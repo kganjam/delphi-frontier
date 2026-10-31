@@ -26,7 +26,7 @@ LIGHT = {"surface": "#2a78d6", "function": "#eb6834", "bg": "#fcfcfb",
 DARK = {"surface": "#3987e5", "function": "#d95926", "bg": "#1a1a19",
         "ink": "#f0efec", "ink2": "#c3c2b7", "grid": "#343431"}
 
-W, H = 940, 716
+W, H = 940, 740
 PANEL_W, PANEL_H = 370, 290
 PAD_L, PAD_T, GAP = 68, 118, 56
 # Roughly how many characters of 11.5px system-ui fit across the plotting width.
@@ -168,9 +168,10 @@ def main() -> int:
         f"paired permutation p = {esm['paired_permutation_delta']['p_two_sided']:.3g}"
         + (f"; Williams p = {w['p_two_sided']:.3g}" if w.get("applicable") else ""),
         f"H1 (better agreement with surface expression): {verdict.upper()} — the interval spans zero, "
-        f"which is not support. This subset resolves |Δρ| of about {1.96 * d['bootstrap_sd']:.2f}; the "
-        f"external reference implies about 0.03, so the design is underpowered for the question by "
-        f"roughly fivefold.",
+        f"which is not support. The CI half-width is {1.96 * d['bootstrap_sd']:.2f}; the external "
+        f"comparison (a different sample, a different pipeline, not a known true difference) is 0.03. "
+        f"This run did not resolve a difference of that size. That is an interval scale, not a power "
+        f"calculation.",
         f"Assay-to-assay ρ = {w.get('rho_between_assays', float('nan')):+.3f}: the model tracks each assay "
         f"about as closely as the two assays track each other. Function is measured downstream of surface "
         f"expression, so they are not independent readouts — though this ρ is lower than that alone implies.",

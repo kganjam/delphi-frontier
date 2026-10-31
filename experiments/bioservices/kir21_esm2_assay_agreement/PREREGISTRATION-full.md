@@ -68,17 +68,23 @@ after seeing whether it held.
 
 | Interval | Effective units | 256 run half-width | Expected narrowing | Predicted half-width |
 | --- | --- | --- | --- | --- |
-| Variant-level bootstrap | 256 → 6,789 variants | 0.149 | ~**5.15×** | ~0.029 |
+| Variant-level bootstrap | 256 → 6,789 variants | 0.149 | ~**5.15×** (√n, assumes independence) | ~0.029 |
 | **Position-clustered bootstrap** | 193 → 391 **positions** | 0.162 | ~**1.42×** | ~**0.114** |
 
 The clustered interval is the one that respects the dependence between variants at
 a position, and its effective sample size is the number of **positions**, which only
 roughly doubles. So:
 
-> **Prediction, recorded in advance: the variant-level interval will tighten enough
-> to resolve a Δρ near the external reference's 0.03, and the position-clustered
+> **Prediction, recorded in advance: the variant-level interval will tighten to a
+> scale comparable with the external comparison's 0.030, and the position-clustered
 > interval will not. If the clustered interval governs, the full run may well return
 > UNDETERMINED again.**
+
+The 0.030 is an **observed external comparison** — ProteinGym's published values on
+a different variant sample computed with a different pipeline, carrying its own
+unreported uncertainty. It is not a known true difference and is not treated as a
+target to be recovered. None of the figures in this section are statistical power
+calculations; they are interval scales.
 
 That is a real possible outcome of this run and it is written down before it happens.
 Reporting a narrowed variant-level interval as resolution, while the clustered

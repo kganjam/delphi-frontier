@@ -31,20 +31,30 @@ from zero here:
 Both ESM-2 correlations are individually far from zero (permutation p < 1e-4 for
 each, 10,000 permutations). What is undetermined is the *difference* between them.
 
-## The honest headline: this design could not have answered its own question
+## This run did not resolve the difference
 
-The subset resolves a difference of about **|Δρ| ≥ 0.15** (the bootstrap SD of Δρ
-is 0.076). The external reference registered in the protocol before the run —
-ProteinGym's published full-dataset ESM-2 (650M) values, 0.352 surface and 0.382
-function — implies a true difference near **0.03**.
+The 95% CI on Δρ has a half-width of **0.149** (bootstrap SD 0.076). The external
+comparison registered in the protocol before the run — ProteinGym's published
+full-dataset ESM-2 (650M) values, 0.352 surface and 0.382 function — differs by
+**0.030**, about a fifth of that half-width.
 
-So the evaluation was underpowered for its own question by roughly **fivefold**,
-and that was fixed by the protocol's 256-variant cap before any data was seen.
-A reader should take "undetermined" as a statement about this design, not as
-evidence that the two agreements are equal.
+**That ratio is a comparison of scales, not statistical power.** No power analysis
+was performed, and 0.030 is **not a known true difference**: it is an observed
+external comparison, computed on a different variant sample with a different
+pipeline, and it carries its own uncertainty, which is not reported in the table it
+was read from. A difference of that size would not be distinguishable at this
+sample size, so **this run did not resolve it**. That is a statement about what
+this run achieved — not a claim that the design could never answer the question,
+and not evidence that the two agreements are equal.
 
-This is the most useful thing the run produced. The pipeline is correct, the
-controls pass, and the answer is that 256 variants cannot settle it.
+The run itself behaved. Naming the controls that passed, rather than asserting
+correctness: the four pilot controls behaved as specified (two positives and, more
+importantly, two refusals); all eight reference checks passed inside the run,
+including byte-identity of the DMS-derived reference with UniProtKB P35561; the
+score-orientation check passed on both assays; the Spearman implementation matched
+`scipy.stats.spearmanr` to four decimals on both assays; 256/256 variants were
+usable with none dropped; and seven statistical controls passed, including two null
+cases that must *not* fire and one that caught a false claim of mine.
 
 ## Agreement with the external reference
 
@@ -53,11 +63,12 @@ controls pass, and the answer is that 256 variants cannot settle it.
 | ProteinGym v1.3 table, full datasets (~6.9k variants) | 0.352 | 0.382 | −0.030 |
 | This run, 256-variant hashed subset | 0.299 | 0.334 | −0.035 |
 
-The **difference** reproduces closely (−0.035 against −0.030) and, notably, has
-the same sign: both point to ESM-2 agreeing marginally *better* with function,
-the opposite of the direction H1 proposed. With a CI of ±0.15 that agreement
-could be coincidence, and it is reported as consistency rather than as
-confirmation.
+The two **differences** are close (−0.035 against −0.030) and share a sign: both
+point to ESM-2 agreeing marginally *better* with function, the opposite of the
+direction H1 proposed. These are two observed comparisons on different variant
+samples computed with different pipelines, not an estimate checked against a known
+value. With a CI of ±0.15 the agreement could be coincidence, and it is reported as
+consistency rather than as confirmation.
 
 Both absolute correlations here sit about 0.05 **below** ProteinGym's. Plausible
 causes, none of them checked: a 256-variant subset against ~6,900; ProteinGym's
@@ -141,9 +152,13 @@ decimals on both assays.
 Score the **full 6,789 matched variants**. That is 391 distinct positions rather
 than 193 — only about twice the forward passes, because masked marginals cost one
 pass per *position* and not per variant, so roughly 40 minutes of the same CPU
-work. At that n the interval on Δρ narrows by about √(6789/256) ≈ 5.2×, to
-roughly ±0.03, which is the scale the external reference implies. A single
-H100 would make it minutes rather than an hour.
+work. A √n argument would put the variant-level interval near ±0.03 at that
+sample size, but **that approximation assumes variants are independent and they
+are not**: variants at one position share a residue, an environment and a single
+forward pass. The position-clustered interval's effective unit is the *position*,
+and positions only go from 193 to 391, so it would narrow far less. Both are
+predicted in advance in `PREREGISTRATION-full.md`, and the full run may still
+return UNDETERMINED on the governing interval.
 
-The 256 cap came from the brief, not from the science, and it was the binding
-constraint on this result.
+The 256 cap came from the brief, not from the science, and it is the binding
+constraint on the precision of this result.
