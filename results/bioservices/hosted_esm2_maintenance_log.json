@@ -1,6 +1,6 @@
 {
   "observation": "Nebius Scientific AI hosted ESM-2 Apps were paused for the whole session",
-  "n_attempts": 5,
+  "n_attempts": 6,
   "models": [
     "esm2-3b",
     "esm2-650m"
@@ -11,62 +11,49 @@
   ],
   "span_utc": [
     "2026-10-31T20:31:47Z",
-    "2026-10-31T21:21:14Z"
+    "2026-10-31T22:01:00Z"
   ],
   "catalogue_said": "availability: available for both Apps throughout",
   "conclusion": "persistent operator-side maintenance; admission never granted, so no inference ran and no sponsor usage is claimed. Not retried further: the brief says review persistent maintenance rather than retry.",
   "attempts": [
     {
-      "receipt": "kir21_hosted_attempt4.json",
-      "run_utc": "2026-10-31T21:21:14Z",
-      "model": "esm2-650m",
-      "final_state": "NOT_SUBMITTED_MAINTENANCE",
-      "code": "MODEL_MAINTENANCE",
-      "admission": "not-submitted",
-      "request_id": "3a1c068f-2e54-419d-9c61-61444eb4a133",
-      "operation_id": null
-    },
-    {
-      "receipt": "kir21_hosted_attempt4.json",
-      "run_utc": "2026-10-31T21:21:14Z",
-      "model": "esm2-3b",
-      "final_state": "NOT_SUBMITTED_MAINTENANCE",
-      "code": "MODEL_MAINTENANCE",
-      "admission": "not-submitted",
-      "request_id": "ede9e83b-d329-4038-8dfe-bd15008accdb",
-      "operation_id": null
-    },
-    {
-      "receipt": "kir21_hosted_pilot.json",
       "run_utc": "2026-10-31T20:31:47Z",
       "model": "esm2-650m",
       "final_state": "NOT_SUBMITTED_MAINTENANCE",
-      "code": "MODEL_MAINTENANCE",
-      "admission": "not-submitted",
-      "request_id": "c552f084-ba9f-49c2-8df4-3eae0037fb94",
       "operation_id": null
     },
     {
-      "receipt": "kir21_hosted_pilot_3b.json",
       "run_utc": "2026-10-31T20:32:36Z",
       "model": "esm2-3b",
       "final_state": "NOT_SUBMITTED_MAINTENANCE",
-      "code": "MODEL_MAINTENANCE",
-      "admission": "not-submitted",
-      "request_id": "893b77bb-39c3-4df6-a67b-33a96f7ad0d3",
       "operation_id": null
     },
     {
-      "receipt": "kir21_hosted_replication.json",
       "run_utc": "2026-10-31T20:34:07Z",
       "model": "esm2-650m",
       "final_state": "NOT_SUBMITTED_MAINTENANCE",
-      "code": "MODEL_MAINTENANCE",
-      "admission": "not-submitted",
-      "request_id": "60feabf5-82d5-466b-955a-27899788607d",
+      "operation_id": null
+    },
+    {
+      "run_utc": "2026-10-31T21:21:14Z",
+      "model": "esm2-3b",
+      "final_state": "NOT_SUBMITTED_MAINTENANCE",
+      "operation_id": null
+    },
+    {
+      "run_utc": "2026-10-31T21:21:14Z",
+      "model": "esm2-650m",
+      "final_state": "NOT_SUBMITTED_MAINTENANCE",
+      "operation_id": null
+    },
+    {
+      "run_utc": "2026-10-31T22:01:00Z",
+      "model": "esm2-650m",
+      "final_state": "NOT_SUBMITTED_MAINTENANCE",
       "operation_id": null
     }
   ],
-  "span_minutes": 49.5,
-  "correction": "The commit that introduced this file described the span as 'roughly 2.5 hours'. That is wrong: the first and last attempts are 49.5 minutes apart (2026-10-31T20:31:47Z to 2026-10-31T21:21:14Z). The commit message cannot be amended once pushed, so the correction lives here, next to the timestamps that refute it."
+  "span_minutes": 89.2,
+  "correction": "The commit that introduced this file described the span as 'roughly 2.5 hours'. That is wrong: the first and last attempts are 49.5 minutes apart (2026-10-31T20:31:47Z to 2026-10-31T21:21:14Z). The commit message cannot be amended once pushed, so the correction lives here, next to the timestamps that refute it.",
+  "closed": "final check made after the design review; still paused. Not retried again: the brief says review persistent maintenance rather than retry."
 }
