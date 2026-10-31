@@ -1,0 +1,31 @@
+{
+ "chord_cells": 40,
+ "grid": [
+  800,
+  320
+ ],
+ "tau": 0.56,
+ "nu": 0.020000000000000018,
+ "Re": 100.0,
+ "U_lattice": 0.05,
+ "steps": 1000,
+ "convective_time_total": 1.25,
+ "Cd_mean_last10pct": 0.5452131596293678,
+ "Cl_mean_last10pct": 0.6131504568544458,
+ "Cd_rel_change_last_two_windows": 0.0028822374763095445,
+ "flux_imbalance_last10pct": 0.001043491630559231,
+ "max_speed_over_cs_Mach": 0.11782121496621109,
+ "all_finite": true,
+ "steady_by_protocol": true,
+ "wall_seconds": 106.3851227760315,
+ "device": "cpu",
+ "seconds_per_step": 0.10638512277603149,
+ "torch": "2.11.0+cu130",
+ "cuda": null,
+ "checks": {
+  "flux_balance_le_3pct": true,
+  "finite": true,
+  "mach_le_0.3": true,
+  "steady_drag_le_1pct": true
+ }
+}
