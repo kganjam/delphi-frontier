@@ -30,6 +30,12 @@ import subprocess
 import sys
 import time
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")))
+
+from experiments.bioservices.sequence_controls import (  # noqa: E402
+    dinucleotide_shuffle, gc_matched_random,
+)
+
 SEED = 0
 N_SAMPLES_PER_ARM = 2
 N_DESIGN_TARGETS = 8          # the remaining targets stay fully held out
@@ -46,31 +52,6 @@ def sha(text: str) -> str:
 
 def log(msg: str) -> None:
     print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
-
-
-def dinucleotide_shuffle(seq: str, rng: random.Random) -> str:
-    """Altschul-Erikson style shuffle: preserves exact dinucleotide counts.
-
-    A mononucleotide shuffle preserves only GC, which is too weak a control for
-    DNA, where dinucleotide composition (CpG above all) carries much of the
-    signal a motif scan would pick up.
-    """
-    edges: dict[str, list[str]] = {}
-    for a, b in zip(seq, seq[1:]):
-        edges.setdefault(a, []).append(b)
-    for v in edges.values():
-        rng.shuffle(v)
-    out, cur = [seq[0]], seq[0]
-    for _ in range(len(seq) - 1):
-        nxt = edges[cur].pop() if edges.get(cur) else rng.choice("ACGT")
-        out.append(nxt)
-        cur = nxt
-    return "".join(out)
-
-
-def gc_matched_random(length: int, gc: float, rng: random.Random) -> str:
-    half_gc, half_at = gc / 2, (1 - gc) / 2
-    return "".join(rng.choices("GCAT", weights=[half_gc, half_gc, half_at, half_at], k=length))
 
 
 def main() -> int:
