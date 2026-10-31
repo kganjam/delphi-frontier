@@ -31,7 +31,8 @@
   "surface_pressure_internal_check": {
     "what": "720 equally spaced angles; p sampled with WaterLily.interp at r = R + 1.5 h, R + 2.5 h, R + 3.5 h, extrapolated quadratically to r = R; Cp = (p - p_ref) / (0.5 U^2), p_ref = mean p over the inlet plane interior at the same step",
     "time": "time mean of the per-sample Cp over the averaging window, sampled every 10th step",
-    "integral": "Cd_p_surface = -sum(Cp * n_x * R dtheta) / (0.5 D) over the 720 points",
+    "integral": "Cd_p_surface = -sum(Cp * n_x * R dtheta) / D over the 720 points (Cp already carries the 0.5 U^2)",
+    "correction_2026_10_31": "frozen text read / (0.5 D), which double-counts the 0.5 already in Cp; corrected before any cylinder run existed (derivation: F_x = -oint p n_x R dtheta, Cd = F_x / (0.5 U^2 D))",
     "role": "INTERNAL consistency between wall-extrapolated surface pressure and the solver's pressure_force; not a comparison with Qu and not a validation of total drag"},
   "runs": {
     "R1": {"n_D": 32, "H": 60, "Re": 100},
