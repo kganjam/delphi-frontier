@@ -4,9 +4,9 @@
   "max_input_tokens": 120000,
   "max_output_tokens": 24000
  },
- "calls": 1,
- "input_tokens": 45884,
- "output_tokens": 8290,
+ "calls": 3,
+ "input_tokens": 45919,
+ "output_tokens": 8389,
  "entries": [
   {
    "label": "kcn-fin-grounded",
@@ -26,6 +26,35 @@
      }
     ],
     "thoughtsTokenCount": 5260,
+    "serviceTier": "standard"
+   }
+  },
+  {
+   "label": "access-probe",
+   "model": "gemini-3.1-pro-preview",
+   "http_status": 400,
+   "t_utc": "2026-10-31T21:05:10Z",
+   "input_tokens": 17,
+   "output_tokens_incl_thinking": 0,
+   "usage_metadata": {}
+  },
+  {
+   "label": "access-probe-2",
+   "model": "gemini-3.1-pro-preview",
+   "http_status": 200,
+   "t_utc": "2026-10-31T21:05:36Z",
+   "input_tokens": 18,
+   "output_tokens_incl_thinking": 99,
+   "usage_metadata": {
+    "promptTokenCount": 18,
+    "totalTokenCount": 117,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 18
+     }
+    ],
+    "thoughtsTokenCount": 99,
     "serviceTier": "standard"
    }
   }

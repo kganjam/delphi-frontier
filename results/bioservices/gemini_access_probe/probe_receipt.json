@@ -1,0 +1,16 @@
+{
+  "classification": "KEY WORKS, request accepted",
+  "finish_reason": "STOP",
+  "http_status": 200,
+  "input_tokens": 18,
+  "latency_s": 1.7,
+  "model_requested": "gemini-3.1-pro-preview",
+  "model_version_returned": "gemini-3.1-pro-preview",
+  "output_tokens": null,
+  "prior_probe_correction": "The first probe this session returned HTTP 400 INVALID_ARGUMENT ('Thinking level MINIMAL is not supported for this model') and my receipt labelled it 'GEMINI API KEY PATH FAILING'. That label was wrong: a 400 on argument contents is evidence the key authenticated. The failure was my parameter, not Google access.",
+  "probe_seattle": "2026-10-31 14:05:36 PDT",
+  "probe_utc": "2026-10-31T21:05:36Z",
+  "response_text": "OK",
+  "scope": "generativelanguage.googleapis.com with an AI Studio API key. This is a DIFFERENT auth path from gcloud ADC and from Compute Engine, so it is not evidence about Compute SERVICE_DISABLED or UREQ_TOS_NOT_ACCEPTED in either direction.",
+  "thinking_tokens": 99
+}

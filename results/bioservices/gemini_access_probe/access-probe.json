@@ -1,0 +1,30 @@
+{
+ "label": "access-probe",
+ "model_requested": "gemini-3.1-pro-preview",
+ "model_version_returned": null,
+ "http_status": 400,
+ "t_utc": "2026-10-31T21:05:10Z",
+ "t_seattle": "2026-10-31 14:05:10 PDT",
+ "elapsed_s": 0.2,
+ "system_instruction": "Answer with exactly 'OK'. Nothing else.",
+ "prompt": "Reply with exactly the two characters: OK",
+ "prompt_sha256": "da3d5f210efe6956530354a65b2361ee64346da6f5be243b63d4d9587cc95228",
+ "generation_config": {
+  "temperature": 0.0,
+  "maxOutputTokens": 400,
+  "thinkingConfig": {
+   "thinkingLevel": "minimal"
+  }
+ },
+ "usage_metadata": {},
+ "finish_reason": null,
+ "response_text": "",
+ "response_raw": {
+  "error": {
+   "code": 400,
+   "message": "Thinking level MINIMAL is not supported for this model. Please retry with other thinking level.",
+   "status": "INVALID_ARGUMENT"
+  }
+ },
+ "epistemic_status": "model-opinion; not verified truth"
+}

@@ -1,0 +1,62 @@
+{
+ "label": "access-probe-2",
+ "model_requested": "gemini-3.1-pro-preview",
+ "model_version_returned": "gemini-3.1-pro-preview",
+ "http_status": 200,
+ "t_utc": "2026-10-31T21:05:36Z",
+ "t_seattle": "2026-10-31 14:05:36 PDT",
+ "elapsed_s": 1.7,
+ "system_instruction": "Answer with exactly 'OK'. Nothing else.",
+ "prompt": "Reply with exactly the two characters: OK",
+ "prompt_sha256": "da3d5f210efe6956530354a65b2361ee64346da6f5be243b63d4d9587cc95228",
+ "generation_config": {
+  "temperature": 0.0,
+  "maxOutputTokens": 600
+ },
+ "usage_metadata": {
+  "promptTokenCount": 18,
+  "totalTokenCount": 117,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 18
+   }
+  ],
+  "thoughtsTokenCount": 99,
+  "serviceTier": "standard"
+ },
+ "finish_reason": "STOP",
+ "response_text": "OK",
+ "response_raw": {
+  "candidates": [
+   {
+    "content": {
+     "parts": [
+      {
+       "text": "OK",
+       "thoughtSignature": "EuIDCt8DAWkUfRNK16eXsOK3tDUcYuGhzbqNUpiP4O4sA0yVu3O1pVeUDQNe4aiBs5WO42A8CZILbOXcmK1rg3+azpL7y1flWtW2hwsVJtAhjo2rw/zCQ6qzDBaCx4EEcwJJU1oL70UF2AzTSATQJ7Kh6m0BvG7Bi4IrNrUTNFvqouznzJl6Nyi5LcK9ROdwdhaD2lDu9NcOU8wt1DdAkYMsYFcibpr7bWbo2MxQzNlPXkUbOL80OvK/3S2TIxrvaqeSmrg7Cj/Gg/i97V8l5kPIpx0PvvHhrGHASB6JOhh56W5e/P8qax/hRldpdlE1nbRxiqq5mRxBZpDUmJzUDmzfgcl+rsPuiRWVBPma0Hwnx3ID4QpMjltMFeNIsiCrJPCpR2J86Efhyoh9NfydSdWJV4g/QoqEYahU8/7OnV/Hnco3bpxow2xHmVitUweNZR9a2hABhbCfgJ4Q3Wrp4Vzpv0o+9/6q+ehjcmXvXbP6sHUu2ofEqpWYCgfznCvxJpqSE8Xrju2qGx1U+h9mxD7BhN46ju8DNJbEHJ0/ckDUd+WZE5eHhEvV6O/dA3537tsTFZvM8IQ/Fu6LLON/GGxdc0sjLt1f2QhvgKvND4nCDAnypC0dw2siPRfns4ZKsWpAnhs="
+      }
+     ],
+     "role": "model"
+    },
+    "finishReason": "STOP",
+    "index": 0
+   }
+  ],
+  "usageMetadata": {
+   "promptTokenCount": 18,
+   "totalTokenCount": 117,
+   "promptTokensDetails": [
+    {
+     "modality": "TEXT",
+     "tokenCount": 18
+    }
+   ],
+   "thoughtsTokenCount": 99,
+   "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.1-pro-preview",
+  "responseId": "IFjmaue1JejJ39IPoPiSeA"
+ },
+ "epistemic_status": "model-opinion; not verified truth"
+}

@@ -18,9 +18,10 @@ epigenetic property is claimed from sequence alone.**
 
 ## Outcome in one line
 
-**16 candidate sequences were generated and recovered. Scoring crashed on a bug
-in my own code.** Generation, controls and the model's own calibration all
-succeeded; the Evo 2 log-likelihood stage did not run.
+**16 candidate sequences were generated, recovered, and scored.** Run 1
+generated them and crashed in scoring on a bug in my own code; run 2
+(`aijob-e00qkdb12x8zv9yckb`, COMPLETED) scored them after the fix. Arm B, the
+few-shot in-context arm, remains untested.
 
 ## What was produced
 
@@ -29,7 +30,7 @@ succeeded; the Evo 2 log-likelihood stage did not run.
 | `candidates.json` | **16** sequences, 1,000 bp each, all distinct | **yes** |
 | `controls.json` | **32** (16 dinucleotide shuffles + 16 GC-matched random) | **yes** |
 | `control_check.json` | model calibration | **yes** |
-| `scores.json` | — | **never written** (the crash) |
+| `scores.json` | **57** scored sequences | written by run 2, `aijob-e00qkdb12x8zv9yckb` |
 
 8 design targets × 2 samples, **arm A only** (`A_native_context`). Arm B
 (few-shot in-context) was skipped on the internal time budget, so **the
@@ -117,7 +118,53 @@ recorded) — consistent with it being finalised after the manifest was written.
 The two scientific payloads, `candidates.json` and `controls.json`, both verify
 exactly.
 
-## What a re-run would add
+## Run 2 — scoring completed
+
+The missing artifact now exists. `aijob-e00r0910b83jyk88ak` **FAILED** before any
+GPU compute (`bash: set: No such file or directory` — repeated `--args`
+collapsed, `-c` was dropped, bash tried to execute the script text as a
+filename). Resubmitted with the command in an injected `run_score.sh`:
+
+| | |
+| --- | --- |
+| Job | **`aijob-e00qkdb12x8zv9yckb`** `bioservices-evo2zf-score-a2` |
+| State | **COMPLETED**, `SCOREJOB_RC=0` |
+| Submitted by | **this harness**, after posting the coordination note to gpuops |
+| Compute | model load 14.3 s, scoring 21.8 s total, 57 sequences |
+
+**The self-check passed before any score was reported.** A uniform random
+sequence scored **−1.3997**, against the **−ln 4 = −1.3863** that a four-letter
+uniform alphabet requires; a poly-C repeat scored −0.019, documenting that a
+near-zero NLL proves nothing. The job was built to refuse to report scores if
+that check failed, because scoring is the stage that crashed in run 1.
+
+| group | n | mean log-prob/base | 95% CI |
+| --- | --- | --- | --- |
+| real held-out promoters | 9 | **−1.2031** | [−1.3136, −1.0925] |
+| **Evo 2 candidates (arm A)** | 16 | **−1.2255** | [−1.2832, −1.1677] |
+| control: dinucleotide shuffle | 16 | −1.3565 | [−1.3712, −1.3417] |
+| control: GC-matched random | 16 | −1.3780 | [−1.3923, −1.3637] |
+| *i.i.d. uniform floor* | — | *−1.3863 theory, −1.3997 measured* | |
+
+What this supports: the candidates are **indistinguishable from real zebrafish
+promoter-proximal sequence under the model's own likelihood** (CIs overlap
+heavily), and both sit clearly above the composition controls, which cluster at
+the random floor.
+
+What it does **not** support, and this is the important part:
+
+- **The candidates were scored by the model that generated them.** High
+  likelihood is expected by construction and is **not** independent evidence of
+  quality. The real held-out halves are the only unbiased row in that table,
+  because the model did not produce them.
+- **Everything sits within ~0.2 nats of the i.i.d. floor.** Evo 2 finds real
+  zebrafish promoter-proximal sequence only modestly more predictable than
+  random, so the dynamic range of this measure on this material is small.
+- The independent motif diagnostic reached the same overlapping conclusion by a
+  route with no model in it, which is the stronger of the two tests.
+- **None of it is function.**
+
+## What a further re-run would add
 
 The fixed `score()` plus a budget large enough for arm B would give Evo 2
 log-likelihoods for candidates, controls and real held-out halves, and would test
