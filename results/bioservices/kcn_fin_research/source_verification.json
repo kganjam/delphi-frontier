@@ -1,0 +1,32 @@
+{
+  "verification": "literal fragments quoted by the model, checked against the fetched source text",
+  "method": "unicode-normalised substring match over the de-tagged full text, plus context reads",
+  "negative_controls": {
+    "PMC12871474:'999.9 um'": "absent",
+    "PMC11018282:'STO-123'": "absent",
+    "PMC10137051:'-1234 mV'": "absent"
+  },
+  "fragments_checked": 18,
+  "fragments_found": 18,
+  "context_confirmed": [
+    {
+      "claim": "STO-609 at 24 uM in embryos",
+      "source": "PMC11018282",
+      "quote": "after 6-h treatment with DMSO (a) or 24 \u03bcm STO-609 (b)",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "KCl causes ~10% finfold length increase WITHOUT injury",
+      "source": "PMC12871474",
+      "quote": "in the absence of injury, this treatment led to larval fin overgrowth ... 10% length increase",
+      "verdict": "confirmed"
+    },
+    {
+      "claim": "2-APB at 13 uM",
+      "source": "PMC11018282",
+      "quote": "final concentrations (200 nM RA, 13 \u03bcm 2-APB, or 24 \u03bcm STO unless indicate otherwise)",
+      "verdict": "confirmed, and refined: 13 \u03bcM is the EMBRYO working concentration; the HEK293 dose-response used 30/75/105/150 \u03bcM separately"
+    }
+  ],
+  "limitation": "fragment presence is weaker than claim correctness: a number can be present in a source and attached to a different entity. The three load-bearing claims above were additionally context-read; the remaining fifteen were checked for presence only."
+}

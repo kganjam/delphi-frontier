@@ -1,0 +1,76 @@
+{
+  "question": "Is OpenResearch available via Nebius Scientific AI on this workspace?",
+  "answer": "No. Not listed in either catalogue, and direct id probes return NOT_FOUND.",
+  "probed_utc": "2026-10-31T20:41:33Z",
+  "direct_id_probes": [
+    {
+      "queried_model_id": "openresearch",
+      "code": "NOT_FOUND",
+      "message": "The requested operation, artifact or App was not found in your workspace.",
+      "request_id": "2203a893-a6bd-4502-9d19-9213a8199f41",
+      "retryable": false
+    },
+    {
+      "queried_model_id": "open-research",
+      "code": "NOT_FOUND",
+      "message": "The requested operation, artifact or App was not found in your workspace.",
+      "request_id": "1637e155-b69a-4bf4-969b-c1c9fd261f03",
+      "retryable": false
+    },
+    {
+      "queried_model_id": "open_research",
+      "code": "NOT_FOUND",
+      "message": "The requested operation, artifact or App was not found in your workspace.",
+      "request_id": "167dbae8-20ba-4b6e-b2b4-b6ce6152a668",
+      "retryable": false
+    },
+    {
+      "queried_model_id": "deep-research",
+      "code": "NOT_FOUND",
+      "message": "The requested operation, artifact or App was not found in your workspace.",
+      "request_id": "fafa1c97-c42a-4a49-99ad-c6fa2168c287",
+      "retryable": false
+    }
+  ],
+  "scientific_catalogue_model_ids": [
+    "alphafold3",
+    "amber",
+    "app-95943840d2b14a65b5cdaa4717b2cdc3",
+    "bioemu2",
+    "boltzgen",
+    "cosmos3-lerobot-augmentation",
+    "esm2-3b",
+    "esm2-650m",
+    "esmfold2",
+    "esmfold2-fast",
+    "gromacs",
+    "gromacs-mpi",
+    "holoscan-endoscopy",
+    "isaac-healthcare",
+    "lammps",
+    "monai-spleen-ct",
+    "mosaic",
+    "namd",
+    "openfold3-openbind",
+    "openmm",
+    "proteina-complexa",
+    "protenix-v2",
+    "rfd4-proteina",
+    "rfdiffusion",
+    "scvi-scanvi",
+    "stab-ddg"
+  ],
+  "n_scientific_models": 26,
+  "n_general_models": 66,
+  "keyword_scan": {
+    "openresearch": 0,
+    "open research": 0,
+    "literature": 0,
+    "pubmed": 0,
+    "citation": 0,
+    "deep research": 0,
+    "websearch": 0,
+    "agent": 0
+  },
+  "note": "Catalogue absence alone would be weak evidence; the direct id probes are the positive check. Note separately that this catalogue reports availability 'available' for esm2-650m and esm2-3b while both refuse submission with MODEL_MAINTENANCE, so its availability field is not a live signal either way."
+}

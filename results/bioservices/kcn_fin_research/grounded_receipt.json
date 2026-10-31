@@ -1,0 +1,155 @@
+{
+  "caps": {
+    "max_calls": 6,
+    "max_input_tokens": 120000,
+    "max_output_tokens": 24000
+  },
+  "epistemic_status": "model analysis of supplied primary text; every claim is a LEAD until checked against the cited source. Not verified truth.",
+  "fallback_reason": "OpenResearch is not present on this Nebius workspace; the exact NOT_FOUND probes are recorded above. Fallback is Europe PMC primary sources plus a grounded model analysis, as authorized.",
+  "ledger_totals": {
+    "calls": 1,
+    "input_tokens": 45884,
+    "output_tokens": 8290
+  },
+  "model_requested": "gemini-3.1-pro-preview",
+  "model_version_returned": "gemini-3.1-pro-preview",
+  "openresearch_availability": {
+    "answer": "No. Not listed in either catalogue, and direct id probes return NOT_FOUND.",
+    "direct_id_probes": [
+      {
+        "code": "NOT_FOUND",
+        "message": "The requested operation, artifact or App was not found in your workspace.",
+        "queried_model_id": "openresearch",
+        "request_id": "2203a893-a6bd-4502-9d19-9213a8199f41",
+        "retryable": false
+      },
+      {
+        "code": "NOT_FOUND",
+        "message": "The requested operation, artifact or App was not found in your workspace.",
+        "queried_model_id": "open-research",
+        "request_id": "1637e155-b69a-4bf4-969b-c1c9fd261f03",
+        "retryable": false
+      },
+      {
+        "code": "NOT_FOUND",
+        "message": "The requested operation, artifact or App was not found in your workspace.",
+        "queried_model_id": "open_research",
+        "request_id": "167dbae8-20ba-4b6e-b2b4-b6ce6152a668",
+        "retryable": false
+      },
+      {
+        "code": "NOT_FOUND",
+        "message": "The requested operation, artifact or App was not found in your workspace.",
+        "queried_model_id": "deep-research",
+        "request_id": "fafa1c97-c42a-4a49-99ad-c6fa2168c287",
+        "retryable": false
+      }
+    ],
+    "keyword_scan": {
+      "agent": 0,
+      "citation": 0,
+      "deep research": 0,
+      "literature": 0,
+      "open research": 0,
+      "openresearch": 0,
+      "pubmed": 0,
+      "websearch": 0
+    },
+    "n_general_models": 66,
+    "n_scientific_models": 26,
+    "note": "Catalogue absence alone would be weak evidence; the direct id probes are the positive check. Note separately that this catalogue reports availability 'available' for esm2-650m and esm2-3b while both refuse submission with MODEL_MAINTENANCE, so its availability field is not a live signal either way.",
+    "probed_utc": "2026-10-31T20:41:33Z",
+    "question": "Is OpenResearch available via Nebius Scientific AI on this workspace?",
+    "scientific_catalogue_model_ids": [
+      "alphafold3",
+      "amber",
+      "app-95943840d2b14a65b5cdaa4717b2cdc3",
+      "bioemu2",
+      "boltzgen",
+      "cosmos3-lerobot-augmentation",
+      "esm2-3b",
+      "esm2-650m",
+      "esmfold2",
+      "esmfold2-fast",
+      "gromacs",
+      "gromacs-mpi",
+      "holoscan-endoscopy",
+      "isaac-healthcare",
+      "lammps",
+      "monai-spleen-ct",
+      "mosaic",
+      "namd",
+      "openfold3-openbind",
+      "openmm",
+      "proteina-complexa",
+      "protenix-v2",
+      "rfd4-proteina",
+      "rfdiffusion",
+      "scvi-scanvi",
+      "stab-ddg"
+    ]
+  },
+  "prompt_sha256": "2b3ba20e60d0ebfa4c2894d8c4ec286342f2dc949fd72c2f8d83da349446ac44",
+  "run_utc": "2026-10-31T20:42:22Z",
+  "sources": [
+    {
+      "chars_supplied": 60000,
+      "chars_total": 71433,
+      "pmcid": "PMC10137051",
+      "read_level": "full-text",
+      "xml_sha256": "26096c15f5e8414f562f47c7071141de4d687e1af824a211e6dcc35dfbade875"
+    },
+    {
+      "chars_supplied": 60000,
+      "chars_total": 159324,
+      "pmcid": "PMC11018282",
+      "read_level": "full-text",
+      "xml_sha256": "708bcadcd6982f35a4a190366af1f3b34561f8436351abe1e95098b2e02bd9ef"
+    },
+    {
+      "chars_supplied": 60000,
+      "chars_total": 96741,
+      "pmcid": "PMC12871474",
+      "read_level": "full-text",
+      "xml_sha256": "891d204132c72add8ebc14edcd332a8e2da32393c8c3ea28f47cba3996f88fa9"
+    },
+    {
+      "abstract_sha256": "69d8ac15f8875db270473e3d30df36ca8d72e22626923ebe3db3dc532f860dc7",
+      "doi": "10.1016/j.cub.2021.08.054",
+      "pmcid": "PMC9172250",
+      "read_level": "abstract",
+      "title": "Modulation of bioelectric cues in the evolution of flying fishes.",
+      "year": "2021"
+    },
+    {
+      "abstract_sha256": "3b7d9c9ea69dac40d98ee6099f42de429f71005c59f656d01e6a1d791736d28f",
+      "doi": "10.1242/dev.199384",
+      "pmcid": "PMC8217709",
+      "read_level": "abstract",
+      "title": "longfin causes cis-ectopic expression of the kcnh2a ether-a-go-go K+ channel to autonomously prolong fin outgrowth.",
+      "year": "2021"
+    },
+    {
+      "abstract_sha256": "f43fce14ba26513355884641b59af0a05bbab92986b1a0bc3f1d4259cefffc81",
+      "doi": "10.1016/j.ydbio.2019.08.016",
+      "pmcid": "PMC7235970",
+      "read_level": "abstract",
+      "title": "Integrated K+ channel and K+Cl- cotransporter functions are required for the coordination of size and proportion during development.",
+      "year": "2019"
+    },
+    {
+      "abstract_sha256": "df9181992c17f93d9d9adb7e7a42f38391f552ac378e7f93a9bbdaf13738d55b",
+      "doi": "10.1002/dvdy.690",
+      "pmcid": "PMC11269526",
+      "read_level": "abstract",
+      "title": "Evolution of two-pore domain potassium channels and their gene expression in zebrafish embryos.",
+      "year": "2024"
+    }
+  ],
+  "task": "zebrafish kcnh2a/kcnk5b fin patterning: bioelectric and mechanobiology",
+  "usage": {
+    "input_tokens": 45884,
+    "output_tokens": 3030,
+    "thinking_tokens": 5260
+  }
+}

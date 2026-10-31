@@ -1,0 +1,33 @@
+{
+ "caps": {
+  "max_calls": 6,
+  "max_input_tokens": 120000,
+  "max_output_tokens": 24000
+ },
+ "calls": 1,
+ "input_tokens": 45884,
+ "output_tokens": 8290,
+ "entries": [
+  {
+   "label": "kcn-fin-grounded",
+   "model": "gemini-3.1-pro-preview",
+   "http_status": 200,
+   "t_utc": "2026-10-31T20:41:34Z",
+   "input_tokens": 45884,
+   "output_tokens_incl_thinking": 8290,
+   "usage_metadata": {
+    "promptTokenCount": 45884,
+    "candidatesTokenCount": 3030,
+    "totalTokenCount": 54174,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 45884
+     }
+    ],
+    "thoughtsTokenCount": 5260,
+    "serviceTier": "standard"
+   }
+  }
+ ]
+}
