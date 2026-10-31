@@ -1,0 +1,131 @@
+{
+ "schema": "cfd3d-cyl2d-timing-0.1",
+ "contract_commit": "9d53cd1 (+ddc7095 formula fix)",
+ "band_commit": "5a02b46",
+ "mode": "TIMING only: no force, pressure or surface routine was called (cyl2d.jl timing())",
+ "host": "this host, 2 Julia threads, capped (jl.sh)",
+ "runs": {
+  "R1": {
+   "cells": 3694084,
+   "dt_grid_last": 0.2849290370941162,
+   "dt_grid_mean": 0.27872467289368313,
+   "gpu": false,
+   "julia": "1.12.7",
+   "mode": "TIMING",
+   "note": "start-up dt; the developed wake has a higher peak speed, so later dt is smaller (estimate only)",
+   "ns_per_cell_step": 114.82707280072678,
+   "run_id": "R1",
+   "steps": 60,
+   "steps_per_D_over_U_at_this_dt": 112.30866578694797,
+   "threads": 2,
+   "wall_s": 25.450851144,
+   "waterlily": "1.10.0",
+   "file_sha256": "f4e019c4ecea4cb86b11fb5f5bb5791ea0bc5077a0ad3f2d58fac57c6ede3949"
+  },
+  "R2": {
+   "cells": 14760964,
+   "dt_grid_last": 0.18814893066883087,
+   "dt_grid_mean": 0.18629580363631248,
+   "gpu": false,
+   "julia": "1.12.7",
+   "mode": "TIMING",
+   "note": "start-up dt; the developed wake has a higher peak speed, so later dt is smaller (estimate only)",
+   "ns_per_cell_step": 128.46243786313684,
+   "run_id": "R2",
+   "steps": 20,
+   "steps_per_D_over_U_at_this_dt": 340.1560655832224,
+   "threads": 2,
+   "wall_s": 37.924588413,
+   "waterlily": "1.10.0",
+   "file_sha256": "c4d243856e112282a81c0b142ad743e1303f5ee2c1095694df0e0fb9dc9ddb26"
+  },
+  "R3_domain": {
+   "cells": 14760964,
+   "dt_grid_last": 0.27731457352638245,
+   "dt_grid_mean": 0.2728765204548836,
+   "gpu": false,
+   "julia": "1.12.7",
+   "mode": "TIMING",
+   "note": "start-up dt; the developed wake has a higher peak speed, so later dt is smaller (estimate only)",
+   "ns_per_cell_step": 101.3131433692271,
+   "run_id": "R3_domain",
+   "steps": 20,
+   "steps_per_D_over_U_at_this_dt": 115.39242093584261,
+   "threads": 2,
+   "wall_s": 29.90959324,
+   "waterlily": "1.10.0",
+   "file_sha256": "3cc578e92a1b3cb4ec8233dd88158ba2e5ef515850e2d273081c3d5614c5feeb"
+  }
+ },
+ "gpu_per_step_ms_measured_3d": [
+  22.302688749794914,
+  19.58477986473029
+ ],
+ "projection": {
+  "R1": {
+   "cells": 3694084,
+   "steps_range": [
+    67385,
+    112309
+   ],
+   "cpu_h_2threads": [
+    7.9,
+    13.2
+   ],
+   "h100_s_at_20ms_per_step": [
+    1348,
+    2246
+   ]
+  },
+  "R2": {
+   "cells": 14760964,
+   "steps_range": [
+    204094,
+    340156
+   ],
+   "cpu_h_2threads": [
+    107.5,
+    179.2
+   ],
+   "h100_s_at_20ms_per_step": [
+    4082,
+    6803
+   ]
+  },
+  "R3_domain": {
+   "cells": 14760964,
+   "steps_range": [
+    69235,
+    115392
+   ],
+   "cpu_h_2threads": [
+    28.8,
+    47.9
+   ],
+   "h100_s_at_20ms_per_step": [
+    1385,
+    2308
+   ]
+  },
+  "M1_mutant": {
+   "cells": 3694084,
+   "steps_range": [
+    67385,
+    112309
+   ],
+   "cpu_h_2threads": [
+    7.9,
+    13.2
+   ],
+   "h100_s_at_20ms_per_step": [
+    1348,
+    2246
+   ]
+  }
+ },
+ "projection_assumptions": [
+  "developed-wake dt between 0.6x and 1.0x the start-up dt measured here (assumed)",
+  "H100 2-D per-step wall ~20 ms, taken from the 3-D job's per-step wall, which was nearly size-independent (22.3 ms at 3.3 M cells, 19.6 ms at 12.1 M); 2-D not measured on GPU"
+ ],
+ "reading": "CPU cannot run the frozen t_end 600 control within the caps (hours per run); GPU is required, and R2 alone likely exceeds one 3300 s packet"
+}
