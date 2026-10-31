@@ -1,0 +1,68 @@
+{
+  "elapsed_seconds": 79.2,
+  "jobs": [
+    {
+      "artifact_id": "dda9fdf4-1760-5161-b493-d939a93801e6",
+      "artifact_sha256": "2aa3e86daec755368a16851eaf8bd5af67c17716cfb95eef6c654d036e3e2b2a",
+      "error": {
+        "code": "MODEL_MAINTENANCE",
+        "detail": {
+          "admission": "not-submitted",
+          "code": "MODEL_MAINTENANCE",
+          "message": "This App is temporarily paused for maintenance; the request was not submitted.",
+          "model_id": "esm2-650m",
+          "next_action": "Wait 30 seconds before retrying with the same idempotency key.",
+          "request_id": "3a1c068f-2e54-419d-9c61-61444eb4a133",
+          "retry_after_seconds": 30,
+          "retryable": true,
+          "status_code": 503
+        },
+        "note": "App paused by the operator; one retry was made as instructed"
+      },
+      "final_state": "NOT_SUBMITTED_MAINTENANCE",
+      "idempotency_key": "kir21-hosted-v3-esm2-650m-pilot",
+      "label": "pilot",
+      "model_id": "esm2-650m",
+      "operation": "score-variants",
+      "operation_id": null,
+      "result": null,
+      "states": [],
+      "submitted_utc": null
+    },
+    {
+      "artifact_id": "dda9fdf4-1760-5161-b493-d939a93801e6",
+      "artifact_sha256": "2aa3e86daec755368a16851eaf8bd5af67c17716cfb95eef6c654d036e3e2b2a",
+      "error": {
+        "code": "MODEL_MAINTENANCE",
+        "detail": {
+          "admission": "not-submitted",
+          "code": "MODEL_MAINTENANCE",
+          "message": "This App is temporarily paused for maintenance; the request was not submitted.",
+          "model_id": "esm2-3b",
+          "next_action": "Wait 30 seconds before retrying with the same idempotency key.",
+          "request_id": "ede9e83b-d329-4038-8dfe-bd15008accdb",
+          "retry_after_seconds": 30,
+          "retryable": true,
+          "status_code": 503
+        },
+        "note": "App paused by the operator; one retry was made as instructed"
+      },
+      "final_state": "NOT_SUBMITTED_MAINTENANCE",
+      "idempotency_key": "kir21-hosted-v3-esm2-3b-pilot",
+      "label": "pilot",
+      "model_id": "esm2-3b",
+      "operation": "score-variants",
+      "operation_id": null,
+      "result": null,
+      "states": [],
+      "submitted_utc": null
+    }
+  ],
+  "local_comparison_file": "results/bioservices/kir21_scores_checkpoint.json",
+  "n_subset": 256,
+  "purpose": "independent-implementation check: identical reference and variant set, scored by a hosted pinned ESM-2 instead of this host's local one",
+  "reference_length": 428,
+  "reference_sha256": "88bfbcddd595e33da25f5ab224ce2b41cfaeacf488c7a7a51178d24d24e3b575",
+  "run_utc": "2026-10-31T21:21:14Z",
+  "stage": "hosted_esm2_replication"
+}
