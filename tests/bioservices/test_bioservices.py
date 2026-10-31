@@ -419,3 +419,107 @@ class TestAnalysisStatistics:
         assert analyze._verdict({"ci_low": -0.3, "ci_high": -0.1})[0] == "falsified"
         assert analyze._verdict({"ci_low": -0.3, "ci_high": 0.0})[0] == "falsified"
         assert analyze._verdict({"ci_low": -0.05, "ci_high": 0.3})[0] == "undetermined"
+
+
+class TestUcscCoordinates:
+    """UCSC is 0-based half-open, Ensembl 1-based inclusive.
+
+    An off-by-one here shifts every fetched region by one base and still returns
+    sequence of the right length, so it would pass every downstream check and
+    quietly misplace the promoter. It is tested against the arithmetic rather
+    than against the network.
+    """
+
+    def test_reverse_complement(self):
+        from connectors.bioservices import ucsc
+
+        assert ucsc.reverse_complement("ACGT") == "ACGT"
+        assert ucsc.reverse_complement("AAAC") == "GTTT"
+        assert ucsc.reverse_complement("ACGTN") == "NACGT"
+
+    def test_reverse_complement_is_an_involution(self):
+        from connectors.bioservices import ucsc
+
+        seq = "ACGTTGCANNACGT"
+        assert ucsc.reverse_complement(ucsc.reverse_complement(seq)) == seq
+
+    def test_url_converts_to_zero_based_half_open(self, monkeypatch):
+        """A 1-based inclusive 101..200 must become start=100, end=200."""
+        import json as _json
+
+        from connectors.bioservices import ucsc
+
+        seen = {}
+
+        class FakeResponse:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def read(self):
+                return _json.dumps({"dna": "A" * 100}).encode()
+
+        def fake_urlopen(req, timeout=None):
+            seen["url"] = req.full_url
+            return FakeResponse()
+
+        monkeypatch.setattr(ucsc.urllib.request, "urlopen", fake_urlopen)
+        out = ucsc.sequence("danRer11", "25", 101, 200, strand=1)
+        assert out == "A" * 100
+        assert "start=100" in seen["url"], seen["url"]
+        assert "end=200" in seen["url"], seen["url"]
+        assert "chrom=chr25" in seen["url"], seen["url"]
+
+    def test_a_length_mismatch_is_refused(self, monkeypatch):
+        import json as _json
+
+        from connectors.bioservices import ucsc
+
+        class FakeResponse:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def read(self):
+                return _json.dumps({"dna": "ACGT"}).encode()  # 4, not 100
+
+        monkeypatch.setattr(ucsc.urllib.request, "urlopen", lambda req, timeout=None: FakeResponse())
+        with pytest.raises(ucsc.UcscError, match="expected 100 bases"):
+            ucsc.sequence("danRer11", "25", 101, 200)
+
+    def test_agrees_locates_a_mismatch(self):
+        from connectors.bioservices import ucsc
+
+        assert ucsc.agrees("ACGT", "ACGT")["identical"] is True
+        out = ucsc.agrees("ACGT", "ACCT")
+        assert out["identical"] is False and out["n_differences"] == 1
+        assert out["first_difference_offsets"] == [3]
+
+
+class TestEnsemblCoordinates:
+    """Upstream of the TSS means upstream in GENE orientation, both strands."""
+
+    def test_upstream_region_on_the_forward_strand(self):
+        from connectors.bioservices.ensembl import Gene
+
+        g = Gene("x", "ENS1", "1", 1000, 2000, 1, "")
+        assert g.tss == 1000
+        assert g.upstream_region(100) == (900, 999)
+
+    def test_upstream_region_on_the_reverse_strand(self):
+        from connectors.bioservices.ensembl import Gene
+
+        g = Gene("x", "ENS1", "1", 1000, 2000, -1, "")
+        assert g.tss == 2000
+        assert g.upstream_region(100) == (2001, 2100)
+
+    def test_upstream_region_length_matches_the_request(self):
+        from connectors.bioservices.ensembl import Gene
+
+        for strand in (1, -1):
+            lo, hi = Gene("x", "E", "1", 5000, 6000, strand, "").upstream_region(2000)
+            assert hi - lo + 1 == 2000
