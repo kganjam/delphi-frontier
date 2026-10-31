@@ -1,0 +1,47 @@
+{
+  "question": "Can OpenResearch be invoked via Nebius Scientific AI?",
+  "answer": "No, and it never could: OpenResearch is NOT a hosted model.",
+  "what_it_actually_is": {
+    "name": "OpenResearch / orx",
+    "version_run_here": "orx 0.2.23",
+    "kind": "local-first Rust CLI + dashboard that RECORDS experiment runs in a local SQLite store",
+    "api": "loopback only, 127.0.0.1:4791 (orx up) / 4790 (orx serve)",
+    "remote_registry": "none; api.openresearch.sh exposes no projects/experiments/runs endpoints",
+    "licence": "MIT (the software, not the content of anyone's runs)"
+  },
+  "why_the_catalogue_probes_could_never_succeed": "A model catalogue lists inference services. orx performs no inference: it archives a git commit, runs a command, and stores the exit code and log. The four NOT_FOUND probes against Nebius were correct, and the reason is categorical rather than a provisioning gap.",
+  "measured_here": [
+    {
+      "check": "binary present and runs",
+      "result": "orx 0.2.23"
+    },
+    {
+      "check": "local store created",
+      "result": ".local/share/openresearch/orx.db"
+    },
+    {
+      "check": "loopback API responds",
+      "result": "GET /api/projects -> {\"projects\":[]}"
+    },
+    {
+      "check": "headless project registration",
+      "result": "NOT AVAILABLE in the CLI surface. `orx up` starts the dashboard but does not register the cwd, `orx projects` stays empty, and there is no `project create` subcommand. Registration appears to need the browser dashboard, so an agent cannot record a run headlessly without driving the UI."
+    }
+  ],
+  "what_was_produced_instead": {
+    "note": "orx could not be driven headlessly, so the replayable artifact it would have wrapped was produced and verified directly. This is the content a run record would have pointed at.",
+    "claim_tested": "the committed 256-variant subset is exactly what the frozen hash rule selects from the 6,789 matched variants",
+    "deterministic": "standard library only; no network, no randomness, no environment dependence",
+    "result": {
+      "committed_sha256": "4bba372f03c4f26c426a1f39c6fe49d6311a216515d6d8920be6ee0c2797cf93",
+      "n_committed_subset": 256,
+      "n_matched": 6789,
+      "n_selected_by_rule": 256,
+      "rule_reproduces_committed_subset": true,
+      "selected_sha256": "4bba372f03c4f26c426a1f39c6fe49d6311a216515d6d8920be6ee0c2797cf93",
+      "verdict": "REPRODUCED"
+    },
+    "results_sha256": "9dc49c260dbb53104d80ddbae20e594dd2b9c619d14315422de7ff24e30a737a"
+  },
+  "epistemic_status": "measured by running orx 0.2.23 on this host, not read from documentation. The corpus session's independent review reached the same characterisation."
+}
