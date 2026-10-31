@@ -1,0 +1,73 @@
+{
+  "chain_under_review": "THE PROPOSED CHAIN UNDER REVIEW\n\nA generative DNA model (Evo 2) produces candidate regulatory sequences for zebrafish\ngenes. The implied engineering argument runs:\n\n  (1) designed DNA sequence\n  (2) -> transcription of the intended gene, in the intended cells, at the intended time\n  (3) -> altered bioelectric state (membrane potential / intracellular K+)\n  (4) -> altered fin size or proportion\n  (5) -> altered whole-organism capability (gliding flight, as in flying fishes)\n\nKnown context you must use rather than assume: the candidates were generated from\nzebrafish promoter-proximal sequence by a sequence model that does NOT model chromatin\naccessibility. No accessibility predictor exists for zebrafish (Enformer and Borzoi\ncover human and mouse). The candidates have NOT been transfected, expressed, or assayed\nin any organism. Measured so far: candidates are indistinguishable from real zebrafish\npromoters under the generating model's own likelihood, and under an independent motif\nscan their enrichment interval overlaps that of real promoters.",
+  "epistemic_status": "model analysis of supplied primary text; a LEAD until checked against the cited source. Not verified truth, and not a review by a person.",
+  "finish_reason": "STOP",
+  "http_status": 200,
+  "ledger_totals": {
+    "calls": 4,
+    "input_tokens": 88109,
+    "output_tokens": 13650
+  },
+  "model_requested": "gemini-3.1-pro-preview",
+  "model_version_returned": "gemini-3.1-pro-preview",
+  "no_success_probability": "no probability of biological success was requested or produced; there is no reference class for one",
+  "prompt_sha256": "ee6ce7af8a4e7bd2879fb3a6d689056a7b3fcd2b21be9d74bc1ddbbf2e4085b3",
+  "run_utc": "2026-10-31T21:25:53Z",
+  "sources": [
+    {
+      "chars_supplied": 55000,
+      "chars_total": 71433,
+      "pmcid": "PMC10137051",
+      "read_level": "full-text",
+      "xml_sha256": "26096c15f5e8414f562f47c7071141de4d687e1af824a211e6dcc35dfbade875"
+    },
+    {
+      "chars_supplied": 55000,
+      "chars_total": 159324,
+      "pmcid": "PMC11018282",
+      "read_level": "full-text",
+      "xml_sha256": "708bcadcd6982f35a4a190366af1f3b34561f8436351abe1e95098b2e02bd9ef"
+    },
+    {
+      "chars_supplied": 55000,
+      "chars_total": 96741,
+      "pmcid": "PMC12871474",
+      "read_level": "full-text",
+      "xml_sha256": "891d204132c72add8ebc14edcd332a8e2da32393c8c3ea28f47cba3996f88fa9"
+    },
+    {
+      "abstract_sha256": "69d8ac15f8875db270473e3d30df36ca8d72e22626923ebe3db3dc532f860dc7",
+      "doi": "10.1016/j.cub.2021.08.054",
+      "pmcid": "PMC9172250",
+      "read_level": "abstract",
+      "title": "Modulation of bioelectric cues in the evolution of flying fishes."
+    },
+    {
+      "abstract_sha256": "3b7d9c9ea69dac40d98ee6099f42de429f71005c59f656d01e6a1d791736d28f",
+      "doi": "10.1242/dev.199384",
+      "pmcid": "PMC8217709",
+      "read_level": "abstract",
+      "title": "longfin causes cis-ectopic expression of the kcnh2a ether-a-go-go K+ channel to autonomously prolong fin outgrowth."
+    },
+    {
+      "abstract_sha256": "f43fce14ba26513355884641b59af0a05bbab92986b1a0bc3f1d4259cefffc81",
+      "doi": "10.1016/j.ydbio.2019.08.016",
+      "pmcid": "PMC7235970",
+      "read_level": "abstract",
+      "title": "Integrated K+ channel and K+Cl- cotransporter functions are required for the coordination of size and proportion during development."
+    },
+    {
+      "abstract_sha256": "df9181992c17f93d9d9adb7e7a42f38391f552ac378e7f93a9bbdaf13738d55b",
+      "doi": "10.1002/dvdy.690",
+      "pmcid": "PMC11269526",
+      "read_level": "abstract",
+      "title": "Evolution of two-pore domain potassium channels and their gene expression in zebrafish embryos."
+    }
+  ],
+  "task": "adversarial review of genotype -> fin growth -> whole-organism interfaces",
+  "usage": {
+    "input_tokens": 42190,
+    "output_tokens": 1539,
+    "thinking_tokens": 3722
+  }
+}

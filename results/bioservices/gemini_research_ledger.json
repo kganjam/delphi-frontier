@@ -4,9 +4,9 @@
   "max_input_tokens": 120000,
   "max_output_tokens": 24000
  },
- "calls": 3,
- "input_tokens": 45919,
- "output_tokens": 8389,
+ "calls": 4,
+ "input_tokens": 88109,
+ "output_tokens": 13650,
  "entries": [
   {
    "label": "kcn-fin-grounded",
@@ -55,6 +55,27 @@
      }
     ],
     "thoughtsTokenCount": 99,
+    "serviceTier": "standard"
+   }
+  },
+  {
+   "label": "design-review-critique",
+   "model": "gemini-3.1-pro-preview",
+   "http_status": 200,
+   "t_utc": "2026-10-31T21:25:10Z",
+   "input_tokens": 42190,
+   "output_tokens_incl_thinking": 5261,
+   "usage_metadata": {
+    "promptTokenCount": 42190,
+    "candidatesTokenCount": 1539,
+    "totalTokenCount": 47451,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 42190
+     }
+    ],
+    "thoughtsTokenCount": 3722,
     "serviceTier": "standard"
    }
   }

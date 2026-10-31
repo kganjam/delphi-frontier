@@ -1,0 +1,19 @@
+{
+  "verification_of": "2026-10-31-fin-design-review-DRAFT.md",
+  "method": "literal fragments from the model critique checked against the fetched source text",
+  "fragments_checked": 13,
+  "fragments_found": 13,
+  "negative_controls": {
+    "PMC11018282:'KIRIN9'": "absent",
+    "PMC12871474:'lof/wt/xx'": "absent",
+    "PMC10137051:'kcnj99'": "absent"
+  },
+  "quote_context_read": {
+    "quote": "interaction between these genetic loci in zebrafish closely phenocopies the observed fin proportions of flying fishes",
+    "source": "PMC9172250 (ABSTRACT only)",
+    "verbatim": true,
+    "why_it_matters": "the source claims a phenocopy of fin PROPORTIONS, not of gliding or any organism-level capability; that distinction is the weakest link in the chain"
+  },
+  "limitation": "fragment presence is weaker than claim correctness. The specifics were checked; the model's JUDGEMENT about where an inference fails was not independently verified and is a lead.",
+  "no_success_probability": "none requested, none produced, and a grep guard confirms none present"
+}
