@@ -230,8 +230,10 @@ def main() -> int:
     print(f"analysis receipt {args.out_json} sha256={digest}")
     print(f"usable {len(usable)}/{len(matched)} over {len(per_position)} positions")
     rc = full.get("reproduction_control", {})
-    print(f"reproduction control: bit_for_bit={rc.get('bit_for_bit')} "
-          f"({rc.get('n_mismatched')} mismatched of {rc.get('n_original')})")
+    print(f"reproduction control: passed={rc.get('passed')} "
+          f"({rc.get('n_differing_at_all')} of {rc.get('n_compared')} differ at the last bit, "
+          f"max_rel {rc.get('max_rel_diff', 0):.3e} vs tol {rc.get('rel_tolerance', 0):.3e}, "
+          f"ranks_identical={rc.get('ranks_identical')})")
     for label, r in results.items():
         d = r["delta_rho_surface_minus_function"]
         c = r["cluster_bootstrap_by_position"]

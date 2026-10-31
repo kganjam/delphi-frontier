@@ -91,11 +91,20 @@ def _panel(rows, xkey, ykey, x0, y0, title, role, xlim, ylim, annotation) -> str
     parts.append(f'<line x1="{x0}" y1="{y0 + PANEL_H}" x2="{x0 + PANEL_W}" y2="{y0 + PANEL_H}" class="axis"/>')
     parts.append(f'<line x1="{x0}" y1="{y0}" x2="{x0}" y2="{y0 + PANEL_H}" class="axis"/>')
 
+    # Per-point tooltips are useful at a few hundred points and are 1.3 MB of
+    # noise at several thousand, where no one can hover an individual mark
+    # anyway. Above the threshold the marks also shrink, so a dense cloud reads
+    # as density rather than as a solid block.
+    dense = len(rows) > 1200
+    radius, cls = (1.8, "pt pt-dense") if dense else (4, "pt")
     for r in rows:
         x, y = sx(float(r[xkey])), sy(float(r[ykey]))
-        parts.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" class="pt pt-{role}">'
-                     f'<title>{_esc(r["mutant"])}: ESM-2 {float(r[xkey]):.2f}, '
-                     f'measured {float(r[ykey]):.2f}</title></circle>')
+        if dense:
+            parts.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{radius}" class="{cls} pt-{role}"/>')
+        else:
+            parts.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{radius}" class="{cls} pt-{role}">'
+                         f'<title>{_esc(r["mutant"])}: ESM-2 {float(r[xkey]):.2f}, '
+                         f'measured {float(r[ykey]):.2f}</title></circle>')
 
     # A backing plate, so the statistics stay readable where points are dense.
     plate_h = 12 + len(annotation) * 17
@@ -105,6 +114,29 @@ def _panel(rows, xkey, ykey, x0, y0, title, role, xlim, ylim, annotation) -> str
         parts.append(f'<text x="{x0 + 10}" y="{y0 + 21 + i * 17}" class="{cls}">{_esc(line)}</text>')
     parts.append("</g>")
     return "".join(parts)
+
+
+def _h1_line(esm: dict, d: dict, cb: dict, verdict: str) -> str:
+    """State the verdict from the GOVERNING interval and say when the two disagree.
+
+    The interesting case is the one this run produced: the variant-level interval
+    excludes zero while the position-clustered interval does not. Reporting only
+    the first would claim a resolution the dependence structure does not support,
+    so the caption names both and says which governs.
+    """
+    governing = esm.get("governing_interval")
+    variant_excludes = d["ci_high"] < 0 or d["ci_low"] > 0
+    cluster_spans = cb["delta_ci_low"] <= 0 <= cb["delta_ci_high"]
+    base = f"H1 (better agreement with surface expression): {verdict.upper()}"
+    if governing:
+        base += f", from the {governing.replace('_', ' ')} interval (the wider one)"
+    if variant_excludes and cluster_spans:
+        base += (". The variant-level interval excludes zero and the position-clustered one does "
+                 "not. Variants at a position share a residue, an environment and one forward "
+                 "pass, so the clustered interval governs and the difference is not resolved here")
+    elif cluster_spans:
+        base += ". The interval spans zero, which is not support"
+    return base + ". An interval scale, not a power calculation."
 
 
 def main() -> int:
@@ -117,6 +149,17 @@ def main() -> int:
     rows = list(csv.DictReader(open(args.csv)))
     an = json.load(open(args.analysis))
     esm = an["results"]["esm2_masked_marginal"]
+
+    # The full-run analysis reports sensitivity instead of a coverage block, so
+    # derive what the figure needs from the rows themselves rather than making
+    # the caller re-run 10,000 bootstraps to add a summary.
+    if "coverage" not in an:
+        pos = sorted({int(r["position"]) for r in rows})
+        an["coverage"] = {
+            "subset_distinct_positions": len(pos),
+            "matched_distinct_positions": an.get("n_positions", len(pos)),
+            "matched_position_range": [pos[0], pos[-1]],
+        }
 
     xs = [float(r["esm2_masked_marginal"]) for r in rows]
     xlim = (min(xs), max(xs))
@@ -159,19 +202,18 @@ def main() -> int:
         body.append(f'<rect x="{x:.2f}" y="{strip_y}" width="1.6" height="12" class="strip-tick"/>')
 
     verdict = esm["verdict_on_H1"]
+    full_set = an["n_usable"] == an["n_matched"]
+    sample_phrase = ("every matched variant" if full_set
+                     else f"hashed subset of {an['n_matched']}")
     caption = [
-        f"n = {an['n_usable']} matched variants, hashed subset of {an['n_matched']}; "
+        f"n = {an['n_usable']} matched variants ({sample_phrase}); "
         f"checkpoint {an['checkpoint_used']}; masked marginals, zero-shot.",
         f"Δρ (surface − function) = {d['point']:+.3f}, 95% CI "
         f"[{d['ci_low']:+.3f}, {d['ci_high']:+.3f}] by variant; "
         f"[{cb['delta_ci_low']:+.3f}, {cb['delta_ci_high']:+.3f}] clustered by position; "
         f"paired permutation p = {esm['paired_permutation_delta']['p_two_sided']:.3g}"
         + (f"; Williams p = {w['p_two_sided']:.3g}" if w.get("applicable") else ""),
-        f"H1 (better agreement with surface expression): {verdict.upper()} — the interval spans zero, "
-        f"which is not support. The CI half-width is {1.96 * d['bootstrap_sd']:.2f}; the external "
-        f"comparison (a different sample, a different pipeline, not a known true difference) is 0.03. "
-        f"This run did not resolve a difference of that size. That is an interval scale, not a power "
-        f"calculation.",
+        _h1_line(esm, d, cb, verdict),
         f"Assay-to-assay ρ = {w.get('rho_between_assays', float('nan')):+.3f}: the model tracks each assay "
         f"about as closely as the two assays track each other. Function is measured downstream of surface "
         f"expression, so they are not independent readouts — though this ρ is lower than that alone implies.",
@@ -194,6 +236,7 @@ def main() -> int:
     .grid{stroke:var(--grid);stroke-width:1}
     .axis{stroke:var(--ink2);stroke-width:1;opacity:.55}
     .pt{fill-opacity:.62;stroke:var(--bg);stroke-width:1}
+    .pt-dense{fill-opacity:.28;stroke:none}
     .pt-surface{fill:var(--c-surface)} .pt-function{fill:var(--c-function)}
     .annot{fill:var(--ink2);font:400 11.5px system-ui,-apple-system,"Segoe UI",sans-serif}
     .annot-strong{fill:var(--ink);font:600 12.5px system-ui,-apple-system,"Segoe UI",sans-serif}

@@ -1,0 +1,411 @@
+{
+  "analysed_utc": "2026-10-31T20:13:11Z",
+  "checkpoint_used": "facebook/esm2_t33_650M_UR50D",
+  "elapsed_seconds": 213.9,
+  "environment": {
+    "cpu_count": 8,
+    "machine": "x86_64",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "torch": "2.15.0+cpu",
+      "transformers": "5.22.1"
+    },
+    "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+    "python": "3.13.12"
+  },
+  "external_reference": {
+    "delta_rho_implied": -0.03,
+    "note": "read from ProteinGym's published table over the FULL datasets with their own pipeline; a lead, not a verified input, and not reproduced here",
+    "proteingym_esm2_650M_spearman_function": 0.382,
+    "proteingym_esm2_650M_spearman_surface": 0.352
+  },
+  "external_reference_status": "an OBSERVED external comparison on a different variant sample computed with a different pipeline, carrying its own unreported uncertainty; not a known true difference and not a target to be recovered",
+  "git_sha": "6b08ef41f3ae702b135ddfc80fa17a05d2f5fd68+dirty",
+  "independent_review": "none; F1-F5 are this harness checking its own run against criteria fixed in advance. Under SPEC-005 the executor cannot certify its own work, so this is a proposed contribution carrying a self-assessment, not a Frontier-accepted result.",
+  "n_matched": 6789,
+  "n_positions": 391,
+  "n_usable": 6789,
+  "preregistration": "PREREGISTRATION-full.md",
+  "protocol_id": "delphi-frontier/kir21-esm2-assay-agreement/v1",
+  "reference_checks": [
+    {
+      "check": "1-4 per-assay internal consistency",
+      "detail": "uniform lengths; mutated position holds the mutant; non-mutated positions agree; declared wild-type agrees with the reconstruction",
+      "note": "enforced by load_assay, which raises ReferenceMismatch on any violation",
+      "passed": true
+    },
+    {
+      "check": "surface member sha256 matches the frozen protocol",
+      "expected": "9d36f57185d11ad98aa3f69ca014c15682dbdb33c4c3c0d1ec0b3ea28ed8c92d",
+      "observed": "9d36f57185d11ad98aa3f69ca014c15682dbdb33c4c3c0d1ec0b3ea28ed8c92d",
+      "passed": true
+    },
+    {
+      "check": "surface row count matches the frozen protocol",
+      "expected": 6917,
+      "observed": 6917,
+      "passed": true
+    },
+    {
+      "check": "function member sha256 matches the frozen protocol",
+      "expected": "75f07fa60b83f41d92ac42738cc6a3dfc7605cde6605add499efd400f4882b92",
+      "observed": "75f07fa60b83f41d92ac42738cc6a3dfc7605cde6605add499efd400f4882b92",
+      "passed": true
+    },
+    {
+      "check": "function row count matches the frozen protocol",
+      "expected": 6963,
+      "observed": 6963,
+      "passed": true
+    },
+    {
+      "check": "5 both assays reconstruct to the same reference",
+      "passed": true
+    },
+    {
+      "check": "6 reference equals UniProtKB P35561",
+      "detail": {
+        "identical": true,
+        "reference_length": 428,
+        "reference_sha256": "88bfbcddd595e33da25f5ab224ce2b41cfaeacf488c7a7a51178d24d24e3b575",
+        "uniprot_length": 428,
+        "uniprot_sha256": "88bfbcddd595e33da25f5ab224ce2b41cfaeacf488c7a7a51178d24d24e3b575"
+      },
+      "passed": true,
+      "uniprot_header": ">sp|P35561|KCNJ2_MOUSE Inward rectifier potassium channel 2 OS=Mus musculus OX=10090 GN=Kcnj2 PE=1 SV=1"
+    },
+    {
+      "check": "reference sha256 matches the frozen protocol",
+      "expected": "88bfbcddd595e33da25f5ab224ce2b41cfaeacf488c7a7a51178d24d24e3b575",
+      "observed": "88bfbcddd595e33da25f5ab224ce2b41cfaeacf488c7a7a51178d24d24e3b575",
+      "passed": true
+    },
+    {
+      "receipts": [
+        {
+          "license": "MIT (ProteinGym curation); underlying measurements from the cited source publication",
+          "media_type": "application/zip",
+          "notes": [
+            "reused cached archive"
+          ],
+          "retrieved_utc": "2026-10-31T20:09:40Z",
+          "sha256": "3a83766254ac9ac9984ec25cb73c6e010ea4418f5e35f143933e6b6e6473b921",
+          "size_bytes": 43021128,
+          "source_id": "proteingym.dms_substitutions",
+          "state": "retrieved",
+          "url": "https://marks.hms.harvard.edu/proteingym/ProteinGym_v1.3/DMS_ProteinGym_substitutions.zip",
+          "version": "ProteinGym_v1.3 / DMS_ProteinGym_substitutions"
+        },
+        {
+          "license": "CC BY 4.0 (UniProt Consortium)",
+          "media_type": "text/x-fasta",
+          "notes": [
+            ">sp|P35561|KCNJ2_MOUSE Inward rectifier potassium channel 2 OS=Mus musculus OX=10090 GN=Kcnj2 PE=1 SV=1"
+          ],
+          "retrieved_utc": "2026-10-31T20:09:42Z",
+          "sha256": "88bfbcddd595e33da25f5ab224ce2b41cfaeacf488c7a7a51178d24d24e3b575",
+          "size_bytes": 540,
+          "source_id": "uniprotkb.P35561",
+          "state": "retrieved",
+          "url": "https://rest.uniprot.org/uniprotkb/P35561.fasta",
+          "version": "SV=1"
+        }
+      ]
+    }
+  ],
+  "reproduction_control": {
+    "criterion": "agreement to float32 precision AND identical ranks; NOT bit-for-bit, because the two runs subtract in different precisions",
+    "max_abs_diff": 4.76837158203125e-07,
+    "max_rel_diff": 5.946229436452051e-08,
+    "missing_examples": [],
+    "n_compared": 256,
+    "n_differing_at_all": 153,
+    "n_missing": 0,
+    "n_original": 256,
+    "n_over_tolerance": 0,
+    "over_tolerance_examples": [],
+    "passed": true,
+    "ranks_identical": true,
+    "rel_tolerance": 4.76e-07,
+    "spearman_original_vs_recomputed": 0.9999999999999998
+  },
+  "results": {
+    "blosum62": {
+      "cluster_bootstrap_by_position": {
+        "delta_bootstrap_mean": 0.07627020759782999,
+        "delta_ci_high": 0.11133834268884597,
+        "delta_ci_low": 0.04019153038513887,
+        "n_clusters": 391,
+        "rho_function_ci": [
+          0.07135898762882797,
+          0.13037280961953657
+        ],
+        "rho_surface_ci": [
+          0.1400186494033685,
+          0.21422352881552065
+        ]
+      },
+      "delta_rho_surface_minus_function": {
+        "bootstrap_mean": 0.07637836843783057,
+        "bootstrap_sd": 0.014186854305185702,
+        "ci_high": 0.10392569376880609,
+        "ci_low": 0.04922353136559459,
+        "point": 0.07641425784010752
+      },
+      "governing_interval": "position_clustered",
+      "interval_widths": {
+        "position_clustered": 0.0711468123037071,
+        "variant_level": 0.0547021624032115
+      },
+      "label": "blosum62",
+      "paired_permutation_delta": {
+        "p_two_sided": 9.999000099990002e-05,
+        "resamples": 10000,
+        "seed": 0
+      },
+      "permutation_p_function": 9.999000099990002e-05,
+      "permutation_p_surface": 9.999000099990002e-05,
+      "rho_function": {
+        "bootstrap_mean": 0.1005712665384843,
+        "bootstrap_sd": 0.011855197781435279,
+        "ci_high": 0.12335622358064934,
+        "ci_low": 0.0771066943905127,
+        "point": 0.10065630831772915
+      },
+      "rho_surface": {
+        "bootstrap_mean": 0.17694963497631488,
+        "bootstrap_sd": 0.011646121140453906,
+        "ci_high": 0.19940730661734493,
+        "ci_low": 0.15390704581681125,
+        "point": 0.17707056615783667
+      },
+      "verdict_on_H1": "supported",
+      "verdict_reason": "governing interval is the position_clustered one (the wider); the 95% CI for delta_rho lies entirely above 0",
+      "verdict_variant_level": "supported",
+      "williams_test": {
+        "applicable": true,
+        "df": 6786,
+        "note": "assumes approximate bivariate normality of ranks; the bootstrap does not",
+        "p_two_sided": 8.468209769283846e-08,
+        "rho_between_assays": 0.28960628642239783,
+        "t": 5.362723011205454
+      }
+    },
+    "esm2_masked_marginal": {
+      "cluster_bootstrap_by_position": {
+        "delta_bootstrap_mean": -0.034963877974117485,
+        "delta_ci_high": 0.018153396197728676,
+        "delta_ci_low": -0.09036036805740334,
+        "n_clusters": 391,
+        "rho_function_ci": [
+          0.3530130678565022,
+          0.42010254619391596
+        ],
+        "rho_surface_ci": [
+          0.295461430936417,
+          0.40725528176081166
+        ]
+      },
+      "delta_rho_surface_minus_function": {
+        "bootstrap_mean": -0.035712764405662276,
+        "bootstrap_sd": 0.013770602801902032,
+        "ci_high": -0.008696450981283545,
+        "ci_low": -0.06241260988252608,
+        "point": -0.035481700894668955
+      },
+      "governing_interval": "position_clustered",
+      "interval_widths": {
+        "position_clustered": 0.10851376425513201,
+        "variant_level": 0.05371615890124254
+      },
+      "label": "esm2_masked_marginal",
+      "paired_permutation_delta": {
+        "p_two_sided": 0.010298970102989701,
+        "resamples": 10000,
+        "seed": 0
+      },
+      "permutation_p_function": 9.999000099990002e-05,
+      "permutation_p_surface": 9.999000099990002e-05,
+      "rho_function": {
+        "bootstrap_mean": 0.3883611385315906,
+        "bootstrap_sd": 0.010366538500804955,
+        "ci_high": 0.4083277891500436,
+        "ci_low": 0.36744158820134826,
+        "point": 0.38844344144105863
+      },
+      "rho_surface": {
+        "bootstrap_mean": 0.35264837412592825,
+        "bootstrap_sd": 0.011044326015422204,
+        "ci_high": 0.374074248887641,
+        "ci_low": 0.3307354698135554,
+        "point": 0.3529617405463897
+      },
+      "verdict_on_H1": "undetermined",
+      "verdict_reason": "governing interval is the position_clustered one (the wider); the 95% CI for delta_rho spans 0; this is not support",
+      "verdict_variant_level": "falsified",
+      "williams_test": {
+        "applicable": true,
+        "df": 6786,
+        "note": "assumes approximate bivariate normality of ranks; the bootstrap does not",
+        "p_two_sided": 0.006549000673555433,
+        "rho_between_assays": 0.28960628642239783,
+        "t": -2.7197883912474365
+      }
+    }
+  },
+  "scoring_invocations": [
+    {
+      "environment": {
+        "cpu_count": 8,
+        "machine": "x86_64",
+        "packages": {
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "torch": "2.15.0+cpu",
+          "transformers": "5.22.1"
+        },
+        "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+        "python": "3.13.12"
+      },
+      "git_sha": "a94067325553f97e6b69d68fc58077392b7b07cc+dirty",
+      "model_load_seconds": 7.36,
+      "positions_this_run": 72,
+      "positions_total": 72,
+      "utc": "2026-10-31T19:34:42Z",
+      "work_seconds": 485.4
+    },
+    {
+      "environment": {
+        "cpu_count": 8,
+        "machine": "x86_64",
+        "packages": {
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "torch": "2.15.0+cpu",
+          "transformers": "5.22.1"
+        },
+        "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+        "python": "3.13.12"
+      },
+      "git_sha": "6d52ce239f975c9a93d51d3d4047dfac474275dc+dirty",
+      "model_load_seconds": 7.82,
+      "positions_this_run": 64,
+      "positions_total": 136,
+      "utc": "2026-10-31T19:42:56Z",
+      "work_seconds": 482.9
+    },
+    {
+      "environment": {
+        "cpu_count": 8,
+        "machine": "x86_64",
+        "packages": {
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "torch": "2.15.0+cpu",
+          "transformers": "5.22.1"
+        },
+        "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+        "python": "3.13.12"
+      },
+      "git_sha": "e90179e65bc0751612fb9424112aa35e9091f52d+dirty",
+      "model_load_seconds": 7.44,
+      "positions_this_run": 72,
+      "positions_total": 208,
+      "utc": "2026-10-31T19:51:10Z",
+      "work_seconds": 483.9
+    },
+    {
+      "environment": {
+        "cpu_count": 8,
+        "machine": "x86_64",
+        "packages": {
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "torch": "2.15.0+cpu",
+          "transformers": "5.22.1"
+        },
+        "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+        "python": "3.13.12"
+      },
+      "git_sha": "fc43db787c43e686920b13d80580ce7bc13b59d6+dirty",
+      "model_load_seconds": 7.09,
+      "positions_this_run": 100,
+      "positions_total": 308,
+      "utc": "2026-10-31T19:59:18Z",
+      "work_seconds": 478.8
+    },
+    {
+      "environment": {
+        "cpu_count": 8,
+        "machine": "x86_64",
+        "packages": {
+          "numpy": "2.5.4",
+          "scipy": "1.18.1",
+          "torch": "2.15.0+cpu",
+          "transformers": "5.22.1"
+        },
+        "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+        "python": "3.13.12"
+      },
+      "git_sha": "fc43db787c43e686920b13d80580ce7bc13b59d6+dirty",
+      "model_load_seconds": 6.76,
+      "positions_this_run": 83,
+      "positions_total": 391,
+      "utc": "2026-10-31T20:07:30Z",
+      "work_seconds": 482.5
+    }
+  ],
+  "sensitivity": {
+    "cluster_count_sensitivity": {
+      "clusters_full": 391,
+      "clusters_subset_covered": 193,
+      "restricted_to_subset_positions": {
+        "delta_ci": [
+          -0.153722037781693,
+          -0.0010945169349193692
+        ],
+        "half_width": 0.0763137604233868,
+        "n_clusters": 193,
+        "n_variants": 3408,
+        "note": "all variants at the 193 positions the 256-variant subset covered; isolates added POSITIONS from added variants at known positions"
+      }
+    },
+    "measured_vs_predicted_narrowing": {
+      "position_clustered": {
+        "full_half_width": 0.054256882127566006,
+        "measured_narrowing": 2.9859450185599443,
+        "predicted_narrowing_sqrt_clusters": 1.4233435058872104,
+        "subset_half_width": 0.1620080669113998
+      },
+      "variant_level": {
+        "caveat": "the sqrt(n) prediction assumes independent variants; they are not independent",
+        "full_half_width": 0.02685807945062127,
+        "measured_narrowing": 5.618298791705844,
+        "n_full": 6789,
+        "n_subset": 256,
+        "predicted_narrowing_sqrt_n": 5.14971176377863,
+        "subset_half_width": 0.15089671532496504
+      }
+    },
+    "per_position_variant_counts": {
+      "max": 19,
+      "mean": 17.36317135549872,
+      "median": 18,
+      "min": 3,
+      "n_positions": 391,
+      "note": "an unbalanced design changes what cluster resampling does",
+      "sd": 2.426636957725957
+    },
+    "subset_versus_full": {
+      "full_delta": -0.035481700894668955,
+      "full_rho_function": 0.38844344144105863,
+      "full_rho_surface": 0.3529617405463897,
+      "note": "subset figures are read from the committed 256-variant analysis, not recomputed",
+      "subset_delta": -0.034804159990844574,
+      "subset_rho_function": 0.33401593614099334,
+      "subset_rho_surface": 0.29921177615014877
+    }
+  },
+  "stage": "analysis_full"
+}
