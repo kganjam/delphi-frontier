@@ -1,0 +1,62 @@
+{
+  "job": "zebrafish-evo2-scoring/v1",
+  "completes": "aijob-e00pwp8khfdwnwm9ps, whose scoring stage crashed before writing scores.json",
+  "outcome_kind": "sequence scores and candidate generation; NOT functional design, no epigenetic claim",
+  "model": {
+    "checkpoint": "evo2_7b",
+    "precision": "bfloat16",
+    "license": "Apache-2.0 (ArcInstitute/evo2)"
+  },
+  "inference": {
+    "generate_bp": 1000,
+    "temperature": 1.0,
+    "top_k": 4,
+    "fewshot_k": 4,
+    "armb_seconds": 800.0
+  },
+  "seeds": {
+    "torch": 0,
+    "python_random": 0
+  },
+  "inputs": {
+    "input_set_id": "zebrafish-promoter-proximal-2kb/v1",
+    "assembly": "GRCz11",
+    "n_candidates_in": 16,
+    "n_controls_in": 32
+  },
+  "scoring_self_check": {
+    "iid_random": {
+      "mean_logprob": -1.3996587991714478,
+      "expected_about": -1.3863
+    },
+    "poly_C": {
+      "mean_logprob": -0.019215382635593414,
+      "note": "degenerate repeat; near-zero NLL proves nothing about quality"
+    },
+    "natural_first_target": {
+      "mean_logprob": -1.1651268005371094,
+      "symbol": "myod1"
+    },
+    "scoring_path_sane": true
+  },
+  "counts": {
+    "scored": 89,
+    "arm_b_generated": 16
+  },
+  "runtime": {
+    "model_load_seconds": 13.6,
+    "total_seconds": 422.6
+  },
+  "software": {
+    "python": "3.12.3",
+    "torch": "2.10.0a0+b4e4ee81d3.nv25.12",
+    "evo2": "present",
+    "vortex": "present",
+    "flash_attn": "2.7.4.post1"
+  },
+  "gpu": {
+    "name": "NVIDIA H100 80GB HBM3",
+    "count": 1,
+    "total_memory_gb": 85.0
+  }
+}

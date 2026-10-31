@@ -1,0 +1,713 @@
+{
+  "comparison_groups_from_run1": {
+    "control_dinucleotide_shuffle": {
+      "cpg_obs_exp": {
+        "ci95": [
+          0.46643689179326786,
+          0.6319357639809039
+        ],
+        "max": 0.8687669209943392,
+        "mean": 0.5491863278870859,
+        "min": 0.23286713286713284,
+        "n": 16,
+        "sd": 0.16887640019146535,
+        "se": 0.04221910004786634
+      },
+      "enrichment_ratio": {
+        "ci95": [
+          0.7347089328436031,
+          1.1226434311937046
+        ],
+        "max": 1.5238095238095237,
+        "mean": 0.9286761820186539,
+        "min": 0.29357798165137616,
+        "n": 16,
+        "sd": 0.3958515289286751,
+        "se": 0.09896288223216877
+      },
+      "enrichment_z": {
+        "ci95": [
+          -0.8166728268924641,
+          0.33982663528616763
+        ],
+        "max": 1.3100132191963068,
+        "mean": -0.23842309580314827,
+        "min": -2.8009787446017587,
+        "n": 16,
+        "sd": 1.180101492019012,
+        "se": 0.295025373004753
+      },
+      "gc": {
+        "ci95": [
+          0.3834513136415055,
+          0.44142368635849455
+        ],
+        "max": 0.494,
+        "mean": 0.4124375,
+        "min": 0.263,
+        "n": 16,
+        "sd": 0.05915548236427457,
+        "se": 0.014788870591068643
+      }
+    },
+    "control_gc_matched_random": {
+      "cpg_obs_exp": {
+        "ci95": [
+          0.938777025459158,
+          1.0343057539285707
+        ],
+        "max": 1.1529668236026893,
+        "mean": 0.9865413896938644,
+        "min": 0.8014842300556587,
+        "n": 16,
+        "sd": 0.0974782943565437,
+        "se": 0.024369573589135926
+      },
+      "enrichment_ratio": {
+        "ci95": [
+          1.001577059695448,
+          1.366247393640496
+        ],
+        "max": 2.191780821917808,
+        "mean": 1.183912226667972,
+        "min": 0.6068965517241379,
+        "n": 16,
+        "sd": 0.372112585658212,
+        "se": 0.093028146414553
+      },
+      "enrichment_z": {
+        "ci95": [
+          -0.10613284099334191,
+          0.9271060129601354
+        ],
+        "max": 3.1798206776459477,
+        "mean": 0.41048658598339677,
+        "min": -1.3939805659268778,
+        "n": 16,
+        "sd": 1.0543253611770178,
+        "se": 0.26358134029425445
+      },
+      "gc": {
+        "ci95": [
+          0.3856662604247445,
+          0.4437087395752555
+        ],
+        "max": 0.49,
+        "mean": 0.4146875,
+        "min": 0.253,
+        "n": 16,
+        "sd": 0.059227019541337717,
+        "se": 0.014806754885334429
+      }
+    },
+    "evo2_A_native_context": {
+      "cpg_obs_exp": {
+        "ci95": [
+          0.4659873274781334,
+          0.6309074712179343
+        ],
+        "max": 0.8629522575500848,
+        "mean": 0.5484473993480339,
+        "min": 0.23286713286713284,
+        "n": 16,
+        "sd": 0.1682858609589806,
+        "se": 0.04207146523974515
+      },
+      "enrichment_ratio": {
+        "ci95": [
+          1.046041016529341,
+          1.431012925689105
+        ],
+        "max": 1.9591836734693877,
+        "mean": 1.238526971109223,
+        "min": 0.5660377358490566,
+        "n": 16,
+        "sd": 0.3928284787344531,
+        "se": 0.09820711968361327
+      },
+      "enrichment_z": {
+        "ci95": [
+          0.06087181143913867,
+          1.3169630305169624
+        ],
+        "max": 2.8711175992088718,
+        "mean": 0.6889174209780505,
+        "min": -1.8585723135719308,
+        "n": 16,
+        "sd": 1.2817257337528813,
+        "se": 0.32043143343822034
+      },
+      "gc": {
+        "ci95": [
+          0.3834801218044183,
+          0.44126987819558167
+        ],
+        "max": 0.491,
+        "mean": 0.412375,
+        "min": 0.263,
+        "n": 16,
+        "sd": 0.05896913917465643,
+        "se": 0.014742284793664108
+      }
+    },
+    "real_held_out": {
+      "cpg_obs_exp": {
+        "ci95": [
+          0.31947554114529597,
+          0.6745163707832315
+        ],
+        "max": 1.0072595281306715,
+        "mean": 0.4969959559642637,
+        "min": 0.2506386278624213,
+        "n": 8,
+        "sd": 0.2561752839133489,
+        "se": 0.09057164021375903
+      },
+      "enrichment_ratio": {
+        "ci95": [
+          1.1098706415721544,
+          1.5433900406169077
+        ],
+        "max": 1.695364238410596,
+        "mean": 1.326630341094531,
+        "min": 0.8,
+        "n": 8,
+        "sd": 0.3128005171841447,
+        "se": 0.11059168342978394
+      },
+      "enrichment_z": {
+        "ci95": [
+          0.2733767344532112,
+          2.1861615435484323
+        ],
+        "max": 3.082906152452193,
+        "mean": 1.2297691390008219,
+        "min": -0.8366600265340756,
+        "n": 8,
+        "sd": 1.380146030063109,
+        "se": 0.4879553084426585
+      },
+      "gc": {
+        "ci95": [
+          0.30341210798974705,
+          0.4005878920102529
+        ],
+        "max": 0.484,
+        "mean": 0.352,
+        "min": 0.265,
+        "n": 8,
+        "sd": 0.07011597535512144,
+        "se": 0.024789740821557608
+      }
+    }
+  },
+  "computed_utc": "2026-10-31T21:35:32Z",
+  "environment": {
+    "cpu_count": 8,
+    "machine": "x86_64",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "torch": "2.15.0+cpu",
+      "transformers": "5.22.1"
+    },
+    "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+    "python": "3.13.12"
+  },
+  "group_summary": {
+    "evo2_B_fewshot_in_context": {
+      "cpg_obs_exp": {
+        "ci95": [
+          0.43950997843303535,
+          0.6531950470137404
+        ],
+        "mean": 0.5463525127233879,
+        "n": 16,
+        "sd": 0.2180459883476583,
+        "se": 0.05451149708691457
+      },
+      "enrichment_z": {
+        "ci95": [
+          0.16841161022792167,
+          1.028620658170775
+        ],
+        "mean": 0.5985161341993483,
+        "n": 16,
+        "sd": 0.8777643346355647,
+        "se": 0.21944108365889117
+      },
+      "gc": {
+        "ci95": [
+          0.35445472569230196,
+          0.404420274307698
+        ],
+        "mean": 0.3794375,
+        "n": 16,
+        "sd": 0.05098525368917958,
+        "se": 0.012746313422294896
+      }
+    }
+  },
+  "jaspar": {
+    "n_informative": 220,
+    "release": "JASPAR2024_CORE_vertebrates_non-redundant"
+  },
+  "kind": "composition diagnostics; no model in the loop; not function",
+  "rows": [
+    {
+      "composition": {
+        "cpg_count": 37,
+        "cpg_obs_exp": 0.7152560083594567,
+        "gc": 0.459,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "sox10",
+        "myl7",
+        "fabp10a",
+        "neurod1"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "myod1:s0",
+      "sha256": "9cead4c2a1258b30cbf9ae8bec2aa99bb6aaffd06bafdb053abe1c4e6f8756af",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 12.875,
+        "null_sd": 5.276294695549683,
+        "observed_hits": 20,
+        "ratio": 1.5533980582524272,
+        "threshold": 0.9,
+        "z": 1.350379463453703
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 21,
+        "cpg_obs_exp": 0.4677591973244147,
+        "gc": 0.425,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "elavl3",
+        "krt4",
+        "gata1a",
+        "neurod1"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "myod1:s1",
+      "sha256": "94e17da605c6e8fd342bba16666355bf6aea9b4b377d8b71faee612836472c54",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 16.625,
+        "null_sd": 5.262739645035518,
+        "observed_hits": 17,
+        "ratio": 1.0225563909774436,
+        "threshold": 0.9,
+        "z": 0.0712556625053165
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 25,
+        "cpg_obs_exp": 0.5453533059655865,
+        "gc": 0.428,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "gata1a",
+        "sox10",
+        "krt4",
+        "myod1"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "elavl3:s0",
+      "sha256": "7507e8652eb323d40fcec9339bffbf51b96c2ff26d361dfca853b3715f21d859",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 15.625,
+        "null_sd": 4.8678977568791,
+        "observed_hits": 16,
+        "ratio": 1.024,
+        "threshold": 0.9,
+        "z": 0.07703530738090512
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 13,
+        "cpg_obs_exp": 0.3855196366550895,
+        "gc": 0.368,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "krt4",
+        "neurod1",
+        "myod1",
+        "fabp10a"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "elavl3:s1",
+      "sha256": "a994baa727fa9bd0e1203fb68cefb11f34860811b711178e22486928f265f3df",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 21.125,
+        "null_sd": 7.453426824526517,
+        "observed_hits": 26,
+        "ratio": 1.2307692307692308,
+        "threshold": 0.9,
+        "z": 0.6540615631937444
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 20,
+        "cpg_obs_exp": 0.4879120879120879,
+        "gc": 0.407,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "elavl3",
+        "myod1",
+        "krt4",
+        "gata1a"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "myl7:s0",
+      "sha256": "e423692aa4729bdd0b81a5011d1f6d0268f7e5163f845e66b5f3fd0b5c4a9fbf",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 18.375,
+        "null_sd": 7.0089228844380935,
+        "observed_hits": 24,
+        "ratio": 1.3061224489795917,
+        "threshold": 0.9,
+        "z": 0.8025484218822244
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 11,
+        "cpg_obs_exp": 0.251131221719457,
+        "gc": 0.419,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "myod1",
+        "sox10",
+        "gata1a",
+        "krt4"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "myl7:s1",
+      "sha256": "1523e00718e7a62169a73971433eb868598fdabc666e5a5ad4ddedcfcfad514d",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 17.25,
+        "null_sd": 6.158617655657106,
+        "observed_hits": 29,
+        "ratio": 1.681159420289855,
+        "threshold": 0.9,
+        "z": 1.907895676752531
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 6,
+        "cpg_obs_exp": 0.42814285714285716,
+        "gc": 0.24,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "gata1a",
+        "krt4",
+        "elavl3",
+        "neurod1"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "fabp10a:s0",
+      "sha256": "992d19fc678729333c9dd5632ff9fb5974355b8bb81f364a572934db36348c12",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 22.5,
+        "null_sd": 4.65985898008574,
+        "observed_hits": 34,
+        "ratio": 1.511111111111111,
+        "threshold": 0.9,
+        "z": 2.467885841426987
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 17,
+        "cpg_obs_exp": 0.6934100930916217,
+        "gc": 0.313,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "elavl3",
+        "neurod1",
+        "myod1",
+        "myl7"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "fabp10a:s1",
+      "sha256": "8e4c0372b650dd349456ba097d43f34032d76db7dedb6c8a0dcfb6b03688efb3",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 28.75,
+        "null_sd": 14.230249470757707,
+        "observed_hits": 45,
+        "ratio": 1.565217391304348,
+        "threshold": 0.9,
+        "z": 1.141933599505248
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 41,
+        "cpg_obs_exp": 1.0252309078621311,
+        "gc": 0.4,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "myod1",
+        "neurod1",
+        "krt4",
+        "myl7"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "gata1a:s0",
+      "sha256": "fc14ba9acdeb57c6ac08ec81064931856a989480e095f00b0f8aec27b3a18afa",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 16.125,
+        "null_sd": 4.38951673226759,
+        "observed_hits": 13,
+        "ratio": 0.8062015503875969,
+        "threshold": 0.9,
+        "z": -0.7119234737227325
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 21,
+        "cpg_obs_exp": 0.619727047146402,
+        "gc": 0.368,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "krt4",
+        "elavl3",
+        "sox10",
+        "myl7"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "gata1a:s1",
+      "sha256": "ae44444d9912fea473820f3e4192492241c19378df36482ab352c11d25752aa2",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 20.25,
+        "null_sd": 7.066015244009273,
+        "observed_hits": 18,
+        "ratio": 0.8888888888888888,
+        "threshold": 0.9,
+        "z": -0.31842557966565394
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 32,
+        "cpg_obs_exp": 0.7925229937774252,
+        "gc": 0.402,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "myod1",
+        "gata1a",
+        "myl7",
+        "neurod1"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "sox10:s0",
+      "sha256": "55a056b3844d0b48360017bb29a4fd37c89f0c99f3e63ba93eb9f823fc84453b",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 16.5,
+        "null_sd": 5.503245795502349,
+        "observed_hits": 11,
+        "ratio": 0.6666666666666666,
+        "threshold": 0.9,
+        "z": -0.9994102034284927
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 10,
+        "cpg_obs_exp": 0.34014300306435136,
+        "gc": 0.343,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "neurod1",
+        "myod1",
+        "gata1a",
+        "elavl3"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "sox10:s1",
+      "sha256": "45082ef3d1cf8abe8c924f940e698ce345c5240c54f2f4fee697d7e9ccb78e50",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 21.625,
+        "null_sd": 5.44944295973713,
+        "observed_hits": 25,
+        "ratio": 1.1560693641618498,
+        "threshold": 0.9,
+        "z": 0.6193293562178699
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 31,
+        "cpg_obs_exp": 0.7699517676893243,
+        "gc": 0.403,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "elavl3",
+        "krt4",
+        "myl7",
+        "myod1"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "neurod1:s0",
+      "sha256": "6801b8747fb21c89e8e3722402184a987f2de80726a7e897effbe5f14ac72f12",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 17.5,
+        "null_sd": 6.546536707079771,
+        "observed_hits": 25,
+        "ratio": 1.4285714285714286,
+        "threshold": 0.9,
+        "z": 1.14564392373896
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 8,
+        "cpg_obs_exp": 0.2781954887218045,
+        "gc": 0.341,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "sox10",
+        "krt4",
+        "myod1",
+        "gata1a"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "neurod1:s1",
+      "sha256": "c0e9d578fd7037ccce10c449c0267821aeada5325004b6672f66ce74bb29caa8",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 17.375,
+        "null_sd": 7.0089228844380935,
+        "observed_hits": 23,
+        "ratio": 1.3237410071942446,
+        "threshold": 0.9,
+        "z": 0.8025484218822244
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 9,
+        "cpg_obs_exp": 0.2440023881893183,
+        "gc": 0.384,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "sox10",
+        "fabp10a",
+        "gata1a",
+        "myl7"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "krt4:s0",
+      "sha256": "630b93fd2bfc86a1609e33705e5137a50c136cc615cd171ee2ca2e8674624964",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 18.625,
+        "null_sd": 6.653409437488207,
+        "observed_hits": 21,
+        "ratio": 1.1275167785234899,
+        "threshold": 0.9,
+        "z": 0.35695984477044435
+      }
+    },
+    {
+      "composition": {
+        "cpg_count": 24,
+        "cpg_obs_exp": 0.6973821989528796,
+        "gc": 0.371,
+        "length": 1000
+      },
+      "fewshot_examples": [
+        "elavl3",
+        "fabp10a",
+        "neurod1",
+        "myod1"
+      ],
+      "group": "evo2_B_fewshot_in_context",
+      "label": "krt4:s1",
+      "sha256": "b0c4fcbbc35c6f144ef0bc30801d7316437da46c90fbc0478a165cfc2be7ccaf",
+      "shuffle_null_enrichment": {
+        "kind": "composition diagnostic against a dinucleotide-preserving null; not function",
+        "n_matrices": 220,
+        "n_shuffles": 8,
+        "null_mean": 18.75,
+        "null_sd": 5.994044663544928,
+        "observed_hits": 20,
+        "ratio": 1.0666666666666667,
+        "threshold": 0.9,
+        "z": 0.2085403212962947
+      }
+    }
+  ],
+  "settings": {
+    "n_shuffles": 8,
+    "seed": 1,
+    "threshold": 0.9,
+    "top_fraction": 0.25
+  },
+  "stage": "evo2_armB_candidate_diagnostics"
+}
