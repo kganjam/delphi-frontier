@@ -174,6 +174,7 @@ def main() -> int:
             log(f"A {t['symbol']} s{s}: {len(seq)} bp")
             flush()
 
+    stop = False
     # --- Arm B: few-shot in-context, following the UNVERIFIED Oct 29 Arc lead ---
     # The examples for a target never include that target, so nothing the model is
     # asked to continue has been shown to it as an answer.
@@ -181,9 +182,13 @@ def main() -> int:
         others = [o for o in design if o["symbol"] != t["symbol"]]
         for s in range(N_SAMPLES_PER_ARM):
             if time.time() - started > args.budget_seconds or len(candidates) >= MAX_CANDIDATES:
-                log("budget or candidate cap reached during arm B; stopping cleanly")
+                log(f"budget or candidate cap reached during arm B at {len(candidates)} "
+                    f"candidates; stopping cleanly")
                 flush()
+                stop = True
                 break
+        if stop:
+            break
             picks = random.Random(f"{SEED}:{t['symbol']}:{s}").sample(others, FEWSHOT_K)
             shots = "".join(p["held_out_seq"] for p in picks)
             seq = generate(shots + t["prompt_seq"])
@@ -217,12 +222,33 @@ def main() -> int:
 
     # --- Evo 2 log-likelihood over everything ---
     def score(seq: str) -> float:
-        """Mean log-probability per base of ``seq`` under Evo 2."""
+        """Mean log-probability per base of ``seq`` under Evo 2.
+
+        The first version of this crashed on the H100 after generation had
+        already succeeded, with "Index tensor must have the same number of
+        dimensions as input tensor". The cause was mine: Evo 2 returns
+        ``outputs, _`` where the logits are ``outputs[0]``, and I treated
+        ``outputs`` as the logits. Slicing ``[:-1]`` then cut the BATCH axis of
+        a (1, L, V) tensor down to length 0 instead of dropping the last
+        position, so the gather had nothing to index.
+
+        Each GPU run is one shot, so the unwrapping is now explicit and the
+        shape is asserted rather than assumed.
+        """
         ids = torch.tensor(model.tokenizer.tokenize(seq), dtype=torch.int).unsqueeze(0).to("cuda:0")
         with torch.inference_mode():
-            logits, _ = model(ids)
-        lp = torch.log_softmax(logits[0][:-1].float(), dim=-1)
-        tgt = ids[0][1:].long()
+            outputs, _ = model(ids)
+        logits = outputs[0] if isinstance(outputs, (tuple, list)) else outputs
+        if logits.dim() == 3:          # (batch, length, vocab)
+            logits = logits[0]
+        if logits.dim() != 2:
+            raise RuntimeError(
+                f"expected per-position logits of shape (length, vocab); got {tuple(logits.shape)}")
+        if logits.shape[0] != ids.shape[1]:
+            raise RuntimeError(
+                f"logits length {logits.shape[0]} does not match {ids.shape[1]} input tokens")
+        lp = torch.log_softmax(logits[:-1].float(), dim=-1)   # (L-1, V)
+        tgt = ids[0, 1:].long()                                # (L-1,)
         return float(lp.gather(-1, tgt.unsqueeze(-1)).squeeze(-1).mean())
 
     scored: list[dict] = []

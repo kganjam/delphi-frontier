@@ -1,0 +1,132 @@
+# Result — Evo 2 zebrafish regulatory candidates, run 1
+
+**Kind:** candidate generation on public reference sequence. **Not functional
+design.** No enzyme, binder or regulatory-function claim is made, and none will
+be without an assay. Evo 2 does not model chromatin accessibility, so **no
+epigenetic property is claimed from sequence alone.**
+
+| | |
+| --- | --- |
+| Nebius job | **`aijob-e00pwp8khfdwnwm9ps`** `delphi-evolve-ops-fevo2zf1-evo2-zebrafish-h100-a1` |
+| Provider state | **COMPLETED** |
+| Submitted by | `dx-gpuops-r1` (this harness submitted no raw GPU job) |
+| Hardware | 1× NVIDIA H100 80GB HBM3, driver 580.173.02 |
+| Image | `nvcr.io/nvidia/pytorch:25.12-py3`, torch 2.10.0a0, flash_attn 2.7.4.post1 |
+| Code | **this repository's** `experiments/bioservices/zebrafish_evo2_regulatory_candidates/gpu_job.py`, pinned |
+| Model | `evo2_7b`, weights 13,766,621,200 bytes, sha256 `c66645929dc1b9c6…ecf4`, **`matches_pinned_lfs_oid: true`** |
+| GPU window | 20:36:42–20:44:57 UTC, 493 telemetry samples, mean util 34.8%, max 89%, mean 16.6 GB |
+
+## Outcome in one line
+
+**16 candidate sequences were generated and recovered. Scoring crashed on a bug
+in my own code.** Generation, controls and the model's own calibration all
+succeeded; the Evo 2 log-likelihood stage did not run.
+
+## What was produced
+
+| artifact | n | sha256 verified against the job's `SHA256SUMS.json` |
+| --- | --- | --- |
+| `candidates.json` | **16** sequences, 1,000 bp each, all distinct | **yes** |
+| `controls.json` | **32** (16 dinucleotide shuffles + 16 GC-matched random) | **yes** |
+| `control_check.json` | model calibration | **yes** |
+| `scores.json` | — | **never written** (the crash) |
+
+8 design targets × 2 samples, **arm A only** (`A_native_context`). Arm B
+(few-shot in-context) was skipped on the internal time budget, so **the
+unverified Arc in-context lead was not tested** and nothing is claimed about it.
+
+## The model's own calibration passed, and it is the right control
+
+`control_check.json`, run on the H100 before generation:
+
+| sequence | mean NLL (nats/nt) |
+| --- | --- |
+| natural | **0.452** |
+| mononucleotide shuffle ×2 | 1.394, 1.396 |
+| i.i.d. random ×2 | 1.398, 1.395 |
+| poly-C homopolymer (artifact doc) | 0.010 |
+
+All three verdicts true: `iid_ge_ln4_minus_0.05`, `natural_below_shuffles_and_iid`,
+`iid_sequences_use_all_four_bases`.
+
+The first of those is the one that matters. An i.i.d. uniform sequence must score
+at the entropy of a four-letter alphabet, **ln 4 = 1.3863** nats/nt; the two
+random controls came in at 1.398 and 1.395. That is the random control gpuops
+reported as broken in their earlier attempt, now landing where theory says it
+must. The poly-C line is there to document the degenerate case: a model assigns
+near-zero NLL to a trivial repeat, so low NLL alone is never evidence of quality.
+
+## Independent assessment of the candidates — CPU, no model in the loop
+
+Evo 2 scoring its own generations would not be independent: they are
+high-likelihood by construction. So the candidates were placed on a PWM-based
+scale whose endpoints were fixed **before any candidate existed**.
+
+| group | n | GC | CpG o/e | mean z | 95% CI |
+| --- | --- | --- | --- | --- | --- |
+| **Evo 2 candidates** | 16 | 0.412 | **0.548** | **+0.69** | **[+0.06, +1.32]** |
+| real held-out promoters | 8 | 0.352 | 0.497 | +1.23 | [+0.27, +2.19] |
+| control: dinucleotide shuffle | 16 | 0.412 | 0.549 | −0.24 | [−0.82, +0.34] |
+| control: GC-matched random | 16 | 0.415 | 0.987 | +0.41 | [−0.11, +0.93] |
+
+What this supports:
+
+- **The candidates reproduce vertebrate CpG depletion**: CpG o/e **0.548**, near
+  the real promoters' 0.497 and far from GC-random's 0.987. That is a real,
+  non-trivial property of vertebrate non-coding sequence, and the model was not
+  asked for it.
+- **They carry motif content above their own dinucleotide composition**:
+  z = +0.69, interval excluding zero.
+
+What it does **not** support, stated because the numbers invite the opposite reading:
+
+- **Candidates are not distinguishable from real promoters here.** The two
+  intervals overlap heavily; with n=16 and n=8 this diagnostic cannot separate
+  them, and "indistinguishable from real" is not a claim that they are equivalent.
+- **The GC-random control is not cleanly at zero** (+0.41, upper bound +0.93), so
+  the scale's separation is weaker on this set than on the baseline. Any reading
+  of the +0.69 should be discounted accordingly.
+- **The candidates are GC-richer than the real held-out halves** (0.412 vs
+  0.352), which is a difference from their target distribution, not a match to it.
+- **None of this is function.** A motif is not a binding event; a binding event
+  is not expression.
+
+## The bug, which is mine
+
+```
+gpu_job.py line 163, in score
+    return float(lp.gather(-1, tgt.unsqueeze(-1)).squeeze(-1).mean())
+RuntimeError: Index tensor must have the same number of dimensions as input tensor
+```
+
+Evo 2 returns `outputs, _` where the logits are `outputs[0]`. I treated
+`outputs` as the logits, so `[:-1]` sliced the **batch** axis of a `(1, L, V)`
+tensor to length 0 instead of dropping the final position, and the gather had
+nothing to index. Fixed: the unwrapping is explicit and the shape is asserted,
+because each GPU run is one shot. Arm B's budget break now exits both loops
+rather than re-testing per target.
+
+**A reporting hazard worth propagating:** the job's own `entry.json` records the
+zebrafish stage as `"status": "ok"` while the same record carries `"rc": 1` and a
+`readback_error` for the missing `scores.json`. The status is wrong and the
+return code is right. A reader taking the status at face value would conclude the
+stage succeeded.
+
+`entry.json` also fails its own manifest hash (2,365 bytes actual against 2,341
+recorded) — consistent with it being finalised after the manifest was written.
+The two scientific payloads, `candidates.json` and `controls.json`, both verify
+exactly.
+
+## What a re-run would add
+
+The fixed `score()` plus a budget large enough for arm B would give Evo 2
+log-likelihoods for candidates, controls and real held-out halves, and would test
+the in-context arm. Bundle for that re-run:
+`evo2_zebrafish_job.py` sha256 `46a5767482a76adcdbcf0f692f9719beed3477a257022a976d40bafb0e64fc24`.
+
+## Limitations
+
+- One arm, 16 candidates, one model, one checkpoint, nine genes.
+- No accessibility oracle exists for zebrafish, so no epigenetic claim is possible.
+- Composition plausibility is not function and is not evidence of it.
+- The held-out comparison is 8 sequences; intervals are wide and reported wide.
