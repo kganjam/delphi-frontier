@@ -134,19 +134,17 @@ def main() -> int:
     # Cluster-count sensitivity: the clustered interval recomputed on the SAME
     # 193 positions the subset covered, so the change attributable to the added
     # positions is measured rather than inferred from a sqrt(n) rule.
-    subset_positions = sorted({surface.variants[k].position
-                               for k in subset_result.get("_subset_keys", [])}) or None
-    idx_193 = None
-    if subset_positions is None:
-        sub_csv = os.path.join(os.path.dirname(args.subset_result),
-                               "kir21_predictions_vs_measurements.csv")
-        if os.path.exists(sub_csv):
-            import csv as _csv
+    # The positions the 256-variant subset covered, read from its committed CSV
+    # rather than re-derived, so this cannot drift from what was actually scored.
+    subset_positions, idx_193 = None, None
+    sub_csv = os.path.join(os.path.dirname(args.subset_result),
+                           "kir21_predictions_vs_measurements.csv")
+    if os.path.exists(sub_csv):
+        import csv as _csv
 
-            with open(sub_csv) as fh:
-                subset_positions = sorted({int(r["position"]) for r in _csv.DictReader(fh)})
-    if subset_positions:
-        keep = {p for p in subset_positions}
+        with open(sub_csv) as fh:
+            subset_positions = sorted({int(r["position"]) for r in _csv.DictReader(fh)})
+        keep = set(subset_positions)
         idx_193 = [i for i, p in enumerate(positions) if p in keep]
 
     cluster_sensitivity = {
@@ -171,9 +169,9 @@ def main() -> int:
         "measured_vs_predicted_narrowing": {
             "variant_level": {
                 "subset_half_width": sub_variant_hw, "full_half_width": full_variant_hw,
+                "n_subset": subset_result["n_usable"], "n_full": len(usable),
                 "measured_narrowing": sub_variant_hw / full_variant_hw if full_variant_hw else None,
-                "predicted_narrowing_sqrt_n": (len(usable) / sub_esm["rho_surface"].get("n", 256)) ** 0.5
-                if sub_esm["rho_surface"].get("n") else (len(usable) / 256) ** 0.5,
+                "predicted_narrowing_sqrt_n": (len(usable) / subset_result["n_usable"]) ** 0.5,
                 "caveat": "the sqrt(n) prediction assumes independent variants; they are not independent",
             },
             "position_clustered": {
