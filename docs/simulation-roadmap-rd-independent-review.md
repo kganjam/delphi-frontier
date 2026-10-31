@@ -104,10 +104,11 @@ The copied Strang/DCT-II/RK4 algebra agrees at the checked anchor. Current numer
 controls test orthonormality, homogeneous steady state, deterministic CPU replay,
 and CPU/CUDA agreement at four settings over10tau. I did not observe their remote
 execution. These do not establish grid/time convergence for N64, tau200 over the
-whole prior. Keep that uncertainty visible; do not call generated fields accurate
+whole prior. The >1000/nonfinite run mask inspects saved snapshots, not every
+intermediate integration state. Keep that scope visible; do not call generated fields accurate
 solutions merely because the diffusion model was trained on solver data.
 
-Training loss rows remain in memory until all30,000 steps finish (`train:146–150`),
+Training loss rows remain in memory until all30,000 steps finish (`train:149–156`),
 and no intermediate checkpoint is saved. The final checkpoint contains EMA weights
 and normalization, not a resumable optimizer/current-model/RNG state. Thus the
 packet's proposed live step-rate stop rule has no streamed step-rate evidence;
@@ -120,7 +121,8 @@ missing training-step information.
 Only a display subset of generated/reference fields is saved in examples.npz;
 the full160-condition generated ensemble is not retained. Per-condition metrics
 can be audited from the exact code/checkpoint/RNG and regenerated solver data,
-but not recomputed directly from every originally returned sample. A separately
+but not recomputed directly from every originally returned sample. Regeneration
+is not guaranteed bitwise without deterministic backend controls. A separately
 registered correction must retain its own source/artifacts. `job.sh` also returns
 raw checkpoint plus its packed copy inside part2, which inflates outer transport;
 verify actual part sizes, all mandatory files and full hashes rather than an
