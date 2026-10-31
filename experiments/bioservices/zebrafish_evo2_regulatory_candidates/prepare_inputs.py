@@ -67,12 +67,24 @@ def main() -> int:
         assembly_name = ensembl.assembly(args.species).get("assembly_name")
         cache["_assembly"] = assembly_name
         write_json(args.lookup_cache, cache)
-    records, receipts, cross_checks = [], [], []
+    records, receipts, cross_checks, unresolved = [], [], [], []
     for symbol, note in TARGETS:
         if symbol in cache:
             gene = ensembl.Gene(**cache[symbol])
         else:
-            gene = ensembl.lookup_symbol(symbol, args.species)
+            try:
+                gene = ensembl.lookup_symbol(symbol, args.species)
+            except Exception as exc:
+                # One annotation source for every target, or none. UCSC/RefSeq
+                # could resolve this symbol, but RefSeq and Ensembl disagree about
+                # gene ends -- measured 179 bp for neurod1 -- and on a minus-strand
+                # gene the end IS the TSS, so a mixed source would define one
+                # target's promoter differently from the rest. Dropping the target
+                # is the smaller loss, and it is recorded rather than hidden.
+                unresolved.append({"symbol": symbol, "tissue_note": note,
+                                   "reason": f"{type(exc).__name__}: {str(exc)[:160]}"})
+                print(f"  {symbol:9s} UNRESOLVED ({type(exc).__name__}); dropped, see input_set.json")
+                continue
             cache[symbol] = dict(gene.__dict__)
             write_json(args.lookup_cache, cache)
         lo, hi = gene.upstream_region(UPSTREAM_BP)
@@ -147,6 +159,8 @@ def main() -> int:
         "prompt_bp": HALF,
         "held_out_bp": HALF,
         "n_targets": len(records),
+        "unresolved_targets": unresolved,
+        "annotation_source": "Ensembl REST gene coordinates only; never mixed with RefSeq",
         "scope": ("public reference genome only; benign model-organism developmental and tissue "
                   "markers; no pathogen, toxin or human-virus sequence"),
         "independent_cross_checks": cross_checks,
@@ -155,7 +169,11 @@ def main() -> int:
     }
     digest = write_json(args.out, payload)
     all_seq = "".join(r["prompt_seq"] + r["held_out_seq"] for r in records)
-    print(f"\nassembly: {assembly_name}  targets: {len(records)}")
+    if len(records) < 9:
+        raise SystemExit(f"only {len(records)} targets resolved; need at least 9 "
+                         f"(8 design + 1 fully held out)")
+    print(f"\nassembly: {assembly_name}  targets: {len(records)}  "
+          f"unresolved: {[u['symbol'] for u in unresolved] or 'none'}")
     checked = [c for c in cross_checks if c.get("checked")]
     print(f"sequence source: UCSC {UCSC_GENOME} (primary)")
     print(f"independent Ensembl cross-check: {sum(c['identical'] for c in checked)}/{len(checked)} "
