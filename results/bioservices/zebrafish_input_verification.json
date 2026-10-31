@@ -1,0 +1,121 @@
+{
+  "all_verified_agree": true,
+  "input_set_id": "zebrafish-promoter-proximal-2kb/v1",
+  "n_identical": 8,
+  "n_targets": 9,
+  "n_unavailable": 1,
+  "n_verified": 8,
+  "note": "the frozen input set is NOT modified by this script; coverage below 100% means Ensembl was unavailable for those regions, not that they disagree",
+  "results": [
+    {
+      "committed_sha256": "9bd3d592c384a1249027eb2c992273917102fdd625fcaa0df09ff38817301ccd",
+      "ensembl_sha256": "9bd3d592c384a1249027eb2c992273917102fdd625fcaa0df09ff38817301ccd",
+      "identical": true,
+      "region": [
+        31423494,
+        31425493
+      ],
+      "strand": -1,
+      "symbol": "myod1",
+      "verified": true
+    },
+    {
+      "committed_sha256": "04f9faf9c116620650f4d8a9a9ecb5098e80dc1950edc7f3f325e62a6ea48ccf",
+      "ensembl_sha256": "04f9faf9c116620650f4d8a9a9ecb5098e80dc1950edc7f3f325e62a6ea48ccf",
+      "identical": true,
+      "region": [
+        46818002,
+        46820001
+      ],
+      "strand": -1,
+      "symbol": "elavl3",
+      "verified": true
+    },
+    {
+      "committed_sha256": "8d283dede0a46d27201d4502ea736b71a76f4246ba1ace3e0793a2561a57279c",
+      "reason": "EnsemblError: /sequence/region/danio_rerio/8:40464936..40466935:-1?content-type=application/json: TimeoutError: The read operation timed out",
+      "region": [
+        40464936,
+        40466935
+      ],
+      "strand": -1,
+      "symbol": "myl7",
+      "verified": false
+    },
+    {
+      "committed_sha256": "605f47b640ecc79968edf01dc277c4abe9eadc187d3dae1b51c9af5b3156cedb",
+      "ensembl_sha256": "605f47b640ecc79968edf01dc277c4abe9eadc187d3dae1b51c9af5b3156cedb",
+      "identical": true,
+      "region": [
+        52510025,
+        52512024
+      ],
+      "strand": 1,
+      "symbol": "fabp10a",
+      "verified": true
+    },
+    {
+      "committed_sha256": "a5245c83679282b11416404842da9d3c79ff646083784ad2ca2b9cbe2cc8bd39",
+      "ensembl_sha256": "a5245c83679282b11416404842da9d3c79ff646083784ad2ca2b9cbe2cc8bd39",
+      "identical": true,
+      "region": [
+        25418857,
+        25420856
+      ],
+      "strand": -1,
+      "symbol": "gata1a",
+      "verified": true
+    },
+    {
+      "committed_sha256": "fe62d387a665aa77d59c8b77ecd60caacce31ea7538d82de3db5e8aa34f2cc35",
+      "ensembl_sha256": "fe62d387a665aa77d59c8b77ecd60caacce31ea7538d82de3db5e8aa34f2cc35",
+      "identical": true,
+      "region": [
+        1490174,
+        1492173
+      ],
+      "strand": 1,
+      "symbol": "sox10",
+      "verified": true
+    },
+    {
+      "committed_sha256": "dccdb4ce9de04d3fa30329cd477e3ff4ea7fa0357b99a2cdd07bc6c1691ac426",
+      "ensembl_sha256": "dccdb4ce9de04d3fa30329cd477e3ff4ea7fa0357b99a2cdd07bc6c1691ac426",
+      "identical": true,
+      "region": [
+        44295072,
+        44297071
+      ],
+      "strand": -1,
+      "symbol": "neurod1",
+      "verified": true
+    },
+    {
+      "committed_sha256": "ec25087b4ed289c9389d81a31b4688d2e34f665328ababb23d44dc6d13009cb3",
+      "ensembl_sha256": "ec25087b4ed289c9389d81a31b4688d2e34f665328ababb23d44dc6d13009cb3",
+      "identical": true,
+      "region": [
+        39313028,
+        39315027
+      ],
+      "strand": -1,
+      "symbol": "krt4",
+      "verified": true
+    },
+    {
+      "committed_sha256": "57395ffe66ddb29dcdff023e346fbf1fbb15448d68c806cb4157342cd361bc20",
+      "ensembl_sha256": "57395ffe66ddb29dcdff023e346fbf1fbb15448d68c806cb4157342cd361bc20",
+      "identical": true,
+      "region": [
+        29768837,
+        29770836
+      ],
+      "strand": 1,
+      "symbol": "pax2a",
+      "verified": true
+    }
+  ],
+  "source": "Ensembl REST, compared against the committed UCSC-derived sequence",
+  "verification_of": "input_set.json",
+  "verified_utc": "2026-10-31T19:53:48Z"
+}
