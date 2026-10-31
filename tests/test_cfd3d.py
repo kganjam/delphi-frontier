@@ -180,3 +180,86 @@ def test_vlm_v3b_is_flagged_not_converged():
     assert r["status"].startswith("NOT CONVERGED")
     cl0 = [v[0] for v in r["convergence_sweep"]["bilinear_surface_normal"].values()]
     assert min(cl0) < 0 < max(cl0)                     # the sign itself is lattice-dependent
+
+
+def test_cyl2d_time_mean_is_exact_for_linear_data_with_partial_windows():
+    e = _load("cyl2d_eval")
+    t = [0.0, 0.3, 1.1, 1.15, 2.9, 4.0, 7.3]                 # non-uniform spacing
+    y = [3 * x + 1 for x in t]
+    for a, b in ((0.1, 6.0), (0.31, 0.32), (1.12, 3.5), (0.0, 7.3)):   # ends inside intervals, one tiny window
+        assert e.time_mean(t, y, a, b) == pytest.approx(1.5 * (a + b) + 1, rel=1e-12)
+    tk = [0.0, 1.0, 2.5, 5.0, 6.0, 9.0]                       # kink at a sample: piecewise linear is exact too
+    yk = [abs(x - 5.0) for x in tk]
+    a, b = 0.5, 7.0                                           # integral of |t - 5| over [0.5, 7] = 10.125 + 2
+    assert e.time_mean(tk, yk, a, b) == pytest.approx((10.125 + 2.0) / 6.5, rel=1e-12)
+
+
+def _cyl_run(cd=1.326, cdp=0.988, st=0.1660, periodic=True, surface=True, dt=0.05):
+    import math
+    t, k = [dt], 0
+    while t[-1] < 600.0:                                      # stops like cyl2d.jl: first sample at or past t_end
+        k += 1
+        t.append(t[-1] + dt * (1.0 + 0.3 * math.sin(0.7 * k)))   # non-uniform steps, like the adaptive dt
+    cl = [math.sin(2 * math.pi * st * s) if periodic else 1e-3 for s in t]
+    run = {"t": t, "Cd": [cd] * len(t), "Cd_p": [cdp] * len(t), "Cl": cl}
+    if surface:                                               # Cp = -k cos(theta) closes to Cd_p for k = 2 Cd_p / pi
+        n = 720
+        run["surface"] = {"Cp_wall_mean": [-2 * cdp / math.pi * math.cos(2 * math.pi * i / n) for i in range(n)]}
+    return run
+
+
+def _cyl_eval(tmp_path, **runs):
+    e = _load("cyl2d_eval")
+    paths = {}
+    for k, r in runs.items():
+        paths[k] = tmp_path / f"{k}.json"
+        paths[k].write_text(json.dumps(r))
+    return e.main(tmp_path / "eval.json", paths)
+
+
+def test_cyl2d_eval_recovers_a_synthetic_pass_and_gates_pressure_coupling_on_closure(tmp_path):
+    good = dict(R1=_cyl_run(cd=1.31), R2=_cyl_run(), R3_domain=_cyl_run(cd=1.315, cdp=0.979, st=0.1650),
+                M1_mutant=_cyl_run(cd=2.0, periodic=False))
+    r = _cyl_eval(tmp_path, **good)
+    assert r["runs"]["R2"]["St"] == pytest.approx(0.1660, rel=1e-3)
+    assert r["runs"]["R2"]["Cd_p_surface"] == pytest.approx(0.988, rel=1e-9)
+    v = r["verdict"]
+    assert v["control_passes"] and v["surface_internal"] and v["pressure_coupling_allowed"]
+    bad_closure = dict(good, R2=_cyl_run())
+    bad_closure["R2"]["surface"]["Cp_wall_mean"] = [c * 0.5 for c in bad_closure["R2"]["surface"]["Cp_wall_mean"]]
+    v = _cyl_eval(tmp_path, **bad_closure)["verdict"]
+    assert v["control_passes"] and v["surface_internal"] is False and v["pressure_coupling_allowed"] is False
+    v = _cyl_eval(tmp_path, **dict(good, R2=_cyl_run(surface=False)))["verdict"]
+    assert v["control_passes"] and "surface_internal" not in v and v["pressure_coupling_allowed"] is False
+    v = _cyl_eval(tmp_path, **dict(good, R2=_cyl_run(cd=1.20)))["verdict"]           # 9.5 % low: outside 2 %
+    assert v["R2_fidelity"] is False and v["control_passes"] is False and v["pressure_coupling_allowed"] is False
+
+
+@pytest.mark.parametrize("breakage", ["nan", "inf", "length", "unsorted", "repeat", "short", "cp_nan", "missing"])
+def test_cyl2d_eval_fails_closed_on_bad_series(tmp_path, breakage):
+    run = _cyl_run()
+    if breakage == "nan":
+        run["Cd"][500] = float("nan")
+    elif breakage == "inf":
+        run["Cl"][-1] = float("inf")
+    elif breakage == "length":
+        run["Cd_p"] = run["Cd_p"][:-1]
+    elif breakage == "unsorted":
+        run["t"][100], run["t"][101] = run["t"][101], run["t"][100]
+    elif breakage == "repeat":
+        run["t"][100] = run["t"][99]
+    elif breakage == "short":
+        run = {k: (v[: len(v) // 2] if isinstance(v, list) else v) for k, v in run.items()}
+    elif breakage == "cp_nan":
+        run["surface"]["Cp_wall_mean"][3] = float("nan")
+    elif breakage == "missing":
+        del run["Cd_p"]
+    r = _cyl_eval(tmp_path, R1=_cyl_run(), R2=run, R3_domain=_cyl_run(cd=1.315, cdp=0.979, st=0.1650),
+                  M1_mutant=_cyl_run(cd=2.0, periodic=False))
+    assert r["runs"]["R2"]["valid"] is False and r["runs"]["R2"]["problems"]
+    assert r["verdict"]["invalid_runs"] == ["R2"]
+    assert r["verdict"]["control_passes"] is False and r["verdict"]["pressure_coupling_allowed"] is False
+    # an invalid mutant cannot pass the mutant rule either
+    r = _cyl_eval(tmp_path, R1=_cyl_run(), R2=_cyl_run(), R3_domain=_cyl_run(cd=1.315, cdp=0.979, st=0.1650),
+                  M1_mutant=run)
+    assert r["verdict"]["mutant"] is False and r["verdict"]["control_passes"] is False
