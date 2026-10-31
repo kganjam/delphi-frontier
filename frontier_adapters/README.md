@@ -51,3 +51,14 @@ executes producer code; producing a bundle is not importing it (corpus owns impo
 
 Freeze: `python3 -m frontier_adapters.engineering_manifest --repo . --source-commit <rev> --out <dir>` (records pinned to the commit's time; same input, same bytes). Checked on an ephemeral
 store: the bundle imports (all `imported_unreviewed`) and `ArtifactIndex` then finds the certificate and the three simulation outputs.
+
+## Design-assurance map -> proposed Actions (`assurance_actions.py`, `assurance_audit.py`; frozen output in `examples/assurance_actions/`)
+
+Single-reader work (Claude Sonnet 5.5, market worker); not Codex-reviewed, not independently reviewed. Input is the committed `artifacts/assurance/map.json` read from a git blob at a pinned commit.
+The adapter refuses unless the map's schema is `frontier.design-assurance/1`, `biological_success_probability` is null, `probability_calibrated` is false, its sha256 matches `artifacts/assurance/manifest.json`, and each next action's `expected_information_gain` / `expected_utility` are null.
+
+* 4 `project.next_actions` -> a derived status **Claim**, a `recorded` **Problem** that depends on that Claim by exact version, and a **proposed** Action targeting the Claim (`inputs` is empty on purpose; see the audit). 5 `equation_gaps` -> Problems only: the map supplies no Action for them and does not link them to bridges, so none is inferred.
+* Problems stay `recorded`: the map gives no falsifiers, acceptance criteria or cost, and the store refuses an Action against an `actionable` Problem that lacks them. Action cost/stop bounds are the text `UNKNOWN`.
+* No metric is produced: no probability, utility, information gain, ranking or calibrated success. Proposals carry qualitative text and `selection_basis: policy`.
+* `python3 -m frontier_adapters.assurance_audit --repo . --source-commit <sha> --dsn <read-only dsn> --namespace <ns> --out <dir>` is read-only against the store (server-side read-only transaction). It reports (a) the schema-level lineage hooks introspected from `frontier.models` and which have a reverse query, (b) live records whose payload names an assurance evidence file, with whether their content pin matches the map's pin and their incoming edges, (c) how the map's `snapshot`-namespace claim refs resolve in the live store, and (d) live Evidence artifact pins whose git-locator file now hashes differently at the checked commit (`file_changed_since_pin`; the pin remains correct for its own commit, and a refreshed record needs a new id).
+* Frozen bundle `bundle.frontier-bundle-0.1.json` (17 records) is for the corpus worker to import; this module writes nothing to a store. Tests: `bash scripts/test_postgres.sh frontier_adapters/tests/test_assurance_actions.py`.

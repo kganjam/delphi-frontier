@@ -1,0 +1,542 @@
+{
+ "adapter": {
+  "id": "frontier_adapters.assurance_actions",
+  "version": "0.1.0"
+ },
+ "bundle_sha256": "c1dbef75aaef8636fabdcb0b9f5aca7a6275593650a27b464bc1a776781e1f16",
+ "checks_performed": [
+  {
+   "detail": "schema 'frontier.design-assurance/1'",
+   "id": "map.schema",
+   "ok": true
+  },
+  {
+   "detail": "biological_success_probability=None probability_calibrated=False: this adapter maps only a map that makes no probability claim",
+   "id": "map.no_probability",
+   "ok": true
+  },
+  {
+   "detail": "sha256 737ed4004156bc32... is recorded in artifacts/assurance/manifest.json",
+   "id": "map.identity",
+   "ok": true
+  },
+  {
+   "detail": "the map carries no expected-information or utility number for this action; none is created here",
+   "id": "action.resolve-cell-tissue-fin.no_numbers",
+   "ok": true
+  },
+  {
+   "detail": "the map carries no expected-information or utility number for this action; none is created here",
+   "id": "action.resolve-fin-deformation-aerodynamic-polar.no_numbers",
+   "ok": true
+  },
+  {
+   "detail": "the map carries no expected-information or utility number for this action; none is created here",
+   "id": "action.resolve-fin-stiffness-calibration.no_numbers",
+   "ok": true
+  },
+  {
+   "detail": "the map carries no expected-information or utility number for this action; none is created here",
+   "id": "action.refine-unconverged-glide.no_numbers",
+   "ok": true
+  }
+ ],
+ "counts": {
+  "equation_gaps": 5,
+  "next_actions": 4,
+  "records": 17
+ },
+ "evidence_pin_check": {
+  "absent_in_tree": [],
+  "hash_differs": [],
+  "match": 32,
+  "pins": 32
+ },
+ "link_checks": [
+  {
+   "detail": "dependencies -> Claim/assure-resolve-cell-tissue-fin-status@ad6260c4ffc7",
+   "id": "assure-resolve-cell-tissue-fin-gap.dependencies",
+   "ok": true
+  },
+  {
+   "detail": "target -> Claim/assure-resolve-cell-tissue-fin-status@ad6260c4ffc7",
+   "id": "assure-resolve-cell-tissue-fin-action.target",
+   "ok": true
+  },
+  {
+   "detail": "dependencies -> Claim/assure-resolve-fin-deformation-aerodynamic-polar-status@c1c57d36e351",
+   "id": "assure-resolve-fin-deformation-aerodynamic-polar-gap.dependencies",
+   "ok": true
+  },
+  {
+   "detail": "target -> Claim/assure-resolve-fin-deformation-aerodynamic-polar-status@c1c57d36e351",
+   "id": "assure-resolve-fin-deformation-aerodynamic-polar-action.target",
+   "ok": true
+  },
+  {
+   "detail": "dependencies -> Claim/assure-resolve-fin-stiffness-calibration-status@58bb1959105f",
+   "id": "assure-resolve-fin-stiffness-calibration-gap.dependencies",
+   "ok": true
+  },
+  {
+   "detail": "target -> Claim/assure-resolve-fin-stiffness-calibration-status@58bb1959105f",
+   "id": "assure-resolve-fin-stiffness-calibration-action.target",
+   "ok": true
+  },
+  {
+   "detail": "dependencies -> Claim/assure-refine-unconverged-glide-status@0ef0f8ef4de6",
+   "id": "assure-refine-unconverged-glide-gap.dependencies",
+   "ok": true
+  },
+  {
+   "detail": "target -> Claim/assure-refine-unconverged-glide-status@0ef0f8ef4de6",
+   "id": "assure-refine-unconverged-glide-action.target",
+   "ok": true
+  }
+ ],
+ "map_project": "flying-fish",
+ "map_status": "unsupported_essential_bridges",
+ "no_metric_statement": "No expected information, utility, ranking score, success probability or calibrated figure is produced or implied. The map's own such fields are null and stay null.",
+ "not_mapped": {
+  "counterexamples": [
+   {
+    "kind": "formal_constraint_conflict",
+    "reason": "a finding recorded by the map, not a gap to act on"
+   },
+   {
+    "kind": "no_robust_candidate_winner",
+    "reason": "a finding recorded by the map, not a gap to act on"
+   }
+  ],
+  "ensembles": "descriptive simulation-envelope fractions; not probabilities of biology, and not a basis for ranking here"
+ },
+ "rows": [
+  {
+   "accepts_new_evidence_via": "Evidence with target == this Claim version and produced_by == this Action version (the store's own typed hooks)",
+   "action_inputs": [],
+   "action_inputs_note": "empty on purpose: pinning a record whose source pin differs from the map's pin would assert a consumption that did not happen",
+   "assurance_item": {
+    "blocks": [
+     "developmental biological design"
+    ],
+    "bridge_id": "cell-tissue-fin",
+    "bridge_status": "unsupported",
+    "id": "resolve-cell-tissue-fin",
+    "kind": "next_action",
+    "priority_class": "unsupported_essential_bridge",
+    "selector": "/project/next_actions/0"
+   },
+   "evidence_pins": [
+    {
+     "path": "projects/flying-fish.draft.json",
+     "selector": "/draft/payload/open_questions",
+     "sha256_map": "38248eede12e0bf5a54a1cc188311ba134a6ad1d8d7f0b86be70fcb3b45c8997",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [],
+   "produces": {
+    "action": {
+     "id": "assure-resolve-cell-tissue-fin-action",
+     "kind": "Action",
+     "namespace": "node-a",
+     "version": "f868de0fbd968cabb7ffda837f77169b2465e1bfd4535dc35119c18f0869ce3f"
+    },
+    "claim": {
+     "id": "assure-resolve-cell-tissue-fin-status",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "ad6260c4ffc7b4d11835f365ab030395ec10ecde16f87ad6a964c18230fd6a36"
+    },
+    "problem": {
+     "id": "assure-resolve-cell-tissue-fin-gap",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "9d0f2d4daf015438f174852392e6c3975aca9fe067acc607096368cbc99ffdf9"
+    }
+   }
+  },
+  {
+   "accepts_new_evidence_via": "Evidence with target == this Claim version and produced_by == this Action version (the store's own typed hooks)",
+   "action_inputs": [],
+   "action_inputs_note": "empty on purpose: pinning a record whose source pin differs from the map's pin would assert a consumption that did not happen",
+   "assurance_item": {
+    "blocks": [
+     "loaded-fin flight prediction"
+    ],
+    "bridge_id": "fin-deformation-aerodynamic-polar",
+    "bridge_status": "unsupported",
+    "id": "resolve-fin-deformation-aerodynamic-polar",
+    "kind": "next_action",
+    "priority_class": "unsupported_essential_bridge",
+    "selector": "/project/next_actions/1"
+   },
+   "evidence_pins": [
+    {
+     "path": "engineering/COUPLING_MANIFEST.json",
+     "selector": "/couplings/7",
+     "sha256_map": "499d3a6159e2355622c907728fb3bcf77c23b11e65f0c529570f8661fc80f041",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [],
+   "produces": {
+    "action": {
+     "id": "assure-resolve-fin-deformation-aerodynamic-polar-action",
+     "kind": "Action",
+     "namespace": "node-a",
+     "version": "fa4fad27aa317ae425a349c5241e262c280f6092d39952e6d77ff17fb6e8552b"
+    },
+    "claim": {
+     "id": "assure-resolve-fin-deformation-aerodynamic-polar-status",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "c1c57d36e351fb41579b14726a07c24cafca79b09dfdb28cb6652e3e3a9cff4c"
+    },
+    "problem": {
+     "id": "assure-resolve-fin-deformation-aerodynamic-polar-gap",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "8be9407f9ba1942cdd071ea8d0dfcdf6a2a4d6ac6bb30e539b38aea6bac29682"
+    }
+   }
+  },
+  {
+   "accepts_new_evidence_via": "Evidence with target == this Claim version and produced_by == this Action version (the store's own typed hooks)",
+   "action_inputs": [],
+   "action_inputs_note": "empty on purpose: pinning a record whose source pin differs from the map's pin would assert a consumption that did not happen",
+   "assurance_item": {
+    "blocks": [
+     "material-validity decision"
+    ],
+    "bridge_id": "fin-stiffness-calibration",
+    "bridge_status": "unknown",
+    "id": "resolve-fin-stiffness-calibration",
+    "kind": "next_action",
+    "priority_class": "unsupported_essential_bridge",
+    "selector": "/project/next_actions/2"
+   },
+   "evidence_pins": [
+    {
+     "path": "engineering/fin_mechanics/artifacts/result.json",
+     "selector": "/not_established",
+     "sha256_map": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [
+    {
+     "basis": "public record text names 'engineering/fin_mechanics/artifacts/result.json' (a text match, not a typed reference)",
+     "is_head": true,
+     "local_status": "imported_unreviewed",
+     "map_pin": {
+      "path": "engineering/fin_mechanics/artifacts/result.json",
+      "selector": "/not_established",
+      "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+     },
+     "pin_relation": "pin_differs_from_map",
+     "ref": {
+      "id": "eng-finmech-claim-ei-crit",
+      "kind": "Claim",
+      "namespace": "node-a",
+      "version": "4998ef85bd98ec64c0f4bc86e77337ea25df7ff5683ac6b62dc9095cf5f62f57"
+     },
+     "reverse_usage_incoming_edges": {
+      "by_kind": {
+       "context_only": 1,
+       "depends_on": 1,
+       "targets": 3
+      },
+      "count": 5,
+      "from": [
+       "node-a/Action/eng-finmech-action-render@2ce84b9068184df208140fe18aaa339c38e6bded34b15717c8869f267f67f0b4",
+       "node-a/Action/eng-finmech-action-sim@16b0d353e95428b623b287237f24c320475868475a537e6e930f5eb46cc5d3fc",
+       "node-a/Evidence/eng-finmech-evidence-render@0360bea50a108244e31b4360c07dd083766875ae50099de54eb46b8418701479",
+       "node-a/Evidence/eng-finmech-evidence-sim@f603df41d519d89ff20afcbda48c2b1059b330e34ddb8a6426a5365105001775",
+       "node-a/Problem/eng-finmech-problem-ei-measurement@4a72ddfd7dc19e0c0e54a59825528d0ea226412bdc552c54e06eaa259f43335c"
+      ]
+     },
+     "usable_as_exact_input": false
+    },
+    {
+     "basis": "public record text names 'engineering/fin_mechanics/artifacts/result.json' (a text match, not a typed reference)",
+     "is_head": true,
+     "local_status": "imported_unreviewed",
+     "map_pin": {
+      "path": "engineering/fin_mechanics/artifacts/result.json",
+      "selector": "/not_established",
+      "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+     },
+     "pin_relation": "pin_differs_from_map",
+     "ref": {
+      "id": "eng-finmech-evidence-sim",
+      "kind": "Evidence",
+      "namespace": "node-a",
+      "version": "f603df41d519d89ff20afcbda48c2b1059b330e34ddb8a6426a5365105001775"
+     },
+     "reverse_usage_incoming_edges": {
+      "by_kind": {
+       "uses": 1
+      },
+      "count": 1,
+      "from": [
+       "node-a/Action/eng-finmech-action-render@2ce84b9068184df208140fe18aaa339c38e6bded34b15717c8869f267f67f0b4"
+      ]
+     },
+     "usable_as_exact_input": false
+    },
+    {
+     "basis": "public record text names 'engineering/fin_mechanics/artifacts/result.json' (a text match, not a typed reference)",
+     "is_head": true,
+     "local_status": "imported_unreviewed",
+     "map_pin": {
+      "path": "engineering/fin_mechanics/artifacts/result.json",
+      "selector": "/not_established",
+      "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+     },
+     "pin_relation": "pin_differs_from_map",
+     "ref": {
+      "id": "eng-finmech-problem-ei-measurement",
+      "kind": "Problem",
+      "namespace": "node-a",
+      "version": "4a72ddfd7dc19e0c0e54a59825528d0ea226412bdc552c54e06eaa259f43335c"
+     },
+     "reverse_usage_incoming_edges": {
+      "by_kind": {},
+      "count": 0,
+      "from": []
+     },
+     "usable_as_exact_input": false
+    }
+   ],
+   "produces": {
+    "action": {
+     "id": "assure-resolve-fin-stiffness-calibration-action",
+     "kind": "Action",
+     "namespace": "node-a",
+     "version": "8ecbf2c957a655aca975a61c2e1ab7345dfa1ac268d085d52a3201ff8f018cdf"
+    },
+    "claim": {
+     "id": "assure-resolve-fin-stiffness-calibration-status",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "58bb1959105f326c2bfb1a431af41afba462c32637f318d55c83b20027b9b587"
+    },
+    "problem": {
+     "id": "assure-resolve-fin-stiffness-calibration-gap",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "79b57b524d87ebcb6b1ff5dade80737c175472bf55b612d3d10ed62c10478b5a"
+    }
+   }
+  },
+  {
+   "accepts_new_evidence_via": "Evidence with target == this Claim version and produced_by == this Action version (the store's own typed hooks)",
+   "action_inputs": [],
+   "action_inputs_note": "empty on purpose: pinning a record whose source pin differs from the map's pin would assert a consumption that did not happen",
+   "assurance_item": {
+    "blocks": null,
+    "bridge_id": null,
+    "bridge_status": null,
+    "id": "refine-unconverged-glide",
+    "kind": "next_action",
+    "priority_class": "known_numerical_failure",
+    "selector": "/project/next_actions/3"
+   },
+   "evidence_pins": [
+    {
+     "path": "engineering/simulation/results_controlled/summary.json",
+     "selector": "/n_unconverged",
+     "sha256_map": "d62b455e16ffa86e4a0ce1753791df0b8f361a937ba24ad4c103f4ff95eb608b",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [],
+   "produces": {
+    "action": {
+     "id": "assure-refine-unconverged-glide-action",
+     "kind": "Action",
+     "namespace": "node-a",
+     "version": "d011d409bc304e9278df091af4f0cc49e4dc7ecf322cc37348a1ea469dedf3db"
+    },
+    "claim": {
+     "id": "assure-refine-unconverged-glide-status",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "0ef0f8ef4de6b7313dcebb7d87e1b5c35814fb61bdf4987eb0c594e7ce01307b"
+    },
+    "problem": {
+     "id": "assure-refine-unconverged-glide-gap",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "bcf8580df90fc301a001af043c3c1c322664fb1724942bff8275d31736c2463a"
+    }
+   }
+  },
+  {
+   "assurance_item": {
+    "id": "gene-to-fin-program",
+    "kind": "equation_gap",
+    "scales": [
+     "molecular",
+     "developmental",
+     "organ"
+    ],
+    "selector": "/equation_gaps/0",
+    "status": "missing_mechanism"
+   },
+   "evidence_pins": [
+    {
+     "path": "projects/flying-fish.draft.json",
+     "selector": "/draft/payload/limitations",
+     "sha256_map": "38248eede12e0bf5a54a1cc188311ba134a6ad1d8d7f0b86be70fcb3b45c8997",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [],
+   "no_action": "no Action is proposed: the map supplies no action for this gap, and a recorded Problem cannot carry an Action until its actionability fields are supplied by a person",
+   "produces": {
+    "problem": {
+     "id": "assure-gap-gene-to-fin-program",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "2178bd327a38b24b4e4ba0030c134557df81ec353d0ae2f33801c78ad9e2dd21"
+    }
+   },
+   "relation_to_bridges": "not declared by the map; not inferred here"
+  },
+  {
+   "assurance_item": {
+    "id": "tissue-to-EI",
+    "kind": "equation_gap",
+    "scales": [
+     "cellular",
+     "tissue",
+     "organ"
+    ],
+    "selector": "/equation_gaps/1",
+    "status": "missing_mechanism"
+   },
+   "evidence_pins": [
+    {
+     "path": "projects/flying-fish.draft.json",
+     "selector": "/draft/payload/limitations",
+     "sha256_map": "38248eede12e0bf5a54a1cc188311ba134a6ad1d8d7f0b86be70fcb3b45c8997",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [],
+   "no_action": "no Action is proposed: the map supplies no action for this gap, and a recorded Problem cannot carry an Action until its actionability fields are supplied by a person",
+   "produces": {
+    "problem": {
+     "id": "assure-gap-tissue-to-EI",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "ec93dae363fdb649e619164e69207c1e9a566555298568ae44388170b2443a49"
+    }
+   },
+   "relation_to_bridges": "not declared by the map; not inferred here"
+  },
+  {
+   "assurance_item": {
+    "id": "deformed-fin-to-polar",
+    "kind": "equation_gap",
+    "scales": [
+     "organ",
+     "organism"
+    ],
+    "selector": "/equation_gaps/2",
+    "status": "missing_mechanism"
+   },
+   "evidence_pins": [
+    {
+     "path": "projects/flying-fish.draft.json",
+     "selector": "/draft/payload/limitations",
+     "sha256_map": "38248eede12e0bf5a54a1cc188311ba134a6ad1d8d7f0b86be70fcb3b45c8997",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [],
+   "no_action": "no Action is proposed: the map supplies no action for this gap, and a recorded Problem cannot carry an Action until its actionability fields are supplied by a person",
+   "produces": {
+    "problem": {
+     "id": "assure-gap-deformed-fin-to-polar",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "09d64a380f4488c5f733fb18c8bb79cc7cf02edbbfdee924d45989efaa8713ff"
+    }
+   },
+   "relation_to_bridges": "not declared by the map; not inferred here"
+  },
+  {
+   "assurance_item": {
+    "id": "neural-caudal-control",
+    "kind": "equation_gap",
+    "scales": [
+     "neural",
+     "organism"
+    ],
+    "selector": "/equation_gaps/3",
+    "status": "missing_mechanism"
+   },
+   "evidence_pins": [
+    {
+     "path": "projects/flying-fish.draft.json",
+     "selector": "/draft/payload/limitations",
+     "sha256_map": "38248eede12e0bf5a54a1cc188311ba134a6ad1d8d7f0b86be70fcb3b45c8997",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [],
+   "no_action": "no Action is proposed: the map supplies no action for this gap, and a recorded Problem cannot carry an Action until its actionability fields are supplied by a person",
+   "produces": {
+    "problem": {
+     "id": "assure-gap-neural-caudal-control",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "45c229dc5f01cca8713fa044e2faa2357cfb4d148568d03dce65ff5059f5923b"
+    }
+   },
+   "relation_to_bridges": "not declared by the map; not inferred here"
+  },
+  {
+   "assurance_item": {
+    "id": "whole-life-history",
+    "kind": "equation_gap",
+    "scales": [
+     "developmental",
+     "ecological",
+     "evolutionary"
+    ],
+    "selector": "/equation_gaps/4",
+    "status": "missing_mechanism"
+   },
+   "evidence_pins": [
+    {
+     "path": "projects/flying-fish.draft.json",
+     "selector": "/draft/payload/limitations",
+     "sha256_map": "38248eede12e0bf5a54a1cc188311ba134a6ad1d8d7f0b86be70fcb3b45c8997",
+     "tree_check": "match"
+    }
+   ],
+   "existing_live_hooks": [],
+   "no_action": "no Action is proposed: the map supplies no action for this gap, and a recorded Problem cannot carry an Action until its actionability fields are supplied by a person",
+   "produces": {
+    "problem": {
+     "id": "assure-gap-whole-life-history",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "7d3a30630156eee4998752093602b3ffc1e7f27b3d436c267a8fff6a67219fa1"
+    }
+   },
+   "relation_to_bridges": "not declared by the map; not inferred here"
+  }
+ ],
+ "source": {
+  "commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+  "map_path": "artifacts/assurance/map.json",
+  "map_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+  "repo_label": "delphi-frontier"
+ },
+ "status": "PROPOSED. Not submitted, accepted or published. Single-reader (market worker), not Codex-reviewed, not independently reviewed."
+}

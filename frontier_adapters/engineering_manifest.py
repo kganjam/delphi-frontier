@@ -52,6 +52,7 @@ class Chain:
         self.repo, self.commit, self.ns, self.issuer, self.created_at, self.name = repo, source_commit, namespace, issuer, created_at, name
         self.records: list[dict] = []
         self.checks: list[dict] = []
+        self.limit = MAX_RECORDS            # read at construction; a caller with a larger, deliberate bundle sets it explicitly
 
     # ---- blobs
     def blob(self, path: str) -> bytes:
@@ -84,8 +85,8 @@ class Chain:
 
     # ---- sequential validated records
     def add(self, draft: dict) -> dict:
-        if len(self.records) >= MAX_RECORDS:
-            raise Refused(f"[{self.name}] more than {MAX_RECORDS} records")
+        if len(self.records) >= self.limit:
+            raise Refused(f"[{self.name}] more than {self.limit} records")
         bad = find_abs_paths(draft)
         if bad:
             raise Refused(f"[{self.name}] absolute local path in a draft at {bad}")
@@ -416,12 +417,13 @@ def link_checks(records: list[dict]) -> list[dict]:
     return checks
 
 
-def build_bundle(chains: list[Chain], *, exporting_node: str | None = None) -> dict:
+def build_bundle(chains: list[Chain], *, exporting_node: str | None = None, limit: int | None = None) -> dict:
     """A frozen, importable `frontier-bundle-0.1` (same body construction as Store.export_bundle). Nothing is written to any store."""
     from frontier.models import MAX_BUNDLE_BYTES, MAX_BUNDLE_RECORDS, POLICY, Record, digest
     records = [r for ch in chains for r in ch.records]
-    if len(records) > MAX_RECORDS:
-        raise Refused(f"{len(records)} records exceeds the first-slice limit of {MAX_RECORDS}")
+    cap = MAX_RECORDS if limit is None else limit
+    if len(records) > cap:
+        raise Refused(f"{len(records)} records exceeds the first-slice limit of {cap}")
     if len(records) > MAX_BUNDLE_RECORDS:
         raise Refused("exceeds the store's bundle record limit")
     for r in records:

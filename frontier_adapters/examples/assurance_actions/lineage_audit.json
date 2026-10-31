@@ -1,0 +1,702 @@
+{
+ "claim_ref_resolution": [
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "doc-SPEC-005",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "6d9d3ca74ae6e5412b95b92faa62af861f46828e4423e428a4ff9295dbb80b33"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "mission specification"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "src-fish1990",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "e23246a05220151b3f9371ec6fd485149b14f22eb1a07886eef761a1d61f48e0"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "wing loading and aspect-ratio allometry"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "src-parkchoi2010",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "827d9d70e06e9ca6ae1acfa9f57ba7757202bca5d5de729b9da20156ea6e54f8"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "lift and drag polar"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "src-davenport1992",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "83d6138b81b48d6c56283470213f5ffbc625c05883ab12b5a854e25d1c145da8"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "stability and wing-loading morphometrics"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "src-davenport2003",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "7b0cb33334b5a52d8db8faedac6762196db3143bcbc1fdfed12e3dabcf5f7603"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "maximum size argument"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "src-daane2021",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "bc4d2c048a377a24242379dbcbfd78575da27fcae24ca6594c892df6b33fea32"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "molecule-to-fin association"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "src-darwin1859",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "517e74e1c4e3002746d85c4b9e9d823fadbb31b68d0549bd8d948bc69c5799a6"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "historical framing"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "src-lovejoy2004",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "a3153edf9a057239607f45efe8231db9a1188555d2f01a4663a37b76fef3f9c7"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "phylogeny of the family"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "doc-model-coupling",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "ddfed7fd539cb173432895e104886fcba89fc9f893177683cb053d2abf9335bf"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "model coupling layer"
+  },
+  {
+   "live": "absent",
+   "map_ref": {
+    "id": "doc-2026-10-31-kcne1-binding-ddg-STOPPED",
+    "kind": "Evidence",
+    "namespace": "snapshot",
+    "version": "38e0ec8be077b4bbf9adc29bd6f2e34edd7c4b5963e6925c9c4ccaa25260bfff"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [],
+   "subsystem": "macromolecular binding test"
+  },
+  {
+   "live": "same_kind_and_id_elsewhere",
+   "map_ref": {
+    "id": "F002",
+    "kind": "Problem",
+    "namespace": "snapshot",
+    "version": "a438fc11cb28510520e581e641d07110298b34005f349badd66d9cbfe19525b3"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [
+    {
+     "id": "F002",
+     "kind": "Problem",
+     "local_status": "proposed",
+     "namespace": "delphi-frontier",
+     "version": "6afb0fddfe777c5ddd705f1b9d31f79090f6df8e331a8b7d7e8a9abe59deb394"
+    }
+   ],
+   "subsystem": "molecular-to-tissue evidence"
+  },
+  {
+   "live": "same_kind_and_id_elsewhere",
+   "map_ref": {
+    "id": "F003",
+    "kind": "Problem",
+    "namespace": "snapshot",
+    "version": "ad73479cc1abee8f0821e3e04fc60f3193a7eaecde2d24579bad2b79c9eba8fb"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [
+    {
+     "id": "F003",
+     "kind": "Problem",
+     "local_status": "proposed",
+     "namespace": "delphi-frontier",
+     "version": "72c7b472326c90cc5a2290ff2669e45c3c29e18d8e3fd05339485a6f298a52cc"
+    }
+   ],
+   "subsystem": "linear versus nonlinear pattern"
+  },
+  {
+   "live": "same_kind_and_id_elsewhere",
+   "map_ref": {
+    "id": "turing-wavelength",
+    "kind": "Claim",
+    "namespace": "snapshot",
+    "version": "ac4bda8db09c3e46df7926300adf7bf00c871bb8c3f501bdac2b66c3cc77389d"
+   },
+   "map_status": "snapshot_pin_not_live_store_acceptance",
+   "same_kind_and_id_in_store": [
+    {
+     "id": "turing-wavelength",
+     "kind": "Claim",
+     "local_status": "proposed",
+     "namespace": "delphi-frontier",
+     "version": "fb04822bc082dcad17e17d38b45cdd932d76bdb604902ba5b72aa57a07f6d081"
+    },
+    {
+     "id": "turing-wavelength",
+     "kind": "Claim",
+     "local_status": "imported_unreviewed",
+     "namespace": "node-a",
+     "version": "96df99f6d191afafd2305986184973c8ffbd04ba644618ba860cb6fc54019b8d"
+    }
+   ],
+   "subsystem": "pattern wavelength at onset"
+  }
+ ],
+ "hooks_by_item": {
+  "deformed-fin-to-polar": [],
+  "gene-to-fin-program": [],
+  "neural-caudal-control": [],
+  "refine-unconverged-glide": [],
+  "resolve-cell-tissue-fin": [],
+  "resolve-fin-deformation-aerodynamic-polar": [],
+  "resolve-fin-stiffness-calibration": [
+   {
+    "basis": "public record text names 'engineering/fin_mechanics/artifacts/result.json' (a text match, not a typed reference)",
+    "is_head": true,
+    "local_status": "imported_unreviewed",
+    "map_pin": {
+     "path": "engineering/fin_mechanics/artifacts/result.json",
+     "selector": "/not_established",
+     "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+    },
+    "pin_relation": "pin_differs_from_map",
+    "ref": {
+     "id": "eng-finmech-claim-ei-crit",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "4998ef85bd98ec64c0f4bc86e77337ea25df7ff5683ac6b62dc9095cf5f62f57"
+    },
+    "reverse_usage_incoming_edges": {
+     "by_kind": {
+      "context_only": 1,
+      "depends_on": 1,
+      "targets": 3
+     },
+     "count": 5,
+     "from": [
+      "node-a/Action/eng-finmech-action-render@2ce84b9068184df208140fe18aaa339c38e6bded34b15717c8869f267f67f0b4",
+      "node-a/Action/eng-finmech-action-sim@16b0d353e95428b623b287237f24c320475868475a537e6e930f5eb46cc5d3fc",
+      "node-a/Evidence/eng-finmech-evidence-render@0360bea50a108244e31b4360c07dd083766875ae50099de54eb46b8418701479",
+      "node-a/Evidence/eng-finmech-evidence-sim@f603df41d519d89ff20afcbda48c2b1059b330e34ddb8a6426a5365105001775",
+      "node-a/Problem/eng-finmech-problem-ei-measurement@4a72ddfd7dc19e0c0e54a59825528d0ea226412bdc552c54e06eaa259f43335c"
+     ]
+    },
+    "usable_as_exact_input": false
+   },
+   {
+    "basis": "public record text names 'engineering/fin_mechanics/artifacts/result.json' (a text match, not a typed reference)",
+    "is_head": true,
+    "local_status": "imported_unreviewed",
+    "map_pin": {
+     "path": "engineering/fin_mechanics/artifacts/result.json",
+     "selector": "/not_established",
+     "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+    },
+    "pin_relation": "pin_differs_from_map",
+    "ref": {
+     "id": "eng-finmech-evidence-sim",
+     "kind": "Evidence",
+     "namespace": "node-a",
+     "version": "f603df41d519d89ff20afcbda48c2b1059b330e34ddb8a6426a5365105001775"
+    },
+    "reverse_usage_incoming_edges": {
+     "by_kind": {
+      "uses": 1
+     },
+     "count": 1,
+     "from": [
+      "node-a/Action/eng-finmech-action-render@2ce84b9068184df208140fe18aaa339c38e6bded34b15717c8869f267f67f0b4"
+     ]
+    },
+    "usable_as_exact_input": false
+   },
+   {
+    "basis": "public record text names 'engineering/fin_mechanics/artifacts/result.json' (a text match, not a typed reference)",
+    "is_head": true,
+    "local_status": "imported_unreviewed",
+    "map_pin": {
+     "path": "engineering/fin_mechanics/artifacts/result.json",
+     "selector": "/not_established",
+     "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+    },
+    "pin_relation": "pin_differs_from_map",
+    "ref": {
+     "id": "eng-finmech-problem-ei-measurement",
+     "kind": "Problem",
+     "namespace": "node-a",
+     "version": "4a72ddfd7dc19e0c0e54a59825528d0ea226412bdc552c54e06eaa259f43335c"
+    },
+    "reverse_usage_incoming_edges": {
+     "by_kind": {},
+     "count": 0,
+     "from": []
+    },
+    "usable_as_exact_input": false
+   }
+  ],
+  "tissue-to-EI": [],
+  "whole-life-history": []
+ },
+ "map": {
+  "commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+  "path": "artifacts/assurance/map.json",
+  "sha256_in_mapping": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7"
+ },
+ "map_audit": {
+  "claim_ref_status_values": {
+   "snapshot_pin_not_live_store_acceptance": 13
+  },
+  "claim_refs": 13,
+  "claim_refs_by_namespace": {
+   "snapshot": 13
+  },
+  "equation_sources_without_sha256": [],
+  "equations": 12,
+  "equations_without_check_evidence": [],
+  "equations_without_sources": [],
+  "evidence_index_pins": 32,
+  "map_itself_in_store": "not asserted: the map is a repository artifact; it is not a store Evidence record unless someone imports it",
+  "nodes_with_no_equation_ids": [
+   "caudal",
+   "flying-fish:collective",
+   "flying-fish:developmental",
+   "flying-fish:ecological",
+   "flying-fish:evolutionary",
+   "flying-fish:macromolecular",
+   "flying-fish:molecular",
+   "flying-fish:neural",
+   "flying-fish:subcellular",
+   "pelvic-left",
+   "pelvic-right"
+  ]
+ },
+ "no_metric_statement": "Counts are counts of records and hooks. No success probability, expected information, utility, confidence or ranking is produced.",
+ "read_at_utc": "2026-10-31T21:15:20Z",
+ "read_only": true,
+ "schema": "frontier.assurance-lineage-audit/1",
+ "schema_hooks": {
+  "bidirectional_count": 9,
+  "forward_fields": [
+   {
+    "bidirectional": true,
+    "field": "inputs",
+    "model": "Action",
+    "pointer": "Ref",
+    "reverse_query": "typed_edges relation 'uses' (indexed on target_version; frontier.graph incoming edges)",
+    "typed_edge_relation": "uses"
+   },
+   {
+    "bidirectional": true,
+    "field": "target",
+    "model": "Action",
+    "pointer": "Ref",
+    "reverse_query": "typed_edges relation 'targets' (indexed on target_version; frontier.graph incoming edges)",
+    "typed_edge_relation": "targets"
+   },
+   {
+    "bidirectional": true,
+    "field": "plan_steps",
+    "model": "ActionProposal",
+    "pointer": "Ref",
+    "reverse_query": "typed_edges relation 'plans_step' (indexed on target_version; frontier.graph incoming edges)",
+    "typed_edge_relation": "plans_step"
+   },
+   {
+    "bidirectional": true,
+    "field": "target",
+    "model": "Assessment",
+    "pointer": "Ref",
+    "reverse_query": "typed_edges relation 'targets' (indexed on target_version; frontier.graph incoming edges)",
+    "typed_edge_relation": "targets"
+   },
+   {
+    "bidirectional": true,
+    "field": "evidence_links",
+    "model": "Dimension",
+    "pointer": "Ref",
+    "reverse_query": "typed_edges relation 'review_evidence' (indexed on target_version; frontier.graph incoming edges)",
+    "typed_edge_relation": "review_evidence"
+   },
+   {
+    "bidirectional": true,
+    "field": "artifacts",
+    "model": "Evidence",
+    "pointer": "ArtifactRef",
+    "reverse_query": "ArtifactIndex search by sha256/role (a separate index)",
+    "typed_edge_relation": null
+   },
+   {
+    "bidirectional": true,
+    "field": "produced_by",
+    "model": "Evidence",
+    "pointer": "Ref",
+    "reverse_query": "typed_edges relation 'produced_by' (indexed on target_version; frontier.graph incoming edges)",
+    "typed_edge_relation": "produced_by"
+   },
+   {
+    "bidirectional": true,
+    "field": "target",
+    "model": "Evidence",
+    "pointer": "Ref",
+    "reverse_query": "typed_edges relation 'targets' (indexed on target_version; frontier.graph incoming edges)",
+    "typed_edge_relation": "targets"
+   },
+   {
+    "bidirectional": false,
+    "field": "target",
+    "model": "Interest",
+    "pointer": "Ref",
+    "reverse_query": "none: forward only",
+    "typed_edge_relation": "targets"
+   },
+   {
+    "bidirectional": true,
+    "field": "dependencies",
+    "model": "Problem",
+    "pointer": "Ref",
+    "reverse_query": "typed_edges relation 'depends_on' (indexed on target_version; frontier.graph incoming edges)",
+    "typed_edge_relation": "depends_on"
+   }
+  ],
+  "forward_only_count": 1,
+  "typed_edge_relations_emitted": {
+   "Action": [
+    "plans_step",
+    "targets",
+    "uses"
+   ],
+   "Assessment": [
+    "review_evidence",
+    "targets"
+   ],
+   "Evidence": [
+    "produced_by",
+    "targets"
+   ],
+   "Problem": [
+    "depends_on"
+   ]
+  },
+  "untyped_lineage_text_not_queryable_backwards": [
+   "Problem.payload.original.claim_ids (untyped ids; the graph draws them as tentative edges only)",
+   "Evidence.payload.provenance.datasets (untyped declarations)",
+   "Claim.payload.source_record_version (a string, not a Ref)",
+   "Claim/Problem Source.locator (a git locator string, not a Ref)"
+  ]
+ },
+ "scope": {
+  "namespaces_read": "all",
+  "queries": "READ ONLY transactions; text match on payload; no URI fetched",
+  "records_visible": 1300,
+  "visibility": "public, non-Event"
+ },
+ "stale_artifact_pins": [
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "eng-finmech-evidence-render",
+    "namespace": "node-a",
+    "version": "0360bea50a108244e31b4360c07dd083766875ae50099de54eb46b8418701479"
+   },
+   "path": "engineering/fin_mechanics/artifacts/fin_mechanics.mp4",
+   "pinned_at_commit": "a48399f60f770c0e88cf3aaf1e7e239ca1055619",
+   "pinned_sha256": "f4080da6514b6e7a374927f7e40ac6ccff7ae33d62fe2ecd96318a2fb7c7ac17",
+   "sha256_at_checked_commit": "dbdedba50e1f34222deafacde235b846d7d2607359f563e813f3bacf53887efd",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "eng-finmech-evidence-render",
+    "namespace": "node-a",
+    "version": "0360bea50a108244e31b4360c07dd083766875ae50099de54eb46b8418701479"
+   },
+   "path": "engineering/fin_mechanics/artifacts/poster.png",
+   "pinned_at_commit": "a48399f60f770c0e88cf3aaf1e7e239ca1055619",
+   "pinned_sha256": "df0e4804e57cda604ac66f8bb49681a9105b930dd1a078d15ce505209030cf95",
+   "sha256_at_checked_commit": "becbc217c525dc85514ec9a8c356f1f0aac10b1e76377ca70b5762851fc005bd",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "eng-finmech-evidence-render",
+    "namespace": "node-a",
+    "version": "0360bea50a108244e31b4360c07dd083766875ae50099de54eb46b8418701479"
+   },
+   "path": "engineering/fin_mechanics/render.py",
+   "pinned_at_commit": "a48399f60f770c0e88cf3aaf1e7e239ca1055619",
+   "pinned_sha256": "58a94ae5adc185ef427654a7b0ff99fa8bf0c994edcb6ba6e10371a687dae171",
+   "sha256_at_checked_commit": "1ba6ba8bf7b414c820791ce14634d1c99789603ebe1a574b1077515fd45b7c66",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "eng-finmech-evidence-render",
+    "namespace": "node-a",
+    "version": "0360bea50a108244e31b4360c07dd083766875ae50099de54eb46b8418701479"
+   },
+   "path": "engineering/fin_mechanics/artifacts/manifest.json",
+   "pinned_at_commit": "a48399f60f770c0e88cf3aaf1e7e239ca1055619",
+   "pinned_sha256": "179f6f910d4e1c58a3241569171fc3bd924d2336982c4b23e1d522f49dbde461",
+   "sha256_at_checked_commit": "bce99b7f6190ec2ba673bc7c0d4962e6bc3548148891591126fff87af1fa52be",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "eng-finmech-evidence-sim",
+    "namespace": "node-a",
+    "version": "f603df41d519d89ff20afcbda48c2b1059b330e34ddb8a6426a5365105001775"
+   },
+   "path": "engineering/fin_mechanics/artifacts/result.json",
+   "pinned_at_commit": "a48399f60f770c0e88cf3aaf1e7e239ca1055619",
+   "pinned_sha256": "971aa0056f0879b9bf38907a533727d324cc26cfea31f74d83e1e08266cf1f36",
+   "sha256_at_checked_commit": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "eng-finmech-evidence-sim",
+    "namespace": "node-a",
+    "version": "f603df41d519d89ff20afcbda48c2b1059b330e34ddb8a6426a5365105001775"
+   },
+   "path": "engineering/fin_mechanics/sweep.py",
+   "pinned_at_commit": "a48399f60f770c0e88cf3aaf1e7e239ca1055619",
+   "pinned_sha256": "17e2e1835d9f67c47b68e8285ae118b1b585c4d2b9a955bd13c598fbc498fa6e",
+   "sha256_at_checked_commit": "31529bac797c4563190f68b180ddd31fe9537a13535a364f5918ac4dd885c8ec",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-build-A-precursor-short-fin",
+    "namespace": "node-a",
+    "version": "5ef4c93ce3e985bedc811701880b1829921f101603fb84a74f1350820ea21abb"
+   },
+   "path": "artifacts/print/manifest.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "61a3da72c032bca6fb73e4fc14de13f0fe33881144c019cfccaa62c5bc0bda7f",
+   "sha256_at_checked_commit": "6fe9356c444f6b8763d5a7cf0d1a7b005eaef57d6ed8fe30591242be63dae81e",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-build-B-two-wing-glider",
+    "namespace": "node-a",
+    "version": "ea93d9e572c77942b70c7551a7bd5c6da27e72b2d1e3ff1033c86db0435cf32a"
+   },
+   "path": "artifacts/print/manifest.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "61a3da72c032bca6fb73e4fc14de13f0fe33881144c019cfccaa62c5bc0bda7f",
+   "sha256_at_checked_commit": "6fe9356c444f6b8763d5a7cf0d1a7b005eaef57d6ed8fe30591242be63dae81e",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-build-C-four-wing-glider",
+    "namespace": "node-a",
+    "version": "39a74f9b196ec34b0dcf21657973bf1a14d9bfce52430864e21dde6e9e87d4ae"
+   },
+   "path": "artifacts/print/manifest.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "61a3da72c032bca6fb73e4fc14de13f0fe33881144c019cfccaa62c5bc0bda7f",
+   "sha256_at_checked_commit": "6fe9356c444f6b8763d5a7cf0d1a7b005eaef57d6ed8fe30591242be63dae81e",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-build-N1-cypselurus-baseline",
+    "namespace": "node-a",
+    "version": "f01e25e92c2aa0593d38a22ed4f93f77f251747f3ac49950609cb29cb8efe46c"
+   },
+   "path": "artifacts/print/manifest.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "61a3da72c032bca6fb73e4fc14de13f0fe33881144c019cfccaa62c5bc0bda7f",
+   "sha256_at_checked_commit": "6fe9356c444f6b8763d5a7cf0d1a7b005eaef57d6ed8fe30591242be63dae81e",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-build-N2-area-x1.3",
+    "namespace": "node-a",
+    "version": "d6a93cb55662d046baa432f5fdc8ec27a3973317d3eb4cfe41be277a7ebc50cd"
+   },
+   "path": "artifacts/print/manifest.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "61a3da72c032bca6fb73e4fc14de13f0fe33881144c019cfccaa62c5bc0bda7f",
+   "sha256_at_checked_commit": "6fe9356c444f6b8763d5a7cf0d1a7b005eaef57d6ed8fe30591242be63dae81e",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-build-N3-area-x1.3-ar-x1.2",
+    "namespace": "node-a",
+    "version": "5f23de40394b046a5ca98fef9424294973d96b8b55429bd92a07a3522cfd4106"
+   },
+   "path": "artifacts/print/manifest.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "61a3da72c032bca6fb73e4fc14de13f0fe33881144c019cfccaa62c5bc0bda7f",
+   "sha256_at_checked_commit": "6fe9356c444f6b8763d5a7cf0d1a7b005eaef57d6ed8fe30591242be63dae81e",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-solve-A-precursor-short-fin",
+    "namespace": "node-a",
+    "version": "db37289b1e5768198f53f8f991738ab9fc06004cecffd8cf589003ff6ea07d4b"
+   },
+   "path": "artifacts/print/design/A-precursor-short-fin.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "e67939d761c13954ee767f2773cc204ae133aa6c17b49ffebcffd6557a892cef",
+   "sha256_at_checked_commit": "32cdf5a1890803dac9a3bafe9167982dc3b66d32dab491c91ba7b5012e549a95",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-solve-B-two-wing-glider",
+    "namespace": "node-a",
+    "version": "45775c2a8d0bfdfea6db340bed377abc9789d1e5975331acd3d696d82f286620"
+   },
+   "path": "artifacts/print/design/B-two-wing-glider.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "8150d2b3e3a4bedcf814660c28020aa177a17beb5671f42aafd5a02b7b357d5b",
+   "sha256_at_checked_commit": "c43843f6347f1016ce9da830659ba172514ac609a08c0097592b22bd44b7aa61",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-solve-C-four-wing-glider",
+    "namespace": "node-a",
+    "version": "b9f6ca31cf88b777d8f06c97f89caebf199ddf0042e05a7b300cd3e5f5c673dc"
+   },
+   "path": "artifacts/print/design/C-four-wing-glider.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "47e658c9e3dfb1762832fb13ecf143d7edcd9b09bb436d5ca53fa39945b915af",
+   "sha256_at_checked_commit": "e7b519008558492e96aa2c37e21bd8107d2bb86e56a5cb07ca7e6ca7e3c986f8",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-solve-N1-cypselurus-baseline",
+    "namespace": "node-a",
+    "version": "1376c75b97ec0f5ac92c50459d63b15b8b49b83e506ffcc1af51ef5114dd46d8"
+   },
+   "path": "artifacts/print/design/N1-cypselurus-baseline.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "3174521fd6bfa013e83d31e1d5bc7215d34abe04e891322bd14c19c28f6df137",
+   "sha256_at_checked_commit": "fe72186fffb1880f8e75ee8a38395116b8e8dbb3dfd091b55821a72a3d686e50",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-solve-N2-area-x1.3",
+    "namespace": "node-a",
+    "version": "f81416501d05d60703ec8a343245d9c060789547fa04b755419fd6a26ead99b7"
+   },
+   "path": "artifacts/print/design/N2-area-x1.3.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "4fa34f0cee5cd7e72fe64f90f5c45ddb2b943a3bf3a502c6a6bec24303b730e8",
+   "sha256_at_checked_commit": "1b3995283442eb09cfadb74fc8f8dce4bceed4a8d4c89e24434cf7c64c39c6cb",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-form-evidence-solve-N3-area-x1.3-ar-x1.2",
+    "namespace": "node-a",
+    "version": "82ba69a3d2a0ae3efd8dc672ac82f8e9b0ec5271ecb432ceb4cb0dc3d6c2f57a"
+   },
+   "path": "artifacts/print/design/N3-area-x1.3-ar-x1.2.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "d5c6885703a7a2d55f302b4a1a7c373c52a82759fd3f808bd0f2e1367488732d",
+   "sha256_at_checked_commit": "3cddb66056ce47a36570638e460990c2d81814034070d5010b6708e23773a405",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-glide-evidence-replay",
+    "namespace": "node-a",
+    "version": "4e919e9dab2a72ed6d2852b308368d1facf0001ccf66e40f53f86c655a4ff398"
+   },
+   "path": "engineering/simulation/video/manifest.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "d441967e3106a3c8aff343a32334d5a22273df5d83812b2556532ec4f8d9807e",
+   "sha256_at_checked_commit": "e91add0f47f44ed35deb60fae47d7e2fd803b27e5f0f9078eba316ff01e74942",
+   "state": "file_changed_since_pin"
+  },
+  {
+   "checked_commit": "df62d69be8197635c2d0cc039ea8aff973f82bf5",
+   "evidence": {
+    "id": "viz-glide-evidence-sim",
+    "namespace": "node-a",
+    "version": "d9fa4862373de5880718af99ce2cf49fcdf2735aa966ca11520af615510348f2"
+   },
+   "path": "engineering/simulation/video/manifest.json",
+   "pinned_at_commit": "42cbd81857b3f8c0962382cda701709326711b5a",
+   "pinned_sha256": "e1ad66e2c7ca1828de3ae8a6b457700fbd623fe6151337f7375b115b9f72accb",
+   "sha256_at_checked_commit": "e91add0f47f44ed35deb60fae47d7e2fd803b27e5f0f9078eba316ff01e74942",
+   "state": "file_changed_since_pin"
+  }
+ ],
+ "stale_pin_note": "file_changed_since_pin: the pin still identifies the bytes at ITS OWN commit correctly; it no longer describes the file at the checked commit. A refreshed record needs a new id (the same id would fork)."
+}

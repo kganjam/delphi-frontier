@@ -1,0 +1,994 @@
+{
+ "bundle_sha256": "c1dbef75aaef8636fabdcb0b9f5aca7a6275593650a27b464bc1a776781e1f16",
+ "exporting_node": "node-a",
+ "policy_version": "frontier-independent-review-0.1",
+ "records": [
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-cell-tissue-fin-status",
+   "issuer": "importer",
+   "kind": "Claim",
+   "namespace": "node-a",
+   "payload": {
+    "assumptions": [
+     "The map's own scope statements apply: Regional labels are UI anchors, not measured anatomical segmentation or uniform local accuracy.",
+     "The map's own scope statements apply: Recorded receipts were read and code hashes recomputed; simulations/Lean were not rerun by this projection."
+    ],
+    "context": "A projection by the assurance builder over recorded receipts. It states what the map lists as unsupported or failed; it is not a biological finding and not a review. The map status for the whole design is 'unsupported_essential_bridges'.",
+    "limitations": [
+     "Derived by an adapter from the map; single-reader, not reviewed.",
+     "Biological success probability in the map is null and uncalibrated.",
+     "that the proposed Action is the best use of resources (the map does not rank, and no expected information or utility is computed)"
+    ],
+    "origin": "derived",
+    "prior_review": {
+     "status": "none: not reviewed by anyone"
+    },
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /project/next_actions[resolve-cell-tissue-fin] and /project/unsupported_essential_bridges[cell-tissue-fin].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "source_record_version": null,
+    "statement": "The design-assurance map (project flying-fish, sha256 737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7) records 'resolve-cell-tissue-fin' (unsupported_essential_bridge): Target-species cell/tissue measurements and a causal developmental-to-fin map. Its essential-bridge entry 'cell-tissue-fin' has status 'unsupported' and blocks: developmental biological design.",
+    "title": "Assurance map status: resolve-cell-tissue-fin"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "ad6260c4ffc7b4d11835f365ab030395ec10ecde16f87ad6a964c18230fd6a36",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-cell-tissue-fin-gap",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "resolve-cell-tissue-fin"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [
+     {
+      "id": "assure-resolve-cell-tissue-fin-status",
+      "kind": "Claim",
+      "namespace": "node-a",
+      "version": "ad6260c4ffc7b4d11835f365ab030395ec10ecde16f87ad6a964c18230fd6a36"
+     }
+    ],
+    "downstream_uses": [
+     "developmental biological design"
+    ],
+    "falsifiers": [],
+    "known_state": "Map status 'unsupported'; blocks developmental biological design.",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "resolve-cell-tissue-fin"
+    },
+    "problem_kind": "project_gap",
+    "question": "What Evidence would resolve 'cell-tissue-fin' so that 'developmental biological design' can be decided?",
+    "required_capabilities": [],
+    "scales": [],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Problem text is derived from the map's entry for this item.",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Target-species cell/tissue measurements and a causal developmental-to-fin map"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "9d0f2d4daf015438f174852392e6c3975aca9fe067acc607096368cbc99ffdf9",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-cell-tissue-fin-action",
+   "issuer": "importer",
+   "kind": "Action",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [
+     "Evidence that supplies: Target-species cell/tissue measurements and a causal developmental-to-fin map, with exact pins, accepted under the independent-review policy."
+    ],
+    "cache_key": {
+     "acceptance_policy": "frontier-independent-review-0.1",
+     "code": "frontier_adapters.assurance_actions@0.1.0; git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "environment": "NOT APPLICABLE: nothing is executed by this record",
+     "input": "assurance map sha256 737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7; evidence pins projects/flying-fish.draft.json#/draft/payload/open_questions:38248eede12e0bf5",
+     "model": "none: a proposal",
+     "parameters": "none: a proposal with no run parameters",
+     "scope": "proposal to resolve one named item of the assurance map",
+     "target": "ad6260c4ffc7b4d11835f365ab030395ec10ecde16f87ad6a964c18230fd6a36"
+    },
+    "cost_stop_bounds": "UNKNOWN. The assurance map states no cost, no budget and no stop bound ('ranking among these needs measured cost/outcome models'). A reviewer must set them before this Action can be made ready; none is invented here.",
+    "inputs": [],
+    "proposal": {
+     "alternatives": [
+      {
+       "description": "Take no action and leave the item as the map records it.",
+       "label": "defer",
+       "tradeoff": "No cost; the dependent decision (developmental biological design) stays blocked and the map keeps this item unsupported or failed."
+      }
+     ],
+     "analysis_plan": "Not declared by the assurance map. The proposer or reviewer sets the analysis plan and its predicate BEFORE any run; none is implied by this draft.",
+     "assumptions": [
+      "The intent 'experiment' is the adapter's reading of the action wording; the map states no intent.",
+      "The action text is taken verbatim from the assurance map; no method detail is added."
+     ],
+     "controls": [
+      "To be declared by the reviewer before the Action is made ready: a positive control, a negative control and a mutation or corruption control appropriate to the measurement or computation. The assurance map declares none."
+     ],
+     "decision_context": "Blocks: developmental biological design. Priority class in the map: unsupported_essential_bridge. Reason in the map: Can remove an explicit essential blocker; ranking among these needs measured cost/outcome models",
+     "expected_information": "Qualitative only: this Action could remove the named blocker. The map's expected_information_gain is null and no probability or utility inputs are explicit, so no number is computed or implied.",
+     "expected_outputs": [
+      "Target-species cell/tissue measurements and a causal developmental-to-fin map"
+     ],
+     "intent": "experiment",
+     "limitations": [
+      "Proposal only: not executed, not scheduled, not leased, not reviewed.",
+      "that the proposed Action is the best use of resources (the map does not rank, and no expected information or utility is computed)",
+      "that the Action will succeed, or any probability of biological success",
+      "that the bridge or gap is a correct or complete description of what blocks the design",
+      "anything about biology"
+     ],
+     "method": "Target-species cell/tissue measurements and a causal developmental-to-fin map",
+     "outcomes": [
+      {
+       "criterion": "Evidence that supplies: Target-species cell/tissue measurements and a causal developmental-to-fin map, with exact pins, accepted under the independent-review policy.",
+       "decision_consequence": "The blocked decision (developmental biological design) can be re-evaluated and the assurance map rebuilt from the new Evidence; the map is not edited by hand.",
+       "label": "requirement_met"
+      },
+      {
+       "criterion": "No Evidence, Evidence outside the stated scope, or Evidence that fails review.",
+       "decision_consequence": "The item stays unsupported or failed and the dependent decision stays blocked.",
+       "label": "requirement_not_met"
+      }
+     ],
+     "selection_basis": "policy",
+     "selection_rationale": "The map's action policy: Blocker/dependency priority only; no invented expected-information or utility numbers. No ranking among actions is made."
+    },
+    "required_capabilities": [],
+    "target": {
+     "id": "assure-resolve-cell-tissue-fin-status",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "ad6260c4ffc7b4d11835f365ab030395ec10ecde16f87ad6a964c18230fd6a36"
+    },
+    "title": "PROPOSED (not executed): Target-species cell/tissue measurements and a causal developmental-to-fin map"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "f868de0fbd968cabb7ffda837f77169b2465e1bfd4535dc35119c18f0869ce3f",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-fin-deformation-aerodynamic-polar-status",
+   "issuer": "importer",
+   "kind": "Claim",
+   "namespace": "node-a",
+   "payload": {
+    "assumptions": [
+     "The map's own scope statements apply: Regional labels are UI anchors, not measured anatomical segmentation or uniform local accuracy.",
+     "The map's own scope statements apply: Recorded receipts were read and code hashes recomputed; simulations/Lean were not rerun by this projection."
+    ],
+    "context": "A projection by the assurance builder over recorded receipts. It states what the map lists as unsupported or failed; it is not a biological finding and not a review. The map status for the whole design is 'unsupported_essential_bridges'.",
+    "limitations": [
+     "Derived by an adapter from the map; single-reader, not reviewed.",
+     "Biological success probability in the map is null and uncalibrated.",
+     "that the proposed Action is the best use of resources (the map does not rank, and no expected information or utility is computed)"
+    ],
+    "origin": "derived",
+    "prior_review": {
+     "status": "none: not reviewed by anyone"
+    },
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /project/next_actions[resolve-fin-deformation-aerodynamic-polar] and /project/unsupported_essential_bridges[fin-deformation-aerodynamic-polar].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "source_record_version": null,
+    "statement": "The design-assurance map (project flying-fish, sha256 737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7) records 'resolve-fin-deformation-aerodynamic-polar' (unsupported_essential_bridge): Calibrated geometry/deformation-to-lift/drag and held-out trajectories. Its essential-bridge entry 'fin-deformation-aerodynamic-polar' has status 'unsupported' and blocks: loaded-fin flight prediction.",
+    "title": "Assurance map status: resolve-fin-deformation-aerodynamic-polar"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "c1c57d36e351fb41579b14726a07c24cafca79b09dfdb28cb6652e3e3a9cff4c",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-fin-deformation-aerodynamic-polar-gap",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "resolve-fin-deformation-aerodynamic-polar"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [
+     {
+      "id": "assure-resolve-fin-deformation-aerodynamic-polar-status",
+      "kind": "Claim",
+      "namespace": "node-a",
+      "version": "c1c57d36e351fb41579b14726a07c24cafca79b09dfdb28cb6652e3e3a9cff4c"
+     }
+    ],
+    "downstream_uses": [
+     "loaded-fin flight prediction"
+    ],
+    "falsifiers": [],
+    "known_state": "Map status 'unsupported'; blocks loaded-fin flight prediction.",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "resolve-fin-deformation-aerodynamic-polar"
+    },
+    "problem_kind": "project_gap",
+    "question": "What Evidence would resolve 'fin-deformation-aerodynamic-polar' so that 'loaded-fin flight prediction' can be decided?",
+    "required_capabilities": [],
+    "scales": [],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Problem text is derived from the map's entry for this item.",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Calibrated geometry/deformation-to-lift/drag and held-out trajectories"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "8be9407f9ba1942cdd071ea8d0dfcdf6a2a4d6ac6bb30e539b38aea6bac29682",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-fin-deformation-aerodynamic-polar-action",
+   "issuer": "importer",
+   "kind": "Action",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [
+     "Evidence that supplies: Calibrated geometry/deformation-to-lift/drag and held-out trajectories, with exact pins, accepted under the independent-review policy."
+    ],
+    "cache_key": {
+     "acceptance_policy": "frontier-independent-review-0.1",
+     "code": "frontier_adapters.assurance_actions@0.1.0; git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "environment": "NOT APPLICABLE: nothing is executed by this record",
+     "input": "assurance map sha256 737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7; evidence pins engineering/COUPLING_MANIFEST.json#/couplings/7:499d3a6159e23556",
+     "model": "none: a proposal",
+     "parameters": "none: a proposal with no run parameters",
+     "scope": "proposal to resolve one named item of the assurance map",
+     "target": "c1c57d36e351fb41579b14726a07c24cafca79b09dfdb28cb6652e3e3a9cff4c"
+    },
+    "cost_stop_bounds": "UNKNOWN. The assurance map states no cost, no budget and no stop bound ('ranking among these needs measured cost/outcome models'). A reviewer must set them before this Action can be made ready; none is invented here.",
+    "inputs": [],
+    "proposal": {
+     "alternatives": [
+      {
+       "description": "Take no action and leave the item as the map records it.",
+       "label": "defer",
+       "tradeoff": "No cost; the dependent decision (loaded-fin flight prediction) stays blocked and the map keeps this item unsupported or failed."
+      }
+     ],
+     "analysis_plan": "Not declared by the assurance map. The proposer or reviewer sets the analysis plan and its predicate BEFORE any run; none is implied by this draft.",
+     "assumptions": [
+      "The intent 'experiment' is the adapter's reading of the action wording; the map states no intent.",
+      "The action text is taken verbatim from the assurance map; no method detail is added."
+     ],
+     "controls": [
+      "To be declared by the reviewer before the Action is made ready: a positive control, a negative control and a mutation or corruption control appropriate to the measurement or computation. The assurance map declares none."
+     ],
+     "decision_context": "Blocks: loaded-fin flight prediction. Priority class in the map: unsupported_essential_bridge. Reason in the map: Can remove an explicit essential blocker; ranking among these needs measured cost/outcome models",
+     "expected_information": "Qualitative only: this Action could remove the named blocker. The map's expected_information_gain is null and no probability or utility inputs are explicit, so no number is computed or implied.",
+     "expected_outputs": [
+      "Calibrated geometry/deformation-to-lift/drag and held-out trajectories"
+     ],
+     "intent": "experiment",
+     "limitations": [
+      "Proposal only: not executed, not scheduled, not leased, not reviewed.",
+      "that the proposed Action is the best use of resources (the map does not rank, and no expected information or utility is computed)",
+      "that the Action will succeed, or any probability of biological success",
+      "that the bridge or gap is a correct or complete description of what blocks the design",
+      "anything about biology"
+     ],
+     "method": "Calibrated geometry/deformation-to-lift/drag and held-out trajectories",
+     "outcomes": [
+      {
+       "criterion": "Evidence that supplies: Calibrated geometry/deformation-to-lift/drag and held-out trajectories, with exact pins, accepted under the independent-review policy.",
+       "decision_consequence": "The blocked decision (loaded-fin flight prediction) can be re-evaluated and the assurance map rebuilt from the new Evidence; the map is not edited by hand.",
+       "label": "requirement_met"
+      },
+      {
+       "criterion": "No Evidence, Evidence outside the stated scope, or Evidence that fails review.",
+       "decision_consequence": "The item stays unsupported or failed and the dependent decision stays blocked.",
+       "label": "requirement_not_met"
+      }
+     ],
+     "selection_basis": "policy",
+     "selection_rationale": "The map's action policy: Blocker/dependency priority only; no invented expected-information or utility numbers. No ranking among actions is made."
+    },
+    "required_capabilities": [],
+    "target": {
+     "id": "assure-resolve-fin-deformation-aerodynamic-polar-status",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "c1c57d36e351fb41579b14726a07c24cafca79b09dfdb28cb6652e3e3a9cff4c"
+    },
+    "title": "PROPOSED (not executed): Calibrated geometry/deformation-to-lift/drag and held-out trajectories"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "fa4fad27aa317ae425a349c5241e262c280f6092d39952e6d77ff17fb6e8552b",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-fin-stiffness-calibration-status",
+   "issuer": "importer",
+   "kind": "Claim",
+   "namespace": "node-a",
+   "payload": {
+    "assumptions": [
+     "The map's own scope statements apply: Regional labels are UI anchors, not measured anatomical segmentation or uniform local accuracy.",
+     "The map's own scope statements apply: Recorded receipts were read and code hashes recomputed; simulations/Lean were not rerun by this projection."
+    ],
+    "context": "A projection by the assurance builder over recorded receipts. It states what the map lists as unsupported or failed; it is not a biological finding and not a review. The map status for the whole design is 'unsupported_essential_bridges'.",
+    "limitations": [
+     "Derived by an adapter from the map; single-reader, not reviewed.",
+     "Biological success probability in the map is null and uncalibrated.",
+     "that the proposed Action is the best use of resources (the map does not rank, and no expected information or utility is computed)"
+    ],
+    "origin": "derived",
+    "prior_review": {
+     "status": "none: not reviewed by anyone"
+    },
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /project/next_actions[resolve-fin-stiffness-calibration] and /project/unsupported_essential_bridges[fin-stiffness-calibration].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "source_record_version": null,
+    "statement": "The design-assurance map (project flying-fish, sha256 737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7) records 'resolve-fin-stiffness-calibration' (unsupported_essential_bridge): Target-fin effective stiffness and boundary-condition data. Its essential-bridge entry 'fin-stiffness-calibration' has status 'unknown' and blocks: material-validity decision.",
+    "title": "Assurance map status: resolve-fin-stiffness-calibration"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "58bb1959105f326c2bfb1a431af41afba462c32637f318d55c83b20027b9b587",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-fin-stiffness-calibration-gap",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "resolve-fin-stiffness-calibration"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [
+     {
+      "id": "assure-resolve-fin-stiffness-calibration-status",
+      "kind": "Claim",
+      "namespace": "node-a",
+      "version": "58bb1959105f326c2bfb1a431af41afba462c32637f318d55c83b20027b9b587"
+     }
+    ],
+    "downstream_uses": [
+     "material-validity decision"
+    ],
+    "falsifiers": [],
+    "known_state": "Map status 'unknown'; blocks material-validity decision.",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "resolve-fin-stiffness-calibration"
+    },
+    "problem_kind": "project_gap",
+    "question": "What Evidence would resolve 'fin-stiffness-calibration' so that 'material-validity decision' can be decided?",
+    "required_capabilities": [],
+    "scales": [],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Problem text is derived from the map's entry for this item.",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Target-fin effective stiffness and boundary-condition data"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "79b57b524d87ebcb6b1ff5dade80737c175472bf55b612d3d10ed62c10478b5a",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-resolve-fin-stiffness-calibration-action",
+   "issuer": "importer",
+   "kind": "Action",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [
+     "Evidence that supplies: Target-fin effective stiffness and boundary-condition data, with exact pins, accepted under the independent-review policy."
+    ],
+    "cache_key": {
+     "acceptance_policy": "frontier-independent-review-0.1",
+     "code": "frontier_adapters.assurance_actions@0.1.0; git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "environment": "NOT APPLICABLE: nothing is executed by this record",
+     "input": "assurance map sha256 737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7; evidence pins engineering/fin_mechanics/artifacts/result.json#/not_established:dc93441487af7bfc",
+     "model": "none: a proposal",
+     "parameters": "none: a proposal with no run parameters",
+     "scope": "proposal to resolve one named item of the assurance map",
+     "target": "58bb1959105f326c2bfb1a431af41afba462c32637f318d55c83b20027b9b587"
+    },
+    "cost_stop_bounds": "UNKNOWN. The assurance map states no cost, no budget and no stop bound ('ranking among these needs measured cost/outcome models'). A reviewer must set them before this Action can be made ready; none is invented here.",
+    "inputs": [],
+    "proposal": {
+     "alternatives": [
+      {
+       "description": "Take no action and leave the item as the map records it.",
+       "label": "defer",
+       "tradeoff": "No cost; the dependent decision (material-validity decision) stays blocked and the map keeps this item unsupported or failed."
+      }
+     ],
+     "analysis_plan": "Not declared by the assurance map. The proposer or reviewer sets the analysis plan and its predicate BEFORE any run; none is implied by this draft.",
+     "assumptions": [
+      "The intent 'experiment' is the adapter's reading of the action wording; the map states no intent.",
+      "The action text is taken verbatim from the assurance map; no method detail is added."
+     ],
+     "controls": [
+      "To be declared by the reviewer before the Action is made ready: a positive control, a negative control and a mutation or corruption control appropriate to the measurement or computation. The assurance map declares none."
+     ],
+     "decision_context": "Blocks: material-validity decision. Priority class in the map: unsupported_essential_bridge. Reason in the map: Can remove an explicit essential blocker; ranking among these needs measured cost/outcome models",
+     "expected_information": "Qualitative only: this Action could remove the named blocker. The map's expected_information_gain is null and no probability or utility inputs are explicit, so no number is computed or implied.",
+     "expected_outputs": [
+      "Target-fin effective stiffness and boundary-condition data"
+     ],
+     "intent": "experiment",
+     "limitations": [
+      "Proposal only: not executed, not scheduled, not leased, not reviewed.",
+      "that the proposed Action is the best use of resources (the map does not rank, and no expected information or utility is computed)",
+      "that the Action will succeed, or any probability of biological success",
+      "that the bridge or gap is a correct or complete description of what blocks the design",
+      "anything about biology"
+     ],
+     "method": "Target-fin effective stiffness and boundary-condition data",
+     "outcomes": [
+      {
+       "criterion": "Evidence that supplies: Target-fin effective stiffness and boundary-condition data, with exact pins, accepted under the independent-review policy.",
+       "decision_consequence": "The blocked decision (material-validity decision) can be re-evaluated and the assurance map rebuilt from the new Evidence; the map is not edited by hand.",
+       "label": "requirement_met"
+      },
+      {
+       "criterion": "No Evidence, Evidence outside the stated scope, or Evidence that fails review.",
+       "decision_consequence": "The item stays unsupported or failed and the dependent decision stays blocked.",
+       "label": "requirement_not_met"
+      }
+     ],
+     "selection_basis": "policy",
+     "selection_rationale": "The map's action policy: Blocker/dependency priority only; no invented expected-information or utility numbers. No ranking among actions is made."
+    },
+    "required_capabilities": [],
+    "target": {
+     "id": "assure-resolve-fin-stiffness-calibration-status",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "58bb1959105f326c2bfb1a431af41afba462c32637f318d55c83b20027b9b587"
+    },
+    "title": "PROPOSED (not executed): Target-fin effective stiffness and boundary-condition data"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "8ecbf2c957a655aca975a61c2e1ab7345dfa1ac268d085d52a3201ff8f018cdf",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-refine-unconverged-glide-status",
+   "issuer": "importer",
+   "kind": "Claim",
+   "namespace": "node-a",
+   "payload": {
+    "assumptions": [
+     "The map's own scope statements apply: Regional labels are UI anchors, not measured anatomical segmentation or uniform local accuracy.",
+     "The map's own scope statements apply: Recorded receipts were read and code hashes recomputed; simulations/Lean were not rerun by this projection."
+    ],
+    "context": "A projection by the assurance builder over recorded receipts. It states what the map lists as unsupported or failed; it is not a biological finding and not a review. The map status for the whole design is 'unsupported_essential_bridges'.",
+    "limitations": [
+     "Derived by an adapter from the map; single-reader, not reviewed.",
+     "Biological success probability in the map is null and uncalibrated.",
+     "that the proposed Action is the best use of resources (the map does not rank, and no expected information or utility is computed)"
+    ],
+    "origin": "derived",
+    "prior_review": {
+     "status": "none: not reviewed by anyone"
+    },
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /project/next_actions[refine-unconverged-glide].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "source_record_version": null,
+    "statement": "The design-assurance map (project flying-fish, sha256 737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7) records 'refine-unconverged-glide' (known_numerical_failure): Inspect and refine the recorded unconverged common-launch scenario before comparing it. It is a recorded numerical failure, not an essential bridge.",
+    "title": "Assurance map status: refine-unconverged-glide"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "0ef0f8ef4de6b7313dcebb7d87e1b5c35814fb61bdf4987eb0c594e7ce01307b",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-refine-unconverged-glide-gap",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "refine-unconverged-glide"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [
+     {
+      "id": "assure-refine-unconverged-glide-status",
+      "kind": "Claim",
+      "namespace": "node-a",
+      "version": "0ef0f8ef4de6b7313dcebb7d87e1b5c35814fb61bdf4987eb0c594e7ce01307b"
+     }
+    ],
+    "downstream_uses": [
+     "comparison of the common-launch glide scenarios"
+    ],
+    "falsifiers": [],
+    "known_state": "Recorded numerical failure; see the cited summary.",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "refine-unconverged-glide"
+    },
+    "problem_kind": "project_gap",
+    "question": "Why does the recorded scenario not converge, and does a refined run change any comparison that used it?",
+    "required_capabilities": [],
+    "scales": [],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Problem text is derived from the map's entry for this item.",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Inspect and refine the recorded unconverged common-launch scenario before comparing it"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "bcf8580df90fc301a001af043c3c1c322664fb1724942bff8275d31736c2463a",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-refine-unconverged-glide-action",
+   "issuer": "importer",
+   "kind": "Action",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [
+     "Evidence that supplies: Inspect and refine the recorded unconverged common-launch scenario before comparing it, with exact pins, accepted under the independent-review policy."
+    ],
+    "cache_key": {
+     "acceptance_policy": "frontier-independent-review-0.1",
+     "code": "frontier_adapters.assurance_actions@0.1.0; git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "environment": "NOT APPLICABLE: nothing is executed by this record",
+     "input": "assurance map sha256 737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7; evidence pins engineering/simulation/results_controlled/summary.json#/n_unconverged:d62b455e16ffa86e",
+     "model": "none: a proposal",
+     "parameters": "none: a proposal with no run parameters",
+     "scope": "proposal to resolve one named item of the assurance map",
+     "target": "0ef0f8ef4de6b7313dcebb7d87e1b5c35814fb61bdf4987eb0c594e7ce01307b"
+    },
+    "cost_stop_bounds": "UNKNOWN. The assurance map states no cost, no budget and no stop bound ('ranking among these needs measured cost/outcome models'). A reviewer must set them before this Action can be made ready; none is invented here.",
+    "inputs": [],
+    "proposal": {
+     "alternatives": [
+      {
+       "description": "Take no action and leave the item as the map records it.",
+       "label": "defer",
+       "tradeoff": "No cost; the dependent decision ((not stated by the map for this item)) stays blocked and the map keeps this item unsupported or failed."
+      }
+     ],
+     "analysis_plan": "Not declared by the assurance map. The proposer or reviewer sets the analysis plan and its predicate BEFORE any run; none is implied by this draft.",
+     "assumptions": [
+      "The intent 'simulation' is the adapter's reading of the action wording; the map states no intent.",
+      "The action text is taken verbatim from the assurance map; no method detail is added."
+     ],
+     "controls": [
+      "To be declared by the reviewer before the Action is made ready: a positive control, a negative control and a mutation or corruption control appropriate to the measurement or computation. The assurance map declares none."
+     ],
+     "decision_context": "Blocks: (not stated by the map for this item). Priority class in the map: known_numerical_failure. Reason in the map: (none stated by the map for this item)",
+     "expected_information": "Qualitative only: this Action could remove the named blocker. The map's expected_information_gain is null and no probability or utility inputs are explicit, so no number is computed or implied.",
+     "expected_outputs": [
+      "Inspect and refine the recorded unconverged common-launch scenario before comparing it"
+     ],
+     "intent": "simulation",
+     "limitations": [
+      "Proposal only: not executed, not scheduled, not leased, not reviewed.",
+      "that the proposed Action is the best use of resources (the map does not rank, and no expected information or utility is computed)",
+      "that the Action will succeed, or any probability of biological success",
+      "that the bridge or gap is a correct or complete description of what blocks the design",
+      "anything about biology"
+     ],
+     "method": "Inspect and refine the recorded unconverged common-launch scenario before comparing it",
+     "outcomes": [
+      {
+       "criterion": "Evidence that supplies: Inspect and refine the recorded unconverged common-launch scenario before comparing it, with exact pins, accepted under the independent-review policy.",
+       "decision_consequence": "The blocked decision ((not stated by the map for this item)) can be re-evaluated and the assurance map rebuilt from the new Evidence; the map is not edited by hand.",
+       "label": "requirement_met"
+      },
+      {
+       "criterion": "No Evidence, Evidence outside the stated scope, or Evidence that fails review.",
+       "decision_consequence": "The item stays unsupported or failed and the dependent decision stays blocked.",
+       "label": "requirement_not_met"
+      }
+     ],
+     "selection_basis": "policy",
+     "selection_rationale": "The map's action policy: Blocker/dependency priority only; no invented expected-information or utility numbers. No ranking among actions is made."
+    },
+    "required_capabilities": [],
+    "target": {
+     "id": "assure-refine-unconverged-glide-status",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "0ef0f8ef4de6b7313dcebb7d87e1b5c35814fb61bdf4987eb0c594e7ce01307b"
+    },
+    "title": "PROPOSED (not executed): Inspect and refine the recorded unconverged common-launch scenario before comparing it"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "d011d409bc304e9278df091af4f0cc49e4dc7ecf322cc37348a1ea469dedf3db",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-gap-gene-to-fin-program",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "gene-to-fin-program"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [],
+    "downstream_uses": [
+     "whole-design validation claims stay blocked while this gap is open"
+    ],
+    "falsifiers": [],
+    "known_state": "The map lists this equation gap with status 'missing_mechanism': No calibrated gene-to-channel-to-pattern-to-fin equation stack is established",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "gene-to-fin-program"
+    },
+    "problem_kind": "project_gap",
+    "question": "What calibrated equations and data would close the gap 'gene-to-fin-program' across scales molecular, developmental, organ?",
+    "required_capabilities": [],
+    "scales": [
+     "molecular",
+     "developmental",
+     "organ"
+    ],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /equation_gaps[gene-to-fin-program].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Missing mechanism: gene-to-fin-program"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "2178bd327a38b24b4e4ba0030c134557df81ec353d0ae2f33801c78ad9e2dd21",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-gap-tissue-to-EI",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "tissue-to-EI"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [],
+    "downstream_uses": [
+     "whole-design validation claims stay blocked while this gap is open"
+    ],
+    "falsifiers": [],
+    "known_state": "The map lists this equation gap with status 'missing_mechanism': No calibrated cell/contact/pattern-to-ray material/geometry map exists",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "tissue-to-EI"
+    },
+    "problem_kind": "project_gap",
+    "question": "What calibrated equations and data would close the gap 'tissue-to-EI' across scales cellular, tissue, organ?",
+    "required_capabilities": [],
+    "scales": [
+     "cellular",
+     "tissue",
+     "organ"
+    ],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /equation_gaps[tissue-to-EI].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Missing mechanism: tissue-to-EI"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "ec93dae363fdb649e619164e69207c1e9a566555298568ae44388170b2443a49",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-gap-deformed-fin-to-polar",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "deformed-fin-to-polar"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [],
+    "downstream_uses": [
+     "whole-design validation claims stay blocked while this gap is open"
+    ],
+    "falsifiers": [],
+    "known_state": "The map lists this equation gap with status 'missing_mechanism': No two-way fluid-structure transfer or measured deformed-fin aerodynamic polar",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "deformed-fin-to-polar"
+    },
+    "problem_kind": "project_gap",
+    "question": "What calibrated equations and data would close the gap 'deformed-fin-to-polar' across scales organ, organism?",
+    "required_capabilities": [],
+    "scales": [
+     "organ",
+     "organism"
+    ],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /equation_gaps[deformed-fin-to-polar].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Missing mechanism: deformed-fin-to-polar"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "09d64a380f4488c5f733fb18c8bb79cc7cf02edbbfdee924d45989efaa8713ff",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-gap-neural-caudal-control",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "neural-caudal-control"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [],
+    "downstream_uses": [
+     "whole-design validation claims stay blocked while this gap is open"
+    ],
+    "falsifiers": [],
+    "known_state": "The map lists this equation gap with status 'missing_mechanism': No executable propulsion, active fin control or caudal swimming dynamics linked here",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "neural-caudal-control"
+    },
+    "problem_kind": "project_gap",
+    "question": "What calibrated equations and data would close the gap 'neural-caudal-control' across scales neural, organism?",
+    "required_capabilities": [],
+    "scales": [
+     "neural",
+     "organism"
+    ],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /equation_gaps[neural-caudal-control].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Missing mechanism: neural-caudal-control"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "45c229dc5f01cca8713fa044e2faa2357cfb4d148568d03dce65ff5059f5923b",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T21:09:23+00:00",
+   "id": "assure-gap-whole-life-history",
+   "issuer": "importer",
+   "kind": "Problem",
+   "namespace": "node-a",
+   "payload": {
+    "acceptance_criteria": [],
+    "approach": "unknown",
+    "completeness": "recorded",
+    "context_tags": [
+     "flying-fish",
+     "design-assurance",
+     "whole-life-history"
+    ],
+    "cost_stop_bounds": null,
+    "data_access": "Not established by the assurance map.",
+    "dependencies": [],
+    "downstream_uses": [
+     "whole-design validation claims stay blocked while this gap is open"
+    ],
+    "falsifiers": [],
+    "known_state": "The map lists this equation gap with status 'missing_mechanism': No growth, ecological fitness or evolutionary reachability equations established",
+    "next_action": null,
+    "novelty_status": "Not searched by this adapter.",
+    "original": {
+     "adapter": "frontier_adapters.assurance_actions",
+     "assurance_item": "whole-life-history"
+    },
+    "problem_kind": "project_gap",
+    "question": "What calibrated equations and data would close the gap 'whole-life-history' across scales developmental, ecological, evolutionary?",
+    "required_capabilities": [],
+    "scales": [
+     "developmental",
+     "ecological",
+     "evolutionary"
+    ],
+    "source": {
+     "access": "Public repository file at an immutable commit (git locator in the title/locator). Only digests are carried; bytes are not embedded and no licence for the content is stated by this record. Selector /equation_gaps[whole-life-history].",
+     "content_available": false,
+     "content_sha256": "737ed4004156bc32510241bcd352c5c7e352f8cb1c81ceb3959700f5862f8fd7",
+     "license": null,
+     "locator": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5:artifacts/assurance/map.json",
+     "source_version": "git:delphi-frontier@df62d69be8197635c2d0cc039ea8aff973f82bf5",
+     "uri": null
+    },
+    "title": "Missing mechanism: whole-life-history"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:adapter:assurance-actions",
+   "version": "7d3a30630156eee4998752093602b3ffc1e7f27b3d436c267a8fff6a67219fa1",
+   "visibility": "public"
+  }
+ ],
+ "review_claims": [],
+ "schema_version": "frontier-bundle-0.1",
+ "trust": "Digest proves integrity only; reviews require receiving-node policy."
+}
