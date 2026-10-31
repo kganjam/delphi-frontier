@@ -1,0 +1,28 @@
+{
+  "check": "do the published headline correlations follow from the published data?",
+  "answer": "Yes, EXACTLY, when recomputed from the full-precision sources.",
+  "exact_reproduction": {
+    "inputs": [
+      "results/bioservices/kir21_full_positions_scores.json (full-precision ESM-2 scores)",
+      "ProteinGym v1.3 assay CSVs (full-precision DMS scores)"
+    ],
+    "rho_surface": {
+      "recomputed": 0.35296174054639,
+      "published": 0.35296174054639,
+      "diff": 0.0
+    },
+    "rho_function": {
+      "recomputed": 0.388443441441059,
+      "published": 0.388443441441059,
+      "diff": 0.0
+    },
+    "n_usable": {
+      "recomputed": 6789,
+      "published": 6789
+    }
+  },
+  "warning_for_anyone_reproducing": "kir21_full_predictions_vs_measurements.csv is a SIX-DECIMAL-PLACE rendering written for plotting. BOTH the predictions and the DMS scores are rounded in it, so recomputing rho from the CSV reproduces the published value only to about 2e-7, not exactly. All 6,789 rows differ from their full-precision values. Use the scores JSON plus the ProteinGym source for exact reproduction; use the CSV for figures.",
+  "my_own_error_in_this_check": "A first pass compared CSV-derived values against published ones with a 1e-9 tolerance and printed MISMATCH on every full-set row while the displayed 6-dp values were identical. A second pass used full-precision predictions but still the CSV's rounded DMS scores and also differed, and I wrote a conclusion claiming exact reproduction before that arm supported it. Only the third pass, full precision on both sides, is exact. The wrong conclusion is recorded here rather than deleted.",
+  "negative_control": "perturbing one prediction by +5.0 moves rho from +0.299212 to +0.298411, so the comparison discriminates rather than matching everything",
+  "256_run": "reproduced exactly from its CSV at 1e-9, because at n=256 the 6-dp rounding broke no ranks"
+}
