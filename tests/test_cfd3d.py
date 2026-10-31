@@ -263,3 +263,13 @@ def test_cyl2d_eval_fails_closed_on_bad_series(tmp_path, breakage):
     r = _cyl_eval(tmp_path, R1=_cyl_run(), R2=_cyl_run(), R3_domain=_cyl_run(cd=1.315, cdp=0.979, st=0.1650),
                   M1_mutant=run)
     assert r["verdict"]["mutant"] is False and r["verdict"]["control_passes"] is False
+
+
+def test_vlm_provenance_names_the_producer_and_only_the_hand_added_keys():
+    p = json.loads((VLM / "PROVENANCE.json").read_text())
+    assert p["producer"]["git_blob"].startswith("cdcf1c41")
+    for v, keys in p["hand_added_keys"].items():
+        rec = json.loads((VLM / v / "vlm.json").read_text())
+        assert set(keys) <= set(rec)
+        assert sha(VLM / v / "vlm.json") == p["verification_2026_10_31"]["committed_file_sha256"][v]
+        assert p["verification_2026_10_31"]["producer_rerun_equals_committed_minus_hand_added"][v]
