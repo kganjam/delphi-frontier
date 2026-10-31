@@ -103,20 +103,64 @@ def main() -> int:
     # Reproduction control against the committed 256.
     with open(args.original_scores) as fh:
         original = json.load(fh)["scores"]
-    mismatches = []
+    # The criterion is NOT bit-for-bit, and the first version of this control
+    # getting that wrong is recorded rather than edited out. The 256 run computed
+    # float(lp[mut] - lp[wt]): the subtraction happens in float32 and is then
+    # widened. This run stores each log-probability as float64 and subtracts in
+    # float64. Different arithmetic ORDER on the same float32 inputs, so the last
+    # bits differ by construction. Measured: 153 of 256 differed, max absolute
+    # 4.77e-07, max RELATIVE 5.9e-08, below float32 epsilon of 1.19e-07, and
+    # Spearman between the two sets was exactly 1.0.
+    #
+    # What the analysis actually consumes is ranks, so the criterion is agreement
+    # to float32 precision AND identical ranks. A real non-determinism would break
+    # both; a representable-precision difference breaks neither.
+    FLOAT32_EPS = 1.19e-07
+    REL_TOLERANCE = 4 * FLOAT32_EPS
+    missing, over_tolerance, diffs = [], [], []
     for key, old in original.items():
         new = scores.get(key)
         if new is None:
-            mismatches.append({"mutant": key, "reason": "absent from the full matched set"})
-        elif new != old:
-            mismatches.append({"mutant": key, "original": old, "recomputed": new,
-                               "abs_diff": abs(new - old)})
+            missing.append(key)
+            continue
+        d = abs(new - old)
+        diffs.append(d)
+        if d > REL_TOLERANCE * max(abs(old), 1.0):
+            over_tolerance.append({"mutant": key, "original": old, "recomputed": new, "abs_diff": d})
+
+    shared = [k for k in original if k in scores]
+    rank_identical, rho = None, None
+    if shared:
+        # Compare the RANK VECTORS directly. Asking whether Spearman == 1.0 is the
+        # same mistake as asking whether the scores are bit-for-bit equal: the
+        # correlation of two identical rankings came back as 0.9999999999999998
+        # here, so an exact float comparison called identical ranks a failure.
+        from scipy.stats import rankdata, spearmanr
+
+        a = rankdata([original[k] for k in shared])
+        b = rankdata([scores[k] for k in shared])
+        rank_identical = bool((a == b).all())
+        rho = float(spearmanr([original[k] for k in shared], [scores[k] for k in shared]).statistic)
+
     control = {
+        "criterion": ("agreement to float32 precision AND identical ranks; NOT bit-for-bit, "
+                      "because the two runs subtract in different precisions"),
         "n_original": len(original),
-        "n_mismatched": len(mismatches),
-        "bit_for_bit": not mismatches,
-        "mismatches": mismatches[:20],
+        "n_compared": len(shared),
+        "n_missing": len(missing),
+        "n_differing_at_all": sum(1 for d in diffs if d > 0),
+        "max_abs_diff": max(diffs) if diffs else 0.0,
+        "max_rel_diff": max((d / max(abs(original[k]), 1.0)
+                             for k, d in zip(shared, diffs)), default=0.0),
+        "rel_tolerance": REL_TOLERANCE,
+        "n_over_tolerance": len(over_tolerance),
+        "spearman_original_vs_recomputed": rho if shared else None,
+        "ranks_identical": rank_identical,
+        "passed": not missing and not over_tolerance and rank_identical is True,
+        "over_tolerance_examples": over_tolerance[:20],
+        "missing_examples": missing[:20],
     }
+    mismatches = over_tolerance or missing
     out = {
         "stage": "full_matched_scoring",
         "completed_utc": utc_now(),
@@ -130,10 +174,12 @@ def main() -> int:
     path = args.checkpoint_file.replace(".json", "_scores.json")
     write_json(path, out)
     print(f"COMPLETE positions={len(state['vectors'])} variants={len(scores)}")
-    print(f"reproduction control: {control['n_original']} original, "
-          f"{control['n_mismatched']} mismatched, bit_for_bit={control['bit_for_bit']}")
+    print(f"reproduction control: {control['n_compared']} compared, "
+          f"{control['n_differing_at_all']} differ at all, max_rel {control['max_rel_diff']:.3e} "
+          f"(tol {control['rel_tolerance']:.3e}), ranks_identical={control['ranks_identical']}, "
+          f"passed={control['passed']}")
     if mismatches:
-        print("HALTING: the scoring path is not reproducible across processes.")
+        print("HALTING: differences exceed float32 precision or ranks changed.")
         for m in mismatches[:5]:
             print("   ", m)
         return 2
