@@ -20,8 +20,8 @@ epigenetic property is claimed from sequence alone.**
 
 **16 candidate sequences were generated, recovered, and scored.** Run 1
 generated them and crashed in scoring on a bug in my own code; run 2
-(`aijob-e00qkdb12x8zv9yckb`, COMPLETED) scored them after the fix. Arm B, the
-few-shot in-context arm, remains untested.
+(`aijob-e00qkdb12x8zv9yckb`, COMPLETED) scored them after the fix. Arm B, the few-shot in-context arm, ran
+separately as `aijob-e00pywdm4ta362pwrh` and is reported below.
 
 ## What was produced
 
@@ -163,6 +163,44 @@ What it does **not** support, and this is the important part:
 - The independent motif diagnostic reached the same overlapping conclusion by a
   route with no model in it, which is the stronger of the two tests.
 - **None of it is function.**
+
+## Arm B — few-shot in-context
+
+`aijob-e00pywdm4ta362pwrh`, **COMPLETED**, `SCOREJOB_RC=0`, 422.6 s. 16
+candidates, 8 targets × 2 samples, 1,000 bp, all distinct. **Zero are identical
+to any real held-out half**, so none is a copy of a prompt or of the comparator.
+
+| group | n | mean log-prob/base | 95% CI |
+| --- | --- | --- | --- |
+| real held-out | 9 | −1.2031 | [−1.3136, −1.0925] |
+| arm A native-context | 16 | −1.2255 | [−1.2832, −1.1677] |
+| **arm B few-shot in-context** | 16 | **−1.2681** | [−1.3347, −1.2015] |
+| dinucleotide shuffle | 32 | −1.3501 | [−1.3616, −1.3385] |
+| GC-matched random | 16 | −1.3780 | [−1.3923, −1.3637] |
+
+**arm B − arm A = −0.0426, 95% CI [−0.1308, +0.0455].** The interval spans zero:
+at 16 per arm there is **no detectable difference** between native-context and
+few-shot in-context prompting on this measure.
+
+Independent motif diagnostic, same scale, no model in the loop:
+
+| group | n | GC | CpG o/e | mean z | 95% CI |
+| --- | --- | --- | --- | --- | --- |
+| real held-out | 8 | 0.352 | 0.497 | +1.23 | [+0.27, +2.19] |
+| arm A | 16 | 0.412 | 0.548 | +0.69 | [+0.06, +1.32] |
+| **arm B** | 16 | 0.379 | 0.546 | **+0.60** | [+0.17, +1.03] |
+| dinucleotide shuffle | 16 | 0.412 | 0.549 | −0.24 | [−0.82, +0.34] |
+| GC-matched random | 16 | 0.415 | 0.987 | +0.41 | [−0.11, +0.93] |
+
+Both arms agree and both overlap the real promoters.
+
+### What arm B did NOT test
+
+The 29 October Arc blog post claims **functional** regulatory sequences at
+30–50% yield, with wet validation in mice. This arm tested whether few-shot
+prompting changes **sequence likelihood and motif composition**. It did not test
+function, yield, or any of their claims, and **a null here is not evidence
+against them**. The lead remains unverified.
 
 ## What a further re-run would add
 
