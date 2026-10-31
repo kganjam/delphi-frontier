@@ -55,7 +55,13 @@ def lattice(poly_uw, origin, e_u, e_w, n_up, ns=20, nc=6, normal_fn=None, colloc
     u_lo, u_hi = poly_uw[:, 0].min(), poly_uw[:, 0].max()
     t = 0.5 * (1 - np.cos(np.linspace(0, math.pi, ns + 1)))
     ue = u_lo + (u_hi - u_lo) * np.clip(t, 1e-6, 1 - 1e-6)
-    to3 = lambda u, w: origin + u * e_u + w * e_w
+
+    def to3(u, w):
+        return origin + u * e_u + w * e_w
+
+    def w(c, f):   # point at chord fraction f on the chord c = (w_min, w_max)
+        return c[0] + f * (c[1] - c[0])
+
     A, B, C, N, area, strip, uw = [], [], [], [], [], [], []
     for i in range(ns):
         c0, c1, cm = chord_at(poly_uw, ue[i]), chord_at(poly_uw, ue[i + 1]), chord_at(poly_uw, 0.5 * (ue[i] + ue[i + 1]))
@@ -63,7 +69,6 @@ def lattice(poly_uw, origin, e_u, e_w, n_up, ns=20, nc=6, normal_fn=None, colloc
             continue
         for j in range(nc):
             f0, f1 = j / nc, (j + 1) / nc
-            w = lambda c, f: c[0] + f * (c[1] - c[0])
             fq = f0 + 0.25 * (f1 - f0)
             A.append(to3(ue[i], w(c0, fq)))
             B.append(to3(ue[i + 1], w(c1, fq)))
@@ -124,11 +129,32 @@ def cl_of(lat, S, alpha):
     return float(F.sum(axis=0) @ lift_dir / (0.5 * S)), F
 
 
+def helm(A: float) -> float:
+    """Helmbold lift-curve slope of an elliptic wing, per radian (recalled)."""
+    return 2 * math.pi * A / (2 + math.sqrt(A * A + 4))
+
+
+def ll(A: float) -> float:
+    """Prandtl lifting-line lift-curve slope of an elliptic wing, per radian (recalled)."""
+    return 2 * math.pi * A / (A + 2)
+
+
+def half_elliptic_wing(sgn: int, dihedral: float):
+    """V6: one half of an elliptic wing (span 1, chord 0.212) on the side sgn, tilted by the dihedral."""
+    def ellipse(y):   # unit-height half ellipse over the half span 0.5
+        return np.sqrt(np.clip(1 - (y / 0.5) ** 2, 0, 1))
+
+    # Leading edge at -0.053*ellipse, trailing edge at +3*0.053*ellipse (straight quarter-chord line). Each edge
+    # has its own linspace and the producer's operation order, so the floats match the producer's exactly.
+    root_to_tip, tip_to_root = np.linspace(0, 0.5, 201), np.linspace(0.5, 0, 201)
+    poly = np.vstack([np.c_[root_to_tip, -ellipse(root_to_tip) * .053], np.c_[tip_to_root, 3 * ellipse(tip_to_root) * .053]])
+    return lattice(poly, np.zeros(3), np.array([0, sgn * math.cos(dihedral), math.sin(dihedral)]),
+                   np.array([1.0, 0, 0]), np.array([0, -sgn * math.sin(dihedral), math.cos(dihedral)]), 20, 12)
+
+
 def controls() -> dict:
     g = json.loads((Path(__file__).parent / "gates_vlm.json").read_text())["controls"]
     r = {}
-    helm = lambda A: 2 * math.pi * A / (2 + math.sqrt(A * A + 4))
-    ll = lambda A: 2 * math.pi * A / (A + 2)
     lat6, S6 = elliptic(6)
     cla6 = cl_of(lat6, S6, 4)[0] / math.radians(4)
     r["V1_elliptic_AR6"] = {"CL_alpha": cla6, "reference": helm(6), "rel_err": abs(cla6 / helm(6) - 1)}
@@ -161,12 +187,7 @@ def controls() -> dict:
     # V6: two half-elliptic wings with +-20 deg dihedral, the right one the mirror of the left; at zero
     # sideslip the summed side force must vanish (a planar wing gives zero side force trivially, so dihedral)
     d = math.radians(20)
-    half = lambda sgn: lattice(
-        np.vstack([np.c_[np.linspace(0, .5, 201), -np.sqrt(np.clip(1 - (np.linspace(0, .5, 201) / .5) ** 2, 0, 1)) * .053],
-                   np.c_[np.linspace(.5, 0, 201), 3 * np.sqrt(np.clip(1 - (np.linspace(.5, 0, 201) / .5) ** 2, 0, 1)) * .053]]),
-        np.zeros(3), np.array([0, sgn * math.cos(d), math.sin(d)]), np.array([1.0, 0, 0]),
-        np.array([0, -sgn * math.sin(d), math.cos(d)]), 20, 12)
-    pair = combine({"L": half(1), "R": half(-1)})
+    pair = combine({"L": half_elliptic_wing(1, d), "R": half_elliptic_wing(-1, d)})
     _, Fp, _, _ = solve(pair, 4)
     a4 = math.radians(4)
     lift = float(Fp.sum(axis=0) @ np.array([-math.sin(a4), 0, math.cos(a4)]))
@@ -191,17 +212,17 @@ def quad_normal(q: np.ndarray) -> np.ndarray:
 
 def fin_setup(fin: dict, ns: int, nc: int):
     pl = fin["fin_plane"]
-    O, eu, ew = (np.array(pl[k], float) for k in ("origin_m", "e_u", "e_w"))
+    origin, eu, ew = (np.array(pl[k], float) for k in ("origin_m", "e_u", "e_w"))
     n_up = np.cross(ew, eu)
     n_up = n_up if n_up[2] >= 0 else -n_up
     out = np.array(fin["outline_m"], float)
-    poly = np.c_[(out - O) @ eu, (out - O) @ ew]
+    poly = np.c_[(out - origin) @ eu, (out - origin) @ ew]
     quads = np.array(fin["quads_m"], float)
     qc = quads.mean(axis=1)
     qn = np.array([quad_normal(q) for q in quads])
     qn = qn * np.sign(qn @ n_up)[:, None]
-    quv = np.c_[(qc - O) @ eu, (qc - O) @ ew]
-    quads_uw = np.stack([np.c_[(q - O) @ eu, (q - O) @ ew] for q in quads])
+    quv = np.c_[(qc - origin) @ eu, (qc - origin) @ ew]
+    quads_uw = np.stack([np.c_[(q - origin) @ eu, (q - origin) @ ew] for q in quads])
 
     def nfn(u, w, f):
         """Normal of the source mid-surface itself at (u, w): invert the containing quad's bilinear map."""
@@ -220,8 +241,8 @@ def fin_setup(fin: dict, ns: int, nc: int):
         n = np.cross(Xs, Xt)
         n /= np.linalg.norm(n)
         return n if n @ n_up >= 0 else -n
-    lat = lattice(poly, O, eu, ew, n_up, ns, nc, normal_fn=nfn)
-    return lat, {"O": O, "eu": eu, "ew": ew, "n_up": n_up, "poly": poly, "quads": quads, "qc": qc, "qn": qn,
+    lat = lattice(poly, origin, eu, ew, n_up, ns, nc, normal_fn=nfn)
+    return lat, {"origin": origin, "eu": eu, "ew": ew, "n_up": n_up, "poly": poly, "quads": quads, "qc": qc, "qn": qn,
                  "quv": quv, "qarea": np.array([0.5 * np.linalg.norm(np.cross(q[2] - q[0], q[3] - q[1])) for q in quads])}
 
 
@@ -244,7 +265,7 @@ def transfer(lat, geo, F_fin: np.ndarray, m: int = 8):
     Overlap is sampled with m x m bilinear points per panel (Jacobian-weighted); a sample inside no quad goes to
     the nearest quad centroid and is counted in `uncovered_area_frac`. Sum over quads == sum over panels exactly.
     """
-    quads_uw = np.stack([np.c_[(q - geo["O"]) @ geo["eu"], (q - geo["O"]) @ geo["ew"]] for q in geo["quads"]])
+    quads_uw = np.stack([np.c_[(q - geo["origin"]) @ geo["eu"], (q - geo["origin"]) @ geo["ew"]] for q in geo["quads"]])
     s = (np.arange(m) + 0.5) / m
     S, T = np.meshgrid(s, s, indexing="ij")
     S, T = S.ravel(), T.ravel()
