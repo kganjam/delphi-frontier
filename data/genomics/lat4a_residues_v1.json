@@ -1,0 +1,178 @@
+{
+ "ensembl": {
+  "slc43a2a": {
+   "assembly": "GRCz11",
+   "chr": "15",
+   "end": 28405742,
+   "ensembl_gene": "ENSDARG00000036848",
+   "proteins": {
+    "ENSDARP00000120945": {
+     "fig2D_window_at": 319,
+     "fig3C_window_at": 194,
+     "length": 571,
+     "res106": "L",
+     "res200": "T",
+     "res319_333": "QSFMRSIFSPIFMLS",
+     "res326": "F",
+     "res74": "L",
+     "sha256": "e4a913f92aeaacee014a31ee645b0e2227171d6c496968769700c704b20c4aeb"
+    },
+    "ENSDARP00000138218": {
+     "fig2D_window_at": 319,
+     "fig3C_window_at": 194,
+     "length": 577,
+     "res106": "L",
+     "res200": "T",
+     "res319_333": "QSFMRSIFSPIFMLS",
+     "res326": "F",
+     "res74": "L",
+     "sha256": "285cf1ad39009c8bf2eeddfd2cbeed3510311bc8f62d396d7f6e394cf0f3df9e"
+    }
+   },
+   "start": 28368644,
+   "strand": 1
+  },
+  "slc43a2b": {
+   "assembly": "GRCz11",
+   "chr": "10",
+   "end": 24391716,
+   "ensembl_gene": "ENSDARG00000061120",
+   "proteins": {
+    "ENSDARP00000091545": {
+     "fig2D_window_at": null,
+     "fig3C_window_at": null,
+     "length": 592,
+     "res106": "G",
+     "res200": "M",
+     "res319_333": "KLCLSTMDLELQCEP",
+     "res326": "D",
+     "res74": "P",
+     "sha256": "0bdd1b9324a7584b56fd1cfabaccb0f42faa55eaaf5600f3ae6fe8dc2a605291"
+    },
+    "ENSDARP00000115460": {
+     "fig2D_window_at": null,
+     "fig3C_window_at": null,
+     "length": 592,
+     "res106": "G",
+     "res200": "M",
+     "res319_333": "KLCLSTMDLELQCEP",
+     "res326": "D",
+     "res74": "P",
+     "sha256": "043f055ed8f417c6ef5cebdd3c71e0d9b5b2d8d9f2761044f2d9a680d220a305"
+    },
+    "ENSDARP00000144096": {
+     "fig2D_window_at": null,
+     "fig3C_window_at": null,
+     "length": 592,
+     "res106": "G",
+     "res200": "M",
+     "res319_333": "KLCLSTMDLELQCEP",
+     "res326": "D",
+     "res74": "P",
+     "sha256": "e7afe00859bc741d23950937b82d3970b43f84a9cb05c38256e3fded89f89d50"
+    },
+    "ENSDARP00000156564": {
+     "fig2D_window_at": null,
+     "fig3C_window_at": null,
+     "length": 598,
+     "res106": "G",
+     "res200": "M",
+     "res319_333": "KLCLSTMDLELQCEP",
+     "res326": "D",
+     "res74": "P",
+     "sha256": "81512398341ef4c66feae6e7e90230a396c9eca11dcd93f7218c0c6ec83c9876"
+    }
+   },
+   "start": 24371921,
+   "strand": -1
+  }
+ },
+ "figure_windows_read_by_eye": {
+  "fig2D": {
+   "danio_window": "QSFMRSIFSPIFMLS",
+   "human_window": "PSFMHSVFSPILLLS",
+   "label_first": 319,
+   "label_last": 333,
+   "page": 5,
+   "panel": "2D",
+   "substituted_index_in_window": 8,
+   "substitution": "F326L (flying fishes)"
+  },
+  "fig3C": {
+   "index_in_window": 7,
+   "nr21_window": "YASSAVKFPGIK",
+   "page": 6,
+   "panel": "3C",
+   "residue": 200,
+   "rows_wt_identical": [
+    "D. rerio (wt)",
+    "O. latipes",
+    "G. gallus",
+    "H. sapiens"
+   ],
+   "substitution": "T200K",
+   "wt_window": "YASSAVTFPGIK"
+  },
+  "read_level": "figure image, read by eye from pages rendered at 400 dpi; the PDF text layer has none of these strings (checked on all pages of both PDFs, with a positive control)",
+  "text_layer_hits": {
+   "PSFMHSVFSPILLLS": [],
+   "QSFMRSIFSPIFMLS": [],
+   "YASSAVKFPGIK": [],
+   "YASSAVTFPGIK": []
+  }
+ },
+ "findings": {
+  "isoforms": "the two Ensembl slc43a2a proteins (571 and 577 aa) differ only by a 6-residue insertion at 367, so their numbering agrees at 74, 106, 200 and 326",
+  "mapping_interval": {
+   "inside": true,
+   "paper_s2": "chromosome 15 between 17-33Mb",
+   "slc43a2a_ensembl_GRCz11": [
+    28368644,
+    28405742
+   ]
+  },
+  "refseq_fragment": {
+   "identical_to_ensembl_1_to_": 139,
+   "length": 153,
+   "protein": "NP_956545.1",
+   "then": "diverges into a different 14-residue C-terminus: a short isoform, so it ends before residue 200 without any numbering conflict"
+  },
+  "slc43a2a_both_isoforms": "contain both paper windows exactly: Figure 3C window at residues 194-205 (T200) and Figure 2D window at 319-333 (F326), the paper's own column labels; residue 74 and residue 106 are L, the residues named by the L74Rfs6 and L106Rfs39 alleles",
+  "slc43a2b_all_four_proteins": "contain neither window (M200, D326, residue 106 G): the control is distinct"
+ },
+ "legend_quotes": {
+  "s2_interval": {
+   "pdf": "mmc1 (publisher supplement)",
+   "pdf_page": 5,
+   "quote": "chromosome 15 between 17-33Mb"
+  },
+  "s2_ko": {
+   "pdf": "mmc1 (publisher supplement)",
+   "pdf_page": 5,
+   "quote": "Truncating frameshift allele (L74Rfs6) in lat4a generated through CRISPR/Cas9."
+  },
+  "s2_recomb": {
+   "pdf": "mmc1 (publisher supplement)",
+   "pdf_page": 5,
+   "quote": "There were 0 recombinants among 145 chromosomes for the lat4a T200K SNP."
+  }
+ },
+ "pdf_sha256": {
+  "main": "e0d4e61d74ab982efa5a3e861103bdc9b1b3ce8c25f01854799dba7b0b22c2e2",
+  "supp": "b83f903946f30865957a50b72763a82b8562a04f61c09c69465921cda28b306b"
+ },
+ "question": "Does a full-length zebrafish slc43a2a carry the paper's residues at the paper's positions, and does slc43a2b not?",
+ "reading": "lat4a_resolution_v3.json's 'supported' stands and its residue gap is closed at the level above; the status wording is unchanged, the evidence is added.",
+ "retrieved_at": {
+  "main": "2026-10-31T23:23:08+00:00",
+  "supp": "2026-10-31T23:23:08+00:00"
+ },
+ "schema": "lat4a-residues-0.1 (connector-local)",
+ "still_not_established": [
+  "which transcript the authors numbered is not stated; the two Ensembl isoforms agree at every position used, so this does not change the result here",
+  "the windows are 12 and 15 residues of a highly conserved region (the paper's own medaka, chicken and human rows share the 12-mer), so the match supports the paper's protein being slc43a2a and not slc43a2b; it is not by itself a test of orthology to other genes",
+  "Figure S2 is read at legend level only: the 17-33 Mb interval has no finer coordinates here, and the three SNP genes are named by the authors' labels (med13b, lat4a, si:dkey-285b23.3)",
+  "this is source alignment and identifier reconciliation: it says nothing about what T200K or F326L does, and no organism-engineering result is claimed"
+ ],
+ "supersedes_for_the_residue_question": "lat4a_resolution_v2.json residue_check and the problem gx-problem-lat4a-residues, which are kept unchanged"
+}

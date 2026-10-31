@@ -1,0 +1,343 @@
+{
+ "answers_in_status": "gx-problem-lat4a-residues",
+ "append_only_note": "adds 5 records. gx-problem-lat4a-residues (daane2021_supplement_records.json) is answered at the level stated here, in status only; it, gx-lat4a-is-slc43a2a-supported and every earlier record keep their versions.",
+ "issuer": "genomics-worker",
+ "namespace": "node-a",
+ "records": [
+  {
+   "created_at": "2026-10-31T23:23:08+00:00",
+   "id": "gx-daane-fig3c-2d-s2-residue-windows",
+   "issuer": "genomics-worker",
+   "kind": "Claim",
+   "namespace": "node-a",
+   "payload": {
+    "assumptions": [],
+    "context": "[species: Danio rerio, Beloniformes; evidence_class: source_assessment; source: Daane 2021 figures + supplement + Ensembl REST] Windows read by eye from rendered figure images (400 dpi); legend sentences quoted verbatim: [s2_interval] mmc1 p.5: \"chromosome 15 between 17-33Mb\"; [s2_recomb] p.5: \"There were 0 recombinants among 145 chromosomes for the lat4a T200K SNP.\"; [s2_ko] p.5: \"Truncating frameshift allele (L74Rfs6) in lat4a generated through CRISPR/Cas9.\"",
+    "limitations": [
+     "The figure windows have no text layer: they were read by eye and could contain a transcription error; they are checked here only by matching a real protein exactly.",
+     "The authors' alignment rows are as drawn; the protein/transcript they numbered is not stated.",
+     "Figure S2 was read at legend level only."
+    ],
+    "origin": "source_statement",
+    "source": {
+     "access": "author-hosted PDF, no login; read level: figure image read by eye for these windows, full text elsewhere; licence: none stated in the bytes read; PDF not stored",
+     "content_available": false,
+     "content_sha256": "e0d4e61d74ab982efa5a3e861103bdc9b1b3ce8c25f01854799dba7b0b22c2e2",
+     "license": null,
+     "locator": "Figure 3C (pdf p.6); Figure 2D (pdf p.5)",
+     "source_version": "Corrected proof; the text prints 'Published: September 16, 2021'",
+     "uri": "https://www.daanelab.org/pdfs/papers/Daane-CurrBio-2021.pdf"
+    },
+    "statement": "Figure 3C aligns YASSAVTFPGIK for zebrafish (wt), medaka, chicken and human and YASSAVKFPGIK for nr21 (T200K); Figure 2D labels residues 319 to 333 and aligns QSFMRSIFSPIFMLS for zebrafish, with F326 replaced by L in flying fishes. The supplement's Figure S2 legend places the nr21 mapping on chromosome 15 between 17 and 33 Mb, reports 0 recombinants among 145 chromosomes for the lat4a T200K SNP, and names a CRISPR frameshift allele L74Rfs6.",
+    "title": "Source statement (Figures 3C and 2D, Figure S2 legend): the paper's Lat4a sequence windows around T200 and F326, and the nr21 mapping interval"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:connector:genomics",
+   "version": "e81a86ecd52178918f071a493e8f99424e5932baacd57de5fb64de420b446e68",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T23:23:08+00:00",
+   "id": "gx-lat4a-ensembl-slc43a2a-carries-the-papers-residues",
+   "issuer": "genomics-worker",
+   "kind": "Claim",
+   "namespace": "node-a",
+   "payload": {
+    "assumptions": [
+     "The Ensembl sequences are the sequences of the genes named."
+    ],
+    "context": "[species: Danio rerio; evidence_class: source_assessment; source: Daane 2021 figures + supplement + Ensembl REST] Comparison and control in lat4a_residues_v1.json.",
+    "limitations": [
+     "The windows are 12 and 15 residues of a highly conserved region, so this supports the paper's protein being slc43a2a and not slc43a2b; it does not test anything beyond that.",
+     "The figure windows were read by eye.",
+     "The transcript the authors numbered is not stated; the two isoforms agree at every position used.",
+     "Nothing here says what T200K or F326L does."
+    ],
+    "origin": "derived",
+    "source": {
+     "access": "public REST GET, no key; responses stored by hash; Ensembl terms not read",
+     "content_available": false,
+     "content_sha256": "e4a913f92aeaacee014a31ee645b0e2227171d6c496968769700c704b20c4aeb",
+     "license": null,
+     "locator": "sequence/id/ENSDARP00000120945 (protein)",
+     "source_version": "Ensembl REST (release not stated in the response)",
+     "uri": "https://rest.ensembl.org/"
+    },
+    "statement": "Both Ensembl slc43a2a proteins (ENSDARP00000120945, 571 aa; ENSDARP00000138218, 577 aa) contain the Figure 3C window at residues 194-205, so T is residue 200, and the Figure 2D window at 319-333, so F is residue 326; residues 74 and 106 are L, as the L74Rfs6 and L106Rfs39 alleles name. None of the four slc43a2b proteins (592-598 aa) contains either window (M200, D326, G106). The slc43a2a gene lies at 28.37-28.41 Mb on chromosome 15, inside the Figure S2 interval. The 153-aa RefSeq NP_956545.1 is identical to Ensembl 1-139 and then diverges: a short isoform, not a numbering conflict.",
+    "title": "Derived: Ensembl's full-length zebrafish slc43a2a carries the paper's windows at the paper's numbering, and slc43a2b does not"
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:connector:genomics",
+   "version": "9ce7ee1d0847fcb12ee9a9d503d904316ed0180fdad422ea39a9961700777b5a",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T23:23:08+00:00",
+   "id": "gx-ev-fig3c-2d-windows",
+   "issuer": "genomics-worker",
+   "kind": "Evidence",
+   "namespace": "node-a",
+   "payload": {
+    "artifacts": [
+     {
+      "availability": "referenced",
+      "byte_size": 6184,
+      "license": null,
+      "media_type": "application/json",
+      "role": "output",
+      "sha256": "83727183b83e5f1b8337e49899554075d774e9377b73168e07d077f602fa4092",
+      "title": "output: data/genomics/lat4a_residues_v1.json - figure windows, legend quotes with pages, the Ensembl comparison, the slc43a2b control and what is still not established",
+      "uri": "urn:sha256:83727183b83e5f1b8337e49899554075d774e9377b73168e07d077f602fa4092"
+     }
+    ],
+    "assumptions": [],
+    "context": "The authors' own figures; transcription is mine.",
+    "created_time": {
+     "basis": "witnessed",
+     "value": "2026-10-31T23:23:08+00:00"
+    },
+    "evidence_kind": "source_assessment",
+    "limitations": [
+     "Read by eye from images; no text layer.",
+     "Windows only, not whole proteins."
+    ],
+    "method": "Rendered the two figure pages at 400 dpi, read the alignment windows and the 319/333 column labels by eye, and checked that the PDF text layer has none of them (with a positive control).",
+    "provenance": {
+     "main_pdf_sha256": "e0d4e61d74ab982efa5a3e861103bdc9b1b3ce8c25f01854799dba7b0b22c2e2",
+     "supplement_mmc1_sha256": "b83f903946f30865957a50b72763a82b8562a04f61c09c69465921cda28b306b"
+    },
+    "relation": "supports",
+    "retrieved_time": {
+     "basis": "witnessed",
+     "value": "2026-10-31T23:23:08+00:00"
+    },
+    "source": {
+     "access": "author-hosted PDF, no login; read level: figure image read by eye for these windows, full text elsewhere; licence: none stated in the bytes read; PDF not stored",
+     "content_available": false,
+     "content_sha256": "e0d4e61d74ab982efa5a3e861103bdc9b1b3ce8c25f01854799dba7b0b22c2e2",
+     "license": null,
+     "locator": "Figure 3C (pdf p.6); Figure 2D (pdf p.5)",
+     "source_version": "Corrected proof; the text prints 'Published: September 16, 2021'",
+     "uri": "https://www.daanelab.org/pdfs/papers/Daane-CurrBio-2021.pdf"
+    },
+    "source_dependence": {
+     "declared": true,
+     "independent_of_author": false,
+     "note": "one operator read the figures and wrote the records; no independent review"
+    },
+    "target": {
+     "id": "gx-daane-fig3c-2d-s2-residue-windows",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "e81a86ecd52178918f071a493e8f99424e5932baacd57de5fb64de420b446e68"
+    },
+    "uncertainty": "Not quantified."
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:connector:genomics",
+   "version": "d906646b3a0972f6e5bc4944b96ee0e2c9075da8c2290beca8cf1bfe646b8b80",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T23:23:08+00:00",
+   "id": "gx-ev-s2-legend",
+   "issuer": "genomics-worker",
+   "kind": "Evidence",
+   "namespace": "node-a",
+   "payload": {
+    "artifacts": [
+     {
+      "availability": "referenced",
+      "byte_size": 6184,
+      "license": null,
+      "media_type": "application/json",
+      "role": "output",
+      "sha256": "83727183b83e5f1b8337e49899554075d774e9377b73168e07d077f602fa4092",
+      "title": "output: data/genomics/lat4a_residues_v1.json - figure windows, legend quotes with pages, the Ensembl comparison, the slc43a2b control and what is still not established",
+      "uri": "urn:sha256:83727183b83e5f1b8337e49899554075d774e9377b73168e07d077f602fa4092"
+     }
+    ],
+    "assumptions": [],
+    "context": "The authors' own legend.",
+    "created_time": {
+     "basis": "witnessed",
+     "value": "2026-10-31T23:23:08+00:00"
+    },
+    "evidence_kind": "source_assessment",
+    "limitations": [
+     "Legend text only; no finer mapping coordinates."
+    ],
+    "method": "Fetched mmc1.pdf, checked its sha256, extracted the page text and verified the three legend sentences verbatim with their page.",
+    "provenance": {
+     "main_pdf_sha256": "e0d4e61d74ab982efa5a3e861103bdc9b1b3ce8c25f01854799dba7b0b22c2e2",
+     "supplement_mmc1_sha256": "b83f903946f30865957a50b72763a82b8562a04f61c09c69465921cda28b306b"
+    },
+    "relation": "supports",
+    "retrieved_time": {
+     "basis": "witnessed",
+     "value": "2026-10-31T23:23:08+00:00"
+    },
+    "source": {
+     "access": "publisher CDN download, no login; read level: full-text for the Figure S2 legend; PDF not stored; licence not read",
+     "content_available": false,
+     "content_sha256": "b83f903946f30865957a50b72763a82b8562a04f61c09c69465921cda28b306b",
+     "license": null,
+     "locator": "Figure S2 legend (mmc1 pdf p.5)",
+     "source_version": "Current Biology 2021 supplement mmc1.pdf (12 pages), sha256 pinned",
+     "uri": "https://ars.els-cdn.com/content/image/1-s2.0-S0960982221011908-mmc1.pdf"
+    },
+    "source_dependence": {
+     "declared": true,
+     "independent_of_author": false,
+     "note": "one operator read the figures and wrote the records; no independent review"
+    },
+    "target": {
+     "id": "gx-daane-fig3c-2d-s2-residue-windows",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "e81a86ecd52178918f071a493e8f99424e5932baacd57de5fb64de420b446e68"
+    },
+    "uncertainty": "Not quantified."
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:connector:genomics",
+   "version": "5c1a9c7225781be6ad52ba98ecf9aeea4d2ee5e78409101f5461378193ab7616",
+   "visibility": "public"
+  },
+  {
+   "created_at": "2026-10-31T23:23:08+00:00",
+   "id": "gx-ev-ensembl-proteins",
+   "issuer": "genomics-worker",
+   "kind": "Evidence",
+   "namespace": "node-a",
+   "payload": {
+    "artifacts": [
+     {
+      "availability": "referenced",
+      "byte_size": 6184,
+      "license": null,
+      "media_type": "application/json",
+      "role": "output",
+      "sha256": "83727183b83e5f1b8337e49899554075d774e9377b73168e07d077f602fa4092",
+      "title": "output: data/genomics/lat4a_residues_v1.json - figure windows, legend quotes with pages, the Ensembl comparison, the slc43a2b control and what is still not established",
+      "uri": "urn:sha256:83727183b83e5f1b8337e49899554075d774e9377b73168e07d077f602fa4092"
+     },
+     {
+      "availability": "referenced",
+      "byte_size": 603,
+      "license": null,
+      "media_type": "text/plain",
+      "role": "input",
+      "sha256": "e4a913f92aeaacee014a31ee645b0e2227171d6c496968769700c704b20c4aeb",
+      "title": "input: data/genomics/artifacts/ensembl_protein_ENSDARP00000120945.fasta - Ensembl protein ENSDARP00000120945",
+      "uri": "urn:sha256:e4a913f92aeaacee014a31ee645b0e2227171d6c496968769700c704b20c4aeb"
+     },
+     {
+      "availability": "referenced",
+      "byte_size": 609,
+      "license": null,
+      "media_type": "text/plain",
+      "role": "input",
+      "sha256": "285cf1ad39009c8bf2eeddfd2cbeed3510311bc8f62d396d7f6e394cf0f3df9e",
+      "title": "input: data/genomics/artifacts/ensembl_protein_ENSDARP00000138218.fasta - Ensembl protein ENSDARP00000138218",
+      "uri": "urn:sha256:285cf1ad39009c8bf2eeddfd2cbeed3510311bc8f62d396d7f6e394cf0f3df9e"
+     },
+     {
+      "availability": "referenced",
+      "byte_size": 630,
+      "license": null,
+      "media_type": "text/plain",
+      "role": "input",
+      "sha256": "81512398341ef4c66feae6e7e90230a396c9eca11dcd93f7218c0c6ec83c9876",
+      "title": "input: data/genomics/artifacts/ensembl_protein_ENSDARP00000156564.fasta - Ensembl protein ENSDARP00000156564",
+      "uri": "urn:sha256:81512398341ef4c66feae6e7e90230a396c9eca11dcd93f7218c0c6ec83c9876"
+     },
+     {
+      "availability": "referenced",
+      "byte_size": 624,
+      "license": null,
+      "media_type": "text/plain",
+      "role": "input",
+      "sha256": "043f055ed8f417c6ef5cebdd3c71e0d9b5b2d8d9f2761044f2d9a680d220a305",
+      "title": "input: data/genomics/artifacts/ensembl_protein_ENSDARP00000115460.fasta - Ensembl protein ENSDARP00000115460",
+      "uri": "urn:sha256:043f055ed8f417c6ef5cebdd3c71e0d9b5b2d8d9f2761044f2d9a680d220a305"
+     },
+     {
+      "availability": "referenced",
+      "byte_size": 624,
+      "license": null,
+      "media_type": "text/plain",
+      "role": "input",
+      "sha256": "0bdd1b9324a7584b56fd1cfabaccb0f42faa55eaaf5600f3ae6fe8dc2a605291",
+      "title": "input: data/genomics/artifacts/ensembl_protein_ENSDARP00000091545.fasta - Ensembl protein ENSDARP00000091545",
+      "uri": "urn:sha256:0bdd1b9324a7584b56fd1cfabaccb0f42faa55eaaf5600f3ae6fe8dc2a605291"
+     },
+     {
+      "availability": "referenced",
+      "byte_size": 624,
+      "license": null,
+      "media_type": "text/plain",
+      "role": "input",
+      "sha256": "e7afe00859bc741d23950937b82d3970b43f84a9cb05c38256e3fded89f89d50",
+      "title": "input: data/genomics/artifacts/ensembl_protein_ENSDARP00000144096.fasta - Ensembl protein ENSDARP00000144096",
+      "uri": "urn:sha256:e7afe00859bc741d23950937b82d3970b43f84a9cb05c38256e3fded89f89d50"
+     }
+    ],
+    "assumptions": [],
+    "context": "An independent database compared with the authors' figures; the match is exact.",
+    "created_time": {
+     "basis": "witnessed",
+     "value": "2026-10-31T23:19:08.384913+00:00"
+    },
+    "evidence_kind": "source_assessment",
+    "limitations": [
+     "Windows are short and conserved.",
+     "The transcript the authors numbered is not stated.",
+     "Ensembl release not stated in the response."
+    ],
+    "method": "Fetched all protein sequences for both genes, stored them by hash, searched for the two windows and read residues 74, 106, 200 and 326; slc43a2b is the distinct control; compared the RefSeq fragment with the Ensembl protein.",
+    "provenance": {
+     "main_pdf_sha256": "e0d4e61d74ab982efa5a3e861103bdc9b1b3ce8c25f01854799dba7b0b22c2e2",
+     "supplement_mmc1_sha256": "b83f903946f30865957a50b72763a82b8562a04f61c09c69465921cda28b306b"
+    },
+    "relation": "supports",
+    "retrieved_time": {
+     "basis": "witnessed",
+     "value": "2026-10-31T23:19:08.384913+00:00"
+    },
+    "source": {
+     "access": "public REST GET, no key; responses stored by hash; Ensembl terms not read",
+     "content_available": false,
+     "content_sha256": "e4a913f92aeaacee014a31ee645b0e2227171d6c496968769700c704b20c4aeb",
+     "license": null,
+     "locator": "sequence/id/ENSDARP00000120945 and the other five proteins (lookup expand=1 for the gene spans)",
+     "source_version": "Ensembl REST (release not stated in the response)",
+     "uri": "https://rest.ensembl.org/"
+    },
+    "source_dependence": {
+     "declared": true,
+     "independent_of_author": true,
+     "note": "one operator read the figures and wrote the records; no independent review"
+    },
+    "target": {
+     "id": "gx-lat4a-ensembl-slc43a2a-carries-the-papers-residues",
+     "kind": "Claim",
+     "namespace": "node-a",
+     "version": "9ce7ee1d0847fcb12ee9a9d503d904316ed0180fdad422ea39a9961700777b5a"
+    },
+    "uncertainty": "Not quantified."
+   },
+   "predecessor": null,
+   "schema_version": "frontier-record-0.1",
+   "source_uri": "urn:frontier:connector:genomics",
+   "version": "c9e6dcca193b0f24d168ac3684c3920880ed6ac13e6bbb2de62dbbd4b150e210",
+   "visibility": "public"
+  }
+ ],
+ "records_schema": "genomics-records-0.1 (connector-local; frontier.models records)",
+ "status": "proposed drafts; nothing submitted, reviewed or accepted"
+}
