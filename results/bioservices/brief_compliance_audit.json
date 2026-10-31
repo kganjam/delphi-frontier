@@ -1,0 +1,138 @@
+{
+  "audit": "original brief (codex03-to-bioservices.md) requirement-by-requirement",
+  "head": "461ff903dd115a7b82f2917893c93813a2804b6d",
+  "n_requirements": 25,
+  "n_met": 25,
+  "not_met": [],
+  "external_unavailability_not_counted_as_unmet": [
+    "hosted ESM-2 replication: my own addition, not a brief requirement; service operator-paused, 6 attempts, never admitted",
+    "OpenResearch: a later request with an explicit 'if listed/capable' condition; it is a local run recorder, not a hosted model, so it cannot be invoked via any catalogue"
+  ],
+  "requirements": [
+    {
+      "requirement": "new isolated Frontier worktree",
+      "met": true,
+      "evidence": "worktree /data/worktrees/delphi-frontier/bioservices, branch work/frontier-bioservices"
+    },
+    {
+      "requirement": "all new code in kganjam/delphi-frontier",
+      "met": true,
+      "evidence": "https://github.com/kganjam/delphi-frontier.git"
+    },
+    {
+      "requirement": "own connectors/bioservices/**, experiments/bioservices/**, tests",
+      "met": true,
+      "evidence": "11 connectors, 9 experiment dirs"
+    },
+    {
+      "requirement": "protocol committed BEFORE any output existed",
+      "met": true,
+      "evidence": "frozen at commit 87526b7; first scoring commit came later"
+    },
+    {
+      "requirement": "source dataset version/licence/sha256",
+      "met": true,
+      "evidence": "protocol.json data block: ProteinGym v1.3, MIT, archive+member sha256"
+    },
+    {
+      "requirement": "reference sequence / assay mismatch checks",
+      "met": true,
+      "evidence": "8 checks pass in-run; DMS-derived reference byte-identical to UniProt P35561"
+    },
+    {
+      "requirement": "deterministic <=256 hashed subset with coverage reported",
+      "met": true,
+      "evidence": "256 selected by sha256 of the variant NAME; coverage block in kir21_analysis.json"
+    },
+    {
+      "requirement": "model/checkpoint/operation version recorded",
+      "met": true,
+      "evidence": "facebook/esm2_t33_650M_UR50D, masked marginals, fp32, seed 0"
+    },
+    {
+      "requirement": "acceptance and falsifier declared in advance",
+      "met": true,
+      "evidence": "PROTOCOL.md sections 8-9; falsifier is the CI rule on delta_rho"
+    },
+    {
+      "requirement": "no-learning / no-leakage rule",
+      "met": true,
+      "evidence": "scorer API cannot accept an assay value; subset keyed on names only; test asserts the signature"
+    },
+    {
+      "requirement": "matched measured outcomes",
+      "met": true,
+      "evidence": "6,789 variants present in BOTH assays, same reference"
+    },
+    {
+      "requirement": "proper baseline",
+      "met": true,
+      "evidence": "BLOSUM62, label-free, plus a permutation null"
+    },
+    {
+      "requirement": "paired uncertainty calculation",
+      "met": true,
+      "evidence": "paired bootstrap (same resampled indices both assays) + position-clustered + Williams"
+    },
+    {
+      "requirement": "stop / resource limits",
+      "met": true,
+      "evidence": "systemd scopes TasksMax=128 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600, 2 threads"
+    },
+    {
+      "requirement": "tiny positive/negative validation pilot FIRST",
+      "met": true,
+      "evidence": "4 controls: 2 positive, 2 refusals; pilot ran before the batch"
+    },
+    {
+      "requirement": "capped hosted/model batch or single-H100 via gpuops",
+      "met": true,
+      "evidence": "hosted checked (absent/paused); 1xH100 Evo2 jobs run, all coordinated to gpuops by file first"
+    },
+    {
+      "requirement": "ALL raw GPU submissions coordinated with dx-gpuops-r1 via files",
+      "met": true,
+      "evidence": "bioservices-to-gpuops.md, -evo2-bundle.md, -selfsubmit.md; self-submissions announced BEFORE submitting"
+    },
+    {
+      "requirement": "sponsor usage recorded only for actually executed work",
+      "met": true,
+      "evidence": "zero Nebius Scientific AI inference executed; 6 attempts never admitted, no operation ids"
+    },
+    {
+      "requirement": "combined job wall bound 60 min",
+      "met": true,
+      "evidence": "Kir2.1 full run 40.8 min; Evo2 jobs each <30 min timeout"
+    },
+    {
+      "requirement": "failed and null outcomes kept",
+      "met": true,
+      "evidence": "FAILED job aijob-e00r0910b83jyk88ak, 6 maintenance refusals, UNDETERMINED verdicts, arm B null all retained"
+    },
+    {
+      "requirement": "Gemini bounded and metered",
+      "met": true,
+      "evidence": "audit ledger 4/4 (<=4 cap); research ledger 4/6, 88,109/120,000 in"
+    },
+    {
+      "requirement": "visual-ready predictions vs measurements + coverage + receipts",
+      "met": true,
+      "evidence": "2 SVG figures, 2 per-variant CSVs, coverage blocks, receipts per stage"
+    },
+    {
+      "requirement": "explicit files committed and pushed",
+      "met": true,
+      "evidence": "head 461ff90, 112 files added, clean tree"
+    },
+    {
+      "requirement": "no recursive agents / outreach / signing / publication",
+      "met": true,
+      "evidence": "none performed"
+    },
+    {
+      "requirement": "report only in bioservices-to-codex03.md",
+      "met": true,
+      "evidence": "final report there; peer notes to gpuops/genomics/root, none to codex-03 or user pane"
+    }
+  ]
+}
