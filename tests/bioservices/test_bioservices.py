@@ -523,3 +523,75 @@ class TestEnsemblCoordinates:
         for strand in (1, -1):
             lo, hi = Gene("x", "E", "1", 5000, 6000, strand, "").upstream_region(2000)
             assert hi - lo + 1 == 2000
+
+
+class TestSequenceControls:
+    """The dinucleotide shuffle must preserve dinucleotide counts EXACTLY.
+
+    A naive edge-walk version shipped here first and did not: when a vertex ran
+    out of outgoing edges the walk fell back to a random base, deviating by up
+    to 6 of 999 dinucleotides on a real promoter and not even preserving
+    mononucleotide composition. Because the control's whole purpose is to hold
+    composition fixed, that silently weakened every comparison made against it.
+    These tests exist so it cannot regress.
+    """
+
+    @staticmethod
+    def _dinuc(seq):
+        from collections import Counter
+
+        return Counter(seq[i:i + 2] for i in range(len(seq) - 1))
+
+    def test_dinucleotide_counts_are_preserved_exactly(self):
+        import random
+
+        from experiments.bioservices.sequence_controls import dinucleotide_shuffle
+
+        rng = random.Random(0)
+        seq = ("ACGTTGCAACGTACGTTTACGGCATCGATCGGATCCGATTACAGGCCTTAACGCGCGATATCGCG"
+               "TTAGCCGGATCAATTCCGGAATTCCGGTTAACCGGTTAACGCGCGTATATCGCGATCGATCGTA") * 4
+        for _ in range(25):
+            out = dinucleotide_shuffle(seq, rng)
+            assert len(out) == len(seq)
+            assert self._dinuc(out) == self._dinuc(seq)
+
+    def test_mononucleotide_counts_are_preserved(self):
+        import random
+        from collections import Counter
+
+        from experiments.bioservices.sequence_controls import dinucleotide_shuffle
+
+        rng = random.Random(1)
+        seq = "ACGT" * 60 + "GGCCAATTGGCC" * 10
+        for _ in range(10):
+            assert Counter(dinucleotide_shuffle(seq, rng)) == Counter(seq)
+
+    def test_the_shuffle_actually_shuffles(self):
+        import random
+
+        from experiments.bioservices.sequence_controls import dinucleotide_shuffle
+
+        rng = random.Random(2)
+        seq = "ACGTTGCAACGTACGTTTACGGCATCGATCGGATCCGATTACAGG" * 6
+        outs = {dinucleotide_shuffle(seq, rng) for _ in range(12)}
+        assert len(outs) > 1, "every shuffle returned the same string"
+
+    def test_a_short_sequence_is_returned_unchanged(self):
+        import random
+
+        from experiments.bioservices.sequence_controls import dinucleotide_shuffle
+
+        rng = random.Random(3)
+        assert dinucleotide_shuffle("A", rng) == "A"
+        assert dinucleotide_shuffle("", rng) == ""
+
+    def test_gc_matched_random_hits_its_target_composition(self):
+        import random
+
+        from experiments.bioservices.sequence_controls import gc_fraction, gc_matched_random
+
+        rng = random.Random(4)
+        seq = gc_matched_random(20000, 0.65, rng)
+        assert len(seq) == 20000
+        assert set(seq) <= set("ACGT")
+        assert abs(gc_fraction(seq) - 0.65) < 0.02
