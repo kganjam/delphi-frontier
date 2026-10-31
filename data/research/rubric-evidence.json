@@ -232,7 +232,7 @@
         "tests": "13 passed",
         "cuda_control": "NOT run here - no GPU on this host; first gate inside the job"
       },
-      "gpu_result": "superseded: control now passes under explicit FP32 and training has begun; no checkpoint yet",
+      "gpu_result": "primary run FAILED on its 1800 s timeout before evaluation; checkpoint audited; held-out evaluation MISSING; billed GPU hours still unknown",
       "runtime_estimate_caveat": "15-25 min is an ESTIMATE scaled from CPU smoke timings, NOT measured on a GPU",
       "h1_partial": "equation reused from registry id eq-rd-schnakenberg with claim/problem refs attached as SNAPSHOT PINS, not live-store acceptance; withdrawal propagation untested",
       "cuda_control_v1": {
@@ -257,10 +257,67 @@
       },
       "training": {
         "began": "2026-10-31 16:09:38 PDT",
-        "checkpoint": null,
-        "note": "training STARTED; no completed checkpoint and none claimed"
+        "reached_steps": 30000,
+        "logged_elapsed_s": 1544.9181144237518,
+        "checkpoint": "exists and is independently audited",
+        "superseded": "the earlier 'training started, no checkpoint' and 'currently running' states"
       },
-      "nothing_relaxed": "source, config, architecture, optimizer, dataset, splits and tolerance all unchanged; first failure retained"
+      "nothing_relaxed": "source, config, architecture, optimizer, dataset, splits and tolerance all unchanged; first failure retained",
+      "primary_run": {
+        "status": "FAILED",
+        "infra_commit": "118fe2b786b222ab46e2425687ada1932824e9df",
+        "checked_at_utc": "2026-10-31T23:45:18.099077Z",
+        "job_id": "aijob-e00qazx6sby3vav47b",
+        "failure_type": "original 1800 second subprocess timeout after checkpoint creation, before frozen evaluate() returned",
+        "outer_timed_out_flag": false,
+        "outer_flag_warning": "the inner subprocess raised TimeoutExpired and the wrapper exited 1 normally, so container timed_out=false does NOT mean no timeout",
+        "checkpoint": {
+          "sha256": "1a0a185cdacd49e8a65aa77ece1cd8f51033533c996025b3f4da907cd2b2ae76",
+          "bytes": 5421109,
+          "steps": 30000,
+          "train_rows": 16800,
+          "weight_tensors": 84,
+          "weight_parameters": 1348290,
+          "all_weights_finite": true
+        },
+        "training_log": {
+          "sha256": "2ecdd2ceb6eec513a634ec7edcaf5e37cc15cba3d3717c90c5ad7ab41dc05862",
+          "logged_rows": 301,
+          "first": {
+            "step": 1,
+            "loss": 1.2327624559402466
+          },
+          "last": {
+            "step": 30000,
+            "loss": 0.008265413343906403,
+            "elapsed_s": 1544.9181144237518
+          },
+          "interpretation": "Observed training loss only, not held-out performance or biological validity"
+        },
+        "telemetry": {
+          "samples": 1831,
+          "mean_gpu_utilization_pct": 97.66,
+          "note": "includes setup and emission"
+        },
+        "missing": [
+          "evaluation.json",
+          "examples.npz"
+        ],
+        "collection_audit_complete": false,
+        "consequence": "NO model-quality claim is possible: no held-out comparison, no baseline, no shuffled-condition null",
+        "recovery": {
+          "kind": "separately frozen evaluation-only, unchanged weights",
+          "status": "awaiting publication and controls",
+          "is_retry": false
+        },
+        "do_not": "say a diffusion job is currently running; the primary run FAILED",
+        "receipts": [
+          "results/infra/diffusion-v2/partial-primary.json",
+          "results/infra/diffusion-v2/partial-checkpoint-audit.json",
+          "results/infra/diffusion-v2/manifest-infra23.json",
+          "artifacts/rd-diffusion/primary-runtime-inputs.tar.xz"
+        ]
+      }
     },
     "organism_scale": {
       "synthetic_datasets_generated": 0,

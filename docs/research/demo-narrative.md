@@ -229,10 +229,24 @@ Numbers, sources and exact limits. Reach for these in Q&A.
 - A paired diagnosis in the **same allocation** confirmed the TF32 hypothesis: default backend
   reproduces **0.001191914** (fails); **explicit IEEE FP32 gives 2.265e-06 (passes)** — the same
   unchanged 0.001 tolerance. Solver parity 5.95e-14 in both.
-- **Training began 16:09:38 PDT. There is no completed checkpoint and none is claimed.**
+- **Training then ran to 30,000 steps, and the primary run FAILED.** The original **1800-second**
+  inner timeout fired after the checkpoint was written and before `evaluate()` returned.
+- **The outer flag lies and the receipt says so.** `outer_timed_out_flag: false`, because the inner
+  subprocess raised `TimeoutExpired` and the wrapper exited 1 normally. Read the failure type.
+- Checkpoint independently audited: sha256 `1a0a185c…`, 5,421,109 bytes, 30,000 steps, 16,800
+  training rows, **84 weight tensors, 1,348,290 parameters, all finite**. 301 logged rows; loss
+  **1.2328 → 0.008265** over **1544.9 s**; 1,831 telemetry samples averaging **97.66%** GPU
+  utilisation.
+- **That loss curve is not a result, and the receipt says so:** *"Observed training loss only, not
+  held-out performance or biological validity."* The collection audit is **`complete: false`** —
+  **`evaluation.json` and `examples.npz` are missing.** No held-out comparison, no baseline, no
+  shuffled-condition null, therefore **no model-quality claim.**
+- A **separately frozen evaluation-only recovery** with unchanged weights is **awaiting publication
+  and controls**. Not a retry. **Do not say a job is currently running.**
 - Nothing was relaxed: source, config, architecture, optimizer, dataset, splits and tolerance all
-  unchanged; the first failure is retained.
-- `results/infra/diffusion-v2/backend-diagnosis.json`, job `aijob-e00qazx6sby3vav47b`.
+  unchanged; both failures retained.
+- `results/infra/diffusion-v2/partial-primary.json`, `partial-checkpoint-audit.json`,
+  `backend-diagnosis.json`; job `aijob-e00qazx6sby3vav47b`; infra commit `118fe2b`.
 
 ## Agents checking each other
 

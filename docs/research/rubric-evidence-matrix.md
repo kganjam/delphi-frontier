@@ -136,8 +136,11 @@ Full document with read-levels: `docs/research/generative-roadmap.md`. Page copy
 | **RD-1D job packet**, hashes, local CPU control receipts | C | **`4a5394f3`**, 15:33:03 PDT; archive sha256 `76eb4a7b…`, 11,526 bytes |
 | RD-1D local controls | C | CPU control all checks ok; torch solver = numpy to 1e-9; `tests/test_rd_diffusion.py` **13 passed**. CUDA control **not run here** (no GPU on this host) |
 | **RD-1D CUDA control** | C | **RAN and PASSED on the provider under explicit IEEE FP32**: 2.2649765e-06 against an unchanged 0.001. Default backend reproduced the 0.001191914 failure in the same allocation; both retained. `results/infra/diffusion-v2/backend-diagnosis.json` | **Earned** — TF32 hypothesis confirmed by measurement, nothing relaxed |
-| **RD-1D training** | C | **began 16:09:38 PDT**; no checkpoint exists and none is claimed; held-out evaluation runs only after the checkpoint is frozen | **In flight** |
-| RD-1D GPU hours | — | **unknown until a receipt exists** — not zero | Honest unknown |
+| **RD-1D training** | C | ran to **30,000 steps** in 1544.9 s, loss 1.2328 → 0.008265 over 301 logged rows; checkpoint audited — sha256 `1a0a185c…`, 84 tensors, 1,348,290 params, all finite | **Ran** |
+| **RD-1D primary run** | C | **FAILED** — original 1800 s inner timeout after the checkpoint, before `evaluate()` returned. `outer_timed_out_flag: false` is misleading and the receipt explains why. `results/infra/diffusion-v2/partial-primary.json` | **Negative, kept** |
+| **RD-1D held-out evaluation** | — | **MISSING**: `evaluation.json` and `examples.npz` absent, collection audit `complete: false` | **NO MODEL-QUALITY CLAIM IS POSSIBLE.** Training loss is not held-out performance — the receipt says so itself |
+| RD-1D evaluation-only recovery | — | separately frozen, unchanged weights, **awaiting publication and controls**; not a retry | Pending |
+| RD-1D GPU time | C/— | **1544.9 s logged training elapsed**; **billed hours unknown** — no usage receipt | Honest unknown |
 | Organism-scale pipeline: datasets, models, candidates, solver-screened, real experiments, GPU hours | — | **0 / 0 / 0 / 0 / 0 / 0 — unbuilt** |
 | Diffusion surrogate for a mechanistic **agent-based** biological model (CPM, in vitro vasculogenesis, ~22x) | — | **Published by Comlekoglu et al.**, arXiv:2505.09630 (v1 2025-05-01, v3 2025-10-23), DOI 10.1088/2632-2153/ae11f8, PMC12570967. A close precedent for stages 1-2. Read-level: abstract |
 | Physics residuals inside diffusion training | — | **Published by Bastek, Sun, Kochmann**, arXiv:2403.14404 — **v1 2024-03-21**, v4 2025-03-13, ICLR 2025 per the Comments field. Read-level: abstract for metadata |
@@ -163,7 +166,12 @@ Full document with read-levels: `docs/research/generative-roadmap.md`. Page copy
   makes its own O₂ at +1000 via **MAR04071** (pyridoxine oxidase in reverse). Zero external O₂
   still grows 0.265; blocked it is **3e-16**. At O₂ 20, **0.291 free vs 0.097 blocked**. It is a
   model-constraint diagnosis; blocking MAR04071 is not biology.
-- **GPU hours are `unknown until a receipt exists`, never `0`**, while a provider job is running.
+- **Billed GPU hours stay `unknown until a receipt exists`, never `0`.** Logged elapsed (1544.9 s)
+  is measured and may be quoted as such.
+- **Do not say a diffusion job is currently running.** The primary run FAILED; the evaluation-only
+  recovery is awaiting publication and controls.
+- **Never present the training loss as a result.** 1.2328 → 0.008265 is training loss. Without
+  `evaluation.json` there is no held-out performance and no quality claim.
 - **Never say "every decision is a record with its claim attached."** An audit found most Action
   inputs absent; curation is pending. Say we are *linking* decisions to exact claims and evidence,
   and show the one persisted example.

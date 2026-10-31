@@ -80,8 +80,8 @@ non-zero when someone else's run exists.
 No physical print, no flight, no living organism, and no GPU-produced biological result. No claim
 to a novel multi-agent architecture: Prove2Me, ScienceClaw, Infinite and ASK published the relevant
 pieces. Nobody here will say an AI solved Navier-Stokes — that result is a proposed counterexample
-and the Clay problem is open. The generative roadmap has one frozen pilot awaiting GPU time and
-nothing trained.
+and the Clay problem is open. The generative roadmap's pilot trained to 30,000 steps and its
+primary run **failed** before evaluation returned, so there is no model-quality claim.
 
 ---
 
@@ -109,9 +109,10 @@ commit is **2026-10-31 07:49:44 PDT** and **all 508 of its commits are dated tha
 - Seven assessment dimensions, all required, with **no composite truth score**
 - The mispredication probe, its failed control and the withdrawal it produced: commits `e4ab195`,
   `b9f603b`, `81ca466`, all 12:05 PDT
-- The RD-1D diffusion pilot: preregistration and code `9c56a927`, frozen job packet `4a5394f3`,
-  both 15:32-15:33 PDT; CUDA controls passed on the provider under explicit FP32 and **training
-  began 16:09:38 PDT**. **No checkpoint yet, and GPU hours unknown until a receipt exists.**
+- The RD-1D diffusion pilot: preregistration and code `9c56a927`, frozen job packet `4a5394f3`;
+  CUDA controls passed under explicit FP32; training ran to **30,000 steps** and the **primary run
+  FAILED** before evaluation returned. Checkpoint audited; **held-out evaluation missing, so no
+  quality claim.** Billed GPU hours unknown.
 
 ### Brought in, not built here
 
@@ -159,13 +160,13 @@ Every count on the About scorecard comes from that call.
 
 Two precision upgrades available, both verified here on 2026-10-31:
 
-1. The pilot status card reads *"implementation in progress"*. **It has moved twice since then and
-   is now stronger again.** The first CUDA control failed at 0.001191914 against a 0.001 tolerance
-   and stopped before training; a paired control in the same allocation then reproduced that
-   failure under the default backend and **passed under explicit IEEE FP32 at 2.2649765e-06**,
-   against the same unchanged tolerance. **Training began 16:09:38 PDT; there is no checkpoint and
-   none is claimed.** Suggested card line: *"controls passed under explicit FP32; training in
-   flight; no checkpoint yet."* **GPU hours are unknown until a receipt exists — not zero.**
+1. The pilot status card reads *"implementation in progress"*. **Current state, 16:45 PDT:**
+   controls passed under explicit IEEE FP32 (2.2649765e-06 against an unchanged 0.001), training
+   ran to **30,000 steps**, and the **primary run FAILED** on its own 1800-second timeout after the
+   checkpoint was written and before evaluation returned. The checkpoint is independently audited;
+   **`evaluation.json` and `examples.npz` are missing, so no quality claim is possible.** Suggested
+   card line: *"trained to 30k steps; primary run failed before evaluation; checkpoint audited, no
+   quality claim."* **Billed GPU hours unknown — not zero.**
 2. The four related-work citations were checked against their arXiv abstract pages and all four
    are correct, including Gallon et al. 2026 (arXiv:2602.09708, v1 2026-02-10). One refinement:
    Bastek et al. is **v1 2024-03-21**, v4 2025-03-13, with ICLR 2025 from the Comments field — the

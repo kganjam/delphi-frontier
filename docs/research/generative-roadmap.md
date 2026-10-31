@@ -1,7 +1,8 @@
 # Generative roadmap: mechanistic simulators as training data, conditional generators, solver-gated inverse design
 
-**Status.** One bounded pilot is frozen and awaiting GPU time. The broad organism-scale proposal is
-unbuilt. The sections below separate the two, and §6 gives the counts.
+**Status.** The bounded pilot trained to 30,000 steps on an H100 and **its primary run FAILED** on
+its own 1800-second timeout before evaluation returned. The checkpoint is verified; **there is no
+held-out evaluation, so there is no quality claim.** The broad organism-scale proposal is unbuilt. The sections below separate the two, and §6 gives the counts.
 
 Read-levels, per `docs/research/README.md`: `full-text` | `abstract` | `search-summary`. Each
 prior-art entry carries its own, and every date below was read from the arXiv abstract page on
@@ -30,7 +31,7 @@ checking into biology. That step is not part of the current pilot.
 
 ## 2. Where this actually stands
 
-### 2.1 The RD-1D pilot: controls passed under explicit FP32; training started, no checkpoint
+### 2.1 The RD-1D pilot: controls passed, training ran, primary run FAILED before evaluation
 
 A conditional DDPM surrogate for a **1-D Schnakenberg reaction-diffusion field**.
 
@@ -91,10 +92,37 @@ Solver parity was **5.95e-14** in both, against a 1e-06 tolerance. The TF32 hypo
 in advance in `inputs/diffusion-backend-policy.json`, and **nothing was relaxed** — source, config,
 architecture, optimizer, dataset, splits and the tolerance itself are unchanged.
 
-**Training began 16:09:38 PDT. No checkpoint exists yet and none is claimed.** Held-out evaluation
-runs only after the checkpoint is frozen, by the preregistration's own ordering.
-
 Receipt: `results/infra/diffusion-v2/backend-diagnosis.json`.
+
+### 2.3 The primary run: trained, then FAILED before evaluation
+
+Training began 16:09:38 PDT and reached **30,000 steps**. The **primary full run is `FAILED`** —
+the original **1800-second** inner-subprocess timeout fired *after* the checkpoint was written and
+*before* the frozen `evaluate()` returned.
+
+> **A green outer flag is not a measurement.** The receipt records `outer_timed_out_flag: false`
+> and explains it: the inner subprocess raised `TimeoutExpired`, the wrapper exited 1 normally, so
+> the container's `timed_out=false` **does not mean no timeout**. Read the failure type, not the
+> flag.
+
+Independently audited: checkpoint sha256 `1a0a185c…`, 5,421,109 bytes, **30,000 steps**, 16,800
+training rows, **84 weight tensors, 1,348,290 parameters, all finite**; training log sha256
+`2ecdd2ce…` with **301 logged rows**. Loss ran from **1.2328 at step 1 to 0.008265 at step 30,000**
+over **1544.9 s**, on an H100 at 100% with 613 W at the last log. Across the run, 1,831 telemetry
+samples averaged **97.66%** GPU utilisation including setup and emission.
+
+**That loss curve is not a result.** The receipt says so in its own field:
+*"Observed training loss only, not held-out performance or biological validity."* The collection
+audit is `complete: false`, naming exactly what is missing — **`evaluation.json` and
+`examples.npz`**. Without them there is no held-out comparison against the solver, no baseline
+comparison, and no shuffled-condition null, so **no claim about model quality can be made.**
+
+A **separately frozen, evaluation-only recovery** with unchanged weights is awaiting publication
+and its controls. It is not a retry and it carries no quality claim.
+
+Receipts: `results/infra/diffusion-v2/partial-primary.json`,
+`partial-checkpoint-audit.json`, `manifest-infra23.json`, and the 5 MB public runtime archive
+`artifacts/rd-diffusion/primary-runtime-inputs.tar.xz`.
 
 ### 2.2 Everything above organism scale
 
@@ -256,18 +284,21 @@ to answer that for one system.
 | Code and job packet | — | **frozen, `4a5394f3`** |
 | Local CPU controls | — | **pass; 13 tests; solver = numpy to 1e-9** |
 | **CUDA control** | — | **RAN on the provider and PASSED under explicit IEEE FP32** (2.265e-06 against an unchanged 0.001). The default backend failed at 0.001191914; both outputs retained |
-| **Synthetic datasets** | 0 | **generated inside the running job** — the dataset stage began with training |
-| **Training** | 0 | **STARTED 16:09:38 PDT** |
-| **Checkpoint** | 0 | **none yet, and none claimed** |
-| Held-out evaluation | 0 | **not yet — it runs after the checkpoint is frozen** |
+| **Synthetic datasets** | 0 | **generated** — 16,800 training rows are recorded in the checkpoint |
+| **Training** | 0 | **RAN to 30,000 steps** in 1544.9 s; loss 1.2328 → 0.008265 over 301 logged rows |
+| **Checkpoint** | 0 | **exists and is independently audited** — sha256 `1a0a185c…`, 84 tensors, 1,348,290 parameters, all finite |
+| **Primary run status** | — | **FAILED.** 1800 s inner timeout after the checkpoint, before `evaluate()` returned |
+| **Held-out evaluation** | 0 | **MISSING** — `evaluation.json` and `examples.npz` absent; collection audit `complete: false`. **No quality claim is possible** |
+| Evaluation-only recovery | — | separately frozen, unchanged weights, **awaiting publication and controls**; not a retry |
 | Inverse candidates proposed | 0 | 0 — out of scope for the pilot |
 | Candidates screened by an exact solver | 0 | 0 |
 | Real experiments | 0 | 0 |
-| **GPU hours spent** | **unknown until a receipt exists** | **unknown until a receipt exists** |
+| **GPU time** | **unknown until a receipt exists** | **1544.9 s of logged training elapsed**; billed GPU hours still unknown — no usage receipt |
 
-> **GPU hours are `unknown`, not `0`.** The job is running on a provider that has not yet returned
-> a usage receipt, so zero would be a claim we cannot support. An earlier version of this table
-> said 0; that was wrong in the same direction the rest of this document warns about.
+> **Billed GPU hours remain `unknown`, not `0`.** Logged training elapsed is measured (1544.9 s);
+> the provider has returned no usage receipt, so a billed figure would be a claim we cannot
+> support. An earlier version of this table said 0; that was wrong in the same direction the rest
+> of this document warns about.
 
 The simulators in stage 1 do exist and run; several are live on the public MCP and anyone can call
 them with no credential.
@@ -292,3 +323,8 @@ them with no credential.
   updated, §2.2 records the paired-control measurement, and **GPU hours now read "unknown until a
   receipt exists" rather than 0** — a running provider job has returned no usage receipt, so zero
   would be a claim we cannot support. The §2.1 heading no longer says "no GPU result".
+- **2026-10-31, revised (infra `118fe2b`).** The pilot's primary run **FAILED** on its original
+  1800-second timeout after the checkpoint was written and before evaluation returned. Status line,
+  §2.1 heading, new §2.3 and the §6 inventory all updated. **`evaluation.json` and `examples.npz`
+  are missing, so no model-quality claim is possible** regardless of how the training loss looks.
+  The "awaiting GPU time" and "currently running" framings are removed.
