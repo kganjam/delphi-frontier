@@ -1,0 +1,259 @@
+{
+  "source_commit": "4a5394f3d19601f3c7a75d08f7f3dc46acc6e1b5",
+  "code_sha256": "25455430ef138b49e6bac151a144e338269a81ce5c2f576387f8805bbb1a400a",
+  "check_scope": "One-core bounded pure function/constructor checks with synthetic software fixtures; no training or held-out evaluation",
+  "split_pair_cardinality": {
+    "train": 4200,
+    "dev": 100,
+    "test_param": 600,
+    "test_seed": 300,
+    "ensemble": 1280
+  },
+  "split_pair_collisions": {
+    "train--dev": 0,
+    "train--test_param": 0,
+    "train--test_seed": 0,
+    "train--ensemble": 0,
+    "dev--test_param": 0,
+    "dev--test_seed": 0,
+    "dev--ensemble": 0,
+    "test_param--test_seed": 0,
+    "test_param--ensemble": 0,
+    "test_seed--ensemble": 0
+  },
+  "W1_fixture": {
+    "declared_metric": 0.998046875,
+    "exact_empirical_W1_relative": 1.0,
+    "mismatch": -0.001953125,
+    "definition": "32equalweight generated amplitudes16zero/16two versus32ones; normalized by solvermean; exact relativeW1=1"
+  },
+  "all_nonfinite_metric_serialization": "{\"mode_tv\": 1.0, \"mode_agree_argmax\": false, \"amp_w1_rel\": Infinity, \"amp_mean_rel_err\": Infinity, \"nonfinite_frac\": 1.0, \"negative_frac\": NaN}",
+  "network_conv_padding": [
+    {
+      "name": "e0.c1",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "e0.c2",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "e0.sk",
+      "kernel": [
+        1
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "zeros"
+    },
+    {
+      "name": "d1",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        2
+      ],
+      "padding_mode": "zeros"
+    },
+    {
+      "name": "e1.c1",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "e1.c2",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "e1.sk",
+      "kernel": [
+        1
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "zeros"
+    },
+    {
+      "name": "d2",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        2
+      ],
+      "padding_mode": "zeros"
+    },
+    {
+      "name": "e2.c1",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "e2.c2",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "e2.sk",
+      "kernel": [
+        1
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "zeros"
+    },
+    {
+      "name": "m.c1",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "m.c2",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "u1.c1",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "u1.c2",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "u1.sk",
+      "kernel": [
+        1
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "zeros"
+    },
+    {
+      "name": "u0.c1",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "u0.c2",
+      "kernel": [
+        3
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "replicate"
+    },
+    {
+      "name": "u0.sk",
+      "kernel": [
+        1
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "zeros"
+    },
+    {
+      "name": "o",
+      "kernel": [
+        1
+      ],
+      "stride": [
+        1
+      ],
+      "padding_mode": "zeros"
+    }
+  ],
+  "model_parameters": 1348290,
+  "missing_model_card": true,
+  "W1_outlier_fixture": {
+    "software_fixture_not_measurement": true,
+    "computed_approx_relative_W1": 1.453125,
+    "exact_empirical_relative_W1": 1.9374999999999998,
+    "all_fields_nonnegative": true,
+    "generated_amplitudes": "31zeros+one32;reference32ones",
+    "code_was_not_modified": true
+  },
+  "solver_anchor_2tau": {
+    "scope": "Frozen prior anchor only; not training/heldout evaluation or coverage across whole prior",
+    "cell_id": 240,
+    "N": 81,
+    "max_u_error": 3.235189893757706e-13,
+    "max_v_error": 1.4432899320127035e-13,
+    "duration_tau": 2,
+    "dt_tau": 0.02
+  },
+  "source_hashes": {
+    "engineering/rd_diffusion/rd_ddpm.py": "25455430ef138b49e6bac151a144e338269a81ce5c2f576387f8805bbb1a400a",
+    "engineering/rd_diffusion/config.json": "bc77ebc55010b9c8ac910c2b31868ec0dbf2d1e3785a06ec3ef1aa028ea2b210",
+    "engineering/rd_diffusion/PREREG.md": "3f6f2c4d9187ced1e9a0d0979a73bd1532bb02c863634e924a9c89da70b5ab8f",
+    "engineering/rd_diffusion/job.sh": "9ca5a4b087dcadec95aeacc4c19f1ad0cf217a9c0cc8148d372036b7e7938372",
+    "engineering/simulation/rd_frames.py": "ee4ed03de805265bfbd1f7673a10b8b2d6eff2a71e0609d86a3e036796a85d12"
+  }
+}
