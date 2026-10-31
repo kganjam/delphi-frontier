@@ -134,5 +134,32 @@
       "met": true,
       "evidence": "final report there; peer notes to gpuops/genomics/root, none to codex-03 or user pane"
     }
-  ]
+  ],
+  "scope_question_settled_from_the_brief_text": {
+    "question": "Were the hosted ESM-2 replication and the OpenResearch step REQUIRED parts of the brief? My earlier audit asserted they were not; this settles it by quotation.",
+    "evidence": [
+      {
+        "brief_line": -1,
+        "quote": "Hosted scientific inference with a frozen bounded protocol is authorized below.",
+        "reading": "AUTHORIZED, not required. Authorization is permission, not obligation."
+      },
+      {
+        "brief_line": "33-34",
+        "quote": "Then one capped hosted/model batch, or a single-H100 BioNeMo job submitted by gpuops if required.",
+        "reading": "An explicit DISJUNCTION. The second branch ran: three Evo 2 jobs on a single H100, submitted through gpuops. A disjunction is satisfied by either branch."
+      },
+      {
+        "brief_line": 15,
+        "quote": "Build and run ONE meaningful benign public-data prediction evaluation.",
+        "reading": "ONE was required. Two were delivered, at 256 and 6,789 variants."
+      },
+      {
+        "brief_line": null,
+        "quote": "(OpenResearch does not appear in the brief: 0 occurrences)",
+        "reading": "It came from a later message whose own wording was 'if listed/capable'. It is neither, being a local run recorder that performs no inference."
+      }
+    ],
+    "conclusion": "The hosted leg was one branch of an explicit OR whose other branch ran, and was additionally my own proposed extra. OpenResearch is absent from the brief. Neither is an unmet brief requirement. This is now settled by the brief's own words rather than by my judgement.",
+    "what_is_genuinely_unfinished": "Nothing in the brief. The hosted ESM-2 cross-implementation check I proposed could not run because the App was operator-paused; it remains available to anyone once the App returns, and the client and runner are committed."
+  }
 }
