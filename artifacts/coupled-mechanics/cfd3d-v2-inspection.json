@@ -1,9 +1,9 @@
 {
  "code_sha256": {
-  "engineering/coupled_mechanics/cfd3d_bundle.py": "0be79e80621eb09624e8b4da1d5a3b3ce474202ce8b7890f7dcb9ff6d43e8794",
+  "engineering/coupled_mechanics/cfd3d_bundle.py": "8e6c2eea76340e161cd234768bbc4d71dc8522b8f677c0ced5b2f8ee877a632b",
   "engineering/coupled_mechanics/contract.py": "f76b63b6f326191dbd9bfc3f58d2248150a9c10acb87e2f6bc714908bf6ac279",
   "engineering/coupled_mechanics/fin_geometry.py": "a47649db11bb5c10cdfec3cb7786b48fcbc01a8b4d50e0180e527cad59e675f7",
-  "engineering/coupled_mechanics/fin_patch.py": "49d053789133ee5b708f0715eff88478dc33c13b282ae803ad950f6e3e2cb323"
+  "engineering/coupled_mechanics/fin_patch.py": "88f76117f0f2f1818a22a72cbdd9856c41c0db9978827f240a422cd89a4363d3"
  },
  "consistency": {
   "L_ref_m": [
@@ -348,8 +348,16 @@
     ],
     "sha256": "30b9fe6143600db8c2e3e536503183704e14e7e98e61223d89021397ec7bfa98"
    },
-   "archive_hash_recomputed": false,
-   "archive_present_here": false,
+   "archive_file_present_here": false,
+   "archive_hash_recomputed": true,
+   "decoded_from_job_log": {
+    "decoded_bytes": 1855111,
+    "matches_recorded": true,
+    "members": 48,
+    "members_byte_identical_to_raw": 48,
+    "members_differing": [],
+    "sha256": "30b9fe6143600db8c2e3e536503183704e14e7e98e61223d89021397ec7bfa98"
+   },
    "job_log_records_it": true,
    "manifest_records_it": true,
    "manifest_sha256": "82ac2b4b19d2624e5f4530896f3fc939b622b5299b97e8ccd61dd24cde1cef8c"

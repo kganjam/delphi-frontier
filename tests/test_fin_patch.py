@@ -135,13 +135,21 @@ def test_v2_station_error_is_measured_and_shrinks(g):
 def test_protocol_resolution_and_hashes(g):
     p = fpch.protocol(g)
     t = g["component"]["params"]["thickness_mm"]["value"]["membrane"] / 1000
-    assert t / p["grid"]["h_m"] >= 2 and t / p["grid"]["h_fine_m"] >= 3 - 1e-9
+    assert t / p["grid"]["h_m"] >= 4 - 1e-9 and t / p["grid"]["h_fine_m"] >= 6 - 1e-9
     assert p["inputs"]["candidate_sha256"] == fg.CANDIDATE and p["member"]["member_sha256"]
-    # gates are frozen: the move to member-pressure/2 changes no threshold
-    assert p["gates"] == {"resolution_cells_across_membrane_min": 2, "grid_pair_rel_diff_max": 0.10,
+    # gates frozen before any result. Against the v1 protocol: resolution raised 2 -> 4 (BDIM), closure
+    # and sign-flip added, nothing lowered. Written out by hand so a change here is a decision.
+    assert p["gates"] == {"resolution_cells_across_membrane_min": 4, "grid_pair_rel_diff_max": 0.10,
                           "stationarity_rel_change_last_two_windows_max": 0.05,
                           "zero_alpha_control_jump_over_alpha_case_max": 0.02,
+                          "alpha_sign_flip_mirror_rel_max": 0.02,
+                          "closure_sampled_vs_solver_section_force_rel_max": 0.10,
                           "sign": "strip-mean jump p_ventral - p_dorsal > 0 for alpha > 0"}
+    import json
+    v1 = json.loads((fg.ROOT / "artifacts/fin-patch/v1-constant-width/protocol.json").read_text())["gates"]
+    for k, old in v1.items():
+        new = p["gates"][k]
+        assert new == old or (k == "resolution_cells_across_membrane_min" and new > old), k
     assert "member-pressure/2" in p["output_contract"]["transfer"]
     assert all(s["ray0_width_per_ds_m"] > 0 for s in p["sections"])
     q = dict(p)
@@ -168,6 +176,7 @@ def synthetic(g, proto, h_m, thickness_m, medium="air", n_rows=4000, **over):
                 "member_sha256": proto["member"]["member_sha256"], "frame_sha256": proto["member"]["frame_sha256"],
                 "candidate_sha256": fg.CANDIDATE, "h_m": h_m, "thickness_m": thickness_m, "medium": medium,
                 "rho_kg_m3": 1.225, "U_m_s": 5.0, "time_window_s": [1.0, 2.0],
+                "Cn_pressure_solver": float(np.sum(jump * np.diff(edges)) / c),  # closes exactly
                 "surface_sha256": "f" * 64, **over}
         cases.append(case)
         surfs.append(rows)
@@ -176,11 +185,11 @@ def synthetic(g, proto, h_m, thickness_m, medium="air", n_rows=4000, **over):
 
 def test_emitter_round_trips_the_analytic_strip_and_passes_the_contract(g):
     proto = fpch.protocol(g)
-    cases, surfs = synthetic(g, proto, h_m=5e-5, thickness_m=1e-4)
+    cases, surfs = synthetic(g, proto, h_m=2.5e-5, thickness_m=1e-4)
     rec = fpch.record_from_sections(cases, surfs, proto, g)
     assert rec["schema"] == "frontier.coupled.member-pressure/2"
     assert rec["tributary"] == ta.record(ta.reference(g), g)["tributary"]  # same widths, same provenance
-    assert rec["resolution"]["cells_across_member_thickness"] == 2
+    assert rec["resolution"]["cells_across_member_thickness"] == 4
     tr = fpch.transfer_load(rec, fpch.member_target(g))
     assert tr["scope"].startswith("2d-extrusion section scenario")
     ref_F = fpch.transfer_load(ta.record(ta.reference(g), g), fpch.member_target(g))["F_N"]
@@ -189,7 +198,7 @@ def test_emitter_round_trips_the_analytic_strip_and_passes_the_contract(g):
     # behaviour on a singular strip, and why a producer's row density at the LE is part of the contract.
     e = []
     for n in (4000, 16000):
-        c2, s2 = synthetic(g, proto, h_m=5e-5, thickness_m=1e-4, n_rows=n)
+        c2, s2 = synthetic(g, proto, h_m=2.5e-5, thickness_m=1e-4, n_rows=n)
         F = fpch.transfer_load(fpch.record_from_sections(c2, s2, proto, g), fpch.member_target(g))["F_N"]
         e.append((ref_F - F) / ref_F)
     assert 0 < e[1] < e[0] < 0.05
@@ -198,16 +207,17 @@ def test_emitter_round_trips_the_analytic_strip_and_passes_the_contract(g):
 
 def test_emitter_computes_resolution_itself_and_refuses(g):
     proto = fpch.protocol(g)
-    cases, surfs = synthetic(g, proto, h_m=1e-4, thickness_m=1e-4)  # 1 cell across
-    with pytest.raises(Refusal, match="MEMBER_UNRESOLVED"):
-        fpch.transfer_load(fpch.record_from_sections(cases, surfs, proto, g), fpch.member_target(g))
-    cases, surfs = synthetic(g, proto, h_m=5e-5, thickness_m=1e-4, medium="none")
+    for h in (1e-4, 5e-5, 1e-4 / 3):  # 1, 2 and 3 cells: below the frozen BDIM gate of 4
+        cases, surfs = synthetic(g, proto, h_m=h, thickness_m=1e-4)
+        with pytest.raises(Refusal, match="MEMBER_UNRESOLVED"):
+            fpch.record_from_sections(cases, surfs, proto, g)
+    cases, surfs = synthetic(g, proto, h_m=2.5e-5, thickness_m=1e-4, medium="none")
     with pytest.raises(Refusal, match="WRONG_PRESSURE_UNIT"):
         fpch.record_from_sections(cases, surfs, proto, g)
-    cases, surfs = synthetic(g, proto, h_m=5e-5, thickness_m=1e-4, member_sha256="0" * 64)
+    cases, surfs = synthetic(g, proto, h_m=2.5e-5, thickness_m=1e-4, member_sha256="0" * 64)
     with pytest.raises(Refusal, match="GEOMETRY_MISMATCH"):
         fpch.record_from_sections(cases, surfs, proto, g)
-    cases, surfs = synthetic(g, proto, h_m=5e-5, thickness_m=1e-4)
+    cases, surfs = synthetic(g, proto, h_m=2.5e-5, thickness_m=1e-4)
     rec = fpch.record_from_sections(cases, surfs, proto, g)
     with pytest.raises(Refusal, match="SAGITTAL_2D_NOT_3D"):
         fpch.transfer_load(rec, fpch.member_target(g, claim="whole_fin_3d"))
@@ -215,7 +225,7 @@ def test_emitter_computes_resolution_itself_and_refuses(g):
 
 def test_emitter_needs_every_contract_station(g):
     proto = fpch.protocol(g)
-    cases, surfs = synthetic(g, proto, h_m=5e-5, thickness_m=1e-4)
+    cases, surfs = synthetic(g, proto, h_m=2.5e-5, thickness_m=1e-4)
     rec = fpch.record_from_sections(cases[1:], surfs[1:], proto, g)  # root section missing
     with pytest.raises(Refusal, match="STATION_COVERAGE"):
         fpch.transfer_load(rec, fpch.member_target(g))
@@ -241,3 +251,15 @@ def test_committed_fin_patch_artifacts_are_current(g):
         assert hashlib.sha256((v1 / name).read_bytes()).hexdigest() == pin["sha256"], name
     for name, sha in manifest["retained_v1"]["sha256"].items():
         assert hashlib.sha256((v1 / name).read_bytes()).hexdigest() == sha, name
+
+
+def test_emitter_refuses_a_section_whose_samples_do_not_close(g):
+    proto = fpch.protocol(g)
+    cases, surfs = synthetic(g, proto, h_m=2.5e-5, thickness_m=1e-4)
+    for c in cases:
+        c["Cn_pressure_solver"] *= 1.05  # within 10 %: accepted
+    fpch.record_from_sections(cases, surfs, proto, g)
+    for c in cases:
+        c["Cn_pressure_solver"] /= 1.05 * 0.2  # samples now read 0.2x the solver, as cfd3d v0.1's did
+    with pytest.raises(Refusal, match="CLOSURE_FAILED"):
+        fpch.record_from_sections(cases, surfs, proto, g)

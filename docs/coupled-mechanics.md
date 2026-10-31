@@ -141,13 +141,13 @@ The superseded constant-width version of those four files is kept byte for byte 
 - **Declared inputs:** α 5°, U 5 m/s and ρ 1.225 are all assumed and unsourced. The v3a pose itself
   has α = 0, because the fin plane contains the stream, so its own load is zero.
 
-| s/L | chord mm | local strip mm | width w_i = dA/ds mm | strip/chord | share of section lift | q_strip mN/m | cells/chord at h | 2D cells | Re_c |
+| s/L | chord mm | local strip mm | width w_i = dA/ds mm | strip/chord | share of section lift | q_strip mN/m | cells/chord at h = 25 µm | 2D cells (7c × 5c) | Re_c |
 |---|---|---|---|---|---|---|---|---|---|
-| 0.00 | 7.5 | 0.27 | 0.267 | 3.6% | 23.9% | 9.7 | 151 | 0.8 M | 2515 |
-| 0.25 | 24.7 | 0.74 | 0.734 | 3.0% | 21.9% | 29.2 | 495 | 8.6 M | 8243 |
-| 0.50 | 29.6 | 1.21 | 1.201 | 4.1% | 25.6% | 40.8 | 592 | 12.2 M | 9860 |
-| 0.75 | 29.6 | 1.60 | 1.587 | 5.4% | 29.4% | 46.8 | 592 | 12.3 M | 9863 |
-| 1.00 | 24.2 | 1.96 | 1.937 | 8.1% | 35.7% | 46.5 | 484 | 8.2 M | 8070 |
+| 0.00 | 7.5 | 0.27 | 0.267 | 3.6% | 23.9% | 9.7 | 302 | 3.2 M | 2515 |
+| 0.25 | 24.7 | 0.74 | 0.734 | 3.0% | 21.9% | 29.2 | 989 | 34.2 M | 8243 |
+| 0.50 | 29.6 | 1.21 | 1.201 | 4.1% | 25.6% | 40.8 | 1183 | 49.0 M | 9860 |
+| 0.75 | 29.6 | 1.60 | 1.587 | 5.4% | 29.4% | 46.8 | 1184 | 49.0 M | 9863 |
+| 1.00 | 24.2 | 1.96 | 1.937 | 8.1% | 35.7% | 46.5 | 968 | 32.8 M | 8070 |
 
 The width is the strip's area per unit length of ray: the strip is bounded by chordwise lines, so
 over ds of the swept ray it covers cos(8°)·ds of span, and w_i = (chordwise strip) · cos λ
@@ -186,23 +186,42 @@ Through `parse_pressure` as `member-pressure/2`, this is accepted as an analytic
 - **G7, structure:** EI and the ray section are unknown.
 - **G8, global CFD:** cfd3d v1 carries the membrane as a smeared 3.7-cell shell, so it is not used.
 
-**The frozen patch case** (`protocol.json`, file sha256 `6c1a0aa6…`, `protocol_sha256` `7e14a21a…`;
-the v1 case `f2c859e0…` is superseded, and no run was made against it). The only change from v1 is
-the output contract: sections now transfer as `/2` with ray 0's own width at each station. Every
-gate and the grid are unchanged, and a test pins them.
+**The frozen patch case** (`protocol.json`, file sha256 `5e431345…`, `protocol_sha256` `f4db6089…`).
+It supersedes the v1 case `f2c859e0…` (f8ebc13). No run was made against v1 or against the
+intermediate `7e14a21a…` (d6b73af). Changes from v1, all made before any result, with no threshold
+lowered (a test compares every gate with v1's):
+- Sections transfer as `/2`, with ray 0's own width at each station.
+- **Resolution raised from 2 to 4 cells** across the membrane. cfd3d reports, from WaterLily's
+  source (`Body.jl:15,28,70`; not re-read here), that the BDIM kernel is ε = 1 cell, so a plate
+  t = 2h has no solid core. The contract's solver-agnostic minimum stays at 2.
+- **Closure gate added.** The sampled jump integrated over the whole chord must lie within 10% of
+  the solver's own section pressure force (`Cn_pressure_solver`), or the emitter refuses
+  `CLOSURE_FAILED`. cfd3d's v0.1 offset samples summed to 0.10–0.25× its solver's force.
+- **Controls added:** −α must mirror +α within 2%, and a t/h = 2 resolution mutant must differ
+  from t/h = 4 by more than the 4/6 pair does.
 - **Sections:** five chordwise sections at the contract stations s/L = 0, ¼, ½, ¾, 1. The contract
   needs both ends.
 - **Solid:** the membrane plate as a real solid, in two declared variants: membrane only, and
   membrane plus a 0.6 mm ray-0 rod at the leading edge.
-- **Grid:** h = t/2 = 50 µm coarse and t/3 fine. Both pass the ≥2-cell gate, so no coarse member is
-  ever unresolved.
-- **Gates, frozen:** grid pair ≤ 10%, stationarity ≤ 5%, α = 0 control ≤ 2%, and the jump sign.
+- **Grid:** h = t/4 = 25 µm coarse and t/6 ≈ 16.7 µm fine. Both pass the 4-cell gate, so no coarse
+  member is ever unresolved.
+- **Gates, frozen:**
+  - resolution ≥ 4 cells;
+  - grid pair ≤ 10%;
+  - stationarity ≤ 5%;
+  - α = 0 control ≤ 2%;
+  - ±α mirror ≤ 2%;
+  - closure ≤ 10%;
+  - the jump sign.
+
   The analytic ratio is reported, not gated.
-- **Solver reference:** the solver's own reference gate is required. cfd3d's C1 is FAILED, which
-  blocks physical-validation wording.
+- **Solver reference:** the solver's own reference gate is required. cfd3d's 3D C1 sphere is FAILED,
+  which blocks physical-validation wording. cfd3d proposes a 2D cylinder at Re 100 (D 64 and 128,
+  with a ν×4 mutant), with its band and source frozen by cfd3d before any run. Its Cd ≈ 1.33 and
+  St ≈ 0.165 are recalled, not yet sourced.
 - **Output:** each section's surface rows go through `fin_patch.record_from_sections` (emits `/2`), which
-  computes resolution from the section's own `h_m` and `thickness_m`. It refuses on an unresolved
-  section, a missing medium, a member hash mismatch, or a missing station. The record is
+  computes resolution from the section's own `h_m` and `thickness_m`. It refuses on fewer than 4
+  cells, a failed closure, a missing medium, a member hash mismatch, or a missing station. The record is
   `2d-extrusion`, so a `whole_fin_3d` target is refused.
 - **Ownership:** cfd3d owns the solver and its packaging, and infra owns dispatch. Cell counts are
   arithmetic; run time must be measured by the solver owner.
@@ -216,10 +235,11 @@ tests in `tests/test_coupled_mechanics.py`. The raw return is infra's untracked 
 The inspection pins every file it read by sha256. CFD04 curates the assets and owns their
 interpretation and the videos.
 
-**Transport.** The archive (1,855,111 B, sha256 `30b9fe61…`) is **not on this host**, so its hash is
-recorded by transport only (`manifest-infra22.json` and `job.log`, both read here) and was not
-recomputed. `status.json` and the platform files are committed in infra-director `5ba6c0e`,
-byte-identical to the raw tree.
+**Transport, recomputed here.** No archive file is on this host, but job.log carries the archive as
+base64 (`COPS_B64` lines). The reader decodes it in memory: 1,855,111 B, sha256 `30b9fe61…`, equal to
+the value `manifest-infra22.json` and `job.log` record. All 48 tar members are byte-identical to
+infra's raw out/ (cfd3d reports the same check). `status.json` and the platform files are
+committed in infra-director `5ba6c0e`, byte-identical to the raw tree.
 
 **Lineage, recomputed:**
 - The candidate is `4a3b912e`: the sha256 of `geometry/candidate.json`, named by components.json,

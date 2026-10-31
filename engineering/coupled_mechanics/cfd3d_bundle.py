@@ -7,6 +7,7 @@ the inspection JSON.
     python -m engineering.coupled_mechanics.cfd3d_bundle <raw out/ dir> artifacts/coupled-mechanics/cfd3d-v2-inspection.json
 
 What the bundle is, from its own records (each re-read here, not relayed):
+- Transport: the archive is re-decoded from job.log's base64, hashed, and compared member by member.
 - WaterLily 1.10.0, BDIM immersed bodies. Fixed rigid fish, candidate 4a3b912e (not v3a e8c2b666).
 - Non-dimensional: medium "none", Cp = (p - p_ref)/(0.5 U^2), grid units.
 - Fins are WaterLilyMeshBodies shells. resolved:false, 0.28-0.42 cells across 0.5 mm.
@@ -16,10 +17,13 @@ Nothing here turns these numbers into fin loads, flight loads or a validated fie
 """
 from __future__ import annotations
 
+import base64
 import hashlib
+import io
 import json
 import math
 import sys
+import tarfile
 from fractions import Fraction
 from pathlib import Path
 
@@ -34,7 +38,8 @@ from .contract import MIN_CELLS_ACROSS_MEMBER, canonical_sha, parse_member, pars
 
 SCHEMA = "frontier.coupled.cfd3d-bundle-inspection/1"
 JOB = "aijob-e00k0jpm34h4na3b99"
-# Transport-recorded only: the archive itself is not on this host, so this hash is NOT recomputed here.
+# As recorded by transport. No archive file exists on this host, but job.log carries the archive as
+# base64 (COPS_B64 lines), so `archive_from_job_log` re-decodes it and recomputes this hash.
 ARCHIVE = {"sha256": "30b9fe6143600db8c2e3e536503183704e14e7e98e61223d89021397ec7bfa98", "bytes": 1855111,
            "recorded_in": ["manifest-infra22.json (owned[0].result)", "job.log COPS_RESULT_BEGIN"]}
 CASES = ("gpu_fish_L64_Re200", "gpu_fish_L128_Re200", "gpu_fish_L128_Re1000", "gpu_fish_L192_Re1000")
@@ -60,6 +65,32 @@ def inventory(out: Path) -> dict:
             for p in sorted(out.rglob("*")) if p.is_file()}
 
 
+def archive_from_job_log(log: Path, out: Path) -> dict:
+    """Decode the archive from job.log's COPS_B64 lines, hash it, and compare every member with out/.
+
+    Read in memory, never extracted to disk (the tar is untrusted data)."""
+    b64 = "".join(line.split("COPS_B64 ", 1)[1].strip() for line in log.read_text().splitlines()
+                  if " COPS_B64 " in line)
+    raw = base64.b64decode(b64, validate=True)
+    members = same = 0
+    differ = []
+    with tarfile.open(fileobj=io.BytesIO(raw), mode="r:*") as tf:
+        for m in tf.getmembers():
+            if not m.isfile():
+                continue
+            members += 1
+            rel = m.name.split("out/", 1)[1] if "out/" in m.name else m.name
+            p = out / rel
+            data = tf.extractfile(m).read()
+            if p.is_file() and hashlib.sha256(p.read_bytes()).digest() == hashlib.sha256(data).digest():
+                same += 1
+            else:
+                differ.append(m.name)
+    return {"decoded_bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
+            "matches_recorded": hashlib.sha256(raw).hexdigest() == ARCHIVE["sha256"] and len(raw) == ARCHIVE["bytes"],
+            "members": members, "members_byte_identical_to_raw": same, "members_differing": differ}
+
+
 def lineage(out: Path, inv: dict, transport_dir: Path | None) -> dict:
     """Do the bundle's own cross-references agree? Each check is recomputed from files on disk."""
     status = json.loads((out / "status.json").read_text())
@@ -78,8 +109,7 @@ def lineage(out: Path, inv: dict, transport_dir: Path | None) -> dict:
         if r.exists():
             rj = json.loads(r.read_text())
             checks[f"{cid}: render.json pins case.json"] = rj["case_json_sha256"] == inv[f"{cid}/case.json"]["sha256"]
-    transport = {"archive": ARCHIVE, "archive_present_here": False,
-                 "archive_hash_recomputed": False}
+    transport = {"archive": ARCHIVE, "archive_file_present_here": False, "archive_hash_recomputed": False}
     if transport_dir is not None:
         m = json.loads((transport_dir / "manifest-infra22.json").read_text())
         res = next(o["result"] for o in m["owned"] if o["id"] == JOB)
@@ -88,6 +118,8 @@ def lineage(out: Path, inv: dict, transport_dir: Path | None) -> dict:
                          and res["truncated"] is False,
                          job_log_records_it=ARCHIVE["sha256"] in log,
                          manifest_sha256=_sha(transport_dir / "manifest-infra22.json"))
+        dec = archive_from_job_log(transport_dir / "results/infra22-cfd3d-geometry-dispatch-repair/job.log", out)
+        transport.update(archive_hash_recomputed=dec["matches_recorded"], decoded_from_job_log=dec)
     render_inputs_absent = sorted({k for cid in CASES if (out / cid / "render/render.json").exists()
                                    for k in json.loads((out / cid / "render/render.json").read_text())["inputs"]
                                    if not (out / cid / "render" / k).exists() and not (out / cid / k).exists()})

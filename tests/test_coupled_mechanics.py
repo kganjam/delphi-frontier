@@ -381,6 +381,28 @@ def test_committed_artifacts_are_current(receipt):
 # ------------------------------------------------------------------ the returned cfd3d v0.1 3D bundle
 # The raw bundle is an untracked return on this host (infra owns it; CFD04 curates its assets), so the
 # tests that need it skip without it. The committed inspection JSON is checked either way.
+
+
+def test_archive_decode_compares_members(tmp_path):
+    out = tmp_path / "out"
+    out.mkdir()
+    (out / "a.json").write_text("{}")
+    buf = io.BytesIO()
+    with tarfile.open(fileobj=buf, mode="w:gz") as tf:
+        for name, data in (("out/a.json", b"{}"), ("out/b.json", b"[]")):
+            info = tarfile.TarInfo(name)
+            info.size = len(data)
+            tf.addfile(info, io.BytesIO(data))
+    b64 = base64.b64encode(buf.getvalue()).decode()
+    log = tmp_path / "job.log"
+    log.write_text("x COPS_RESULT_BEGIN {}\n" + "".join(f"[t] COPS_B64 {b64[i:i + 76]}\n" for i in range(0, len(b64), 76)))
+    d = cb.archive_from_job_log(log, out)
+    assert d["sha256"] == hashlib.sha256(buf.getvalue()).hexdigest() and d["matches_recorded"] is False
+    assert d["members"] == 2 and d["members_byte_identical_to_raw"] == 1 and d["members_differing"] == ["out/b.json"]
+import base64  # noqa: E402
+import io  # noqa: E402
+import tarfile  # noqa: E402
+
 from engineering.coupled_mechanics import cfd3d_bundle as cb  # noqa: E402
 
 RAW = Path("/data/worktrees/delphi-frontier/infra-director/results/infra/cfd3d-v2/results/"
@@ -425,7 +447,9 @@ def test_bundle_limits_are_preserved(inspection):
     assert all(r["Re_consistent"] and r["h_equals_L_ref_over_L_cells"] and r["fin_cells_matches_case"] for r in rows)
     assert not any(r["fins_resolved_declared"] or r["fins_resolved_by_rule"] for r in rows)
     assert all(r["medium"].startswith("none") for r in rows)
-    assert inspection["lineage"]["transport"]["archive_hash_recomputed"] is False
+    tr = inspection["lineage"]["transport"]
+    assert tr["archive_hash_recomputed"] is True and tr["decoded_from_job_log"]["sha256"] == cb.ARCHIVE["sha256"]
+    assert tr["decoded_from_job_log"]["members_byte_identical_to_raw"] == tr["decoded_from_job_log"]["members"] == 48
     assert inspection["solver_runs_by_this_reader"] == 0
     re200, re1000 = inspection["grid_pairs"]
     assert re200["within_cfd3d_10pct_rule"]["Cd_total"] == "no"

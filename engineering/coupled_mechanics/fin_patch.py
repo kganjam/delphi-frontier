@@ -3,7 +3,7 @@
 Why a patch: the global 3D CFD (cfd3d v1) carries the 0.10 mm membrane as a 3.7-cell shell at
 h = 1.8-7.2 mm, so its fin jumps are smeared and refused. A load on ray 0 needs the pressure on both
 faces of a member that the grid actually resolves. The patch is a set of chordwise sections through
-ray 0 at the contract's station positions, each resolved to >= 2 cells across the membrane, in
+ray 0 at the contract's station positions, each resolved to >= 4 cells across the membrane, in
 which the membrane, and optionally the ray-0 rod at the leading edge, is a real solid.
 
 What it is not: a 2D section is a strip, so the records it yields are `2d-extrusion` and the
@@ -28,19 +28,29 @@ from engineering.fin_mechanics.load_bridge import Refusal
 from . import SCHEMA_PRESSURE_V2, SCHEMA_TARGET
 from . import fin_geometry as fg
 from . import thin_airfoil as ta
-from .contract import MIN_CELLS_ACROSS_MEMBER, parse_member, parse_pressure
+from .contract import parse_member, parse_pressure
 from .traction import resultants
 
 PROTOCOL_SCHEMA = "frontier.coupled.fin-patch-protocol/1"
 SECTION_SCHEMA = "frontier.coupled.fin-patch-section/1"
-# Declared before any patch result, never relaxed after one (same thresholds as cfd3d/windtunnel).
+# Declared before any patch result, never relaxed after one. Raised twice before any result, both on
+# cfd3d's report (cfd3d-to-coupled-mechanics.md Update 2, 2026-10-31):
+# - resolution 2 -> 4: under WaterLily BDIM (kernel eps = 1 cell, Body.jl:15,28,70, reported by cfd3d and
+#   not re-read here) a plate t = 2h has a solid core of zero width. 4 cells leave a 2-cell core. The
+#   contract's own minimum (MIN_CELLS_ACROSS_MEMBER = 2) is solver-agnostic and stays.
+# - closure added: cfd3d's v0.1 offset samples summed to 0.10-0.25x the solver's own pressure force, so a
+#   section whose sampled jump does not integrate to the solver's force is refused.
+RESOLUTION_CELLS_PATCH = 4
 GATES = {
-    "resolution_cells_across_membrane_min": MIN_CELLS_ACROSS_MEMBER,
+    "resolution_cells_across_membrane_min": RESOLUTION_CELLS_PATCH,
     "grid_pair_rel_diff_max": 0.10,
     "stationarity_rel_change_last_two_windows_max": 0.05,
     "zero_alpha_control_jump_over_alpha_case_max": 0.02,
+    "alpha_sign_flip_mirror_rel_max": 0.02,
+    "closure_sampled_vs_solver_section_force_rel_max": 0.10,
     "sign": "strip-mean jump p_ventral - p_dorsal > 0 for alpha > 0",
 }
+GATES_RAISED_FROM = {"resolution_cells_across_membrane_min": 2}  # v1 protocol cf7d3fca; never lowered
 
 
 def member_target(g: dict, claim: str = "member_scenario") -> dict:
@@ -108,7 +118,7 @@ def protocol(g: dict | None = None) -> dict:
     comp = g["component"]["params"]
     t_mem = comp["thickness_mm"]["value"]["membrane"] / 1000.0
     d_ray = comp["thickness_mm"]["value"]["ray_max"] / 1000.0
-    h = t_mem / MIN_CELLS_ACROSS_MEMBER
+    h = t_mem / RESOLUTION_CELLS_PATCH
     flow = ref["flow"]
     nu_air = {"value": 1.5e-5, "status": "assumed", "source": "windtunnel protocol air viscosity (declared)"}
     sections = []
@@ -145,25 +155,37 @@ def protocol(g: dict | None = None) -> dict:
                  "alpha_eff_rad_lifting_line": ref["alpha_eff_rad"], "alpha_eff_status": "assumed (elliptic lifting line on a non-elliptic fan, AR %.2f)" % ref["aspect"]["AR"],
                  "Re_ladder": [1000, "declared-U Re_c per section (see sections)"],
                  "regime_gap": "declared U is unsourced; flight/taxi regimes are not established; no free surface"},
-        "grid": {"h_m": h, "h_rule": "coarse h = t_membrane / %d (the resolution gate)" % MIN_CELLS_ACROSS_MEMBER,
-                 "h_fine_m": t_mem / 3,
-                 "grid_pair": "coarse t/2 and fine t/3 (ratio 1.5); both members of the pair pass the gate, "
+        "grid": {"h_m": h, "h_rule": "coarse h = t_membrane / %d (the resolution gate)" % RESOLUTION_CELLS_PATCH,
+                 "h_fine_m": t_mem / 6,
+                 "grid_pair": "coarse t/4 and fine t/6 (ratio 1.5); both members of the pair pass the gate, "
                               "so no coarse result is ever an unresolved one; fine costs 2.25x the cells"},
         "controls": {"alpha_zero": "same section at alpha 0; symmetric plate gives a jump near 0",
+                     "alpha_sign_flip": "same section at -alpha: |jump(+a) + jump(-a)| / |jump(+a)| within the gate",
+                     "resolution_mutant": ("same section at t/h = 2 (BDIM bare edge, no solid core). It must "
+                                           "differ from t/h = 4 by more than the t/4 vs t/6 pair does; if it "
+                                           "does not, resolution is not demonstrated and the result says so"),
+                     "closure": ("per section: the sampled jump integrated over the whole chord, "
+                                 "sum((Cp_minus - Cp_plus) dl) / c, against the solver's own section "
+                                 "normal pressure force coefficient; refused outside the gate"),
                      "analytic_reference": "thin-airfoil strip mean (reported ratio, not a pass gate: viscous "
                                            "sections at finite Re are expected to differ)"},
-        "gates": GATES,
+        "gates": GATES, "gates_raised_from": GATES_RAISED_FROM,
         "solver_requirements": {
             "owner": "cfd3d (claude-04) chooses the solver; dispatch by infra only",
-            "reference_gate": "the solver's own reference gate must be reported; cfd3d C1 sphere is FAILED as of "
-                              "Update 1 and that blocks any physical-validation wording",
-            "thin_boundary": "resolved solid, >= 2 cells across t_membrane; an immersed-boundary smoothing band "
-                             "wider than the plate is NOT resolution"},
+            "reference_gate": ("the solver's own reference gate must be reported. cfd3d's 3D C1 sphere is FAILED, "
+                               "which blocks physical-validation wording. cfd3d proposes a 2D cylinder at Re 100 "
+                               "(D 64 and 128 cells, a nu x 4 mutant; Cd ~1.33 and St ~0.165 are RECALLED, not "
+                               "yet sourced), with its band and source frozen by cfd3d before any run"),
+            "thin_boundary": ("resolved solid, >= %d cells across t_membrane; an immersed-boundary smoothing band "
+                              "wider than the plate is NOT resolution" % RESOLUTION_CELLS_PATCH),
+            "wall_values": ("sample each face at two or more offsets outside the band and extrapolate to the "
+                            "wall; the closure gate checks the result")},
         "output_contract": {
             "per_section_file": "case.json + surface rows, cfd3d 10-column float32 layout, one row per wall "
                                 "segment of the DORSAL face (normal +n), Cp_plus at +offset n, Cp_minus at "
                                 "-(offset + thickness) n, so both faces are sampled outside the wall",
             "case_json_required": ["schema", "station_s_over_L", "member_sha256", "frame_sha256", "candidate_sha256",
+                                   "Cn_pressure_solver",
                                    "h_m", "thickness_m", "medium", "rho_kg_m3", "U_m_s", "alpha_deg", "Re_c",
                                    "p_ref", "time_window_s", "gates", "solver", "surface_sha256"],
             "transfer": "engineering.coupled_mechanics.fin_patch.record_from_sections -> member-pressure/2 "
@@ -191,8 +213,18 @@ def _section(case: dict, surface: np.ndarray, proto: dict) -> dict:
         raise Refusal("WRONG_PRESSURE_UNIT", "section has no physical medium; Cp cannot become Pa")
     h, t = float(case["h_m"]), float(case["thickness_m"])
     cells = int(math.floor(t / h + 1e-9))
+    need = proto["gates"]["resolution_cells_across_membrane_min"]
+    if cells < need:
+        raise Refusal("MEMBER_UNRESOLVED", f"section has {cells} cells across the membrane; the frozen patch "
+                                           f"protocol needs {need} (BDIM: 2 cells leave no solid core)")
     st = next(s for s in proto["sections"] if s["station_s_over_L"] == case["station_s_over_L"])
     c = st["chord_m"]
+    sampled = float(np.sum((surface[:, 8] - surface[:, 7]) * surface[:, 6]) / c)
+    solver = float(case["Cn_pressure_solver"])
+    tol = proto["gates"]["closure_sampled_vs_solver_section_force_rel_max"]
+    if solver == 0 or abs(sampled - solver) / abs(solver) > tol:
+        raise Refusal("CLOSURE_FAILED", f"sampled section force {sampled:.6g} vs solver {solver:.6g}: outside "
+                                        f"{tol:.0%}; off-wall samples are not wall pressures")
     xi = (surface[:, 0] - surface[:, 0].min()) / c  # chordwise position from the leading edge, plane coords
     strip = (xi >= st["tributary_strip_xi"][0]) & (xi <= st["tributary_strip_xi"][1])
     if strip.sum() < 2:
