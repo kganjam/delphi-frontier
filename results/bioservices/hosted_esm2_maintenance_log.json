@@ -66,5 +66,7 @@
       "request_id": "60feabf5-82d5-466b-955a-27899788607d",
       "operation_id": null
     }
-  ]
+  ],
+  "span_minutes": 49.5,
+  "correction": "The commit that introduced this file described the span as 'roughly 2.5 hours'. That is wrong: the first and last attempts are 49.5 minutes apart (2026-10-31T20:31:47Z to 2026-10-31T21:21:14Z). The commit message cannot be amended once pushed, so the correction lives here, next to the timestamps that refute it."
 }
