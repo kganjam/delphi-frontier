@@ -328,6 +328,66 @@
     "A testable mechanism for a bigger paired fin; no flight is implied.",
     "Title and author list are not restated here because the card did not carry them; only the journal, year and PMC id were given."
    ]
+  },
+  {
+   "id": "preuss2006",
+   "cite": "Preuss, T., Osei-Bonsu, P.E., Weiss, S.A., Wang, C. & Faber, D.S. (2006). Neural representation of object approach in a decision-making motor circuit. J. Neurosci. 26(13): 3454-3464.",
+   "url": "https://doi.org/10.1523/JNEUROSCI.5259-05.2006",
+   "read_level": "abstract (PubMed, 2026-11-01)",
+   "kind": "observed",
+   "note": "Goldfish looming-evoked C-starts: response probability 0.70-0.91, mean latencies 142-716 ms; the Mauthner cell is the threshold detector. Used by the neural-scale escape model (engineering/neuro).",
+   "caveats": [
+    "Goldfish, not Exocoetidae."
+   ],
+   "short": "Preuss et al. 2006"
+  },
+  {
+   "id": "domenici2011",
+   "cite": "Domenici, P., Blagburn, J.M. & Bacon, J.P. (2011). Animal escapology I: theoretical issues and emerging trends in escape trajectories. J. Exp. Biol. 214(15): 2463-2473.",
+   "url": "https://doi.org/10.1242/jeb.029652",
+   "read_level": "abstract (PubMed, 2026-11-01)",
+   "kind": "source_assessment",
+   "note": "Review: away responses about 50-90% of the time; escape trajectories mainly 90-180 deg from the threat.",
+   "caveats": [
+    "Multi-taxon review; not flying-fish data."
+   ],
+   "short": "Domenici et al. 2011"
+  },
+  {
+   "id": "eaton2001",
+   "cite": "Eaton, R.C., Lee, R.K. & Foreman, M.B. (2001). The Mauthner cell and other identified neurons of the brainstem escape network of fish. Prog. Neurobiol. 63(4): 467-485.",
+   "url": "https://doi.org/10.1016/s0301-0082(00)00047-2",
+   "read_level": "abstract (PubMed, 2026-11-01)",
+   "kind": "source_assessment",
+   "note": "Mauthner cell as a command-like neuron feeding a lower-level CPG; stimulus angle sets the escape trajectory.",
+   "caveats": [
+    "Review; numbers not re-read."
+   ],
+   "short": "Eaton et al. 2001"
+  },
+  {
+   "id": "sarocortes2022",
+   "cite": "Saro-Cortes, V. et al. (2022). An adaptable flying fish robotic model for aero- and hydrodynamic experimentation. Integr. Comp. Biol.",
+   "url": "https://doi.org/10.1093/icb/icac101",
+   "read_level": "abstract (PubMed, 2026-11-01)",
+   "kind": "observed",
+   "note": "Robotic model at Re 30,000: pelvic fins directly behind the pectorals maximise efficiency, but pitch stability is lost for positive pelvic pitch angles and for pelvic fins directly below the pectorals.",
+   "caveats": [
+    "Robotic model, not an animal."
+   ],
+   "short": "Saro-Cortes et al. 2022"
+  },
+  {
+   "id": "taylor2003",
+   "cite": "Taylor, G.K., Nudds, R.L. & Thomas, A.L.R. (2003). Flying and swimming animals cruise at a Strouhal number tuned for high power efficiency. Nature 425: 707-711.",
+   "url": "https://doi.org/10.1038/nature02000",
+   "read_level": "abstract (PubMed, 2026-11-01)",
+   "kind": "observed",
+   "note": "Cruising swimmers and fliers use 0.2 < St < 0.4.",
+   "caveats": [
+    "Cruising, not burst or taxi."
+   ],
+   "short": "Taylor et al. 2003"
   }
  ],
  "disagreements": [

@@ -1,0 +1,9 @@
+{
+ "command": "engineering/neuro/run.sh caudal_cpg m2-caudal-cpg --seed 20261101",
+ "python_module": "engineering.neuro.caudal_cpg",
+ "exit_code": 0,
+ "start_utc": "2026-11-01T14:58:49Z",
+ "end_utc": "2026-11-01T15:01:57Z",
+ "caps": "systemd-run --user --scope TasksMax=256 MemoryMax=6G MemorySwapMax=0 RuntimeMaxSec=1800; OMP_NUM_THREADS=1",
+ "manifest_sha256": "1e847054777336a3d35088a3b0f918ec5963e2b87bf7212c0a4c20b0abbb8bb5"
+}

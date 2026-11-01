@@ -1,0 +1,316 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "m2-caudal-cpg",
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organ",
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Caudal-fin CPG to thrust: phase-locking stability and frequency/amplitude/muscle sweep (extends behavior-cpg)",
+ "extends": "behavior-cpg (engineering/behavior/model.py cpg() and rk4() imported unchanged)",
+ "command": "python -m engineering.neuro.caudal_cpg --seed 20261101",
+ "seed": 20261101,
+ "git_head_at_run": "caffef4",
+ "ran": {
+  "utc": "2026-11-01T15:01:56Z",
+  "seattle": "2026-11-01 07:01 PST"
+ },
+ "elapsed_s": 186.84153771400452,
+ "env": {
+  "python": "3.13.12",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "matplotlib": "3.10.8",
+  "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+  "OMP_NUM_THREADS": "1"
+ },
+ "code_sha256": {
+  "engineering/neuro/caudal_cpg.py": "02ce0ab2410d6f336236d27c0379ee2ae5aa31d9b486094ef0e8c1af943a5f46",
+  "engineering/neuro/common.py": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+  "engineering/neuro/sources.json": "89c5e364160b5e01daf8b1b99157c6bf9cc31cb96407f99a6797852b3604d455",
+  "engineering/behavior/model.py": "25729db211570bf91fc0d676c527f300e104cb45b53fc9b39a73560d00e68dce"
+ },
+ "inputs": {
+  "engineering/behavior/model.py": {
+   "sha256": "25729db211570bf91fc0d676c527f300e104cb45b53fc9b39a73560d00e68dce",
+   "bytes": 8552
+  },
+  "engineering/simulation/video/manifest.json": {
+   "sha256": "e91add0f47f44ed35deb60fae47d7e2fd803b27e5f0f9078eba316ff01e74942",
+   "bytes": 3325
+  }
+ },
+ "parameters": {
+  "H_over_L": {
+   "value": 0.1,
+   "basis": "assumption; ~0.1 L half-amplitude in fast steady swimming (recalled general fish kinematics), swept 0.05-0.15"
+  },
+  "span_over_L": {
+   "value": 0.25,
+   "basis": "assumption; caudal fin depth, swept 0.2-0.3"
+  },
+  "f_m_Hz": {
+   "value": 35.0,
+   "basis": "assumption form; corner swept 20-70 Hz (wardle1975, edgerton_breder1941)"
+  },
+  "k_swim": {
+   "value": 2.0,
+   "basis": "assumption; swimming drag augmentation over rigid-body drag, swept 1-3"
+  },
+  "S_wet_over_L2": {
+   "value": 0.4,
+   "basis": "assumption; fusiform wetted area"
+  },
+  "k_form": {
+   "value": 0.2,
+   "basis": "assumption"
+  },
+  "m_add_frac": {
+   "value": 0.1,
+   "basis": "assumption; longitudinal added mass"
+  },
+  "lobe_area_over_L2": {
+   "value": 0.01,
+   "basis": "assumption; immersed hypocaudal lobe during taxi, swept x0.5-2"
+  },
+  "lobe_AR": {
+   "value": 3.0,
+   "basis": "assumption"
+  },
+  "alpha_feather_deg": {
+   "value": 12.0,
+   "basis": "assumption; passive feathering holds effective attack angle at or below this"
+  },
+  "L_m": {
+   "value": 0.171,
+   "basis": "assumption: m=0.05 kg baseline with condition factor 1.0"
+  }
+ },
+ "checks": [
+  {
+   "name": "EBT closed form equals phase-averaged Lighthill expression at U=0.0",
+   "pass": true,
+   "detail": [
+    1.698392026975211,
+    1.6983920269752113
+   ]
+  },
+  {
+   "name": "EBT closed form equals phase-averaged Lighthill expression at U=1.0",
+   "pass": true,
+   "detail": [
+    1.5531856363785137,
+    1.553185636378514
+   ]
+  },
+  {
+   "name": "EBT closed form equals phase-averaged Lighthill expression at U=3.0",
+   "pass": true,
+   "detail": [
+    0.39153451160493463,
+    0.3915345116049351
+   ]
+  },
+  {
+   "name": "EBT thrust is zero when U equals wave speed c",
+   "pass": true
+  },
+  {
+   "name": "zero amplitude gives zero EBT thrust and zero lobe thrust minus drag <= 0",
+   "pass": true
+  },
+  {
+   "name": "reused CPG: dt halving changes final phase lags < 1e-3 rad",
+   "pass": true,
+   "detail": 2.6716406864579767e-12
+  },
+  {
+   "name": "reused CPG locks at the behavior-cpg defaults with lag 2pi/7",
+   "pass": true
+  },
+  {
+   "name": "numerical locking matches the analytic condition |(N-1) dw| <= c in every case, including the 5 within 15% of the boundary",
+   "pass": true,
+   "detail": {
+    "agree": 48,
+    "of": 48,
+    "near_boundary": 5
+   }
+  },
+  {
+   "name": "numerical Jacobian slowest eigenvalue matches -sqrt(c^2-dw^2) within 2% where locked",
+   "pass": true,
+   "detail": [
+    [
+     10.0,
+     0.0,
+     -9.999989515563357,
+     -10.0
+    ],
+    [
+     20.0,
+     0.0,
+     -19.99999999213742,
+     -20.0
+    ],
+    [
+     40.0,
+     0.0,
+     -39.99999998427484,
+     -40.0
+    ],
+    [
+     40.0,
+     0.5,
+     -33.4124136287528,
+     -33.41241362647454
+    ],
+    [
+     60.0,
+     0.0,
+     -59.99999999062311,
+     -60.0
+    ],
+    [
+     60.0,
+     0.5,
+     -55.824630635470385,
+     -55.824630624363486
+    ]
+   ]
+  },
+  {
+   "name": "every swept speed equilibrium is stable: d(T-D)/dU < 0",
+   "pass": true,
+   "detail": -0.24432533334837625
+  },
+  {
+   "name": "comparison (not a fit): nominal EBT speed within factor 2 of Bainbridge empirical U=L/4(3f-4) for 8-20 Hz",
+   "pass": true,
+   "detail": {
+    "4.0": 1.5034707036170463,
+    "6.0": 1.3075172053722743,
+    "8.0": 1.2297544001711165,
+    "10.0": 1.1867502051298515,
+    "12.0": 1.1580076253860332,
+    "14.0": 1.136144751321689,
+    "16.0": 1.1179057385659037,
+    "18.0": 1.1016649926273303,
+    "20.0": 1.08654360706808
+   }
+  }
+ ],
+ "all_checks_pass": true,
+ "headline": {
+  "nominal_peak_U_ms": 7.014164977471033,
+  "nominal_peak_at_f_Hz": 80.0,
+  "sweep_max_U_ms": 14.466907766870216,
+  "sweep_max_U_BL_s": 84.60179980625857,
+  "taxi_V_max_ms_no_power_cap": {
+   "f30_fm35": 19.5,
+   "f30_fm70": 24.0,
+   "f50_fm35": 25.0,
+   "f50_fm70": 25.0,
+   "f70_fm35": 25.0,
+   "f70_fm70": 25.0
+  },
+  "taxi_V_max_ms_capped_by_power_and_wet_fraction": {
+   "f30_fm35": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 18.0,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f30_fm70": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f50_fm35": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f50_fm70": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f70_fm35": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f70_fm70": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   }
+  },
+  "submerged_U_at_power_cap_W_per_kg": {
+   "50": 2.3838911263850986,
+   "150": 3.5118879924252018,
+   "250": 4.190765848973183
+  },
+  "reading": "Submerged EBT speed is capped below the body-wave speed f*lambda; the binding limit is muscle power, not frequency: see submerged_U_at_power_cap against the ~10 m/s taxi start in Fish 1990."
+ },
+ "outputs": {
+  "figure.png": "3d2c7331d99ed5240181d4a51947d98fad91495da57992a015cd260683473cb4",
+  "results.json": "c571d66b0c2707021e5415ecbf6a5749788c95908b2eefdfbdc8a4c3e985ab8c"
+ }
+}

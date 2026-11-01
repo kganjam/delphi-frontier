@@ -1,0 +1,403 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "m1-fast-start",
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Mauthner-triggered C-start escape to surface emergence, taxi and glide release (Monte Carlo over sourced priors)",
+ "feeds": "engineering/simulation/glide.py integrate() with the glide-fixed-launch organism polar: a launch-speed distribution in place of the assumed fixed V0 = 12 m/s",
+ "command": "python -m engineering.neuro.fast_start --seed 20261101 --n 20000",
+ "seed": 20261101,
+ "git_head_at_run": "caffef4",
+ "ran": {
+  "utc": "2026-11-01T15:10:01Z",
+  "seattle": "2026-11-01 07:10 PST"
+ },
+ "elapsed_s": 482.3614454269409,
+ "env": {
+  "python": "3.13.12",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "matplotlib": "3.10.8",
+  "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+  "OMP_NUM_THREADS": "1"
+ },
+ "code_sha256": {
+  "engineering/neuro/caudal_cpg.py": "02ce0ab2410d6f336236d27c0379ee2ae5aa31d9b486094ef0e8c1af943a5f46",
+  "engineering/neuro/common.py": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+  "engineering/neuro/fast_start.py": "b0abb5f7a453efce277b0715996767039aaa60e216d94ae84c6348b2b5ebff97",
+  "engineering/neuro/sources.json": "89c5e364160b5e01daf8b1b99157c6bf9cc31cb96407f99a6797852b3604d455",
+  "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7"
+ },
+ "inputs": {
+  "engineering/simulation/video/manifest.json": {
+   "sha256": "e91add0f47f44ed35deb60fae47d7e2fd803b27e5f0f9078eba316ff01e74942",
+   "bytes": 3325
+  },
+  "engineering/simulation/glide.py": {
+   "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "bytes": 4371
+  },
+  "engineering/behavior/model.py": {
+   "sha256": "25729db211570bf91fc0d676c527f300e104cb45b53fc9b39a73560d00e68dce",
+   "bytes": 8552
+  }
+ },
+ "priors": {
+  "p_resp": {
+   "uniform": [
+    0.7,
+    0.91
+   ],
+   "basis": "preuss2006 abstract_verified"
+  },
+  "theta_thr_deg": {
+   "uniform": [
+    15,
+    40
+   ],
+   "basis": "assumption; Preuss 2006 verifies the angular-size threshold principle, not these values"
+  },
+  "u_pred_ms": {
+   "uniform": [
+    2,
+    6
+   ],
+   "basis": "assumption: pursuit speed of a pelagic predator"
+  },
+  "D_pred_m": {
+   "uniform": [
+    0.1,
+    0.3
+   ],
+   "basis": "assumption: predator frontal size"
+  },
+  "r0_m": {
+   "uniform": [
+    1.5,
+    4.0
+   ],
+   "basis": "assumption: predator distance at looming onset"
+  },
+  "e_pred_deg": {
+   "uniform": [
+    -150,
+    -30
+   ],
+   "basis": "assumption: threat elevation, from below"
+  },
+  "lat_M_ms": {
+   "uniform": [
+    5,
+    20
+   ],
+   "basis": "domenici_blake1997 / burgess_granato2007 recalled_not_reread (wide)"
+  },
+  "t_stage1_ms": {
+   "uniform": [
+    15,
+    35
+   ],
+   "basis": "domenici_blake1997 recalled_not_reread (scaled for ~17 cm)"
+  },
+  "omega_max_deg_s": {
+   "uniform": [
+    1500,
+    5000
+   ],
+   "basis": "domenici_blake1997 recalled_not_reread (wide)"
+  },
+  "p_away": {
+   "uniform": [
+    0.5,
+    0.9
+   ],
+   "basis": "domenici2011 abstract_verified"
+  },
+  "gamma_cs_deg": {
+   "uniform": [
+    -10,
+    30
+   ],
+   "basis": "assumption: vertical component of the C-start escape path"
+  },
+  "dU_cstart_BL_s": {
+   "uniform": [
+    5,
+    15
+   ],
+   "basis": "assumption informed by fast-start reviews (recalled); stage-2 speed jump"
+  },
+  "d0_m": {
+   "uniform": [
+    0.3,
+    2.0
+   ],
+   "basis": "assumption: starting depth of an epipelagic fish"
+  },
+  "u0_ms": {
+   "uniform": [
+    0.3,
+    1.0
+   ],
+   "basis": "assumption: cruise speed before stimulus"
+  },
+  "gamma_star_deg": {
+   "uniform": [
+    20,
+    45
+   ],
+   "basis": "assumption bracketing park_choi2010 30-35 deg emergence attack angle"
+  },
+  "q_max_deg_s": {
+   "uniform": [
+    200,
+    800
+   ],
+   "basis": "assumption: burst pitch-rate cap"
+  },
+  "f_burst_Hz": {
+   "uniform": [
+    20,
+    60
+   ],
+   "basis": "assumption; upper end from edgerton_breder1941 taxi range (recalled)"
+  },
+  "f_m_Hz": {
+   "uniform": [
+    20,
+    70
+   ],
+   "basis": "wardle1975 recalled (form assumed); same range as M2 sweep"
+  },
+  "H_over_L": {
+   "uniform": [
+    0.08,
+    0.15
+   ],
+   "basis": "assumption, M2 range"
+  },
+  "lam_over_L": {
+   "uniform": [
+    0.8,
+    1.2
+   ],
+   "basis": "assumption, M2 range"
+  },
+  "k_swim": {
+   "uniform": [
+    1.0,
+    3.0
+   ],
+   "basis": "assumption, M2 range"
+  },
+  "P_musc_W_per_kg": {
+   "uniform": [
+    50,
+    250
+   ],
+   "basis": "assumption: burst white-muscle mechanical power per kg muscle, order of magnitude recalled; thrust <= eta P / U"
+  },
+  "f_taxi_Hz": {
+   "uniform": [
+    30,
+    70
+   ],
+   "basis": "edgerton_breder1941 recalled_not_reread (50-70 Hz) widened"
+  },
+  "alpha_feather_deg": {
+   "uniform": [
+    6,
+    15
+   ],
+   "basis": "assumption: passive feathering limit of the taxi lobe (drives taxi thrust; reviewer flag)"
+  },
+  "wet_frac": {
+   "uniform": [
+    0.0,
+    0.1
+   ],
+   "basis": "assumption: residual wetted-hull drag fraction during taxi (reviewer flag)"
+  },
+  "T_taxi_max_s": {
+   "uniform": [
+    0.3,
+    1.5
+   ],
+   "basis": "assumption: taxi time budget"
+  }
+ },
+ "checks": [
+  {
+   "name": "control: p_resp = 0 gives zero emergences",
+   "pass": true
+  },
+  {
+   "name": "control: stationary predator -> every responder emerges",
+   "pass": true,
+   "detail": 200
+  },
+  {
+   "name": "control: dt halving changes emergence speed < 2% (max over samples emerging in both)",
+   "pass": true,
+   "detail": 0.00038950136347676046
+  },
+  {
+   "name": "control: glide feed reproduces the glide-fixed-launch nominal range 25.14 m at V0 12 m/s, h0 1 m",
+   "pass": true,
+   "detail": 25.14228700829958
+  },
+  {
+   "name": "control: vectorised lobe thrust equals M2.lobe_thrust within 0.1%",
+   "pass": true,
+   "detail": [
+    [
+     2.2068682708965253,
+     2.930332888602797
+    ],
+    [
+     2.206872451186129,
+     2.9303546792871646
+    ]
+   ]
+  }
+ ],
+ "all_checks_pass": true,
+ "summary": {
+  "n": 20000,
+  "P_respond": 0.8857,
+  "P_caught": 0.7327,
+  "P_emerge": 0.2673,
+  "V_stall_ms": 10.819320735405796,
+  "t_go_s": {
+   "q5": 0.267737055578204,
+   "q25": 0.42682551377726907,
+   "q50": 0.5879784206568541,
+   "q75": 0.8027943904353743,
+   "q95": 1.2517512095665517,
+   "n": 17714
+  },
+  "U_emerge_ms": {
+   "q5": 2.5318171414734545,
+   "q25": 3.0326006921078603,
+   "q50": 3.4281042948111997,
+   "q75": 3.83048735866005,
+   "q95": 4.444239658603951,
+   "n": 5346
+  },
+  "gamma_emerge_deg": {
+   "q5": 21.337074352314122,
+   "q25": 26.60582761897045,
+   "q50": 32.757632829304825,
+   "q75": 38.94896515388089,
+   "q95": 43.76646652767773,
+   "n": 5346
+  },
+  "t_emerge_s": {
+   "q5": 0.8166395158228188,
+   "q25": 1.2152643608044587,
+   "q50": 1.5336708160424974,
+   "q75": 1.9015560993075518,
+   "q95": 2.4883849028671374,
+   "n": 5346
+  },
+  "power_to_hold_10ms_submerged_W_per_kg_muscle": {
+   "k_swim=1.0": 1624.7869165379159,
+   "k_swim=2.0": 3249.5738330758318,
+   "k_swim=3.0": 4874.360749613747
+  },
+  "direct_launch_from_emergence": {
+   "glide_range_m": {
+    "q5": 0.1126173760952454,
+    "q25": 0.8815407976758451,
+    "q50": 1.177916866191011,
+    "q75": 1.4820715247594174,
+    "q95": 2.0063409951118603,
+    "n": 5346
+   },
+   "fraction_stalled_or_splashed_within_1m": 0.3367003367003367
+  },
+  "glide_feed_note": "after-taxi release at h0=0.1 m, gamma0=0 (continuity); h0=1 m only for comparison with glide-fixed-launch",
+  "taxi_opt": {
+   "start": "V = U_emerge",
+   "P_takeoff": 0.01185,
+   "P_takeoff_given_emerge": 0.044332210998877665,
+   "V_end_ms_all_emerged": {
+    "q5": 5.885870104240759,
+    "q25": 7.449645597697101,
+    "q50": 8.779460151653016,
+    "q75": 10.086070211519898,
+    "q95": 11.788713498117158,
+    "n": 5346
+   },
+   "taxi_time_s_takeoff": {
+    "q5": 0.8300000000000006,
+    "q25": 0.9340000000000007,
+    "q50": 1.0560000000000007,
+    "q75": 1.2040000000000008,
+    "q95": 1.3352000000000008,
+    "n": 237
+   },
+   "glide_range_m_h0_0.1": {
+    "q5": 16.58512319228656,
+    "q25": 16.608366004814,
+    "q50": 16.637618252143817,
+    "q75": 16.670791658756553,
+    "q95": 16.722136436221756,
+    "n": 237
+   },
+   "glide_range_m_h0_1.0_comparison": {
+    "q5": 24.0040070433959,
+    "q25": 24.018841624474007,
+    "q50": 24.037511961523997,
+    "q75": 24.05869750845572,
+    "q95": 24.091482255274673,
+    "n": 237
+   }
+  },
+  "taxi_pes": {
+   "start": "V = U_emerge cos(gamma_emerge)",
+   "P_takeoff": 0.01055,
+   "P_takeoff_given_emerge": 0.039468761690983914,
+   "V_end_ms_all_emerged": {
+    "q5": 5.658895942401588,
+    "q25": 7.262121350321268,
+    "q50": 8.620188416380081,
+    "q75": 9.980344833889864,
+    "q95": 11.67782225244261,
+    "n": 5346
+   },
+   "taxi_time_s_takeoff": {
+    "q5": 0.8690000000000007,
+    "q25": 0.9620000000000007,
+    "q50": 1.0900000000000007,
+    "q75": 1.2270000000000008,
+    "q95": 1.364000000000001,
+    "n": 211
+   },
+   "glide_range_m_h0_0.1": {
+    "q5": 16.58524501723177,
+    "q25": 16.607861504913586,
+    "q50": 16.638889038625706,
+    "q75": 16.67383969479952,
+    "q95": 16.731715251171547,
+    "n": 211
+   },
+   "glide_range_m_h0_1.0_comparison": {
+    "q5": 24.004084750510756,
+    "q25": 24.018519965989213,
+    "q50": 24.03832407736357,
+    "q75": 24.06064174994005,
+    "q95": 24.097607688795236,
+    "n": 211
+   }
+  }
+ },
+ "outputs": {
+  "figure.png": "f24782017d643bc36004dc3273c4cefd915364b1b8a0fbddbafcb4cf24fbd551",
+  "results.json": "3f6120af76dcb82688f4425a61716f855a3ffe6eece8ce0e3630b1e570aaa3a1"
+ }
+}

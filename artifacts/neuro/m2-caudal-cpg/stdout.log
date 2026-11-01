@@ -1,0 +1,154 @@
+{
+ "checks": [
+  [
+   "EBT closed form equals phase-averaged Lighthill expression at U=0.0",
+   true
+  ],
+  [
+   "EBT closed form equals phase-averaged Lighthill expression at U=1.0",
+   true
+  ],
+  [
+   "EBT closed form equals phase-averaged Lighthill expression at U=3.0",
+   true
+  ],
+  [
+   "EBT thrust is zero when U equals wave speed c",
+   true
+  ],
+  [
+   "zero amplitude gives zero EBT thrust and zero lobe thrust minus drag <= 0",
+   true
+  ],
+  [
+   "reused CPG: dt halving changes final phase lags < 1e-3 rad",
+   true
+  ],
+  [
+   "reused CPG locks at the behavior-cpg defaults with lag 2pi/7",
+   true
+  ],
+  [
+   "numerical locking matches the analytic condition |(N-1) dw| <= c in every case, including the 5 within 15% of the boundary",
+   true
+  ],
+  [
+   "numerical Jacobian slowest eigenvalue matches -sqrt(c^2-dw^2) within 2% where locked",
+   true
+  ],
+  [
+   "every swept speed equilibrium is stable: d(T-D)/dU < 0",
+   true
+  ],
+  [
+   "comparison (not a fit): nominal EBT speed within factor 2 of Bainbridge empirical U=L/4(3f-4) for 8-20 Hz",
+   true
+  ]
+ ],
+ "headline": {
+  "nominal_peak_U_ms": 7.014164977471033,
+  "nominal_peak_at_f_Hz": 80.0,
+  "sweep_max_U_ms": 14.466907766870216,
+  "sweep_max_U_BL_s": 84.60179980625857,
+  "taxi_V_max_ms_no_power_cap": {
+   "f30_fm35": 19.5,
+   "f30_fm70": 24.0,
+   "f50_fm35": 25.0,
+   "f50_fm70": 25.0,
+   "f70_fm35": 25.0,
+   "f70_fm70": 25.0
+  },
+  "taxi_V_max_ms_capped_by_power_and_wet_fraction": {
+   "f30_fm35": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 18.0,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f30_fm70": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f50_fm35": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f50_fm70": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f70_fm35": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   },
+   "f70_fm70": {
+    "P50_wet0.0": 10.0,
+    "P50_wet0.02": 8.5,
+    "P50_wet0.05": 7.0,
+    "P50_wet0.1": 6.0,
+    "P150_wet0.0": 16.5,
+    "P150_wet0.02": 13.0,
+    "P150_wet0.05": 10.5,
+    "P150_wet0.1": 8.5,
+    "P250_wet0.0": 19.5,
+    "P250_wet0.02": 15.5,
+    "P250_wet0.05": 12.5,
+    "P250_wet0.1": 10.5
+   }
+  },
+  "submerged_U_at_power_cap_W_per_kg": {
+   "50": 2.3838911263850986,
+   "150": 3.5118879924252018,
+   "250": 4.190765848973183
+  },
+  "reading": "Submerged EBT speed is capped below the body-wave speed f*lambda; the binding limit is muscle power, not frequency: see submerged_U_at_power_cap against the ~10 m/s taxi start in Fish 1990."
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "command": "engineering/neuro/run.sh fast_start m1-fast-start --seed 20261101 --n 20000",
+ "python_module": "engineering.neuro.fast_start",
+ "exit_code": 0,
+ "start_utc": "2026-11-01T15:01:57Z",
+ "end_utc": "2026-11-01T15:10:01Z",
+ "caps": "systemd-run --user --scope TasksMax=256 MemoryMax=6G MemorySwapMax=0 RuntimeMaxSec=1800; OMP_NUM_THREADS=1",
+ "manifest_sha256": "87934224d2e0bd111581ee4cab2e8ba516428bc4ffbfb04d5b0af0e224d19c99"
+}

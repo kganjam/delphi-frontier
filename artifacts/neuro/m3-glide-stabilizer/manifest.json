@@ -1,0 +1,247 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "m3-glide-stabilizer",
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organ",
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Glide pitch/roll stabiliser: pelvic/pectoral control surfaces, per-channel sensing delay and noise, stability envelope and failure map",
+ "command": "python -m engineering.neuro.glide_stab --seed 20261101",
+ "seed": 20261101,
+ "git_head_at_run": "caffef4",
+ "ran": {
+  "utc": "2026-11-01T15:00:22Z",
+  "seattle": "2026-11-01 07:00 PST"
+ },
+ "elapsed_s": 88.32826495170593,
+ "env": {
+  "python": "3.13.12",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "matplotlib": "3.10.8",
+  "platform": "Linux-6.17.0-1012-aws-x86_64-with-glibc2.39",
+  "OMP_NUM_THREADS": "1"
+ },
+ "code_sha256": {
+  "engineering/neuro/common.py": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+  "engineering/neuro/glide_stab.py": "5bbfb7a83c1c80567f2d534ded283dbdac98d80d79630c93894af003c4aa99f1",
+  "engineering/neuro/sources.json": "89c5e364160b5e01daf8b1b99157c6bf9cc31cb96407f99a6797852b3604d455"
+ },
+ "inputs": {
+  "artifacts/glider/r3-daane/flight_model.json": {
+   "sha256": "75c50d5364eeb48d29faee81d68252077d23b435a2d08cfe2051d18612430a9b",
+   "bytes": 56018
+  },
+  "artifacts/glider/r3-daane/manifest.json": {
+   "sha256": "de0a5e7940aedde6bde904d7158864a6b600fb4a0ced6b29851e7d209a8567d9",
+   "bytes": 109858
+  },
+  "artifacts/aeroelastic/RESULTS.md": {
+   "sha256": "b3a6a3b892d8275ee246ac406f975a1947ed19a493507b5ffbe794fae68f91b3",
+   "bytes": 5484
+  }
+ },
+ "ties": {
+  "ff-organ wing placement": "trim CG = NP - 8% MAC as in claude-organ r2-glide-sweep; r3-daane geometry; static margin swept -10..30% MAC",
+  "ff-organ aeroelastic": "lift-slope factor 1-0.0054 from artifacts/aeroelastic/RESULTS.md (24x6 mesh, compliance 0.2, alpha 4 deg); effective dihedral swept 0-14 deg"
+ },
+ "assumptions": {
+  "actuator_lag_s": 0.02,
+  "fin_authority_deg": 15,
+  "design_bandwidth_rad_s": {
+   "pitch": 15.0,
+   "roll": 10.0
+  },
+  "trim_CL": 0.6,
+  "CD0": 0.06,
+  "e": 0.8,
+  "vertical_surface": "caudal fin only, k_v 0.05-0.30 of pectoral area, arm 0.06 m, AR 1.5",
+  "gust": "first-order Dryden-like, L_g 1 m",
+  "noise": "white: attitude 1-2 deg, rate 5 deg/s per sample",
+  "50g_case": "same geometry, CG and radii of gyration as the 25 g print"
+ },
+ "checks": [
+  {
+   "name": "control: computed neutral point within 3 mm of the repo hand-NP bracket 55.6-58.3 mm (same method family: consistency, not validation)",
+   "pass": true,
+   "detail": 56.86149980376734
+  },
+  {
+   "name": "control: trim ballast at SM 8% within 10% of ff-organ r2 baseline ballast 4.69 g",
+   "pass": true,
+   "detail": 4.757530137739781
+  },
+  {
+   "name": "control: open-loop longitudinal modes stable at SM 8%",
+   "pass": true,
+   "detail": [
+    "(-5.114806412365872+12.153777309152485j)",
+    "(-5.114806412365872-12.153777309152485j)",
+    "(-0.12920227370942622+1.2433776727990582j)",
+    "(-0.12920227370942622-1.2433776727990582j)"
+   ]
+  },
+  {
+   "name": "control: SM -10% gives an unstable open-loop pitch mode",
+   "pass": true
+  },
+  {
+   "name": "control: zero-gain closed loop radius equals open-loop radius",
+   "pass": true
+  },
+  {
+   "name": "control: augmented delay matrix reproduces an explicit-buffer simulation (400 steps, delays 30/10 ms)",
+   "pass": true,
+   "detail": 8.673617379884035e-18
+  }
+ ],
+ "all_checks_pass": true,
+ "summary": {
+  "trim_25g": {
+   "V": 10.801238391854055,
+   "gam": -0.1264559925247334,
+   "x_np": 0.05686149980376734,
+   "x_cg": 0.054391047573261866,
+   "sm": 0.08,
+   "m_ballast_print": 0.004757530137739782,
+   "Iyy": 3.413154202646934e-05,
+   "Ixx": 2.6967538170154458e-05,
+   "Izz": 5.9026132331736234e-05
+  },
+  "trim_50g": {
+   "V": 15.275257824184962,
+   "gam": -0.1264559925247334,
+   "Iyy": 6.826308405293867e-05,
+   "Ixx": 5.3935076340308916e-05,
+   "Izz": 0.00011805226466347247
+  },
+  "pitch_openloop_eig_25g": [
+   "(-5.114806412365872+12.153777309152485j)",
+   "(-5.114806412365872-12.153777309152485j)",
+   "(-0.12920227370942622+1.2433776727990582j)",
+   "(-0.12920227370942622-1.2433776727990582j)"
+  ],
+  "lat_openloop_eig_25g_G7_kv0.15": [
+   "(-23.4490029253611+0j)",
+   "(-0.03737358661817414+7.721385662200757j)",
+   "(-0.03737358661817414-7.721385662200757j)",
+   "(-0.06199422162557147+0j)"
+  ],
+  "pitch_crit_vision_delay_s_tc0.01_nominal_gain": {
+   "25g": null,
+   "50g": null
+  },
+  "pitch_crit_common_delay_s_otolith_nominal_gain": {
+   "25g": 0.045,
+   "50g": 0.04
+  },
+  "roll_crit_vision_delay_s_tc0.01": {
+   "25g_G0_kv0.05": -1.0,
+   "25g_G0_kv0.15": null,
+   "25g_G0_kv0.3": null,
+   "25g_G4_kv0.05": -1.0,
+   "25g_G4_kv0.15": null,
+   "25g_G4_kv0.3": null,
+   "25g_G7_kv0.05": -1.0,
+   "25g_G7_kv0.15": null,
+   "25g_G7_kv0.3": null,
+   "25g_G10_kv0.05": -1.0,
+   "25g_G10_kv0.15": 0.19,
+   "25g_G10_kv0.3": null,
+   "25g_G14_kv0.05": -1.0,
+   "25g_G14_kv0.15": 0.15,
+   "25g_G14_kv0.3": null,
+   "50g_G0_kv0.05": -1.0,
+   "50g_G0_kv0.15": null,
+   "50g_G0_kv0.3": null,
+   "50g_G4_kv0.05": -1.0,
+   "50g_G4_kv0.15": null,
+   "50g_G4_kv0.3": null,
+   "50g_G7_kv0.05": -1.0,
+   "50g_G7_kv0.15": 0.19,
+   "50g_G7_kv0.3": null,
+   "50g_G10_kv0.05": -1.0,
+   "50g_G10_kv0.15": 0.16,
+   "50g_G10_kv0.3": null,
+   "50g_G14_kv0.05": -1.0,
+   "50g_G14_kv0.15": 0.13,
+   "50g_G14_kv0.3": null
+  },
+  "roll_otolith_stable_tc0.01": {
+   "25g_G0_kv0.05": false,
+   "25g_G0_kv0.15": false,
+   "25g_G0_kv0.3": false,
+   "25g_G4_kv0.05": false,
+   "25g_G4_kv0.15": true,
+   "25g_G4_kv0.3": false,
+   "25g_G7_kv0.05": false,
+   "25g_G7_kv0.15": true,
+   "25g_G7_kv0.3": false,
+   "25g_G10_kv0.05": false,
+   "25g_G10_kv0.15": true,
+   "25g_G10_kv0.3": true,
+   "25g_G14_kv0.05": false,
+   "25g_G14_kv0.15": true,
+   "25g_G14_kv0.3": true,
+   "50g_G0_kv0.05": false,
+   "50g_G0_kv0.15": false,
+   "50g_G0_kv0.3": false,
+   "50g_G4_kv0.05": false,
+   "50g_G4_kv0.15": true,
+   "50g_G4_kv0.3": false,
+   "50g_G7_kv0.05": false,
+   "50g_G7_kv0.15": true,
+   "50g_G7_kv0.3": false,
+   "50g_G10_kv0.05": false,
+   "50g_G10_kv0.15": true,
+   "50g_G10_kv0.3": true,
+   "50g_G14_kv0.05": false,
+   "50g_G14_kv0.15": true,
+   "50g_G14_kv0.3": true
+  },
+  "roll_openloop_unstable": {
+   "25g_G0_kv0.05": true,
+   "25g_G0_kv0.15": true,
+   "25g_G0_kv0.3": true,
+   "25g_G4_kv0.05": true,
+   "25g_G4_kv0.15": true,
+   "25g_G4_kv0.3": true,
+   "25g_G7_kv0.05": true,
+   "25g_G7_kv0.15": false,
+   "25g_G7_kv0.3": true,
+   "25g_G10_kv0.05": true,
+   "25g_G10_kv0.15": true,
+   "25g_G10_kv0.3": true,
+   "25g_G14_kv0.05": true,
+   "25g_G14_kv0.15": true,
+   "25g_G14_kv0.3": false,
+   "50g_G0_kv0.05": true,
+   "50g_G0_kv0.15": true,
+   "50g_G0_kv0.3": true,
+   "50g_G4_kv0.05": true,
+   "50g_G4_kv0.15": true,
+   "50g_G4_kv0.3": true,
+   "50g_G7_kv0.05": true,
+   "50g_G7_kv0.15": true,
+   "50g_G7_kv0.3": true,
+   "50g_G10_kv0.05": true,
+   "50g_G10_kv0.15": true,
+   "50g_G10_kv0.3": true,
+   "50g_G14_kv0.05": true,
+   "50g_G14_kv0.15": true,
+   "50g_G14_kv0.3": true
+  },
+  "passive_pitch_stable_sm_range": [
+   0.0,
+   0.3
+  ],
+  "notes": "crit = smallest swept delay with closed-loop spectral radius >= 1 (None = stable over the whole sweep; -1 = unstable at zero delay)."
+ },
+ "outputs": {
+  "figure.png": "8583f3b1ff13e80162c5558f4111d964dbcbc8ffc309e31dbb76bda46416c5ae",
+  "results.json": "0b9839c2ce2764644cd29be89ccb33265d6405582297ea2c02d5af8fc5ad3145"
+ }
+}

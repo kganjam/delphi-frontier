@@ -1,0 +1,180 @@
+{
+ "checks": [
+  [
+   "control: computed neutral point within 3 mm of the repo hand-NP bracket 55.6-58.3 mm (same method family: consistency, not validation)",
+   true,
+   56.86149980376734
+  ],
+  [
+   "control: trim ballast at SM 8% within 10% of ff-organ r2 baseline ballast 4.69 g",
+   true,
+   4.757530137739781
+  ],
+  [
+   "control: open-loop longitudinal modes stable at SM 8%",
+   true,
+   [
+    "(-5.114806412365872+12.153777309152485j)",
+    "(-5.114806412365872-12.153777309152485j)",
+    "(-0.12920227370942622+1.2433776727990582j)",
+    "(-0.12920227370942622-1.2433776727990582j)"
+   ]
+  ],
+  [
+   "control: SM -10% gives an unstable open-loop pitch mode",
+   true,
+   null
+  ],
+  [
+   "control: zero-gain closed loop radius equals open-loop radius",
+   true,
+   null
+  ],
+  [
+   "control: augmented delay matrix reproduces an explicit-buffer simulation (400 steps, delays 30/10 ms)",
+   true,
+   8.673617379884035e-18
+  ]
+ ],
+ "summary": {
+  "trim_25g": {
+   "V": 10.801238391854055,
+   "gam": -0.1264559925247334,
+   "x_np": 0.05686149980376734,
+   "x_cg": 0.054391047573261866,
+   "sm": 0.08,
+   "m_ballast_print": 0.004757530137739782,
+   "Iyy": 3.413154202646934e-05,
+   "Ixx": 2.6967538170154458e-05,
+   "Izz": 5.9026132331736234e-05
+  },
+  "trim_50g": {
+   "V": 15.275257824184962,
+   "gam": -0.1264559925247334,
+   "Iyy": 6.826308405293867e-05,
+   "Ixx": 5.3935076340308916e-05,
+   "Izz": 0.00011805226466347247
+  },
+  "pitch_openloop_eig_25g": [
+   "(-5.114806412365872+12.153777309152485j)",
+   "(-5.114806412365872-12.153777309152485j)",
+   "(-0.12920227370942622+1.2433776727990582j)",
+   "(-0.12920227370942622-1.2433776727990582j)"
+  ],
+  "lat_openloop_eig_25g_G7_kv0.15": [
+   "(-23.4490029253611+0j)",
+   "(-0.03737358661817414+7.721385662200757j)",
+   "(-0.03737358661817414-7.721385662200757j)",
+   "(-0.06199422162557147+0j)"
+  ],
+  "pitch_crit_vision_delay_s_tc0.01_nominal_gain": {
+   "25g": null,
+   "50g": null
+  },
+  "pitch_crit_common_delay_s_otolith_nominal_gain": {
+   "25g": 0.045,
+   "50g": 0.04
+  },
+  "roll_crit_vision_delay_s_tc0.01": {
+   "25g_G0_kv0.05": -1.0,
+   "25g_G0_kv0.15": null,
+   "25g_G0_kv0.3": null,
+   "25g_G4_kv0.05": -1.0,
+   "25g_G4_kv0.15": null,
+   "25g_G4_kv0.3": null,
+   "25g_G7_kv0.05": -1.0,
+   "25g_G7_kv0.15": null,
+   "25g_G7_kv0.3": null,
+   "25g_G10_kv0.05": -1.0,
+   "25g_G10_kv0.15": 0.19,
+   "25g_G10_kv0.3": null,
+   "25g_G14_kv0.05": -1.0,
+   "25g_G14_kv0.15": 0.15,
+   "25g_G14_kv0.3": null,
+   "50g_G0_kv0.05": -1.0,
+   "50g_G0_kv0.15": null,
+   "50g_G0_kv0.3": null,
+   "50g_G4_kv0.05": -1.0,
+   "50g_G4_kv0.15": null,
+   "50g_G4_kv0.3": null,
+   "50g_G7_kv0.05": -1.0,
+   "50g_G7_kv0.15": 0.19,
+   "50g_G7_kv0.3": null,
+   "50g_G10_kv0.05": -1.0,
+   "50g_G10_kv0.15": 0.16,
+   "50g_G10_kv0.3": null,
+   "50g_G14_kv0.05": -1.0,
+   "50g_G14_kv0.15": 0.13,
+   "50g_G14_kv0.3": null
+  },
+  "roll_otolith_stable_tc0.01": {
+   "25g_G0_kv0.05": false,
+   "25g_G0_kv0.15": false,
+   "25g_G0_kv0.3": false,
+   "25g_G4_kv0.05": false,
+   "25g_G4_kv0.15": true,
+   "25g_G4_kv0.3": false,
+   "25g_G7_kv0.05": false,
+   "25g_G7_kv0.15": true,
+   "25g_G7_kv0.3": false,
+   "25g_G10_kv0.05": false,
+   "25g_G10_kv0.15": true,
+   "25g_G10_kv0.3": true,
+   "25g_G14_kv0.05": false,
+   "25g_G14_kv0.15": true,
+   "25g_G14_kv0.3": true,
+   "50g_G0_kv0.05": false,
+   "50g_G0_kv0.15": false,
+   "50g_G0_kv0.3": false,
+   "50g_G4_kv0.05": false,
+   "50g_G4_kv0.15": true,
+   "50g_G4_kv0.3": false,
+   "50g_G7_kv0.05": false,
+   "50g_G7_kv0.15": true,
+   "50g_G7_kv0.3": false,
+   "50g_G10_kv0.05": false,
+   "50g_G10_kv0.15": true,
+   "50g_G10_kv0.3": true,
+   "50g_G14_kv0.05": false,
+   "50g_G14_kv0.15": true,
+   "50g_G14_kv0.3": true
+  },
+  "roll_openloop_unstable": {
+   "25g_G0_kv0.05": true,
+   "25g_G0_kv0.15": true,
+   "25g_G0_kv0.3": true,
+   "25g_G4_kv0.05": true,
+   "25g_G4_kv0.15": true,
+   "25g_G4_kv0.3": true,
+   "25g_G7_kv0.05": true,
+   "25g_G7_kv0.15": false,
+   "25g_G7_kv0.3": true,
+   "25g_G10_kv0.05": true,
+   "25g_G10_kv0.15": true,
+   "25g_G10_kv0.3": true,
+   "25g_G14_kv0.05": true,
+   "25g_G14_kv0.15": true,
+   "25g_G14_kv0.3": false,
+   "50g_G0_kv0.05": true,
+   "50g_G0_kv0.15": true,
+   "50g_G0_kv0.3": true,
+   "50g_G4_kv0.05": true,
+   "50g_G4_kv0.15": true,
+   "50g_G4_kv0.3": true,
+   "50g_G7_kv0.05": true,
+   "50g_G7_kv0.15": true,
+   "50g_G7_kv0.3": true,
+   "50g_G10_kv0.05": true,
+   "50g_G10_kv0.15": true,
+   "50g_G10_kv0.3": true,
+   "50g_G14_kv0.05": true,
+   "50g_G14_kv0.15": true,
+   "50g_G14_kv0.3": true
+  },
+  "passive_pitch_stable_sm_range": [
+   0.0,
+   0.3
+  ],
+  "notes": "crit = smallest swept delay with closed-loop spectral radius >= 1 (None = stable over the whole sweep; -1 = unstable at zero delay)."
+ }
+}

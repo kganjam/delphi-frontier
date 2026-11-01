@@ -1414,6 +1414,14 @@ def engineering_cards(ins: Inputs, out: dict) -> list[dict]:
             "equations": [{"label": "Erk activity", "tex": "\\dot E=\\alpha_1\\tfrac{A^2}{\\beta^2+A^2}(1-E)-E(\\gamma_1 I+\\gamma_e)", "source": "Hayden 2021, doi 10.1016/j.bpj.2021.05.004"}, {"label": "Activator with diffusion", "tex": "\\dot A=\\alpha_2[\\text{source}]+\\alpha_3E-\\gamma_2A+D\\nabla^2A", "source": "Hayden 2021"}, {"label": "Inhibitor", "tex": "\\dot I=\\gamma_3(\\alpha_4E-I)", "source": "Hayden 2021"}, {"label": "Growth coupling (ASSUMED exponential form)", "tex": "\\frac{d\\ln a}{dt}=0.006\\ \\mathrm{h^{-1}}\\ \\text{for}\\ t-t_{\\text{peak}}\\le 24\\ \\mathrm{h}", "source": "assumption; measured form is linear, De Simone 2021 Ext. Data Fig. 7b"}],
             "sources": [{"label": s_["citation"], "locator": f"doi {s_['doi']}; read level {s_['read_level']}; {s_.get('used_for', '')}"} for s_ in r["sources"] if not s_.get("used_for", "").startswith("NOT YET")],
             "limitations": r["not_claimed"], "couplings": [], "manifest": f"{d}/receipt.json", "native": True})
+    if (ROOT / "engineering/neuro/site.py").is_file() and (ROOT / "artifacts/neuro").is_dir():
+        # Neural-scale models (claude-neuro): cards only for exit-0 runs whose manifest digest matches the run receipt.
+        module_path = "engineering/neuro/site.py"
+        ins.read(module_path)
+        spec = importlib.util.spec_from_file_location("frontier_neuro_cards", ROOT / module_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        cards.extend(module.build_cards(ins.read, lambda rid, name, sha: _vid(ins, out, "neuro-" + rid, "artifacts/neuro/" + rid, name, sha)))
     return cards
 
 

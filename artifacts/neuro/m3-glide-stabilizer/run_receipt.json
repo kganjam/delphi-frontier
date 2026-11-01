@@ -1,0 +1,9 @@
+{
+ "command": "engineering/neuro/run.sh glide_stab m3-glide-stabilizer --seed 20261101",
+ "python_module": "engineering.neuro.glide_stab",
+ "exit_code": 0,
+ "start_utc": "2026-11-01T14:58:53Z",
+ "end_utc": "2026-11-01T15:00:22Z",
+ "caps": "systemd-run --user --scope TasksMax=256 MemoryMax=6G MemorySwapMax=0 RuntimeMaxSec=1800; OMP_NUM_THREADS=1",
+ "manifest_sha256": "6241f891cf874a800c6a691b2f6f45337941d19fb9ef41575d17d18eaf890e5d"
+}

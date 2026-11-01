@@ -1,0 +1,91 @@
+{
+ "m1-fast-start": {
+  "model_name": "Looming threshold -> Mauthner latency -> C-start (yaw) -> CPG burst (M2 thrust, power-capped) -> taxi -> engineering/simulation/glide.py",
+  "context": "3D point-body Monte Carlo (20,000 draws) over the priors listed in the manifest. Each prior is tagged abstract_verified (PubMed abstract read this session), recalled_not_reread or assumption. It feeds the project's existing organism glide model with a launch-speed distribution in place of its fixed V0 = 12 m/s.",
+  "time_units": "seconds of escape, burst, taxi and glide (physical time of the point-body model)",
+  "equations": [
+   {"label": "Looming trigger (angular size threshold)", "tex": "2\\arctan\\frac{D_p}{2r(t)}=\\theta_{thr},\\quad t_{go}=t_{thr}+\\tau_M", "source": "Preuss et al. 2006 (threshold on a scaled angular size; values assumed)"},
+   {"label": "Burst speed (EBT thrust, power cap, submerged drag)", "tex": "(1+a)m\\dot U=\\min\\!\\left(\\tfrac{m_a\\omega^2H^2}{4}\\big(1-\\tfrac{U^2}{c^2}\\big),\\,\\tfrac{\\eta P_{musc}m_{musc}}{U}\\right)-\\tfrac12\\rho U^2S_wC_f(1+k)k_s", "source": "Lighthill 1971 (recalled); muscle power cap is an assumption"},
+   {"label": "Taxi", "tex": "m\\dot V=\\min(T_{lobe},\\eta P/V)-D_{air}-0.24\\tfrac12\\rho V^2t^2-f_{wet}D_{sub}", "source": "quasi-steady feathering foil; Hoerner spray drag (recalled)"}
+  ],
+  "sources": ["preuss2006", "eaton2001", "domenici_blake1997", "domenici2011", "burgess_granato2007", "park_choi2010", "lighthill1971", "fish1990", "edgerton_breder1941", "wardle1975"],
+  "parameter_unknowns": [
+   "Looming threshold, predator speed, size and start distance, and starting depth are assumptions. The capture fraction depends mostly on them.",
+   "Muscle mechanical power (50-250 W/kg muscle), the 50% muscle fraction and the 0.75 propulsive efficiency are assumptions. Emergence speed scales with them.",
+   "The taxi lobe area, feathering limit (6-15 deg) and residual wetted-hull fraction (0-10%) are assumptions, and they decide whether take-off speed is reached.",
+   "Body length 0.171 m comes from an assumed condition factor; the organism glide manifest gives mass only."
+  ],
+  "open_questions": [
+   "What emergence speed and angle do free flying fish actually show? This model predicts a few m/s underwater, with the taxi supplying the rest.",
+   "Is Edgerton & Breder's 50-70 Hz taxi beat compatible with the muscle twitch limit at sea temperature?"
+  ],
+  "perturbation_sweep": "Fixed one factor at a time (4,000 draws each, same seed): Mauthner path latency 5-320 ms; muscle corner frequency 20-70 Hz; commanded emergence angle 15-60 deg; muscle power 50-1000 W/kg muscle. Effects on P(caught), P(emerge), P(take-off) and emergence speed and angle are in results.json 'sweep'.",
+  "experiment_design": "Calibrate with (a) synchronised underwater and aerial high-speed video of wild flying-fish launches (emergence speed and path angle, taxi duration and speed history, tail-beat frequency), and (b) looming-stimulus trials on captive juveniles or halfbeaks (latency distribution, escape trajectories, response probability). Falsifier: emergence at 8-10 m/s or more with only a small taxi increment would refute the power-limited chain.",
+  "does_not_establish": [
+   "SIMULATED, not observed. The predator is a pure-pursuit point, not an animal, so capture fractions compare model variants only.",
+   "No neuron is simulated. The Mauthner cell is reduced to a threshold plus a latency, and the C-start to a yaw turn plus a speed jump.",
+   "Escape kinematics come from goldfish, zebrafish and multi-species reviews; none is fitted to Exocoetidae.",
+   "Release at h0 = 0.1 m with gamma0 = 0 is an assumed continuity condition. The h0 = 1 m numbers are only for comparison with the glide-fixed-launch card."
+  ],
+  "couplings": [{"to": "glide-fixed-launch", "kind": "launch-speed distribution into engineering/simulation/glide.integrate (same organism polar)"}, {"to": "neuro-m2-caudal-cpg", "kind": "thrust, drag and muscle functions imported"}]
+ },
+ "m2-caudal-cpg": {
+  "model_name": "behavior-cpg phase/amplitude chain (imported unchanged) + detuning + muscle low-pass + Lighthill EBT thrust + quasi-steady taxi lobe",
+  "context": "Extends behavior-cpg and does not duplicate it: engineering.behavior.model.cpg() and rk4() are imported. Added here: the phase-locking stability of that chain under a descending-drive frequency gradient; the body wavelength set by the chain's phase lag; thrust, drag, power and speed equilibria; and a re-run of behavior-cpg's own servo across its declared 15-45 Hz band.",
+  "time_units": "seconds (CPG integration, dt 0.1 ms); speed equilibria are steady states",
+  "equations": [
+   {"label": "Reused oscillator chain with added detuning", "tex": "\\dot\\theta_i=2\\pi(\\nu+i\\,\\delta\\nu)+a_{i-1}c\\sin(\\theta_{i-1}-\\theta_i-\\varphi)", "source": "Ijspeert et al. 2007 form, as implemented in engineering/behavior/model.py"},
+   {"label": "Locking and stability of the unidirectional chain", "tex": "|(N-1)\\,2\\pi\\delta\\nu|\\le c,\\quad \\lambda_{slow}=-\\sqrt{c^2-((N-1)2\\pi\\delta\\nu)^2}", "source": "derived here; checked against numerical integration and a numerical Jacobian"},
+   {"label": "Elongated-body thrust", "tex": "\\bar T=\\tfrac{m_a\\omega^2H^2}{4}\\left(1-\\tfrac{U^2}{c^2}\\right),\\;m_a=\\tfrac{\\pi}{4}\\rho s^2,\\;c=f\\lambda", "source": "Lighthill 1971 (recalled), checked by phase averaging"},
+   {"label": "Muscle low-pass (assumed form)", "tex": "H(f)=H_0/\\sqrt{1+(f/f_m)^2}", "source": "assumption; Wardle 1975 motivates the twitch limit"}
+  ],
+  "sources": ["ijspeert2007", "lighthill1971", "taylor2003", "wardle1975", "edgerton_breder1941", "fish1990"],
+  "parameter_unknowns": [
+   "Tail amplitude, caudal span, wavelength, drag augmentation and wetted area are assumptions and are swept.",
+   "The muscle corner frequency f_m is a swept assumption; no Exocoetidae muscle data was used.",
+   "The taxi lobe model (area, aspect ratio, passive feathering limit) is assumed; no flying-fish caudal-lobe measurement was used."
+  ],
+  "open_questions": [
+   "Which kinematic recording of Exocoetidae burst swimming (f, H, lambda against U) would calibrate EBT here?",
+   "Does the reticulospinal drive impose a frequency gradient along the body? Locking is lost beyond |(N-1)dw| = c."
+  ],
+  "perturbation_sweep": "Terminal speed over tail-beat frequency 4-80 Hz x amplitude 0.05-0.15 L x muscle corner 20-70 Hz x wavelength 0.8-1.2 L x drag factor 1-3 (8,580 equilibria); locking over coupling 10-120 1/s x detuning 0-6 Hz per segment (48 integrations); taxi top speed over power 50-250 W/kg x wetted-hull fraction 0-10%.",
+  "experiment_design": "Measure tail-beat frequency, tail amplitude and body wavelength against speed in burst-swimming and taxiing flying fish (high-speed video), and run work-loop experiments on axial white muscle at habitat temperature (power against cycle frequency). Falsifier: muscle power of about 1000 W/kg or more, or an emergence faster than the power-capped EBT equilibrium.",
+  "does_not_establish": [
+   "SIMULATED, not observed. EBT is an inviscid reactive-force theory; the drag model is a flat-plate estimate.",
+   "The CPG is the behavior-cpg phase-oscillator abstraction, not a spinal circuit; phase lag is imposed, not emergent.",
+   "Agreement with Bainbridge's empirical speed-frequency relation is a recalled comparison, not a fit or a validation for flying fish.",
+   "behavior-cpg's servo is a designed actuator; its tracking results say nothing about fish muscle."
+  ],
+  "couplings": [{"to": "behavior-cpg", "kind": "imports cpg() and rk4() unchanged"}, {"to": "neuro-m1-fast-start", "kind": "provides thrust/drag/muscle functions"}]
+ },
+ "m3-glide-stabilizer": {
+  "model_name": "Linear small-perturbation glider (longitudinal [u, alpha, q, theta]; lateral [beta, p, r, phi]) with delayed vestibular/visual feedback to pelvic and pectoral fins",
+  "context": "Plant from ff-organ's r3-daane printed glider geometry and trim rule (CG = NP - 8% MAC), plus ff-organ's aeroelastic lift-slope factor. Stability is computed exactly for the delayed linear loop, with one delay chain per sensed channel. Failures come from a Monte Carlo with fin saturation, gusts and sensor noise. Otolith signals are derived from the plant's specific force, so in flight the otolith 'bank' signal reflects sideslip and is not the bank angle.",
+  "time_units": "seconds of glide (2 ms discrete step)",
+  "equations": [
+   {"label": "Delayed output feedback", "tex": "\\delta(t)=\\mathrm{sat}\\Big(-\\textstyle\\sum_j K_j\\,y_j(t-\\tau_j)\\Big)\\ \\text{via first-order fin lag}", "source": "design choice; exact discrete delay chains"},
+   {"label": "Otolith signals in flight", "tex": "\\hat\\theta_{oto}=\\theta+\\dot u/g,\\quad \\hat\\phi_{oto}=-Y/(mg)=-Y_\\beta\\beta/(mg)", "source": "gravito-inertial specific force (standard mechanics)"},
+   {"label": "Static margin and neutral point", "tex": "x_{np}=\\frac{a_wx_w+\\eta\\frac{S_t}{S_w}a_t(1-\\epsilon_\\alpha)x_t}{C_{L\\alpha}}-\\frac{\\Delta C_{m\\alpha,body}c}{C_{L\\alpha}}", "source": "textbook flight mechanics (recalled); repo hand-NP method family"}
+  ],
+  "sources": ["park_choi2010", "saro_cortes2022", "deng2019", "ehrlich_schoppik2017"],
+  "parameter_unknowns": [
+   "The caudal fin as vertical surface (area fraction 0.05-0.30 of pectoral area, arm 0.06 m) is assumed; the print geometry has no separate caudal surface in flight_model.json.",
+   "Fin actuator lag (20 ms), authority (+-15 deg), controller bandwidths and sensor noise are assumptions.",
+   "Trim CL 0.6, CD0 0.06 and e 0.8 are design assumptions shared with the organism glide polar."
+  ],
+  "open_questions": [
+   "What are fin-muscle EMG latencies after an imposed pitch or roll in flying fish?",
+   "Do flying fish use vision for bank in flight? Test with vision occluded in a tethered or wind-tunnel preparation."
+  ],
+  "perturbation_sweep": "Exact closed-loop spectral radius over canal delay 0-100 ms x vision delay 0-200 ms, over gain 0.1-10 x nominal, over static margin -10 to 30% MAC, and over dihedral 0-14 deg x vertical-surface fraction 0.05-0.30 at 25 g and 50 g. Failure Monte Carlo over gust 0.25-2 m/s x vision delay 30-150 ms for vision, otolith, rate-only and passive configurations.",
+  "experiment_design": "Fly an IMU-instrumented r3-daane print through measured gusts to check the linear plant and its modes. In animals: imposed-perturbation trials (tethered or wind tunnel) with and without vision, recording fin EMG latency and attitude recovery. Falsifier: robust bank recovery with vision blocked in a coordinated glide would reveal a non-visual bank cue that this model lacks.",
+  "does_not_establish": [
+   "SIMULATED, not observed. A stabilising PD loop shows that some controller with these delays could work, not that fish use it.",
+   "Linear, quasi-steady aerodynamics with no ground effect (which Park & Choi 2010 show matters near the surface), no unsteady flow and no fin twist.",
+   "The 50 g case assumes the same geometry, CG and radii of gyration as the 25 g print.",
+   "Vestibular and visual systems are reduced to delays plus white noise; canal high-pass dynamics and visual processing are not modelled."
+  ],
+  "couplings": [{"to": "aeroelastic-coupling", "kind": "lift-slope factor 1-0.0054"}, {"to": "claude-organ r2-glide-sweep", "kind": "trim rule SM 8% MAC and r3-daane geometry"}]
+ }
+}

@@ -4,7 +4,7 @@
  "projects": [
   {
    "id": "flying-fish",
-      "live_project_id": "project-flying-fish-mission",
+   "live_project_id": "project-flying-fish-mission",
    "title": "Flying fish",
    "featured": true,
    "status": "exploratory, featured",
@@ -85,12 +85,24 @@
      "gap": "A scoped elastic surrogate; how real fin rays load and bend is not modelled."
     },
     "neural": {
-     "sources": [],
+     "sources": [
+      "preuss2006",
+      "eaton2001",
+      "domenici2011",
+      "parkchoi2010",
+      "sarocortes2022",
+      "taylor2003"
+     ],
      "models": [],
-     "videos": [],
+     "videos": [
+      "behavior-cpg",
+      "neuro-m1-fast-start",
+      "neuro-m2-caudal-cpg",
+      "neuro-m3-glide-stabilizer"
+     ],
      "claims": [],
      "equations": [],
-     "gap": "No control model or source is indexed."
+     "gap": "Simulated control models only, with no neural recording and no Exocoetidae calibration. The escape-to-launch chain (M1) is driven by power-capped caudal thrust (M2, which extends behavior-cpg), and a glide pitch/roll stabiliser with sensing delays (M3) runs on the r3-daane geometry. What a nervous system would have to implement, and what these models do not establish: engineering/neuro/NEURAL_IMPLEMENTATION.md."
     },
     "organism": {
      "sources": [
