@@ -10,6 +10,7 @@ PIN=dd8668f99ff74fb2fc2ee60deb91287a3b519d8f
 SRC_SHA=0a0f4fd105a8df21df8b62a7d00e5178096d28415f2fb9f1679f6c78fd2c6546
 GENCODE=${GENCODE:-arch=compute_75,code=compute_75}
 CMAKE_URL=https://github.com/Kitware/CMake/releases/download/v3.18.6/cmake-3.18.6-Linux-x86_64.tar.gz
+exec 3>&1  # fd3 = job log, so EXTRA can stream partial returns past step()
 O=/out; mkdir -p $O; W=/work; mkdir -p $W; cd $W
 R=$O/receipt.txt
 log(){ echo "[$(date -u +%FT%TZ)] $*" | tee -a $R; }
