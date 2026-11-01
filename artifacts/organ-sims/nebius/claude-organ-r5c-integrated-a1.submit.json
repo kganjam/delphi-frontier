@@ -1,0 +1,4 @@
+{"job_name": "claude-organ-r5c-integrated-a1", "job_id": "aijob-e00wqgd3v4vd9g6f4t", "submitted_utc": "2026-11-01T16:02:39Z", "platform": "gpu-l40s-a", "preset": "1gpu-40vcpu-160gb",
+ "why_gpu_platform": "non-GPU vCPU quota full; CPU-only PyBullet workload, GPU idle", "image": "python:3.12.7-bookworm", "timeout": "2h", "disk": "50Gi",
+ "command": "bash /work/run_job.sh 00972ac37b79712bbb51847b9ce492ee04dadba9 r5c-integrated-launch engineering.organ_sims.r5c_integrated 32 38", "code_commit": "00972ac37b79712bbb51847b9ce492ee04dadba9", "run_job_sh_sha256": "4456ec960eb988cc05c15d3e3dc0bfe1fae479c2379f1012b46180ae85d1834c",
+ "dry_run": "R5C_SMOKE local rc 0 (dev venv); job venv dry runs of r4b/r1b at the same commit rc 0"}

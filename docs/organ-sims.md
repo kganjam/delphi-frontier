@@ -9,6 +9,7 @@ Code: `engineering/organ_sims/`. Logs: `artifacts/organ-sims/logs/`.
 | Run | Question | Exit | Checks |
 |---|---|---|---|
 | R1 `r1-v3b-convergence` | Why does v3b's VLM CL not converge? | 0 (report run 2; run 1 exited 3, see R1) | 18/18 |
+| R1b `r1b-v3b-fix` | v3b design-change test, rebuilt fins (Nebius) | 0 | 4/4 |
 | R2 `r2-glide-sweep` | Wing area, AR and placement vs launch-glide range, under printed-mass constraints | 0 | 8/8 |
 | R3 `r3-underwater-drag` | Underwater drag of the same bodies, fins spread vs folded | 0 | 13/13 |
 | R4 `r4-aeroelastic-stiffness` | Fin bending over the sourced fin-ray stiffness range | 0 | 6/6 |
@@ -87,6 +88,40 @@ chord slope that grows from +0.5° at the root to +12.5° at the tip: geometric 
   - The "max/min over nc 8–24 ≤ 1%" convergence criterion fails for v3b. That failure is real, and it is now
     recorded as a finding (the nc = 8 under-resolution). The gate is now the last refinement step in each direction.
 - The run-1 log is kept as `logs/r1-report2-run1-exit3.log`.
+
+## R1b. Testing the v3b design change (Nebius job, `r1b-v3b-fix`)
+
+**Method.** v3b's fins are rebuilt in-process with the committed `engineering/fishv3/build.py`, with only the pose
+knobs changed. Pectoral and pelvic camber are scaled together by ×1 (control), ×0.5, ×0, ×−0.5 and ×−1. A further
+variant keeps ×1 camber but uses v3a's smaller lead angles. All are solved on the corrected-collocation VLM at
+48×16 and 72×24.
+
+**Run record.**
+- Job `aijob-e00kayvx99taj1118z`, code `fc9d04c`; science exit 0 in 117 s; tarball SHA-256 matched.
+- Checks 4/4:
+  - The ×1 rebuild reproduces the committed `panels.json` bit-for-bit.
+  - Its CL equals R1's at both lattices (to 1e-9).
+  - Every variant changes ≤ 1.8% from 48×16 to 72×24.
+
+**Results at 72×24:**
+
+| Camber knob | CL(4°) | CL(0°) | Tip chord slope (TE up +) |
+|---|---|---|---|
+| ×1 (v3b as built) | 0.162 | −0.065 | +12.5° |
+| ×0.5 | 0.195 | −0.033 | +6.3° |
+| ×0 | 0.228 | 0.000 | 0° |
+| ×−0.5 | 0.261 | +0.033 | −6.3° |
+| ×−1 | 0.294 | +0.065 | −12.5° |
+| ×1 with v3a lead angles | 0.204 | −0.037 | +12.7° |
+
+- **The effect is linear in the camber knob** and comes from the ray-wise camber turning into twist. Reducing the
+  sweep alone recovers only a third of the loss.
+- **Design change, verified in the model:** reverse the camber sign. Use **×−0.5**, not ×−1: ×−1 puts the tip
+  about 12.5° above the root incidence, roughly 16° at a 4° body angle. That is probably stalled, and an inviscid VLM
+  cannot see stall. ×−0.5 gains +61% CL(4°) over v3b as built (+15% over flat) with about 6° of wash-in.
+- **Biology:** the camber sign of a real gliding flying-fish pectoral is not sourced here (Park & Choi 2010 unread).
+  This is a design statement, not a claim about fish.
+- **Not established:** viscous effects, stall, the body, pitch-moment consequences of moving lift outboard.
 
 ## R2. Wing area, AR and placement sweep (point-mass glide, printed masses)
 

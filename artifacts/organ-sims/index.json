@@ -137,8 +137,29 @@
   },
   {
    "id": "r1b-v3b-fix",
+   "title": "v3b design-change test: rebuilt fins with altered camber/sweep, corrected-collocation VLM",
    "scales": [
     "organ"
+   ],
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No measured fin pose or lift: inviscid thin-surface VLM on rebuilt designed geometry; camber sign and sweep are assumed deployment knobs (Park & Choi 2010 unread); no body, viscosity or separation.",
+   "checks_passed": 4,
+   "checks_total": 4,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T16:00:29Z",
+   "manifest": "artifacts/organ-sims/r1b-v3b-fix/manifest.json",
+   "manifest_sha256": "ee780c3601f6263ef4b2a664dc27a557952b552895044afb3fadc07fb9c6a83a",
+   "figures": [
+    "artifacts/organ-sims/r1b-v3b-fix/variants.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
+  },
+  {
+   "id": "r5c-integrated-launch",
+   "scales": [
+    "collective",
+    "organism"
    ],
    "status": "no manifest (run not completed)"
   },

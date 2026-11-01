@@ -1,0 +1,628 @@
+{
+ "schema": "frontier.organ-sim.manifest/1",
+ "id": "r1b-v3b-fix",
+ "title": "v3b design-change test: rebuilt fins with altered camber/sweep, corrected-collocation VLM",
+ "evidence_kind": "simulated, not observed",
+ "scales": [
+  "organ"
+ ],
+ "does_not_establish": "No measured fin pose or lift: inviscid thin-surface VLM on rebuilt designed geometry; camber sign and sweep are assumed deployment knobs (Park & Choi 2010 unread); no body, viscosity or separation.",
+ "scope": "simulated, not observed",
+ "command": "/tmp/repo/engineering/organ_sims/r1b_v3b_fix.py 12",
+ "seed": null,
+ "git_head_at_run": "fc9d04c",
+ "python": "3.12.7",
+ "ran_utc": "2026-11-01T16:00:29Z",
+ "inputs": {
+  "artifacts/fish3d/fish3d-v3b-glide-pose/panels.json": {
+   "sha256": "0dcb6555c2334bc538eb69784fe131a381b092da38c4b17eb0757ccd171870cf",
+   "bytes": 143605
+  },
+  "artifacts/organ-sims/r1-v3b-convergence/manifest.json": {
+   "sha256": "c8012d3d73592ed76241b636b6dc9090a285ed1f1756d72855f59f52192c18ac",
+   "bytes": 74266
+  },
+  "engineering/fishv3/build.py": {
+   "sha256": "89474664119292aed91800fa647958ea3a52faf430a454d3c5b67b04caef42fd",
+   "bytes": 43970
+  },
+  "engineering/cfd3d/vlm.py": {
+   "sha256": "f9dd43a97243234880fef5c4d99e77ee34458980c6246a284762763a12acb6d3",
+   "bytes": 21367
+  }
+ },
+ "code_sha256": {
+  "engineering/organ_sims/common.py": "1f7b668af21389960ea5d7797a7dcfbdf56b3c81400bc3ccbed50762b7dd9688",
+  "engineering/organ_sims/index.py": "9d25969238579345755b2651004dd3ae01320fec60ab397d22d5d609e5c6f93b",
+  "engineering/organ_sims/r1_v3b_convergence.py": "539630b87142f4223eddfe268915bf41aab0a3fdfba94bf067553fa22f2846ed",
+  "engineering/organ_sims/r1b_v3b_fix.py": "51173960a338172bac69c597c052f9eb74290cfeab2e27eb711f50ea31fd44c3",
+  "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
+  "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
+  "engineering/organ_sims/r4_aeroelastic_stiffness.py": "c2eecffe07310b33f3b09421b5a92d42fd7cf099b5e58a978c47f7b85c61f1e1",
+  "engineering/organ_sims/r4b_torsion.py": "21e97961ca43610ac377cf53196ff831450ef987c6acb7459f054a93e89d9bdb",
+  "engineering/organ_sims/r5_school_launch.py": "28af5ff0e13435f5e3fe1a5dcc1ac8ceda897cdd38ec875b5c79b4d17b40eb39",
+  "engineering/organ_sims/r5b_stagger.py": "64920881ab02ecc69b8ee577f793c46056dc30fb21723841154dcd7410aeaeab",
+  "engineering/organ_sims/r6_trim_map.py": "8f569762016b61da0ded64c74a77e21b62f47a4f9fc7ca350a21e94c9f70c78d"
+ },
+ "git_dirty_paths_at_run": [
+  "?? artifacts/organ-sims/logs/r1b-v3b-fix.log",
+  "?? artifacts/organ-sims/r1b-v3b-fix/"
+ ],
+ "results": {
+  "rows": [
+   {
+    "variant": "camber_x1",
+    "knobs": {
+     "pectoral_camber": 0.06,
+     "pelvic_camber": 0.04
+    },
+    "ns": 48,
+    "nc": 16,
+    "S_lattice_m2": 0.005199446269570648,
+    "CL_a0": -0.06647737893545347,
+    "CL_a4": 0.16133147510411788,
+    "CLa_per_deg": 0.05695221350989284,
+    "alpha_zero_lift_deg": 1.1672483796245439
+   },
+   {
+    "variant": "camber_x0.5",
+    "knobs": {
+     "pectoral_camber": 0.03,
+     "pelvic_camber": 0.02
+    },
+    "ns": 48,
+    "nc": 16,
+    "S_lattice_m2": 0.005199444297668223,
+    "CL_a0": -0.03329012825726428,
+    "CL_a4": 0.1949716163490098,
+    "CLa_per_deg": 0.05706543615156852,
+    "alpha_zero_lift_deg": 0.5833676302559769
+   },
+   {
+    "variant": "camber_x0",
+    "knobs": {
+     "pectoral_camber": 0.0,
+     "pelvic_camber": 0.0
+    },
+    "ns": 48,
+    "nc": 16,
+    "S_lattice_m2": 0.00519944572291527,
+    "CL_a0": -3.748950581054441e-06,
+    "CL_a4": 0.22869988614947587,
+    "CLa_per_deg": 0.05717590877501423,
+    "alpha_zero_lift_deg": 6.556870999298791e-05
+   },
+   {
+    "variant": "camber_x-0.5",
+    "knobs": {
+     "pectoral_camber": -0.03,
+     "pelvic_camber": -0.02
+    },
+    "ns": 48,
+    "nc": 16,
+    "S_lattice_m2": 0.005199445697762632,
+    "CL_a0": 0.03339032333060743,
+    "CL_a4": 0.26252493862983467,
+    "CLa_per_deg": 0.05728365382480681,
+    "alpha_zero_lift_deg": -0.5828944402311795
+   },
+   {
+    "variant": "camber_x-1",
+    "knobs": {
+     "pectoral_camber": -0.06,
+     "pelvic_camber": -0.04
+    },
+    "ns": 48,
+    "nc": 16,
+    "S_lattice_m2": 0.005199446590738888,
+    "CL_a0": 0.0668712659867737,
+    "CL_a4": 0.29642610693880117,
+    "CLa_per_deg": 0.05738871023800687,
+    "alpha_zero_lift_deg": -1.1652338188023403
+   },
+   {
+    "variant": "camber_x1_v3a_lead",
+    "knobs": {
+     "pectoral_camber": 0.06,
+     "pelvic_camber": 0.04,
+     "pectoral_lead_angle_deg": 8.0,
+     "pelvic_lead_angle_deg": 22.0
+    },
+    "ns": 48,
+    "nc": 16,
+    "S_lattice_m2": 0.005291726491663965,
+    "CL_a0": -0.04159947025485555,
+    "CL_a4": 0.20008189734677975,
+    "CLa_per_deg": 0.060420341900408826,
+    "alpha_zero_lift_deg": 0.6885010734203422
+   },
+   {
+    "variant": "camber_x1",
+    "knobs": {
+     "pectoral_camber": 0.06,
+     "pelvic_camber": 0.04
+    },
+    "ns": 72,
+    "nc": 24,
+    "S_lattice_m2": 0.005201387033128972,
+    "CL_a0": -0.0648550008406277,
+    "CL_a4": 0.16195336185334128,
+    "CLa_per_deg": 0.056702090673492245,
+    "alpha_zero_lift_deg": 1.143785001051943
+   },
+   {
+    "variant": "camber_x0.5",
+    "knobs": {
+     "pectoral_camber": 0.03,
+     "pelvic_camber": 0.02
+    },
+    "ns": 72,
+    "nc": 24,
+    "S_lattice_m2": 0.005201385021019016,
+    "CL_a0": -0.03248981468957616,
+    "CL_a4": 0.1947521320873013,
+    "CLa_per_deg": 0.05681048669421936,
+    "alpha_zero_lift_deg": 0.571898193100361
+   },
+   {
+    "variant": "camber_x0",
+    "knobs": {
+     "pectoral_camber": 0.0,
+     "pelvic_camber": 0.0
+    },
+    "ns": 72,
+    "nc": 24,
+    "S_lattice_m2": 0.005201386204738692,
+    "CL_a0": -4.376607468121459e-06,
+    "CL_a4": 0.22765964027621638,
+    "CLa_per_deg": 0.05691600422092113,
+    "alpha_zero_lift_deg": 7.689590174203953e-05
+   },
+   {
+    "variant": "camber_x-0.5",
+    "knobs": {
+     "pectoral_camber": -0.03,
+     "pelvic_camber": -0.02
+    },
+    "ns": 72,
+    "nc": 24,
+    "S_lattice_m2": 0.00520138600834983,
+    "CL_a0": 0.03261581599337627,
+    "CL_a4": 0.26069037321396665,
+    "CLa_per_deg": 0.0570186393051476,
+    "alpha_zero_lift_deg": -0.5720202444471827
+   },
+   {
+    "variant": "camber_x-1",
+    "knobs": {
+     "pectoral_camber": -0.06,
+     "pelvic_camber": -0.04
+    },
+    "ns": 72,
+    "nc": 24,
+    "S_lattice_m2": 0.0052013871741254025,
+    "CL_a0": 0.0653460988674172,
+    "CL_a4": 0.29381989068070774,
+    "CLa_per_deg": 0.05711844795332263,
+    "alpha_zero_lift_deg": -1.1440454215565912
+   },
+   {
+    "variant": "camber_x1_v3a_lead",
+    "knobs": {
+     "pectoral_camber": 0.06,
+     "pelvic_camber": 0.04,
+     "pectoral_lead_angle_deg": 8.0,
+     "pelvic_lead_angle_deg": 22.0
+    },
+    "ns": 72,
+    "nc": 24,
+    "S_lattice_m2": 0.0052927034689164935,
+    "CL_a0": -0.036941394085826716,
+    "CL_a4": 0.20370569611196654,
+    "CLa_per_deg": 0.060161772549448315,
+    "alpha_zero_lift_deg": 0.6140343364295617
+   }
+  ],
+  "pose_decomposition": {
+   "camber_x1": [
+    {
+     "u_mm": [
+      -1.7165437360596767e-05,
+      12.103070853232113
+     ],
+     "chord_slope_deg_TE_up_positive": 0.48600425038762307,
+     "camber_over_chord": 0.018473646331344552
+    },
+    {
+     "u_mm": [
+      12.103070853232113,
+      24.20615887190159
+     ],
+     "chord_slope_deg_TE_up_positive": 0.2849480451475147,
+     "camber_over_chord": 0.037254994242459906
+    },
+    {
+     "u_mm": [
+      24.20615887190159,
+      36.30924689057107
+     ],
+     "chord_slope_deg_TE_up_positive": 2.5490586090335974,
+     "camber_over_chord": 0.05673099514973562
+    },
+    {
+     "u_mm": [
+      36.30924689057107,
+      48.412334909240535
+     ],
+     "chord_slope_deg_TE_up_positive": 6.1559627640645065,
+     "camber_over_chord": 0.03854421127176855
+    },
+    {
+     "u_mm": [
+      48.412334909240535,
+      60.51542292791001
+     ],
+     "chord_slope_deg_TE_up_positive": 9.012616827597718,
+     "camber_over_chord": 0.02890896910262888
+    },
+    {
+     "u_mm": [
+      60.51542292791001,
+      72.61851094657949
+     ],
+     "chord_slope_deg_TE_up_positive": 10.790598943163172,
+     "camber_over_chord": 0.016805386191138274
+    },
+    {
+     "u_mm": [
+      72.61851094657949,
+      84.72159896524896
+     ],
+     "chord_slope_deg_TE_up_positive": 12.524392283577843,
+     "camber_over_chord": -0.016836509536865787
+    }
+   ],
+   "camber_x0.5": [
+    {
+     "u_mm": [
+      -1.7165437360596767e-05,
+      12.103067456140886
+     ],
+     "chord_slope_deg_TE_up_positive": 0.2429704737528417,
+     "camber_over_chord": 0.00923696104883826
+    },
+    {
+     "u_mm": [
+      12.103067456140886,
+      24.206152077719135
+     ],
+     "chord_slope_deg_TE_up_positive": 0.14245397664904227,
+     "camber_over_chord": 0.01862732769830067
+    },
+    {
+     "u_mm": [
+      24.206152077719135,
+      36.30923669929738
+     ],
+     "chord_slope_deg_TE_up_positive": 1.2751983887718366,
+     "camber_over_chord": 0.02836515100007336
+    },
+    {
+     "u_mm": [
+      36.30923669929738,
+      48.41232132087563
+     ],
+     "chord_slope_deg_TE_up_positive": 3.0868025686692424,
+     "camber_over_chord": 0.01927141362371526
+    },
+    {
+     "u_mm": [
+      48.41232132087563,
+      60.515405942453874
+     ],
+     "chord_slope_deg_TE_up_positive": 4.534375356651982,
+     "camber_over_chord": 0.014454558707055169
+    },
+    {
+     "u_mm": [
+      60.515405942453874,
+      72.61849056403211
+     ],
+     "chord_slope_deg_TE_up_positive": 5.443577927993306,
+     "camber_over_chord": 0.008402891553006322
+    },
+    {
+     "u_mm": [
+      72.61849056403211,
+      84.72157518561036
+     ],
+     "chord_slope_deg_TE_up_positive": 6.337833945782576,
+     "camber_over_chord": -0.008417206551294184
+    }
+   ],
+   "camber_x0": [
+    {
+     "u_mm": [
+      -1.7165437360596767e-05,
+      12.103064059049656
+     ],
+     "chord_slope_deg_TE_up_positive": -1.070081196808188e-05,
+     "camber_over_chord": -7.037780245966502e-07
+    },
+    {
+     "u_mm": [
+      12.103064059049656,
+      24.206145283536674
+     ],
+     "chord_slope_deg_TE_up_positive": -4.469062371163366e-05,
+     "camber_over_chord": 4.573478860252293e-07
+    },
+    {
+     "u_mm": [
+      24.206145283536674,
+      36.30922650802369
+     ],
+     "chord_slope_deg_TE_up_positive": 3.332110187061109e-05,
+     "camber_over_chord": -6.506810556192919e-07
+    },
+    {
+     "u_mm": [
+      36.30922650802369,
+      48.412307732510705
+     ],
+     "chord_slope_deg_TE_up_positive": -8.34504016844103e-05,
+     "camber_over_chord": -7.432129089804524e-08
+    },
+    {
+     "u_mm": [
+      48.412307732510705,
+      60.51538895699772
+     ],
+     "chord_slope_deg_TE_up_positive": -2.402879250984932e-05,
+     "camber_over_chord": -1.1804711884342281e-06
+    },
+    {
+     "u_mm": [
+      60.51538895699772,
+      72.61847018148475
+     ],
+     "chord_slope_deg_TE_up_positive": 0.0001496300289072299,
+     "camber_over_chord": -9.06397870938584e-07
+    },
+    {
+     "u_mm": [
+      72.61847018148475,
+      84.72155140597177
+     ],
+     "chord_slope_deg_TE_up_positive": 8.812819445135588e-05,
+     "camber_over_chord": -1.0337971820779803e-06
+    }
+   ],
+   "camber_x-0.5": [
+    {
+     "u_mm": [
+      -1.7165437360596767e-05,
+      12.10306066195843
+     ],
+     "chord_slope_deg_TE_up_positive": -0.24305740882442628,
+     "camber_over_chord": -0.009237674011718038
+    },
+    {
+     "u_mm": [
+      12.10306066195843,
+      24.206138489354224
+     ],
+     "chord_slope_deg_TE_up_positive": -0.14244522759228406,
+     "camber_over_chord": -0.018627897257853705
+    },
+    {
+     "u_mm": [
+      24.206138489354224,
+      36.30921631675
+     ],
+     "chord_slope_deg_TE_up_positive": -1.2752168096720882,
+     "camber_over_chord": -0.028365981118399896
+    },
+    {
+     "u_mm": [
+      36.30921631675,
+      48.412294144145804
+     ],
+     "chord_slope_deg_TE_up_positive": -3.0869235315264105,
+     "camber_over_chord": -0.019272492113892384
+    },
+    {
+     "u_mm": [
+      48.412294144145804,
+      60.5153719715416
+     ],
+     "chord_slope_deg_TE_up_positive": -4.534426481809054,
+     "camber_over_chord": -0.014455547480332892
+    },
+    {
+     "u_mm": [
+      60.5153719715416,
+      72.61844979893738
+     ],
+     "chord_slope_deg_TE_up_positive": -5.443558952529711,
+     "camber_over_chord": -0.008403845382884158
+    },
+    {
+     "u_mm": [
+      72.61844979893738,
+      84.72152762633317
+     ],
+     "chord_slope_deg_TE_up_positive": -6.337971864402028,
+     "camber_over_chord": 0.008415969405533045
+    }
+   ],
+   "camber_x-1": [
+    {
+     "u_mm": [
+      -1.7165437360596767e-05,
+      12.103071238404352
+     ],
+     "chord_slope_deg_TE_up_positive": -0.485983295729277,
+     "camber_over_chord": -0.0184734351675679
+    },
+    {
+     "u_mm": [
+      12.103071238404352,
+      24.206159642246067
+     ],
+     "chord_slope_deg_TE_up_positive": -0.28487670298872647,
+     "camber_over_chord": -0.037255605448267996
+    },
+    {
+     "u_mm": [
+      24.206159642246067,
+      36.309248046087774
+     ],
+     "chord_slope_deg_TE_up_positive": -2.54913589894749,
+     "camber_over_chord": -0.0567312374626431
+    },
+    {
+     "u_mm": [
+      36.309248046087774,
+      48.41233644992949
+     ],
+     "chord_slope_deg_TE_up_positive": -6.156033781787849,
+     "camber_over_chord": -0.038545617384974126
+    },
+    {
+     "u_mm": [
+      48.41233644992949,
+      60.51542485377121
+     ],
+     "chord_slope_deg_TE_up_positive": -9.012714350531196,
+     "camber_over_chord": -0.028909857370564434
+    },
+    {
+     "u_mm": [
+      60.51542485377121,
+      72.61851325761292
+     ],
+     "chord_slope_deg_TE_up_positive": -10.790555795773912,
+     "camber_over_chord": -0.0168079509555385
+    },
+    {
+     "u_mm": [
+      72.61851325761292,
+      84.72160166145463
+     ],
+     "chord_slope_deg_TE_up_positive": -12.52464387691262,
+     "camber_over_chord": 0.01683518200289541
+    }
+   ],
+   "camber_x1_v3a_lead": [
+    {
+     "u_mm": [
+      -1.7165437360596767e-05,
+      12.734975522508659
+     ],
+     "chord_slope_deg_TE_up_positive": 0.46230414051933394,
+     "camber_over_chord": 0.021911756136778527
+    },
+    {
+     "u_mm": [
+      12.734975522508659,
+      25.46996821045468
+     ],
+     "chord_slope_deg_TE_up_positive": -0.013171782558531233,
+     "camber_over_chord": 0.040704191683396854
+    },
+    {
+     "u_mm": [
+      25.46996821045468,
+      38.2049608984007
+     ],
+     "chord_slope_deg_TE_up_positive": 1.7487574359257017,
+     "camber_over_chord": 0.061254409395865204
+    },
+    {
+     "u_mm": [
+      38.2049608984007,
+      50.93995358634672
+     ],
+     "chord_slope_deg_TE_up_positive": 6.501127344620039,
+     "camber_over_chord": 0.04500825580126423
+    },
+    {
+     "u_mm": [
+      50.93995358634672,
+      63.674946274292736
+     ],
+     "chord_slope_deg_TE_up_positive": 8.349858029696978,
+     "camber_over_chord": 0.038856956777345485
+    },
+    {
+     "u_mm": [
+      63.674946274292736,
+      76.40993896223875
+     ],
+     "chord_slope_deg_TE_up_positive": 10.890308364401479,
+     "camber_over_chord": 0.021590004324857855
+    },
+    {
+     "u_mm": [
+      76.40993896223875,
+      89.14493165018477
+     ],
+     "chord_slope_deg_TE_up_positive": 12.710941720232869,
+     "camber_over_chord": -0.005699230127199387
+    }
+   ]
+  },
+  "convergence_48_to_72": {
+   "camber_x1": 0.0038547143316085553,
+   "camber_x0.5": 0.001125724173695164,
+   "camber_x0": 0.004548519418936636,
+   "camber_x-0.5": 0.00698815672691111,
+   "camber_x-1": 0.008792127943816674,
+   "camber_x1_v3a_lead": 0.018111577375268695
+  },
+  "wall_s": 116.22655153274536,
+  "workers": 12
+ },
+ "checks": [
+  {
+   "name": "control: in-process rebuild of v3b (camber x1) reproduces committed panels.json exactly",
+   "pass": true,
+   "detail": 0.0
+  },
+  {
+   "name": "control: camber x1 at 48x16 reproduces R1 CL(4) (1e-9)",
+   "pass": true,
+   "detail": [
+    0.16133147510411788,
+    0.16133147510411847
+   ]
+  },
+  {
+   "name": "control: camber x1 at 72x24 reproduces R1 CL(4) (1e-9)",
+   "pass": true,
+   "detail": [
+    0.16195336185334128,
+    0.16195336185334155
+   ]
+  },
+  {
+   "name": "every variant: CL(4) changes <= 2% from 48x16 to 72x24",
+   "pass": true,
+   "detail": {
+    "camber_x1": 0.0038547143316085553,
+    "camber_x0.5": 0.001125724173695164,
+    "camber_x0": 0.004548519418936636,
+    "camber_x-0.5": 0.00698815672691111,
+    "camber_x-1": 0.008792127943816674,
+    "camber_x1_v3a_lead": 0.018111577375268695
+   }
+  }
+ ],
+ "design_implications": {
+  "see": "docs/organ-sims.md"
+ },
+ "figures": [
+  "artifacts/organ-sims/r1b-v3b-fix/variants.png"
+ ]
+}

@@ -1,0 +1,5 @@
+{"job_name": "claude-organ-r4b-torsion-a2", "job_id": "aijob-e00ejvmc0pmnce04en", "submitted_utc": "2026-11-01T16:02:08Z", "platform": "gpu-l40s-a", "preset": "1gpu-40vcpu-160gb",
+ "why_gpu_platform": "non-GPU vCPU quota full (cpu-d3 refused repeatedly); CPU-only workload, GPU idle",
+ "image": "python:3.12.7-bookworm", "timeout": "2h", "disk": "50Gi", "command": "bash /work/run_job.sh 00972ac37b79712bbb51847b9ce492ee04dadba9 r4b-torsion engineering.organ_sims.r4b_torsion 38",
+ "code_commit": "00972ac37b79712bbb51847b9ce492ee04dadba9", "run_job_sh_sha256": "4456ec960eb988cc05c15d3e3dc0bfe1fae479c2379f1012b46180ae85d1834c", "retry_of": "claude-organ-r4b-torsion-a1 (scipy missing)",
+ "dry_run": "clean sparse clone of 00972ac37b79712bbb51847b9ce492ee04dadba9 in a fresh venv with only the pinned job packages: R4B_SMOKE rc 0"}
