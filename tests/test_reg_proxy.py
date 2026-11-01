@@ -24,7 +24,7 @@ def run_controls(cwd):
 def test_controls_pass_on_the_committed_code():
     rc, ctl = run_controls(ROOT)
     failed = [c for c in ctl if not c["passed"]]
-    assert rc == 0 and len(ctl) == 29 and not failed, failed
+    assert rc == 0 and len(ctl) == 30 and not failed, failed
 
 
 AMENDMENT_SHA = "048e4745f78462a43bf6790a8d7d8a528f4b9c81cb10c0cfbd41d037e5657637"  # frozen at c713181 before the reader repair; deliberately restated
@@ -32,6 +32,13 @@ AMENDMENT_SHA = "048e4745f78462a43bf6790a8d7d8a528f4b9c81cb10c0cfbd41d037e565763
 
 def test_amendment_bytes_are_the_frozen_ones():
     assert hashlib.sha256(open(os.path.join(PKG, "transport_amendment.json"), "rb").read()).hexdigest() == AMENDMENT_SHA
+
+
+AMENDMENT2_SHA = "69e4d1bcb7dbcd16969bda58de962d5db32a3aba1873ee0cb3c04be68d13d5cc"  # frozen at 360b1e5 before the reservation repair; deliberately restated
+
+
+def test_amendment2_bytes_are_the_frozen_ones():
+    assert hashlib.sha256(open(os.path.join(PKG, "transport_amendment_2.json"), "rb").read()).hexdigest() == AMENDMENT2_SHA
 
 
 def test_protocol_bytes_are_the_frozen_ones():
@@ -49,7 +56,8 @@ MUTATIONS = [
     ("window_count.py", "if len(data) != isize or zlib.crc32(data) != crc:", "if False:", "crc"),
     ("window_count.py", "if coff >= total:", "if False:", "index/file mismatch"),
     ("window_count.py", 'if len(body) != expected:', "if False:", "short read"),
-    ("window_count.py", "self.budget.precheck(expected)  # cap refusals are final: never retried", "pass", "caps checked before send"),
+    ("window_count.py", "self.budget.precheck(expected + 1)  # reserve the sentinel byte too, per attempt; cap refusals are final: never retried", "pass", "caps checked before send"),
+    ("window_count.py", "self.budget.precheck(expected + 1)", "self.budget.precheck(expected)", "sentinel byte reserved"),
     ("window_count.py", "self.budget.charge(len(c))", "pass", "bytes read are charged"),
     ("window_count.py", "self.budget.charge(len(e.partial))", "pass", "partial IncompleteRead bytes are charged"),
     ("window_count.py", "self._bounded_read(r, expected + 1, rec)", "self._bounded_read(r, expected + 1000000, rec)", "read bound"),

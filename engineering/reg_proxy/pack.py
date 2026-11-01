@@ -11,7 +11,7 @@ import tarfile
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MEMBERS = ["engineering/__init__.py", "engineering/reg_proxy/__init__.py", "engineering/reg_proxy/window_count.py",
            "engineering/reg_proxy/controls_synth.py", "engineering/reg_proxy/protocol.json", "engineering/reg_proxy/controls.json",
-           "engineering/reg_proxy/transport_amendment.json", "engineering/reg_proxy/fixtures/GSM8153942_0dpa1_atac_fragments.tsv.gz.tbi.gz",
+           "engineering/reg_proxy/transport_amendment.json", "engineering/reg_proxy/transport_amendment_2.json", "engineering/reg_proxy/fixtures/GSM8153942_0dpa1_atac_fragments.tsv.gz.tbi.gz",
            "engineering/reg_proxy/fixtures/htslib_fixture.tsv.gz", "engineering/reg_proxy/fixtures/htslib_fixture.tsv.gz.tbi",
            "engineering/reg_proxy/fixtures/htslib_expected.json"]
 OUT = os.path.join(ROOT, "artifacts", "reg-proxy")
@@ -58,6 +58,7 @@ def build(out=OUT):
               "outputs": ["results.json", "receipt.json", "requests.json"],
               "exit_codes": {"0": "complete (330/330 usable)", "2": "stopped_on_bound", "3": "partial_data", "4": "stopped_on_error", "1": "preflight failed"},
               "amendment_sha256": hashlib.sha256(d["engineering/reg_proxy/transport_amendment.json"]).hexdigest(),
+              "amendment2_sha256": hashlib.sha256(d["engineering/reg_proxy/transport_amendment_2.json"]).hexdigest(),
               "protocol_sha256": hashlib.sha256(d["engineering/reg_proxy/protocol.json"]).hexdigest(),
               "controls_sha256": hashlib.sha256(d["engineering/reg_proxy/controls.json"]).hexdigest()}
     json.dump(packet, open(os.path.join(out, "packet.json"), "w"), indent=1, sort_keys=True)

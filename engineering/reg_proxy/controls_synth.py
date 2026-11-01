@@ -507,6 +507,44 @@ def run_all():
             return "a 100-byte request against a 50-byte window, library or total cap is refused before it is sent"
         results.append(_ctl("caps refuse a request before it is sent", precheck))
 
+        def cap_edge():
+            # 1. a request of exactly the remaining cap cannot reserve its sentinel byte: refused unsent
+            before = srv.hits
+            h = wc.HttpRange(proto, wc.Budget(proto["bounds"] | {"per_window_compressed_max_bytes": 100}), [srv.host], "http")
+            try:
+                h.get(srv.url("/a.gz"), 0, 99, total)
+                raise AssertionError("100-byte request accepted against a 100-byte cap")
+            except wc.Refused as e:
+                assert e.status == "window_byte_cap" and srv.hits == before, (e.status, srv.hits - before)
+            # 2. an oversized body against a cap with room for exactly expected+1 never pushes any ledger past its cap
+            srv.mode = "oversize"
+            try:
+                caps = {"per_window_compressed_max_bytes": 101, "per_library_compressed_max_bytes": 101, "total_compressed_max_bytes": 101}
+                bud = wc.Budget(proto["bounds"] | caps)
+                h = wc.HttpRange(proto, bud, [srv.host], "http")
+                try:
+                    h.get(srv.url("/a.gz"), 0, 99, total)
+                    raise AssertionError("oversized body accepted")
+                except wc.Refused as e:
+                    assert e.status == "oversized_response", e.status
+                assert bud.bytes == bud.lib_bytes == bud.window_bytes == 101, (bud.bytes, bud.lib_bytes, bud.window_bytes)
+            finally:
+                srv.mode = "ok"
+            # 3. retries reserve too: after one 99-byte short read the second attempt (99+101 > 150) is refused unsent
+            srv.mode, before = "short", srv.hits
+            try:
+                bud = wc.Budget(proto["bounds"] | {"per_window_compressed_max_bytes": 150})
+                h = wc.HttpRange(proto, bud, [srv.host], "http")
+                try:
+                    h.get(srv.url("/a.gz"), 0, 99, total)
+                    raise AssertionError("short body accepted")
+                except wc.Refused as e:
+                    assert e.status == "window_byte_cap" and srv.hits - before == 1 and bud.window_bytes == 99 <= 150, (e.status, srv.hits - before, bud.window_bytes)
+            finally:
+                srv.mode = "ok"
+            return "100 B request vs 100 B cap refused unsent; oversized body vs cap 101 charges exactly 101 on all ledgers; retry reservation refuses a second attempt that could exceed the cap"
+        results.append(_ctl("cap boundary: sentinel byte and retries reserved", cap_edge))
+
         def library_ledger():
             import tempfile
             ctl2 = {"controls": [{"name": "fx", "class": "reporter_positive", "chrom": "chr1", "start_1based": 1001, "end_1based": 2400}],

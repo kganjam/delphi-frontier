@@ -89,7 +89,7 @@ class HttpRange:
         last = None
         for attempt in range(1, self.attempts + 1):
             self.budget.check()
-            self.budget.precheck(expected)  # cap refusals are final: never retried
+            self.budget.precheck(expected + 1)  # reserve the sentinel byte too, per attempt; cap refusals are final: never retried
             self.budget.requests += 1
             rec = {"url": url, "range": f"{start}-{end}", "attempt": attempt, "t": time.time(), "bytes_charged": 0}
             r = None
@@ -370,6 +370,7 @@ def run(out, proto, controls, make_fetch, clock=time.monotonic, budget=None):
            "unusable_identities": [list(x) for x in expected if x in present and x not in usable],
            "protocol_sha256": hashlib.sha256(open(os.path.join(HERE, "protocol.json"), "rb").read()).hexdigest(),
            "amendment_sha256": hashlib.sha256(open(os.path.join(HERE, "transport_amendment.json"), "rb").read()).hexdigest(),
+           "amendment2_sha256": hashlib.sha256(open(os.path.join(HERE, "transport_amendment_2.json"), "rb").read()).hexdigest(),
            "results_sha256": hashlib.sha256(open(p, "rb").read()).hexdigest()}
     json.dump(rec, open(os.path.join(out, "receipt.json"), "w"), indent=1, sort_keys=True)
     return doc, rec
