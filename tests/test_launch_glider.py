@@ -577,7 +577,23 @@ def test_printfix_accepts_true_mirror_and_refuses_transform_mirror():
     old, ro, m = _printfix_records(fixed=False)
     new, rn, _ = _printfix_records(fixed=True)
     good = fm.printfix_check(old, ro, new, rn, m)
-    assert good["pass"] and good["body_bytes_identical"]
+    assert good["pass"] and good["body_payload_identical"]
+
+    def relabel(rel, header=b"r4 label".ljust(80), move=False):   # header-only change passes; a moved vertex fails
+        b = rn(rel)
+        if rel != "stl/body.stl":
+            return b
+        b = header + b[80:]
+        if move:
+            b = b[:84 + 12] + struct.pack("<f", struct.unpack("<f", b[96:100])[0] + 0.5) + b[100:]
+        return b
+    new2 = json.loads(json.dumps(new))
+    new2["parts"][0]["stl_sha256"] = hashlib.sha256(relabel("stl/body.stl")).hexdigest()
+    r = fm.printfix_check(old, ro, new2, relabel, m)
+    assert r["pass"] and not r["body_header_identical"]
+    new3 = json.loads(json.dumps(new))
+    new3["parts"][0]["stl_sha256"] = hashlib.sha256(relabel("stl/body.stl", move=True)).hexdigest()
+    assert not fm.printfix_check(old, ro, new3, lambda rel: relabel(rel, move=True), m)["pass"]
     same = fm.printfix_check(old, ro, old, ro, m)   # negative control: r3's form is not printable as a right part
     assert not same["pass"]
     row = next(r for r in same["parts"] if r["id"] == "fin_R")

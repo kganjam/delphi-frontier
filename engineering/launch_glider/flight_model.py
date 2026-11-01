@@ -243,14 +243,16 @@ def hand_np(rec: dict) -> dict:
 
 def printfix_check(old: dict, read_old, new: dict, read_new, mat: dict, tol_m: float = 1e-6) -> dict:
     """A print-fix revision may change only how the right-side parts are printed. Checks:
-    the body STL bytes are identical; every right part's print-frame mesh is its left partner's mesh mirrored (it is
+    the body STL's triangle payload is byte-identical (the 80-byte header is a label and is reported, not required to
+    match); every right part's print-frame mesh is its left partner's mesh mirrored (it is
     printable as a right part) with a proper (det +1) placement; every part's fish-frame geometry is unchanged (sorted
     vertex sets within tol_m); and the recomputed dry mass and CG are unchanged."""
     def by_id(rec):
         return {p["id"]: p for p in rec["parts"] + rec.get("spare_parts", [])}
     po, pn = by_id(old), by_id(new)
     rows, ok = [], True
-    body_same = po["body"]["stl_sha256"] == pn["body"]["stl_sha256"]
+    bo, bn = read_old(po["body"]["stl"]), read_new(pn["body"]["stl"])
+    body_same = bo[80:] == bn[80:]
     ok &= body_same
     if set(po) != set(pn):
         return {"pass": False, "reason": f"part sets differ: {sorted(set(po) ^ set(pn))}"}
@@ -279,7 +281,8 @@ def printfix_check(old: dict, read_old, new: dict, read_new, mat: dict, tol_m: f
     dm = rn["dry"]["mass_kg"] / ro["dry"]["mass_kg"] - 1
     dcg = float(np.linalg.norm(np.subtract(rn["dry"]["cg_m"], ro["dry"]["cg_m"])))
     ok &= abs(dm) < 1e-6 and dcg < tol_m and rn["status"] == "AGREES"
-    return {"pass": bool(ok), "body_bytes_identical": body_same, "parts": rows, "dry_mass_rel_change": dm,
+    return {"pass": bool(ok), "body_payload_identical": body_same, "body_header_identical": bo[:80] == bn[:80],
+            "body_sha256": [po["body"]["stl_sha256"], pn["body"]["stl_sha256"]], "parts": rows, "dry_mass_rel_change": dm,
             "dry_cg_change_m": dcg, "new_record_recompute": rn["status"]}
 
 
@@ -397,6 +400,15 @@ def run(repo: Path, commit: str, card: Path, grid: dict | None = None, revisions
 
 
 def main(argv):
+    if argv[1:2] == ["printfix"]:   # printfix <old commit> <old path> <new commit> <new path> <out>
+        oc, op, nc, np_, out = argv[2:7]
+        mat = pr.load_material(Path("data/materials/formlabs-studio-2026-10-31.json"))
+        ro, rn = git_source(Path("."), oc, op), git_source(Path("."), nc, np_)
+        r = {"schema": "frontier.glider.printfix-check/1", "old": {"commit": oc, "path": op},
+             "new": {"commit": nc, "path": np_}, **printfix_check(load(ro), ro, load(rn), rn, mat)}
+        Path(out).write_text(json.dumps(r, indent=1, sort_keys=True, default=float) + "\n")
+        print(out, hashlib.sha256(Path(out).read_bytes()).hexdigest(), "PASS" if r["pass"] else "FAIL")
+        return
     args = list(argv[1:])
     grid = GRIDS[args.pop(args.index("--grid") + 1)] if "--grid" in args else None
     if "--grid" in args:

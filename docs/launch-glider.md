@@ -30,6 +30,8 @@ Reproduce:
 - `python -m engineering.launch_glider.flight_model 19f4546 artifacts/launch-glider/r1-dynamics.json`
 - `python -m engineering.launch_glider.flight_model 1fac368 artifacts/launch-glider/r2-light-dynamics.json artifacts/glider/r2-light`
 - `python -m engineering.launch_glider.flight_model --grid spec 361480f artifacts/launch-glider/r3-daane-dynamics.json artifacts/glider/r3-daane`
+- `python -m engineering.launch_glider.flight_model --grid spec bd2fcf3 artifacts/launch-glider/r4-daane-printfix-dynamics.json artifacts/glider/r4-daane-printfix`
+- `python -m engineering.launch_glider.flight_model printfix 361480f artifacts/glider/r3-daane bd2fcf3 artifacts/glider/r4-daane-printfix artifacts/launch-glider/r4-printfix-check.json`
 
 Both run single-threaded.
 
@@ -253,6 +255,45 @@ transferred: every number here comes from r3's own bytes.
   - x34 dz +1.5: −0.22 m, and x34 dz +3: −1.12 m. Both release nose-down; avoid them.
 - **Chirality: blocking for printing.** The r3 right fins are the left STLs placed by a det −1 transform, so printing
   them gives two left fins. r4-daane-printfix is meant to correct only that.
+
+## r4-daane-printfix (`work/fish-glider` @ `bd2fcf3`): printfix verified; first-print constraints
+**Printfix check:** `artifacts/launch-glider/r4-printfix-check.json`, PASS.
+- The body's triangle payload is byte-identical to r3's. Only the 80-byte STL header label differs: sha256
+  `91fa0d85…` (r3) vs `11499468…` (r4).
+- Every part's fish-frame geometry is unchanged.
+- Every placement is proper (det +1).
+- Every `_R` print file differs from its `_L` partner and is outward (V > 0), so it prints as a right part.
+- The recomputed dry mass and CG are unchanged: 20.335 g, x 63.61 mm.
+
+**Simulation:** `r4-daane-printfix-dynamics.json`, from r4's own bytes at SPEC speeds. It is row-for-row identical
+to r3's, as the identical geometry requires.
+
+**Minimal first-print constraints (fit and balance print).** These come from analysis only. Nothing has been
+printed, weighed or thrown.
+1. **Right fins:** print the r4 `_R` files only. Never print the `_R` file of r1, r2 or r3.
+2. **Pectoral orientation:** keep the span axis perpendicular to the build direction, and tilt about the span axis
+   only. Otherwise the orientation case fails: 9.8 and 8.2 MPa against 7.17 MPa at k_z 0.5.
+3. **Sections:** do not thin any section below the recorded values:
+   - pectoral: membrane 0.5 mm; spar 1.6 × 2.0 mm, tapering to 1.2; doubler 1.2 mm to 12 mm;
+   - pelvic spar 1.2 × 1.2 mm.
+
+   Support scars on the spar or root are notches, which the declared SF 3 is not shown to cover.
+4. **Balance for the first throws:**
+   - CG x **49.5–55.2 mm** (r3/r4's own hand-NP window, SM 0.10–0.20), target 52.4 mm;
+   - never aft of **54.1 mm** (SM 0.05 at the forward end of the hand bracket) until cfd04's NP is known;
+   - ballast about 3.7–7.7 g (5.5 g at the target), total 24.0–28.0 g, assuming shot at 4.7 g/cm³ and the mesh
+     dry mass.
+
+   This replaces the earlier 44–60 mm window cited in ASSEMBLY.md, which came from v3a's planform.
+5. **Catch:** use plug x20 dz 0 (in the set). If spares are printed, x34 dz 0 and x20 dz −1.5 are the
+   alternatives. **Do not use x34 dz +1.5 or +3**: in simulation they release nose-down.
+6. **Measure and record** each part's printed mass, the dry and ballasted CG (x **and** z), the catch seat height,
+   and the launch speed. Each 1 mm of seat-to-CG height changes the simulated release pitch rate by several rad/s.
+7. **What the simulation says** (nominal coefficients, SPEC speeds only):
+   - 4 and 6 m/s do not reach 5 m.
+   - At 8 m/s, 5–8 m appears only in post-stall cases.
+
+   This is **not a pass**, and no speed above 8 m/s was used.
 
 ## Corrections to the frozen `print-requirements.json` (ac293117…; the artifact is kept unchanged)
 These answer the independent review (`launchable-fish-review`, c2ec8f0). Each was re-checked here.

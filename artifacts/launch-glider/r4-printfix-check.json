@@ -1,0 +1,170 @@
+{
+ "body_header_identical": false,
+ "body_payload_identical": true,
+ "body_sha256": [
+  "91fa0d8501c473aa424e5c2e2b85e4fabf3fdb9e1af8801085654fd9b637101a",
+  "11499468c57f10a65aa5a1bcf8a9814a145be09073e0c70bcec67d92389d0204"
+ ],
+ "dry_cg_change_m": 0.0,
+ "dry_mass_rel_change": 0.0,
+ "new": {
+  "commit": "bd2fcf3",
+  "path": "artifacts/glider/r4-daane-printfix"
+ },
+ "new_record_recompute": "AGREES",
+ "old": {
+  "commit": "361480f",
+  "path": "artifacts/glider/r3-daane"
+ },
+ "parts": [
+  {
+   "fish_geometry_unchanged": true,
+   "id": "body",
+   "pass": true,
+   "placement_det": 1.0
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pectoral_L",
+   "pass": true,
+   "placement_det": 1.0
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pectoral_R",
+   "left_print_volume_positive": true,
+   "pass": true,
+   "placement_det": 1.0,
+   "print_bytes_differ_from_left": true,
+   "print_volume_positive": true
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_L-dec+2",
+   "pass": true,
+   "placement_det": 0.9999999999999999
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_R-dec+2",
+   "left_print_volume_positive": true,
+   "pass": true,
+   "placement_det": 0.9999999999999999,
+   "print_bytes_differ_from_left": true,
+   "print_volume_positive": true
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "catch_plug-x20-dz+0.0",
+   "pass": true,
+   "placement_det": 1.0
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_L-dec+4",
+   "pass": true,
+   "placement_det": 0.9999999999999999
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_R-dec+4",
+   "left_print_volume_positive": true,
+   "pass": true,
+   "placement_det": 0.9999999999999999,
+   "print_bytes_differ_from_left": true,
+   "print_volume_positive": true
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_L-dec+3",
+   "pass": true,
+   "placement_det": 0.9999999999999999
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_R-dec+3",
+   "left_print_volume_positive": true,
+   "pass": true,
+   "placement_det": 0.9999999999999999,
+   "print_bytes_differ_from_left": true,
+   "print_volume_positive": true
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_L-dec+1",
+   "pass": true,
+   "placement_det": 0.9999999999999999
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_R-dec+1",
+   "left_print_volume_positive": true,
+   "pass": true,
+   "placement_det": 0.9999999999999999,
+   "print_bytes_differ_from_left": true,
+   "print_volume_positive": true
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_L-dec+0",
+   "pass": true,
+   "placement_det": 0.9999999999999999
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_R-dec+0",
+   "left_print_volume_positive": true,
+   "pass": true,
+   "placement_det": 0.9999999999999999,
+   "print_bytes_differ_from_left": true,
+   "print_volume_positive": true
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_L-dec-1",
+   "pass": true,
+   "placement_det": 0.9999999999999999
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "pelvic_R-dec-1",
+   "left_print_volume_positive": true,
+   "pass": true,
+   "placement_det": 0.9999999999999999,
+   "print_bytes_differ_from_left": true,
+   "print_volume_positive": true
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "catch_plug-x20-dz+1.5",
+   "pass": true,
+   "placement_det": 1.0
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "catch_plug-x20-dz-1.5",
+   "pass": true,
+   "placement_det": 1.0
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "catch_plug-x34-dz+0.0",
+   "pass": true,
+   "placement_det": 1.0
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "catch_plug-x34-dz+1.5",
+   "pass": true,
+   "placement_det": 1.0
+  },
+  {
+   "fish_geometry_unchanged": true,
+   "id": "catch_plug-x34-dz-1.5",
+   "pass": true,
+   "placement_det": 1.0
+  }
+ ],
+ "pass": true,
+ "schema": "frontier.glider.printfix-check/1"
+}
