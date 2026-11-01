@@ -33,9 +33,14 @@ MATS = """
         <Material ID="2"><Name>active</Name><Display><Red>1</Red><Green>0.2</Green><Blue>0.2</Blue><Alpha>1</Alpha></Display>
             <Mechanical><MatModel>0</MatModel><Elastic_Mod>1e6</Elastic_Mod><Fail_Stress>0</Fail_Stress><Density>1000</Density>
             <Poissons_Ratio>0.35</Poissons_Ratio><CTE>0.01</CTE><MaterialTempPhase>0</MaterialTempPhase><uStatic>1</uStatic><uDynamic>0.8</uDynamic></Mechanical></Material>"""
+MAT_CILIA = """
+        <Material ID="3"><Name>ciliated</Name><Display><Red>1</Red><Green>0.8</Green><Blue>0</Blue><Alpha>1</Alpha></Display>
+            <Mechanical><MatModel>0</MatModel><Elastic_Mod>1e6</Elastic_Mod><Fail_Stress>0</Fail_Stress><Density>1000</Density>
+            <Poissons_Ratio>0.35</Poissons_Ratio><CTE>0</CTE><MaterialTempPhase>0</MaterialTempPhase><uStatic>1</uStatic><uDynamic>0.8</uDynamic>
+            <Cilia>1</Cilia></Mechanical></Material>"""
 
 
-def base_vxa(lattice=0.01, dtfrac=0.9, record=0):
+def base_vxa(lattice=0.01, dtfrac=0.9, record=0, cilia=False):
     return f"""<VXA Version="1.1">
 <GPU><HeapSize>0.5</HeapSize></GPU>
 <Simulator>
@@ -44,7 +49,7 @@ def base_vxa(lattice=0.01, dtfrac=0.9, record=0):
     <RecordHistory><RecordStepSize>{record}</RecordStepSize><RecordVoxel>1</RecordVoxel><RecordLink>0</RecordLink></RecordHistory>
     <StopCondition><StopConditionFormula><mtSUB><mtVAR>t</mtVAR><mtCONST>{T_END}</mtCONST></mtSUB></StopConditionFormula></StopCondition>
     <FitnessFunction><mtVAR>x</mtVAR></FitnessFunction>
-    <SecondaryExperiment>1</SecondaryExperiment>
+    <SecondaryExperiment>1</SecondaryExperiment>{"<EnableCilia>1</EnableCilia>" if cilia else ""}
     <ReinitializeInitialPositionAfterThisManySeconds>{T_TRANS}</ReinitializeInitialPositionAfterThisManySeconds>
 </Simulator>
 <Environment>
@@ -53,7 +58,7 @@ def base_vxa(lattice=0.01, dtfrac=0.9, record=0):
 </Environment>
 <VXC Version="0.94">
     <Lattice><Lattice_Dim>{lattice}</Lattice_Dim></Lattice>
-    <Palette>{MATS}
+    <Palette>{MATS}{MAT_CILIA if cilia else ""}
     </Palette>
     <Structure Compression="ASCII_READABLE"><X_Voxels>1</X_Voxels><Y_Voxels>1</Y_Voxels><Z_Voxels>1</Z_Voxels>
         <Data><Layer><![CDATA[1]]></Layer></Data></Structure>
@@ -62,7 +67,7 @@ def base_vxa(lattice=0.01, dtfrac=0.9, record=0):
 """
 
 
-def vxd(mat, phase, nx, ny, nz):
+def vxd(mat, phase, nx, ny, nz, cilia=None):
     """mat[x][y][z] in {0,1,2}; phase[x][y][z] in cycles. voxcraft layer order: k = x + nx*y within layer z."""
     layers, players = [], []
     for z in range(nz):
@@ -76,7 +81,20 @@ def vxd(mat, phase, nx, ny, nz):
     return ("<VXD>\n<Structure replace=\"VXA.VXC.Structure\" Compression=\"ASCII_READABLE\">"
             f"<X_Voxels>{nx}</X_Voxels><Y_Voxels>{ny}</Y_Voxels><Z_Voxels>{nz}</Z_Voxels>\n"
             "<Data>" + "".join(layers) + "</Data>\n<PhaseOffset>" + "".join(players) + "</PhaseOffset>\n"
+            + (cilia_xml(mat, cilia, nx, ny, nz) if cilia is not None else "") +
             "</Structure>\n</VXD>\n")
+
+
+def cilia_xml(mat, f, nx, ny, nz):
+    L = []
+    for z in range(nz):
+        v = []
+        for y in range(ny):
+            for x in range(nx):
+                fx, fy, fz = f[x][y][z]
+                v += ["%.9e" % fx, "%.9e" % fy, "%.9e" % fz]
+        L.append("<Layer><![CDATA[%s]]></Layer>" % ",".join(v))
+    return "<BaseCiliaForce>" + "".join(L) + "</BaseCiliaForce>\n"
 
 
 def grid(nx, ny, nz, f):
@@ -111,7 +129,7 @@ def write_batch(d, base, bodies, manifest, batchname):
     with open(os.path.join(d, "base.vxa"), "w") as f:
         f.write(base)
     for name, (mat, ph, dims, meta) in bodies.items():
-        txt = vxd(mat, ph, *dims)
+        txt = vxd(mat, ph, *dims, cilia=meta.pop("_cilia", None))
         fn = name + ".vxd"
         with open(os.path.join(d, fn), "w") as f:
             f.write(txt)
@@ -172,6 +190,7 @@ def main():
     ap.add_argument("--nrep", type=int, default=3)
     ap.add_argument("--skip-endpoints", action="store_true")
     ap.add_argument("--ensemble", type=int, default=0, help="POST-HOC: N phase-perturbed members per pattern (8x4x3, DtFrac 0.9)")
+    ap.add_argument("--cilia", action="store_true", help="Addendum A cilia arm (preregistered before running)")
     ap.add_argument("--eps", type=float, default=1e-7, help="POST-HOC: phase perturbation sd, in cycles")
     a = ap.parse_args()
     manifest = []
@@ -204,6 +223,36 @@ def main():
                     bodies[f"ens_{pname}_m{m:03d}"] = (mat, php, (8, 4, 3), dict(kind="ensemble", pattern=pname, member=m, eps=eps, dtfrac=dtf, lattice=0.01, dims="8x4x3"))
             write_batch(os.path.join(a.out, tag), base_vxa(0.01, dtf), bodies, manifest, tag)
         PHASE_FMT = "%.6f"
+    if a.cilia:
+        nx_, ny_, nz_ = 8, 4, 3
+        cm = grid(nx_, ny_, nz_, lambda x, y, z: 3)
+        zero = grid(nx_, ny_, nz_, lambda x, y, z: 0.0)
+        cr = random.Random(a.seed + 11)
+        ang = grid(nx_, ny_, nz_, lambda x, y, z: cr.uniform(0, 2 * math.pi))
+        xc, yc = (nx_ - 1) / 2.0, (ny_ - 1) / 2.0
+        def fld(F, kind):
+            def f(x, y, z):
+                if kind == "off": return (0.0, 0.0, 0.0)
+                if kind == "px": return (F, 0.0, 0.0)
+                if kind == "mx": return (-F, 0.0, 0.0)
+                if kind == "py": return (0.0, F, 0.0)
+                if kind == "my": return (0.0, -F, 0.0)
+                if kind == "dpp": return (F / math.sqrt(2), F / math.sqrt(2), 0.0)
+                if kind == "dpm": return (F / math.sqrt(2), -F / math.sqrt(2), 0.0)
+                if kind == "swirl":
+                    rx, ry = x - xc, y - yc; r = math.hypot(rx, ry); return (-F * ry / r, F * rx / r, 0.0)
+                if kind == "rand": a_ = ang[x][y][z]; return (F * math.cos(a_), F * math.sin(a_), 0.0)
+                if kind == "randmy": a_ = ang[x][ny_ - 1 - y][z]; return (F * math.cos(a_), -F * math.sin(a_), 0.0)
+            return grid(nx_, ny_, nz_, f)
+        for tag, dtf in (("cilia_dt090", 0.9), ("cilia_dt045", 0.45)):
+            bodies = {}
+            for F in (0.005, 0.01, 0.02):
+                for kind in ("off", "px", "mx", "py", "my", "dpp", "dpm", "swirl", "rand", "randmy"):
+                    if kind == "off" and F != 0.02: continue
+                    for r in range(a.nrep):
+                        nm = "cil_F%03d_%s_r%d" % (int(F * 1000), kind, r)
+                        bodies[nm] = (cm, zero, (nx_, ny_, nz_), dict(kind="cilia", pattern=kind, F=F, rep=r, dtfrac=dtf, lattice=0.01, dims="8x4x3", _cilia=fld(F, kind)))
+            write_batch(os.path.join(a.out, tag), base_vxa(0.01, dtf, cilia=True), bodies, manifest, tag)
     rng = random.Random(a.seed)
     nx, ny, nz = 6, 6, 5
     bi = 0

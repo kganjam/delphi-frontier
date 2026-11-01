@@ -22,3 +22,19 @@ Population (1000 random bodies x {act, pas, mir, rep}): reported as distribution
    fraction of passive controls with |d| >= 1e-5 m; mirror error e vs duplicate error |d_rep - d_act|;
    relative mirror error only where |d_act| > 10x the 95th percentile passive |d|; divergence count.
 Scope: generic soft-voxel ground-contact mechanics, not tissue-calibrated, no fluid, contraction only.
+
+## Addendum A (2026-11-01 ~09:45 PST, written BEFORE any cilia run exists): cilia arm
+Same 8x4x3 block at 10 mm, gravity + floor + friction, but material "ciliated" (CTE 0, Cilia 1) and VXA EnableCilia=1:
+each surface voxel gets a constant body-frame force vector f (voxcraft BaseCiliaForce), |f| = F identical for every voxel
+in every pattern (equal total commanded cilia force). Patterns: cilia_off (F=0), cilia_px, cilia_mx, cilia_py, cilia_my,
+cilia_dpp (+x+y)/sqrt2, cilia_dpm (+x-y)/sqrt2, cilia_swirl (tangential about the vertical axis, zero net force),
+cilia_rand (seeded random xy directions) and cilia_randmy (its y-mirror). F in {0.005, 0.01, 0.02} N per voxel
+(84 surface voxels; body weight 0.94 N, mu_s = 1). DtFrac 0.9 and 0.45. 3 replicates of each.
+C1 passive: cilia_off |d| < 1e-5 m in every run.
+C2 pattern-dependence (at F = 0.02): |d_px - d_swirl| > max over dt change of |d_P(0.45) - d_P(0.9)| for P in {px, swirl}.
+C3 mirror (at every F, DtFrac 0.9): pairs (px,mx; x), (py,my; y), (dpp,dpm; y), (rand,randmy; y):
+   e < max(1e-5 m, 0.01 |d|).
+Descriptive (no threshold): displacement vs F (a Coulomb threshold is expected but not quantitatively predicted).
+Interpretation rule fixed in advance: if C3 passes under cilia while E3 failed under contraction, that is consistent with
+(not proof of) the stick-slip amplification explanation of E3; if C3 also fails, the asymmetry is not specific to
+contraction-driven stick-slip.
