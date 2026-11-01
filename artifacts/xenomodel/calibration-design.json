@@ -1,0 +1,77 @@
+{
+ "schema": "claude-xenomodel.experiment-design/1",
+ "id": "xenomodel-calibration-couplings-r1",
+ "project": "project-tissue-microcarrier",
+ "status": "DESIGN ONLY. No measurement has been made. Nothing here has been executed in a laboratory.",
+ "authored": "2026-11-01, harness claude-xenomodel",
+ "builds_on": "docs/simulation-roadmap.md section 'One measurement that would calibrate the missing biology' (same-specimen strain + frequency + modulus). This record makes it port-by-port, adds the number of points and a registration rule, and adds the substrate-anisotropy measurement that docs/xenomodel/actuation-motion-equations.md shows is the controlling parameter for contraction-driven motion.",
+ "ciliary_caveat": "The project sources (Kriegman 2020, Blackiston 2021; abstract level) report CILIARY locomotion. Contraction is this project's modelling choice. Measurement M0 is therefore a gate: if the construct does not contract, ports P1 and P2 are refuted for this construct (not calibrated) and the coupling must be re-modelled as ciliary surface slip.",
+ "verdict_rule": "A port changes from 'scenario' to 'registered calibration' only when its dataset (a) has every quantity in the stated units with per-point uncertainty, (b) was taken under the stated conditions on identified specimens, (c) meets the minimum point count, and (d) the fitted map passes its acceptance check on held-out points. The calibrated map is valid only inside the measured domain; outside it the port reverts to 'scenario'.",
+ "measurements": [
+  {
+   "id": "M0-contraction-gate",
+   "port": "precondition for P1 and P2",
+   "quantity": "free (unloaded) peak-to-peak linear boundary strain eps_free and its dominant frequency f",
+   "units": {"eps_free": "1 (dimensionless)", "f": "Hz"},
+   "conditions": "construct free-floating in its culture medium at its culture temperature (record it, degC), no external load, imaged at >= 10x the highest candidate beat frequency (frame rate), optical-flow or kymograph strain along the long axis and one transverse axis",
+   "points": ">= 5 specimens; >= 60 s per specimen; >= 2 axes",
+   "decision": "eps_free > 3x the passive-specimen (fixed/killed control) strain noise floor on >= 4 of 5 specimens -> proceed to M1/M2; otherwise contraction is refuted for this construct and the actuation model is replaced by a ciliary slip model",
+   "controls": ["fixed (non-living) specimen for the strain noise floor", "cilia-immobilised specimen (if a method is available) to separate ciliary drift from contraction"]
+  },
+  {
+   "id": "M1-actuation-to-stress",
+   "port": "P1: cell actuation -> tissue stress",
+   "quantity": "isometric active stress amplitude sigma_a (force / cross-sectional area) versus stimulation or beat frequency, plus eps_free on the SAME specimen",
+   "units": {"sigma_a": "Pa", "f": "Hz", "eps_free": "1", "area": "m^2 (measured, not nominal)"},
+   "conditions": "specimen length-clamped at 0, 5, 10 % pre-strain; culture medium and temperature as M0; force transducer resolution better than 10 % of the smallest expected active force",
+   "points": ">= 5 frequencies spanning the observed beat frequency x {0.5, 1, 2} and its natural value; x 3 pre-strains; x >= 3 specimens = >= 45 points",
+   "model_mapping": "Voxelyze: cte * temp_amplitude := eps_free (replaces the assumed 0.10). PhysiCell module: XM_EPS := eps_free and period := 1/f. Active-strain linear elasticity: sigma_a = E * eps_free under clamp, which is checked against M2's E (consistency test, see acceptance).",
+   "acceptance": "the measured sigma_a agrees with E * eps_free (E from M2, same specimen) within the combined 95 % uncertainty on >= 2/3 of held-out points; if not, the active-strain model is rejected and an explicit active-stress constitutive law is needed",
+   "does_not_fix": "spatial pattern of actuation (phase map) - requires M1b"
+  },
+  {
+   "id": "M1b-phase-map",
+   "port": "P1 spatial part",
+   "quantity": "local contraction phase phi(x) relative to a reference point, and local amplitude eps(x)",
+   "units": {"phi": "rad", "x": "m", "eps": "1"},
+   "conditions": "as M0, strain tracked on a grid of >= 8 x 4 regions over the construct",
+   "points": ">= 32 regions x >= 20 cycles x >= 3 specimens",
+   "model_mapping": "replaces the imposed patterns (uniform/longitudinal/travelling...) with a measured phase map; wavelength lambda and phase velocity c = 2 pi f / q follow directly",
+   "acceptance": "phase-map repeatability across cycles: circular standard deviation < 0.5 rad per region"
+  },
+  {
+   "id": "M2-stress-to-deformation",
+   "port": "P2: tissue stress -> construct deformation",
+   "quantity": "quasi-static elastic modulus E, Poisson ratio nu, and stress-relaxation time tau; storage and loss moduli E', E'' at the actuation frequency",
+   "units": {"E": "Pa", "nu": "1", "tau": "s", "E_storage": "Pa", "E_loss": "Pa"},
+   "conditions": "same specimens as M1 (passive, actuation blocked pharmacologically or by measuring between beats), micro-indentation or uniaxial tension, strain range 0-10 %, culture medium and temperature as M0",
+   "points": ">= 8 strain levels in 0-10 % (linearity check) x >= 3 locations x >= 3 specimens = >= 72 points; plus a relaxation curve (>= 3 tau) and >= 3 frequencies for E', E''",
+   "model_mapping": "Voxelyze E_Pa (replaces the demo 1e5 Pa), poisson (replaces 0.35); damping ratio from E''/E' at f replaces zeta_internal = 1.0. PhysiCell module: spring k / drag xi from E * cell spacing / substrate drag (requires M3).",
+   "acceptance": "linear fit stress-strain R^2 >= 0.95 over the declared range (else a nonlinear law is registered instead); held-out strain points predicted within 95 % CI"
+  },
+  {
+   "id": "M3-substrate-reaction",
+   "port": "P3: deformation -> net motion (NOT a port the project listed as calibratable; added because the Lean family shows it controls the sign and size of motion)",
+   "quantity": "tangential reaction force F on a PASSIVE construct dragged at constant speed v in +x and -x along its long axis on the intended substrate (or in the intended fluid near a wall)",
+   "units": {"F": "N", "v": "m/s"},
+   "conditions": "actuation blocked; normal load = construct's own weight in medium (record buoyant weight, N); same substrate, medium and temperature as M0",
+   "points": ">= 5 speeds per direction spanning 0.1x-10x the expected crawl speed x 2 directions x >= 3 specimens = >= 30 points",
+   "model_mapping": "decides the external force law: linear (F = xi v), Coulomb (F = mu N sign v) or direction-dependent (xi_plus != xi_minus). Linear isotropic -> Theorem 2 predicts NO contraction-driven net motion. Direction-dependent -> crawler law D = A (r - 1)/(r + 1), r = xi_minus/xi_plus, with A from M0/M1.",
+   "acceptance": "r is registered when its 95 % CI excludes 1, or is registered as 'isotropic' when the CI lies inside [0.95, 1.05]; then the prediction D/A = (r - 1)/(r + 1) is testable against a measured crawl displacement (M4)"
+  },
+  {
+   "id": "M4-validation",
+   "port": "end-to-end check, not a calibration",
+   "quantity": "net displacement per cycle D of the actuating construct on the M3 substrate",
+   "units": {"D": "m per cycle"},
+   "points": ">= 20 cycles x >= 5 specimens, with mirrored-orientation placement as the mirror-symmetry control",
+   "falsifies": "the crawler law if measured D lies outside the 95 % prediction interval of A (r - 1)/(r + 1) using M0/M1/M3 values; ciliary drift measured in M0 must be subtracted or shown negligible first"
+  }
+ ],
+ "minimum_total": "M0 >= 5 specimens; M1 >= 45 points; M1b >= 32 regions x 20 cycles x 3; M2 >= 72 + relaxation + 3 frequencies; M3 >= 30 points; M4 >= 100 cycles",
+ "what_this_cannot_establish": [
+  "anything about a construct other than the one measured",
+  "that the construct is the Kriegman/Blackiston organism",
+  "that contraction rather than cilia drives any observed motion, unless M0's cilia-immobilised control is available"
+ ]
+}

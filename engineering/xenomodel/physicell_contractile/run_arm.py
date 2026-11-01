@@ -10,6 +10,8 @@ here = Path(__file__).resolve().parent
 xml = (here / "PhysiCell_settings.xml").read_text()
 xml = xml.replace("<folder>output</folder>", f"<folder>{out}</folder>", 1)
 xml = xml.replace('<dt_mechanics units="min">0.1</dt_mechanics>', f'<dt_mechanics units="min">{dtm}</dt_mechanics>')
+if "XM_DTDIFF" in env_kv:
+    xml = xml.replace('<dt_diffusion units="min">0.005</dt_diffusion>', f'<dt_diffusion units="min">{env_kv["XM_DTDIFF"]}</dt_diffusion>')
 if "XM_MAXTIME" in env_kv:
     xml = xml.replace('<max_time units="min">300</max_time>', f'<max_time units="min">{env_kv["XM_MAXTIME"]}</max_time>')
 cfg = out / "settings.xml"; cfg.write_text(xml)

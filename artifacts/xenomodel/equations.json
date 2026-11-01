@@ -1,0 +1,398 @@
+{
+ "schema": "claude-xenomodel.equations/1",
+ "format_note": "entry keys follow engineering/assurance/equations.py registry() entries, plus a 'status' field",
+ "equations": [
+  {
+   "id": "eq-am-motion",
+   "model_id": "actuated_lattice",
+   "studio_anchor": "tissue-microcarrier:construct",
+   "scale": "construct",
+   "region_ids": [],
+   "latex": "m_i\\ddot x_i=\\sum_j F_{ij}(x,t)-C_i\\dot x_i+N_i\\hat z+f_i+m_i g,\\quad F_{ij}=-F_{ji},\\quad s_i(t)=s_0(1+\\alpha A\\sin(\\omega t+\\varphi_i))",
+   "variables": [
+    {
+     "symbol": "x_i",
+     "unit": "m",
+     "role": "state"
+    },
+    {
+     "symbol": "m_i",
+     "unit": "kg",
+     "role": "parameter"
+    },
+    {
+     "symbol": "F_ij",
+     "unit": "N",
+     "role": "internal-force"
+    },
+    {
+     "symbol": "C_i",
+     "unit": "kg/s",
+     "role": "parameter"
+    },
+    {
+     "symbol": "N_i",
+     "unit": "N",
+     "role": "contact-normal"
+    },
+    {
+     "symbol": "f_i",
+     "unit": "N",
+     "role": "contact-tangential"
+    },
+    {
+     "symbol": "g",
+     "unit": "m/s^2",
+     "role": "parameter"
+    },
+    {
+     "symbol": "alpha A",
+     "unit": "1",
+     "role": "actuation-strain"
+    },
+    {
+     "symbol": "omega",
+     "unit": "rad/s",
+     "role": "actuation"
+    },
+    {
+     "symbol": "varphi_i",
+     "unit": "rad",
+     "role": "actuation-phase"
+    }
+   ],
+   "sources": [
+    {
+     "path": "docs/xenomodel/actuation-motion-equations.md",
+     "selector": "symbol:docs/xenomodel/actuation-motion-equations.md#E0"
+    }
+   ],
+   "citation": null,
+   "domain": "Stated discrete/continuous model only; no tissue calibration; contraction is a modelling choice (sources report cilia)",
+   "assumptions": [
+    "Newton's third law for internal forces (assumed for Voxelyze links)",
+    "rigid flat floor, no fluid",
+    "Voxelyze actuation law include/VX_Voxel.h:88 @4287e365"
+   ],
+   "check_evidence": [],
+   "input_ports": [
+    "phase_pattern",
+    "cte",
+    "amplitude",
+    "frequency"
+   ],
+   "output_ports": [
+    "com_trajectory"
+   ],
+   "coupling_ids": [],
+   "status": "stated model",
+   "scope": "Governing equation of the soft-voxel engine family; not a tissue law"
+  },
+  {
+   "id": "eq-am-momentum",
+   "model_id": "actuated_lattice",
+   "studio_anchor": "tissue-microcarrier:construct",
+   "scale": "construct",
+   "region_ids": [],
+   "latex": "\\frac{d}{dt}\\sum_i m_i\\dot x_i^h=-\\sum_i C_i\\dot x_i^h+\\sum_i f_i",
+   "variables": [
+    {
+     "symbol": "x_i^h",
+     "unit": "m",
+     "role": "state"
+    },
+    {
+     "symbol": "C_i",
+     "unit": "kg/s",
+     "role": "parameter"
+    },
+    {
+     "symbol": "f_i",
+     "unit": "N",
+     "role": "contact-tangential"
+    }
+   ],
+   "sources": [
+    {
+     "path": "docs/xenomodel/actuation-motion-equations.md",
+     "selector": "symbol:docs/xenomodel/actuation-motion-equations.md#E1"
+    }
+   ],
+   "citation": null,
+   "domain": "Stated discrete/continuous model only; no tissue calibration; contraction is a modelling choice (sources report cilia)",
+   "assumptions": [
+    "internal forces cancel pairwise"
+   ],
+   "check_evidence": [
+    {
+     "path": "engineering/formalize/lean/ActuationMotion.lean",
+     "selector": "ActuationMotion.total_momentum_step"
+    }
+   ],
+   "input_ports": [
+    "C",
+    "m"
+   ],
+   "output_ports": [
+    "com_velocity"
+   ],
+   "coupling_ids": [],
+   "status": "derived",
+   "scope": "Momentum balance of E0"
+  },
+  {
+   "id": "eq-am-com-fixed",
+   "model_id": "actuated_lattice",
+   "studio_anchor": "tissue-microcarrier:construct",
+   "scale": "construct",
+   "region_ids": [],
+   "latex": "m_i=m,\\ C_i=C,\\ f\\equiv0:\\ V(t)=V_0e^{-Ct/m},\\ X(t)=X_0+V_0\\frac{m}{C}(1-e^{-Ct/m});\\quad P_{n+1}=(1-\\Delta t\\,C/m)P_n",
+   "variables": [
+    {
+     "symbol": "V",
+     "unit": "m/s",
+     "role": "com-velocity"
+    },
+    {
+     "symbol": "X",
+     "unit": "m",
+     "role": "com-position"
+    },
+    {
+     "symbol": "m",
+     "unit": "kg",
+     "role": "parameter"
+    },
+    {
+     "symbol": "C",
+     "unit": "kg/s",
+     "role": "parameter"
+    },
+    {
+     "symbol": "Delta t",
+     "unit": "s",
+     "role": "numerical-step"
+    },
+    {
+     "symbol": "P_n",
+     "unit": "kg m/s",
+     "role": "total-momentum"
+    }
+   ],
+   "sources": [
+    {
+     "path": "engineering/formalize/lean/ActuationMotion.lean",
+     "selector": "symbol:ActuationMotion.com_fixed_absolute_damping"
+    }
+   ],
+   "citation": null,
+   "domain": "Stated discrete/continuous model only; no tissue calibration; contraction is a modelling choice (sources report cilia)",
+   "assumptions": [
+    "homogeneous mass",
+    "one damping coefficient",
+    "no horizontal contact force",
+    "Voxelyze symplectic Euler src/VX_Voxel.cpp timeStep/force @4287e365"
+   ],
+   "check_evidence": [
+    {
+     "path": "artifacts/xenomodel/lean-receipt.json",
+     "selector": "/positive"
+    },
+    {
+     "path": "artifacts/voxel-actuation/summary.json",
+     "selector": "/controls/D_frictionless"
+    }
+   ],
+   "input_ports": [
+    "m",
+    "C",
+    "dt"
+   ],
+   "output_ports": [
+    "com_displacement"
+   ],
+   "coupling_ids": [],
+   "status": "Lean-checked (discrete)",
+   "scope": "Zero horizontal COM motion for every actuation pattern when frictionless and homogeneous; heterogeneous mass breaks it (Lean counterexample)"
+  },
+  {
+   "id": "eq-am-linear-drag",
+   "model_id": "overdamped_lattice",
+   "studio_anchor": "tissue-microcarrier:cellular",
+   "scale": "cellular",
+   "region_ids": [],
+   "latex": "\\xi_i\\dot x_i=\\sum_jF_{ij}\\Rightarrow\\sum_i\\xi_i x_i=\\mathrm{const};\\quad x_i(T)=x_i(0)+d\\ \\forall i\\Rightarrow d=0",
+   "variables": [
+    {
+     "symbol": "xi_i",
+     "unit": "N s/m (PhysiCell: unit mobility)",
+     "role": "parameter"
+    },
+    {
+     "symbol": "x_i",
+     "unit": "um",
+     "role": "state"
+    },
+    {
+     "symbol": "d",
+     "unit": "um",
+     "role": "cycle-translation"
+    }
+   ],
+   "sources": [
+    {
+     "path": "engineering/formalize/lean/ActuationMotion.lean",
+     "selector": "symbol:ActuationMotion.linear_drag_no_net_displacement"
+    }
+   ],
+   "citation": null,
+   "domain": "Stated discrete/continuous model only; no tissue calibration; contraction is a modelling choice (sources report cilia)",
+   "assumptions": [
+    "overdamped (low Reynolds number)",
+    "linear, lab-frame, configuration-independent drag",
+    "internal forces only"
+   ],
+   "check_evidence": [
+    {
+     "path": "artifacts/xenomodel/lean-receipt.json",
+     "selector": "/positive"
+    },
+    {
+     "path": "artifacts/xenomodel/physicell-results.json",
+     "selector": "/checks (I1,I2,I3,N1)"
+    }
+   ],
+   "input_ports": [
+    "xi"
+   ],
+   "output_ports": [
+    "com_displacement"
+   ],
+   "coupling_ids": [],
+   "status": "Lean-checked; engine-tested (PhysiCell 1.14.2)",
+   "scope": "No net displacement per cycle for ANY actuation, including travelling waves and asymmetric bodies"
+  },
+  {
+   "id": "eq-am-crawler",
+   "model_id": "aniso_crawler",
+   "studio_anchor": "tissue-microcarrier:cellular",
+   "scale": "cellular",
+   "region_ids": [],
+   "latex": "f(v)=\\begin{cases}\\xi_+v&v\\ge0\\\\\\xi_-v&v<0\\end{cases},\\ \\Delta X=\\kappa\\,\\mathrm{TV}(L),\\ \\kappa=\\frac{\\xi_--\\xi_+}{2(\\xi_++\\xi_-)},\\ D=A\\frac{\\xi_--\\xi_+}{\\xi_++\\xi_-}",
+   "variables": [
+    {
+     "symbol": "xi_+",
+     "unit": "N s/m",
+     "role": "parameter"
+    },
+    {
+     "symbol": "xi_-",
+     "unit": "N s/m",
+     "role": "parameter"
+    },
+    {
+     "symbol": "L",
+     "unit": "um",
+     "role": "body-length"
+    },
+    {
+     "symbol": "A",
+     "unit": "um",
+     "role": "length-amplitude"
+    },
+    {
+     "symbol": "D",
+     "unit": "um/cycle",
+     "role": "output"
+    },
+    {
+     "symbol": "kappa",
+     "unit": "1",
+     "role": "derived"
+    }
+   ],
+   "sources": [
+    {
+     "path": "engineering/formalize/lean/ActuationMotion.lean",
+     "selector": "symbol:ActuationMotion.crawler_path"
+    }
+   ],
+   "citation": null,
+   "domain": "Stated discrete/continuous model only; no tissue calibration; contraction is a modelling choice (sources report cilia)",
+   "assumptions": [
+    "two nodes",
+    "direction-dependent linear friction",
+    "force balance each step"
+   ],
+   "check_evidence": [
+    {
+     "path": "artifacts/xenomodel/lean-receipt.json",
+     "selector": "/positive"
+    },
+    {
+     "path": "artifacts/xenomodel/physicell-results.json",
+     "selector": "/checks (A1*,A2)"
+    }
+   ],
+   "input_ports": [
+    "xi_plus",
+    "xi_minus",
+    "A"
+   ],
+   "output_ports": [
+    "net_displacement"
+   ],
+   "coupling_ids": [],
+   "status": "Lean-checked; engine-tested (ratio 0.999989 at dt 0.025)",
+   "scope": "D=0 iff xi_+=xi_-; mirror negates; linear in A; rate-independent"
+  },
+  {
+   "id": "eq-am-mirror",
+   "model_id": "actuated_lattice",
+   "studio_anchor": "tissue-microcarrier:construct",
+   "scale": "construct",
+   "region_ids": [],
+   "latex": "R:x\\mapsto-x,\\ \\text{equivariant dynamics, symmetric body}\\Rightarrow D(\\varphi\\circ R)=-D(\\varphi);\\ \\varphi\\circ R=\\varphi\\Rightarrow D=0",
+   "variables": [
+    {
+     "symbol": "D",
+     "unit": "m/cycle",
+     "role": "output"
+    },
+    {
+     "symbol": "varphi",
+     "unit": "rad",
+     "role": "actuation-phase"
+    }
+   ],
+   "sources": [
+    {
+     "path": "docs/xenomodel/actuation-motion-equations.md",
+     "selector": "symbol:docs/xenomodel/actuation-motion-equations.md#5"
+    }
+   ],
+   "citation": null,
+   "domain": "Stated discrete/continuous model only; no tissue calibration; contraction is a modelling choice (sources report cilia)",
+   "assumptions": [
+    "isotropic friction and damping",
+    "mirror-symmetric body",
+    "unique solution / unique attracting periodic orbit for the half-period variant"
+   ],
+   "check_evidence": [
+    {
+     "path": "artifacts/voxel-actuation/posthoc",
+     "selector": "parity-nx4/6/7 (post-hoc only)"
+    }
+   ],
+   "input_ports": [
+    "phase_pattern"
+   ],
+   "output_ports": [
+    "net_displacement"
+   ],
+   "coupling_ids": [],
+   "status": "paper derivation; post-hoc consistent with stored Voxelyze parity runs; forward predictions P-V1..P-V3 issued",
+   "scope": "Constrains Coulomb-friction motion by symmetry; not Lean-checked"
+  }
+ ]
+}
