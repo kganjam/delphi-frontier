@@ -14,7 +14,9 @@
 | `aijob-e00bvd85xvypgq1j6a` | `claude-evo-finscale-cond-a1` | COMPLETED | `EVOCD_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 29.8 s |
 | `aijob-e00zx1288cyng43ag5` | `claude-evo-finscale-motif-a1` | COMPLETED | `MOTIF_RC=0` | cpu-d3 2vcpu-8gb | 323.8 s |
 | `aijob-e00ep572741570h1f8` | `claude-evo-finscale-tiling-a1` | COMPLETED | `EVOTL_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 54.3 s |
-| `aijob-e00vjsseen85f1j3ac` | `claude-evo-finscale-tiling-a2` | in flight at time of writing | — | 1× H100 | 5 shuffles/tile |
+| `aijob-e00vjsseen85f1j3ac` | `claude-evo-finscale-tiling-a2` | COMPLETED | `EVOTL_RC=0` | 1× NVIDIA H100 80GB HBM3 | 188.5 s |
+| `aijob-e00rxkkk1t1r7sz5kt` | `claude-evo-finscale-promptrep-a1` | COMPLETED | `EVOPR_RC=0` | 1× NVIDIA H100 80GB HBM3 | prompt replication |
+| `aijob-e00amstsw7srskvjh9` | `claude-evo-finscale-motif-prompt-a1` | in flight at time of writing | — | cpu-d3 2vcpu-8gb | motif scan, prompt halves |
 
 **The motif scan now has a Nebius receipt, and an unusually strong one.** It was
 first blocked — `compute.instance.non-gpu.vcpu` was saturated tenant-wide (limit
@@ -92,6 +94,13 @@ Python 3.12.3, torch `2.10.0a0+b4e4ee81d3.nv25.12`, `flash_attn 2.7.4.post1`,
 | `tiling_v1/manifest.json` | `477734361f09a924aae2036ad3e3ee385bf146d1abb7229d067331702bb77ccc` |
 | `tiling_v1/scoring_self_check.json` | `0ec454cb7cb06eee7e76371065f10f3ca597ad2ef249fa8a110d2696b6fa8229` |
 | `tiling_v1/job_log_aijob-e00ep572741570h1f8.log.gz` | `f756c437e749f80c98b73840bdf969b0ddb9384e408f8c314fee788129df5474` |
+| `tiling_v2/tile_deltas.json` | `89e38027e76301ab18c41cd7db59b39b3ef5bdc0c65cdd3c949a582b182559fa` |
+| `tiling_v2/manifest.json` | `49074193987f18d44066131c8005cb409153810aed5ea8d1cb700e677e28e904` |
+| `tiling_v2/job_log_aijob-e00vjsseen85f1j3ac.log.gz` | `1ef9cef7b72474fd753bb4ab885b79ead3cfc116f6aab6aa79d001a50d267e6a` |
+| `prompt_replication/prompt_scores.json` | `9aa4f7c744d13774f78946c2a59165b367e67160522f000f8f7c4d2eb5f3c942` |
+| `prompt_replication/manifest.json` | `fef17264c1bb5612c46f3feb45341f77f7e872126b47c311a240fe39b7fe81f8` |
+| `prompt_replication/scoring_self_check.json` | `49d7d41bbbbb5345e2c5d2401a5f7e182679b9d30ff4d0d40ee626b34571af76` |
+| `prompt_replication/job_log_aijob-e00rxkkk1t1r7sz5kt.log.gz` | `bb441eb2df29be354cd09ffb5aa1de89572267b14d4e6e16546931a3d55d54e5` |
 
 **Script provenance for the tiling job.** `evo2_tiling_job.py` in the repo is now
 **v2** (sha256 `feb6aefddd3b97eb…`, 5 shuffles per tile). The v1 job printed
@@ -110,6 +119,13 @@ jobs: `iid_random` **−1.3996587991714478**, `poly_C` −0.0192153826,
 `natural_first_target` −1.2162884474, `scoring_path_sane: true`. These are
 bit-identical to each other **and** to the earlier bioservices `score-a2` value
 of −1.3997, across three independently submitted jobs.
+
+**Cross-job anchor (prompt replication).** That job re-scored a held-out window
+three earlier jobs had already scored, and asserted bit-identity before its own
+numbers could be pooled with theirs: `dan:fgf20a` = **−1.216288447380066**,
+matching exactly. A mismatch would have been logged as a pooling hazard rather
+than passing silently, because scores can look internally sane and still be
+incomparable with earlier ones.
 
 **Determinism across jobs, now four independent submissions.** The 19 real
 held-out windows were scored in both scoring jobs: **19/19 bit-identical, max

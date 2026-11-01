@@ -1,0 +1,48 @@
+{
+  "job": "fin-scale-evo2-prompt-replication/v1",
+  "model": "evo2_7b",
+  "precision": "bfloat16",
+  "seed": 0,
+  "replicates": 5,
+  "question": "does 'real beats its own composition-matched scramble' replicate on the 19 PROMPT halves, which no test has used?",
+  "why": "doubles n for the core claim from 19 to 38 windows on sequence disjoint from the held-out halves, at no data cost",
+  "scoring": "unconditional P(sequence), as the baseline job scored these same prompt halves",
+  "outcome_kind": "computed likelihoods under one model; NOT observation, NOT function",
+  "self_check": {
+    "iid_random": -1.3996587991714478,
+    "expected_about": -1.3863,
+    "poly_C": -0.019215382635593414,
+    "scoring_path_sane": true,
+    "heldout_anchor_target": "dan:fgf20a",
+    "heldout_anchor_score": -1.216288447380066,
+    "heldout_anchor_expected": -1.216288447380066,
+    "anchor_matches_earlier_jobs": true
+  },
+  "inputs": {
+    "input_set_id": "fin-scale-regulatory-2kb/v1",
+    "n_targets": 19
+  },
+  "software": {
+    "python": "3.12.3",
+    "torch": "2.10.0a0+b4e4ee81d3.nv25.12",
+    "evo2": "present",
+    "transformer_engine": "2.10.0+769ed778",
+    "flash_attn": "2.7.4.post1",
+    "vortex": "present",
+    "pip_freeze_sha256": "f3487791bb834b0a43a3ed26f48500d70c83a913444e4e6683c26a052c8ea44c"
+  },
+  "gpu": {
+    "count": 1,
+    "name": "NVIDIA H100 80GB HBM3",
+    "capability": [
+      9,
+      0
+    ],
+    "total_memory_gb": 85.0
+  },
+  "runtime": {
+    "load_seconds": 13.8,
+    "total_seconds": 28.8,
+    "n_windows": 19
+  }
+}

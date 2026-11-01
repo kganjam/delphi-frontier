@@ -272,3 +272,65 @@ its SDs should be read before trusting any individual tile. Several top tiles si
 at window edges (0–50, 950–1000), which may be boundary effects rather than
 biology. And a tile Evo 2 relies on is **not** a binding site, **not** an
 enhancer, and **not** an edit worth making in a fish.
+
+## 10. Replication on the prompt halves — the core claim on new sequence
+
+`aijob-e00rxkkk1t1r7sz5kt`, `EVOPR_RC=0`, 1× H100. Everything in §1–§9 rests on
+the 19 held-out halves. The 19 prompt halves are equally real sequence from the
+same loci, verified disjoint, and had only ever been conditioning context — never
+a test set. Testing them takes n for the core claim from 19 to **38 windows** at
+no data cost. 5 replicate dinucleotide shuffles and 5 replicate GC-matched
+randoms per window, so each control is a mean rather than a single draw.
+
+**Cross-job anchor.** Internal sanity would not establish that these numbers can
+be pooled with the earlier jobs', so the job re-scored a held-out window three
+earlier jobs had scored and asserted bit-identity: `dan:fgf20a` came back
+**−1.216288447380066**, exactly the earlier value. Pooling is therefore legitimate
+rather than assumed.
+
+| | n | mean log-prob/base | 95% CI |
+| --- | --- | --- | --- |
+| real prompt half | 19 | −1.1714 | [−1.2416, −1.1011] |
+| its own dinucleotide shuffles (×5) | 19 | −1.3491 | [−1.3619, −1.3364] |
+| its own GC-matched randoms (×5) | 19 | −1.3681 | [−1.3799, −1.3563] |
+| **paired real − own shuffle** | **19** | **+0.1778** | **[0.1135, 0.2421]**, t=5.81, p=1.7×10⁻⁵ |
+
+**19/19 windows positive**, against +0.1444 (unconditional) and +0.1685
+(conditional) on the held-out halves. The claim replicates on sequence that no
+test had touched.
+
+**Both species now individually significant**, which the held-out test did not
+achieve as cleanly:
+
+| | paired delta | 95% CI | p | positive |
+| --- | --- | --- | --- | --- |
+| zebrafish | +0.2233 | [0.1179, 0.3288] | 0.00099 | 10/10 |
+| flying fish | +0.1271 | [0.0498, 0.2044] | 0.0053 | **9/9** |
+
+**The replicates settle the noise question.** Within-window SD across the 5
+shuffle replicates is **0.00298** on average (max 0.00462), so the measured
+effect is about **60× the control noise**. Whatever else is arguable here, this
+effect is not a sampling artefact of the control.
+
+## 11. Tiling with replicates — and what my v1 caveat got right
+
+`aijob-e00vjsseen85f1j3ac`, `EVOTL_RC=0`, 188.5 s, 5 shuffles per tile,
+`identity_delta` = 0.0 again.
+
+| | v1 (1 shuffle) | v2 (5 shuffles) |
+| --- | --- | --- |
+| mean tile delta | +0.01063 | **+0.01075** |
+| positive tiles | 345/380 | **359/380** |
+| within-tile replicate SD | not measurable | mean 0.00198, max 0.02179 |
+
+The aggregate was already reliable: v1 against v2 per-tile gives Pearson
+**r=0.987**, Spearman **ρ=0.912**. But **the top tile changed in 4 of 19
+windows** — which is precisely the per-tile claim the v1 writeup said not to
+trust, so the caveat was right in the specific way that mattered rather than
+merely cautious in general.
+
+**58% of tiles (221/379) have a delta exceeding 2× their own replicate SD.** The
+other 42% are not individually resolvable even with 5 replicates. So the profile
+supports statements about *regions* of a window, and about the aggregate, but a
+single named 50 bp tile should be quoted only if its own SD is checked first —
+the per-tile SDs are in `tiling_v2/tile_deltas.json` for exactly that.

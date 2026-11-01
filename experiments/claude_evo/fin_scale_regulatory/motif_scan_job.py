@@ -102,6 +102,13 @@ def main() -> int:
     ap.add_argument("--budget-seconds", type=float, default=2400.0)
     ap.add_argument("--collection", default="CORE")
     ap.add_argument("--tax-group", default="vertebrates")
+    ap.add_argument("--half", choices=["held_out", "prompt"], default="held_out",
+                    help="which half of each 2 kb window to scan. The prompt "
+                         "halves are disjoint real sequence that no motif test "
+                         "has used, so scanning them replicates the endpoint on "
+                         "new sequence rather than reanalysing the same windows.")
+    ap.add_argument("--skip-candidates", action="store_true",
+                    help="candidates exist only for the held-out half")
     args = ap.parse_args()
     started = time.time()
     os.makedirs(args.out_dir, exist_ok=True)
@@ -132,7 +139,10 @@ def main() -> int:
 
     # PSSMs and thresholds depend on the background, and all our sequences share
     # one background per window-family, so cache per rounded background.
-    pooled = "".join(t["held_out_seq"] for t in inputs["targets"])
+    SEQ_FIELD = "held_out_seq" if args.half == "held_out" else "prompt_seq"
+    SHA_FIELD = "held_out_sha256" if args.half == "held_out" else "prompt_sha256"
+    log(f"scanning the {args.half} half of each window")
+    pooled = "".join(t[SEQ_FIELD] for t in inputs["targets"])
     BG = bg_of(pooled)
     log(f"pooled background over {len(inputs['targets'])} real windows: "
         + ", ".join(f"{b}={BG[b]:.4f}" for b in "ACGT"))
@@ -210,9 +220,9 @@ def main() -> int:
             log("budget spent; stopping cleanly")
             break
         key = f"{t['species'].split('_')[0][:3]}:{t['symbol']}"
-        do("real_held_out", key, t["species"], t["symbol"], t["held_out_seq"], t["held_out_sha256"])
+        do(f"real_{args.half}", key, t["species"], t["symbol"], t[SEQ_FIELD], t[SHA_FIELD])
 
-    for c in cands:
+    for c in (cands if not args.skip_candidates else []):
         if time.time() - started > args.budget_seconds:
             log("budget spent; stopping cleanly")
             break
@@ -229,6 +239,7 @@ def main() -> int:
             "primary_endpoint": "total hits across all motifs, real vs own mean "
                                 "shuffle, paired across windows (ONE test)",
             "secondary": "per-motif, Holm-corrected, descriptive only",
+            "half_scanned": args.half,
             "jaspar_release": "JASPAR2024", "collection": args.collection,
             "tax_group": args.tax_group, "n_motifs": len(motifs),
             "fpr_threshold": FPR, "n_shuffles": N_SHUFFLES, "seed": SEED,

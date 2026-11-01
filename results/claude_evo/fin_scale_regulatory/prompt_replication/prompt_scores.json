@@ -1,0 +1,857 @@
+[
+  {
+    "target": "dan:fgf20a",
+    "species": "danio_rerio",
+    "symbol": "fgf20a",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "9f5696f9ad774bc93022cae0580352fe9550607ce73d1a83c6fb75a2cbec5cc7",
+    "rescored_sha256": "9f5696f9ad774bc93022cae0580352fe9550607ce73d1a83c6fb75a2cbec5cc7",
+    "gc": 0.343,
+    "real_logprob": -1.244383692741394,
+    "dinuc_shuffle_logprobs": [
+      -1.327609658241272,
+      -1.3286845684051514,
+      -1.3323777914047241,
+      -1.3338903188705444,
+      -1.3301945924758911
+    ],
+    "dinuc_shuffle_mean": -1.3305513858795166,
+    "dinuc_shuffle_sd": 0.002586034665958724,
+    "dinuc_shuffle_sha256": [
+      "f21fadd7188b4a99bb711800b38825b7617c64b4e9c3629d7ed752b2b8644fe3",
+      "e433023436320529f14d9a584e3319cc73768290f05a94aae399bbe627e4627c",
+      "2006b084124450d386a12a0045eb7a26f9b85e4fde2f4f4bf1d0049591450aee",
+      "259e59d69b0811d001af06a74838eddb18360d334cac52b838fdbf297b3c84a4",
+      "6f55f39db2813672dd91c3cf57303d04b6b52cfb8382b4d3dccc944778146f2c"
+    ],
+    "gc_random_logprobs": [
+      -1.3521478176116943,
+      -1.366078495979309,
+      -1.3399385213851929,
+      -1.3338147401809692,
+      -1.3409243822097778
+    ],
+    "gc_random_mean": -1.3465807914733887,
+    "gc_random_sd": 0.012749892590797134,
+    "gc_random_sha256": [
+      "2e785c996b32e06f46b6a8b397ea9f059e40e154779b924dc31143527e4dfbfa",
+      "96ec3268ad9cb1483a09ede9bae31b5ec2297158dec66862e26a367ac0559a09",
+      "eef4937f30572431a12c4d897dfa6e704a1bcf3a51af208ec053af8caad037dc",
+      "1e9199ac04c91eb1e352dcb7f534e389ec5c1b8a954f1e1623f8dddde31d1840",
+      "c2166ff10b6aaac4660b20da3ab1aa91d305b3a67dae8ecbd528cbfd7ce62ec5"
+    ],
+    "delta_vs_dinuc_shuffle": 0.08616769313812256,
+    "delta_vs_gc_random": 0.10219709873199467
+  },
+  {
+    "target": "hir:fgf20a",
+    "species": "hirundichthys_speculiger",
+    "symbol": "fgf20a",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "353a97bc6515a5ae16a748c898cdfab52518af8d3d0debb601debf83c52f0f15",
+    "rescored_sha256": "353a97bc6515a5ae16a748c898cdfab52518af8d3d0debb601debf83c52f0f15",
+    "gc": 0.363,
+    "real_logprob": -1.303788661956787,
+    "dinuc_shuffle_logprobs": [
+      -1.3519682884216309,
+      -1.3489632606506348,
+      -1.346110224723816,
+      -1.3539414405822754,
+      -1.3488960266113281
+    ],
+    "dinuc_shuffle_mean": -1.349975848197937,
+    "dinuc_shuffle_sd": 0.0030343917861430604,
+    "dinuc_shuffle_sha256": [
+      "e06beb5493251bcec60df1a2210f64fd86391399304fb87149583cc96666f532",
+      "6f31a268829fa933a843b8432f88f3754b604af0d1adfbea48dfdbd0f1fe8a4b",
+      "1ee35e4faa997826235ffb8121e56199206e0744b90627b49686bec551099031",
+      "3e38950722a85da2c8a921ad1551c3d5d4f711a058c6854fa921a24c91442cdd",
+      "0baf73578ef7326dcfa0c0a805224820c70f1619fed5f60d9687f5bd5dec5462"
+    ],
+    "gc_random_logprobs": [
+      -1.3634549379348755,
+      -1.3512309789657593,
+      -1.3622750043869019,
+      -1.3574293851852417,
+      -1.3512297868728638
+    ],
+    "gc_random_mean": -1.3571240186691285,
+    "gc_random_sd": 0.005834730643672824,
+    "gc_random_sha256": [
+      "7191645ee05cde7e72198efb852124c704e4977ba11e310dc7c1f569fbda7ad3",
+      "60ecffde852c348d5e3cf0cca9cdd2c993dfdbfc023a7c7b0a0c0a7db9e1dd43",
+      "073262ecb09f6aa92285ce846437b756312c86354d0984c1eb905332ab486ac6",
+      "9cf31d287f693eb8c53f6961ce244520fc8d54bbab71a0b674d8335aa9c4b2d6",
+      "354d04ce5b130fd3843a9f016bc2bafe0f7ea27ae5842b53196f9e91e76b1e4a"
+    ],
+    "delta_vs_dinuc_shuffle": 0.046187186241149814,
+    "delta_vs_gc_random": 0.05333535671234135
+  },
+  {
+    "target": "dan:shha",
+    "species": "danio_rerio",
+    "symbol": "shha",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "469478d07839b31dbe402f7c5c2c525d3bc6d626b2e97bdd5f8f69a0d01149fc",
+    "rescored_sha256": "469478d07839b31dbe402f7c5c2c525d3bc6d626b2e97bdd5f8f69a0d01149fc",
+    "gc": 0.311,
+    "real_logprob": -1.0667129755020142,
+    "dinuc_shuffle_logprobs": [
+      -1.3134125471115112,
+      -1.3071670532226562,
+      -1.3084815740585327,
+      -1.3137868642807007,
+      -1.3027210235595703
+    ],
+    "dinuc_shuffle_mean": -1.3091138124465942,
+    "dinuc_shuffle_sd": 0.004619899343410728,
+    "dinuc_shuffle_sha256": [
+      "0e82762b6b107727438222f1477350bdc52e3013a7be194c201275c4d32c74e9",
+      "b3e9f93644d687b2761b22b7acf141e19152318f1a87298582b6a07d68278332",
+      "790ecdb918162e8c4ef7b24d53e54b2b19f00a942e00e9def853abda87f2db19",
+      "ce3e83530fd15fdb6dc9ecbbb2dcb06247a34e84f6428f8f388bb9364cd20cdf",
+      "97dd28b9677acb40e6af4fadf20c814b3a908073988818a51559dc1d3763af8f"
+    ],
+    "gc_random_logprobs": [
+      -1.3359712362289429,
+      -1.3288222551345825,
+      -1.3366752862930298,
+      -1.328921914100647,
+      -1.3429381847381592
+    ],
+    "gc_random_mean": -1.3346657752990723,
+    "gc_random_sd": 0.00594377384289062,
+    "gc_random_sha256": [
+      "af74d58073fd303dddb0e72288188c90d84d7b15793c525db0064d0c3fdc1a70",
+      "1f3ea5e8d4f78c32e9db14c8243d1b20339e5a1e321d305ade19b6096065ef9d",
+      "d2b21efb725196e618c427c36f24b211f3d830e0a5cbcd327a7f4e68ad8ae3dd",
+      "415c9b6cbaae3ee19a966839c4e895c2b2fa159dd49c1afbe41c695541692fef",
+      "0c1f06b078586a4a6179abccbc73398aa533dd78899ea3306dd0b16ffd7ad24f"
+    ],
+    "delta_vs_dinuc_shuffle": 0.24240083694458003,
+    "delta_vs_gc_random": 0.2679527997970581
+  },
+  {
+    "target": "hir:shha",
+    "species": "hirundichthys_speculiger",
+    "symbol": "shha",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "b749dd8202be15c82aa3aae479578ce67c2f1c1f7d48095be4744bb05ac59ff3",
+    "rescored_sha256": "b749dd8202be15c82aa3aae479578ce67c2f1c1f7d48095be4744bb05ac59ff3",
+    "gc": 0.457,
+    "real_logprob": -1.0700170993804932,
+    "dinuc_shuffle_logprobs": [
+      -1.3577046394348145,
+      -1.3568661212921143,
+      -1.3625802993774414,
+      -1.3586773872375488,
+      -1.3622311353683472
+    ],
+    "dinuc_shuffle_mean": -1.3596119165420533,
+    "dinuc_shuffle_sd": 0.0026325864875062395,
+    "dinuc_shuffle_sha256": [
+      "7f08de67a7f836dad477134836c44c21103a2931514a9440b1a784c6b35920cc",
+      "9f757b2b73d13e5fadbfb4c3c844108932b996ba83cc8d8969056d1b465b6931",
+      "14d4b1fb02512b71b05867461a354efdbd7eb9773f153e5d438586a34f867156",
+      "3081570d78a777efbdd8c83d6f82d4fdff0bca3041d20c34478a07c937967e82",
+      "001f7cbc0c4b3a3361381363d2970208e2d8bb4e46c2e7298379110d3a78c6b3"
+    ],
+    "gc_random_logprobs": [
+      -1.393411636352539,
+      -1.4010841846466064,
+      -1.400869607925415,
+      -1.3985848426818848,
+      -1.3965271711349487
+    ],
+    "gc_random_mean": -1.3980954885482788,
+    "gc_random_sd": 0.0032119153575136897,
+    "gc_random_sha256": [
+      "5f79beeb7d9a9e256a21d603333a6d878af6e7c11a749e9a876b2a34899c60e7",
+      "29480ebf7dfe238aa07823de109ad125042aa97d1ad4995a90fd48238ce7464d",
+      "bd914148162fd47423c255ca6f04ba6ec27847061b097f054ab06584503d592d",
+      "46f2dbafcb874c8f1f82dd395a2a26de264cf73a9ec2bb535493c12f120cd6a1",
+      "6926e9c86a96539e3128e93fc0ee7b5404fba18ba8e3ca7f293e53e84359bb57"
+    ],
+    "delta_vs_dinuc_shuffle": 0.2895948171615601,
+    "delta_vs_gc_random": 0.32807838916778564
+  },
+  {
+    "target": "dan:msx1b",
+    "species": "danio_rerio",
+    "symbol": "msx1b",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "f4f1321560eff1351acf84cb7eb40952c2d987be1c98893157056e14300662c8",
+    "rescored_sha256": "f4f1321560eff1351acf84cb7eb40952c2d987be1c98893157056e14300662c8",
+    "gc": 0.321,
+    "real_logprob": -1.1689597368240356,
+    "dinuc_shuffle_logprobs": [
+      -1.3147227764129639,
+      -1.3165016174316406,
+      -1.318278193473816,
+      -1.3163864612579346,
+      -1.3068153858184814
+    ],
+    "dinuc_shuffle_mean": -1.3145408868789672,
+    "dinuc_shuffle_sd": 0.00449818074643882,
+    "dinuc_shuffle_sha256": [
+      "353fcb640d5944123f448d577c6913740ff101910f46afa83bef258ef1c4ecbb",
+      "adc7a28ec659848e0bdd77a6daa0e978821e53d2303a7c3cb5606bdf062ee00f",
+      "c4f255e1f735dd5c5410efc9f5fe226cef3178909b4ae8c67e64117788270835",
+      "4e74323d891b2191f560fe5cc4a3254e19ce22ccea71d1162dc061f9e176b337",
+      "b154642beb91693d9c985a9be8508842a0d7a8dee10ad6847fd41debdf752ee8"
+    ],
+    "gc_random_logprobs": [
+      -1.3510241508483887,
+      -1.3226290941238403,
+      -1.3243528604507446,
+      -1.3358476161956787,
+      -1.3215595483779907
+    ],
+    "gc_random_mean": -1.3310826539993286,
+    "gc_random_sd": 0.012528073452888748,
+    "gc_random_sha256": [
+      "2781b486626b4b20b0c0cb9956d795df56b8636b7bb230e98d667bd708cc0bd8",
+      "74d2f93ed156a2794951cbf1e7c8cb5d100e6a63ad63a4a28c82ece16936fe0a",
+      "f8e8fb81a08f89c61a9bed6108f462697d9e79cd96975f8cbb994b7ae9b8e44d",
+      "4adafc8563e58e6c00cf17729f889329a6d174b6a4edfb555b12014546ccd69a",
+      "5b7c9208b8718a33e7519e56e250ce193098545c88b2eb27a09578e9d841f0f4"
+    ],
+    "delta_vs_dinuc_shuffle": 0.14558115005493155,
+    "delta_vs_gc_random": 0.16212291717529292
+  },
+  {
+    "target": "hir:msx1b",
+    "species": "hirundichthys_speculiger",
+    "symbol": "msx1b",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "fe7f054566ac2f8e1d8d8285e526fe583331a97c4578568514fff98a1fbb6ee7",
+    "rescored_sha256": "fe7f054566ac2f8e1d8d8285e526fe583331a97c4578568514fff98a1fbb6ee7",
+    "gc": 0.472,
+    "real_logprob": -1.3652927875518799,
+    "dinuc_shuffle_logprobs": [
+      -1.3824896812438965,
+      -1.3881913423538208,
+      -1.387803077697754,
+      -1.3838081359863281,
+      -1.3799651861190796
+    ],
+    "dinuc_shuffle_mean": -1.3844514846801759,
+    "dinuc_shuffle_sd": 0.003521688381244374,
+    "dinuc_shuffle_sha256": [
+      "7c10e4ddd486984f39e92cbd9e9fc57806ba9d160a405a98c758c29e34bf51ea",
+      "e4e4600f0da076a38c300ed91bf7db109df500684c0bf7ff91e1cfc27cebdfa0",
+      "bd980cb8021a37ecaab8e8cbfa61fdf403590248e6b6c96a4cd581481f46df9a",
+      "f0e4de12f6b45c3863c7e1cb299936c5b1254e38e1571ccdb0b0189fbe78e9de",
+      "3309db6233e95fa3c991a0f0fd4aff8f1b08fb689f8d12422e9e0464eb01ecae"
+    ],
+    "gc_random_logprobs": [
+      -1.3912068605422974,
+      -1.3965728282928467,
+      -1.3912160396575928,
+      -1.4027740955352783,
+      -1.3980365991592407
+    ],
+    "gc_random_mean": -1.3959612846374512,
+    "gc_random_sd": 0.004904518496544994,
+    "gc_random_sha256": [
+      "99d8c3566c22587ab471f29d426b56859cec160de8b86149970e41985f94375d",
+      "d12c1fb9541e1492120aefe7a2be78f9486c460af96abd5ada0f5b2af76d5401",
+      "6951c974235668153d6b551562ab2301db82ccce8a91115df70507fc440c7239",
+      "71071387c70d8ff863d71baad8145f1c751a8bc6d8f47b240f5bd9f3fd3296d9",
+      "a54500aad32b5a17685a30b4cef302c4b1cd89fbe107fbf7e5747d84dd6aeb9b"
+    ],
+    "delta_vs_dinuc_shuffle": 0.019158697128295987,
+    "delta_vs_gc_random": 0.03066849708557129
+  },
+  {
+    "target": "dan:sp7",
+    "species": "danio_rerio",
+    "symbol": "sp7",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "f0c2485086a7b72e32de834753f55689154c11309e4d26b37f34ab32e7886cdb",
+    "rescored_sha256": "f0c2485086a7b72e32de834753f55689154c11309e4d26b37f34ab32e7886cdb",
+    "gc": 0.378,
+    "real_logprob": -0.8548891544342041,
+    "dinuc_shuffle_logprobs": [
+      -1.3212147951126099,
+      -1.32236909866333,
+      -1.3132245540618896,
+      -1.3211005926132202,
+      -1.3138028383255005
+    ],
+    "dinuc_shuffle_mean": -1.31834237575531,
+    "dinuc_shuffle_sd": 0.00444051093737281,
+    "dinuc_shuffle_sha256": [
+      "2289ba847a3470f723579342d32336eb54eead2a9099db06131c1576e0f0af7c",
+      "ef43595b5ade8da543a6732af8fc1e84c512c0270d88f2870ed9a2dff71d6894",
+      "450d7aab2dc378f78a99e1aa08882a0cf470436be309a2ee5a6024d2d1ac360e",
+      "b4ebb62927ebb89c266171e0f28ca90b504365516efcdfa96787a4655f6dc728",
+      "02c8aa44611062d3726e888c8201d9f394bb8bdccc7ca065f78c9df21e59e265"
+    ],
+    "gc_random_logprobs": [
+      -1.3715500831604004,
+      -1.3794991970062256,
+      -1.3756715059280396,
+      -1.3608530759811401,
+      -1.3674167394638062
+    ],
+    "gc_random_mean": -1.3709981203079225,
+    "gc_random_sd": 0.007248477673247097,
+    "gc_random_sha256": [
+      "a826ddf65b481f2400f719cfd4e1c55f90fe0e0059e954e3936a791dd0af38a0",
+      "4cb66b0ea4d37b50fec15f177ff1bbec742c9b75f03f8dc7c072add0e7dda982",
+      "40d37eecf446a6e561ffb6298f4ffd4f42b36b69ac11bb5569ec9554d5cefcb5",
+      "0fb4701434acd486df05292085b7835800e02e4af8c7029c87cf4d6845f29360",
+      "c721dd44324cafe321a3e7be37ffbeb38186e3ac115a1109fa1d2cc5c68b2d51"
+    ],
+    "delta_vs_dinuc_shuffle": 0.463453221321106,
+    "delta_vs_gc_random": 0.5161089658737184
+  },
+  {
+    "target": "hir:sp7",
+    "species": "hirundichthys_speculiger",
+    "symbol": "sp7",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "efbb1aaf2cbeea7a805f2cabb4c76138beb9e1920a2ac75af5ecc020dbe67ed3",
+    "rescored_sha256": "efbb1aaf2cbeea7a805f2cabb4c76138beb9e1920a2ac75af5ecc020dbe67ed3",
+    "gc": 0.399,
+    "real_logprob": -1.2340763807296753,
+    "dinuc_shuffle_logprobs": [
+      -1.3637995719909668,
+      -1.355633020401001,
+      -1.3648922443389893,
+      -1.361761212348938,
+      -1.3650535345077515
+    ],
+    "dinuc_shuffle_mean": -1.3622279167175293,
+    "dinuc_shuffle_sd": 0.003913544693204596,
+    "dinuc_shuffle_sha256": [
+      "5c26a89bcb8a6bb828f35e6e22e222729f473e02eaa80fb01440bef32c18423f",
+      "4781d37045eb3dd77aad6e1b6cf865ebd1afd5ca699da6be6ea08b8e27253f83",
+      "eed778da645743f12cc712a00d4f4ec139e382a1d685b386a304d4ca93a3e8ff",
+      "564cfdedea45f135781378fc6800885abc94a3ab531f5d9a2b83803df2c292cc",
+      "5ff35289c68cd46fa5f7d1efd968ec5ecb57f7149ca88e580d96cb9eb215958a"
+    ],
+    "gc_random_logprobs": [
+      -1.3730435371398926,
+      -1.372618317604065,
+      -1.3648101091384888,
+      -1.3886736631393433,
+      -1.3715341091156006
+    ],
+    "gc_random_mean": -1.3741359472274781,
+    "gc_random_sd": 0.0087832590908768,
+    "gc_random_sha256": [
+      "9d1a2cb1c86a3e6808709aa9f88f78f5c3c9d3ed2840d4eca79b1af0dcda024f",
+      "a07624b31fc54c806c3270a5dba426b5ef037d06029877bca60529d677e54ed7",
+      "6a879a3b781b9b1edefda967503c32625a4ff257284eb28dbb7bc92aa7ac639e",
+      "2f4f91a5bdaca898b2a7ae22668e5360961cf00e85422ad16c84799f797d4c22",
+      "315f7d12a72a1d5d1b896dd87176e53bd93f19008c6cc1f997c8ad70aa0d5f52"
+    ],
+    "delta_vs_dinuc_shuffle": 0.128151535987854,
+    "delta_vs_gc_random": 0.14005956649780282
+  },
+  {
+    "target": "dan:runx2b",
+    "species": "danio_rerio",
+    "symbol": "runx2b",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "b7b0c52c0c863089011cdb71a6ad050ad6769faffd25f952542040a07218879d",
+    "rescored_sha256": "b7b0c52c0c863089011cdb71a6ad050ad6769faffd25f952542040a07218879d",
+    "gc": 0.374,
+    "real_logprob": -0.868289589881897,
+    "dinuc_shuffle_logprobs": [
+      -1.353663444519043,
+      -1.3486524820327759,
+      -1.3526477813720703,
+      -1.3491160869598389,
+      -1.3536384105682373
+    ],
+    "dinuc_shuffle_mean": -1.3515436410903932,
+    "dinuc_shuffle_sd": 0.002467416222299081,
+    "dinuc_shuffle_sha256": [
+      "f54a7ecd519419d918914304d41416ee1b65eafa772cb43c5870e74fdb065602",
+      "05738a00c59e38677c64ad6e39be46695adac9e74782c1a28822e7f2ac344e57",
+      "5236386a16379a4d4a7c55c739daead0234fe24e9af52b8d8d6b6ee108803c08",
+      "d669580fab0d9c27232f7c4c94b6935951224dc53026321eed4562d206cd4890",
+      "5091f7cb2a9c8232be975a3baa794b4f4f08c9f725e1620ed1b4e91118baba53"
+    ],
+    "gc_random_logprobs": [
+      -1.3774160146713257,
+      -1.3698757886886597,
+      -1.3403925895690918,
+      -1.3702936172485352,
+      -1.3786951303482056
+    ],
+    "gc_random_mean": -1.3673346281051635,
+    "gc_random_sd": 0.015586708445430659,
+    "gc_random_sha256": [
+      "797bc43b0ad929a186d29910b9ac784bf766eb88efcc37957ada00b40a268f5e",
+      "83e504fae1c8b392ad6635cb780c06a7f48796f87cc688ef715593c890806ea2",
+      "d9a64309a2845897976bf76a99103d865cf00b0e5f2e07956785fae4f95f3f27",
+      "f591ddec322dd890fc4e7a63bcd39c85167f6754b6b3eaf129cd27299816e6af",
+      "63d24db913b77352b3392510fa42f5216102db7f5175013dc23288d8d6919bea"
+    ],
+    "delta_vs_dinuc_shuffle": 0.4832540512084962,
+    "delta_vs_gc_random": 0.4990450382232665
+  },
+  {
+    "target": "hir:runx2b",
+    "species": "hirundichthys_speculiger",
+    "symbol": "runx2b",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "f34d68d701c253b6535561bcfd59b3002e9d288b12c709cad208eb9d693861cd",
+    "rescored_sha256": "f34d68d701c253b6535561bcfd59b3002e9d288b12c709cad208eb9d693861cd",
+    "gc": 0.508,
+    "real_logprob": -1.2931572198867798,
+    "dinuc_shuffle_logprobs": [
+      -1.3892993927001953,
+      -1.3955620527267456,
+      -1.3915289640426636,
+      -1.3990166187286377,
+      -1.3923696279525757
+    ],
+    "dinuc_shuffle_mean": -1.3935553312301636,
+    "dinuc_shuffle_sd": 0.0037907011659375723,
+    "dinuc_shuffle_sha256": [
+      "1f80c28253be79d72c1c1dae3f4f9f1116eee090a026a3286a3226ab596ddd7f",
+      "c81245348a7c239e888f6855133f8886779f96a70e1b92f2a34d57fbc96c0d83",
+      "55e894068a965277ef57516d227d6c0ab580b26441d0b9791b733aebb76b87f3",
+      "9e4285f81c03effa7a6aa776e39dbe6870a0315fcc57c92455b36aaf60ae4e9c",
+      "b5f53aa4f9ff4b88d8e2e4fc5b54a71f2f48372430eedc35bce06751ff41c62d"
+    ],
+    "gc_random_logprobs": [
+      -1.3999552726745605,
+      -1.4014835357666016,
+      -1.4066799879074097,
+      -1.4021059274673462,
+      -1.401153802871704
+    ],
+    "gc_random_mean": -1.4022757053375243,
+    "gc_random_sd": 0.0025834635180246248,
+    "gc_random_sha256": [
+      "eccecd05b29b2a37bc9d17ecaff8d564e8406b51a27b67d03b2cdc26e2468582",
+      "481389c07836c2635c19862f58324bd1774644a981048b6967aaa665d3b0359f",
+      "6977e824456fe90b627a537e5a70c5770a7ebab47046b7e0de88f915b0783fae",
+      "405b1860eee339d3e6a513d56b1177f9079dd93b9e53ddde01b9f2ed7de4a9c9",
+      "bdb72b34ba0bc725b5b3377c892e035749b522558ea2be934935f2d1dd95e271"
+    ],
+    "delta_vs_dinuc_shuffle": 0.10039811134338383,
+    "delta_vs_gc_random": 0.10911848545074454
+  },
+  {
+    "target": "dan:lef1",
+    "species": "danio_rerio",
+    "symbol": "lef1",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "1513f2c69118e9dc043971d7e5560f5081e4368557f99c0e8aa738962a2f91da",
+    "rescored_sha256": "1513f2c69118e9dc043971d7e5560f5081e4368557f99c0e8aa738962a2f91da",
+    "gc": 0.378,
+    "real_logprob": -1.2610464096069336,
+    "dinuc_shuffle_logprobs": [
+      -1.3514349460601807,
+      -1.3556292057037354,
+      -1.351616382598877,
+      -1.3532682657241821,
+      -1.35158371925354
+    ],
+    "dinuc_shuffle_mean": -1.352706503868103,
+    "dinuc_shuffle_sd": 0.0017974726238639037,
+    "dinuc_shuffle_sha256": [
+      "07d273a6cf127b6d01a53b8470d0807ce4c340fd03b24831e0fa728221cca53e",
+      "5de8c711b43ebe072844b38f0ff22e67df62b923a57c281702bf99015e7c6d05",
+      "85d3f2d096f19281eb844a8bb199cf6127f0c4b1250a5d31093ef8f1cb782198",
+      "16eee548d226a06e8bb106f4200363ba68df4cadad13e1b564169b5d48cad725",
+      "e91d4ef1561a6f4c38e1262d79a3822df5ec29c11562e951afd1188720aac342"
+    ],
+    "gc_random_logprobs": [
+      -1.3532166481018066,
+      -1.3618464469909668,
+      -1.3794355392456055,
+      -1.3690648078918457,
+      -1.3671376705169678
+    ],
+    "gc_random_mean": -1.3661402225494386,
+    "gc_random_sd": 0.009640653932362934,
+    "gc_random_sha256": [
+      "9d5b69846d227618342179f5a501da7cee48ab0cd88fd9c00122b376f875fbf5",
+      "9fb179bc0e09ce0d56c1ad192146e5bf816a9dce30dd676601f6cfbe3b43a5d9",
+      "2a905a6ab2d4ec892c7ca22b108de8518e2fc2f5b4b839dc5bfd5dc65cc7c01b",
+      "746c5462f4d982f1a950f154f09c662bf21257f09a678920fe7c28555c0aceda",
+      "1d4786592872673769bceeabee5fae35f07c437f93965838a981e2ad183dceaf"
+    ],
+    "delta_vs_dinuc_shuffle": 0.09166009426116939,
+    "delta_vs_gc_random": 0.10509381294250497
+  },
+  {
+    "target": "hir:lef1",
+    "species": "hirundichthys_speculiger",
+    "symbol": "lef1",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "e0c6595462a10ec82bd4951326105037f65d4296fc4b4005b2df4b102a22e444",
+    "rescored_sha256": "e0c6595462a10ec82bd4951326105037f65d4296fc4b4005b2df4b102a22e444",
+    "gc": 0.437,
+    "real_logprob": -1.2646657228469849,
+    "dinuc_shuffle_logprobs": [
+      -1.362518548965454,
+      -1.3639863729476929,
+      -1.3661106824874878,
+      -1.3588809967041016,
+      -1.3623547554016113
+    ],
+    "dinuc_shuffle_mean": -1.3627702713012695,
+    "dinuc_shuffle_sd": 0.002645738299456262,
+    "dinuc_shuffle_sha256": [
+      "f549ad8a890d2fd5f8ccbc0d8afcce57d9273d2554a8d9e534734ce7bef26dbc",
+      "76850033bab2895d26527add05452886619c8a90c804c3f71342671a8d41aae7",
+      "22eae1e991ab6ca460cd75879c5b289380ede8a0a0e0c20040bc1b8859cb58f3",
+      "f93cb004efa6fad3c1a3af5f6d15c88b91fea0af716c1409d8c66d053f3e7676",
+      "89604ac5a27365cf9c295fda1da1f0126d31b091c546ef1d1df70345d4b38087"
+    ],
+    "gc_random_logprobs": [
+      -1.3936017751693726,
+      -1.387054443359375,
+      -1.3881503343582153,
+      -1.3913729190826416,
+      -1.3941402435302734
+    ],
+    "gc_random_mean": -1.3908639430999756,
+    "gc_random_sd": 0.003176668308846268,
+    "gc_random_sha256": [
+      "1da23473a7a8fa9e5e466f5c855a27633c90edb84f234a72f538cd3a24c6a554",
+      "ac382544f91d30e86b49da38bd344d90f483d305ae8f503947a1a8d70deda5cb",
+      "b25d95e3a00020622a715fd7bbfc5330a789c1901c05e69a51061a8af78fce56",
+      "63570005efe222ece7b60355e89c70615ccae574613fcb797d475a18c60ac43f",
+      "0e95ad5f5ed365a63099941cb91a592ea9dfd262f1a4d5fcaf2dfda4fa8b2c78"
+    ],
+    "delta_vs_dinuc_shuffle": 0.09810454845428462,
+    "delta_vs_gc_random": 0.12619822025299077
+  },
+  {
+    "target": "dan:tbx5a",
+    "species": "danio_rerio",
+    "symbol": "tbx5a",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "b3e95d280ac9257538e877ed27b9f1c8ac79200004c3a33bdfd5b7e8a398803c",
+    "rescored_sha256": "b3e95d280ac9257538e877ed27b9f1c8ac79200004c3a33bdfd5b7e8a398803c",
+    "gc": 0.394,
+    "real_logprob": -1.303929090499878,
+    "dinuc_shuffle_logprobs": [
+      -1.3723582029342651,
+      -1.3730698823928833,
+      -1.3711555004119873,
+      -1.3740049600601196,
+      -1.3727771043777466
+    ],
+    "dinuc_shuffle_mean": -1.3726731300354005,
+    "dinuc_shuffle_sd": 0.001042157985224483,
+    "dinuc_shuffle_sha256": [
+      "12a30d4f68dbe14482fc4288516ef4d445123c7d25ee56c51089a77de7199222",
+      "2f3d4450b49f028abfaf5a307a56977a8a3f39225a106999e52a2fe1b5799e42",
+      "587c86f3ced6a16981185629a2170353068161ea2c0041e8e99e3f36f8ee64df",
+      "08486beb0f112a2c7c573b2571cb036ce563fc5141fe91214715aabc8600070f",
+      "9b7b291c443faa9d444774161764ca2eda85470a2c136a79bdeca66fc0bc3070"
+    ],
+    "gc_random_logprobs": [
+      -1.383056402206421,
+      -1.3732448816299438,
+      -1.3744107484817505,
+      -1.3748842477798462,
+      -1.3744838237762451
+    ],
+    "gc_random_mean": -1.3760160207748413,
+    "gc_random_sd": 0.003982826250044877,
+    "gc_random_sha256": [
+      "45e038316ba250b34c0de03fe97785963f7eb39adcb41a58291210c53ed86340",
+      "dea25c34f34c16cde1b2be85281774eabc48540131fcaf452901bb08928ec754",
+      "94a4b483745fbc71973ecab59b3aead1c255f5890b20be89bf078d0625c64a63",
+      "a2691f2a565ff1fcb82d4a08a2581c0a1f5fdb4b65cc01fda3ba6983336d9e67",
+      "d0d2366576f94d9f1edca8484ef715856d140da205c3dd0e0ca8e3f565207ffe"
+    ],
+    "delta_vs_dinuc_shuffle": 0.06874403953552255,
+    "delta_vs_gc_random": 0.07208693027496338
+  },
+  {
+    "target": "hir:tbx5a",
+    "species": "hirundichthys_speculiger",
+    "symbol": "tbx5a",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "eda8b52b0917b0bff339d025c5f73f6f19cdd54b37069815d3c46825acbe3b00",
+    "rescored_sha256": "eda8b52b0917b0bff339d025c5f73f6f19cdd54b37069815d3c46825acbe3b00",
+    "gc": 0.48,
+    "real_logprob": -1.2701928615570068,
+    "dinuc_shuffle_logprobs": [
+      -1.3801294565200806,
+      -1.3863699436187744,
+      -1.3846492767333984,
+      -1.3855364322662354,
+      -1.387688398361206
+    ],
+    "dinuc_shuffle_mean": -1.384874701499939,
+    "dinuc_shuffle_sd": 0.0028791792611935515,
+    "dinuc_shuffle_sha256": [
+      "8b30a3355cfc33f6f7f9cc58b6e2e39e419a7db5391a4140d254b3260b222a34",
+      "b6a833aacd63157b4c4a3acff6d1b27adb334a1b6a1d226803e20355cdf4f1ea",
+      "facab8544283c0b3cbc266299837c5b5d7830b4bc38e7a2e71b21d92bee7621c",
+      "27eb62e2d879905729ae2abf8350ae22aad0e68f0d80caf0dfbcf916399951db",
+      "346b3ce66aa1035cd634332a807da9f6af5086a9ecca750abfd39ff71423395c"
+    ],
+    "gc_random_logprobs": [
+      -1.3946287631988525,
+      -1.3957905769348145,
+      -1.4003525972366333,
+      -1.398613691329956,
+      -1.4029444456100464
+    ],
+    "gc_random_mean": -1.3984660148620605,
+    "gc_random_sd": 0.0033734185846505606,
+    "gc_random_sha256": [
+      "52c840bb90d6b668d79e36362a875b9b64b413bebe4d51e76b0b7ea761a04363",
+      "72b6732edfa5e1cf80e79f6854795afa806f6b9c67711f089e27223ba86dd193",
+      "e2513f5d96229bc26bc501fe240728a7c31f1cd2768201f0512be97903e7d292",
+      "e1a0e137467dc2597890424f7e6eaccf1e2c85163ea5ec007f1bda53cf8a69ae",
+      "b59670842873622265c38186aaf820b885c8c819266a670afca7d374324127b3"
+    ],
+    "delta_vs_dinuc_shuffle": 0.11468183994293213,
+    "delta_vs_gc_random": 0.12827315330505362
+  },
+  {
+    "target": "dan:hoxd13a",
+    "species": "danio_rerio",
+    "symbol": "hoxd13a",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "fc7058a349c69e7458cbec9a2848e3229bfa3bcfef59e8ddd14fa7447981d7f6",
+    "rescored_sha256": "fc7058a349c69e7458cbec9a2848e3229bfa3bcfef59e8ddd14fa7447981d7f6",
+    "gc": 0.33,
+    "real_logprob": -1.1626522541046143,
+    "dinuc_shuffle_logprobs": [
+      -1.326375126838684,
+      -1.3346128463745117,
+      -1.327514886856079,
+      -1.3280596733093262,
+      -1.3307980298995972
+    ],
+    "dinuc_shuffle_mean": -1.3294721126556397,
+    "dinuc_shuffle_sd": 0.003301599559080264,
+    "dinuc_shuffle_sha256": [
+      "9d7d55d6593c1f24dced037a476fc0e59a8b84a86f0b504ce2ea3d45ccf9ecd5",
+      "d486c1a669576624611d18ea7e338fe739a428116c5801e9dfe332f87649e82d",
+      "966eaa54e80fd3fe74cf55dd05e0a1371bf8a15eca4dc58e43e22443cde5a5cf",
+      "2d45acc77be4e06c76ebd94835c070164510887557d32e7b905b5fa931e82160",
+      "a32cc52694054a1ef0d1e77f05c4d6179139a994d306cb6b996b34725862cf7b"
+    ],
+    "gc_random_logprobs": [
+      -1.3402339220046997,
+      -1.3412680625915527,
+      -1.345940113067627,
+      -1.348787546157837,
+      -1.3383618593215942
+    ],
+    "gc_random_mean": -1.342918300628662,
+    "gc_random_sd": 0.0043089942288973984,
+    "gc_random_sha256": [
+      "4f438010e1044e8fbacb9e8ed6a020e6506d707f225361770b237076939c197b",
+      "b0aefdaa14520832944ed0d885cc6f41e1fb0cf04e6ced4fa9cf75d4a81b5d51",
+      "6e21a22ab6ca8e6027759e531d3c838ccd323c443084623349e5fe4e3f0e5f13",
+      "2bb924277826a8a0a80e0deb1961d2a3d8fccd2366221aa25e858f9474490cc5",
+      "bf0216549e5c9bbfd7877b4072a56e49153aeb8df6432e61764d9469452518cb"
+    ],
+    "delta_vs_dinuc_shuffle": 0.16681985855102544,
+    "delta_vs_gc_random": 0.18026604652404776
+  },
+  {
+    "target": "dan:fgf10a",
+    "species": "danio_rerio",
+    "symbol": "fgf10a",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "464f466a2874e29c1f2e911dfb603179fbf617f22f9d593f47c4755d30c584f2",
+    "rescored_sha256": "464f466a2874e29c1f2e911dfb603179fbf617f22f9d593f47c4755d30c584f2",
+    "gc": 0.322,
+    "real_logprob": -1.072428822517395,
+    "dinuc_shuffle_logprobs": [
+      -1.3103728294372559,
+      -1.3133697509765625,
+      -1.313166618347168,
+      -1.314595341682434,
+      -1.308184027671814
+    ],
+    "dinuc_shuffle_mean": -1.3119377136230468,
+    "dinuc_shuffle_sd": 0.00260590413485874,
+    "dinuc_shuffle_sha256": [
+      "d8ec45c240c9e9761a822d89944e76c6350c512398af44016ad832baea1ee63f",
+      "9d1b07f65cd2a54a3d9e79f33d45d98c130a8e66b52155d7793e37bdcc49d906",
+      "18adb47d289c0b94743529ed1847aef79a9ab38c6c728f833b0ca2c8e29d5e68",
+      "7a4833080253e8c920ad11a30c802de4e5eabdef925bf4996bb6de3d34024343",
+      "2e8be532574177e311c872b1d2934a96aba351500aecbf10b099353dcc484538"
+    ],
+    "gc_random_logprobs": [
+      -1.3342636823654175,
+      -1.3368805646896362,
+      -1.3396384716033936,
+      -1.3300424814224243,
+      -1.3309286832809448
+    ],
+    "gc_random_mean": -1.3343507766723632,
+    "gc_random_sd": 0.004019927289594923,
+    "gc_random_sha256": [
+      "6c464c6d1260c9eadd2ceb8c7eee5332a5cb5e6bef3ef38b93406783684ec96b",
+      "4aa88d874262fd378efbfc38a622928ff7de4f20a8e8c089cfc6defb2822fae1",
+      "bd73e2a630f1dd9fb70641be7467ba3fcf9035c119fff7ad5ca78192bb10d368",
+      "d44352bcfb8c484a95f210a7df873e5e4b2d0f293bd5d3ac0974e25ca606e761",
+      "fc3a0a49f17a14856a989b05313282d702da559cb5fb8bc1d4cf3af3de5fe3fb"
+    ],
+    "delta_vs_dinuc_shuffle": 0.23950889110565177,
+    "delta_vs_gc_random": 0.2619219541549682
+  },
+  {
+    "target": "hir:fgf10a",
+    "species": "hirundichthys_speculiger",
+    "symbol": "fgf10a",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "2e796706b4d52198c054cab0d8ad545b3f70290da2cca1e61c6a01291052c119",
+    "rescored_sha256": "2e796706b4d52198c054cab0d8ad545b3f70290da2cca1e61c6a01291052c119",
+    "gc": 0.413,
+    "real_logprob": -1.3023242950439453,
+    "dinuc_shuffle_logprobs": [
+      -1.3504951000213623,
+      -1.353305459022522,
+      -1.352049708366394,
+      -1.3569316864013672,
+      -1.3535600900650024
+    ],
+    "dinuc_shuffle_mean": -1.3532684087753295,
+    "dinuc_shuffle_sd": 0.0023813087679132004,
+    "dinuc_shuffle_sha256": [
+      "0cefb85ea50dffdfc900bd4d19b987e22dc2c4b53e366cebdcdd9d7467d8e0b2",
+      "f8ce8f88afb5ce1ff5c3f54bb04b694be3eb58c23f19ebb71afa009e355e44a9",
+      "a5a738fb0c081384536e4516578a32df804249b84d30c3d1a7f02b7528c56bcb",
+      "4a2b4c6894f61cc067846696af1191ec7cc32e6f1942f3ea0d9234a4e4dcf1bc",
+      "b69b2fb42ff7baa1ca2d203ebd4649463b80822ba8361836928d5dfb910355c2"
+    ],
+    "gc_random_logprobs": [
+      -1.381994605064392,
+      -1.3827613592147827,
+      -1.3948386907577515,
+      -1.3798716068267822,
+      -1.392580509185791
+    ],
+    "gc_random_mean": -1.3864093542098999,
+    "gc_random_sd": 0.006794793718742236,
+    "gc_random_sha256": [
+      "314a18fe2b355615ddef4fb190f6b2d81971e5dbf501fb231716b230d6e1a6fd",
+      "0ce48be7cac005a9e3e7c523c39fca1a9a0bd366a6c2af0b2f46fd83b0e63150",
+      "e568b388e920b926b66bca7d00bf9704308460f2f00f64ab592bca32b71d4e49",
+      "1ac0e792815a54151ceeb375e91d60a69381d7982ab556bc3dd957db22a59455",
+      "fa87bb6420209c4aa6af45c6755d0d7f34537e3fe6765d0021d0c6a8cd18c418"
+    ],
+    "delta_vs_dinuc_shuffle": 0.05094411373138419,
+    "delta_vs_gc_random": 0.08408505916595455
+  },
+  {
+    "target": "dan:kcnk5b",
+    "species": "danio_rerio",
+    "symbol": "kcnk5b",
+    "region_basis": "Ensembl gene start (includes UTR) = TSS",
+    "half": "prompt",
+    "prompt_sha256": "9fe602cb5a764b6b8dff4699f9490a24cc64b8a0b43c08deb11fbf96734a84fa",
+    "rescored_sha256": "9fe602cb5a764b6b8dff4699f9490a24cc64b8a0b43c08deb11fbf96734a84fa",
+    "gc": 0.325,
+    "real_logprob": -1.076082468032837,
+    "dinuc_shuffle_logprobs": [
+      -1.322556734085083,
+      -1.320645809173584,
+      -1.321382761001587,
+      -1.3232183456420898,
+      -1.3219751119613647
+    ],
+    "dinuc_shuffle_mean": -1.3219557523727417,
+    "dinuc_shuffle_sd": 0.000999995734051022,
+    "dinuc_shuffle_sha256": [
+      "7bb7f5d29141a675d3e843f05aec77aef94c737988f9d8c7ff886c09a86ae4b9",
+      "cb6d9c96cda4edddcc83549838752c0dff37124645856bd6c9a7717843691eec",
+      "ca67bf75d85b3783d34293a227476dffcd44d64d116445e712c5745c04d994bc",
+      "8ac35b777c13e293b3fe12d5885ebd35a7da4662c09633a73a1735ca086e0055",
+      "000b086f263177e9b6e1a5c6a9e7252ae98de86310f98bcd01181e7ab5c43846"
+    ],
+    "gc_random_logprobs": [
+      -1.3440544605255127,
+      -1.341817855834961,
+      -1.3237909078598022,
+      -1.3446654081344604,
+      -1.3324620723724365
+    ],
+    "gc_random_mean": -1.3373581409454345,
+    "gc_random_sd": 0.009030049939751034,
+    "gc_random_sha256": [
+      "56f80523b36bbee645a3eea417b411df7b6ea1e51d1dda1028de066655b948bd",
+      "3f2d8b096eb42f7a8202f69c30f7d58350c6ee5f6827836ea2edccc617ab3c62",
+      "1d68559c8cefc24aba6a7536ea6d1e2d533508d7b1c08916b1c05fa013b5e4ae",
+      "e8541d518105265a2378021f2295255f9d5485f42f9fd5bb541c415fde04b238",
+      "b2191ce70740e1163d31a60649d0de2827b0a856ad5824f274a6a68eabe840fa"
+    ],
+    "delta_vs_dinuc_shuffle": 0.24587328433990474,
+    "delta_vs_gc_random": 0.26127567291259757
+  },
+  {
+    "target": "hir:kcnk5b",
+    "species": "hirundichthys_speculiger",
+    "symbol": "kcnk5b",
+    "region_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+    "half": "prompt",
+    "prompt_sha256": "b73236cd99ddb3224d63c8054bc236162cc7dbf4d7a4d101cd778525b908d57f",
+    "rescored_sha256": "b73236cd99ddb3224d63c8054bc236162cc7dbf4d7a4d101cd778525b908d57f",
+    "gc": 0.413,
+    "real_logprob": -1.0728733539581299,
+    "dinuc_shuffle_logprobs": [
+      -1.364782452583313,
+      -1.3743352890014648,
+      -1.369707465171814,
+      -1.369754672050476,
+      -1.369570255279541
+    ],
+    "dinuc_shuffle_mean": -1.3696300268173218,
+    "dinuc_shuffle_sd": 0.003378741405663354,
+    "dinuc_shuffle_sha256": [
+      "548620231fe4a9311302d0456dc7d5c07fcad8a31496728b74009250e5ccf149",
+      "3365508a99fde4a5f40ae5ef3ef4b1b53921a8dfac9f8eb033a8c6b8cc03a91a",
+      "c21cb0c8f660e932dcfb350e90a030a8b9ab0bb4d0765ec1c924f6344899c7e5",
+      "3651ffa45f997d3941f4da41213205d299b968bad473e42e52034651caca9fc2",
+      "261ee13cfd890bf2a5475c2cad13e15a10fa5892500e93b0eaa122f12475ed82"
+    ],
+    "gc_random_logprobs": [
+      -1.38386869430542,
+      -1.3859078884124756,
+      -1.376715064048767,
+      -1.386260986328125,
+      -1.383676290512085
+    ],
+    "gc_random_mean": -1.3832857847213744,
+    "gc_random_sd": 0.003853371928612572,
+    "gc_random_sha256": [
+      "c6169d043817c27afd72a39f51ee1682a6f5ec1fd27d42aa7d4f31c4f8f78670",
+      "54c332abf75f51de06d6a39add7b658022a23d9a3118011b7a09e1fd2f6027ec",
+      "e60b1214e4b75af6002563817034f644a1d4f5297a4451e759423d93b84c2f6b",
+      "f5474a40a184019dac5d30fee6b2d00aefacf5d0713ed1e77eaec4a714e8be40",
+      "f64be66e9ff38fb7d9bd6dd7410ecaae10e0356c4e3591d4c545a7fc38964212"
+    ],
+    "delta_vs_dinuc_shuffle": 0.29675667285919194,
+    "delta_vs_gc_random": 0.31041243076324454
+  }
+]

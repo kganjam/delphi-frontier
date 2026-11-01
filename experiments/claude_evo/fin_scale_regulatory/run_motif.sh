@@ -8,5 +8,5 @@ base64 -d /work/input_set.json.gz.b64       | gunzip > /work/input_set.json || e
 base64 -d /work/candidates_slim.json.gz.b64 | gunzip > /work/candidates.json || exit 1
 sha256sum /work/motif_scan_job.py /work/input_set.json /work/candidates.json
 pip install -q pyjaspar biopython numpy || exit 1
-python3 /work/motif_scan_job.py --input-set /work/input_set.json --candidates /work/candidates.json --out-dir /work/out --collection CORE --tax-group vertebrates --budget-seconds 2400
+python3 /work/motif_scan_job.py --input-set /work/input_set.json --candidates /work/candidates.json --out-dir /work/out --collection CORE --tax-group vertebrates --half prompt --skip-candidates --budget-seconds 2400
 echo "MOTIF_RC=$?"
