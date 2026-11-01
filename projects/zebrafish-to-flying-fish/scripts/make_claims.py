@@ -243,7 +243,7 @@ CLAIMS = [
     ),
     dict(
         id="zf2ff-claim-kcnh2a-absent-from-the-assembly",
-        title="kcnh2a is absent from the Beloniform lineage containing flying fishes, shown with a non-Beloniform outgroup that retains it",
+        title="kcnh2a is absent from three Beloniformes including a chromosome-level sister-family genome, while a non-Beloniform outgroup retains it",
         statement=(
             "A low-stringency whole-assembly search with the zebrafish kcnh2a protein alone (miniprot "
             "0.18-r281, -N 20 --outs=0.3 --outc=0.05) finds no region beyond the 7 already known. A gene "
@@ -268,15 +268,24 @@ CLAIMS = [
             "kcnh2a pairs with zebrafish kcnh2a in a 2-tip clade at 100/100, while zebrafish kcnh2b, "
             "medaka kcnh2b and the flying-fish locus form the other sub-clade. The duplication "
             "therefore predates the cyprinid-acanthomorph split, a non-Beloniform acanthomorph "
-            "retains the a copy, and both available Beloniformes lack it."),
+            "retains the a copy, and both available Beloniformes lack it. A third Beloniform was then "
+            "added to remove the draft-assembly caveat: Hemiramphus limbatus (GCA_056149455.1), "
+            "Hemiramphidae, the SISTER FAMILY to Exocoetidae, on a CHROMOSOME-LEVEL assembly, scanned "
+            "with the same queries and parameters (job aijob-e00w2q5tkmgw74bcr5, COMPLETED). Its 14 "
+            "KCNH-like loci cover the family, and its single kcnh2-family locus joins the b clade: "
+            "zebrafish kcnh2b, medaka kcnh2b, the flying-fish locus and the halfbeak locus at 98.2/99, "
+            "while the a clade contains only Takifugu kcnh2a and zebrafish kcnh2a at 100/100. So three "
+            "Beloniformes each carry exactly one kcnh2-family gene and all three are on the b side."),
         context=("kcnh2a is the longfin gene and one of the two loci a flying-fish phylogenomic study "
                  "names for paired-fin size, so it is this project's primary candidate locus. The "
                  "consequence is that an edit aimed at the Exocoetid kcnh2a has no located target in "
                  "the only public assembly for the family. " + SCOPE),
         assumptions=["ASSUMED: that a miniprot prediction from an unannotated assembly is a usable proxy for the protein a region encodes.",
                      "ASSUMED: that 10 UniProt entries adequately represent the zebrafish KCNH family; kcnh8a and kcnh8b were not retrievable, so some of the 14 loci may belong to paralogs absent from the reference set."],
-        limitations=["This claim went through two reversals, both kept in the repo rather than edited away. An earlier version said no kcnh2a-like region exists anywhere in the assembly; that was withdrawn after synteny put slc12a7a on the same scaffold as the kcnh2-like region (data/synteny/FINDING.md). The medaka annotation evidence answered that objection, the Takifugu/medaka naming inconsistency then undercut the annotation evidence, and the outgroup tree settled it on sequence.",
-                     "Only TWO Beloniformes are represented: medaka, and one miniprot prediction from a draft assembly. A third Beloniform genome would strengthen this considerably and was not run.",
+        limitations=["Four further Beloniform chromosome-level genomes exist in NCBI (Hyporhamphus gernaerti, Hyporhamphus sajori, Hyporhamphus intermedius, Cololabis saira, Xenentodon cancila) and were NOT examined. Any of them carrying an a-side locus would overturn this.",
+                     "This claim went through two reversals, both kept in the repo rather than edited away. An earlier version said no kcnh2a-like region exists anywhere in the assembly; that was withdrawn after synteny put slc12a7a on the same scaffold as the kcnh2-like region (data/synteny/FINDING.md). The medaka annotation evidence answered that objection, the Takifugu/medaka naming inconsistency then undercut the annotation evidence, and the outgroup tree settled it on sequence.",
+                     "Three Beloniformes are now represented, one of them chromosome-level, which removes the draft-assembly objection but not the small sample.",
+                     "Two of the halfbeak's 14 locus placements are weakly supported (63.6/82 and 4.9/31) and are read as unresolved; neither falls in either kcnh2 clade, so dropping them does not change the result.",
                      "Takifugu's 'single' kcnh2 means the only gene carrying that symbol in Ensembl; an unnamed or unannotated Takifugu kcnh2b was not excluded. That does not disturb the a-clade placement but is why the phrase 'retains a, lacks b' is avoided.",
                      "A sufficiently divergent Exocoetid kcnh2a could be placed with a neighbouring paralog rather than appearing as a kcnh2a sister, which would produce this same result. A tree with medaka Beloniformes outgroups was submitted to test the prediction that the flying-fish locus groups with medaka kcnh2b.",
                      "Zebrafish kcnh2b's GRCz11 position could not be retrieved (Ensembl has no kcnh2b symbol for zebrafish), so the b-block assignment in zebrafish is inferred from medaka's arrangement and the aoc1/sspo neighbours of zebrafish slc12a7b, not read directly.",

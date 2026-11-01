@@ -734,6 +734,43 @@ project's disposal. What remains is a literature step: PMID 34534441 and PMID 40
 text for their own gene identifiers and the residue position. `zf2ff-problem-lat4a-identifier` stays
 open and records exactly that.
 
+## R7k — A chromosome-level sister-family genome removes the draft-assembly caveat
+
+**`claude-zf2ff-halfbeak-tree-1`** (`aijob-e00w2q5tkmgw74bcr5`), CLI-read `COMPLETED`. Manifest:
+[`data/tree11/MANIFEST.md`](data/tree11/MANIFEST.md).
+
+The `kcnh2a` result rested on two Beloniformes, one a scaffold-level draft. This adds a third:
+*Hemiramphus limbatus* (`GCA_056149455.1`), **Hemiramphidae — the sister family to Exocoetidae** — on
+a **chromosome-level** assembly, scanned with the **same** queries and parameters as the flying-fish
+census so the two are comparable. 14 merged KCNH-like loci, the same count as the flying fish.
+
+**Controls reproduce:** Takifugu + zebrafish `kcnh2a` at **100/100**; flying-fish `locus01` + medaka
+`kcnh2b` at **98.6/100**.
+
+| clade | members | support |
+| --- | --- | --- |
+| **`kcnh2a`** | Takifugu `kcnh2a`, zebrafish `kcnh2a` — **and nothing else** | 100/100 |
+| **`kcnh2b`** | zebrafish `kcnh2b`, medaka `kcnh2b`, **flying-fish `locus01`**, **halfbeak `locus01`** | **98.2/99** |
+
+**Three Beloniformes each contribute exactly one `kcnh2`-family locus and all three are in the `b`
+clade; the `a` clade holds only the two non-Beloniformes.** The halfbeak carries the rest of the KCNH
+family on a chromosome-level assembly, so "missing because it is a draft" is no longer available as an
+explanation. The halfbeak's `locus01` best-hit its query `kcnh2a` at identity 0.632 — the same
+best-hit pattern the flying-fish locus showed — and the tree again placed it on the `b` side, which is
+a third demonstration in this project that **a best hit cannot name a paralog**.
+
+Two halfbeak loci are weakly placed (63.6/82 and 4.9/31) and are read as unresolved; neither is in
+either `kcnh2` clade.
+
+**What is established:** across three Beloniformes, one chromosome-level, with a non-Beloniform
+outgroup retaining the `a` copy and controls holding under two substitution models — the `kcnh2a`
+paralog is **absent from the Beloniform lineage containing flying fishes**, and these species carry
+the `b` copy instead.
+
+**What is not:** strict orthology (no synteny in any of these trees); anything about expression,
+conductance or phenotype; and what the published flying-fish `kcnh2a` signal refers to. Four further
+Beloniform genomes exist and were not examined; they could still overturn this.
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
