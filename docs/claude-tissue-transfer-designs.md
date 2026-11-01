@@ -26,8 +26,9 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 `-edge2d-cases`, `-edge2d-gamma`, `-fan`, `-fan-video`, `-growing-rd`, `-rd-wavelength`).
 - In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
   pattern is spots) and growth along the fin axis.
-- With growth confined to a narrow apical zone from a long fold, the pattern forms bands parallel to the edge.
-  Ray-like orientation needs the proliferating zone to be wider than about one pattern wavelength (12-seed control).
+- With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
+  the proliferating zone to be wider than about **half a pattern wavelength**: a sharp switch between L_p = 4 and 6
+  when λ ≈ 11, from 12-seed controls with long and short starts.
 - With row insertion from a very short fold, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern
   units. That threshold tracks λ·σ (pooled slope 0.50). A reversal of orientation behind a moving front is a known
   phenomenon.
@@ -354,6 +355,36 @@ final length 187, not 192.
 **Testable prediction, revised.** If rays were patterned by such a mechanism, ray-like orientation would need
 proliferation spread over a distal zone at least about one ray-spacing long. That can be checked with a proliferation
 marker (EdU or PCNA) in the fin fold at the time rays are laid down.
+
+**Zone-width sweep and short-start control** (`claude-tissue-pzone-lp`, job `aijob-e00ysdr0hbbm0s2pqe`, 601.4 s;
+`claude-tissue-pzone-y8`, job `aijob-e00fz6wvwm0p4bcz9f`, 624.3 s; both COMPLETED; 12 seeds; same script as `pzone`).
+
+Long start (Y0 = 48), v = 0.1, mean orientation A:
+
+| L_p | 2 | 4 | 6 | 8 | 12 | 16 | 24 | 48 | Uniform |
+|---|---|---|---|---|---|---|---|---|---|
+| A | −0.78 | −0.49 | **0.63** | 0.71 | 0.66 | 0.72 | 0.75 | 0.86 | 0.94 |
+
+- **Sharp switch.** The orientation flips from edge-parallel to proximo-distal between L_p = 4 and 6, at about half a
+  wavelength (λ ≈ 11).
+- **Above the switch,** orientation improves gradually with zone width.
+
+Short start (Y0 = 8):
+
+| | L_p = 2 | L_p = 12 | Uniform |
+|---|---|---|---|
+| v = 0.1 | 0.52 ± 0.27 | 0.98 | 0.99 |
+| v = 0.4 | −0.79 | 0.92 | 0.95 |
+
+Static control: 0.02.
+
+**Reading.**
+- **A short start helps:** at L_p = 12 and v = 0.1, A rises from 0.66 to 0.98.
+- **Row insertion also mattered:** under continuous apical growth (L_p = 2) at slow speed, the short start reaches only
+  0.52, against 0.99 when rows were inserted at the edge.
+- **So the clean rays in the first edge-growth run came from both** the very short start and the row-insertion scheme.
+- **The robust result across schemes and starts:** ray-like orientation needs a proliferating zone wider than about
+  half a pattern wavelength. A narrower apical zone gives bands parallel to the edge.
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and
