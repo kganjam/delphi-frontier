@@ -1,6 +1,6 @@
 diff -ru orig/src/VX3/VX3_SimulationManager.cu voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu
 --- orig/src/VX3/VX3_SimulationManager.cu	2026-11-01 08:16:01.065602978 -0800
-+++ voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu	2026-11-01 08:28:04.017376871 -0800
++++ voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu	2026-11-01 10:25:33.548946825 -0800
 @@ -394,6 +394,7 @@
  
      // if "Lane User Stack Overflow" ocurs, maybe Stack Size too small, can try this:
@@ -9,9 +9,18 @@ diff -ru orig/src/VX3/VX3_SimulationManager.cu voxcraft-sim-dd8668f99ff74fb2fc2e
  }
  
  /* gets the current printfFifo buffer size and increases it PrintfFIFOSize times */                                                           
+@@ -407,7 +408,7 @@
+ 
+ 
+ void VX3_SimulationManager::startKernel(int num_simulation, int device_index) {
+-    int threadsPerBlock = 512;
++    int threadsPerBlock = 64; /* FORK: was 512; inlined child work needs more registers per thread */
+     int numBlocks = (num_simulation + threadsPerBlock - 1) / threadsPerBlock;
+     if (numBlocks == 1)
+         threadsPerBlock = num_simulation;
 diff -ru orig/src/VX3/VX3_VoxelyzeKernel.cu voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_VoxelyzeKernel.cu
 --- orig/src/VX3/VX3_VoxelyzeKernel.cu	2026-11-01 08:16:01.065963916 -0800
-+++ voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_VoxelyzeKernel.cu	2026-11-01 08:28:04.017142198 -0800
++++ voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_VoxelyzeKernel.cu	2026-11-01 10:25:33.548702101 -0800
 @@ -11,17 +11,17 @@
  }
  

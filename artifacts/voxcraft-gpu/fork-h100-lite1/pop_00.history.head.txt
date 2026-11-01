@@ -1,0 +1,9 @@
+1 GPU found.
+=== set device to 0 for 1000 simulations ===
+Total GPU memory 85017493504 bytes.
+Set GPU heap size to be 42508746752 bytes.
+set GPU printfFIFO size to be 432537600 bytes.
+[1;31m
+/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu(426): CUDA Function Error: too many resources requested for launch 
+[0mRunning simulation locally by default.
+./vx3_node_worker -i workspace/locally/20261101182355.15777540809036604832.vxt -o workspace/locally/20261101182355.15777540809036604832.vxr

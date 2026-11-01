@@ -65,5 +65,10 @@ old = "    // if \"Lane User Stack Overflow\" ocurs, maybe Stack Size too small,
 assert sm.count(old) == 1, "stack comment anchor"
 STACK = int(os.environ.get("VX3_FORK_STACK", "32768"))
 sm = sm.replace(old, old + "\n    VcudaDeviceSetLimit(cudaLimitStackSize, %d); /* FORK: parent thread runs former child work */" % STACK)
+# 7) host side: the fork's per-simulation kernel inlines the former child work, so 512 threads/block exceeds the
+#    register file ("too many resources requested for launch", observed on H100 for a 1000-simulation batch).
+old2 = "    int threadsPerBlock = 512;"
+assert sm.count(old2) == 1, "threadsPerBlock anchor"
+sm = sm.replace(old2, "    int threadsPerBlock = 64; /* FORK: was 512; inlined child work needs more registers per thread */")
 open(pm, "w").write(sm)
 print("forked", p, "bytes", n0, "->", len(s), "launch sites", nl + 1 + npw, "syncs removed", nsync, "occupancy removed", nocc)

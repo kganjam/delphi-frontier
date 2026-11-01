@@ -2,7 +2,7 @@
 # fetch_return.sh <aijob-id> <outdir>: pull job logs, decode the base64 return archive, verify its sha256.
 set -eu
 J=$1; D=$2; mkdir -p $D
-~/.nebius/bin/nebius --profile hackathon ai job logs $J > $D/job.log 2>&1 || true
+~/.nebius/bin/nebius --profile hackathon ai job logs $J --since 12h --tail 1000 > $D/job.log 2>&1 || true
 python3 - "$D" <<'PY'
 import sys, re, base64, hashlib, os
 d = sys.argv[1]; L = open(os.path.join(d, "job.log"), errors="replace").read().splitlines()

@@ -3,6 +3,9 @@
 import sys, os, json, csv, math, statistics as st
 import xml.etree.ElementTree as ET
 
+T_MIN = 3.99   # every config stops at t=4 (lite) or t=6; anything earlier did not run to completion
+INVALID = []
+
 def load_reports(d):
     rows = {}
     for fn in sorted(os.listdir(d)):
@@ -20,6 +23,8 @@ def load_reports(d):
                      x0=g("initialCenterOfMass/x"), y0=g("initialCenterOfMass/y"), z0=g("initialCenterOfMass/z"),
                      x1=g("currentCenterOfMass/x"), y1=g("currentCenterOfMass/y"), z1=g("currentCenterOfMass/z"))
             r["dx"], r["dy"], r["dz"] = r["x1"]-r["x0"], r["y1"]-r["y0"], r["z1"]-r["z0"]
+            if r["t"] < T_MIN:   # the worker writes a report even when the kernel never ran (t=0): not data
+                INVALID.append((batch, b.tag, r["t"])); continue
             rows[(batch, b.tag)] = r
     return rows
 
@@ -35,7 +40,7 @@ def mean_d(rows, batch, prefix, pat, nrep=3):
 
 def main(d):
     rows = load_reports(d)
-    out = {"n_bodies_reported": len(rows)}
+    out = {"n_bodies_reported": len(rows), "n_invalid_rejected": len(INVALID)}
     with open(os.path.join(d, "bodies.csv"), "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(next(iter(rows.values())).keys()) if rows else ["batch"])
         w.writeheader(); [w.writerow(r) for r in rows.values()]
