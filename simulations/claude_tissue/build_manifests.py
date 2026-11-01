@@ -140,6 +140,17 @@ def cards():
             parameter_unknowns=["Starting fin-fold geometry at patterning onset is not measured here."],
             open_questions=["Measure fin-fold length vs ray spacing at the onset of ray patterning."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; generic kinetics."])
+    if (A/"claude-tissue-edge2d-gamma/edge2d_gamma.json").exists():
+        eg2 = J("claude-tissue-edge2d-gamma/edge2d_gamma.json"); sm = eg2["summary"]
+        C["claude-tissue-edge2d-gamma"] = dict(
+            title="Does the outgrowth-speed threshold for ray-like stripes scale with pattern-formation speed? Rate-scale test (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; scaling test for claude-tissue-edge2d-cases",
+            model=dict(name="2-D Schnakenberg with rate scale gamma, distal-edge growth", context=f"cases {eg2['meta'].get('cases')}"),
+            equations=[{"label": "Scaling hypothesis", "tex": "v^*\\propto\\lambda^*\\sigma_{\\max}\\propto\\sqrt{\\gamma}", "source": "this harness; linear theory gives lambda*sigma 0.45, 0.64, 0.90 for gamma 0.5, 1, 2"}],
+            numerical_results=[f"gamma={v['b']}, edge speed {v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}" for v in sm.values()],
+            parameter_unknowns=["Generic kinetics; speeds in pattern units."],
+            open_questions=["If v* scales with lambda*sigma, the measurable prediction is a ratio: outgrowth speed / (ray spacing x patterning rate)."],
+            limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless."])
     if (A/"claude-tissue-fan/fan.json").exists():
         fn = J("claude-tissue-fan/fan.json"); sm = fn["summary"]
         C["claude-tissue-fan"] = dict(

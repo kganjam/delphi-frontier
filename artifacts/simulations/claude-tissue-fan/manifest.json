@@ -1,0 +1,127 @@
+{
+  "base_commit": "f9c476c2daa1ec9217e141cecee7c93b5d92d347",
+  "code_sha256": {
+    "simulations/claude_tissue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "simulations/claude_tissue/build_manifests.py": "8417855d27af82a3b801d946146462a1b3feb17f68bfb4bca0cbe061ad15aa0d",
+    "simulations/claude_tissue/collect_gpu2.py": "991e46c3d95474602ce52c39fb14bd4c512ffa48f0d2c66317fb9ced7c892aae",
+    "simulations/claude_tissue/collect_rd_v2.py": "0e12867daab7054d0bd22d3d9dfaeea63d38f77a4b20076e2bd1a6471cf9325e",
+    "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+    "simulations/claude_tissue/dev_programme.py": "ff9f4336262a7f650edfc4185c7b247da697a5a87321d117d3bc11928e33a070",
+    "simulations/claude_tissue/dev_programme_species.py": "21f558444192465bd3a394c86695596cc51e99d2af9b3b3f788afa75899ae8b4",
+    "simulations/claude_tissue/dev_programme_video.py": "db8f8d9e26404ed37dcd39175fbed5789c66109d1d2f2b212c823e17f80fbe7d",
+    "simulations/claude_tissue/edge2d_cases_gpu.py": "f2457f94c42a99034aa2b9068eb35dbc7275584332719965935375396e8f48e6",
+    "simulations/claude_tissue/edge2d_gamma_gpu.py": "b972677347c58cf08605b952eebcd506666d2acda164a07b6643d15f7b8981b9",
+    "simulations/claude_tissue/edge2d_gpu.py": "219d919d25dc4361fc5fb8f42cd0b01e90d5f1ca0a32ab99b456c8f83c8f708e",
+    "simulations/claude_tissue/edge_growth_rd.py": "ff17c026f5f25dc1b7257faf572e8d46c2d1f9ab774421875ed835dddd72fc09",
+    "simulations/claude_tissue/fan_gpu.py": "8c6ef6ff181955d998282780d75406dbfa98fd169ecf11dd416663990a146916",
+    "simulations/claude_tissue/fin_growth.py": "15653ce43228ad2dd207899110b8a6b98b0a8e15c6c674d66566be8a4d03f69b",
+    "simulations/claude_tissue/growing_rd.py": "3381bbce05e514d73d23051dd2614d4a6179e2f6ef09d7901ddafa0d6fc81d3d",
+    "simulations/claude_tissue/growing_rd_v2.py": "daf29f9ab143409d5385c1369f695e05ab6c1c1358bbf6ed26a27c33280b22cb",
+    "simulations/claude_tissue/identifiability.py": "bbb3d4eead39125f928f6798ec3e055ad29699a688aaa20f7133cab9410b0404",
+    "simulations/claude_tissue/identifiability_v2.py": "7359c0ae9acc946361fce480b36f3d0a6343af9081b7137178332a4f6c82cfa7",
+    "simulations/claude_tissue/phase_map_gpu.py": "3e58dd2d888ccf392b4ec3e0f7ec2810112c1750a87088f379b111a3aab9f09b",
+    "simulations/claude_tissue/rd_convergence.py": "b23b305e794d2095505cb170eed0f155b559a4b9fa387f1dba3f31e84f482bf6",
+    "simulations/claude_tissue/rd_wavelength.py": "cb0d94c7ef51ce28ff426a5d93310b01d9954569bfca2dccdd3c675ac12559d8",
+    "simulations/claude_tissue/rd_wavelength_v2_gpu.py": "793c452a83d0288827d6054924a961a5c141cc164cc6aaa3080c9b55469dad54",
+    "simulations/claude_tissue/transfer_regimes.py": "59d228120ae335b3f903ecf9e311dc4f40654c2845a8c492146c03f9c17d2b1a",
+    "simulations/claude_tissue/uniform2d_gpu.py": "216a97a8916435f43782385b52668e811dfc53bee8557b514537c602eb5e3af4",
+    "simulations/claude_tissue/uniform2d_y0_gpu.py": "c479a1460a92c3b01ad1428d19d247657bb697b76f61f2b44842a1eea8629288"
+  },
+  "does_not_establish": [
+    "Does not establish that fin rays are Turing patterns or how rays bifurcate in fish.",
+    "Dimensionless; generic kinetics; peak counting on rings may miss edge peaks."
+  ],
+  "evidence_kind": "simulated; dimensionless; fan geometry is idealised",
+  "experiment_design": "docs/claude-tissue-transfer-designs.md",
+  "files": {
+    "fan.json": {
+      "bytes": 9245,
+      "sha256": "547cd84a4141e443e8fccdf49a2e3ec97fa9f61ee6885e4d42c98d458f5d8ab1"
+    },
+    "fan.png": {
+      "bytes": 499738,
+      "sha256": "d2ffc938f10d92ecb8b3f03b3edf59e347f468a876288dc0ff51ebd38788df26"
+    },
+    "job-log.txt": {
+      "bytes": 71425,
+      "sha256": "d97a1601e3381ae997ec05727f02838cbc428e46a9aca2d4d70a38f9b80d1b1b"
+    },
+    "receipt-claude-tissue-fan.json": {
+      "bytes": 1134,
+      "sha256": "8685ea1cb9aef4a447c450ac5b55dd3c0bca9d2a414b8147b198836b2e8982c0"
+    }
+  },
+  "id": "claude-tissue-fan",
+  "input_sha256": {},
+  "measurement_rows": 0,
+  "runs": [
+    {
+      "code_changed_since_run": null,
+      "command": "python3 /work/fan.py (args in META)",
+      "compute": "Nebius aijob-e00jd38fyzb9kahcda (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+      "exit_code": 0,
+      "job_state": "COMPLETED",
+      "receipt": "receipt-claude-tissue-fan.json",
+      "run": "claude-tissue-fan",
+      "seed": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "superseded": null,
+      "wall_s": 777.2
+    }
+  ],
+  "scales": [
+    "tissue",
+    "developmental"
+  ],
+  "schema": "frontier.claude-tissue-simulation.manifest/1",
+  "status": "computed_not_observed",
+  "studio_card": {
+    "couplings": [],
+    "equations": [
+      {
+        "label": "Polar Laplacian",
+        "source": "standard",
+        "tex": "\\nabla^2u=u_{rr}+\\tfrac{1}{r}u_r+\\tfrac{1}{r^2}u_{\\theta\\theta}"
+      },
+      {
+        "label": "Fixed-spacing expectation",
+        "source": "lambda* from claude-tissue-rd-wavelength v2",
+        "tex": "N(r)=r\\Theta/\\lambda^*"
+      }
+    ],
+    "evidence_kind": "simulated; dimensionless; fan geometry is idealised",
+    "id": "claude-tissue-fan",
+    "limitations": [
+      "Does not establish that fin rays are Turing patterns or how rays bifurcate in fish.",
+      "Dimensionless; generic kinetics; peak counting on rings may miss edge peaks."
+    ],
+    "manifest": "artifacts/simulations/claude-tissue-fan/manifest.json",
+    "model": {
+      "context": "R0=30.0, R_end=190.0, THETA=1.2 rad, d in [10]",
+      "name": "2-D Schnakenberg on an annular sector (polar grid), rows activated at the distal arc"
+    },
+    "native": true,
+    "numerical_results": [
+      "d=10, edge speed 0.4: stripes along arc [2.8, 2.8, 3.5, 3.8, 6.5] at r [46, 78, 110, 142, 174] (fixed-spacing expectation [5.1, 8.7, 12.3, 15.9, 19.5]); radial orientation A -0.88",
+      "d=10, edge speed 0.1: stripes along arc [2.5, 5.5, 9.8, 13.2, 17.2] at r [46, 78, 110, 142, 174] (fixed-spacing expectation [5.1, 8.7, 12.3, 15.9, 19.5]); radial orientation A 0.60",
+      "d=10, static: stripes along arc [2.8, 3.5, 6.2, 8.8, 11.0] at r [46, 78, 110, 142, 174] (fixed-spacing expectation [5.1, 8.7, 12.3, 15.9, 19.5]); radial orientation A -0.20"
+    ],
+    "open_questions": [
+      "Compare with how rays are added or branch as real pectoral fins widen distally."
+    ],
+    "parameter_unknowns": [
+      "Real fin fan angle, growth law and patterning timing are not measured here."
+    ],
+    "scales": [
+      "tissue",
+      "developmental"
+    ],
+    "sources": [],
+    "title": "Turing stripes on a fan-shaped fin fold growing at its distal arc: do ray-like stripes multiply as the fin widens? (simulated, H100)"
+  },
+  "title": "Turing stripes on a fan-shaped fin fold growing at its distal arc: do ray-like stripes multiply as the fin widens? (simulated, H100)"
+}

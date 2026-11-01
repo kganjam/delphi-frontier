@@ -1,0 +1,30 @@
+{
+ "code_matches_repo": true,
+ "code_sha256": {
+  "simulations/claude_tissue/fan_gpu.py": "8c6ef6ff181955d998282780d75406dbfa98fd169ecf11dd416663990a146916"
+ },
+ "collected_utc": "2026-11-01T16:38:51Z",
+ "collector_sha256": {
+  "simulations/claude_tissue/collect_gpu2.py": "991e46c3d95474602ce52c39fb14bd4c512ffa48f0d2c66317fb9ced7c892aae"
+ },
+ "command": "python3 /work/fan.py (args in META)",
+ "compute": "Nebius aijob-e00jd38fyzb9kahcda (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "input_sha256": {},
+ "job": "aijob-e00jd38fyzb9kahcda",
+ "job_state": "COMPLETED",
+ "name": "claude-tissue-fan",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-fan/fan.json": "547cd84a4141e443e8fccdf49a2e3ec97fa9f61ee6885e4d42c98d458f5d8ab1",
+  "artifacts/simulations/claude-tissue-fan/fan.png": "d2ffc938f10d92ecb8b3f03b3edf59e347f468a876288dc0ff51ebd38788df26",
+  "artifacts/simulations/claude-tissue-fan/job-log.txt": "d97a1601e3381ae997ec05727f02838cbc428e46a9aca2d4d70a38f9b80d1b1b"
+ },
+ "seed": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "wall_s": 777.2
+}

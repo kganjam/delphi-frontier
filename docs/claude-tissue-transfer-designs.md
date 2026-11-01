@@ -256,6 +256,27 @@ wavelengths long.
 stripes, but even a long starting fold ends mostly proximo-distally oriented with residual defects. The dominant
 orienting factor is **anisotropic stretching along the growth axis**; a short start removes the remaining defects.
 
+**Fan-shaped fold** (`claude-tissue-fan`, job `aijob-e00jd38fyzb9kahcda`, COMPLETED, 777.2 s). An annular sector
+(R0 = 30, final radius 190, Θ = 1.2 rad) grows at its distal arc, at d = 10 with 4 seeds. Stripes are counted along the
+arc at five radii (45 to 174) and compared with r·Θ/λ* (5.1 to 19.5).
+
+| Condition | Stripes along the arc, inner → outer | Radial orientation A |
+|---|---|---|
+| Slow edge growth (0.1) | 2.5 → 5.5 → 9.8 → 13.2 → 17.2 | +0.60 |
+| Fast edge growth (0.4) | 2.8 → 2.8 → 3.5 → 3.8 → 6.5 | −0.88 |
+| Static | 2.8 → 3.5 → 6.2 → 8.8 → 11.0 | −0.20 |
+
+- **Slow distal growth.** Stripes run radially (ray-like) and are **added as the fan widens**, roughly parallel to
+  the fixed-spacing line, and new stripes appear distally.
+- **Fast growth.** Gives circumferential arcs.
+- **Static.** Gives a mixed pattern.
+- **Counting caveat.** The innermost count is limited by the short inner arc, and the counting uses a simple
+  ring-peak rule.
+
+**Prediction.** If rays were laid down by such a mechanism under slow outgrowth, ray number would rise with distal fin
+width at fixed spacing. Insertion or branching events would sit distally. That is testable against how rays are added
+or branch in widening pectoral fins (not checked here).
+
 ## 3. fin-growth: morphogen production → pectoral/SL ratio (molecular → organ)
 
 **Model.** 1-D quasi-steady distal-source gradient m(x) with a saturating local growth law. The growth law is declared,
