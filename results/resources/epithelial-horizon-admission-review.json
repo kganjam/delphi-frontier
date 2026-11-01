@@ -1,0 +1,241 @@
+{
+  "archive_sha256": "9b9c08957e2fc3149962f31e01cd5b09faee3da30d359b8feaf70541cec318f1",
+  "fixture": "Read-only original StopTime1000 native logs, no new simulation. All required future horizons absent.",
+  "reproduction_rc": 0,
+  "analysis_rc": 0,
+  "hypothesis_outcome": "SUPPORTED at these horizons: none of the 4 evaluable brackets moved",
+  "per_arm_t_end": [
+    1000.0
+  ],
+  "arms_claiming_future_observed": 30,
+  "evaluable_cells": 4,
+  "path": "/data/artifacts/delphi-evolve-rethink/horizon-contract-review-5tdqvyky",
+  "schema": "frontier.pre-admission-review-correction/1",
+  "observed_utc": "2026-11-01T07:52:43.174067+00:00",
+  "source_commit": "3b1f17b",
+  "protocol_commit": "7afb713",
+  "protocol_sha256": "9e7219c00419c49dcb2b8e65ccb78b988aa8321db3cb8360f4dc4cada8757f2a",
+  "analyzer_sha256": "bc47039a782d6153d489389e5a4748fc39058382acf8529335239ca19d1e6f29",
+  "inputs": [
+    {
+      "arm_id": "S-k4-J35-lamV0.4-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J35-lamV0.4-s1/logger.csv",
+      "bytes": 285904,
+      "sha256": "a2c96f95009bae782c199d2a5eae284818f2c42f1bb6557beaf5e73c5c557661"
+    },
+    {
+      "arm_id": "S-k4-J35-lamV0.8-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J35-lamV0.8-s1/logger.csv",
+      "bytes": 285977,
+      "sha256": "d190ae9caa7437c1e7297cf25a6b41b6522554769180340b1b8e74f4eaa615f8"
+    },
+    {
+      "arm_id": "S-k4-J35-lamV0.8-s2",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J35-lamV0.8-s2/logger.csv",
+      "bytes": 286152,
+      "sha256": "f2031045b0a8c8d3c4e996ff1e10323275502b431f2574aa4266ef4e79c5b792"
+    },
+    {
+      "arm_id": "S-k4-J35-lamV0.8-s3",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J35-lamV0.8-s3/logger.csv",
+      "bytes": 286215,
+      "sha256": "8f9b985f9da761922a695527a749a58e8b82b5a70879d5fe8b1b3dd15ca24776"
+    },
+    {
+      "arm_id": "S-k4-J35-lamV1.6-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J35-lamV1.6-s1/logger.csv",
+      "bytes": 286194,
+      "sha256": "a75981fa33777a9a70d7e9a088182afe91274c8543bf17aa5cbfb0fc1a5134fd"
+    },
+    {
+      "arm_id": "S-k4-J35-lamV1.6-s2",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J35-lamV1.6-s2/logger.csv",
+      "bytes": 286388,
+      "sha256": "b3d2c9a5dceb46ebcecf09393575a39da88d92061c97a24ed5847df51698c3c8"
+    },
+    {
+      "arm_id": "S-k4-J35-lamV1.6-s3",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J35-lamV1.6-s3/logger.csv",
+      "bytes": 286268,
+      "sha256": "3b75f09c998b002d22f4212e200f4a3a4f1b613c099d08e2cd1969b8f92d786e"
+    },
+    {
+      "arm_id": "S-k4-J560-lamV0.8-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J560-lamV0.8-s1/logger.csv",
+      "bytes": 285756,
+      "sha256": "e61e5cd975047aff1ba83bb0cd3491bab94b819cdd593495832e7bf268430df1"
+    },
+    {
+      "arm_id": "S-k4-J560-lamV1.6-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J560-lamV1.6-s1/logger.csv",
+      "bytes": 285927,
+      "sha256": "b82c6413abc3eed1a8c7e661cf040a0635b0c4687073cc012ab64a8840ee5c2f"
+    },
+    {
+      "arm_id": "S-k4-J560-lamV1.6-s2",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J560-lamV1.6-s2/logger.csv",
+      "bytes": 285886,
+      "sha256": "e645146521a55d10b0e5c7afe866a71a93ad18a57f2afe595499e3781ba91986"
+    },
+    {
+      "arm_id": "S-k4-J560-lamV1.6-s3",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J560-lamV1.6-s3/logger.csv",
+      "bytes": 285941,
+      "sha256": "635a9dc8c1afa989cb4b97621e66063ca0a9698cda3a26c2f3d041b24af409e7"
+    },
+    {
+      "arm_id": "S-k4-J560-lamV3.2-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J560-lamV3.2-s1/logger.csv",
+      "bytes": 286057,
+      "sha256": "eec5e3e50059ad5400a211c1b618ff198524efee0a7d4ce65ce4371e4d2ab998"
+    },
+    {
+      "arm_id": "S-k4-J560-lamV3.2-s2",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J560-lamV3.2-s2/logger.csv",
+      "bytes": 286078,
+      "sha256": "887bf59f2a3c6f90797a7b1bf6e410d00eb3cb8b860505ebc284a2703f8c4f15"
+    },
+    {
+      "arm_id": "S-k4-J560-lamV3.2-s3",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J560-lamV3.2-s3/logger.csv",
+      "bytes": 286137,
+      "sha256": "68975598fa5032ba73c59252b6e46876ca4f0706fc711f45e0738d1bfc81eb1a"
+    },
+    {
+      "arm_id": "S-k4-J560-lamV12.8-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k4-J560-lamV12.8-s1/logger.csv",
+      "bytes": 284939,
+      "sha256": "88e01bf1892db72ece839b809894f99887cfa22c1787e2bddd9b28f9a4b9c732"
+    },
+    {
+      "arm_id": "S-k7-J35-lamV0.2-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J35-lamV0.2-s1/logger.csv",
+      "bytes": 271470,
+      "sha256": "725a7a9aaebbd617555e91f4b690a5127fadee8f70d0f449f1d62926f05a7348"
+    },
+    {
+      "arm_id": "S-k7-J35-lamV0.4-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J35-lamV0.4-s1/logger.csv",
+      "bytes": 271727,
+      "sha256": "c75e0e91ca1b54eb04bf09e2d727d141bda51839bd7bd577c39618fc48ea8c62"
+    },
+    {
+      "arm_id": "S-k7-J35-lamV0.4-s2",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J35-lamV0.4-s2/logger.csv",
+      "bytes": 271593,
+      "sha256": "d6b8d033451cb2fa3a1a2b44b0eda5cbb853d75f1220afe77d5fe9423339d2cd"
+    },
+    {
+      "arm_id": "S-k7-J35-lamV0.4-s3",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J35-lamV0.4-s3/logger.csv",
+      "bytes": 271676,
+      "sha256": "ef21db6d554383444f2b4a60d8c1d90b466339f37b9590875678792c7ea1c6c1"
+    },
+    {
+      "arm_id": "S-k7-J35-lamV0.8-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J35-lamV0.8-s1/logger.csv",
+      "bytes": 272042,
+      "sha256": "65d392bbe589c9d4882e4b92abac03d3881f8a04e3346e50c955b6b828e14ebd"
+    },
+    {
+      "arm_id": "S-k7-J35-lamV0.8-s2",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J35-lamV0.8-s2/logger.csv",
+      "bytes": 272025,
+      "sha256": "8752e2d4ecac38a9672157c20703049f36e85b598f5c29adf0e27320681d99b3"
+    },
+    {
+      "arm_id": "S-k7-J35-lamV0.8-s3",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J35-lamV0.8-s3/logger.csv",
+      "bytes": 271933,
+      "sha256": "2e5c1bd4aca867d193fbb0cce7c16ec7c4c069f389098d0da41f52e2e3b87225"
+    },
+    {
+      "arm_id": "S-k7-J560-lamV0.2-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J560-lamV0.2-s1/logger.csv",
+      "bytes": 271456,
+      "sha256": "f9161ce8cc8f718c789755e6ce6bce1c47cb0da0b36af55defe7e2de1303e6a7"
+    },
+    {
+      "arm_id": "S-k7-J560-lamV0.4-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J560-lamV0.4-s1/logger.csv",
+      "bytes": 271579,
+      "sha256": "f2b9b72c3c886a04cd860397e268dfe7782ab4f439bccf3f516b671c3afcdd09"
+    },
+    {
+      "arm_id": "S-k7-J560-lamV0.8-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J560-lamV0.8-s1/logger.csv",
+      "bytes": 271697,
+      "sha256": "49bfa2d520b50966e59aa07187f14a3cc214d03ce6b550a194ffc670652efeb2"
+    },
+    {
+      "arm_id": "S-k7-J560-lamV0.8-s2",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J560-lamV0.8-s2/logger.csv",
+      "bytes": 271849,
+      "sha256": "5ec2340cd32f7d7c68edfe8d4268d70cdc48524e877fceaa36ad89e4b51ee769"
+    },
+    {
+      "arm_id": "S-k7-J560-lamV0.8-s3",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J560-lamV0.8-s3/logger.csv",
+      "bytes": 271700,
+      "sha256": "3b17a834b140d40a2d3ec2ee44dd832cc7fdb999e48c12aca8dd80a463ae55e6"
+    },
+    {
+      "arm_id": "S-k7-J560-lamV1.6-s2",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J560-lamV1.6-s2/logger.csv",
+      "bytes": 271928,
+      "sha256": "919759fe9cc4de150a977d2d0a14409e8913bb3cf1e3708ea54e1d63d63691ec"
+    },
+    {
+      "arm_id": "S-k7-J560-lamV1.6-s3",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J560-lamV1.6-s3/logger.csv",
+      "bytes": 272015,
+      "sha256": "717c65231de193fb8553f45f944cb12afb61cca5b909f2181cad911ef66cb09a"
+    },
+    {
+      "arm_id": "S-k7-J560-lamV12.8-s1",
+      "source_path": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science/S-k7-J560-lamV12.8-s1/logger.csv",
+      "bytes": 270316,
+      "sha256": "0cbbe677d7f05f55ef5e6818f66e3c8317d23134ae5861890ca2e1e01e87e085"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "/data/artifacts/delphi-evolve-rethink/horizon-contract-review-5tdqvyky/check_reproduction.py",
+        "--pins",
+        "/data/artifacts/delphi-evolve-rethink/horizon-contract-review-5tdqvyky/reproduction-pins.json",
+        "--out",
+        "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science",
+        "--report",
+        "/data/artifacts/delphi-evolve-rethink/horizon-contract-review-5tdqvyky/reproduction-replayed.json"
+      ],
+      "exit_code": 0,
+      "stdout": "reproduction: 30 reproduced, 0 diverged, 0 missing -> REPRODUCED\n",
+      "stderr": "",
+      "result_sha256": "58d3676e7762b50a59c375c1b568be5756ac95fce84670cf761f152e42bc207a"
+    },
+    {
+      "argv": [
+        "python3",
+        "/data/artifacts/delphi-evolve-rethink/horizon-contract-review-5tdqvyky/analyze_horizon.py",
+        "--protocol",
+        "/data/artifacts/delphi-evolve-rethink/horizon-contract-review-5tdqvyky/horizon-protocol.json",
+        "--out",
+        "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science",
+        "--reproduction",
+        "/data/artifacts/delphi-evolve-rethink/horizon-contract-review-5tdqvyky/reproduction-replayed.json",
+        "--report",
+        "/data/artifacts/delphi-evolve-rethink/horizon-contract-review-5tdqvyky/horizon-replayed.json"
+      ],
+      "exit_code": 0,
+      "stdout": "SUPPORTED at these horizons: none of the 4 evaluable brackets moved  (reproduction: REPRODUCED)\n  control positive S-k4-J35-lamV0.4-s1        PASS\n  control positive S-k4-J560-lamV0.8-s1       PASS\n  control negative S-k4-J560-lamV12.8-s1      PASS\n  control positive S-k7-J35-lamV0.2-s1        PASS\n  control positive S-k7-J560-lamV0.2-s1       PASS\n  control negative S-k7-J560-lamV12.8-s1      PASS\n",
+      "stderr": "",
+      "result_sha256": "73eff6fb88b0e5596ca2bdd9cfc0d39c2e096194ecc5553f5850194866069c36"
+    }
+  ],
+  "original_headline": "SUPPORTED at these horizons: none of the 4 evaluable brackets moved",
+  "admission": "BLOCKED before any new scientific computation",
+  "repair_result": null,
+  "scope": "Procedural cross-agent review finding. No matched-budget comparison or collective-advantage claim. Actual original time1000-only observations expose a false future-horizon pass."
+}
