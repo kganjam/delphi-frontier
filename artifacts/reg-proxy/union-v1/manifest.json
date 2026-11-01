@@ -1,0 +1,55 @@
+{
+ "note": "the lineage directories are byte copies of the raw science files; neither original run is edited by the union",
+ "recovery_v1": {
+  "files": {
+   "receipt.json": {
+    "bytes": 3469,
+    "sha256": "5bd1de1658836eb35b405f6147f8592a53d4e60a5a47c8417074f15a57a10a6e"
+   },
+   "requests.json": {
+    "bytes": 113325,
+    "sha256": "d7dad5a5e7044f957e26d52f3d5402939e4fcc56e5c91b34d92473bc9fbcfa21"
+   },
+   "results.json": {
+    "bytes": 79029,
+    "sha256": "d2d60603c60bbff422c41c155225e297079fa7c7e7284d0b465b5bc420b6f540"
+   }
+  },
+  "infra_final_manifest_sha256_reported": "83f7509a351e159c0cae4e059f1a1179a939b82468b5c9365c142db97fa42208",
+  "packet_sha256": "2786c0100d1ed7b1112191768f425da2ced541630a410437e0dbee40ae8ad1d2",
+  "raw_directory": "/home/ubuntu/scidex/data/scidex-artifacts/delphi-evolve-rethink/gcp/regulatory-context-missing-only/regulatory-context-missing-only/frontier-cpu-20261031-02/final-4352f6f792dc496a9f3b860b969875e7/science"
+ },
+ "schema": "frontier.reg-proxy.lineage-manifest/1",
+ "union": {
+  "audit_recovery.json": {
+   "bytes": 5432,
+   "sha256": "d900aa4d28a4c3ac3649523ed43cc0771414d4254f77a31707d7a5818ecd9bef"
+  },
+  "union.json": {
+   "bytes": 244944,
+   "sha256": "74441883b37c8bd1aa2c07cc499aad74d94026396d983b3348dc4fe78fe2749a"
+  },
+  "union_receipt.json": {
+   "bytes": 3339,
+   "sha256": "f00ed1c990f07b1936ec8aa559c34df5e87954c0a2d5d21bf68b32b8dca0d912"
+  }
+ },
+ "v1": {
+  "files": {
+   "receipt.json": {
+    "bytes": 7441,
+    "sha256": "cf1e05acf581802e9c774160bc994da2870845d14851e8435c34e5d2b4dd7955"
+   },
+   "requests.json": {
+    "bytes": 65243,
+    "sha256": "c5861f6c84266661f4c4a240e98e4e94a5d35e30ef84ee2195a4d1c626f7e7cd"
+   },
+   "results.json": {
+    "bytes": 142964,
+    "sha256": "f2eb5178787e371cb53f58f4b725feaa8a2f26ae4df5e4c0f2b99b776a31ac8a"
+   }
+  },
+  "infra_final_manifest_sha256_reported": "b6c637b3c8502806c0d655aa744a39313db7be08a7ef0bf9af8d1257596d1ba0",
+  "raw_directory": "/data/artifacts/delphi-evolve-rethink/gcp/regulatory-context-v1/frontier-cpu-20261031-02/final-d13aa1b88dd6468f9ada0d9a7654a099/science"
+ }
+}

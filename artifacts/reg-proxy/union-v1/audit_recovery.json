@@ -1,0 +1,364 @@
+{
+ "checks": [
+  {
+   "detail": "files=['receipt.json', 'requests.json', 'results.json'] bytes=195823",
+   "id": "C1_files",
+   "passed": true
+  },
+  {
+   "detail": "results hash match=True; pin mismatches=[]",
+   "id": "C2_pins",
+   "passed": true
+  },
+  {
+   "detail": "expected=165 present=165 duplicates=0 missing=0 extra=0 geometry_mismatch=0",
+   "id": "C3_identities",
+   "passed": true
+  },
+  {
+   "detail": "0 problems; first=[]",
+   "id": "C4_rows",
+   "passed": true
+  },
+  {
+   "detail": "recomputed=partial_data results=partial_data receipt=partial_data; present=165 usable=106",
+   "id": "C5_completion",
+   "passed": true
+  },
+  {
+   "detail": "requests=165 (receipt 165) charged=57772362 (receipt 57772362) max_library=17949840 elapsed_s=96.0 problems=[]",
+   "id": "C6_budget",
+   "passed": true
+  },
+  {
+   "detail": "106 responses; unlinked=0 []",
+   "id": "C6b_linkage",
+   "passed": true
+  },
+  {
+   "detail": "55 recomputed summary rows; equal=True",
+   "id": "C7_summary",
+   "passed": true
+  },
+  {
+   "detail": "claim_limits ok=True; forbidden keys=[]",
+   "id": "C8_claims",
+   "passed": true
+  },
+  {
+   "detail": "no LEN/lepb identity",
+   "id": "C9_scope",
+   "passed": true
+  }
+ ],
+ "meaning": "consistent = the returned files agree with the frozen protocol and each other; it is not biological validation and not an independent measurement of the counts",
+ "observations": {
+  "fragment_rows_by_library": {
+   "0dpa1": {
+    "akap6-ENH": 153,
+    "gda-ENH": 79,
+    "il11a-ENH1": 87,
+    "il11a-ENH2": 502,
+    "il11a-ENH3": 221,
+    "inhbaa-ENH1": 96,
+    "lhx2b-ENH1": 164,
+    "lhx2b-ENH2": 113,
+    "pcdh12-ENH": 77,
+    "prdm1a-ENH": 210,
+    "vat1-ENH": 110
+   },
+   "0dpa2": {
+    "akap6-ENH": 170,
+    "gda-ENH": 149,
+    "il11a-ENH1": 65,
+    "il11a-ENH2": 1287,
+    "il11a-ENH3": 292,
+    "inhbaa-ENH1": 65,
+    "lhx2b-ENH1": 100,
+    "lhx2b-ENH2": 89,
+    "pcdh12-ENH": 121,
+    "prdm1a-ENH": 207,
+    "vat1-ENH": 106
+   },
+   "1dpa1": {
+    "akap6-ENH": 718,
+    "gda-ENH": 586,
+    "il11a-ENH1": 717,
+    "il11a-ENH2": 1808,
+    "il11a-ENH3": 1536,
+    "inhbaa-ENH1": 406,
+    "lhx2b-ENH1": 423,
+    "lhx2b-ENH2": 280,
+    "pcdh12-ENH": 2296,
+    "prdm1a-ENH": 3837,
+    "vat1-ENH": 445
+   },
+   "1dpa2": {
+    "il11a-ENH1": 304,
+    "il11a-ENH2": 1082,
+    "inhbaa-ENH1": 215
+   },
+   "2dpa1": {}
+  },
+  "positives_with_zero_fragments": [],
+  "status_counts_per_library": {
+   "0dpa1": {
+    "ok": 33
+   },
+   "0dpa2": {
+    "ok": 33
+   },
+   "1dpa1": {
+    "ok": 33
+   },
+   "1dpa2": {
+    "empty_206": 26,
+    "ok": 7
+   },
+   "2dpa1": {
+    "library_unavailable": 33
+   }
+  },
+  "undefined_ratio_windows": 1,
+  "unusable_identities": [
+   [
+    "1dpa2",
+    "akap6-ENH"
+   ],
+   [
+    "1dpa2",
+    "akap6-ENH+250000"
+   ],
+   [
+    "1dpa2",
+    "akap6-ENH+500000"
+   ],
+   [
+    "1dpa2",
+    "gda-ENH"
+   ],
+   [
+    "1dpa2",
+    "gda-ENH+250000"
+   ],
+   [
+    "1dpa2",
+    "gda-ENH+500000"
+   ],
+   [
+    "1dpa2",
+    "il11a-ENH2+250000"
+   ],
+   [
+    "1dpa2",
+    "il11a-ENH2+500000"
+   ],
+   [
+    "1dpa2",
+    "il11a-ENH3"
+   ],
+   [
+    "1dpa2",
+    "il11a-ENH3+250000"
+   ],
+   [
+    "1dpa2",
+    "il11a-ENH3+500000"
+   ],
+   [
+    "1dpa2",
+    "lhx2b-ENH1"
+   ],
+   [
+    "1dpa2",
+    "lhx2b-ENH1+250000"
+   ],
+   [
+    "1dpa2",
+    "lhx2b-ENH1+500000"
+   ],
+   [
+    "1dpa2",
+    "lhx2b-ENH2"
+   ],
+   [
+    "1dpa2",
+    "lhx2b-ENH2+250000"
+   ],
+   [
+    "1dpa2",
+    "lhx2b-ENH2+500000"
+   ],
+   [
+    "1dpa2",
+    "pcdh12-ENH"
+   ],
+   [
+    "1dpa2",
+    "pcdh12-ENH+250000"
+   ],
+   [
+    "1dpa2",
+    "pcdh12-ENH+500000"
+   ],
+   [
+    "1dpa2",
+    "prdm1a-ENH"
+   ],
+   [
+    "1dpa2",
+    "prdm1a-ENH+250000"
+   ],
+   [
+    "1dpa2",
+    "prdm1a-ENH+500000"
+   ],
+   [
+    "1dpa2",
+    "vat1-ENH"
+   ],
+   [
+    "1dpa2",
+    "vat1-ENH+250000"
+   ],
+   [
+    "1dpa2",
+    "vat1-ENH+500000"
+   ],
+   [
+    "2dpa1",
+    "akap6-ENH"
+   ],
+   [
+    "2dpa1",
+    "akap6-ENH+250000"
+   ],
+   [
+    "2dpa1",
+    "akap6-ENH+500000"
+   ],
+   [
+    "2dpa1",
+    "gda-ENH"
+   ],
+   [
+    "2dpa1",
+    "gda-ENH+250000"
+   ],
+   [
+    "2dpa1",
+    "gda-ENH+500000"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH1"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH1+250000"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH1+500000"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH2"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH2+250000"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH2+500000"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH3"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH3+250000"
+   ],
+   [
+    "2dpa1",
+    "il11a-ENH3+500000"
+   ],
+   [
+    "2dpa1",
+    "inhbaa-ENH1"
+   ],
+   [
+    "2dpa1",
+    "inhbaa-ENH1+250000"
+   ],
+   [
+    "2dpa1",
+    "inhbaa-ENH1+500000"
+   ],
+   [
+    "2dpa1",
+    "lhx2b-ENH1"
+   ],
+   [
+    "2dpa1",
+    "lhx2b-ENH1+250000"
+   ],
+   [
+    "2dpa1",
+    "lhx2b-ENH1+500000"
+   ],
+   [
+    "2dpa1",
+    "lhx2b-ENH2"
+   ],
+   [
+    "2dpa1",
+    "lhx2b-ENH2+250000"
+   ],
+   [
+    "2dpa1",
+    "lhx2b-ENH2+500000"
+   ],
+   [
+    "2dpa1",
+    "pcdh12-ENH"
+   ],
+   [
+    "2dpa1",
+    "pcdh12-ENH+250000"
+   ],
+   [
+    "2dpa1",
+    "pcdh12-ENH+500000"
+   ],
+   [
+    "2dpa1",
+    "prdm1a-ENH"
+   ],
+   [
+    "2dpa1",
+    "prdm1a-ENH+250000"
+   ],
+   [
+    "2dpa1",
+    "prdm1a-ENH+500000"
+   ],
+   [
+    "2dpa1",
+    "vat1-ENH"
+   ],
+   [
+    "2dpa1",
+    "vat1-ENH+250000"
+   ],
+   [
+    "2dpa1",
+    "vat1-ENH+500000"
+   ]
+  ]
+ },
+ "schema": "frontier.reg-proxy.return-audit/1",
+ "verdict": "consistent"
+}
