@@ -77,21 +77,24 @@ def cards():
         open_questions=["FRAP of a candidate ligand plus measured ray spacing would test whether lambda_nondim falls in the simulated band."],
         limitations=["Does not establish that fin rays or scales are Turing patterns.", "v1 (L=32) superseded: quantized wavenumber; v1 convergence control found 1 of 3 cases unconverged at t=150."])
     rows = gr["rows"]
+    eg = J("claude-tissue-growing-rd/edge-growth.json")["rows"]
     C["claude-tissue-growing-rd"] = dict(
-        title="Turing peaks on a growing fin-width domain: frequency doubling under slow uniform growth, irregular insertion under fast growth (simulated)",
+        title="Turing peaks on a growing fin-width domain: uniform growth gives frequency doubling, edge growth gives sequential insertion with speed-dependent spacing (simulated)",
         scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; peaks -> rays is an assumption",
-        model=dict(name="1-D Schnakenberg on an exponentially growing domain with dilution, Neumann ends", context="12x width increase, 3 growth times x 3 diffusion ratios x 5 seeds."),
+        model=dict(name="1-D Schnakenberg on a growing domain: uniform (dilution) growth and edge (apical) growth", context="12x width increase; each mode 3 growth speeds x 3 diffusion ratios x 5 seeds."),
         equations=[{"label": "Growing-domain RD (comoving)", "tex": "u_t=\\gamma f(u,v)-\\tfrac{\\dot W}{W}u+W^{-2}u_{\\xi\\xi}", "source": "Crampin, Gaffney & Maini 1999 form"}],
-        numerical_results=[f"d={d}, T={T:g}: final peaks {sorted({r['n_final'] for r in rows if r['d']==d and r['T_grow']==T})} (W/lambda* = {[r['n_expected_final'] for r in rows if r['d']==d][0]:.1f})" for d in (15, 20, 30) for T in (250.0, 1000.0, 4000.0)],
-        parameter_unknowns=["Growth is uniform; real fin outgrowth is likely distal/edge-biased (not modelled)."],
-        open_questions=["Live imaging of ray-primordium insertion events (+1 vs doubling) is the discriminating readout."],
+        numerical_results=[f"d={d}, T={T:g}: final peaks {sorted({r['n_final'] for r in rows if r['d']==d and r['T_grow']==T})} (W/lambda* = {[r['n_expected_final'] for r in rows if r['d']==d][0]:.1f})" for d in (15, 20, 30) for T in (250.0, 1000.0, 4000.0)]
+            + [f"EDGE growth d={d}, speed {v:g}: final peaks {sorted({r['n_final'] for r in eg if r['d']==d and r['speed']==v})}, max jump {max(r['max_jump'] for r in eg if r['d']==d and r['speed']==v)}, mean spacing {sum(r['mean_spacing'] for r in eg if r['d']==d and r['speed']==v)/5:.1f} (lambda* {[r['lambda_star'] for r in eg if r['d']==d][0]:.1f})" for d in (15, 20, 30) for v in (0.5, 0.1, 0.03)],
+        parameter_unknowns=["Real fin outgrowth geometry (where and how fast tissue is added) is not measured here; both growth modes are idealised."],
+        open_questions=["Live imaging of ray-primordium insertion events (+1 at margin vs synchronous splitting) discriminates the growth modes.", "Edge model predicts new-ray spacing widens when outgrowth slows (e.g. temperature series in medaka)."],
         limitations=["Does not establish how fin rays are added in any species.", "Interior-peak counting may under-count edge peaks."])
     return C
 
 SUPERSEDED = {"receipt-claude-tissue-rd-wavelength.json": "v1 (L=32) superseded by receipt-claude-tissue-rd-wavelength-v2.json",
               "receipt-claude-tissue-rd-convergence.json": "control on v1; motivates v2",
               "receipt-claude-tissue-identifiability.json": "v1 superseded by identifiability-v2 (rank-4 was a time-step artifact)",
-              "receipt-claude-tissue-growing-rd.json": "v1 (4x growth) complemented by v2 (12x growth)"}
+              "receipt-claude-tissue-growing-rd.json": "v1 (4x growth) complemented by v2 (12x growth)",
+              "receipt-claude-tissue-transfer-regimes.json": None}
 
 def git_head():
     return subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
@@ -107,6 +110,11 @@ if __name__ == "__main__":
             runs.append(dict(receipt=p.name, run=r["name"], command=r["command"], exit_code=r["exit_code"], seed=r["seed"], wall_s=r["wall_s"],
                              compute=r.get("compute") or r.get("gpu"), job_state=r.get("job_state"), superseded=SUPERSEDED.get(p.name),
                              code_changed_since_run=stale or None))
+        vids = sorted(d.glob("*.mp4"))
+        if vids:
+            card["video"] = dict(file=vids[0].name, sha256=sha(vids[0]), note=f"{vids[0].stat().st_size} bytes; render of computed model state, not footage")
+        if (d/"poster.png").exists():
+            card["poster"] = "poster.png"
         card = dict(id=name, **card, manifest=f"artifacts/simulations/{name}/manifest.json", native=True, couplings=[],
                     sources=[{"label": "Observed allometry", "locator": "artifacts/observed-allometry/source-observations.csv"}] if inputs else [])
         man = dict(schema="frontier.claude-tissue-simulation.manifest/1", id=name, title=card["title"], scales=card["scales"],

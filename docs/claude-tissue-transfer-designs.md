@@ -125,6 +125,23 @@ by the kinetics (d), and the growth rate controls whether the staircase holds or
 
 **Counting limitation.** Peak counts use an interior-maximum rule, so edge peaks may be under-counted.
 
+**v3: edge (apical) growth contrast**, added after the review noted that rays are added at the margins.
+`edge_growth_rd.py`: the same kinetics, but the domain grows only by appending cells at one edge (W 12 → 144). The runs
+cover 3 edge speeds (0.5, 0.1, 0.03, matching growth times of about 264, 1320 and 4400) × 3 values of d × 5 seeds.
+All 45 runs completed, in three capped processes plus a merge, every exit code 0.
+
+- **Event type.** Every peak is added sequentially at the growing edge (+1 events, max jump 1 in 44/45 runs) and
+  never by doubling. The final count stays close to W/λ*: 8–12 peaks against 10.3–11.9 expected.
+- **Regularity.** Spacing is highly regular, with CV ≤ 0.04.
+- **Speed dependence.** Spacing *widens as the edge slows*. At d = 15 it goes from 12.0 to 13.7 (λ* 12.1); at d = 20 from
+  13.1 to 15.1 (λ* 12.9); at d = 30 from 15.1 to 17.9 (λ* 14.0). That is up to +28% above the fastest linear mode.
+- **Transfer function.** Under edge growth, ray number ≈ W / s(v), where spacing s rises as outgrowth speed v falls.
+  Under uniform growth, the count is a power-of-two staircase.
+
+**Discriminating prediction.** Margin-addition with spacing that depends on outgrowth speed (edge model) vs
+synchronous splitting (uniform model). Slowing fin outgrowth, for example by temperature in medaka, should *widen* new
+ray spacing under the edge model.
+
 **Experiment design.**
 1. **Longitudinal live imaging.** Image ray-primordium (or scale-primordium) markers in a growing fin fold of flying fish and
    in an outgroup with short fins. Score the insertion events: +1 at an edge, +1 in the interior, or near-doubling.

@@ -1,0 +1,29 @@
+{
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+  "simulations/claude_tissue/edge_growth_rd.py": "ff17c026f5f25dc1b7257faf572e8d46c2d1f9ab774421875ed835dddd72fc09"
+ },
+ "command": "python3 simulations/claude_tissue/edge_growth_rd.py 20",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {},
+ "name": "claude-tissue-edge-growth-rd-d20",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-growing-rd/edge-growth-part-d20.json": "9a896d789d610715ba3201fcc4ce10f21093712c40d10ef8455b3f50d11c51ec"
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "wall_s": 328.288
+}
