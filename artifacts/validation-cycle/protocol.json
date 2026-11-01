@@ -105,7 +105,9 @@
     "why": "GRCz11 coordinates for the tested element are unresolved in the ledger"
   },
   "slice": {
-    "EI_crit_Nm2": 0.00064599609375,
+    "EI_crit_end_loaded_Nm2": 0.0017226562499999998,
+    "EI_crit_note": "the receipt's critical EI is for its UNIFORM pressure load; the end-loaded slice needs its own, derived here from P L^3/(3EI) and P L^2/(2EI) with the declared limits",
+    "EI_crit_uniform_load_receipt_Nm2": 0.00064599609375,
     "EI_domain_exit_multiple_of_crit": 0.5,
     "EI_positive_multiple_of_crit": 2.0,
     "EI_status": "ASSUMED_RANGE_NOT_MEASURED",

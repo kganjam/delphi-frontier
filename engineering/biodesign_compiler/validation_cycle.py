@@ -82,6 +82,14 @@ def operating_point(root: Path = ROOT) -> dict:
     return {"P_N": float(Fraction(ex["F_total_N"])), "L_m": float(Fraction(ex["L_ray_m"])), "P_exact": ex["F_total_N"], "L_exact": ex["L_ray_m"], "EI_crit_Nm2": float(Fraction(r["critical_stiffness"]["EI_crit_Nm2_exact"])), "EI_status": r["EI_assumed_range"]["status"], "limits": r["validity"]["policy"]}
 
 
+TIP_OVER_L_MAX, SLOPE_MAX_RAD = 0.1, 0.2  # beam.check_small_deformation defaults, the declared small-deflection limits
+
+
+def end_loaded_crit(P: float, L: float) -> float:
+    """Smallest EI for which an END-LOADED cantilever stays inside the declared limits: tip/L <= 0.1 and slope <= 0.2 rad."""
+    return max(P * L**2 / (3.0 * TIP_OVER_L_MAX), P * L**2 / (2.0 * SLOPE_MAX_RAD))
+
+
 def build_protocol(root: Path = ROOT) -> dict:
     op = operating_point(root)
     reused = {k: _file_pin(v, root) for k, v in {"fin_mechanics_receipt": FINMECH, "analytic_controls": CONTROLS, "observed_allometry_update": ALLOM, "observed_allometry_receipt": ALLOM_RECEIPT}.items()}
@@ -100,7 +108,9 @@ def build_protocol(root: Path = ROOT) -> dict:
             "law": "delta = P L^3 / (3 EI)",
             "not_this_law": "uniformly loaded beam: delta = q L^4 / (8 EI)",
             "operating_point": {k: op[k] for k in ("P_N", "L_m", "P_exact", "L_exact")},
-            "EI_crit_Nm2": op["EI_crit_Nm2"],
+            "EI_crit_uniform_load_receipt_Nm2": op["EI_crit_Nm2"],
+            "EI_crit_end_loaded_Nm2": end_loaded_crit(op["P_N"], op["L_m"]),
+            "EI_crit_note": "the receipt's critical EI is for its UNIFORM pressure load; the end-loaded slice needs its own, derived here from P L^3/(3EI) and P L^2/(2EI) with the declared limits",
             "EI_status": op["EI_status"],
             "EI_positive_multiple_of_crit": 2.0,
             "EI_domain_exit_multiple_of_crit": 0.5,
@@ -142,7 +152,7 @@ def check_mechanical(protocol: dict) -> dict:
     """Executed: FEM versus the closed form at the declared point, with the validity gate strict."""
     s = protocol["slice"]
     op, tol = s["operating_point"], protocol["tolerances"]
-    EI = s["EI_positive_multiple_of_crit"] * s["EI_crit_Nm2"]
+    EI = s["EI_positive_multiple_of_crit"] * s["EI_crit_end_loaded_Nm2"]
     sol, chk = beam.solve_checked(op["L_m"], EI, n_el=s["n_elements"], tip_force=op["P_N"], strict=True)
     tip_a, slope_a = _tip_slope_analytic(op["P_N"], op["L_m"], EI)
     tip_rel = abs(sol.tip - tip_a) / tip_a
@@ -166,7 +176,7 @@ def check_mechanical(protocol: dict) -> dict:
 def check_negative_controls(protocol: dict) -> dict:
     """Executed: each control must be refused for ITS intended reason (a law mutant, a unit mutant, a context mix-up, a domain exit)."""
     s, tol = protocol["slice"], protocol["tolerances"]
-    op, EI = s["operating_point"], s["EI_positive_multiple_of_crit"] * s["EI_crit_Nm2"]
+    op, EI = s["operating_point"], s["EI_positive_multiple_of_crit"] * s["EI_crit_end_loaded_Nm2"]
     out = []
     # 1 law: the uniformly loaded tip formula used for an end load, and L^3 -> L^2, against independent quadrature (control_residuals)
     for name, fn in (("uniform-load law applied to an end load", lambda P, L, EI_: beam.tip_deflection_uniform(P, L, EI_)), ("L^3 -> L^2 mutation", lambda P, L, EI_: P * L**2 / (3.0 * EI_))):
@@ -182,12 +192,19 @@ def check_negative_controls(protocol: dict) -> dict:
     end = beam.tip_deflection_point_load(op["P_N"], op["L_m"], EI)
     out.append({"id": "context:uniformly loaded claim", "intended_failure": "wrong load case for the slice", "uniform_over_end_tip_ratio": uni / end, "rejected": abs(uni / end - 1.0) > 0.1 and True})
     # 4 domain exit: below the critical EI the linear model is outside its declared domain (strict gate raises)
-    low = s["EI_domain_exit_multiple_of_crit"] * s["EI_crit_Nm2"]
+    low = s["EI_domain_exit_multiple_of_crit"] * s["EI_crit_end_loaded_Nm2"]
     try:
         beam.solve_checked(op["L_m"], low, n_el=s["n_elements"], tip_force=op["P_N"], strict=True)
         out.append({"id": "domain:EI below critical", "intended_failure": "small-deformation limit exceeded", "rejected": False})
     except beam.SmallDeformationViolation as e:
         out.append({"id": "domain:EI below critical", "intended_failure": "small-deformation limit exceeded", "refusal": str(e), "rejected": True})
+    # 5 context: the receipt's critical EI belongs to the uniformly loaded case; used for the end load it is outside the declared domain
+    wrong_crit = s["EI_crit_uniform_load_receipt_Nm2"]
+    try:
+        beam.solve_checked(op["L_m"], wrong_crit * s["EI_positive_multiple_of_crit"], n_el=s["n_elements"], tip_force=op["P_N"], strict=True)
+        out.append({"id": "context:uniform-load critical EI used for the end load", "intended_failure": "wrong load case for the stiffness threshold", "rejected": False})
+    except beam.SmallDeformationViolation as e:
+        out.append({"id": "context:uniform-load critical EI used for the end load", "intended_failure": "wrong load case for the stiffness threshold", "refusal": str(e), "rejected": True})
     return {"controls": out, "all_rejected": all(c["rejected"] for c in out)}
 
 
@@ -284,7 +301,7 @@ def _results(protocol: dict, mech, neg, virt, reused) -> dict:
         "c-fem-vs-analytic": {
             "status": "pass" if mech["passed"] else "fail",
             "cases": {"positive": pos, "negative": n, "negative_rejected": neg["all_rejected"]},
-            "scope": "the declared point only (EI = 2 x critical, assumed)",
+            "scope": "the declared point only (EI = 2 x the end-loaded critical value, assumed)",
             "licenses": "the end-loaded FEM equals the closed form at this point, inside the small-deflection domain",
             "execution": {"kind": "executed", "tip_rel_error": mech["cases"][0]["rel_error"], "tip_over_L": mech["tip_over_L"]},
         },
@@ -658,7 +675,7 @@ def prepare_bundle(source_commit: str, created_at: str, out: Path) -> dict:
                 "created_time": {"value": None, "basis": "unknown"},
                 "retrieved_time": {"value": created_at, "basis": "declared"},
                 "method": "Executed: FEM versus closed form with the strict validity gate; law, unit, context and domain negative controls; V1 and V2 on the saved section. Reused (not rerun): the pinned fin_mechanics receipt and analytic controls.",
-                "context": "End-loaded cantilever, assumed EI = 2 x the critical value, declared P and L from the pinned receipt.",
+                "context": "End-loaded cantilever, assumed EI = 2 x the end-loaded critical value, declared P and L from the pinned receipt.",
                 "assumptions": ["Euler-Bernoulli, linear elastic, static, constant EI."],
                 "provenance": {"adapter": "engineering.biodesign_compiler.validation_cycle", "executed": summary["reused_vs_executed"]["executed"], "reused": summary["reused_vs_executed"]["reused"], "store_execution": False},
                 "source_dependence": {"group": "shares fin_mechanics.beam with the producer receipt", "independent_replication": False},
