@@ -101,7 +101,7 @@
   }
  ],
  "review": {
-  "model": "gemini-4-argon (Google), design critique 2026-11-01T14:39Z, full code + summary sent",
+  "model": "gemini-4-argon (Google), design critique 2026-11-01T14:39Z, full code + summary sent; gemini-3.8-flash wording check of findings 2026-11-01 ~15:19Z (three overclaim/jargon fixes applied)",
   "changed_in_response": [
    "added an aquatic fin cost (kappa_fin, swept 0-1; default 0 = escape-only fitness, stated)",
    "added a zero-lift (ballistic) control for every phenotype",
@@ -147,14 +147,14 @@
  "findings": [
   "ANSWER (default physics, H_vis + H_chase): changing all four traits together along the straight line ancestor -> target, W never decreases (max drop 0.0e+00 over 200 steps) -- a monotonically improving path EXISTS when traits co-vary. With one trait changing at a time there is no strictly improving path: the least-bad route dips by 1.2e-04.",
   "Default physics, H_vis + H_chase: W rises from 0.484 (ancestor) to 0.9997 (target). The best single-trait path has worst step dW = -1.21e-04: no strictly improving path; every path crosses a dip of at least 1.21e-04. Bottleneck step: M 0.0271 -> 0.033 (dW -1.21e-04).",
-  "H_chase only (escape requires out-running the predator's chase): the ancestor's 0.137 pectoral ratio gives a leap shorter than the chase, W = e_swim exactly, and the landscape is flat around it: worst step 0.00e+00; the Lande walk does not move (ends at p = 0.137). Under this hypothesis the first steps are neutral and need drift or another benefit.",
+  "H_chase only (escape requires out-running the predator's chase): the ancestor's 0.137 pectoral ratio gives a leap shorter than the chase, W = e_swim exactly, and the landscape is flat around it: worst step 0.00e+00; the Lande walk does not move (ends at p = 0.137). Under this hypothesis the model walk's first steps are neutral: in the model, only drift or an additional benefit could start it.",
   "H_vis only: worst step -1.47e-03; bottleneck M 0.0182 -> 0.0222 (dW -1.47e-03).",
   "Selection-driven (Lande) walk, default, H_vis + H_chase, 20000 generations at CV_A 0.05: ends at p = 0.312, A = 1.87, M = 17.0 g, c = 0.635; normalised distance to the Exocoetus-like target 0.87. The walk does not head to the target's aspect ratio or mass under this fitness.",
   "Across all 90 sensitivity rows: strictly improving path in 1, neutral-only in 24, a required dip in 65; the Lande walk came within 0.05 (normalised) of the target in 0.",
-  "Where the dip is (reach_post, default landscape): vis: to the target cell worst step -1.5e-03 (M), mass free -7.9e-04 (A), mass frozen -1.3e-03 (p); both: to the target cell worst step -1.2e-04 (M), mass free -2.0e-05 (M), mass frozen -5.7e-05 (p). So the dip is not only the mass increase: escape peaks once the fins carry the full weight at exit (phi = 1, p near 0.3) and falls slightly as p and A rise further toward the exocoetid values.",
-  "H_chase plateau: 28912 grid cells connected to the ancestor have W exactly equal to e_swim (up to p = 0.79); a path to the target exists with no downhill step but begins with neutral steps only -- under H_chase the first steps need drift, not selection.",
+  "Where the dip is (reach_post, default landscape): vis: to the target cell worst step -1.5e-03 (M), mass free -7.9e-04 (A), mass frozen -1.3e-03 (p); both: to the target cell worst step -1.2e-04 (M), mass free -2.0e-05 (M), mass frozen -5.7e-05 (p). So the dip is not only the mass increase: in the model, escape probability peaks when the fins first carry the full body weight at water exit (lift ratio phi = 1, pectoral length about 0.3 SL) and declines slightly as fin length p and aspect ratio A rise further toward the exocoetid values.",
+  "H_chase plateau: 28912 grid cells connected to the ancestor have W exactly equal to e_swim (up to p = 0.79); a path to the target exists with no downhill step but begins with neutral steps only -- in the H_chase model, selection alone cannot start the walk.",
   "BOTTLENECK of the selection-driven walk: across all 30 H_vis+H_chase rows the walk ends at p = 0.22-0.73 with broad fins (A about 2), never within 0.05 of the target. The stall is where the fins first carry the full weight at water exit; it is robust to the CL control rule (scheduled-CL variant ends at p = 0.36) but not to exit speed (V_exit = 4 m/s: p = 0.73).",
-  "Straight-line (traits co-varying) check across the 78 sensitivity rows that ran it: monotone non-decreasing in 54; largest single drop among the rest 6.9e-03. Required single-trait dips, where present, range 5.4e-07 to 5.3e-03 in W per attack; whether drift or a correlated response would cross them depends on Ne and G, which this model does not estimate. The Ne needed for selection to dominate at the weakest positive step is given per row in sensitivity.json.",
+  "Straight-line (traits co-varying) check across the 78 sensitivity rows that ran it: monotone non-decreasing in 54; largest single drop among the rest 6.9e-03. Required single-trait dips, where present, range 5.4e-07 to 5.3e-03 in W per attack; whether drift or a correlated response would cross them depends on effective population size (Ne) and the genetic covariance matrix (G), which this model does not estimate. The Ne needed for selection to dominate at the weakest positive step is given per row in sensitivity.json.",
   "Zero-lift control: ancestor airborne 6.12 m with lift vs 5.24 m ballistic; target 37.7 m vs 12.9 m."
  ],
  "parameter_unknowns": [

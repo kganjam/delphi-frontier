@@ -50,9 +50,25 @@ ABM = {  # value, unit, provenance
 A0 = {k: v[0] for k, v in ABM.items()}
 
 
-def make_schools(rng, B, N, A, steps=250):
-    """Zonal model in 2-D, B schools of N in parallel; returns positions (B,N,2) centred, heading rotated to +x."""
-    pos = rng.normal(0, 0.25 * math.sqrt(N), (B, N, 2)); ang = rng.normal(0, 0.3, (B, N))
+def make_schools(rng, B, N, A, steps=250, max_tries=20):
+    """Zonal model in 2-D, B schools of N in parallel; returns positions (B,N,2) centred, heading rotated to +x.
+    Any school whose attraction-radius graph is not connected (it fragmented into sub-schools) is regenerated
+    (fix 2026-11-01 ~15:35Z: a wider initial scatter fragmented 35% of N=32 and 83% of N=64 schools)."""
+    pos = _form(rng, B, N, A, steps)
+    for _ in range(max_tries):
+        if N == 1:
+            break
+        bad = ~np.isfinite(hop_matrix(pos, A["r_att"])).all(axis=(1, 2))
+        if not bad.any():
+            break
+        pos[bad] = _form(rng, int(bad.sum()), N, A, steps)
+    else:
+        raise RuntimeError("could not form connected schools")
+    return pos
+
+
+def _form(rng, B, N, A, steps):
+    pos = rng.normal(0, 0.08 * math.sqrt(N), (B, N, 2)); ang = rng.normal(0, 0.3, (B, N))
     vel = np.stack([np.cos(ang), np.sin(ang)], -1)
     if N == 1:
         return np.zeros((B, 1, 2))
@@ -108,7 +124,7 @@ def run(rng, B, N, mode, glide_d, glide_t, A, P, record=False):
     for k in range(steps):
         t = k * dt
         live = pmode < 2
-        if not live.any():
+        if not live.any() and not (record and (status == 1).any()):   # when recording, keep flying airborne fish to landing (video only)
             break
         water = status == 0
         # detection
@@ -224,18 +240,20 @@ def main():
     ap.add_argument("--seed", type=int, default=20261101)
     ap.add_argument("--B", type=int, default=600)
     ap.add_argument("--quick", action="store_true")
-    ap.add_argument("--part", default="all", help="all | main | sens:<i>-<j> (slice of the sensitivity list)")
+    ap.add_argument("--part", default="all", help="all | main | main:<N,N,..> | sens:<i>-<j> (slice of the sensitivity list)")
     a_ = ap.parse_args()
     started = C.utcnow(); t0 = time.time(); inputs = C.input_hashes(__file__)
-    do_main = a_.part in ("all", "main"); sl = slice(None) if a_.part == "all" else (slice(*map(int, a_.part[5:].split("-"))) if a_.part.startswith("sens:") else slice(0, 0))
-    sfx = "" if a_.part == "all" else "_" + a_.part.replace(":", "").replace("-", "_")
+    do_main = a_.part in ("all", "main") or a_.part.startswith("main:"); main_ns = [int(x) for x in a_.part[5:].split(",")] if a_.part.startswith("main:") else None
+    extras_main = do_main and (main_ns is None or 16 in main_ns)
+    sl = slice(None) if a_.part == "all" else (slice(*map(int, a_.part[5:].split("-"))) if a_.part.startswith("sens:") else slice(0, 0))
+    sfx = "" if a_.part == "all" else "_" + a_.part.replace(":", "").replace("-", "_").replace(",", "_")
     out = Path(a_.out); out.mkdir(parents=True, exist_ok=True)
     P = dict(C.DEFAULT)
     tz = C.target_phenotype(P); g = C.launch_and_glide(tz["p"], tz["A"], tz["M"], tz["c"], P)
     gd, gt = float(g["d"]), float(g["t_air"])
     res = {"schema": "frontier.eco.collective/1", "abm_assumptions": ABM, "shared_assumptions": C.ASSUMPTIONS, "sources": C.SOURCES,
            "glide_input": {"phenotype": tz, "airborne_distance_m": gd, "airborne_time_s": gt, "from": "common.launch_and_glide (project glide model), Exocoetus-like target"}}
-    ns = [1, 4, 16] if a_.quick else NS
+    ns = [1, 4, 16] if a_.quick else (main_ns or NS)
     res["part"] = a_.part
     if do_main:
         res["main"] = batch(a_.seed, a_.B, gd, gt, A0, P, ns=ns)
@@ -243,7 +261,7 @@ def main():
             print(k, v, flush=True)
         # alpha (encounter-rate scaling) post-hoc
         res["risk_per_time_relative_to_solitary"] = {}
-        for alpha in (0.0, 0.5, 1.0):
+        for alpha in (0.0, 0.5, 1.0) if 1 in ns else ():
             for cond in CONDS:
                 base = res["main"][f"{cond}|1"]["P_capture_episode"]
                 res["risk_per_time_relative_to_solitary"][f"alpha={alpha}|{cond}"] = {str(N): (res["main"][f"{cond}|{N}"]["P_capture_episode"] * N ** alpha / N) / max(base, 1e-12) for N in ns}
@@ -260,9 +278,9 @@ def main():
             sens.append({"setting": name, "abm_overrides": aov, "escape_overrides": pov, "glide_scale": glide_scale, "B": Bs, "results": r})
             print(name, {k: round(v["per_capita"], 4) for k, v in r.items()}, flush=True)
         res["sensitivity"] = sens
-        if do_main:  # seed replicate of the main table for N in {1, 16}
+        if extras_main:  # seed replicate of the main table for N in {1, 16}
             res["seed_replicate"] = batch(a_.seed + 99, a_.B, gd, gt, A0, P, ns=[1, 16])
-    if do_main:  # record one episode per condition for the video
+    if extras_main:  # record one episode per condition for the video
         rec = {}
         for cond in CONDS:
             for N in (1, 32):
@@ -284,10 +302,14 @@ def merge(out_dir, sfxs):
         shards.append({"part": rc.get("part"), "receipt": f"receipt_{t}.json", "receipt_sha256": C.sha256_file(out / f"receipt_{t}.json"), "exit_code": rc["exit_code"], "command": rc["command"], "elapsed_s": rc.get("elapsed_s")})
         if res is None:
             res = {k: v for k, v in r.items() if k not in ("sensitivity", "part", "elapsed_s")}; res["sensitivity"] = []
-        for k in ("main", "risk_per_time_relative_to_solitary", "seed_replicate"):
+        for k in ("seed_replicate",):
             if k in r:
                 res[k] = r[k]
+        res.setdefault("main", {}).update(r.get("main", {}))
         res["sensitivity"] += r.get("sensitivity", [])
+    ns = sorted({int(k.split("|")[1]) for k in res["main"]})
+    res["risk_per_time_relative_to_solitary"] = {f"alpha={al}|{c}": {str(N): (res["main"][f"{c}|{N}"]["P_capture_episode"] * N ** al / N) / max(res["main"][f"{c}|1"]["P_capture_episode"], 1e-12) for N in ns}
+                                                 for al in (0.0, 0.5, 1.0) for c in CONDS}
     C.dump(out / "results.json", res)
     first = json.loads((out / f"receipt_{sfxs[0]}.json").read_text())
     C.dump(out / "receipt.json", {"schema": "frontier.eco.receipt/1", "kind": "merge of shard receipts", "script": first["script"], "seed": first["seed"], "exit_code": 0 if all(s["exit_code"] == 0 for s in shards) else 1,
