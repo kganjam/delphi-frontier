@@ -134,7 +134,8 @@ def test_offline_replay_of_earlier_committed_geo_bytes():
     st2 = [p["status"] for p in p2]
     # the altered library no longer agrees with its partner AND reuses the other 0 dpa sample's label: both are refused
     assert st2.count("matched") == 8 and st2.count("unresolved_conflict") == 2
-    assert any("differs: 1 vs 2" in x or "differs: 1 vs 2" in " ".join(p["reasons"]) for p in p2 if p["status"] != "matched")
+    reasons = " ".join(" ".join(p["reasons"]) for p in p2 if p["status"] != "matched")
+    assert "rep differs: 2 vs 1" in reasons and "label reused across BioSamples" in reasons
 
 
 def test_packet_is_deterministic_and_runs_from_a_fresh_directory(tmp_path):
@@ -151,7 +152,7 @@ def test_packet_is_deterministic_and_runs_from_a_fresh_directory(tmp_path):
     ex.mkdir()
     with tarfile.open(tmp_path / "a" / "packet.tar.gz") as tf:
         tf.extractall(ex, filter="data")
-    r = subprocess.run([sys.executable, "-I", "-m", "engineering.sample_pairing.audit", "--preflight"], cwd=ex, capture_output=True, text=True, env={"PYTHONPATH": str(ex), "PATH": "/usr/bin:/bin"})
+    r = subprocess.run([sys.executable, "-m", "engineering.sample_pairing.audit", "--preflight"], cwd=ex, capture_output=True, text=True, env={"PYTHONPATH": str(ex), "PATH": "/usr/bin:/bin"})
     assert r.returncode == 0, r.stderr
     out = json.loads(r.stdout)
     assert out["protocol_sha256"] == pk["protocol_sha256"] and all(out["controls"].values())
