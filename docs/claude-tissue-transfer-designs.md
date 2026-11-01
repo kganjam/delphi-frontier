@@ -444,8 +444,24 @@ shows the dip is isolated to exactly L_p = 10:
 | Distal A | 0.98 | 0.01 (reproduced) | 0.99 |
 
 A single integer width failing points to a discretisation effect: the zone boundary is a step applied to cell
-centres. Non-integer widths 9.7–10.3 are being tested (`claude-tissue-pzone-g2r3`). A γ = 0.5 regional run is also
-running for completeness (`claude-tissue-pzone-g05r`).
+centres. Non-integer widths 9.7–10.3 are being tested (`claude-tissue-pzone-g2r3`). **γ = 0.5 regional run** (`claude-tissue-pzone-g05r`, job `aijob-e00wxw6fcavbvv05j5`, COMPLETED, 760.2 s):
+
+| L_p | 4 | 6 | 7 | 8 | 10 | 12 |
+|---|---|---|---|---|---|---|
+| Distal A | −0.12 | −0.10 | **0.81** | 0.93 | 0.97 | 0.98 |
+
+The switch lies between L_p = 6 and 7.
+
+**Switch estimates across rate scales:**
+
+| γ | λ | Switch L_p* | L_p* / λ |
+|---|---|---|---|
+| 2 | 7.9 | ≈ 2.5 | 0.32 |
+| 1 | 11 | ≈ 5 | 0.45 |
+| 0.5 | 15.8 | ≈ 6.5 | 0.41 |
+
+The switch grows with the wavelength at roughly 0.3–0.45 λ. The brackets are about 1 unit wide, so a precise scaling
+exponent is not determined; a finer γ = 1 run is queued (`claude-tissue-pzone-g1f`).
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and
