@@ -1,0 +1,31 @@
+{
+  "schema": "frontier.sequence-evidence.test-receipt/1",
+  "time_UTC": "2026-11-01T05:35:01.828797+00:00",
+  "base_commit": "7645cd031d0937afcfbe3ef7232ae90d52607f80",
+  "checks": [
+    {
+      "argv": [
+        "/data/worktrees/delphi-frontier/codex-demo/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_sequence_evidence.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": ".............                                                            [100%]\n13 passed in 0.47s\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/miniconda3/bin/ruff",
+        "check",
+        "connectors/sequence_evidence",
+        "tests/test_sequence_evidence.py"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    }
+  ],
+  "scope": "13 focused sequence/context checks plus focused Ruff, not whole-suite or independent biology"
+}
