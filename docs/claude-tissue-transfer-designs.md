@@ -451,8 +451,15 @@ centres. Non-integer widths were then tested (`claude-tissue-pzone-g2r3`, job `a
 | Distal A | 0.34 | −0.01 | 0.01 | 0.66 | 0.97 |
 
 **The integer-artifact explanation is ruled out.** Orientation fails smoothly across a narrow window about 0.5 wide,
-centred near L_p ≈ 10 ≈ 1.27 λ. A resonance between zone width and wavelength is possible but unverified. A run at
-γ = 1 near 1.27 λ ≈ 14 is testing whether the window recurs (`claude-tissue-pzone-g1res`). **γ = 0.5 regional run** (`claude-tissue-pzone-g05r`, job `aijob-e00wxw6fcavbvv05j5`, COMPLETED, 760.2 s):
+centred near L_p ≈ 10 ≈ 1.27 λ. A resonance between zone width and wavelength is possible but unverified. A run at γ = 1 near 1.27 λ ≈ 14 tested whether the window recurs (`claude-tissue-pzone-g1res`, job
+`aijob-e00sjqac5mkk26xx38`, COMPLETED, 632.4 s).
+
+| L_p | 13 | 13.5 | 14 | 14.5 | 15 |
+|---|---|---|---|---|---|
+| Distal A | 0.97 | 0.95 | 0.98 | 0.97 | 0.96 |
+
+**There is no window at γ = 1.** The γ = 2 failure near L_p ≈ 10 is therefore not a general zone-to-wavelength
+resonance. It remains **unexplained**, observed only at γ = 2. **γ = 0.5 regional run** (`claude-tissue-pzone-g05r`, job `aijob-e00wxw6fcavbvv05j5`, COMPLETED, 760.2 s):
 
 | L_p | 4 | 6 | 7 | 8 | 10 | 12 |
 |---|---|---|---|---|---|---|
