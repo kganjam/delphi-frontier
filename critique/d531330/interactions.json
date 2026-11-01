@@ -1,0 +1,237 @@
+{
+ "chromium": "145.0.7632.6",
+ "base": "https://frontier.morphoswarm.ai/",
+ "knowledge_scroll": {
+  "item_count_after_each_scroll": [
+   50,
+   50,
+   100,
+   150,
+   150,
+   200,
+   200,
+   250,
+   300
+  ],
+  "more_controls": [
+   "Natural selection makes organisms simple",
+   "Freshwater biotas evolve and go extinct ",
+   "Large populations favour natural selecti",
+   "UNRESOLVED and expected to stay so on pr",
+   "Congeners compete more severely than spe"
+  ],
+  "page": {
+   "sh": 41626,
+   "y": 33583
+  },
+  "page_errors": []
+ },
+ "search": {
+  "normal": {
+   "hash": "#/search?q=fish&tab=catalog",
+   "h1": "Search",
+   "n": 40,
+   "injected_img": false,
+   "text": "Search\n\nSearch every record the node can read. Results come from the live catalog when a runtime is connected, otherwise from the committed snapshot, and the mo",
+   "dialogs": [],
+   "page_errors": []
+  },
+  "nonsense": {
+   "hash": "#/search?q=zzqxjv&tab=catalog",
+   "h1": "Search",
+   "n": 20,
+   "injected_img": false,
+   "text": "Search\n\nSearch every record the node can read. Results come from the live catalog when a runtime is connected, otherwise from the committed snapshot, and the mo",
+   "dialogs": [],
+   "page_errors": []
+  },
+  "empty": {
+   "hash": "#/search?tab=catalog",
+   "h1": "Search",
+   "n": 20,
+   "injected_img": false,
+   "text": "Search\n\nSearch every record the node can read. Results come from the live catalog when a runtime is connected, otherwise from the committed snapshot, and the mo",
+   "dialogs": [],
+   "page_errors": []
+  },
+  "html": {
+   "hash": "#/search?q=%3Cimg+src%3Dx+onerror%3Dalert%281%29%3E&tab=catalog",
+   "h1": "Search",
+   "n": 20,
+   "injected_img": false,
+   "text": "Search\n\nSearch every record the node can read. Results come from the live catalog when a runtime is connected, otherwise from the committed snapshot, and the mo",
+   "dialogs": [],
+   "page_errors": []
+  },
+  "quote": {
+   "hash": "#/search?q=a%22b%27c&tab=catalog",
+   "h1": "Search",
+   "n": 32,
+   "injected_img": false,
+   "text": "Search\n\nSearch every record the node can read. Results come from the live catalog when a runtime is connected, otherwise from the committed snapshot, and the mo",
+   "dialogs": [],
+   "page_errors": []
+  }
+ },
+ "graph": {
+  "#/graph": {
+   "svg": 0,
+   "canvas": 0,
+   "nodes": 0,
+   "edges": 0,
+   "svg_with_title": 0,
+   "page_errors": []
+  },
+  "#/knowledge?tab=graph": {
+   "svg": 1,
+   "canvas": 0,
+   "nodes": 0,
+   "edges": 0,
+   "svg_with_title": 1,
+   "page_errors": []
+  },
+  "#/frontier": {
+   "svg": 1,
+   "canvas": 1,
+   "nodes": 0,
+   "edges": 0,
+   "svg_with_title": 1,
+   "page_errors": []
+  }
+ },
+ "downloads_and_3d": {
+  "webgl": true,
+  "viewer_elements": {
+   "canvas": 0,
+   "model_viewer": 0
+  },
+  "page_errors": [],
+  "download_links_found": 2,
+  "checked": [
+   {
+    "url": "data/snapshot.json",
+    "status": 200,
+    "bytes": null,
+    "type": "application/json"
+   },
+   {
+    "url": "data/catalog.json",
+    "status": 200,
+    "bytes": null,
+    "type": "application/json"
+   }
+  ]
+ },
+ "studio_links": {
+  "links": 12,
+  "checked": 12,
+  "not_found": [
+   "#/evidence"
+  ],
+  "rows": [
+   {
+    "href": "#/home",
+    "h1": "Design together.Know what's open.",
+    "notfound": false
+   },
+   {
+    "href": "#/studio",
+    "h1": "Studio",
+    "notfound": false
+   },
+   {
+    "href": "#/frontier",
+    "h1": "What we know.What's next.Who's working on it.",
+    "notfound": false
+   },
+   {
+    "href": "#/knowledge",
+    "h1": "Knowledge",
+    "notfound": false
+   },
+   {
+    "href": "#/evidence",
+    "h1": "Evidence",
+    "notfound": true
+   },
+   {
+    "href": "#/work",
+    "h1": "System",
+    "notfound": false
+   },
+   {
+    "href": "#/about",
+    "h1": "Build a design.Discover what science is missing.",
+    "notfound": false
+   },
+   {
+    "href": "#/about/team",
+    "h1": "Different expertise.A shared, inspectable record.",
+    "notfound": false
+   },
+   {
+    "href": "#/about/docs",
+    "h1": "Open the reasoning.",
+    "notfound": false
+   },
+   {
+    "href": "#/about/inspirations",
+    "h1": "Make scientific knowledgeusable in the next decision.",
+    "notfound": false
+   },
+   {
+    "href": "#/generative",
+    "h1": "Generative biology,grounded in mechanism.",
+    "notfound": false
+   },
+   {
+    "href": "#/studio/flying-fish",
+    "h1": "Flying fish",
+    "notfound": false
+   }
+  ]
+ },
+ "keyboard": {
+  "desktop": {
+   "first_five": [
+    "N1 baseline (flat fin plates)v",
+    "Interactive 3D fish mesh. Arro",
+    "Reset view",
+    "Show all components",
+    "adult-fao"
+   ],
+   "no_visible_focus_indicator": 0,
+   "focus_offscreen": 0,
+   "tabs": 30,
+   "skip_link_first": false
+  },
+  "phone": {
+   "first_five": [
+    "N1 baseline (flat fin plates)v",
+    "How these candidates relate: t",
+    "Parametric design drawing: sta",
+    "Side",
+    "Top"
+   ],
+   "no_visible_focus_indicator": 4,
+   "focus_offscreen": 0,
+   "tabs": 30,
+   "skip_link_first": false
+  }
+ },
+ "back_forward": {
+  "trail": [
+   "#/studio",
+   "#/knowledge",
+   "#/evidence"
+  ],
+  "after_back": {
+   "hash": "#/knowledge",
+   "h1": "Knowledge"
+  },
+  "after_reload": {
+   "hash": "#/knowledge",
+   "h1": "Knowledge"
+  }
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "work_null_context": "cation draft export.\nticked\tMeasure actual claim reuse and coordination; retain null results.\nopen\tVerify and deploy the integrated demo wit",
+ "graph_unnamed": [
+  "<a href=\"#/entity//\"> </a>"
+ ],
+ "graph_text": "/ NEIGHBOURHOOD\n\nNeighbourhood graph\n\nThe graph could not be built: \u201c\u201d is not a record kind this site knows (Claim, Problem, Evidence, Assessment, Action, Actor, ResourceOffer, Interest, Event, Project, Annotation); no request was made. Nothing is drawn in its place.",
+ "search_nonsense_text": "Search\n\nSearch every record the node can read. Results come from the live catalog when a runtime is connected, otherwise from the committed snapshot, and the mode is stated above the list.\n\nRanked results\n\nlexical text match. A score is shown only with its kind; a rank is not truth, quality or acceptance.\n\nNo ranked result. lexical text match.\n\nRecords are shown as full envelopes with a separate local status. Upstream labels never become local acceptance. The catalog is read through the adapter: live mode (runtime answered /api/health).\n\nQuery\nKind\nall\nClaim\nProblem\nEvidence\nLocal status\nany\nsnapshot unreviewed\nSearch\nClear\n\nNo record matches (the live node returned none). Try fewer words or",
+ "evidence_notfound_context": "records, mostly barcodes per the report.\nRaw pectoral-fin area versus body mass\tnot found\tFish 1990 publishes fitted coefficients, not raw data. Dryad, Figshare",
+ "entity_rget-morphol": {
+  "h1": 1,
+  "main": 8187,
+  "errs": [],
+  "bad": [
+   "429 https://frontier.morphoswarm.ai/api/session",
+   "FAILED ntier.morphoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4 net::ERR_ABORTED"
+  ]
+ },
+ "entity_ogenetic-flo": {
+  "h1": 1,
+  "main": 8187,
+  "errs": [],
+  "bad": [
+   "429 https://frontier.morphoswarm.ai/api/session",
+   "FAILED ntier.morphoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4 net::ERR_ABORTED"
+  ]
+ },
+ "home_videos": [
+  {
+   "src": "",
+   "ready": 0,
+   "err": null,
+   "paused": true,
+   "autoplay": false,
+   "muted": true,
+   "controls": false,
+   "label": "Turntable of the fish3d candidate mesh (static render, not interactive)"
+  },
+  {
+   "src": "hoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4",
+   "ready": 4,
+   "err": null,
+   "paused": true,
+   "autoplay": false,
+   "muted": true,
+   "controls": true,
+   "label": "Turntable of the 3D model of candidate N1"
+  }
+ ],
+ "home_bad": [
+  "429 https://frontier.morphoswarm.ai/api/session",
+  "FAILED ntier.morphoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4 net::ERR_ABORTED"
+ ],
+ "turntable_head": 200,
+ "studio_viewer": {
+  "canvas": 0,
+  "viewer": [],
+  "dl": []
+ }
+}
