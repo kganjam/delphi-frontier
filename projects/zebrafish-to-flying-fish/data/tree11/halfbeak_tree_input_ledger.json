@@ -1,0 +1,170 @@
+{
+ "scope": "KCNH tree adding every KCNH-like locus of a CHROMOSOME-LEVEL Hemiramphus limbatus genome. Hemiramphidae is the sister family to Exocoetidae. A gene tree places sequences; it does not prove orthology.",
+ "question": "Does the halfbeak -- a chromosome-level genome in the sister family to flying fishes -- carry a kcnh2a-side locus? If not, the kcnh2a loss result no longer depends on a draft assembly.",
+ "halfbeak_assembly": {
+  "accession": "GCA_056149455.1",
+  "level": "Chromosome",
+  "genome_fasta_sha256": "4eb5eacf08983a12c93ca6013504ff12dd9205a7347a5b51bee986fc30b30cb3"
+ },
+ "search": "miniprot 0.18-r281 -N 10 --outs=0.5 --trans, the same 10 zebrafish KCNH queries and parameters as the flying-fish census, so the two are comparable",
+ "n_halfbeak_loci": 14,
+ "n_sequences": 51,
+ "fasta_bytes": 55161,
+ "fasta_sha256": "a155b178465d91d568b6d7e2803545326b1f273a660745e4bb725fce5b3b67a4",
+ "halfbeak_loci": [
+  {
+   "name": "HLIMB_locus01_len1277",
+   "sequence_id": "CM148831.1",
+   "start": 1511849,
+   "end": 1836795,
+   "top_query": "ZF_kcnh2a",
+   "coverage": 1.0,
+   "identity": 0.632,
+   "protein_len": 1277,
+   "sha256": "381dc0afc73827ae18221db8e8843abd14ea284fdf7583c238bc08ace9c0f483"
+  },
+  {
+   "name": "HLIMB_locus02_len1191",
+   "sequence_id": "CM148837.1",
+   "start": 13905756,
+   "end": 13993905,
+   "top_query": "ZF_kcnh7",
+   "coverage": 1.0,
+   "identity": 0.704,
+   "protein_len": 1191,
+   "sha256": "e219ebae9c6cb07a61ff9c30ba5c3db5411678fda489305c0adb9f6382cf8f55"
+  },
+  {
+   "name": "HLIMB_locus03_len1177",
+   "sequence_id": "CM148821.1",
+   "start": 2028746,
+   "end": 2073373,
+   "top_query": "ZF_kcnh6a",
+   "coverage": 1.0,
+   "identity": 0.734,
+   "protein_len": 1177,
+   "sha256": "bfd1e7fffe9541be0cc81f134c23a553fb7a838588a4ed0cd8382bf9509b06b6"
+  },
+  {
+   "name": "HLIMB_locus04_len1155",
+   "sequence_id": "CM148827.1",
+   "start": 23638776,
+   "end": 23684595,
+   "top_query": "ZF_kcnh7",
+   "coverage": 1.0,
+   "identity": 0.658,
+   "protein_len": 1155,
+   "sha256": "92283da7430a3931f4aa4874d6f8ae458b5e19151ee69c7a9ad2c7b688de321f"
+  },
+  {
+   "name": "HLIMB_locus05_len1147",
+   "sequence_id": "CM148821.1",
+   "start": 28370857,
+   "end": 28471357,
+   "top_query": "ZF_kcnh4a",
+   "coverage": 1.0,
+   "identity": 0.61,
+   "protein_len": 1147,
+   "sha256": "edb0849db949c74aa658fbf2b319847fd68ec95abacaf6b94efa365e8888035a"
+  },
+  {
+   "name": "HLIMB_locus06_len1108",
+   "sequence_id": "CM148827.1",
+   "start": 7797744,
+   "end": 7947530,
+   "top_query": "ZF_kcnh3",
+   "coverage": 1.0,
+   "identity": 0.741,
+   "protein_len": 1108,
+   "sha256": "a75a1e89d030d27487e25c58565de9bf4a0a35621aaa043cf3777c252791cfb2"
+  },
+  {
+   "name": "HLIMB_locus07_len1068",
+   "sequence_id": "CM148818.1",
+   "start": 17579888,
+   "end": 17594523,
+   "top_query": "ZF_kcnh5a",
+   "coverage": 0.996,
+   "identity": 0.692,
+   "protein_len": 1068,
+   "sha256": "28b14d7cb90c27416a5b3530424ef9eb63522ecddbf834fc12fe04e826239701"
+  },
+  {
+   "name": "HLIMB_locus08_len1066",
+   "sequence_id": "CM148836.1",
+   "start": 25671129,
+   "end": 25865121,
+   "top_query": "ZF_kcnh5a",
+   "coverage": 0.998,
+   "identity": 0.736,
+   "protein_len": 1066,
+   "sha256": "f5c56d394a152e1c7941644f279762fa69fe6e83928c9e14e36f809ad80acc22"
+  },
+  {
+   "name": "HLIMB_locus09_len1045",
+   "sequence_id": "CM148837.1",
+   "start": 6651355,
+   "end": 6696494,
+   "top_query": "ZF_kcnh3",
+   "coverage": 0.903,
+   "identity": 0.665,
+   "protein_len": 1045,
+   "sha256": "8b799bb98f274f557e4e656504e21c35e830c1bee7f0f07c3de8403ce3bbf0de"
+  },
+  {
+   "name": "HLIMB_locus10_len992",
+   "sequence_id": "CM148830.1",
+   "start": 8360968,
+   "end": 8411008,
+   "top_query": "ZF_kcnh1a",
+   "coverage": 1.0,
+   "identity": 0.856,
+   "protein_len": 992,
+   "sha256": "d7823fa069fb64053113ea80035b49d1d15b6019a57e0ad2d1010e773f5fef6f"
+  },
+  {
+   "name": "HLIMB_locus11_len983",
+   "sequence_id": "CM148822.1",
+   "start": 38492405,
+   "end": 38546865,
+   "top_query": "ZF_kcnh1b",
+   "coverage": 0.995,
+   "identity": 0.867,
+   "protein_len": 983,
+   "sha256": "532bd654df67cc745ef11e84ae45db29263094941cedbd78e3521b3c7d17e1f5"
+  },
+  {
+   "name": "HLIMB_locus12_len957",
+   "sequence_id": "CM148835.1",
+   "start": 18750741,
+   "end": 18797033,
+   "top_query": "ZF_kcnh4a",
+   "coverage": 0.834,
+   "identity": 0.675,
+   "protein_len": 957,
+   "sha256": "c19578ab3caa1e11a01a5ad0ed84f788853dd6838975374087917e8fa873feb3"
+  },
+  {
+   "name": "HLIMB_locus13_len887",
+   "sequence_id": "CM148835.1",
+   "start": 16221204,
+   "end": 16283805,
+   "top_query": "ZF_kcnh6b",
+   "coverage": 0.945,
+   "identity": 0.616,
+   "protein_len": 887,
+   "sha256": "e5deeea53d9d4f5f27be8077e37c89db94218310393548b0010a5d86fae187d3"
+  },
+  {
+   "name": "HLIMB_locus14_len679",
+   "sequence_id": "CM148829.1",
+   "start": 21840413,
+   "end": 21912780,
+   "top_query": "ZF_kcnh4a",
+   "coverage": 0.592,
+   "identity": 0.702,
+   "protein_len": 679,
+   "sha256": "c431eeac6b000627719e3c9404b565e695097aceaf969dfec7d1c58e7df15c38"
+  }
+ ]
+}
