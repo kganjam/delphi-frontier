@@ -147,10 +147,23 @@ def cards():
             scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; scaling test for claude-tissue-edge2d-cases",
             model=dict(name="2-D Schnakenberg with rate scale gamma, distal-edge growth", context=f"cases {eg2['meta'].get('cases')}"),
             equations=[{"label": "Scaling hypothesis", "tex": "v^*\\propto\\lambda^*\\sigma_{\\max}\\propto\\sqrt{\\gamma}", "source": "this harness; linear theory gives lambda*sigma 0.45, 0.64, 0.90 for gamma 0.5, 1, 2"}],
-            numerical_results=[f"gamma={v['b']}, edge speed {v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}" for v in sm.values()],
+            numerical_results=[f"gamma={v['b']}, edge speed {v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}" for v in sm.values()]
+                + ([f"log-log slope of threshold (A=0 crossing) vs gamma: {J('claude-tissue-edge2d-gamma/threshold-scaling.json')['loglog_slope_vA0_vs_gamma']:.2f} (sqrt-gamma prediction 0.5); A=0.5 crossing slope {J('claude-tissue-edge2d-gamma/threshold-scaling.json')['loglog_slope_vA05_vs_gamma']:.2f} (noisy)"]
+                   if (A/"claude-tissue-edge2d-gamma/threshold-scaling.json").exists() else []),
             parameter_unknowns=["Generic kinetics; speeds in pattern units."],
             open_questions=["If v* scales with lambda*sigma, the measurable prediction is a ratio: outgrowth speed / (ray spacing x patterning rate)."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless."])
+    if (A/"claude-tissue-fan-video/fan_video.json").exists():
+        fv = J("claude-tissue-fan-video/fan_video.json"); sm = fv["summary"]
+        C["claude-tissue-fan-video"] = dict(
+            title="Video: ray-like Turing stripes radiating and multiplying on a fan-shaped fin fold growing at its distal arc (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; video renders model state on an idealised fan, not tissue",
+            model=dict(name="2-D Schnakenberg on an annular sector, slow distal-arc growth (one seed, rendered)", context="same scheme as claude-tissue-fan; d=10, edge speed 0.1"),
+            equations=[{"label": "Polar Laplacian", "tex": "\\nabla^2u=u_{rr}+\\tfrac{1}{r}u_r+\\tfrac{1}{r^2}u_{\\theta\\theta}", "source": "standard"}],
+            numerical_results=[f"final stripes along arc {v['peaks_mean']} at r {[round(x) for x in v['radii']]} (fixed-spacing expectation {[round(x, 1) for x in v['expected']]})" for v in sm.values()],
+            parameter_unknowns=["Fan angle, growth law and timing are idealised."],
+            open_questions=["Compare insertion positions with real ray addition/branching in widening pectoral fins."],
+            limitations=["Does not establish that fin rays are Turing patterns.", "Single seed (rendering run); statistics are in claude-tissue-fan."])
     if (A/"claude-tissue-fan/fan.json").exists():
         fn = J("claude-tissue-fan/fan.json"); sm = fn["summary"]
         C["claude-tissue-fan"] = dict(

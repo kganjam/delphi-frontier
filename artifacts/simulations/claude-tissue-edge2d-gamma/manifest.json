@@ -1,0 +1,161 @@
+{
+  "base_commit": "162d2a9b261771264d5024bec3bcbd01e7319f30",
+  "code_sha256": {
+    "simulations/claude_tissue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "simulations/claude_tissue/build_manifests.py": "f22a26f340fbb69f38d496e2d05a762f950c19839c4a1d5494afe3c44e1d8edf",
+    "simulations/claude_tissue/collect_gpu2.py": "7263fd3be3e544d01c184587c4b3bf5c1f0397ce69373709eef7759458393fa0",
+    "simulations/claude_tissue/collect_rd_v2.py": "0e12867daab7054d0bd22d3d9dfaeea63d38f77a4b20076e2bd1a6471cf9325e",
+    "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+    "simulations/claude_tissue/dev_programme.py": "ff9f4336262a7f650edfc4185c7b247da697a5a87321d117d3bc11928e33a070",
+    "simulations/claude_tissue/dev_programme_species.py": "21f558444192465bd3a394c86695596cc51e99d2af9b3b3f788afa75899ae8b4",
+    "simulations/claude_tissue/dev_programme_video.py": "db8f8d9e26404ed37dcd39175fbed5789c66109d1d2f2b212c823e17f80fbe7d",
+    "simulations/claude_tissue/edge2d_cases_gpu.py": "f2457f94c42a99034aa2b9068eb35dbc7275584332719965935375396e8f48e6",
+    "simulations/claude_tissue/edge2d_gamma_gpu.py": "b972677347c58cf08605b952eebcd506666d2acda164a07b6643d15f7b8981b9",
+    "simulations/claude_tissue/edge2d_gpu.py": "219d919d25dc4361fc5fb8f42cd0b01e90d5f1ca0a32ab99b456c8f83c8f708e",
+    "simulations/claude_tissue/edge_growth_rd.py": "ff17c026f5f25dc1b7257faf572e8d46c2d1f9ab774421875ed835dddd72fc09",
+    "simulations/claude_tissue/fan_gpu.py": "8c6ef6ff181955d998282780d75406dbfa98fd169ecf11dd416663990a146916",
+    "simulations/claude_tissue/fan_video_gpu.py": "88d7f4aecb9a3edfe31b7c5e23d6bebf5eb6801dad8a84a557d8c127b481fb77",
+    "simulations/claude_tissue/fin_growth.py": "15653ce43228ad2dd207899110b8a6b98b0a8e15c6c674d66566be8a4d03f69b",
+    "simulations/claude_tissue/growing_rd.py": "3381bbce05e514d73d23051dd2614d4a6179e2f6ef09d7901ddafa0d6fc81d3d",
+    "simulations/claude_tissue/growing_rd_v2.py": "daf29f9ab143409d5385c1369f695e05ab6c1c1358bbf6ed26a27c33280b22cb",
+    "simulations/claude_tissue/identifiability.py": "bbb3d4eead39125f928f6798ec3e055ad29699a688aaa20f7133cab9410b0404",
+    "simulations/claude_tissue/identifiability_v2.py": "7359c0ae9acc946361fce480b36f3d0a6343af9081b7137178332a4f6c82cfa7",
+    "simulations/claude_tissue/phase_map_gpu.py": "3e58dd2d888ccf392b4ec3e0f7ec2810112c1750a87088f379b111a3aab9f09b",
+    "simulations/claude_tissue/rd_convergence.py": "b23b305e794d2095505cb170eed0f155b559a4b9fa387f1dba3f31e84f482bf6",
+    "simulations/claude_tissue/rd_wavelength.py": "cb0d94c7ef51ce28ff426a5d93310b01d9954569bfca2dccdd3c675ac12559d8",
+    "simulations/claude_tissue/rd_wavelength_v2_gpu.py": "793c452a83d0288827d6054924a961a5c141cc164cc6aaa3080c9b55469dad54",
+    "simulations/claude_tissue/threshold_scaling.py": "78f58fd580da33709c35bbcb9cb4b80de9fb10e9bbca131e05a67d5037333397",
+    "simulations/claude_tissue/transfer_regimes.py": "59d228120ae335b3f903ecf9e311dc4f40654c2845a8c492146c03f9c17d2b1a",
+    "simulations/claude_tissue/uniform2d_gpu.py": "216a97a8916435f43782385b52668e811dfc53bee8557b514537c602eb5e3af4",
+    "simulations/claude_tissue/uniform2d_y0_gpu.py": "c479a1460a92c3b01ad1428d19d247657bb697b76f61f2b44842a1eea8629288"
+  },
+  "does_not_establish": [
+    "Does not establish that fin rays are Turing patterns.",
+    "Dimensionless."
+  ],
+  "evidence_kind": "simulated; dimensionless; scaling test for claude-tissue-edge2d-cases",
+  "experiment_design": "docs/claude-tissue-transfer-designs.md",
+  "files": {
+    "edge2d_gamma.json": {
+      "bytes": 16584,
+      "sha256": "d0a9642ed0830947a6e02501e0af0e7549a785fdd0825e30d77a5d0e84a9b179"
+    },
+    "edge2d_gamma.png": {
+      "bytes": 833351,
+      "sha256": "e40c9eee4ef3cad0fe80a5f8afd29e82a9dd746554b4adbdb4431063e9f1c9b2"
+    },
+    "job-log.txt": {
+      "bytes": 74671,
+      "sha256": "928b9bcfe9858d5c3dc2bf29bb7ee2e16acbbd1ad00f5dc62ca20793063e7f8b"
+    },
+    "receipt-claude-tissue-edge2d-gamma.json": {
+      "bytes": 1201,
+      "sha256": "860c2441a1c627174a5cb799de48a6d4d182267fe9dfaff473a065482a70be97"
+    },
+    "receipt-claude-tissue-threshold-scaling.json": {
+      "bytes": 1344,
+      "sha256": "f0e63e0a7d80bd8e7d3687b0db435ea18c2e82487676814e11ba4768f1682c8d"
+    },
+    "threshold-scaling.json": {
+      "bytes": 1207,
+      "sha256": "ac66e5010776651d926855cd7a628ac03cbf82a6c06b87cef328c7f955b4a253"
+    }
+  },
+  "id": "claude-tissue-edge2d-gamma",
+  "input_sha256": {
+    "artifacts/simulations/claude-tissue-edge2d-cases/edge2d_cases.json": "b25987bcb835c8d7201ee084da4769d8c42b2dd8b076f8d8008d53eaa7d74f3c",
+    "artifacts/simulations/claude-tissue-edge2d-gamma/edge2d_gamma.json": "d0a9642ed0830947a6e02501e0af0e7549a785fdd0825e30d77a5d0e84a9b179",
+    "artifacts/simulations/claude-tissue-edge2d/edge2d.json": "0eb6b2c07443232210ce3d325356a1c7a5930666878dc8a29d16c827dec17615"
+  },
+  "measurement_rows": 0,
+  "runs": [
+    {
+      "code_changed_since_run": null,
+      "command": "python3 /work/edge2dg.py (args in META)",
+      "compute": "Nebius aijob-e00kgg8wfcq6694170 (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+      "exit_code": 0,
+      "job_state": "COMPLETED",
+      "receipt": "receipt-claude-tissue-edge2d-gamma.json",
+      "run": "claude-tissue-edge2d-gamma",
+      "seed": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "superseded": null,
+      "wall_s": 668.9
+    },
+    {
+      "code_changed_since_run": null,
+      "command": "python3 simulations/claude_tissue/threshold_scaling.py",
+      "compute": "none used (CPU numpy); no Nebius job started",
+      "exit_code": 0,
+      "job_state": null,
+      "receipt": "receipt-claude-tissue-threshold-scaling.json",
+      "run": "claude-tissue-threshold-scaling",
+      "seed": "none (derived)",
+      "superseded": null,
+      "wall_s": 0.002
+    }
+  ],
+  "scales": [
+    "tissue",
+    "developmental"
+  ],
+  "schema": "frontier.claude-tissue-simulation.manifest/1",
+  "status": "computed_not_observed",
+  "studio_card": {
+    "couplings": [],
+    "equations": [
+      {
+        "label": "Scaling hypothesis",
+        "source": "this harness; linear theory gives lambda*sigma 0.45, 0.64, 0.90 for gamma 0.5, 1, 2",
+        "tex": "v^*\\propto\\lambda^*\\sigma_{\\max}\\propto\\sqrt{\\gamma}"
+      }
+    ],
+    "evidence_kind": "simulated; dimensionless; scaling test for claude-tissue-edge2d-cases",
+    "id": "claude-tissue-edge2d-gamma",
+    "limitations": [
+      "Does not establish that fin rays are Turing patterns.",
+      "Dimensionless."
+    ],
+    "manifest": "artifacts/simulations/claude-tissue-edge2d-gamma/manifest.json",
+    "model": {
+      "context": "cases [[0.9, 10, 2.0, [0.6, 0.4, 0.3, 0.2, 0.1]], [0.9, 10, 0.5, [0.3, 0.2, 0.15, 0.1, 0.05]]]",
+      "name": "2-D Schnakenberg with rate scale gamma, distal-edge growth"
+    },
+    "native": true,
+    "numerical_results": [
+      "gamma=0.5, edge speed 0.3: A = -0.61 +/- 0.16",
+      "gamma=0.5, edge speed 0.2: A = 0.12 +/- 0.52",
+      "gamma=0.5, edge speed 0.15: A = 0.59 +/- 0.28",
+      "gamma=0.5, edge speed 0.1: A = 0.93 +/- 0.02",
+      "gamma=0.5, edge speed 0.05: A = 0.98 +/- 0.03",
+      "gamma=2.0, edge speed 0.6: A = -0.74 +/- 0.10",
+      "gamma=2.0, edge speed 0.4: A = 0.05 +/- 0.49",
+      "gamma=2.0, edge speed 0.3: A = 0.30 +/- 0.04",
+      "gamma=2.0, edge speed 0.2: A = 0.45 +/- 0.53",
+      "gamma=2.0, edge speed 0.1: A = 1.00 +/- 0.00",
+      "log-log slope of threshold (A=0 crossing) vs gamma: 0.47 (sqrt-gamma prediction 0.5); A=0.5 crossing slope 0.13 (noisy)"
+    ],
+    "open_questions": [
+      "If v* scales with lambda*sigma, the measurable prediction is a ratio: outgrowth speed / (ray spacing x patterning rate)."
+    ],
+    "parameter_unknowns": [
+      "Generic kinetics; speeds in pattern units."
+    ],
+    "scales": [
+      "tissue",
+      "developmental"
+    ],
+    "sources": [
+      {
+        "label": "Observed allometry",
+        "locator": "artifacts/observed-allometry/source-observations.csv"
+      }
+    ],
+    "title": "Does the outgrowth-speed threshold for ray-like stripes scale with pattern-formation speed? Rate-scale test (simulated, H100)"
+  },
+  "title": "Does the outgrowth-speed threshold for ray-like stripes scale with pattern-formation speed? Rate-scale test (simulated, H100)"
+}

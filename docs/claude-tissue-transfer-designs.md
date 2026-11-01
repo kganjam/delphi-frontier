@@ -243,6 +243,27 @@ The threshold, roughly 0.15–0.25 wavelength-units of new tissue per unit patte
 the particular kinetics. That makes it a candidate model-independent prediction, though it was tested here only within
 Schnakenberg.
 
+**Does the threshold scale with pattern-formation speed?** (`claude-tissue-edge2d-gamma`, job `aijob-e00kgg8wfcq6694170`,
+COMPLETED, 668.9 s; `threshold_scaling.py`). Run at b = 0.9, d = 10 with rate scale γ = 0.5 and 2; the γ = 1 points
+are pooled from the earlier runs. Linear theory gives λ·σ_max = 0.45, 0.64 and 0.90 for γ = 0.5, 1 and 2, which scales
+as √γ.
+
+| γ | Edge speed where A crosses 0 | Where A crosses 0.5 |
+|---|---|---|
+| 0.5 | 0.22 | 0.16 |
+| 1 | 0.26 | 0.20 |
+| 2 | 0.41 | 0.19 |
+
+- **The A = 0 crossing** (where orientation is lost) rises with γ, with a log-log slope of 0.47. That is close to the
+  0.5 predicted if outgrowth must stay slower than pattern formation, v* ∝ λ·σ_max.
+- **The A = 0.5 crossing** does not scale. The γ = 2 points near 0.2 are noisy (SD ≈ 0.5).
+
+**Reading.** The evidence is suggestive, not decisive: 4 seeds and few speeds per γ.
+
+**What it would mean.** If confirmed, the measurable prediction is a single dimensionless ratio: outgrowth speed
+divided by (ray spacing × patterning rate). Ray orientation should degrade when that ratio exceeds about 0.3–0.4,
+reading the threshold as v*/(λσ).
+
 **Starting-length test** (`claude-tissue-uniform2d-y0`, job `aijob-e00dy3kv6127nqa3dj`, COMPLETED, 307.9 s). Uniform growth
 at d = 10 to the same final length 192, starting from different lengths Y0. λ ≈ 11, so Y0 = 96 starts about 9
 wavelengths long.
