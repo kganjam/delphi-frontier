@@ -1,0 +1,18 @@
+{
+ "command": ".venv-mol/bin/python experiments/mol_sims/bioelectric_cell.py",
+ "evidence_kind": "simulated",
+ "exit_code": 0,
+ "input_sha256": {
+  "script": "f770c63ebd1c0ccf5ceca27fca8e7b9368222bf909d033751d95e7f784d22df6"
+ },
+ "integrator": "LSODA rtol=1e-9",
+ "output_sha256": {
+  "result": "124482ca1975f637d932c89bd72a48572190453bd866fa061ec04e7c4d736ac7"
+ },
+ "scipy": "1.18.1",
+ "scope": "SIMULATED, not observed. Assumed generic parameters; qualitative sign test only; no zebrafish calibration.",
+ "seed": null,
+ "seed_note": "deterministic ODE",
+ "sim": "s5",
+ "wall_seconds": 9.5
+}

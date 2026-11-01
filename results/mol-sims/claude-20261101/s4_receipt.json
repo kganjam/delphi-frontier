@@ -1,0 +1,27 @@
+{
+ "atol": 1e-12,
+ "command": ".venv-mol/bin/python experiments/mol_sims/run_sims.py s4",
+ "evidence_kind": "simulated",
+ "exit_code": 0,
+ "input_sha256": {
+  "fgf10a": "87bf300edba0840883bc9c2934bd75bbf069f0a8549d2300d6bbad38a386af80",
+  "fgf10a_uniprot": "e55d91fbbd98327b48ad06716f223310830fef94b6bafa15f9c3b176dd3f74c0",
+  "hoxd13a": "e08cae8b0174383e6c0a88e7d581092178a08d63f993eaa29836965b1ab58df3",
+  "hoxd13a_uniprot": "c901b367eb84a047631632f9ac4c32369552a2c78039467b9e3f679813acd5f6",
+  "kcnk5b": "d595b671bd95db40fef62b182f7978ffe5199df79c956663759a5d2c5789ddaa",
+  "kcnk5b_uniprot": "1dcc3e7bff0684ec0a077710335bf3b11b6114989762386d9773849f896fcfe9",
+  "shha": "fb411a85468e904f0ee5c61bc55287c74976bf562fdb7b2b27863ef36a14f723",
+  "shha_uniprot": "7a31bd1171aa3ad7f2d83c706f516d3dd9f8f4bed62d00a0b9911545b2a10620"
+ },
+ "integrator": "cvode",
+ "output_sha256": {
+  "result": "34d56cc4c2bd8dcbe9f5940fb136493ca76cec52d7bf2e38f6a1f88ab3632748"
+ },
+ "roadrunner": "2.11.0",
+ "rtol": 1e-10,
+ "scope": "SIMULATED, not observed. Published-model dynamics, not fit to any fish data; no biological validation.",
+ "seed": null,
+ "seed_note": "deterministic ODE integration; no random numbers used",
+ "sim": "s4",
+ "wall_seconds": 0.0
+}

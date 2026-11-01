@@ -1,0 +1,19 @@
+[
+ {"id": "s1", "model": "BIOMD0000000275 Goldbeter-Gonze-Pourquie 2007 RA/FGF mutual-inhibition switch, steady states from two initial conditions along position x (0-50)",
+  "use": "proxy for an RA/FGF bistable boundary in fin/limb bud proximal-distal patterning",
+  "results": "baseline bistable x 14-25; FGF synthesis x2 shifts window to 9-19, x4 to 6-14, x0.5 to 20-31; RA synthesis x0.5 -> 6-14, x2 -> 25-35; Cyp26 loss did not reach steady state (max rate 7.1, RA accumulates); FGF loss: no bistability",
+  "calibration_experiment": "graded RA (or DEAB RALDH inhibitor) bath in zebrafish pectoral fin bud 24-36 hpf, measure position of fgf24/fgf10a expression boundary by HCR; model predicts monotone shift and hysteresis (pre-treatment history dependence)"},
+ {"id": "s2/s2b", "model": "BIOMD0000000395 Sivakumar 2011 Drosophila Hedgehog pathway ODE; target gene s75",
+  "use": "proxy for Shh->ptch/gli target response in fin bud",
+  "results": "Hh dose-response EC50 ~1e-4 model units, default Hh=5 is saturating. At EC50: Ptc loss gives basal target (0.47, same as no Hh); Ptc x2 raises target slightly; Smo loss basal; Sufu-Ci repressor complex loss drops target to 0.24 (below no-Hh basal), Sufu x2 raises it to 0.84",
+  "our_reading": "Ptc acts as an obligate receptor/activator in this model; in vertebrates and flies Ptc loss gives ligand-independent constitutive activation, so the model is sign-wrong for Ptc-null predictions",
+  "calibration_experiment": "cyclopamine (Smo antagonist) dose series in fin bud, ptch2 HCR as readout; plus ptch1/ptch2 double mutant expecting constitutive activation"},
+ {"id": "s3", "model": "local +-10% log sensitivity on both SBML models", "results": "275: F output sensitivities ~28 (near switching threshold at baseline x), 395: top sensitivity 0.77"},
+ {"id": "s5", "model": "single-cell pump-leak: GHK K2P leak (Kcnk5b), Kir (Kcnj13-like), Na leak + persistent Na window current, Cl leak, saturable Na/K-ATPase, fixed volume; T-type window current readout. All parameters generic assumed.",
+  "use": "test whether Kcnk5b gain-of-function can depolarise fin-bud cells as reported (Yi 2024 PLoS Biol: K+ decreased, depolarisation enhanced via Na+ channels)",
+  "results": "Passive arm: Kcnk5b x2-x32 hyperpolarises to -64..-86 mV within 10 min; K_i falls 120->92 mM over 24 h. Na-recruitment arm (g_NaP scales with Kcnk5b fold, c=1): depolarises -32 -> -19 mV at x8 by 1 h, K_i falls to ~31 mM and Na_i rises. Kcnj13 dose has no effect at baseline Vm (-32 mV, above Kir rectification). Full ion steady state takes days (unphysiological K_i 44-184 mM at extremes; no volume/osmotic regulation).",
+  "calibration_experiment": "hsp70:kcnk5b heat-shock dose series in pectoral fin bud cells: measure Vm (GEVI or DiBAC4(3)), [K+]i (FRET K+ sensor as in Yi 2024) and [Na+]i (ING-2) at 1 h and 6 h, with/without TTX or a persistent-Na blocker; passive model predicts hyperpolarisation + Na_i fall, recruitment model predicts depolarisation + Na_i rise"},
+ {"id": "struct", "model": "Boltz-2 with PDB70-only MSA (14-122 sequences) on trimmed domains: ShhN (24-197) monomer, Fgf10a core (58-201) + Fgfr2 IIIb D2-D3 (150-360) complex",
+  "results": "ShhN mean pLDDT 85 (OpenFold2 dummy-MSA 40 same residues), pTM 0.82. Fgf complex chain pLDDT 87/85, interface pLDDT 72, conf 0.77; 18/38 receptor interface residues in the IIIb/IIIc alternative-exon segment (21% of construct). 10 ns explicit-solvent MD of ShhN apo (no Zn/Ca) planned.",
+  "risk": "PDB70 MSA contains the human/mouse crystal structures' sequences, so the model may be templating the known complex"}
+]

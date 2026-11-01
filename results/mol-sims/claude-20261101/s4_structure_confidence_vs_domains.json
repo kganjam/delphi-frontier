@@ -1,0 +1,67 @@
+{
+ "fgf10a": {
+  "accession": "Q8AY90",
+  "frac_ge50": 0.417910447761194,
+  "frac_ge70": 0.024875621890547265,
+  "longest_run_ge50": 24,
+  "longest_run_ge70": 1,
+  "md_decision": "not run: no stretch of >=30 consecutive residues with pLDDT>=70 to define a prepared MD start",
+  "mean_plddt": 48.76562189054726,
+  "n": 201,
+  "uniprot_entry_found": true,
+  "uniprot_features": []
+ },
+ "hoxd13a": {
+  "accession": "Q90472",
+  "frac_ge50": 0.2578125,
+  "frac_ge70": 0.0390625,
+  "longest_run_ge50": 27,
+  "longest_run_ge70": 7,
+  "md_decision": "not run: no stretch of >=30 consecutive residues with pLDDT>=70 to define a prepared MD start",
+  "mean_plddt": 42.548710937500005,
+  "n": 256,
+  "uniprot_entry_found": true,
+  "uniprot_features": []
+ },
+ "kcnk5b": {
+  "accession": "Q6PFU3",
+  "frac_ge50": 0.6584821428571429,
+  "frac_ge70": 0.14732142857142858,
+  "longest_run_ge50": 57,
+  "longest_run_ge70": 17,
+  "md_decision": "not run: no stretch of >=30 consecutive residues with pLDDT>=70 to define a prepared MD start",
+  "mean_plddt": 56.09908482142857,
+  "n": 448,
+  "uniprot_entry_found": true,
+  "uniprot_features": [
+   {
+    "desc": "Potassium channel",
+    "end": 137,
+    "frac_ge70": 0.0,
+    "mean_plddt": 44.118253968253974,
+    "start": 75,
+    "type": "Domain"
+   },
+   {
+    "desc": "Potassium channel",
+    "end": 246,
+    "frac_ge70": 0.24324324324324326,
+    "mean_plddt": 57.41175675675676,
+    "start": 173,
+    "type": "Domain"
+   }
+  ]
+ },
+ "shha": {
+  "accession": "Q92008",
+  "frac_ge50": 0.19856459330143542,
+  "frac_ge70": 0.01674641148325359,
+  "longest_run_ge50": 17,
+  "longest_run_ge70": 4,
+  "md_decision": "not run: no stretch of >=30 consecutive residues with pLDDT>=70 to define a prepared MD start",
+  "mean_plddt": 41.218397129186606,
+  "n": 418,
+  "uniprot_entry_found": true,
+  "uniprot_features": []
+ }
+}
