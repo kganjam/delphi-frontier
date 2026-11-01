@@ -66,16 +66,37 @@ for i in range(len(names)):
 
 slopes = {k: v["last_block_slope_A_per_ns"] for k, v in out.items() if v["last_block_slope_A_per_ns"] is not None}
 long_slopes = {k: v for k, v in slopes.items() if out[k]["prod_ns"] >= 30}
+# The slope of one 5 ns block is itself a noisy statistic - argon's objection. Compare it against how much
+# the BLOCK MEANS wander: if the scatter between blocks exceeds what the final slope would predict, a flat
+# final block says nothing, and the plateau criterion should not be used at all at this length.
+scatter = {k: {"block_mean_min_A": min(b["mean_rmsd_A"] for b in v["blocks_5ns"]),
+               "block_mean_max_A": max(b["mean_rmsd_A"] for b in v["blocks_5ns"]),
+               "block_mean_range_A": round(max(b["mean_rmsd_A"] for b in v["blocks_5ns"])
+                                           - min(b["mean_rmsd_A"] for b in v["blocks_5ns"]), 3),
+               "block_slope_sign_changes": sum(1 for a, b in zip(v["blocks_5ns"], v["blocks_5ns"][1:])
+                                               if a["slope_A_per_ns"] * b["slope_A_per_ns"] < 0)}
+           for k, v in out.items() if len(v["blocks_5ns"]) >= 2}
+long_flat = [k for k, v in long_slopes.items() if abs(v) < 0.1]
+wander = {k: v for k, v in scatter.items() if out[k]["prod_ns"] >= 30}
 verdict = ("not enough long replicas to judge" if len(long_slopes) < 2 else
-           "the long replicas agree that the final 5 ns block is flat (|slope| < 0.1 A/ns): the fold has stopped drifting"
-           if all(abs(v) < 0.1 for v in long_slopes.values()) else
-           "the long replicas still drift in their final block, so even this length is not converged; "
-           "only the ranking of mobile residues may be quoted")
+           ("Both 40 ns replicas end on a near-flat 5 ns block (" + ", ".join(f"{v:+.3f}" for v in long_slopes.values())
+            + " A/ns), but that does NOT establish convergence: across the eight blocks of each run the block MEANS "
+            + "wander by " + " and ".join(f"{v['block_mean_range_A']:.2f} A" for v in wander.values())
+            + " with the block slope changing sign "
+            + " and ".join(str(v["block_slope_sign_changes"]) + " times" for v in wander.values())
+            + ". The wander is larger than any trend, so a flat final block is luck of the window, and RMSD plateau is "
+              "not a usable convergence criterion for this system at this length. What IS stable is the per-residue "
+              "flexibility RANKING, which agrees across all four replicas, and that is all these runs support."))
 rep = {"scope": "SIMULATED classical MD of a PREDICTED structure (apo, no Zn2+/Ca2+); convergence of the simulation, "
                 "not accuracy of the structure; nothing observed",
        "start_model_cif_sha256": hashlib.sha256(cif.read_bytes()).hexdigest(),
        "replicas": out, "cross_replica_rmsf": pairs,
-       "final_block_slopes_A_per_ns": slopes, "verdict": verdict}
+       "final_block_slopes_A_per_ns": slopes, "block_mean_scatter": scatter,
+       "rmsf_rho_range_all_replicas": [min(v["rmsf_vs_start_plddt"]["rho"] for v in out.values()),
+                                       max(v["rmsf_vs_start_plddt"]["rho"] for v in out.values())],
+       "cross_replica_rmsf_rho_range": [min(v["rmsf_spearman_rho"] for v in pairs.values()),
+                                        max(v["rmsf_spearman_rho"] for v in pairs.values())] if pairs else None,
+       "verdict": verdict}
 p = dirs[0].parent / "md_convergence_report.json"
 p.write_text(json.dumps(rep, indent=1, sort_keys=True))
 print(json.dumps({"verdict": verdict, "final_block_slopes_A_per_ns": slopes,

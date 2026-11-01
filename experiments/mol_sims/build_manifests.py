@@ -154,20 +154,47 @@ if mdp.exists():
             sl = cv["final_block_slopes_A_per_ns"]
             checks.append({"name": "drift measured over 5 ns blocks instead of 2 ns windows", "result":
                            "final-5-ns-block slope per replica: " + ", ".join(f"{k} {v:+.2f} A/ns" for k, v in sl.items())
-                           + f". {cv['verdict']}. A 2 ns window is too short to read a slope from: the negative last-2-ns "
+                           + ". A 2 ns window is too short to read a slope from: the negative last-2-ns "
                              "figure above is window noise, not a plateau, and should not be quoted as one."})
+            longr = [k for k in cv["replicas"] if cv["replicas"][k]["prod_ns"] >= 30]
+            if longr:
+                checks.append({"name": f"two 40 ns replicas added to test convergence ({', '.join(longr)})",
+                               "result": cv["verdict"]})
+                checks.append({"name": "what reproduces across ALL FOUR replicas (2 x 10 ns, 2 x 40 ns)",
+                               "result": f"flexibility vs start-model pLDDT: rho {cv['rmsf_rho_range_all_replicas'][0]} to "
+                                         f"{cv['rmsf_rho_range_all_replicas'][1]} in every replica; per-residue RMSF agrees "
+                                         f"between every pair of replicas at rho {cv['cross_replica_rmsf_rho_range'][0]} to "
+                                         f"{cv['cross_replica_rmsf_rho_range'][1]}. The ranking of mobile residues is the "
+                                         f"robust result; the absolute RMSD level is not."})
+                for k in longr:
+                    rr = cv["replicas"][k]
+                    srcs.extend([R / k / "md_receipt.json", R / k / "md_summary.json", R / k / "job_log.txt", R / k / "final_frame_protein.pdb"])
+                vfp = R / "md_log_verification.json"
+                if vfp.exists():
+                    vf = json.loads(vfp.read_text())
+                    checks.append({"name": "log-integrity re-check of every MD run in this project",
+                                   "result": ", ".join(f"{len(v)} {st}" for st, v in vf["by_status"].items())
+                                             + ". The log service returns 16 KiB pieces out of order; accepting any ordering that "
+                                               "merely PARSED once spliced potential energies into the RMSD array (a 926209 A RMSD "
+                                               "and a negative radius of gyration). The reassembler now also checks array lengths, "
+                                               "distance ranges and energy signs, and every committed run re-derives from its saved log."})
+                    srcs.append(vfp)
             srcs.append(cvp)
         srcs += [rcp, R / "md_shhN_rep2/md_receipt.json", R / "md_shhN_rep2/md_summary.json", R / "md_shhN_rep2/final_frame_protein.pdb", R / "md_shhN_rep2/job_log.txt"]
-    write(base("openmm-shhN-md", "10 ns explicit-solvent MD of the predicted Shha signalling domain: the fold holds and flexibility tracks predictor confidence",
+    write(base("openmm-shhN-md", "Explicit-solvent MD of the predicted Shha signalling domain, 2 x 10 ns + 2 x 40 ns: flexibility tracks predictor confidence in every replica, but the runs are not converged",
                "macromolecular", "SIMULATED classical MD of a PREDICTED structure; not an observation",
                f"OpenMM 8.6.1 CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl, seed {a['seed']}",
                "Start: the Boltz-2 ShhN model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT; CA frames every 10 ps. TWO independent replicas (seeds 20261101 and 777000). Run as a Nebius AI job on one H100; results read from the job log, which the service splits and can return out of order, so the summary and final frame are reassembled and checked (JSON parse, gzip) before use.",
                srcs,
-               ["that the predicted fold is correct (MD stability is not accuracy)", "a converged simulation: the two replicas disagree on drift", "any equilibrium property, free energy or binding quantity from one 10 ns replica",
+               ["that the predicted fold is correct (MD stability is not accuracy)",
+                "a converged simulation: 5 ns block means wander by about 3 A in BOTH 40 ns replicas with the slope changing sign repeatedly, so RMSD plateau is not a usable criterion here",
+                "any equilibrium property, free energy or binding quantity from these replicas",
                 "Zn2+/Ca2+ site behaviour: this is an apo run with no ions bound", "anything about fin size, Shh gradient range or flight"],
                checks,
                ["Force-field and water-model error are not quantified here.", "Protonation states are PDBFixer defaults at pH 7."],
-               ["Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site?", "What does the +0.98 A/ns drift in replica 2 settle to over hundreds of ns?"],
+               ["Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site?",
+                "At what length does the RMSD block-mean wander (about 3 A over 40 ns) actually settle? 40 ns is not enough.",
+                "Would a frame-level test (pairwise RMSD matrix, cluster overlap between replicas) show sampling overlap? It needs trajectory frames, which the job log does not return."],
                ["10 ns per replica: far too short to sample conformational change (argon), and the two replicas disagree on whether the RMSD has settled.", "The start is a prediction, so every number inherits that uncertainty."],
                time_units="nanoseconds of simulated time"))
 

@@ -1,6 +1,6 @@
 {
  "id": "openmm-shhN-md",
- "title": "10 ns explicit-solvent MD of the predicted Shha signalling domain: the fold holds and flexibility tracks predictor confidence",
+ "title": "Explicit-solvent MD of the predicted Shha signalling domain, 2 x 10 ns + 2 x 40 ns: flexibility tracks predictor confidence in every replica, but the runs are not converged",
  "scales": [
   "macromolecular"
  ],
@@ -50,7 +50,19 @@
   },
   {
    "name": "drift measured over 5 ns blocks instead of 2 ns windows",
-   "result": "final-5-ns-block slope per replica: md_shhN +0.20 A/ns, md_shhN_rep2 +0.32 A/ns. not enough long replicas to judge. A 2 ns window is too short to read a slope from: the negative last-2-ns figure above is window noise, not a plateau, and should not be quoted as one."
+   "result": "final-5-ns-block slope per replica: md_shhN +0.20 A/ns, md_shhN_40ns_a +0.06 A/ns, md_shhN_40ns_b -0.11 A/ns, md_shhN_rep2 +0.32 A/ns. A 2 ns window is too short to read a slope from: the negative last-2-ns figure above is window noise, not a plateau, and should not be quoted as one."
+  },
+  {
+   "name": "two 40 ns replicas added to test convergence (md_shhN_40ns_a, md_shhN_40ns_b)",
+   "result": "Both 40 ns replicas end on a near-flat 5 ns block (+0.056, -0.109 A/ns), but that does NOT establish convergence: across the eight blocks of each run the block MEANS wander by 3.00 A and 2.80 A with the block slope changing sign 6 times and 3 times. The wander is larger than any trend, so a flat final block is luck of the window, and RMSD plateau is not a usable convergence criterion for this system at this length. What IS stable is the per-residue flexibility RANKING, which agrees across all four replicas, and that is all these runs support."
+  },
+  {
+   "name": "what reproduces across ALL FOUR replicas (2 x 10 ns, 2 x 40 ns)",
+   "result": "flexibility vs start-model pLDDT: rho -0.737 to -0.6 in every replica; per-residue RMSF agrees between every pair of replicas at rho 0.776 to 0.916. The ranking of mobile residues is the robust result; the absolute RMSD level is not."
+  },
+  {
+   "name": "log-integrity re-check of every MD run in this project",
+   "result": "6 CONFIRMED. The log service returns 16 KiB pieces out of order; accepting any ordering that merely PARSED once spliced potential energies into the RMSD array (a 926209 A RMSD and a negative radius of gyration). The reassembler now also checks array lengths, distance ranges and energy signs, and every committed run re-derives from its saved log."
   }
  ],
  "parameter_unknowns": [
@@ -59,7 +71,8 @@
  ],
  "open_questions": [
   "Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site?",
-  "What does the +0.98 A/ns drift in replica 2 settle to over hundreds of ns?"
+  "At what length does the RMSD block-mean wander (about 3 A over 40 ns) actually settle? 40 ns is not enough.",
+  "Would a frame-level test (pairwise RMSD matrix, cluster overlap between replicas) show sampling overlap? It needs trajectory frames, which the job log does not return."
  ],
  "limitations": [
   "10 ns per replica: far too short to sample conformational change (argon), and the two replicas disagree on whether the RMSD has settled.",
@@ -67,8 +80,8 @@
  ],
  "does_not_establish": [
   "that the predicted fold is correct (MD stability is not accuracy)",
-  "a converged simulation: the two replicas disagree on drift",
-  "any equilibrium property, free energy or binding quantity from one 10 ns replica",
+  "a converged simulation: 5 ns block means wander by about 3 A in BOTH 40 ns replicas with the slope changing sign repeatedly, so RMSD plateau is not a usable criterion here",
+  "any equilibrium property, free energy or binding quantity from these replicas",
   "Zn2+/Ca2+ site behaviour: this is an apo run with no ions bound",
   "anything about fin size, Shh gradient range or flight"
  ],
@@ -79,7 +92,16 @@
   "results/mol-sims/claude-20261101/md_shhN/final_frame_protein.pdb": "2383111dc87ca2c9ab203d07ff53884dff3208a67fc8b7fda23301c1c58d0cbd",
   "results/mol-sims/claude-20261101/md_shhN/job_log.txt": "1eea56ecb4321243daf3f12a57a056e6bfc295d49b8f572b50fc5034814eae3c",
   "results/mol-sims/claude-20261101/structures/shhN/model_0.cif": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c",
-  "results/mol-sims/claude-20261101/md_convergence_report.json": "cc905561e03fe957d7e87755e81da1a5d8fc0a851d9fd84a3b461916dd4e26ba",
+  "results/mol-sims/claude-20261101/md_shhN_40ns_a/md_receipt.json": "f43ebf5892135e226f80c11786ae680aa93b24567e61056782b97db156c8182c",
+  "results/mol-sims/claude-20261101/md_shhN_40ns_a/md_summary.json": "90bee91726bd8843480c1bb23aba6ede58cdbbb3dd2a154b7be7b1b5252a22ef",
+  "results/mol-sims/claude-20261101/md_shhN_40ns_a/job_log.txt": "323161070aeb25fcc628297bd49bb3d5a91b52bbad55138bec0c3cb78cf710d9",
+  "results/mol-sims/claude-20261101/md_shhN_40ns_a/final_frame_protein.pdb": "8ef9c5d767f1ad670a6ba60f482253bf2ea27c97caefad9dfa5f3e0ea6a9116d",
+  "results/mol-sims/claude-20261101/md_shhN_40ns_b/md_receipt.json": "038c36bb715a20dc4a665bedffe4fc846105adab9d52e7f272d286d897b36faa",
+  "results/mol-sims/claude-20261101/md_shhN_40ns_b/md_summary.json": "27592ecaebf107893727db52153abe9b0da843b4134aef1b995ab430ce2b5004",
+  "results/mol-sims/claude-20261101/md_shhN_40ns_b/job_log.txt": "870de5f9f0efdde6f3948b97d518dce96851f3885e19de7bb48fb1ad166784c4",
+  "results/mol-sims/claude-20261101/md_shhN_40ns_b/final_frame_protein.pdb": "cd4ca71713653ef2a708b76ce1ea3d3708a829be1bf2f4336fa197b8bc94556e",
+  "results/mol-sims/claude-20261101/md_log_verification.json": "f519b6a13f481fe6cc11cc2ce2121f76fb48ab1cb8c6790c6a36c4c20a94aa02",
+  "results/mol-sims/claude-20261101/md_convergence_report.json": "48c069245d5a38f7748cd490865034c61929c3ae267b5f44715ff64a3653a3ba",
   "results/mol-sims/claude-20261101/md_shhN_replica_comparison.json": "57e4d46c3ba155ed9cc263ef493cfa25a5981dc7f4172bba4e9ca05dba106f53",
   "results/mol-sims/claude-20261101/md_shhN_rep2/md_receipt.json": "61a4efc7e0b22c3c98dd2d836a02e986eae799896b8b266d96f02c90aeb6aa54",
   "results/mol-sims/claude-20261101/md_shhN_rep2/md_summary.json": "29854e5306c87ca576e9cf17e24637518d1197745c2ac9a789ce01abf605b44c",

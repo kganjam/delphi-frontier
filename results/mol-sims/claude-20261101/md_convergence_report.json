@@ -1,13 +1,70 @@
 {
+ "block_mean_scatter": {
+  "md_shhN": {
+   "block_mean_max_A": 3.87,
+   "block_mean_min_A": 2.119,
+   "block_mean_range_A": 1.751,
+   "block_slope_sign_changes": 0
+  },
+  "md_shhN_40ns_a": {
+   "block_mean_max_A": 5.478,
+   "block_mean_min_A": 2.474,
+   "block_mean_range_A": 3.004,
+   "block_slope_sign_changes": 6
+  },
+  "md_shhN_40ns_b": {
+   "block_mean_max_A": 5.274,
+   "block_mean_min_A": 2.476,
+   "block_mean_range_A": 2.798,
+   "block_slope_sign_changes": 3
+  },
+  "md_shhN_rep2": {
+   "block_mean_max_A": 3.735,
+   "block_mean_min_A": 2.531,
+   "block_mean_range_A": 1.204,
+   "block_slope_sign_changes": 0
+  }
+ },
  "cross_replica_rmsf": {
+  "md_shhN vs md_shhN_40ns_a": {
+   "n_residues": 174,
+   "p": 8.570611070703872e-46,
+   "rmsf_spearman_rho": 0.832
+  },
+  "md_shhN vs md_shhN_40ns_b": {
+   "n_residues": 174,
+   "p": 3.344609162786071e-70,
+   "rmsf_spearman_rho": 0.916
+  },
   "md_shhN vs md_shhN_rep2": {
    "n_residues": 174,
    "p": 8.248192357767379e-68,
    "rmsf_spearman_rho": 0.91
+  },
+  "md_shhN_40ns_a vs md_shhN_40ns_b": {
+   "n_residues": 174,
+   "p": 8.977178370632721e-58,
+   "rmsf_spearman_rho": 0.881
+  },
+  "md_shhN_rep2 vs md_shhN_40ns_a": {
+   "n_residues": 174,
+   "p": 2.712038561980821e-36,
+   "rmsf_spearman_rho": 0.776
+  },
+  "md_shhN_rep2 vs md_shhN_40ns_b": {
+   "n_residues": 174,
+   "p": 1.0405022838761977e-56,
+   "rmsf_spearman_rho": 0.877
   }
  },
+ "cross_replica_rmsf_rho_range": [
+  0.776,
+  0.916
+ ],
  "final_block_slopes_A_per_ns": {
   "md_shhN": 0.205,
+  "md_shhN_40ns_a": 0.056,
+  "md_shhN_40ns_b": -0.109,
   "md_shhN_rep2": 0.321
  },
  "replicas": {
@@ -42,6 +99,164 @@
    },
    "seed": 20261101
   },
+  "md_shhN_40ns_a": {
+   "all_finite": true,
+   "blocks_5ns": [
+    {
+     "mean_rmsd_A": 2.474,
+     "ns": [
+      0,
+      5
+     ],
+     "slope_A_per_ns": 0.316
+    },
+    {
+     "mean_rmsd_A": 4.401,
+     "ns": [
+      5,
+      10
+     ],
+     "slope_A_per_ns": 0.138
+    },
+    {
+     "mean_rmsd_A": 4.687,
+     "ns": [
+      10,
+      15
+     ],
+     "slope_A_per_ns": -0.213
+    },
+    {
+     "mean_rmsd_A": 4.119,
+     "ns": [
+      15,
+      20
+     ],
+     "slope_A_per_ns": 0.296
+    },
+    {
+     "mean_rmsd_A": 3.826,
+     "ns": [
+      20,
+      25
+     ],
+     "slope_A_per_ns": -0.06
+    },
+    {
+     "mean_rmsd_A": 5.478,
+     "ns": [
+      25,
+      30
+     ],
+     "slope_A_per_ns": 0.712
+    },
+    {
+     "mean_rmsd_A": 4.622,
+     "ns": [
+      30,
+      35
+     ],
+     "slope_A_per_ns": -0.304
+    },
+    {
+     "mean_rmsd_A": 4.17,
+     "ns": [
+      35,
+      40
+     ],
+     "slope_A_per_ns": 0.056
+    }
+   ],
+   "last_block_slope_A_per_ns": 0.056,
+   "md_summary_sha256": "90bee91726bd8843480c1bb23aba6ede58cdbbb3dd2a154b7be7b1b5252a22ef",
+   "n_atoms": 54817,
+   "ns_per_day": 467.0,
+   "prod_ns": 40.0,
+   "rmsf_vs_start_plddt": {
+    "p": 4.7067852185882146e-31,
+    "rho": -0.737
+   },
+   "seed": 20261105
+  },
+  "md_shhN_40ns_b": {
+   "all_finite": true,
+   "blocks_5ns": [
+    {
+     "mean_rmsd_A": 2.476,
+     "ns": [
+      0,
+      5
+     ],
+     "slope_A_per_ns": 0.201
+    },
+    {
+     "mean_rmsd_A": 2.605,
+     "ns": [
+      5,
+      10
+     ],
+     "slope_A_per_ns": 0.036
+    },
+    {
+     "mean_rmsd_A": 3.346,
+     "ns": [
+      10,
+      15
+     ],
+     "slope_A_per_ns": 0.28
+    },
+    {
+     "mean_rmsd_A": 4.253,
+     "ns": [
+      15,
+      20
+     ],
+     "slope_A_per_ns": 0.075
+    },
+    {
+     "mean_rmsd_A": 4.477,
+     "ns": [
+      20,
+      25
+     ],
+     "slope_A_per_ns": -0.058
+    },
+    {
+     "mean_rmsd_A": 4.809,
+     "ns": [
+      25,
+      30
+     ],
+     "slope_A_per_ns": 0.031
+    },
+    {
+     "mean_rmsd_A": 4.881,
+     "ns": [
+      30,
+      35
+     ],
+     "slope_A_per_ns": 0.176
+    },
+    {
+     "mean_rmsd_A": 5.274,
+     "ns": [
+      35,
+      40
+     ],
+     "slope_A_per_ns": -0.109
+    }
+   ],
+   "last_block_slope_A_per_ns": -0.109,
+   "md_summary_sha256": "27592ecaebf107893727db52153abe9b0da843b4134aef1b995ab430ce2b5004",
+   "n_atoms": 55452,
+   "ns_per_day": 466.8,
+   "prod_ns": 40.0,
+   "rmsf_vs_start_plddt": {
+    "p": 7.769322154167991e-21,
+    "rho": -0.633
+   },
+   "seed": 20261106
+  },
   "md_shhN_rep2": {
    "all_finite": true,
    "blocks_5ns": [
@@ -74,7 +289,11 @@
    "seed": 777000
   }
  },
+ "rmsf_rho_range_all_replicas": [
+  -0.737,
+  -0.6
+ ],
  "scope": "SIMULATED classical MD of a PREDICTED structure (apo, no Zn2+/Ca2+); convergence of the simulation, not accuracy of the structure; nothing observed",
  "start_model_cif_sha256": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c",
- "verdict": "not enough long replicas to judge"
+ "verdict": "Both 40 ns replicas end on a near-flat 5 ns block (+0.056, -0.109 A/ns), but that does NOT establish convergence: across the eight blocks of each run the block MEANS wander by 3.00 A and 2.80 A with the block slope changing sign 6 times and 3 times. The wander is larger than any trend, so a flat final block is luck of the window, and RMSD plateau is not a usable convergence criterion for this system at this length. What IS stable is the per-residue flexibility RANKING, which agrees across all four replicas, and that is all these runs support."
 }

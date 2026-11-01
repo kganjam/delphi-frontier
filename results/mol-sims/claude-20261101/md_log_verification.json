@@ -1,0 +1,64 @@
+{
+ "by_status": {
+  "CONFIRMED": [
+   "md_shhN",
+   "md_shhN_rep2",
+   "md_fgf_complex",
+   "md_fgf_negctrl",
+   "md_shhN_40ns_a",
+   "md_shhN_40ns_b"
+  ]
+ },
+ "per_run": {
+  "md_fgf_complex": {
+   "committed_summary_sha256": "9537d0b70e193f8c978e1f1cf754365a2818bac0eaa1749624c47c1f27d444df",
+   "differences": null,
+   "job_log_sha256": "601d9670c10194f76620ba5b1dae84d8d17efbf059be9c2cf23149f9cc130bf7",
+   "n_log_chunks": 3,
+   "sanity_checks_passed": true,
+   "status": "CONFIRMED"
+  },
+  "md_fgf_negctrl": {
+   "committed_summary_sha256": "c00bbd37905c44f98c760f47c093c3c721c5ca59ceb2f7ebd6f8c08ad4988d82",
+   "differences": null,
+   "job_log_sha256": "21b6be197f0dfce63a2319321abdeb064f960db83883a73d2c18c16f09667470",
+   "n_log_chunks": 3,
+   "sanity_checks_passed": true,
+   "status": "CONFIRMED"
+  },
+  "md_shhN": {
+   "committed_summary_sha256": "0037ecaf0b0385fa99094d62b72e19c3663056cff419e3c0a14149afab0bf3eb",
+   "differences": null,
+   "job_log_sha256": "1eea56ecb4321243daf3f12a57a056e6bfc295d49b8f572b50fc5034814eae3c",
+   "n_log_chunks": 2,
+   "sanity_checks_passed": true,
+   "status": "CONFIRMED"
+  },
+  "md_shhN_40ns_a": {
+   "committed_summary_sha256": "90bee91726bd8843480c1bb23aba6ede58cdbbb3dd2a154b7be7b1b5252a22ef",
+   "differences": null,
+   "job_log_sha256": "323161070aeb25fcc628297bd49bb3d5a91b52bbad55138bec0c3cb78cf710d9",
+   "n_log_chunks": 7,
+   "sanity_checks_passed": true,
+   "status": "CONFIRMED"
+  },
+  "md_shhN_40ns_b": {
+   "committed_summary_sha256": "27592ecaebf107893727db52153abe9b0da843b4134aef1b995ab430ce2b5004",
+   "differences": null,
+   "job_log_sha256": "870de5f9f0efdde6f3948b97d518dce96851f3885e19de7bb48fb1ad166784c4",
+   "n_log_chunks": 7,
+   "sanity_checks_passed": true,
+   "status": "CONFIRMED"
+  },
+  "md_shhN_rep2": {
+   "committed_summary_sha256": "29854e5306c87ca576e9cf17e24637518d1197745c2ac9a789ce01abf605b44c",
+   "differences": null,
+   "job_log_sha256": "453c6d339af5e871ce0eac220095719fe3daac15cd5257d4f0a9ca857b4ce4b6",
+   "n_log_chunks": 2,
+   "sanity_checks_passed": true,
+   "status": "CONFIRMED"
+  }
+ },
+ "scope": "an integrity check on saved logs, not a simulation result",
+ "why": "The log service returns 16 KiB pieces out of order. Accepting any ordering that parsed as JSON was too weak for arrays of plain floats; the check now also requires array lengths to match the production length, distances to be positive and under 500 A, and potential energies to be negative."
+}
