@@ -37,6 +37,67 @@
     page(snap, route) { return page(snap, route); },
   };
 
+  /* ----------------------------------------------------------------- where each family of routes acts, drawn once.
+   * A schematic of a limb bud, not a measurement and not to scale: it exists so a reader can see that the routes on this page
+   * act at different places in one system rather than being a list of interchangeable genes. Each pin filters the routes below. */
+  function budDiagram(l) {
+    const have = new Set(((l.routes || {}).routes || []).map((r) => r.scale));
+    /* [x, y, number label, the scale the pin filters to, name, what acts there] */
+    const PINS = [
+      [70, 240, "gene", "Limb-field induction", "Tbx5 for the forelimb, Tbx4 and Pitx1 for the hindlimb, Meis1/2 proximally. Remove the field and nothing starts at all."],
+      [205, 310, "molecular", "ZPA and its ZRS enhancer", "Shh is switched on in the ZPA by the ZRS, which sits about a megabase away inside an intron of Lmbr1. This is the cis-regulatory route: edit the switch, not the gene."],
+      [330, 374, "gene", "Ridge induction", "Fgf10 from the mesenchyme and Wnt3 / β-catenin in the ectoderm raise the apical ectodermal ridge. Lose it and there is no limb at all — this is the amelia route."],
+      [398, 168, "cellular", "Ridge maintenance", "The ridge itself: p63, Fgf4 and Fgf8, or physical ablation. The bud starts and then stops, which is truncation rather than absence."],
+      [352, 240, "pattern", "Skeletal patterning", "BMP–SOX9–WNT sets how many elements the field makes and how far apart. A small enough field makes none."],
+      [740, 200, "tissue", "The maintenance loop", "SHH → GREM1 ⊣ BMP ⊣ FGF → SHH. Break any arm and the bud stops being held open, whichever arm you break."],
+    ];
+    return html`<figure class="lmbud">
+      <svg viewBox="0 0 960 440" role="img" aria-labelledby="budt budd" preserveAspectRatio="xMidYMid meet">
+        <title id="budt">Where each family of routes acts on the limb bud</title>
+        <desc id="budd">On the left, a schematic limb bud projecting from the body wall, with the apical ectodermal ridge along its distal rim, the zone of polarising activity at its posterior base and the progenitor mesenchyme between them. On the right, the maintenance loop drawn as a circuit of four nodes: SHH activates GREM1, GREM1 inhibits BMP, BMP inhibits FGF, and FGF activates SHH. Six numbered pins mark where the routes on this page act; each one is named in the list under this figure.</desc>
+        <defs>
+          <marker id="lmar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0e7c86"></path></marker>
+          <marker id="lmbar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M8 1 L8 9" stroke="#b3261e" stroke-width="2.6" fill="none"></path></marker>
+        </defs>
+        <rect x="0" y="0" width="960" height="440" fill="#fffdf8"></rect>
+        <line x1="512" y1="40" x2="512" y2="400" stroke="#ddd3c0" stroke-dasharray="5 6"></line>
+        <text x="265" y="42" class="lmb-ttl" text-anchor="middle">The bud</text>
+        <text x="740" y="42" class="lmb-ttl" text-anchor="middle">The loop that holds it open</text>
+
+        <rect x="20" y="80" width="90" height="320" rx="6" fill="#efe7d6" stroke="#ddd3c0"></rect>
+        <text x="65" y="72" class="lmb-ax" text-anchor="middle">flank</text>
+        <path d="M 110 150 C 210 136, 318 140, 372 152 C 418 163, 442 200, 442 245 C 442 290, 418 327, 372 338 C 318 350, 210 354, 110 340 Z" fill="#e3f1f1" stroke="#0e7c86" stroke-width="2"></path>
+        <path d="M 372 152 C 418 163, 442 200, 442 245 C 442 290, 418 327, 372 338" fill="none" stroke="#9a6700" stroke-width="10" stroke-linecap="round" opacity=".9"></path>
+        <text x="456" y="249" class="lmb-lab" text-anchor="start">AER</text>
+        <text x="280" y="232" class="lmb-lab" text-anchor="middle">mesenchyme</text>
+        <text x="280" y="250" class="lmb-sub" text-anchor="middle">progenitor pool</text>
+        <ellipse cx="242" cy="310" rx="50" ry="21" fill="#fdf0d8" stroke="#c99a2e"></ellipse>
+        <text x="248" y="315" class="lmb-lab" text-anchor="middle">ZPA</text>
+        <path d="M 300 358 L 348 344" class="lmb-arr" marker-end="url(#lmar)"></path>
+        <text x="294" y="362" class="lmb-sub" text-anchor="end">Fgf10 · Wnt3</text>
+        <text x="265" y="124" class="lmb-sub" text-anchor="middle">proximal ← → distal</text>
+
+        <ellipse cx="620" cy="120" rx="54" ry="23" fill="#fdf0d8" stroke="#c99a2e"></ellipse><text x="620" y="126" class="lmb-lab" text-anchor="middle">SHH</text>
+        <ellipse cx="862" cy="120" rx="54" ry="23" fill="#e3f1f1" stroke="#0e7c86"></ellipse><text x="862" y="126" class="lmb-lab" text-anchor="middle">GREM1</text>
+        <ellipse cx="862" cy="282" rx="54" ry="23" fill="#fffdf8" stroke="#8a74b8"></ellipse><text x="862" y="288" class="lmb-lab" text-anchor="middle">BMP</text>
+        <ellipse cx="620" cy="282" rx="54" ry="23" fill="#fdf0d8" stroke="#9a6700"></ellipse><text x="620" y="288" class="lmb-lab" text-anchor="middle">FGF4/8</text>
+        <path d="M 676 120 L 800 120" class="lmb-arr" marker-end="url(#lmar)"></path>
+        <path d="M 862 164 L 862 257" class="lmb-arr inh" marker-end="url(#lmbar)"></path>
+        <path d="M 806 282 L 676 282" class="lmb-arr inh" marker-end="url(#lmbar)"></path>
+        <path d="M 620 257 L 620 164" class="lmb-arr" marker-end="url(#lmar)"></path>
+        <text x="740" y="356" class="lmb-note" text-anchor="middle">break any arm and the bud stops growing</text>
+        <text x="620" y="152" class="lmb-sub" text-anchor="middle">in the ZPA</text>
+        <text x="862" y="152" class="lmb-sub" text-anchor="middle">in the mesenchyme</text>
+        <text x="862" y="320" class="lmb-sub" text-anchor="middle">in the mesenchyme</text>
+        <text x="620" y="320" class="lmb-sub" text-anchor="middle">in the ridge</text>
+
+        ${PINS.map(([x, y, scale, name, note], i) => html`<g class="lmpin ${have.has(scale) ? "" : "off"}" data-scale="${scale}" tabindex="0" role="button" aria-label="${(i + 1) + ". " + name}: ${note} Activate to show only routes at this scale.">
+          <circle cx="${x}" cy="${y}" r="15"></circle><text x="${x}" y="${y + 5}" text-anchor="middle" class="lmb-pin">${i + 1}</text></g>`)}
+      </svg>
+      <figcaption class="small">Schematic, not a measurement and not to scale. Each numbered pin is a place the routes below act; select one to show only that scale.
+        <ol class="lmpinlist small">${PINS.map(([, , scale, name, note]) => html`<li data-scale="${scale}"><b>${name}</b> <span class="faint">(${(l.scales || []).find((s) => s.key === scale) ? l.scales.find((s) => s.key === scale).label : scale})</span> — ${note}</li>`)}</ol></figcaption></figure>`;
+  }
+
   /* ----------------------------------------------------------------- routes */
   function routeCard(r, i) {
     const ev = r.evidence || [];
@@ -158,6 +219,10 @@
         ${rec.alternative ? html`<p class="note small"><b>If the goal is a viable adult rather than an embryonic phenotype.</b> ${rec.alternative}</p>` : ""}
         ${(rec.risks || []).length ? html`<p class="small"><b>What would sink it.</b> ${rec.risks.join(" ")}</p>` : ""}</section>` : ""}
 
+      <section class="panel lmbudsec" aria-labelledby="lm-bd"><h2 id="lm-bd">Where the routes act</h2>
+        <p class="small">All of this happens in one structure over about two days of mouse development. The routes below are not interchangeable genes; they are interventions at different places in that structure, and that is why they give different animals.</p>
+        ${budDiagram(l)}</section>
+
       ${routesSection(l)}
 
       <section class="panel" id="studies" aria-labelledby="lm-st"><h2 id="lm-st">What we ran</h2>
@@ -203,7 +268,13 @@
           });
           root.querySelectorAll(".lmscale").forEach((sec) => { sec.hidden = ![...sec.querySelectorAll(".lmroute")].some((el) => !el.hidden); });
           count.textContent = shown === total ? `showing all ${total} routes` : `showing ${shown} of ${total} routes`;
+          root.querySelectorAll(".lmpin").forEach((g) => g.classList.toggle("on", !!want.scale && g.dataset.scale === want.scale));
         };
+        const pick = (sc) => { form.scale.value = sc === form.scale.value ? "" : sc; apply(); const t = root.querySelector("#routes"); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); };
+        root.querySelectorAll(".lmpin").forEach((g) => {
+          g.addEventListener("click", () => pick(g.dataset.scale));
+          g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(g.dataset.scale); } });
+        });
         form.addEventListener("change", apply);
         form.addEventListener("submit", (e) => e.preventDefault());
         apply();
