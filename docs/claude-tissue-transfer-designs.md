@@ -517,7 +517,17 @@ pattern wavelengths. Below it, the tissue is unoriented or, for the narrowest zo
 Accepted, and how each point is handled:
 1. **Partly expected from scaling.** Changing γ rescales length (λ ∝ γ^−1/2) and time. Because v was held fixed in
    absolute units, the dimensionless speed changed too, so a constant L_p*/λ also says the switch is insensitive to
-   speed over that range. A direct speed test is running (γ = 1, v = 0.25; `claude-tissue-pzone-g1v25`).
+   speed over that range. A direct speed test followed (`claude-tissue-pzone-g1v25`, job `aijob-e00ersmqcfgkf5s3ye`, COMPLETED, 325.0 s), at
+γ = 1 with v = 0.25:
+
+| L_p | 3.5 | 4 | 4.5 | 5 | 6 |
+|---|---|---|---|---|---|
+| Distal A | −0.83 | −0.83 | −1.00 | 0.52 | 0.88 |
+
+- The switch is about **4.75 ≈ 0.43 λ**, against about 4.25 ≈ 0.39 λ at v = 0.1.
+- So a 2.5× faster outgrowth moves the switch up by roughly 12%, a modest dependence on speed.
+- Below the switch, faster growth gives true edge-parallel bands rather than unoriented tissue.
+- A v = 0.4 run is queued (`claude-tissue-pzone-g1v40`).
 2. **Below the switch is not always "bands".** At γ = 1 and 0.5 the tissue just below the switch is *unoriented*
    (distal A ≈ −0.1 to 0). Edge-parallel bands appear only for the narrowest zones, for example L_p ≤ 2.75 at γ = 2.
 3. **Resolution.** At γ = 2 the switch zone is only 2–3 cells wide, so "0.37" is not resolved to two digits. A
