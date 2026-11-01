@@ -486,10 +486,13 @@ def test_packet_pins_tools_inputs_and_the_frozen_bundle():
     rr = pk["resource_request"]
     assert (
         rr["gpu"] == 0
-        and "NO new VM" in rr["vm"]
+        and "DEDICATED" in rr["vm"]
+        and "8 vCPU / 32 GB" in rr["vm"]
         and rr["vcpu"] <= 8
         and rr["ram_gb_cap"] <= 32
-        and "unmeasured" in rr["estimates_are_unmeasured"]
+        and rr["estimates_are_unmeasured"].startswith(
+            "no full-size genome has been run"
+        )
     )
 
 

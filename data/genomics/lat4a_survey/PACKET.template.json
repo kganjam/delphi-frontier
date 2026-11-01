@@ -85,8 +85,8 @@
   "ram_gb_cap": 24,
   "ram_note": "enforced by a systemd scope MemoryMax=24G with MemorySwapMax=0; the probe gate stops the run if one genome needs more than 8000 MB",
   "vcpu": 6,
-  "vcpu_note": "3 workers x 2 threads; the probe uses 1 worker x 4 threads",
-  "vm": "NO new VM: co-tenant on the already approved e2-standard-16 (or any worker infra assigns)"
+  "vcpu_note": "3 workers x 2 threads = 6 of the 8 vCPU; the probe uses 1 worker x 4 threads",
+  "vm": "DEDICATED genomics VM, 8 vCPU / 32 GB (authorized by infra); the job itself uses at most 6 vCPU and a 24 GB scope cap, so there is headroom and no co-tenancy is assumed"
  },
  "safety": {
   "deletes": "only <ROOTDIR>/work/<accession>.fna.gz files the job itself downloaded",
