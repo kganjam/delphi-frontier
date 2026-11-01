@@ -239,9 +239,8 @@ This extends the edge-growth run to two more stripe-regime cells from the phase 
 - Around 0.2 the stripes are partly oriented.
 - At 0.3–0.4 the pattern becomes oblique or edge-parallel bands.
 
-The threshold, roughly 0.15–0.25 wavelength-units of new tissue per unit pattern time, therefore depends little on
-the particular kinetics. That makes it a candidate model-independent prediction, though it was tested here only within
-Schnakenberg.
+The threshold, roughly 0.15–0.25 wavelength-units of new tissue per unit pattern time, is similar for these three
+cells. All three lie near the onset boundary of one model, so this is *not* evidence of model independence.
 
 **Does the threshold scale with pattern-formation speed?** (`claude-tissue-edge2d-gamma`, job `aijob-e00kgg8wfcq6694170`,
 COMPLETED, 668.9 s; `threshold_scaling.py`). Run at b = 0.9, d = 10 with rate scale γ = 0.5 and 2; the γ = 1 points
@@ -258,7 +257,10 @@ as √γ.
   0.5 predicted if outgrowth must stay slower than pattern formation, v* ∝ λ·σ_max.
 - **The A = 0.5 crossing** does not scale. The γ = 2 points near 0.2 are noisy (SD ≈ 0.5).
 
-**Reading.** The evidence is suggestive, not decisive: 4 seeds and few speeds per γ.
+**Reading.** The evidence is weak:
+- the slope rests on three interpolated points;
+- the A = 0.5 crossing does not scale;
+- the domain width was not rescaled with λ, so it held about 6, 9 and 13 stripes for γ = 0.5, 1 and 2, which is a confound.
 
 **What it would mean.** If confirmed, the measurable prediction is a single dimensionless ratio: outgrowth speed
 divided by (ray spacing × patterning rate). Ray orientation should degrade when that ratio exceeds about 0.3–0.4,
@@ -297,6 +299,22 @@ arc at five radii (45 to 174) and compared with r·Θ/λ* (5.1 to 19.5).
 **Prediction.** If rays were laid down by such a mechanism under slow outgrowth, ray number would rise with distal fin
 width at fixed spacing. Insertion or branching events would sit distally. That is testable against how rays are added
 or branch in widening pectoral fins (not checked here).
+
+**Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
+1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
+   the reviewer cites prior analyses such as Míguez et al. 2006 and Krause et al. 2021, which I have not checked here.
+   The threshold reported above is a numerical instance of that, not a new finding.
+2. **"Model-independent."** Withdrawn.
+3. **√γ scaling.** Downgraded to weak, with the width confound stated.
+4. **What A measures.** It is an orientation measure only: spots and an isotropic labyrinth both give A ≈ 0. Pattern type
+   comes from the phase-map component density.
+5. **New-row initialisation.** Rows are added at the homogeneous steady state plus 1% noise, which creates a front.
+   Fast edge growth producing edge-parallel bands is that front's signature.
+6. **Fin biology.** The reviewer states that teleost rays branch apically, so interior insertion in the fan run may not
+   match pectoral-fin ontogeny (not checked here).
+7. **Quasi-1D start.** Partly answered already by the starting-length test, where long starts still orient
+   (A 0.74–0.87). The reviewer's main requested control is queued: a long start with a continuous proliferation zone
+   of variable width (apical to uniform), using a finite-volume growth scheme and 12 seeds.
 
 ## 3. fin-growth: morphogen production → pectoral/SL ratio (molecular → organ)
 

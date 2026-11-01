@@ -46,19 +46,20 @@ assert meta, "no META line"
 def img(s, key="u8"):
     shp = s.get("shape") or [s["n"], s["n"]]; return np.frombuffer(base64.b64decode(s[key]), dtype=np.uint8).reshape(shp)
 
-if kind in ("edge2d", "uniform2d", "edge2d_cases", "uniform2d_y0", "edge2d_gamma"):
+SCRIPT_OF = {"edge2d_gamma_fine": "edge2d_gamma"}   # kinds that reuse another kind's GPU script
+if kind in ("edge2d", "uniform2d", "edge2d_cases", "uniform2d_y0", "edge2d_gamma", "edge2d_gamma_fine"):
     if kind == "uniform2d_y0":   # group by starting length: reuse the 'b' slot as the grouping key, labelled Y0
         for r in rows + snaps: r["b"] = r.get("y0")
         meta["b"] = None
-    if kind == "edge2d_gamma":   # group by rate scale gamma
+    if kind in ("edge2d_gamma", "edge2d_gamma_fine"):   # group by rate scale gamma
         for r in rows + snaps: r["b"] = r.get("gamma")
         meta["b"] = None
-    OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = f"simulations/claude_tissue/{kind}_gpu.py"
+    OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = f"simulations/claude_tissue/{SCRIPT_OF.get(kind, kind)}_gpu.py"
     summ = {}
     keys = sorted({(r.get("b", meta.get("b")), r["d"], r["speed"]) for r in rows}, key=lambda k: (k[0], k[1], -k[2] if k[2] else 1))
     for bb, d, v in keys:
             rs = [r for r in rows if r.get("b", meta.get("b")) == bb and r["d"] == d and r["speed"] == v]
-            kk = {"edge2d_cases": f"b={bb},d={d},v={v}", "uniform2d_y0": f"Y0={bb},d={d},v={v}", "edge2d_gamma": f"gamma={bb},d={d},v={v}"}.get(kind, f"d={d},v={v}")
+            kk = {"edge2d_cases": f"b={bb},d={d},v={v}", "uniform2d_y0": f"Y0={bb},d={d},v={v}", "edge2d_gamma": f"gamma={bb},d={d},v={v}", "edge2d_gamma_fine": f"gamma={bb},d={d},v={v}"}.get(kind, f"d={d},v={v}")
             if rs: summ[kk] = dict(b=bb, d=d, speed=v, n=len(rs), orientation_A_mean=float(np.mean([r["orientation_A"] for r in rs])),
                                               orientation_A_sd=float(np.std([r["orientation_A"] for r in rs])), stripes_across_width=[r["stripes_across_width"] for r in rs],
                                               top2_power_fraction_mean=float(np.mean([r["top2_power_fraction"] for r in rs])))
@@ -69,14 +70,14 @@ if kind in ("edge2d", "uniform2d", "edge2d_cases", "uniform2d_y0", "edge2d_gamma
     allv = sorted({v["speed"] for v in summ.values()}, key=lambda x: -x if x else 1); pos = {sp: i for i, sp in enumerate(allv)}
     for (bb, d), c in zip(sorted({(v["b"], v["d"]) for v in summ.values()}), ["tab:red", "tab:green", "tab:blue", "tab:purple", "tab:orange"]):
         vs = [v for v in summ.values() if v["b"] == bb and v["d"] == d]
-        ax.errorbar([pos[v["speed"]] for v in vs], [v["orientation_A_mean"] for v in vs], [v["orientation_A_sd"] for v in vs], marker="o", color=c, label=(f"start length Y0={bb}, d={d}" if kind == "uniform2d_y0" else (f"gamma={bb}, b=0.9, d={d}" if kind == "edge2d_gamma" else f"b={bb}, d={d}")))
+        ax.errorbar([pos[v["speed"]] for v in vs], [v["orientation_A_mean"] for v in vs], [v["orientation_A_sd"] for v in vs], marker="o", color=c, label=(f"start length Y0={bb}, d={d}" if kind == "uniform2d_y0" else (f"gamma={bb}, b=0.9, d={d}" if kind.startswith("edge2d_gamma") else f"b={bb}, d={d}")))
     ax.set_xticks(range(len(allv))); ax.set_xticklabels([("static (all at once)" if sp == 0 else f"{'uniform' if kind.startswith('uniform') else 'edge'} speed {sp}") for sp in allv])
     ax.axhline(0, color="k", lw=0.5); ax.set_ylabel("orientation index A (+1 = proximo-distal stripes)"); ax.legend()
-    ax.set_title(f"SIMULATED 2-D { {'edge2d': 'distal-edge growth vs static patterning', 'edge2d_cases': 'distal-edge growth: threshold and other kinetics', 'uniform2d': 'UNIFORM proximo-distal growth (control)', 'uniform2d_y0': 'UNIFORM growth from different starting lengths Y0', 'edge2d_gamma': 'distal-edge growth: threshold vs rate scale gamma'}[kind] } ({len(meta['seeds'])} seeds each); dimensionless")
+    ax.set_title(f"SIMULATED 2-D { {'edge2d': 'distal-edge growth vs static patterning', 'edge2d_cases': 'distal-edge growth: threshold and other kinetics', 'uniform2d': 'UNIFORM proximo-distal growth (control)', 'uniform2d_y0': 'UNIFORM growth from different starting lengths Y0', 'edge2d_gamma': 'distal-edge growth: threshold vs rate scale gamma', 'edge2d_gamma_fine': 'distal-edge growth: finer speed grid near the threshold'}[kind] } ({len(meta['seeds'])} seeds each); dimensionless")
     sn_sorted = sorted(snaps, key=lambda s: (s.get("b", 0), s["d"], -s["speed"] if s["speed"] else 1))[:13]
     for i, s in enumerate(sn_sorted):
         a2 = fig.add_subplot(2, len(sn_sorted), len(sn_sorted) + 1 + i); a2.imshow(img(s), cmap="magma", origin="lower", aspect="auto"); a2.axis("off")
-        a2.set_title(f"{({'uniform2d_y0': 'Y0=', 'edge2d_gamma': 'g='}.get(kind, 'b='))+str(s['b'])+' ' if s.get('b') is not None else ''}d={s['d']}\n{'static' if s['speed']==0 else 'v='+str(s['speed'])}", fontsize=6)
+        a2.set_title(f"{({'uniform2d_y0': 'Y0=', 'edge2d_gamma': 'g=', 'edge2d_gamma_fine': 'g='}.get(kind, 'b='))+str(s['b'])+' ' if s.get('b') is not None else ''}d={s['d']}\n{'static' if s['speed']==0 else 'v='+str(s['speed'])}", fontsize=6)
     fig.text(0.5, 0.02, "panels: final field, seed 1, distal (growing) edge at top", ha="center", fontsize=8)
     fig.tight_layout(rect=(0, 0.03, 1, 1)); fig.savefig(OUT/f"{kind}.png", dpi=100); plt.close(fig)
     outs = [OUT/f"{kind}.json", OUT/f"{kind}.png"]
@@ -89,6 +90,36 @@ if kind in ("edge2d", "uniform2d", "edge2d_cases", "uniform2d_y0", "edge2d_gamma
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-threads", "1", "-framerate", "10", "-i", f"{tmp}/f%03d.png", "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2",
                         "-pix_fmt", "yuv420p", "-c:v", "libx264", str(OUT/f"{kind}.mp4")], check=True)
         subprocess.run(["cp", f"{tmp}/f{fr[-1]['k']:03d}.png", str(OUT/"poster.png")], check=True); outs += [OUT/f"{kind}.mp4", OUT/"poster.png"]
+elif kind == "pzone":
+    OUT = ROOT/"artifacts/simulations/claude-tissue-pzone"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/pzone_gpu.py"
+    summ = {}
+    for r in rows:
+        k = f"lp={r['lp_label']},v={r['speed']}"
+        summ.setdefault(k, dict(lp=r["lp"], lp_label=r["lp_label"], speed=r["speed"], A=[], stripes=[], length=r["length"], cells=r["cells"], splits=r["splits"]))
+        summ[k]["A"].append(r["orientation_A"]); summ[k]["stripes"].append(r["stripes_across_width"])
+    for v in summ.values():
+        a = np.array(v["A"]); v.update(n=len(a), orientation_A_mean=float(a.mean()), orientation_A_sd=float(a.std()), orientation_A_sem=float(a.std()/np.sqrt(len(a))),
+                                       frac_seeds_A_gt_0_8=float(np.mean(a > 0.8)))
+    res = dict(job=job, job_state=state, meta=meta, done=done, n_rows=len(rows), summary=summ, rows=rows,
+               reading="lp = width of the distal proliferation zone (small = apical/edge, 'uniform' = whole length); A +1 = proximo-distal stripes")
+    (OUT/"pzone.json").write_text(json.dumps(res, indent=1))
+    fig = plt.figure(figsize=(16, 8)); ax = fig.add_subplot(2, 1, 1)
+    lps = [l for l in meta["lps"]]; cols = ["tab:red", "tab:orange", "tab:green", "tab:blue"]
+    for l, c in zip(lps, cols):
+        lab = "uniform" if l == 0 else l; vs = [v for v in summ.values() if v["lp_label"] == lab]
+        vs.sort(key=lambda v: v["speed"])
+        ax.errorbar([v["speed"] for v in vs], [v["orientation_A_mean"] for v in vs], [v["orientation_A_sem"]*1.96 for v in vs], marker="o", color=c, capsize=3,
+                    label=f"proliferation zone {'= whole length (uniform)' if l == 0 else str(l) + ' (wavelength ~11)'}")
+    st = [v for v in summ.values() if v["lp_label"] == "static"]
+    if st: ax.axhline(st[0]["orientation_A_mean"], color="gray", ls=":", label="static (all at once)")
+    ax.axhline(0, color="k", lw=0.5); ax.set_xlabel("total elongation speed v"); ax.set_ylabel("orientation A (mean, 95% CI over 12 seeds)")
+    ax.set_title(f"SIMULATED continuous growth in a distal proliferation zone, start length {meta['Y0']} -> {meta['Y1']}, d={meta['d']}"); ax.legend(fontsize=8)
+    sn = sorted(snaps, key=lambda s: (s["lp"] if s["lp"] > 0 else (1e3 if s["lp"] == 0 else 1e4), s["speed"]))
+    for i, s_ in enumerate(sn[:13]):
+        a2 = fig.add_subplot(2, len(sn[:13]), len(sn[:13]) + 1 + i); a2.imshow(img(s_), cmap="magma", origin="lower", aspect="auto"); a2.axis("off")
+        a2.set_title(f"{'static' if s_['lp'] < 0 else ('unif' if s_['lp'] == 0 else 'Lp=' + str(s_['lp']))}\nv={s_['speed']}", fontsize=6)
+    fig.tight_layout(); fig.savefig(OUT/"pzone.png", dpi=100); plt.close(fig)
+    outs = [OUT/"pzone.json", OUT/"pzone.png"]
 elif kind in ("fan", "fan_video"):
     OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = f"simulations/claude_tissue/{kind}_gpu.py"
     summ = {}
@@ -160,7 +191,7 @@ else:
     fig.tight_layout(); fig.savefig(OUT/"phase-map.png", dpi=100); plt.close(fig)
     outs = [OUT/"phase-map.json", OUT/"phase-map.png"]
 ok = state == "COMPLETED" and done is not None
-rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan', 'edge2d_gamma': 'edge2dg', 'fan_video': 'fanv'}[kind] }.py (args in META)", job=job, job_state=state,
+rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan', 'edge2d_gamma': 'edge2dg', 'fan_video': 'fanv', 'edge2d_gamma_fine': 'edge2dg', 'pzone': 'pzone'}[kind] }.py (args in META)", job=job, job_state=state,
            exit_code=0 if ok else 1, seed=meta.get("seeds"), wall_s=(done or {}).get("wall_s"),
            compute=f"Nebius {job} ({meta.get('gpu')}), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
            code_sha256={script: meta["script_sha256"]}, code_matches_repo=bool(meta["script_sha256"] == sha(ROOT/script)),

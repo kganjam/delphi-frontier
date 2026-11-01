@@ -1,0 +1,21 @@
+**1. Numerical and Methodological Flaws**
+* **Quasi-1D initial condition (Severe):** Starting at $8 \times 96$ with $\lambda \approx 11$ suppresses vertical modes from $t=0$, forcing 1D horizontal wavevectors (9 peaks). Subsequent slow growth merely propagates an already-1D boundary condition rather than genuinely orienting a 2D pattern.
+* **Grid-addition vs. continuum growth (Severe):** "Adding rows" at the edge introduces discrete spatial shocks; "stretching rows" without explicitly stating whether morphogen dilution and advection terms ($\nabla \cdot (\mathbf{u}c)$) are solved on a Lagrangian vs. remeshed Eulerian grid invalidates the edge vs. uniform comparison. 
+* **Boundary conditions & discrete rows:** Newly added distal rows require initial concentration values (homogeneous steady state? copied from $Y-1$? noise?). If initialized near steady state at high speed (0.4), an artificial concentration front forms parallel to the edge, trivially forcing $A < 0$ (traveling wave front). Zero-flux BCs on a $96$-wide domain also artificially pin stripe phase.
+* **Orientation metric $A$:** Undefined. If $A$ is based on structure-tensor gradients or Fourier power, a hexagonal spot lattice yields $A \approx 0$, indistinguishable from an isotropic labyrinth ($A = -0.06$) or diagonal stripes ($45^\circ$).
+* **Underpowered statistics & interpolation:** $N=3$ or $4$ seeds is insufficient near a bifurcation (e.g., $0.67 \pm 0.47$ at $v=0.15$). Interpolating $A=0$ crossings from 3–4 coarse speed points and fitting a 3-point log-log slope ($\gamma = 0.5, 1, 2$) is statistically meaningless.
+* **Dimensional error in $\gamma$ scaling:** In the standard Schnakenberg PDE, $\lambda \propto \gamma^{-1/2}$ and $\sigma_{\max} \propto \gamma$, so the characteristic front speed scales as $\lambda\sigma_{\max} \propto \sqrt{\gamma}$. If $\lambda$ was not rescaled when varying $\gamma$, the domain size in wavelengths changed (from $\sim 9\lambda$ to $\sim 18\lambda$), confounding the threshold test.
+
+**2. Overclaims and Unsupported Interpretations**
+* **"Model-independent prediction":** Claiming the $v^*$ threshold is kinetic-independent based on three points along the *same* bifurcation boundary in a *single* 2-variable polynomial PDE is unwarranted.
+* **The $\sqrt{\gamma}$ scaling claim:** Fitting a slope of 0.47 to three points ($0.22, 0.26, 0.41$) while the $A=0.5$ crossing is flat ($0.16, 0.20, 0.19$) is cherry-picking the threshold definition to match linear theory.
+* **Fin-ray biology:** Generating 9 stripes on a rectangle does not model fin rays, which require actinotrichia guidance, epithelial-mesenchymal cross-talk, and discrete bifurcation—not pure reaction-diffusion.
+
+**3. Missing or Contradictory Literature**
+* **Crampin, Gaffney & Maini (1999, 2002); Neville, Maini & Gaffney (2006):** Established rigorous PDE formulations for uniform vs. apical (edge) domain growth, including dilution and frequency-doubling, which are ignored here.
+* **Miguez et al. (2006); Konow et al. (2019); Krause et al. (2021):** Analytically derived the transition from perpendicular to parallel stripes at a critical boundary velocity $v_c$ (comparing growth speed to the Fisher/KPP-like Turing front propagation speed). Your "new" threshold is a known travelling-wave phenomenon.
+* **Kondo & Asai (1995); Painter, Maini & Othmer (1999):** Classic works on directional growth and chemotaxis orienting fish stripes and skeletal elements.
+* **Lalonde & Akimenko (2018); Marcon & Sharpe (2012):** Show that teleost fin rays (lepidotrichia) branch via apical splitting and sonic hedgehog (Shh) signaling at the distal tip, whereas inter-ray insertion (your "slow fan" result) contradicts standard pectoral fin ontogeny.
+
+**4. Single Most Important Control**
+* **Match the effective Peclet/dilution physics across growth modes in a non-1D starting domain:** Start at $Y_0 = 48$ ($>4\lambda$, eliminating the quasi-1D artifact) and implement a continuous Eulerian advection-dilution PDE where growth velocity $\mathbf{u}(y)$ is localized to a distal proliferation zone of width $L_p$. Vary $L_p$ from $L_p \to \text{domain length}$ (uniform) to $L_p \ll \lambda$ (apical), with $N \ge 20$ seeds, to prove the speed threshold is a genuine biological transition rather than a discrete row-insertion artifact.

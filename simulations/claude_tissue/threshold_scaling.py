@@ -9,6 +9,8 @@ from claude_tissue.common import ROOT, write_receipt
 A = ROOT/"artifacts/simulations"; OUT = A/"claude-tissue-edge2d-gamma"
 INPUTS = ["artifacts/simulations/claude-tissue-edge2d-gamma/edge2d_gamma.json", "artifacts/simulations/claude-tissue-edge2d/edge2d.json",
           "artifacts/simulations/claude-tissue-edge2d-cases/edge2d_cases.json"]
+FINE = "artifacts/simulations/claude-tissue-edge2d-gamma-fine/edge2d_gamma_fine.json"   # finer speed grid (pooled if present)
+if (ROOT/FINE).exists(): INPUTS.append(FINE)
 
 def cross(pts, level):
     sp = sorted(pts); a = [pts[s] for s in sp]
@@ -17,19 +19,21 @@ def cross(pts, level):
     return None
 
 if __name__ == "__main__":
-    t0 = time.time(); g, e, c = (json.loads((ROOT/p).read_text())["summary"] for p in INPUTS)
+    t0 = time.time(); g, e, c = (json.loads((ROOT/p).read_text())["summary"] for p in INPUTS[:3])
     pts = {0.5: {}, 1.0: {}, 2.0: {}}
     for v in g.values(): pts[v["b"]][v["speed"]] = v["orientation_A_mean"]
     for v in e.values():
         if v["d"] == 10 and v["speed"] > 0: pts[1.0][v["speed"]] = v["orientation_A_mean"]
     for v in c.values():
         if v["b"] == 0.9 and v["d"] == 10 and v["speed"] > 0: pts[1.0][v["speed"]] = v["orientation_A_mean"]
+    if len(INPUTS) > 3:
+        for v in json.loads((ROOT/INPUTS[3]).read_text())["summary"].values(): pts[v["b"]][v["speed"]] = v["orientation_A_mean"]
     th = {str(G): dict(points={str(k): v for k, v in sorted(p.items())}, v_A0=cross(p, 0.0), v_A05=cross(p, 0.5)) for G, p in pts.items()}
     G = np.log([0.5, 1.0, 2.0]); v0 = np.log([th[k]["v_A0"] for k in ("0.5", "1.0", "2.0")]); v5 = np.log([th[k]["v_A05"] for k in ("0.5", "1.0", "2.0")])
     out = dict(method="linear interpolation of mean orientation A vs edge speed; 4 seeds per point", thresholds=th,
                loglog_slope_vA0_vs_gamma=float(np.polyfit(G, v0, 1)[0]), loglog_slope_vA05_vs_gamma=float(np.polyfit(G, v5, 1)[0]),
                predicted_slope_if_v_star_scales_with_lambda_sigma=0.5,
                caveat="Few speeds per gamma and 4 seeds; gamma=2 points near 0.2 have SD ~0.5, so the A=0.5 crossing is poorly determined.")
-    p = OUT/"threshold-scaling.json"; p.write_text(json.dumps(out, indent=1))
+    p = OUT/("threshold-scaling-pooled.json" if len(INPUTS) > 3 else "threshold-scaling.json"); p.write_text(json.dumps(out, indent=1))
     print(json.dumps({k: out[k] for k in ("loglog_slope_vA0_vs_gamma", "loglog_slope_vA05_vs_gamma")}))
-    write_receipt(OUT, "claude-tissue-threshold-scaling", "python3 simulations/claude_tissue/threshold_scaling.py", "none (derived)", INPUTS, [p], t0)
+    write_receipt(OUT, "claude-tissue-threshold-scaling" + ("-pooled-fine" if len(INPUTS) > 3 else ""), "python3 simulations/claude_tissue/threshold_scaling.py", "none (derived)", INPUTS, [p], t0)

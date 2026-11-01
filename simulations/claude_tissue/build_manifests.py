@@ -153,6 +153,31 @@ def cards():
             parameter_unknowns=["Generic kinetics; speeds in pattern units."],
             open_questions=["If v* scales with lambda*sigma, the measurable prediction is a ratio: outgrowth speed / (ray spacing x patterning rate)."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless."])
+    if (A/"claude-tissue-edge2d-gamma-fine/edge2d_gamma_fine.json").exists():
+        gf = J("claude-tissue-edge2d-gamma-fine/edge2d_gamma_fine.json"); sm = gf["summary"]
+        pooled = J("claude-tissue-edge2d-gamma/threshold-scaling-pooled.json") if (A/"claude-tissue-edge2d-gamma/threshold-scaling-pooled.json").exists() else None
+        C["claude-tissue-edge2d-gamma-fine"] = dict(
+            title="Finer speed grid near the ray-orientation threshold at three rate scales (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; refinement of claude-tissue-edge2d-gamma",
+            model=dict(name="2-D Schnakenberg, distal-edge growth, rate scale gamma", context=f"cases {gf['meta'].get('cases')}"),
+            equations=[{"label": "Scaling hypothesis", "tex": "v^*\\propto\\lambda^*\\sigma_{\\max}\\propto\\sqrt{\\gamma}", "source": "this harness"}],
+            numerical_results=[f"gamma={v['b']}, edge speed {v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}" for v in sm.values()]
+                + ([f"pooled log-log slope of threshold vs gamma: A=0 crossing {pooled['loglog_slope_vA0_vs_gamma']:.2f}, A=0.5 crossing {pooled['loglog_slope_vA05_vs_gamma']:.2f} (sqrt prediction 0.5)"] if pooled else []),
+            parameter_unknowns=["Generic kinetics; speeds in pattern units."],
+            open_questions=["Measure outgrowth speed / (ray spacing x patterning rate) in a fin at ray-patterning onset."],
+            limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; 4 seeds per point."])
+    if (A/"claude-tissue-pzone/pzone.json").exists():
+        pz = J("claude-tissue-pzone/pzone.json"); sm = pz["summary"]
+        C["claude-tissue-pzone"] = dict(
+            title="Reviewer-requested control: continuous growth in a distal proliferation zone of variable width, from a long starting fold (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; 12 seeds per condition",
+            model=dict(name="2-D Schnakenberg, finite-volume growth confined to a distal zone of width Lp (apical to uniform); cells split, no rows inserted at steady state",
+                       context=f"start length {pz['meta']['Y0']} (>4 wavelengths) -> {pz['meta']['Y1']}, d={pz['meta']['d']}, Lp in {pz['meta']['lps']} (0 = uniform)"),
+            equations=[{"label": "Growth with dilution in the zone", "tex": "\\partial_t(hc)=h\\,f(c)+\\text{fluxes},\\quad \\dot h_i=\\tfrac{v}{L_p}h_i\\ (i\\in\\text{zone})", "source": "this harness (finite volume)"}],
+            numerical_results=[f"Lp={v['lp_label']}, v={v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {1.96*v['orientation_A_sem']:.2f} (95% CI), {100*v['frac_seeds_A_gt_0_8']:.0f}% seeds A>0.8" for v in sm.values()],
+            parameter_unknowns=["Real proliferation-zone width and outgrowth speed of fin folds are not measured here."],
+            open_questions=["Map Lp and v onto measured distal proliferation in fin folds."],
+            limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; generic kinetics."])
     if (A/"claude-tissue-fan-video/fan_video.json").exists():
         fv = J("claude-tissue-fan-video/fan_video.json"); sm = fv["summary"]
         C["claude-tissue-fan-video"] = dict(
