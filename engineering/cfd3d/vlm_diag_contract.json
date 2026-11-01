@@ -1,0 +1,95 @@
+{
+ "schema": "cfd3d-vlm-diag-contract-0.1",
+ "frozen_note": "Written and committed before any solve of this diagnostic. Families, observables, classification, reference, tolerance and negatives are not changed after an outcome; a code fix after freezing is recorded separately and changes no rule here.",
+ "question": "The rigid paired-fin CL of the existing VLM is non-monotone under span refinement (peak at 36 strips) and drifts with growing steps under chord refinement (owner07, coupled-fidelity d732065, ladder-diagnostic.json). Is that the scheme on any planform, a force or boundary-condition law defect, the sampling of the fin planform, or the interaction between the four fins?",
+ "source": {
+  "vlm_py": {"path": "engineering/cfd3d/vlm.py", "sha256": "044a6dc281a50db17f522d66d2c1efa0fbb0bf0d38f71b5885763a88f7f0a06a",
+   "note": "unchanged; the ruff refactor (5ce6cca) of the f9dd43a9 bytes owner07 ran. Arm R0 checks that the two give the same numbers."},
+  "panels_json": {"path": "artifacts/fish3d/fish3d-v3a-fan/panels.json", "from": "fish3d 8dc5cc4",
+   "sha256": "1f64a9759de289118e22e6a9edc5d76c63e6daef5c4a5b84e294e80021a1d33d"},
+  "environment": {"python": "3.12.3", "numpy": "2.5.4", "threads": 1,
+   "pins_basis": "the same numpy as owner07's runtime control and preflight (numpy 2.5.4, python 3.12.3); scipy is not imported by vlm.py"}
+ },
+ "source_review_before_runs": [
+  "Each fin's chord axis e_w is exactly +x (all four fins), so every trailing leg (+x) runs along its own strip edge on its own fin. A leg skewed across downstream panels is therefore not the mechanism here.",
+  "The pectoral wake (z 6-17 mm) passes 10 mm or more above the pelvic plane (z -4.5 to -0.3 mm) over the whole pelvic span, and the pelvic fin sits downstream (x 86.5-117 mm vs pectoral trailing edge 78.7 mm). The interaction is smooth in geometry and not a near-singular approach; arm F3 against F1/F2 tests it anyway.",
+  "The fin outlines are coarse polygons: pectoral 31 vertices, pelvic 13. Each leading edge is a single straight segment; the root trailing edges are one swept segment (pectoral root chord 7.5 mm, widening to 35 mm); the tips are rounded through 5-10 vertices whose chord changes from 5 mm to 0 within 1.7 mm of span. chord_at is exact for the polygon, so the strips sample the polygon's kinks at cosine-spaced edges whose position relative to each kink changes with the strip count.",
+  "In each strip the bound vortex runs straight between the strip-edge quarter-chord points (chords at the two edges), while the collocation point uses the chord at the strip midpoint. Where the outline bends inside a strip, the bound segment and the collocation point disagree about the local chord (O(h^2) on a smooth outline, O(h) at a kink).",
+  "owner07's leg clearance (0.16 of |B-A|) is normalised by the bound-segment length, which near a rounded tip is several strip widths (the quarter-chord line follows the tip). Within a strip the leg-to-collocation distance is half the strip width by construction.",
+  "Kutta-Joukowski uses the free stream only, the standard linear VLM lift. It is a smooth functional of the circulations and is not expected to produce non-monotone convergence by itself. The descriptive KJ-local observable reports its size."
+ ],
+ "units": "unit free stream |V| = 1, rho = 1; CL = lift / (0.5 S_ref), dimensionless; alpha 4 deg (the ladder's rigid fixed alpha). Fin coordinates in metres as in panels.json; CL is scale-free.",
+ "S_ref": {
+  "elliptic_dense": "b^2 / AR (analytic; the vlm.controls convention)",
+  "polygon_planforms": "shoelace area of the polygon (the planform is the polygon)",
+  "fins": "panels.json area_flat_m2, summed over the fins in the solve (owner07's fixed_area_CL convention)"
+ },
+ "families": {
+  "span": {"ns": [8, 12, 16, 24, 32, 48, 64, 96], "nc": 8},
+  "chord": {"nc": [2, 3, 4, 6, 8, 12, 16, 24], "ns": 32},
+  "triples_r2": {"span": [[8, 16, 32], [12, 24, 48], [16, 32, 64], [24, 48, 96]],
+                 "chord": [[2, 4, 8], [3, 6, 12], [4, 8, 16], [6, 12, 24]]},
+  "decisive_triples": {"span": [[16, 32, 64], [24, 48, 96]], "chord": [[4, 8, 16], [6, 12, 24]]},
+  "tail": {"span": [24, 32, 48, 64, 96], "chord": [6, 8, 12, 16, 24]}
+ },
+ "classification": {
+  "triple": "eps21 = f(medium) - f(coarse), eps32 = f(fine) - f(medium), R = eps32 / eps21. monotone_convergent if 0 < R < 1; oscillatory_convergent if -1 < R < 0; divergent if |R| >= 1; converged_roundoff if |eps21| and |eps32| are both <= 1e-12 |f(fine)|. observed order p = ln(1/R) / ln 2 when monotone_convergent.",
+  "family_regular": "both decisive triples are monotone_convergent or converged_roundoff, AND the successive differences over the tail all have the same sign (or are all within 1e-12 |f|). Otherwise irregular. A family with any member not computed is incomplete.",
+  "arm_regular": "both families regular. Any incomplete family makes the arm incomplete."
+ },
+ "reference": {
+  "law_check": {"arm": "A1_elliptic_AR6_dense",
+   "equation": "Helmbold CL_alpha = 2 pi A / (2 + sqrt(A^2 + 4)), A = 6: 4.5287 /rad (recalled, as in gates_vlm.json V1)",
+   "observable": "CL_alpha = CL / radians(4) at the finest member of each family (ns 96 nc 8; ns 32 nc 24)",
+   "tolerance": "|CL_alpha / Helmbold - 1| <= 0.03 at both, the frozen gates_vlm.json V1 rel_err_max (frozen before vlm.py existed); no new tolerance is chosen",
+   "limit": "Helmbold is an approximate lifting-surface relation; the 3 % tolerance is the stated allowance for that and for the discretisation"},
+  "descriptive_only": "A2 (elliptic AR 4) against Helmbold A = 4 (3.8832 /rad) is reported without a tolerance."
+ },
+ "arms": [
+  {"id": "R0_reproduce_owner07", "what": "the four v3a fins combined, owner07's 11 (ns, nc) points: span (16,8) (24,8) (32,8) (36,8) (48,8) (64,8); chord (32,4) (32,6) (32,9) (32,12) (32,16)",
+   "rule": "every CL equals ladder-diagnostic.json separate_refinement CL_rigid within 1e-12 relative; otherwise the whole diagnostic is invalid and stops",
+   "expected": "copied from coupled-fidelity d732065 artifacts/aeroelastic/fidelity-v1/ladder-diagnostic.json",
+   "values": {"16x8": 0.24219045883800855, "24x8": 0.24943330625078972, "32x8": 0.2498656853271448, "36x8": 0.25087070393905925,
+              "48x8": 0.24852949109688166, "64x8": 0.24796330001373817, "32x4": 0.25016390827889173, "32x6": 0.25004960368793716,
+              "32x9": 0.24975152326561603, "32x12": 0.24929366359202546, "32x16": 0.24832347898580515}},
+  {"id": "N1_mutant_collocation_quarter_chord", "what": "A1 with collocation at 1/4 chord (the frozen V5 mutant)", "negative": true,
+   "rule": "must be flagged: Helmbold law check fails OR the arm is irregular. If not flagged, D_law is unknown"},
+  {"id": "A1_elliptic_AR6_dense", "what": "vlm.elliptic(6): span 1, 802-vertex polygon, straight quarter-chord line, planar"},
+  {"id": "A2_elliptic_AR4_dense", "what": "vlm.elliptic(4): aspect ratio near the single pectoral's (b^2/S = 3.67)"},
+  {"id": "A3_rectangle_AR4", "what": "4-vertex rectangle, span 1, chord 0.25, planar"},
+  {"id": "A4_elliptic_AR4_coarse7", "what": "the A2 ellipse with 7 uniform-in-span points per edge (14 vertices, about the pelvic's 13); straight quarter-chord line"},
+  {"id": "A4_elliptic_AR4_coarse16", "what": "the A2 ellipse with 16 uniform-in-span points per edge (32 vertices, about the pectoral's 31)"},
+  {"id": "N2_notched_rectangle", "what": "A3 with the trailing edge stepped from chord 0.25 to 0.125 at u = -0.5 + 1/pi (a chord discontinuity inside the span)", "negative": true,
+   "rule": "must be classified irregular in at least one family. If not, the regularity detector is insensitive to an outline discontinuity and every 'not indicated' below that rests on regularity becomes unknown"},
+  {"id": "F1_pectoral_L_isolated", "what": "vlm.fin_setup on pectoral_L alone (source normals), S_ref its area_flat_m2"},
+  {"id": "F2_pelvic_L_isolated", "what": "vlm.fin_setup on pelvic_L alone"},
+  {"id": "F3_four_fins_combined", "what": "the four fins in one solve, as the ladder does; S_ref the summed area_flat_m2"}
+ ],
+ "arm_order": ["R0_reproduce_owner07", "N1_mutant_collocation_quarter_chord", "A1_elliptic_AR6_dense", "A2_elliptic_AR4_dense",
+               "A3_rectangle_AR4", "A4_elliptic_AR4_coarse7", "A4_elliptic_AR4_coarse16", "N2_notched_rectangle",
+               "F1_pectoral_L_isolated", "F2_pelvic_L_isolated", "F3_four_fins_combined"],
+ "decisions": {
+  "D_scheme": "indicated if any of A1, A2, A3 is irregular (the scheme misbehaves on smooth or kink-free planforms). not_indicated if all three are regular and N2 is flagged. Otherwise unknown.",
+  "D_law": "indicated if A1 is regular and its law check fails. not_indicated_at_3pct if A1 is regular, its law check passes and N1 is flagged. Otherwise unknown.",
+  "D_sampling": "indicated if A1-A3 are regular and any of A4 (coarse7, coarse16), F1, F2 is irregular; the irregular ones are named (A4 irregular: coarse polygon sampling of a smooth outline suffices; only F irregular: specific to the fin outlines). not_indicated if all of A1-A4, F1, F2 are regular and N2 is flagged. Otherwise unknown.",
+  "D_interaction": "indicated if F1 and F2 are regular and F3 is irregular. not_indicated if F1, F2, F3 are all regular and N2 is flagged. confounded if F1 or F2 is irregular. Otherwise unknown.",
+  "precondition": "R0 must pass; otherwise every decision is invalid"
+ },
+ "descriptive_not_criteria": {
+  "KJ_local": "lift recomputed with Kutta-Joukowski on the local velocity (free stream plus every horseshoe's induced velocity at each bound-segment midpoint) over the free-stream KJ lift, minus 1. Labelled as a diagnostic of the force law, not a repair; the source keeps free-stream KJ.",
+  "area_ratio": "lattice area over S_ref",
+  "per_fin_CL": "in F3, each fin's lift over 0.5 x its own area_flat_m2",
+  "observed_order": "p for monotone_convergent triples"
+ },
+ "execution": {
+  "local_probe": {"cap": "systemd-run --user --scope -p CPUQuota=100% -p TasksMax=128 -p MemoryMax=2G -p MemorySwapMax=0 -p RuntimeMaxSec=180", "threads": 1,
+   "deadline_s": 150, "rule": "arms in arm_order, each family ascending; results.json rewritten atomically after every solve; a solve not started before the deadline is recorded not_run_deadline; a kill keeps the last results.json"},
+  "extended": {
+   "families": {"span": {"ns_add": [128, 192], "decisive_triples": [[32, 64, 128], [48, 96, 192]], "tail": [48, 64, 96, 128, 192]},
+                "chord": {"nc_add": [32, 48], "decisive_triples": [[8, 16, 32], [12, 24, 48]], "tail": [12, 16, 24, 32, 48]}},
+   "useful_if": "any core arm is incomplete after the local probe; OR any of A1-A3 is irregular (is it pre-asymptotic?); OR F3 is irregular while F1 and F2 are regular (does the interaction persist?). Otherwise no remote packet is sent.",
+   "packet_limits": {"vCPU": 4, "wall_s": 900, "memory_GiB": 8, "tasks": 128, "output_cap_bytes": 5000000},
+   "classification": "the same rules on the extended decisive triples and tail; core and extended verdicts are both kept"}
+ },
+ "scope": "Rigid, fixed-alpha, inviscid VLM solves of the unchanged source on analytic planforms and the v3a fin panels. No coupled arm, beam, glide, CFD or biological claim. Old VLM outputs, the ladder return and the failed CFD evidence are not modified."
+}
