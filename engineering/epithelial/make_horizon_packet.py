@@ -171,7 +171,8 @@ def main() -> None:
                 tf.addfile(ti, fh)
     shutil.rmtree(stage)
     print(f"{out}  {out.stat().st_size} bytes  sha256 {hashlib.sha256(out.read_bytes()).hexdigest()}  "
-          f"arms {len(arms)}  members {len(files) + 1}")
+          f"arms {len(arms)}  regular members {len(files)} "
+          f"(= {len(files) - 1} listed in SHA256SUMS + SHA256SUMS itself)")
 
 
 if __name__ == "__main__":
