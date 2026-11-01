@@ -1,0 +1,17 @@
+model: gemini-4-argon
+
+1. **Retrospective data leakage in Part B (Fatal self-deception):** Arm 0 is not a genuine preregistration; it is a post-hoc simulation on a dataset (`F003`, `P8-1`) you have already analyzed. Because the author (Claude) has prior exposure to the numerical pathology of this exact grid, the selection of features $s_1, s_2, s_3$, their equal rank-normal weighting, and the synthetic "expert" heuristic (`Brusselator before Schnakenberg`, ascending $\epsilon$) are almost certainly contaminated by outcome knowledge. You are testing whether you can remember which features correlate with non-convergence in F003, not whether an ex-ante mechanism works.
+
+2. **`accepted(t)` vs. `positive(i)` bait-and-switch (Incoherent objective):** In Part A3, you explicitly protect negative results: a failed prediction with complete receipts still scores `accepted(t) = 1`. In Part B, every single cell is a deterministic numerical check with complete receipts, meaning under A3, `accepted(i) = 1` for all 2,520 cells. In A2, this reduces `accepted(t)` to a sheer task-count maximizing term, making `cheapest` trivially optimal on the first half of the objective. To avoid this in Part B, you silently replace `accepted(t)` with `positive(i)` (finding a bug/non-convergence), abandoning your own Part A protection of negative work. 
+
+3. **Gameable acceptance and cost predicates (Goodhart's Law):** 
+   * *Task splitting & triviality:* Because `accepted(t) = 1` rewards any completed task with valid receipts regardless of outcome (A3), agents in a real commons will split work into micro-tasks with trivial predicates to farm the $w_{\text{accept}} = 1$ payout.
+   * *Decision-change manipulation:* `decision_change(t)` counts *any* named update to a "next action," "dependency edge," or "published number." A researcher or lead can trivially manufacture decision changes by logging micro-updates or shifting a continuous estimate by $10^{-6}$.
+   * *Cost underbidding:* A4 forces policies to allocate using *ex-ante declared* costs, while A2 isn't clear whether the budget constraint $\sum \text{cost}(t) \le B$ binds on ex-ante or ex-post cost. Without a penalty for cost overruns, proposers will declare near-zero ex-ante costs to get funded by cost-normalizing policies (like `signal`).
+
+4. **Broken baseline rule and strawman "expert" (Inadequate baselines):**
+   * *Inconsistency:* A6 states a mechanism is only an improvement if it beats **all** baselines. Yet Part B's prediction B1 only requires `signal` to beat `uniform`'s median—abandoning the A6 standard before the experiment even begins.
+   * *Strawman expert:* Part B's `expert` baseline is written by the LLM ("no human expert wrote it") and ignores cost $c_i$, whereas `signal` divides by $c_i$. Beating a cost-blind heuristic on a cost-normalized metric proves nothing about domain expertise vs. signals.
+   * *Missing single-feature baselines:* Does $z(s_1)+z(s_2)+z(s_3)$ beat just ranking by stationarity residual ($s_3 / c_i$) alone?
+
+5. **Counterfactual dependency invalidity (A2/A3):** `decision_change(t)` is path-dependent. If task $t_1$ and $t_2$ both discover the same flaw, only the first dispatched changes the record. Evaluating counterfactual policy orderings on a fixed static log (even in future Part A replays) without an explicit model of informational redundancy is invalid.

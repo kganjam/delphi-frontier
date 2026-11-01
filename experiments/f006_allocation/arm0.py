@@ -62,7 +62,8 @@ def main():
         for i, x in zip(ids, zz):
             zsum[i] = zsum.get(i, 0.0) + float(x)
     pc = an["per_cell"]
-    pos = {i: (pc[str(i)]["step"] == "step_sensitive" or pc[str(i)]["horizon"] == "horizon_changed") for i in ids}
+    HORIZON_ONLY = "--horizon-only" in sys.argv     # AMENDMENT_1 item 1: ground truth nobody had seen
+    pos = {i: ((not HORIZON_ONLY and pc[str(i)]["step"] == "step_sensitive") or pc[str(i)]["horizon"] == "horizon_changed") for i in ids}
 
     def in_numerator(i):
         r = rows[i]
@@ -111,15 +112,19 @@ def main():
 
     expert = sorted(ids, key=lambda i: (abs(cells[i]["rho"] - 1), cells[i]["model"] != "brusselator", cells[i]["eps"], i))
     cheapest = sorted(ids, key=lambda i: (cost[i], i))
+    expert_ca = sorted(ids, key=lambda i: (abs(cells[i]["rho"] - 1), cells[i]["model"] != "brusselator", cost[i], i))
     sig = sorted(ids, key=lambda i: (-norm.cdf(zsum[i] / math.sqrt(3)) / cost[i], i))
-    res = {"inputs": {"analysis_sha256": hashlib.sha256(Path(an_p).read_bytes()).hexdigest(), "arm0_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()},
+    res = {"ground_truth": "horizon_changed only" if HORIZON_ONLY else "step_sensitive or horizon_changed", "inputs": {"analysis_sha256": hashlib.sha256(Path(an_p).read_bytes()).hexdigest(), "arm0_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()},
            "pool": {"n_tasks": len(ids), "total_cost_cellsteps": total, "n_positive": sum(pos.values()), "n_decision_positive": sum(dec.values()),
                     "n_strata": n_strata, "positive_by_kind": {"step_sensitive": sum(pc[str(i)]["step"] == "step_sensitive" for i in ids),
                                                                "horizon_changed": sum(pc[str(i)]["horizon"] == "horizon_changed" for i in ids)}},
            "budgets": {}}
     for bf in BUDGETS:
         B = bf * total
-        rb = {"expert": score(fill(expert, B)), "cheapest": score(fill(cheapest, B)), "signal": score(fill(sig, B))}
+        rb = {"expert_informed": score(fill(expert, B)), "expert_informed_costaware": score(fill(expert_ca, B)),
+              "cheapest": score(fill(cheapest, B)), "signal": score(fill(sig, B))}
+        for nm, s in (("s1/c", s1), ("s2/c", s2), ("s3/c", s3)):
+            rb[nm] = score(fill(sorted(ids, key=lambda i: (-(s[i] if math.isfinite(s[i]) else 1e300) / cost[i], i)), B))
         for name, mk in (("uniform", lambda rng: rng.sample(ids, len(ids))), ("stratified", stratified_order)):
             runs = [score(fill(mk(random.Random(1000 + s)), B)) for s in range(SEEDS)]
             rb[name] = {k: {"median": statistics.median(r[k] for r in runs), "p05": float(np.percentile([r[k] for r in runs], 5)),
