@@ -1,0 +1,46 @@
+{
+ "schema": "claude-xenomodel.physicell-arm-receipt/1",
+ "argv": [
+  "systemd-run",
+  "--user",
+  "--scope",
+  "-q",
+  "-p",
+  "TasksMax=64",
+  "-p",
+  "MemoryMax=2G",
+  "-p",
+  "MemorySwapMax=0",
+  "-p",
+  "RuntimeMaxSec=1800",
+  "--setenv=OMP_NUM_THREADS=1",
+  "--setenv=XM_GEOM=strip",
+  "--setenv=XM_NX=10",
+  "--setenv=XM_NY=3",
+  "--setenv=XM_XIP=1",
+  "--setenv=XM_XIM=3",
+  "/home/ubuntu/scidex/data/scidex-artifacts/claude-xenomodel/xm-build/xm_contractile",
+  "/data/artifacts/claude-xenomodel/runs-r1/A3-strip-stand-dt0.05/settings.xml"
+ ],
+ "exit": 0,
+ "wall_s": 2.21,
+ "dt_mechanics_min": 0.05,
+ "params": {
+  "XM_GEOM": "strip",
+  "XM_NX": "10",
+  "XM_NY": "3",
+  "XM_XIP": "1",
+  "XM_XIM": "3"
+ },
+ "binary_sha256": "4c8e53145c82a377de17bd1810345bf4205e3bcf75efc8cfd4c6082cd4d28cd6",
+ "settings_sha256": "7d96e06d3888799bfe6086a5ad69533ef7c101304ebedb6cf39e088c1ff17250",
+ "custom_cpp_sha256": "3ae0d5c658af1ec16153edcea8a68fa09d7a0803c98cd238d254ca02d8205e2d",
+ "main_cpp_sha256": "6961af30cabf0a53fc9fb9bcc7b51c9f2ed42112edb501f15baf72d0e49eee77",
+ "physicell": {
+  "version": "1.14.2",
+  "commit": "dbd3499250141b27600e91e501c54c46f68f2763"
+ },
+ "seed": 0,
+ "determinism": "no stochastic term is used by this module; OMP_NUM_THREADS=1",
+ "com_csv_sha256": "dde6cac6884fe429c33650a3c8d331bd000f2eac2f0ac7b6ae7f8c74d6539b28"
+}

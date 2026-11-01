@@ -1,0 +1,42 @@
+{
+ "schema": "claude-xenomodel.physicell-arm-receipt/1",
+ "argv": [
+  "systemd-run",
+  "--user",
+  "--scope",
+  "-q",
+  "-p",
+  "TasksMax=64",
+  "-p",
+  "MemoryMax=2G",
+  "-p",
+  "MemorySwapMax=0",
+  "-p",
+  "RuntimeMaxSec=1800",
+  "--setenv=OMP_NUM_THREADS=1",
+  "--setenv=XM_GEOM=pair",
+  "--setenv=XM_XIP=3",
+  "--setenv=XM_XIM=1",
+  "/home/ubuntu/scidex/data/scidex-artifacts/claude-xenomodel/xm-build/xm_contractile",
+  "/data/artifacts/claude-xenomodel/runs-r1/A2-pair-mirror/settings.xml"
+ ],
+ "exit": 0,
+ "wall_s": 1.89,
+ "dt_mechanics_min": 0.1,
+ "params": {
+  "XM_GEOM": "pair",
+  "XM_XIP": "3",
+  "XM_XIM": "1"
+ },
+ "binary_sha256": "4c8e53145c82a377de17bd1810345bf4205e3bcf75efc8cfd4c6082cd4d28cd6",
+ "settings_sha256": "43eca7e65a9b52c2e83eb99d6863f2a34d983c949fdaff49d98dfd60e9b7c0ba",
+ "custom_cpp_sha256": "3ae0d5c658af1ec16153edcea8a68fa09d7a0803c98cd238d254ca02d8205e2d",
+ "main_cpp_sha256": "6961af30cabf0a53fc9fb9bcc7b51c9f2ed42112edb501f15baf72d0e49eee77",
+ "physicell": {
+  "version": "1.14.2",
+  "commit": "dbd3499250141b27600e91e501c54c46f68f2763"
+ },
+ "seed": 0,
+ "determinism": "no stochastic term is used by this module; OMP_NUM_THREADS=1",
+ "com_csv_sha256": "042c1f2fa5b242df60f931b230241da4f83a5ac05882cef0a0bf4fe39e8ee097"
+}
