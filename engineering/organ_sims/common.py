@@ -28,6 +28,7 @@ SCALES = {
     "r6-trim-map": (["organism"], "No flight test: 6-DOF quasi-steady glider with assumed polars, CLmax and dispersion; trims are computed, not hand-trimmed; keys above dec+4 do not exist as prints; no aeroelasticity (R4) or launch-stroke loads."),
     "r4b-torsion": (["organ", "tissue"], "No measured fin torsional stiffness: GJ is swept as a ratio of EI (biology unsourced) and estimated for the print with an ASSUMED Poisson ratio; uniform rod about an assumed elastic axis; no membrane, ray network or unsteady loads."),
     "r1b-v3b-fix": (["organ"], "No measured fin pose or lift: inviscid thin-surface VLM on rebuilt designed geometry; camber sign and sweep are assumed deployment knobs (Park & Choi 2010 unread); no body, viscosity or separation."),
+    "r5c-integrated-launch": (["collective", "organism"], "No observed launch or schooling: rigid printed gliders of computed (not hand-trimmed) designs released under an assumed timing rule and dispersion; straight horseshoe wakes; no control or behaviour (ff-eco)."),
     "r5-school-launch": (["collective", "organism"], "No observed schooling or collective behaviour: rigid printed gliders released together under an ASSUMED dispersion; no sensing, control, decision or population dynamics (ff-eco owns those); wake model is a straight horseshoe per fish."),
 }
 

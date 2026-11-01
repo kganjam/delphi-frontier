@@ -1,0 +1,50 @@
+{
+ "job_name": "claude-organ-r4b-torsion-a1",
+ "job_id": "aijob-e00vzgaqzha3k23eb5",
+ "collected_utc": "2026-11-01T15:56:29Z",
+ "state": "FAILED",
+ "status": {
+  "instances": [
+   {
+    "state": "FAILED",
+    "compute_instance_id": "computeinstance-e00x0yzxe7pqgkf0ct",
+    "compute_instance_state": "RUNNING",
+    "private_ip": "10.0.0.61"
+   }
+  ],
+  "state": "FAILED",
+  "state_details": {
+   "code": "ContainerFailed",
+   "message": "Container exited with non-zero exit code."
+  },
+  "started_at": "2026-11-01T15:53:16.453040689Z",
+  "finished_at": "2026-11-01T15:54:42.551323123Z"
+ },
+ "log_queries": 1,
+ "log_bytes": 1601,
+ "log_sha256": "037f6a995e46cae8298b540ac1f9d2789bea0c684e8f82cf0ab289ace33556cb",
+ "science_rc": 1,
+ "science_wall_s": 0,
+ "log_head": [
+  "ORGAN-JOB start 2026-11-01T15:53:16Z sha=4edab8ec83b6f32727647a3ab75ab097769828ef rid=r4b-torsion mod=engineering.organ_sims.r4b_torsion args=38",
+  "Python 3.12.7",
+  "pkgs 2.2.6 3.10.3",
+  "ORGAN-JOB science rc=1 wall_s=0"
+ ],
+ "output": {
+  "declared_sha256": "44ecdc166a5b5ea0f9f6ef110c29764c44ae71caa370e07577bdd1ee380bec78",
+  "declared_bytes": 539,
+  "decoded_bytes": 539,
+  "sha256_match": true
+ },
+ "files": {
+  "artifacts/organ-sims/logs/r4b-torsion.log": {
+   "sha256": "b4919102c3bd5cec08e345ef70e4aa0d652abc834fe2e2bb53bfe3eeac76c076",
+   "bytes": 553
+  },
+  "artifacts/organ-sims/logs/r4b-torsion.job.json": {
+   "sha256": "27f80153828ab226c8a6941227e3ed14871444406741c4a3e4f1a8dce5b13e46",
+   "bytes": 193
+  }
+ }
+}
