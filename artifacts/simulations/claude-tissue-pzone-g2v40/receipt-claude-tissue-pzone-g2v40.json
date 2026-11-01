@@ -1,0 +1,38 @@
+{
+ "code_matches_repo": true,
+ "code_sha256": {
+  "simulations/claude_tissue/pzone_regional_gpu.py": "bbb8f59f3dcb721bd324d1ce742372194c824ded14db26938e974dc73fc32aa1"
+ },
+ "collected_utc": "2026-11-01T19:54:00Z",
+ "collector_sha256": {
+  "simulations/claude_tissue/collect_gpu2.py": "85bd2403c8c9c223cb8b4e57f5644ba87a8ff7517ff2e7d6f38a818f4ba97ef7"
+ },
+ "command": "python3 /work/pzoner.py (args in META)",
+ "compute": "Nebius aijob-e00fzv2zsdj29g7zct (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "input_sha256": {},
+ "job": "aijob-e00fzv2zsdj29g7zct",
+ "job_state": "COMPLETED",
+ "name": "claude-tissue-pzone-g2v40",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-pzone-g2v40/job-log.txt": "3935c7ea5a1bc03e66abdce45d378b784369d1e71d60b1f0cc6f5d38b4642e0b",
+  "artifacts/simulations/claude-tissue-pzone-g2v40/pzone_g2v40.json": "7da050a04c64957d1f499685a8a6831cd6bc33e6a749de2ce412d17dc15e3f7f",
+  "artifacts/simulations/claude-tissue-pzone-g2v40/pzone_g2v40.png": "970b45ef2c6fe98c569cea1c8cca35f5f886a6b380fd77d6c44d6e95da39bc40"
+ },
+ "seed": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12
+ ],
+ "wall_s": 241.7
+}
