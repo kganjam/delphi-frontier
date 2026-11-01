@@ -1,0 +1,11 @@
+{
+  "command": "python frontier_compute/gcp_worker.py build artifacts/gcp/betse-k-sensitivity/config.json --packet artifacts/gcp/betse-k-sensitivity/payload.tar.gz --exporter frontier_compute/gcp_artifacts.py --output artifacts/gcp/betse-k-sensitivity/startup.sh",
+  "config_sha256": "66a36a4c5996060fc1cb9148f4ec52e9ade50a47dcb4967e4cba8940c90696ca",
+  "created_utc": "2026-11-01T02:47:12Z",
+  "note": "Local startup-script build only; no VM create/start or GCP mutation performed.",
+  "schema": "frontier.gcp-worker-startup-build/1",
+  "source_archive_sha256": "fbe72dc7c0c2ed8cd9271928a08d30a6efff75f931f17eb922e4b71b61ef393e",
+  "startup_script_bytes": 72139,
+  "startup_script_sha256": "ad0dfa5826e31488b6138e370270d051c8a9597abb2c6b310efbcadb9cbd08b4",
+  "submitted_to_provider": false
+}
