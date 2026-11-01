@@ -1,0 +1,132 @@
+{
+ "biology": "unknown; synthetic model-unit exercise, n=6, no DDPM acceleration claim, optimizer worse or failed is a legitimate outcome",
+ "design_success": {
+  "baseline": [
+   {
+    "gate_A_met": true,
+    "gate_B_success": true,
+    "score": 0.017587948349902214,
+    "status": null,
+    "target": "T0"
+   },
+   {
+    "gate_A_met": true,
+    "gate_B_success": true,
+    "score": 0.017761849389671194,
+    "status": null,
+    "target": "T1"
+   },
+   {
+    "gate_A_met": true,
+    "gate_B_success": true,
+    "score": 0.007388917296185616,
+    "status": null,
+    "target": "T2"
+   },
+   {
+    "gate_A_met": true,
+    "gate_B_success": false,
+    "score": 0.02712028850047059,
+    "status": null,
+    "target": "T3"
+   },
+   {
+    "gate_A_met": true,
+    "gate_B_success": false,
+    "score": 0.02053798915552644,
+    "status": null,
+    "target": "T4"
+   },
+   {
+    "gate_A_met": false,
+    "gate_B_success": false,
+    "score": 8.652851708419855e-07,
+    "status": null,
+    "target": "T5"
+   }
+  ],
+  "n_B_success": {
+   "baseline": 3,
+   "optimizer": 4
+  },
+  "optimizer": [
+   {
+    "gate_A_met": true,
+    "gate_B_success": true,
+    "score": 0.0032798163344033545,
+    "status": null,
+    "target": "T0"
+   },
+   {
+    "gate_A_met": true,
+    "gate_B_success": true,
+    "score": 0.0022021641031043236,
+    "status": null,
+    "target": "T1"
+   },
+   {
+    "gate_A_met": true,
+    "gate_B_success": true,
+    "score": 0.0012422205283569693,
+    "status": null,
+    "target": "T2"
+   },
+   {
+    "gate_A_met": true,
+    "gate_B_success": true,
+    "score": 0.0025160427177647496,
+    "status": null,
+    "target": "T3"
+   },
+   {
+    "gate_A_met": true,
+    "gate_B_success": false,
+    "score": 0.10842067802356035,
+    "status": null,
+    "target": "T4"
+   },
+   {
+    "gate_A_met": false,
+    "gate_B_success": false,
+    "score": 8.684470722504209e-08,
+    "status": null,
+    "target": "T5"
+   }
+  ]
+ },
+ "numerical_validity": {
+  "all_counts_64": true,
+  "negative_ok_on_patterned": true,
+  "oracle_ok": true,
+  "oracle_recompute_max_abs": 0.0,
+  "seed_check_recompute_max_abs_diff": 0.0,
+  "selection_recomputed_equal": true,
+  "trace_score_recompute_max_abs_diff": 0.0,
+  "trace_validity_mismatches": 0,
+  "wrong_ic_ok": false
+ },
+ "protocol_sha256_expected": "8f6fee6f15856bfeae105bcb73bbeea853e8f52196bf3e59ce80cb938e8ce346",
+ "raw_concentration_negative_cells": {
+  "evaluated_candidates": 0,
+  "independent": 0,
+  "targets": 0,
+  "validation_controls": 0
+ },
+ "schema": "frontier.rd-inverse.return-audit/1",
+ "transport": {
+  "files_hash_mismatch_or_missing": [],
+  "phases_present": [
+   "control",
+   "independent_checks",
+   "search",
+   "selection",
+   "targets",
+   "validation_controls"
+  ],
+  "protocol_sha256_matches": true,
+  "receipt_complete": true,
+  "status": null,
+  "stopped_at_cap_after": null
+ },
+ "unaudited": "GPU runtime and CUDA parity are read from receipt/control.json, not recomputed here"
+}
