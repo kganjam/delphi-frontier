@@ -444,7 +444,15 @@ shows the dip is isolated to exactly L_p = 10:
 | Distal A | 0.98 | 0.01 (reproduced) | 0.99 |
 
 A single integer width failing points to a discretisation effect: the zone boundary is a step applied to cell
-centres. Non-integer widths 9.7–10.3 are being tested (`claude-tissue-pzone-g2r3`). **γ = 0.5 regional run** (`claude-tissue-pzone-g05r`, job `aijob-e00wxw6fcavbvv05j5`, COMPLETED, 760.2 s):
+centres. Non-integer widths were then tested (`claude-tissue-pzone-g2r3`, job `aijob-e00xeqsd6t1y722cjc`, COMPLETED, 625.3 s):
+
+| L_p | 9.7 | 9.9 | 10.0 | 10.1 | 10.3 |
+|---|---|---|---|---|---|
+| Distal A | 0.34 | −0.01 | 0.01 | 0.66 | 0.97 |
+
+**The integer-artifact explanation is ruled out.** Orientation fails smoothly across a narrow window about 0.5 wide,
+centred near L_p ≈ 10 ≈ 1.27 λ. A resonance between zone width and wavelength is possible but unverified. A run at
+γ = 1 near 1.27 λ ≈ 14 is testing whether the window recurs (`claude-tissue-pzone-g1res`). **γ = 0.5 regional run** (`claude-tissue-pzone-g05r`, job `aijob-e00wxw6fcavbvv05j5`, COMPLETED, 760.2 s):
 
 | L_p | 4 | 6 | 7 | 8 | 10 | 12 |
 |---|---|---|---|---|---|---|
