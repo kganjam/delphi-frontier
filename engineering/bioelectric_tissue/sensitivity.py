@@ -14,6 +14,8 @@ import shutil
 import subprocess
 import sys
 import time
+import tempfile
+import threading
 from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -26,6 +28,7 @@ HERE = Path(__file__).resolve().parent
 OUT_DEFAULT = HERE.parents[1] / "artifacts" / "bioelectric-tissue" / "k-sensitivity-v1"
 MULTIPLIERS = (2.0, 5.0, 10.0)
 MAX_WORKERS = 2
+_PROGRESS_LOCK = threading.Lock()
 
 
 def sha256(path: Path) -> str:
@@ -49,6 +52,45 @@ def environment_packages(betse_python: str) -> dict:
     return json.loads(result.stdout)
 
 
+def progress_checkpoint(scenario: str, status: str, command: list[str], started_utc: str,
+                        exit_code: int | None = None, source_work: Path | None = None,
+                        log_path: Path | None = None) -> dict:
+    out_text = os.environ.get("COPS_OUT")
+    if not out_text:
+        return {"status": status, "files": {}}
+    out = Path(out_text)
+    out.mkdir(parents=True, exist_ok=True)
+    partial = out / "partial"
+    partial.mkdir(exist_ok=True)
+    source_files = {}
+    if source_work is not None:
+        for label, source in (("trajectory", source_work / f"{scenario}.npz"),
+                              ("config", source_work / "cfg" / "run.yaml")):
+            if source.is_file():
+                suffix = ".npz" if label == "trajectory" else ".yaml"
+                target = partial / f"{scenario}{suffix}"
+                shutil.copy2(source, target)
+                source_files[label] = {"path": f"partial/{target.name}", "sha256": sha256(target),
+                                       "bytes": target.stat().st_size}
+    if log_path is not None and log_path.is_file():
+        source_files["log"] = {"path": str(log_path.relative_to(out)), "sha256": sha256(log_path),
+                               "bytes": log_path.stat().st_size}
+    with _PROGRESS_LOCK:
+        progress_path = out / "progress.json"
+        current = json.loads(progress_path.read_text()) if progress_path.exists() else {"schema": "frontier.betse-k-sensitivity.progress/1", "runs": {}}
+        current["runs"][scenario] = {"status": status, "started_utc": started_utc,
+                                      "exit_code": exit_code, "command": command,
+                                      "files": source_files}
+        payload = (json.dumps(current, indent=2, sort_keys=True, allow_nan=False) + "\n").encode()
+        with tempfile.NamedTemporaryFile(dir=out, prefix=".progress.", delete=False) as stream:
+            temp = Path(stream.name)
+            stream.write(payload)
+            stream.flush()
+            os.fsync(stream.fileno())
+        temp.replace(progress_path)
+    return current["runs"][scenario]
+
+
 def run_stage(py: str, scenario: str, work: Path, *, template: Path | None,
               multiplier: float = 1.0, k_change: bool = False,
               gap_block: bool = False, half_step: bool = False) -> dict:
@@ -66,16 +108,29 @@ def run_stage(py: str, scenario: str, work: Path, *, template: Path | None,
     work.mkdir(parents=True, exist_ok=True)
     started = datetime.now(timezone.utc).isoformat()
     started_clock = time.monotonic()
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=600, env=env)
+    log_root = Path(os.environ.get("COPS_OUT", str(work.parent))) / "run-logs"
+    log_root.mkdir(parents=True, exist_ok=True)
+    log_path = log_root / f"{scenario}.log"
+    progress_checkpoint(scenario, "running", cmd, started, source_work=work)
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=600, env=env)
+    except subprocess.TimeoutExpired as error:
+        log = f"timeout after 600 seconds\n{error.stdout or ''}\n{error.stderr or ''}"[-12000:]
+        log_path.write_text(log, encoding="utf-8")
+        progress_checkpoint(scenario, "timeout", cmd, started, source_work=work, log_path=log_path)
+        raise RuntimeError(f"BETSE stage {scenario} timed out; see {log_path.name}") from error
     finished = datetime.now(timezone.utc).isoformat()
     log = (result.stdout + result.stderr)[-12000:]
-    log_path = work.parent / f"{scenario}.log"
     log_path.write_text(log, encoding="utf-8")
     if result.returncode != 0:
+        progress_checkpoint(scenario, "failed", cmd, started, result.returncode, source_work=work, log_path=log_path)
         raise RuntimeError(f"BETSE stage {scenario} exited {result.returncode}; see {log_path.name}")
+    progress = progress_checkpoint(scenario, "completed", cmd, started, result.returncode,
+                                   source_work=work, log_path=log_path)
     return {"scenario": scenario, "command": cmd, "started_utc": started,
             "finished_utc": finished, "elapsed_s": time.monotonic() - started_clock,
-            "exit_code": result.returncode, "log": log_path.name, "log_sha256": sha256(log_path)}
+            "exit_code": result.returncode, "log": str(log_path.relative_to(Path(os.environ.get("COPS_OUT", str(work.parent))))),
+            "log_sha256": sha256(log_path), "checkpoint_files": progress["files"]}
 
 
 def paired_effect(d: dict, base: dict) -> dict:
@@ -153,7 +208,7 @@ def make_manifest(out: Path, work: Path, run_records: list[dict], source_commit:
         "label": "SIMULATED; BETSE 1.5.0; generic 2-D patch; parameter sensitivity only; not a measured tissue or fin model",
         "protocol_sha256": protocol_sha,
         "source_commit": source_commit,
-        "source_files": {name: sha256(HERE / name) for name in ("betse_stage.py", "sensitivity.py", "render_sensitivity.py", "analysis.py", "requirements-betse.txt") if (HERE / name).is_file()},
+        "source_files": {name: sha256(HERE / name) for name in ("betse_stage.py", "sensitivity.py", "render_sensitivity.py", "run-betse-sensitivity.sh", "sensitivity_protocol.json", "analysis.py", "requirements-betse.txt") if (HERE / name).is_file()},
         "protocol_path": "protocol.json",
         "betse_version": subprocess.run([str(Path(betse_python).parent / "betse"), "--version"], capture_output=True, text=True, timeout=30).stdout.strip().splitlines()[-1],
         "environment": {"python": sys.version.split()[0], "platform": platform.platform(),
