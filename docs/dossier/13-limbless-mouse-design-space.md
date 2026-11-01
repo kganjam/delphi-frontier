@@ -33,7 +33,21 @@ Three studies, each a **simulation or a sequence analysis**. None is an observat
 
 Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS-motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the one that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page.
 
-**Declared and not present.** The result file `results/limbless-mouse/zrs-analysis.json` is not in this tree. It is listed rather than hidden.
+- Figure `zrs-conservation.png`: Sequence analysis. Per-column conservation across the ZRS orthologs retrieved, with ETS motif positions marked.
+
+- This is a correlational, post-hoc analysis of a handful of sequences. It is NOT a predictor. With two knock-in species that gave normal limbs and two that truncated, no statistic computed here has the power to establish that any sequence feature causes the phenotype; the causal evidence is Kvon et al.'s mouse knock-ins, not this alignment.
+- The sequences analysed are NOT the sequences Kvon et al. knocked in. Theirs were synthesised from supplementary Tables S2/S3, which could not be retrieved. These were re-derived from reference genomes, so they may differ from the constructs by assembly errors, strain or individual polymorphism, and by window boundaries.
+- Species substitutions were necessary and change what the comparison means: the paper used boa constrictor (Assemblathon 2 assembly, not in NCBI) and speckled rattlesnake Crotalus mitchellii (JPMF01); this analysis uses Eryx miliaris (dwarf sand boa, a different basal snake, from a dedicated GenBank ZRS record) and Crotalus tigris. Thamnophis elegans was added and is not in the paper at all. Viper (JTGP01) was not analysed.
+- Percent identity depends heavily on how much flanking sequence is included, and there is no single correct number. Mouse-human is 88.3% over the trimmed core, 78.6% over the full 1.3 kb window, and 85-86% over the best-aligning block alone. Kvon et al. state 73% for human vs mouse; they do not define the metric, so these numbers are NOT directly comparable to theirs and the discrepancy is a definitional difference, not a contradiction of either result.
+- The core boundaries (mouse 398-1043) come from thresholds on a smoothed conservation profile. The thresholds were chosen by reading the profile's shoulder, but they are choices, and the identity numbers shift if they move.
+- ETS site numbering E0-E4 from Kvon et al. is NOT reproduced. Their site coordinates were in inaccessible supplementary material, so no site here is claimed to be 'the' E1, E2 etc. Every motif call is marked inferred. The one exception in strength of evidence is the 17 bp deletion block, which was located independently by alignment and which the paper also describes as overlapping an ETS site.
+- A PWM hit is a sequence match, not a measurement of binding. No ChIP, EMSA or reporter data were used here, and FIMO itself was not run - an equivalent threshold was recomputed.
+- The corn snake negative ('no ZRS detected') is scoped: the whole annotated LMBR1 locus plus 10 kb either side was searched with 12-mer seeding and local alignment using BOTH the mouse and the Burmese python ZRS as queries. It does not exclude a ZRS remnant elsewhere in the corn snake genome, nor one too diverged for these queries to find.
+- Rattlesnake could not be assessed at the 17 bp site: MAFFT places unrelated sequence in those columns rather than a gap, so it is reported as not assessable there rather than as retaining the site. Its ETS1 scan returns no hit in that block.
+- Alignment of sequences this diverged is itself uncertain. Different aligners or parameters will move indel placement, and the snake columns are where that uncertainty is largest.
+- Model fidelity is not biological validity: reproducing Kvon et al.'s observations says these sequence relationships are real, not that any interpretation of limb loss built on them is.
+
+Full result file: `results/limbless-mouse/zrs-analysis.json`. Code: `results/limbless-mouse/code/final_analysis.py (with fetch_orthologs.py, locate_zrs.py, core_trim.py, make_figure.py and zrs_lib.py beside it)`.
 
 ### The SHH–GREM1–FGF loop: where a weakened enhancer stops being a weaker limb and starts being no limb
 

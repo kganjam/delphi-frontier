@@ -91,3 +91,8 @@
 .lmbud .lmpin.off .lmb-pl { fill: var(--faint); }
 .lmpinlist { margin: .6rem 0 0; padding-left: 1.25rem; max-width: 86ch; }
 .lmpinlist li { margin-bottom: .25rem; }
+
+/* Species names and gene symbols must not break mid-word: "Mus muscu lus" reads as a different organism. */
+.lmstudy table td, .lmstudy table th { overflow-wrap: normal; word-break: normal; hyphens: none; }
+.lmstudy table td:first-child, .lmstudy table th:first-child { min-width: 7.5em; }
+.lmstudy table { font-size: .88rem; }

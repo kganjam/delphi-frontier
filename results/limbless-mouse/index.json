@@ -14,11 +14,16 @@
       "kind": "sequence analysis",
       "question": "Kvon et al. replaced the mouse ZRS with orthologs and got normal limbs from some species and truncated limbs from others. What, in the sequence itself, separates the two groups?",
       "summary": "Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS-motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the one that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page.",
-      "code": "results/limbless-mouse/code/zrs_analysis.py",
+      "code": "results/limbless-mouse/code/final_analysis.py (with fetch_orthologs.py, locate_zrs.py, core_trim.py, make_figure.py and zrs_lib.py beside it)",
       "data": "results/limbless-mouse/zrs-analysis.json",
       "figures": [
-        {"file": "zrs-conservation.png", "alt": "Per-column conservation of aligned ZRS orthologs with ETS motif positions marked, species coloured by the limb phenotype their knock-in produced", "caption": "Sequence analysis. Per-column conservation across the ZRS orthologs retrieved, with ETS motif positions marked."}
-      ]
+        {
+          "file": "zrs-conservation.png",
+          "alt": "Per-column conservation of aligned ZRS orthologs with ETS motif positions marked, species coloured by the limb phenotype their knock-in produced",
+          "caption": "Sequence analysis. Per-column conservation across the ZRS orthologs retrieved, with ETS motif positions marked."
+        }
+      ],
+      "summary_table_title": "Every ortholog retrieved, with its divergence from mouse and its ETS1 motif content"
     },
     {
       "id": "shh-grem1-fgf-loop",
@@ -30,9 +35,21 @@
       "code": "results/limbless-mouse/code/shh_loop.py",
       "data": "results/limbless-mouse/shh-loop.json",
       "figures": [
-        {"file": "shh-loop-control.png", "alt": "Simulated time courses of SHH, GREM1, BMP and FGF under wild-type parameters, showing the loop engaging and then self-terminating", "caption": "Simulation, control arm. Wild-type parameters: the loop engages, is sustained for a bounded window, and self-terminates."},
-        {"file": "shh-loop-threshold.png", "alt": "Simulated outgrowth duration against the fraction of wild-type ZPA Shh output, showing a sharp threshold", "caption": "Simulation. Outgrowth duration against the fraction of wild-type ZPA Shh output. The threshold is a property of this model, not a measurement in an embryo."},
-        {"file": "shh-loop-phasemap.png", "alt": "Simulated two-dimensional phase map over Shh output and FGF10 input, coloured by phenotype class", "caption": "Simulation. Two knobs at once: the same phenotype class is reachable from different directions, which is the point of a design space."}
+        {
+          "file": "shh-loop-control.png",
+          "alt": "Simulated time courses of SHH, GREM1, BMP and FGF under wild-type parameters, showing the loop engaging and then self-terminating",
+          "caption": "Simulation, control arm. Wild-type parameters: the loop engages, is sustained for a bounded window, and self-terminates."
+        },
+        {
+          "file": "shh-loop-threshold.png",
+          "alt": "Simulated outgrowth duration against the fraction of wild-type ZPA Shh output, showing a sharp threshold",
+          "caption": "Simulation. Outgrowth duration against the fraction of wild-type ZPA Shh output. The threshold is a property of this model, not a measurement in an embryo."
+        },
+        {
+          "file": "shh-loop-phasemap.png",
+          "alt": "Simulated two-dimensional phase map over Shh output and FGF10 input, coloured by phenotype class",
+          "caption": "Simulation. Two knobs at once: the same phenotype class is reachable from different directions, which is the point of a design space."
+        }
       ]
     },
     {
@@ -45,9 +62,21 @@
       "code": "results/limbless-mouse/code/digit_turing.py",
       "data": "results/limbless-mouse/digit-turing.json",
       "figures": [
-        {"file": "digit-turing-normal.png", "alt": "Simulated digit-like pattern in a limb-bud-shaped domain", "caption": "Simulation. The pattern the model makes in a full-size paddle."},
-        {"file": "digit-turing-series.png", "alt": "A strip of simulated patterns across the parameter sweep, from several elements down to none, each labelled with its element count", "caption": "Simulation. The same model across the sweep, from several elements down to none."},
-        {"file": "digit-turing-domain.png", "alt": "Simulated element count against domain size, with the critical domain size marked", "caption": "Simulation. Element count against domain size, in units of the pattern's own wavelength."}
+        {
+          "file": "digit-turing-normal.png",
+          "alt": "Simulated digit-like pattern in a limb-bud-shaped domain",
+          "caption": "Simulation. The pattern the model makes in a full-size paddle."
+        },
+        {
+          "file": "digit-turing-series.png",
+          "alt": "A strip of simulated patterns across the parameter sweep, from several elements down to none, each labelled with its element count",
+          "caption": "Simulation. The same model across the sweep, from several elements down to none."
+        },
+        {
+          "file": "digit-turing-domain.png",
+          "alt": "Simulated element count against domain size, with the critical domain size marked",
+          "caption": "Simulation. Element count against domain size, in units of the pattern's own wavelength."
+        }
       ]
     }
   ]

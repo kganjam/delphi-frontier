@@ -179,6 +179,7 @@
           <p class="facts-line"><b id="homeq">${openQ}</b> curated questions in the snapshot <span class="faint small">(live count appears when the node is reachable)</span></p>
           <p><a class="btn" href="${DF.href("/frontier")}">Open the Frontier</a> <a class="btn ghost" href="${DF.href("/knowledge")}">Claims and evidence</a></p></article></section>
       <section class="panel crosslinks"><h2>How they connect</h2><ul><li>Every open question names the scales it touches; from a question you can jump to that subsystem in the studio.</li><li>Every subsystem lists the open questions at its scale and links to them on the Frontier.</li><li>Claims, evidence and artifacts live once, in the Delphi foundation, and both paths link to the same entity pages.</li></ul>
+        ${DF.limbless && snap.limbless ? html`<p class="small"><b>Design space:</b> <a href="${DF.href("/studio/limbless-mouse")}">${snap.limbless.title}</a> — ${(snap.limbless.counts || {}).routes || 0} sourced routes to one stated outcome, across ${(snap.limbless.scales || []).length} scales, with the models that bear on them. Written in answer to a question put to us: could you make one?</p>` : ""}
         <p class="small faint">Projects other than Flying fish are added as Project records; none is invented here.</p></section>`,
       async after(root) {
         DF.mountFishMini(root.querySelector("#fishmini"), snap);

@@ -185,7 +185,7 @@
       ${s.present ? "" : html`<p class="note warn"><b>Declared and not present.</b> The result file <code>${s.data_path || ""}</code> is not in this build, so nothing below is shown for it. It is listed rather than hidden.</p>`}
       ${s.summary ? html`<p>${s.summary}</p>` : ""}
       ${s.question ? html`<p class="small"><b>The design question it answers.</b> ${s.question}</p>` : ""}
-      ${figs.length ? html`<div class="lmfigs">${figs.map((f) => html`<figure><img src="${f.href}" alt="${f.alt || f.caption || s.title}" loading="lazy"><figcaption class="small">${f.caption || ""} <span class="faint">Simulation or analysis output, not an observation. sha256 ${U.sha(f.sha256)}</span></figcaption></figure>`)}</div>` : ""}
+      ${figs.length ? html`<div class="lmfigs">${figs.map((f) => html`<figure><img src="${f.href}" alt="${f.alt || f.caption || s.title}" loading="lazy"><figcaption class="small">${f.caption || ""} <span class="faint">${/simulation/i.test(s.kind || "") ? "Simulation output" : "Analysis output"}, not an observation. sha256 ${U.sha(f.sha256)}</span></figcaption></figure>`)}</div>` : ""}
       ${missing.length ? html`<p class="small faint">${missing.length} declared figure${missing.length === 1 ? "" : "s"} not in this build: ${missing.map((f) => f.file).join(", ")}.</p>` : ""}
       ${d.headline ? html`<p class="lmhead"><b>${d.headline}</b></p>` : ""}
       ${eqs.length ? html`<h4>The model, as written</h4><div class="lmeqs">${eqs.map((e) => html`<div class="eqcard">${typeof e === "string" ? DF.texSpan(e, true) : html`${e.name ? html`<h5>${e.name}</h5>` : ""}${DF.texSpan(e.latex || e.tex || "", true)}${e.note ? html`<p class="small faint">${e.note}</p>` : ""}`}</div>`)}</div>` : ""}
@@ -202,8 +202,15 @@
       ${(d.retrievals || []).length ? html`<details><summary><b>${d.retrievals.length} retrievals</b> <span class="faint small">every sequence fetched, with its accession and digest</span></summary>
         <div class="tablewrap"><table><thead><tr><th scope="col">Species</th><th scope="col">Accession</th><th scope="col">Coordinates</th><th scope="col">HTTP</th><th scope="col">Bytes</th><th scope="col">sha256</th><th scope="col">Retrieved</th></tr></thead>
         <tbody>${d.retrievals.map((r) => html`<tr><td class="small">${r.species || ""}</td><td class="small">${r.url ? html`<a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.accession || r.url}</a>` : (r.accession || "")}</td><td class="small">${r.coords || ""}</td><td>${r.http_status === undefined ? "" : r.http_status}</td><td>${r.bytes === undefined ? "" : r.bytes}</td><td>${r.sha256 ? U.sha(r.sha256) : ""}</td><td class="small">${r.retrieved_at || ""}</td></tr>`)}</tbody></table></div></details>` : ""}
-      ${(d.summary_table || []).length ? html`<h4>Per species</h4><div class="tablewrap"><table><thead><tr>${Object.keys(d.summary_table[0]).map((k) => html`<th scope="col">${k.replace(/_/g, " ")}</th>`)}</tr></thead>
-        <tbody>${d.summary_table.map((row) => html`<tr>${Object.keys(d.summary_table[0]).map((k) => html`<td class="small">${row[k] === null || row[k] === undefined ? html`<span class="faint">not tested</span>` : (typeof row[k] === "number" ? DF.fmt(row[k], 4) : String(row[k]))}</td>`)}</tr>`)}</tbody></table></div>` : ""}
+      ${(d.summary_table || []).length ? (() => {
+        /* The columns are the union over all rows, not the first row's keys: a field that appears only on the one row that
+         * needs it (a species with no ZRS, say) would otherwise be dropped from the table without trace. */
+        const cols = [...new Set(d.summary_table.flatMap((r) => Object.keys(r)))];
+        const cell = (v) => v === null || v === undefined ? html`<span class="faint">—</span>` : (typeof v === "number" ? DF.fmt(v, 4) : (v === true ? U.pill("yes", "ok") : v === false ? U.pill("no", "no") : String(v)));
+        return html`<h4>${d.summary_table_title || s.summary_table_title || "Per row"}</h4><div class="tablewrap"><table><thead><tr>${cols.map((k) => html`<th scope="col">${k.replace(/_/g, " ")}</th>`)}</tr></thead>
+          <tbody>${d.summary_table.map((row) => html`<tr>${cols.map((k) => html`<td class="small">${cell(row[k])}</td>`)}</tr>`)}</tbody></table></div>
+          <p class="small faint">An em dash means the field is not applicable or was not tested, never that it was measured as zero.</p>`;
+      })() : ""}
       ${(d.limitations || []).length ? html`<div class="lmlimits"><h4>What this study does not establish</h4><ul class="small">${d.limitations.map((x) => html`<li>${x}</li>`)}</ul></div>` : ""}
       ${sources.length ? html`<details><summary><b>${sources.length} sources</b> <span class="faint small">with read levels</span></summary><ul class="small">${sources.map((x) => html`<li>${x.cite || x.title || ""} ${x.read_level ? U.pill(x.read_level + " read", "rl") : ""}${x.pmid ? html`<br><a href="https://pubmed.ncbi.nlm.nih.gov/${String(x.pmid)}/" target="_blank" rel="noopener noreferrer">PMID ${x.pmid}</a>` : ""}${x.doi ? html` <span class="faint">doi ${x.doi}</span>` : ""}</li>`)}</ul></details>` : ""}
       <p class="small faint">${s.code ? html`Code: <code>${s.code}</code>. ` : ""}${s.data_href ? html`<a href="${s.data_href}" download>Download the full result file</a> · ` : ""}sha256 ${U.sha(s.sha256)}</p></section>`;
