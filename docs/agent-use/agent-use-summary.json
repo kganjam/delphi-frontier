@@ -194,10 +194,16 @@
   },
   {
    "metric": "Codex tokens",
-   "value": "not counted",
+   "value": {
+    "input_tokens": 5054653696,
+    "cached_input_tokens": 4969079168,
+    "output_tokens": 15417346,
+    "reasoning_output_tokens": 5847495,
+    "total_tokens": 5070071042
+   },
    "floor": false,
-   "source": "scan of 6,778 ~/.codex/sessions files did not finish in budget",
-   "label": "not counted"
+   "source": "codex.py: max cumulative total_token_usage per file; window = max minus last value timestamped before 2026-10-30T00:00Z",
+   "label": "measured"
   },
   {
    "metric": "spend",
@@ -586,7 +592,7 @@
    "end": "2026-11-01T16:48:15Z",
    "clock": "git author date (start); observation system clock (end)"
   },
-  "hourly_csv": "hour_utc,commits_frontier,commits_evolve,sessions_started,jobs_submitted,jobs_finished,sessions_started_claude_toplevel,sessions_started_codex\n2026-10-31T06:00Z,0,2,nc,nc,nc,10,nc\n2026-10-31T07:00Z,0,84,nc,nc,nc,19,nc\n2026-10-31T08:00Z,0,62,nc,nc,nc,10,nc\n2026-10-31T09:00Z,0,16,nc,nc,nc,6,nc\n2026-10-31T10:00Z,0,0,nc,nc,nc,6,nc\n2026-10-31T11:00Z,0,0,nc,nc,nc,6,nc\n2026-10-31T12:00Z,0,2,nc,nc,nc,11,nc\n2026-10-31T13:00Z,0,78,nc,nc,nc,15,nc\n2026-10-31T14:00Z,2,91,nc,nc,nc,6,nc\n2026-10-31T15:00Z,0,40,nc,nc,nc,7,nc\n2026-10-31T16:00Z,6,27,nc,nc,nc,7,nc\n2026-10-31T17:00Z,17,6,nc,nc,nc,6,nc\n2026-10-31T18:00Z,70,13,nc,nc,nc,11,nc\n2026-10-31T19:00Z,133,8,nc,nc,nc,6,nc\n2026-10-31T20:00Z,119,9,nc,nc,nc,8,nc\n2026-10-31T21:00Z,89,0,nc,6,4,6,nc\n2026-10-31T22:00Z,176,0,nc,10,9,6,nc\n2026-10-31T23:00Z,140,0,nc,0,3,6,nc\n2026-11-01T00:00Z,143,0,nc,2,2,6,nc\n2026-11-01T01:00Z,99,0,nc,1,1,6,nc\n2026-11-01T02:00Z,94,0,nc,3,2,6,nc\n2026-11-01T03:00Z,88,0,nc,3,1,6,nc\n2026-11-01T04:00Z,67,0,nc,0,2,6,nc\n2026-11-01T05:00Z,71,0,nc,0,0,6,nc\n2026-11-01T06:00Z,112,0,nc,1,1,6,nc\n2026-11-01T07:00Z,77,0,nc,1,1,6,nc\n2026-11-01T08:00Z,2,0,nc,0,0,6,nc\n2026-11-01T09:00Z,0,0,nc,0,0,6,nc\n2026-11-01T10:00Z,0,0,nc,0,0,6,nc\n2026-11-01T11:00Z,0,0,nc,0,0,6,nc\n2026-11-01T12:00Z,0,0,nc,0,0,6,nc\n2026-11-01T13:00Z,6,0,nc,1,1,7,nc\n2026-11-01T14:00Z,16,0,nc,5,2,14,nc\n2026-11-01T15:00Z,40,0,nc,22,17,9,nc\n2026-11-01T16:00Z,52,0,nc,36,31,9,nc",
+  "hourly_csv": "hour_utc,commits_frontier,commits_evolve,sessions_started,jobs_submitted,jobs_finished,sessions_started_claude_toplevel,sessions_started_codex\n2026-10-31T06:00Z,0,2,11,nc,nc,10,1\n2026-10-31T07:00Z,0,84,19,nc,nc,19,0\n2026-10-31T08:00Z,0,62,10,nc,nc,10,0\n2026-10-31T09:00Z,0,16,6,nc,nc,6,0\n2026-10-31T10:00Z,0,0,6,nc,nc,6,0\n2026-10-31T11:00Z,0,0,6,nc,nc,6,0\n2026-10-31T12:00Z,0,2,11,nc,nc,11,0\n2026-10-31T13:00Z,0,78,15,nc,nc,15,0\n2026-10-31T14:00Z,2,91,6,nc,nc,6,0\n2026-10-31T15:00Z,0,40,7,nc,nc,7,0\n2026-10-31T16:00Z,6,27,7,nc,nc,7,0\n2026-10-31T17:00Z,17,6,6,nc,nc,6,0\n2026-10-31T18:00Z,70,13,12,nc,nc,11,1\n2026-10-31T19:00Z,133,8,6,nc,nc,6,0\n2026-10-31T20:00Z,119,9,11,nc,nc,8,3\n2026-10-31T21:00Z,89,0,7,6,4,6,1\n2026-10-31T22:00Z,176,0,6,10,9,6,0\n2026-10-31T23:00Z,140,0,6,0,3,6,0\n2026-11-01T00:00Z,143,0,6,2,2,6,0\n2026-11-01T01:00Z,99,0,6,1,1,6,0\n2026-11-01T02:00Z,94,0,6,3,2,6,0\n2026-11-01T03:00Z,88,0,6,3,1,6,0\n2026-11-01T04:00Z,67,0,6,0,2,6,0\n2026-11-01T05:00Z,71,0,6,0,0,6,0\n2026-11-01T06:00Z,112,0,6,1,1,6,0\n2026-11-01T07:00Z,77,0,6,1,1,6,0\n2026-11-01T08:00Z,2,0,6,0,0,6,0\n2026-11-01T09:00Z,0,0,6,0,0,6,0\n2026-11-01T10:00Z,0,0,6,0,0,6,0\n2026-11-01T11:00Z,0,0,6,0,0,6,0\n2026-11-01T12:00Z,0,0,6,0,0,6,0\n2026-11-01T13:00Z,6,0,7,1,1,7,0\n2026-11-01T14:00Z,16,0,14,5,2,14,0\n2026-11-01T15:00Z,40,0,9,22,17,9,0\n2026-11-01T16:00Z,52,0,9,36,31,9,0",
   "columns_note": "commits by git author date (%aI) in UTC; sessions_started = Claude top-level + Codex, nc while Codex is not counted; sessions_started_claude_toplevel covers all projects on the host; jobs_* only our 91 listed Nebius jobs, nc before the list window (2026-10-31T21Z)",
   "quiet_stretches": [
    {
@@ -1034,7 +1040,6 @@
   }
  ],
  "not_established": [
-  "Codex token usage (scan did not finish in budget)",
   "Nebius jobs older than newest 100 (CLI cannot page)",
   "Google Cloud job counts",
   "spend",
