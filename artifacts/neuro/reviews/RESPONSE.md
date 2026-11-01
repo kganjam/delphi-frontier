@@ -24,3 +24,7 @@ The raw reviews are in this folder. The prompts were sent with the full source o
 ## Found by our own controls (not by the reviewers)
 - Body length bug: 0.037 m instead of 0.171 m (a factor 100 was missing from the Fulton condition factor). The Bainbridge comparison could not catch it, because both sides scale with L. There is now an assert and a test.
 - Air-density mismatch: 1.204 against the glide model's 1.225. Caught by the "reproduce glide-fixed-launch 25.14 m" control (M1 run exited 3). M1 and M2 now use engineering.simulation.controlled.RHO.
+
+## Round 3: gemini-3.8-flash (quick bug check of m5_mcell.py and sobol_m3.py)
+- It reported no defects that would change a reported number. That is weak evidence from a quick model, not a verification; the numerical controls in each manifest remain the primary check.
+- A known modelling choice the reviewer did not flag: the M5 noise increment sigma*sqrt((1-a^2)/2) gives a stationary membrane-noise SD of sigma/sqrt(2), not sigma. The reported "sigma ~0.45-0.6 of threshold" is therefore the parameter value; the stationary SD is about 0.32-0.42 of threshold.

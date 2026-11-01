@@ -1,0 +1,1 @@
+No concrete defects found that would change a reported number in either module. Both simulation update schemes, delay buffer indexing, noise increment scalings, and sensitivity matrix reshapings are mathematically exact and match their corresponding controls.
