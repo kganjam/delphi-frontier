@@ -17,6 +17,9 @@ import zlib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TILE = 1 << 14
+INDEX_MAX_EXPANDED = 64 << 20  # the index is <= 1 MiB compressed; anything expanding past 64 MiB is refused
+USABLE = ('ok', 'beyond_last_interval')
+EXIT_CODES = {'complete': 0, 'stopped_on_bound': 2, 'partial_data': 3, 'stopped_on_error': 4}  # transport_amendment.json
 
 
 class Refused(Exception):
@@ -28,17 +31,37 @@ class Refused(Exception):
 
 
 class Budget:
+    """Global, per-library and per-window byte ledgers plus request and runtime bounds (transport_amendment.json)."""
+
     def __init__(self, bounds, clock=time.monotonic):
         self.b, self.clock, self.t0 = bounds, clock, clock()
-        self.requests = self.bytes = 0
+        self.requests = self.bytes = self.lib_bytes = self.window_bytes = 0
+
+    def new_library(self):
+        self.lib_bytes = self.window_bytes = 0
+
+    def new_window(self):
+        self.window_bytes = 0
 
     def check(self):
         if self.clock() - self.t0 > self.b["runtime_hard_s"]:
             raise Refused("stopped_on_bound", "runtime")
         if self.requests >= self.b["total_requests_max"]:
             raise Refused("stopped_on_bound", "requests")
-        if self.bytes >= self.b["total_compressed_max_bytes"]:
+
+    def precheck(self, n):
+        """Refuse a request that could take any ledger over its cap, before it is sent."""
+        if self.bytes + n > self.b["total_compressed_max_bytes"]:
             raise Refused("stopped_on_bound", "total_bytes")
+        if self.lib_bytes + n > self.b["per_library_compressed_max_bytes"]:
+            raise Refused("library_byte_cap", f"{self.lib_bytes}+{n}")
+        if self.window_bytes + n > self.b["per_window_compressed_max_bytes"]:
+            raise Refused("window_byte_cap", f"{self.window_bytes}+{n}")
+
+    def charge(self, n):
+        self.bytes += n
+        self.lib_bytes += n
+        self.window_bytes += n
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -62,35 +85,67 @@ class HttpRange:
         u = urllib.parse.urlparse(url)
         if u.scheme != self.scheme or u.hostname not in self.hosts and f"{u.hostname}:{u.port}" not in self.hosts:
             raise Refused("host_refused", url)
+        expected = end - start + 1
         last = None
         for attempt in range(1, self.attempts + 1):
             self.budget.check()
+            self.budget.precheck(expected)  # cap refusals are final: never retried
             self.budget.requests += 1
-            rec = {"url": url, "range": f"{start}-{end}", "attempt": attempt, "t": time.time()}
+            rec = {"url": url, "range": f"{start}-{end}", "attempt": attempt, "t": time.time(), "bytes_charged": 0}
+            r = None
             try:
                 r = self.opener.open(urllib.request.Request(url, headers={"Range": f"bytes={start}-{end}"}), timeout=self.timeout)
-                body = r.read()
                 rec["http_status"] = r.status
                 if r.status != 206:
-                    raise Refused("unsupported_range", f"HTTP {r.status}")
+                    raise Refused("unsupported_range", f"HTTP {r.status}")  # no body byte is read
                 if r.headers.get("Content-Range") != f"bytes {start}-{end}/{total}":
                     raise Refused("range_mismatch", str(r.headers.get("Content-Range")))
-                if len(body) != end - start + 1:
-                    raise Refused("short_read", f"{len(body)} of {end - start + 1}")
-                self.budget.bytes += len(body)
+                body, err = self._bounded_read(r, expected + 1, rec)
+                if err:
+                    raise Refused("transport_error", err)
+                if len(body) > expected:
+                    raise Refused("oversized_response", f">{expected}")
+                if len(body) != expected:
+                    raise Refused("short_read", f"{len(body)} of {expected}")
                 rec.update(ok=True, bytes=len(body), sha256=hashlib.sha256(body).hexdigest())
                 self.log.append(rec)
                 return body
             except Refused as e:
                 last = e
                 rec.update(ok=False, failure=e.status)
-            except (http.client.IncompleteRead, urllib.error.URLError, OSError, http.client.HTTPException) as e:
+            except (urllib.error.URLError, OSError, http.client.HTTPException) as e:
                 last = Refused("transport_error", type(e).__name__)
                 rec.update(ok=False, failure=type(e).__name__)
+            finally:
+                if r is not None:
+                    r.close()
             self.log.append(rec)
-            if last.status in ("unsupported_range", "range_mismatch"):
+            if last.status in ("unsupported_range", "range_mismatch", "oversized_response"):
                 break  # deterministic server behaviour: a second attempt cannot differ
         raise last
+
+    def _bounded_read(self, r, limit, rec):
+        """Read at most `limit` bytes in chunks, charging every byte actually read, even when the read then fails."""
+        got, err = [], None
+        n = 0
+        try:
+            while n < limit:
+                c = r.read(min(65536, limit - n))
+                if not c:
+                    break
+                got.append(c)
+                n += len(c)
+                self.budget.charge(len(c))
+                rec["bytes_charged"] = n
+        except http.client.IncompleteRead as e:
+            if e.partial:
+                got.append(e.partial)
+                self.budget.charge(len(e.partial))
+                rec["bytes_charged"] = n + len(e.partial)
+            err = "IncompleteRead"
+        except (OSError, http.client.HTTPException) as e:
+            err = type(e).__name__
+        return b"".join(got), err
 
 
 def bgzf_block(buf, off):
@@ -121,9 +176,13 @@ def bgzf_block(buf, off):
 
 def read_index(blob):
     """Parse a .tbi (optionally still wrapped in an outer gzip, as GEO ships it). Returns names, linear index, format."""
-    t = zlib.decompress(blob, 31)
-    if t[:2] == b"\x1f\x8b":
-        t = b"".join(_bgzf_all(t))
+    t = blob
+    for _ in range(3):  # GEO ships gzip(BGZF(tbi)); htslib writes BGZF(tbi) directly
+        if t[:2] != b"\x1f\x8b":
+            break
+        t = b"".join(_bgzf_all(t)) if t[3] & 4 and b"BC" in t[10:20] else zlib.decompressobj(31).decompress(t, INDEX_MAX_EXPANDED + 1)
+        if len(t) > INDEX_MAX_EXPANDED:
+            raise Refused("bad_index", "expanded index too large")
     if t[:4] != b"TBI\x01":
         raise Refused("bad_index", "magic")
     n, fmt, cs, cb, ce, meta, skip, ln = struct.unpack_from("<8i", t, 4)
@@ -146,11 +205,14 @@ def read_index(blob):
 
 
 def _bgzf_all(buf):
-    off = 0
+    off = size = 0
     while off < len(buf):
         r = bgzf_block(buf, off)
         if r is None:
             raise Refused("bad_index", "truncated bgzf")
+        size += len(r[0])
+        if size > INDEX_MAX_EXPANDED:
+            raise Refused("bad_index", "expanded index too large")
         yield r[0]
         off += r[1]
 
@@ -247,54 +309,67 @@ def build_windows(controls):
 
 
 def run(out, proto, controls, make_fetch, clock=time.monotonic, budget=None):
-    """make_fetch(url, total, budget) -> fetch(start,end). Writes results.json/receipt.json into the NEW directory `out`."""
+    """make_fetch(url, total, budget) -> fetch(start,end). Writes results.json/receipt.json into the NEW directory `out`.
+    completion_status follows transport_amendment.json: complete only when all expected identities are present and usable."""
     if os.path.exists(out):
         raise SystemExit(f"{out} exists: refuse to reuse an output directory")
     os.makedirs(out)
     budget = budget or Budget(proto["bounds"], clock)
     wins = build_windows(controls["controls"])
-    res, status = [], "complete"
-    lib_bytes = {}
-    for lib in controls["libraries"]:
-        try:
-            if status != "complete":
-                raise Refused(status, "skipped after stop")
-            fi = make_fetch(lib["index_url"], lib["index_bytes"], budget)
-            blob = fi(0, lib["index_bytes"] - 1) if lib["index_bytes"] <= proto["bounds"]["index_download_max_bytes"] else None
-            if blob is None:
-                raise Refused("index_too_large", str(lib["index_bytes"]))
-            idx = read_index(blob)
-            if idx["format"] != 65536:
-                raise Refused("bad_index", f"format {idx['format']}")
-            fetch = make_fetch(lib["fragments_url"], lib["fragments_bytes"], budget)
-        except Refused as e:
-            if e.status == "stopped_on_bound":
-                status = "stopped_on_bound"
-            for w in wins:
-                res.append({"library": lib["label"], "gsm": lib["gsm"], "window": w["id"], "kind": w["kind"], "chrom": w["chrom"], "start0": w["start0"], "end0": w["end0"], "status": "library_unavailable", "detail": e.status})
-            continue
-        for w in wins:
-            row = {"library": lib["label"], "gsm": lib["gsm"], "window": w["id"], "kind": w["kind"], "chrom": w["chrom"], "start0": w["start0"], "end0": w["end0"]}
+    expected = [(lib["label"], w["id"]) for lib in controls["libraries"] for w in wins]
+    assert len(set(expected)) == len(expected)
+    res, stop, error = [], None, None
+    try:
+        for lib in controls["libraries"]:
+            budget.new_library()
+
+            def rowbase(w, lib=lib):
+                return {"library": lib["label"], "gsm": lib["gsm"], "window": w["id"], "kind": w["kind"], "chrom": w["chrom"], "start0": w["start0"], "end0": w["end0"]}
             try:
-                if lib_bytes.get(lib["gsm"], 0) >= proto["bounds"]["per_library_compressed_max_bytes"]:
-                    raise Refused("library_byte_cap")
-                r = count_window(fetch, lib["fragments_bytes"], idx, w["chrom"], w["start0"], w["end0"], proto["transport"] | proto["bounds"])
-                lib_bytes[lib["gsm"]] = lib_bytes.get(lib["gsm"], 0) + r["compressed_bytes_read"]
-                row.update(r)
+                if lib["index_bytes"] > proto["bounds"]["index_download_max_bytes"]:
+                    raise Refused("index_too_large", str(lib["index_bytes"]))
+                idx = read_index(make_fetch(lib["index_url"], lib["index_bytes"], budget)(0, lib["index_bytes"] - 1))
+                if idx["format"] != 65536:
+                    raise Refused("bad_index", f"format {idx['format']}")
+                fetch = make_fetch(lib["fragments_url"], lib["fragments_bytes"], budget)
             except Refused as e:
-                row.update(status=e.status, detail=e.detail)
                 if e.status == "stopped_on_bound":
-                    status = "stopped_on_bound"
-            res.append(row)
-            if status != "complete":
+                    stop = e.detail
+                    break
+                res += [rowbase(w) | {"status": "library_unavailable", "detail": e.status} for w in wins]
+                continue
+            for w in wins:
+                budget.new_window()
+                row = rowbase(w)
+                try:
+                    row.update(count_window(fetch, lib["fragments_bytes"], idx, w["chrom"], w["start0"], w["end0"], proto["transport"] | proto["bounds"]))
+                except Refused as e:
+                    row.update(status=e.status, detail=e.detail)
+                    if e.status == "stopped_on_bound":
+                        stop = e.detail
+                row["window_bytes_charged"] = budget.window_bytes
+                res.append(row)
+                if stop:
+                    break
+            if stop:
                 break
+    except Exception as e:  # an unexpected failure must not be reported as a complete run
+        error = type(e).__name__
+    present = {(r["library"], r["window"]) for r in res}
+    usable = {(r["library"], r["window"]) for r in res if r["status"] in USABLE}
+    status = ("stopped_on_error" if error else "stopped_on_bound" if stop else
+              "complete" if len(present) == len(expected) == len(usable) and present == set(expected) else "partial_data")
     summary = summarise(res, controls["libraries"])
-    doc = {"schema": "frontier.reg-proxy.results/1", "completion_status": status, "windows": res, "summary": summary,
+    doc = {"schema": "frontier.reg-proxy.results/2", "completion_status": status, "windows": res, "summary": summary,
            "claim_limits": "descriptive library counts; accessibility is context, not function; LEN excluded; no test, threshold or rank"}
     p = os.path.join(out, "results.json")
     json.dump(doc, open(p, "w"), indent=1, sort_keys=True)
-    rec = {"completion_status": status, "requests": budget.requests, "compressed_bytes": budget.bytes, "elapsed_s": round(clock() - budget.t0, 1),
+    rec = {"completion_status": status, "stop_detail": stop, "error": error, "requests": budget.requests, "compressed_bytes": budget.bytes,
+           "elapsed_s": round(clock() - budget.t0, 1), "expected_identities": len(expected), "present_identities": len(present),
+           "usable_identities": len(usable), "missing_identities": [list(x) for x in expected if x not in present],
+           "unusable_identities": [list(x) for x in expected if x in present and x not in usable],
            "protocol_sha256": hashlib.sha256(open(os.path.join(HERE, "protocol.json"), "rb").read()).hexdigest(),
+           "amendment_sha256": hashlib.sha256(open(os.path.join(HERE, "transport_amendment.json"), "rb").read()).hexdigest(),
            "results_sha256": hashlib.sha256(open(p, "rb").read()).hexdigest()}
     json.dump(rec, open(os.path.join(out, "receipt.json"), "w"), indent=1, sort_keys=True)
     return doc, rec
@@ -302,7 +377,7 @@ def run(out, proto, controls, make_fetch, clock=time.monotonic, budget=None):
 
 def summarise(rows, libraries):
     """Per library and window: count, per-kb, ratio to the median of that window's own two comparison counts (null if 0)."""
-    usable = {"ok", "beyond_last_interval"}
+    usable = set(USABLE)
     by = {(r["library"], r["window"]): r for r in rows}
     out = []
     for r in rows:
@@ -351,7 +426,7 @@ def main(argv=None):
         doc, rec = run(out, proto, ctl, http_fetch_factory(proto, log))
         json.dump(log, open(os.path.join(out, "requests.json"), "w"), indent=1)
         print(json.dumps(rec, indent=1))
-        return 0 if rec["completion_status"] == "complete" else 2
+        return EXIT_CODES[rec["completion_status"]]
     raise SystemExit("usage: --preflight | --run [--out DIR]")
 
 

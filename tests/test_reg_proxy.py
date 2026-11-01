@@ -24,7 +24,14 @@ def run_controls(cwd):
 def test_controls_pass_on_the_committed_code():
     rc, ctl = run_controls(ROOT)
     failed = [c for c in ctl if not c["passed"]]
-    assert rc == 0 and len(ctl) == 21 and not failed, failed
+    assert rc == 0 and len(ctl) == 29 and not failed, failed
+
+
+AMENDMENT_SHA = "048e4745f78462a43bf6790a8d7d8a528f4b9c81cb10c0cfbd41d037e5657637"  # frozen at c713181 before the reader repair; deliberately restated
+
+
+def test_amendment_bytes_are_the_frozen_ones():
+    assert hashlib.sha256(open(os.path.join(PKG, "transport_amendment.json"), "rb").read()).hexdigest() == AMENDMENT_SHA
 
 
 def test_protocol_bytes_are_the_frozen_ones():
@@ -41,7 +48,15 @@ MUTATIONS = [
     ("window_count.py", 'if a["chrom"] == b["chrom"] and a["start0"] < b["end0"] and b["start0"] < a["end0"]:', "if False:", "overlap"),
     ("window_count.py", "if len(data) != isize or zlib.crc32(data) != crc:", "if False:", "crc"),
     ("window_count.py", "if coff >= total:", "if False:", "index/file mismatch"),
-    ("window_count.py", 'if len(body) != end - start + 1:', "if False:", "short read"),
+    ("window_count.py", 'if len(body) != expected:', "if False:", "short read"),
+    ("window_count.py", "self.budget.precheck(expected)  # cap refusals are final: never retried", "pass", "caps checked before send"),
+    ("window_count.py", "self.budget.charge(len(c))", "pass", "bytes read are charged"),
+    ("window_count.py", "self.budget.charge(len(e.partial))", "pass", "partial IncompleteRead bytes are charged"),
+    ("window_count.py", "self._bounded_read(r, expected + 1, rec)", "self._bounded_read(r, expected + 1000000, rec)", "read bound"),
+    ("window_count.py", 'if r.status != 206:', 'if False:', "status checked before body"),
+    ("window_count.py", 'error = type(e).__name__', 'error = None', "unexpected error status"),
+    ("window_count.py", 'present == set(expected) else "partial_data")', 'present == set(expected) or True else "partial_data")', "complete needs all usable"),
+    ("window_count.py", 'if self.lib_bytes + n > self.b["per_library_compressed_max_bytes"]:', "if False:", "library cap"),
 ]
 
 

@@ -1,0 +1,726 @@
+{
+ "tool": "pysam 0.24.1 / htslib 1.24",
+ "fixture_records": 6000,
+ "windows": [
+  {
+   "chrom": "chr1",
+   "start": 0,
+   "end": 500,
+   "rows": 6,
+   "dup": 10,
+   "barcodes": 6
+  },
+  {
+   "chrom": "chr1",
+   "start": 16383,
+   "end": 16385,
+   "rows": 62,
+   "dup": 119,
+   "barcodes": 41
+  },
+  {
+   "chrom": "chr1",
+   "start": 16384,
+   "end": 16385,
+   "rows": 62,
+   "dup": 119,
+   "barcodes": 41
+  },
+  {
+   "chrom": "chr2",
+   "start": 89000,
+   "end": 91000,
+   "rows": 228,
+   "dup": 439,
+   "barcodes": 57
+  },
+  {
+   "chrom": "chr1",
+   "start": 199000,
+   "end": 260000,
+   "rows": 69,
+   "dup": 129,
+   "barcodes": 40
+  },
+  {
+   "chrom": "chr2",
+   "start": 10000000,
+   "end": 10000010,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 163289,
+   "end": 164789,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr1",
+   "start": 180996,
+   "end": 210996,
+   "rows": 363,
+   "dup": 715,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 65287,
+   "end": 65687,
+   "rows": 89,
+   "dup": 176,
+   "barcodes": 51
+  },
+  {
+   "chrom": "chr2",
+   "start": 29676,
+   "end": 59676,
+   "rows": 1138,
+   "dup": 2242,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr2",
+   "start": 64637,
+   "end": 64638,
+   "rows": 163,
+   "dup": 324,
+   "barcodes": 58
+  },
+  {
+   "chrom": "chr1",
+   "start": 150455,
+   "end": 150456,
+   "rows": 79,
+   "dup": 160,
+   "barcodes": 47
+  },
+  {
+   "chrom": "chr1",
+   "start": 191675,
+   "end": 221675,
+   "rows": 190,
+   "dup": 365,
+   "barcodes": 56
+  },
+  {
+   "chrom": "chr1",
+   "start": 73264,
+   "end": 103264,
+   "rows": 508,
+   "dup": 1036,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 41839,
+   "end": 42239,
+   "rows": 83,
+   "dup": 154,
+   "barcodes": 46
+  },
+  {
+   "chrom": "chr2",
+   "start": 161985,
+   "end": 162385,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr1",
+   "start": 34666,
+   "end": 34667,
+   "rows": 84,
+   "dup": 149,
+   "barcodes": 45
+  },
+  {
+   "chrom": "chr1",
+   "start": 54907,
+   "end": 55307,
+   "rows": 87,
+   "dup": 167,
+   "barcodes": 46
+  },
+  {
+   "chrom": "chr2",
+   "start": 43642,
+   "end": 45142,
+   "rows": 213,
+   "dup": 426,
+   "barcodes": 59
+  },
+  {
+   "chrom": "chr1",
+   "start": 52137,
+   "end": 52537,
+   "rows": 93,
+   "dup": 181,
+   "barcodes": 48
+  },
+  {
+   "chrom": "chr1",
+   "start": 181047,
+   "end": 211047,
+   "rows": 363,
+   "dup": 715,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 78325,
+   "end": 79825,
+   "rows": 99,
+   "dup": 208,
+   "barcodes": 52
+  },
+  {
+   "chrom": "chr1",
+   "start": 108765,
+   "end": 109165,
+   "rows": 78,
+   "dup": 159,
+   "barcodes": 43
+  },
+  {
+   "chrom": "chr1",
+   "start": 69156,
+   "end": 70656,
+   "rows": 107,
+   "dup": 209,
+   "barcodes": 52
+  },
+  {
+   "chrom": "chr1",
+   "start": 78999,
+   "end": 80499,
+   "rows": 103,
+   "dup": 215,
+   "barcodes": 52
+  },
+  {
+   "chrom": "chr2",
+   "start": 17307,
+   "end": 18807,
+   "rows": 208,
+   "dup": 399,
+   "barcodes": 59
+  },
+  {
+   "chrom": "chr2",
+   "start": 80232,
+   "end": 81732,
+   "rows": 215,
+   "dup": 433,
+   "barcodes": 58
+  },
+  {
+   "chrom": "chr2",
+   "start": 48437,
+   "end": 78437,
+   "rows": 1189,
+   "dup": 2367,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 184724,
+   "end": 184725,
+   "rows": 67,
+   "dup": 128,
+   "barcodes": 40
+  },
+  {
+   "chrom": "chr1",
+   "start": 67156,
+   "end": 68656,
+   "rows": 104,
+   "dup": 206,
+   "barcodes": 52
+  },
+  {
+   "chrom": "chr1",
+   "start": 105983,
+   "end": 135983,
+   "rows": 515,
+   "dup": 1011,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr2",
+   "start": 95993,
+   "end": 95994,
+   "rows": 132,
+   "dup": 249,
+   "barcodes": 51
+  },
+  {
+   "chrom": "chr1",
+   "start": 118704,
+   "end": 119104,
+   "rows": 80,
+   "dup": 167,
+   "barcodes": 47
+  },
+  {
+   "chrom": "chr1",
+   "start": 163502,
+   "end": 163503,
+   "rows": 75,
+   "dup": 157,
+   "barcodes": 43
+  },
+  {
+   "chrom": "chr1",
+   "start": 198111,
+   "end": 228111,
+   "rows": 92,
+   "dup": 176,
+   "barcodes": 43
+  },
+  {
+   "chrom": "chr2",
+   "start": 90277,
+   "end": 91777,
+   "rows": 184,
+   "dup": 353,
+   "barcodes": 56
+  },
+  {
+   "chrom": "chr1",
+   "start": 121333,
+   "end": 122833,
+   "rows": 100,
+   "dup": 214,
+   "barcodes": 48
+  },
+  {
+   "chrom": "chr1",
+   "start": 77558,
+   "end": 107558,
+   "rows": 518,
+   "dup": 1059,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 23902,
+   "end": 25402,
+   "rows": 98,
+   "dup": 181,
+   "barcodes": 52
+  },
+  {
+   "chrom": "chr2",
+   "start": 134448,
+   "end": 134848,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 89118,
+   "end": 89119,
+   "rows": 191,
+   "dup": 364,
+   "barcodes": 56
+  },
+  {
+   "chrom": "chr2",
+   "start": 81906,
+   "end": 83406,
+   "rows": 211,
+   "dup": 411,
+   "barcodes": 58
+  },
+  {
+   "chrom": "chr1",
+   "start": 46524,
+   "end": 46924,
+   "rows": 80,
+   "dup": 150,
+   "barcodes": 47
+  },
+  {
+   "chrom": "chr2",
+   "start": 189041,
+   "end": 219041,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr1",
+   "start": 42343,
+   "end": 42344,
+   "rows": 78,
+   "dup": 146,
+   "barcodes": 43
+  },
+  {
+   "chrom": "chr2",
+   "start": 157456,
+   "end": 157457,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 62216,
+   "end": 63716,
+   "rows": 221,
+   "dup": 439,
+   "barcodes": 59
+  },
+  {
+   "chrom": "chr2",
+   "start": 119449,
+   "end": 119849,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr1",
+   "start": 14603,
+   "end": 44603,
+   "rows": 512,
+   "dup": 999,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 87604,
+   "end": 88004,
+   "rows": 82,
+   "dup": 164,
+   "barcodes": 47
+  },
+  {
+   "chrom": "chr1",
+   "start": 191801,
+   "end": 221801,
+   "rows": 189,
+   "dup": 363,
+   "barcodes": 56
+  },
+  {
+   "chrom": "chr1",
+   "start": 27952,
+   "end": 57952,
+   "rows": 551,
+   "dup": 1075,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 97779,
+   "end": 97780,
+   "rows": 65,
+   "dup": 127,
+   "barcodes": 38
+  },
+  {
+   "chrom": "chr2",
+   "start": 110269,
+   "end": 110669,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr1",
+   "start": 118791,
+   "end": 148791,
+   "rows": 522,
+   "dup": 1049,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr2",
+   "start": 127967,
+   "end": 157967,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 71836,
+   "end": 101836,
+   "rows": 797,
+   "dup": 1574,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 105850,
+   "end": 105851,
+   "rows": 74,
+   "dup": 148,
+   "barcodes": 43
+  },
+  {
+   "chrom": "chr1",
+   "start": 98828,
+   "end": 128828,
+   "rows": 524,
+   "dup": 1040,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 88730,
+   "end": 88731,
+   "rows": 71,
+   "dup": 143,
+   "barcodes": 41
+  },
+  {
+   "chrom": "chr2",
+   "start": 128938,
+   "end": 130438,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 16543,
+   "end": 16544,
+   "rows": 147,
+   "dup": 291,
+   "barcodes": 54
+  },
+  {
+   "chrom": "chr2",
+   "start": 199134,
+   "end": 200634,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 146620,
+   "end": 176620,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 69431,
+   "end": 70931,
+   "rows": 218,
+   "dup": 431,
+   "barcodes": 58
+  },
+  {
+   "chrom": "chr1",
+   "start": 170312,
+   "end": 170313,
+   "rows": 70,
+   "dup": 145,
+   "barcodes": 41
+  },
+  {
+   "chrom": "chr2",
+   "start": 124335,
+   "end": 125835,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 176067,
+   "end": 206067,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr2",
+   "start": 75714,
+   "end": 77214,
+   "rows": 223,
+   "dup": 434,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr2",
+   "start": 71794,
+   "end": 101794,
+   "rows": 797,
+   "dup": 1574,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 91762,
+   "end": 121762,
+   "rows": 525,
+   "dup": 1057,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr2",
+   "start": 95492,
+   "end": 95892,
+   "rows": 137,
+   "dup": 259,
+   "barcodes": 52
+  },
+  {
+   "chrom": "chr1",
+   "start": 138763,
+   "end": 139163,
+   "rows": 94,
+   "dup": 195,
+   "barcodes": 50
+  },
+  {
+   "chrom": "chr2",
+   "start": 94903,
+   "end": 96403,
+   "rows": 142,
+   "dup": 268,
+   "barcodes": 52
+  },
+  {
+   "chrom": "chr1",
+   "start": 181253,
+   "end": 211253,
+   "rows": 362,
+   "dup": 712,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr2",
+   "start": 45043,
+   "end": 46543,
+   "rows": 209,
+   "dup": 430,
+   "barcodes": 59
+  },
+  {
+   "chrom": "chr2",
+   "start": 163508,
+   "end": 163509,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr1",
+   "start": 51275,
+   "end": 81275,
+   "rows": 531,
+   "dup": 1072,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 163596,
+   "end": 163996,
+   "rows": 84,
+   "dup": 178,
+   "barcodes": 46
+  },
+  {
+   "chrom": "chr1",
+   "start": 198966,
+   "end": 198967,
+   "rows": 54,
+   "dup": 99,
+   "barcodes": 34
+  },
+  {
+   "chrom": "chr1",
+   "start": 123623,
+   "end": 124023,
+   "rows": 79,
+   "dup": 162,
+   "barcodes": 48
+  },
+  {
+   "chrom": "chr1",
+   "start": 14193,
+   "end": 14194,
+   "rows": 55,
+   "dup": 107,
+   "barcodes": 39
+  },
+  {
+   "chrom": "chr1",
+   "start": 83191,
+   "end": 113191,
+   "rows": 511,
+   "dup": 1035,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr1",
+   "start": 50688,
+   "end": 80688,
+   "rows": 529,
+   "dup": 1064,
+   "barcodes": 60
+  },
+  {
+   "chrom": "chr2",
+   "start": 121983,
+   "end": 151983,
+   "rows": 0,
+   "dup": 0,
+   "barcodes": 0
+  },
+  {
+   "chrom": "chr1",
+   "start": 173676,
+   "end": 174076,
+   "rows": 74,
+   "dup": 152,
+   "barcodes": 44
+  }
+ ],
+ "real_index_contigs_by_htslib": [
+  "chr1",
+  "chr10",
+  "chr11",
+  "chr12",
+  "chr13",
+  "chr14",
+  "chr15",
+  "chr16",
+  "chr17",
+  "chr18",
+  "chr19",
+  "chr2",
+  "chr20",
+  "chr21",
+  "chr22",
+  "chr23",
+  "chr24",
+  "chr25",
+  "chr3",
+  "chr4",
+  "chr5",
+  "chr6",
+  "chr7",
+  "chr8",
+  "chr9",
+  "EGFP"
+ ],
+ "sha256": {
+  "tsv_gz": "99f2b2d631b8a9b32aac53665741977af0c5ac99a0f42b61202a54a0d9e7b4f6",
+  "tbi": "50fcd467a42f6809401516e4a05aaeba2700c6fba317b2192f60ed53be774bc0"
+ }
+}

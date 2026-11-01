@@ -93,7 +93,7 @@ class Server:
 
     def __init__(self, files):
         outer = self
-        self.files, self.mode, self.fail_first, self.hits = files, "ok", 0, 0
+        self.files, self.mode, self.fail_first, self.hits, self.sent = files, "ok", 0, 0, 0
 
         class H(http.server.BaseHTTPRequestHandler):
             def log_message(self, *a):
@@ -107,13 +107,35 @@ class Server:
                     self.send_header("Location", "http://127.0.0.1:1/x")
                     self.end_headers()
                     return
-                if outer.fail_first > 0:
+                rng0 = self.headers.get("Range")
+                if outer.fail_first > 0 and rng0:
                     outer.fail_first -= 1
+                    a0, b0 = map(int, rng0.split("=")[1].split("-"))
+                    b0 = min(b0, len(blob) - 1)
                     self.send_response(206)
-                    self.send_header("Content-Length", "1000")
+                    self.send_header("Content-Range", f"bytes {a0}-{b0}/{len(blob)}")
+                    self.send_header("Content-Length", str(b0 - a0 + 1))
                     self.end_headers()
-                    self.wfile.write(b"x")  # short body then close: IncompleteRead
+                    self.wfile.write(blob[a0:a0 + 7])  # fewer bytes than promised, then close: IncompleteRead
                     return
+                if outer.mode == "chunked_trunc" and rng0:
+                    a0, b0 = map(int, rng0.split("=")[1].split("-"))
+                    b0 = min(b0, len(blob) - 1)
+                    self.send_response(206)
+                    self.send_header("Content-Range", f"bytes {a0}-{b0}/{len(blob)}")
+                    self.send_header("Transfer-Encoding", "chunked")
+                    self.end_headers()
+                    self.wfile.write(b"7\r\n" + blob[a0:a0 + 7] + b"\r\n")  # one 7-byte chunk, then the connection closes
+                    return
+                if outer.mode == "infinite_200":
+                    self.send_response(200)
+                    self.end_headers()
+                    try:
+                        while True:
+                            self.wfile.write(b"z" * 65536)
+                            outer.sent += 65536
+                    except OSError:
+                        return
                 rng = self.headers.get("Range")
                 if outer.mode == "ignore_range" or not rng:
                     self.send_response(200)
@@ -127,6 +149,9 @@ class Server:
                 cr = f"bytes {a}-{b}/{len(blob)}" if outer.mode != "bad_content_range" else f"bytes {a}-{b}/{len(blob) + 1}"
                 if outer.mode == "short":
                     body = body[:-1]
+                if outer.mode == "oversize":
+                    body = blob[a:b + 1] + blob[b + 1:b + 1 + 500]
+                    cr = f"bytes {a}-{b}/{len(blob)}"
                 self.send_response(206)
                 self.send_header("Content-Range", cr)
                 self.send_header("Content-Length", str(len(body)))
@@ -288,6 +313,24 @@ def run_all():
         return "11 controls (1 reporter-negative), no LEN window, 10 libraries, source table hash pinned"
     results.append(_ctl("controls manifest integrity", controls_integrity))
 
+    def htslib_crosscheck():
+        d = os.path.join(HERE, "fixtures")
+        exp = json.load(open(os.path.join(d, "htslib_expected.json")))
+        frag_h, tbi_h = open(os.path.join(d, "htslib_fixture.tsv.gz"), "rb").read(), open(os.path.join(d, "htslib_fixture.tsv.gz.tbi"), "rb").read()
+        assert hashlib.sha256(frag_h).hexdigest() == exp["sha256"]["tsv_gz"] and hashlib.sha256(tbi_h).hexdigest() == exp["sha256"]["tbi"]
+        ix = wc.read_index(tbi_h)
+        assert ix["format"] == 65536 and ix["names"] == ["chr1", "chr2"], ix["names"]
+        n = 0
+        for w in exp["windows"]:
+            r = wc.count_window(local_fetch(frag_h), len(frag_h), ix, w["chrom"], w["start"], w["end"], lim)
+            assert r["status"] in ("ok", "beyond_last_interval"), (w, r["status"])
+            assert (r["fragment_rows"], r["dup_count_sum"], r["distinct_barcodes"]) == (w["rows"], w["dup"], w["barcodes"]), (w, r["fragment_rows"])
+            n += 1
+        real = wc.read_index(open(REAL_INDEX, "rb").read())
+        assert real["names"] == exp["real_index_contigs_by_htslib"], (real["names"][:3], exp["real_index_contigs_by_htslib"][:3])
+        return f"{n} windows counted from an htslib-written index and file equal htslib's own fetch counts ({exp['tool']}); real 0dpa1 index contig list equals htslib's (26)"
+    results.append(_ctl("independent htslib cross-check", htslib_crosscheck))
+
     # ---- real transport class against a local Range server ----
     files = {"/a.gz": frag, "/a.tbi.gz": tbi}
     srv = Server(files)
@@ -328,9 +371,12 @@ def run_all():
             srv.fail_first = 1
             log = []
             h = wc.HttpRange(proto, wc.Budget(proto["bounds"]), [srv.host], "http", log=log)
+            bud = wc.Budget(proto["bounds"])
+            h = wc.HttpRange(proto, bud, [srv.host], "http", log=log)
             body = h.get(srv.url("/a.gz"), 0, 99, total)
-            assert body == frag[:100] and [x["ok"] for x in log] == [False, True]
-            return "one IncompleteRead then success: both attempts logged (declared max 2)"
+            assert body == frag[:100] and [x["ok"] for x in log] == [False, True], log
+            assert [x["bytes_charged"] for x in log] == [7, 100] and bud.bytes == 107, (log, bud.bytes)
+            return "one IncompleteRead (7 bytes) then success: both attempts logged and the 7 failed bytes are charged (107 total)"
         results.append(_ctl("declared second attempt after IncompleteRead", flaky))
 
         def host_refused():
@@ -356,15 +402,17 @@ def run_all():
             doc, rec = wc.run(out, proto, ctl2, wc.http_fetch_factory(proto, log, [srv.host], "http"))
             rows = doc["windows"]
             assert len(rows) == 6, [(r["library"],r["window"],r["status"],r.get("detail")) for r in rows]
-            assert rec["completion_status"] == "complete", rec["completion_status"]
+            assert rec["completion_status"] == "partial_data", rec["completion_status"]
+            assert rec["expected_identities"] == 6 and rec["present_identities"] == 6 and rec["usable_identities"] == 5 and rec["unusable_identities"] == [["fx2", "fx"]], rec
             first = [r for r in rows if r["library"] == "fx1" and r["window"] == "fx"][0]
             assert first["fragment_rows"] == oracle(recs, "chr1", 1000, 2400)[0], first
             bad = [r for r in rows if r["library"] == "fx2"]
-            assert len(bad) == 3 and all(r["status"] != "ok" and r.get("fragment_rows", 0) == 0 for r in bad), [r["status"] for r in bad]
+            st = {r["window"]: r["status"] for r in bad}
+            assert st["fx"] not in ("ok", "beyond_last_interval") and st["fx+250000"] == "beyond_last_interval", st  # indexed-empty windows never touch the bad file
             try:
                 wc.run(out, proto, ctl2, wc.http_fetch_factory(proto, log, [srv.host], "http"))
             except SystemExit:
-                return f"run wrote results+receipt, retained {len(rows)} rows incl. failures; reuse of output dir refused"
+                return "one unreadable window -> partial_data (6 expected, 6 present, 5 usable), the failed row kept; reuse of output dir refused"
             raise AssertionError("output dir reuse accepted")
         results.append(_ctl("end-to-end run keeps every row and refuses output reuse", end_to_end))
 
@@ -379,6 +427,120 @@ def run_all():
             assert rec["completion_status"] == "stopped_on_bound", rec
             return f"request bound 1 -> stopped_on_bound after {rec['requests']} requests; {len(doc['windows'])} rows kept"
         results.append(_ctl("request bound stops the run and keeps partial rows", bound))
+
+        def no_body_on_200():
+            srv.mode, srv.sent = "infinite_200", 0
+            bud = wc.Budget(proto["bounds"])
+            h = wc.HttpRange(proto, bud, [srv.host], "http", timeout=5)
+            try:
+                try:
+                    h.get(srv.url("/a.gz"), 0, 99, total)
+                except wc.Refused as e:
+                    assert e.status == "unsupported_range", e.status
+                    assert bud.bytes == 0, bud.bytes
+                    return f"HTTP 200 from a server that streams forever: refused on status, 0 body bytes read or charged (server wrote {srv.sent // 1024} KiB into socket buffers)"
+                raise AssertionError("200 accepted")
+            finally:
+                srv.mode = "ok"
+        results.append(_ctl("HTTP 200 refused without consuming the body", no_body_on_200))
+
+        def oversize():
+            srv.mode = "oversize"
+            bud = wc.Budget(proto["bounds"])
+            h = wc.HttpRange(proto, bud, [srv.host], "http")
+            try:
+                try:
+                    h.get(srv.url("/a.gz"), 0, 99, total)
+                except wc.Refused as e:
+                    assert e.status == "oversized_response", e.status
+                    assert bud.bytes == 101, bud.bytes  # read limit is expected+1, and those bytes are charged
+                    return "206 body longer than its range: read stops at expected+1 (101), refused, 101 bytes charged"
+                raise AssertionError("oversized body accepted")
+            finally:
+                srv.mode = "ok"
+        results.append(_ctl("oversized 206 body bounded and charged", oversize))
+
+        def failed_bytes_charged():
+            srv.mode = "short"
+            bud = wc.Budget(proto["bounds"])
+            h = wc.HttpRange(proto, bud, [srv.host], "http")
+            try:
+                try:
+                    h.get(srv.url("/a.gz"), 0, 99, total)
+                except wc.Refused as e:
+                    assert e.status == "short_read"
+                    assert bud.bytes == 198 and bud.requests == 2, (bud.bytes, bud.requests)  # 2 attempts x 99 bytes, both charged
+                    return "short body: both attempts charged (198 bytes, 2 requests)"
+                raise AssertionError("short body accepted")
+            finally:
+                srv.mode = "ok"
+        results.append(_ctl("failed and retried reads consume budget", failed_bytes_charged))
+
+        def chunked_partial():
+            srv.mode = "chunked_trunc"
+            bud = wc.Budget(proto["bounds"])
+            h = wc.HttpRange(proto, bud, [srv.host], "http")
+            try:
+                try:
+                    h.get(srv.url("/a.gz"), 0, 99, total)
+                except wc.Refused as e:
+                    assert e.status == "transport_error", e.status
+                    assert bud.bytes == 14 and bud.requests == 2, (bud.bytes, bud.requests)
+                    return "chunked body cut after 7 bytes (http.client IncompleteRead): 7 bytes charged per attempt, 2 attempts, 14 total"
+                raise AssertionError("truncated chunked body accepted")
+            finally:
+                srv.mode = "ok"
+        results.append(_ctl("IncompleteRead partial bytes are charged", chunked_partial))
+
+        def precheck():
+            for cap, status in (("per_window_compressed_max_bytes", "window_byte_cap"), ("per_library_compressed_max_bytes", "library_byte_cap"),
+                                ("total_compressed_max_bytes", "stopped_on_bound")):
+                before = srv.hits
+                h = wc.HttpRange(proto, wc.Budget(proto["bounds"] | {cap: 50}), [srv.host], "http")
+                try:
+                    h.get(srv.url("/a.gz"), 0, 99, total)
+                except wc.Refused as e:
+                    assert e.status == status, (cap, e.status)
+                    assert srv.hits == before, "a request was sent that could exceed the cap"
+                    continue
+                raise AssertionError(f"{cap} not enforced")
+            return "a 100-byte request against a 50-byte window, library or total cap is refused before it is sent"
+        results.append(_ctl("caps refuse a request before it is sent", precheck))
+
+        def library_ledger():
+            import tempfile
+            ctl2 = {"controls": [{"name": "fx", "class": "reporter_positive", "chrom": "chr1", "start_1based": 1001, "end_1based": 2400}],
+                    "libraries": [{"gsm": "GSMfx1", "label": "fx1", "dpa": 0, "replicate": 1, "fragments_url": srv.url("/a.gz"), "fragments_bytes": total,
+                                   "index_url": srv.url("/a.tbi.gz"), "index_bytes": len(tbi)}]}
+            small = proto | {"bounds": proto["bounds"] | {"per_library_compressed_max_bytes": len(tbi) + 5}}
+            doc, rec = wc.run(os.path.join(tempfile.mkdtemp(), "o"), small, ctl2, wc.http_fetch_factory(small, [], [srv.host], "http"))
+            st = {r["window"]: r["status"] for r in doc["windows"]}
+            assert st["fx"] == "library_byte_cap", st
+            assert rec["completion_status"] == "partial_data", rec["completion_status"]
+            return "index bytes count against the library ledger: the next read is refused (library_byte_cap) and the run is partial_data"
+        results.append(_ctl("index download is charged to the library", library_ledger))
+
+        def completeness():
+            import tempfile
+            good = {"controls": [{"name": "fx", "class": "reporter_positive", "chrom": "chr1", "start_1based": 1001, "end_1based": 2400}],
+                    "libraries": [{"gsm": f"GSMfx{i}", "label": f"fx{i}", "dpa": 0, "replicate": i, "fragments_url": srv.url("/a.gz"), "fragments_bytes": total,
+                                   "index_url": srv.url("/a.tbi.gz"), "index_bytes": len(tbi)} for i in (1, 2)]}
+            doc, rec = wc.run(os.path.join(tempfile.mkdtemp(), "o"), proto, good, wc.http_fetch_factory(proto, [], [srv.host], "http"))
+            assert rec["completion_status"] == "complete" and wc.EXIT_CODES[rec["completion_status"]] == 0, rec
+            assert (rec["expected_identities"], rec["present_identities"], rec["usable_identities"]) == (6, 6, 6) and not rec["missing_identities"]
+
+            def boom(url, total_, budget):
+                raise ValueError("unexpected")
+            d2, r2 = wc.run(os.path.join(tempfile.mkdtemp(), "o"), proto, good, boom)
+            assert r2["completion_status"] == "stopped_on_error" and r2["error"] == "ValueError" and wc.EXIT_CODES["stopped_on_error"] == 4, r2
+            assert len(r2["missing_identities"]) == 6
+            b = wc.Budget(proto["bounds"] | {"total_requests_max": 1})
+            d3, r3 = wc.run(os.path.join(tempfile.mkdtemp(), "o"), proto, good, wc.http_fetch_factory(proto, [], [srv.host], "http"), budget=b)
+            assert r3["completion_status"] == "stopped_on_bound" and r3["missing_identities"] and wc.EXIT_CODES["stopped_on_bound"] == 2
+            real = json.load(open(os.path.join(HERE, "controls.json")))
+            assert len(wc.build_windows(real["controls"])) * len(real["libraries"]) == 330
+            return "complete only with every identity present and usable (exit 0); error -> stopped_on_error (4); bound -> stopped_on_bound (2) with missing identities listed; real manifest expects 330"
+        results.append(_ctl("completion status needs all identities present and usable", completeness))
     finally:
         srv.close()
     return {"schema": "frontier.reg-proxy.controls-run/1", "protocol_sha256": hashlib.sha256(open(os.path.join(HERE, "protocol.json"), "rb").read()).hexdigest(), "controls": results}
