@@ -1,0 +1,59 @@
+{
+ "scope": "Second gene tree: where does each remaining kcnh2a-aligning region of GCA_018398805.1 fall? Inputs are miniprot predictions from an unannotated assembly; a tree places sequences and does not prove orthology.",
+ "question": "Is any of the 5 unassigned kcnh2a-aligning regions kcnh2a-like?",
+ "positive_controls": [
+  "HSPEC_ambiguous_1 must again fall with ZF_kcnh2b",
+  "HSPEC_control_kcnh6alike_1 must again fall with ZF_kcnh6a"
+ ],
+ "n_sequences": 19,
+ "fasta_bytes": 19630,
+ "fasta_sha256": "585d9bd569c343f77d43f8e757623c756d370b7f69d525271720812147a28830",
+ "candidates": [
+  {
+   "name": "HSPEC_cand_HS00779_len1083",
+   "scaffold": "JAGFBZ010000779.1",
+   "t_start": 222718,
+   "t_end": 318314,
+   "len": 1083,
+   "sha256": "1e3ae9a745e6056744ce915e3bed3a56f1e2348bfdfa280b94265a669483f52d",
+   "from": "low-stringency kcnh2a-only miniprot run, -N 20 --outs=0.3 --outc=0.05"
+  },
+  {
+   "name": "HSPEC_cand_HS00289_len864",
+   "scaffold": "JAGFBZ010000289.1",
+   "t_start": 1149677,
+   "t_end": 1194380,
+   "len": 864,
+   "sha256": "f0a130851c543fbc5082ae19ac9cbdaacc1262d8b8caf0b533623ff4468da43d",
+   "from": "low-stringency kcnh2a-only miniprot run, -N 20 --outs=0.3 --outc=0.05"
+  },
+  {
+   "name": "HSPEC_cand_HS02447_len783",
+   "scaffold": "JAGFBZ010002447.1",
+   "t_start": 34884,
+   "t_end": 47383,
+   "len": 783,
+   "sha256": "7c34822615302da83d00c13b45939eb11ca458063f7d7d4961c14332bdcc3ff0",
+   "from": "low-stringency kcnh2a-only miniprot run, -N 20 --outs=0.3 --outc=0.05"
+  },
+  {
+   "name": "HSPEC_cand_HS02515_len725",
+   "scaffold": "JAGFBZ010002515.1",
+   "t_start": 949537,
+   "t_end": 955766,
+   "len": 725,
+   "sha256": "15153e52fe54753368ab86bc72fddbf2f739c8685ba92f2007138958d2f425db",
+   "from": "low-stringency kcnh2a-only miniprot run, -N 20 --outs=0.3 --outc=0.05"
+  },
+  {
+   "name": "HSPEC_cand_HS00590_len491",
+   "scaffold": "JAGFBZ010000590.1",
+   "t_start": 78547,
+   "t_end": 87838,
+   "len": 491,
+   "sha256": "7fc1f6d7104b4f30d1ef9b8ca22703e5ca9f003ba06e0096463055e1699c9686",
+   "from": "low-stringency kcnh2a-only miniprot run, -N 20 --outs=0.3 --outc=0.05"
+  }
+ ],
+ "reference_set": "same 10 zebrafish KCNH proteins and 2 human outgroups as data/tree/kcnh_tree_input_ledger.json, plus one sequence from each already-assigned region as a carried-forward control"
+}
