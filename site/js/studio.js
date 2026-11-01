@@ -156,13 +156,61 @@
           <details><summary><b>${H.sources.length} sources</b> <span class="faint small">licences and read levels as recorded</span></summary><ul class="small">${H.sources.map((x) => html`<li>${x.citation}<br><span class="faint">Read: ${x.read_level}. Licence: ${x.licence}</span></li>`)}</ul><p class="small faint">Raw source files are not redistributed by this site. Manifest ${H.manifest}.</p></details></div></div></section>`;
   }
 
+  /* A subsystem's status, defined once. The home doorway and the project rail both draw this rail, and a second copy of the
+   * rule would drift: the home page would say a scale has a model on a day the project page says it is a gap. */
+  function scaleCoverage(snap, p, key) {
+    const PD = (snap.project_drafts || {})[p.id];
+    return PD ? PD.scale_coverage.find((c) => c.scale === key || (key === "ecological" && c.scale === "evolutionary")) : null;
+  }
+  function scaleStatus(snap, p, key) {
+    const cov = scaleCoverage(snap, p, key);
+    if (cov) return { implemented_model: "model", source_only: "partial" }[cov.status] || "gap";
+    const pan = p.panels[key];
+    if (pan && pan.models.length) return "model";
+    if ((pan && hasContent(pan)) || (snap.simulation_manifests || []).some((x) => (x.scales || []).includes(key))) return "partial";
+    return "gap";
+  }
+
+  /* ---------------------------------------------------------------- home: the way in to the featured project.
+   * The studio entry used to sit below a 3,500-pixel anatomy panel, which is to say nobody found it. This is the doorway:
+   * the whole subsystem rail, clickable, with the counts beside it and the gaps counted in the same sentence. */
+  function studioDoorway(snap) {
+    const p = fish(snap); const m = snap.mission;
+    const rail = m.scales.map((s) => ({ ...s, status: scaleStatus(snap, p, s.key) }));
+    const n = (st) => rail.filter((r) => r.status === st).length;
+    const sims = (snap.simulation_manifests || []); const vids = sims.filter((x) => x.video_state === "present_verified" && x.poster_href);
+    const forms = snap.print_forms ? snap.print_forms.forms.filter((f) => f.files.image) : [];
+    const cm = (snap.coupling_manifest || {}).counts; const fam = ((snap.lean_gallery || {}).families || []).length;
+    const strip = [
+      ...forms.slice(0, 2).map((f) => ({ href: DF.href("/studio/" + p.id, { scale: "organ" }), img: f.files.image.href, label: f.title, play: false })),
+      ...vids.slice(0, 4).map((x) => ({ href: DF.href("/studio/" + p.id, { scale: (x.scales || ["organism"])[0] }), img: x.poster_href, label: x.title, play: true })),
+    ];
+    const stat = (big, small) => html`<div class="dstat"><b>${big}</b><span>${small}</span></div>`;
+    return html`<section class="panel doorway" aria-labelledby="dw-h">
+      <div class="dwhead"><div><p class="eyebrow">Featured project · work it across 11 scales</p><h2 id="dw-h">${p.title}</h2>
+        <p class="lede">${p.goal}</p></div>
+        <p class="dwgo"><a class="btn big" href="${DF.href("/studio/" + p.id)}">Open the ${p.title} studio</a><br><a class="small" href="${DF.href("/studio")}">All projects and design spaces</a></p></div>
+
+      <h3 class="sr">Subsystems by scale</h3>
+      <ol class="dwrail">${rail.map((r, i) => html`<li><a class="dwscale ${r.status}" href="${DF.href("/studio/" + p.id, { scale: r.key })}"><span class="n">${i + 1}</span><b>${r.label}</b><small>${r.status === "model" ? "recorded model" : r.status === "partial" ? "partial" : "stated gap"}</small></a></li>`)}</ol>
+      <p class="small dwgaps"><b>${n("model")} of ${rail.length} scales have a recorded model</b>, ${n("partial")} are partial and ${n("gap")} are stated gaps. Every gap is written out on its own subsystem page rather than left blank. The status of each scale is the Project record's own declaration, not a count of files.${cm ? html` Of ${cm.composable + cm.scenario + cm.refused} declared couplings between scales, ${cm.composable} are composable, ${cm.scenario} are scenario-level and <b>${cm.refused} are refused</b>.` : ""}</p>
+
+      ${strip.length ? html`<h3 class="sr">A sample of what is inside</h3><div class="dwstrip">${strip.map((x) => html`<a class="dwtile" href="${x.href}"><img src="${x.img}" alt="${x.label}" loading="lazy"><span>${x.play ? "▶ " : ""}${x.label}</span></a>`)}</div>` : ""}
+
+      <p class="small dwmore">Each tile opens the subsystem it belongs to. The rest of it: <a href="${DF.href("/simulations")}">all ${sims.length} recorded runs with their checks and sources</a> · <a href="${DF.href("/proofs")}">the ${fam} Lean proof families</a> · <a href="${DF.href("/engineering")}">the engineering workspace</a> · <a href="${DF.href("/evidence")}">what is verified and what is not</a> · <a href="${DF.href("/frontier")}">the open questions</a>.</p>
+      <div class="dwstats">${stat(sims.length, "recorded simulation runs")}${stat((m.equations || []).length, "named equations")}${stat(fam, "Lean proof families")}${stat((snap.claims || []).length, "claims with conditions")}${stat(forms.length, "printable forms")}</div>
+      <p class="small faint">Nothing here is a validated organism. The candidate is an engineering design sized from published measurements, and every parameter carries its own status word on the subsystem pages.</p></section>`;
+  }
+
   /* ---------------------------------------------------------------- home */
   DF.views.home = function (snap) {
     const p = fish(snap); const forms = snap.print_forms ? snap.print_forms.forms : []; const vids = (snap.simulation_manifests || []).filter((m) => m.video_state === "present_verified" && m.poster_href);
-    const openQ = DF.questions(snap).filter((q) => q.state === "open").length; const withModel = Object.values(p.panels).filter((x) => x.models.length).length;
+    const openQ = DF.questions(snap).filter((q) => q.state === "open").length;
+    const withModel = snap.mission.scales.filter((s) => scaleStatus(snap, p, s.key) === "model").length;   // same rule as the doorway and the project rail
     return {
       html: html`<section class="hero compact"><div><p class="eyebrow">MorphoSwarm Studio</p><h1>Design together.<br>Know what's open.</h1></div>
         <div class="herotext"><p class="lede">Two ways in, one body of evidence. <b>Studio</b> is where a design goal is worked across scales, with the models, media and gaps in one place. <b>Frontier</b> is the shared list of open questions and who is working on them. Both read the same claims and evidence, kept in the Delphi foundation: what we know, what's next, who's working on it.</p><p class="small herowatch"><a href="${DF.href("/demo")}">Watch the demo</a></p></div></section>
+      ${studioDoorway(snap)}
       ${groundingSection(snap)}
       <p class="small aboutlink"><a href="${DF.href("/about")}">About this project</a> · <a href="${DF.href("/generative")}">Generative biology: from mechanistic simulation to equation-conditioned models</a></p>
       <section class="panel goalpanel">${goalForm("")}</section>
@@ -295,8 +343,8 @@
     if (!p) return { html: html`<section class="pagehead"><h1>No such project</h1><p class="lede">There is no project “${id}” in this snapshot. <a href="${DF.href("/studio")}">See the projects</a>.</p></section>` };
     const m = snap.mission; const scale = route.params.scale && p.panels[route.params.scale] ? route.params.scale : "organism"; const pan = p.panels[scale]; const sc = m.scales.find((s) => s.key === scale);
     const sub = html`<nav class="subnav" aria-label="Project sections"><a href="${DF.href("/studio/" + p.id)}" aria-current="page">Studio</a><a href="${DF.href("/engineering")}">Engineering workspace</a><a href="${DF.href("/simulations")}">Simulations</a><a href="${DF.href("/belief")}">Belief</a><a href="${DF.href("/formalize")}">Proposal checker</a><a href="${DF.href("/history")}">Fish design history</a><a href="${DF.href("/regulatory")}">Regulatory applicability</a><a href="${DF.href("/blueprints")}">Genetic blueprints</a><a href="${DF.href("/experimentation", { scale })}">Experimentation</a><a href="${DF.href("/ecology")}">Ecology scenarios</a><a href="${DF.href("/assemblies")}">Assemblies</a><a href="${DF.href("/reuse")}">Claim reuse and dispute</a><a href="${DF.href("/frontier", { scale })}">Open questions at this scale</a></nav>`;
-    const PD = (snap.project_drafts || {})[p.id]; const cov = (k) => (PD ? PD.scale_coverage.find((c) => c.scale === k || (k === "ecological" && c.scale === "evolutionary")) : null);
-    const rail = m.scales.map((s, i) => { const pn = p.panels[s.key]; const c = cov(s.key); const st = c ? ({ implemented_model: "model", source_only: "partial" }[c.status] || "gap") : pn.models.length ? "model" : hasContent(pn) || (snap.simulation_manifests || []).some((x) => (x.scales || []).includes(s.key)) ? "partial" : "gap";
+    const PD = (snap.project_drafts || {})[p.id]; const cov = (k) => scaleCoverage(snap, p, k);
+    const rail = m.scales.map((s, i) => { const st = scaleStatus(snap, p, s.key);
       return html`<li><a class="subsys ${st} ${s.key === scale ? "on" : ""}" href="${DF.href("/studio/" + p.id, { scale: s.key })}" aria-current="${s.key === scale ? "true" : "false"}"><span class="n">${i + 1}</span><b>${s.label}</b><small>${st === "model" ? "recorded model" : st === "partial" ? "partial" : "gap"}</small></a></li>`; });
     const models = pan.models.length ? html`<div class="cards">${pan.models.map((mid) => { const mm = modelOf(snap, mid); return mm ? html`<article class="card"><h4>${mm.name}</h4><p class="small">${U.pill(mm.status || "status not stated", "st-unk")} ${mm.engine ? U.pill(mm.engine, "grp") : ""} ports: ${mm.ports}</p><p class="small"><b>Scope.</b> ${mm.scope || ""}</p><p class="small"><b>Not established.</b> ${(mm.not_established || []).join("; ") || "not stated"}</p></article>` : html`<article class="card"><h4>${mid}</h4><p class="small faint">Named in the project but not in the coupling manifest.</p></article>`; })}</div>` : html`<p class="empty">No model is attached at this scale. ${pan.gap}</p>`;
     const vids = [...new Set([...pan.videos, ...(snap.simulation_manifests || []).filter((m) => (m.scales || []).includes(scale)).map((m) => m.id)])].map((v) => vidOf(snap, v)).filter(Boolean);

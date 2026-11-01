@@ -335,3 +335,31 @@ main table td,main table th{overflow-wrap:break-word}main table td a,main table 
 main table.qtable td{overflow-wrap:break-word}main table.qtable td a,main table.qtable td code,main table.qtable td:first-child{overflow-wrap:anywhere}
 .board table td:last-child{min-width:9.5em}
 .board table th,.board table td{padding-left:10px;padding-right:10px}
+
+/* Home doorway: the way in to the featured project, above the anatomy panel rather than below it. Status colours are the same
+   three the project rail uses (.subsys), because they mean the same thing and a second palette would read as a second meaning. */
+.doorway{border:2px solid var(--line);border-top:6px solid var(--teal);background:var(--paper)}
+.dwhead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:start}
+.dwhead h2{margin:.1rem 0 .3rem;font-size:1.8rem}
+.dwhead .lede{margin:0;max-width:62ch}
+.dwgo{margin:0;text-align:right;white-space:nowrap}
+.dwgo .small{display:inline-block;margin-top:8px}
+.btn.big{font-size:1.02rem;padding:11px 20px}
+.dwrail{list-style:none;margin:16px 0 8px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:8px}
+.dwscale{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 8px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;text-decoration:none;color:var(--ink);align-items:center;height:100%}
+.dwscale .n{font:700 .75rem var(--mono);background:var(--ink);color:#fff;border-radius:50%;width:22px;height:22px;display:grid;place-items:center;grid-row:span 2}
+.dwscale b{font-size:.92rem;line-height:1.25;overflow-wrap:normal;word-break:normal;hyphens:none}
+.dwscale small{grid-column:2;color:var(--faint);font-size:.72rem}
+.dwscale.model{border-left:5px solid var(--lime-d)}.dwscale.partial{border-left:5px solid #c99a2e}.dwscale.gap{border-left:5px dashed #b0a68f}
+.dwscale:hover,.dwscale:focus{border-color:var(--teal);box-shadow:0 0 0 2px #cfe6e6}
+.dwgaps{max-width:90ch}
+.dwstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:14px 0}
+.dwtile{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;text-decoration:none;color:var(--ink)}
+.dwtile img{width:100%;height:110px;object-fit:cover;display:block;background:#14263b}
+.dwtile span{display:block;padding:6px 8px;font-size:.78rem;line-height:1.3}
+.dwtile:hover{border-color:var(--teal);box-shadow:0 0 0 2px #cfe6e6}
+.dwstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0 6px}
+.dstat{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#f6f1e7}
+.dstat b{display:block;font:700 1.5rem/1.1 var(--sans);color:var(--teal-d)}
+.dstat span{display:block;font-size:.76rem;color:var(--dim);margin-top:2px}
+@media (max-width:760px){.dwhead{grid-template-columns:minmax(0,1fr)}.dwgo{text-align:left}.dwhead h2{font-size:1.5rem}.dwscale small{display:none}}
