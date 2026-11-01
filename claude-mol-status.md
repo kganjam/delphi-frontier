@@ -1,6 +1,6 @@
 # claude-mol status
-Updated: 2026-11-01 17:36 UTC / 09:36 PST
-Branch: claude/mol-sims-20261101, last commit 9357dec6 Withdraw the complex-MD null: the correlation is in t (pushed)
+Updated: 2026-11-01 19:38 UTC / 11:38 PST
+Branch: claude/mol-sims-20261101, last commit efb2e84a Two 40 ns ShhN replicas, and a log-reassembly defect  (pushed)
 
 ## Studio-scale contribution (gap report, 2026-11-01)
 Manifests written to site/artifacts/simulations/, each naming one project_scale and what it does NOT establish:
@@ -31,8 +31,9 @@ s3 local sensitivity; s4 OpenFold2 confidence; s5 Kcnk5b/Kcnj13 pump-leak sweep;
 - claude-mol-shhn-md40-20261105 aijob-e00j94wgv579ddn7g9: FAILED at launch, and -20261106 aijob-e00kp81hkyhc9yb10p
   CANCELLED by me as doomed the same way: the Nebius CLI's repeated --args OVERRIDES instead of appending, so the
   "-c" was dropped and the container ran the script text as a filename. Relaunched through an injected runner:
-- claude-mol-shhn-md40b-20261105 aijob-e00s0swv95fj2pfjwj: RUNNING (ShhN apo 40 ns, convergence replica A)
-- claude-mol-shhn-md40b-20261106 aijob-e00grxxts2zagf2hk5: RUNNING (ShhN apo 40 ns, convergence replica B)
+- claude-mol-shhn-md40b-20261105 aijob-e00s0swv95fj2pfjwj: COMPLETED, collected (40 ns, 467 ns/day, rho -0.737)
+- claude-mol-shhn-md40b-20261106 aijob-e00grxxts2zagf2hk5: COMPLETED, collected (40 ns, 467 ns/day, rho -0.633)
+No jobs of mine are running. I cancelled only my own doomed job; no job I did not start was ever touched.
   Purpose: the 10 ns pair was NOT converged. Over 5 ns blocks both 10 ns replicas drift UP (+0.21, +0.32 A/ns),
   so the -0.11 A/ns last-2-ns figure in replica 1 was window noise, not a plateau. 40 ns x 2 tests whether the
   final block goes flat. Only 2 of my jobs run at once; no job I did not start has been touched.
@@ -52,8 +53,22 @@ Four corrections made, all committed:
 3. Contact retention now reported as a COUNT (69.5 vs 42.4 pairs, 1.64x), not only a fraction that made them look alike.
 4. A 5 ns-block slope is a weak convergence criterion (a drifting protein can pause); the frame-level test argon asked
    for needs trajectory frames, which the job log does not return. Recorded as not done, not claimed.
-Still outstanding from the review: per-chain realignment of RMSF (needs frames) and a template-free refold, which is
-running now as the singleseq control.
+5. Template-free refold DONE: both complexes refolded with a single-sequence a3m. The IIIc > IIIb inversion SURVIVES
+   (0.660 vs 0.614; gap narrows 0.077 -> 0.046), so template proximity does NOT explain it and the manifest line that
+   named it as the cause is corrected. The Fgf10a ligand collapses without an alignment (-47.8 pLDDT) while the Fgfr2
+   receptor stays above 80, which is itself learned structural memory, so the control cannot exclude memorisation.
+6. Convergence DONE with 2 x 40 ns: both end on a near-flat final 5 ns block (+0.06, -0.11 A/ns) but block MEANS wander
+   3.00 and 2.80 A with the slope changing sign 6 and 3 times. RMSD plateau is NOT a usable criterion here - argon's
+   objection upheld. Across all four replicas: rho -0.60 to -0.74, pairwise RMSF rho 0.78-0.92. Ranking is the result.
+Still outstanding: per-chain realignment of RMSF and a frame-level convergence test (pairwise RMSD / cluster overlap).
+Both need trajectory frames, which the job log does not return. Recorded as not done, not claimed.
+
+## Defect found in my own tooling (fixed, nothing committed was wrong)
+collect_md.py reassembled out-of-order 16 KiB log chunks by accepting any ordering that PARSED as JSON. For arrays of
+plain floats that is too weak: a wrong order spliced potential energies (~-9e5 kJ/mol) into the RMSD array, giving a
+926209 A RMSD and a NEGATIVE radius of gyration on the first 40 ns collection. 10 ns runs make 2-3 chunks (wrong order
+fails to parse); 40 ns makes 7 (it does not). The check now also validates array lengths, distance ranges and energy
+signs. All six MD runs re-derived from their saved logs: 6/6 CONFIRMED (results/.../md_log_verification.json).
 
 ## Findings that limit what may be claimed
 1. The non-cognate Fgfr2 IIIc control OUTSCORED the cognate IIIb complex (0.84 vs 0.77), and IIIc has the closer
@@ -69,7 +84,6 @@ running now as the singleseq control.
 *.b64 inputs excluded. Status mirrored to /data/artifacts/delphi-evolve-rethink/claude-mol-status.md.
 
 ## Next
-1. Collect the two 40 ns replicas (~2.2 h each), run md_convergence.py over all four ShhN replicas, correct the
-   openmm-shhN-md manifest + README if the longer runs change the drift statement.
-2. Score the single-sequence Boltz-2 refolds of both complexes (argon's template control): does the IIIc > IIIb
-   inversion survive without a PDB70 alignment?
+All planned runs are collected, verified and committed; 9 manifests validate and every declared source_files hash
+matches on disk. Artifacts mirrored. Remaining blockers are external (undocumented upload manifest for
+AlphaFold3/stab_ddg/BioEmu2) or need trajectory frames the job log will not return.
