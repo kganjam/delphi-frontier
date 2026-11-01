@@ -1,0 +1,108 @@
+{
+ "scope": "Family-wide SLC43 census of GCA_018398805.1 placed with the zebrafish family and two medaka proteins. Medaka is a labelled PROXY. A gene tree places sequences; it does not prove orthology and is not evidence of expression or function.",
+ "question": "Which SLC43 loci does the flying-fish assembly carry, and which zebrafish paralog is each closest to? This is the answerable form of the open Problem zf2ff-problem-lat4a-identifier.",
+ "prior_signal_worth_checking": "Neither medaka nor Takifugu has an annotated slc43a2a in Ensembl, and the zebrafish slc43a2a UniProt entry is a 153 aa fragment, so the 'lat4a' symbol may carry the same naming problem kcnh2a did.",
+ "search": "miniprot 0.18-r281 -N 10 --outs=0.5 --trans, 6 zebrafish SLC43 queries, 5 whole-scaffold chunks",
+ "n_merged_loci": 8,
+ "n_sequences": 16,
+ "fasta_bytes": 8266,
+ "fasta_sha256": "1c1b2882e721dfecc6a6c468d0ea4822dbf4432d9d3c763e54007805b9829e18",
+ "loci": [
+  {
+   "name": "HSPEC_slc43locus01_HS00485_len593",
+   "scaffold": "JAGFBZ010000485.1",
+   "start": 561206,
+   "end": 573455,
+   "top_query": "ZF_slc43a2b_LAT4",
+   "top_AS": 2034,
+   "coverage": 1.0,
+   "identity": 0.786,
+   "protein_len": 593,
+   "sha256": "0bdac5a537e80f8ecc3a134685d4f9c638dd8db97f7d3423e014e44866b82d1f"
+  },
+  {
+   "name": "HSPEC_slc43locus02_HS01224_len570",
+   "scaffold": "JAGFBZ010001224.1",
+   "start": 1267873,
+   "end": 1287961,
+   "top_query": "ZF_slc43a2b_LAT4",
+   "top_AS": 1915,
+   "coverage": 1.0,
+   "identity": 0.734,
+   "protein_len": 570,
+   "sha256": "130fd37dda50144378017038b04cdbbabd8357276dc8348e2cf2062780bb2211"
+  },
+  {
+   "name": "HSPEC_slc43locus03_HS00671_len543",
+   "scaffold": "JAGFBZ010000671.1",
+   "start": 707657,
+   "end": 722937,
+   "top_query": "ZF_slc43a1b",
+   "top_AS": 1578,
+   "coverage": 0.954,
+   "identity": 0.714,
+   "protein_len": 543,
+   "sha256": "4ed243a2110264f7cad0ab3feb97801749707d75d998feffd39707835b8176ec"
+  },
+  {
+   "name": "HSPEC_slc43locus04_HS00571_len541",
+   "scaffold": "JAGFBZ010000571.1",
+   "start": 108386,
+   "end": 126964,
+   "top_query": "ZF_slc43a1a",
+   "top_AS": 1599,
+   "coverage": 1.0,
+   "identity": 0.727,
+   "protein_len": 541,
+   "sha256": "5f5ed6b371fc026eae04b1aa1652915582fb71bda59bc31d04d162482c847a01"
+  },
+  {
+   "name": "HSPEC_slc43locus05_HS02045_len499",
+   "scaffold": "JAGFBZ010002045.1",
+   "start": 1021385,
+   "end": 1038399,
+   "top_query": "ZF_slc43a3b",
+   "top_AS": 1309,
+   "coverage": 1.0,
+   "identity": 0.653,
+   "protein_len": 499,
+   "sha256": "b946bc7b377b867d7a7a5e302ef488897e791a7063c521628187559fdefb1270"
+  },
+  {
+   "name": "HSPEC_slc43locus06_HS00571_len482",
+   "scaffold": "JAGFBZ010000571.1",
+   "start": 15873,
+   "end": 43393,
+   "top_query": "ZF_slc43a3b",
+   "top_AS": 1401,
+   "coverage": 0.984,
+   "identity": 0.703,
+   "protein_len": 482,
+   "sha256": "0975e31269aeba266ce5bdbf76de94705adcc0746c22413ddf159c36e7fd25f0"
+  },
+  {
+   "name": "HSPEC_slc43locus07_HS01331_len482",
+   "scaffold": "JAGFBZ010001331.1",
+   "start": 850851,
+   "end": 864302,
+   "top_query": "ZF_slc43a3b",
+   "top_AS": 1372,
+   "coverage": 0.984,
+   "identity": 0.695,
+   "protein_len": 482,
+   "sha256": "c72e5335e93d66c0cec4541a8aed0c8d65c9ce9bec1d48f95d4eeef89afd6801"
+  },
+  {
+   "name": "HSPEC_slc43locus08_HS02674_len225",
+   "scaffold": "JAGFBZ010002674.1",
+   "start": 389,
+   "end": 13658,
+   "top_query": "ZF_slc43a3b",
+   "top_AS": 528,
+   "coverage": 0.438,
+   "identity": 0.654,
+   "protein_len": 225,
+   "sha256": "1c6ff57af4d841e343e6b3b9a520f5708c6bf9a06e5f05b4cf5aa8e5701549cd"
+  }
+ ]
+}
