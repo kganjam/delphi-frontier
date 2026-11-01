@@ -1797,6 +1797,16 @@ def blog_posts(ins: Inputs, extra: dict) -> list[dict]:
     return sorted(posts, key=lambda x: x["date"] or "", reverse=True)
 
 
+def _has_mapping(value) -> bool:
+    """True if a nested structure contains a dict anywhere. A list of records (parameters, sources, retrievals) is content the
+    page renders; a list of numbers is a series the figures already plot."""
+    if isinstance(value, dict):
+        return True
+    if isinstance(value, list):
+        return any(_has_mapping(v) for v in value)
+    return False
+
+
 def limbless_block(ins: Inputs, extra: dict) -> dict | None:
     """Studio > Limbless mouse. Authored prose comes from site/content/limbless-mouse.json; the route map and the computed
     studies come from results/limbless-mouse/, listed by that directory's own index so a figure cannot appear without a caption.
@@ -1813,6 +1823,22 @@ def limbless_block(ins: Inputs, extra: dict) -> dict | None:
     ix = ins.json(index)
     page["index_sha256"] = ins.seen[index]["sha256"]
     page["generated_at"] = ix.get("generated_at")
+
+    def trim(value, path: str, dropped: list):
+        """Keep the snapshot readable: a sweep's raw samples and a phase-map grid are plotted in the figures and shipped whole in
+        the downloadable result file, so embedding them again costs every visitor a few hundred kilobytes for nothing. Long
+        numeric runs are replaced by a marker that says how many values were omitted and where to get them: a reader can see that
+        something was left out, which a silent truncation would not show."""
+        if isinstance(value, dict):
+            return {k: trim(v, f"{path}.{k}", dropped) for k, v in value.items()}
+        if isinstance(value, list):
+            size = len(canonical(value))
+            if size > 4000 and not _has_mapping(value):   # a numeric series, never a list of records: provenance tables stay whole
+                dropped.append({"path": path, "length": len(value), "bytes": size})
+                return {"omitted_from_snapshot": len(value), "bytes": size,
+                        "reason": "plotted in this study's figures; the full series is in the downloadable result file"}
+            return [trim(v, f"{path}[{i}]", dropped) for i, v in enumerate(value)]
+        return value
 
     def pull(rel: str) -> tuple[dict | None, str | None]:
         if not (ROOT / rel).exists():
@@ -1837,9 +1863,12 @@ def limbless_block(ins: Inputs, extra: dict) -> dict | None:
             raw = ins.read(rel)
             extra[f"@artifacts/limbless-mouse/{f['file']}"] = raw
             figures.append({**f, "state": "present", "href": f"artifacts/limbless-mouse/{f['file']}", "sha256": digest_bytes(raw), "bytes": len(raw)})
-        if data is not None:   # the study's own result file is offered for download beside the page that reads it
+        dropped: list = []
+        if data is not None:   # the study's own result file is offered for download beside the page that reads it, whole
             extra[f"@artifacts/limbless-mouse/{s['id']}.json"] = ins.read(s["data"])
+            data = trim(data, s["id"], dropped)
         studies.append({**{k: v for k, v in s.items() if k != "figures"}, "present": data is not None, "sha256": sha, "figures": figures, "data": data,
+                        "omitted_series": sorted(dropped, key=lambda x: -x["length"]),
                         "data_path": s["data"], "data_href": f"artifacts/limbless-mouse/{s['id']}.json" if data is not None else None})
     page["studies"] = studies
     page["counts"] = {"routes": len((routes or {}).get("routes", [])), "studies_present": sum(1 for s in studies if s["present"]),

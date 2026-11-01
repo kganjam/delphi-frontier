@@ -43,7 +43,24 @@ Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation
 
 An ODE model of the SHH–GREM1–BMP–FGF feedback loop, built from the published topology with every rate constant marked sourced or assumed. The wild-type control must initiate, sustain and self-terminate before any sweep is read. Three knobs are then swept — ZPA Shh output, AER-inducing FGF10 input, and GREM1 production — because three different routes on this page act on three different parts of the same loop.
 
-**Declared and not present.** The result file `results/limbless-mouse/shh-loop.json` is not in this tree. It is listed rather than hidden.
+- Figure `shh-loop-control.png`: Simulation, control arm. Wild-type parameters: the loop engages, is sustained for a bounded window, and self-terminates.
+- Figure `shh-loop-threshold.png`: Simulation. Outgrowth duration against the fraction of wild-type ZPA Shh output. The threshold is a property of this model, not a measurement in an embryo.
+- Figure `shh-loop-phasemap.png`: Simulation. Two knobs at once: the same phenotype class is reachable from different directions, which is the point of a design space.
+
+23 parameters, of which 21 are assumed rather than sourced.
+
+- This is a SIMULATION. No quantity in this file is an observation of any embryo.
+- The model is a caricature of a signalling TOPOLOGY. It is not calibrated to any measured mouse limb bud: no concentration, rate, diffusion length or developmental time in it was fitted to data, and none should be read as one.
+- Fourteen of the eighteen parameters are assumed. They were chosen so the wild-type arm initiates, is maintained and self-terminates -- that is, the control arm's qualitative behaviour was an input to parameter choice, not an independent result.
+- A threshold in this model is a threshold in this model. It is not a prediction of the ZRS allelic series at which a mouse loses a limb, and it has no units that could be compared to one.
+- The model is non-spatial: SHH, GREM1, BMP and FGF are single well-mixed levels. The real loop is spatially organised across an epithelial-mesenchymal boundary with measured gradients, and the Scherz 2004 mechanism it borrows is explicitly geometric (an expanding descendant zone). Variable Z is a zero-dimensional stand-in for that geometry.
+- The model contains no SHH-independent proximal outgrowth, so it cannot distinguish a Shh-null limb -- which in mice still forms proximal skeleton -- from true amelia. Its 'no-limb' class means only 'this loop never engaged'.
+- Digit number and digit pattern are outside the model. Sheth et al. 2012 (PMID 23239739) show digit patterning is a Turing-type mechanism whose wavelength distal Hox genes set; none of that is represented here, so the model says nothing about how many digits form.
+- The knob s is held constant in time. In python hindlimb buds the reported defect is that SHH is weak AND transient (PMID 27773569); a time-varying s is not explored.
+- Only the classifier's boundaries, not the model, decide where 'truncated' ends and 'normal' begins. Those cuts (5%, 85%, 115% of the wild-type control) are assumed.
+- The outgrowth window duration is most sensitive to k_Z, a wholly assumed parameter. No sensitivity analysis over the full parameter space was run.
+
+Full result file: `results/limbless-mouse/shh-loop.json`. Code: `results/limbless-mouse/code/shh_loop.py`.
 
 ### Skeletal elements as a Turing pattern: how small a limb bud can be and still make a digit
 

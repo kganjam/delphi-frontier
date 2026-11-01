@@ -165,7 +165,7 @@
     return html`<h4>What each knob does, and where it breaks</h4>
       <p class="small faint">A threshold is the value of that knob below which this model's loop never engages. It is a property of the model; the uncertainty beside it is how far the number moved across integrators and tolerances, which is not the same as being right.</p>
       <div class="tablewrap"><table><thead><tr><th scope="col">Knob</th><th scope="col">What it stands for</th><th scope="col">Threshold</th><th scope="col">Numerical uncertainty</th></tr></thead>
-      <tbody>${keys.map((k) => { const s = sweeps[k] || {}; return html`<tr><td><code>${k}</code>${s.label ? html`<br><span class="small faint">${s.label}</span>` : ""}</td><td class="small">${s.meaning || s.description || ""}${s.source ? html`<br><span class="faint">${s.source}</span>` : ""}</td><td>${s.threshold === undefined || s.threshold === null ? html`<span class="faint">none in the range swept</span>` : DF.fmt(s.threshold, 3)}</td><td class="small">${unc(k, s)}</td></tr>`; })}</tbody></table></div>`;
+      <tbody>${keys.map((k) => { const s = sweeps[k] || {}; return html`<tr><td><code>${k}</code>${s.label ? html`<br><span class="small faint">${s.label}</span>` : ""}</td><td class="small">${s.meaning || s.description || ""}${s.source ? html`<br><span class="faint">${s.source}</span>` : ""}</td><td>${s.threshold === undefined || s.threshold === null ? html`<span class="faint">none in the range swept</span>` : DF.fmt(s.threshold, 3)}${s.threshold_note ? html`<br><span class="small faint">${s.threshold_note}</span>` : ""}</td><td class="small">${unc(k, s)}</td></tr>`; })}</tbody></table></div>`;
   }
 
   function listOf(title, items, cls) {
