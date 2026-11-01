@@ -34,11 +34,11 @@
   },
   "branch": "work/genomics",
   "bundle": {
-   "base64_bytes": 62120,
-   "bytes": 46588,
+   "base64_bytes": 62192,
+   "bytes": 46643,
    "contents": {
     "connectors/genomics/__init__.py": "6a96f99f54dfd369128d2fe93e8a0d87d6f5c85e07c6185afc02960f9bc5bb34",
-    "connectors/genomics/lat4a_survey.py": "34e4569d14f6ef285eafe1dfb0327bb87c4a94893b0c06b8a1f4ca6fc6267bc1",
+    "connectors/genomics/lat4a_survey.py": "3195783954560130b15bde107db6b242cb259c62353c687267b02d5622ddfe70",
     "connectors/genomics/lat4a_survey_job.py": "10bbed674aadd3d312eb073273f751699374d4e41ea161b443bb3dc3cb993d1a",
     "data/genomics/artifacts/ensembl_protein_ENSDARP00000120945.fasta": "e4a913f92aeaacee014a31ee645b0e2227171d6c496968769700c704b20c4aeb",
     "data/genomics/artifacts/ensembl_protein_ENSDARP00000156564.fasta": "81512398341ef4c66feae6e7e90230a396c9eca11dcd93f7218c0c6ec83c9876",
@@ -55,14 +55,14 @@
    "file": "lat4a-survey-bundle.tar.gz",
    "metadata_attribute": "lat4a-bundle-b64",
    "metadata_value_limit_bytes": 262144,
-   "sha256": "e4b6bb81ada9861d486741a661e2083ab0d97d896c177f151527cc3cab6e0287"
+   "sha256": "cd5e9efce32b74b6e16aa5dc25c6b3def53b1d98b84c56ac380874d11fd0c114"
   },
-  "commit": "6e3f2a3dac8db33c6fc8bf2d74c829aead847d62",
+  "commit": "9f70091f3dcb37e02bdebf62ec0d3ce40315dae2",
   "repo": "kganjam/delphi-frontier (private)"
  },
  "inputs": {
   "connectors/genomics/__init__.py": "6a96f99f54dfd369128d2fe93e8a0d87d6f5c85e07c6185afc02960f9bc5bb34",
-  "connectors/genomics/lat4a_survey.py": "34e4569d14f6ef285eafe1dfb0327bb87c4a94893b0c06b8a1f4ca6fc6267bc1",
+  "connectors/genomics/lat4a_survey.py": "3195783954560130b15bde107db6b242cb259c62353c687267b02d5622ddfe70",
   "connectors/genomics/lat4a_survey_job.py": "10bbed674aadd3d312eb073273f751699374d4e41ea161b443bb3dc3cb993d1a",
   "data/genomics/artifacts/ensembl_protein_ENSDARP00000120945.fasta": "e4a913f92aeaacee014a31ee645b0e2227171d6c496968769700c704b20c4aeb",
   "data/genomics/artifacts/ensembl_protein_ENSDARP00000156564.fasta": "81512398341ef4c66feae6e7e90230a396c9eca11dcd93f7218c0c6ec83c9876",
