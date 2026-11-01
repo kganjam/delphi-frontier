@@ -38,8 +38,8 @@ def load_runs(root: Path, scale: float = 1.0):
     out = {}
     for m in sorted(root.glob("*/metrics.json")):
         d = json.loads(m.read_text())
-        if abs(d["scale"] - scale) > 1e-9:
-            continue
+        if abs(d["scale"] - scale) > 1e-9 or not m.parent.name.startswith(f"{d['arm']}-s"):
+            continue  # frozen arms only (supplementary/diagnostic runs carry a suffix such as cc, n1, rep2)
         out.setdefault(d["arm"], []).append(d)
     return out
 
