@@ -1,0 +1,46 @@
+{
+  "job": "fin-scale-evo2-conditional/v1",
+  "model": "evo2_7b",
+  "precision": "bfloat16",
+  "question": "given the SAME 1 kb prompt, is the real continuation more likely than the model's own sample?",
+  "outcome_kind": "computed likelihoods under one model; NOT observation, NOT function",
+  "scoring": "mean log-prob over continuation positions only, from one forward pass over prompt+continuation; unconditional score of the same sequence reported alongside for comparability with arm A",
+  "seed": 0,
+  "self_check": {
+    "iid_random": -1.3996587991714478,
+    "expected_about": -1.3863,
+    "poly_C": -0.019215382635593414,
+    "natural_first_target": -1.216288447380066,
+    "scoring_path_sane": true,
+    "cond_iid_given_real_prompt": -1.4058609008789062,
+    "cond_gate_sane": true
+  },
+  "inputs": {
+    "input_set_id": "fin-scale-regulatory-2kb/v1",
+    "n_targets": 19,
+    "n_candidates": 38
+  },
+  "software": {
+    "python": "3.12.3",
+    "torch": "2.10.0a0+b4e4ee81d3.nv25.12",
+    "evo2": "present",
+    "transformer_engine": "2.10.0+769ed778",
+    "flash_attn": "2.7.4.post1",
+    "vortex": "present",
+    "pip_freeze_sha256": "f3487791bb834b0a43a3ed26f48500d70c83a913444e4e6683c26a052c8ea44c"
+  },
+  "gpu": {
+    "count": 1,
+    "name": "NVIDIA H100 80GB HBM3",
+    "capability": [
+      9,
+      0
+    ],
+    "total_memory_gb": 85.0
+  },
+  "runtime": {
+    "load_seconds": 14.1,
+    "total_seconds": 29.8,
+    "n_rows": 76
+  }
+}

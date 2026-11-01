@@ -1,0 +1,44 @@
+{
+  "job": "fin-scale-jaspar-motif-scan/v1",
+  "question": "do these windows carry more JASPAR motif hits than dinucleotide-preserving scrambles of themselves?",
+  "outcome_kind": "computed motif hit counts; NOT observed binding, NOT functional evidence, NOT a claim about any live fish",
+  "primary_endpoint": "total hits across all motifs, real vs own mean shuffle, paired across windows (ONE test)",
+  "secondary": "per-motif, Holm-corrected, descriptive only",
+  "jaspar_release": "JASPAR2024",
+  "collection": "CORE",
+  "tax_group": "vertebrates",
+  "n_motifs": 879,
+  "fpr_threshold": 0.0001,
+  "n_shuffles": 5,
+  "seed": 0,
+  "both_strands": true,
+  "n_motifs_built": 879,
+  "pseudocounts": "JASPAR sqrt(N)/4 via Bio.motifs.jaspar.calculate_pseudocounts; without them only 6 of 879 motifs yield a finite threshold",
+  "background": {
+    "kind": "single pooled background over all real held-out windows",
+    "values": {
+      "A": 0.29537,
+      "C": 0.20221,
+      "G": 0.19858,
+      "T": 0.30384
+    },
+    "why": "threshold_fpr costs ~244 s for 879 motifs, so a per-sequence background was unaffordable; real and its shuffle share identical PSSMs and thresholds, so the paired contrast remains composition-controlled",
+    "forfeits": "cross-sequence hit-count comparison is composition-confounded and descriptive only"
+  },
+  "inputs": {
+    "input_set_id": "fin-scale-regulatory-2kb/v1",
+    "n_targets": 19,
+    "n_candidates": 38
+  },
+  "software": {
+    "python": "3.13.12",
+    "numpy": "2.5.4",
+    "Bio": "1.88",
+    "pyjaspar": "4.0.0",
+    "pip_freeze_sha256": "da651762f3020b56c3199e79b375ce1064a5b166912f4553ac4b4cb792ea69cc"
+  },
+  "runtime": {
+    "total_seconds": 275.2,
+    "n_scanned": 57
+  }
+}

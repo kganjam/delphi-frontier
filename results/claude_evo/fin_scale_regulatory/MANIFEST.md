@@ -11,6 +11,16 @@
 | --- | --- | --- | --- | --- | --- |
 | `aijob-e00cd0nepn7c42q9sm` | `claude-evo-finscale-a1` | COMPLETED | `EVOFS_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 965.5 s |
 | `aijob-e00pya60nwmwjd5df7` | `claude-evo-finscale-baseline-a1` | COMPLETED | `EVOBL_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 22.7 s |
+| `aijob-e00bvd85xvypgq1j6a` | `claude-evo-finscale-cond-a1` | COMPLETED | `EVOCD_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 29.8 s |
+
+The JASPAR motif scan has **no Nebius job id**: it needs no GPU and was written
+as a CPU job, but `compute.instance.non-gpu.vcpu` is saturated tenant-wide
+(limit 24; 8, 4 and 2 vCPU presets all refused with `ResourceExhausted`). Other
+teams hold that quota and nothing was cancelled to make room. It ran locally
+under the mandated `systemd-run` cap; `motif/local_run.log.gz` is its full log
+and `experiments/.../run_motif.sh` + `motif_scan_job.py.gz.b64` are the
+submittable bundle, ready if CPU frees. Its result is therefore **not** backed by
+a Nebius job receipt and is labelled local throughout.
 
 Submitted by me this session. Prior work I did **not** re-run and do **not**
 claim: `aijob-e00pwp8khfdwnwm9ps` (run 1), `aijob-e00qkdb12x8zv9yckb`
@@ -63,6 +73,14 @@ Python 3.12.3, torch `2.10.0a0+b4e4ee81d3.nv25.12`, `flash_attn 2.7.4.post1`,
 | `baseline/manifest.json` | `11c337fc75fd0f0572a11e697c70ff7fa22500147be33b393c5b1091d5cbd8ac` |
 | `baseline/scoring_self_check.json` | `748e86800019e19e297f4bc35dea7ecbe5bbc5ed21c284480eccfa3f109d4f21` |
 | `baseline/job_log_aijob-e00pya60nwmwjd5df7.log.gz` | `23f211cbdfc20e1fd54f780df55f892a5b124e7bb9759d1068d35d31f05d0c43` |
+| `baseline/positional_report.json` | see git; derived from `positional_logprobs.json.gz` |
+| `conditional/conditional_scores.json` | `e98ea1996ec759af161589da0f349abc6c8992bae72de2b5bf286171f1133855` |
+| `conditional/manifest.json` | `e7de6757a7d2b63d8e5adbac44226b86db4d480980d6935c2fe5431eca43f92d` |
+| `conditional/scoring_self_check.json` | `47656882def9ff2499e686c441d7159b42a5ff285ab5034cad1d081fda31e168` |
+| `conditional/job_log_aijob-e00bvd85xvypgq1j6a.log.gz` | `e859252de33ecd8fff27e5e1ee122e002033aa92e0e3fcc9cdc8105e14f07452` |
+| `motif/motif_hits.json` | `06cbb8d8d2919466e24aa6ebd6e9b06cfb6ccfbdd6070007522d05a1e86b56fa` |
+| `motif/manifest.json` | `6fd884dad6039939b7ae2a393ddffa46383319845362759d7342504e58a50a97` |
+| `motif/local_run.log.gz` | `f04b869cbf7fede042f2a7100da55c5c3e6895f48ec3ffb5b504049d9a1599d9` |
 
 The two `scoring_self_check.json` files are the same file by hash because both
 jobs produced bit-identical self-checks.
@@ -99,9 +117,16 @@ uniform random −1.3997.
 ## Results
 
 See `RESULT.md`. One-line version: the real windows beat their own
-composition-matched scrambles (+0.1444, CI [0.0980, 0.1908], paired, n=19,
-p=3.9e-06), and the real-vs-generated gap exists only in the species whose
-assembly is in Evo 2's training corpus.
+composition-matched scrambles, at likelihood level (+0.1444 unconditional,
++0.1685 conditional, p≈2–4×10⁻⁶) and independently at motif level (+125.3
+JASPAR hits, p=0.00069), with both effects holding in the out-of-corpus species
+where memorisation cannot explain them.
+
+**One earlier claim is corrected in §2/§7:** the real-vs-generated gap was
+reported as significant from unconditional scoring (p=0.017). Under the fair
+conditional test it is **not** significant (+0.0577, p=0.122), because
+conditioning helps the generated sequences about twice as much as the real ones.
+The species ordering survives; the reliable-gap claim does not.
 
 ## Reproduction
 
@@ -110,11 +135,23 @@ experiments/claude_evo/fin_scale_regulatory/
   prepare_inputs.py              # builds input_set.json (predecessor)
   run.sh, evo2_fin_scale_job.py           # arm A, as submitted
   run_baseline.sh, evo2_heldout_baseline_job.py  # baseline, as submitted
+  run_conditional.sh, evo2_conditional_job.py    # conditional scoring, as submitted
+  run_motif.sh, motif_scan_job.py                # JASPAR scan (submittable; ran locally)
   recover_bundle.py              # log -> output bundle
   analyze_outputs.py             # artefact screen (CPU)
   summarize.py                   # group statistics (CPU)
+  positional_analysis.py         # per-position advantage by bin (CPU)
   review/argon_design_review.md  # adversarial review and what changed
 ```
+
+**The `--inject-file` cap is on BASE64, not raw plaintext.** It is 65536 bytes
+of encoded payload, so only **~49152 bytes of raw plaintext** across all files.
+The inherited bioservices note said 65536 raw and so did an earlier commit of
+mine; both were wrong. A 53,124 B set was rejected at exactly 53124×4/3 = 70832,
+and every accepted set obeys the 4/3 rule (43,314 / 33,054 / 32,718). The fix is
+to inject the job script gzip+base64 too and print its sha256 inside the job:
+the conditional job's log shows `fa71252d12f3f6d0…`, matching its repo copy, so
+the log proves which code ran.
 
 **Recovery gotcha that nearly cost the baseline data.** `nebius ai job logs`
 defaults to the last **100 lines** and silently truncated a 224-chunk payload:

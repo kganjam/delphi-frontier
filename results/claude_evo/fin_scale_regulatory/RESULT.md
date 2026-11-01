@@ -34,9 +34,21 @@ syntax. Beating a dinucleotide shuffle demonstrates structure above k = 2 —
 higher-order Markov statistics, repeat structure, codon-like periodicity — and
 nothing more specific.
 
-## 2. The finding that tracks training-corpus membership
+## 2. The finding that tracks training-corpus membership — **WEAKENED by §7, read both**
 
-Generated candidates were compared with the real windows, paired by window:
+> **Correction, added after the conditional-scoring job
+> (`aijob-e00bvd85xvypgq1j6a`).** The significance reported in this section is
+> partly an artefact of scoring unconditionally. Under the fair comparison —
+> real continuation vs generated continuation given the **same** prompt, which
+> is the quantity generation actually optimised — the overall real-vs-generated
+> difference is **+0.0577, CI [−0.0169, +0.1324], p=0.122: not significant**,
+> and the zebrafish gap falls to p=0.088. The *direction* and the species
+> *ordering* below survive; the claim of a statistically reliable gap does not.
+> §7 has the detail. I am leaving this section standing rather than rewriting
+> it, so the correction is visible instead of silent.
+
+Generated candidates were compared with the real windows, paired by window,
+**scored unconditionally**:
 
 | species | corpus status | real − candidate (paired) | p |
 | --- | --- | --- | --- |
@@ -46,7 +58,8 @@ Generated candidates were compared with the real windows, paired by window:
 The gap between real and generated sequence appears **only** where the model has
 likely seen the real sequence. This is a *within-species* paired comparison, so
 unlike the cross-species contrast in §4 it is **not** subject to the leakage,
-window-definition or GC confounds — they cancel.
+window-definition or GC confounds — they cancel. **But see the correction above:
+under conditional scoring neither species reaches significance.**
 
 Two readings, and the honest position is that this single observation does not
 separate them:
@@ -136,3 +149,82 @@ two-species test finds real **ahead** of candidates overall (+0.0773, CI
 by zebrafish. The two results are consistent once pairing and corpus membership
 are accounted for; the earlier framing simply could not see the split, having
 only in-corpus windows and no composition-matched baseline for the real row.
+
+
+## 7. Conditional scoring — the fair real-vs-generated test, and a correction
+
+`aijob-e00bvd85xvypgq1j6a`, `EVOCD_RC=0`, 1× H100 80GB, 29.8 s, 76 rows. Arm A
+sampled candidates as P(x | 1 kb prompt) but scored everything as unconditional
+P(x). That is internally consistent, so arm A's group comparison stands — but it
+is not the quantity generation optimised, and argon was right that it matters.
+This job feeds prompt+continuation as one sequence and averages over the
+continuation positions only, so every arm shares an identical conditioning
+prefix. Gate specific to this job: conditioning on a real upstream prompt must
+not flatter a random continuation — `cond_iid_given_real_prompt` = **−1.4059**,
+below the −1.30 bar. Passed.
+
+### The headline result gets *stronger*
+
+| | paired mean | 95% CI | p |
+| --- | --- | --- | --- |
+| real − own dinucleotide shuffle, **unconditional** | +0.1444 | [0.0980, 0.1908] | 3.9×10⁻⁶ |
+| real − own dinucleotide shuffle, **conditional** | **+0.1685** | **[0.1164, 0.2206]** | 2.3×10⁻⁶ |
+
+§1 does not depend on the scoring convention.
+
+### The real-vs-generated gap does *not* survive
+
+| comparison (paired, same prompt) | mean | 95% CI | p |
+| --- | --- | --- | --- |
+| real − generated, all windows | +0.0577 | [−0.0169, +0.1324] | **0.122** |
+| real − generated, zebrafish (in corpus) | +0.1061 | [−0.0192, +0.2314] | 0.088 |
+| real − generated, flying fish (out of corpus) | +0.0039 | [−0.0845, +0.0924] | 0.921 |
+
+Against the unconditional values (+0.0773 p=0.017; zebrafish +0.1374 p=0.005),
+every one of these is weaker. **The mechanism is visible and not mysterious:**
+conditioning helps the generated sequences (+0.0391, CI [0.0078, 0.0704]) about
+twice as much as it helps the real ones (+0.0195, CI [0.0111, 0.0278]) — exactly
+as expected, since the candidates were *sampled* under that prompt. Scoring
+unconditionally therefore penalised the candidates relative to their own
+objective, and part of the §2 significance came from that penalty rather than
+from the sequences.
+
+**What stands and what falls.** Zebrafish still shows the larger gap and flying
+fish essentially none, so the species *ordering* in §2 is unchanged. The claim
+that there is a statistically reliable real-vs-generated gap **falls**. The
+honest summary is: under the fair test, Evo 2's own samples are not reliably
+distinguishable from real held-out sequence by its own likelihood, in either
+species, at n=10 and n=9.
+
+## 8. Motif level: the result survives, and is strongest out of corpus
+
+879 JASPAR2024 CORE vertebrate motifs, both strands, per-motif thresholds at
+FPR 1×10⁻⁴, 5 dinucleotide-preserving shuffles per sequence. Pre-registered
+primary endpoint: total hits, real vs own mean shuffle, paired. Run locally —
+Nebius non-GPU vCPU quota was saturated tenant-wide (see `MANIFEST.md`).
+
+| group | real hits | own-shuffle mean | **excess** | 95% CI | p |
+| --- | --- | --- | --- | --- | --- |
+| real held-out (n=19) | 391.9 | 266.6 | **+125.3** | [61.0, 189.7] | **0.00069** |
+| ↳ flying fish (n=9) | — | — | **+181.4** | [75.2, 287.7] | 0.0043 |
+| ↳ zebrafish (n=10) | — | — | +74.8 | [−5.8, 155.4] | 0.065 |
+| generated (n=38) | 304.9 | 265.4 | +39.5 | [14.1, 64.9] | 0.0033 |
+
+17 of 19 real windows carry more motif hits than their own scrambles, and
+**9 of 9** flying fish windows do.
+
+This is the motif-level version of §1 and it agrees with it. It also lands
+hardest where memorisation cannot explain it: the out-of-corpus species shows
+the larger and the more consistent excess, while zebrafish alone does not reach
+significance. Generated sequence carries a real but much smaller excess (+39.5
+against +125.3), which is the cleanest separation between real and generated
+sequence anywhere in this work — notably clearer than the likelihood test in §7.
+
+**Limits.** A single pooled background was used (per-sequence backgrounds cost
+~3.8 h against ~6 min), so each window against its own shuffles is
+composition-controlled and valid, but comparing *excess magnitudes between
+species* is not confound-free — flying fish GC runs higher and absolute hit rates
+scale with composition. Treat flying-fish-vs-zebrafish excess as descriptive.
+Per-motif results are secondary and Holm-corrected in `motif/motif_hits.json`;
+no individual motif claim is made here. And a PWM hit is a sequence match, **not
+binding** — nothing here shows a transcription factor occupies these sites.
