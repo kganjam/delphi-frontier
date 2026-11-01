@@ -405,9 +405,16 @@ start.)
 
 All three brackets contain λ/2, so **L_p* ≈ λ/2** is consistent with the data. This is a coarse bracket, not a fit.
 
-**Unexplained anomaly.** At γ = 2, L_p = 10 (≈ 1.3 λ) is negative in all 12 seeds while 8 and 12 are positive. This is
-reported as found. Follow-up jobs are running: γ = 2 at L_p = 1, 2, 9, 10, 11 (`claude-tissue-pzone-g2b`), and γ = 1 at
-L_p = 9–14 (`claude-tissue-pzone-g1b`).
+**Anomaly, and a metric problem it exposed.** At γ = 2, L_p = 10 (≈ 1.3 λ) is negative in all 12 seeds while 8 and 12
+are positive. The snapshots show the cause:
+- the proximal part of the fold keeps the pattern that formed in the 48-row starting fold (bands or spots);
+- only the newly grown distal tissue carries proximo-distal stripes;
+- the whole-domain A mixes the two, and at L_p = 10 the proximal half locked into edge-parallel bands.
+
+So the whole-domain A numbers above understate how the newly grown tissue is oriented. The γ = 2 and γ = 1 follow-ups
+were cancelled before running and resubmitted with a regional-metric script (`pzone_regional_gpu.py`). It reports A for
+the distal half, the proximal quarter, and the tissue descended from growth: `claude-tissue-pzone-g2r` and
+`claude-tissue-pzone-g1r`, jobs `aijob-e00gczy89devejh5js` and `aijob-e00zqkxgb98px1a1mf`.
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and

@@ -166,7 +166,7 @@ def cards():
             parameter_unknowns=["Generic kinetics; speeds in pattern units."],
             open_questions=["Measure outgrowth speed / (ray spacing x patterning rate) in a fin at ray-patterning onset."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; 4 seeds per point."])
-    for _nm in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b"):
+    for _nm in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r"):
       _dir = "claude-tissue-" + _nm.replace("_", "-")
       if (A/f"{_dir}/{_nm}.json").exists():
         pz = J(f"{_dir}/{_nm}.json"); sm = pz["summary"]
@@ -177,12 +177,15 @@ def cards():
                    "pzone_g0p5": "Zone-width switch at rate scale gamma=0.5 (longer wavelength): does it scale with the wavelength? (simulated, H100)",
                    "pzone_g2p0": "Zone-width switch at rate scale gamma=2 (shorter wavelength): does it scale with the wavelength? (simulated, H100)",
                    "pzone_g2b": "Follow-up at gamma=2: zone widths 1-2 (switch) and 9-11 (anomalous dip at 10) (simulated, H100)",
-                   "pzone_g1b": "Follow-up at gamma=1: zone widths 9-14, checking for a dip like the one at gamma=2 (simulated, H100)"}[_nm],
+                   "pzone_g1b": "Follow-up at gamma=1: zone widths 9-14, checking for a dip like the one at gamma=2 (simulated, H100)",
+                   "pzone_g2r": "Regional orientation (distal grown tissue vs proximal starting fold) vs proliferation-zone width, gamma=2 (simulated, H100)",
+                   "pzone_g1r": "Regional orientation (distal grown tissue vs proximal starting fold) vs proliferation-zone width, gamma=1 (simulated, H100)"}[_nm],
             scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; 12 seeds per condition",
             model=dict(name="2-D Schnakenberg, finite-volume growth confined to a distal zone of width Lp (apical to uniform); cells split, no rows inserted at steady state",
                        context=f"start length {pz['meta']['Y0']} (>4 wavelengths) -> {pz['meta']['Y1']}, d={pz['meta']['d']}, Lp in {pz['meta']['lps']} (0 = uniform)"),
             equations=[{"label": "Growth with dilution in the zone", "tex": "\\partial_t(hc)=h\\,f(c)+\\text{fluxes},\\quad \\dot h_i=\\tfrac{v}{L_p}h_i\\ (i\\in\\text{zone})", "source": "this harness (finite volume)"}],
-            numerical_results=[f"Lp={v['lp_label']}, v={v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {1.96*v['orientation_A_sem']:.2f} (95% CI), {100*v['frac_seeds_A_gt_0_8']:.0f}% seeds A>0.8" for v in sm.values()],
+            numerical_results=[f"Lp={v['lp_label']}, v={v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {1.96*v['orientation_A_sem']:.2f} (95% CI), {100*v['frac_seeds_A_gt_0_8']:.0f}% seeds A>0.8"
+                               + (f"; distal half {v['A_distal_half_mean']:.2f}, proximal quarter {v['A_proximal_quarter_mean']:.2f}" if 'A_distal_half_mean' in v else "") for v in sm.values()],
             parameter_unknowns=["Real proliferation-zone width and outgrowth speed of fin folds are not measured here."],
             open_questions=["Map Lp and v onto measured distal proliferation in fin folds."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; generic kinetics."])
