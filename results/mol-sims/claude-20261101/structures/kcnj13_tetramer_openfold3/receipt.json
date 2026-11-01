@@ -1,0 +1,209 @@
+{
+ "artifacts": [
+  {
+   "artifact_id": "35c1309c-0645-570e-b1ea-bb0ae2772730",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "57ddc7e7b2e3563b6f125a7282cd1b485bf4cdeb7fad9918646c8c92d837faae",
+   "size_bytes": 1181944
+  },
+  {
+   "artifact_id": "4521d7fd-289c-596d-9a41-093f971440d0",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "8903fc4d54449078c4709046937f7789bfee83bfed94a496b8e06b034b89d1f1",
+   "size_bytes": 1181978
+  }
+ ],
+ "chains": {
+  "A": {
+   "name": "kcnj13",
+   "sequence_sha256": "8029209004a52efea91ae2c899c017ed4795a843615b4b272c7087c67ba396b2",
+   "source": "Q0KIZ7 1-362 full length (Kir7.1)"
+  },
+  "B": {
+   "name": "kcnj13",
+   "sequence_sha256": "8029209004a52efea91ae2c899c017ed4795a843615b4b272c7087c67ba396b2",
+   "source": "Q0KIZ7 1-362 full length (Kir7.1)"
+  },
+  "C": {
+   "name": "kcnj13",
+   "sequence_sha256": "8029209004a52efea91ae2c899c017ed4795a843615b4b272c7087c67ba396b2",
+   "source": "Q0KIZ7 1-362 full length (Kir7.1)"
+  },
+  "D": {
+   "name": "kcnj13",
+   "sequence_sha256": "8029209004a52efea91ae2c899c017ed4795a843615b4b272c7087c67ba396b2",
+   "source": "Q0KIZ7 1-362 full length (Kir7.1)"
+  }
+ },
+ "epistemic_status": "computed structure hypothesis (OpenFold3 preview2 + PDB70 MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:51:39Z",
+ "operation_id": "op-67b229cccc60b8a3",
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T14:42:34Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:51:32Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/of3-kcnj13_tetramer/op-67b229cccc60b8a3/artifacts/4521d7fd-289c-596d-9a41-093f971440d0.json",
+     "path": "artifacts/4521d7fd-289c-596d-9a41-093f971440d0.json",
+     "sha256": "8903fc4d54449078c4709046937f7789bfee83bfed94a496b8e06b034b89d1f1",
+     "size_bytes": 1181978
+    },
+    {
+     "key": "frontier/claude-mol/of3-kcnj13_tetramer/op-67b229cccc60b8a3/artifacts/35c1309c-0645-570e-b1ea-bb0ae2772730.json",
+     "path": "artifacts/35c1309c-0645-570e-b1ea-bb0ae2772730.json",
+     "sha256": "57ddc7e7b2e3563b6f125a7282cd1b485bf4cdeb7fad9918646c8c92d837faae",
+     "size_bytes": 1181944
+    },
+    {
+     "key": "frontier/claude-mol/of3-kcnj13_tetramer/op-67b229cccc60b8a3/result.json",
+     "path": "result.json",
+     "sha256": "1d3695ce67847d28cc6fe6347a78a947bff9bcee9940ce585da0b87aaaabae63",
+     "size_bytes": 1058
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/of3-kcnj13_tetramer/op-67b229cccc60b8a3/manifest.json",
+   "prefix": "frontier/claude-mol/of3-kcnj13_tetramer/op-67b229cccc60b8a3/"
+  },
+  "execution": "async",
+  "model_id": "openfold3",
+  "operation": {
+   "id": "op-67b229cccc60b8a3",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "structures",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "structure"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "4521d7fd-289c-596d-9a41-093f971440d0",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "8903fc4d54449078c4709046937f7789bfee83bfed94a496b8e06b034b89d1f1",
+    "size_bytes": 1181978
+   },
+   "attempt_id": "op-67b229cccc60b8a3-zjp5s",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-67b229cccc60b8a3",
+   "sha256": "8903fc4d54449078c4709046937f7789bfee83bfed94a496b8e06b034b89d1f1",
+   "size_bytes": 1181978,
+   "timings": {
+    "completed_at": "2026-11-01T14:51:11Z",
+    "duration_s": 509.720872,
+    "first_byte_at": "2026-11-01T14:51:10Z",
+    "posted_at": "2026-11-01T14:42:41Z"
+   }
+  },
+  "result": {
+   "artifact": {
+    "artifact_id": "35c1309c-0645-570e-b1ea-bb0ae2772730",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "57ddc7e7b2e3563b6f125a7282cd1b485bf4cdeb7fad9918646c8c92d837faae",
+    "size_bytes": 1181944
+   },
+   "content_type": "application/json",
+   "schema": "fs2-serve.nebius.ai/operation-artifact-result/v1"
+  },
+  "upstream_success": true
+ },
+ "seed": 42,
+ "seed_note": "runtime-fixed seed 42, one sample",
+ "submit_isError": false,
+ "submit_payload": {
+  "delivery": {
+   "export_state": null,
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-of3-kcnj13_tetramer-89cb4b787899c32bbbba",
+  "model_id": "openfold3",
+  "operation": {
+   "id": "op-67b229cccc60b8a3",
+   "status": "RUNNING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T14:41:51Z",
+ "target": "kcnj13_tetramer",
+ "tool": "infer_openfold3_native"
+}

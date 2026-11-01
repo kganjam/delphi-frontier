@@ -1,0 +1,66 @@
+{
+ "id": "openmm-shhN-md",
+ "title": "10 ns explicit-solvent MD of the predicted Shha signalling domain: the fold holds and flexibility tracks predictor confidence",
+ "scales": [
+  "macromolecular"
+ ],
+ "project_scale": "macromolecular",
+ "evidence_kind": "SIMULATED classical MD of a PREDICTED structure; not an observation",
+ "model": {
+  "name": "OpenMM 8.6.1 CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl, seed 20261101",
+  "context": "Start: the Boltz-2 ShhN model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT; CA frames every 10 ps. One replica. Run as a Nebius AI job on one H100; results read from the job log, which the service splits and can return out of order, so the summary and final frame are reassembled and checked (JSON parse, gzip) before use."
+ },
+ "time": {
+  "units": "nanoseconds of simulated time",
+  "note": ""
+ },
+ "video": null,
+ "numerical_checks": [
+  {
+   "name": "CA RMSD from the equilibrated start",
+   "result": "first 1 ns mean 1.33 A, last 2 ns mean 4.19 A, max 4.79 A; last-2-ns drift -0.11 A/ns"
+  },
+  {
+   "name": "per-residue flexibility vs the predictor's own confidence",
+   "result": "Spearman rho -0.63 (p=1.9e-20) between CA RMSF and start-model pLDDT: low-confidence residues move most"
+  },
+  {
+   "name": "radius of gyration, first vs last frame",
+   "result": "16.31 -> 15.71 A (no unfolding)"
+  },
+  {
+   "name": "all saved values finite",
+   "result": "True"
+  },
+  {
+   "name": "throughput",
+   "result": "469 ns/day on one H100, 54508 atoms"
+  }
+ ],
+ "parameter_unknowns": [
+  "Force-field and water-model error are not quantified here.",
+  "Protonation states are PDBFixer defaults at pH 7."
+ ],
+ "open_questions": [
+  "Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site? Do independent replicas agree?"
+ ],
+ "limitations": [
+  "Single replica, 10 ns: far too short to sample conformational change (argon).",
+  "The start is a prediction, so every number inherits that uncertainty."
+ ],
+ "does_not_establish": [
+  "that the predicted fold is correct (MD stability is not accuracy)",
+  "any equilibrium property, free energy or binding quantity from one 10 ns replica",
+  "Zn2+/Ca2+ site behaviour: this is an apo run with no ions bound",
+  "anything about fin size, Shh gradient range or flight"
+ ],
+ "couplings": [],
+ "source_files": {
+  "results/mol-sims/claude-20261101/md_shhN/md_receipt.json": "d32ebae4eb3671d4cd89c4e701750054333f860e2cb0470252a9f18fd470bce7",
+  "results/mol-sims/claude-20261101/md_shhN/md_summary.json": "0037ecaf0b0385fa99094d62b72e19c3663056cff419e3c0a14149afab0bf3eb",
+  "results/mol-sims/claude-20261101/md_shhN/final_frame_protein.pdb": "2383111dc87ca2c9ab203d07ff53884dff3208a67fc8b7fda23301c1c58d0cbd",
+  "results/mol-sims/claude-20261101/md_shhN/job_log.txt": "1eea56ecb4321243daf3f12a57a056e6bfc295d49b8f572b50fc5034814eae3c",
+  "results/mol-sims/claude-20261101/structures/shhN/model_0.cif": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c"
+ },
+ "producer": "claude-mol harness, branch claude/mol-sims-20261101"
+}

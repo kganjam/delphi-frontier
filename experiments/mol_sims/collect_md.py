@@ -22,14 +22,27 @@ lines = log.splitlines()
 
 
 def between(a, b):
+    """Chunks between two markers. The log service splits long lines at 16 KiB and can return the pieces
+    out of order, so the caller reassembles by trying permutations and checking the result parses."""
     i = next(k for k, l in enumerate(lines) if l.strip().endswith(a))
     j = next(k for k, l in enumerate(lines) if l.strip().endswith(b))
-    return [l.split()[-1] if " " in l.strip() else l.strip() for l in lines[i + 1:j]]
+    return [l.strip() for l in lines[i + 1:j]]
 
 
-summ = json.loads("".join(between("@@SUMMARY_BEGIN@@", "@@SUMMARY_END@@")) if False else
-                  next(l[l.index("{"):] for l in lines if '"rmsd_ca_A_every_10ps"' in l))
-pdb = gzip.decompress(base64.b64decode("".join(between("@@FINAL_PDB_GZ_B64_BEGIN@@", "@@FINAL_PDB_GZ_B64_END@@"))))
+def reassemble(chunks, check, max_perm=5040):
+    import itertools
+    if len(chunks) > 8:                    # too many to permute: rely on log order
+        return check("".join(chunks))
+    for perm in itertools.permutations(range(len(chunks))):
+        try:
+            return check("".join(chunks[k] for k in perm))
+        except Exception:
+            continue
+    raise SystemExit("could not reassemble log chunks")
+
+
+summ = reassemble(between("@@SUMMARY_BEGIN@@", "@@SUMMARY_END@@"), json.loads)
+pdb = reassemble(between("@@FINAL_PDB_GZ_B64_BEGIN@@", "@@FINAL_PDB_GZ_B64_END@@"), lambda t: gzip.decompress(base64.b64decode(t)))
 (outdir / "final_frame_protein.pdb").write_bytes(pdb)
 pl = [float(l.split()[-2]) for l in cif.read_text().splitlines() if l.startswith("ATOM") and l.split()[3] == "CA"]
 rmsf = np.array(summ["rmsf_ca_A_after_20pct"])

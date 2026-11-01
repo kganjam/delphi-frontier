@@ -27,13 +27,17 @@
   {
    "name": "pTM (3 samples)",
    "result": "0.45, 0.49, 0.46"
+  },
+  {
+   "name": "OpenFold3 tetramer attempt: chain pLDDT / ipTM / pTM / confidence",
+   "result": "45.8 / 0.24 / 0.29 / 0.29 -- WORSE than the monomer; the tetramer was not resolved"
   }
  ],
  "parameter_unknowns": [
   "Model-internal confidence only."
  ],
  "open_questions": [
-  "Would a membrane-aware model resolve the cytoplasmic domain packing?"
+  "Would a membrane-aware model or a deep MSA resolve the tetramer? The PDB70-only MSA did not."
  ],
  "limitations": [
   "MSA is PDB70-only (structural database, 14-122 sequences), so homologous crystal structures may be templated.",
@@ -42,13 +46,15 @@
  "does_not_establish": [
   "channel function, rectification or pigment-pattern/fin effects",
   "membrane placement",
-  "a correct tetramer unless ipTM is high"
+  "a tetramer: the 4-chain attempt scored far lower than the monomer"
  ],
  "couplings": [],
  "source_files": {
   "results/mol-sims/claude-20261101/structures/kcnj13/receipt.json": "94028420770fa58ebab9ee073bba63d91e784920635bd441d7b0a6e666cfcb46",
   "results/mol-sims/claude-20261101/structures/kcnj13/model_0.cif": "35ac98a6c36f51cae8ef5a46a22eedbc1ca77095d3044536a86da6e974d5e31b",
-  "results/mol-sims/claude-20261101/structures/summary.json": "6771b62e1278994825fa964ab9a9afcbec0fe9bdea8db08789caca82a15280ab"
+  "results/mol-sims/claude-20261101/structures/summary.json": "8ef78b757a67840c0b26215e3de24b928e0d33ae14d68084fc69a81034873b74",
+  "results/mol-sims/claude-20261101/structures/kcnj13_tetramer_openfold3/receipt.json": "c8b408090203760d68d2ec14c8254cbcec861a454c5c9c3d03aaad6dfc1ce163",
+  "results/mol-sims/claude-20261101/structures/kcnj13_tetramer_openfold3/model_0.cif": "1600408924b946fc486e72e3b60056e140b202769697e89ac6169b4c27553951"
  },
  "producer": "claude-mol harness, branch claude/mol-sims-20261101"
 }

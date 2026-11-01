@@ -95,14 +95,36 @@ if "kcnj13" in S:
     srcs = [R / "structures/kcnj13/receipt.json", R / "structures/kcnj13/model_0.cif", R / "structures/summary.json"]
     if "kcnj13_tetramer_openfold3" in S:
         t = S["kcnj13_tetramer_openfold3"]; tc = chain("kcnj13_tetramer_openfold3")["A"]
-        checks.append({"name": "OpenFold3 tetramer: chain pLDDT / ipTM / pTM", "result": f"{tc['mean_plddt']:.1f} / {t['iptm_scores'][0]:.2f} / {t['ptm_scores'][0]:.2f}"})
+        checks.append({"name": "OpenFold3 tetramer attempt: chain pLDDT / ipTM / pTM / confidence", "result": f"{tc['mean_plddt']:.1f} / {t['iptm_scores'][0]:.2f} / {t['ptm_scores'][0]:.2f} / {t['confidence_scores'][0]:.2f} -- WORSE than the monomer; the tetramer was not resolved"})
         srcs += [R / "structures/kcnj13_tetramer_openfold3/receipt.json", R / "structures/kcnj13_tetramer_openfold3/model_0.cif"]
     write(base("boltz2-kcnj13", "Predicted zebrafish Kcnj13 (Kir7.1) with an MSA: revisits the low-confidence OpenFold2 model",
                "macromolecular", SCOPE, "Boltz-2 monomer (3 samples) and OpenFold3 tetramer, PDB70 MSA",
                "Full-length Kcnj13 (Q0KIZ7, 362 aa), the same sequence as the studio's openfold2-kcnj13 card.",
-               srcs, ["channel function, rectification or pigment-pattern/fin effects", "membrane placement", "a correct tetramer unless ipTM is high"],
-               checks, ["Model-internal confidence only."], ["Would a membrane-aware model resolve the cytoplasmic domain packing?"],
+               srcs, ["channel function, rectification or pigment-pattern/fin effects", "membrane placement", "a tetramer: the 4-chain attempt scored far lower than the monomer"],
+               checks, ["Model-internal confidence only."], ["Would a membrane-aware model or a deep MSA resolve the tetramer? The PDB70-only MSA did not."],
                [lim_msa, "Monomer prediction of an obligate tetramer."]))
+
+# --- macromolecular: MD of the predicted ShhN model ---
+mdp = R / "md_shhN/md_receipt.json"
+if mdp.exists():
+    a = json.loads(mdp.read_text())["analysis"]
+    checks = [{"name": "CA RMSD from the equilibrated start", "result": f"first 1 ns mean {a['rmsd_ca_A']['first_ns_mean']:.2f} A, last 2 ns mean {a['rmsd_ca_A']['last_2ns_mean']:.2f} A, max {a['rmsd_ca_A']['max']:.2f} A; last-2-ns drift {a['rmsd_ca_A']['last_2ns_slope_A_per_ns']:+.2f} A/ns"},
+              {"name": "per-residue flexibility vs the predictor's own confidence", "result": f"Spearman rho {a['rmsf_vs_start_plddt_spearman']['rho']:.2f} (p={a['rmsf_vs_start_plddt_spearman']['p']:.1e}) between CA RMSF and start-model pLDDT: low-confidence residues move most"},
+              {"name": "radius of gyration, first vs last frame", "result": f"{a['rg_ca_A_first_last'][0]:.2f} -> {a['rg_ca_A_first_last'][1]:.2f} A (no unfolding)"},
+              {"name": "all saved values finite", "result": str(a["all_finite"])},
+              {"name": "throughput", "result": f"{a['ns_per_day']:.0f} ns/day on one H100, {a['n_atoms']} atoms"}]
+    write(base("openmm-shhN-md", "10 ns explicit-solvent MD of the predicted Shha signalling domain: the fold holds and flexibility tracks predictor confidence",
+               "macromolecular", "SIMULATED classical MD of a PREDICTED structure; not an observation",
+               f"OpenMM 8.6.1 CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl, seed {a['seed']}",
+               "Start: the Boltz-2 ShhN model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT; CA frames every 10 ps. One replica. Run as a Nebius AI job on one H100; results read from the job log, which the service splits and can return out of order, so the summary and final frame are reassembled and checked (JSON parse, gzip) before use.",
+               [R / "md_shhN/md_receipt.json", R / "md_shhN/md_summary.json", R / "md_shhN/final_frame_protein.pdb", R / "md_shhN/job_log.txt", R / "structures/shhN/model_0.cif"],
+               ["that the predicted fold is correct (MD stability is not accuracy)", "any equilibrium property, free energy or binding quantity from one 10 ns replica",
+                "Zn2+/Ca2+ site behaviour: this is an apo run with no ions bound", "anything about fin size, Shh gradient range or flight"],
+               checks,
+               ["Force-field and water-model error are not quantified here.", "Protonation states are PDBFixer defaults at pH 7."],
+               ["Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site? Do independent replicas agree?"],
+               ["Single replica, 10 ns: far too short to sample conformational change (argon).", "The start is a prediction, so every number inherits that uncertainty."],
+               time_units="nanoseconds of simulated time"))
 
 # --- subcellular: Hedgehog pathway ODE ---
 s2b = json.loads((R / "s2b_hedgehog_perturbations_at_ec.json").read_text())
