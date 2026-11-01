@@ -4,11 +4,34 @@
   "context": "3D point-body Monte Carlo (20,000 draws) over the priors listed in the manifest. Each prior is tagged abstract_verified (PubMed abstract read this session), recalled_not_reread or assumption. It feeds the project's existing organism glide model with a launch-speed distribution in place of its fixed V0 = 12 m/s.",
   "time_units": "seconds of escape, burst, taxi and glide (physical time of the point-body model)",
   "equations": [
-   {"label": "Looming trigger (angular size threshold)", "tex": "2\\arctan\\frac{D_p}{2r(t)}=\\theta_{thr},\\quad t_{go}=t_{thr}+\\tau_M", "source": "Preuss et al. 2006 (threshold on a scaled angular size; values assumed)"},
-   {"label": "Burst speed (EBT thrust, power cap, submerged drag)", "tex": "(1+a)m\\dot U=\\min\\!\\left(\\tfrac{m_a\\omega^2H^2}{4}\\big(1-\\tfrac{U^2}{c^2}\\big),\\,\\tfrac{\\eta P_{musc}m_{musc}}{U}\\right)-\\tfrac12\\rho U^2S_wC_f(1+k)k_s", "source": "Lighthill 1971 (recalled); muscle power cap is an assumption"},
-   {"label": "Taxi", "tex": "m\\dot V=\\min(T_{lobe},\\eta P/V)-D_{air}-0.24\\tfrac12\\rho V^2t^2-f_{wet}D_{sub}", "source": "quasi-steady feathering foil; Hoerner spray drag (recalled)"}
+   {
+    "label": "Looming trigger (angular size threshold)",
+    "tex": "2\\arctan\\frac{D_p}{2r(t)}=\\theta_{thr},\\quad t_{go}=t_{thr}+\\tau_M",
+    "source": "Preuss et al. 2006 (threshold on a scaled angular size; values assumed)"
+   },
+   {
+    "label": "Burst speed (EBT thrust, power cap, submerged drag)",
+    "tex": "(1+a)m\\dot U=\\min\\!\\left(\\tfrac{m_a\\omega^2H^2}{4}\\big(1-\\tfrac{U^2}{c^2}\\big),\\,\\tfrac{\\eta P_{musc}m_{musc}}{U}\\right)-\\tfrac12\\rho U^2S_wC_f(1+k)k_s",
+    "source": "Lighthill 1971 (recalled); muscle power cap is an assumption"
+   },
+   {
+    "label": "Taxi",
+    "tex": "m\\dot V=\\min(T_{lobe},\\eta P/V)-D_{air}-0.24\\tfrac12\\rho V^2t^2-f_{wet}D_{sub}",
+    "source": "quasi-steady feathering foil; Hoerner spray drag (recalled)"
+   }
   ],
-  "sources": ["preuss2006", "eaton2001", "domenici_blake1997", "domenici2011", "burgess_granato2007", "park_choi2010", "lighthill1971", "fish1990", "edgerton_breder1941", "wardle1975"],
+  "sources": [
+   "preuss2006",
+   "eaton2001",
+   "domenici_blake1997",
+   "domenici2011",
+   "burgess_granato2007",
+   "park_choi2010",
+   "lighthill1971",
+   "fish1990",
+   "edgerton_breder1941",
+   "wardle1975"
+  ],
   "parameter_unknowns": [
    "Looming threshold, predator speed, size and start distance, and starting depth are assumptions. The capture fraction depends mostly on them.",
    "Muscle mechanical power (50-250 W/kg muscle), the 50% muscle fraction and the 0.75 propulsive efficiency are assumptions. Emergence speed scales with them.",
@@ -27,19 +50,51 @@
    "Escape kinematics come from goldfish, zebrafish and multi-species reviews; none is fitted to Exocoetidae.",
    "Release at h0 = 0.1 m with gamma0 = 0 is an assumed continuity condition. The h0 = 1 m numbers are only for comparison with the glide-fixed-launch card."
   ],
-  "couplings": [{"to": "glide-fixed-launch", "kind": "launch-speed distribution into engineering/simulation/glide.integrate (same organism polar)"}, {"to": "neuro-m2-caudal-cpg", "kind": "thrust, drag and muscle functions imported"}]
+  "couplings": [
+   {
+    "to": "glide-fixed-launch",
+    "kind": "launch-speed distribution into engineering/simulation/glide.integrate (same organism polar)"
+   },
+   {
+    "to": "neuro-m2-caudal-cpg",
+    "kind": "thrust, drag and muscle functions imported"
+   }
+  ]
  },
  "m2-caudal-cpg": {
   "model_name": "behavior-cpg phase/amplitude chain (imported unchanged) + detuning + muscle low-pass + Lighthill EBT thrust + quasi-steady taxi lobe",
   "context": "Extends behavior-cpg and does not duplicate it: engineering.behavior.model.cpg() and rk4() are imported. Added here: the phase-locking stability of that chain under a descending-drive frequency gradient; the body wavelength set by the chain's phase lag; thrust, drag, power and speed equilibria; and a re-run of behavior-cpg's own servo across its declared 15-45 Hz band.",
   "time_units": "seconds (CPG integration, dt 0.1 ms); speed equilibria are steady states",
   "equations": [
-   {"label": "Reused oscillator chain with added detuning", "tex": "\\dot\\theta_i=2\\pi(\\nu+i\\,\\delta\\nu)+a_{i-1}c\\sin(\\theta_{i-1}-\\theta_i-\\varphi)", "source": "Ijspeert et al. 2007 form, as implemented in engineering/behavior/model.py"},
-   {"label": "Locking and stability of the unidirectional chain", "tex": "|(N-1)\\,2\\pi\\delta\\nu|\\le c,\\quad \\lambda_{slow}=-\\sqrt{c^2-((N-1)2\\pi\\delta\\nu)^2}", "source": "derived here; checked against numerical integration and a numerical Jacobian"},
-   {"label": "Elongated-body thrust", "tex": "\\bar T=\\tfrac{m_a\\omega^2H^2}{4}\\left(1-\\tfrac{U^2}{c^2}\\right),\\;m_a=\\tfrac{\\pi}{4}\\rho s^2,\\;c=f\\lambda", "source": "Lighthill 1971 (recalled), checked by phase averaging"},
-   {"label": "Muscle low-pass (assumed form)", "tex": "H(f)=H_0/\\sqrt{1+(f/f_m)^2}", "source": "assumption; Wardle 1975 motivates the twitch limit"}
+   {
+    "label": "Reused oscillator chain with added detuning",
+    "tex": "\\dot\\theta_i=2\\pi(\\nu+i\\,\\delta\\nu)+a_{i-1}c\\sin(\\theta_{i-1}-\\theta_i-\\varphi)",
+    "source": "Ijspeert et al. 2007 form, as implemented in engineering/behavior/model.py"
+   },
+   {
+    "label": "Locking and stability of the unidirectional chain",
+    "tex": "|(N-1)\\,2\\pi\\delta\\nu|\\le c,\\quad \\lambda_{slow}=-\\sqrt{c^2-((N-1)2\\pi\\delta\\nu)^2}",
+    "source": "derived here; checked against numerical integration and a numerical Jacobian"
+   },
+   {
+    "label": "Elongated-body thrust",
+    "tex": "\\bar T=\\tfrac{m_a\\omega^2H^2}{4}\\left(1-\\tfrac{U^2}{c^2}\\right),\\;m_a=\\tfrac{\\pi}{4}\\rho s^2,\\;c=f\\lambda",
+    "source": "Lighthill 1971 (recalled), checked by phase averaging"
+   },
+   {
+    "label": "Muscle low-pass (assumed form)",
+    "tex": "H(f)=H_0/\\sqrt{1+(f/f_m)^2}",
+    "source": "assumption; Wardle 1975 motivates the twitch limit"
+   }
   ],
-  "sources": ["ijspeert2007", "lighthill1971", "taylor2003", "wardle1975", "edgerton_breder1941", "fish1990"],
+  "sources": [
+   "ijspeert2007",
+   "lighthill1971",
+   "taylor2003",
+   "wardle1975",
+   "edgerton_breder1941",
+   "fish1990"
+  ],
   "parameter_unknowns": [
    "Tail amplitude, caudal span, wavelength, drag augmentation and wetted area are assumptions and are swept.",
    "The muscle corner frequency f_m is a swept assumption; no Exocoetidae muscle data was used.",
@@ -57,18 +112,44 @@
    "Agreement with Bainbridge's empirical speed-frequency relation is a recalled comparison, not a fit or a validation for flying fish.",
    "behavior-cpg's servo is a designed actuator; its tracking results say nothing about fish muscle."
   ],
-  "couplings": [{"to": "behavior-cpg", "kind": "imports cpg() and rk4() unchanged"}, {"to": "neuro-m1-fast-start", "kind": "provides thrust/drag/muscle functions"}]
+  "couplings": [
+   {
+    "to": "behavior-cpg",
+    "kind": "imports cpg() and rk4() unchanged"
+   },
+   {
+    "to": "neuro-m1-fast-start",
+    "kind": "provides thrust/drag/muscle functions"
+   }
+  ]
  },
  "m3-glide-stabilizer": {
   "model_name": "Linear small-perturbation glider (longitudinal [u, alpha, q, theta]; lateral [beta, p, r, phi]) with delayed vestibular/visual feedback to pelvic and pectoral fins",
   "context": "Plant from ff-organ's r3-daane printed glider geometry and trim rule (CG = NP - 8% MAC), plus ff-organ's aeroelastic lift-slope factor. Stability is computed exactly for the delayed linear loop, with one delay chain per sensed channel. Failures come from a Monte Carlo with fin saturation, gusts and sensor noise. Otolith signals are derived from the plant's specific force, so in flight the otolith 'bank' signal reflects sideslip and is not the bank angle.",
   "time_units": "seconds of glide (2 ms discrete step)",
   "equations": [
-   {"label": "Delayed output feedback", "tex": "\\delta(t)=\\mathrm{sat}\\Big(-\\textstyle\\sum_j K_j\\,y_j(t-\\tau_j)\\Big)\\ \\text{via first-order fin lag}", "source": "design choice; exact discrete delay chains"},
-   {"label": "Otolith signals in flight", "tex": "\\hat\\theta_{oto}=\\theta+\\dot u/g,\\quad \\hat\\phi_{oto}=-Y/(mg)=-Y_\\beta\\beta/(mg)", "source": "gravito-inertial specific force (standard mechanics)"},
-   {"label": "Static margin and neutral point", "tex": "x_{np}=\\frac{a_wx_w+\\eta\\frac{S_t}{S_w}a_t(1-\\epsilon_\\alpha)x_t}{C_{L\\alpha}}-\\frac{\\Delta C_{m\\alpha,body}c}{C_{L\\alpha}}", "source": "textbook flight mechanics (recalled); repo hand-NP method family"}
+   {
+    "label": "Delayed output feedback",
+    "tex": "\\delta(t)=\\mathrm{sat}\\Big(-\\textstyle\\sum_j K_j\\,y_j(t-\\tau_j)\\Big)\\ \\text{via first-order fin lag}",
+    "source": "design choice; exact discrete delay chains"
+   },
+   {
+    "label": "Otolith signals in flight",
+    "tex": "\\hat\\theta_{oto}=\\theta+\\dot u/g,\\quad \\hat\\phi_{oto}=-Y/(mg)=-Y_\\beta\\beta/(mg)",
+    "source": "gravito-inertial specific force (standard mechanics)"
+   },
+   {
+    "label": "Static margin and neutral point",
+    "tex": "x_{np}=\\frac{a_wx_w+\\eta\\frac{S_t}{S_w}a_t(1-\\epsilon_\\alpha)x_t}{C_{L\\alpha}}-\\frac{\\Delta C_{m\\alpha,body}c}{C_{L\\alpha}}",
+    "source": "textbook flight mechanics (recalled); repo hand-NP method family"
+   }
   ],
-  "sources": ["park_choi2010", "saro_cortes2022", "deng2019", "ehrlich_schoppik2017"],
+  "sources": [
+   "park_choi2010",
+   "saro_cortes2022",
+   "deng2019",
+   "ehrlich_schoppik2017"
+  ],
   "parameter_unknowns": [
    "The caudal fin as vertical surface (area fraction 0.05-0.30 of pectoral area, arm 0.06 m) is assumed; the print geometry has no separate caudal surface in flight_model.json.",
    "Fin actuator lag (20 ms), authority (+-15 deg), controller bandwidths and sensor noise are assumptions.",
@@ -86,6 +167,50 @@
    "The 50 g case assumes the same geometry, CG and radii of gyration as the 25 g print.",
    "Vestibular and visual systems are reduced to delays plus white noise; canal high-pass dynamics and visual processing are not modelled."
   ],
-  "couplings": [{"to": "aeroelastic-coupling", "kind": "lift-slope factor 1-0.0054"}, {"to": "claude-organ r2-glide-sweep", "kind": "trim rule SM 8% MAC and r3-daane geometry"}]
+  "couplings": [
+   {
+    "to": "aeroelastic-coupling",
+    "kind": "lift-slope factor 1-0.0054"
+   },
+   {
+    "to": "claude-organ r2-glide-sweep",
+    "kind": "trim rule SM 8% MAC and r3-daane geometry"
+   }
+  ]
+ },
+ "j1-m1-sobol": {
+  "model_name": "Saltelli/Sobol global sensitivity of M1 (32 inputs: 26 priors + 6 internal draws; first-order and total indices with bootstrap intervals)",
+  "context": "It answers which unknowns would most change M1's predictions if measured. It ran as Nebius CPU job claude-neuro-j1-m1-sobol-a1: 139,264 model runs in each of two scenarios, one with the predator and one kinematic-only with the predator disabled.",
+  "time_units": "none: variance decomposition over the prior box",
+  "equations": [
+   {
+    "label": "Total index (Jansen)",
+    "tex": "S_{T,i}=\\frac{\\tfrac{1}{2N}\\sum_j\\big(f(A)_j-f(A_B^{(i)})_j\\big)^2}{V(Y)}",
+    "source": "Jansen 1999 form; Saltelli 2010 first-order form"
+   }
+  ],
+  "sources": [
+   "preuss2006",
+   "domenici2011"
+  ],
+  "parameter_unknowns": [
+   "The indices are relative to the uniform prior boxes in fast_start.PRIORS; narrower or wider boxes change the ranking."
+  ],
+  "open_questions": [
+   "Can axial white-muscle power and taxi wetted drag be measured in Exocoetidae? Together they control take-off in this model."
+  ],
+  "perturbation_sweep": "Every input varies jointly over its prior box (scrambled Sobol design, N 4096, d 32). The inert inputs in the kinematic scenario serve as a built-in null.",
+  "experiment_design": "Measure first what has the largest total index. For take-off: muscle power (in-situ work loops at habitat temperature), taxi wetted fraction and taxi duration (high-speed video of the hull's water contact). For emergence speed: muscle power and the swimming drag factor (PIV, or deceleration during glides between beats). For capture: predator approach speed (field video). Mauthner latency explains almost none of the variance within 5-20 ms.",
+  "does_not_establish": [
+   "SIMULATED: these indices rank the model's own priors; they are not measurements and do not show which biology matters in real fish.",
+   "A model-form error, such as the EBT thrust law or the taxi lobe model, does not appear in these indices.",
+   "Take-off is rare (3.4%) and interaction-dominated (sum of S1 = 0.25), so the first-order indices understate the combined effects."
+  ],
+  "couplings": [
+   {
+    "to": "neuro-m1-fast-start",
+    "kind": "global sensitivity of that model (same code; default path reproduced within 1e-9 on the cloud CPU)"
+   }
+  ]
  }
 }

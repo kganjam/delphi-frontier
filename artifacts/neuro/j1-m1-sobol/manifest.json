@@ -1,0 +1,527 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "j1-m1-sobol",
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Global (Sobol) sensitivity of the escape-to-launch model: which unknowns to measure first",
+ "command": "python3 -V; OMP_NUM_THREADS=1 python3 -m engineering.neuro.sobol_m1 --out /work/out --N 4096 --procs 4 --seed 20261101 --reference /work/repo/ref.json",
+ "python_module": "engineering.neuro.sobol_m1",
+ "seed": 20261101,
+ "nebius_job": {
+  "name": "claude-neuro-j1-m1-sobol-a1",
+  "id": "aijob-e00j2c1psat7zgsbg1",
+  "spec": {
+   "name": "claude-neuro-j1-m1-sobol-a1",
+   "platform": "cpu-d3",
+   "preset": "4vcpu-16gb",
+   "timeout": "2h",
+   "disk": "20Gi",
+   "image": "python:3.13-slim",
+   "question": "Which of M1's 26 priors (plus 6 internal draws) drive capture, emergence speed and take-off? Ranks measurements by variance share.",
+   "command": "python3 -V; OMP_NUM_THREADS=1 python3 -m engineering.neuro.sobol_m1 --out /work/out --N 4096 --procs 4 --seed 20261101 --reference /work/repo/ref.json"
+  }
+ },
+ "injected_sources": {
+  "engineering/__init__.py": {
+   "source": "engineering/__init__.py",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "engineering/behavior/__init__.py": {
+   "source": "engineering/behavior/__init__.py",
+   "sha256": "ea894bb7612769cd5478ea155f7641f812ab8dee59000bf8cd2e44ed95037ce6",
+   "bytes": 134
+  },
+  "engineering/behavior/model.py": {
+   "source": "engineering/behavior/model.py",
+   "sha256": "25729db211570bf91fc0d676c527f300e104cb45b53fc9b39a73560d00e68dce",
+   "bytes": 8552
+  },
+  "engineering/neuro/__init__.py": {
+   "source": "engineering/neuro/__init__.py",
+   "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+   "bytes": 487
+  },
+  "engineering/neuro/caudal_cpg.py": {
+   "source": "engineering/neuro/caudal_cpg.py",
+   "sha256": "02ce0ab2410d6f336236d27c0379ee2ae5aa31d9b486094ef0e8c1af943a5f46",
+   "bytes": 23603
+  },
+  "engineering/neuro/common.py": {
+   "source": "engineering/neuro/common.py",
+   "sha256": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+   "bytes": 2684
+  },
+  "engineering/neuro/fast_start.py": {
+   "source": "engineering/neuro/fast_start.py",
+   "sha256": "48ddda84e50d582ffd128ec8288a2e3de5076085b673be0518bb556af954d433",
+   "bytes": 22383
+  },
+  "engineering/neuro/sobol_m1.py": {
+   "source": "engineering/neuro/sobol_m1.py",
+   "sha256": "d312034e0afd11b6f96802e7f6cf398e1cf6b257ae949ce8b4712c3391cc6e1f",
+   "bytes": 8465
+  },
+  "engineering/simulation/__init__.py": {
+   "source": "engineering/simulation/__init__.py",
+   "sha256": "d7ff2108d1c58d5da04f5972a4f64e49f3a7d8758c6a197c36743420f3574ec7",
+   "bytes": 381
+  },
+  "engineering/simulation/controlled.py": {
+   "source": "engineering/simulation/controlled.py",
+   "sha256": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+   "bytes": 8447
+  },
+  "engineering/simulation/evaluate.py": {
+   "source": "engineering/simulation/evaluate.py",
+   "sha256": "0a793951b8812a9093a637c61d79f3f4fea5e93f07a92825e46601c8e84357fc",
+   "bytes": 5180
+  },
+  "engineering/simulation/glide.py": {
+   "source": "engineering/simulation/glide.py",
+   "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "bytes": 4371
+  },
+  "engineering/simulation/schema.py": {
+   "source": "engineering/simulation/schema.py",
+   "sha256": "94b4f003be514ac5055ed184b0e2695a68bf0de8689e387238e9583c8e62b944",
+   "bytes": 4760
+  },
+  "ref.json": {
+   "source": "artifacts/neuro/jobs/inputs/m1_reference_head400.json",
+   "sha256": "f0f4c275fe8eeb28f089761dd221fd0cb0133ffc1b00c507dd3b5a07c036be93",
+   "bytes": 11254
+  }
+ },
+ "bundle_sha256": "204297760e8257e1f1792fb0ad5165ce23d0829c8a892cc07d3a837404420487",
+ "git_head_at_submit": "120d4d4",
+ "env": {
+  "python": "3.13.18",
+  "numpy": "2.4.4",
+  "cpu_count": 4,
+  "procs": 4,
+  "scipy": "1.17.1"
+ },
+ "elapsed_s": 336.58178448677063,
+ "checks": [
+  {
+   "name": "control: Ishigami S1/ST within 0.03 of analytic (N 8192)",
+   "pass": true,
+   "detail": {
+    "S1": [
+     0.3137014853926838,
+     0.44252597719852155,
+     -0.00037630075656537387
+    ],
+    "exact_S1": [
+     0.31390519114781146,
+     0.4424111447900409,
+     0.0
+    ],
+    "ST": [
+     0.557706471386605,
+     0.44263309669684225,
+     0.24379148258943523
+    ],
+    "exact_ST": [
+     0.5575888552099592,
+     0.4424111447900409,
+     0.2436836640621477
+    ]
+   }
+  },
+  {
+   "name": "control: committed M1 run (seed 20261101) reproduced on this machine, first 400 samples (bitwise / within 1e-9)",
+   "pass": true,
+   "detail": {
+    "bitwise": false,
+    "within_1e-9": true
+   }
+  },
+  {
+   "name": "control: inert inputs in the kinematic scenario (predator, looming, response) have |ST| < 0.01",
+   "pass": true,
+   "detail": 6.280981022554131e-32
+  }
+ ],
+ "all_checks_pass": true,
+ "ran": {
+  "utc": "2026-11-01T16:02:39Z"
+ },
+ "summary": {
+  "predator:caught": {
+   "mean": 0.7625732421875,
+   "top_ST": [
+    [
+     "u_pred_ms",
+     0.8313,
+     [
+      0.7937,
+      0.8682
+     ],
+     0.4652
+    ],
+    [
+     "_u_resp",
+     0.2744,
+     [
+      0.2506,
+      0.3005
+     ],
+     0.0836
+    ],
+    [
+     "theta_thr_deg",
+     0.2002,
+     [
+      0.1791,
+      0.2201
+     ],
+     0.0337
+    ],
+    [
+     "P_musc_W_per_kg",
+     0.1955,
+     [
+      0.1737,
+      0.2156
+     ],
+     0.0337
+    ],
+    [
+     "k_swim",
+     0.1416,
+     [
+      0.1242,
+      0.1582
+     ],
+     -0.0108
+    ],
+    [
+     "D_pred_m",
+     0.1348,
+     [
+      0.1158,
+      0.1514
+     ],
+     0.0189
+    ]
+   ],
+   "nonfinite_rows_set_to_0": 0
+  },
+  "kinematic:U_emerge": {
+   "mean": 3.2568767064151523,
+   "top_ST": [
+    [
+     "P_musc_W_per_kg",
+     0.5903,
+     [
+      0.5629,
+      0.6152
+     ],
+     0.5263
+    ],
+    [
+     "k_swim",
+     0.3296,
+     [
+      0.3156,
+      0.3446
+     ],
+     0.3124
+    ],
+    [
+     "f_burst_Hz",
+     0.1354,
+     [
+      0.1218,
+      0.1492
+     ],
+     0.0609
+    ],
+    [
+     "lam_over_L",
+     0.0215,
+     [
+      0.0189,
+      0.0245
+     ],
+     -0.0078
+    ],
+    [
+     "H_over_L",
+     0.0185,
+     [
+      0.0164,
+      0.0209
+     ],
+     0.0074
+    ],
+    [
+     "f_m_Hz",
+     0.0101,
+     [
+      0.0083,
+      0.012
+     ],
+     0.0028
+    ]
+   ],
+   "nonfinite_rows_set_to_0": 0
+  },
+  "kinematic:t_emerge_after_command": {
+   "mean": 0.7763953857328743,
+   "top_ST": [
+    [
+     "d0_m",
+     0.7207,
+     [
+      0.6869,
+      0.7623
+     ],
+     0.6618
+    ],
+    [
+     "gamma_star_deg",
+     0.1946,
+     [
+      0.1837,
+      0.2061
+     ],
+     0.1597
+    ],
+    [
+     "P_musc_W_per_kg",
+     0.0931,
+     [
+      0.087,
+      0.0994
+     ],
+     0.0693
+    ],
+    [
+     "k_swim",
+     0.0387,
+     [
+      0.0362,
+      0.0415
+     ],
+     0.0267
+    ],
+    [
+     "f_burst_Hz",
+     0.0157,
+     [
+      0.0133,
+      0.0183
+     ],
+     0.0066
+    ],
+    [
+     "H_over_L",
+     0.0033,
+     [
+      0.0026,
+      0.0041
+     ],
+     0.002
+    ]
+   ],
+   "nonfinite_rows_set_to_0": 0
+  },
+  "kinematic:V_taxi_end": {
+   "mean": 8.28061632123436,
+   "top_ST": [
+    [
+     "P_musc_W_per_kg",
+     0.5689,
+     [
+      0.5454,
+      0.5945
+     ],
+     0.55
+    ],
+    [
+     "T_taxi_max_s",
+     0.3504,
+     [
+      0.3328,
+      0.3657
+     ],
+     0.3295
+    ],
+    [
+     "wet_frac",
+     0.0698,
+     [
+      0.0663,
+      0.0737
+     ],
+     0.0543
+    ],
+    [
+     "f_m_Hz",
+     0.0316,
+     [
+      0.0269,
+      0.0366
+     ],
+     0.0191
+    ],
+    [
+     "H_over_L",
+     0.0257,
+     [
+      0.0212,
+      0.0301
+     ],
+     0.0081
+    ],
+    [
+     "alpha_feather_deg",
+     0.011,
+     [
+      0.0093,
+      0.0127
+     ],
+     -0.004
+    ]
+   ],
+   "nonfinite_rows_set_to_0": 0
+  },
+  "kinematic:takeoff": {
+   "mean": 0.0340576171875,
+   "top_ST": [
+    [
+     "P_musc_W_per_kg",
+     0.8126,
+     [
+      0.7068,
+      0.9232
+     ],
+     0.0891
+    ],
+    [
+     "wet_frac",
+     0.6716,
+     [
+      0.5784,
+      0.7718
+     ],
+     0.0594
+    ],
+    [
+     "T_taxi_max_s",
+     0.6716,
+     [
+      0.5728,
+      0.771
+     ],
+     0.0816
+    ],
+    [
+     "H_over_L",
+     0.1076,
+     [
+      0.0681,
+      0.1514
+     ],
+     0.0074
+    ],
+    [
+     "f_m_Hz",
+     0.0779,
+     [
+      0.0472,
+      0.1099
+     ],
+     0.0148
+    ],
+    [
+     "k_swim",
+     0.0482,
+     [
+      0.0262,
+      0.0774
+     ],
+     0.0
+    ]
+   ],
+   "nonfinite_rows_set_to_0": 0
+  },
+  "kinematic:gamma_emerge": {
+   "mean": 32.49999998835847,
+   "top_ST": [
+    [
+     "gamma_star_deg",
+     1.0,
+     [
+      0.969,
+      1.0298
+     ],
+     1.0
+    ],
+    [
+     "p_resp",
+     0.0,
+     [
+      0.0,
+      0.0
+     ],
+     0.0
+    ],
+    [
+     "theta_thr_deg",
+     0.0,
+     [
+      0.0,
+      0.0
+     ],
+     0.0
+    ],
+    [
+     "u_pred_ms",
+     0.0,
+     [
+      0.0,
+      0.0
+     ],
+     0.0
+    ],
+    [
+     "D_pred_m",
+     0.0,
+     [
+      0.0,
+      0.0
+     ],
+     0.0
+    ],
+    [
+     "r0_m",
+     0.0,
+     [
+      0.0,
+      0.0
+     ],
+     0.0
+    ]
+   ],
+   "nonfinite_rows_set_to_0": 0
+  },
+  "kinematic_emerged_fraction": 1.0,
+  "runs_per_scenario": 139264,
+  "N": 4096,
+  "d": 32
+ },
+ "outputs": {
+  "figure.png": "0a2eba373ae8848afae174ca7ccaa45e6280b9499bf713d82048ec79e679341c",
+  "job_stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "job_stdout.log": "8a7254c7ccab3b7d7d274ce2fc91063a1035d9fc9b0af4c5732488ab8a93acbc",
+  "sobol_m1.json": "67460687de8bdb84db99110e15ca8193823c9d77a6386518debdc8105bb8e08c"
+ }
+}

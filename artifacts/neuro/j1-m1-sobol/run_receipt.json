@@ -1,0 +1,12 @@
+{
+ "command": "python3 -V; OMP_NUM_THREADS=1 python3 -m engineering.neuro.sobol_m1 --out /work/out --N 4096 --procs 4 --seed 20261101 --reference /work/repo/ref.json",
+ "python_module": "engineering.neuro.sobol_m1",
+ "exit_code": 0,
+ "where": "Nebius AI job claude-neuro-j1-m1-sobol-a1 (aijob-e00j2c1psat7zgsbg1)",
+ "platform": "cpu-d3 4vcpu-16gb",
+ "archive_sha256": "8876ec1eb667087e021378a76505d5404e64b00db102fe1d256a67c83d88afb4",
+ "collected_utc": "2026-11-01T16:02:39Z",
+ "submitted_utc": "2026-11-01T15:42:08Z",
+ "manifest_sha256": "8c1365d3615fa7b31bb998c20afe6722511a3c71ef17fdc6d347d37876df5a55",
+ "collection_receipt": "artifacts/neuro/jobs/claude-neuro-j1-m1-sobol-a1/collected/collection_receipt.json"
+}

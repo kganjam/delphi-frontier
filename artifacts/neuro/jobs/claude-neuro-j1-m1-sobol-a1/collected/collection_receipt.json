@@ -1,0 +1,116 @@
+{
+ "name": "claude-neuro-j1-m1-sobol-a1",
+ "job_id": "aijob-e00j2c1psat7zgsbg1",
+ "collected_utc": "2026-11-01T16:02:39Z",
+ "archive_sha256": "8876ec1eb667087e021378a76505d5404e64b00db102fe1d256a67c83d88afb4",
+ "archive_bytes": 7840,
+ "container_rc": 0,
+ "rc_line": "NEURO-RC 0 2026-11-01T15:50:57Z",
+ "chunks": 4,
+ "files": {
+  "out/sobol_m1.json": {
+   "sha256": "67460687de8bdb84db99110e15ca8193823c9d77a6386518debdc8105bb8e08c",
+   "bytes": 27274
+  },
+  "out/stderr.log": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "out/stdout.log": {
+   "sha256": "8a7254c7ccab3b7d7d274ce2fc91063a1035d9fc9b0af4c5732488ab8a93acbc",
+   "bytes": 358
+  }
+ },
+ "submission": {
+  "name": "claude-neuro-j1-m1-sobol-a1",
+  "submitted_utc": "2026-11-01T15:42:08Z",
+  "spec": {
+   "name": "claude-neuro-j1-m1-sobol-a1",
+   "platform": "cpu-d3",
+   "preset": "4vcpu-16gb",
+   "timeout": "2h",
+   "disk": "20Gi",
+   "image": "python:3.13-slim",
+   "question": "Which of M1's 26 priors (plus 6 internal draws) drive capture, emergence speed and take-off? Ranks measurements by variance share.",
+   "command": "python3 -V; OMP_NUM_THREADS=1 python3 -m engineering.neuro.sobol_m1 --out /work/out --N 4096 --procs 4 --seed 20261101 --reference /work/repo/ref.json"
+  },
+  "injected": {
+   "engineering/__init__.py": {
+    "source": "engineering/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+   },
+   "engineering/behavior/__init__.py": {
+    "source": "engineering/behavior/__init__.py",
+    "sha256": "ea894bb7612769cd5478ea155f7641f812ab8dee59000bf8cd2e44ed95037ce6",
+    "bytes": 134
+   },
+   "engineering/behavior/model.py": {
+    "source": "engineering/behavior/model.py",
+    "sha256": "25729db211570bf91fc0d676c527f300e104cb45b53fc9b39a73560d00e68dce",
+    "bytes": 8552
+   },
+   "engineering/neuro/__init__.py": {
+    "source": "engineering/neuro/__init__.py",
+    "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+    "bytes": 487
+   },
+   "engineering/neuro/caudal_cpg.py": {
+    "source": "engineering/neuro/caudal_cpg.py",
+    "sha256": "02ce0ab2410d6f336236d27c0379ee2ae5aa31d9b486094ef0e8c1af943a5f46",
+    "bytes": 23603
+   },
+   "engineering/neuro/common.py": {
+    "source": "engineering/neuro/common.py",
+    "sha256": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+    "bytes": 2684
+   },
+   "engineering/neuro/fast_start.py": {
+    "source": "engineering/neuro/fast_start.py",
+    "sha256": "48ddda84e50d582ffd128ec8288a2e3de5076085b673be0518bb556af954d433",
+    "bytes": 22383
+   },
+   "engineering/neuro/sobol_m1.py": {
+    "source": "engineering/neuro/sobol_m1.py",
+    "sha256": "d312034e0afd11b6f96802e7f6cf398e1cf6b257ae949ce8b4712c3391cc6e1f",
+    "bytes": 8465
+   },
+   "engineering/simulation/__init__.py": {
+    "source": "engineering/simulation/__init__.py",
+    "sha256": "d7ff2108d1c58d5da04f5972a4f64e49f3a7d8758c6a197c36743420f3574ec7",
+    "bytes": 381
+   },
+   "engineering/simulation/controlled.py": {
+    "source": "engineering/simulation/controlled.py",
+    "sha256": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+    "bytes": 8447
+   },
+   "engineering/simulation/evaluate.py": {
+    "source": "engineering/simulation/evaluate.py",
+    "sha256": "0a793951b8812a9093a637c61d79f3f4fea5e93f07a92825e46601c8e84357fc",
+    "bytes": 5180
+   },
+   "engineering/simulation/glide.py": {
+    "source": "engineering/simulation/glide.py",
+    "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+    "bytes": 4371
+   },
+   "engineering/simulation/schema.py": {
+    "source": "engineering/simulation/schema.py",
+    "sha256": "94b4f003be514ac5055ed184b0e2695a68bf0de8689e387238e9583c8e62b944",
+    "bytes": 4760
+   },
+   "ref.json": {
+    "source": "artifacts/neuro/jobs/inputs/m1_reference_head400.json",
+    "sha256": "f0f4c275fe8eeb28f089761dd221fd0cb0133ffc1b00c507dd3b5a07c036be93",
+    "bytes": 11254
+   }
+  },
+  "runner_sha256": "b298a79924fd4f31b825d8ae3c3b7ba3a05bef542101424c5cd9fea6b0ef788d",
+  "bundle_tar_xz_sha256": "204297760e8257e1f1792fb0ad5165ce23d0829c8a892cc07d3a837404420487",
+  "bundle_b64_bytes": 41820,
+  "cli_rc": 0,
+  "git_head": "120d4d4",
+  "job_id": "aijob-e00j2c1psat7zgsbg1"
+ }
+}

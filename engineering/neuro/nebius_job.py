@@ -86,7 +86,7 @@ def submit(spec_path):
 
 def status(quiet=False):
     r = neb("ai", "job", "list", "--format", "json")
-    mine = {j["name"]: j for j in ledger()}
+    mine = {j["name"]: j for j in ledger() if j.get("job_id")}
     out = []
     for it in json.loads(r.stdout).get("items", []):
         n = it["metadata"]["name"]
@@ -98,7 +98,7 @@ def status(quiet=False):
 
 
 def collect(name, dest):
-    rec = next(j for j in ledger() if j["name"] == name)
+    rec = [j for j in ledger() if j["name"] == name and j.get("job_id")][-1]       # latest submission that created a job
     r = neb("ai", "job", "logs", rec["job_id"])
     lines = r.stdout.splitlines()
     chunks, done, rc_line = {}, None, None
