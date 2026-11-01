@@ -1,0 +1,336 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "j4-m3-sobol",
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organ",
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Global sensitivity of glide roll stabilisation: design vs neural vs fin-muscle vs environment parameters",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.sobol_m3 --out /work/out --N 2048 --trials 128 --procs 16 --geometry /work/repo/geometry.json --seed 20261101",
+ "python_module": "engineering.neuro.sobol_m3",
+ "seed": 20261101,
+ "nebius_job": {
+  "name": "claude-neuro-j4-m3-sobol-a1",
+  "id": "aijob-e00zbjs3mpm12eswgz",
+  "spec": {
+   "name": "claude-neuro-j4-m3-sobol-a1",
+   "platform": "gpu-h100-sxm",
+   "preset": "1gpu-16vcpu-200gb",
+   "timeout": "1h",
+   "disk": "80Gi",
+   "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+   "pip": "scipy",
+   "question": "Which of 14 design, neural, fin-muscle and environment parameters decide whether the r3-daane glider stays upright in roll?",
+   "gpu_justification": "32,768 Saltelli points x 128 saturation Monte Carlo trajectories x 2500 steps (float64, per-trajectory plants/delays/lags); 16 vCPUs compute 32,768 exact linear radii",
+   "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.sobol_m3 --out /work/out --N 2048 --trials 128 --procs 16 --geometry /work/repo/geometry.json --seed 20261101"
+  }
+ },
+ "injected_sources": {
+  "engineering/__init__.py": {
+   "source": "engineering/__init__.py",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "engineering/neuro/__init__.py": {
+   "source": "engineering/neuro/__init__.py",
+   "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+   "bytes": 487
+  },
+  "engineering/neuro/common.py": {
+   "source": "engineering/neuro/common.py",
+   "sha256": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+   "bytes": 2684
+  },
+  "engineering/neuro/glide_stab.py": {
+   "source": "engineering/neuro/glide_stab.py",
+   "sha256": "5bbfb7a83c1c80567f2d534ded283dbdac98d80d79630c93894af003c4aa99f1",
+   "bytes": 24336
+  },
+  "engineering/neuro/sobol_core.py": {
+   "source": "engineering/neuro/sobol_core.py",
+   "sha256": "09bafc48e45ff5a3c376c6e3bbb8b3fe175fab0cf2ec11659ff9b884fab26070",
+   "bytes": 2027
+  },
+  "engineering/neuro/sobol_m3.py": {
+   "source": "engineering/neuro/sobol_m3.py",
+   "sha256": "80eff3b2e0dbc854d8657ed1718a071a351cc25692f5114c4bf45835bc6d62be",
+   "bytes": 9728
+  },
+  "engineering/simulation/__init__.py": {
+   "source": "engineering/simulation/__init__.py",
+   "sha256": "d7ff2108d1c58d5da04f5972a4f64e49f3a7d8758c6a197c36743420f3574ec7",
+   "bytes": 381
+  },
+  "engineering/simulation/controlled.py": {
+   "source": "engineering/simulation/controlled.py",
+   "sha256": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+   "bytes": 8447
+  },
+  "engineering/simulation/evaluate.py": {
+   "source": "engineering/simulation/evaluate.py",
+   "sha256": "0a793951b8812a9093a637c61d79f3f4fea5e93f07a92825e46601c8e84357fc",
+   "bytes": 5180
+  },
+  "engineering/simulation/glide.py": {
+   "source": "engineering/simulation/glide.py",
+   "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "bytes": 4371
+  },
+  "engineering/simulation/schema.py": {
+   "source": "engineering/simulation/schema.py",
+   "sha256": "94b4f003be514ac5055ed184b0e2695a68bf0de8689e387238e9583c8e62b944",
+   "bytes": 4760
+  },
+  "geometry.json": {
+   "source": "artifacts/neuro/jobs/inputs/r3daane_geometry.json",
+   "sha256": "8e72cd5c43cd82b7cc6162f6313748b5eb7beb10f41275723265aa5f5fb6bcef",
+   "bytes": 910
+  }
+ },
+ "bundle_sha256": "ddbf1f4ea59c4caeed73eb4e4428e62e2a1d243f5b06e1ed7597dab7ea12a0d6",
+ "git_head_at_submit": "f53196ab",
+ "env": {
+  "python": "3.11.10",
+  "numpy": "2.1.2",
+  "scipy": "1.17.1",
+  "torch": "2.5.1+cu124",
+  "cpu_count": 16
+ },
+ "elapsed_s": 25.95608687400818,
+ "checks": [
+  {
+   "name": "control: Ishigami S1/ST within 0.03 of analytic (N 8192)",
+   "pass": true,
+   "detail": {
+    "S1": [
+     0.3137014853926838,
+     0.44252597719852155,
+     -0.00037630075656537387
+    ],
+    "exact_S1": [
+     0.31390519114781146,
+     0.4424111447900409,
+     0.0
+    ],
+    "ST": [
+     0.557706471386605,
+     0.44263309669684225,
+     0.24379148258943523
+    ],
+    "exact_ST": [
+     0.5575888552099592,
+     0.4424111447900409,
+     0.2436836640621477
+    ]
+   }
+  },
+  {
+   "name": "control: batched-loop update order reproduces glide_stab.closed_loop matrix power (300 steps)",
+   "pass": true,
+   "detail": 5.421010862427522e-19
+  }
+ ],
+ "all_checks_pass": true,
+ "ran": {
+  "utc": "2026-11-01T16:35:26Z"
+ },
+ "summary": {
+  "fail_prob": {
+   "mean": 0.4570808410644531,
+   "top_ST": [
+    [
+     "k_v",
+     0.5123,
+     [
+      0.4753,
+      0.5434
+     ],
+     0.3177
+    ],
+    [
+     "dihedral_deg",
+     0.4084,
+     [
+      0.3763,
+      0.4406
+     ],
+     0.2062
+    ],
+    [
+     "gain_rate",
+     0.2514,
+     [
+      0.2263,
+      0.2789
+     ],
+     0.0528
+    ],
+    [
+     "gain_att",
+     0.1495,
+     [
+      0.13,
+      0.1692
+     ],
+     0.0346
+    ],
+    [
+     "gust_sd_ms",
+     0.1406,
+     [
+      0.1237,
+      0.1573
+     ],
+     0.0729
+    ],
+    [
+     "tau_vision_s",
+     0.0934,
+     [
+      0.0781,
+      0.1101
+     ],
+     -0.0025
+    ]
+   ],
+   "mc_noise_share_of_variance": 0.0016344646492815976
+  },
+  "linear_unstable": {
+   "mean": 0.35888671875,
+   "top_ST": [
+    [
+     "k_v",
+     0.6398,
+     [
+      0.5908,
+      0.6781
+     ],
+     0.3841
+    ],
+    [
+     "gain_rate",
+     0.3555,
+     [
+      0.3163,
+      0.3879
+     ],
+     0.0382
+    ],
+    [
+     "gain_att",
+     0.2833,
+     [
+      0.2552,
+      0.3135
+     ],
+     0.0531
+    ],
+    [
+     "dihedral_deg",
+     0.2663,
+     [
+      0.239,
+      0.297
+     ],
+     0.0573
+    ],
+    [
+     "tau_vision_s",
+     0.1867,
+     [
+      0.1612,
+      0.2163
+     ],
+     0.0127
+    ],
+    [
+     "tau_canal_s",
+     0.1061,
+     [
+      0.0852,
+      0.1272
+     ],
+     0.0064
+    ]
+   ]
+  },
+  "log_radius": {
+   "mean": 0.0005219148531559947,
+   "top_ST": [
+    [
+     "k_v",
+     0.8793,
+     [
+      0.8143,
+      0.9432
+     ],
+     0.7471
+    ],
+    [
+     "gain_rate",
+     0.0915,
+     [
+      0.0778,
+      0.1079
+     ],
+     0.0044
+    ],
+    [
+     "gain_att",
+     0.0875,
+     [
+      0.0776,
+      0.0988
+     ],
+     0.0236
+    ],
+    [
+     "dihedral_deg",
+     0.085,
+     [
+      0.0753,
+      0.097
+     ],
+     -0.0001
+    ],
+    [
+     "tau_vision_s",
+     0.0674,
+     [
+      0.0534,
+      0.0845
+     ],
+     -0.0026
+    ],
+    [
+     "CL_trim",
+     0.0337,
+     [
+      0.0297,
+      0.0386
+     ],
+     0.0027
+    ]
+   ]
+  },
+  "linear_vs_mc_agreement": {
+   "fraction_where_linear_stable_iff_fail_prob_below_0.5": 0.85400390625
+  },
+  "points": 32768,
+  "trials": 128,
+  "elapsed": {
+   "linear_s": 9.305116176605225,
+   "mc_s": 15.105984926223755
+  },
+  "gpu": "NVIDIA H100 80GB HBM3"
+ },
+ "outputs": {
+  "figure.png": "76d6f57968d0ac4fda003996db1b58024509935cabb5bd8a009237d5b3242a44",
+  "job_stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "job_stdout.log": "046891279d3f9e59b0fbf992a099944caa87a668a54bdd5a17494cb2fdbd3c4c",
+  "sobol_m3.json.gz": "3ef544844a42b4e29fa08204ac5d3e486dec8c4cceee56579d68305dfd97c8c4"
+ }
+}

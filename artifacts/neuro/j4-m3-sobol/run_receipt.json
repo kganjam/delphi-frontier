@@ -1,0 +1,12 @@
+{
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.sobol_m3 --out /work/out --N 2048 --trials 128 --procs 16 --geometry /work/repo/geometry.json --seed 20261101",
+ "python_module": "engineering.neuro.sobol_m3",
+ "exit_code": 0,
+ "where": "Nebius AI job claude-neuro-j4-m3-sobol-a1 (aijob-e00zbjs3mpm12eswgz)",
+ "platform": "gpu-h100-sxm 1gpu-16vcpu-200gb",
+ "archive_sha256": "7bf2a683046c100ed6fe8b579f22733ccb60216a5af4ca59e7ddce50f2484599",
+ "collected_utc": "2026-11-01T16:35:26Z",
+ "submitted_utc": "2026-11-01T16:28:43Z",
+ "manifest_sha256": "2ae89a7d12fbea4c0ddfcd48c82f38fde4a3af804c08793c8c89231711ff226b",
+ "collection_receipt": "artifacts/neuro/jobs/claude-neuro-j4-m3-sobol-a1/collected/collection_receipt.json"
+}

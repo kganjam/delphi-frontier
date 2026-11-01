@@ -315,7 +315,8 @@
   "experiment_design": "Prioritise measurements by total index: geometry (caudal vertical-surface area, dihedral) from the specimen or print; neural delays from fin EMG latency after imposed roll; fin actuator lag and authority from muscle twitch kinetics and range of motion.",
   "does_not_establish": [
    "SIMULATED: ranks the model's priors; linear quasi-steady plant.",
-   "Monte Carlo noise is part of the failure variance; its share is reported."
+   "Monte Carlo noise is part of the failure variance; its share is reported.",
+   "Compute note: the 4.2M-trajectory Monte Carlo took 15 s on the H100; the job did not strictly need a GPU."
   ],
   "couplings": [
    {

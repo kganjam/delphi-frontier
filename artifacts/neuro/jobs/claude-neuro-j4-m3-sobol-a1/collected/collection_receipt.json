@@ -1,0 +1,108 @@
+{
+ "name": "claude-neuro-j4-m3-sobol-a1",
+ "job_id": "aijob-e00zbjs3mpm12eswgz",
+ "collected_utc": "2026-11-01T16:35:26Z",
+ "archive_sha256": "7bf2a683046c100ed6fe8b579f22733ccb60216a5af4ca59e7ddce50f2484599",
+ "archive_bytes": 18824,
+ "container_rc": 0,
+ "rc_line": "NEURO-RC 0 2026-11-01T16:34:22Z",
+ "chunks": 2,
+ "files": {
+  "out/sobol_m3.json.gz": {
+   "sha256": "3ef544844a42b4e29fa08204ac5d3e486dec8c4cceee56579d68305dfd97c8c4",
+   "bytes": 18019
+  },
+  "out/stderr.log": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "out/stdout.log": {
+   "sha256": "046891279d3f9e59b0fbf992a099944caa87a668a54bdd5a17494cb2fdbd3c4c",
+   "bytes": 364
+  }
+ },
+ "submission": {
+  "name": "claude-neuro-j4-m3-sobol-a1",
+  "submitted_utc": "2026-11-01T16:28:43Z",
+  "spec": {
+   "name": "claude-neuro-j4-m3-sobol-a1",
+   "platform": "gpu-h100-sxm",
+   "preset": "1gpu-16vcpu-200gb",
+   "timeout": "1h",
+   "disk": "80Gi",
+   "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+   "pip": "scipy",
+   "question": "Which of 14 design, neural, fin-muscle and environment parameters decide whether the r3-daane glider stays upright in roll?",
+   "gpu_justification": "32,768 Saltelli points x 128 saturation Monte Carlo trajectories x 2500 steps (float64, per-trajectory plants/delays/lags); 16 vCPUs compute 32,768 exact linear radii",
+   "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.sobol_m3 --out /work/out --N 2048 --trials 128 --procs 16 --geometry /work/repo/geometry.json --seed 20261101"
+  },
+  "injected": {
+   "engineering/__init__.py": {
+    "source": "engineering/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+   },
+   "engineering/neuro/__init__.py": {
+    "source": "engineering/neuro/__init__.py",
+    "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+    "bytes": 487
+   },
+   "engineering/neuro/common.py": {
+    "source": "engineering/neuro/common.py",
+    "sha256": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+    "bytes": 2684
+   },
+   "engineering/neuro/glide_stab.py": {
+    "source": "engineering/neuro/glide_stab.py",
+    "sha256": "5bbfb7a83c1c80567f2d534ded283dbdac98d80d79630c93894af003c4aa99f1",
+    "bytes": 24336
+   },
+   "engineering/neuro/sobol_core.py": {
+    "source": "engineering/neuro/sobol_core.py",
+    "sha256": "09bafc48e45ff5a3c376c6e3bbb8b3fe175fab0cf2ec11659ff9b884fab26070",
+    "bytes": 2027
+   },
+   "engineering/neuro/sobol_m3.py": {
+    "source": "engineering/neuro/sobol_m3.py",
+    "sha256": "80eff3b2e0dbc854d8657ed1718a071a351cc25692f5114c4bf45835bc6d62be",
+    "bytes": 9728
+   },
+   "engineering/simulation/__init__.py": {
+    "source": "engineering/simulation/__init__.py",
+    "sha256": "d7ff2108d1c58d5da04f5972a4f64e49f3a7d8758c6a197c36743420f3574ec7",
+    "bytes": 381
+   },
+   "engineering/simulation/controlled.py": {
+    "source": "engineering/simulation/controlled.py",
+    "sha256": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+    "bytes": 8447
+   },
+   "engineering/simulation/evaluate.py": {
+    "source": "engineering/simulation/evaluate.py",
+    "sha256": "0a793951b8812a9093a637c61d79f3f4fea5e93f07a92825e46601c8e84357fc",
+    "bytes": 5180
+   },
+   "engineering/simulation/glide.py": {
+    "source": "engineering/simulation/glide.py",
+    "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+    "bytes": 4371
+   },
+   "engineering/simulation/schema.py": {
+    "source": "engineering/simulation/schema.py",
+    "sha256": "94b4f003be514ac5055ed184b0e2695a68bf0de8689e387238e9583c8e62b944",
+    "bytes": 4760
+   },
+   "geometry.json": {
+    "source": "artifacts/neuro/jobs/inputs/r3daane_geometry.json",
+    "sha256": "8e72cd5c43cd82b7cc6162f6313748b5eb7beb10f41275723265aa5f5fb6bcef",
+    "bytes": 910
+   }
+  },
+  "runner_sha256": "666a3532fe6b12f503f55e02bf23bf01084a1d8f3588b9da41bad86cb4650280",
+  "bundle_tar_xz_sha256": "ddbf1f4ea59c4caeed73eb4e4428e62e2a1d243f5b06e1ed7597dab7ea12a0d6",
+  "bundle_b64_bytes": 28536,
+  "cli_rc": 0,
+  "git_head": "f53196ab",
+  "job_id": "aijob-e00zbjs3mpm12eswgz"
+ }
+}

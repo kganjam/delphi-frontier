@@ -10,7 +10,9 @@ import numpy as np
 
 from engineering.neuro import common as C
 
-JOBS = {"j4": ("claude-neuro-j4-m3-sobol-a1", "j4-m3-sobol", "out/sobol_m3.json.gz"),
+JOBS = {"j5": ("claude-neuro-j5-m1-m5prior-a1", "m1-fast-start-m5prior", "out/m1-fast-start-m5prior/manifest.json"),
+        "j6": ("claude-neuro-j6-m5-design-a1", "j6-m5-design", "out/m5_design.json.gz"),
+        "j4": ("claude-neuro-j4-m3-sobol-a1", "j4-m3-sobol", "out/sobol_m3.json.gz"),
         "j1": ("claude-neuro-j1-m1-sobol-a1", "j1-m1-sobol", "out/sobol_m1.json"),
         "j2": ("claude-neuro-j2-m3-atlas-a2", "j2-m3-atlas", "out/m3_atlas.json.gz"),
         "j3": ("claude-neuro-j3-m5-mcell-a2", "j3-m5-mcell", "out/m5_mcell.json.gz")}
@@ -173,5 +175,51 @@ def j4():
     write(dst, rid, m, cr, name)
 
 
+def j5():
+    """M1 rerun inside the job: its own manifest/results/figure are copied unchanged; run_receipt wraps the job; a comparison file is added."""
+    name, rid, res = JOBS["j5"]; col = C.OUT / "jobs" / name / "collected"; cr = json.loads((col / "collection_receipt.json").read_text())
+    src = col / "out" / rid; dst = C.OUT / rid; dst.mkdir(parents=True, exist_ok=True)
+    for f in src.iterdir():
+        shutil.copy(f, dst / f.name)
+    for f in ("stdout.log", "stderr.log"):
+        if (col / "out" / f).exists():
+            shutil.copy(col / "out" / f, dst / f"job_{f}")
+    m = json.loads((dst / "manifest.json").read_text()); b = json.loads((C.OUT / "m1-fast-start" / "manifest.json").read_text())["summary"]; s_ = m["summary"]
+    keys = ["P_caught", "P_emerge"]; cmp = {k: {"baseline_assumed_priors": b[k], "m5_priors": s_[k]} for k in keys}
+    cmp["U_emerge_median"] = {"baseline_assumed_priors": b["U_emerge_ms"]["q50"], "m5_priors": s_["U_emerge_ms"]["q50"]}
+    cmp["t_go_median_s"] = {"baseline_assumed_priors": b["t_go_s"]["q50"], "m5_priors": s_["t_go_s"]["q50"]}
+    for t in ("taxi_pes", "taxi_opt"):
+        cmp[f"{t}_P_takeoff"] = {"baseline_assumed_priors": b[t]["P_takeoff"], "m5_priors": s_[t]["P_takeoff"]}
+    (dst / "comparison_with_assumed_priors.json").write_text(json.dumps({"note": "Same seed and code; only theta_thr_deg and lat_M_ms priors differ (from M5/J3). Simulated.", "comparison": cmp, "prior_overrides": m.get("prior_overrides")}, indent=1))
+    rr = {"command": cr["submission"]["spec"]["command"], "python_module": "engineering.neuro.fast_start", "exit_code": int(cr["container_rc"]), "where": f"Nebius AI job {name} ({cr['job_id']})",
+          "platform": cr["submission"]["spec"]["platform"] + " " + cr["submission"]["spec"]["preset"], "archive_sha256": cr["archive_sha256"], "collected_utc": cr["collected_utc"],
+          "manifest_sha256": C.sha(dst / "manifest.json"), "collection_receipt": f"artifacts/neuro/jobs/{name}/collected/collection_receipt.json"}
+    (dst / "run_receipt.json").write_text(json.dumps(rr, indent=1)); print(json.dumps({"rid": rid, "exit_code": rr["exit_code"], "all_checks_pass": m["all_checks_pass"], "comparison": cmp}, default=str))
+
+
+def j6():
+    name, rid, cr, col, dst, R = receipt_and_dirs("j6")
+    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(1, 3, figsize=(17, 5.5)); summ = {"discrimination_accuracy": R["discrimination_accuracy"]}
+    for pk, acc in R["discrimination_accuracy"].items():
+        ns = sorted(int(n) for n in acc); ax[0].plot(ns, [acc[str(n)] for n in ns], "o-", label=pk)
+    ax[0].axhline(1 / 3, color="k", ls=":", label="chance"); ax[0].set_xscale("log", base=2); ax[0].set_xlabel("fish per encoder hypothesis (one parameter set each)"); ax[0].set_ylabel("encoder classification accuracy")
+    ax[0].legend(fontsize=8); ax[0].set_title("discriminability by protocol", fontsize=9)
+    for k_i, (pk, key, lab) in enumerate((("P_wide", "angle_deg_q10_50_90", "response angle (deg)"), ("P_wide", "latency_s_q10_50_90", "latency from onset (s)"))):
+        lv = np.array(R["protocols"][pk]["lv_s"]) * 1e3
+        for e, v in R["encoders"].items():
+            Q = np.array([[np.nan if x is None else x for x in row] for row in v["protocols"][pk][key]], float)
+            ax[k_i + 1].plot(lv, Q[:, 1], "o-", label=e); ax[k_i + 1].fill_between(lv, Q[:, 0], Q[:, 2], alpha=.15)
+        ax[k_i + 1].set_xscale("log"); ax[k_i + 1].set_xlabel("l/v (ms)"); ax[k_i + 1].set_ylabel(lab); ax[k_i + 1].legend(fontsize=8)
+        ax[k_i + 1].set_title(f"{pk}: median and 10-90% over consistent sets", fontsize=9)
+    for e, v in R["encoders"].items():
+        summ[e] = {"n_consistent_sets": v["n_consistent_sets"], "angle_slope_deg_per_log2_lv": {pk: v["protocols"][pk]["angle_slope_deg_per_log2_lv"] for pk in v["protocols"]}}
+    fig.suptitle(f"J6 M5 experiment design: protocols x encoders ({R.get('gpu')}); SIMULATED sizing of a real experiment", fontsize=11)
+    fig.tight_layout(); fig.savefig(dst / "figure.png", dpi=100); plt.close(fig)
+    m = base_manifest(rid, name, cr, R, "Looming-protocol design: how many fish and which l/v range would discriminate Mauthner-cell encoding hypotheses", ["organism"],
+                      "engineering.neuro.m5_design", cr["submission"]["spec"]["command"])
+    m["summary"] = summ; write(dst, rid, m, cr, name)
+
+
 if __name__ == "__main__":
-    {"j1": j1, "j2": j2, "j3": j3, "j4": j4}[sys.argv[1]]()
+    {"j1": j1, "j2": j2, "j3": j3, "j4": j4, "j5": j5, "j6": j6}[sys.argv[1]]()

@@ -1,0 +1,4 @@
+Python 3.11.10
+name, memory.total [MiB]
+NVIDIA H100 80GB HBM3, 81559 MiB
+{"checks": [["control: Ishigami S1/ST within 0.03 of analytic (N 8192)", true], ["control: batched-loop update order reproduces glide_stab.closed_loop matrix power (300 steps)", true]], "elapsed": {"linear_s": 9.305116176605225, "mc_s": 15.105984926223755}, "fail_mean": 0.4570808410644531}
