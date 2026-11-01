@@ -2,7 +2,7 @@
  * author_report (what documents and people say) and measured (what a receipt in the tree records). */
 (function () {
   const DF = window.DF; const { html, raw, esc } = DF; const U = DF.ui;
-  const TABS = [["overview", "Overview"], ["built", "How it was built"], ["specs", "Specs and goals"], ["work", "Work and bottlenecks"], ["resources", "Resources"], ["receipts", "Receipts"], ["runtime", "Runtime and tools"], ["connect", "Connect and share"]];
+  const TABS = [["overview", "Overview"], ["built", "How it was built"], ["specs", "Specs and goals"], ["work", "Work and bottlenecks"], ["operations", "Operations"], ["resources", "Resources"], ["receipts", "Receipts"], ["runtime", "Runtime and tools"], ["connect", "Connect and share"]];
   const AUTHOR = html`<span class="pill lvl-a" title="Written by the authors of the work">author report</span>`;
   const MEAS = html`<span class="pill lvl-m" title="A receipt in the tree records this">measured</span>`;
   const BLOCK = /blocked|failed|authentication|repair|requested|pending|recovery|not yet|unknown/i;
@@ -12,7 +12,7 @@
     const tab = route.params.tab || "overview"; const S = snap.system; const live = DF.api.isLive();
     const nav = html`<nav class="subnav" aria-label="System sections">${TABS.map(([k, t]) => html`<a href="${DF.href("/work", { tab: k })}" aria-current="${tab === k ? "page" : "false"}">${t}</a>`)}</nav>`;
     const head = html`<section class="pagehead"><h1>System</h1><p class="lede">What is being built, by whom, against which spec, and what has actually been measured. Two levels stay apart: ${AUTHOR} (documents and status text) and ${MEAS} (a run with a receipt). Nothing here is live activity, and no step is claimed to have built itself.</p>${nav}</section>`;
-    const body = { overview, built, specs, work, resources, receipts, runtime, connect }[tab] || overview;
+    const body = { overview, built, specs, work, operations, resources, receipts, runtime, connect }[tab] || overview;
     const out = body(snap, S, live, route);
     return { html: html`${head}${out.html}`, after: out.after };
   };
@@ -40,6 +40,89 @@
       <div class="tablewrap"><table class="build-table"><caption class="sr">Scoped model executions, outcomes and evidence</caption><thead><tr><th scope="col">Model or simulator</th><th scope="col">Provider</th><th scope="col">Recorded outcome</th><th scope="col">Usage and evidence</th></tr></thead><tbody>
       ${m.entries.map((r) => html`<tr><th scope="row" data-label="Model or simulator">${r.model || r.model_or_tool || (r.models || []).map((x) => x.model).join(", ")}<br><code class="small">${r.id}</code></th><td class="small" data-label="Provider">${r.provider}</td><td class="small" data-label="Recorded outcome">${r.status.replace(/_/g, " ")}<p>${r.scope_note || ""}</p></td><td class="small" data-label="Usage and evidence"><details><summary>Inspect receipt and scope</summary>${tree(r.usage || r.calls || {usage: "See the named receipt; no aggregate is inferred."}, 0)}<ul>${(r.evidence || []).map((e) => evidenceLink(e, m.source_tree_commit))}</ul></details></td></tr>`)}</tbody></table></div>
       <p class="small">${m.source_tree_note} <a href="${repository(M.path)}" target="_blank" rel="noopener noreferrer">Full ledger and result artifacts</a> ${U.sha(M.sha256)}</p></details>` : ""}`;
+  }
+
+  /* Operations: a bounded projection of the queue and resource receipts (artifacts/system-operations/operations.json, built by frontier/system_operations.py).
+   * Every block says what its receipt records and what it does not. A missing or changed receipt reads "unavailable", never zero. */
+  const SEA = (t) => { const d = t ? new Date(t) : null; return d && !isNaN(d) ? d.toLocaleString("en-US", { timeZone: "America/Los_Angeles", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" }) : "not recorded"; };
+  const OPSTATE = (s) => U.pill(String(s || "unknown").replace(/_/g, " "), /FAILED|CANCELLED/.test(s) ? "no" : s === "COMPLETED" ? "st-unk" : "st-unk");
+  const srcLink = (path) => html`<a href="${repository(path)}" target="_blank" rel="noopener noreferrer"><code>${path}</code></a>`;
+  const unavailable = (sec, name) => html`<p class="note small"><b>${name}: unavailable.</b> ${sec.reason || "No data."} ${sec.sources ? html`Receipts: ${Object.entries(sec.sources).map(([k, v]) => html`<code>${k}</code> (${v}) `)}` : ""}This is not zero activity.</p>`;
+  const opsDetails = (summary, body) => html`<details class="ops-detail"><summary>${summary}</summary>${body}</details>`;
+  const opsTable = (caption, head, rows) => html`<div class="tablewrap"><table class="build-table"><caption class="sr">${caption}</caption><thead><tr>${head.map((h) => html`<th scope="col">${h}</th>`)}</tr></thead><tbody>${rows.map((r) => html`<tr>${r.map((c, i) => (i === 0 ? html`<th scope="row" data-label="${head[0]}">${c}</th>` : html`<td data-label="${head[i]}">${c}</td>`))}</tr>`)}</tbody></table></div>`;
+  function opsView(P) {
+    const Q = P.queue, R = P.runs, SH = P.shared_jobs, PL = P.plans, RC = P.recovery, SP = P.spend, LM = P.limits, AU = P.audits;
+    const src = opsTable("Receipts this view reads, with pin status and the time each describes", ["Receipt", "Status", "Describes", "Digest"],
+      P.sources.map((x) => [srcLink(x.path), U.pill(x.status, x.status === "verified" ? "ok" : "no"), html`${SEA(x.observed)} ${x.historical_cutoff ? U.pill("historical cutoff", "st-unk") : ""}`, x.actual_sha256 ? U.sha(x.actual_sha256) : "none"]));
+    return html`<section class="panel build-report" aria-labelledby="op-h"><h2 id="op-h">Operations ${AUTHOR}</h2>
+      <p class="small">Latest source observation ${SEA(P.latest_source_observation_utc)}; ${P.projected_at_utc ? html`projected ${SEA(P.projected_at_utc)}` : "no generation time is stamped (the build is deterministic from the receipt bytes)"}. Built from committed receipts. ${P.scope} ${P.event_scope} A provider or process state is never a scientific result, utilization is shown only where it was sampled, and a missing or changed receipt is unavailable, not zero.</p>
+      <p class="small">${P.documents.map((d) => html`<a href="${repository(d.path)}" target="_blank" rel="noopener noreferrer">${d.path}</a> `)} · ${P.agents.reason}</p></section>
+
+      <section class="panel build-report" aria-labelledby="op-q"><h2 id="op-q">Horizon and owners</h2>
+      ${Q.status !== "ok" ? unavailable(Q, "Queue") : html`<p class="small">Queue owner identity <code>${Q.queue_owner_identity}</code>. Observed ${SEA(Q.observed_utc)}; updated ${SEA(Q.updated_utc)}. Planning horizon ${Q.horizon_utc ? html`${SEA(Q.horizon_utc[0])} to ${SEA(Q.horizon_utc[1])}` : "not recorded"}. ${Q.horizon_note}</p>
+        <p class="small">${Q.tasks_note} ${Object.entries(Q.task_state_counts).map(([k, v]) => html`${OPSTATE(k)} ${v} `)}</p>
+        ${opsDetails(`Show all ${Q.tasks.length} queue rows with owner and provider state`, opsTable("Queue tasks with owner and provider state; a provider state is not a scientific outcome", ["Task", "Owner", "Provider state", "Observed"], Q.tasks.map((t) => [html`${t.task}<br><code class="small">${t.job_id || ""}</code>`, t.owner, OPSTATE(t.provider_state), SEA(t.provider_state_observed_utc)])))}`}</section>
+
+      <section class="panel build-report" aria-labelledby="op-p"><h2 id="op-p">Plan, provider state and sampled utilization</h2>
+      ${PL.status !== "ok" ? unavailable(PL, "Plans") : html`<div class="two"><article><h3>Planned or recorded stage</h3><p class="small">${PL.plans_note}</p>${opsDetails(`Show all ${PL.plans.length} recorded stages`, opsTable("Planned or recorded stages from the queue", ["Task", "Recorded stage text"], PL.plans.map((p) => [p.task, p.recorded_state])))}</article>
+        <article><h3>Provider state</h3><p class="small">${PL.provider_state.meaning}</p>
+        <ul class="small"><li>Nebius requested capacity: ${PL.provider_state.nebius_allocation ? html`${PL.provider_state.nebius_allocation.instances} instance(s), ${PL.provider_state.nebius_allocation.running_instances} running, ${PL.provider_state.nebius_allocation.pulling_instances} pulling, ${PL.provider_state.nebius_allocation.gpus} GPU` : "not recorded"}</li>
+        <li>Google compute: ${PL.provider_state.google_compute.active_allocated_vcpus ?? "not recorded"} vCPUs allocated of a ${PL.provider_state.google_compute.global_cpu_limit ?? "unrecorded"} vCPU limit, observed ${SEA(PL.provider_state.google_compute.observed_utc)}</li></ul>
+        <h3>Sampled utilization</h3><p class="small">${U.pill(PL.sampled_utilization.status, "st-unk")} ${PL.sampled_utilization.note}</p>
+        ${opsTable("Historical sampled GPU windows of finished work", ["Window", "Samples", "Mean / max GPU %"], PL.sampled_utilization.windows.slice(-6).map((w) => [html`${w.task_label}<br><span class="small">${w.window_utc ? SEA(w.window_utc[0]) : ""}</span>`, w.samples, `${Number(w.gpu_utilization_pct_mean).toFixed(1)} / ${w.gpu_utilization_pct_max}`]))}
+        ${PL.sampled_utilization.windows.length > 6 ? opsDetails(`Show all ${PL.sampled_utilization.windows.length} sampled windows`, opsTable("All historical sampled GPU windows", ["Window", "Samples", "Mean / max GPU %"], PL.sampled_utilization.windows.map((w) => [w.task_label, w.samples, `${Number(w.gpu_utilization_pct_mean).toFixed(1)} / ${w.gpu_utilization_pct_max}`]))) : ""}</article></div>`}</section>
+
+      <section class="panel build-report" aria-labelledby="op-r"><h2 id="op-r">Completed, failed and partial runs</h2>
+      ${R.status !== "ok" ? unavailable(R, "Runs") : html`<p class="small">${R.meaning} ${Object.entries(R.groups).map(([k, v]) => html`<b>${k}</b> ${v} · `)} Container seconds recomputed from the rows: ${Object.entries(R.recomputed_totals).map(([k, v]) => `${k} ${v.jobs} jobs, ${v.seconds} s`).join("; ")} ${R.totals_match ? U.pill("matches the receipt's own totals", "ok") : U.pill("differs from the receipt's own totals", "no")}</p>
+        <p class="small">${R.scope}</p>
+        ${opsTable("Failed and partial runs, always visible", ["Job", "Kind", "Provider state", "Container s", "Receipt"], R.rows.filter((r) => r.group !== "completed").map((r) => [html`<code class="small">${r.job_id}</code>`, r.kind, html`${OPSTATE(r.provider_state)}${r.truncated || r.timed_out ? U.pill("partial", "st-unk") : ""}`, r.container_seconds, html`${srcLink(r.receipt)} ${U.sha(r.receipt_sha256)}`]))}
+        ${opsDetails(`Show all ${R.rows.length} terminal receipts`, opsTable("Terminal controller receipts by run", ["Job", "Kind", "Provider state", "Container s", "Receipt"], R.rows.map((r) => [html`<code class="small">${r.job_id}</code>`, r.kind, html`${OPSTATE(r.provider_state)}${r.truncated || r.timed_out ? U.pill("partial", "st-unk") : ""}`, r.container_seconds, html`${srcLink(r.receipt)} ${U.sha(r.receipt_sha256)}`])))}`}</section>
+
+      <section class="panel build-report" aria-labelledby="op-a"><h2 id="op-a">Preparation and partial results</h2>
+      ${AU.status !== "ok" ? unavailable(AU, "Audits") : html`<p class="small">${AU.note}</p>
+        ${opsDetails(`Show ${AU.not_complete.length} preparation rows not recorded as complete`, opsTable("Preparation rows whose recorded state is not complete; not an audit queue", ["Task", "Recorded state"], AU.not_complete.map((a) => [a.task, a.recorded_state])))}
+        ${AU.partial.map((p) => html`<p class="small">${p.task}: ${p.recorded_state}; usable ${p.usable} of ${p.expected}, ${p.unresolved} unresolved.</p>`)}`}</section>
+
+      <section class="panel build-report" aria-labelledby="op-l"><h2 id="op-l">Resource limits and spend</h2>
+      ${LM.status !== "ok" ? unavailable(LM, "Limits") : html`<ul class="small"><li>GPUs per job: ${LM.limits.gpus_per_job}; team GPU ceiling: ${LM.limits.team_gpu_ceiling}; policy toward others' waiting jobs: ${LM.limits.foreign_waiting_policy}</li>
+        <li>Google global CPU limit ${LM.limits.google_global_cpu_limit}; GPU quota granted ${LM.limits.google_gpu_quota_granted}</li>
+        ${LM.shared_host_reading ? html`<li>Shared build host reading ${SEA(LM.shared_host_reading.observed_utc)} ${U.pill("historical", "st-unk")}: ${LM.shared_host_reading.logical_cpus} CPUs, load ${(LM.shared_host_reading.load_1_5_15 || []).map((x) => x.toFixed(1)).join(" / ")}. ${LM.shared_host_reading.note}</li>` : ""}</ul><p class="small">${LM.note}</p>`}
+      <p class="note small">${U.pill("spend " + SP.status, "no")} ${SP.meaning}</p>
+      ${opsTable("Where each source states cost", ["Source", "Field", "Recorded"], SP.recorded_fields.map((f) => [f.source, html`<code>${f.field}</code>`, f.recorded]))}</section>
+
+      <section class="panel build-report" aria-labelledby="op-s"><h2 id="op-s">Shared jobs: attributed and unattributed</h2>
+      ${SH.status !== "ok" ? unavailable(SH, "Shared jobs") : html`<p class="small">Listed ${SH.listed_total} jobs, observed ${SEA(SH.observed_utc)}: <b>${SH.attributed_to_this_team}</b> attributed to this team, <b>${SH.earlier_team_exact_id_ledger}</b> to earlier team work by an exact-ID ledger (${SH.ledger_entries} entries ${SH.ledger_matches_breakdown ? U.pill("ledger matches", "ok") : U.pill("ledger mismatch", "no")}), <b>${SH.unattributed}</b> unattributed. ${SH.breakdown_sums_to_total ? "" : U.pill("parts do not sum to the total", "no")}</p>
+        <p class="note small">${SH.meaning}</p>
+        ${opsTable("Listed jobs by attribution group and provider state", ["Group", "Provider states"], Object.entries(SH.states_by_group).map(([g, st]) => [g.replace(/_/g, " "), Object.entries(st).map(([k, v]) => `${k} ${v}`).join(" · ")]))}`}</section>
+
+      <section class="panel build-report" aria-labelledby="op-b"><h2 id="op-b">Recovery: separate layers, not one green state</h2>
+      ${RC.status !== "ok" ? unavailable(RC, "Recovery") : html`<p class="note small"><b>${RC.summary}</b></p>
+        <div class="two"><article><h3>Latest file and source checkpoint</h3><ul class="small"><li>Archive created ${SEA(RC.latest_file_and_source_checkpoint.snapshot_created_utc)}; release revision <code>${(RC.latest_file_and_source_checkpoint.release_revision || "").slice(0, 10)}</code></li>
+          <li>Actual separate-host file restore ${SEA(RC.latest_file_and_source_checkpoint.off_host_file_restore.verified_utc)}: ${RC.latest_file_and_source_checkpoint.off_host_file_restore.files_restored} files, ${RC.latest_file_and_source_checkpoint.off_host_file_restore.capture_errors} capture errors</li>
+          <li>Source recovery ${SEA(RC.latest_file_and_source_checkpoint.off_host_source_recovery.verified_utc)}: required commit <code>${(RC.latest_file_and_source_checkpoint.off_host_source_recovery.required_revision || "").slice(0, 10)}</code>, verify exit ${RC.latest_file_and_source_checkpoint.off_host_source_recovery.verify_exit}, fetch exit ${RC.latest_file_and_source_checkpoint.off_host_source_recovery.fetch_exit}</li></ul></article>
+        <article><h3>Database cutoff</h3><ul class="small"><li>Logical copy captured ${SEA(RC.database_cutoff.captured_utc)}: ${RC.database_cutoff.record_versions} record versions, ${RC.database_cutoff.event_rows} events</li><li>${RC.database_cutoff.meaning}</li><li>${RC.database_cutoff.replay}</li></ul></article></div>
+        <h3>Older application drill</h3><p class="small">Started ${SEA(RC.older_application_drill.started_utc)}, finished ${SEA(RC.older_application_drill.finished_utc)}, source <code>${(RC.older_application_drill.source_sha || "").slice(0, 10)}</code>, ${RC.older_application_drill.record_versions_at_that_cutoff} record versions: ${RC.older_application_drill.checks_passed} of ${RC.older_application_drill.checks_total} checks passed. ${RC.older_application_drill.meaning}</p>
+        <h3>Snapshot chain</h3>${opsDetails(`Show all ${RC.snapshot_chain.length} archives`, opsTable("Archives with creation time, file count and off-host file restore", ["Archive", "Created", "Files", "Off-host restore", "Capture errors"], RC.snapshot_chain.map((x) => [x.label, SEA(x.created_utc), x.files, html`${SEA(x.offhost_file_restore_verified_utc)}${x.offhost_files_restored != null ? ` · ${x.offhost_files_restored} files` : ""}`, x.capture_errors])))}
+        <p class="small">${RC.later_work_note}</p><p class="small">Failed attempts kept: ${RC.failed_attempts_preserved.service_drill_attempts} service-drill, ${RC.failed_attempts_preserved.stable_failed_captures} capture, ${RC.failed_attempts_preserved.studies_preparation_failures} preparation.</p>
+        <p class="small"><b>Not established:</b> ${RC.not_established.join("; ")}.</p>
+        <details><summary>Remaining items the receipts list</summary><ul class="small">${Object.entries(RC.remaining_per_source).flatMap(([k, v]) => v.map((x) => html`<li>${k}: ${x}</li>`))}</ul></details>`}</section>
+
+      <section class="panel build-report" aria-labelledby="op-src"><h2 id="op-src">Source records</h2><p class="small">${P.sources.length} receipts, ${P.sources.filter((x) => x.status !== "verified").length} not verified against their pins.</p>${opsDetails("Show receipts, pin status and digests", src)}</section>`;
+  }
+  function operations() {
+    return { html: html`<div id="opsroot"><section class="panel"><p class="small faint">Loading the operations projection…</p></section></div>`,
+      async after(root) {
+        const host = root.querySelector("#opsroot");
+        try {
+          const r = await fetch("artifacts/system-operations/operations.json", { cache: "no-store" });
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          const P = await r.json();
+          if (P.schema !== "frontier.system-operations/1") throw new Error("unexpected schema");
+          host.innerHTML = opsView(P).toString();
+        } catch (e) {
+          host.innerHTML = html`<section class="panel"><h2>Operations</h2><p class="note small"><b>Unavailable.</b> The projection could not be loaded (${String(e.message).slice(0, 80)}). This is not zero activity.</p></section>`.toString();
+        }
+      } };
   }
 
   /* How it was built: dated receipts, usage windows, provider outcomes and preregistered verdicts, each with its file and sha256. Spend and total usage stay unknown. */

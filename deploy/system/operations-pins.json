@@ -1,0 +1,84 @@
+{
+ "schema": "frontier.system-operations-pins/1",
+ "note": "Re-pin only after reading what changed. A changed file is shown as unavailable until then.",
+ "pins": [
+  {
+   "id": "queue",
+   "path": "results/infra/queue.json",
+   "sha256": "af978d4315edc3a0b1bbf0166609351957163d6cabb09e9c73b158a34a955435",
+   "bytes": 59042
+  },
+  {
+   "id": "usage",
+   "path": "results/resources/hackathon-usage.json",
+   "sha256": "d18a9bfd0ce48fc491d3fc3f0c14a3869b5ecfe1749cb7813b9537d93a7c8912",
+   "bytes": 63941
+  },
+  {
+   "id": "inventory",
+   "path": "results/resources/resource-inventory.json",
+   "sha256": "6901748b19528bce19ff24b0561bdb44a66546553893c8e9146e84d39dced85f",
+   "bytes": 47353
+  },
+  {
+   "id": "shared",
+   "path": "results/resources/shared-job-counts.json",
+   "sha256": "a935b0a12e963e0f1733856eb4d85cb75d134d520478062bceff769579fc8233",
+   "bytes": 2326
+  },
+  {
+   "id": "ledger",
+   "path": "results/resources/team-job-ownership.json",
+   "sha256": "93ad1b561e3b0604e98f7b0b13b902c1f3437922fd1d7dcb8c39d3ffd14a226f",
+   "bytes": 6303
+  },
+  {
+   "id": "runtime",
+   "path": "results/resources/terminal-runtime-receipts.json",
+   "sha256": "862e5fab170dcbbc67ff3ccb44ac93df4f78759c6effd57e1d7b15a4e5563443",
+   "bytes": 9047
+  },
+  {
+   "id": "progress",
+   "path": "results/resources/current-job-progress.json",
+   "sha256": "2981d4b19d16d338c2c575402f557cc83db8026db52480c8c74b5b3baf3f4d8e",
+   "bytes": 5009
+  },
+  {
+   "id": "rd_inverse",
+   "path": "results/resources/rd-inverse-completion.json",
+   "sha256": "09fdd97dda0dad7723e9aef5ff5b5250db05be6a866124650c662742437a3c16",
+   "bytes": 3891
+  },
+  {
+   "id": "recovery_base",
+   "path": "results/resources/backup-recovery-20261101.json",
+   "sha256": "bac3def0d10368d2c807e6af2c04ef6f72958f4e49d45aa80756bef9bd84332d",
+   "bytes": 3978
+  },
+  {
+   "id": "recovery_service",
+   "path": "results/resources/backup-recovery-service-20261101.json",
+   "sha256": "41b15bf237e055146bb6909dc8bf175e668b3c588079978d526f0cca28c1e805",
+   "bytes": 14010
+  },
+  {
+   "id": "recovery_stable",
+   "path": "results/resources/backup-recovery-stable-addons-20261101.json",
+   "sha256": "1af043d9ba3b3535011bb7626a99a620a0d7bf9d3e5b5286f1faee85fe8cd24b",
+   "bytes": 13439
+  },
+  {
+   "id": "recovery_films",
+   "path": "results/resources/backup-recovery-four-film-20261101.json",
+   "sha256": "edb84ada1ac11e7fc6642a2a97fa7819dbdfb7d3ba938d1526673deb0c1d1188",
+   "bytes": 10983
+  },
+  {
+   "id": "recovery_studies",
+   "path": "results/resources/backup-recovery-studies-20261101.json",
+   "sha256": "2991eeb007f592e1ab6e3e6c7bdd90f533946cd8dee9e67f0d4363b68cd07967",
+   "bytes": 13020
+  }
+ ]
+}

@@ -1,0 +1,1537 @@
+{
+ "agents": {
+  "reason": "No receipt gives a current active-agent total, so none is shown.",
+  "status": "not published"
+ },
+ "audits": {
+  "not_complete": [
+   {
+    "next_acceptance": "Preserve calibration and stockouts; H100 comparison is separately frozen and does not overwrite L4 NO-GO.",
+    "recorded_state": "original_no_go_preserved_five_capacity_failures_no_further_blind_admission",
+    "task": "L4 same-state parity and runtime calibration then conditional R2"
+   },
+   {
+    "next_acceptance": "Preserve coherent restart checkpoints, exact case identity, frozen fidelity and negative control evaluation; combine with R2 only after its return",
+    "recorded_state": "running_three_partial_restart_checkpoints_returned",
+    "task": "Collect existing CPU cylinder R1/R3/M1"
+   },
+   {
+    "next_acceptance": "Completedtrainingcheckpoint checked; originalfullrunFAIL remains, noheldoutperformanceclaim",
+    "recorded_state": "collected_partial_primary_failed",
+    "task": "Collect primary trained RD model"
+   },
+   {
+    "next_acceptance": "Trace allfourcases and pressureframes to exactgeometry/source; retain C1FAIL and smoothed/subgridfinlimits; actual-fieldvideos only",
+    "recorded_state": "returned_owner_processing",
+    "task": "Curate controlled3D pressure/video artifacts"
+   },
+   {
+    "next_acceptance": "Preserve Re=UL/nu when mapping Cp toPa; analytictraction integration N and rayloadN/m; loadgridrefinement; tributarywidth/leadingedge/sectionvs3D contracts; EI remainsassumed",
+    "recorded_state": "returned_pressure_available_contract_validation",
+    "task": "Pressure-to-fin mechanical interface"
+   },
+   {
+    "next_acceptance": "Freeze geometry/resolution/sectionprotocol, run analytic CPUcontrol and measuredruntime; explicitly handlefailedphysicalreference beforeinterpretation",
+    "recorded_state": "not_gpu_ready_CPUcontrol_and_runtime_pending",
+    "task": "Resolved local fin-section CFD packet"
+   },
+   {
+    "next_acceptance": "Choose an unresolved measuredscientificgap from above; preregister observables/controls/parameterdomains, usablepacket, runtime/outputs and termination beforedispatch",
+    "recorded_state": "conditional_not_admitted",
+    "task": "6\u201324h evidence-driven follow-up selection"
+   },
+   {
+    "next_acceptance": "Frozen source-native model, declared uptake bounds, LP feasibility/conservation and negative controls, all outcomes retained.",
+    "recorded_state": "provider_stopped_no_packet",
+    "task": "Zebrafish-GEM oxygen and medium constraints"
+   },
+   {
+    "next_acceptance": "Existing VLM geometry/pins, coefficient finite differences, mesh/unit/negative controls, coordinate owner07.",
+    "recorded_state": "backlog_owner_prioritized_frozen_CUDA_control_arms",
+    "task": "Neutral point and rigid geometry stability"
+   },
+   {
+    "next_acceptance": "Author offline replay already resolves10declared RNA/ATAC BioSample pairs; no new job justified for identical metadata. Quantitative functional-proxy availability is a separate prospective task.",
+    "recorded_state": "ready_but_deprioritized_answer_already_in_existing_data",
+    "task": "Public regulatory metadata sample-pairing audit"
+   },
+   {
+    "next_acceptance": "Native gene references/translation checked; LEN exactGRCz11 interval unresolved. Existing32targets differ; no functional-proxy claim.",
+    "recorded_state": "source_ledger_complete_LEN_coordinates_unresolved_no_inference_packet",
+    "task": "Source-defined LEN/lepb functional evidence and native control ledger"
+   },
+   {
+    "next_acceptance": "Finite candidate set, formal/domain filter, actual numerical checks and measurement value; independent frozen controls before CPU/GPU admission.",
+    "recorded_state": "root_reports_local_bounded_comparison_complete_no_remote_packet",
+    "task": "Cross-scale candidate filtering and experimental-design packet"
+   },
+   {
+    "next_acceptance": "Preserve native outputs and failed criteria; independent interpretation/publication review only. No automatic scientific rerun.",
+    "recorded_state": "CPU_complete_GPU_probe_compile_failed_no_retry",
+    "task": "Xenobot inspired voxel microcarrier mechanics"
+   },
+   {
+    "next_acceptance": "Preserve native outputs and failed criteria; independent interpretation/publication review only. No automatic scientific rerun.",
+    "recorded_state": "local_36_preserved_new_240_fixed_horizon_criterion_FAILED",
+    "task": "Epithelial repair source-grounded comparison"
+   },
+   {
+    "next_acceptance": null,
+    "recorded_state": "source_and_protocol_preparation_only",
+    "task": "Minimal time-resolved epithelial threshold comparison"
+   }
+  ],
+  "note": "This is not an audit queue: the queue has no audit field. These are rows whose recorded state does not begin with `complete`; they are not a count of pending audits, and `complete` rows may still carry a failed or retained result.",
+  "partial": [
+   {
+    "expected": 330,
+    "recorded_state": "completed_partial_no_more_retry",
+    "task": "regulatory recovery",
+    "unresolved": 59,
+    "usable": 271
+   }
+  ],
+  "status": "ok"
+ },
+ "documents": [
+  {
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/docs/infra-queue.md",
+   "path": "docs/infra-queue.md"
+  },
+  {
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/docs/recovery/README.md",
+   "path": "docs/recovery/README.md"
+  },
+  {
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/docs/resource-utilization.md",
+   "path": "docs/resource-utilization.md"
+  }
+ ],
+ "event_scope": "Provider and queue records of this hackathon only.",
+ "latest_source_observation_utc": "2026-11-01T07:39:28.658877+00:00",
+ "limits": {
+  "limits": {
+   "foreign_waiting_policy": "yield;nevercanceltheirjobs",
+   "google_global_cpu_limit": 32.0,
+   "google_gpu_quota_granted": 1.0,
+   "gpus_per_job": 1,
+   "team_gpu_ceiling": 10
+  },
+  "note": "Provider quotas and ceilings as recorded in the queue; a limit is not a measure of use.",
+  "shared_host_reading": {
+   "historical": true,
+   "load_1_5_15": [
+    6.96435546875,
+    11.35546875,
+    11.220703125
+   ],
+   "logical_cpus": 8,
+   "note": "Instant reading of the shared build host when recorded; not per-agent use and not current.",
+   "observed_utc": "2026-11-01T00:07:56.413176Z"
+  },
+  "status": "ok"
+ },
+ "plans": {
+  "plans": [
+   {
+    "budget": "One H100; 2400s science, 48MiB complete return cap",
+    "job_id": "aijob-e00rhs6hdan4n57kv8",
+    "owner": "infra_director transport / mechanobio_sim science",
+    "priority": 1,
+    "recorded_state": "complete_original0of48_failed_design_preserved",
+    "task": "Collect four-model NCA comparison"
+   },
+   {
+    "budget": "Reuse stopped 4-vCPU VM04 with existing exact dependencies; fresh task prefix and output directory",
+    "job_id": null,
+    "owner": "mechanobio_sim freezes / infra_director dispatches",
+    "priority": 1,
+    "recorded_state": "complete_original_partial_preserved",
+    "task": "Complete two unstarted ecology scenario pairs"
+   },
+   {
+    "budget": "One L4, 4 vCPU, 10800s science; 14400s VM stop",
+    "job_id": null,
+    "owner": "claude-04 science / infra_director dispatch and collection",
+    "priority": 1,
+    "recorded_state": "original_no_go_preserved_five_capacity_failures_no_further_blind_admission",
+    "task": "L4 same-state parity and runtime calibration then conditional R2"
+   },
+   {
+    "budget": "Existing 16-vCPU worker; 79200s task, 23h VM stop, periodic checkpoint export",
+    "job_id": null,
+    "owner": "claude-04 science / infra_director collection",
+    "priority": 1,
+    "recorded_state": "running_three_partial_restart_checkpoints_returned",
+    "task": "Collect existing CPU cylinder R1/R3/M1"
+   },
+   {
+    "budget": "oneH100;1800s evaluation-only; no optimizer/training",
+    "job_id": null,
+    "owner": "dx-market-r1 source / infra_director admission",
+    "priority": 1,
+    "recorded_state": "completed_original_failure_retained",
+    "task": "Exact-weight evaluation recovery"
+   },
+   {
+    "budget": null,
+    "job_id": "aijob-e00qazx6sby3vav47b",
+    "owner": "infra_director / dx-market-r1",
+    "priority": 1,
+    "recorded_state": "collected_partial_primary_failed",
+    "task": "Collect primary trained RD model"
+   },
+   {
+    "budget": "oneH100,initial30min hardbound, no additionaltraining",
+    "job_id": null,
+    "owner": "dx-market-r1 prepares / infra_director dispatches",
+    "priority": 2,
+    "recorded_state": "completed_strict_metric_audit_failed",
+    "task": "Secondary exact empirical W1 and full ensemble retention"
+   },
+   {
+    "budget": "oneCPU capped local or one4vCPU remote if packet ready",
+    "job_id": null,
+    "owner": "claude-04",
+    "priority": 1,
+    "recorded_state": "returned_owner_processing",
+    "task": "Curate controlled3D pressure/video artifacts"
+   },
+   {
+    "budget": null,
+    "job_id": null,
+    "owner": "claude-07 coordinated with claude-04",
+    "priority": 2,
+    "recorded_state": "returned_pressure_available_contract_validation",
+    "task": "Pressure-to-fin mechanical interface"
+   },
+   {
+    "budget": "oneH100 bounded packet only after measuredCPUruntime and frozencriteria",
+    "job_id": null,
+    "owner": "claude-07 / claude-04",
+    "priority": 3,
+    "recorded_state": "not_gpu_ready_CPUcontrol_and_runtime_pending",
+    "task": "Resolved local fin-section CFD packet"
+   },
+   {
+    "budget": "no newcloudcompute",
+    "job_id": null,
+    "owner": "mechanobio_sim",
+    "priority": 1,
+    "recorded_state": "complete_with_retained_reproduction_failure",
+    "task": "Training-only RD numerical audit publication"
+   },
+   {
+    "budget": "oneCPU bounded; remoteCPU onlyifowner supplies usefulfrozencontinuationpacket",
+    "job_id": null,
+    "owner": "claude-04",
+    "priority": 3,
+    "recorded_state": "completed_372_solves_independently_audited",
+    "task": "3variant vortex-lattice CPU refinement"
+   },
+   {
+    "budget": "no additionalMDjob requested",
+    "job_id": null,
+    "owner": "mechanobio_sim / root",
+    "priority": 1,
+    "recorded_state": "complete",
+    "task": "Existing molecular trajectory publication"
+   },
+   {
+    "budget": null,
+    "job_id": null,
+    "owner": "root scientificdirector + infra_director",
+    "priority": 4,
+    "recorded_state": "conditional_not_admitted",
+    "task": "6\u201324h evidence-driven follow-up selection"
+   },
+   {
+    "budget": "4vCPU,12GiB,20min,<50MB; noGPU",
+    "job_id": null,
+    "owner": "mechanobio_sim",
+    "priority": 1,
+    "recorded_state": "complete_36arms_independent_audit_reported",
+    "task": "Static aeroelastic fin-to-flight bridge"
+   },
+   {
+    "budget": "4vCPU bounded CPU packet; noGPU",
+    "job_id": null,
+    "owner": "claude-11",
+    "priority": 2,
+    "recorded_state": "provider_stopped_no_packet",
+    "task": "Zebrafish-GEM oxygen and medium constraints"
+   },
+   {
+    "budget": "4vCPU/12GiB/128tasks/1200s/<50MB",
+    "job_id": null,
+    "owner": "resource_scaling science / infra_director collection",
+    "priority": 3,
+    "recorded_state": "complete_all_eight_trajectories_local_render_recovery_published",
+    "task": "BETSE eight-condition generic permeability comparison"
+   },
+   {
+    "budget": "4vCPU,12GiB,20min if packet runtime supports",
+    "job_id": null,
+    "owner": "claude-04",
+    "priority": 3,
+    "recorded_state": "backlog_owner_prioritized_frozen_CUDA_control_arms",
+    "task": "Neutral point and rigid geometry stability"
+   },
+   {
+    "budget": "10800s science,4h provider,explicit0700Z capability cancellation",
+    "job_id": "aijob-e00mednyphzqff68gx",
+    "owner": "infra_director + claude-04",
+    "priority": 2,
+    "recorded_state": "completed_original_fidelity_failure_preserved",
+    "task": "Full R2 cylinder CUDA assay"
+   },
+   {
+    "budget": "1H100,8models\u00d72000steps,200probes,2400s,48MiB",
+    "job_id": "aijob-e00wmj8t8ndzvcpfja",
+    "owner": "mechanobio_sim training / infra_director independent evaluation and admission",
+    "priority": null,
+    "recorded_state": "completed_independently_audited_mixed_tradeoff",
+    "task": "NCA root-erasing damage curriculum comparison"
+   },
+   {
+    "budget": "7200s science,3h provider; exact-object checkpoint slots cancelled by0700Z",
+    "job_id": "aijob-e00rbmygvays5hjd49",
+    "owner": "claude-04 science / infra_director collection",
+    "priority": 1,
+    "recorded_state": "completed_original_fidelity_failure_preserved",
+    "task": "Collect separately frozen CUDA R1/M1/R3 comparison"
+   },
+   {
+    "budget": "Proposed1CPU/4GiB/600s/20MB; not admitted",
+    "job_id": null,
+    "owner": "claude-10",
+    "priority": null,
+    "recorded_state": "ready_but_deprioritized_answer_already_in_existing_data",
+    "task": "Public regulatory metadata sample-pairing audit"
+   },
+   {
+    "budget": null,
+    "job_id": null,
+    "owner": "mechanobio_sim",
+    "priority": 1,
+    "recorded_state": "source_ledger_complete_LEN_coordinates_unresolved_no_inference_packet",
+    "task": "Source-defined LEN/lepb functional evidence and native control ledger"
+   },
+   {
+    "budget": "Up to8CPU/12GiB/1200s/128tasks, <=500MB compressed inputs and50MB outputs, only after pinned protocol",
+    "job_id": null,
+    "owner": "claude-10",
+    "priority": 2,
+    "recorded_state": "completed_partial_union_271_of_330_no_further_retry",
+    "task": "Independent processed regulatory-data functional/context proxy"
+   },
+   {
+    "budget": "4CPU/12GiB/1200s/128tasks/50MB",
+    "job_id": null,
+    "owner": "claude-07",
+    "priority": 2,
+    "recorded_state": "complete_45_arms_magnitude_unresolved",
+    "task": "Consequential aeroelastic effect-resolution follow-up"
+   },
+   {
+    "budget": null,
+    "job_id": null,
+    "owner": "claude-14 / root",
+    "priority": 2,
+    "recorded_state": "root_reports_local_bounded_comparison_complete_no_remote_packet",
+    "task": "Cross-scale candidate filtering and experimental-design packet"
+   },
+   {
+    "budget": null,
+    "job_id": null,
+    "owner": "claude-15",
+    "priority": null,
+    "recorded_state": "CPU_complete_GPU_probe_compile_failed_no_retry",
+    "task": "Xenobot inspired voxel microcarrier mechanics"
+   },
+   {
+    "budget": null,
+    "job_id": null,
+    "owner": "claude-09",
+    "priority": null,
+    "recorded_state": "local_36_preserved_new_240_fixed_horizon_criterion_FAILED",
+    "task": "Epithelial repair source-grounded comparison"
+   },
+   {
+    "budget": "Completed4vCPU packet,466.7s scientific wall; no duplicate assay",
+    "job_id": null,
+    "owner": "claude-07 science / infra_director transport",
+    "priority": 1,
+    "recorded_state": "completed_owner_independent_audit_reported_no_magnitude_resolved",
+    "task": "Aeroelastic magnitude fidelity audit"
+   },
+   {
+    "budget": "Completed one-worker CPU packet76.3s;181requests89.7MBcharged",
+    "job_id": null,
+    "owner": "claude-10 science / infra_director transport",
+    "priority": 1,
+    "recorded_state": "completed_partial_union_271_of_330_no_further_retry",
+    "task": "Source-defined regulatory accessibility context"
+   },
+   {
+    "budget": "OneH100,900s,2buildthreads,12GiB,16MiBreturn; only after exact executable packet/control review",
+    "job_id": null,
+    "owner": "claude-15 prepares / infra_director admission",
+    "priority": 1,
+    "recorded_state": "completed_compile_failed_no_GPU_science_no_retry",
+    "task": "Voxcraft modern GPU compatibility/control probe"
+   },
+   {
+    "budget": "Candidate8CPU/8GiB/roughly20min, exact frozen total runtime and measured control required",
+    "job_id": null,
+    "owner": "claude-09",
+    "priority": 1,
+    "recorded_state": "completed_240_native_runs_fixed_horizon_interval_FAIL_under_publication_review",
+    "task": "Epithelial repair existing local arm collection"
+   },
+   {
+    "budget": "One H100; 900 s science; 40 min provider; 48 MiB compressed return",
+    "job_id": "aijob-e00grxtt94bh26a9c0",
+    "owner": "claude-14 science; infra_director admission/collection",
+    "priority": null,
+    "recorded_state": "complete_native_controls_and_cardinality_checked_independent_analysis_pending",
+    "task": "Six synthetic-target inverse Schnakenberg comparison"
+   },
+   {
+    "budget": "4 vCPU, 12 GiB, 1200 s science, 1000 s no-new-work",
+    "job_id": null,
+    "owner": "claude-07 science; infra_director admission/collection",
+    "priority": null,
+    "recorded_state": "complete_51_arms_with_two_model_domain_exits_independent_analysis_pending",
+    "task": "Paired corrected-collocation aeroelastic comparison"
+   },
+   {
+    "budget": "Candidate 4\u20138 vCPU, <=12 GiB, <=1800 s science, <=100 MB outputs; owner must first measure and freeze exact smaller scope.",
+    "job_id": null,
+    "owner": "claude-09 prepares; infra_director sole dispatcher",
+    "priority": null,
+    "recorded_state": "source_and_protocol_preparation_only",
+    "task": "Minimal time-resolved epithelial threshold comparison"
+   }
+  ],
+  "plans_note": "Recorded stage text copied from the queue. It mixes planned and finished work; the page does not rank or count it as success.",
+  "provider_state": {
+   "google_compute": {
+    "active_allocated_vcpus": 16,
+    "active_cpu_vms": 1,
+    "active_gpu_vms": 0,
+    "global_cpu_limit": 32.0,
+    "gpu_quota_granted": 1.0,
+    "observed_utc": "2026-11-01T07:39:29.742145+00:00"
+   },
+   "meaning": "Requested capacity of nonterminal jobs, including startup. RUNNING is not measured GPU utilization. Kernel utilization is unknown until sampled telemetry is collected.",
+   "nebius_active_gpu_jobs": 0,
+   "nebius_allocation": {
+    "gpus": 0,
+    "instances": 0,
+    "interpretation": "Requested capacity of nonterminal jobs, including startup. RUNNING is not measured GPU utilization. Kernel utilization is unknown until sampled telemetry is collected.",
+    "jobs_with_unknown_capacity": 0,
+    "memory_gb": 0,
+    "pulling_instances": 0,
+    "running_instances": 0,
+    "vcpus": 0
+   },
+   "running_or_starting_per_queue": {
+    "running": [
+     {
+      "task": "original_CPU_cylinder_controls",
+      "vm": "frontier-cpu-20261031-03"
+     }
+    ],
+    "starting": []
+   }
+  },
+  "sampled_utilization": {
+   "current_gpu_utilization_pct": null,
+   "google_cpu_utilization": null,
+   "note": "Windows are historical sampled intervals of finished work (including setup and artifact emission). They are not current occupancy, and an unsampled period is unknown, not zero or idle.",
+   "status": "no current sample: utilization is unknown right now",
+   "windows": [
+    {
+     "gpu_utilization_pct_max": 100.0,
+     "gpu_utilization_pct_mean": 96.63,
+     "sample_period_ms": 1000,
+     "samples": 52,
+     "task_label": "ns2d-shear-demo-h100",
+     "window_utc": [
+      "2026-10-31T19:54:05Z",
+      "2026-10-31T19:54:56Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 55.0,
+     "gpu_utilization_pct_mean": 51.56,
+     "sample_period_ms": 1000,
+     "samples": 149,
+     "task_label": "heldout-validation-h100",
+     "window_utc": [
+      "2026-10-31T20:10:28Z",
+      "2026-10-31T20:12:57Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 100.0,
+     "gpu_utilization_pct_mean": 98.62,
+     "sample_period_ms": 1000,
+     "samples": 181,
+     "task_label": "ns2d-refine-h100",
+     "window_utc": [
+      "2026-10-31T20:34:27Z",
+      "2026-10-31T20:37:27Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 89.0,
+     "gpu_utilization_pct_mean": 34.78,
+     "sample_period_ms": 1000,
+     "samples": 493,
+     "task_label": "evo2-zebrafish-h100",
+     "window_utc": [
+      "2026-10-31T20:36:42Z",
+      "2026-10-31T20:44:57Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 50.0,
+     "gpu_utilization_pct_mean": 45.802439024390246,
+     "sample_period_ms": 1000,
+     "samples": 410,
+     "task_label": "infra-dt-quarter",
+     "window_utc": [
+      "2026-10-31T21:48:23.301000Z",
+      "2026-10-31T21:55:12.388000Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 56.0,
+     "gpu_utilization_pct_mean": 50.111111111111114,
+     "sample_period_ms": 1000,
+     "samples": 117,
+     "task_label": "infra-initial-perturbation-completion",
+     "window_utc": [
+      "2026-10-31T21:52:52.966000Z",
+      "2026-10-31T21:54:48.993000Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 88.0,
+     "gpu_utilization_pct_mean": 30.194690265486727,
+     "sample_period_ms": 1000,
+     "samples": 113,
+     "task_label": "infra-angle-grid-batch",
+     "window_utc": [
+      "2026-10-31T21:59:15.893000Z",
+      "2026-10-31T22:01:07.918000Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 98.0,
+     "gpu_utilization_pct_mean": 85.7925925925926,
+     "sample_period_ms": 1000,
+     "samples": 270,
+     "task_label": "infra-cylinder-re100",
+     "window_utc": [
+      "2026-10-31T22:06:18.907000Z",
+      "2026-10-31T22:10:47.969000Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 95.0,
+     "gpu_utilization_pct_mean": 37.40944881889764,
+     "sample_period_ms": 1000,
+     "samples": 127,
+     "task_label": "infra-collagen-md-v2",
+     "window_utc": [
+      "2026-10-31T22:13:23.701000Z",
+      "2026-10-31T22:15:29.733000Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 100.0,
+     "gpu_utilization_pct_mean": 85.6426735218509,
+     "sample_period_ms": 1000.0,
+     "samples": 389,
+     "task_label": "Exact-weight DDPM evaluation recovery",
+     "window_utc": [
+      "2026-11-01T00:19:50.920000Z",
+      "2026-11-01T00:26:19.103000Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 100.0,
+     "gpu_utilization_pct_mean": 80.02459016393442,
+     "sample_period_ms": 1000.0,
+     "samples": 244,
+     "task_label": "infra-secondary-exact-w1",
+     "window_utc": [
+      "2026-11-01T00:54:17.451000Z",
+      "2026-11-01T00:58:20.580000Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 95.0,
+     "gpu_utilization_pct_mean": 90.84944751381215,
+     "sample_period_ms": 1000.0,
+     "samples": 724,
+     "task_label": "Original four-model NCA comparison",
+     "window_utc": [
+      "2026-11-01T01:39:46.828000Z",
+      "2026-11-01T01:51:49.981000Z"
+     ]
+    },
+    {
+     "gpu_utilization_pct_max": 37.0,
+     "gpu_utilization_pct_mean": 32.269972451790636,
+     "sample_period_ms": 1000.0,
+     "samples": 363,
+     "task_label": "Inverse Schnakenberg six synthetic targets",
+     "window_utc": [
+      "2026-11-01T07:27:44.034000Z",
+      "2026-11-01T07:33:46.106000Z"
+     ]
+    }
+   ]
+  },
+  "status": "ok"
+ },
+ "projected_at_utc": null,
+ "projector_sha256": "e1a6366a468c365027d089feed7515274ecec8418e013e78070d30066b828c8a",
+ "queue": {
+  "horizon_note": "The planning horizon is the window the queue was planned for. It is a plan, not a record of what ran.",
+  "horizon_utc": [
+   "2026-10-31T23:28:04.655084+00:00",
+   "2026-11-01T23:28:04.655084+00:00"
+  ],
+  "observed_utc": "2026-11-01T07:39:28.658877Z",
+  "policies": {
+   "foreign_waiting": "yield;nevercanceltheirjobs",
+   "gpus_per_job": 1,
+   "no_biological_validity_from_numerical_success": true,
+   "provider_cost": "unknown",
+   "team_ceiling": 10
+  },
+  "queue_owner_identity": "infra_director",
+  "status": "ok",
+  "task_state_counts": {
+   "CANCELLED": 1,
+   "COMPLETED": 20,
+   "FAILED": 7
+  },
+  "tasks": [
+   {
+    "job_id": "aijob-e00se2hy8rdykbfrbf",
+    "owner": "GPUops",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "2Dlow-Reynolds, notflight",
+    "task": "N1meshCUDAparity/grid"
+   },
+   {
+    "job_id": "aijob-e00pywdm4ta362pwrh",
+    "owner": "bioservices",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Noadditionalgeneration;harnesssafeguardstoprespected",
+    "task": "Evo2armBexistingrun"
+   },
+   {
+    "job_id": "aijob-e00h6cqxa1c7cwts6y",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "33 previously sensitive cells +48 controls;2 patterned-mode differences remain; no biological validity claim",
+    "task": "RD timestep-quarter81cells"
+   },
+   {
+    "job_id": "aijob-e00cqbmnzwmvms8ayr",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "357 missing relative 1e-10 initial-state noise checks plus48 fixed repeats; not physical parameter robustness",
+    "task": "Atlas missing initial-state perturbation checks"
+   },
+   {
+    "job_id": "aijob-e00saz7cewggkp50d2",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "All six angle/grid cases passed frozen numerical bounds; Re80 2D sagittal projection, span ignored",
+    "task": "Fish angle/grid controls and original artifact recovery"
+   },
+   {
+    "job_id": "aijob-e00vga5krqxr3xxc94",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Frozen numerical gates passed; literature bands source-unverified, physical benchmark agreement not established; corrected v2 video retained.",
+    "task": "Re100 cylinder outflow and refinement"
+   },
+   {
+    "job_id": "aijob-e00a3q798jsc6fdbas",
+    "owner": "infra_director",
+    "provider_state": "FAILED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Stopped at finite-difference force control; no production trajectory. Original failure and exact state preserved.",
+    "task": "Collagen MD first attempt"
+   },
+   {
+    "job_id": "aijob-e00h8rra7x8ams6jyn",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Three100ps actualH100CUDA trajectories;303finite savedstates. Numerical controls/parity passed; biological accuracy/cross-scale transfer unknown.",
+    "task": "Collagen MD derivative-oracle repair"
+   },
+   {
+    "job_id": "aijob-e00bqeswtkd7dexff4",
+    "owner": "infra_director",
+    "provider_state": "FAILED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "CPU-only4vCPU,3one-thread arms,3000s each; generic model, nofishcalibration. Prior local partial run retained.",
+    "task": "Morpheus full-horizon baseline/feedback-off/seed-repeat"
+   },
+   {
+    "job_id": "aijob-e00q8z2et1q0zf5qaq",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Allthree arms through originalt2;256/128/263 finalcells; genericmodel, nofishcalibration/convergence.",
+    "task": "Morpheus all-arm artifact recovery"
+   },
+   {
+    "job_id": "aijob-e00s3bqbccez3bjpm9",
+    "owner": "infra_director",
+    "provider_state": "FAILED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "GeometrymetadataSHA failed despite12matchingSTLs; noCFDran. Ownerdiagnosingexactmetadata difference; no gate relaxation.",
+    "task": "Controlled3D WaterLily first packet"
+   },
+   {
+    "job_id": "aijob-e00cz0vk0jepf7j2fc",
+    "owner": "infra_director",
+    "provider_state": "FAILED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "FrozenNNCPU/CUDAtolerance failed0.001191914>0.001; solverparitypassed;trainingblockedbeforeweights/holdouts.",
+    "task": "Conditional RD diffusion control, training and held-out evaluation"
+   },
+   {
+    "job_id": "aijob-e00m8v3m77z86n5ads",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Default cloud reproduces failed hash; disabling specified AVX512 dispatch matches original pin. Three float64 widths differ by1\u20132ULP; allSTLs already matched. N",
+    "task": "CFD candidate metadata CPU-only diagnosis"
+   },
+   {
+    "job_id": "aijob-e00qxektzctnk69zwg",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Three900psCUDAbranches,all33hashesand303savedstateschecked;originalcontrols pass;windowdriftFALSE,FALSE,TRUE retained.",
+    "task": "Exact-state molecular900ps conditional extensions"
+   },
+   {
+    "job_id": "aijob-e00k0jpm34h4na3b99",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Four controlled3D numerical cases,12pressure arrays,2actual videos; exactgeometry/platformgates pass. PhysicalsphereC1FAIL retained; noflightvalidation.",
+    "task": "Controlled3D GPU retry after exact metadata diagnosis"
+   },
+   {
+    "job_id": "aijob-e00qazx6sby3vav47b",
+    "owner": "infra_director",
+    "provider_state": "FAILED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Original1800s timeout/full-runFAIL. Exact30k-step finitecheckpoint and301logs recovered; no evaluation/examples. Training loss is not held-outperformance.",
+    "task": "DDPM default-vs-explicitFP32 control and conditional training"
+   },
+   {
+    "job_id": "aijob-e00qzdzsh5mj8pvbd2",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Five training-only configs,960rows returned. Independent full metric reproduction FAILED at66near-uniform power ratios; original ratios/modes retained; no conve",
+    "task": "Training-only RD five-point discretization audit"
+   },
+   {
+    "job_id": "aijob-e00fb6jhvdt12fgsje",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Exact checkpoint recovery, strict completeness passed; original primary timeout FAIL retained; no retraining or speedup claim.",
+    "task": "Exact-checkpoint evaluation-only recovery"
+   },
+   {
+    "job_id": "aijob-e00dw01t3zcsg4az55",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Structural coverage passes; strict exact-W1 metric audit FAILED, all raw metrics retained. No retraining.",
+    "task": "Preregistered exact-W1/amplitude-stratified secondary evaluation"
+   },
+   {
+    "job_id": "aijob-e00rhs6hdan4n57kv8",
+    "owner": "infra_director + mechanobio_sim",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": "results/resources/nca-completion.json",
+    "scope": "4 models x2000steps and52 evaluation runs completed;0/48 design predicates,4/4 absorbing negatives. Original metadata parse failure retained; exact outer/part a",
+    "task": "Four-model inverse NCA comparison"
+   },
+   {
+    "job_id": "aijob-e00jmvgx169vje8ywk",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": "results/resources/nca-seed-completion.json",
+    "scope": "No biological validation. Controls and negative outcomes retained.",
+    "task": "Seed-placement NCA controlled comparison"
+   },
+   {
+    "job_id": "aijob-e00dydgq6ps3hkzjfv",
+    "owner": "infra_director",
+    "provider_state": "FAILED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": "results/resources/cfd-h100-calibration-completion.json",
+    "scope": "No biological validation. Controls and negative outcomes retained.",
+    "task": "H100 cylinder controls and calibration only"
+   },
+   {
+    "job_id": "aijob-e00gjhtd6nk55b266v",
+    "owner": "infra_director",
+    "provider_state": "CANCELLED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Cancelled while IMAGE_PULLING before science after discovering silent warm-worker budget clamp; original failure retained.",
+    "task": "R2 frozen cylinder assay"
+   },
+   {
+    "job_id": "aijob-e00wmj8t8ndzvcpfja",
+    "owner": "infra_director admission / native or CFD owner interpretation",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Synthetic fin pattern, independently frozen200probes, not genomic or biological validation.",
+    "task": "Eight-model paired NCA damage curriculum"
+   },
+   {
+    "job_id": "aijob-e00mednyphzqff68gx",
+    "owner": "infra_director admission / native or CFD owner interpretation",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Exact original science archive and criteria; predecessor cancelled before science; all same-job controls required.",
+    "task": "R2 cylinder assay after explicit wrapper-budget repair"
+   },
+   {
+    "job_id": "aijob-e00rbmygvays5hjd49",
+    "owner": "infra_director admission / native or CFD owner interpretation",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Same source equations and criteria, CUDA backend explicitly declared; original CPU partials retained; no fish/flight validation.",
+    "task": "Separately declared CUDA R1/M1/R3 control comparison"
+   },
+   {
+    "job_id": "aijob-e00wfnzb38fccw6k57",
+    "owner": "infra_director",
+    "provider_state": "FAILED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "Native COMPILE_FAIL; no scientific cases; forty actual GPU samples all zero percent. No retry.",
+    "task": "Voxcraft modern CUDA compatibility control"
+   },
+   {
+    "job_id": "aijob-e00grxtt94bh26a9c0",
+    "owner": "infra_director",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
+    "receipt": null,
+    "scope": "One H100, six synthetic targets; two methods with equal 64 actual solver evaluations each. Same-job numerical gates precede endpoints; no biological claim.",
+    "task": "Six synthetic-target inverse Schnakenberg comparison"
+   }
+  ],
+  "tasks_note": "28 queue rows listed. This is the queue's own task list, not every provider job (see shared jobs), and a provider state is not a scientific outcome.",
+  "updated_utc": "2026-11-01T07:40:51.406740+00:00"
+ },
+ "recovery": {
+  "database_cutoff": {
+   "captured_utc": "2026-11-01T07:04:11.807435+00:00",
+   "event_rows": 1988,
+   "meaning": "Cutoff of the logical database copy. Writes after it are not in that copy.",
+   "raw_restore_counts_identical": true,
+   "record_versions": 3960,
+   "replay": "Prior actual separate-host application drill was older source/DB. This capture independently restored all files off-host and source bundle; fresh raw/sanitized database replay was local isolatedPG16, not a new application drill."
+  },
+  "failed_attempts_preserved": {
+   "service_drill_attempts": 3,
+   "stable_failed_captures": 2,
+   "studies_preparation_failures": 4
+  },
+  "later_work_note": "Receipts after the cutoffs above are not part of this view, including additive archives written since and a full current-release backup that is in progress. None is claimed complete here.",
+  "latest_file_and_source_checkpoint": {
+   "later_static_delta": {
+    "files_restored": 18,
+    "release_revision": "795f1405e9ebea4554d3c7e4d62b924742aab2ad",
+    "source_verified_utc": "2026-11-01T07:18:31.344526+00:00"
+   },
+   "off_host_file_restore": {
+    "capture_errors": 0,
+    "files_restored": 7601,
+    "verified_utc": "2026-11-01T07:10:54.489353+00:00"
+   },
+   "off_host_source_recovery": {
+    "fetch_exit": 0,
+    "required_revision": "d87e5d15094be6fe89704f8225b17d4719d07b3b",
+    "verified_utc": "2026-11-01T07:13:25.459385+00:00",
+    "verify_exit": 0
+   },
+   "release_revision": "d87e5d15094be6fe89704f8225b17d4719d07b3b",
+   "snapshot_created_utc": "2026-11-01T07:08:41.826644+00:00"
+  },
+  "not_established": [
+   "Application restore at the latest source and database",
+   "Restore without fresh credentials",
+   "A public-domain cutover",
+   "Anything written after the cutoffs above"
+  ],
+  "older_application_drill": {
+   "applies_to_latest_source_or_database": false,
+   "checks_passed": 7,
+   "checks_total": 7,
+   "finished_utc": "2026-11-01T04:36:58.365688+00:00",
+   "meaning": "A real application and MCP drill on a separate host, at this older source and database only. It does not cover the later source, records or media.",
+   "record_versions_at_that_cutoff": 3912,
+   "scope": "Disposable separate-host recovery only. No public-domain cutover or unrelated service changes.",
+   "source_sha": "8a1f0914ec86d7905f5d19a4d20ee70a8f5fd587",
+   "started_utc": "2026-11-01T04:36:20.922083+00:00",
+   "success": true
+  },
+  "remaining_per_source": {
+   "base": [
+    "Incremental snapshot after final corrected video publication and newer source/compute returns.",
+    "Fresh-host complete website/MCP rollout is not claimed; archive/source restore and isolated DB/application replay were exercised."
+   ],
+   "service": [
+    "Final additive snapshot with newer root refs, canonical BETSE and CFD return plus all actual drill logs.",
+    "Pending remote R2 and Google CPU state not yet returned; final checkpoints of completed CUDA arms were not exported.",
+    "Print-v4 not yet reviewed/ready at snapshot preparation; later additive capture required."
+   ],
+   "stable": [
+    "Print-v4 and new science videos are actively generated and explicitly deferred; capture after exact publication.",
+    "Original Google CPU cylinder worker still has bounded exports; states not yet returned are not claimed archived.",
+    "Unexported final CFD restart-state bytes and external model/genome dependencies remain explicitly inventoried.",
+    "Source/application changes and DB writes after the declared cutoffs require later additive capture."
+   ]
+  },
+  "snapshot_chain": [
+   {
+    "archive_sha256": "100e8bbbad91c1219b1489199d3d20c11b5a1dbe93656b78a98ac6fb165f3b94",
+    "capture_errors": 0,
+    "created_utc": "2026-11-01T03:51:13.986684+00:00",
+    "files": 14677,
+    "label": "base file archive",
+    "note": null,
+    "offhost_capture_errors": 0,
+    "offhost_file_restore_verified_utc": "2026-11-01T03:57:23.533875+00:00",
+    "offhost_files_restored": 14677
+   },
+   {
+    "archive_sha256": "4c8cfb98f3529fddb9cb2905c3942a1611cb456ac18283c731118821933d7501",
+    "capture_errors": 0,
+    "created_utc": "2026-11-01T04:12:25.897404+00:00",
+    "files": 15564,
+    "label": "service-drill archive",
+    "note": null,
+    "offhost_capture_errors": 0,
+    "offhost_file_restore_verified_utc": "2026-11-01T04:19:30.097528+00:00",
+    "offhost_files_restored": 15564
+   },
+   {
+    "archive_sha256": "d95096e63db197efa597c04ad8befee4f59d304a6b5ff1fe3ee78efa74d1e7e3",
+    "capture_errors": 0,
+    "created_utc": "2026-11-01T04:52:20.436113+00:00",
+    "files": 17486,
+    "label": "additive 20261101T0455",
+    "note": null,
+    "offhost_capture_errors": 0,
+    "offhost_file_restore_verified_utc": "2026-11-01T04:56:00.827801+00:00",
+    "offhost_files_restored": 17486
+   },
+   {
+    "archive_sha256": "f16301f7bbc2b7d960d70db6cb6e8ea62b02d07c445a051647c1f0071a1440b4",
+    "capture_errors": 0,
+    "created_utc": "2026-11-01T04:53:18.309737+00:00",
+    "files": 5,
+    "label": "additive 20261101T0500",
+    "note": null,
+    "offhost_capture_errors": 0,
+    "offhost_file_restore_verified_utc": "2026-11-01T04:53:38.533614+00:00",
+    "offhost_files_restored": 5
+   },
+   {
+    "archive_sha256": "d6d5b0f5c036412cb63ca18d29cea7e679dabe8265e016d0b28de74e22784317",
+    "capture_errors": 0,
+    "created_utc": "2026-11-01T06:04:42.046399+00:00",
+    "files": 561,
+    "label": "additive 20261101T0610",
+    "note": null,
+    "offhost_capture_errors": 0,
+    "offhost_file_restore_verified_utc": "2026-11-01T06:10:27.650670+00:00",
+    "offhost_files_restored": 561
+   },
+   {
+    "archive_sha256": "e62b472aaaf551a15c5993d9cfad1ab91d9dfbbda13e538ee72ffa1e2427fe11",
+    "capture_errors": 0,
+    "created_utc": "2026-11-01T06:12:02.294193+00:00",
+    "files": 18,
+    "label": "additive 20261101T0620",
+    "note": null,
+    "offhost_capture_errors": 0,
+    "offhost_file_restore_verified_utc": "2026-11-01T06:12:44.419342+00:00",
+    "offhost_files_restored": 18
+   },
+   {
+    "archive_sha256": "9dcde023bac4df0533da62b90d81f5edb84e452b6766967ca2c680d9f4327cfd",
+    "capture_errors": 0,
+    "created_utc": "2026-11-01T07:08:41.826644+00:00",
+    "files": 7601,
+    "label": "additive 0710",
+    "note": null,
+    "offhost_capture_errors": 0,
+    "offhost_file_restore_verified_utc": "2026-11-01T07:10:54.489353+00:00",
+    "offhost_files_restored": 7601
+   },
+   {
+    "archive_sha256": "941a92b10fb90f745441637106d977e94d58551ce8d9203371c79d409de6cf9b",
+    "capture_errors": 0,
+    "created_utc": "2026-11-01T07:15:17.559068+00:00",
+    "files": 18,
+    "label": "additive 0720 (static delta)",
+    "note": null,
+    "offhost_capture_errors": 0,
+    "offhost_file_restore_verified_utc": "2026-11-01T07:15:35.474973+00:00",
+    "offhost_files_restored": 18
+   }
+  ],
+  "status": "ok",
+  "summary": "Not one green state. Files, source commits and the database are restored on a separate host to different cutoffs; the full application was exercised only at an older source and database."
+ },
+ "runs": {
+  "groups": {
+   "completed": 18,
+   "failed": 6,
+   "other": 0,
+   "partial": 0
+  },
+  "meaning": "Provider job and process completion only. Container seconds include setup and emission; they are not billed time, GPU kernel time or a scientific pass. A failed or partial run stays listed.",
+  "recomputed_totals": {
+   "cpu": {
+    "jobs": 3,
+    "seconds": 153.6
+   },
+   "gpu": {
+    "jobs": 21,
+    "seconds": 17313.5
+   }
+  },
+  "rows": [
+   {
+    "container_seconds": 112.2,
+    "group": "completed",
+    "job_id": "aijob-e00saz7cewggkp50d2",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/aoa/manifest-infra12.json",
+    "receipt_sha256": "3030a9a7b2a25d7a206e95d26c895296acc74555f05cbc9790c1e3140b1e8d34",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 3323.3,
+    "group": "completed",
+    "job_id": "aijob-e00rbmygvays5hjd49",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/cfd-h100-arms-v2/manifest-infra34.json",
+    "receipt_sha256": "6a8a80b0e5b6f17e28f79fb37ac6f88715a2ea35a37711b2ad4f4743333b5089",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 765.3,
+    "group": "failed",
+    "job_id": "aijob-e00dydgq6ps3hkzjfv",
+    "kind": "gpu",
+    "provider_state": "FAILED",
+    "receipt": "results/infra/cfd-h100-calibration/manifest-infra29.json",
+    "receipt_sha256": "fd7e5770328ecf25a4abf697324bc197483938a3ac27a202df44ea16fb5f1675",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 4496.9,
+    "group": "completed",
+    "job_id": "aijob-e00mednyphzqff68gx",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/cfd-r2-h100-v2/manifest-infra32.json",
+    "receipt_sha256": "6559478af2feb4a9b73cab4e0d083f6ff143615d67f0ea794206f33f3c6a6009",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 45.6,
+    "group": "failed",
+    "job_id": "aijob-e00s3bqbccez3bjpm9",
+    "kind": "gpu",
+    "provider_state": "FAILED",
+    "receipt": "results/infra/cfd3d/manifest-infra18.json",
+    "receipt_sha256": "d32d778635308f3314bdece32c74fb69996e33eb0bb4c40c403d1c95c41aeaa0",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 6.2,
+    "group": "completed",
+    "job_id": "aijob-e00m8v3m77z86n5ads",
+    "kind": "cpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/cfd3d-diagnostic/manifest-infra20.json",
+    "receipt_sha256": "e38fe4ecb613629ff45a0875eef089ffdb60cf9d0c1f4147a5ffb856fa05120f",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 1549.0,
+    "group": "completed",
+    "job_id": "aijob-e00k0jpm34h4na3b99",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/cfd3d-v2/manifest-infra22.json",
+    "receipt_sha256": "82ac2b4b19d2624e5f4530896f3fc939b622b5299b97e8ccd61dd24cde1cef8c",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 269.6,
+    "group": "completed",
+    "job_id": "aijob-e00vga5krqxr3xxc94",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/cylinder/manifest-infra13.json",
+    "receipt_sha256": "f8f771a825cf58c4b7b67641ab15055ce559dcf0a6100d98bc6791440a7b2c63",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 5.0,
+    "group": "failed",
+    "job_id": "aijob-e00cz0vk0jepf7j2fc",
+    "kind": "gpu",
+    "provider_state": "FAILED",
+    "receipt": "results/infra/diffusion/manifest-infra19.json",
+    "receipt_sha256": "19147fcedd79f937dc6c7755f1917faff9cafde5b0ea36d758a327ef92976db6",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 388.8,
+    "group": "completed",
+    "job_id": "aijob-e00fb6jhvdt12fgsje",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/diffusion-recovery/manifest-infra25.json",
+    "receipt_sha256": "acdf01a6e656787164e1e6991fa6c9233b7089222e30fad06ad008cee2ad6928",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 243.7,
+    "group": "completed",
+    "job_id": "aijob-e00dw01t3zcsg4az55",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/diffusion-secondary/manifest-infra26.json",
+    "receipt_sha256": "f3d9df339656903261f13177e28151a5cf3ec3dc428a69465672e985c61ceaec",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 1830.9,
+    "group": "failed",
+    "job_id": "aijob-e00qazx6sby3vav47b",
+    "kind": "gpu",
+    "provider_state": "FAILED",
+    "receipt": "results/infra/diffusion-v2/manifest-infra23.json",
+    "receipt_sha256": "b85753825b09e27f1033f35b4e9137798f9902d0625a46d0f32ff098b61b0a1b",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 410.1,
+    "group": "completed",
+    "job_id": "aijob-e00h6cqxa1c7cwts6y",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/dt4/manifest-infra10.json",
+    "receipt_sha256": "378c2e9cdbc96cbc99259e80b8a2c39afbd520325d164852cfd83439b1df125c",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 126.3,
+    "group": "completed",
+    "job_id": "aijob-e00h8rra7x8ams6jyn",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/md-v2/manifest-infra15.json",
+    "receipt_sha256": "248f425157f91025db091f59cb1d862849d819b927c291b319ab51afa998c076",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 500.2,
+    "group": "completed",
+    "job_id": "aijob-e00qxektzctnk69zwg",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/md-v3/manifest-infra21.json",
+    "receipt_sha256": "884d3340969b9a000100450d14ec0d0faa0fb497ff918d786ed88a507fdf9455",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 59.7,
+    "group": "failed",
+    "job_id": "aijob-e00bqeswtkd7dexff4",
+    "kind": "cpu",
+    "provider_state": "FAILED",
+    "receipt": "results/infra/morpheus/manifest-infra16.json",
+    "receipt_sha256": "1a3f36f28892d08695eb62b9c79cf542d4a9b8ce7cdbb6963cbec484faa1bc73",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 87.7,
+    "group": "completed",
+    "job_id": "aijob-e00q8z2et1q0zf5qaq",
+    "kind": "cpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/morpheus-v2/manifest-infra17.json",
+    "receipt_sha256": "032bb505abbd28b9bbe7b7d3cee89350dc8303e62cc0c755eacbf58f65dd2864",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 723.8,
+    "group": "completed",
+    "job_id": "aijob-e00rhs6hdan4n57kv8",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/nca/recovered/manifest-infra27-recovery.json",
+    "receipt_sha256": "6d6d2ed704e0bd7ae58235f7aa41f25e6a829ed67f82e046b5fa5cfd131a4dfe",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 1523.9,
+    "group": "completed",
+    "job_id": "aijob-e00wmj8t8ndzvcpfja",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/nca-curriculum/manifest-infra31.json",
+    "receipt_sha256": "6c5b3bc3a81dd4d84c2bf047d048b0d874c488403ce214adddef84a5f8fe4398",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 743.1,
+    "group": "completed",
+    "job_id": "aijob-e00jmvgx169vje8ywk",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/nca-seed/manifest-infra28.json",
+    "receipt_sha256": "a012d3aae404b458533f59672d479957a7678ba19f4cfa35f918f606f13e7870",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 34.2,
+    "group": "completed",
+    "job_id": "aijob-e00se2hy8rdykbfrbf",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/p9-check/manifest-infra-p9-check.json",
+    "receipt_sha256": "d6208d5064d8e70236e60755ec9bdfe9924e6757c8021d36809fb3f10cf72e18",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 119.2,
+    "group": "completed",
+    "job_id": "aijob-e00cqbmnzwmvms8ayr",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/perturb/manifest-infra11.json",
+    "receipt_sha256": "6acd4c325047ba091a0d389d833db5e3dc3ab1175e7484cbb3e6470da33c1be4",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 63.3,
+    "group": "completed",
+    "job_id": "aijob-e00qzdzsh5mj8pvbd2",
+    "kind": "gpu",
+    "provider_state": "COMPLETED",
+    "receipt": "results/infra/rd-numerics/manifest-infra24.json",
+    "receipt_sha256": "2d563d675cc2fcf5f5a07e0287fdda77d1b0aeee761d03ea31ca43f82fb99704",
+    "timed_out": false,
+    "truncated": false
+   },
+   {
+    "container_seconds": 39.1,
+    "group": "failed",
+    "job_id": "aijob-e00wfnzb38fccw6k57",
+    "kind": "gpu",
+    "provider_state": "FAILED",
+    "receipt": "results/infra/voxcraft-probe/manifest-infra36.json",
+    "receipt_sha256": "e388362b698e96b4499648bfd9b7f3fb7399a6b1b29e56a2c818a8a23535fa98",
+    "timed_out": false,
+    "truncated": false
+   }
+  ],
+  "scope": "Subset of exact owned terminal controller receipts, including failures. Container duration includes setup and emission; it is not GPU kernel time or all historical usage. GCP VM time is excluded.",
+  "stated_totals": {
+   "cpu": {
+    "jobs": 3,
+    "seconds": 153.6
+   },
+   "gpu": {
+    "jobs": 21,
+    "seconds": 17313.5
+   }
+  },
+  "status": "ok",
+  "totals_match": true
+ },
+ "schema": "frontier.system-operations/1",
+ "scope": "A bounded projection of committed queue and receipt files, each pinned by sha256. It measures nothing and starts nothing.",
+ "shared_jobs": {
+  "attributed_to_this_team": 48,
+  "breakdown_sums_to_total": true,
+  "current_gpu_jobs": {
+   "other_or_unattributed": {},
+   "ours": {}
+  },
+  "earlier_team_exact_id_ledger": 15,
+  "earliest_listed_creation": "2026-10-31T01:46:14.195638Z",
+  "ledger_entries": 15,
+  "ledger_matches_breakdown": true,
+  "listed_total": 94,
+  "meaning": "Unattributed means no exact record attributes the job to this team. It does not say another team owns it. Jobs are counted, not owned: this page claims no authority over others' jobs and offers no cancel control.",
+  "observed_utc": "2026-11-01T07:39:28.658877+00:00",
+  "states_by_group": {
+   "other_or_unattributed": {
+    "CANCELLED": 2,
+    "COMPLETED": 18,
+    "FAILED": 11
+   },
+   "ours": {
+    "CANCELLED": 4,
+    "COMPLETED": 49,
+    "FAILED": 10
+   }
+  },
+  "status": "ok",
+  "unattributed": 31
+ },
+ "sources": [
+  {
+   "actual_sha256": "af978d4315edc3a0b1bbf0166609351957163d6cabb09e9c73b158a34a955435",
+   "historical_cutoff": false,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/infra/queue.json",
+   "id": "queue",
+   "observed": "2026-11-01T07:39:28.658877Z",
+   "path": "results/infra/queue.json",
+   "pinned_sha256": "af978d4315edc3a0b1bbf0166609351957163d6cabb09e9c73b158a34a955435",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "d18a9bfd0ce48fc491d3fc3f0c14a3869b5ecfe1749cb7813b9537d93a7c8912",
+   "historical_cutoff": false,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/hackathon-usage.json",
+   "id": "usage",
+   "observed": "2026-11-01T07:39:28.658877Z",
+   "path": "results/resources/hackathon-usage.json",
+   "pinned_sha256": "d18a9bfd0ce48fc491d3fc3f0c14a3869b5ecfe1749cb7813b9537d93a7c8912",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "6901748b19528bce19ff24b0561bdb44a66546553893c8e9146e84d39dced85f",
+   "historical_cutoff": false,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/resource-inventory.json",
+   "id": "inventory",
+   "observed": "2026-11-01T07:39:28.658877Z",
+   "path": "results/resources/resource-inventory.json",
+   "pinned_sha256": "6901748b19528bce19ff24b0561bdb44a66546553893c8e9146e84d39dced85f",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "a935b0a12e963e0f1733856eb4d85cb75d134d520478062bceff769579fc8233",
+   "historical_cutoff": false,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/shared-job-counts.json",
+   "id": "shared",
+   "observed": "2026-11-01T07:39:28.658877+00:00",
+   "path": "results/resources/shared-job-counts.json",
+   "pinned_sha256": "a935b0a12e963e0f1733856eb4d85cb75d134d520478062bceff769579fc8233",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "93ad1b561e3b0604e98f7b0b13b902c1f3437922fd1d7dcb8c39d3ffd14a226f",
+   "historical_cutoff": true,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/team-job-ownership.json",
+   "id": "ledger",
+   "observed": "2026-10-31T23:14:44.022065+00:00",
+   "path": "results/resources/team-job-ownership.json",
+   "pinned_sha256": "93ad1b561e3b0604e98f7b0b13b902c1f3437922fd1d7dcb8c39d3ffd14a226f",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "862e5fab170dcbbc67ff3ccb44ac93df4f78759c6effd57e1d7b15a4e5563443",
+   "historical_cutoff": null,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/terminal-runtime-receipts.json",
+   "id": "runtime",
+   "observed": null,
+   "path": "results/resources/terminal-runtime-receipts.json",
+   "pinned_sha256": "862e5fab170dcbbc67ff3ccb44ac93df4f78759c6effd57e1d7b15a4e5563443",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "2981d4b19d16d338c2c575402f557cc83db8026db52480c8c74b5b3baf3f4d8e",
+   "historical_cutoff": true,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/current-job-progress.json",
+   "id": "progress",
+   "observed": "2026-11-01T03:24:14.286425+00:00",
+   "path": "results/resources/current-job-progress.json",
+   "pinned_sha256": "2981d4b19d16d338c2c575402f557cc83db8026db52480c8c74b5b3baf3f4d8e",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "09fdd97dda0dad7723e9aef5ff5b5250db05be6a866124650c662742437a3c16",
+   "historical_cutoff": false,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/rd-inverse-completion.json",
+   "id": "rd_inverse",
+   "observed": "2026-11-01T07:38:11.998585+00:00",
+   "path": "results/resources/rd-inverse-completion.json",
+   "pinned_sha256": "09fdd97dda0dad7723e9aef5ff5b5250db05be6a866124650c662742437a3c16",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "bac3def0d10368d2c807e6af2c04ef6f72958f4e49d45aa80756bef9bd84332d",
+   "historical_cutoff": true,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/backup-recovery-20261101.json",
+   "id": "recovery_base",
+   "observed": "2026-11-01T03:57:23.533875+00:00",
+   "path": "results/resources/backup-recovery-20261101.json",
+   "pinned_sha256": "bac3def0d10368d2c807e6af2c04ef6f72958f4e49d45aa80756bef9bd84332d",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "41b15bf237e055146bb6909dc8bf175e668b3c588079978d526f0cca28c1e805",
+   "historical_cutoff": true,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/backup-recovery-service-20261101.json",
+   "id": "recovery_service",
+   "observed": "2026-11-01T04:36:58.365688+00:00",
+   "path": "results/resources/backup-recovery-service-20261101.json",
+   "pinned_sha256": "41b15bf237e055146bb6909dc8bf175e668b3c588079978d526f0cca28c1e805",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "1af043d9ba3b3535011bb7626a99a620a0d7bf9d3e5b5286f1faee85fe8cd24b",
+   "historical_cutoff": true,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/backup-recovery-stable-addons-20261101.json",
+   "id": "recovery_stable",
+   "observed": "2026-11-01T04:59:26.888315+00:00",
+   "path": "results/resources/backup-recovery-stable-addons-20261101.json",
+   "pinned_sha256": "1af043d9ba3b3535011bb7626a99a620a0d7bf9d3e5b5286f1faee85fe8cd24b",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "edb84ada1ac11e7fc6642a2a97fa7819dbdfb7d3ba938d1526673deb0c1d1188",
+   "historical_cutoff": true,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/backup-recovery-four-film-20261101.json",
+   "id": "recovery_films",
+   "observed": "2026-11-01T06:14:23.212126+00:00",
+   "path": "results/resources/backup-recovery-four-film-20261101.json",
+   "pinned_sha256": "edb84ada1ac11e7fc6642a2a97fa7819dbdfb7d3ba938d1526673deb0c1d1188",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "2991eeb007f592e1ab6e3e6c7bdd90f533946cd8dee9e67f0d4363b68cd07967",
+   "historical_cutoff": false,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/backup-recovery-studies-20261101.json",
+   "id": "recovery_studies",
+   "observed": "2026-11-01T07:15:35.474973+00:00",
+   "path": "results/resources/backup-recovery-studies-20261101.json",
+   "pinned_sha256": "2991eeb007f592e1ab6e3e6c7bdd90f533946cd8dee9e67f0d4363b68cd07967",
+   "status": "verified"
+  }
+ ],
+ "spend": {
+  "meaning": "Actual spend is unknown: no billing meter was queried and no estimate, zero or credit-based figure is inferred. Nothing is summed.",
+  "recorded_fields": [
+   {
+    "billed_figure": null,
+    "field": "cost",
+    "recorded": "Unknown. No dollar estimate or zero spend inferred from credits.",
+    "source": "usage"
+   },
+   {
+    "billed_figure": null,
+    "field": "cost",
+    "recorded": "Unknown. Zero worker creations from the two recorded failed launch attempts does not establish zero total project spend.",
+    "source": "inventory"
+   },
+   {
+    "billed_figure": null,
+    "field": "policies.provider_cost",
+    "recorded": "unknown",
+    "source": "queue"
+   },
+   {
+    "billed_figure": null,
+    "field": "gcp.cost",
+    "recorded": "no billed figure recorded",
+    "source": "queue"
+   }
+  ],
+  "status": "unknown",
+  "total": null
+ }
+}
