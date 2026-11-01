@@ -1,0 +1,460 @@
+{
+ "schema": "frontier.epithelial-horizon-protocol.v1",
+ "status": "FROZEN before any new outcome existed",
+ "relationship_to_previous": {
+  "preserves": "dff5e58 and every record, criterion and verdict in it, unchanged",
+  "cannot_do": "this study CANNOT reinterpret the previous FAIL as a pass. The fixed-horizon result stands on its own criteria. A horizon effect found here would be a new, separately scoped finding about observation horizon, not a revision of that one.",
+  "release": "belongs to a later release than the one carrying the 36-run and 240-run records"
+ },
+ "hypothesis": {
+  "H": "The closure thresholds measured at StopTime 1000 are unchanged when the observation horizon is extended 8x, for the parameter columns that set the minimum feasible spread.",
+  "tests_what": "observation-horizon dependence of the bracket positions, and only that",
+  "falsified_if": "any selected hi-side arrested arm closes at a horizon beyond 1000, which moves its bracket up a grid step",
+  "not_a_test_of": [
+   "whether lambda* is proportional to J (that is the frozen FAIL, untouched)",
+   "gap-size scaling (untested at this resolution; see card section 6)",
+   "anything biological. Model-time units are not calibrated tissue time."
+  ]
+ },
+ "selection": {
+  "rationale": {
+   "per_gap_columns": [
+    {
+     "gap": 4,
+     "J": 35.0,
+     "role": "sets max(lo/J): if its hi-side arm closes later the spread GROWS",
+     "brackets": {
+      "s1": [
+       0.4,
+       0.8
+      ],
+      "s2": [
+       0.4,
+       0.8
+      ],
+      "s3": [
+       0.4,
+       0.8
+      ]
+     }
+    },
+    {
+     "gap": 4,
+     "J": 560.0,
+     "role": "sets min(hi/J): if its hi-side arm closes later the spread SHRINKS",
+     "brackets": {
+      "s1": [
+       0.8,
+       1.6
+      ],
+      "s2": [
+       0.8,
+       1.6
+      ],
+      "s3": [
+       0.8,
+       1.6
+      ]
+     }
+    },
+    {
+     "gap": 7,
+     "J": 35.0,
+     "role": "sets max(lo/J): if its hi-side arm closes later the spread GROWS",
+     "brackets": {
+      "s1": [
+       0.2,
+       0.4
+      ],
+      "s2": [
+       0.2,
+       0.4
+      ],
+      "s3": [
+       0.2,
+       0.4
+      ]
+     }
+    },
+    {
+     "gap": 7,
+     "J": 560.0,
+     "role": "sets min(hi/J): if its hi-side arm closes later the spread SHRINKS",
+     "brackets": {
+      "s1": [
+       0.2,
+       0.4
+      ],
+      "s2": [
+       0.4,
+       0.8
+      ],
+      "s3": [
+       0.4,
+       0.8
+      ]
+     }
+    }
+   ],
+   "excluded": "the middle J columns cannot set the minimum feasible spread, so re-running them could not change the statistic under test"
+  },
+  "arms": 30,
+  "arm_ids": [
+   "S-k4-J35-lamV0.4-s1",
+   "S-k4-J35-lamV0.8-s1",
+   "S-k4-J35-lamV0.8-s2",
+   "S-k4-J35-lamV0.8-s3",
+   "S-k4-J35-lamV1.6-s1",
+   "S-k4-J35-lamV1.6-s2",
+   "S-k4-J35-lamV1.6-s3",
+   "S-k4-J560-lamV0.8-s1",
+   "S-k4-J560-lamV1.6-s1",
+   "S-k4-J560-lamV1.6-s2",
+   "S-k4-J560-lamV1.6-s3",
+   "S-k4-J560-lamV3.2-s1",
+   "S-k4-J560-lamV3.2-s2",
+   "S-k4-J560-lamV3.2-s3",
+   "S-k4-J560-lamV12.8-s1",
+   "S-k7-J35-lamV0.2-s1",
+   "S-k7-J35-lamV0.4-s1",
+   "S-k7-J35-lamV0.4-s2",
+   "S-k7-J35-lamV0.4-s3",
+   "S-k7-J35-lamV0.8-s1",
+   "S-k7-J35-lamV0.8-s2",
+   "S-k7-J35-lamV0.8-s3",
+   "S-k7-J560-lamV0.2-s1",
+   "S-k7-J560-lamV0.4-s1",
+   "S-k7-J560-lamV0.8-s1",
+   "S-k7-J560-lamV0.8-s2",
+   "S-k7-J560-lamV0.8-s3",
+   "S-k7-J560-lamV1.6-s2",
+   "S-k7-J560-lamV1.6-s3",
+   "S-k7-J560-lamV12.8-s1"
+  ]
+ },
+ "arms": [
+  {
+   "id": "S-k4-J35-lamV0.4-s1",
+   "gap_k": 4,
+   "J": 35.0,
+   "lambda_v": 0.4,
+   "seed": 1,
+   "role": "POSITIVE CONTROL: already CLOSED by 1000. Must close again, at the same sweep count, or the extension is not an extension"
+  },
+  {
+   "id": "S-k4-J35-lamV0.8-s1",
+   "gap_k": 4,
+   "J": 35.0,
+   "lambda_v": 0.8,
+   "seed": 1,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k4-J35-lamV0.8-s2",
+   "gap_k": 4,
+   "J": 35.0,
+   "lambda_v": 0.8,
+   "seed": 2,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k4-J35-lamV0.8-s3",
+   "gap_k": 4,
+   "J": 35.0,
+   "lambda_v": 0.8,
+   "seed": 3,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k4-J35-lamV1.6-s1",
+   "gap_k": 4,
+   "J": 35.0,
+   "lambda_v": 1.6,
+   "seed": 1,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k4-J35-lamV1.6-s2",
+   "gap_k": 4,
+   "J": 35.0,
+   "lambda_v": 1.6,
+   "seed": 2,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k4-J35-lamV1.6-s3",
+   "gap_k": 4,
+   "J": 35.0,
+   "lambda_v": 1.6,
+   "seed": 3,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k4-J560-lamV0.8-s1",
+   "gap_k": 4,
+   "J": 560.0,
+   "lambda_v": 0.8,
+   "seed": 1,
+   "role": "POSITIVE CONTROL: already CLOSED by 1000. Must close again, at the same sweep count, or the extension is not an extension"
+  },
+  {
+   "id": "S-k4-J560-lamV1.6-s1",
+   "gap_k": 4,
+   "J": 560.0,
+   "lambda_v": 1.6,
+   "seed": 1,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k4-J560-lamV1.6-s2",
+   "gap_k": 4,
+   "J": 560.0,
+   "lambda_v": 1.6,
+   "seed": 2,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k4-J560-lamV1.6-s3",
+   "gap_k": 4,
+   "J": 560.0,
+   "lambda_v": 1.6,
+   "seed": 3,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k4-J560-lamV3.2-s1",
+   "gap_k": 4,
+   "J": 560.0,
+   "lambda_v": 3.2,
+   "seed": 1,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k4-J560-lamV3.2-s2",
+   "gap_k": 4,
+   "J": 560.0,
+   "lambda_v": 3.2,
+   "seed": 2,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k4-J560-lamV3.2-s3",
+   "gap_k": 4,
+   "J": 560.0,
+   "lambda_v": 3.2,
+   "seed": 3,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k4-J560-lamV12.8-s1",
+   "gap_k": 4,
+   "J": 560.0,
+   "lambda_v": 12.8,
+   "seed": 1,
+   "role": "NEGATIVE CONTROL: deep in the arrested regime. If this closes, arrest is horizon-fragile everywhere and no bracket in the study is interpretable"
+  },
+  {
+   "id": "S-k7-J35-lamV0.2-s1",
+   "gap_k": 7,
+   "J": 35.0,
+   "lambda_v": 0.2,
+   "seed": 1,
+   "role": "POSITIVE CONTROL: already CLOSED by 1000. Must close again, at the same sweep count, or the extension is not an extension"
+  },
+  {
+   "id": "S-k7-J35-lamV0.4-s1",
+   "gap_k": 7,
+   "J": 35.0,
+   "lambda_v": 0.4,
+   "seed": 1,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k7-J35-lamV0.4-s2",
+   "gap_k": 7,
+   "J": 35.0,
+   "lambda_v": 0.4,
+   "seed": 2,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k7-J35-lamV0.4-s3",
+   "gap_k": 7,
+   "J": 35.0,
+   "lambda_v": 0.4,
+   "seed": 3,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k7-J35-lamV0.8-s1",
+   "gap_k": 7,
+   "J": 35.0,
+   "lambda_v": 0.8,
+   "seed": 1,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k7-J35-lamV0.8-s2",
+   "gap_k": 7,
+   "J": 35.0,
+   "lambda_v": 0.8,
+   "seed": 2,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k7-J35-lamV0.8-s3",
+   "gap_k": 7,
+   "J": 35.0,
+   "lambda_v": 0.8,
+   "seed": 3,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k7-J560-lamV0.2-s1",
+   "gap_k": 7,
+   "J": 560.0,
+   "lambda_v": 0.2,
+   "seed": 1,
+   "role": "POSITIVE CONTROL: already CLOSED by 1000. Must close again, at the same sweep count, or the extension is not an extension"
+  },
+  {
+   "id": "S-k7-J560-lamV0.4-s1",
+   "gap_k": 7,
+   "J": 560.0,
+   "lambda_v": 0.4,
+   "seed": 1,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k7-J560-lamV0.8-s1",
+   "gap_k": 7,
+   "J": 560.0,
+   "lambda_v": 0.8,
+   "seed": 1,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k7-J560-lamV0.8-s2",
+   "gap_k": 7,
+   "J": 560.0,
+   "lambda_v": 0.8,
+   "seed": 2,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k7-J560-lamV0.8-s3",
+   "gap_k": 7,
+   "J": 560.0,
+   "lambda_v": 0.8,
+   "seed": 3,
+   "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+  },
+  {
+   "id": "S-k7-J560-lamV1.6-s2",
+   "gap_k": 7,
+   "J": 560.0,
+   "lambda_v": 1.6,
+   "seed": 2,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k7-J560-lamV1.6-s3",
+   "gap_k": 7,
+   "J": 560.0,
+   "lambda_v": 1.6,
+   "seed": 3,
+   "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+  },
+  {
+   "id": "S-k7-J560-lamV12.8-s1",
+   "gap_k": 7,
+   "J": 560.0,
+   "lambda_v": 12.8,
+   "seed": 1,
+   "role": "NEGATIVE CONTROL: deep in the arrested regime. If this closes, arrest is horizon-fragile everywhere and no bracket in the study is interpretable"
+  }
+ ],
+ "horizon_schedule": {
+  "stop_time": 8000,
+  "observed_at": [
+   1000,
+   2000,
+   4000,
+   8000
+  ],
+  "one_trajectory_many_horizons": true,
+  "justification": "measured locally before freezing: a run at StopTime 2000 reproduces the StopTime 1000 run's logger BYTE-IDENTICALLY for t<=1000, so extending the stop time does not perturb the trajectory and one longer run legitimately carries several horizon observations. If the packet's reproduction control fails, this justification is void and no horizon reading may be taken."
+ },
+ "sample_times": {
+  "log_step": 10,
+  "must_equal_original": true,
+  "why": "a different logging cadence would change the sampled rows and make the t<=1000 reproduction control impossible to evaluate byte-wise"
+ },
+ "closure_definition": {
+  "operational": "gap_nodes(t) = 40000 - sum(cell.volume) over living cells at a logged time. An arm is CLOSED AT HORIZON h if gap_nodes reaches 0 at some logged t <= h.",
+  "per_arm": "every arm is classified on its own trajectory; no averaging across seeds",
+  "per_seed": "seeds are reported separately and never pooled into a mean before classification. A seed mean masked a shrinking arm once already (k=4, J=560, lambda_V=12.8: -3, -16, +22 with mean +1.0); that is why this is written into the protocol.",
+  "arrested_at_h": "not closed by horizon h. This is an observation, not permanent arrest, and not a bound on closure beyond h."
+ },
+ "bracketing_rules": {
+  "bracket_at_h": "per (gap, J, seed): lo = largest lambda_V CLOSED by h, hi = smallest lambda_V ARRESTED at h, requiring lo < hi",
+  "unresolved": "if no bracket exists inside the selected lambda_V set at horizon h, that cell is UNRESOLVED at h. UNRESOLVED is never a pass and is never dropped to let the remaining cells look consistent.",
+  "censoring": "an arm still shrinking at the final horizon is reported as censored at that horizon. Censoring is descriptive; a finite window bounds nothing about later closure.",
+  "nonmonotone": "if bracket positions do not move monotonically with h, that is reported as observed and is not smoothed",
+  "thresholds_as_intervals": "every threshold is reported as its bracketing interval. The geometric mean is a summary of that interval and is never reported alone as a measured threshold."
+ },
+ "reproduction_control": {
+  "requirement": "for every selected arm, the extended run's logger rows at t <= 1000 must be BYTE-IDENTICAL to the corresponding rows of that arm's native logger from the previous CPU run",
+  "columns": [
+   "time",
+   "cell.id",
+   "cell.center.x",
+   "cell.center.y",
+   "cell.volume",
+   "cell.surface"
+  ],
+  "roundoff_policy": "byte-identical text, no tolerance. Justified because the solver is deterministic for a fixed seed and the same pinned binary: measured before freezing, a local rerun of S-k4-J560-lamV1.6-s1 reproduced the VM's native logger byte for byte on different hardware. A numeric tolerance would hide exactly the nondeterminism this control exists to detect.",
+  "binary_and_environment": "the binary is pinned by sha256 and fetched by the packet, so it is identical. The host is NOT asserted identical; the control is what establishes that the difference did not matter.",
+  "on_failure": "if any arm's prefix does not reproduce, that arm's horizon readings are UNINTERPRETABLE and must be reported as such, not analysed. If more than one arm fails, the trajectory-reuse justification above is void for the whole packet and no horizon conclusion may be drawn from it."
+ },
+ "cardinality": {
+  "arms": 30,
+  "horizons_per_arm": 4,
+  "observations": 120,
+  "gaps": 2,
+  "j_columns_per_gap": 2,
+  "seeds": 3
+ },
+ "limits": {
+  "measured_basis": "6.85 s and 285 927 bytes per 1000 model-time units, peak RSS 10.8 MB, measured locally on one arm at StopTime 1000 and 2000 (linear in both)",
+  "projected_per_arm": {
+   "wall_s": 55,
+   "logger_bytes": 2287416
+  },
+  "projected_total": {
+   "cpu_s": 1650,
+   "output_mb": 68.6
+  },
+  "caps_requested": {
+   "vcpu": "4-8",
+   "memory": "<=12 GiB",
+   "threads_per_arm": 1,
+   "whole_tree_s": 1800,
+   "outputs_mb": 100
+  },
+  "headroom_note": "the projection sits well inside every cap; if the timing gate in the packet measures a materially slower rate the run should stop rather than expand"
+ },
+ "returns": [
+  "per-arm logger.csv",
+  "per-arm model.xml",
+  "per-arm stdout/exit",
+  "binary receipt (url, bytes, sha256, environment)",
+  "completeness audit over the exact declared ids",
+  "every skipped or failed arm, by id, preserved",
+  "NO lattice frames and therefore NO movie: centre/volume logs cannot be turned into cell shapes or a wound boundary, and none will be invented"
+ ],
+ "native_source": {
+  "return_dir": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c",
+  "manifest_sha256": "39f32c4d97c86aecab6e1dd02b3147cca8d029652ba2380adf99a10d06e116f7"
+ }
+}
