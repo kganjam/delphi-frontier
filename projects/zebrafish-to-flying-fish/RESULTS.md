@@ -233,7 +233,60 @@ evidence the gene is absent from *H. speculiger* — the assembly is scaffold-le
 a divergent or fragmented ortholog would look exactly like this. It is a limit on what can be designed:
 an edit aimed at "the Exocoetid `kcnh2a`" currently has no located target.
 
-## R4 — Cross-check of the Evo 2 harness's flying-fish windows (their action item (a))
+## R4 — Gene tree (analysis G2b): the kcnh2 collision is resolved, with a passing control
+
+Run as Nebius CPU job **`claude-zf2ff-kcnh-tree-1`** (`aijob-e00knz7gwwqck9nksp`), state read from the
+CLI as `COMPLETED`. Full manifest, software versions, input and output digests, and the quota refusal
+that forced a smaller preset: [`data/tree/MANIFEST.md`](data/tree/MANIFEST.md).
+
+| | |
+| --- | --- |
+| Method | MAFFT v7.505 `--auto` → IQ-TREE 2.0.7 maximum likelihood, `LG+G4`, 1000 ultrafast bootstrap + 1000 SH-aLRT replicates, `--seed 12345` |
+| Input | 20 proteins, sha256 `7ace646d…4697d051`, **re-hashed in-container to the same digest** |
+| Alignment | 1,915 columns; 566 constant, 925 parsimony-informative; log-likelihood −27133.2124 (s.e. 480.0026) |
+| Outputs | treefile sha256 `06c33bdd…3b2a51b8`, recovered from the job log and committed |
+| Analysis | `scripts/analyze_tree.py` → `data/tree/tree_analysis.json` |
+
+**The control was checked first and it passes.** The four predictions from JAGFBZ010001790.1 — the
+scaffold the reciprocal test called `kcnh6a`-like — form a clade with zebrafish `kcnh6a` and **nothing
+else**, support **94.4/97** (SH-aLRT/UFBoot). An independent method confirms that call, so the tree's
+placement of the ambiguous sequences carries weight.
+
+**The question is resolved.** The four predictions from the collision scaffold JAGFBZ010001591.1 form a
+clade (**99.8/100**) that is **sister to zebrafish `kcnh2b`** (**99/100**), with `kcnh2a` outside that
+pair (99.2/100):
+
+```
+(ZF_kcnh2a , (ZF_kcnh2b , (4 × HSPEC_ambiguous)99.8/100 )99/100 )99.2/100
+```
+
+So **the one `kcnh2`-like region detectable in `GCA_018398805.1` is `kcnh2b`-like**, and this project
+has found **no `kcnh2a`-like region** in it: the second-best scaffold is `kcnh6a`-like (§R3) and this
+one is `kcnh2b`-like.
+
+**What this does to the plan.** `kcnh2a` — the `longfin` gene, `PLAN.md`'s primary candidate — remains
+**unlocated** in the only public Exocoetidae assembly, and now for a sharper reason than "the method
+cannot tell": the best candidate region has been positively assigned elsewhere. Three readings of the
+same question now exist and they do not all agree, which is worth stating plainly:
+
+| Test | Verdict on the collision region | Design quality |
+| --- | --- | --- |
+| Forward mapping, percent identity (§R2) | `kcnh2b` (0.762 vs 0.610) | no control for paralogy |
+| Reciprocal test, alignment score (§R3) | `kcnh2a` on the longest prediction, by 631 | no outgroup, no control |
+| Reciprocal test, percent identity (§R3) | `kcnh2b` | same |
+| **Gene tree, this run** | **`kcnh2b`, 99/100, with a passing positive control** | outgroups + positive control |
+
+Two of three agree on `kcnh2b` and the one that disagrees is the weakest design. The tree is taken as
+the answer **because of its control**, not because it ran last.
+
+**Limitations that remain.** A gene tree places sequences; it does not establish orthology without
+synteny, which was not run. The four predictions come from one region, so they are not independent.
+The `kcnh2a` (1253 aa) vs `kcnh2b` (837 aa) length difference is uncontrolled. The inputs are miniprot
+predictions from an unannotated assembly, not transcripts. One run, one operator, not independently
+reviewed. And absence of a `kcnh2a`-like region in a fragmented scaffold-level assembly is **not**
+evidence that *Hirundichthys speculiger* lacks the gene.
+
+## R5 — Cross-check of the Evo 2 harness's flying-fish windows (their action item (a))
 
 `/data/artifacts/delphi-evolve-rethink/messages/evo-to-zf2ff.md` arrived during this session and asked
 for exactly this: its 9 flying-fish windows were placed by a CDS-only GeneWise ortholog model, this
@@ -286,7 +339,7 @@ than the *clean-window* half. That does not show their model was wrong: my `hoxd
 **weakest in my whole table** (coverage 0.824, identity 0.447), which is itself a reason a stricter
 ortholog model would decline it.
 
-## R5 — Inputs reused from other harnesses (their receipts, not ours)
+## R6 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
   Europe PMC retrievals, GRCz11 coordinates for 8 candidate genes, and OpenFold2 predicted structures
@@ -303,13 +356,16 @@ ortholog model would decline it.
 ## Failures and things not done
 
 - **No full text was read, for any source.** Every literature statement in `PLAN.md` is abstract-level.
-- Analyses G3–G6 in `PLAN.md` §3 were **not run**: no synteny analysis beyond recording scaffold
+- Analysis G2b was run as a Nebius CPU job and resolved the `kcnh2` collision (§R4). Analyses G3–G6
+  in `PLAN.md` §3 were **not run**: no synteny analysis beyond recording scaffold
   identity, no convergent-residue inspection, no conserved-element scan, no phylogenomic scan (the
   35-species data behind PMID 34534441 is not public here). G2 was run (§R3) and returned a
   resolution for the hedgehog collision and a **non-resolution** for the `kcnh2` collision.
-- No gene tree was built, which is what the `kcnh2` question actually needs, and no outgroup species
-  was used anywhere in this project.
-- No GPU job was submitted by this project. No Nebius job carries the `claude-zf2ff-` prefix.
+- No **synteny** analysis was built, which is what an orthology claim would still need beyond the
+  gene tree.
+- No **GPU** job was submitted by this project; the work it needed was CPU-bound. Two Nebius CPU jobs
+  carry the `claude-zf2ff-` prefix: `claude-zf2ff-kcnh-tree-1` (COMPLETED, §R4) and
+  `claude-zf2ff-motif-scan-1`.
 - The `lat4a` ↔ `slc43a2a`/`slc43a2b` identifier question is **unresolved**, and it blocks G4 and
   perturbation row P2.
 - The round-1 mapping was produced by a predecessor process; it was reviewed and its controls were

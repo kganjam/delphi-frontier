@@ -1,0 +1,2 @@
+windows_all.fa.gz.b64
+Reproduce the job input blob with: gzip -9 -c windows_all.fa | base64 -w0 > windows_all.fa.gz.b64

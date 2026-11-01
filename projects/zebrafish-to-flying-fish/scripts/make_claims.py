@@ -200,10 +200,20 @@ CLAIMS = [
         origin="source_statement",
     ),
     dict(
-        id="zf2ff-claim-kcnh2-paralog-unresolved",
-        title="The one kcnh2-like region found in the Hirundichthys speculiger assembly cannot be assigned to kcnh2a or kcnh2b",
+        id="zf2ff-claim-kcnh2-region-is-kcnh2b-like",
+        title="A gene tree with a passing positive control places the one kcnh2-like region of the Hirundichthys speculiger assembly with kcnh2b, not kcnh2a",
         statement=(
-            "Three computed tests leave the paralog identity of this region open. (1) Forward mapping: the "
+            "A maximum-likelihood protein gene tree (MAFFT v7.505 then IQ-TREE 2.0.7, LG+G4, 1000 "
+            "ultrafast bootstrap and 1000 SH-aLRT replicates, seed 12345, Nebius job "
+            "aijob-e00knz7gwwqck9nksp, state COMPLETED) places the four miniprot-predicted proteins from "
+            "JAGFBZ010001591.1 in a clade (support 99.8/100) sister to zebrafish kcnh2b (99/100), with "
+            "kcnh2a outside that pair (99.2/100). Its positive control passes: the four predictions from "
+            "JAGFBZ010001790.1, which an earlier reciprocal test called kcnh6a-like, form a clade with "
+            "zebrafish kcnh6a and nothing else (94.4/97). Therefore the one kcnh2-like region detectable "
+            "in this assembly is kcnh2b-like, and this project has located no kcnh2a-like region in it. "
+            "The three earlier readings of the same question did not agree, and the tree is taken as the "
+            "answer because it is the only one of them with an outgroup and a positive control. (1) "
+            "Forward mapping: the "
             "kcnh2a and kcnh2b queries best-hit the same region of JAGFBZ010001591.1 from the identical "
             "start coordinate 1301510, with kcnh2b at higher identity (0.762 vs 0.610). (2) Reciprocal "
             "test: miniprot --trans predicted 8 distinct proteins from that scaffold and each was aligned "
@@ -215,16 +225,20 @@ CLAIMS = [
             "accounted for: all 10 predicted proteins there rank kcnh6a first with margins 325-1544. By "
             "contrast the same reciprocal test resolves the shha/shhb collision cleanly, with 5 of 5 "
             "predicted proteins from JAGFBZ010001012.1 ranking shha first."),
-        context=("kcnh2a is this project's primary candidate locus for fin-size engineering, so an "
-                 "unresolved paralog assignment means the proposed edit has no located target in the only "
-                 "public Exocoetidae assembly. " + SCOPE),
+        context=("kcnh2a is this project's primary candidate locus for fin-size engineering (the longfin "
+                 "gene), so this means the proposed edit has no located target in the only public "
+                 "Exocoetidae assembly: the best candidate region has been positively assigned to the "
+                 "other paralog. " + SCOPE),
         assumptions=["ASSUMED: that a miniprot protein prediction from an unannotated assembly is a usable proxy for the protein the region encodes.",
                      "ASSUMED: that the 10 UniProt entries used represent the zebrafish kcnh family adequately; kcnh8a and kcnh8b were not retrievable and are missing."],
-        limitations=["This is a negative result about method resolution, not evidence that kcnh2a is absent from Hirundichthys speculiger. The assembly is scaffold-level and unannotated; a divergent or fragmented ortholog would look the same.",
-                     "No gene tree, no outgroup species and no synteny analysis was run, and a gene tree is what this question needs.",
-                     "Global BLOSUM62 score rewards aligning more of a longer protein, which is the likely mechanical cause of the score/identity disagreement; that explanation was not tested.",
-                     "Hypothesis offered and untested: the region holds more than one kcnh-like gene, or a collapsed or tandem duplication."],
-        source=computed_source("data/reciprocal/reciprocal_check.json"),
+        limitations=["Absence of a located kcnh2a-like region is NOT evidence that Hirundichthys speculiger lacks the gene. The assembly is scaffold-level and unannotated; a divergent or fragmented ortholog would look the same.",
+                     "A gene tree places sequences by substitution likelihood; it does not establish orthology without synteny, which was not run.",
+                     "The four predictions come from one genomic region, so they are not independent sequences and their own clade is partly an artefact of that.",
+                     "The zebrafish kcnh2a entry is 1253 aa and kcnh2b's is 837 aa; the tree does not control for the length difference, and that difference is the likely mechanical cause of the earlier score-vs-identity disagreement.",
+                     "The inputs are miniprot predictions from an unannotated assembly, not sequenced transcripts.",
+                     "kcnh8a and kcnh8b were not retrievable from UniProt, so the zebrafish family in the tree is 10 of its members, not all of them.",
+                     "One run, one operator, not independently reviewed."],
+        source=computed_source("data/tree/tree_analysis.json"),
         origin="derived",
     ),
     dict(

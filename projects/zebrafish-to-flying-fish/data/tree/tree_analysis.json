@@ -1,0 +1,83 @@
+{
+  "treefile": "data/tree/zf2ff_kcnh.treefile",
+  "method": "IQ-TREE 2.0.7 maximum likelihood, LG+G4, 1000 ultrafast bootstrap and 1000 SH-aLRT replicates, seed 12345, on a MAFFT v7.505 --auto alignment. Support shown as SH-aLRT/UFBoot percentages.",
+  "scope": "A protein gene tree over UniProt reference proteins and miniprot predictions from an unannotated assembly. It places sequences by substitution likelihood. It is not a synteny test and not evidence of expression or function.",
+  "n_tips": 20,
+  "tips": [
+    "ZF_kcnh5a",
+    "HUMAN_KCNH1_OUTGROUP",
+    "ZF_kcnh1b",
+    "ZF_kcnh1a",
+    "ZF_kcnh4a",
+    "ZF_kcnh3",
+    "ZF_kcnh7",
+    "ZF_kcnh6b",
+    "HSPEC_control_kcnh6alike_4_len1057_from_kcnh3",
+    "HSPEC_control_kcnh6alike_3_len1135_from_kcnh2a",
+    "HSPEC_control_kcnh6alike_2_len1144_from_kcnh7",
+    "HSPEC_control_kcnh6alike_1_len1199_from_kcnh6a",
+    "ZF_kcnh6a",
+    "HUMAN_KCNH2_OUTGROUP",
+    "HSPEC_ambiguous_3_len1052_from_kcnh7",
+    "HSPEC_ambiguous_2_len1154_from_kcnh6a",
+    "HSPEC_ambiguous_4_len818_from_kcnh2b",
+    "HSPEC_ambiguous_1_len1325_from_kcnh2a",
+    "ZF_kcnh2b",
+    "ZF_kcnh2a"
+  ],
+  "control": {
+    "question": "do the JAGFBZ010001790.1 predictions group with zebrafish kcnh6a?",
+    "smallest_clade_containing_the_4_controls": [
+      "HSPEC_control_kcnh6alike_1_len1199_from_kcnh6a",
+      "HSPEC_control_kcnh6alike_2_len1144_from_kcnh7",
+      "HSPEC_control_kcnh6alike_3_len1135_from_kcnh2a",
+      "HSPEC_control_kcnh6alike_4_len1057_from_kcnh3"
+    ],
+    "support_of_that_clade": "94.4/97",
+    "smallest_clade_containing_them_plus_ZF_kcnh6a": [
+      "HSPEC_control_kcnh6alike_1_len1199_from_kcnh6a",
+      "HSPEC_control_kcnh6alike_2_len1144_from_kcnh7",
+      "HSPEC_control_kcnh6alike_3_len1135_from_kcnh2a",
+      "HSPEC_control_kcnh6alike_4_len1057_from_kcnh3",
+      "ZF_kcnh6a"
+    ],
+    "contains_nothing_else": true,
+    "verdict": "PASS: the controls and zebrafish kcnh6a form a clade with nothing else in it"
+  },
+  "question": {
+    "question": "do the JAGFBZ010001591.1 predictions group with kcnh2a or kcnh2b?",
+    "smallest_clade_containing_the_4_predictions": [
+      "HSPEC_ambiguous_1_len1325_from_kcnh2a",
+      "HSPEC_ambiguous_2_len1154_from_kcnh6a",
+      "HSPEC_ambiguous_3_len1052_from_kcnh7",
+      "HSPEC_ambiguous_4_len818_from_kcnh2b"
+    ],
+    "support_of_that_clade": "99.8/100",
+    "clade_with_ZF_kcnh2b": [
+      "HSPEC_ambiguous_1_len1325_from_kcnh2a",
+      "HSPEC_ambiguous_2_len1154_from_kcnh6a",
+      "HSPEC_ambiguous_3_len1052_from_kcnh7",
+      "HSPEC_ambiguous_4_len818_from_kcnh2b",
+      "ZF_kcnh2b"
+    ],
+    "support_with_ZF_kcnh2b": "99/100",
+    "clade_with_ZF_kcnh2a": [
+      "HSPEC_ambiguous_1_len1325_from_kcnh2a",
+      "HSPEC_ambiguous_2_len1154_from_kcnh6a",
+      "HSPEC_ambiguous_3_len1052_from_kcnh7",
+      "HSPEC_ambiguous_4_len818_from_kcnh2b",
+      "ZF_kcnh2a",
+      "ZF_kcnh2b"
+    ],
+    "support_with_ZF_kcnh2a": "99.2/100",
+    "closer_zebrafish_paralog": "kcnh2b",
+    "verdict": "The predictions join ZF_kcnh2b in a clade of 5 tips, while joining ZF_kcnh2a requires a clade of 6 tips, so kcnh2b is the closer zebrafish paralog."
+  },
+  "caveats": [
+    "The four predictions come from ONE genomic region, so they are not independent sequences; their own clade is partly an artefact of being the same locus. The question is where that locus sits.",
+    "The zebrafish kcnh2a UniProt entry is 1253 aa and kcnh2b's is 837 aa. A length difference can affect alignment and branch length; the tree does not control for it.",
+    "A gene tree places a sequence; it does not establish orthology without synteny, which was not run.",
+    "The input proteins are miniprot predictions from an unannotated assembly, not sequenced transcripts.",
+    "This contradicts the alignment-SCORE ranking of the reciprocal test for the longest prediction, and agrees with its percent-identity ranking and with the forward mapping. The tree is the better-designed test of the three because it has an outgroup and a positive control, but it is still one test."
+  ]
+}

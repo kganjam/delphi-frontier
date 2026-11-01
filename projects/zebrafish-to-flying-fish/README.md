@@ -24,6 +24,8 @@ Nothing here demonstrates that a flying fish can be built.
 | [`SOURCES.md`](SOURCES.md) | Generated: 45 Europe PMC queries, 227 saved records, 154 distinct PMIDs, each with the request URL and response sha256. Read-level is `abstract` for every row. |
 | [`REVIEW.md`](REVIEW.md) | What an LLM critique found, which findings were verified and acted on, and which were rejected and why. |
 | [`claims/zf2ff-claims.json`](claims/zf2ff-claims.json) | 9 Claim and 3 Problem drafts, validated against `frontier/models.py`. Validated is not true (SPEC-001). |
+| [`data/tree/MANIFEST.md`](data/tree/MANIFEST.md) | Manifest for the Nebius gene-tree job: job id, preset, image, software versions, every input and output digest, and the quota refusal that forced a smaller preset. |
+| [`CROSSCHECK-EVO.md`](CROSSCHECK-EVO.md) | Generated: the Evo 2 harness's 9 flying-fish windows checked against this project's independent placements. |
 | `scripts/` | Everything that produced the above. |
 | `data/` | Verbatim API responses, ledgers with hashes, PAF alignments, and the machine-readable summaries. |
 
@@ -68,13 +70,14 @@ process; it is reviewed here, not re-run.
 3. **The plan designed the blade and forgot the root.** The pectoral girdle and fin musculature were
    missing until review caught it. They are plausibly the binding constraint and the
    worst-sourced part of the document.
-4. **A computed check killed a headline row, and the follow-up check could not revive it.** Paralog
-   controls run after review show the `kcnh2b` query aligning to the same region as `kcnh2a` at higher
-   identity. A reciprocal best-hit test then **resolved** the parallel `shha`/`shhb` collision cleanly
-   (5 of 5 predictions) but **failed to resolve** the `kcnh2` one: alignment score and percent identity
-   rank the same predicted sequence differently. So after three mapping rounds, a span audit and a
-   reciprocal test, the plan's primary candidate locus has no located target — reported as the
-   non-result it is, not rounded to a conclusion.
+4. **A computed check killed a headline row, and a gene tree then settled it against the plan.**
+   Paralog controls run after review showed the `kcnh2b` query aligning to the same region as
+   `kcnh2a`, at higher identity. A reciprocal best-hit test resolved the parallel `shha`/`shhb`
+   collision but not this one. A maximum-likelihood gene tree with human outgroups **and a positive
+   control that passes** (Nebius job `claude-zf2ff-kcnh-tree-1`) places that region with **`kcnh2b`**
+   at 99/100 support, `kcnh2a` outside. So the plan's primary candidate locus — `kcnh2a`, the
+   `longfin` gene — is **not located** in the only public Exocoetidae assembly, and the conclusion
+   went against the project's own working hypothesis.
 
 ## Status
 
