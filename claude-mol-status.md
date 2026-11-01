@@ -1,6 +1,6 @@
 # claude-mol status
-Updated: 2026-11-01 17:14 UTC / 09:14 PST
-Branch: claude/mol-sims-20261101, last commit 0f6ea3ea Collect the non-cognate Fgfr2 IIIc control MD: the sp (pushed)
+Updated: 2026-11-01 17:36 UTC / 09:36 PST
+Branch: claude/mol-sims-20261101, last commit 9357dec6 Withdraw the complex-MD null: the correlation is in t (pushed)
 
 ## Studio-scale contribution (gap report, 2026-11-01)
 Manifests written to site/artifacts/simulations/, each naming one project_scale and what it does NOT establish:
@@ -28,14 +28,32 @@ s3 local sensitivity; s4 OpenFold2 confidence; s5 Kcnk5b/Kcnj13 pump-leak sweep;
   replicas disagree on drift (-0.11 vs +0.98 A/ns), so 10 ns is NOT converged.
 - claude-mol-fgfnc-md-s1 aijob-e00nv1v66h5nrk4zpx: COMPLETED, collected. Non-cognate IIIc complex keeps 62% of its
   68 inter-chain contacts (cognate: 73% of 95) - the same range, so 10 ns interface persistence does NOT discriminate isoforms.
-- claude-mol-shhn-md40-20261105 aijob-e00j94wgv579ddn7g9: RUNNING (ShhN apo 40 ns, convergence replica A)
-- claude-mol-shhn-md40-20261106 aijob-e00kp81hkyhc9yb10p: RUNNING (ShhN apo 40 ns, convergence replica B)
+- claude-mol-shhn-md40-20261105 aijob-e00j94wgv579ddn7g9: FAILED at launch, and -20261106 aijob-e00kp81hkyhc9yb10p
+  CANCELLED by me as doomed the same way: the Nebius CLI's repeated --args OVERRIDES instead of appending, so the
+  "-c" was dropped and the container ran the script text as a filename. Relaunched through an injected runner:
+- claude-mol-shhn-md40b-20261105 aijob-e00s0swv95fj2pfjwj: RUNNING (ShhN apo 40 ns, convergence replica A)
+- claude-mol-shhn-md40b-20261106 aijob-e00grxxts2zagf2hk5: RUNNING (ShhN apo 40 ns, convergence replica B)
   Purpose: the 10 ns pair was NOT converged. Over 5 ns blocks both 10 ns replicas drift UP (+0.21, +0.32 A/ns),
   so the -0.11 A/ns last-2-ns figure in replica 1 was window noise, not a plateau. 40 ns x 2 tests whether the
   final block goes flat. Only 2 of my jobs run at once; no job I did not start has been touched.
 
 ## Blockers
 Manifest-based MCP tools (OpenMM/AF3/BioEmu2/stab_ddg): schema not published; MD moved to raw H100 jobs instead.
+
+## Round-2 review (gemini-4-argon) and what it changed
+Prompt: experiments/mol_sims/conclusions_round2.json; reply: results/.../gemini_review_conclusions_round2_gemini-4-argon.json.
+Four corrections made, all committed:
+1. s5 Kcnk5b: the arms were compared at DIFFERENT times (10 min vs 1 h). Re-read at matched times and screened against
+   Na_i 5-30 / K_i 100-150 mM, the recruitment arm is only physiological to x4 (+6.0 mV, not the -19 mV quoted at x8/1 h,
+   where Na_i reaches ~90 mM). That figure is WITHDRAWN. Signs still differ inside the usable window.
+2. Complex MD: pooling both chains was the wrong test. Split by chain, flexibility vs start-model pLDDT is strong in the
+   LIGAND INTERFACE residues in BOTH complexes (rho -0.697 and -0.703, R2 ~0.49, surviving Bonferroni over 14 groups).
+   The earlier "did not reproduce" null is WITHDRAWN.
+3. Contact retention now reported as a COUNT (69.5 vs 42.4 pairs, 1.64x), not only a fraction that made them look alike.
+4. A 5 ns-block slope is a weak convergence criterion (a drifting protein can pause); the frame-level test argon asked
+   for needs trajectory frames, which the job log does not return. Recorded as not done, not claimed.
+Still outstanding from the review: per-chain realignment of RMSF (needs frames) and a template-free refold, which is
+running now as the singleseq control.
 
 ## Findings that limit what may be claimed
 1. The non-cognate Fgfr2 IIIc control OUTSCORED the cognate IIIb complex (0.84 vs 0.77), and IIIc has the closer
@@ -51,5 +69,7 @@ Manifest-based MCP tools (OpenMM/AF3/BioEmu2/stab_ddg): schema not published; MD
 *.b64 inputs excluded. Status mirrored to /data/artifacts/delphi-evolve-rethink/claude-mol-status.md.
 
 ## Next
-Collect the two 40 ns replicas (~2.2 h each), run experiments/mol_sims/md_convergence.py over all four ShhN
-replicas, and correct the openmm-shhN-md manifest + README if the longer runs change the drift statement.
+1. Collect the two 40 ns replicas (~2.2 h each), run md_convergence.py over all four ShhN replicas, correct the
+   openmm-shhN-md manifest + README if the longer runs change the drift statement.
+2. Score the single-sequence Boltz-2 refolds of both complexes (argon's template control): does the IIIc > IIIb
+   inversion survive without a PDB70 alignment?

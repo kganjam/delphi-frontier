@@ -118,7 +118,8 @@ def alt_exon_check(fc):
 
 def main():
     res = {}
-    for t in ["shhN", "fgf_complex", "fgf_vs_fgfr2c_negctrl", "kcnk5b_dimer_openfold3", "kcnj13", "kcnj13_tetramer_openfold3"]:
+    for t in ["shhN", "fgf_complex", "fgf_vs_fgfr2c_negctrl", "kcnk5b_dimer_openfold3", "kcnj13", "kcnj13_tetramer_openfold3",
+              "fgf_complex_singleseq", "fgf_vs_fgfr2c_negctrl_singleseq"]:   # the last two: argon's template control, no PDB70 alignment
         if (SD / t / "receipt.json").exists() and json.loads((SD / t / "receipt.json").read_text()).get("final_status") == "SUCCEEDED":
             res[t] = analyze(t)
             m0 = res[t]["models"][0]

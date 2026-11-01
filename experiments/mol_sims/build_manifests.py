@@ -70,10 +70,13 @@ write(base("boltz2-shhN", "Predicted structure of zebrafish Shha signalling doma
 # --- macromolecular: Fgf10a-Fgfr2b with negative control ---
 fc, nc = S["fgf_complex"], S["fgf_vs_fgfr2c_negctrl"]
 ax = fc["interface_vs_alternative_exon"]
+sscp = R / "singleseq_control.json"
+SSC = json.loads(sscp.read_text()) if sscp.exists() else None
 write(base("boltz2-fgf10a-fgfr2b", "Predicted Fgf10a–Fgfr2b complex (Boltz-2) with a non-cognate Fgfr2c control that scored higher: no specificity signal",
            "macromolecular", SCOPE, "Boltz-2 complex prediction, 3 samples each, PDB70 MSA per chain",
            "Fgf10a core (Q8AY90 58-201) with Fgfr2 IIIb D2-D3 (F1RBT3 150-360); control: Fgfr2 IIIc D2-D3 (Q8JG38 150-362). IIIb chosen by alignment to human P21802-3 vs -1.",
-           [R / "structures/fgf_complex/receipt.json", R / "structures/fgf_complex/model_0.cif", R / "structures/fgf_vs_fgfr2c_negctrl/receipt.json", R / "structures/fgf_vs_fgfr2c_negctrl/model_0.cif", R / "structures/summary.json"],
+           [R / "structures/fgf_complex/receipt.json", R / "structures/fgf_complex/model_0.cif", R / "structures/fgf_vs_fgfr2c_negctrl/receipt.json", R / "structures/fgf_vs_fgfr2c_negctrl/model_0.cif", R / "structures/summary.json"]
+           + ([sscp, R / "structures/fgf_complex_singleseq/receipt.json", R / "structures/fgf_vs_fgfr2c_negctrl_singleseq/receipt.json"] if SSC else []),
            ["FGF10-FGFR2b isoform specificity (the non-cognate control scores higher)", "binding affinity or ddG", "that this complex forms in the zebrafish or flying-fish pectoral fin bud"],
            [{"name": "cognate IIIb: confidence / pTM / interface pLDDT (top)", "result": f"{fc['confidence_scores'][0]:.2f} / {fc['ptm_scores'][0]:.2f} / {fc['models'][0]['interface']['mean_plddt_interface']:.1f}"},
             {"name": "non-cognate IIIc control: confidence / pTM / interface pLDDT (top)", "result": f"{nc['confidence_scores'][0]:.2f} / {nc['ptm_scores'][0]:.2f} / {nc['models'][0]['interface']['mean_plddt_interface']:.1f}"},
@@ -81,10 +84,20 @@ write(base("boltz2-fgf10a-fgfr2b", "Predicted Fgf10a–Fgfr2b complex (Boltz-2) 
             {"name": "chain pLDDT A/B (cognate)", "result": f"{chain('fgf_complex')['A']['mean_plddt']:.1f} / {chain('fgf_complex')['B']['mean_plddt']:.1f}"},
             {"name": "closest PDB70 hit, receptor IIIb construct", "result": tmpl("fgfr2b_d2d3")},
             {"name": "closest PDB70 hit, receptor IIIc control construct", "result": tmpl("fgfr2c_d2d3")},
-            {"name": "likely cause of the control inversion", "result": "the non-cognate IIIc construct has the CLOSER template of the two, so template proximity, not biology, tracks the scores"}],
+            {"name": "template proximity as the suspected cause of the control inversion", "result": "the non-cognate IIIc construct has the CLOSER template of the two, which suggested template proximity rather than biology was tracking the scores - but the control below TESTS that and does not support it"}]
+           + ([{"name": "TEMPLATE CONTROL: both complexes refolded with a single-sequence MSA (no PDB70 alignment)",
+                "result": f"cognate {SSC['per_pair']['cognate_fgf10a_fgfr2b']['with_pdb70_msa']['top_confidence']} -> "
+                          f"{SSC['per_pair']['cognate_fgf10a_fgfr2b']['single_sequence']['top_confidence']}, non-cognate "
+                          f"{SSC['per_pair']['noncognate_fgf10a_fgfr2c']['with_pdb70_msa']['top_confidence']} -> "
+                          f"{SSC['per_pair']['noncognate_fgf10a_fgfr2c']['single_sequence']['top_confidence']}. The non-cognate complex "
+                          f"still scores higher; the gap only narrows from {SSC['inversion_gap_noncognate_minus_cognate']['with_pdb70_msa']} "
+                          f"to {SSC['inversion_gap_noncognate_minus_cognate']['single_sequence']}. The inversion is NOT explained by template proximity."},
+               {"name": "which chain the alignment was holding up", "result": SSC["where_the_confidence_lived"]}] if SSC else []),
            ["Confidence scores are not affinities; no ddG was computed (stab_ddg needs an undocumented upload manifest, blocked)."],
-           ["Would a deep (UniRef) MSA or AlphaFold3 discriminate IIIb from IIIc? Would MD separate them?"],
-           [lim_msa, "The negative control failed to discriminate, so the predictor is not informative about isoform choice here."]))
+           ["Would a deep (UniRef) MSA or AlphaFold3 discriminate IIIb from IIIc? Would MD separate them?",
+            "Why does the inversion survive removal of the MSA? A single-sequence input removes the alignment but not the model's learned structural memory, so memorisation is not excluded."],
+           [lim_msa, "The negative control failed to discriminate, so the predictor is not informative about isoform choice here.",
+            "The single-sequence control removes the MSA, not learned structural memory: the receptor chain still reaches above 80 pLDDT with no alignment."]))
 
 # --- macromolecular: Kcnk5b dimer ---
 kd = S["kcnk5b_dimer_openfold3"]; kc = chain("kcnk5b_dimer_openfold3")["A"]

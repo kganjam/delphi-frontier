@@ -1,0 +1,90 @@
+{
+ "answer": "Yes. Both complexes lose confidence without the MSA (cognate 0.767 -> 0.614, non-cognate 0.844 -> 0.66), but the non-cognate complex still scores HIGHER and the gap only narrows from 0.077 to 0.046. So the inversion is not an artefact of template proximity: it persists when the alignment is taken away. Either way the confidence carries no isoform-specificity signal, which is the conclusion that matters, and this control strengthens rather than weakens it.",
+ "caveat": "A single-sequence input removes the MSA, NOT the model's learned structural memory. The receptor holding above 80 pLDDT with no alignment is evidence of that memory, so this is a weaker control than a genuinely template-free predictor would be, and it cannot rule out memorisation.",
+ "inversion_gap_noncognate_minus_cognate": {
+  "single_sequence": 0.046,
+  "with_pdb70_msa": 0.077
+ },
+ "per_pair": {
+  "cognate_fgf10a_fgfr2b": {
+   "delta_chain_plddt": {
+    "A": -47.8,
+    "B": -11.2
+   },
+   "delta_confidence": -0.153,
+   "single_sequence": {
+    "chain_mean_plddt": {
+     "A": 38.9,
+     "B": 73.9
+    },
+    "interface_mean_plddt": 52.8,
+    "n_interface_residues": [
+     51,
+     62
+    ],
+    "target": "fgf_complex_singleseq",
+    "top_confidence": 0.614,
+    "top_ptm": 0.785
+   },
+   "with_pdb70_msa": {
+    "chain_mean_plddt": {
+     "A": 86.7,
+     "B": 85.1
+    },
+    "interface_mean_plddt": 71.7,
+    "n_interface_residues": [
+     37,
+     38
+    ],
+    "target": "fgf_complex",
+    "top_confidence": 0.767,
+    "top_ptm": 0.621
+   }
+  },
+  "noncognate_fgf10a_fgfr2c": {
+   "delta_chain_plddt": {
+    "A": -35.4,
+    "B": -0.7
+   },
+   "delta_confidence": -0.184,
+   "single_sequence": {
+    "chain_mean_plddt": {
+     "A": 52.8,
+     "B": 83.5
+    },
+    "interface_mean_plddt": 61.4,
+    "n_interface_residues": [
+     32,
+     35
+    ],
+    "target": "fgf_vs_fgfr2c_negctrl_singleseq",
+    "top_confidence": 0.66,
+    "top_ptm": 0.539
+   },
+   "with_pdb70_msa": {
+    "chain_mean_plddt": {
+     "A": 88.2,
+     "B": 84.2
+    },
+    "interface_mean_plddt": 73.4,
+    "n_interface_residues": [
+     36,
+     51
+    ],
+    "target": "fgf_vs_fgfr2c_negctrl",
+    "top_confidence": 0.844,
+    "top_ptm": 0.791
+   }
+  }
+ },
+ "question": "Does the non-cognate > cognate confidence inversion survive removal of the PDB70 alignment?",
+ "scope": "COMPUTED structure hypotheses; confidence is the model's self-assessment, not accuracy; nothing observed",
+ "source_files": {
+  "structures/fgf_complex/receipt.json": "f66acc5ddcfc5b342de84043cf3bedf982e4d8545921f13aa81acb4b95b30460",
+  "structures/fgf_complex_singleseq/receipt.json": "9b90b8a7b2407036361eba1acb26949139e616dd3468882949c44f81213557f4",
+  "structures/fgf_vs_fgfr2c_negctrl/receipt.json": "6e82822dc0f5bcd19a24fbf2f34e9e199e29bc1bd7cd205e178ce620ed7c164c",
+  "structures/fgf_vs_fgfr2c_negctrl_singleseq/receipt.json": "9f9075d2ecfa48c9950eecd193f573f9508249fc38db77dd8587e53b260a1fd2",
+  "structures/summary.json": "1ae4e5b1b223f524f042d12e351fdcf2601b84d722464efc76d96fc96151ccb6"
+ },
+ "where_the_confidence_lived": "The two chains behave very differently without an MSA. The Fgf10a ligand chain collapses (-47.8 and -35.4 mean pLDDT), while the Fgfr2 receptor chain barely moves (-11.2 and -0.7). The receptor's D2-D3 immunoglobulin fold is common in the training set, so the model reconstructs it from sequence alone; the ligand's confidence was alignment-dependent."
+}

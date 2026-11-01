@@ -211,6 +211,46 @@ def fold(c, target):
     print(target, rec["final_status"])
 
 
+def fold_single_seq(c, target):
+    """Boltz-2 on the SAME chains with a SINGLE-SEQUENCE a3m (query only, no PDB70 homologues).
+
+    gemini-4-argon's round-2 review asked for this control. With the PDB70 MSA, Boltz-2 scored the
+    NON-cognate Fgf10a-Fgfr2c complex higher than the cognate Fgf10a-Fgfr2b, and IIIc also has the
+    closer template (81 %/99 % vs 78 %/99 % identity x coverage). If the inversion is template/MSA
+    recall rather than interface chemistry, removing the alignment should change or flatten the
+    ordering. Everything else - chains, trims, sampling parameters - is held fixed.
+    """
+    d = OUT / f"{target}_singleseq"; d.mkdir(parents=True, exist_ok=True)
+    if (d / "receipt.json").exists() and json.loads((d / "receipt.json").read_text()).get("final_status") == "SUCCEEDED":
+        print(target, "singleseq done, skip"); return
+    polys, chain_ids = [], "ABCDEFGH"
+    for i, ch in enumerate(TARGETS[target]):
+        seq, _ = CHAINS[ch]
+        a3m = f">query_{ch}\n{seq}\n"
+        polys.append({"id": chain_ids[i], "molecule_type": "protein", "sequence": seq,
+                      "msa": {"msa_search": {"a3m": {"alignment": a3m, "format": "a3m"}}}})
+    key = sha(json.dumps(polys, sort_keys=True))
+    rec = {"tool": "boltz2_predict_native", "target": target, "msa_mode": "single sequence (query only), no PDB70 search",
+           "control_for": "whether the IIIc > IIIb confidence inversion tracks template/MSA recall",
+           "chains": {chain_ids[i]: {"name": ch, "source": CHAINS[ch][1], "sequence_sha256": sha(CHAINS[ch][0])} for i, ch in enumerate(TARGETS[target])},
+           "params": {"diffusion_samples": 3, "recycling_steps": 3, "sampling_steps": 200}, "seed_note": "runtime accepts no seed; nondeterministic",
+           "submitted_utc": utc(), "polls": [], "evidence_kind": "predicted",
+           "epistemic_status": "computed structure hypothesis (Boltz-2, single-sequence MSA); not observed, not function"}
+    args = {"polymers": polys, **rec["params"], "output_format": "mmcif", "wait_seconds": 30,
+            "idempotency_key": f"frontier-claude-mol-b2ss-{target}-{key[:20]}", "output_prefix": f"frontier/claude-mol/b2ss-{target}"}
+    rec["idempotency_key"] = args["idempotency_key"]
+    op = run_op(c, "boltz2_predict_native", args, rec)
+    if op and str(rec["final_status"]).upper() == "SUCCEEDED":
+        res, arts = fetch_result(c, op)
+        rec["result_summary"] = redact(res) if len(json.dumps(res)) < 200000 else {"keys": list(res)}
+        rec["artifacts"] = [m for m, _ in arts]
+        for i, (meta, data) in enumerate(arts):
+            (d / f"artifact_{i}").write_bytes(data)
+    rec["finished_utc"] = utc()
+    (d / "receipt.json").write_text(json.dumps(rec, indent=1, sort_keys=True) + "\n")
+    print(target, "singleseq", rec["final_status"])
+
+
 def fold_of3(c, target):
     """OpenFold3 (fixed seed 42, one sample) for targets Boltz-2 rejected (homodimer MSA identity check)."""
     d = OUT / f"{target}_openfold3"; d.mkdir(parents=True, exist_ok=True)
@@ -248,7 +288,7 @@ def main():
               c.tool_payload(c.call_tool("get_model_schema", {"model_id": names[0]})), indent=1)[:6000])
         return
     for n in names or (CHAINS if stage == "msa" else TARGETS):
-        {"msa": msa, "fold": fold, "of3": fold_of3}[stage](c, n)
+        {"msa": msa, "fold": fold, "of3": fold_of3, "singleseq": fold_single_seq}[stage](c, n)
 
 
 if __name__ == "__main__":
