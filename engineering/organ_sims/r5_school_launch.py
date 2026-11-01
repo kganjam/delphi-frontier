@@ -61,8 +61,11 @@ def rot(axis, deg):
     return np.eye(3) + math.sin(t) * K + (1 - math.cos(t)) * K @ K
 
 
-def build_model(cg_shift=0.0, decalage=2.0):
-    """Body-frame model (flight_model frame: x snout->tail, y left, z dorsal; origin snout), returns dict in CG frame."""
+def build_model(cg_shift=0.0, decalage=2.0, pec=(1.0, 1.0, 0.0)):
+    """Body-frame model (flight_model frame: x snout->tail, y left, z dorsal; origin snout), returns dict in CG frame.
+    pec = (area scale, aspect-ratio scale, root x shift m) of the pectoral pair, as in R2: span x sqrt(ka kar), chord x
+    sqrt(ka/kar), fin mass x ka, ballast and CG from R2's own config() rule so a design is the same object in both runs.
+    The default reproduces R5 exactly."""
     H = json.loads((C.ROOT / FM).read_text()); M = json.loads((C.ROOT / MAN).read_text())
     R3 = json.loads((C.ROOT / R3M).read_text())["results"]["geometry"]["v3a"]
     dry = H["assembled_dry"]; m_d = dry["mass_kg"]; cg_d = np.array(dry["cg_m"])
@@ -78,6 +81,23 @@ def build_model(cg_shift=0.0, decalage=2.0):
     def pa(mass, r):
         r = np.asarray(r); return mass * (r @ r * np.eye(3) - np.outer(r, r))
     I = I + pa(m_d, cg_d - cg) + pa(m_b, np.array([X_BALLAST, 0, cg_d[2]]) - cg)
+    ka, kar, dxp = pec
+    scaled = (ka, kar, dxp) != (1.0, 1.0, 0.0)
+    if scaled:
+        from engineering.organ_sims import r2_glide_sweep as R2
+        c2 = R2.config(R2.S_PEC0 * ka, R2.AR0 * kar, dxp, 0.8, V0, 0.0)
+        m_fin_extra = R2.m_pec2 * (ka - 1.0)
+        m_dry2 = c2["m_dry_kg"]
+        cg_dry2 = (c2["m_total_kg"] * c2["cg_final_m"] - c2["m_ballast_kg"] * X_BALLAST) / m_dry2
+        x_t2 = c2["cg_final_m"] + cg_shift                     # cg_shift moves the TARGET; ballast is recomputed
+        m_b = max(m_dry2 * (cg_dry2 - x_t2) / (x_t2 - X_BALLAST), 0.0)
+        m = m_dry2 + m_b
+        cg = np.array([(m_dry2 * cg_dry2 + m_b * X_BALLAST) / m, 0.0, cg_d[2]])
+        cg_d = np.array([cg_dry2, 0.0, cg_d[2]])
+        I = np.array(dry["inertia_cg_kg_m2"]) + pa(m_d, cg_d - cg) + pa(m_b, np.array([X_BALLAST, 0, cg_d[2]]) - cg)
+        pc = np.array([R2.cg_pec + dxp, 0.0, cg_d[2]])
+        for sgn in (1, -1):    # extra fin mass as two point masses at the scaled fin centroids (approximation)
+            I = I + pa(m_fin_extra / 2, pc + np.array([0, sgn * 0.06 * math.sqrt(ka * kar), 0]) - cg)
     surfaces = []
     S_wing = 0.0
     for s in H["lifting_surfaces"]:
@@ -91,12 +111,16 @@ def build_model(cg_shift=0.0, decalage=2.0):
         n = np.cross(ew, eu); n = n if n[2] > 0 else -n
         Rinc = rot(eu, inc)                        # leading edge (-x) up: right-hand rotation about the (~+y) span axis
         n = Rinc @ n; t = Rinc @ ew
+        sr, cr = (math.sqrt(ka * kar), math.sqrt(ka / kar)) if s["id"] == "pectoral" else (1.0, 1.0)
+        if s["id"] == "pectoral":
+            span, A = span * sr, A * ka
         for side in (1, -1):
             mir = np.array([1, side, 1])
-            r = (O + cen_uw[0] * eu + cen_uw[1] * ew) * mir
+            r = (O + cen_uw[0] * sr * eu + cen_uw[1] * cr * ew) * mir
             # force point = aerodynamic centre: spanwise at the area centroid, streamwise at the r4 manifest's
             # quarter-chord station of the mean chord (hand_neutral_point.<fin>.quarter_chord_x_mm), not the centroid
-            r[0] = hnp[s["id"]]["quarter_chord_x_mm"] * 1e-3
+            qx = hnp[s["id"]]["quarter_chord_x_mm"] * 1e-3
+            r[0] = O[0] + (qx - O[0]) * cr + (dxp if s["id"] == "pectoral" else 0.0)
             nn = n * mir; tt = t * mir
             AR_pair = (2 * span) ** 2 / (2 * A)
             surfaces.append({"id": f"{s['id']}_{'L' if side > 0 else 'R'}", "r": r - cg, "n": nn, "t": tt, "S": A, "AR": AR_pair,
@@ -115,7 +139,7 @@ def build_model(cg_shift=0.0, decalage=2.0):
                          "chord": g["streamwise_extent_m"], "CLa": helm(ar), "kind": "median"})
     body = {"S_wet": H["body"]["wetted_area_m2"], "L": 0.159, "vol": H["body"]["enclosed_volume_m3"],
             "FF": 1 + 1.5 * (math.sqrt(H["body"]["max_width_m"] * H["body"]["max_depth_m"]) / 0.159) ** 1.5}
-    return {"decalage_deg": decalage, "m": m, "m_ballast": m_b, "cg": cg, "I": I, "surfaces": surfaces, "S_wing": S_wing, "AR_wing": AR_wing, "b_wing": b_wing,
+    return {"pec": list(pec), "decalage_deg": decalage, "m": m, "m_ballast": m_b, "cg": cg, "I": I, "surfaces": surfaces, "S_wing": S_wing, "AR_wing": AR_wing, "b_wing": b_wing,
             "np_x": np_x, "mac": mac, "body": body, "width": H["body"]["max_width_m"], "depth": H["body"]["max_depth_m"]}
 
 

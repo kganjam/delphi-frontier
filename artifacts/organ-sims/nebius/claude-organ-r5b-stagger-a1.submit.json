@@ -1,0 +1,6 @@
+{"job_name": "claude-organ-r5b-stagger-a1", "job_id": "aijob-e00dg72tscvj43r3mc", "submitted_utc": "2026-11-01T15:37:29Z",
+ "platform": "gpu-l40s-a", "preset": "1gpu-40vcpu-160gb",
+ "why_gpu_platform": "non-GPU vCPU quota (24) was fully used by other jobs (create returned ResourceExhausted for cpu-d3 16vcpu); the workload is CPU-only PyBullet, the GPU is idle",
+ "image": "python:3.12.7-bookworm", "timeout": "2h", "disk": "50Gi",
+ "command": "bash /work/run_job.sh a422be6221b7ba1702c91eead51703098bb4a746 r5b-staggered-release engineering.organ_sims.r5b_stagger 16 38",
+ "injected": {"/work/run_job.sh": "engineering/organ_sims/nebius/run_job.sh"}, "code_commit": "a422be6221b7ba1702c91eead51703098bb4a746"}
