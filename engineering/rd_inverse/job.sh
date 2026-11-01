@@ -4,6 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."; OUT="${OUT:-out}"; mkdir -p "$OUT"
 python3 -m engineering.rd_inverse.design preflight
 [ "${PREFLIGHT:-0}" = "1" ] && exit 0
-python3 -m engineering.rd_inverse.design run --out "$OUT" --device cuda --require-cuda
-tar -czf "$OUT/rd_inverse_outputs.tgz" -C "$OUT" control.json targets.json targets.npz traces.json evaluated_fields.npz selection.json validation_controls.json independent_checks.json receipt.json
+timeout -k 10 900 python3 -m engineering.rd_inverse.design run --out "$OUT" --device cuda --require-cuda && rc=0 || rc=$?; echo "run exit=$rc (partial outputs retained)"
+tar -czf "$OUT/rd_inverse_outputs.tgz" -C "$OUT" $(cd "$OUT" && ls *.json *.npz)
 ls -l "$OUT"/rd_inverse_outputs.tgz; sha256sum "$OUT"/rd_inverse_outputs.tgz
+exit "$rc"

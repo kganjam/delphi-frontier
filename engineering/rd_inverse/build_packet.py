@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 FILES = ["engineering/__init__.py", "engineering/rd_inverse/__init__.py", "engineering/rd_inverse/design.py", "engineering/rd_inverse/job.sh",
-         "engineering/rd_inverse/protocol.json", "engineering/rd_inverse/PREREG.md", "engineering/rd_diffusion/rd_ddpm.py",
+         "engineering/rd_inverse/protocol.json", "engineering/rd_inverse/PREREG.md", "engineering/rd_inverse/ADDENDUM_1.md", "engineering/rd_diffusion/rd_ddpm.py",
          "engineering/rd_diffusion/config.json", "engineering/rd_numerics/__init__.py", "engineering/rd_numerics/audit.py"]
 OUT = ROOT / "artifacts/rd-inverse/packet"
 sha = lambda b: hashlib.sha256(b).hexdigest()
