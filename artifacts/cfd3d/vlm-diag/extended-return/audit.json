@@ -1,0 +1,522 @@
+{
+ "schema": "cfd3d-vlm-diag-return-audit-0.1",
+ "return_dir": "/home/ubuntu/scidex/data/scidex-artifacts/delphi-evolve-rethink/gcp/vlm-diagnostic-v1/frontier-cpu-20261031-04/final-63536de4539148309a1aadf02879bfaf",
+ "checks": {
+  "rehash": {
+   "listed": 18,
+   "mismatches": [],
+   "bytes": 564910,
+   "unlisted_on_disk": [
+    "collection_receipt.json"
+   ]
+  },
+  "inputs": {
+   "archive_sha256_matches": true,
+   "source_commit_matches": true,
+   "member_hash_mismatches": [],
+   "members": 9
+  },
+  "pins": {
+   "numpy_2.5.4_installed": true,
+   "per_process": {
+    "core-f3": {
+     "python": "3.12.3",
+     "numpy": "2.5.4",
+     "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+     },
+     "vlm_py": true,
+     "runner": true,
+     "contract": true,
+     "panels": true,
+     "addendum": true,
+     "mode": "extended",
+     "variant": "core",
+     "status": "complete",
+     "elapsed_s": 386.023533148
+    },
+    "repair-f3": {
+     "python": "3.12.3",
+     "numpy": "2.5.4",
+     "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+     },
+     "vlm_py": true,
+     "runner": true,
+     "contract": true,
+     "panels": true,
+     "addendum": true,
+     "mode": "extended",
+     "variant": "repair",
+     "status": "complete",
+     "elapsed_s": 349.20763905
+    },
+    "core-rest": {
+     "python": "3.12.3",
+     "numpy": "2.5.4",
+     "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+     },
+     "vlm_py": true,
+     "runner": true,
+     "contract": true,
+     "panels": true,
+     "addendum": true,
+     "mode": "extended",
+     "variant": "core",
+     "status": "complete",
+     "elapsed_s": 321.28640992
+    },
+    "repair-rest": {
+     "python": "3.12.3",
+     "numpy": "2.5.4",
+     "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+     },
+     "vlm_py": true,
+     "runner": true,
+     "contract": true,
+     "panels": true,
+     "addendum": true,
+     "mode": "extended",
+     "variant": "repair",
+     "status": "complete",
+     "elapsed_s": 225.009459131
+    }
+   }
+  },
+  "solves": {
+   "total": 372,
+   "per_arm": {
+    "core/R0_reproduce_owner07": {
+     "solves": 11,
+     "expected": 11,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/N1_mutant_collocation_quarter_chord": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/A1_elliptic_AR6_dense": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/A2_elliptic_AR4_dense": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/A3_rectangle_AR4": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/A4_elliptic_AR4_coarse7": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/A4_elliptic_AR4_coarse16": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/N2_notched_rectangle": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/F1_pectoral_L_isolated": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/F2_pelvic_L_isolated": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "core/F3_four_fins_combined": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/A1_elliptic_AR6_dense": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/A2_elliptic_AR4_dense": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/A3_rectangle_AR4": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/A4_elliptic_AR4_coarse7": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/A4_elliptic_AR4_coarse16": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/N2_notched_rectangle": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/F1_pectoral_L_isolated": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/F2_pelvic_L_isolated": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    },
+    "repair/F3_four_fins_combined": {
+     "solves": 19,
+     "expected": 19,
+     "identical_set": true,
+     "non_complete": [],
+     "non_finite": []
+    }
+   },
+   "core_arms": true,
+   "repair_arms": true
+  },
+  "R0": {
+   "16x8": {
+    "expected": 0.24219045883800855,
+    "returned": 0.24219045883800855,
+    "rel": 0.0
+   },
+   "24x8": {
+    "expected": 0.24943330625078972,
+    "returned": 0.24943330625078972,
+    "rel": 0.0
+   },
+   "32x8": {
+    "expected": 0.2498656853271448,
+    "returned": 0.2498656853271448,
+    "rel": 0.0
+   },
+   "36x8": {
+    "expected": 0.25087070393905925,
+    "returned": 0.25087070393905925,
+    "rel": 0.0
+   },
+   "48x8": {
+    "expected": 0.24852949109688166,
+    "returned": 0.24852949109688166,
+    "rel": 0.0
+   },
+   "64x8": {
+    "expected": 0.24796330001373817,
+    "returned": 0.24796330001373817,
+    "rel": 0.0
+   },
+   "32x4": {
+    "expected": 0.25016390827889173,
+    "returned": 0.25016390827889173,
+    "rel": 0.0
+   },
+   "32x6": {
+    "expected": 0.25004960368793716,
+    "returned": 0.25004960368793716,
+    "rel": 0.0
+   },
+   "32x9": {
+    "expected": 0.24975152326561603,
+    "returned": 0.24975152326561603,
+    "rel": 0.0
+   },
+   "32x12": {
+    "expected": 0.24929366359202546,
+    "returned": 0.24929366359202546,
+    "rel": 0.0
+   },
+   "32x16": {
+    "expected": 0.24832347898580515,
+    "returned": 0.24832347898580515,
+    "rel": 0.0
+   }
+  },
+  "rederivation": {
+   "decisions": {
+    "core/N1_flagged": {
+     "native": true,
+     "independent": true,
+     "same": true
+    },
+    "core/N2_flagged": {
+     "native": true,
+     "independent": true,
+     "same": true
+    },
+    "core/D_scheme": {
+     "native": "indicated",
+     "independent": "indicated",
+     "same": true
+    },
+    "core/D_law": {
+     "native": "unknown",
+     "independent": "unknown",
+     "same": true
+    },
+    "core/D_sampling": {
+     "native": "unknown",
+     "independent": "unknown",
+     "same": true
+    },
+    "core/D_interaction": {
+     "native": "confounded",
+     "independent": "confounded",
+     "same": true
+    },
+    "core/D_colloc": {
+     "native": "unknown",
+     "independent": "unknown",
+     "same": true
+    },
+    "core/invariance_rectangle": {
+     "native": true,
+     "independent": true,
+     "same": true
+    },
+    "core/addendum_N2_flagged": {
+     "native": false,
+     "independent": false,
+     "same": true
+    },
+    "core/fins_repaired": {
+     "native": {
+      "F1_pectoral_L_isolated": {
+       "span": "regular",
+       "chord": "irregular"
+      },
+      "F2_pelvic_L_isolated": {
+       "span": "regular",
+       "chord": "irregular"
+      },
+      "F3_four_fins_combined": {
+       "span": "regular",
+       "chord": "irregular"
+      }
+     },
+     "independent": {
+      "F1_pectoral_L_isolated": {
+       "span": "regular",
+       "chord": "irregular"
+      },
+      "F2_pelvic_L_isolated": {
+       "span": "regular",
+       "chord": "irregular"
+      },
+      "F3_four_fins_combined": {
+       "span": "regular",
+       "chord": "irregular"
+      }
+     },
+     "same": true
+    },
+    "extended/N1_flagged": {
+     "native": true,
+     "independent": true,
+     "same": true
+    },
+    "extended/N2_flagged": {
+     "native": true,
+     "independent": true,
+     "same": true
+    },
+    "extended/D_scheme": {
+     "native": "indicated",
+     "independent": "indicated",
+     "same": true
+    },
+    "extended/D_law": {
+     "native": "unknown",
+     "independent": "unknown",
+     "same": true
+    },
+    "extended/D_sampling": {
+     "native": "unknown",
+     "independent": "unknown",
+     "same": true
+    },
+    "extended/D_interaction": {
+     "native": "confounded",
+     "independent": "confounded",
+     "same": true
+    },
+    "extended/D_colloc": {
+     "native": "supported",
+     "independent": "supported",
+     "same": true
+    },
+    "extended/invariance_rectangle": {
+     "native": true,
+     "independent": true,
+     "same": true
+    },
+    "extended/addendum_N2_flagged": {
+     "native": true,
+     "independent": true,
+     "same": true
+    },
+    "extended/fins_repaired": {
+     "native": {
+      "F1_pectoral_L_isolated": {
+       "span_extended": "regular",
+       "chord_extended": "irregular"
+      },
+      "F2_pelvic_L_isolated": {
+       "span_extended": "regular",
+       "chord_extended": "irregular"
+      },
+      "F3_four_fins_combined": {
+       "span_extended": "regular",
+       "chord_extended": "irregular"
+      }
+     },
+     "independent": {
+      "F1_pectoral_L_isolated": {
+       "span_extended": "regular",
+       "chord_extended": "irregular"
+      },
+      "F2_pelvic_L_isolated": {
+       "span_extended": "regular",
+       "chord_extended": "irregular"
+      },
+      "F3_four_fins_combined": {
+       "span_extended": "regular",
+       "chord_extended": "irregular"
+      }
+     },
+     "same": true
+    }
+   },
+   "all_decisions_same": true,
+   "family_verdicts_compared": 76,
+   "family_verdicts_same": 76
+  },
+  "merged_arms_equal_process_arms": true,
+  "cross_host_vs_local_probes": {
+   "shared_points": 296,
+   "max_abs_rel": 0.0,
+   "bit_identical": 296
+  }
+ },
+ "decisions_independent": {
+  "core": {
+   "R0": true,
+   "N1_flagged": true,
+   "N2_flagged": true,
+   "D_scheme": "indicated",
+   "D_law": "unknown",
+   "D_sampling": "unknown",
+   "D_interaction": "confounded",
+   "D_colloc": "unknown",
+   "addendum_N2_flagged": false,
+   "invariance_rectangle": true,
+   "D_fins_after_repair_literal": "not_explained_by_H_colloc_chord_families_stay_irregular",
+   "fins_repaired": {
+    "F1_pectoral_L_isolated": {
+     "span": "regular",
+     "chord": "irregular"
+    },
+    "F2_pelvic_L_isolated": {
+     "span": "regular",
+     "chord": "irregular"
+    },
+    "F3_four_fins_combined": {
+     "span": "regular",
+     "chord": "irregular"
+    }
+   }
+  },
+  "extended": {
+   "R0": true,
+   "N1_flagged": true,
+   "N2_flagged": true,
+   "D_scheme": "indicated",
+   "D_law": "unknown",
+   "D_sampling": "unknown",
+   "D_interaction": "confounded",
+   "D_colloc": "supported",
+   "addendum_N2_flagged": true,
+   "invariance_rectangle": true,
+   "D_fins_after_repair_literal": "not_explained_by_H_colloc_chord_families_stay_irregular",
+   "fins_repaired": {
+    "F1_pectoral_L_isolated": {
+     "span_extended": "regular",
+     "chord_extended": "irregular"
+    },
+    "F2_pelvic_L_isolated": {
+     "span_extended": "regular",
+     "chord_extended": "irregular"
+    },
+    "F3_four_fins_combined": {
+     "span_extended": "regular",
+     "chord_extended": "irregular"
+    }
+   }
+  }
+ }
+}

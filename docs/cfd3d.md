@@ -184,6 +184,18 @@ Curated in `artifacts/cfd3d/gpu-v1/` with `receipt.json`. The transport hash was
     classifier's 1e-12 roundoff threshold counts 1e-6 plateaus as irregular.
   - `vlm.py` and every existing VLM output are unchanged. The extended CPU packet (`build_packet.py --vlmdiag`)
     was handed to infra and not submitted here.
+  - **Extended return (Google worker04, packet 36de63a5), independently audited** (`vlm_diag_audit.py`, which
+    reimplements the classification without importing the runner). Results are in
+    `artifacts/cfd3d/vlm-diag/extended-return/`: native copy, `audit.json`, `analysis.json`.
+    - Integrity: all 18 files rehash exactly, the inputs and pins match, all 372 solves are present, and R0
+      reproduces exactly.
+    - Re-derivation: 76/76 family verdicts and every decision agree. The 296 points shared with the local probes
+      are bit-identical.
+    - Verdicts kept as returned: core D_scheme indicated; D_law and D_sampling unknown; D_interaction confounded.
+      Addendum D_colloc is unknown on the core families and **supported** on the extended families.
+    - Beside "supported": its N2 flag rests on one 3.7e-4 sign change in the span tail. The unrepaired fins break
+      down at 48 chordwise panels (four-fin CL 0.242 → 0.127), while the repaired value holds at 0.2502. Under the
+      1e-12 rule, the fins' repaired chord plateaus (range about 8e-6) still read irregular.
 - **C1 is untouched.** The 3-D sphere gate C1 stays FAILED. A cylinder pass would not change it, and would not
   validate fins or flight.
 

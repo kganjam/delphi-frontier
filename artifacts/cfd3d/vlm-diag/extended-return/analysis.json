@@ -1,0 +1,107 @@
+{
+ "schema": "cfd3d-vlm-diag-return-analysis-0.1",
+ "audit_sha256": "52cee9aef25ceb09bf74b12c092e63c8d372576497ee8c95fbb0e4cffaf3e9fb",
+ "native_merged_sha256": "1b3c320f42903189637ce7a2f3fd4e6b5f9200458570b4b68628a5fdc6462671",
+ "verdicts_preserved": {
+  "core_contract_core_families": {
+   "precondition_R0": true,
+   "N1_flagged": true,
+   "N2_flagged": true,
+   "D_scheme": "indicated",
+   "D_law": "unknown",
+   "D_sampling": "unknown",
+   "D_interaction": "confounded"
+  },
+  "core_contract_extended_families": {
+   "precondition_R0": true,
+   "N1_flagged": true,
+   "N2_flagged": true,
+   "D_scheme": "indicated",
+   "D_law": "unknown",
+   "D_sampling": "unknown",
+   "D_interaction": "confounded"
+  },
+  "addendum_core_families": {
+   "D_colloc": "unknown"
+  },
+  "addendum_extended_families": {
+   "D_colloc": "supported"
+  },
+  "addendum_D_fins_after_repair_literal": {
+   "core": "not_explained_by_H_colloc_chord_families_stay_irregular",
+   "extended": "not_explained_by_H_colloc_chord_families_stay_irregular"
+  }
+ },
+ "audit_controls": {
+  "tamper": "copy of the return with one repaired A1 CL (32x48) +1e-3 and native extended D_colloc relabelled 'unknown': rehash flagged both files, merged-vs-process arms unequal, independent D_colloc 'refuted' vs native 'unknown' (disagreement flagged). Copy deleted afterwards.",
+  "cross_implementation_test": "tests/test_cfd3d.py::test_vlm_diag_audit_reimplementation_agrees_with_the_runner_classifier"
+ },
+ "caveats_beside_the_verdicts": {
+  "core_breakdown_at_fine_chord": {
+   "F1_core_CL_32x32_32x48": [
+    0.23738398868342006,
+    0.09232843001530859
+   ],
+   "F3_core_CL_32x32_32x48": [
+    0.2421233975554838,
+    0.12718757418710927
+   ],
+   "F3_repair_CL_32x32_32x48": [
+    0.25018035630329766,
+    0.25018073188988044
+   ]
+  },
+  "extended_N2_flag_margin": {
+   "repaired_N2_span_tail": {
+    "48": 0.2747769285357081,
+    "64": 0.27285831266441773,
+    "96": 0.27088569345964625,
+    "128": 0.2698630821527169,
+    "192": 0.269962782130223
+   },
+   "last_step_rel": 0.00036944652343985304,
+   "note": "the extended addendum's N2 flag, on which D_colloc 'supported' rests, comes from one sign change in the last span step (128 -> 192)"
+  },
+  "repaired_chord_plateaus": {
+   "A1_elliptic_AR6_dense": {
+    "verdict": "regular",
+    "tail_range_rel": 8.372992387802467e-06,
+    "core_tail_range_rel": 0.02740675488180303
+   },
+   "A2_elliptic_AR4_dense": {
+    "verdict": "regular",
+    "tail_range_rel": 1.6325585035714013e-05,
+    "core_tail_range_rel": 0.026630412774237288
+   },
+   "F1_pectoral_L_isolated": {
+    "verdict": "irregular",
+    "tail_range_rel": 8.025798227585306e-06,
+    "core_tail_range_rel": 0.720687962169548
+   },
+   "F2_pelvic_L_isolated": {
+    "verdict": "irregular",
+    "tail_range_rel": 8.401967092935696e-06,
+    "core_tail_range_rel": 0.2563483461524087
+   },
+   "F3_four_fins_combined": {
+    "verdict": "irregular",
+    "tail_range_rel": 8.669233198489051e-06,
+    "core_tail_range_rel": 0.5490260329399779
+   }
+  },
+  "classifier_limit": "the frozen 1e-12 roundoff rule classifies sub-1e-5 plateaus with noise-level sign changes as irregular; that is why the fins' repaired chord families (range ~8e-6) read 'irregular' and D_fins_after_repair reads 'not explained' when applied literally. No rule is changed here.",
+  "span_families": "every span_extended family except core and repaired N2 is regular, core and repaired, in the 32-192 range"
+ },
+ "resources_returned": {
+  "service_runtime": "6 min 28.9 s",
+  "cpu_time": "21 min 22.7 s",
+  "process_elapsed_s": {
+   "core-f3": 386.023533148,
+   "repair-f3": 349.20763905,
+   "core-rest": 321.28640992,
+   "repair-rest": 225.009459131
+  },
+  "memory": "the service's reported 4.4 MB peak cannot be the solver tree (6144-panel matrices are 302 MB); per-process memory was not measured in the return"
+ },
+ "scope": "rigid, fixed-alpha, inviscid VLM; analytic planforms and v3a fin panels; no CFD, coupling or biological claim; vlm.py unchanged"
+}

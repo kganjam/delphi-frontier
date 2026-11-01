@@ -1,0 +1,107 @@
+{
+ "addendum_sha256": "6a68b13da4a17e379507372c80df955681eee87896e50abacb90aee805ae921d",
+ "decisions_core": {
+  "precondition_R0": true,
+  "N1_flagged": true,
+  "N2_flagged": true,
+  "D_scheme": "indicated",
+  "D_law": "unknown",
+  "D_sampling": "unknown",
+  "D_interaction": "confounded"
+ },
+ "decisions_extended": {
+  "precondition_R0": true,
+  "N1_flagged": true,
+  "N2_flagged": true,
+  "D_scheme": "indicated",
+  "D_law": "unknown",
+  "D_sampling": "unknown",
+  "D_interaction": "confounded"
+ },
+ "addendum_core": {
+  "D_colloc": "unknown",
+  "invariance_rectangle": true,
+  "invariance_max_abs_rel": 0.0,
+  "N2_flagged": false,
+  "A1_A2_repaired_chord": {
+   "A1_elliptic_AR6_dense": "irregular",
+   "A2_elliptic_AR4_dense": "irregular"
+  },
+  "A1_A2_repaired_arm": {
+   "A1_elliptic_AR6_dense": "irregular",
+   "A2_elliptic_AR4_dense": "irregular"
+  },
+  "fins_repaired_by_family": {
+   "F1_pectoral_L_isolated": {
+    "span": "regular",
+    "chord": "irregular"
+   },
+   "F2_pelvic_L_isolated": {
+    "span": "regular",
+    "chord": "irregular"
+   },
+   "F3_four_fins_combined": {
+    "span": "regular",
+    "chord": "irregular"
+   }
+  },
+  "A1_repaired_law_check": {
+   "reference_helmbold_A6": 4.528663741470871,
+   "tolerance": 0.03,
+   "at": {
+    "96x8": {
+     "CL_alpha": 4.410509142732009,
+     "rel_err": -0.026090389016272364
+    },
+    "32x24": {
+     "CL_alpha": 4.450231459006835,
+     "rel_err": -0.017319078417282197
+    }
+   },
+   "pass": true
+  }
+ },
+ "addendum_extended": {
+  "D_colloc": "supported",
+  "invariance_rectangle": true,
+  "invariance_max_abs_rel": 0.0,
+  "N2_flagged": true,
+  "A1_A2_repaired_chord": {
+   "A1_elliptic_AR6_dense": "regular",
+   "A2_elliptic_AR4_dense": "regular"
+  },
+  "A1_A2_repaired_arm": {
+   "A1_elliptic_AR6_dense": "regular",
+   "A2_elliptic_AR4_dense": "regular"
+  },
+  "fins_repaired_by_family": {
+   "F1_pectoral_L_isolated": {
+    "span_extended": "regular",
+    "chord_extended": "irregular"
+   },
+   "F2_pelvic_L_isolated": {
+    "span_extended": "regular",
+    "chord_extended": "irregular"
+   },
+   "F3_four_fins_combined": {
+    "span_extended": "regular",
+    "chord_extended": "irregular"
+   }
+  },
+  "A1_repaired_law_check": {
+   "reference_helmbold_A6": 4.528663741470871,
+   "tolerance": 0.03,
+   "at": {
+    "96x8": {
+     "CL_alpha": 4.410509142732009,
+     "rel_err": -0.026090389016272364
+    },
+    "32x24": {
+     "CL_alpha": 4.450231459006835,
+     "rel_err": -0.017319078417282197
+    }
+   },
+   "pass": true
+  }
+ }
+}

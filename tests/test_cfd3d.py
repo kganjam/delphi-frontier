@@ -522,3 +522,13 @@ def test_vlm_diag_repair_moves_collocation_only_where_the_outline_bends():
     assert moved > 1e-6
     for k in ("A", "B", "N", "area"):
         assert d.repair_colloc(ell, *d.PLANAR[:3])[k] is ell[k]
+
+
+def test_vlm_diag_audit_reimplementation_agrees_with_the_runner_classifier():
+    """The return audit re-derives verdicts without importing vlm_diag; both must read the contract the same way."""
+    d, a = _load("vlm_diag"), _load("vlm_diag_audit")
+    for seq in ((1.0, 0.5, 0.25), (1.0, 0.5, 0.75), (1.0, 1.5, 2.5), (0.3, 0.3, 0.3), (1.0, 1.0, 1.1)):
+        assert a.status_of(*seq)[0] == d.triple(*seq)["status"]
+    tri, tail, ns = [[16, 32, 64], [24, 48, 96]], [24, 32, 48, 64, 96], [16, 24, 32, 48, 64, 96]
+    for vals in ({n: 1 + 1 / n for n in ns}, {n: 1 + 1e-4 * n for n in ns}, {n: 1 + (-1) ** n / n for n in ns}):
+        assert a.verdict(vals, tri, tail) == d.family(vals, tri, tri, tail)["verdict"]
