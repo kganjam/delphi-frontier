@@ -165,9 +165,43 @@ def stl_png(stl: Path, out: Path, cells: Path | None = None, title: str = ""):
     plt.close(fig)
 
 
+def offlattice_fig(summary: dict, out: Path, key: str = "trajectory"):
+    """Final Rg ratio and core-shell index vs A-A adhesion, one line per B/A ratio, for each (D, dt)."""
+    rows = summary["groups"]
+    combos = sorted({(r["D"], r["dt"]) for r in rows})
+    ratio_col = {1.0: "#2a78d6", 0.5: "#eb6834", 0.25: "#1baf7a"}
+    fig, axes = plt.subplots(2, len(combos), figsize=(3.3 * len(combos), 5.6), squeeze=False)
+    for j, (D, dt) in enumerate(combos):
+        for ratio, col in ratio_col.items():
+            rr = sorted([r for r in rows if r["D"] == D and r["dt"] == dt and (r["ratio"] == ratio or r["c_AA"] == 0)],
+                        key=lambda r: r["c_AA"])
+            if not rr:
+                continue
+            x = [r["c_AA"] for r in rr]
+            axes[0, j].errorbar(x, [r["rg_ratio_mean"] for r in rr], color=col, lw=1.6, marker="o", ms=4,
+                                label=f"c_BB/c_AA = {ratio:g}")
+            axes[1, j].errorbar(x, [r["final_core_shell_index_mean"] for r in rr],
+                                yerr=[r["final_core_shell_index_range"] / 2 for r in rr], color=col, lw=1.6, marker="o", ms=4, capsize=2)
+        axes[0, j].axhline(0.95, color=INK2, lw=0.8, ls="--")
+        axes[1, j].axhline(0.1, color=INK2, lw=0.8, ls="--")
+        axes[0, j].set_title(f"D={D:g}, dt={dt:g}", fontsize=9, color=INK, loc="left")
+        axes[1, j].set_xlabel("A–A adhesion strength c_AA")
+    axes[0, 0].set_ylabel("final Rg / initial Rg")
+    axes[1, 0].set_ylabel("final core–shell index")
+    axes[0, 0].legend(fontsize=7, frameon=False)
+    fig.suptitle(f"Off-lattice engine (N={summary['n_cells']} cells, 4 seeds per point): compaction and sorting vs adhesion",
+                 x=0.01, ha="left", color=INK, fontsize=11)
+    fig.text(0.01, 0.005, "dashed: 0.95 no-compaction line (top), 0.1 sorting threshold (bottom). " + SCOPE.replace("Morpheus 2.3.9 Cellular Potts", "PhysiCell-form potentials, PyTorch"),
+             fontsize=6.5, color=INK2)
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    fig.savefig(out, dpi=130)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("what", choices=["curves", "gif", "stl"])
+    ap.add_argument("what", choices=["curves", "gif", "stl", "offlattice"])
+    ap.add_argument("--summary"); ap.add_argument("--key")
     ap.add_argument("--runs"); ap.add_argument("--run"); ap.add_argument("--stl"); ap.add_argument("--cells")
     ap.add_argument("--title", default=""); ap.add_argument("--out", required=True)
     a = ap.parse_args()
@@ -175,5 +209,7 @@ if __name__ == "__main__":
         curves(Path(a.runs), Path(a.out))
     elif a.what == "gif":
         gif(Path(a.run), Path(a.out))
+    elif a.what == "offlattice":
+        offlattice_fig(json.loads(Path(a.summary).read_text())[a.key], Path(a.out))
     else:
         stl_png(Path(a.stl), Path(a.out), Path(a.cells) if a.cells else None, a.title)
