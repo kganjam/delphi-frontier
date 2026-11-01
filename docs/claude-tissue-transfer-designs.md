@@ -602,6 +602,19 @@ So the rule **L_p* ≈ 0.4 λ is an upper estimate** until refined runs bracket 
 a refined γ = 1 run at physical L_p = 3.5–4.5 (`claude-tissue-pzone-refine-g1`), and a refined γ = 2 run with a lower
 bracket (`claude-tissue-pzone-refine-g2b`).
 
+**Refined γ = 1** (`claude-tissue-pzone-refine-g1`, job `aijob-e00w7ytqha1g4er39e`, COMPLETED, 1589.7 s). Half cell
+size, v = 0.1 physical; distal A:
+
+| Physical L_p | 3.5 | 4.0 | 4.5 |
+|---|---|---|---|
+| Refined grid | −0.21 | 0.51 | 0.86 |
+| Coarse grid | — | −0.04 | 0.79 |
+
+- The refined switch is about **3.8 ≈ 0.35 λ**, against 4.25 on the coarse grid: a downward shift of about 10%.
+- With about 4 cells across the zone at γ = 1, grid sensitivity is moderate. It is larger at γ = 2, where the zone is
+  only 2–3 cells.
+- Refined γ = 2 (lower bracket) and refined γ = 0.5 runs are running (`claude-tissue-pzone-refine-g2b`, `-refine-g05`).
+
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
    the reviewer cites prior analyses such as Míguez et al. 2006 and Krause et al. 2021, which I have not checked here.
