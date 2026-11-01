@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).parent / "packet_files_horizon"))
 from check_reproduction import prefix_bytes  # noqa: E402
 
 SCRIPTS = ("run_packet.sh", "verify_packet.py", "audit_completeness.py",
-           "check_reproduction.py", "analyze_horizon.py")
+           "check_reproduction.py", "analyze_horizon.py", "check_probe.py")
 EDIT = ('<StopTime value="1000"/>', '<StopTime value="8000"/>')
 
 README = """Epithelial observation-horizon study (Morpheus v2.3.9, CPU only)

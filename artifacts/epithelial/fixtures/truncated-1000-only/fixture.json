@@ -1,0 +1,198 @@
+{
+ "schema": "frontier.epithelial-horizon-regression.v1",
+ "what": "The REAL original 1000-only native loggers of all 30 selected arms, staged as if they were a completed 8000 run. This is the exact input on which the packet at archive 9b9c0895 / source 3b1f17b produced a FALSE PASS.",
+ "demonstrated_false_pass": {
+  "reported_by": "infra admission review",
+  "reproduced_here": true,
+  "reproduction_rc": 0,
+  "analysis_rc": 0,
+  "headline": "SUPPORTED at these horizons: none of the 4 evaluable brackets moved",
+  "arms_falsely_marking_horizon_8000_observed": 30,
+  "actual_t_end": 1000.0,
+  "why": "analyze_horizon marked a horizon observed whenever any sample fell at or below it, so a trajectory ending at 1000 satisfied horizons 2000, 4000 and 8000. reached_full_horizon was computed and never used."
+ },
+ "must_now": "be REJECTED: no SUPPORTED headline, and the unobserved horizons must be named",
+ "source": "/data/artifacts/delphi-evolve-rethink/gcp/epithelial-j-scaling-v1/frontier-cpu-20261031-02/final-ae15a56498cc4a0e80ad1b00a7e7fc0c/science",
+ "arms": {
+  "S-k4-J35-lamV0.4-s1": {
+   "sha256": "a2c96f95009bae782c199d2a5eae284818f2c42f1bb6557beaf5e73c5c557661",
+   "bytes": 285904,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J35-lamV0.8-s1": {
+   "sha256": "d190ae9caa7437c1e7297cf25a6b41b6522554769180340b1b8e74f4eaa615f8",
+   "bytes": 285977,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J35-lamV0.8-s2": {
+   "sha256": "f2031045b0a8c8d3c4e996ff1e10323275502b431f2574aa4266ef4e79c5b792",
+   "bytes": 286152,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J35-lamV0.8-s3": {
+   "sha256": "8f9b985f9da761922a695527a749a58e8b82b5a70879d5fe8b1b3dd15ca24776",
+   "bytes": 286215,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J35-lamV1.6-s1": {
+   "sha256": "a75981fa33777a9a70d7e9a088182afe91274c8543bf17aa5cbfb0fc1a5134fd",
+   "bytes": 286194,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J35-lamV1.6-s2": {
+   "sha256": "b3d2c9a5dceb46ebcecf09393575a39da88d92061c97a24ed5847df51698c3c8",
+   "bytes": 286388,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J35-lamV1.6-s3": {
+   "sha256": "3b75f09c998b002d22f4212e200f4a3a4f1b613c099d08e2cd1969b8f92d786e",
+   "bytes": 286268,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J560-lamV0.8-s1": {
+   "sha256": "e61e5cd975047aff1ba83bb0cd3491bab94b819cdd593495832e7bf268430df1",
+   "bytes": 285756,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J560-lamV1.6-s1": {
+   "sha256": "b82c6413abc3eed1a8c7e661cf040a0635b0c4687073cc012ab64a8840ee5c2f",
+   "bytes": 285927,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J560-lamV1.6-s2": {
+   "sha256": "e645146521a55d10b0e5c7afe866a71a93ad18a57f2afe595499e3781ba91986",
+   "bytes": 285886,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J560-lamV1.6-s3": {
+   "sha256": "635a9dc8c1afa989cb4b97621e66063ca0a9698cda3a26c2f3d041b24af409e7",
+   "bytes": 285941,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J560-lamV3.2-s1": {
+   "sha256": "eec5e3e50059ad5400a211c1b618ff198524efee0a7d4ce65ce4371e4d2ab998",
+   "bytes": 286057,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J560-lamV3.2-s2": {
+   "sha256": "887bf59f2a3c6f90797a7b1bf6e410d00eb3cb8b860505ebc284a2703f8c4f15",
+   "bytes": 286078,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J560-lamV3.2-s3": {
+   "sha256": "68975598fa5032ba73c59252b6e46876ca4f0706fc711f45e0738d1bfc81eb1a",
+   "bytes": 286137,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k4-J560-lamV12.8-s1": {
+   "sha256": "88e01bf1892db72ece839b809894f99887cfa22c1787e2bddd9b28f9a4b9c732",
+   "bytes": 284939,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J35-lamV0.2-s1": {
+   "sha256": "725a7a9aaebbd617555e91f4b690a5127fadee8f70d0f449f1d62926f05a7348",
+   "bytes": 271470,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J35-lamV0.4-s1": {
+   "sha256": "c75e0e91ca1b54eb04bf09e2d727d141bda51839bd7bd577c39618fc48ea8c62",
+   "bytes": 271727,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J35-lamV0.4-s2": {
+   "sha256": "d6b8d033451cb2fa3a1a2b44b0eda5cbb853d75f1220afe77d5fe9423339d2cd",
+   "bytes": 271593,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J35-lamV0.4-s3": {
+   "sha256": "ef21db6d554383444f2b4a60d8c1d90b466339f37b9590875678792c7ea1c6c1",
+   "bytes": 271676,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J35-lamV0.8-s1": {
+   "sha256": "65d392bbe589c9d4882e4b92abac03d3881f8a04e3346e50c955b6b828e14ebd",
+   "bytes": 272042,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J35-lamV0.8-s2": {
+   "sha256": "8752e2d4ecac38a9672157c20703049f36e85b598f5c29adf0e27320681d99b3",
+   "bytes": 272025,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J35-lamV0.8-s3": {
+   "sha256": "2e5c1bd4aca867d193fbb0cce7c16ec7c4c069f389098d0da41f52e2e3b87225",
+   "bytes": 271933,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J560-lamV0.2-s1": {
+   "sha256": "f9161ce8cc8f718c789755e6ce6bce1c47cb0da0b36af55defe7e2de1303e6a7",
+   "bytes": 271456,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J560-lamV0.4-s1": {
+   "sha256": "f2b9b72c3c886a04cd860397e268dfe7782ab4f439bccf3f516b671c3afcdd09",
+   "bytes": 271579,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J560-lamV0.8-s1": {
+   "sha256": "49bfa2d520b50966e59aa07187f14a3cc214d03ce6b550a194ffc670652efeb2",
+   "bytes": 271697,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J560-lamV0.8-s2": {
+   "sha256": "5ec2340cd32f7d7c68edfe8d4268d70cdc48524e877fceaa36ad89e4b51ee769",
+   "bytes": 271849,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J560-lamV0.8-s3": {
+   "sha256": "3b17a834b140d40a2d3ec2ee44dd832cc7fdb999e48c12aca8dd80a463ae55e6",
+   "bytes": 271700,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J560-lamV1.6-s2": {
+   "sha256": "919759fe9cc4de150a977d2d0a14409e8913bb3cf1e3708ea54e1d63d63691ec",
+   "bytes": 271928,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J560-lamV1.6-s3": {
+   "sha256": "717c65231de193fb8553f45f944cb12afb61cca5b909f2181cad911ef66cb09a",
+   "bytes": 272015,
+   "t_end": 1000.0,
+   "n_times": 101
+  },
+  "S-k7-J560-lamV12.8-s1": {
+   "sha256": "0cbbe677d7f05f55ef5e6818f66e3c8317d23134ae5861890ca2e1e01e87e085",
+   "bytes": 270316,
+   "t_end": 1000.0,
+   "n_times": 101
+  }
+ }
+}

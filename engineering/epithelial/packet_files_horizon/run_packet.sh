@@ -63,30 +63,16 @@ sed 's|<StopTime value="8000"/>|<StopTime value="500"/>|' "$HERE/models/$FIRST.x
 S=$(date +%s.%N)
 ( cd "$GATE" && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
     timeout --kill-after=30 300 "$BIN" -f model.xml --no-gnuplot --num-threads 1 >stdout.log 2>&1 )
+probe_rc=$?
 E=$(date +%s.%N)
-python3 - "$S" "$E" "$HERE/arms.json" "$TIMING_GATE_FACTOR" "$JOB_TIMEOUT_S" "$WORKERS" "$OUT/timing-gate.json" <<'PY'
-import json, sys
-s, e, arms, factor, job_s, workers, out = sys.argv[1:]
-el = float(e) - float(s)
-n = len(json.load(open(arms)))
-rate = el / 500.0                      # seconds per 1000 model-time units is rate*1000
-per_arm = rate * 8000
-total_cpu = per_arm * n
-wall = total_cpu / max(int(workers), 1)
-declared = 55.0
-ok = per_arm <= declared * float(factor) and wall <= float(job_s)
-json.dump({"probe_stop_time": 500, "probe_wall_s": round(el, 2),
-           "projected_per_arm_s": round(per_arm, 1), "declared_per_arm_s": declared,
-           "projected_total_cpu_s": round(total_cpu, 1),
-           "projected_wall_s_at_workers": round(wall, 1), "workers": int(workers),
-           "job_timeout_s": float(job_s), "passed": ok,
-           "rule": "refuse if the measured per-arm projection exceeds declared x factor, or if "
-                   "the projected wall time exceeds the whole-tree bound"}, open(out, "w"), indent=1)
-print(f"timing gate: probe {el:.1f}s -> {per_arm:.0f}s/arm, {wall:.0f}s wall at {workers} workers; "
-      f"{'PASS' if ok else 'REFUSE'}")
-sys.exit(0 if ok else 4)
-PY
-[ $? -eq 0 ] || { echo "timing gate refused; not starting the scientific tree"; exit 4; }
+# A probe that FAILS also finishes fast. Exit status and real output are both required, or a
+# missing shared library would look like a very quick solver and sail through the projection.
+python3 "$HERE/check_probe.py" --start "$S" --end "$E" --arms "$HERE/arms.json" \
+        --factor "$TIMING_GATE_FACTOR" --job-timeout "$JOB_TIMEOUT_S" --workers "$WORKERS" \
+        --probe-exit "$probe_rc" --logger "$GATE/logger.csv" --stdout "$GATE/stdout.log" \
+        --report "$OUT/timing-gate.json"
+gate_rc=$?
+[ "$gate_rc" -eq 0 ] || { echo "timing gate refused (rc=$gate_rc); receipt at $OUT/timing-gate.json; not starting the scientific tree"; exit 4; }
 
 # ---- the arms -------------------------------------------------------------------------------
 run_one() {

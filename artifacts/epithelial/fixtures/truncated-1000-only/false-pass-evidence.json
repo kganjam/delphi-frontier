@@ -1,0 +1,1959 @@
+{
+ "schema": "frontier.epithelial-horizon-result.v1",
+ "criterion": {
+  "source_file": "analyze_horizon.py",
+  "criterion_sha256": "bc47039a782d6153d489389e5a4748fc39058382acf8529335239ca19d1e6f29",
+  "horizons": [
+   1000,
+   2000,
+   4000,
+   8000
+  ],
+  "hypothesis": "The closure thresholds measured at StopTime 1000 are unchanged when the observation horizon is extended 8x, for the parameter columns that set the minimum feasible spread.",
+  "falsified_if": "any selected hi-side arrested arm closes at a horizon beyond 1000, which moves its bracket up a grid step"
+ },
+ "scope": "observation-horizon dependence only. This report does NOT revisit the frozen fixed-horizon FAIL and cannot turn it into a pass.",
+ "arms_declared": 30,
+ "arms_read": 30,
+ "arms_missing": [],
+ "uninterpretable_by_reproduction": [],
+ "reproduction_verdict": "REPRODUCED",
+ "hypothesis_outcome": "SUPPORTED at these horizons: none of the 4 evaluable brackets moved",
+ "evaluable_cells": 4,
+ "outcome_is_vacuous_guarded": true,
+ "brackets_by_horizon": {
+  "k4-J35-s1": {
+   "1000": {
+    "state": "BRACKETED",
+    "lo": 0.4,
+    "hi": 0.8
+   },
+   "2000": {
+    "state": "BRACKETED",
+    "lo": 0.4,
+    "hi": 0.8
+   },
+   "4000": {
+    "state": "BRACKETED",
+    "lo": 0.4,
+    "hi": 0.8
+   },
+   "8000": {
+    "state": "BRACKETED",
+    "lo": 0.4,
+    "hi": 0.8
+   }
+  },
+  "k4-J35-s2": {
+   "1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "2000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "4000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "8000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   }
+  },
+  "k4-J35-s3": {
+   "1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "2000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "4000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "8000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   }
+  },
+  "k4-J560-s1": {
+   "1000": {
+    "state": "BRACKETED",
+    "lo": 0.8,
+    "hi": 1.6
+   },
+   "2000": {
+    "state": "BRACKETED",
+    "lo": 0.8,
+    "hi": 1.6
+   },
+   "4000": {
+    "state": "BRACKETED",
+    "lo": 0.8,
+    "hi": 1.6
+   },
+   "8000": {
+    "state": "BRACKETED",
+    "lo": 0.8,
+    "hi": 1.6
+   }
+  },
+  "k4-J560-s2": {
+   "1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "2000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "4000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "8000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   }
+  },
+  "k4-J560-s3": {
+   "1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "2000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "4000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "8000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   }
+  },
+  "k7-J35-s1": {
+   "1000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "2000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "4000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "8000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   }
+  },
+  "k7-J35-s2": {
+   "1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "2000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "4000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "8000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   }
+  },
+  "k7-J35-s3": {
+   "1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "2000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "4000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "8000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   }
+  },
+  "k7-J560-s1": {
+   "1000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "2000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "4000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "8000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   }
+  },
+  "k7-J560-s2": {
+   "1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "2000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "4000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "8000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   }
+  },
+  "k7-J560-s3": {
+   "1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "2000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "4000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "8000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   }
+  }
+ },
+ "bracket_motion": {
+  "k4-J35-s1": {
+   "baseline_1000": {
+    "state": "BRACKETED",
+    "lo": 0.4,
+    "hi": 0.8
+   },
+   "final": {
+    "state": "BRACKETED",
+    "lo": 0.4,
+    "hi": 0.8
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k4-J35-s2": {
+   "baseline_1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "final": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k4-J35-s3": {
+   "baseline_1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "final": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k4-J560-s1": {
+   "baseline_1000": {
+    "state": "BRACKETED",
+    "lo": 0.8,
+    "hi": 1.6
+   },
+   "final": {
+    "state": "BRACKETED",
+    "lo": 0.8,
+    "hi": 1.6
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k4-J560-s2": {
+   "baseline_1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "final": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k4-J560-s3": {
+   "baseline_1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "final": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k7-J35-s1": {
+   "baseline_1000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "final": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k7-J35-s2": {
+   "baseline_1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "final": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k7-J35-s3": {
+   "baseline_1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "final": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k7-J560-s1": {
+   "baseline_1000": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "final": {
+    "state": "BRACKETED",
+    "lo": 0.2,
+    "hi": 0.4
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k7-J560-s2": {
+   "baseline_1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "final": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "moved": false,
+   "monotone": true
+  },
+  "k7-J560-s3": {
+   "baseline_1000": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "final": {
+    "state": "UNRESOLVED",
+    "why": "none of the selected lambda_V closed",
+    "note": "UNRESOLVED is not a pass and is not dropped"
+   },
+   "moved": false,
+   "monotone": true
+  }
+ },
+ "controls": {
+  "S-k4-J35-lamV0.4-s1": {
+   "kind": "positive",
+   "passed": true,
+   "requirement": "must still close by horizon 1000",
+   "closure_time": 240.0
+  },
+  "S-k4-J560-lamV0.8-s1": {
+   "kind": "positive",
+   "passed": true,
+   "requirement": "must still close by horizon 1000",
+   "closure_time": 480.0
+  },
+  "S-k4-J560-lamV12.8-s1": {
+   "kind": "negative",
+   "passed": true,
+   "requirement": "must NOT close by the final horizon",
+   "gap_at_final": 1775.0
+  },
+  "S-k7-J35-lamV0.2-s1": {
+   "kind": "positive",
+   "passed": true,
+   "requirement": "must still close by horizon 1000",
+   "closure_time": 450.0
+  },
+  "S-k7-J560-lamV0.2-s1": {
+   "kind": "positive",
+   "passed": true,
+   "requirement": "must still close by horizon 1000",
+   "closure_time": 880.0
+  },
+  "S-k7-J560-lamV12.8-s1": {
+   "kind": "negative",
+   "passed": true,
+   "requirement": "must NOT close by the final horizon",
+   "gap_at_final": 3662.0
+  }
+ },
+ "censored_at_final_horizon": {
+  "arms": {
+   "S-k4-J35-lamV0.8-s1": 126.0,
+   "S-k4-J35-lamV0.8-s2": 148.0,
+   "S-k4-J35-lamV1.6-s1": 68.0,
+   "S-k4-J35-lamV1.6-s2": 53.0,
+   "S-k4-J35-lamV1.6-s3": 35.0,
+   "S-k7-J35-lamV0.4-s2": 150.0,
+   "S-k7-J35-lamV0.4-s3": 6.0,
+   "S-k7-J35-lamV0.8-s1": 47.0,
+   "S-k7-J35-lamV0.8-s3": 116.0,
+   "S-k7-J560-lamV0.2-s1": 281.0,
+   "S-k7-J560-lamV0.4-s1": 613.0,
+   "S-k7-J560-lamV0.8-s1": 91.0,
+   "S-k7-J560-lamV0.8-s2": 46.0,
+   "S-k7-J560-lamV0.8-s3": 8.0
+  },
+  "note": "still shrinking at the final horizon. Descriptive: a finite window bounds nothing about closure beyond it."
+ },
+ "per_arm": {
+  "S-k4-J35-lamV0.4-s1": {
+   "spec": {
+    "id": "S-k4-J35-lamV0.4-s1",
+    "gap_k": 4,
+    "J": 35.0,
+    "lambda_v": 0.4,
+    "seed": 1,
+    "role": "POSITIVE CONTROL: already CLOSED by 1000. Must close again, at the same sweep count, or the extension is not an extension"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 240.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 240.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 240.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 240.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J35-lamV0.8-s1": {
+   "spec": {
+    "id": "S-k4-J35-lamV0.8-s1",
+    "gap_k": 4,
+    "J": 35.0,
+    "lambda_v": 0.8,
+    "seed": 1,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 506.0,
+     "delta_last_20pct": 126.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 506.0,
+     "delta_last_20pct": 126.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 506.0,
+     "delta_last_20pct": 126.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 506.0,
+     "delta_last_20pct": 126.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J35-lamV0.8-s2": {
+   "spec": {
+    "id": "S-k4-J35-lamV0.8-s2",
+    "gap_k": 4,
+    "J": 35.0,
+    "lambda_v": 0.8,
+    "seed": 2,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 314.0,
+     "delta_last_20pct": 148.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 314.0,
+     "delta_last_20pct": 148.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 314.0,
+     "delta_last_20pct": 148.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 314.0,
+     "delta_last_20pct": 148.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J35-lamV0.8-s3": {
+   "spec": {
+    "id": "S-k4-J35-lamV0.8-s3",
+    "gap_k": 4,
+    "J": 35.0,
+    "lambda_v": 0.8,
+    "seed": 3,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 694.0,
+     "delta_last_20pct": -186.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 694.0,
+     "delta_last_20pct": -186.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 694.0,
+     "delta_last_20pct": -186.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 694.0,
+     "delta_last_20pct": -186.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J35-lamV1.6-s1": {
+   "spec": {
+    "id": "S-k4-J35-lamV1.6-s1",
+    "gap_k": 4,
+    "J": 35.0,
+    "lambda_v": 1.6,
+    "seed": 1,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1185.0,
+     "delta_last_20pct": 68.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1185.0,
+     "delta_last_20pct": 68.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1185.0,
+     "delta_last_20pct": 68.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1185.0,
+     "delta_last_20pct": 68.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J35-lamV1.6-s2": {
+   "spec": {
+    "id": "S-k4-J35-lamV1.6-s2",
+    "gap_k": 4,
+    "J": 35.0,
+    "lambda_v": 1.6,
+    "seed": 2,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1201.0,
+     "delta_last_20pct": 53.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1201.0,
+     "delta_last_20pct": 53.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1201.0,
+     "delta_last_20pct": 53.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1201.0,
+     "delta_last_20pct": 53.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J35-lamV1.6-s3": {
+   "spec": {
+    "id": "S-k4-J35-lamV1.6-s3",
+    "gap_k": 4,
+    "J": 35.0,
+    "lambda_v": 1.6,
+    "seed": 3,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1192.0,
+     "delta_last_20pct": 35.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1192.0,
+     "delta_last_20pct": 35.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1192.0,
+     "delta_last_20pct": 35.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1192.0,
+     "delta_last_20pct": 35.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J560-lamV0.8-s1": {
+   "spec": {
+    "id": "S-k4-J560-lamV0.8-s1",
+    "gap_k": 4,
+    "J": 560.0,
+    "lambda_v": 0.8,
+    "seed": 1,
+    "role": "POSITIVE CONTROL: already CLOSED by 1000. Must close again, at the same sweep count, or the extension is not an extension"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 480.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 480.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 480.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 480.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J560-lamV1.6-s1": {
+   "spec": {
+    "id": "S-k4-J560-lamV1.6-s1",
+    "gap_k": 4,
+    "J": 560.0,
+    "lambda_v": 1.6,
+    "seed": 1,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 359.0,
+     "delta_last_20pct": -23.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 359.0,
+     "delta_last_20pct": -23.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 359.0,
+     "delta_last_20pct": -23.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 359.0,
+     "delta_last_20pct": -23.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J560-lamV1.6-s2": {
+   "spec": {
+    "id": "S-k4-J560-lamV1.6-s2",
+    "gap_k": 4,
+    "J": 560.0,
+    "lambda_v": 1.6,
+    "seed": 2,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 307.0,
+     "delta_last_20pct": -25.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 307.0,
+     "delta_last_20pct": -25.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 307.0,
+     "delta_last_20pct": -25.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 307.0,
+     "delta_last_20pct": -25.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J560-lamV1.6-s3": {
+   "spec": {
+    "id": "S-k4-J560-lamV1.6-s3",
+    "gap_k": 4,
+    "J": 560.0,
+    "lambda_v": 1.6,
+    "seed": 3,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 277.0,
+     "delta_last_20pct": -13.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 277.0,
+     "delta_last_20pct": -13.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 277.0,
+     "delta_last_20pct": -13.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 277.0,
+     "delta_last_20pct": -13.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J560-lamV3.2-s1": {
+   "spec": {
+    "id": "S-k4-J560-lamV3.2-s1",
+    "gap_k": 4,
+    "J": 560.0,
+    "lambda_v": 3.2,
+    "seed": 1,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1276.0,
+     "delta_last_20pct": -63.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1276.0,
+     "delta_last_20pct": -63.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1276.0,
+     "delta_last_20pct": -63.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1276.0,
+     "delta_last_20pct": -63.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J560-lamV3.2-s2": {
+   "spec": {
+    "id": "S-k4-J560-lamV3.2-s2",
+    "gap_k": 4,
+    "J": 560.0,
+    "lambda_v": 3.2,
+    "seed": 2,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1239.0,
+     "delta_last_20pct": -6.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1239.0,
+     "delta_last_20pct": -6.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1239.0,
+     "delta_last_20pct": -6.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1239.0,
+     "delta_last_20pct": -6.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J560-lamV3.2-s3": {
+   "spec": {
+    "id": "S-k4-J560-lamV3.2-s3",
+    "gap_k": 4,
+    "J": 560.0,
+    "lambda_v": 3.2,
+    "seed": 3,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1316.0,
+     "delta_last_20pct": -42.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1316.0,
+     "delta_last_20pct": -42.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1316.0,
+     "delta_last_20pct": -42.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1316.0,
+     "delta_last_20pct": -42.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k4-J560-lamV12.8-s1": {
+   "spec": {
+    "id": "S-k4-J560-lamV12.8-s1",
+    "gap_k": 4,
+    "J": 560.0,
+    "lambda_v": 12.8,
+    "seed": 1,
+    "role": "NEGATIVE CONTROL: deep in the arrested regime. If this closes, arrest is horizon-fragile everywhere and no bracket in the study is interpretable"
+   },
+   "t_end": 1000.0,
+   "gap0": 2500.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1775.0,
+     "delta_last_20pct": -12.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1775.0,
+     "delta_last_20pct": -12.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1775.0,
+     "delta_last_20pct": -12.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1775.0,
+     "delta_last_20pct": -12.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J35-lamV0.2-s1": {
+   "spec": {
+    "id": "S-k7-J35-lamV0.2-s1",
+    "gap_k": 7,
+    "J": 35.0,
+    "lambda_v": 0.2,
+    "seed": 1,
+    "role": "POSITIVE CONTROL: already CLOSED by 1000. Must close again, at the same sweep count, or the extension is not an extension"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 450.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 450.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 450.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 450.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 0.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J35-lamV0.4-s1": {
+   "spec": {
+    "id": "S-k7-J35-lamV0.4-s1",
+    "gap_k": 7,
+    "J": 35.0,
+    "lambda_v": 0.4,
+    "seed": 1,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1456.0,
+     "delta_last_20pct": -33.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1456.0,
+     "delta_last_20pct": -33.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1456.0,
+     "delta_last_20pct": -33.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1456.0,
+     "delta_last_20pct": -33.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J35-lamV0.4-s2": {
+   "spec": {
+    "id": "S-k7-J35-lamV0.4-s2",
+    "gap_k": 7,
+    "J": 35.0,
+    "lambda_v": 0.4,
+    "seed": 2,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1342.0,
+     "delta_last_20pct": 150.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1342.0,
+     "delta_last_20pct": 150.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1342.0,
+     "delta_last_20pct": 150.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1342.0,
+     "delta_last_20pct": 150.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J35-lamV0.4-s3": {
+   "spec": {
+    "id": "S-k7-J35-lamV0.4-s3",
+    "gap_k": 7,
+    "J": 35.0,
+    "lambda_v": 0.4,
+    "seed": 3,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1258.0,
+     "delta_last_20pct": 6.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1258.0,
+     "delta_last_20pct": 6.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1258.0,
+     "delta_last_20pct": 6.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1258.0,
+     "delta_last_20pct": 6.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J35-lamV0.8-s1": {
+   "spec": {
+    "id": "S-k7-J35-lamV0.8-s1",
+    "gap_k": 7,
+    "J": 35.0,
+    "lambda_v": 0.8,
+    "seed": 1,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2499.0,
+     "delta_last_20pct": 47.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2499.0,
+     "delta_last_20pct": 47.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2499.0,
+     "delta_last_20pct": 47.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2499.0,
+     "delta_last_20pct": 47.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J35-lamV0.8-s2": {
+   "spec": {
+    "id": "S-k7-J35-lamV0.8-s2",
+    "gap_k": 7,
+    "J": 35.0,
+    "lambda_v": 0.8,
+    "seed": 2,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2502.0,
+     "delta_last_20pct": -59.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2502.0,
+     "delta_last_20pct": -59.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2502.0,
+     "delta_last_20pct": -59.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2502.0,
+     "delta_last_20pct": -59.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J35-lamV0.8-s3": {
+   "spec": {
+    "id": "S-k7-J35-lamV0.8-s3",
+    "gap_k": 7,
+    "J": 35.0,
+    "lambda_v": 0.8,
+    "seed": 3,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2426.0,
+     "delta_last_20pct": 116.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2426.0,
+     "delta_last_20pct": 116.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2426.0,
+     "delta_last_20pct": 116.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2426.0,
+     "delta_last_20pct": 116.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J560-lamV0.2-s1": {
+   "spec": {
+    "id": "S-k7-J560-lamV0.2-s1",
+    "gap_k": 7,
+    "J": 560.0,
+    "lambda_v": 0.2,
+    "seed": 1,
+    "role": "POSITIVE CONTROL: already CLOSED by 1000. Must close again, at the same sweep count, or the extension is not an extension"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 880.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 281.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 880.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 281.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 880.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 281.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": true,
+     "closure_time": 880.0,
+     "gap_at_h": 0.0,
+     "delta_last_20pct": 281.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J560-lamV0.4-s1": {
+   "spec": {
+    "id": "S-k7-J560-lamV0.4-s1",
+    "gap_k": 7,
+    "J": 560.0,
+    "lambda_v": 0.4,
+    "seed": 1,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 23.0,
+     "delta_last_20pct": 613.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 23.0,
+     "delta_last_20pct": 613.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 23.0,
+     "delta_last_20pct": 613.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 23.0,
+     "delta_last_20pct": 613.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J560-lamV0.8-s1": {
+   "spec": {
+    "id": "S-k7-J560-lamV0.8-s1",
+    "gap_k": 7,
+    "J": 560.0,
+    "lambda_v": 0.8,
+    "seed": 1,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1236.0,
+     "delta_last_20pct": 91.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1236.0,
+     "delta_last_20pct": 91.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1236.0,
+     "delta_last_20pct": 91.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1236.0,
+     "delta_last_20pct": 91.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J560-lamV0.8-s2": {
+   "spec": {
+    "id": "S-k7-J560-lamV0.8-s2",
+    "gap_k": 7,
+    "J": 560.0,
+    "lambda_v": 0.8,
+    "seed": 2,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1382.0,
+     "delta_last_20pct": 46.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1382.0,
+     "delta_last_20pct": 46.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1382.0,
+     "delta_last_20pct": 46.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1382.0,
+     "delta_last_20pct": 46.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J560-lamV0.8-s3": {
+   "spec": {
+    "id": "S-k7-J560-lamV0.8-s3",
+    "gap_k": 7,
+    "J": 560.0,
+    "lambda_v": 0.8,
+    "seed": 3,
+    "role": "bracket hi-side: the arrested arm a longer horizon could flip"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1516.0,
+     "delta_last_20pct": 8.0,
+     "still_shrinking": true
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1516.0,
+     "delta_last_20pct": 8.0,
+     "still_shrinking": true
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1516.0,
+     "delta_last_20pct": 8.0,
+     "still_shrinking": true
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 1516.0,
+     "delta_last_20pct": 8.0,
+     "still_shrinking": true
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J560-lamV1.6-s2": {
+   "spec": {
+    "id": "S-k7-J560-lamV1.6-s2",
+    "gap_k": 7,
+    "J": 560.0,
+    "lambda_v": 1.6,
+    "seed": 2,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2709.0,
+     "delta_last_20pct": -60.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2709.0,
+     "delta_last_20pct": -60.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2709.0,
+     "delta_last_20pct": -60.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2709.0,
+     "delta_last_20pct": -60.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J560-lamV1.6-s3": {
+   "spec": {
+    "id": "S-k7-J560-lamV1.6-s3",
+    "gap_k": 7,
+    "J": 560.0,
+    "lambda_v": 1.6,
+    "seed": 3,
+    "role": "one grid step above the hi-side, so a flipped bracket still has an upper edge instead of becoming unresolved"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2703.0,
+     "delta_last_20pct": -64.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2703.0,
+     "delta_last_20pct": -64.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2703.0,
+     "delta_last_20pct": -64.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 2703.0,
+     "delta_last_20pct": -64.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  },
+  "S-k7-J560-lamV12.8-s1": {
+   "spec": {
+    "id": "S-k7-J560-lamV12.8-s1",
+    "gap_k": 7,
+    "J": 560.0,
+    "lambda_v": 12.8,
+    "seed": 1,
+    "role": "NEGATIVE CONTROL: deep in the arrested regime. If this closes, arrest is horizon-fragile everywhere and no bracket in the study is interpretable"
+   },
+   "t_end": 1000.0,
+   "gap0": 4375.0,
+   "nonfinite": 0,
+   "per_horizon": {
+    "1000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 3662.0,
+     "delta_last_20pct": -18.0,
+     "still_shrinking": false
+    },
+    "2000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 3662.0,
+     "delta_last_20pct": -18.0,
+     "still_shrinking": false
+    },
+    "4000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 3662.0,
+     "delta_last_20pct": -18.0,
+     "still_shrinking": false
+    },
+    "8000": {
+     "observed": true,
+     "closed": false,
+     "closure_time": null,
+     "gap_at_h": 3662.0,
+     "delta_last_20pct": -18.0,
+     "still_shrinking": false
+    }
+   },
+   "reached_full_horizon": false
+  }
+ }
+}

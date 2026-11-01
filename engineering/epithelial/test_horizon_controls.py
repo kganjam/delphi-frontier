@@ -12,6 +12,7 @@ import argparse
 import difflib
 import hashlib
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -85,25 +86,36 @@ def c_reproduction(packet: Path, native: Path) -> None:
 
 
 def c_no_vacuous_verdict(packet: Path) -> None:
-    """A verdict over an empty set is not a verdict."""
-    print("\nH3 the analyzer refuses to call an empty comparison SUPPORTED")
+    """A verdict over an empty set, or over a falsifier that was never exercised, is not a verdict."""
+    print("\nH3 the analyzer refuses to call an unexercised comparison SUPPORTED")
     proto = json.loads((packet / "horizon-protocol.json").read_text())
     hdr = "time\tcell.id\tcell.center.x\tcell.center.y\tcell.volume\tcell.surface\n"
-    body = hdr + "".join(f"{t}\t1\t10\t10\t37500\t88.6\n" for t in range(0, 8001, 10))
-    for label, verdict, want in (("reproduction VOID", "VOID", "UNINTERPRETABLE"),
-                                 ("reproduction REPRODUCED but nothing evaluable", "REPRODUCED", "UNRESOLVED")):
+
+    def traj(close_at):
+        return hdr + "".join(
+            f"{t}\t1\t10\t10\t{40000 if (close_at is not None and t >= close_at) else 37500}\t88.6\n"
+            for t in range(0, 8001, 10))
+
+    # (a) reproduction VOID -> UNINTERPRETABLE, whatever the arms say
+    # (b) reproduction fine, controls fine, but every hi-side arm is ALREADY closed at the
+    #     baseline, so the declared falsifier can never fire -> UNRESOLVED, not SUPPORTED
+    for label, verdict, close_at, want in (
+            ("reproduction VOID", "VOID", None, "UNINTERPRETABLE"),
+            ("falsifier never exercised", "REPRODUCED", 100, "UNRESOLVED")):
         with tempfile.TemporaryDirectory() as td:
             td = Path(td)
             out = td / "out"
             for a in proto["arms"]:
-                (out / a["id"]).mkdir(parents=True)
-                (out / a["id"] / "logger.csv").write_text(body)
-                (out / a["id"] / "exit.txt").write_text("exit=0\n")
+                d = out / a["id"]
+                d.mkdir(parents=True)
+                # the NEGATIVE controls must never close, or they fail and the run is
+                # uninterpretable for that reason instead of the one under test
+                c = None if a["role"].startswith("NEGATIVE") else close_at
+                (d / "logger.csv").write_text(traj(c))
+                (d / "exit.txt").write_text("exit=0\n")
             allarms = [a["id"] for a in proto["arms"]]
             (td / "rep.json").write_text(json.dumps(dict(
-                verdict=verdict,
-                diverged_arms=allarms if verdict == "VOID" else [],
-                missing_arms=[])))
+                verdict=verdict, diverged_arms=allarms if verdict == "VOID" else [], missing_arms=[])))
             run([sys.executable, str(packet / "analyze_horizon.py"),
                  "--protocol", str(packet / "horizon-protocol.json"), "--out", str(out),
                  "--reproduction", str(td / "rep.json"), "--report", str(td / "h.json")])
@@ -130,6 +142,139 @@ def c_audit_key_and_crash(packet: Path) -> None:
                 check(f"H4 arms keyed by {key!r} wrote a report", (td / "c.json").exists(), True)
 
 
+def c_truncation_regression(packet: Path, native: Path) -> None:
+    """THE regression. The real 1000-only logs produced rc0 SUPPORTED before the repair."""
+    print("\nH5 the demonstrated false pass: real 1000-only logs staged as a finished 8000 run")
+    proto = json.loads((packet / "horizon-protocol.json").read_text())
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        out = td / "out"
+        for a in proto["arms"]:
+            d = out / a["id"]
+            d.mkdir(parents=True)
+            shutil.copy(native / "science" / a["id"] / "logger.csv", d / "logger.csv")
+            (d / "exit.txt").write_text("exit=0\n")
+        r1 = run([sys.executable, str(packet / "check_reproduction.py"),
+                  "--pins", str(packet / "reproduction-pins.json"), "--out", str(out),
+                  "--report", str(td / "rep.json")])
+        check("H5 reproduction still passes on these logs (they ARE the native ones)", r1.returncode, 0)
+        r2 = run([sys.executable, str(packet / "analyze_horizon.py"),
+                  "--protocol", str(packet / "horizon-protocol.json"), "--out", str(out),
+                  "--reproduction", str(td / "rep.json"), "--report", str(td / "h.json")])
+        h = json.loads((td / "h.json").read_text())
+        check("H5 analysis REFUSES (exit 2, was 0)", r2.returncode, 2)
+        check("H5 headline is not SUPPORTED", h["hypothesis_outcome"].startswith("UNINTERPRETABLE"), True)
+        check("H5 all 30 arms are named as missing the final horizon",
+              len(h["coverage"]["arms_missing_the_final_horizon"]), 30)
+        check("H5 no arm claims horizon 8000 observed",
+              sum(1 for v in h["per_arm"].values() if v["per_horizon"]["8000"]["observed"]), 0)
+
+
+def c_falsifier_direct(packet: Path) -> None:
+    """A hi-side arm closing later must falsify even when its group never brackets."""
+    print("\nH6 the per-arm falsifier fires where bracket motion is blind")
+    proto = json.loads((packet / "horizon-protocol.json").read_text())
+    hdr = "time\tcell.id\tcell.center.x\tcell.center.y\tcell.volume\tcell.surface\n"
+
+    def traj(close_at):
+        out = [hdr]
+        for t in range(0, 8001, 10):
+            v = 40000 if (close_at is not None and t >= close_at) else 37500
+            out.append(f"{t}\t1\t10\t10\t{v}\t88.6\n")
+        return "".join(out)
+
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        out = td / "out"
+        # pick a hi-side arm in a group that has NO positive control (seed != 1), so the group
+        # is UNRESOLVED at baseline; then close BOTH it and its next lambda by the final horizon,
+        # so the group is UNRESOLVED again at the end and the bracket tuple never moves.
+        target = next(a for a in proto["arms"]
+                      if a["role"].startswith("bracket hi-side") and a["seed"] != 1)
+        group = [a for a in proto["arms"]
+                 if a["gap_k"] == target["gap_k"] and a["J"] == target["J"] and a["seed"] == target["seed"]]
+        closing = {a["id"]: 4000 for a in group}
+        for a in proto["arms"]:
+            d = out / a["id"]
+            d.mkdir(parents=True)
+            # positive controls close early so the controls pass; the target group closes late
+            c = 100 if a["role"].startswith("POSITIVE") else closing.get(a["id"])
+            (d / "logger.csv").write_text(traj(c))
+            (d / "exit.txt").write_text("exit=0\n")
+        target = target["id"]
+        (td / "rep.json").write_text(json.dumps(dict(verdict="REPRODUCED", diverged_arms=[], missing_arms=[])))
+        r = run([sys.executable, str(packet / "analyze_horizon.py"),
+                 "--protocol", str(packet / "horizon-protocol.json"), "--out", str(out),
+                 "--reproduction", str(td / "rep.json"), "--report", str(td / "h.json")])
+        h = json.loads((td / "h.json").read_text())
+        key = [k for k in h["bracket_motion"] if target.split("-lamV")[0].replace("S-", "") in k.replace("-s", "-s")]
+        blind = [k for k, v in h["bracket_motion"].items()
+                 if v["baseline_1000"]["state"] == "UNRESOLVED" and v["final"]["state"] == "UNRESOLVED"
+                 and not v["moved"]]
+        check("H6 the target's group is UNRESOLVED at both ends, so tuple motion is blind",
+              len(blind) >= 1, True)
+        check("H6 the falsifier names the closing hi-side arm", h["falsifier"]["falsified_by"], [target])
+        check("H6 headline is NOT SUPPORTED", h["hypothesis_outcome"].startswith("NOT SUPPORTED"), True)
+        check("H6 exit 0 (a real scientific verdict, not a refusal)", r.returncode, 0)
+
+
+def c_failed_control_blocks_headline(packet: Path) -> None:
+    print("\nH7 a failed required control removes the headline")
+    proto = json.loads((packet / "horizon-protocol.json").read_text())
+    hdr = "time\tcell.id\tcell.center.x\tcell.center.y\tcell.volume\tcell.surface\n"
+    neg = [a["id"] for a in proto["arms"] if a["role"].startswith("NEGATIVE")][0]
+
+    def traj(close_at):
+        return hdr + "".join(
+            f"{t}\t1\t10\t10\t{40000 if (close_at is not None and t >= close_at) else 37500}\t88.6\n"
+            for t in range(0, 8001, 10))
+
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        out = td / "out"
+        for a in proto["arms"]:
+            d = out / a["id"]
+            d.mkdir(parents=True)
+            # positive controls close early as required; the NEGATIVE control wrongly closes too
+            c = 100 if a["role"].startswith("POSITIVE") else (6000 if a["id"] == neg else None)
+            (d / "logger.csv").write_text(traj(c))
+            (d / "exit.txt").write_text("exit=0\n")
+        (td / "rep.json").write_text(json.dumps(dict(verdict="REPRODUCED", diverged_arms=[], missing_arms=[])))
+        r = run([sys.executable, str(packet / "analyze_horizon.py"),
+                 "--protocol", str(packet / "horizon-protocol.json"), "--out", str(out),
+                 "--reproduction", str(td / "rep.json"), "--report", str(td / "h.json")])
+        h = json.loads((td / "h.json").read_text())
+        check("H7 the negative control is recorded failed", h["controls_failed"], [neg])
+        check("H7 headline is UNINTERPRETABLE", h["hypothesis_outcome"].startswith("UNINTERPRETABLE"), True)
+        check("H7 exit 2", r.returncode, 2)
+
+
+def c_probe_gate(packet: Path) -> None:
+    print("\nH8 the timing probe must have worked, not merely finished fast")
+    hdr = "time\tcell.id\tcell.center.x\tcell.center.y\tcell.volume\tcell.surface\n"
+    good = hdr + "".join(f"{t}\t1\t10\t10\t37500\t88.6\n" for t in range(0, 501, 10))
+    cases = [("healthy probe", 0, good, 0),
+             ("failed executable (fast, but rc!=0)", 127, "", 4),
+             ("rc 0 but no logger", 0, None, 4),
+             ("rc 0 but empty logger", 0, "", 4),
+             ("rc 0 but non-finite rows", 0, hdr + "0\t1\t10\t10\tnan\t88.6\n", 4)]
+    for label, rc, body, want in cases:
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            (td / "arms.json").write_text(json.dumps([{"id": f"a{i}"} for i in range(30)]))
+            logger = td / "logger.csv"
+            if body is not None:
+                logger.write_text(body)
+            (td / "stdout.log").write_text("probe output")
+            r = run([sys.executable, str(packet / "check_probe.py"), "--start", "100.0",
+                     "--end", "100.4", "--arms", str(td / "arms.json"), "--factor", "2.0",
+                     "--job-timeout", "1800", "--workers", "8", "--probe-exit", str(rc),
+                     "--logger", str(logger), "--stdout", str(td / "stdout.log"),
+                     "--report", str(td / "g.json")])
+            check(f"H8 {label} -> exit {want}", r.returncode, want)
+            check(f"H8 {label} left a receipt", (td / "g.json").exists(), True)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--packet", required=True)
@@ -140,6 +285,10 @@ def main() -> None:
     c_reproduction(packet, native)
     c_no_vacuous_verdict(packet)
     c_audit_key_and_crash(packet)
+    c_truncation_regression(packet, native)
+    c_falsifier_direct(packet)
+    c_failed_control_blocks_headline(packet)
+    c_probe_gate(packet)
     bad = [n for n, ok in results if not ok]
     print(f"\n{len(results) - len(bad)}/{len(results)} controls pass")
     for n in bad:
