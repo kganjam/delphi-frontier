@@ -1,6 +1,6 @@
 # Delphi · demo videos
 
-Narrated demonstrations of the **Delphi scientific commons** and the **MorphoSwarm Frontier**
+Narrated demonstrations of the **Delphi scientific commons** and the **MorphoSwarm Studio**
 design studio. Seven cuts, each with captions, a transcript and a downloadable MP4.
 
 **New here? Start with the one-minute vision cut.**
