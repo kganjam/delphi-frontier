@@ -1,0 +1,67 @@
+{
+ "attempts": 181,
+ "cause": "not determined by this log",
+ "failed_are_all_full_index_range_requests": true,
+ "failed_attempts": 11,
+ "failed_by_library": {
+  "0dpa1": [
+   0.0,
+   0.19
+  ],
+  "0dpa2": [
+   0.31,
+   0.42
+  ],
+  "1dpa1": [
+   0.54,
+   0.66
+  ],
+  "1dpa2": [
+   1.8,
+   25.8
+  ],
+  "2dpa1": [
+   25.91,
+   26.03
+  ],
+  "2dpa2": [
+   26.15
+  ]
+ },
+ "failure_signatures": [
+  [
+   "short_read",
+   206,
+   0
+  ]
+ ],
+ "first_success_s": 33.43,
+ "gap_before_second_attempt_s": [
+  0.19,
+  0.11,
+  0.12,
+  24.0,
+  0.12,
+  7.29
+ ],
+ "index_outcome_by_library": {
+  "0dpa1": "failed",
+  "0dpa2": "failed",
+  "1dpa1": "failed",
+  "1dpa2": "failed",
+  "2dpa1": "failed",
+  "2dpa2": "ok",
+  "4dpa1": "ok",
+  "4dpa2": "ok",
+  "6dpa1": "ok",
+  "6dpa2": "ok"
+ },
+ "last_failure_s": 26.15,
+ "non_index_requests_failed": 0,
+ "non_index_requests_ok": 165,
+ "not_logged": [
+  "response headers (Content-Length, Content-Range value, Connection, Age, cache headers)",
+  "whether the connection closed early or declared length 0",
+  "per-request wall time"
+ ]
+}

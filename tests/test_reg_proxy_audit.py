@@ -234,3 +234,17 @@ def test_a_logged_retry_is_accepted_and_an_unfailed_retry_is_not(tmp_path):
         assert "C6_budget" in failed(ar.audit(out, ctl, host_prefix=srv.url("/"), n_expected=3))
     finally:
         srv.close()
+
+
+def test_transport_diagnosis_reports_signatures_without_a_cause():
+    ctl = json.load(open(os.path.join(cs.HERE, "controls.json")))
+    lib = ctl["libraries"][0]
+    reqs = [{"url": lib["index_url"], "range": f"0-{lib['index_bytes'] - 1}", "attempt": 1, "t": 100.0, "ok": False, "failure": "short_read", "http_status": 206, "bytes_charged": 0},
+            {"url": lib["index_url"], "range": f"0-{lib['index_bytes'] - 1}", "attempt": 2, "t": 100.2, "ok": False, "failure": "short_read", "http_status": 206, "bytes_charged": 0},
+            {"url": ctl["libraries"][1]["index_url"], "range": f"0-{ctl['libraries'][1]['index_bytes'] - 1}", "attempt": 1, "t": 130.0, "ok": True, "http_status": 206, "bytes_charged": 5}]
+    d = ar.transport_diagnosis(reqs, ctl)
+    assert d["failure_signatures"] == [("short_read", 206, 0)] and d["failed_are_all_full_index_range_requests"]
+    assert d["index_outcome_by_library"][lib["label"]] == "failed" and d["index_outcome_by_library"][ctl["libraries"][1]["label"]] == "ok"
+    assert d["first_success_s"] == 30.0 and d["gap_before_second_attempt_s"] == [0.2] and d["cause"].startswith("not determined")
+    reqs[0]["range"] = "0-99"
+    assert not ar.transport_diagnosis(reqs, ctl)["failed_are_all_full_index_range_requests"]

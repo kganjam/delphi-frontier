@@ -167,10 +167,40 @@ def audit(d, controls=None, host_prefix=f"https://{HOST}/", n_expected=330):
             "meaning": "consistent = the returned files agree with the frozen protocol and each other; it is not biological validation and not an independent measurement of the counts"}
 
 
+def transport_diagnosis(reqs, controls=None):
+    """Describe failed attempts from requests.json alone: which files and ranges, status, bytes, timing. States no cause."""
+    controls = controls or json.load(open(os.path.join(HERE, "controls.json")))
+    idx_urls = {lib["index_url"]: lib["label"] for lib in controls["libraries"]}
+    sizes = {lib["index_url"]: lib["index_bytes"] for lib in controls["libraries"]}
+    t0 = reqs[0]["t"] if reqs else 0
+    fails = [q for q in reqs if not q.get("ok")]
+    def full_index(q):
+        return q["url"] in idx_urls and q["range"] == f"0-{sizes[q['url']] - 1}"
+    ok_after = [q for q in reqs if q.get("ok")]
+    return {
+        "attempts": len(reqs), "failed_attempts": len(fails),
+        "failure_signatures": sorted({(q.get("failure"), q.get("http_status"), q.get("bytes_charged")) for q in fails}, key=str),
+        "failed_are_all_full_index_range_requests": all(full_index(q) for q in fails),
+        "failed_by_library": {lab: [round(q["t"] - t0, 2) for q in fails if idx_urls.get(q["url"]) == lab] for lab in dict.fromkeys(idx_urls.values())
+                              if any(idx_urls.get(q["url"]) == lab for q in fails)},
+        "index_outcome_by_library": {lab: ("ok" if any(q.get("ok") and idx_urls.get(q["url"]) == lab for q in reqs) else "failed") for lab in dict.fromkeys(idx_urls.values())},
+        "last_failure_s": round(max((q["t"] for q in fails), default=t0) - t0, 2),
+        "first_success_s": round(min((q["t"] for q in ok_after), default=t0) - t0, 2),
+        "non_index_requests_failed": sum(1 for q in fails if q["url"] not in idx_urls),
+        "non_index_requests_ok": sum(1 for q in ok_after if q["url"] not in idx_urls),
+        "gap_before_second_attempt_s": [round(b["t"] - a["t"], 2) for a, b in zip(reqs, reqs[1:]) if a["attempt"] == 1 and b["attempt"] == 2],
+        "not_logged": ["response headers (Content-Length, Content-Range value, Connection, Age, cache headers)", "whether the connection closed early or declared length 0", "per-request wall time"],
+        "cause": "not determined by this log",
+    }
+
+
 def main(argv=None):
     a = list(sys.argv[1:] if argv is None else argv)
     if not a:
-        raise SystemExit("usage: audit_return DIR")
+        raise SystemExit("usage: audit_return DIR [--diagnose]")
+    if "--diagnose" in a:
+        print(json.dumps(transport_diagnosis(json.load(open(os.path.join(a[0], "requests.json")))), indent=1, sort_keys=True))
+        return 0
     r = audit(a[0])
     print(json.dumps(r, indent=1, sort_keys=True))
     return 0 if r["verdict"] == "consistent" else 1
