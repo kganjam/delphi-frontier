@@ -21,10 +21,12 @@ Independent review is a separate assignment (`launchable-fish-review`).
 | `dynamics.py` | Batched pitch-plane rigid body: slingshot stroke, then free flight to first ground contact. Also scenario aero, trim, and Jacobian modes. |
 | `candidate.py` | Placeholder candidate built from the v3a meshes at declared print thicknesses (shell body, membrane fins, R1/R2 spars, R3 hardware, ballast). |
 | `sweep.py` | Feasibility map. Every row includes a same-mass, same-CD0, no-lift control that starts from the same release state. |
+| `flight_model.py` | Reads claude-05's `frontier.glider.flight-model/1` records from git at a pinned commit. It checks every STL sha256 and recomputes mass, CG and inertia from the bytes, refusing a record that differs by more than 0.5% or 0.5 mm. It then checks the as-built fin and catch sections against R1–R3, solves the bay ballast for each NP scenario, and flies the result. |
 
 Reproduce:
 - `python -m engineering.launch_glider.print_requirements artifacts/fish3d/fish3d-v3a-fan/panels.json data/materials/formlabs-studio-2026-10-31.json artifacts/launch-glider/print-requirements.json`
 - `python -m engineering.launch_glider.sweep artifacts/launch-glider/feasibility-map.json`
+- `python -m engineering.launch_glider.flight_model 19f4546 artifacts/launch-glider/r1-dynamics.json`
 
 Both run single-threaded.
 
@@ -132,6 +134,54 @@ Nominal value with its bracket. None is measured for this glider.
    - The catch height and hook arm must be adjustable by test.
 4. **The hand NP may be too far forward.** Park & Choi's stable stuffed fish had x_CG/SL 0.39–0.44. The NP is
    therefore a sweep axis (60, 66 and 72 mm), not a value.
+
+## claude-05's r1 (`work/fish-glider` @ `19f4546`): results on the actual bytes
+Artifact: `artifacts/launch-glider/r1-dynamics.json`. Same nominal coefficients and scenario axes as above.
+1. **Mass properties agree.** Both revisions recompute to claude-05's records within 4×10⁻⁷ in mass and 10⁻⁸ m in
+   CG:
+   - r1-light: 17.136 g, CG x 68.25 mm, z 3.48 mm;
+   - r1-strong: 19.948 g, CG x 69.35 mm, z 3.32 mm.
+
+   **What the agreement shows:** the STL bytes, the transforms (the right-side fins are mirrors) and the density
+   agree with the records. Both are exact polyhedral integrals of the same meshes, so it is **not** an independent
+   check of the geometry itself.
+2. **Structure passes R1–R3** with the scenario loads (10 m/s, 0.1 m stroke, peak/mean 2, 10° misalignment, C_N
+   1.2, SF 3):
+   - **Pectoral:** σ_max 6.1 MPa at the doubler end; in-plane root 5.4 MPa; allowable 14.3 MPa. Worst tip 3.5% of
+     span; cruise tip 0.58–0.94% (limit 3%).
+   - **Pelvic:** 2.7 MPa (6.7 MPa in plane).
+   - **Catch:** the bond perimeter needed is 1.2–2.0 mm, against about 68 mm available.
+
+   The mass cases run up to the heaviest swept ballast plus adhesive and tape: 24.3 g (light) and 29.0 g (strong).
+   These exceed R1–R4's 20 g scenario mass, and the checks above were run at these masses.
+3. **The hand NP needs ballast.** The hand NP on r1's own surfaces is 54.5–59.0 mm. The dry CG (68–69 mm) is
+   behind it, so dry r1 is statically unstable unless the true NP is aft of about 72 mm. Reaching SM 0.15 takes:
+
+   | NP scenario | ballast, r1-light | ballast, r1-strong | total, light | total, strong |
+   |---|---|---|---|---|
+   | 56.7 mm | 6.4 g | 8.3 g | 23.6 g | 28.3 g |
+   | 72 mm | 0.1 g | 0.5 g | 17.2 g | 20.4 g |
+
+   Trim speed rises to 10.7–16.6 m/s. The VLM NP is therefore the decisive unknown.
+4. **At SPEC speeds:**
+   - 4 m/s never glides: gain ≤ 0.37 m, and 26–38 of 54 draws per case tumble.
+   - 6 m/s: gain ≤ 1.0 m.
+   - 8 m/s: range 3.0–8.6 m and gain −1.9 to +2.5 m. 195 of the 432 flown 8 m/s draws reach 5–8 m with gain > 1 m and no
+     tumble.
+5. **Most of those good draws depend on the post-stall model.** 180 of the 195 reach full separation
+   (separation_max ≥ 0.9) at some point in flight: they pitch up after release and fly much of the way stalled.
+   Only 6 stay attached throughout. The placeholder map has the same pattern: 108 of its 116 good 8 m/s draws
+   separate.
+   - Their gain therefore rests on the declared flat-plate post-stall coefficients (k_post, dx_cp_post), which are
+     the least supported in the table.
+   - The 5–8 m result is a **post-stall scenario result**, not a trimmed-glide result.
+6. **Catch.** The r1-as-built seat (40 mm ahead of the dry CG, 1.5 mm below it) gives the most nose-up release.
+   It has the lowest median gain of the non-extreme options (0.77 m at 8 m/s).
+   - Best: the r2 plugs at ξ 25 mm, ζ 0, and ξ 40 mm at ζ 0 to +3 mm (median gain 1.3–1.6 m).
+   - Worst: ξ 25 mm at ζ +3 mm (median −1.4 m).
+
+   The catch is the lever claude-05 controls that matters most for the release transition.
+7. **Launch pitch.** 0–15° is useful. At 30°, the median gain is about zero.
 
 ## Limits
 - Pitch plane only: no roll, yaw, spiral or Dutch roll. Lateral behaviour is reported as static derivatives once

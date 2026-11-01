@@ -135,6 +135,8 @@ def fin_case(pf: dict, mat: dict, t_m: float, ws: float, hs: float, p: float, a_
     L = pf["span_m"]
     E, rho = mat["flexural_modulus_Pa"], mat["solid_density_kg_m3"]
 
+    hs_of = hs if callable(hs) else (lambda x: hs)   # spar height may taper along the span (hs(s), m)
+
     def t_of(x):
         x = np.asarray(x, float)
         return np.where(x < root_len, t_root if t_root else t_m, t_m)
@@ -148,18 +150,18 @@ def fin_case(pf: dict, mat: dict, t_m: float, ws: float, hs: float, p: float, a_
         return max(min(ci, ws + k_f * ti), 1e-6)
 
     def EI(x):
-        return np.array([E * section(b_eff(ci, ti), ti, ws, hs)["I_m4"]
-                         for ci, ti in zip(np.atleast_1d(c_of(x)), np.atleast_1d(t_of(x)))])
+        return np.array([E * section(b_eff(ci, ti), ti, ws, float(hs_of(xi)))["I_m4"]
+                         for xi, ci, ti in zip(np.atleast_1d(x), np.atleast_1d(c_of(x)), np.atleast_1d(t_of(x)))])
 
     def q(x):   # N/m: pressure on the chord plus the inertia of the section's own mass
-        return p * c_of(x) + rho * (c_of(x) * t_of(x) + ws * hs) * a_n
+        return p * c_of(x) + rho * (c_of(x) * t_of(x) + ws * np.vectorize(hs_of)(x)) * a_n
 
     sol = beam.solve_cantilever(L, EI, q, n_el=n_el)
     xs = np.linspace(0, L, 401)
     qs = q(xs)
     # bending moment M(x) = int_x^L q(xi) (xi - x) dxi
     M = np.array([np.trapezoid(qs[i:] * (xs[i:] - x), xs[i:]) if i < len(xs) - 1 else 0.0 for i, x in enumerate(xs)])
-    sig = np.array([M[i] / section(b_eff(float(c_of(x)), float(t_of(x))), float(t_of(x)), ws, hs)["Z_m3"]
+    sig = np.array([M[i] / section(b_eff(float(c_of(x)), float(t_of(x))), float(t_of(x)), ws, float(hs_of(x)))["Z_m3"]
                     for i, x in enumerate(xs)])
     k = int(np.argmax(sig))
     chk = beam.check_small_deformation(sol.tip, sol.max_abs_slope, L,

@@ -397,3 +397,103 @@ def test_sweep_dt_halving_on_one_row():
     a = sw.run(ROOT, CARD, grid={**SMALL, "CL_trim": {"values": [0.45]}})
     b = sw.run(ROOT, CARD, grid={**SMALL, "CL_trim": {"values": [0.45]}}, dt_stroke=5e-5, dt_fly=5e-4)
     assert abs(a["rows"][0]["flight"]["range_m"] / b["rows"][0]["flight"]["range_m"] - 1) < 5e-3
+
+
+# ---------------------------------------------------------------- claude-05 flight-model records
+import hashlib  # noqa: E402
+import struct  # noqa: E402
+import subprocess  # noqa: E402
+
+from engineering.launch_glider import flight_model as fm  # noqa: E402
+
+R1_COMMIT = "19f4546"
+
+
+def _stl_bytes(tri_mm):
+    t = np.asarray(tri_mm, np.float32).reshape(-1, 9)
+    out = b"\0" * 80 + struct.pack("<I", len(t))
+    for row in t:
+        out += struct.pack("<3f", 0, 0, 0) + row.tobytes() + b"\0\0"
+    return out
+
+
+def _fake_record(mirror=False):
+    """One 10 x 20 x 5 mm box part placed by a transform (optionally a y-mirror), with its exact mass properties."""
+    b = _stl_bytes(_box(10.0, 20.0, 5.0))
+    T = [[1, 0, 0, 30.0], [0, -1 if mirror else 1, 0, 0.0], [0, 0, 1, 2.0], [0, 0, 0, 1]]
+    m = 1220.0 * 10e-3 * 20e-3 * 5e-3
+    cg = [0.035, -0.010 if mirror else 0.010, 0.0045]
+    part = {"id": "box", "stl": "stl/box.stl", "stl_sha256": hashlib.sha256(b).hexdigest(), "mass_kg": m,
+            "cg_m": cg, "print_to_fish_transform_mm": T}
+    rec = {"schema": fm.SCHEMA, "material": {"density_kg_m3": 1220.0}, "parts": [part],
+           "assembled_dry": {"mass_kg": m, "cg_m": cg, "inertia_cg_kg_m2": np.eye(3).tolist()}}
+    return rec, {"stl/box.stl": b}
+
+
+def test_recompute_box_part_including_mirror():
+    for mirror in (False, True):
+        rec, files = _fake_record(mirror)
+        rc = fm.recompute(rec, files.__getitem__, MAT | {"solid_density_kg_m3": 1220.0})
+        assert rc["status"] == "AGREES"
+        assert rc["dry"]["mass_kg"] == pytest.approx(rec["parts"][0]["mass_kg"], rel=1e-6)   # a mirror keeps V > 0
+        assert np.allclose(rc["dry"]["cg_m"], rec["parts"][0]["cg_m"], atol=1e-9)
+
+
+def test_recompute_refuses_wrong_bytes_and_flags_wrong_mass():
+    rec, files = _fake_record()
+    bad = dict(files)
+    bad["stl/box.stl"] = files["stl/box.stl"][:-1] + b"\1"
+    with pytest.raises(ValueError, match="sha256"):
+        fm.recompute(rec, bad.__getitem__, MAT | {"solid_density_kg_m3": 1220.0})
+    rec["parts"][0]["mass_kg"] *= 1.01   # mutant: the record claims 1% more mass than its bytes hold
+    rc = fm.recompute(rec, files.__getitem__, MAT | {"solid_density_kg_m3": 1220.0})
+    assert rc["status"] == "DISAGREES"
+    with pytest.raises(ValueError, match="refused"):
+        fm.candidate(rec, rc, None)
+
+
+def test_tapered_spar_callable_matches_constant_and_taper_softens():
+    pf = pr.planform(_rect_fin())
+    a = pr.fin_case(pf, MAT, 0.5e-3, 1.6e-3, 2.0e-3, 50.0, 0.0)
+    b = pr.fin_case(pf, MAT, 0.5e-3, 1.6e-3, lambda s: 2.0e-3, 50.0, 0.0)
+    assert b["tip_m"] == pytest.approx(a["tip_m"], rel=1e-12) and b["sigma_max_Pa"] == pytest.approx(a["sigma_max_Pa"])
+    taper = lambda s: float(np.interp(s, [0, 0.056, 0.08], [2e-3, 2e-3, 1.2e-3]))  # noqa: E731
+    c = pr.fin_case(pf, MAT, 0.5e-3, 1.6e-3, taper, 50.0, 0.0)
+    assert abs(c["tip_m"]) > abs(a["tip_m"]) and c["root_moment_N_m"] == pytest.approx(a["root_moment_N_m"])
+    a_n = pr.fin_case(pf, MAT, 0.5e-3, 1.6e-3, 2.0e-3, 50.0, 1000.0)   # with inertia load the lighter tip unloads the root
+    c_n = pr.fin_case(pf, MAT, 0.5e-3, 1.6e-3, taper, 50.0, 1000.0)
+    assert c_n["root_moment_N_m"] < a_n["root_moment_N_m"]
+
+
+def _r1_available():
+    return subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", f"{R1_COMMIT}^{{commit}}"]).returncode == 0
+
+
+@pytest.mark.skipif(not _r1_available(), reason="claude-05's r1 commit is not in this clone")
+def test_r1_records_recompute_and_ballast():
+    mat = pr.load_material(CARD)
+    read = fm.git_source(ROOT, R1_COMMIT, fm.REVISIONS[0])
+    rec = fm.load(read)
+    rc = fm.recompute(rec, read, mat)
+    assert rc["status"] == "AGREES" and rc["dry_mass_rel_diff"] < 1e-6
+    dry = fm.candidate(rec, rc, None)
+    assert dry["S_paired_m2"] == pytest.approx(52.93e-4, rel=1e-3)   # v3a planform, unchanged by claude-05
+    c = fm.candidate(rec, rc, 0.056)
+    assert c["ballast_status"] == "ok" and c["assembled"]["cg_m"][0] == pytest.approx(0.056, abs=1e-6)
+    far = fm.candidate(rec, rc, 0.030)   # ahead of what the full bay can reach: retained with the reason
+    assert far["ballast_status"] == "BALLAST_BAY_CANNOT_REACH"
+    xi, zeta = fm._catch("r1-as-built", rec, dry["assembled"]["cg_m"])
+    assert xi * 1e3 == pytest.approx(rec["launch"]["ahead_of_dry_cg_mm"], abs=1e-6)
+    assert -zeta * 1e3 == pytest.approx(rec["launch"]["seat_below_dry_cg_mm"], abs=1e-6)
+
+
+@pytest.mark.skipif(not _r1_available(), reason="claude-05's r1 commit is not in this clone")
+def test_r1_small_run_flies_both_revisions():
+    g = {"x_np_m": {"values": [0.066]}, "CL_trim": {"values": [0.45]}, "V0_m_s": {"values": [8.0]},
+         "phi_deg": {"values": [0.0]}, "catch": {"values": ["r1-as-built", "r2 xi25 zeta+1.5"]}}
+    r = fm.run(ROOT, R1_COMMIT, CARD, grid=g)
+    assert sorted({x["revision"] for x in r["rows"]}) == ["r1-light", "r1-strong"] and len(r["rows"]) == 4
+    assert all(x["release"]["V_m_s"] == pytest.approx(8.0, rel=2e-3) for x in r["rows"])
+    assert all(x["static_margin"] == pytest.approx(sw.SM_TARGET, abs=1e-6) for x in r["rows"])
+    for rev in ("r1-light", "r1-strong"):
+        assert r["checks"][rev]["recompute"]["status"] == "AGREES"

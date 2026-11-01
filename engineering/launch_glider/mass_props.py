@@ -18,10 +18,13 @@ import numpy as np
 
 def read_stl(path) -> np.ndarray:
     """(n, 3, 3) float64 triangles from a binary STL, in the file's units."""
-    b = open(path, "rb").read()
+    return parse_stl(open(path, "rb").read(), str(path))
+
+
+def parse_stl(b: bytes, name: str = "stl") -> np.ndarray:
     n = struct.unpack("<I", b[80:84])[0]
     if len(b) != 84 + 50 * n:
-        raise ValueError(f"{path}: not a binary STL of {n} triangles ({len(b)} bytes)")
+        raise ValueError(f"{name}: not a binary STL of {n} triangles ({len(b)} bytes)")
     a = np.frombuffer(b[84:84 + 50 * n], dtype=np.dtype([("n", "<3f4"), ("v", "<9f4"), ("a", "<u2")]))
     return a["v"].reshape(-1, 3, 3).astype(float)
 
