@@ -535,3 +535,128 @@ def test_the_bundle_is_reproducible_from_the_frozen_commit():
         assert all(m.mtime == 0 and m.uid == 0 for m in tar.getmembers()), (
             "no timestamps or owners leak into the bundle"
         )
+
+
+def assert_json_native(obj, path="$"):
+    """Every value must be exactly a JSON-native type: a NumPy scalar (even a float64) is a boundary leak."""
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            assert type(k) is str, (path, k)
+            assert_json_native(v, f"{path}.{k}")
+    elif isinstance(obj, (list, tuple)):
+        for i, v in enumerate(obj):
+            assert_json_native(v, f"{path}[{i}]")
+    else:
+        assert type(obj) in (str, int, float, bool, type(None)), (
+            f"{path} is {type(obj).__module__}.{type(obj).__name__}, not JSON-native"
+        )
+
+
+def back_translate(protein):
+    from Bio.Data import CodonTable
+
+    first = {}
+    for codon, aa in CodonTable.unambiguous_dna_by_id[1].forward_table.items():
+        first.setdefault(aa, codon)
+    first = {
+        aa: sorted(
+            c
+            for c, a in CodonTable.unambiguous_dna_by_id[1].forward_table.items()
+            if a == aa
+        )[0]
+        for aa in first
+    }
+    return "".join(first[a] for a in protein)
+
+
+def hit_for(cds, strand="+"):
+    """A miniprot-style hit on a toy contig that contains exactly this CDS, on the requested strand."""
+    from Bio.Seq import Seq
+
+    flank = "N" * 30
+    if strand == "+":
+        contig = flank + cds + flank
+        cds_coords = [(31, 30 + len(cds))]
+    else:
+        contig = flank + str(Seq(cds).reverse_complement()) + flank
+        cds_coords = [(31, 30 + len(cds))]
+    return contig, {
+        "contig": "c",
+        "start": 31,
+        "end": 30 + len(cds),
+        "strand": strand,
+        "score": "1",
+        "attrs": {"Target": "q 1 %d" % (len(cds) // 3)},
+        "cds": cds_coords,
+    }
+
+
+def test_a_partial_coverage_hit_is_json_native_and_scored_is_a_python_bool():
+    """The failure seen on the first cloud probe: a fragmented hit made `scored` a NumPy bool (NumPy 2 names that type 'bool'), which json.dumps refuses."""
+    refs = {"a": LS.ref_protein("a"), "b": LS.ref_protein("b")}
+    contig, hit = hit_for(back_translate(refs["a"][180:260]))
+    r = LS.read_hit(contig, hit, refs)
+    assert (
+        r["not_scored_because"] == "partial coverage of the reference"
+        and r["scored"] is False
+    ), "a Python False, not numpy.False_"
+    assert_json_native(r)
+    assert json.loads(json.dumps(r)) == r
+
+
+def test_the_json_boundary_holds_across_scored_partial_stopped_and_both_strands():
+    """Every outcome of read_hit and of loci() must serialise; a full-length hit is scored, a fragment is not, an internal stop is not."""
+    refs = {"a": LS.ref_protein("a"), "b": LS.ref_protein("b")}
+    rng = random.Random(20261101)
+    cases = [
+        ("full a +", refs["a"], "+"),
+        ("full a -", refs["a"], "-"),
+        ("full b -", refs["b"], "-"),
+    ]
+    for i in range(12):
+        ref = refs["a" if i % 2 == 0 else "b"]
+        start = rng.randrange(0, len(ref) - 40)
+        cases.append(
+            (
+                f"fragment {i}",
+                ref[start : start + rng.randrange(40, len(ref) - start)],
+                rng.choice("+-"),
+            )
+        )
+    reads = {}
+    for name, prot, strand in cases:
+        contig, hit = hit_for(back_translate(prot.replace("*", "A")), strand)
+        r = LS.read_hit(contig, hit, refs)
+        assert_json_native(r)
+        json.dumps(r)
+        reads[name] = r
+    assert (
+        reads["full a +"]["scored"] is True
+        and reads["full a +"]["paralog_call"] == "slc43a2a-type"
+        and reads["full a +"]["residues"]["326"]["aa"] == "F"
+    )
+    assert (
+        reads["full a -"]["scored"] is True
+        and reads["full a -"]["residues"]["200"]["aa"] == "T"
+    ), "minus strand, full length"
+    assert (
+        reads["full b -"]["paralog_call"] == "slc43a2b-type"
+        and reads["full b -"]["residues"]["326"]["aa"] == "D"
+    )
+    assert any(
+        r["scored"] is False for n, r in reads.items() if n.startswith("fragment")
+    ), "fragments exist that are not scored"
+    contig, hit = hit_for(back_translate(refs["a"]))  # a full-length CDS ...
+    stop_contig = (
+        contig[: 30 + 300 * 3] + "TAA" + contig[30 + 301 * 3 :]
+    )  # ... with a stop codon forced into codon 301
+    r = LS.read_hit(stop_contig, hit, refs)
+    assert (
+        r["internal_stops"] >= 1
+        and r["scored"] is False
+        and r["not_scored_because"] == "internal stop codon(s)"
+    )
+    assert_json_native(r)
+    rows = LS.loci(list(reads.values()) + [r])
+    assert_json_native(rows)
+    json.dumps(rows)

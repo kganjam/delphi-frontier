@@ -93,7 +93,9 @@ def align_to_refs(body: str, refs: dict[str, str], al) -> dict:
     ident = {}
     for k, ref in refs.items():
         a = al.align(ref, body.replace("*", "X"))[0]
-        cov = sum(te - ts for ts, te in a.aligned[0])
+        cov = int(
+            sum(te - ts for ts, te in a.aligned[0])
+        )  # a.aligned holds NumPy ints; keep every number below a Python int/float so it is JSON-native
         same = sum(
             1
             for (ts, te), (qs, qe) in zip(*a.aligned)
@@ -165,7 +167,7 @@ def read_hit(contig_seq: str, hit: dict, refs: dict[str, str], al=None) -> dict:
         k: v["coverage_of_reference"] for k, v in ident.items()
     }
     out["paralog_call"] = f"slc43a2{best}-type" if margin >= MARGIN else "ambiguous"
-    out["scored"] = (
+    out["scored"] = bool(
         out["paralog_call"] != "ambiguous"
         and ident[best]["coverage_of_reference"] >= MIN_COVERAGE
         and out["internal_stops"] == 0
