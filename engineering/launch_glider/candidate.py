@@ -137,7 +137,8 @@ AERO_NOMINAL = {  # scenario coefficients: value, bracket, source; none measured
     "k_post": (0.9, (0.8, 1.0), "declared flat-plate post-stall factor"),
     "Cm_q": (-4.5, (-8.0, -2.0), "pelvic tail-volume estimate -2 a_t V_H (l_t/c)(1-eps); declared"),
     "k_munk": (0.9, (0.8, 0.95), "slender-body k2-k1 for fineness ~6, recalled; declared"),
-    "x_cp_post": (0.0658, (0.060, 0.072), "paired-fin area centroid; declared post-stall centre of pressure"),
+    "dx_cp_post": (0.0057, (0.002, 0.010), "declared post-stall centre of pressure aft of the NP; nominal = paired-fin "
+                                            "area centroid (65.8 mm) minus the hand fins-only NP (60.1 mm)"),
 }
 
 

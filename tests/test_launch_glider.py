@@ -372,3 +372,28 @@ def test_munk_couple_is_destabilising_by_exactly_2_vol_k():
     slope = (d[1] - d[0]) / (a[1] - a[0])
     assert slope == pytest.approx(2 * BASE["vol"] * 0.9 * math.cos(2 * a[1]) * 1.0, rel=1e-3)
     assert slope > 0
+
+
+# ---------------------------------------------------------------- feasibility sweep
+from engineering.launch_glider import sweep as sw  # noqa: E402
+
+SMALL = {"x_np_m": {"values": [0.066]}, "t_body_m": {"values": [0.5e-3]}, "CL_trim": {"values": [0.45, 0.6]},
+         "V0_m_s": {"values": [8.0]}, "phi_deg": {"values": [0.0]}, "hook_zeta_m": {"values": [0.0]},
+         "hook_xi_m": {"values": [0.025]}}
+
+
+def test_sweep_retains_failed_trim_and_runs_controls():
+    r = sw.run(ROOT, CARD, grid=SMALL)
+    assert [f["status"] for f in r["failed_designs"]] == ["TRIM_ABOVE_CL_PEAK"]     # retained, not dropped
+    (row,) = r["rows"]
+    assert row["static_margin"] == pytest.approx(sw.SM_TARGET, abs=1e-9)
+    assert row["release"]["V_m_s"] == pytest.approx(8.0, rel=2e-3)
+    assert row["glide_gain_m"] == pytest.approx(row["flight"]["range_m"] - row["no_lift_control"]["range_m"])
+    assert row["modes"]["max_real"] <= 1e-9
+    assert r["unreleased"] == 0 and r["airborne_at_t_max"] == 0
+
+
+def test_sweep_dt_halving_on_one_row():
+    a = sw.run(ROOT, CARD, grid={**SMALL, "CL_trim": {"values": [0.45]}})
+    b = sw.run(ROOT, CARD, grid={**SMALL, "CL_trim": {"values": [0.45]}}, dt_stroke=5e-5, dt_fly=5e-4)
+    assert abs(a["rows"][0]["flight"]["range_m"] / b["rows"][0]["flight"]["range_m"] - 1) < 5e-3

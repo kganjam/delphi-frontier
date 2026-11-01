@@ -15,10 +15,11 @@ Aerodynamics (scenario model; every coefficient is a declared parameter, none is
              angle and post-stall shape are brackets.
   pitch moment about the CG:
      M = qd S c Cm0 (1 - s) - qd S CN (x_cp - x_cg) + qd 2 Vol k_munk sin a cos a + qd S c Cm_q qhat
-     CN = CL cos a + CD sin a (normal force), x_cp = (1 - s) x_np + s x_cp_post (geometry x, aft of snout).
+     CN = CL cos a + CD sin a (normal force), x_cp = x_np + s dx_cp_post (geometry x, aft of snout): the
+     separated-flow centre of pressure is tied to the NP scenario, so moving the NP moves both.
   The Munk term is the slender-body potential couple (destabilising); x_np is the FINS-ONLY neutral point.
-Slingshot stroke: band force F(xi) along a fixed launch direction u = (cos phi, sin phi), applied at the hook,
-  xi = hook displacement along u.  Profiles over xi/s, each with mean 1 over displacement (so the work is Fbar s and
+Slingshot stroke: band force F(xi) applied at the hook and directed at the fork, a fixed point s ahead of the
+  hook's start along the aimed line u = (cos phi, sin phi); xi = hook displacement along u.  Profiles over xi/s, each with mean 1 over displacement (so the work is Fbar s and
   a_mean = Fbar/m is SPEC-010's V0^2/2s when nothing else does work), and peak/mean {1, pi/2, 2}:
   constant 1; quarter-cosine (pi/2) cos(pi xi / 2s); linear (ideal elastic band) 2 (1 - xi/s).  All are
   pre-tensioned (F(0) > 0): the model starts at rest, so a profile with F(0) = 0 never starts.  Fbar is iterated per draw so the CG speed at release
@@ -58,7 +59,7 @@ class Params:
     k_post: object = 1.0
     CD0: object = 0.06
     x_np: object = 0.058
-    x_cp_post: object = 0.07
+    dx_cp_post: object = 0.0057  # post-stall centre of pressure aft of x_np [m]
     Cm0: object = 0.0
     Cm_q: object = -4.0
     CL_q: object = 0.0
@@ -98,7 +99,7 @@ def aero(p: Params, alpha, V, q):
     CL = (1 - s) * cl_att + s * cl_sep
     CD = (1 - s) * cd_att + s * cd_sep
     CN = CL * np.cos(alpha) + CD * np.sin(alpha)
-    x_cp = (1 - s) * p.x_np + s * p.x_cp_post
+    x_cp = p.x_np + s * p.dx_cp_post
     M_over_qd = (p.S * p.c * p.Cm0 * (1 - s) - p.S * CN * (x_cp - p.x_cg)
                  + 2 * p.vol * p.k_munk * np.sin(alpha) * np.cos(alpha) + p.S * p.c * p.Cm_q * qhat)
     return CL, CD, CN, M_over_qd, s
@@ -132,10 +133,14 @@ def rhs(p: Params, y: np.ndarray, band: dict | None = None):
         xi = (hook[0] - band["hook0"][0]) * band["u"][0] + (hook[1] - band["hook0"][1]) * band["u"][1]
         on = (xi < band["s"]) & band["active"]
         F = np.where(on, band["Fbar"] * _force_shape(band["kind"], xi / band["s"]), 0.0)
-        FX = FX + F * band["u"][0]
-        FZ = FZ + F * band["u"][1]
-        M = M + r[0] * F * band["u"][1] - r[1] * F * band["u"][0]
-        extra = {"F": F, "xi": xi, "on": on}
+        anchor = band["hook0"] + band["s"] * band["u"]                   # the fork: the band pulls toward it
+        d = anchor - hook
+        dn = np.maximum(np.hypot(d[0], d[1]), 1e-12)
+        ux, uz = d[0] / dn, d[1] / dn
+        FX = FX + F * ux
+        FZ = FZ + F * uz
+        M = M + r[0] * F * uz - r[1] * F * ux
+        extra = {"F": F, "xi": xi, "on": on, "ux": ux, "uz": uz}
     else:
         extra = {}
     dy = np.stack([VX, VZ, q, FX / p.m, FZ / p.m, M / p.Iyy])
@@ -186,7 +191,7 @@ def stroke(p: Params, L: Launch, n: int, dt: float = 1e-4, iters: int = 4, t_max
             f = np.stack([np.cos(y[2]), np.sin(y[2])])
             nn = np.stack([-np.sin(y[2]), np.cos(y[2])])
             r = xi_h * f + zeta_h * nn
-            Mb = r[0] * F * u[1] - r[1] * F * u[0]
+            Mb = r[0] * F * aux["uz"] - r[1] * F * aux["ux"]
             Fpk = np.maximum(Fpk, np.where(band["active"], F, 0.0))
             Mpk = np.where(np.abs(Mb) > np.abs(Mpk), Mb, Mpk)
             H = H + np.where(band["active"], Mb * dt, 0.0)
@@ -274,14 +279,17 @@ def _f(v) -> float:
 
 
 def alpha_for_cl(p: Params, CL_target: float) -> float:
-    """Smallest alpha >= a0 with CL(alpha) = CL_target on the blended curve (bisection; refuses if unreachable)."""
+    """Smallest alpha >= a0 with CL(alpha) = CL_target on the attached branch of the blended curve, i.e. before its
+    first local maximum (bisection).  Refuses a CL only reachable post-stall."""
     lo = _f(p.a0)
     grid = lo + np.radians(np.linspace(0, 40, 4001))
     q1 = p.broadcast(grid.size)
     CL = aero(q1, grid, np.full_like(grid, 10.0), np.zeros_like(grid))[0]
-    k = np.nonzero(CL >= CL_target)[0]
+    dCL = np.diff(CL)
+    top = int(np.argmax(dCL < 0)) if np.any(dCL < 0) else len(CL) - 1   # first local maximum: attached branch only
+    k = np.nonzero(CL[: top + 1] >= CL_target)[0]
     if not len(k):
-        raise ValueError(f"CL {CL_target} unreachable (max {CL.max():.3f}); trim impossible")
+        raise ValueError(f"TRIM_ABOVE_CL_PEAK: CL {CL_target} above the attached-branch peak {CL[top]:.3f}")
     a, b = grid[max(k[0] - 1, 0)], grid[k[0]]
     p1 = p.broadcast(1)
     for _ in range(60):
