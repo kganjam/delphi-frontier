@@ -1,0 +1,338 @@
+{
+  "analysis": "positional log-prob advantage, real minus own dinucleotide shuffle",
+  "question": "is the mean-level advantage earned across the window or concentrated at the prompt boundary?",
+  "n_windows": 19,
+  "curve_length": 999,
+  "n_bins": 10,
+  "bin_edges_bp": [
+    0,
+    100,
+    200,
+    300,
+    400,
+    500,
+    599,
+    699,
+    799,
+    899,
+    999
+  ],
+  "all": {
+    "per_bin": [
+      {
+        "n": 19,
+        "mean": 0.1,
+        "lo": -0.0008,
+        "hi": 0.2008,
+        "bin_bp": "0-100",
+        "excludes_zero": false
+      },
+      {
+        "n": 19,
+        "mean": 0.1986,
+        "lo": 0.0847,
+        "hi": 0.3125,
+        "bin_bp": "100-200",
+        "excludes_zero": true
+      },
+      {
+        "n": 19,
+        "mean": 0.2423,
+        "lo": 0.078,
+        "hi": 0.4067,
+        "bin_bp": "200-300",
+        "excludes_zero": true
+      },
+      {
+        "n": 19,
+        "mean": 0.1534,
+        "lo": 0.0506,
+        "hi": 0.2562,
+        "bin_bp": "300-400",
+        "excludes_zero": true
+      },
+      {
+        "n": 19,
+        "mean": 0.1593,
+        "lo": 0.0451,
+        "hi": 0.2735,
+        "bin_bp": "400-500",
+        "excludes_zero": true
+      },
+      {
+        "n": 19,
+        "mean": 0.2215,
+        "lo": 0.0932,
+        "hi": 0.3497,
+        "bin_bp": "500-599",
+        "excludes_zero": true
+      },
+      {
+        "n": 19,
+        "mean": 0.1303,
+        "lo": 0.0568,
+        "hi": 0.2039,
+        "bin_bp": "599-699",
+        "excludes_zero": true
+      },
+      {
+        "n": 19,
+        "mean": 0.091,
+        "lo": 0.0233,
+        "hi": 0.1587,
+        "bin_bp": "699-799",
+        "excludes_zero": true
+      },
+      {
+        "n": 19,
+        "mean": 0.0655,
+        "lo": 0.0239,
+        "hi": 0.1072,
+        "bin_bp": "799-899",
+        "excludes_zero": true
+      },
+      {
+        "n": 19,
+        "mean": 0.083,
+        "lo": 0.022,
+        "hi": 0.1439,
+        "bin_bp": "899-999",
+        "excludes_zero": true
+      }
+    ],
+    "n_bins_excluding_zero": 9,
+    "first_bin": {
+      "n": 19,
+      "mean": 0.1,
+      "lo": -0.0008,
+      "hi": 0.2008,
+      "bin_bp": "0-100",
+      "excludes_zero": false
+    },
+    "last_bin": {
+      "n": 19,
+      "mean": 0.083,
+      "lo": 0.022,
+      "hi": 0.1439,
+      "bin_bp": "899-999",
+      "excludes_zero": true
+    },
+    "trend_across_window": {
+      "spearman_rho": -0.6242,
+      "p": 0.05372,
+      "reading": "negative rho with small p would mean the advantage decays across the window, i.e. boundary-driven"
+    }
+  },
+  "zebrafish": {
+    "per_bin": [
+      {
+        "n": 10,
+        "mean": 0.1599,
+        "lo": -0.0279,
+        "hi": 0.3477,
+        "bin_bp": "0-100",
+        "excludes_zero": false
+      },
+      {
+        "n": 10,
+        "mean": 0.2765,
+        "lo": 0.0599,
+        "hi": 0.4931,
+        "bin_bp": "100-200",
+        "excludes_zero": true
+      },
+      {
+        "n": 10,
+        "mean": 0.3061,
+        "lo": 0.0627,
+        "hi": 0.5495,
+        "bin_bp": "200-300",
+        "excludes_zero": true
+      },
+      {
+        "n": 10,
+        "mean": 0.1523,
+        "lo": 0.011,
+        "hi": 0.2937,
+        "bin_bp": "300-400",
+        "excludes_zero": true
+      },
+      {
+        "n": 10,
+        "mean": 0.2714,
+        "lo": 0.0664,
+        "hi": 0.4765,
+        "bin_bp": "400-500",
+        "excludes_zero": true
+      },
+      {
+        "n": 10,
+        "mean": 0.3163,
+        "lo": 0.0766,
+        "hi": 0.556,
+        "bin_bp": "500-599",
+        "excludes_zero": true
+      },
+      {
+        "n": 10,
+        "mean": 0.1707,
+        "lo": 0.0378,
+        "hi": 0.3036,
+        "bin_bp": "599-699",
+        "excludes_zero": true
+      },
+      {
+        "n": 10,
+        "mean": 0.1032,
+        "lo": -0.0298,
+        "hi": 0.2362,
+        "bin_bp": "699-799",
+        "excludes_zero": false
+      },
+      {
+        "n": 10,
+        "mean": 0.0687,
+        "lo": -0.0095,
+        "hi": 0.1468,
+        "bin_bp": "799-899",
+        "excludes_zero": false
+      },
+      {
+        "n": 10,
+        "mean": 0.0266,
+        "lo": -0.0208,
+        "hi": 0.074,
+        "bin_bp": "899-999",
+        "excludes_zero": false
+      }
+    ],
+    "n_bins_excluding_zero": 6,
+    "first_bin": {
+      "n": 10,
+      "mean": 0.1599,
+      "lo": -0.0279,
+      "hi": 0.3477,
+      "bin_bp": "0-100",
+      "excludes_zero": false
+    },
+    "last_bin": {
+      "n": 10,
+      "mean": 0.0266,
+      "lo": -0.0208,
+      "hi": 0.074,
+      "bin_bp": "899-999",
+      "excludes_zero": false
+    },
+    "trend_across_window": {
+      "spearman_rho": -0.6,
+      "p": 0.06669,
+      "reading": "negative rho with small p would mean the advantage decays across the window, i.e. boundary-driven"
+    }
+  },
+  "flyingfish": {
+    "per_bin": [
+      {
+        "n": 9,
+        "mean": 0.0334,
+        "lo": -0.0487,
+        "hi": 0.1155,
+        "bin_bp": "0-100",
+        "excludes_zero": false
+      },
+      {
+        "n": 9,
+        "mean": 0.112,
+        "lo": 0.0506,
+        "hi": 0.1734,
+        "bin_bp": "100-200",
+        "excludes_zero": true
+      },
+      {
+        "n": 9,
+        "mean": 0.1715,
+        "lo": -0.0956,
+        "hi": 0.4386,
+        "bin_bp": "200-300",
+        "excludes_zero": false
+      },
+      {
+        "n": 9,
+        "mean": 0.1546,
+        "lo": -0.0312,
+        "hi": 0.3405,
+        "bin_bp": "300-400",
+        "excludes_zero": false
+      },
+      {
+        "n": 9,
+        "mean": 0.0347,
+        "lo": 0.015,
+        "hi": 0.0543,
+        "bin_bp": "400-500",
+        "excludes_zero": true
+      },
+      {
+        "n": 9,
+        "mean": 0.1161,
+        "lo": 0.0418,
+        "hi": 0.1903,
+        "bin_bp": "500-599",
+        "excludes_zero": true
+      },
+      {
+        "n": 9,
+        "mean": 0.0855,
+        "lo": 0.0115,
+        "hi": 0.1596,
+        "bin_bp": "599-699",
+        "excludes_zero": true
+      },
+      {
+        "n": 9,
+        "mean": 0.0774,
+        "lo": 0.0222,
+        "hi": 0.1325,
+        "bin_bp": "699-799",
+        "excludes_zero": true
+      },
+      {
+        "n": 9,
+        "mean": 0.0621,
+        "lo": 0.0174,
+        "hi": 0.1067,
+        "bin_bp": "799-899",
+        "excludes_zero": true
+      },
+      {
+        "n": 9,
+        "mean": 0.1456,
+        "lo": 0.0299,
+        "hi": 0.2613,
+        "bin_bp": "899-999",
+        "excludes_zero": true
+      }
+    ],
+    "n_bins_excluding_zero": 7,
+    "first_bin": {
+      "n": 9,
+      "mean": 0.0334,
+      "lo": -0.0487,
+      "hi": 0.1155,
+      "bin_bp": "0-100",
+      "excludes_zero": false
+    },
+    "last_bin": {
+      "n": 9,
+      "mean": 0.1456,
+      "lo": 0.0299,
+      "hi": 0.2613,
+      "bin_bp": "899-999",
+      "excludes_zero": true
+    },
+    "trend_across_window": {
+      "spearman_rho": 0.0303,
+      "p": 0.9338,
+      "reading": "negative rho with small p would mean the advantage decays across the window, i.e. boundary-driven"
+    }
+  }
+}
