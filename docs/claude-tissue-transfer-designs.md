@@ -733,6 +733,22 @@ exactly 192). γ = 1, v = 0.1, coarse grid, 12 seeds; distal A:
 - For biology, the comparison to make is between the sharpness of the distal proliferation boundary and the ray
   spacing, not just the zone width.
 
+**Other kinetics** (`claude-tissue-pzone-kin`, job `aijob-e00ndspv6qk6a20594`, COMPLETED, 629.9 s). A second
+stripe-regime cell, b = 1.8 and d = 30 (λ ≈ 10.5, σ_max ≈ 0.062, close to b = 0.9 and d = 10 at λ ≈ 11.1 and
+σ ≈ 0.057). γ = 1, v = 0.1, coarse grid, 12 seeds; distal A:
+
+| L_p | 3.0 | 3.5 | 4.0 | 4.5 | 5.0 |
+|---|---|---|---|---|---|
+| Distal A | 0.69 | 0.82 | 0.80 | 0.91 | 0.95 |
+
+**Reading.**
+- The switch lies **below 3.0 (< 0.28 λ)**, against about 0.39 λ for b = 0.9 and d = 10 on the same grid.
+- The two cells have nearly the same wavelength and pattern-formation rate. So **the zone-width switch also depends on
+  the kinetics, beyond λ and σ**, and "about λ/3" is not universal.
+- The robust qualitative statement is: a narrow apical zone gives edge-parallel bands, and a zone wider than a
+  kinetics-dependent fraction of λ (about 0.25–0.4 here) gives rays.
+- A lower-bracket run (`claude-tissue-pzone-kinb`) and a third cell, b = 1.1 and d = 13 (`claude-tissue-pzone-kin2`), are running.
+
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
    the reviewer cites prior analyses such as Míguez et al. 2006 and Krause et al. 2021, which I have not checked here.
