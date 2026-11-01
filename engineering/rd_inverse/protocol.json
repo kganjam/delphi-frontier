@@ -1,0 +1,180 @@
+{
+ "bounds": {
+  "gpus": 1,
+  "hard_cap_basis": "CPU one-thread measurement 2026-11-01: batch 96 at N64 100 steps 0.145 s (about 14.5 s per 10000 steps); batch 18 at N256 50 steps 0.051 s (about 41 s per 40000 steps). A CPU-only estimate of the whole job is roughly 8-10 minutes, so the H100 is expected well under the cap. Not a measured runtime of the new algorithm.",
+  "hard_cap_s": 900,
+  "image": "nvcr.io/nvidia/pytorch@sha256:11e9976339d08669ede155cdbc601b1df5f57772fcee772b23527efc54e05602",
+  "local_test_cap": "1 CPU, 2 GiB, 128 tasks",
+  "max_output_mib_compressed": 48,
+  "memory": "a few GB GPU, host RAM < 4 GiB",
+  "phase_order_and_partial": "each phase writes and hashes its output before the next; if the cap is hit the run stops, later phases stay absent and the receipt says incomplete",
+  "scientific_runtime_target_s": 900
+ },
+ "controls_in_job": [
+  "CPU tiny analytic heat-cosine control and wrong-sign mutation rejected",
+  "source wrapper equality CPU <1e-11",
+  "actual same-job CPU vs CUDA tiny solver discrepancy <1e-9 with float64 and TF32 disabled; CUDA required, never silently falling back",
+  "oracle, negative, mutation controls above"
+ ],
+ "equations": "u_t = u_xx + (a - u + u^2 v); v_t = d v_xx + (b - u^2 v); zero-flux on [0, L] (engineering/rd_diffusion/config.json); Strang exact DCT diffusion + RK4 reaction",
+ "fixed": {
+  "N": 64,
+  "a": 0.15,
+  "b": 0.9,
+  "dt": 0.02,
+  "dtype": "float64",
+  "ic": "u0=a+b, v0=b/(a+b)^2 plus continuous cosine ic_modal(seed,K=20,L,N,eps*|u0|,eps*|v0|); same seed for target and every candidate, coefficients scaled to the domain length L",
+  "tau": 200.0,
+  "tf32": "disabled"
+ },
+ "gates": {
+  "A_absolute_amplitude": "target u peak-to-peak at tau=200 >= 0.10 absolute model units. Evaluated for every target BEFORE any mode or spectral-ratio summary. A target below it is reported 'unpatterned: design success undefined' and kept.",
+  "B_design_success": "best raw RMS score <= 0.02 absolute AND gate A met. A method that does not reach it is reported as not reaching it.",
+  "no_relaxation": "thresholds are not changed after outcomes; failures are retained; no epsilon tuning; mode/spectral summaries are secondary and reported only after gate A"
+ },
+ "independent_checks": {
+  "resolution": {
+   "base": [
+    64,
+    0.02
+   ],
+   "claim_limit": "three configurations and one IC seed per target: a sparse consistency check, no convergence claim",
+   "comparison": "candidate vs target both solved at the config with the target's ic_seed, compared on the common 64-point grid by analytic cosine projection (rd_numerics.audit.common_grid); plus candidate self-difference to its own base field",
+   "configs": [
+    [
+     64,
+     0.005
+    ],
+    [
+     128,
+     0.005
+    ],
+    [
+     256,
+     0.005
+    ]
+   ]
+  },
+  "seed_generalisation": {
+   "comparison": "candidate vs true parameters under the same new seed, N64 dt 0.02; reported as RMS per seed, a measure of IC dependence, not of identifiability alone",
+   "ic_seeds": "920000 + 10*index + {0,1,2}, untouched by anything above"
+  },
+  "selected": "each method's selected candidate and the true parameters, per target"
+ },
+ "methods": {
+  "accounting": "every true solver evaluation counts, initialization included; no hidden evaluation; no target parameter or target field is visible to either method except through the score of an evaluated candidate",
+  "baseline": {
+   "algorithm": "torch.quasirandom.SobolEngine(dimension=2, scramble=True, seed=1000+target_index), first 64 points mapped affinely to the bounds",
+   "name": "scrambled Sobol"
+  },
+  "budget_per_target_per_method": 64,
+  "optimizer": {
+   "algorithm": "4 rounds x 16 evaluations. Round 1: first 16 points of SobolEngine(2, scramble=True, seed=2000+target_index) (counts as evaluations). Rounds 2-4: in unit-square coordinates take the 4 lowest-score evaluated points so far; mean = their mean; per-axis sd = max(population sd of the 4, 0.03); draw 16 points ~ Normal(mean, sd) with torch.Generator seeded 3000+10*target_index+round; clip to [0,1]. Failed candidates rank last.",
+   "name": "batched elite Gaussian search (diagonal)",
+   "tuning": "none after outcomes; constants above are final"
+  },
+  "pairing": "equal 64 true solver evaluations per target per method; six targets; n=6 is descriptive: no significance test and no claim about superiority beyond these six targets",
+  "selection": "selected candidate = the lowest-score evaluated point of that method (ties to the earlier evaluation); selection uses only the 64 scores"
+ },
+ "near_optimal_and_nonidentifiability": "for each target, pool both methods' evaluations and list every point with score <= best + 0.005; report count and the d and L range of that set. A large range is nonidentifiability, not an error.",
+ "never_read": "No outcome of the original RD/DDPM holdouts is read, used or reproduced. Original RD/DDPM source, protocols, holdouts and failed audits are preserved untouched.",
+ "oracle_and_negatives": {
+  "negative_controls": [
+   "wrong-parameter mutation: evaluate (d_true*1.5 clipped to 40, L_true) and (d_true, L swapped to the opposite bound): score must exceed 0.02 for at least one of them on each patterned target, else the score is not discriminating",
+   "wrong-IC mutation: true parameters with ic_seed+1: score must exceed the oracle by a measurable margin (>1e-6)"
+  ],
+  "positive_oracle": "evaluate the true parameters with the target's ic_seed; expected score 0 (<1e-12). Run as a separate validation control and never enters either method's candidate set or elite selection.",
+  "source_mutation": "preflight refuses when any pinned source hash differs; a test flips one byte and requires refusal"
+ },
+ "schema": "frontier.rd-inverse.protocol/1",
+ "scope": "Synthetic numerical inverse-design exercise with the existing Schnakenberg solver. Not a fish, not measured, not DNA, no biological interpretation; all variables and time are model units. No DDPM acceleration claim.",
+ "score": {
+  "definition": "RMS over both channels and all 64 cells of the raw difference candidate-minus-target at tau=200 (model units, no normalisation)",
+  "failed_candidate": "non-finite or |value|>1000 scores as failure; it is retained in the trace with score null and ranks last"
+ },
+ "search_bounds": {
+  "L": [
+   30.0,
+   70.0
+  ],
+  "d": [
+   10.0,
+   40.0
+  ]
+ },
+ "seeds_summary": {
+  "generalisation_seeds": "920000+10*i+{0,1,2}",
+  "ic_seeds": "910000+i",
+  "optimizer_rounds": "3000+10*i+round",
+  "sobol_baseline": "1000+i",
+  "sobol_optimizer_init": "2000+i",
+  "target_rng": 20261101
+ },
+ "separate_statuses": [
+  "transport completeness",
+  "numerical validity (controls)",
+  "design success (gate B per target)",
+  "biology: unknown, not addressed"
+ ],
+ "source_pins": {
+  "config": {
+   "path": "engineering/rd_diffusion/config.json",
+   "sha256": "bc77ebc55010b9c8ac910c2b31868ec0dbf2d1e3785a06ec3ef1aa028ea2b210",
+   "use": "K_modes=20, eps=0.05 for the continuous cosine IC"
+  },
+  "projection": {
+   "path": "engineering/rd_numerics/audit.py",
+   "sha256": "ff8fe2498919227dc272c121be1268380af7ba9423e49d872f71e3be64e59e2c",
+   "use": "common_grid analytic cosine projection reused for cross-resolution comparison"
+  },
+  "solver": {
+   "path": "engineering/rd_diffusion/rd_ddpm.py",
+   "sha256": "25455430ef138b49e6bac151a144e338269a81ce5c2f576387f8805bbb1a400a",
+   "use": "imported unmodified: advance, ic_modal, dct_matrix"
+  }
+ },
+ "status": "FROZEN before any target field, score or trace is computed",
+ "targets": {
+  "count": 6,
+  "generation": "d_true, L_true ~ Uniform(bounds) from numpy default_rng(20261101) (d vector then L vector); ic_seed = 910000 + index. Parameters and seeds were drawn before any solver run and are listed here; the optimizer never receives them.",
+  "list": [
+   {
+    "L_true": 50.732131,
+    "d_true": 27.747122,
+    "ic_seed": 910000,
+    "id": "T0"
+   },
+   {
+    "L_true": 40.621416,
+    "d_true": 20.740493,
+    "ic_seed": 910001,
+    "id": "T1"
+   },
+   {
+    "L_true": 47.304134,
+    "d_true": 24.517847,
+    "ic_seed": 910002,
+    "id": "T2"
+   },
+   {
+    "L_true": 47.354643,
+    "d_true": 39.597025,
+    "ic_seed": 910003,
+    "id": "T3"
+   },
+   {
+    "L_true": 39.9954,
+    "d_true": 14.078234,
+    "ic_seed": 910004,
+    "id": "T4"
+   },
+   {
+    "L_true": 42.03601,
+    "d_true": 10.031312,
+    "ic_seed": 910005,
+    "id": "T5"
+   }
+  ],
+  "target_field": "solver output (u,v) at tau=200, N64, dt 0.02, at the true parameters and the target's ic_seed"
+ }
+}
