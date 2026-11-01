@@ -1,10 +1,13 @@
 """Analytic-planform control for the VLM's rigid-CL refinement behaviour (contract: vlm_diag_contract.json).
 
-    python -I engineering/cfd3d/vlm_diag.py OUTDIR [--deadline S] [--extended] [--arms ID,ID] [--panels PATH]
+    python -I engineering/cfd3d/vlm_diag.py OUTDIR [--deadline S] [--extended] [--repair] [--arms ID,ID] [--panels PATH]
+    python -I engineering/cfd3d/vlm_diag.py merge OUT.json RESULTS_DIR [RESULTS_DIR ...]
 
 Runs the frozen arms in order on the unchanged vlm.py, writes OUTDIR/results.json atomically after every solve,
 and classifies each refinement family by the contract's rules. Inputs are checked by sha256 and refused on a
 mismatch. Nothing here changes vlm.py; the local-velocity Kutta-Joukowski lift is a labelled diagnostic only.
+--repair runs the post-hoc REPAIR variant of vlm_diag_addendum_repair.json (panel-consistent collocation, only C
+moved); merge combines result directories and adds the addendum's D_colloc against the core variant.
 """
 from __future__ import annotations
 
@@ -31,6 +34,7 @@ _spec = importlib.util.spec_from_file_location("vlm", HERE / "vlm.py")
 vlm = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(vlm)
 CONTRACT = json.loads((HERE / "vlm_diag_contract.json").read_text())
+ADDENDUM = json.loads((HERE / "vlm_diag_addendum_repair.json").read_text())
 ALPHA = 4.0
 TOL_ROUND = 1e-12
 
@@ -64,14 +68,30 @@ U_STEP = -0.5 + 1 / math.pi
 NOTCH = np.array([[-0.5, 0.0], [0.5, 0.0], [0.5, 0.125], [U_STEP, 0.125], [U_STEP, 0.25], [-0.5, 0.25]])
 
 
-def builders(fins: dict) -> dict:
+def repair_colloc(lat: dict, origin, e_u, e_w, f: float = 0.75) -> dict:
+    """REPAIR (addendum): collocation at the 3/4 point of the panel's own corners, averaged over its two strip
+    edges, instead of the chord at the strip midpoint. Only C changes."""
+    uw = lat["uw"]                    # corners: edge i front, edge i+1 front, edge i+1 rear, edge i rear
+    um = 0.5 * (uw[:, 0, 0] + uw[:, 1, 0])
+    wc = 0.5 * ((uw[:, 0, 1] + f * (uw[:, 3, 1] - uw[:, 0, 1])) + (uw[:, 1, 1] + f * (uw[:, 2, 1] - uw[:, 1, 1])))
+    return {**lat, "C": origin + um[:, None] * e_u + wc[:, None] * e_w}
+
+
+def builders(fins: dict, repair: bool = False) -> dict:
     """arm id -> f(ns, nc) returning (lattice, S_ref, owners-or-None, per-owner reference areas)."""
+    def fix(lat, origin, e_u, e_w):
+        return repair_colloc(lat, origin, e_u, e_w) if repair else lat
+
     def poly_arm(poly):
-        return lambda ns, nc: (vlm.lattice(poly, *PLANAR, ns, nc), shoelace(poly), None, None)
+        return lambda ns, nc: (fix(vlm.lattice(poly, *PLANAR, ns, nc), *PLANAR[:3]), shoelace(poly), None, None)
+
+    def fin_one(f, ns, nc):
+        lat, geo = vlm.fin_setup(fins[f], ns, nc)
+        return fix(lat, geo["origin"], geo["eu"], geo["ew"])
 
     def fin_arm(names):
         def build(ns, nc):
-            lats = {f: vlm.fin_setup(fins[f], ns, nc)[0] for f in names}
+            lats = {f: fin_one(f, ns, nc) for f in names}
             areas = {f: float(fins[f]["area_flat_m2"]) for f in names}
             lat = vlm.combine(lats) if len(names) > 1 else lats[names[0]]
             return lat, sum(areas.values()), (lat["owner"] if len(names) > 1 else None), areas
@@ -80,7 +100,7 @@ def builders(fins: dict) -> dict:
     def ell(ar, colloc=0.75):
         def build(ns, nc):
             lat, s = vlm.elliptic(ar, ns, nc, colloc=colloc)
-            return lat, s, None, None
+            return fix(lat, *PLANAR[:3]), s, None, None
         return build
 
     return {
@@ -266,6 +286,68 @@ def decide(arms: dict, extended: bool) -> dict:
     return d
 
 
+def colloc_decision(core: dict, rep: dict, extended: bool) -> dict:
+    """Addendum D_colloc: the repaired arms against the core rectangle (invariance) and the N2 negative."""
+    fam, arm_key = ("chord_extended", "arm_extended") if extended else ("chord", "arm_core")
+
+    def cls(arms, a):
+        return arms.get(a, {}).get("classification", {})
+
+    a3c, a3r = core.get("A3_rectangle_AR4", {}).get("solves", {}), rep.get("A3_rectangle_AR4", {}).get("solves", {})
+    pairs = {k: (a3c[k].get("CL"), a3r[k].get("CL")) for k in a3r if k in a3c}
+    rel = {k: (r / c - 1) if c is not None and r is not None else None for k, (c, r) in pairs.items()}
+    full = {f"{n}x{m}" for n, m in points(extended)}
+    if any(v is not None and abs(v) > TOL_ROUND for v in rel.values()):
+        inv = False
+    else:
+        inv = True if full <= {k for k, v in rel.items() if v is not None} else None
+    n2 = (cls(rep, "N2_notched_rectangle").get(arm_key) or "incomplete") == "irregular"
+    chord = {a: (cls(rep, a).get(fam) or {}).get("verdict", "incomplete") for a in ("A1_elliptic_AR6_dense", "A2_elliptic_AR4_dense")}
+    arm = {a: cls(rep, a).get(arm_key) or "incomplete" for a in chord}
+    if inv is False:
+        d = "invalid"
+    elif not n2:
+        d = "unknown"
+    elif "irregular" in chord.values():
+        d = "refuted"
+    elif inv is True and all(v == "regular" for v in arm.values()):
+        d = "supported"
+    else:
+        d = "unknown"
+    fins = {a: {k: (cls(rep, a).get(k) or {}).get("verdict", "incomplete")
+                for k in (("span_extended", "chord_extended") if extended else ("span", "chord"))}
+            for a in ("F1_pectoral_L_isolated", "F2_pelvic_L_isolated", "F3_four_fins_combined")}
+    return {"D_colloc": d, "invariance_rectangle": inv, "invariance_max_abs_rel": max((abs(v) for v in rel.values() if v is not None), default=None),
+            "N2_flagged": n2, "A1_A2_repaired_chord": chord, "A1_A2_repaired_arm": arm, "fins_repaired_by_family": fins,
+            "A1_repaired_law_check": rep.get("A1_elliptic_AR6_dense", {}).get("law_check")}
+
+
+def merge(out: Path, dirs: list[Path]) -> dict:
+    """Combine result directories (any mix of core/repair, core/extended) and decide on the union."""
+    variants: dict[str, dict] = {"core": {}, "repair": {}}
+    src, extended = [], False
+    for d in dirs:
+        r = json.loads((d / "results.json").read_text())
+        src.append({"dir": str(d), "variant": r.get("variant", "core"), "mode": r["mode"], "status": r["status"],
+                    "runner_sha256": r["runner_sha256"], "elapsed_s": r.get("elapsed_s")})
+        extended |= r["mode"] == "extended"
+        for a, v in r["arms"].items():
+            if a in variants[r.get("variant", "core")]:
+                raise SystemExit(f"REFUSED: arm {a} appears twice in variant {r.get('variant', 'core')}")
+            variants[r.get("variant", "core")][a] = v
+    res = {"schema": "cfd3d-vlm-diag-merged-0.1", "sources": src, "contract_sha256": sha(HERE / "vlm_diag_contract.json"),
+           "addendum_sha256": sha(HERE / "vlm_diag_addendum_repair.json"), "arms": variants,
+           "decisions_core": decide(variants["core"], False)}
+    if extended:
+        res["decisions_extended"] = decide(variants["core"], True)
+    if variants["repair"]:
+        res["addendum_core"] = colloc_decision(variants["core"], variants["repair"], False)
+        if extended:
+            res["addendum_extended"] = colloc_decision(variants["core"], variants["repair"], True)
+    out.write_text(json.dumps(res, indent=1))
+    return res
+
+
 def write(out: Path, res: dict) -> None:
     tmp = out / f".results.json.tmp.{os.getpid()}"
     tmp.write_text(json.dumps(res, indent=1))
@@ -273,10 +355,16 @@ def write(out: Path, res: dict) -> None:
 
 
 def main(argv=None) -> int:
+    argv = sys.argv[1:] if argv is None else argv
+    if argv and argv[0] == "merge":
+        r = merge(Path(argv[1]), [Path(x) for x in argv[2:]])
+        print(json.dumps({k: r[k] for k in r if k.startswith(("decisions", "addendum"))}, indent=1))
+        return 0
     ap = argparse.ArgumentParser()
     ap.add_argument("outdir", type=Path)
     ap.add_argument("--deadline", type=float, default=CONTRACT["execution"]["local_probe"]["deadline_s"])
     ap.add_argument("--extended", action="store_true")
+    ap.add_argument("--repair", action="store_true")
     ap.add_argument("--arms", default="")
     ap.add_argument("--panels", type=Path, default=HERE.parents[1] / CONTRACT["source"]["panels_json"]["path"])
     a = ap.parse_args(argv)
@@ -293,13 +381,15 @@ def main(argv=None) -> int:
            "environment": {"python": platform.python_version(), "numpy": np.__version__,
                            "threads": {k: os.environ.get(k) for k in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS")},
                            "cpus_visible": len(os.sched_getaffinity(0))},
-           "mode": "extended" if a.extended else "core", "deadline_s": a.deadline, "alpha_deg": ALPHA,
+           "mode": "extended" if a.extended else "core", "variant": "repair" if a.repair else "core",
+           "addendum_sha256": sha(HERE / "vlm_diag_addendum_repair.json") if a.repair else None, "deadline_s": a.deadline, "alpha_deg": ALPHA,
            "status": "running", "arms": {}}
     write(a.outdir, res)
-    build = builders(fins)
+    build = builders(fins, repair=a.repair)
     order = CONTRACT["arm_order"]
-    chosen = [x for x in a.arms.split(",") if x] or order
-    unknown = [x for x in chosen if x not in build]
+    allowed = ADDENDUM["repair_variant"]["arms"] if a.repair else order
+    chosen = [x for x in a.arms.split(",") if x] or allowed
+    unknown = [x for x in chosen if x not in build or x not in allowed]
     if unknown:
         print(f"REFUSED: unknown arms {unknown}", file=sys.stderr)
         return 2
@@ -342,14 +432,15 @@ def main(argv=None) -> int:
                 res["decisions"] = decide(res["arms"], False)
                 write(a.outdir, res)
                 return 3
-    res["decisions_core"] = decide(res["arms"], False)
-    if a.extended:
-        res["decisions_extended"] = decide(res["arms"], True)
+    if not a.repair:
+        res["decisions_core"] = decide(res["arms"], False)
+        if a.extended:
+            res["decisions_extended"] = decide(res["arms"], True)
     res["status"] = "complete" if not any(s.get("state") for r in res["arms"].values() for s in r["solves"].values()) \
         else "partial (see solve states)"
     res["elapsed_s"] = time.monotonic() - t0
     write(a.outdir, res)
-    print(json.dumps({"status": res["status"], "elapsed_s": round(res["elapsed_s"], 1), **res["decisions_core"]}))
+    print(json.dumps({"status": res["status"], "elapsed_s": round(res["elapsed_s"], 1), **res.get("decisions_core", {})}))
     return 0
 
 

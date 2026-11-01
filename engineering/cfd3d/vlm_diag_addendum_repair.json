@@ -1,0 +1,33 @@
+{
+ "schema": "cfd3d-vlm-diag-addendum-0.1",
+ "status": "POST-HOC: written after the core probe's outcome (core contract f4904ed; results below), committed before any repaired solve. It adds a labelled repair arm and a prediction; it changes no core rule, tolerance or verdict, and vlm.py stays unchanged.",
+ "core_outcome_seen": {
+  "results_sha256": "6fbc9f54c3d2ec99f174bff25336de77400d990c1b2363d3d23377f84f75baa9", "results_path": "artifacts/cfd3d/vlm-diag/core-probe/results.json (committed with this addendum)",
+  "summary": "R0 reproduced owner07's 11 values exactly; N1 and N2 flagged. Frozen decisions: D_scheme indicated, D_law unknown, D_sampling unknown, D_interaction confounded. The irregular smooth-planform families are the CHORD families of A1, A2 (and A4): R = 1.46-1.98 in every chord triple, i.e. CL grows about linearly in nc at ns 32. The rectangle A3 is regular in both families (chord R 0.23). Span families of A1, A2, A4 are regular; F1, F2, F3 are irregular in both."
+ },
+ "hypothesis_H_colloc": {
+  "statement": "In vlm.lattice the bound vortex of each panel joins the quarter-chord points of the two STRIP-EDGE chords (c0, c1), but the collocation point uses the chord at the strip MIDPOINT (cm). On a curved outline cm differs from the edge-chord average by delta ~ curvature x (strip width)^2, independent of nc, while the chordwise panel length is chord/nc. The collocation point therefore moves by delta relative to its own panel, a fraction delta*nc/chord of the panel that grows with nc: chord refinement at fixed ns diverges about linearly, span refinement converges, and a straight-edged planform (rectangle: delta = 0) is unaffected. At a polygon kink inside a strip delta is O(strip width), which would also make span refinement irregular on the fin outlines.",
+  "source_lines": "vlm.py lattice(): cm = chord_at(poly_uw, 0.5 * (ue[i] + ue[i + 1])); C.append(to3(um, w(cm, f0 + colloc * (f1 - f0)))) against A/B from w(c0, fq), w(c1, fq)."
+ },
+ "repair_variant": {
+  "label": "REPAIR (diagnostic only, not applied to vlm.py or to any existing output)",
+  "definition": "panel-consistent collocation: C = origin + um e_u + wc e_w, with wc = 0.5 [w(c0, f) + w(c1, f)], f = f0 + 0.75 (f1 - f0), computed from the lattice's own panel corners lat['uw']. Only C changes; A, B, N (normals as built), area and the solve are the unchanged vlm.py code.",
+  "arms": ["A1_elliptic_AR6_dense", "A2_elliptic_AR4_dense", "A3_rectangle_AR4", "A4_elliptic_AR4_coarse7",
+           "A4_elliptic_AR4_coarse16", "N2_notched_rectangle", "F1_pectoral_L_isolated", "F2_pelvic_L_isolated",
+           "F3_four_fins_combined"],
+  "families_and_classification": "exactly the core contract's (vlm_diag_contract.json, unchanged)"
+ },
+ "controls": {
+  "invariance_rectangle": "A3 repaired must equal A3 core at every (ns, nc) within 1e-12 relative (delta = 0 there). If not, the repair changes more than the collocation inconsistency and D_colloc is invalid.",
+  "N2_negative": "N2 repaired must still be irregular in at least one family (a chord step is not cured by moving collocation points). If not, D_colloc is unknown."
+ },
+ "prediction_and_decision": {
+  "D_colloc": "supported if A1, A2 repaired are regular in BOTH families and the controls hold; refuted if either A1 or A2 repaired chord family is still irregular; otherwise unknown.",
+  "D_fins_after_repair": "reported per arm (F1, F2, F3 repaired verdicts by family). If F1 and F2 repaired are regular, the fin irregularity is explained by H_colloc; if their chord families become regular but a span family stays irregular, the remainder is attributed to outline sampling (kinks), labelled as an inference; if their chord families stay irregular, H_colloc does not explain the fins.",
+  "law": "the core law check (Helmbold A = 6, frozen 3 %) is also reported for A1 repaired; descriptive, because the core D_law rule is defined on the unrepaired source."
+ },
+ "execution": {
+  "local": "one more capped local run of the repaired core arms with the core probe's cap (1 CPU, 2 GiB, 128 tasks, 180 s, deadline 150 s), from a git archive of the commit that freezes this addendum",
+  "remote_packet": "the frozen extended families (core contract execution.extended; useful_if fired: A1 and A2 are irregular) for core AND repaired arms, <= 15 min on 4 vCPU, built only from committed sources and sent to infra; not submitted here"
+ }
+}

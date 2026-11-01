@@ -1,0 +1,14 @@
+{
+ "schema": "cfd3d-vlm-diag-run-receipt-0.1",
+ "what": "core local probe of the frozen contract",
+ "source_commit": "f4904ed",
+ "run_from": "git archive of f4904ed into a fresh directory (vlm.py, vlm_diag.py, contract, gates_vlm.json, panels.json); no worktree files on the path",
+ "command": "systemd-run --user --scope -p CPUQuota=100% -p TasksMax=128 -p MemoryMax=2G -p MemorySwapMax=0 -p RuntimeMaxSec=180 env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python -I vlm_diag.py OUT",
+ "interpreter": "python 3.12.3, numpy 2.5.4 (uv venv, numpy==2.5.4 only)",
+ "exit_code": 0,
+ "wall": "2:04.07",
+ "max_rss_kB": 272964,
+ "stdout": "{\"status\": \"complete\", \"elapsed_s\": 123.9, \"precondition_R0\": true, \"N1_flagged\": true, \"N2_flagged\": true, \"D_scheme\": \"indicated\", \"D_law\": \"unknown\", \"D_sampling\": \"unknown\", \"D_interaction\": \"confounded\"}",
+ "results_sha256": "6fbc9f54c3d2ec99f174bff25336de77400d990c1b2363d3d23377f84f75baa9",
+ "host": "shared 8-vCPU host, load average 2.8-4.9 at start"
+}
