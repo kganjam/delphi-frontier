@@ -1,0 +1,184 @@
+{
+ "scope": "Residue check at one alignment column. It tests a published amino-acid state against a miniprot PREDICTION from an unannotated draft assembly, not against a sequenced transcript, and it is not evidence of transport activity or phenotype.",
+ "published_claim": "PMID 34534441 full text (PMC9172250): a shared amino acid substitution in lat4a found across multiple lineages with enlarged pectoral fins, F326L; present in both flying-halfbeak lineages and all sequenced Exocoetidae except Parexocoetus brachypterus. Lat4 = Slc43a2 per the paper's ref 17.",
+ "prediction_tested": "H. speculiger is an Exocoetid and is not P. brachypterus, so its LAT4 should carry L at the F326 position.",
+ "declared_ambiguity": "The paper's text as read does not state which sequence's numbering F326 refers to. Both zebrafish SLC43A2 paralogs are therefore used as the numbering reference and both results are reported.",
+ "results": [
+  {
+   "reference": "ZF_slc43a2b_LAT4",
+   "reference_len": 592,
+   "reference_residue_at_326": "D",
+   "locus": "HSPEC_slc43locus01_HS00485_len593",
+   "aligned_residue_in_locus": "D",
+   "reference_context_320_332": "LCLSTMDLELQCE",
+   "locus_context_aligned": "LCLSTMDLEMDCK",
+   "matches_published_L": false,
+   "matches_reference_F": true
+  },
+  {
+   "reference": "ZF_slc43a2b_LAT4",
+   "reference_len": 592,
+   "reference_residue_at_326": "D",
+   "locus": "HSPEC_slc43locus02_HS01224_len570",
+   "aligned_residue_in_locus": "D",
+   "reference_context_320_332": "LCLSTMDLELQCE",
+   "locus_context_aligned": "LCLSTVDLEVKCK",
+   "matches_published_L": false,
+   "matches_reference_F": true
+  },
+  {
+   "reference": "ZF_slc43a2b_LAT4",
+   "reference_len": 592,
+   "reference_residue_at_326": "D",
+   "locus": "HSPEC_slc43locus03_HS00671_len543",
+   "aligned_residue_in_locus": "S",
+   "reference_context_320_332": "LCLSTMDLELQCE",
+   "locus_context_aligned": "FVFVSLSLSLTSV",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2b_LAT4",
+   "reference_len": 592,
+   "reference_residue_at_326": "D",
+   "locus": "HSPEC_slc43locus04_HS00571_len541",
+   "aligned_residue_in_locus": "T",
+   "reference_context_320_332": "LCLSTMDLELQCE",
+   "locus_context_aligned": "LPNGTDTAPI---",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2b_LAT4",
+   "reference_len": 592,
+   "reference_residue_at_326": "D",
+   "locus": "HSPEC_slc43locus05_HS02045_len499",
+   "aligned_residue_in_locus": "D",
+   "reference_context_320_332": "LCLSTMDLELQCE",
+   "locus_context_aligned": "LELSGKDDATQ-E",
+   "matches_published_L": false,
+   "matches_reference_F": true
+  },
+  {
+   "reference": "ZF_slc43a2b_LAT4",
+   "reference_len": 592,
+   "reference_residue_at_326": "D",
+   "locus": "HSPEC_slc43locus06_HS00571_len482",
+   "aligned_residue_in_locus": "-",
+   "reference_context_320_332": "LCLSTMDLELQCE",
+   "locus_context_aligned": "-------------",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2b_LAT4",
+   "reference_len": 592,
+   "reference_residue_at_326": "D",
+   "locus": "HSPEC_slc43locus07_HS01331_len482",
+   "aligned_residue_in_locus": "-",
+   "reference_context_320_332": "LCLSTMDLELQCE",
+   "locus_context_aligned": "VA-----------",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2b_LAT4",
+   "reference_len": 592,
+   "reference_residue_at_326": "D",
+   "locus": "HSPEC_slc43locus08_HS02674_len225",
+   "aligned_residue_in_locus": "-",
+   "reference_context_320_332": "LCLSTMDLELQCE",
+   "locus_context_aligned": "-------------",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+   "reference_len": 577,
+   "reference_residue_at_326": "F",
+   "locus": "HSPEC_slc43locus01_HS00485_len593",
+   "aligned_residue_in_locus": "S",
+   "reference_context_320_332": "SFMRSIFSPIFML",
+   "locus_context_aligned": "SFLKSISSPIFML",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+   "reference_len": 577,
+   "reference_residue_at_326": "F",
+   "locus": "HSPEC_slc43locus02_HS01224_len570",
+   "aligned_residue_in_locus": "L",
+   "reference_context_320_332": "SFMRSIFSPIFML",
+   "locus_context_aligned": "SFMKSILSPIFLL",
+   "matches_published_L": true,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+   "reference_len": 577,
+   "reference_residue_at_326": "F",
+   "locus": "HSPEC_slc43locus03_HS00671_len543",
+   "aligned_residue_in_locus": "C",
+   "reference_context_320_332": "SFMRSIFSPIFML",
+   "locus_context_aligned": "-LCHSVCSPIFLW",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+   "reference_len": 577,
+   "reference_residue_at_326": "F",
+   "locus": "HSPEC_slc43locus04_HS00571_len541",
+   "aligned_residue_in_locus": "F",
+   "reference_context_320_332": "SFMRSIFSPIFML",
+   "locus_context_aligned": "-FRRSVFSFIFLW",
+   "matches_published_L": false,
+   "matches_reference_F": true
+  },
+  {
+   "reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+   "reference_len": 577,
+   "reference_residue_at_326": "F",
+   "locus": "HSPEC_slc43locus05_HS02045_len499",
+   "aligned_residue_in_locus": "L",
+   "reference_context_320_332": "SFMRSIFSPIFML",
+   "locus_context_aligned": "SFRSCVLSWFFLW",
+   "matches_published_L": true,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+   "reference_len": 577,
+   "reference_residue_at_326": "F",
+   "locus": "HSPEC_slc43locus06_HS00571_len482",
+   "aligned_residue_in_locus": "L",
+   "reference_context_320_332": "SFMRSIFSPIFML",
+   "locus_context_aligned": "TFLECLLSRFFVC",
+   "matches_published_L": true,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+   "reference_len": 577,
+   "reference_residue_at_326": "F",
+   "locus": "HSPEC_slc43locus07_HS01331_len482",
+   "aligned_residue_in_locus": "K",
+   "reference_context_320_332": "SFMRSIFSPIFML",
+   "locus_context_aligned": "TFLECLKSRFFVC",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  },
+  {
+   "reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+   "reference_len": 577,
+   "reference_residue_at_326": "F",
+   "locus": "HSPEC_slc43locus08_HS02674_len225",
+   "aligned_residue_in_locus": "-",
+   "reference_context_320_332": "SFMRSIFSPIFML",
+   "locus_context_aligned": "-------------",
+   "matches_published_L": false,
+   "matches_reference_F": false
+  }
+ ]
+}

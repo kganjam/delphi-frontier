@@ -771,6 +771,61 @@ the `b` copy instead.
 conductance or phenotype; and what the published flying-fish `kcnh2a` signal refers to. Four further
 Beloniform genomes exist and were not examined; they could still overturn this.
 
+## R7l — The first full text read, and analysis G4 finally run: F326L reproduced independently
+
+Full write-up: [`FULLTEXT-FINDING.md`](FULLTEXT-FINDING.md). Europe PMC's `fullTextXML` endpoint
+returned HTTP 500 for both target papers, but both are in PMC with free full text; `PMC9172250`
+(PMID 34534441) was retrieved and saved with its digest. **This is the first full text this project
+has read** — everything in `PLAN.md` remains abstract-level.
+
+**Three corrections and one test came out of it.**
+
+**(a) The flying-fish signal is `lat4a`; `kcnh2a` is zebrafish-side only.** `lat4a` carries the
+comparative evidence (phyloP acceleration p = 0.008 on the flying-fish ancestral node, elevated rate
+in gliding beloniforms, a convergent substitution). `kcnh2a` enters only through zebrafish genetics:
+`longfin^dt2` (`lof`) is a **chromosome-2 inversion** with breakpoints upstream of the `prrx1a` TSS
+(~23.174 Mb, Zv11) and **between `kcc4a` and `kcnh2a`** (~24.075 Mb), coding regions untouched.
+Earlier commits of this project said the published flying-fish `kcnh2a` signal "needs re-reading" —
+**that was the wrong worry and is corrected**: the paper never claims an Exocoetid `kcnh2a`, so this
+project's Beloniformes result does not contradict it. The engineering consequence survives (the `lof`
+route is a zebrafish tool, untransferable to a clade without the gene) but the implied tension does
+not exist.
+
+*Incidental cross-check:* `kcc4a` is SLC12A7, and this project's independent synteny run placed
+zebrafish `slc12a7a` at 24,027,744–24,069,434 with `kcnh2a` at 24,080,694 — the paper's breakpoint
+falls in that gap. Two independent routes to the same interval.
+
+**(b) `lat4a` is SLC43A2**, from the paper's own citation of Guetg et al. 2015 ("Lat4 (Slc43a2)").
+
+**(c) The substitution is named: F326L** — shared across lineages with enlarged pectoral fins,
+present in both flying-halfbeak lineages and all sequenced Exocoetidae **except** *Parexocoetus
+brachypterus*. The paper also reports a zebrafish `lat4a` allele `nr21` (predicted T200K).
+
+**(d) The test.** *H. speculiger* is an Exocoetid and not *P. brachypterus*, so L is predicted.
+`scripts/check_lat4a_f326l.py` → `data/census_slc43/lat4a_f326l_check.json`:
+
+| numbering reference | residue 326 | `slc43locus01` | `slc43locus02` |
+| --- | --- | --- | --- |
+| zebrafish `slc43a2a` (Ensembl, 577 aa) | **F** | S | **L** |
+| zebrafish `slc43a2b` (UniProt, 592 aa) | D | D | D |
+
+Position 326 of `slc43a2a` is **F**, as "F326L" requires, while in `slc43a2b` it is `D` — so the
+paper's numbering is on the **`a`** paralog, which the text read does not state and this project
+inferred. `slc43locus02` carries **L** in conserved context (zebrafish `SFMRSI`**F**`SPIFML` vs
+flying fish `SFMKSI`**L**`SPIFLL`), while `slc43locus01`, the confident `a2b` locus, carries `S`.
+
+**So the published substitution is independently reproduced in a different Exocoetid species, from a
+public draft assembly, by a different route than the paper used** — and the identifier question is
+resolved: the paper's `lat4a` is the `a` paralog of `slc43a2`, and the flying-fish locus is
+`slc43locus02` on **JAGFBZ010001224.1**, exactly the locus three trees had tentatively placed on the
+`a` side at sub-threshold support. Residue evidence and tree evidence now agree by independent means.
+
+**Limitations.** The flying-fish residue is from a miniprot **prediction**, not a transcript. That
+F326 is numbered on `slc43a2a` is an inference from residue matching, not a read statement.
+`slc43locus05`/`06` also show `L` at that column but with **non-homologous** flanking context
+(`slc43a3`-family loci, coincidental). Nothing here measures transport activity, expression or
+phenotype.
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
@@ -787,7 +842,9 @@ Beloniform genomes exist and were not examined; they could still overturn this.
 
 ## Failures and things not done
 
-- **No full text was read, for any source.** Every literature statement in `PLAN.md` is abstract-level.
+- **One full text has now been read** (PMID 34534441 / PMC9172250, §R7l), which corrected one of this
+  project's own framings and unblocked analysis G4. Every **other** literature statement in `PLAN.md`
+  remains abstract-level, including PMID 40689752, whose full text is in PMC but was not retrieved.
 - Analysis G2b was run as a Nebius CPU job and resolved the `kcnh2` collision (§R4). Analyses G3–G6
   in `PLAN.md` §3 were **not run**: no synteny analysis beyond recording scaffold
   identity, no convergent-residue inspection, no conserved-element scan, no phylogenomic scan (the

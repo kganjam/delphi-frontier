@@ -291,7 +291,7 @@ CLAIMS = [
                      "Zebrafish kcnh2b's GRCz11 position could not be retrieved (Ensembl has no kcnh2b symbol for zebrafish), so the b-block assignment in zebrafish is inferred from medaka's arrangement and the aoc1/sspo neighbours of zebrafish slc12a7b, not read directly.",
                      "Three of the 14 locus assignments are weakly supported and should be read as unresolved (42.7/68, 23.4/62, and one with no recovered support value); none of the three was assigned to kcnh2a, so dropping them does not change the result.",
                      "A gene tree places sequences by substitution likelihood; no synteny was used in the census.",
-                     "The published flying-fish phylogenomics that names kcnh2a (PMID 34534441) used 35 species with its own sequencing, not this assembly. Its methods were NOT read here and this claim does not assert the paper is wrong; it asserts that the gene is not findable in the public Beloniformes genomes checked, which means any design resting on that paper needs the paper's own gene identifiers read first.",
+                     "CORRECTED after reading PMID 34534441's full text: that paper's flying-fish genomic signal is in lat4a, NOT kcnh2a. kcnh2a enters it only through zebrafish genetics (the longfin-dt2 chromosome-2 inversion, breakpoints upstream of prrx1a and between kcc4a and kcnh2a). So this claim does not contradict the paper, and earlier wording in this project suggesting a tension with it was wrong and is withdrawn. What survives is the engineering consequence: the longfin route is a zebrafish tool and cannot be transferred to a clade that lacks the gene.",
                      "Under the second substitution model kcnh1b is also unassigned, so the census is not a clean one-to-one map and '9 of 10' is model-dependent even though the kcnh2a result is not.",
                      "One operator, not independently reviewed; a model-sensitivity re-run was submitted separately."],
         source=computed_source("data/synteny/synteny.json"),
@@ -325,6 +325,38 @@ CLAIMS = [
                      "Two of the nine flying-fish windows sit at loci this project's own cross-check assigns to a different paralog than their label (kcnk5b and fgf10a), so their gene labels are in doubt independently of this result.",
                      "Pass 1's reported species asymmetry is withdrawn. It is retained in the record only to show what the design change did."],
         source=computed_source("data/motif/motif_heldout_result.json"),
+        origin="derived",
+    ),
+    dict(
+        id="zf2ff-claim-f326l-reproduced-in-another-exocoetid",
+        title="The published flying-fish Lat4a F326L substitution is independently reproduced in Hirundichthys speculiger, and lat4a is the a paralog of slc43a2",
+        statement=(
+            "The full text of PMID 34534441 (PMC9172250, read 2026-11-01, the first full text this "
+            "project has read) states the convergent substitution as F326L in lat4a, present in both "
+            "flying-halfbeak lineages and in all sequenced Exocoetidae except the sailfin flying fish "
+            "Parexocoetus brachypterus, and cites Guetg et al. 2015 identifying Lat4 as Slc43a2. "
+            "H. speculiger is an Exocoetid and is not P. brachypterus, so L is predicted at that "
+            "position. Testing that against the two SLC43A2-family loci this project predicted from "
+            "GCA_018398805.1: position 326 of zebrafish slc43a2a (Ensembl ENSDARG00000036848, 577 aa) "
+            "is F, as F326L requires, while the same position in slc43a2b is D; slc43locus02 on "
+            "JAGFBZ010001224.1 carries L in conserved flanking context (zebrafish SFMRSIFSPIFML vs "
+            "flying fish SFMKSILSPIFLL); and slc43locus01, the locus confidently assigned to slc43a2b, "
+            "carries S. So the substitution is reproduced in a different Exocoetid species from a "
+            "public draft assembly by a different route than the paper used, the paper's numbering is "
+            "on the a paralog, and the flying-fish locus is slc43locus02 -- the same locus three gene "
+            "trees had tentatively placed on the a side at sub-threshold support (36.2/65, then "
+            "66.7/78)."),
+        context=("This is the one place where this project's computation and a published comparative "
+                 "result meet and agree, by independent means. It also resolves the identifier half of "
+                 "Problem zf2ff-problem-lat4a-identifier. " + SCOPE),
+        assumptions=["ASSUMED, by inference and not read from the paper: that F326 is numbered on zebrafish slc43a2a. The inference is that position 326 of that sequence is F while the same position of slc43a2b is D.",
+                     "ASSUMED: that a miniprot prediction from an unannotated draft assembly reports the true codon at this position. The conserved flanking context supports it but does not prove it."],
+        limitations=["The flying-fish residue comes from a PREDICTION, not a sequenced transcript. A prediction error at that codon would invalidate this.",
+                     "slc43locus05 and slc43locus06 also show L at the aligned column, but their flanking context is NON-homologous; they are slc43a3-family loci and those matches are coincidental. Only slc43locus02's match is in context.",
+                     "This measures a residue, not transport activity, expression or any phenotype. The paper reports in vivo zebrafish work for that; this project read it and did not reproduce it.",
+                     "Agreement with a published result is not independent confirmation of the paper's biological conclusion: both this check and the paper rest on the same assumption that the substitution matters, which neither establishes here.",
+                     "One operator, not independently reviewed. PMID 40689752's full text was not retrieved."],
+        source=computed_source("data/census_slc43/lat4a_f326l_check.json"),
         origin="derived",
     ),
     dict(
