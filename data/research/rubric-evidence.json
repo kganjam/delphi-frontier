@@ -738,5 +738,76 @@
       "write_receipts_24h": 357
     },
     "do_not": "claim the RD execution graph is persisted; its DB ref is unread. Use the Project example."
+  },
+  "claim_reuse_loop": {
+    "artifacts": [
+      "artifacts/claim-reuse/",
+      "docs/reviews/fin-reuse-review-findings.md"
+    ],
+    "read": "directly",
+    "claim": "node-a/Claim/eng-finmech-claim-ei-crit@4998ef85bd98ec64c0f4bc86e77337ea25df7ff5683ac6b62dc9095cf5f62f57",
+    "ei_crit_exact": "1323/2048000",
+    "read_before_run": true,
+    "hardcoded_fallback": false,
+    "protocol_committed_before_runs": "be4dfc6",
+    "computations": [
+      {
+        "margin": "9/10",
+        "consumed_EI": "11907/20480000",
+        "tip_over_span": 0.111111111158,
+        "max_slope": 0.148148148207,
+        "domain": "INVALID - retained counterexample"
+      },
+      {
+        "margin": "11/10",
+        "consumed_EI": "14553/20480000",
+        "tip_over_span": 0.090909090883,
+        "max_slope": 0.12121212118,
+        "domain": "inside declared limits"
+      }
+    ],
+    "independent_review": {
+      "actor": "fin-reuse-reviewer",
+      "criteria_committed_before_author_output": "11fa785",
+      "hand_rederivation": "EI_tip = 1323/2048000, the Claim exactly",
+      "closed_form": {
+        "below": "tip/L = 1/9, slope 4/27, invalid at the 1/10 tip limit",
+        "above": "tip/L = 1/11, slope 4/33, valid"
+      },
+      "agreement": "4.2e-10",
+      "own_FEM": "Hermite-cubic, 16/32/64 elements, within 5.1e-10 of the author",
+      "replay": "profile.csv byte-identical, tip difference 0.0",
+      "controls": "zero load exactly 0.0 m; L^3 mutant rejected at rel error 5.67; five altered Claim records each refused by the record digest check"
+    },
+    "verdict": "Evidence remains DISPUTED",
+    "findings": [
+      "inherited limitation text copied from the source Claim, wrong in the conservative direction",
+      "'mesh convergence' is round-off not convergence: for constant EI under uniform load the Hermite element is exact at the nodes, and the author's error GROWS with refinement (1.4e-12 -> 5.7e-11 -> 4.2e-10)",
+      "mutation controls are caught by the digest check, not the scope gate the Action names",
+      "the 0.9/1.1 margins live only inside a cache-key digest in the Action payloads"
+    ],
+    "does_not_support": "anything about a fish, a measured fin-ray stiffness or load, or fluid-structure behaviour; NO independent non-computational replication and NO empirical data exist for this scope",
+    "reviewer_caveat": "an AI agent process - not a laboratory, not a human, no biological acceptance",
+    "framing": "scoped reuse and honest contest, NOT agency superiority"
+  },
+  "print_design_history": {
+    "props": "six solid props in two versioned sets, each an engineered illustrative form",
+    "never_printed": "nothing sliced, loaded into PreForm or printed; printer and resin unknown; never say 'printed forms'",
+    "candidates": {
+      "A_precursor_short_fin": "UNSAT on the wing-loading bound, 1891 N/m2 against 208.9, retained",
+      "B_two_wing_glider": "feasible, independently verified",
+      "C_four_wing_glider": "feasible, independently verified"
+    },
+    "no_glide_simulation": "A-C have none; the build attaches a glide receipt only when one names the candidate sha256",
+    "opt_in_constraints_not_taken": [
+      "Fish's aspect-ratio range is for individual pectoral fins; its mapping onto b^2/S is unresolved",
+      "the 16-20 m/s taxi speed is NOT a flight-speed envelope"
+    ],
+    "new_requirement": {
+      "what": "strong-fin, sling-launched glider",
+      "status": "a design requirement",
+      "flight": "NO prototype has flown and no flight has been demonstrated",
+      "what_would_settle_it": "a launch and a measurement, neither of which exists"
+    }
   }
 }

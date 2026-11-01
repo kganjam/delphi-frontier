@@ -8,7 +8,7 @@ Supersedes `archive/demo-narrative-2026-10-31-refusal-led.md`.
 
 ---
 
-# PART 1 — THE SPOKEN SCRIPT (450 words)
+# PART 1 — THE SPOKEN SCRIPT (452 words)
 
 ### Open · on the viewer
 
@@ -31,8 +31,8 @@ so do their neighbours. Block the gap junctions and those two drop four times fu
 neighbours barely move. That's the coupling, shown by removing it.
 
 Down again, to metabolism. A genome-scale zebrafish model ships with no medium, so we **assumed**
-one. Growth came out zero — the biomass pool needed a vitamin E catabolite we hadn't
-supplied. We added it; it solved.
+one. Growth came out zero — the biomass pool needed a vitamin E catabolite we hadn't supplied.
+We added it; it solved.
 
 Then we swept oxygen and growth barely moved. Not biology: under our assumed medium the model was
 **making its own oxygen**, one reaction running backwards beside an uncapped vitamin. Block it and
@@ -55,10 +55,10 @@ design is for.
 
 ### Close · the commons
 
-We are linking those decisions to the exact claims behind them. One is persisted: the flying-fish
-Project pins **twenty-two members**, molecular and genomic evidence among them, carrying thirteen
-forward from its previous version. It's **proposed, not accepted**, and most decisions aren't
-curated yet — that's the work, and it's why the graph is public.
+Here's the loop closing. One exact stiffness claim, read live through the MCP, fed into two
+separate leased computations. An independent reviewer re-derived it by hand, wrote their own
+solver, matched to ten decimals — then **disputed the evidence anyway**: reproducing mathematics
+isn't empirical relevance, and nobody has measured a real fin. Scoped reuse, honest contest.
 
 One honest result. We preregistered a comparison of a single analyst against collaborating agents.
 **Every arm scored full marks**, so **this task did not distinguish them.** That's a null about
@@ -66,7 +66,7 @@ our benchmark, not evidence that agents coordinate better.
 
 ---
 
-**Pacing.** 450 words: **3:13 at 140 wpm, 3:00 at 150**. If the slot is hard three minutes, either
+**Pacing.** 452 words: **3:14 at 140 wpm, 3:01 at 150**. If the slot is hard three minutes, either
 speak at 150 or **drop the oxygen paragraph** (−58 words → 2:47 at 140). Cut the whole metabolism
 beat for 2:20, and the scale beat too for 1:55. **Never cut the edge section** — it is the thesis.
 
@@ -171,6 +171,25 @@ Numbers, sources and exact limits. Reach for these in Q&A.
   assumed and unsourced, a gap factor of roughly 760-1520.
 - `docs/coupled-mechanics.md`, `docs/cfd3d.md`, `artifacts/coupled-mechanics/result.json`.
 
+## Print and design history
+
+- **Six solid props in two versioned sets**, each built from a design JSON with its own display
+  stand. Each is an **engineered illustrative form** — not an ancestor, not a viable organism, not
+  a demonstrated evolutionary path, not flight-tested. **Fins are thickened so they can print.**
+- **Nothing has been sliced, loaded into PreForm or printed. Printer and resin are unknown.**
+  Never say "printed forms".
+- Candidate history, v1 → v2: **A, precursor-inspired short fin — `unsat`** on the wing-loading
+  bound (1891 N/m² against 208.9), retained; **B, two-wing glider** and **C, four-wing glider**
+  both feasible and independently verified.
+- **A–C have no glide simulation.** The build attaches a glide receipt only when one names the
+  candidate's sha256.
+- **Two opt-in constraints are deliberately not taken**, and the reason is recorded: Fish's
+  aspect-ratio range is for individual pectoral fins and its mapping onto b²/S is unresolved; and
+  the 16–20 m/s taxi speed **is not a flight-speed envelope**.
+- **New requirement: a strong-fin, sling-launched glider.** It is a design requirement.
+  **No prototype has flown, and no flight has been demonstrated.** If asked what would settle it,
+  the answer is a launch and a measurement, neither of which exists.
+
 ## The commons
 
 - **Repository public** as of 2026-10-31: `github.com/kganjam/delphi-frontier`. Verified
@@ -207,7 +226,48 @@ Numbers, sources and exact limits. Reach for these in Q&A.
   controlled counterfactual** and must not count as evidence of advantage. We don't count them.
 - `results/capability-agency/results-card.md`, commit `92c86683`.
 
-## The persisted linking example — inspected
+## The claim-reuse loop — the strongest reuse evidence, inspected
+
+**The loop.** One exact public Claim — `node-a/Claim/eng-finmech-claim-ei-crit@4998ef85…`,
+EI_crit = **1323/2048000** exactly — was **read before the run** and consumed by **two distinct
+leased computations** through the live MCP, at **0.9× and 1.1×** the threshold, with real
+proposals, coordinator readiness, leases, running states, proposed Evidence and submitted Actions.
+The solver's EI is parsed from the Claim at runtime; **there is no hardcoded fallback stiffness.**
+Protocol committed in `be4dfc6` **before** any candidate run.
+
+| candidate | consumed EI | tip/span | max slope | declared linear-model domain |
+|---|---|---|---|---|
+| 0.9× threshold | 11907/20480000 | 0.111111111158 | 0.148148148207 | **invalid** — retained counterexample |
+| 1.1× threshold | 14553/20480000 | 0.090909090883 | 0.121212121180 | inside declared limits |
+
+**The independent review** (`docs/reviews/fin-reuse-review-findings.md`; actor
+`fin-reuse-reviewer`, **criteria committed before any author output** at `11fa785`, author
+checkout read-only):
+
+- Re-derived by hand in exact fractions: EI_tip = **1323/2048000 — the Claim, exactly**
+- Closed form: below → tip/L = **1/9**, slope 4/27, invalid at the 1/10 tip limit; above →
+  **1/11**, slope 4/33, valid. Author's values agree to **4.2e-10**
+- **Their own Hermite-cubic FEM**, not the author's code, 16/32/64 elements: within **5.1e-10**
+- Replay of author code: `profile.csv` **byte-identical**, tip difference **0.0**
+- Controls: zero load → exactly 0.0 m; L³ mutant rejected at relative error 5.67; **five altered
+  Claim records each refused** by the record digest check
+
+**And the Evidence is still disputed.** Four findings, none changing the numbers:
+1. Inherited limitation text copied from the source Claim, wrong in the conservative direction
+2. **"Mesh convergence" is round-off, not convergence** — for constant EI under uniform load the
+   Hermite element is exact at the nodes, and the author's error *grows* with refinement
+   (1.4e-12 → 5.7e-11 → 4.2e-10)
+3. Mutation controls are caught by the **digest** check, not the scope gate the Action names
+4. The 0.9/1.1 margins live only inside a cache-key digest in the Action payloads
+
+**What it does not support, in the reviewer's words:** anything about a fish, a measured fin-ray
+stiffness or load, or fluid-structure behaviour. **No independent non-computational replication
+and no empirical data exist for this scope.** The reviewer is an AI agent process — **not a
+laboratory, not a human, no biological acceptance.**
+
+**Say this is scoped reuse and honest contest. It is not evidence that agents coordinate better.**
+
+## The Project — a second persisted example, inspected
 
 - **Project `project-flying-fish-mission`, version `1177c609…`**, predecessor `a4953d50…`.
   **22 members**, **13 preserved** from the predecessor, 4 old-version annotations.

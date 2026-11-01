@@ -16,6 +16,8 @@ first. Mixing levels in one table without marking them is the failure this colum
 
 | Claim | Level | Receipt | Status |
 |---|---|---|---|
+| **A closed reuse loop: one exact Claim → two leased computations → Evidence → independent review → dispute** | **C** | `artifacts/claim-reuse/`, `docs/reviews/fin-reuse-review-findings.md`. Claim `eng-finmech-claim-ei-crit@4998ef85…`, EI_crit **1323/2048000**, read before the run, no hardcoded fallback; protocol committed `be4dfc6` before any run. Reviewer's criteria committed **before author output** (`11fa785`); hand re-derivation exact, own FEM within **5.1e-10**, author replay **byte-identical** | **Earned — the strongest reuse evidence.** Say **scoped reuse and honest contest**, never agency superiority |
+| That Evidence remains **disputed** | **C** | 4 findings, none changing the numbers; notably **"mesh convergence" is round-off, not convergence** — the author's error *grows* with refinement | **Earned.** Reviewer is an AI agent process — **not a laboratory, not a human, no biological acceptance**. No independent non-computational replication and no empirical data exist for this scope |
 | Decisions linked to the exact claims and evidence behind them | **C (one instance)** | **Persisted:** Project `project-flying-fish-mission` version `1177c609…` pins **22 members** (molecular and genomic evidence among them), **13 preserved** from predecessor `a4953d50…`; `imports/2026-10-31-curated-v2/project-receipt.json`, 23:39:09Z — **read directly**. Curated import: **37 verified, 0 problems**, store at 3,882 versions and **0 forks** | **Partly earned — do not generalise.** `local_status: "proposed"`, **not accepted**; its scope says "no causal bridge or biological review". An audit found most Action inputs absent; curation pending. **Do not cite the RD execution graph as persisted** — its DB ref is unread |
 | Whole-organism design maps knowledge gaps; each gap becomes a pinned Problem/Action | C | `frontier/models.py` `completeness` discriminator; `recorded` vs `actionable` with four required fields | **Earned** |
 | 250 morphoswarm register problems imported, **0 actionable** | C | `scripts/import_register.py` run output | **Earned** — and the zero is the point |
@@ -172,6 +174,9 @@ Full document with read-levels: `docs/research/generative-roadmap.md`. Page copy
   recovery is awaiting publication and controls.
 - **Never present the training loss as a result.** 1.2328 → 0.008265 is training loss. Without
   `evaluation.json` there is no held-out performance and no quality claim.
+- **New print requirement: a strong-fin, sling-launched glider.** It is a requirement. **No
+  prototype has flown and no flight has been demonstrated.** Nothing has been sliced or printed;
+  printer and resin are unknown. Never say "printed forms".
 - **Never say "every decision is a record with its claim attached."** An audit found most Action
   inputs absent; curation is pending. Say we are *linking* decisions to exact claims and evidence,
   and show the one persisted example.
