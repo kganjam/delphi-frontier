@@ -196,6 +196,17 @@ def cards():
             parameter_unknowns=["Real proliferation-zone width and outgrowth speed of fin folds are not measured here."],
             open_questions=["Map Lp and v onto measured distal proliferation in fin folds."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; generic kinetics."])
+    if (A/"claude-tissue-pzone-video/pzone_video.json").exists():
+        pv = J("claude-tissue-pzone-video/pzone_video.json")
+        C["claude-tissue-pzone-video"] = dict(
+            title="Video: where the fin fold grows decides whether Turing stripes become ray-like (apical zone vs wide zone vs uniform; simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; render of model state for one seed, not tissue",
+            model=dict(name="2-D Schnakenberg, finite-volume growth in a distal proliferation zone", context="gamma=1, d=10, start 48 -> 192, v=0.1; statistics (12 seeds) in claude-tissue-pzone*"),
+            equations=[{"label": "Growth in the zone", "tex": "\\dot h_i=\\tfrac{v}{L_p}h_i\\ (i\\in\\text{zone})", "source": "this harness"}],
+            numerical_results=[f"{'static' if r['lp'] < 0 else ('uniform' if r['lp'] == 0 else 'Lp=' + str(r['lp']))}: whole-domain A {r['orientation_A']:.2f}, distal-half A {r['A_distal_half']:.2f}" for r in pv["rows"]],
+            parameter_unknowns=["Real fin-fold proliferation-zone width is not measured here."],
+            open_questions=["Measure the width of the distal proliferating zone relative to ray spacing at ray patterning onset."],
+            limitations=["Does not establish that fin rays are Turing patterns.", "Single seed (render); statistics are in the pzone cards."])
     if (A/"claude-tissue-fan-video/fan_video.json").exists():
         fv = J("claude-tissue-fan-video/fan_video.json"); sm = fv["summary"]
         C["claude-tissue-fan-video"] = dict(

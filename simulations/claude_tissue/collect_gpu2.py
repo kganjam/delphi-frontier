@@ -135,6 +135,29 @@ elif kind in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzon
         a2.set_title(f"{'static' if s_['lp'] < 0 else ('unif' if s_['lp'] == 0 else 'Lp=' + str(s_['lp']))}\nv={s_['speed']}", fontsize=6)
     fig.tight_layout(); fig.savefig(OUT/f"{kind}.png", dpi=100); plt.close(fig)
     outs = [OUT/f"{kind}.json", OUT/f"{kind}.png"]
+elif kind == "pzone_video":
+    OUT = ROOT/"artifacts/simulations/claude-tissue-pzone-video"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/pzone_video_gpu.py"
+    res = dict(job=job, job_state=state, meta=meta, done=done, n_rows=len(rows), rows=rows, n_frames=len(frames),
+               reading="side-by-side render of one seed: apical zone (Lp=2), zone ~1 wavelength (Lp=12), uniform growth, static; distal edge at top")
+    (OUT/"pzone_video.json").write_text(json.dumps(res, indent=1))
+    groups = {}
+    for f in frames: groups.setdefault(f["lp"], {})[f["k"]] = f
+    order = [l for l in (2, 12, 0, -1) if l in groups]; nk = min(len(groups[l]) for l in order)
+    lab = {2: "apical zone (Lp=2)", 12: "zone ~1 wavelength (Lp=12)", 0: "uniform growth", -1: "static (all at once)"}
+    rr = {r["lp"]: r for r in rows}
+    tmp = tempfile.mkdtemp(prefix="pzv-")
+    for k in range(nk):
+        fg, axs = plt.subplots(1, len(order), figsize=(2.6*len(order), 5.2))
+        for a, l in zip(axs, order):
+            f = groups[l][sorted(groups[l])[k]]; a.imshow(img(f), cmap="magma", origin="lower", aspect="auto"); a.axis("off")
+            end = f" -> A={rr[l]['orientation_A']:.2f}" if (l in rr and k == nk - 1) else ""
+            a.set_title(lab[l] + end, fontsize=7)
+        fg.suptitle(f"SIMULATED Turing pattern on a growing fin fold (dimensionless), t={groups[order[0]][sorted(groups[order[0]])[k]]['t']:.0f}; distal edge at top", fontsize=8)
+        fg.tight_layout(rect=(0, 0, 1, 0.95)); fg.savefig(f"{tmp}/f{k:03d}.png", dpi=90); plt.close(fg)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-threads", "1", "-framerate", "10", "-i", f"{tmp}/f%03d.png", "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2",
+                    "-pix_fmt", "yuv420p", "-c:v", "libx264", str(OUT/"pzone_video.mp4")], check=True)
+    subprocess.run(["cp", f"{tmp}/f{nk-1:03d}.png", str(OUT/"poster.png")], check=True)
+    outs = [OUT/"pzone_video.json", OUT/"pzone_video.mp4", OUT/"poster.png"]
 elif kind in ("fan", "fan_video"):
     OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = f"simulations/claude_tissue/{kind}_gpu.py"
     summ = {}
@@ -206,7 +229,7 @@ else:
     fig.tight_layout(); fig.savefig(OUT/"phase-map.png", dpi=100); plt.close(fig)
     outs = [OUT/"phase-map.json", OUT/"phase-map.png"]
 ok = state == "COMPLETED" and done is not None
-rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan', 'edge2d_gamma': 'edge2dg', 'fan_video': 'fanv', 'edge2d_gamma_fine': 'edge2dg', 'pzone': 'pzone', 'pzone_y8': 'pzone', 'pzone_lp': 'pzone', 'pzone_g0p5': 'pzoneg', 'pzone_g2p0': 'pzoneg', 'pzone_g2b': 'pzoneg', 'pzone_g1b': 'pzoneg', 'pzone_g2r': 'pzoner', 'pzone_g1r': 'pzoner', 'pzone_g05r': 'pzoner', 'pzone_g2r2': 'pzoner', 'pzone_g2r3': 'pzoner', 'pzone_g1f': 'pzoner', 'pzone_g1res': 'pzoner', 'pzone_g2f': 'pzoner', 'pzone_g05f': 'pzoner'}[kind] }.py (args in META)", job=job, job_state=state,
+rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan', 'edge2d_gamma': 'edge2dg', 'fan_video': 'fanv', 'edge2d_gamma_fine': 'edge2dg', 'pzone': 'pzone', 'pzone_y8': 'pzone', 'pzone_lp': 'pzone', 'pzone_g0p5': 'pzoneg', 'pzone_g2p0': 'pzoneg', 'pzone_g2b': 'pzoneg', 'pzone_g1b': 'pzoneg', 'pzone_g2r': 'pzoner', 'pzone_g1r': 'pzoner', 'pzone_g05r': 'pzoner', 'pzone_g2r2': 'pzoner', 'pzone_g2r3': 'pzoner', 'pzone_g1f': 'pzoner', 'pzone_g1res': 'pzoner', 'pzone_g2f': 'pzoner', 'pzone_g05f': 'pzoner', 'pzone_video': 'pzonev'}[kind] }.py (args in META)", job=job, job_state=state,
            exit_code=0 if ok else 1, seed=meta.get("seeds"), wall_s=(done or {}).get("wall_s"),
            compute=f"Nebius {job} ({meta.get('gpu')}), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
            code_sha256={script: meta["script_sha256"]}, code_matches_repo=bool(meta["script_sha256"] == sha(ROOT/script)),
