@@ -3,6 +3,12 @@
 
 .lmhead-sec .lede { max-width: 62ch; }
 .lmanswer p { max-width: 74ch; }
+/* At desk width a single 74ch measure leaves half the panel empty. Two columns keep the measure and fill the panel;
+   paragraphs never split across the break, so the reading order stays obvious. */
+@media (min-width: 1250px) {
+  .lmanswer .lmcols { columns: 2; column-gap: 3rem; }
+  .lmanswer .lmcols p { max-width: none; break-inside: avoid; margin-top: 0; }
+}
 .lmanswer h2 { margin-bottom: .4rem; }
 .lmhead { font-size: 1.02rem; }
 

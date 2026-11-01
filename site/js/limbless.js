@@ -237,7 +237,7 @@
         <p>${U.pill("design space, not a design", "warn")} ${U.pill("no animal work", "ok")} ${U.pill((l.counts || {}).routes + " sourced routes", "cur")} ${U.pill((l.counts || {}).studies_present + " computed studies", "ev")}</p></section>
 
       <section class="panel lmanswer" aria-labelledby="lm-a"><h2 id="lm-a">${(l.answer || {}).headline || "The answer"}</h2>
-        ${((l.answer || {}).paragraphs || []).map((p) => html`<p>${p}</p>`)}
+        <div class="lmcols">${((l.answer || {}).paragraphs || []).map((p) => html`<p>${p}</p>`)}</div>
         ${(l.answer || {}).precision_note ? html`<p class="note warn">${l.answer.precision_note}</p>` : ""}
         <p class="small"><a href="#routes">Jump to the ${(l.counts || {}).routes || 0} routes</a> · <a href="#studies">what we ran</a> · <a href="#chain">where the chain breaks</a> · <a href="#welfare">welfare and 3Rs</a></p></section>
 
