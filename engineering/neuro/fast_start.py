@@ -90,26 +90,32 @@ def simulate(s, dt=1e-3, T=4.0):
     # ---- decision: time for the looming angle to reach threshold (predator closing on a nearly still fish)
     r_thr = s["D_pred_m"] / (2 * np.tan(s["theta_thr_deg"] * DEG / 2))
     t_thr = np.maximum(s["r0_m"] - r_thr, 0) / s["u_pred_ms"]
-    responds = rng.uniform(size=n) < s["p_resp"]
+    responds = s["_u_resp"] < s["p_resp"] if "_u_resp" in s else rng.uniform(size=n) < s["p_resp"]
     t_go = t_thr + s["lat_M_ms"] * 1e-3
     # ---- geometry: fish at (0,0,-d0) heading +x; predator at elevation e_p, azimuth a_p
-    a_p = rng.uniform(-math.pi, math.pi, n); e_p = s["e_pred_deg"] * DEG
+    a_p = (-math.pi + 2 * math.pi * s["_u_ap"]) if "_u_ap" in s else rng.uniform(-math.pi, math.pi, n); e_p = s["e_pred_deg"] * DEG
     p0 = np.stack([s["r0_m"] * np.cos(e_p) * np.cos(a_p), s["r0_m"] * np.cos(e_p) * np.sin(a_p), -s["d0_m"] + s["r0_m"] * np.sin(e_p)], 1)
     fish = np.stack([np.zeros(n), np.zeros(n), -s["d0_m"]], 1)
     t1 = t_go + s["t_stage1_ms"] * 1e-3
     adv = np.minimum(s["u_pred_ms"] * t1, s["r0_m"])[:, None]           # predator closes straight until the fish moves
     pred = fish + (p0 - fish) * (1 - adv / s["r0_m"][:, None])
     # ---- C-start: yaw to escape trajectory ET from the threat azimuth
-    away = rng.uniform(size=n) < s["p_away"]
-    et = np.where(away, np.where(rng.uniform(size=n) < 0.6, rng.uniform(130, 180, n), rng.uniform(90, 130, n)), rng.uniform(0, 90, n)) * DEG
-    side = np.where(rng.uniform(size=n) < 0.5, 1.0, -1.0)
+    if "_u_away" in s:      # pre-drawn uniforms (global sensitivity analysis); same distributions as the default draws below
+        away = s["_u_away"] < s["p_away"]; ue = s["_u_et"]
+        et = np.where(away, np.where(s["_u_mix"] < 0.6, 130 + 50 * ue, 90 + 40 * ue), 90 * ue) * DEG
+        side = np.where(s["_u_side"] < 0.5, 1.0, -1.0)
+    else:
+        away = rng.uniform(size=n) < s["p_away"]
+        et = np.where(away, np.where(rng.uniform(size=n) < 0.6, rng.uniform(130, 180, n), rng.uniform(90, 130, n)), rng.uniform(0, 90, n)) * DEG
+        side = np.where(rng.uniform(size=n) < 0.5, 1.0, -1.0)
     psi_t = wrap(a_p + side * et)
     cap = s["omega_max_deg_s"] * DEG * s["t_stage1_ms"] * 1e-3
     psi = np.sign(psi_t) * np.minimum(np.abs(psi_t), cap)               # partial turn if the cap binds; finished at 1/4 rate below
     yaw_rate_after = 0.25 * s["omega_max_deg_s"] * DEG
     gam = s["gamma_cs_deg"] * DEG
     U = s["u0_ms"] + s["dU_cstart_BL_s"] * L
-    caught = ~responds | (np.linalg.norm(pred - fish, axis=1) < 0.5 * s["D_pred_m"])
+    nopred = bool(s.get("_no_predator", False))       # sensitivity-analysis switch: kinematics only, the predator never catches
+    caught = ~responds | ((np.linalg.norm(pred - fish, axis=1) < 0.5 * s["D_pred_m"]) & (not nopred))
     Hf = M2.muscle_amp(s["f_burst_Hz"], s["H_over_L"] * L, s["f_m_Hz"]); lam = s["lam_over_L"] * L; span = M2.NOM["span_over_L"] * L
     meff = C.ORG["m_kg"] * (1 + M2.NOM["m_add_frac"])
     Pcap = ETA_PROP * s["P_musc_W_per_kg"] * MUSCLE_FRAC * C.ORG["m_kg"]
@@ -128,7 +134,7 @@ def simulate(s, dt=1e-3, T=4.0):
         d = fish - pred; r = np.linalg.norm(d, axis=1) + 1e-12
         pred = np.where(active[:, None], pred + dt * s["u_pred_ms"][:, None] * d / r[:, None], pred)
         dmin = np.where(active, np.minimum(dmin, r), dmin)
-        hit = active & (r < 0.5 * s["D_pred_m"]); caught |= hit
+        hit = active & (r < 0.5 * s["D_pred_m"]) & (not nopred); caught |= hit
         out = active & ~hit & (fish[:, 2] >= 0)
         Ue = np.where(out, U, Ue); ge = np.where(out, gam, ge); te = np.where(out, t1 + (k + 1) * dt, te)
         emerged |= out; active &= ~(hit | out)

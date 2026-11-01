@@ -1,0 +1,30 @@
+{
+"geometry": {
+"Sw": 0.005817894475679894,
+"bw": 0.22624478938589837,
+"ARw": 8.798149388621853,
+"cw": 0.03088065288131843,
+"x_w": 0.056167196784429975,
+"St": 0.0009615605236370659,
+"bt": 0.14181185599322688,
+"ARt": 20.914546724709677,
+"x_t": 0.09042753414977117,
+"dihedral_deg": 7.0,
+"vol": 4.874092770252251e-05,
+"np_bracket_m": [
+0.055616637870108475,
+0.058323652593946
+],
+"Ixx_dry": 2.706690936388552e-05,
+"Iyy_dry": 2.687526780236069e-05,
+"Izz_dry": 5.186159081012609e-05,
+"m_dry": 0.0203345909831279,
+"cg_dry": 0.0636070724317126,
+"X_BALLAST": 0.015
+},
+"source_files": {
+"artifacts/glider/r3-daane/flight_model.json": "75c50d5364eeb48d29faee81d68252077d23b435a2d08cfe2051d18612430a9b",
+"artifacts/glider/r3-daane/manifest.json": "de0a5e7940aedde6bde904d7158864a6b600fb4a0ced6b29851e7d209a8567d9"
+},
+"note": "engineering.neuro.glide_stab.geometry() output, extracted so the job needs no 110 KB manifest"
+}

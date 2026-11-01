@@ -1,0 +1,26 @@
+{
+ "name": "claude-neuro-j1-m1-sobol-a1",
+ "platform": "cpu-d3",
+ "preset": "4vcpu-16gb",
+ "timeout": "2h",
+ "disk": "20Gi",
+ "image": "python:3.13-slim",
+ "question": "Which of M1's 26 priors (plus 6 internal draws) drive capture, emergence speed and take-off? Ranks measurements by variance share.",
+ "command": "python3 -V; OMP_NUM_THREADS=1 python3 -m engineering.neuro.sobol_m1 --out /work/out --N 4096 --procs 4 --seed 20261101 --reference /work/repo/ref.json",
+ "files": {
+  "engineering/__init__.py": "engineering/__init__.py",
+  "engineering/neuro/__init__.py": "engineering/neuro/__init__.py",
+  "engineering/neuro/common.py": "engineering/neuro/common.py",
+  "engineering/neuro/caudal_cpg.py": "engineering/neuro/caudal_cpg.py",
+  "engineering/neuro/fast_start.py": "engineering/neuro/fast_start.py",
+  "engineering/neuro/sobol_m1.py": "engineering/neuro/sobol_m1.py",
+  "engineering/behavior/__init__.py": "engineering/behavior/__init__.py",
+  "engineering/behavior/model.py": "engineering/behavior/model.py",
+  "engineering/simulation/__init__.py": "engineering/simulation/__init__.py",
+  "engineering/simulation/controlled.py": "engineering/simulation/controlled.py",
+  "engineering/simulation/evaluate.py": "engineering/simulation/evaluate.py",
+  "engineering/simulation/glide.py": "engineering/simulation/glide.py",
+  "engineering/simulation/schema.py": "engineering/simulation/schema.py",
+  "ref.json": "artifacts/neuro/jobs/inputs/m1_reference_head400.json"
+ }
+}
