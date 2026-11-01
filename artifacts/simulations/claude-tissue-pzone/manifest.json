@@ -1,5 +1,5 @@
 {
-  "base_commit": "a2960b687ec67d8d3156896d3e612928d6028917",
+  "base_commit": "441fb55ee3c3f609547e54561320a7d71e1cf025",
   "code_sha256": {
     "simulations/claude_tissue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "simulations/claude_tissue/build_manifests.py": "b67eb45c9aa33065ab6af9f984f0f51f77dbde04c04d6274f2a594c1c8157a4a",
@@ -36,7 +36,7 @@
     "simulations/claude_tissue/transfer_regimes.py": "59d228120ae335b3f903ecf9e311dc4f40654c2845a8c492146c03f9c17d2b1a",
     "simulations/claude_tissue/uniform2d_gpu.py": "216a97a8916435f43782385b52668e811dfc53bee8557b514537c602eb5e3af4",
     "simulations/claude_tissue/uniform2d_y0_gpu.py": "c479a1460a92c3b01ad1428d19d247657bb697b76f61f2b44842a1eea8629288",
-    "simulations/claude_tissue/zone_rule_summary.py": "b36bbf6bc216c36d4b05275785eac9e17790602fc761dde683b78eaab3be7aa1"
+    "simulations/claude_tissue/zone_rule_summary.py": "e9a80dd232066f72200ef1bee9d54e94cbdab8b3c53e29be882b75983136eb47"
   },
   "does_not_establish": [
     "Does not establish that fin rays are Turing patterns.",
@@ -62,8 +62,8 @@
       "sha256": "7350ce6909f73c09bb39ab7b29d517f28f5b30a8a35080641e549b9a57fde960"
     },
     "receipt-claude-tissue-zone-rule-summary.json": {
-      "bytes": 3577,
-      "sha256": "43c3ff1d1a78dda21df70335bbc05f83273371de3770298f1fdbf724babca6f3"
+      "bytes": 3983,
+      "sha256": "f14234b2c246f96380f12281fe4cc89d2c58d92a703e7693ac1c638783bb90ce"
     },
     "review-gemini-4-argon-final.txt": {
       "bytes": 2024,
@@ -74,12 +74,12 @@
       "sha256": "0dce0a9792755942d92ab7b92c1f9181f5a2da231335ea45a8d0c0a53ce86658"
     },
     "zone-rule.json": {
-      "bytes": 7473,
-      "sha256": "d3b5862c301b4f1093a6f9f99739b96e1d5b3c4f534894077b52f33a4bcd5e50"
+      "bytes": 8674,
+      "sha256": "78ac939f96bf10f3a327077e773da3a8dae346a87aa3c33df743b78c6569edbc"
     },
     "zone-rule.png": {
-      "bytes": 89240,
-      "sha256": "052df5676e5193373fc545f255018746bf7f0269de26a107d2be3793943ca635"
+      "bytes": 92359,
+      "sha256": "689079ec2241c90169a65f34cb5595b026b7d4128014cafb4f9a68e6e18d276e"
     }
   },
   "id": "claude-tissue-pzone",
@@ -94,6 +94,9 @@
     "artifacts/simulations/claude-tissue-pzone-g2r/pzone_g2r.json": "c891a87d0954ef9febb17458196e3cce046345efecb6db9026e5105189bcc2e2",
     "artifacts/simulations/claude-tissue-pzone-g2v25/pzone_g2v25.json": "5c21b3b1e02d42092b3d25a9f721473ccab4ff3bea231dfa10acf005aac8b25e",
     "artifacts/simulations/claude-tissue-pzone-g2v40/pzone_g2v40.json": "7da050a04c64957d1f499685a8a6831cd6bc33e6a749de2ce412d17dc15e3f7f",
+    "artifacts/simulations/claude-tissue-pzone-kin/pzone_kin.json": "be14ca9913040c7e18eadb7bf55d1e9f7870cd99d2eac5d65ebc3e39dab3d00e",
+    "artifacts/simulations/claude-tissue-pzone-kin2/pzone_kin2.json": "52a4b89888489215eee8f58c27d7498199808a1884061a6793c10cd543c5c34e",
+    "artifacts/simulations/claude-tissue-pzone-kinb/pzone_kinb.json": "fd726b377787cc43bc66d0a0d64519c187bcc24e686ac79681dfca32fd136935",
     "artifacts/simulations/claude-tissue-pzone-refine-g05/pzone_refine_g05.json": "d9e3674a086d2ec40802daf25ed17ae16125c85be0696a8f0cc7b52ef09da08f",
     "artifacts/simulations/claude-tissue-pzone-refine-g05b/pzone_refine_g05b.json": "62706ee8c667f01ec7a8ef8dcb1e9a08bdc21c838cd04f142a25489228d3e9a2",
     "artifacts/simulations/claude-tissue-pzone-refine-g1/pzone_refine_g1.json": "4b9a0651dbfea674a83c0623539a22ee241e0bfea9742e4668d671cde9bb5506",
@@ -140,7 +143,7 @@
       "run": "claude-tissue-zone-rule-summary",
       "seed": "none (derived)",
       "superseded": null,
-      "wall_s": 0.366
+      "wall_s": 0.318
     }
   ],
   "scales": [
@@ -195,7 +198,9 @@
       "ZONE RULE (coarse, sharp edge, gamma 1, v 0.4): Lp*/lambda = 0.49 at v/sqrt(gamma) = 0.40",
       "ZONE RULE (coarse, sharp edge, gamma 2, v 0.25): Lp*/lambda = 0.38 at v/sqrt(gamma) = 0.18",
       "ZONE RULE (coarse, sharp edge, gamma 2, v 0.4): Lp*/lambda = 0.50 at v/sqrt(gamma) = 0.28",
-      "ZONE RULE (coarse, smooth edge (w=1), gamma 1, v 0.1): Lp*/lambda = 0.26 at v/sqrt(gamma) = 0.10"
+      "ZONE RULE (coarse, smooth edge (w=1), gamma 1, v 0.1): Lp*/lambda = 0.26 at v/sqrt(gamma) = 0.10",
+      "ZONE RULE (coarse, sharp edge, b 1.1 d 13, gamma 1, v 0.1): Lp*/lambda = 0.36 at v/sqrt(gamma) = 0.10",
+      "ZONE RULE (coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1): Lp*/lambda = 0.28 at v/sqrt(gamma) = 0.10"
     ],
     "open_questions": [
       "Map Lp and v onto measured distal proliferation in fin folds."

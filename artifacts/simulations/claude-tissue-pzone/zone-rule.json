@@ -436,11 +436,87 @@
    ],
    "Lp_switch": 2.866208865888427,
    "Lp_switch_over_lambda": 0.2572898443346882
+  },
+  "coarse, sharp edge, b 1.1 d 13, gamma 1, v 0.1": {
+   "gamma": 1.0,
+   "v": 0.1,
+   "grid": "coarse",
+   "edge": "kin",
+   "lambda_linear": 10.83,
+   "dimensionless_speed": 0.1,
+   "points": [
+    [
+     3.0,
+     0.019903270066055134
+    ],
+    [
+     3.5,
+     -0.29891353101598533
+    ],
+    [
+     4.0,
+     0.7021247774667194
+    ],
+    [
+     4.5,
+     0.8224556990550624
+    ],
+    [
+     5.0,
+     0.990688554784899
+    ]
+   ],
+   "Lp_switch": 3.8990424363613596,
+   "Lp_switch_over_lambda": 0.3600223856289344
+  },
+  "coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1": {
+   "gamma": 1.0,
+   "v": 0.1,
+   "grid": "coarse",
+   "edge": "kin",
+   "lambda_linear": 10.54,
+   "dimensionless_speed": 0.1,
+   "points": [
+    [
+     1.5,
+     -0.6306793111584067
+    ],
+    [
+     2.0,
+     -0.5322723805377111
+    ],
+    [
+     2.5,
+     -0.4296783807710272
+    ],
+    [
+     3.0,
+     0.6932268976004244
+    ],
+    [
+     3.5,
+     0.8229996059285788
+    ],
+    [
+     4.0,
+     0.8010580780610251
+    ],
+    [
+     4.5,
+     0.9083705458116126
+    ],
+    [
+     5.0,
+     0.9483974530465632
+    ]
+   ],
+   "Lp_switch": 2.9139611767251368,
+   "Lp_switch_over_lambda": 0.2764669048126316
   }
  },
  "caveats": [
   "Brackets are 0.25-1 units wide; values near the switch have wide CIs (see per-run cards).",
-  "One model family (Schnakenberg), d=10, b=0.9; other kinetics tested separately (claude-tissue-pzone-kin*).",
+  "One model family (Schnakenberg); b=0.9, d=10 except the two 'other kinetics' groups (b=1.1,d=13 and b=1.8,d=30).",
   "Coarse-grid gamma=2 values are biased upward (zone only 2-3 cells)."
  ]
 }

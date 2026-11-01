@@ -1,7 +1,7 @@
 {
  "code_sha256": {
   "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
-  "simulations/claude_tissue/zone_rule_summary.py": "b36bbf6bc216c36d4b05275785eac9e17790602fc761dde683b78eaab3be7aa1"
+  "simulations/claude_tissue/zone_rule_summary.py": "e9a80dd232066f72200ef1bee9d54e94cbdab8b3c53e29be882b75983136eb47"
  },
  "command": "python3 simulations/claude_tissue/zone_rule_summary.py",
  "environment": {
@@ -23,6 +23,9 @@
   "artifacts/simulations/claude-tissue-pzone-g2r/pzone_g2r.json": "c891a87d0954ef9febb17458196e3cce046345efecb6db9026e5105189bcc2e2",
   "artifacts/simulations/claude-tissue-pzone-g2v25/pzone_g2v25.json": "5c21b3b1e02d42092b3d25a9f721473ccab4ff3bea231dfa10acf005aac8b25e",
   "artifacts/simulations/claude-tissue-pzone-g2v40/pzone_g2v40.json": "7da050a04c64957d1f499685a8a6831cd6bc33e6a749de2ce412d17dc15e3f7f",
+  "artifacts/simulations/claude-tissue-pzone-kin/pzone_kin.json": "be14ca9913040c7e18eadb7bf55d1e9f7870cd99d2eac5d65ebc3e39dab3d00e",
+  "artifacts/simulations/claude-tissue-pzone-kin2/pzone_kin2.json": "52a4b89888489215eee8f58c27d7498199808a1884061a6793c10cd543c5c34e",
+  "artifacts/simulations/claude-tissue-pzone-kinb/pzone_kinb.json": "fd726b377787cc43bc66d0a0d64519c187bcc24e686ac79681dfca32fd136935",
   "artifacts/simulations/claude-tissue-pzone-refine-g05/pzone_refine_g05.json": "d9e3674a086d2ec40802daf25ed17ae16125c85be0696a8f0cc7b52ef09da08f",
   "artifacts/simulations/claude-tissue-pzone-refine-g05b/pzone_refine_g05b.json": "62706ee8c667f01ec7a8ef8dcb1e9a08bdc21c838cd04f142a25489228d3e9a2",
   "artifacts/simulations/claude-tissue-pzone-refine-g1/pzone_refine_g1.json": "4b9a0651dbfea674a83c0623539a22ee241e0bfea9742e4668d671cde9bb5506",
@@ -34,10 +37,10 @@
  },
  "name": "claude-tissue-zone-rule-summary",
  "output_sha256": {
-  "artifacts/simulations/claude-tissue-pzone/zone-rule.json": "d3b5862c301b4f1093a6f9f99739b96e1d5b3c4f534894077b52f33a4bcd5e50",
-  "artifacts/simulations/claude-tissue-pzone/zone-rule.png": "052df5676e5193373fc545f255018746bf7f0269de26a107d2be3793943ca635"
+  "artifacts/simulations/claude-tissue-pzone/zone-rule.json": "78ac939f96bf10f3a327077e773da3a8dae346a87aa3c33df743b78c6569edbc",
+  "artifacts/simulations/claude-tissue-pzone/zone-rule.png": "689079ec2241c90169a65f34cb5595b026b7d4128014cafb4f9a68e6e18d276e"
  },
  "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
  "seed": "none (derived)",
- "wall_s": 0.366
+ "wall_s": 0.318
 }

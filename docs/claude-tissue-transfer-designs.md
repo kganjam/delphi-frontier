@@ -767,7 +767,11 @@ stripe-regime cell, b = 1.8 and d = 30 (λ ≈ 10.5, σ_max ≈ 0.062, close to 
 
   The switch is about **3.8 ≈ 0.35 λ**, close to b = 0.9 and d = 10 (0.39 λ on the coarse grid). So two of the three
   kinetics sit near 0.35–0.39 λ, while b = 1.8 and d = 30 (the most strongly driven cell) is lower.
-- A lower-bracket run for b = 1.8 and d = 30 is running (`claude-tissue-pzone-kinb`).
+- **b = 1.8 and d = 30, lower bracket** (`claude-tissue-pzone-kinb`, job `aijob-e00h3w2kz3rjs79621`, COMPLETED, 392.3 s):
+  distal A is −0.63, −0.53 and −0.43 at L_p = 1.5, 2.0 and 2.5 (0.69 at 3.0).
+  The switch is about **2.9 ≈ 0.28 λ** (A = 0.5 crossing).
+- **The three kinetics on the same coarse grid give 0.39, 0.36 and 0.28 λ.** A grid-refinement run for b = 1.8 and
+  d = 30 is running (`claude-tissue-pzone-refine-kin`).
 
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;

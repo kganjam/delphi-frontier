@@ -25,7 +25,10 @@ GROUPS = {   # name: (gamma, physical v, grid, edge, [(dir, kind, scale)])
     "coarse, sharp edge, gamma 2, v 0.25": (2.0, 0.25, "coarse", "sharp", [("claude-tissue-pzone-g2v25", "pzone_g2v25", 1.0)]),
     "coarse, sharp edge, gamma 2, v 0.4": (2.0, 0.4, "coarse", "sharp", [("claude-tissue-pzone-g2v40", "pzone_g2v40", 1.0)]),
     "coarse, smooth edge (w=1), gamma 1, v 0.1": (1.0, 0.1, "coarse", "smooth1", [("claude-tissue-pzone-smooth", "pzone_smooth", 1.0), ("claude-tissue-pzone-smooth-b", "pzone_smooth_b", 1.0)]),
+    "coarse, sharp edge, b 1.1 d 13, gamma 1, v 0.1": (1.0, 0.1, "coarse", "kin", [("claude-tissue-pzone-kin2", "pzone_kin2", 1.0)]),
+    "coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1": (1.0, 0.1, "coarse", "kin", [("claude-tissue-pzone-kin", "pzone_kin", 1.0), ("claude-tissue-pzone-kinb", "pzone_kinb", 1.0)]),
 }
+LAMBDA_OVERRIDE = {"coarse, sharp edge, b 1.1 d 13, gamma 1, v 0.1": 10.83, "coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1": 10.54}   # linear-theory lambda for those kinetics
 
 def crossing(pts, level=0.5):
     pts = sorted(pts)
@@ -44,18 +47,18 @@ if __name__ == "__main__":
             for vv in json.loads(p.read_text())["summary"].values():
                 if vv["lp"] is not None and vv["lp"] > 0 and "A_distal_half_mean" in vv:
                     pts[round(vv["lp"]*sc, 4)] = vv["A_distal_half_mean"]
-        lam = LAM1/np.sqrt(g); x = crossing(list(pts.items()))
+        lam = LAMBDA_OVERRIDE.get(name, LAM1/np.sqrt(g)); x = crossing(list(pts.items()))
         res[name] = dict(gamma=g, v=v, grid=grid, edge=edge, lambda_linear=float(lam), dimensionless_speed=float(v/np.sqrt(g)),
                          points=sorted(pts.items()), Lp_switch=x, Lp_switch_over_lambda=(float(x/lam) if x else None))
         print(name, x and round(x, 2), x and round(x/lam, 3), flush=True)
     out = dict(definition="Lp* = first upward crossing of distal-half orientation A = 0.5 (linear interpolation); lambda = 11.14/sqrt(gamma)",
                groups=res, caveats=["Brackets are 0.25-1 units wide; values near the switch have wide CIs (see per-run cards).",
-                                    "One model family (Schnakenberg), d=10, b=0.9; other kinetics tested separately (claude-tissue-pzone-kin*).",
+                                    "One model family (Schnakenberg); b=0.9, d=10 except the two 'other kinetics' groups (b=1.1,d=13 and b=1.8,d=30).",
                                     "Coarse-grid gamma=2 values are biased upward (zone only 2-3 cells)."])
     pj = OUT/"zone-rule.json"; pj.write_text(json.dumps(out, indent=1))
     fig, ax = plt.subplots(1, 2, figsize=(13, 4.8))
     mk = {("refined", "sharp"): ("o", "tab:blue", "refined grid, sharp edge"), ("coarse", "sharp"): ("s", "tab:gray", "coarse grid, sharp edge"),
-          ("coarse", "smooth1"): ("^", "tab:green", "coarse grid, smooth edge (width 1)")}
+          ("coarse", "smooth1"): ("^", "tab:green", "coarse grid, smooth edge (width 1)"), ("coarse", "kin"): ("D", "tab:red", "coarse grid, other kinetics (b,d)")}
     seen = set()
     for name, r in res.items():
         if r["Lp_switch_over_lambda"] is None: continue
