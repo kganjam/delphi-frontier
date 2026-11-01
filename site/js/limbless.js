@@ -47,7 +47,15 @@
     if (!obj) return "";
     return Object.entries(obj).filter(([k, v]) => !skip.includes(k) && v !== null && v !== undefined && (!Array.isArray(v) || v.length)).map(([k, v]) => {
       if (typeof v === "string") return html`<h3>${HEAD(k)}</h3><p>${v}</p>`;
-      if (Array.isArray(v)) return html`<h3>${HEAD(k)}</h3><ul>${v.map((x) => html`<li>${typeof x === "string" ? x : (x.name || x.title ? html`<b>${x.name || x.title}.</b> ${x.note || x.text || x.detail || ""}` : Object.entries(x).map(([kk, vv]) => html`<b>${HEAD(kk)}:</b> ${String(vv)}. `))}</li>`)}</ul>`;
+      if (Array.isArray(v)) return html`<h3>${HEAD(k)}</h3><ul>${v.map((x) => {
+        if (typeof x === "string") return html`<li>${x}</li>`;
+        /* A list of records usually leads with the field the list is named after ("refinements" -> "refinement"), and
+         * repeating that label on every row is noise. Lead with its value; label only the fields that add something. */
+        const ent = Object.entries(x); const [k0, v0] = ent[0] || ["", ""];
+        const lead = k.toLowerCase().includes(k0.toLowerCase()) && typeof v0 === "string";
+        const rest = lead ? ent.slice(1) : ent;
+        return html`<li>${lead ? html`${v0} ` : ""}${rest.map(([kk, vv]) => html`<b>${HEAD(kk)}:</b> ${String(vv)} `)}</li>`;
+      })}</ul>`;
       if (typeof v === "object") return html`<h3>${HEAD(k)}</h3><dl class="lmmeta">${Object.entries(v).map(([kk, vv]) => html`<dt>${HEAD(kk)}</dt><dd>${typeof vv === "string" ? vv : JSON.stringify(vv)}</dd>`)}</dl>`;
       return html`<h3>${HEAD(k)}</h3><p>${String(v)}</p>`;
     });

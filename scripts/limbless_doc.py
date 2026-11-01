@@ -42,7 +42,14 @@ def emit(w, obj, skip=()) -> None:
             w(v + "\n")
         elif isinstance(v, list):
             for x in v:
-                w(f"- {x}" if isinstance(x, str) else "- " + "; ".join(f"**{head(kk)}:** {vv}" for kk, vv in x.items()))
+                if isinstance(x, str):
+                    w(f"- {x}")
+                    continue
+                # A list of records usually leads with the field the list is named after; repeating that label is noise.
+                ent = list(x.items())
+                lead = bool(ent) and ent[0][0].lower() in k.lower() and isinstance(ent[0][1], str)
+                body = (ent[0][1] + " " if lead else "") + " ".join(f"**{head(kk)}:** {vv}" for kk, vv in (ent[1:] if lead else ent))
+                w(f"- {body.strip()}")
             w("")
         elif isinstance(v, dict):
             for kk, vv in v.items():

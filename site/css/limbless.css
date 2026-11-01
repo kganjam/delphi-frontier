@@ -112,3 +112,9 @@
 .lmfigs video { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fffdf8; display: block; }
 .lmcrit, .lmctrl { margin: 1rem 0; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
 .lmcrit h4, .lmctrl h4 { margin: 0 0 .35rem; }
+
+/* Gene symbols and PMIDs must not break mid-token: "SHH / ZRS (withi n LMBR 1)" is not a gene. */
+.lmgenes td, .lmgenes th { overflow-wrap: normal; word-break: normal; hyphens: none; }
+.lmgenes td:first-child, .lmgenes th:first-child { min-width: 11em; }
+.lmgenes td:first-child a { white-space: nowrap; }
+.lmgenes { font-size: .88rem; }
