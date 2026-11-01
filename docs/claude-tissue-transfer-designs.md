@@ -27,8 +27,9 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 - In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
   pattern is spots) and growth along the fin axis.
 - With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
-  the proliferating zone to be wider than about **half a pattern wavelength**: a sharp switch between L_p = 4 and 6
-  when λ ≈ 11, from 12-seed controls with long and short starts.
+  the proliferating zone to be wider than about **half a pattern wavelength**. The switch scales with λ across three
+  rate scales (12 seeds each). Above it, newly grown tissue is almost perfectly ray-like (distal-half A 0.94–1.00).
+  One unexplained exception remains: γ = 2, L_p = 10.
 - With row insertion from a very short fold, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern
   units. That threshold tracks λ·σ (pooled slope 0.50). A reversal of orientation behind a moving front is a known
   phenomenon.
@@ -415,6 +416,28 @@ So the whole-domain A numbers above understate how the newly grown tissue is ori
 were cancelled before running and resubmitted with a regional-metric script (`pzone_regional_gpu.py`). It reports A for
 the distal half, the proximal quarter, and the tissue descended from growth: `claude-tissue-pzone-g2r` and
 `claude-tissue-pzone-g1r`, jobs `aijob-e00gczy89devejh5js` and `aijob-e00zqkxgb98px1a1mf`.
+
+**Regional orientation** (`claude-tissue-pzone-g2r`, job `aijob-e00gczy89devejh5js`, 726.3 s; `claude-tissue-pzone-g1r`, job
+`aijob-e00zqkxgb98px1a1mf`, 741.7 s; both COMPLETED; 12 seeds; v = 0.1; long start). Values are A in the **distal half**
+(grown tissue), mean ± 95% CI:
+
+| γ | L_p = 2 | 3 | 4 | 6 | 8 | 10 | 12 | 48 | Uniform | Static |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | | | −0.04 ± 0.40 | **0.97** | | 0.98 | 0.97 | 1.00 | 0.93 | −0.04 |
+| 2 | −0.64 | **0.88** | | 0.94 | 0.99 | **0.01 ± 0.13** | 0.99 | | | −0.14 |
+
+The γ = 1 whole-domain values reproduce the earlier run exactly, a determinism check.
+
+**Reading.**
+- Measured on the newly grown tissue, ray-like orientation is close to perfect (0.94–1.00) once the proliferation zone
+  is wider than the switch.
+- The switch sits at L_p ≈ 2.5 for γ = 2 (λ ≈ 7.9), ≈ 5 for γ = 1 (λ ≈ 11) and ≈ 7 for γ = 0.5 (λ ≈ 15.8, from the
+  whole-domain run). That is about 0.6–0.9 × λ/2: **the switch scales with the pattern wavelength.**
+- The proximal quarter keeps the starting-fold pattern; its A is mostly negative.
+
+**Still unexplained.** At γ = 2, L_p = 10 (≈ 1.3 λ), even the distal half is unoriented (0.01 ± 0.13 over 12 seeds),
+while L_p = 8 and 12 give 0.99. A follow-up at L_p = 9–11 is running (`claude-tissue-pzone-g2r2`), with a γ = 0.5
+regional run for completeness (`claude-tissue-pzone-g05r`).
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and
