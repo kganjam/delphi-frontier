@@ -711,6 +711,29 @@ the same pattern found for `kcnh2a` and it is an annotation fact, not a genome-c
 **What none of this touches:** which gene the *papers* mean by "lat4a", and what their reported
 convergent amino-acid change is. That needs full text and cannot be settled by sequence work here.
 
+## R7j — More taxa raise the support but not enough; the sequence route for `lat4a` is exhausted
+
+**`claude-zf2ff-slc43-broad-tree-1`** (`aijob-e00vqt5q32bjca4ktb`), CLI-read `COMPLETED`. Manifest:
+[`data/tree10/MANIFEST.md`](data/tree10/MANIFEST.md). Takifugu and stickleback `slc43a2b` added, so the
+*b* clade has four reference taxa and an *a*-side locus should stand out.
+
+- **`slc43locus01` confirmed as a *b*-side locus**: inside the clade containing all four reference
+  `slc43a2b` sequences (5 tips, 78.5/73). Its nearest-neighbour support dropped to 50.6/73 only
+  because three taxa now compete for "closest" — clade membership is the meaningful statement.
+- **`slc43locus02` pairs with full-length `slc43a2a` at 66.7/78**, up from 36.2/65, and stays outside
+  the *b* clade in both trees.
+
+**Three trees now point the same way and the support rose each time the input improved** (36.2/65 →
+66.7/78). It is **still** below conventional thresholds, so `slc43locus02` is **not** claimed as the
+`slc43a2a` ortholog. A consistent direction across three underpowered trees is precisely what should
+not become a claim.
+
+**Conclusion for this locus:** both available improvements — a full-length reference and more taxa —
+have been applied and both left the question short, so **the sequence route is exhausted** at this
+project's disposal. What remains is a literature step: PMID 34534441 and PMID 40689752 read in full
+text for their own gene identifiers and the residue position. `zf2ff-problem-lat4a-identifier` stays
+open and records exactly that.
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
