@@ -1,0 +1,75 @@
+{
+ "schema": "cfd3d-image-check-0.1",
+ "date": "2026-10-31",
+ "question": "can the CUDA arms packet b8f9543b run on python:3.12-slim-bookworm instead of the NVIDIA PyTorch image (infra 8:13pm PDT)",
+ "image": {
+  "image": "library/python:3.12-slim-bookworm",
+  "index_digest": "sha256:e697c81897302a4c4333bade000d98038fbb21eb064f8ee1fd42d02ebcd9d337",
+  "amd64_manifest": "sha256:623674a14ef93d052bb9b0de4dbf5f28eb578a35263838941cc8aa43213c1487",
+  "layers": [
+   {
+    "digest": "sha256:3c5439d0ae62993af4cc4e21b8c777297e81bc40e200d4633c85a3e0f977a3bc",
+    "bytes": 28247437
+   },
+   {
+    "digest": "sha256:a4516a4e263798f91046a65329f83ee86d1bd6aba295a387dcf47c290bd695ba",
+    "bytes": 3341547
+   },
+   {
+    "digest": "sha256:5b676d7ddb724969a481e77bf8fa799dd439efe94776431a478e7e4bb55a3e59",
+    "bytes": 13680507
+   },
+   {
+    "digest": "sha256:560ad164c1fd1ea529655e9f0a0eebc06ba4ad9de73701013445883f16041990",
+    "bytes": 250
+   }
+  ]
+ },
+ "userland": {
+  "python": "3.12.16",
+  "debian_version": "12.15",
+  "ca_bundle": "/etc/ssl/certs/ca-certificates.crt present",
+  "nvidia_smi_in_image": false
+ },
+ "method": "layers pulled anonymously from registry-1.docker.io and sha256-checked, extracted to a rootfs, run with bwrap (own pid ns, clean env, host network) under systemd-run MemoryMax=8G MemorySwapMax=0 TasksMax=512 CPUQuota=200%; no docker access on this host; no GPU on this host",
+ "command": "cfd3d_launch.py cfd3d-arms-packet.tar.xz b8f9543b... engineering/cfd3d/cyl2d_entry.py arms_packet.json telemetry julia env",
+ "archive_sha256": "b8f9543bd94e305243a02f3ae9037632f775992b839c50faecf23d27cbbd28dd",
+ "stages": {
+  "telemetry": {
+   "ok": false,
+   "t_s": 0.0
+  },
+  "julia": {
+   "ok": true,
+   "t_s": 7.7,
+   "sha256": "4e7e9e776634d24835250de67cde39b0d4af15bc432eb20697e6be6c28ea69e8"
+  },
+  "env": {
+   "ok": false,
+   "t_s": 603.2,
+   "rc": 4
+  }
+ },
+ "rc": 3,
+ "env_log_lines": [
+  "  4 dependencies successfully precompiled in 3 seconds. 3 already precompiled.",
+  "   4972.7 ms  \u2713 WaterLily \u2192 WaterLilyCUDAExt",
+  "  136 dependencies successfully precompiled in 395 seconds. 24 already precompiled.",
+  "\u2502    InitError: AssertionError: CUDA.functional()",
+  "CANON d1a8e00741a5d1733be9e007b49bb2844fff2bdd232ccb993c1838319ed926bc",
+  "CUDA functional false "
+ ],
+ "verified": [
+  "Python 3.12.16 runs the launcher and entry (tarfile filters available)",
+  "Julia 1.12.7 tarball downloads over urllib with the image's CA bundle and matches its pinned sha256",
+  "all 103 pins install from pkg.julialang.org; 136 dependencies precompile, including CUDA and WaterLily -> WaterLilyCUDAExt (395 s at 2 CPUs)",
+  "the canonical manifest digest d1a8e007... matches"
+ ],
+ "expected_failure": "env gate rc 3: WaterLilyCUDAExt's __init__ asserts CUDA.functional(), false with no GPU; the same on any GPU-less host",
+ "not_verified": [
+  "libcuda.so.1 and nvidia-smi are not in the image; they must be injected by the GPU container runtime (NVIDIA images set NVIDIA_VISIBLE_DEVICES and NVIDIA_DRIVER_CAPABILITIES; python:slim does not)",
+  "CUDA.functional() on a device in this image",
+  "any timing or GPU utilisation"
+ ],
+ "fail_closed": "no libcuda: env rc 3 after ~6-10 min; no nvidia-smi: telemetry not ok and the calibration memory gate fails closed (rc 11) before any arm"
+}
