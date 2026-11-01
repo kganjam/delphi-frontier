@@ -166,7 +166,7 @@ def cards():
             parameter_unknowns=["Generic kinetics; speeds in pattern units."],
             open_questions=["Measure outgrowth speed / (ray spacing x patterning rate) in a fin at ray-patterning onset."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; 4 seeds per point."])
-    for _nm in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r", "pzone_g05r", "pzone_g2r2"):
+    for _nm in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r", "pzone_g05r", "pzone_g2r2", "pzone_g2r3"):
       _dir = "claude-tissue-" + _nm.replace("_", "-")
       if (A/f"{_dir}/{_nm}.json").exists():
         pz = J(f"{_dir}/{_nm}.json"); sm = pz["summary"]
@@ -181,7 +181,8 @@ def cards():
                    "pzone_g2r": "Regional orientation (distal grown tissue vs proximal starting fold) vs proliferation-zone width, gamma=2 (simulated, H100)",
                    "pzone_g1r": "Regional orientation (distal grown tissue vs proximal starting fold) vs proliferation-zone width, gamma=1 (simulated, H100)",
                    "pzone_g05r": "Regional orientation vs proliferation-zone width, gamma=0.5 (simulated, H100)",
-                   "pzone_g2r2": "Probe of the unexplained gamma=2 dip at zone widths 9-11 (regional metric) (simulated, H100)"}[_nm],
+                   "pzone_g2r2": "Probe of the unexplained gamma=2 dip at zone widths 9-11 (regional metric) (simulated, H100)",
+                   "pzone_g2r3": "Is the gamma=2, Lp=10 dip a discretisation artefact? Non-integer zone widths 9.7-10.3 (simulated, H100)"}[_nm],
             scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; 12 seeds per condition",
             model=dict(name="2-D Schnakenberg, finite-volume growth confined to a distal zone of width Lp (apical to uniform); cells split, no rows inserted at steady state",
                        context=f"start length {pz['meta']['Y0']} (>4 wavelengths) -> {pz['meta']['Y1']}, d={pz['meta']['d']}, Lp in {pz['meta']['lps']} (0 = uniform)"),

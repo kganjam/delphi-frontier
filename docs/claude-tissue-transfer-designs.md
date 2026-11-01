@@ -436,8 +436,16 @@ The γ = 1 whole-domain values reproduce the earlier run exactly, a determinism 
 - The proximal quarter keeps the starting-fold pattern; its A is mostly negative.
 
 **Still unexplained.** At γ = 2, L_p = 10 (≈ 1.3 λ), even the distal half is unoriented (0.01 ± 0.13 over 12 seeds),
-while L_p = 8 and 12 give 0.99. A follow-up at L_p = 9–11 is running (`claude-tissue-pzone-g2r2`), with a γ = 0.5
-regional run for completeness (`claude-tissue-pzone-g05r`).
+while L_p = 8 and 12 give 0.99. The follow-up `claude-tissue-pzone-g2r2` (job `aijob-e00zamme1qkx4bgsxj`, COMPLETED, 403.3 s)
+shows the dip is isolated to exactly L_p = 10:
+
+| L_p | 9 | 10 | 11 |
+|---|---|---|---|
+| Distal A | 0.98 | 0.01 (reproduced) | 0.99 |
+
+A single integer width failing points to a discretisation effect: the zone boundary is a step applied to cell
+centres. Non-integer widths 9.7–10.3 are being tested (`claude-tissue-pzone-g2r3`). A γ = 0.5 regional run is also
+running for completeness (`claude-tissue-pzone-g05r`).
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and
