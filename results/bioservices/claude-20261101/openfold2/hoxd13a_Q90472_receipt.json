@@ -1,0 +1,87 @@
+{
+ "epistemic_status": "computed structure hypothesis (OpenFold2, dummy MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T13:29:22Z",
+ "gene": "hoxd13a",
+ "idempotency_key": "frontier-claude-hoxd13a-openfold2-18c37c3522ddabf8545f",
+ "metrics": {
+  "ca_residues_in_pdb": 256,
+  "inference_seconds": 8.902367320843041,
+  "length_matches_input": true,
+  "mean_plddt": 42.54846224933863,
+  "n_plddt_ge_70": 10,
+  "pdb_sha256": "e08cae8b0174383e6c0a88e7d581092178a08d63f993eaa29836965b1ab58df3",
+  "ptm": null,
+  "ranking_confidence": 42.54846224933863
+ },
+ "operation_id": "op-b3cab91bf5c81e46",
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:27:58Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:28:12Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:28:25Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:28:38Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:28:51Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:29:03Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T13:29:17Z"
+  }
+ ],
+ "result_artifact": {
+  "artifact_id": "fa9fa098-1cb2-5863-b8c0-df4ddd3216ff",
+  "sha256": "c86c9e3dac7da18784fe76e478dd910be6922385d2faaad23fe7b180f9f6afa6",
+  "size_bytes": 1388886,
+  "url_persisted": false
+ },
+ "result_keys": [
+  "confidence",
+  "format",
+  "inference_seconds",
+  "model_param_set",
+  "plddt",
+  "predicted_aligned_error",
+  "ptm_score",
+  "relaxed",
+  "runtime_origin",
+  "structure"
+ ],
+ "sequence_length": 256,
+ "sequence_sha256": "18c37c3522ddabf8545f1d82b76cebecb72bc85c6051e78a6676662d64ec91c6",
+ "submit_isError": false,
+ "submit_payload": {
+  "error": {
+   "admission": "accepted",
+   "code": "SERVERLESS_REQUEST_FAILED",
+   "message": "The accepted operation's current state is temporarily unavailable. Its execution outcome has not been observed.",
+   "model_id": "openfold2",
+   "next_action": "Poll this same operation ID; do not submit the inference again.",
+   "operation_id": "op-b3cab91bf5c81e46",
+   "phase": "observation",
+   "request_id": "b3aa0533-c6d4-414e-9abc-cc03f2f7c877",
+   "retryable": true,
+   "status_code": 503
+  }
+ },
+ "submitted_utc": "2026-11-01T13:27:21Z",
+ "tool": "infer_openfold2_native",
+ "uniprot": "Q90472"
+}

@@ -1,0 +1,872 @@
+[
+ {
+  "epistemic_status": "simulation of a published model at curated defaults; not observed, not fit to fish data",
+  "evidence_kind": "simulated",
+  "finite": true,
+  "integrator": "cvode",
+  "model": "BIOMD0000000201",
+  "n_oscillating_late": 0,
+  "n_species": 20,
+  "n_varying": 16,
+  "name": "Goldbeter2008_Somite_Segmentation_Clock_Notch_Wnt_FGF",
+  "ok": true,
+  "points": 2001,
+  "publication": "http://identifiers.org/pubmed/18308339",
+  "roadrunner": "2.11.0",
+  "sbml_sha256": "6e1861d9c8d149054352bb3087e87a02be6b554a96df2c438106fa05e950f3ca",
+  "species_stats_first40": {
+   "[A]": {
+    "final": 0.03090031371424532,
+    "late_peaks": 1,
+    "max": 0.5277124840062296,
+    "mean_peak_period": null,
+    "min": 0.002433185844862031
+   },
+   "[BN]": {
+    "final": 0.6142820800954537,
+    "late_peaks": 1,
+    "max": 0.6501475474229121,
+    "mean_peak_period": null,
+    "min": 0.001
+   },
+   "[B]": {
+    "final": 1.329373969931445,
+    "late_peaks": 1,
+    "max": 1.3940362449637493,
+    "mean_peak_period": null,
+    "min": 0.1
+   },
+   "[Bp]": {
+    "final": 0.008300727085517398,
+    "late_peaks": 1,
+    "max": 0.1,
+    "mean_peak_period": null,
+    "min": 0.00022273612652275575
+   },
+   "[Dusp]": {
+    "final": 2.960321353177255,
+    "late_peaks": 1,
+    "max": 10.25049529698756,
+    "mean_peak_period": null,
+    "min": 0.016899232439257072
+   },
+   "[ERKa]": {
+    "final": 0.1487001227171432,
+    "late_peaks": 1,
+    "max": 1.9996456289383022,
+    "mean_peak_period": null,
+    "min": 0.015045443688220193
+   },
+   "[F]": {
+    "final": 0.366194112814541,
+    "late_peaks": 1,
+    "max": 2.959563061342653,
+    "mean_peak_period": null,
+    "min": 0.0007914652191507263
+   },
+   "[K]": {
+    "final": 2.015148900762426,
+    "late_peaks": 1,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 0.28622140145914543
+   },
+   "[MAx]": {
+    "final": 2.1374344267519945,
+    "late_peaks": 1,
+    "max": 14.480237110500768,
+    "mean_peak_period": null,
+    "min": 0.08896203503638558
+   },
+   "[MDusp]": {
+    "final": 0.5097150987453716,
+    "late_peaks": 1,
+    "max": 6.048862520234587,
+    "mean_peak_period": null,
+    "min": 0.08099710912043802
+   },
+   "[MF]": {
+    "final": 0.000494708036944764,
+    "late_peaks": 1,
+    "max": 2.7353770899432983,
+    "mean_peak_period": null,
+    "min": 0.00019372040063604388
+   },
+   "[N]": {
+    "final": 0.05812749815626187,
+    "late_peaks": 1,
+    "max": 0.5,
+    "mean_peak_period": null,
+    "min": 0.04255431863069125
+   },
+   "[Na]": {
+    "final": 0.6019150536387039,
+    "late_peaks": 1,
+    "max": 1.1487339399582146,
+    "mean_peak_period": null,
+    "min": 0.2
+   },
+   "[Nan]": {
+    "final": 0.0014804446226877525,
+    "late_peaks": 1,
+    "max": 0.08028108884286564,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[Rasa]": {
+    "final": 1.9887812708553807,
+    "late_peaks": 0,
+    "max": 1.9887827364787007,
+    "mean_peak_period": null,
+    "min": 0.5
+   },
+   "[Xa]": {
+    "final": 0.012190586852118702,
+    "late_peaks": 1,
+    "max": 1.9780263581955162,
+    "mean_peak_period": null,
+    "min": 0.0012026959925290472
+   }
+  },
+  "t_end": 200,
+  "wall_s": 0.01
+ },
+ {
+  "epistemic_status": "simulation of a published model at curated defaults; not observed, not fit to fish data",
+  "evidence_kind": "simulated",
+  "finite": true,
+  "integrator": "cvode",
+  "model": "BIOMD0000000275",
+  "n_oscillating_late": 4,
+  "n_species": 5,
+  "n_varying": 4,
+  "name": "Goldbeter2007_Somitogenesis_Switch",
+  "ok": true,
+  "points": 2001,
+  "publication": "http://identifiers.org/pubmed/17497689",
+  "roadrunner": "2.11.0",
+  "sbml_sha256": "600e2c173146c24f77c738c9117aa684a0acf9aeedea227126efaf033f641e70",
+  "species_stats_first40": {
+   "[C]": {
+    "final": 24.99545389251998,
+    "late_peaks": 7,
+    "max": 24.99546689484568,
+    "mean_peak_period": 14.566666666666666,
+    "min": 0.1
+   },
+   "[F]": {
+    "final": 0.7543771237378898,
+    "late_peaks": 7,
+    "max": 1.0,
+    "mean_peak_period": 14.55,
+    "min": 0.12499525577053769
+   },
+   "[M_C]": {
+    "final": 6.998726722237131,
+    "late_peaks": 7,
+    "max": 6.9987275697656575,
+    "mean_peak_period": 14.533333333333335,
+    "min": 0.1
+   },
+   "[RA]": {
+    "final": 0.1988361571031424,
+    "late_peaks": 7,
+    "max": 2.7664681402340543,
+    "mean_peak_period": 16.033333333333335,
+    "min": 0.1
+   }
+  },
+  "t_end": 200,
+  "wall_s": 0.0
+ },
+ {
+  "epistemic_status": "simulation of a published model at curated defaults; not observed, not fit to fish data",
+  "evidence_kind": "simulated",
+  "finite": true,
+  "integrator": "cvode",
+  "model": "BIOMD0000000395",
+  "n_oscillating_late": 6,
+  "n_species": 23,
+  "n_varying": 21,
+  "name": "Sivakumar2011 - Hedgehog Signaling Pathway",
+  "ok": true,
+  "points": 2001,
+  "publication": "http://identifiers.org/pubmed/21978399",
+  "roadrunner": "2.11.0",
+  "sbml_sha256": "e2efcbe5d9787d0696b691eb823bf70b32b56a97f14eb7201a0448c4d3327998",
+  "species_stats_first40": {
+   "[s10]": {
+    "final": 0.6952033522192599,
+    "late_peaks": 0,
+    "max": 0.6952033522192599,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s128]": {
+    "final": 0.9836045356239129,
+    "late_peaks": 14,
+    "max": 2.5,
+    "mean_peak_period": 6.800000000000001,
+    "min": 0.7310559644565687
+   },
+   "[s135]": {
+    "final": 0.9836045356239131,
+    "late_peaks": 14,
+    "max": 2.5,
+    "mean_peak_period": 6.800000000000001,
+    "min": 0.731055964456569
+   },
+   "[s140]": {
+    "final": 2.586951729293316,
+    "late_peaks": 13,
+    "max": 2.5869517293001127,
+    "mean_peak_period": 6.691666666666667,
+    "min": 0.0
+   },
+   "[s148]": {
+    "final": 0.009966817020785557,
+    "late_peaks": 0,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 0.009966817020785557
+   },
+   "[s150]": {
+    "final": 0.009966817020787005,
+    "late_peaks": 0,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 0.009966817020787005
+   },
+   "[s158]": {
+    "final": 1.3019690049883703e-14,
+    "late_peaks": 9,
+    "max": 0.20142642313214118,
+    "mean_peak_period": 10.475000000000001,
+    "min": -1.5757012280216449e-12
+   },
+   "[s159]": {
+    "final": 0.3643295534494881,
+    "late_peaks": 0,
+    "max": 0.8019605611380743,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s160]": {
+    "final": 0.1387517528394476,
+    "late_peaks": 0,
+    "max": 0.5737539824182366,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s161]": {
+    "final": 0.15312103331197136,
+    "late_peaks": 0,
+    "max": 0.4204609737593359,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s1]": {
+    "final": 1.7863176214924414,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 1.786317621492439
+   },
+   "[s21]": {
+    "final": 3.2136823785075603,
+    "late_peaks": 0,
+    "max": 3.213682378507561,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s46]": {
+    "final": 0.21546677915512494,
+    "late_peaks": 0,
+    "max": 0.21546677915512494,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s48]": {
+    "final": 0.6952033522192601,
+    "late_peaks": 0,
+    "max": 0.6952033522192601,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s68]": {
+    "final": 2.6257036295292364,
+    "late_peaks": 0,
+    "max": 2.6257036295292364,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s69]": {
+    "final": 1.5762817453151203,
+    "late_peaks": 0,
+    "max": 1.5762817453151203,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s70]": {
+    "final": 0.33383084337764174,
+    "late_peaks": 0,
+    "max": 0.33383084337764174,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s71]": {
+    "final": 6.302920558045804e-14,
+    "late_peaks": 12,
+    "max": 2.0,
+    "mean_peak_period": 6.836363636363636,
+    "min": -7.701773966998259e-12
+   },
+   "[s75]": {
+    "final": 0.9294437350754605,
+    "late_peaks": 14,
+    "max": 0.9294437350765544,
+    "mean_peak_period": 6.415384615384617,
+    "min": 0.0
+   },
+   "[s7]": {
+    "final": 1.7863176214924399,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 1.7863176214924374
+   },
+   "[s9]": {
+    "final": 1.304796647780741,
+    "late_peaks": 0,
+    "max": 2.0,
+    "mean_peak_period": null,
+    "min": 1.304796647780741
+   }
+  },
+  "t_end": 200,
+  "wall_s": 0.01
+ },
+ {
+  "epistemic_status": "simulation of a published model at curated defaults; not observed, not fit to fish data",
+  "evidence_kind": "simulated",
+  "finite": true,
+  "integrator": "cvode",
+  "model": "BIOMD0000000396",
+  "n_oscillating_late": 3,
+  "n_species": 36,
+  "n_varying": 29,
+  "name": "Sivakumar2011 - Notch Signaling Pathway",
+  "ok": true,
+  "points": 2001,
+  "publication": "http://identifiers.org/pubmed/21978399",
+  "roadrunner": "2.11.0",
+  "sbml_sha256": "754abfc8bb9224531124ccdfe068d50230785cbb95548313417ef620ad5013f4",
+  "species_stats_first40": {
+   "[s15]": {
+    "final": 2.4661766817451767,
+    "late_peaks": 0,
+    "max": 5.146161669504709,
+    "mean_peak_period": null,
+    "min": 2.4661766817451767
+   },
+   "[s18]": {
+    "final": 0.061445053053318266,
+    "late_peaks": 0,
+    "max": 0.061445053053318266,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s19]": {
+    "final": 3.1648259364448323,
+    "late_peaks": 0,
+    "max": 3.1648259364448323,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s1]": {
+    "final": 1.1916386535930141,
+    "late_peaks": 1,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 1.1275107590024707
+   },
+   "[s22]": {
+    "final": 2.641744977053812,
+    "late_peaks": 0,
+    "max": 2.641744977053812,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s24]": {
+    "final": 3.930176981830411,
+    "late_peaks": 0,
+    "max": 3.930176981830411,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s25]": {
+    "final": 0.4343313373253487,
+    "late_peaks": 0,
+    "max": 0.64,
+    "mean_peak_period": null,
+    "min": 0.4343313373253487
+   },
+   "[s26]": {
+    "final": 1.2364841873374657,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 1.2364841873374657
+   },
+   "[s27]": {
+    "final": 1.7364841873174865,
+    "late_peaks": 0,
+    "max": 2.05777620683984,
+    "mean_peak_period": null,
+    "min": 0.49560554372162424
+   },
+   "[s28]": {
+    "final": 7.542437943266927e-12,
+    "late_peaks": 14,
+    "max": 5.0,
+    "mean_peak_period": 6.738461538461539,
+    "min": -1.0933732030873612e-11
+   },
+   "[s29]": {
+    "final": 1.7364841873174863,
+    "late_peaks": 0,
+    "max": 2.05777620683984,
+    "mean_peak_period": null,
+    "min": 0.49560554372162424
+   },
+   "[s32]": {
+    "final": -1.4966493047339267e-12,
+    "late_peaks": 15,
+    "max": 0.12270113152560426,
+    "mean_peak_period": 6.550000000000001,
+    "min": -2.8663805227037354e-12
+   },
+   "[s35]": {
+    "final": 3.6628042377227463,
+    "late_peaks": 0,
+    "max": 3.6628042377227463,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s37]": {
+    "final": 0.22166982275743405,
+    "late_peaks": 0,
+    "max": 0.22166982275743405,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s39]": {
+    "final": 0.05670420207794046,
+    "late_peaks": 0,
+    "max": 0.5,
+    "mean_peak_period": null,
+    "min": 0.05670420207794046
+   },
+   "[s40]": {
+    "final": 0.22162597516462448,
+    "late_peaks": 0,
+    "max": 0.22162597516462448,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s41]": {
+    "final": 0.6309984252569906,
+    "late_peaks": 1,
+    "max": 0.6968675618047421,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s48]": {
+    "final": 2.7177273351766096,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 2.7177273351766096
+   },
+   "[s4]": {
+    "final": 1.1916386535930144,
+    "late_peaks": 1,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 1.127510759002471
+   },
+   "[s53]": {
+    "final": 1.7127150996869904,
+    "late_peaks": 0,
+    "max": 1.7976818131815222,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s60]": {
+    "final": 0.5695575651367043,
+    "late_peaks": 0,
+    "max": 0.5695575651367043,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s63]": {
+    "final": 0.027837344009880704,
+    "late_peaks": 0,
+    "max": 0.027837344009880704,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s64]": {
+    "final": 0.20566866267465042,
+    "late_peaks": 48,
+    "max": 0.20566866267465042,
+    "mean_peak_period": 0.7340425531914894,
+    "min": 0.0
+   },
+   "[s67]": {
+    "final": 0.8336452948257812,
+    "late_peaks": 0,
+    "max": 1.5426833730821559,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s75]": {
+    "final": 0.1007115749533871,
+    "late_peaks": 0,
+    "max": 0.17548794631066011,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s76]": {
+    "final": 4.950975679639238,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 4.950975679337773
+   },
+   "[s77]": {
+    "final": 4.950975679639238,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 4.950975679337773
+   },
+   "[s7]": {
+    "final": 1.4631647430030756,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 1.4631647430030756
+   },
+   "[s82]": {
+    "final": 0.049024320360758426,
+    "late_peaks": 0,
+    "max": 0.04902432066222447,
+    "mean_peak_period": null,
+    "min": 0.0
+   }
+  },
+  "t_end": 200,
+  "wall_s": 0.01
+ },
+ {
+  "epistemic_status": "simulation of a published model at curated defaults; not observed, not fit to fish data",
+  "evidence_kind": "simulated",
+  "finite": true,
+  "integrator": "cvode",
+  "model": "BIOMD0000000397",
+  "n_oscillating_late": 0,
+  "n_species": 50,
+  "n_varying": 49,
+  "name": "Sivakumar2011_WntSignalingPathway",
+  "ok": true,
+  "points": 2001,
+  "publication": "http://identifiers.org/pubmed/21978399",
+  "roadrunner": "2.11.0",
+  "sbml_sha256": "e6afae50b887803da1f158d8316fb8bf7f2384c284d6628a605aabaafe490719",
+  "species_stats_first40": {
+   "[s101]": {
+    "final": 0.9254625708634087,
+    "late_peaks": 0,
+    "max": 0.9254625708634087,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s102]": {
+    "final": 2.625707355638731,
+    "late_peaks": 0,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 2.625707355638731
+   },
+   "[s107]": {
+    "final": 1.8875883253356556,
+    "late_peaks": 0,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 1.8875883253356556
+   },
+   "[s121]": {
+    "final": 2.1523156375800654,
+    "late_peaks": 0,
+    "max": 4.0,
+    "mean_peak_period": null,
+    "min": 1.4101176102377575
+   },
+   "[s123]": {
+    "final": 0.3536480925743326,
+    "late_peaks": 0,
+    "max": 1.4726930569925751,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s129]": {
+    "final": 0.16082791948297911,
+    "late_peaks": 0,
+    "max": 0.3413831980394158,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s155]": {
+    "final": 0.07453742913419192,
+    "late_peaks": 0,
+    "max": 0.07453742913419192,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s159]": {
+    "final": 0.29598493055561387,
+    "late_peaks": 0,
+    "max": 0.7012261641604537,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s164]": {
+    "final": 0.925462570860889,
+    "late_peaks": 0,
+    "max": 0.925462570860889,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s16]": {
+    "final": 0.8093573174105934,
+    "late_peaks": 0,
+    "max": 0.8093573174118959,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s170]": {
+    "final": 0.0018948686534630901,
+    "late_peaks": 0,
+    "max": 2.0,
+    "mean_peak_period": null,
+    "min": 0.0018948686534630901
+   },
+   "[s171]": {
+    "final": 0.006456279078582936,
+    "late_peaks": 0,
+    "max": 2.0,
+    "mean_peak_period": null,
+    "min": 0.006456279078582936
+   },
+   "[s172]": {
+    "final": 0.021225768443627502,
+    "late_peaks": 0,
+    "max": 2.0,
+    "mean_peak_period": null,
+    "min": 0.021225768443627502
+   },
+   "[s173]": {
+    "final": 0.015188168998991438,
+    "late_peaks": 0,
+    "max": 2.0,
+    "mean_peak_period": null,
+    "min": 0.015188168998991438
+   },
+   "[s174]": {
+    "final": 0.656135414079342,
+    "late_peaks": 0,
+    "max": 4.0,
+    "mean_peak_period": null,
+    "min": 0.656135414079342
+   },
+   "[s176]": {
+    "final": 1.3457594545736777,
+    "late_peaks": 0,
+    "max": 1.3476609727703814,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s179]": {
+    "final": 0.004561410424774586,
+    "late_peaks": 0,
+    "max": 0.3367530835866283,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s183]": {
+    "final": 0.008731889920336794,
+    "late_peaks": 0,
+    "max": 0.24516049263114503,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s188]": {
+    "final": 0.006037599444920086,
+    "late_peaks": 0,
+    "max": 0.43589813500341185,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s195]": {
+    "final": 1.9787332660796644,
+    "late_peaks": 0,
+    "max": 1.9787332660796644,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s1]": {
+    "final": 0.6819212035468143,
+    "late_peaks": 0,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 0.6819212035424352
+   },
+   "[s232]": {
+    "final": 0.7068684363019024,
+    "late_peaks": 0,
+    "max": 0.7068684363019024,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s239]": {
+    "final": 1.4405436373070595,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 1.4405436373018277
+   },
+   "[s245]": {
+    "final": 0.42138366881113176,
+    "late_peaks": 1,
+    "max": 0.42365813872522845,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s252]": {
+    "final": 3.7948693345683755,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 3.7948693345683755
+   },
+   "[s260]": {
+    "final": 4.0749275689774234e-14,
+    "late_peaks": 0,
+    "max": 0.004908121528272715,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s268]": {
+    "final": 7.93548399321677e-13,
+    "late_peaks": 0,
+    "max": 1.0,
+    "mean_peak_period": null,
+    "min": 7.93548399321677e-13
+   },
+   "[s270]": {
+    "final": 8.440363937792629e-13,
+    "late_peaks": 0,
+    "max": 0.14666658170319222,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s275]": {
+    "final": 1.3954167249814919e-12,
+    "late_peaks": 0,
+    "max": 0.2360439744205333,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s27]": {
+    "final": 1.5087214790426244,
+    "late_peaks": 0,
+    "max": 1.5087214790457004,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s28]": {
+    "final": 1.491278520957377,
+    "late_peaks": 0,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 1.491278520954301
+   },
+   "[s30]": {
+    "final": 0.06041955070043275,
+    "late_peaks": 0,
+    "max": 1.0,
+    "mean_peak_period": null,
+    "min": 0.03972130156571268
+   },
+   "[s31]": {
+    "final": 2.3136194750775068,
+    "late_peaks": 0,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 2.3136194750775068
+   },
+   "[s32]": {
+    "final": 0.7046959474764684,
+    "late_peaks": 0,
+    "max": 1.0,
+    "mean_peak_period": null,
+    "min": 0.5531745945415429
+   },
+   "[s33]": {
+    "final": 0.29530405252353115,
+    "late_peaks": 0,
+    "max": 0.4468254054584579,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s36]": {
+    "final": 0.10158261504589132,
+    "late_peaks": 0,
+    "max": 5.0,
+    "mean_peak_period": null,
+    "min": 0.09366635500570272
+   },
+   "[s37]": {
+    "final": 0.085549507313322,
+    "late_peaks": 0,
+    "max": 0.085549507313322,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s46]": {
+    "final": 0.7274112344416179,
+    "late_peaks": 0,
+    "max": 1.0,
+    "mean_peak_period": null,
+    "min": 0.5960560056194939
+   },
+   "[s5]": {
+    "final": 1.2413775662399849,
+    "late_peaks": 0,
+    "max": 1.2413775662408402,
+    "mean_peak_period": null,
+    "min": 0.0
+   },
+   "[s75]": {
+    "final": 1.7785524985792682,
+    "late_peaks": 0,
+    "max": 3.0,
+    "mean_peak_period": null,
+    "min": 1.7038743501566913
+   }
+  },
+  "t_end": 200,
+  "wall_s": 0.01
+ }
+]

@@ -1,0 +1,90 @@
+{
+ "epistemic_status": "computed structure hypothesis (OpenFold2, dummy MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T13:27:21Z",
+ "gene": "fgf10a",
+ "idempotency_key": "frontier-claude-fgf10a-openfold2-5511594b94e1a62b3e09",
+ "metrics": {
+  "ca_residues_in_pdb": 201,
+  "inference_seconds": 6.3345483308658,
+  "length_matches_input": true,
+  "mean_plddt": 48.7658608469797,
+  "n_plddt_ge_70": 5,
+  "pdb_sha256": "87bf300edba0840883bc9c2934bd75bbf069f0a8549d2300d6bbad38a386af80",
+  "ptm": null,
+  "ranking_confidence": 48.7658608469797
+ },
+ "operation_id": "op-83a31cc8bc39f875",
+ "polls": [
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T13:27:17Z"
+  }
+ ],
+ "result_artifact": {
+  "artifact_id": "bf20e3fc-7538-567d-ab10-78ab510e0577",
+  "sha256": "d539d2a150aabf468702712468618fd4149ae03a132558a011faafa51a7addd8",
+  "size_bytes": 884424,
+  "url_persisted": false
+ },
+ "result_keys": [
+  "confidence",
+  "format",
+  "inference_seconds",
+  "model_param_set",
+  "plddt",
+  "predicted_aligned_error",
+  "ptm_score",
+  "relaxed",
+  "runtime_origin",
+  "structure"
+ ],
+ "sequence_length": 201,
+ "sequence_sha256": "5511594b94e1a62b3e09a9dc9d441363548049fc09b2f4f9c951f54c42fcc8c4",
+ "submit_isError": false,
+ "submit_payload": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-fgf10a-openfold2/op-83a31cc8bc39f875/artifacts/5bd8e532-3189-5b59-b498-ea658b007ff3.json",
+     "path": "artifacts/5bd8e532-3189-5b59-b498-ea658b007ff3.json",
+     "sha256": "f5892497bf76afb635a5b6d409a7487d18acb2ca0ec3879fcc6b60b12bdd1b4d",
+     "size_bytes": 925046
+    },
+    {
+     "key": "frontier/claude-fgf10a-openfold2/op-83a31cc8bc39f875/artifacts/bf20e3fc-7538-567d-ab10-78ab510e0577.json",
+     "path": "artifacts/bf20e3fc-7538-567d-ab10-78ab510e0577.json",
+     "sha256": "d539d2a150aabf468702712468618fd4149ae03a132558a011faafa51a7addd8",
+     "size_bytes": 884424
+    },
+    {
+     "key": "frontier/claude-fgf10a-openfold2/op-83a31cc8bc39f875/result.json",
+     "path": "result.json",
+     "sha256": "7e1a7de7a8d609f93c71485658a4c4810705227b1118f9c41e0115203c1ce293",
+     "size_bytes": 1053
+    }
+   ],
+   "manifest_key": "frontier/claude-fgf10a-openfold2/op-83a31cc8bc39f875/manifest.json",
+   "prefix": "frontier/claude-fgf10a-openfold2/op-83a31cc8bc39f875/"
+  },
+  "delivery": {
+   "export_state": "succeeded",
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-fgf10a-openfold2-5511594b94e1a62b3e09",
+  "model_id": "openfold2",
+  "operation": {
+   "id": "op-83a31cc8bc39f875",
+   "status": "SUCCEEDED"
+  },
+  "result_available": true
+ },
+ "submitted_utc": "2026-11-01T13:27:15Z",
+ "tool": "infer_openfold2_native",
+ "uniprot": "Q8AY90"
+}

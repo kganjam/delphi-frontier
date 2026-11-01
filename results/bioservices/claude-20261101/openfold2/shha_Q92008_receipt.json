@@ -1,0 +1,83 @@
+{
+ "epistemic_status": "computed structure hypothesis (OpenFold2, dummy MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T13:31:15Z",
+ "gene": "shha",
+ "idempotency_key": "frontier-claude-shha-openfold2-0c245bb888c5e081e8a2",
+ "metrics": {
+  "ca_residues_in_pdb": 418,
+  "inference_seconds": 20.10487815099998,
+  "length_matches_input": true,
+  "mean_plddt": 41.21845140411523,
+  "n_plddt_ge_70": 7,
+  "pdb_sha256": "fb411a85468e904f0ee5c61bc55287c74976bf562fdb7b2b27863ef36a14f723",
+  "ptm": null,
+  "ranking_confidence": 41.21845140411523
+ },
+ "operation_id": "op-6de2205ecb226c1e",
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:30:02Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:30:15Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:30:28Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:30:41Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:30:54Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T13:31:10Z"
+  }
+ ],
+ "result_artifact": {
+  "artifact_id": "7e2b8ded-3d49-597a-b476-ebfd02c5ce62",
+  "sha256": "7165f9baaf0c2cd3a9af29bcd17ab2da0c7101a1bb8fc5081e4ee28e086fde26",
+  "size_bytes": 3520151,
+  "url_persisted": false
+ },
+ "result_keys": [
+  "confidence",
+  "format",
+  "inference_seconds",
+  "model_param_set",
+  "plddt",
+  "predicted_aligned_error",
+  "ptm_score",
+  "relaxed",
+  "runtime_origin",
+  "structure"
+ ],
+ "sequence_length": 418,
+ "sequence_sha256": "0c245bb888c5e081e8a2d614430cc1a7aaa39f7d886091636714f3b49f9c0a2f",
+ "submit_isError": false,
+ "submit_payload": {
+  "error": {
+   "admission": "accepted",
+   "code": "SERVERLESS_REQUEST_FAILED",
+   "message": "The accepted operation's current state is temporarily unavailable. Its execution outcome has not been observed.",
+   "model_id": "openfold2",
+   "next_action": "Poll this same operation ID; do not submit the inference again.",
+   "operation_id": "op-6de2205ecb226c1e",
+   "phase": "observation",
+   "request_id": "f153d9fe-b22d-433c-9e39-9160ad8ea9bc",
+   "retryable": true,
+   "status_code": 503
+  }
+ },
+ "submitted_utc": "2026-11-01T13:29:22Z",
+ "tool": "infer_openfold2_native",
+ "uniprot": "Q92008"
+}

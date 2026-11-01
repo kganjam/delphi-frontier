@@ -1,0 +1,72 @@
+{
+ "epistemic_status": "computed structure hypothesis (OpenFold2, dummy MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T13:32:25Z",
+ "gene": "kcnk5b",
+ "idempotency_key": "frontier-claude-kcnk5b-openfold2-9e234f26d3ac6764e6d2",
+ "metrics": {
+  "ca_residues_in_pdb": 448,
+  "inference_seconds": 14.645061088027433,
+  "length_matches_input": true,
+  "mean_plddt": 56.09918511765344,
+  "n_plddt_ge_70": 66,
+  "pdb_sha256": "d595b671bd95db40fef62b182f7978ffe5199df79c956663759a5d2c5789ddaa",
+  "ptm": null,
+  "ranking_confidence": 56.09918511765344
+ },
+ "operation_id": "op-83bc718db408cd89",
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:31:53Z"
+  },
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T13:32:06Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T13:32:20Z"
+  }
+ ],
+ "result_artifact": {
+  "artifact_id": "c7ab5c49-0cdd-5a69-ba6d-e7dc77af1c76",
+  "sha256": "4a91d0138384b78f0feeb327957a9e0bd59868deffd79b659d80109473ae2059",
+  "size_bytes": 4028913,
+  "url_persisted": false
+ },
+ "result_keys": [
+  "confidence",
+  "format",
+  "inference_seconds",
+  "model_param_set",
+  "plddt",
+  "predicted_aligned_error",
+  "ptm_score",
+  "relaxed",
+  "runtime_origin",
+  "structure"
+ ],
+ "sequence_length": 448,
+ "sequence_sha256": "9e234f26d3ac6764e6d2a70e407defbab7fbaf421c765da909f0f75ab25ae682",
+ "submit_isError": false,
+ "submit_payload": {
+  "delivery": {
+   "export_state": null,
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-kcnk5b-openfold2-9e234f26d3ac6764e6d2",
+  "model_id": "openfold2",
+  "operation": {
+   "id": "op-83bc718db408cd89",
+   "status": "RUNNING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T13:31:15Z",
+ "tool": "infer_openfold2_native",
+ "uniprot": "Q6PFU3"
+}
