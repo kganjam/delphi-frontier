@@ -27,6 +27,7 @@ Reproduce:
 - `python -m engineering.launch_glider.print_requirements artifacts/fish3d/fish3d-v3a-fan/panels.json data/materials/formlabs-studio-2026-10-31.json artifacts/launch-glider/print-requirements.json`
 - `python -m engineering.launch_glider.sweep artifacts/launch-glider/feasibility-map.json`
 - `python -m engineering.launch_glider.flight_model 19f4546 artifacts/launch-glider/r1-dynamics.json`
+- `python -m engineering.launch_glider.flight_model 1fac368 artifacts/launch-glider/r2-light-dynamics.json artifacts/glider/r2-light`
 
 Both run single-threaded.
 
@@ -185,6 +186,24 @@ Artifact: `artifacts/launch-glider/r1-dynamics.json`. Same nominal coefficients 
 
    The catch is the lever claude-05 controls that matters most for the release transition.
 7. **Launch pitch.** 0–15° is useful. At 30°, the median gain is about zero.
+
+## claude-05's r2-light (`work/fish-glider` @ `1fac368`): the adjustable catch
+Artifact: `artifacts/launch-glider/r2-light-dynamics.json`.
+- **Mass properties agree.** Every part and spare (pelvic keys, catch plugs) matches within 1.1×10⁻⁶. The dry
+  assembly is 19.13 g, CG x 64.3 mm.
+- **Each catch seat is a separate assembly.** The plug is swapped in, and the plugs weigh 0.30–0.72 g. Seats are
+  fixed in the body, so their offset from the CG follows the ballast.
+- **Structure passes** up to 25.1 g.
+- **At 8 m/s:** gain −2.8 to +1.9 m. 69 of 192 draws reach 5–8 m with gain > 1 m and no tumble, and 68 of those
+  separate (post-stall result, as for r1). Its gain is slightly lower than r1-light's, because it is 2 g heavier.
+- **Catch ranking** (median gain at 8 m/s):
+  - slot x20 dz 0 (the nominal print plug): 1.39 m, best;
+  - x34 dz 0: 1.33 m;
+  - x20 dz +1.5: 1.27 m;
+  - x34 dz +3: −0.84 m, worst, because it releases nose-down.
+- **Mass target.** "10.5 g" (claude-05's label) is my mass budget: the mass whose trim speed at C_L 0.5 equals an
+  8 m/s release. It is not a flight limit. Above it, the model releases below trim and the glide gain falls with
+  mass, as these maps show.
 
 ## Limits
 - Pitch plane only: no roll, yaw, spiral or Dutch roll. Lateral behaviour is reported as static derivatives once

@@ -85,13 +85,30 @@ def recompute(rec: dict, read, mat: dict) -> dict:
     dcg = float(np.linalg.norm(np.subtract(dry["cg_m"], d["cg_m"])))
     dI = float(np.max(np.abs(np.subtract(dry["inertia_cg_kg_m2"], d["inertia_cg_kg_m2"])))
                / np.max(np.abs(d["inertia_cg_kg_m2"])))
+    spares = {}
+    for p in rec.get("spare_parts", []):   # alternative parts (pelvic keys, catch plugs): bytes and props checked too
+        s = mp.solid(_fish_triangles(read, p), rho)
+        rows.append({"id": p["id"], "spare": True, "stl_sha256": p["stl_sha256"], "mass_kg": s["mass_kg"],
+                     "cg_m": s["cg_m"], "volume_m3": s["volume_m3"], "declared_mass_kg": p["mass_kg"],
+                     "mass_rel_diff": s["mass_kg"] / p["mass_kg"] - 1,
+                     "cg_diff_m": float(np.linalg.norm(np.subtract(s["cg_m"], p["cg_m"])))})
+        spares[p["id"]] = s
     worst_m = max(abs(r["mass_rel_diff"]) for r in rows + [{"mass_rel_diff": dm}])
     worst_cg = max(r["cg_diff_m"] for r in rows + [{"cg_diff_m": dcg}])
     ok = worst_m <= TOLERANCE["mass_rel"] and worst_cg <= TOLERANCE["cg_m"]
     return {"status": "AGREES" if ok else "DISAGREES", "tolerance": TOLERANCE, "parts": rows, "dry": dry,
+            "_props": {p["id"]: s for p, s in zip(rec["parts"], parts)} | {k: v for k, v in spares.items()},
             "dry_mass_rel_diff": dm, "dry_cg_diff_m": dcg, "dry_inertia_max_rel_diff": dI,
             "method": "signed-tetrahedron integrals (mass_props.solid) on the STL bytes after the record's "
                       "print_to_fish transform", "_verts": np.concatenate(verts)}
+
+
+def assembly(rec: dict, rc: dict, plug: str | None = "nominal") -> dict:
+    """Dry assembly with the nominal catch plug swapped for `plug` (a spare plug id, or None for the bare slot top)."""
+    if plug == "nominal":
+        return rc["dry"]
+    ids = [p["id"] for p in rec["parts"] if not p["id"].startswith("catch_plug")]
+    return mp.combine([rc["_props"][i] for i in ids] + ([rc["_props"][plug]] if plug else []))
 
 
 def surface(rec: dict, sid: str) -> dict:
@@ -152,16 +169,21 @@ def catch_check(rec: dict, verts: np.ndarray, mat: dict, m_kg: float) -> dict:
     sf = pr.SCENARIO["strength_safety_factor"]["value"]
     F = pr.loads(m_kg)["hook_force_peak_N"]
     L = rec["launch"]
-    t = L["boss_section"]["thickness_x_mm"] * 1e-3
-    x = L["seat_mm"][0] * 1e-3
-    near = verts[np.abs(verts[:, 0] - x) < 1e-3]
-    w = float(near[:, 1].max() - near[:, 1].min())
-    dpt = float(near[:, 2].max() - near[:, 2].min())
+    b = L["boss_section"]
+    t = b.get("thickness_x_mm", b.get("thickness_mm")) * 1e-3
+    xs = [L["seat_mm"][0]] if "seat_mm" in L else sorted({s["seat_mm"][0] for s in L["seats"]})
+
+    def extent(x):
+        near = verts[np.abs(verts[:, 0] - x * 1e-3) < 1e-3]
+        return float(near[:, 1].max() - near[:, 1].min()), float(near[:, 2].max() - near[:, 2].min())
+    x = min(xs, key=lambda v: sum(extent(v)))   # the narrowest seat station governs
+    w, dpt = extent(x)
+    x *= 1e-3
     tau = 0.5 * mat["ultimate_tensile_strength_Pa"] / sf
     p_need = F / (t * tau)
     p_have = math.pi * (w + dpt) / 2
     bearing = F / (2 * L["contact_radius_mm"] * 1e-3 * w)
-    return {"peak_force_N": F, "design_force_N": sf * F, "wall_t_m": t, "body_width_at_seat_m": w,
+    return {"peak_force_N": F, "design_force_N": sf * F, "wall_t_m": t, "seat_x_m": x, "body_width_at_seat_m": w,
             "body_depth_at_seat_m": dpt, "allowable_shear_Pa": tau, "bond_perimeter_needed_m": p_need,
             "bond_perimeter_estimate_m": p_have, "bearing_Pa_on_seat": bearing,
             "pass": bool(p_have >= p_need),
@@ -175,12 +197,12 @@ def ballast_point(rec: dict, m_b: float) -> list:
     return [float(np.interp(m_b, g, [r["fill_centroid_mm"][k] * 1e-3 for r in rows])) for k in range(3)]
 
 
-def candidate(rec: dict, rc: dict, x_cg_target: float | None) -> dict:
-    """A sweep candidate: the recomputed dry assembly plus the ballast that puts the CG at x_cg_target
-    (None or a target behind the dry CG: no ballast)."""
+def candidate(rec: dict, rc: dict, x_cg_target: float | None, dry: dict | None = None) -> dict:
+    """A sweep candidate: the recomputed dry assembly (or `dry`, e.g. another catch plug) plus the ballast that puts
+    the CG at x_cg_target (None or a target behind the dry CG: no ballast)."""
     if rc["status"] != "AGREES":
         raise ValueError("refused: recomputed mass properties disagree with the record")
-    dry = rc["dry"]
+    dry = dry or rc["dry"]
     mmax = rec["ballast"]["mass_range_kg"][1]
     status, mb = "ok", 0.0
     if x_cg_target is None or x_cg_target >= dry["cg_m"][0]:
@@ -231,7 +253,21 @@ GRID_R1 = {
 }
 
 
+def catches(rec: dict, G_: dict) -> list[tuple[str, object]]:
+    """(label, plug) per catch option. A record with launch.seats[] (r2 on) has body-fixed seats, one per slot and
+    offset, each with its own plug (None = bare slot top); otherwise the grid's labels with the nominal assembly."""
+    seats = rec["launch"].get("seats")
+    if not seats:
+        return [(c, "nominal") for c in G_["catch"]["values"]]
+    return [(f"slot x{s['slot_x_mm']:g} dz{s['offset_from_design_cg_z_mm']:+g}", s["plug"]) for s in seats]
+
+
 def _catch(label: str, rec: dict, cg) -> tuple[float, float]:
+    seat = next((s["seat_mm"] for s in rec["launch"].get("seats", [])
+                 if f"slot x{s['slot_x_mm']:g} dz{s['offset_from_design_cg_z_mm']:+g}" == label), None)
+    if seat is not None:   # body-fixed seat: its offset from this draw's CG
+        x, z = (v * 1e-3 for v in seat)
+        return cg[0] - x, z - cg[2]
     if label == "r1-as-built":
         x, z = (v * 1e-3 for v in rec["launch"]["seat_mm"])
         return cg[0] - x, z - cg[2]
@@ -258,20 +294,23 @@ def run(repo: Path, commit: str, card: Path, grid: dict | None = None, revisions
         checks[rec["revision"]] = {
             "record": {"path": f"{base}/flight_model.json", "sha256": hashlib.sha256(read("flight_model.json")).hexdigest(),
                        "commit": commit, "candidate_sha256": rec["candidate_sha256"], "label": rec["label"]},
-            "recompute": {k: v for k, v in rc.items() if k != "_verts"},
+            "recompute": {k: v for k, v in rc.items() if not k.startswith("_")},
             "hand_np": np_b,
             "structure": {case: {"mass_kg": m, "fin": fin_check(rec, mat, m, dry["S_paired_m2"]),
                                  "catch": catch_check(rec, rc["_verts"], mat, m)}
                           for case, m in (("dry_plus_non_mesh", m_dry),
                                           ("heaviest_swept_ballast_plus_non_mesh", m_ballasted))},
         }
-        for x_np, c in by_np.items():
-            for cl, V0, phi, catch in itertools.product(G_["CL_trim"]["values"], G_["V0_m_s"]["values"],
-                                                        G_["phi_deg"]["values"], G_["catch"]["values"]):
+        opts = catches(rec, G_)
+        for (x_np, c0), (catch, plug) in itertools.product(by_np.items(), opts):
+            c = c0 if plug == "nominal" else candidate(rec, rc, x_np - sw.SM_TARGET * dry["mac_m"],
+                                                       assembly(rec, rc, plug))
+            for cl, V0, phi in itertools.product(G_["CL_trim"]["values"], G_["V0_m_s"]["values"],
+                                                 G_["phi_deg"]["values"]):
                 cg = c["assembled"]["cg_m"]
                 xi, zeta = _catch(catch, rec, cg)
                 rows.append({"revision": rec["revision"], "x_np_m": x_np, "CL_trim": cl, "V0_m_s": V0,
-                             "phi_deg": phi, "catch": catch, "hook_xi_m": xi, "hook_zeta_m": zeta,
+                             "phi_deg": phi, "catch": catch, **({"plug": plug} if plug != "nominal" else {}), "hook_xi_m": xi, "hook_zeta_m": zeta,
                              "x_cg_m": cg[0], "z_cg_m": cg[2], "mass_kg": c["assembled"]["mass_kg"],
                              "ballast_kg": c["ballast_kg"], "ballast_status": c["ballast_status"],
                              "Iyy_kg_m2": c["assembled"]["inertia_cg_kg_m2"][1][1]})
@@ -293,7 +332,8 @@ def run(repo: Path, commit: str, card: Path, grid: dict | None = None, revisions
 
 def main(argv):
     commit, out = argv[1], Path(argv[2])
-    r = run(Path("."), commit, Path("data/materials/formlabs-studio-2026-10-31.json"))
+    r = run(Path("."), commit, Path("data/materials/formlabs-studio-2026-10-31.json"),
+            revisions=tuple(argv[3:]) or REVISIONS)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(r, indent=1, sort_keys=True, default=float) + "\n")
     print(out, hashlib.sha256(out.read_bytes()).hexdigest())

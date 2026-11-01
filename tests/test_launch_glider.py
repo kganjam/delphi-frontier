@@ -501,3 +501,28 @@ def test_r1_small_run_flies_both_revisions():
         sig = max(fin["worst"]["sigma_max_Pa"], fin["inplane_root"]["sigma_Pa"])
         for k, ok in fin["stress_pass_by_k_z"].items():   # the knockdown is applied to the allowable, not the load
             assert ok == (sig <= float(k) * fin["allowable_Pa"])
+
+
+R2_COMMIT = "1fac368"
+
+
+@pytest.mark.skipif(subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", f"{R2_COMMIT}^{{commit}}"]).returncode != 0,
+                    reason="claude-05's r2 commit is not in this clone")
+def test_r2_seats_swap_their_plug_mass():
+    mat = pr.load_material(CARD)
+    read = fm.git_source(ROOT, R2_COMMIT, "artifacts/glider/r2-light")
+    rec = fm.load(read)
+    rc = fm.recompute(rec, read, mat)
+    assert rc["status"] == "AGREES"
+    opts = fm.catches(rec, fm.GRID_R1)
+    assert len(opts) == 8 and sum(p is None for _, p in opts) == 2   # two slots x four offsets; top = bare slot
+    props = rc["_props"]
+    nominal = next(p["id"] for p in rec["parts"] if p["id"].startswith("catch_plug"))
+    for _, plug in opts:
+        a = fm.assembly(rec, rc, plug)
+        want = rc["dry"]["mass_kg"] - props[nominal]["mass_kg"] + (props[plug]["mass_kg"] if plug else 0.0)
+        assert a["mass_kg"] == pytest.approx(want, rel=1e-12)
+    label, plug = opts[1]
+    seat = rec["launch"]["seats"][1]["seat_mm"]
+    xi, zeta = fm._catch(label, rec, rc["dry"]["cg_m"])
+    assert xi == pytest.approx(rc["dry"]["cg_m"][0] - seat[0] * 1e-3) and zeta == pytest.approx(seat[1] * 1e-3 - rc["dry"]["cg_m"][2])
