@@ -109,16 +109,36 @@
   },
   {
    "id": "r6-trim-map",
+   "title": "R2 wing designs re-flown in 6-DOF with moment-balance trim (CG and pelvic key) and launch dispersion",
    "scales": [
     "organism"
    ],
-   "status": "no manifest (run not completed)"
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No flight test: 6-DOF quasi-steady glider with assumed polars, CLmax and dispersion; trims are computed, not hand-trimmed; keys above dec+4 do not exist as prints; no aeroelasticity (R4) or launch-stroke loads.",
+   "checks_passed": 3,
+   "checks_total": 3,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T15:53:22Z",
+   "manifest": "artifacts/organ-sims/r6-trim-map/manifest.json",
+   "manifest_sha256": "93dcc64942e97cc70f0b57bba1ac403f0e932753c5221c2d7948f4942921553a",
+   "figures": [
+    "artifacts/organ-sims/r6-trim-map/trim_map.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
   },
   {
    "id": "r4b-torsion",
    "scales": [
     "organ",
     "tissue"
+   ],
+   "status": "no manifest (run not completed)"
+  },
+  {
+   "id": "r1b-v3b-fix",
+   "scales": [
+    "organ"
    ],
    "status": "no manifest (run not completed)"
   },

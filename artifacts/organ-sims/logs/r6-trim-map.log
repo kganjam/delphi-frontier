@@ -1,10 +1,179 @@
-pybullet build time: Nov  1 2026 15:44:10
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/tmp/repo/engineering/organ_sims/r6_trim_map.py", line 18, in <module>
-    from engineering.organ_sims import r2_glide_sweep as R2
-  File "/tmp/repo/engineering/organ_sims/r2_glide_sweep.py", line 31, in <module>
-    H = json.load(open(C.ROOT / FM)); M = json.load(open(C.ROOT / MAN)); V = json.load(open(C.ROOT / VLM)); K = json.load(open(C.ROOT / CAND))
-                  ^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: '/tmp/repo/artifacts/glider/r3-daane/flight_model.json'
+pybullet build time: Nov  1 2026 15:50:48
+{
+ "V6": {
+  "best_6dof_printed_key_feasible": {
+   "ka": 1.2,
+   "kar": 0.85,
+   "dx_m": 0.0,
+   "key_deg": 3.0,
+   "new_key_needed": false,
+   "cg_shift_m": 0.004,
+   "cg_x_m": 0.05849969300152176,
+   "m_kg": 0.023969965328633554,
+   "m_ballast_kg": 0.002435718459204767,
+   "trim": {
+    "alpha_deg": 5.516086431156202,
+    "CL": 0.613581046670885,
+    "dCm_dalpha_per_deg": -0.006087684532120646,
+    "L_over_D": 10.49935645818001
+   },
+   "static_margin_MAC": 0.07017598136395359,
+   "r2_constraints": {
+    "print_length_ok": true,
+    "biology_band_ok": true,
+    "catch_slot_ok": true,
+    "L_fin_m": 0.10292082210587541
+   },
+   "V6": {
+    "nominal_range_m": 4.763913199582738,
+    "mean_range_m": 4.507651913645146,
+    "p10_range_m": 3.391138421046498,
+    "sd_range_m": 0.86205456874246,
+    "r2_point_mass_range_m": 4.961184101443845
+   },
+   "V8": {
+    "nominal_range_m": 8.191205907990776,
+    "mean_range_m": 7.797784923045668,
+    "p10_range_m": 5.101720182869932,
+    "sd_range_m": 2.1877730997868623,
+    "r2_point_mass_range_m": 12.873231048891578
+   },
+   "r2_feasible_all_hard": true
+  },
+  "best_6dof_any_key_feasible": {
+   "ka": 1.4,
+   "kar": 0.85,
+   "dx_m": 0.0,
+   "key_deg": 6.0,
+   "new_key_needed": true,
+   "cg_shift_m": 0.004,
+   "cg_x_m": 0.058499693001521746,
+   "m_kg": 0.025217817727606423,
+   "m_ballast_kg": 0.0024839149718767547,
+   "trim": {
+    "alpha_deg": 5.879612081374912,
+    "CL": 0.6072094364304227,
+    "dCm_dalpha_per_deg": -0.010124999176440767,
+    "L_over_D": 10.526475578490148
+   },
+   "static_margin_MAC": 0.11836419310924526,
+   "r2_constraints": {
+    "print_length_ok": true,
+    "biology_band_ok": true,
+    "catch_slot_ok": true,
+    "L_fin_m": 0.11096693989622668
+   },
+   "V6": {
+    "nominal_range_m": 4.68442774164314,
+    "mean_range_m": 4.525019685174277,
+    "p10_range_m": 3.768735859588733,
+    "sd_range_m": 0.67973840685634,
+    "r2_point_mass_range_m": 5.276412936187228
+   },
+   "V8": {
+    "nominal_range_m": 9.058537689761241,
+    "mean_range_m": 8.641743563241771,
+    "p10_range_m": 6.561897658354027,
+    "sd_range_m": 2.0021979770086022,
+    "r2_point_mass_range_m": 14.926891573564632
+   },
+   "r2_feasible_all_hard": true
+  },
+  "baseline_dec4": {
+   "nominal_range_m": 4.175360343751471,
+   "mean_range_m": 4.058416473707609,
+   "p10_range_m": 3.3959831193714773,
+   "sd_range_m": 0.5763023258596801,
+   "r2_point_mass_range_m": 4.675808542014233
+  },
+  "spearman_r2_vs_6dof": 0.46182266009852224
+ },
+ "V8": {
+  "best_6dof_printed_key_feasible": {
+   "ka": 1.2,
+   "kar": 0.85,
+   "dx_m": 0.0,
+   "key_deg": 3.0,
+   "new_key_needed": false,
+   "cg_shift_m": 0.004,
+   "cg_x_m": 0.05849969300152176,
+   "m_kg": 0.023969965328633554,
+   "m_ballast_kg": 0.002435718459204767,
+   "trim": {
+    "alpha_deg": 5.516086431156202,
+    "CL": 0.613581046670885,
+    "dCm_dalpha_per_deg": -0.006087684532120646,
+    "L_over_D": 10.49935645818001
+   },
+   "static_margin_MAC": 0.07017598136395359,
+   "r2_constraints": {
+    "print_length_ok": true,
+    "biology_band_ok": true,
+    "catch_slot_ok": true,
+    "L_fin_m": 0.10292082210587541
+   },
+   "V6": {
+    "nominal_range_m": 4.763913199582738,
+    "mean_range_m": 4.507651913645146,
+    "p10_range_m": 3.391138421046498,
+    "sd_range_m": 0.86205456874246,
+    "r2_point_mass_range_m": 4.961184101443845
+   },
+   "V8": {
+    "nominal_range_m": 8.191205907990776,
+    "mean_range_m": 7.797784923045668,
+    "p10_range_m": 5.101720182869932,
+    "sd_range_m": 2.1877730997868623,
+    "r2_point_mass_range_m": 12.873231048891578
+   },
+   "r2_feasible_all_hard": true
+  },
+  "best_6dof_any_key_feasible": {
+   "ka": 1.4,
+   "kar": 0.85,
+   "dx_m": 0.0,
+   "key_deg": 6.0,
+   "new_key_needed": true,
+   "cg_shift_m": 0.004,
+   "cg_x_m": 0.058499693001521746,
+   "m_kg": 0.025217817727606423,
+   "m_ballast_kg": 0.0024839149718767547,
+   "trim": {
+    "alpha_deg": 5.879612081374912,
+    "CL": 0.6072094364304227,
+    "dCm_dalpha_per_deg": -0.010124999176440767,
+    "L_over_D": 10.526475578490148
+   },
+   "static_margin_MAC": 0.11836419310924526,
+   "r2_constraints": {
+    "print_length_ok": true,
+    "biology_band_ok": true,
+    "catch_slot_ok": true,
+    "L_fin_m": 0.11096693989622668
+   },
+   "V6": {
+    "nominal_range_m": 4.68442774164314,
+    "mean_range_m": 4.525019685174277,
+    "p10_range_m": 3.768735859588733,
+    "sd_range_m": 0.67973840685634,
+    "r2_point_mass_range_m": 5.276412936187228
+   },
+   "V8": {
+    "nominal_range_m": 9.058537689761241,
+    "mean_range_m": 8.641743563241771,
+    "p10_range_m": 6.561897658354027,
+    "sd_range_m": 2.0021979770086022,
+    "r2_point_mass_range_m": 14.926891573564632
+   },
+   "r2_feasible_all_hard": true
+  },
+  "baseline_dec4": {
+   "nominal_range_m": 6.38315643437261,
+   "mean_range_m": 6.277746679975454,
+   "p10_range_m": 5.035972777785514,
+   "sd_range_m": 1.214274040752278,
+   "r2_point_mass_range_m": 10.605361650644413
+  },
+  "spearman_r2_vs_6dof": 0.5158154005703917
+ }
+}

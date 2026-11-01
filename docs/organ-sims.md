@@ -13,6 +13,7 @@ Code: `engineering/organ_sims/`. Logs: `artifacts/organ-sims/logs/`.
 | R3 `r3-underwater-drag` | Underwater drag of the same bodies, fins spread vs folded | 0 | 13/13 |
 | R4 `r4-aeroelastic-stiffness` | Fin bending over the sourced fin-ray stiffness range | 0 | 6/6 |
 | R5b `r5b-staggered-release` | Staggered collective release (Nebius) | 0 | 2/2 |
+| R6 `r6-trim-map` | R2 designs in 6-DOF with real trim (Nebius) | 0 (attempt a2; a1 failed at import) | 3/3 |
 | R5 `r5-school-launch` | Collective launch in PyBullet (6-DOF, contacts, wake coupling) | 0 (run 2; run 1 exited 3, see R5) | 8/8 |
 
 ## Project scales and what each run does NOT establish
@@ -260,6 +261,47 @@ landing deviation from each fish's own lane.
 - **Wake cost to followers:** negligible in this model.
 - **Not established:** a straight horseshoe wake (no roll-up, descent or decay); no wake impingement on the water
   surface; assumed dispersion; no real launcher.
+
+## R6. R2's designs re-flown in 6-DOF with a real trim (Nebius job, `r6-trim-map`)
+
+**Why.** In the 6-DOF model, R2's best designs were over-stable under R2's linear neutral-point rule and trimmed near
+zero lift (argon #4). R6 replaces that rule with moment-balance trim.
+
+**Setup.**
+- Design grid: pectoral area ×1.0–1.8, aspect ratio ×0.7–1.0, root shift 0 or +4 mm.
+- For each design and pelvic key (dec 2, 3, 4 printed; 6 and 8 would be new prints), the CG target is swept from
+  −4 to +12 mm (ballast recomputed).
+- A trim is kept only if: ballast ≥ 0, CG within 44–60 mm, static margin ≥ 0.05 MAC, and trim CL 0.40–0.70. Among
+  admissible CGs, the one with trim CL closest to 0.55 is used.
+- Each kept configuration is flown nominally and with the R5 "low" dispersion (16 seeds) at 6 and 8 m/s.
+
+**Run record.**
+- Attempt a1 (`aijob-e00yvx4yvv90cwh3qz`) failed at import: the job's sparse checkout lacked R2's inputs. Its log
+  and receipt are kept, and every later job got a clean-clone dry run before submission.
+- Attempt a2 (`aijob-e00b8s2q52mwhxyj79`, code `4edab8e`): science exit 0 in 91 s; tarball SHA-256 matched.
+- Checks 3/3. Baseline dec+4 reproduces R5's trim, CL 0.547.
+- Totals: 1,350 static trims, 1,938 flights, 57 admissible configurations.
+
+**Results at V0 = 8 m/s** (mean / 10th percentile range, simulated):
+
+| Configuration | Mean | P10 | R2 point mass |
+|---|---|---|---|
+| Baseline r4, dec+4 | 6.28 m | 5.04 m | 10.6 m |
+| Best with an existing printed key and all hard constraints: pectoral ×1.2 area, ×0.85 AR, dec+3, CG +4 mm (58.5 mm), 24.0 g | 7.80 m | 5.10 m | 12.9 m |
+| Best with all hard constraints and a NEW key: ×1.4 area, ×0.85 AR, dec+6, CG 58.5 mm, 25.2 g | 8.64 m | 6.56 m | 14.9 m |
+
+- **R2's ranking only weakly survives trim.** Spearman correlation between R2 point-mass range and 6-DOF mean range
+  is 0.46 (6 m/s) and 0.52 (8 m/s). R2 overpredicts range by 30–45%.
+- **R2's "best" (×1.8 area, ×0.7 AR) does not make the top list** once trimmed.
+- **Design change, superseding R2:**
+  - Moderately larger pectorals (×1.2–1.4) at slightly lower AR (×0.85).
+  - Move the CG aft to ≈ 58.5 mm (less nose ballast).
+  - Print a dec+6 pelvic key.
+  - Within the existing parts, ×1.2 with dec+3 gains +24% mean range but nothing at P10.
+- **Constraints:** a dec+6 key is a new print. CG 58.5 mm sits near the 60 mm window edge. Static margins of
+  0.07–0.12 are thinner than the 10–20% the hand-NP plan targeted.
+- **Not established:** quasi-steady 6-DOF with assumed polars and CLmax; no aeroelasticity (R4b) or launch-stroke
+  loads; assumed dispersion.
 
 ## LLM review
 

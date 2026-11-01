@@ -1,0 +1,4 @@
+{"job_name": "claude-organ-r1b-v3b-fix-a1", "job_id": "aijob-e00kayvx99taj1118z", "submitted_utc": "2026-11-01T15:54:17Z", "platform": "gpu-l40s-a", "preset": "1gpu-40vcpu-160gb",
+ "why_gpu_platform": "cpu-d3 create returned ResourceExhausted (non-GPU vCPU quota full); CPU-only VLM workload, GPU idle",
+ "image": "python:3.12.7-bookworm", "timeout": "2h", "disk": "50Gi", "command": "bash /work/run_job.sh fc9d04c2d4bc4746edaff8b4bc9574a8f81b470a r1b-v3b-fix engineering.organ_sims.r1b_v3b_fix 12",
+ "code_commit": "fc9d04c2d4bc4746edaff8b4bc9574a8f81b470a", "run_job_sh_sha256": "431582f28f1a8f7e9c5b91ff9bb5cf2c8f0ef76711cdc9312473ae84b7e2e038", "dry_run": "clean sparse clone of fc9d04c2d4bc4746edaff8b4bc9574a8f81b470a ran R1B_SMOKE/R6_SMOKE/R4B_SMOKE with rc 0 before submission"}
