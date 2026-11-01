@@ -154,3 +154,221 @@ def test_requirements_artifact_reproduces():
     assert rec["pass"] and rec["worst"]["sigma_max_Pa"] < r["fin_sizing"]["pectoral"][0]["allowable_Pa"]
     bare = pect[0.0005]["rows"][0]
     assert bare["spar_h_m"] == pytest.approx(0.0004) and not bare["pass"]   # retained failing design
+
+
+# ---------------------------------------------------------------- mass properties
+from engineering.launch_glider import mass_props as mprops  # noqa: E402
+
+
+def _box(a, b, c, o=(0.0, 0.0, 0.0)):
+    """Closed, outward box [0,a]x[0,b]x[0,c] + o as 12 triangles."""
+    v = np.array([[x, y, z] for x in (0, a) for y in (0, b) for z in (0, c)], float) + np.asarray(o)
+    f = [(0, 1, 3), (0, 3, 2), (4, 6, 7), (4, 7, 5), (0, 4, 5), (0, 5, 1),
+         (2, 3, 7), (2, 7, 6), (0, 2, 6), (0, 6, 4), (1, 5, 7), (1, 7, 3)]
+    return v[np.array(f)]
+
+
+def _icosphere(r, k):
+    t = (1 + 5 ** 0.5) / 2
+    V = [[-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0], [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
+         [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]]
+    F = [(0, 11, 5), (0, 5, 1), (0, 1, 7), (0, 7, 10), (0, 10, 11), (1, 5, 9), (5, 11, 4), (11, 10, 2), (10, 7, 6),
+         (7, 1, 8), (3, 9, 4), (3, 4, 2), (3, 2, 6), (3, 6, 8), (3, 8, 9), (4, 9, 5), (2, 4, 11), (6, 2, 10),
+         (8, 6, 7), (9, 8, 1)]
+    tri = np.array([[V[i] for i in f] for f in F], float)
+    for _ in range(k):
+        a, b, c = tri[:, 0], tri[:, 1], tri[:, 2]
+        ab, bc, ca = (a + b) / 2, (b + c) / 2, (c + a) / 2
+        tri = np.concatenate([np.stack(x, 1) for x in ((a, ab, ca), (ab, b, bc), (ca, bc, c), (ab, bc, ca))])
+    return r * tri / np.linalg.norm(tri, axis=2, keepdims=True)
+
+
+def test_solid_box_mass_cg_inertia_exact():
+    a, b, c, rho = 0.03, 0.02, 0.01, 1220.0
+    r = mprops.solid(_box(a, b, c, (0.1, -0.2, 0.05)), rho)
+    m = rho * a * b * c
+    assert r["mass_kg"] == pytest.approx(m, rel=1e-12)
+    assert np.allclose(r["cg_m"], [0.1 + a / 2, -0.2 + b / 2, 0.05 + c / 2], atol=1e-14)
+    assert np.allclose(np.diag(r["inertia_cg_kg_m2"]), [m * (b * b + c * c) / 12, m * (a * a + c * c) / 12,
+                                                      m * (a * a + b * b) / 12], rtol=1e-10)
+
+
+def test_sheet_box_and_sphere_shell():
+    a, t, rho = 0.02, 1e-3, 1000.0
+    r = mprops.sheet(_box(a, a, a), rho, t)
+    m = rho * t * 6 * a * a
+    assert r["mass_kg"] == pytest.approx(m) and r["area_m2"] == pytest.approx(6 * a * a)
+    assert r["inertia_cg_kg_m2"][0][0] == pytest.approx(m * a * a * 5 / 18, rel=1e-10)  # thin cube shell
+    R = 0.05
+    s = mprops.sheet(_icosphere(R, 4), rho, t)
+    assert s["inertia_cg_kg_m2"][1][1] == pytest.approx(2 / 3 * s["mass_kg"] * R * R, rel=2e-3)
+    v = mprops.solid(_icosphere(R, 4), rho)
+    assert v["inertia_cg_kg_m2"][2][2] == pytest.approx(0.4 * v["mass_kg"] * R * R, rel=5e-3)
+
+
+def test_inverted_solid_refused_and_parallel_axis():
+    with pytest.raises(ValueError):
+        mprops.solid(_box(1, 1, 1)[:, ::-1], 1.0)
+    c = mprops.combine([mprops.point(1.0, [1, 0, 0]), mprops.point(1.0, [-1, 0, 0])])
+    assert np.allclose(np.diag(c["inertia_cg_kg_m2"]), [0, 2, 2])
+
+
+# ---------------------------------------------------------------- dynamics controls and mutants
+from engineering.launch_glider import dynamics as dyn  # noqa: E402
+from engineering.simulation import glide  # noqa: E402
+
+BASE = dict(m=0.012, Iyy=2.4e-5, x_cg=0.052, z_cg=0.0, S=0.005293, c=0.0265, AR=7.4, vol=48.7e-6, x_np=0.060)
+
+
+def _trimmed(cl=0.5, **kw):
+    p = dyn.Params(**{**BASE, **kw}).broadcast(1)
+    p.Cm0 = np.array([dyn.cm0_for_trim(p, cl)])
+    return p
+
+
+def test_vacuum_projectile_closed_form():
+    n = 4
+    p = dyn.Params(**BASE, lift=0.0, drag=0.0).broadcast(n)
+    V0, g0, h = np.array([4.0, 6.0, 8.0, 8.0]), np.radians([0, 20, 45, -10]), 1.35
+    y0 = np.stack([np.zeros(n), np.full(n, h), g0, V0 * np.cos(g0), V0 * np.sin(g0), np.zeros(n)])
+    r = dyn.fly(p, y0, dt=1e-3)
+    R = V0 * np.cos(g0) * (V0 * np.sin(g0) + np.sqrt((V0 * np.sin(g0)) ** 2 + 2 * dyn.G * h)) / dyn.G
+    assert np.allclose(r["range_m"], R, rtol=1e-6)
+
+
+def test_lift_does_no_work_without_drag():
+    p = _trimmed(drag=0.0)
+    y0 = np.array([[0.0], [1.4], [0.3], [6.0], [0.5], [2.0]])
+    r = dyn.fly(p, y0, dt=2e-4, record_every=1)
+    h = r["history_first_draw"]
+    E = 0.5 * (h[:, 4] ** 2 + h[:, 5] ** 2) + dyn.G * h[:, 2]
+    assert np.ptp(E) / E[0] < 1e-6
+
+
+def test_trimmed_3dof_equals_glide_point_mass():
+    p = _trimmed(0.5)
+    t = dyn.trim(p, 0.5)
+    y = dyn.trim_state(p, 0.5, Z=1.35)
+    dy, _ = dyn.rhs(p, y)
+    assert np.allclose(dy[3:, 0], 0, atol=1e-9)
+    r = dyn.fly(p, y, dt=1e-3)
+    g = glide.integrate(0.012, 0.005293, 7.4, 1.225, t["CL"], 0.06, 0.8, 1.35, t["V_m_s"], gam0=t["gamma_rad"])
+    assert r["range_m"][0] == pytest.approx(float(g["range_m"][0]), rel=1e-6)
+    assert math.tan(-t["gamma_rad"]) == pytest.approx(t["CD"] / t["CL"], rel=1e-12)
+
+
+def test_dt_halving_converges():
+    p = _trimmed(0.5).broadcast(1)
+    y0 = np.array([[0.0], [1.35], [0.25], [7.0], [1.0], [0.0]])
+    r1, r2 = dyn.fly(p, y0, dt=2e-3), dyn.fly(p, y0, dt=1e-3)
+    assert abs(r1["range_m"][0] / r2["range_m"][0] - 1) < 5e-3
+
+
+def test_modes_stable_with_margin_and_unstable_when_cg_behind_np():
+    p = _trimmed(0.5)
+    md = dyn.jacobian_modes(p, dyn.trim_state(p, 0.5))
+    assert md["max_real"] <= 1e-9 and md["short_period"].real < 0
+    bad = _trimmed(0.5, x_cg=0.070)       # mutant: CG 10 mm behind the fins' NP
+    mb = dyn.jacobian_modes(bad, dyn.trim_state(bad, 0.5))
+    assert mb["max_real"] > 0.5
+
+
+def test_linearisation_matches_nonlinear_small_perturbation():
+    """x(t) = expm(J t) dx0 against the nonlinear run from the same small pitch-rate kick (first 1 s)."""
+    from scipy.linalg import expm
+    p = _trimmed(0.5)
+    y_t = dyn.trim_state(p, 0.5, Z=50.0)
+    md = dyn.jacobian_modes(p, y_t)
+    dx0 = np.zeros((6, 1))
+    dx0[5, 0] = 0.05
+    r = dyn.fly(p, y_t + dx0, dt=2e-4, t_max=1.0, record_every=50)
+    h = r["history_first_draw"]
+    q_nl = h[:, 6]
+    q_lin = np.array([(expm(md["J"] * t) @ dx0)[5, 0] for t in h[:, 0]])
+    assert np.max(np.abs(q_nl - q_lin)) < 0.02 * np.max(np.abs(q_lin))
+    assert md["short_period"].real < 0 and md["phugoid"].real < 0
+
+
+def test_stroke_closed_form_constant_force(monkeypatch):
+    monkeypatch.setattr(dyn, "G", 0.0)
+    p = dyn.Params(**BASE, lift=0.0, drag=0.0).broadcast(3)
+    L = dyn.Launch(V0=[4.0, 6.0, 8.0], stroke=[0.1, 0.2, 0.3], phi=0.0, profile=0, xi_h=0.025, zeta_h=0.0)
+    st = dyn.stroke(p, L, 3, dt=2e-5)
+    assert np.allclose(st["V_release_m_s"], [4, 6, 8], rtol=2e-3)
+    assert np.allclose(st["a_mean_m_s2"], st["a_mean_formula_m_s2"], rtol=1e-3)
+    assert np.allclose(st["t_release_s"], 2 * np.array([0.1, 0.2, 0.3]) / np.array([4, 6, 8]), rtol=3e-3)
+    assert np.allclose(st["q_release_rad_s"], 0, atol=1e-9)        # line of action through the CG
+
+
+@pytest.mark.parametrize("profile,ratio", [(0, 1.0), (1, math.pi / 2), (2, 2.0)])
+def test_stroke_peak_over_mean(monkeypatch, profile, ratio):
+    monkeypatch.setattr(dyn, "G", 0.0)
+    p = dyn.Params(**BASE, lift=0.0, drag=0.0).broadcast(1)
+    st = dyn.stroke(p, dyn.Launch(V0=6.0, stroke=0.2, phi=0.0, profile=profile), 1, dt=2e-5)
+    assert st["a_peak_m_s2"][0] / st["a_mean_m_s2"][0] == pytest.approx(ratio, rel=2e-3)
+    assert st["V_release_m_s"][0] == pytest.approx(6.0, rel=2e-3)
+
+
+def test_hook_ahead_self_aligns_hook_behind_does_not(monkeypatch):
+    """Pull from ahead of the CG restores a misalignment; the mutant hook behind the CG amplifies it."""
+    monkeypatch.setattr(dyn, "G", 0.0)
+    p = dyn.Params(**BASE, lift=0.0, drag=0.0).broadcast(2)
+    L = dyn.Launch(V0=8.0, stroke=0.3, phi=0.0, delta=np.radians(3.0), profile=0, xi_h=[0.025, -0.025])
+    st = dyn.stroke(p, L, 2, dt=2e-5)
+    th = np.degrees(st["theta_release_rad"])
+    assert abs(th[0]) <= 3.0 + 1e-6
+    assert abs(th[1]) > 3.0
+
+
+def test_hook_below_cg_sets_release_attitude(monkeypatch):
+    """Under tension the CG lies on the band line, so a hook zeta below the CG holds the nose up by atan(-zeta/xi).
+
+    Started at that attitude the body stays there (equilibrium); started level it swings about it."""
+    monkeypatch.setattr(dyn, "G", 0.0)
+    p = dyn.Params(**BASE, lift=0.0, drag=0.0).broadcast(2)
+    th_eq = math.atan(0.002 / 0.025)
+    L = dyn.Launch(V0=6.0, stroke=0.2, phi=0.0, delta=[th_eq, 0.0], profile=0, xi_h=0.025, zeta_h=-0.002)
+    st = dyn.stroke(p, L, 2, dt=5e-5)
+    assert st["theta_release_rad"][0] == pytest.approx(th_eq, abs=1e-6)
+    assert abs(st["q_release_rad_s"][0]) < 1e-5
+    assert 0.0 < st["theta_release_rad"][1] <= 2 * th_eq + 1e-6
+
+
+def test_ballistic_control_has_no_rotation():
+    p = dyn.Params(**BASE, lift=0.0, cd_ballistic=0.07).broadcast(1)
+    y0 = np.array([[0.0], [1.35], [0.2], [8.0], [1.0], [0.0]])
+    r = dyn.fly(p, y0, dt=1e-3, record_every=1)
+    assert np.allclose(r["history_first_draw"][:, 3], 0.2)
+    rv = dyn.fly(dyn.Params(**BASE, lift=0.0, drag=0.0).broadcast(1), y0, dt=1e-3)
+    assert r["range_m"][0] < rv["range_m"][0]
+
+
+# ---------------------------------------------------------------- placeholder candidate from v3a meshes
+from engineering.launch_glider import candidate as cand  # noqa: E402
+
+
+def test_candidate_from_v3a_meshes():
+    mat = pr.load_material(CARD)
+    c = cand.build(0.053, mat, root=ROOT)
+    assert c["assembled"]["cg_m"][0] == pytest.approx(0.053, abs=1e-12)
+    tot = sum(v["mass_kg"] for v in c["parts"].values())
+    assert c["assembled"]["mass_kg"] == pytest.approx(tot, rel=1e-12)
+    body = mprops.read_stl(ROOT / "artifacts/fish3d/fish3d-v3a-fan/components/body.stl")
+    A = 0.5 * np.linalg.norm(np.cross(body[:, 1] - body[:, 0], body[:, 2] - body[:, 0]), axis=1).sum()
+    assert c["parts"]["body_shell"]["mass_kg"] == pytest.approx(1220 * 0.8e-3 * A, rel=1e-12)
+    hull = np.asarray(c["contacts_xz_m"])
+    assert hull[:, 1].min() == pytest.approx(-0.029, abs=5e-4)      # caudal lower lobe is the lowest point
+    assert hull[:, 0].min() == pytest.approx(0.0, abs=1e-4)         # snout
+    with_ballast = cand.build(0.080, mat, root=ROOT)                # target behind the dry CG
+    assert with_ballast["ballast_status"] == "NO_BALLAST_NEEDED_CG_AHEAD_OF_TARGET"
+
+
+def test_munk_couple_is_destabilising_by_exactly_2_vol_k():
+    a = np.radians([-1.0, 1.0])
+    V, q = np.full(2, 8.0), np.zeros(2)
+    with_body = dyn.aero(dyn.Params(**BASE).broadcast(2), a, V, q)[3]
+    no_body = dyn.aero(dyn.Params(**{**BASE, "vol": 0.0}).broadcast(2), a, V, q)[3]
+    d = (with_body - no_body)
+    slope = (d[1] - d[0]) / (a[1] - a[0])
+    assert slope == pytest.approx(2 * BASE["vol"] * 0.9 * math.cos(2 * a[1]) * 1.0, rel=1e-3)
+    assert slope > 0
