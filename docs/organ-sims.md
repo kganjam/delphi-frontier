@@ -47,6 +47,15 @@ v3a and v3c only *looked* converged because the committed ladder refined span an
 partly cancelled. v3b's cambered normals sample the displaced points differently at each lattice, so it diverged
 visibly (26%).
 
+**Prior work (credited).** The same collocation defect was found independently on branch `work/vlm-diagnostic`
+before this run:
+- `b976001` audited 372 VLM diagnostic solves. On the extended families its collocation hypothesis was "supported";
+  the unrepaired fins break down at nc 48 while the repaired value holds at 0.2502.
+- `a376163` ran the paired corrected-collocation aeroelastic comparison.
+
+R1 is an independent confirmation by a different route. What is new here is v3b-specific: the cause of *its* 26%
+jump, its corrected CL, the ray-wise-camber washout decomposition, and its ≥ 16 chordwise panel requirement.
+
 **Fix tested.** Put the collocation point at the bilinear 3/4-chord point of the panel's own corners
 (`r1_v3b_convergence.lattice_consistent`; `vlm.py` itself is unchanged). With that:
 - For the planar v3a and v3c, CL is independent of the chordwise panel count to 3e-5. For v3b's twisted surface,

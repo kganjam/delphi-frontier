@@ -26,6 +26,7 @@ SCALES = {
     "r4-aeroelastic-stiffness": (["organ", "tissue"], "No flying-fish fin stiffness: the sourced EI is bluegill rays (Alben 2007); torsion-rigid, linear beam; does not establish fin twist, membrane mechanics or in-flight deformation."),
     "r5b-staggered-release": (["collective", "organism"], "No observed schooling or launch: rigid printed gliders released with assumed timing offsets and dispersion; no sensing, control or behaviour (ff-eco); straight horseshoe wakes, no wake roll-up or decay."),
     "r6-trim-map": (["organism"], "No flight test: 6-DOF quasi-steady glider with assumed polars, CLmax and dispersion; trims are computed, not hand-trimmed; keys above dec+4 do not exist as prints; no aeroelasticity (R4) or launch-stroke loads."),
+    "r4b-torsion": (["organ", "tissue"], "No measured fin torsional stiffness: GJ is swept as a ratio of EI (biology unsourced) and estimated for the print with an ASSUMED Poisson ratio; uniform rod about an assumed elastic axis; no membrane, ray network or unsteady loads."),
     "r5-school-launch": (["collective", "organism"], "No observed schooling or collective behaviour: rigid printed gliders released together under an ASSUMED dispersion; no sensing, control, decision or population dynamics (ff-eco owns those); wake model is a straight horseshoe per fish."),
 }
 
