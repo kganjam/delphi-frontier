@@ -353,3 +353,42 @@ def test_cyl2d_entry_hands_popen_only_strings(tmp_path, monkeypatch):
     m.cyl(tmp_path / "x.json", "R2", 2, 8, 60, tmp_path / "log.txt", "TIMING", 300, gpu=True)
     assert seen and all(isinstance(a, str) for argv in seen for a in argv)
     assert any("TIMING" in argv and "40" in argv for argv in seen)
+
+
+@pytest.mark.parametrize("case,go", [("fits", True), ("too_slow", False), ("not_gpu", False), ("gpu_mem", False)])
+def test_r2_calibration_rule_go_and_no_go(tmp_path, monkeypatch, case, go):
+    monkeypatch.setenv("COPS_OUT", str(tmp_path / "out"))
+    monkeypatch.setenv("CFD3D_WORK", str(tmp_path / "work"))
+    monkeypatch.setattr(sys, "argv", ["cyl2d_entry.py", "r2_packet.json"])
+    m = _load("cyl2d_entry")
+    m.OUT.mkdir(parents=True)
+    step_s = 0.05 if case != "too_slow" else 0.5                 # 340k x 1.3 x step_s vs 30,000 s left
+
+    class FakePopen:
+        def __init__(self, argv, **kw):
+            out = Path(argv[argv.index("R2") - 1])
+            out.write_text(json.dumps({"wall_s": 300 * step_s, "steps": 300, "ns_per_cell_step": 1.0,
+                                       "dt_grid_last": 0.18, "gpu": case != "not_gpu"}))
+            self.pid, self.returncode = 0, 0
+
+        def poll(self):
+            return 0
+
+    def fake_poll(stop, rows):
+        rows.append([23000 if case == "gpu_mem" else 3000, 23034])
+
+    monkeypatch.setattr(m.subprocess, "Popen", FakePopen)
+    monkeypatch.setattr(m, "CAP", [])
+    monkeypatch.setattr(m, "gpu_memory_poll", fake_poll)
+    monkeypatch.setattr(m, "left", lambda: 30_000.0)
+    assert m.PK_FILE == "r2_packet.json"
+    assert m.st_calibration() is go
+    r = json.loads((m.OUT / "calibration.json").read_text())
+    assert r["go"] is go and r["projected_wall_s"][1] == round(340_000 * step_s * 1.3)
+
+
+def test_r2_packet_controls_record_the_dry_run_and_its_mutant():
+    r = json.loads((ART / "cyl2d/r2-packet-controls.json").read_text())
+    p = r["platform_dry_run"]["result"]
+    assert p["aligned_within"] and not p["shifted_within"] and p["ok"] is False and p["dry_run_would_pass"]
+    assert r["cyl2d_jl_sha256"] == sha(ROOT / "engineering/cfd3d/cyl2d.jl") and r["same_files_as_the_local_run"]

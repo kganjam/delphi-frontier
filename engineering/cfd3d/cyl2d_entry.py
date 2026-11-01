@@ -8,7 +8,7 @@ packet 95ac40c9 carries that version.
 Stages; a failed gate stops every later stage. OUT/status.json is the machine-readable completion contract:
   completion  "complete" (every planned case finished and was evaluated) | "partial" (gates passed, some case
               stopped at its budget with a checkpoint, or failed) | "failed" (a gate failed or an exception)
-  rc          0 complete, 10 partial, 2-7 the failed gate, 1 exception
+  rc          0 complete, 10 partial, 2-7 the failed gate, 11 calibration no-go (CUDA packet), 1 exception
   science     never "passed": the cylinder verdict is OUT/eval.json verdict (control_passes,
               pressure_coupling_allowed). The 3-D C1 sphere reference gate FAILED and stays failed; nothing
               here licenses a physical-validation claim for fins, the fish or flight.
@@ -29,7 +29,8 @@ CUDA packets add (device "cuda"):
   platform       same-state CPU/CUDA control: T_same is run on the CPU to t = 100 (developed shedding), then
                  continued from that one checkpoint on the CPU and on the device; the aligned series must agree
                  within the frozen tolerance and a 10-step-shifted comparison must not (gate)
-  calibration    force-free R2 TIMING on the device; projected R2 wall time (telemetry)
+  calibration    force-free R2 TIMING on the device with device-memory polling; R2 starts only if the frozen
+                 rule passes (see st_calibration), otherwise rc 11
   output         OUT bytes against max_out_bytes (failure means partial, not a gate)
 PREFLIGHT=1: files, JSON/TOML and Python syntax only; no download and no Julia.
 Environment: COPS_OUT (default out), CFD3D_WORK (default /work/cfd3d), CFD3D_OUTER_BUDGET_S overrides the
@@ -110,7 +111,8 @@ def stage(name: str, ok: bool, **info) -> bool:
 
 def finish(rc: int) -> int:
     status["rc"] = rc
-    status["completion"] = {0: "complete", 10: "partial"}.get(rc, "failed")
+    status["completion"] = {0: "complete", 10: "partial",
+                            11: "stopped: R2 does not fit (calibration rule); controls and timing kept"}.get(rc, "failed")
     save()
     log(f"done completion={status['completion']} rc={rc}")
     return rc
@@ -446,14 +448,36 @@ def st_platform() -> bool:
     return stage("platform", ok, **info)
 
 
+def gpu_memory_poll(stop: threading.Event, rows: list) -> None:
+    """Device memory used/total (MiB) every 2 s from nvidia-smi while the calibration runs."""
+    smi = shutil.which("nvidia-smi")
+    while smi and not stop.wait(2):
+        q = subprocess.run([smi, "--query-gpu=memory.used,memory.total", "--format=csv,noheader,nounits"],
+                           capture_output=True, text=True)
+        try:
+            rows.append([int(x) for x in q.stdout.split("\n")[0].split(",")])
+        except ValueError:
+            continue
+
+
 def st_calibration() -> bool:
-    """Force-free R2 timing on the device, and the projected R2 wall time (telemetry; never a gate)."""
+    """Force-free R2 timing on the device, the projected R2 wall time, and the frozen go/no-go rule:
+    R2 starts only if steps_projected[1] x measured s/step x run_overhead fits in the time left for cases, the
+    device memory peak is under gpu_mem_frac_max of the card and host RSS under host_rss_max_gb. A no-go stops
+    the packet (rc 11) with the controls and this measurement kept."""
     cb = PK["calibration"]
     d = WORK / "calibration"
     d.mkdir(parents=True, exist_ok=True)
-    rc, peak = cyl(d / "r2_timing.json", cb["run_id"], 2, 8, cb["timeout_s"], d / "log.txt", "TIMING",
-                   cb["steps"], gpu=True)
-    info = {"rc": rc, "peak_host_rss_gb": round(peak, 2)}
+    stop, mem_rows = threading.Event(), []
+    poll = threading.Thread(target=gpu_memory_poll, args=(stop, mem_rows), daemon=True)
+    poll.start()
+    rc, peak = cyl(d / "r2_timing.json", cb["run_id"], 2, cb["host_rss_max_gb"], cb["timeout_s"], d / "log.txt",
+                   "TIMING", cb["steps"], gpu=True)
+    stop.set()
+    poll.join(timeout=10)
+    info = {"rc": rc, "peak_host_rss_gb": round(peak, 2), "rule": cb["rule"],
+            "gpu_mem_peak_mib": max((r[0] for r in mem_rows), default=None),
+            "gpu_mem_total_mib": mem_rows[0][1] if mem_rows else None}
     if rc == 0:
         r = json.loads((d / "r2_timing.json").read_text())
         step_s = r["wall_s"] / r["steps"]
@@ -462,9 +486,15 @@ def st_calibration() -> bool:
                     dt_grid_last=r["dt_grid_last"], gpu=r["gpu"],
                     projected_wall_s=[round(lo * step_s * cb["run_overhead"]), round(hi * step_s * cb["run_overhead"])],
                     left_s=round(left()))
-        info["fits"] = info["projected_wall_s"][1] <= left()
+        case_left = left() - PK["ckpt_margin_s"]
+        info["fits_time"] = info["projected_wall_s"][1] <= case_left
+        info["fits_time_lower_only"] = info["projected_wall_s"][0] <= case_left < info["projected_wall_s"][1]
+        mem_ok = info["gpu_mem_peak_mib"] is not None and \
+            info["gpu_mem_peak_mib"] <= cb["gpu_mem_frac_max"] * info["gpu_mem_total_mib"]
+        info["fits_memory"] = mem_ok and peak <= cb["host_rss_max_gb"]
+    info["go"] = rc == 0 and info.get("gpu") is True and info.get("fits_time") is True and info.get("fits_memory") is True
     (OUT / "calibration.json").write_text(json.dumps(info, indent=1))
-    return stage("calibration", True, **info)
+    return stage("calibration", info["go"], **info)
 
 
 def st_telemetry() -> bool:
@@ -475,7 +505,8 @@ def st_telemetry() -> bool:
 
 
 def st_output() -> bool:
-    size = sum(f.stat().st_size for f in OUT.rglob("*") if f.is_file())
+    """The returned science outputs against max_out_bytes; exported checkpoints have their own cap (EXPORT_MAX)."""
+    size = sum(f.stat().st_size for f in OUT.rglob("*") if f.is_file() and EXPORT not in f.parents)
     return stage("output", size <= PK["max_out_bytes"], bytes=size, cap=PK["max_out_bytes"])
 
 
@@ -624,7 +655,7 @@ def st_eval() -> bool:
 STAGES = {"telemetry": st_telemetry, "julia": st_julia, "env": st_env, "restart_check": st_restart_check,
           "platform": st_platform, "scaling": st_scaling, "calibration": st_calibration, "cases": st_cases,
           "eval": st_eval, "output": st_output}
-GATE_RC = {"julia": 2, "env": 3, "restart_check": 4, "platform": 5, "eval": 7}
+GATE_RC = {"julia": 2, "env": 3, "restart_check": 4, "platform": 5, "eval": 7, "calibration": 11}
 
 
 def facts() -> dict:

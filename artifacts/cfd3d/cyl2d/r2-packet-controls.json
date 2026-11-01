@@ -1,0 +1,83 @@
+{
+ "schema": "cfd3d-r2-packet-controls-0.1",
+ "host": "this host: 8 vCPU, no GPU, shared (load 7-26); Julia 1.12.7; no CUDA arm could run here",
+ "cyl2d_jl_sha256": "2786e2c43bb0bf2e07bcff43d453a84262ed3b0c62f1f1fea9c1c7046e4a13d9",
+ "cyl2d_eval_sha256": "ab56628471254cfc642db09c48997249d69ccd900b2267b79f398cca8e106512",
+ "same_files_as_the_local_run": true,
+ "env_gpu_pins": {
+  "stage": true,
+  "canonical_sha256_matched": "d1a8e00741a5d1733be9e007b49bb2844fff2bdd232ccb993c1838319ed926bc",
+  "note": "run with device cpu here: Pkg.add of the 103 pins, digest check, precompile (460 s, incl. CUDA and WaterLilyCUDAExt) and the package loads; CUDA.functional() not testable without a GPU"
+ },
+ "restart_check_cpu_arm_in_env_gpu": {
+  "ok": true,
+  "t_s": 727.3,
+  "rc_straight": 0,
+  "rc_first_segment": 75,
+  "rc_resumed": 0,
+  "first_segment_wrote_no_output": true,
+  "series_identical": true,
+  "segments": [
+   1,
+   2
+  ],
+  "steps": [
+   198,
+   198
+  ],
+  "cp_samples": [
+   14,
+   14
+  ],
+  "cp_after_split": 7,
+  "final_state_identical": true,
+  "foreign_checkpoint_refused": true
+ },
+ "platform_dry_run": {
+  "what": "both arms on the CPU (CFD3D_PLATFORM_DRY_RUN=1); the stage refuses by design",
+  "result": {
+   "t_state": 100.05064392089844,
+   "steps": [
+    1594,
+    1594
+   ],
+   "aligned": {
+    "Cd": 0.0,
+    "Cd_p": 0.0,
+    "Cl": 0.0,
+    "t": 0.0,
+    "n": 20
+   },
+   "shifted": {
+    "Cd": 0.006259500640912893,
+    "Cd_p": 0.0061122905828607434,
+    "Cl": 0.12403883217948593,
+    "t": 0.006233551071078425,
+    "n": 20
+   },
+   "max_abs_du": 0.0,
+   "tolerance": {
+    "Cd": 0.005,
+    "Cd_p": 0.005,
+    "Cl": 0.005,
+    "t": 0.001,
+    "u_abs": 0.01
+   },
+   "aligned_within": true,
+   "shifted_within": false,
+   "dry_run_would_pass": true,
+   "ok": false
+  },
+  "reading": "T_same at t = 100 has a developed wake: a 10-step shift moves Cl by 0.124 of mean |Cd| (25x the tolerance), so the CUDA comparison can fail; aligned CPU arms are identical"
+ },
+ "float32_output_equivalence": {
+  "what": "T_restart with this cyl2d.jl vs the frozen CPU packet's (ebc21ef0)",
+  "result": "t, Cd, Cd_p, Cl rounded to Float32 equal the frozen script's exactly; surface Cp_wall_mean identical; JSON 23,455 vs 30,368 B"
+ },
+ "unit_tested_not_run_on_device": [
+  "calibration go/no-go rule (4 cases)",
+  "int argv to Popen (VM03 regression)",
+  "CUDA restart arm and platform comparison code paths (exercised only with gpu=False here)"
+ ],
+ "entry_differences_from_the_local_run": "argv str conversion, calibration gate + nvidia-smi memory poll, output size excluding exported checkpoints (all after the run; covered by unit tests)"
+}
