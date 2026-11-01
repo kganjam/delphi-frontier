@@ -1,0 +1,127 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "j8-m5-design-fair",
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Protocol-fair looming-experiment design: encoder discrimination with selection and features on disjoint trials",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design fair --out /work/out --sets 8192 --trials 32 --seed 20261102",
+ "python_module": "engineering.neuro.m5_design fair",
+ "seed": 20261101,
+ "nebius_job": {
+  "name": "claude-neuro-j8-m5-design-fair-a1",
+  "id": "aijob-e00rfswbzghc0g0vmq",
+  "spec": {
+   "name": "claude-neuro-j8-m5-design-fair-a1",
+   "platform": "gpu-h100-sxm",
+   "preset": "1gpu-16vcpu-200gb",
+   "timeout": "1h",
+   "disk": "80Gi",
+   "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+   "pip": "scipy==1.17.1",
+   "question": "Protocol-fair version of J6: with consistent sets selected under each protocol on half the trials and features from the held-out half, which looming protocol best discriminates the encoders?",
+   "gpu_justification": "8192 fresh sets x 3 encoders x 3 protocols x 7-8 l/v x 32 trials, up to 57k steps at 0.5 ms",
+   "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design fair --out /work/out --sets 8192 --trials 32 --seed 20261102"
+  }
+ },
+ "injected_sources": {
+  "engineering/__init__.py": {
+   "source": "engineering/__init__.py",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "engineering/neuro/__init__.py": {
+   "source": "engineering/neuro/__init__.py",
+   "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+   "bytes": 487
+  },
+  "engineering/neuro/m5_design.py": {
+   "source": "engineering/neuro/m5_design.py",
+   "sha256": "f6119fa72605e31683a342fb4d6ab02bebdd5c0c080d577d03c73259d51e7d04",
+   "bytes": 10441
+  },
+  "engineering/neuro/m5_mcell.py": {
+   "source": "engineering/neuro/m5_mcell.py",
+   "sha256": "d1c4a01a4f55785a211c3853699dde20071c4c241b2d8b1601dc06eb217c925e",
+   "bytes": 12855
+  }
+ },
+ "bundle_sha256": "9d2c63b8ef72812e10ada733d2b88d524bb3676afbfca896bb861f3466576d47",
+ "git_head_at_submit": "4fca6c61",
+ "env": {
+  "python": "3.11.10",
+  "numpy": "2.1.2",
+  "torch": "2.5.1+cu124",
+  "scipy": "1.17.1"
+ },
+ "elapsed_s": 204.9052414894104,
+ "checks": [
+  {
+   "name": "control: every protocol yields >= 20 selected sets per encoder",
+   "pass": true
+  }
+ ],
+ "all_checks_pass": true,
+ "ran": {
+  "utc": "2026-11-01T17:12:52Z"
+ },
+ "summary": {
+  "P_J3": {
+   "n_selected": {
+    "kappa": 108,
+    "eta": 107,
+    "theta": 69
+   },
+   "accuracy": {
+    "1": 0.5008333333333334,
+    "2": 0.5958333333333333,
+    "4": 0.7133333333333333,
+    "8": 0.7666666666666666,
+    "16": 0.8816666666666666,
+    "32": 0.9516666666666665
+   },
+   "note": null
+  },
+  "P_onset2": {
+   "n_selected": {
+    "kappa": 113,
+    "eta": 82,
+    "theta": 79
+   },
+   "accuracy": {
+    "1": 0.4366666666666667,
+    "2": 0.4866666666666667,
+    "4": 0.5525,
+    "8": 0.6408333333333335,
+    "16": 0.7508333333333335,
+    "32": 0.8383333333333333
+   },
+   "note": null
+  },
+  "P_wide": {
+   "n_selected": {
+    "kappa": 162,
+    "eta": 124,
+    "theta": 130
+   },
+   "accuracy": {
+    "1": 0.4525,
+    "2": 0.46333333333333326,
+    "4": 0.5924999999999999,
+    "8": 0.6875,
+    "16": 0.78,
+    "32": 0.8866666666666666
+   },
+   "note": null
+  }
+ },
+ "outputs": {
+  "figure.png": "7478a719c8bb82339c4c86f04e39be2ccc89395b8c659c54dd478c2ff7f5e7e6",
+  "job_stderr.log": "fd6e389c48bd956f0c59b7d66eeff8fecfc3a3f5937ce7905b3bd2015a238eaf",
+  "job_stdout.log": "1a8cfd38ddf34c6b290d8698e71e525f0f044af184dabd7c8eaa1b7a88530bc1",
+  "m5_design_fair.json.gz": "fdc730d4787026ff6e413b67f1400b4cde20c2cf6d9cab951d0f279efa9f170e"
+ }
+}

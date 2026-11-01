@@ -1,0 +1,12 @@
+{
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design fair --out /work/out --sets 8192 --trials 32 --seed 20261102",
+ "python_module": "engineering.neuro.m5_design fair",
+ "exit_code": 0,
+ "where": "Nebius AI job claude-neuro-j8-m5-design-fair-a1 (aijob-e00rfswbzghc0g0vmq)",
+ "platform": "gpu-h100-sxm 1gpu-16vcpu-200gb",
+ "archive_sha256": "f2e2aa43c439214af5720bf56479c547dc469b01b9e07ee3ae47c42eb8e9e225",
+ "collected_utc": "2026-11-01T17:12:52Z",
+ "submitted_utc": "2026-11-01T16:45:58Z",
+ "manifest_sha256": "fc9e99e05a2d4a2327938f10b5579d606f33da130604a7443233a13b3e1d12e4",
+ "collection_receipt": "artifacts/neuro/jobs/claude-neuro-j8-m5-design-fair-a1/collected/collection_receipt.json"
+}

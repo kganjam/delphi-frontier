@@ -481,7 +481,7 @@
    "Is the 2 deg onset feasible on a real display at the fish's viewing distance?"
   ],
   "perturbation_sweep": "8,192 fresh sets (seed 20261102) x 3 encoders x 3 protocols x 32 trials (16 for selection, 16 held out).",
-  "experiment_design": "Use the protocol with the highest held-out accuracy in this card (numerical checks) to plan the looming experiment; compare with J6, which was biased toward the J3 protocol.",
+  "experiment_design": "Result: with selection and features on disjoint trials, the J3-like protocol (5 deg onset, l/v 10-240 ms) still discriminates best: 88% with 16 fish and 95% with 32, against 75%/84% for the 2 deg onset and 78%/89% for l/v 5-500 ms (chance 33%). Plan: at least 16 fish per hypothesis under a J3-like looming series. This confirms J6; its selection-bias caveat does not change the recommendation.",
   "does_not_establish": [
    "SIMULATED sizing: assumes the real encoder is one of the three model forms, and that fish vary like the consistent parameter sets.",
    "It still assumes the true encoder is one of the three model forms."

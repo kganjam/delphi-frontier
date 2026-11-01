@@ -1,0 +1,6 @@
+/work/repo/engineering/neuro/m5_design.py:116: RuntimeWarning: Mean of empty slice
+  ang = np.stack([np.degrees(np.nanmean(np.where(out[lv][0][:, sl], out[lv][2][:, sl], np.nan), 1)) for lv in lvs], 1)
+/work/repo/engineering/neuro/m5_design.py:117: RuntimeWarning: Mean of empty slice
+  lat = np.stack([np.nanmean(np.where(out[lv][0][:, sl], out[lv][1][:, sl], np.nan), 1) + P["motor_s"] for lv in lvs], 1)
+/work/repo/engineering/neuro/m5_design.py:122: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  pm = pA.mean(1); rho = np.array([spearmanr(lvs, latA[i]).statistic if np.isfinite(latA[i]).all() else np.nan for i in range(len(pm))])
