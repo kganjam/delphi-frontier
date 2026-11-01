@@ -61,7 +61,8 @@ Everything numerical is mine.
 ## 2. Provenance, edge by edge
 
 Every regulatory edge below is carried in `shh-loop.json` under `model.edges` with its PMID.
-**Read level is `abstract` for all eleven sources**: the edges are taken from statements made in
+**Read level is `abstract` for every source in `sources`** (the JSON states the count and the
+set of read levels, so neither is hand-written): the edges are taken from statements made in
 the abstracts, not from figures or supplementary data. PMIDs and DOIs were each resolved through
 the PubMed E-utilities MCP tools (`lookup_article_by_citation`, then `get_article_metadata` to
 confirm the title and DOI). Bibliographic metadata retrieved from PubMed.
@@ -181,7 +182,7 @@ detail.** Knocking each mechanism out, simulated to t = 200 (`termination_ablati
 | arm | terminates? | window | FGF at t = 200 |
 |---|---|---|---|
 | both mechanisms (wild type) | **yes** | 25.34 | 0.055 |
-| no descendant-zone ratchet (`k_Z = 0`, Scherz removed) | **no** | 196.05 | 0.809 |
+| no descendant-zone ratchet (`k_Z = 0`, Scherz removed) | **no** | 196.06 | 0.809 |
 | no FGF⊣Grem1 repression (`K_FG → ∞`, Verheyden & Sun removed) | **yes** | 26.35 | 0.054 |
 | neither | **no** | 196.07 | 0.972 |
 
@@ -344,5 +345,6 @@ analysis over the full parameter space was run.** The reported uncertainty is nu
 is the uncertainty from the integrator, and it says nothing about uncertainty from the parameters,
 which is the dominant term by far and is not quantified anywhere in this artifact.
 
-**All eleven sources were read at `abstract` level.** Every regulatory edge is taken from a
+**Every source was read at `abstract` level** — `provenance.read_levels_present` in the JSON is
+the authority, and it lists exactly one level. Every regulatory edge is taken from a
 sentence in an abstract, not from a figure or supplementary data. No source was read in full text.

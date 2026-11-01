@@ -132,6 +132,10 @@ def main():
             errs.append(f"{r['id']}: bad evidence_strength {r['evidence_strength']}")
         if not r["evidence"]:
             errs.append(f"{r['id']}: no evidence entries")
+        if r["study"] is not None and r["study"] not in STUDY_IDS:
+            errs.append(f"{r['id']}: unknown study id {r['study']}")
+        if r["study"] and r["study"] not in r["what_we_would_run"]:
+            errs.append(f"{r['id']}: study {r['study']} not named in what_we_would_run")
         for ev in r["evidence"]:
             if ev["read_level"] not in RANK:
                 errs.append(f"{r['id']}: bad read_level {ev['read_level']}")
@@ -180,10 +184,16 @@ def main():
     for s in source_list:
         by_read[s["read_level"]] = by_read.get(s["read_level"], 0) + 1
 
+    by_study = {}
+    for r in routes:
+        k = r["study"] or "(none)"
+        by_study[k] = by_study.get(k, 0) + 1
+
     print(f"routes: {len(routes)}")
-    for s in meta["scales"]:
-        print(f"  {s['key']:<10} {by_scale.get(s['key'], 0)}")
+    for k in PAGE_SCALES:
+        print(f"  {k:<10} {by_scale.get(k, 0)}")
     print("evidence_strength:", json.dumps(by_strength))
+    print("study:", json.dumps(by_study))
     print(f"sources: {len(source_list)}  read_levels: {json.dumps(by_read)}")
     print("OK")
     return 0

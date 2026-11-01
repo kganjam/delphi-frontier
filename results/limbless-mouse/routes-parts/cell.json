@@ -27,10 +27,11 @@
     "lethality_risk": "Low in chick; the manipulation is local.",
     "specificity": "One limb, one bud, at one time - the most spatially and temporally precise intervention available anywhere in this design space.",
     "difficulty": "low in chick (a classical embryology technique), impractical in mouse in utero.",
-    "what_we_would_run": "This is the physical ground truth for the timing axis. Our growth simulators can reproduce 'stop distal outgrowth at time t and see what is already specified', and the chick excision series is the only dataset that could calibrate such a model - except that we cannot read Summerbell's numbers from the PubMed record, so the calibration is not available to us today.",
+    "what_we_would_run": "This is the physical ground truth for the timing axis. Our growth simulators can reproduce 'stop distal outgrowth at time t and see what is already specified', and the chick excision series is the only dataset that could calibrate such a model - except that we cannot read Summerbell's numbers from the PubMed record, so the calibration is not available to us today. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "We could not access the numerical series. Any claim we make about the quantitative relationship between excision stage and truncation level would be unsupported by what we actually read."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "cell-aer-genetic-ablation",
@@ -60,10 +61,11 @@
     "lethality_risk": "Depends entirely on promoter leakiness; an attenuated toxin is used precisely to keep ablation local.",
     "specificity": "As specific as the promoter. An AER-only driver would be the most limb-specific cellular intervention possible.",
     "difficulty": "medium-high, and the honest difficulty is finding a driver that is on in AER precursors and nowhere that matters.",
-    "what_we_would_run": "Nothing. This route is on the page as a clearly-labelled PROPOSAL, to show the shape of the design space rather than to claim a result. Presenting it as established would be the exact failure mode the page exists to avoid.",
+    "what_we_would_run": "Nothing. This route is on the page as a clearly-labelled PROPOSAL, to show the shape of the design space rather than to claim a result. Presenting it as established would be the exact failure mode the page exists to avoid. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Does an AER-specific driver with the right onset exist? Our search covered 'diphtheria toxin ablation apical ectodermal ridge genetic mouse' on PubMed and returned four records, none of them an AER ablation. That is the scope of our negative, not a statement about the literature."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "cell-zpa-shh-timing",
@@ -93,10 +95,11 @@
     "lethality_risk": "Low when induction is late enough to miss the early Shh requirements in notochord and neural tube - which is exactly the advantage of the inducible allele over the germline null (compare gene-shh-gli3, which is catastrophic).",
     "specificity": "Autopod, both limbs, graded.",
     "difficulty": "low-medium; the alleles are published and tamoxifen dosing is routine.",
-    "what_we_would_run": "This is the best-posed quantitative dataset in the whole design space for our Lean threshold work: an ordered stimulus (induction time) mapping to an ordered, countable outcome (digit number). Stating 'given a monotone map from signal duration to element count, an ordered duration series implies an ordered count series', then mutating the monotonicity and the threshold and showing Lean rejects both mutants, is a bounded job. It proves our reasoning is consistent; it proves nothing about mice, and the page must say that in the same sentence.",
+    "what_we_would_run": "This is the best-posed quantitative dataset in the whole design space for our Lean threshold work: an ordered stimulus (induction time) mapping to an ordered, countable outcome (digit number). Stating 'given a monotone map from signal duration to element count, an ordered duration series implies an ordered count series', then mutating the monotonicity and the threshold and showing Lean rejects both mutants, is a bounded job. It proves our reasoning is consistent; it proves nothing about mice, and the page must say that in the same sentence.\n\nSTUDY: `shh-grem1-fgf-loop`, the ODE of the maintenance loop, bears on this route: Scherz et al.'s loop termination by expansion of former-ZPA descendants is a termination mechanism the ODE would have to represent, and a model with no spatial term cannot.",
     "open_questions": [
       "Scherz et al. make loop termination a consequence of CELL LINEAGE geometry rather than of a transcriptional timer. A model with no spatial representation of former-ZPA descendants cannot express that mechanism at all."
-    ]
+    ],
+    "study": "shh-grem1-fgf-loop"
   },
   {
     "id": "cell-fgf10-ligand-stability",
@@ -119,9 +122,10 @@
     "lethality_risk": "Unknown for a destabilised germline allele. If it behaves as a graded Fgf10 hypomorph the lung phenotype scales with it, so the lethality that sinks the Fgf10 null is likely to scale too.",
     "specificity": "Poor at the gene level (FGF10 serves many organs) but unusual at the BIOPHYSICAL level: nothing else on this page proposes to tune a phenotype by changing a protein's folding stability rather than its sequence-level function.",
     "difficulty": "high, and genuinely novel - we found no published destabilised-FGF10 animal.",
-    "what_we_would_run": "This is the one route where a protein-structure model, rather than a genome model, is the right tool: predict melting temperature for designed FGF10 variants and check against the measured STAB series, which gives a held-out numerical benchmark with real values. We have not run it and have no structure pipeline today.",
+    "what_we_would_run": "This is the one route where a protein-structure model, rather than a genome model, is the right tool: predict melting temperature for designed FGF10 variants and check against the measured STAB series, which gives a held-out numerical benchmark with real values. We have not run it and have no structure pipeline today. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Does a destabilised FGF10 produce a graded limb phenotype, or does the limb buffer ligand half-life entirely? Unknown; the published direction is the stabilising one."
-    ]
+    ],
+    "study": null
   }
 ]

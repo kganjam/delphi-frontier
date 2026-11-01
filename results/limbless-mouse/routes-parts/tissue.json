@@ -34,10 +34,11 @@
     "lethality_risk": "Low if limb-restricted.",
     "specificity": "Both limbs; the loop is limb-bud-specific in its Shh/Grem1 arm.",
     "difficulty": "high. The circuit is the thing everyone understands least well in quantitative terms, which is why 'trigger it early' is a sentence and not a protocol.",
-    "what_we_would_run": "This is the one route our existing reaction-diffusion and pattern simulators represent natively: an activator-inhibitor system with delayed negative feedback. We can run it and show how termination time moves with the inhibitory-loop gain. We CANNOT calibrate it - we have no registered calibration anywhere in our system - so the output is a simulated trajectory labelled 'simulated, not observed', and the bridge from it to a skeletal element count is exactly the kind our coupling layer refuses.",
+    "what_we_would_run": "This is the one route our existing reaction-diffusion and pattern simulators represent natively: an activator-inhibitor system with delayed negative feedback. We can run it and show how termination time moves with the inhibitory-loop gain. We CANNOT calibrate it - we have no registered calibration anywhere in our system - so the output is a simulated trajectory labelled 'simulated, not observed', and the bridge from it to a skeletal element count is exactly the kind our coupling layer refuses.\n\nSTUDY: `shh-grem1-fgf-loop` IS this route: the ODE is the model of exactly this circuit, and the route is the biology it claims to represent.",
     "open_questions": [
       "Mouse and chick terminate the loop in a different SEQUENCE, which is what led Verheyden & Sun to the inhibitory loop in the first place. A single model fitted to one species is not transferable to the other without saying so."
-    ]
+    ],
+    "study": "shh-grem1-fgf-loop"
   },
   {
     "id": "tissue-bmp-sox9-wnt-turing",
@@ -60,10 +61,11 @@
     "lethality_risk": "BMP and WNT are systemic; any whole-animal manipulation is dangerous and any explant manipulation is not an animal.",
     "specificity": "Autopod pattern only.",
     "difficulty": "medium in explant, high in vivo.",
-    "what_we_would_run": "We have 12 tissue-scale and 4 developmental-scale reaction-diffusion runs recorded, each with a manifest, numerical checks, input hashes and a verified figure, each labelled simulated-not-observed. Re-instantiating that machinery on the published BMP-SOX9-WNT network is the single most direct reuse of what we already have. It would produce a simulated digit pattern, not a prediction about a mouse.",
+    "what_we_would_run": "We have 12 tissue-scale and 4 developmental-scale reaction-diffusion runs recorded, each with a manifest, numerical checks, input hashes and a verified figure, each labelled simulated-not-observed. Re-instantiating that machinery on the published BMP-SOX9-WNT network is the single most direct reuse of what we already have. It would produce a simulated digit pattern, not a prediction about a mouse.\n\nSTUDY: `digit-turing`, the BMP-SOX9-WNT reaction-diffusion model, IS this route: the published network and the model on this page are the same object.",
     "open_questions": [
       "A Turing model explains how digits are SPACED. Nothing in it explains why a limb bud exists. Conflating the two is the most likely way a cross-scale system gets this subject wrong, and the page should say so."
-    ]
+    ],
+    "study": "digit-turing"
   },
   {
     "id": "tissue-hox-turing-wavelength",
@@ -86,9 +88,10 @@
     "lethality_risk": "Not retrieved; the compound mutants are described as analysed, not as viable adults, and we will not assert either.",
     "specificity": "Autopod.",
     "difficulty": "high - this is a large multi-allele breeding programme.",
-    "what_we_would_run": "Sheth et al. give an ordered dose mapped to an ordered wavelength, which is a second, independent instance of the same claim shape as the ZRS series and the Shh timing series. Three independent ordered-dose datasets in one subject is unusual, and it is the honest reason to call limb development a good benchmark domain - not because we can predict it, but because it is unusually well ordered.",
+    "what_we_would_run": "Sheth et al. give an ordered dose mapped to an ordered wavelength, which is a second, independent instance of the same claim shape as the ZRS series and the Shh timing series. Three independent ordered-dose datasets in one subject is unusual, and it is the honest reason to call limb development a good benchmark domain - not because we can predict it, but because it is unusually well ordered.\n\nSTUDY: `digit-turing` bears on this route: distal Hox dose is the published wavelength parameter of that model, and Sheth et al.'s allelic series is the only measured dose-to-wavelength data the model could be checked against.",
     "open_questions": [
       "Does wavelength modulation ever reach a regime with ZERO digits, or does the pattern simply get finer until the field runs out? The published direction goes the other way and we have no evidence for the zero limit."
-    ]
+    ],
+    "study": "digit-turing"
   }
 ]

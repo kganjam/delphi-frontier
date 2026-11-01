@@ -2,10 +2,48 @@
 
 Written 2026-11-01, Seattle (PDT). Companion to `routes.json` in this directory.
 
-`routes.json` holds **39 routes** across 7 scales, **68 sources**, all PubMed-verified.
-This file records how they were found, what I could not check, and where I think the
-existing dossier page (`docs/dossier/12-limbless-mouse.md`, 322 lines, fetched HTTP 200
-from `raw.githubusercontent.com/kganjam/delphi-frontier/main`) is **wrong or overstated**.
+`routes.json` holds **39 routes** across the page's **8 declared scales**, **68 sources**, all
+PubMed-verified. This file records how they were found, what I could not check, and where I
+think the existing dossier page (`docs/dossier/12-limbless-mouse.md`, 322 lines, fetched
+HTTP 200 from `raw.githubusercontent.com/kganjam/delphi-frontier/main`) is **wrong or
+overstated**.
+
+**Scale keys and counts**, in the page's declared order — every pin on the schematic is live:
+
+| key | routes |
+|---|---|
+| `molecular` | 7 |
+| `gene` | 12 |
+| `cell` | 4 |
+| `tissue` | 1 |
+| `pattern` | 2 |
+| `timing` | 4 |
+| `organism` | 4 |
+| `invitro` | 5 |
+
+`tissue` and `pattern` are deliberately split, per the two models the page runs: `tissue` holds
+only the SHH–GREM1–FGF **maintenance loop** (an ODE; sets limb size and when outgrowth stops),
+and `pattern` holds the BMP–SOX9–WNT **reaction–diffusion** rows (sets digit number and
+spacing). `tissue` having a single route is not a gap — it is one circuit, and padding it would
+mean putting pattern-formation rows where the ODE pin is.
+
+**Study ids.** Each route carries a machine-readable `study` field (`zrs-conservation`,
+`shh-grem1-fgf-loop`, `digit-turing`, or `null`) and names it in `what_we_would_run`. **12 of 39
+routes have one** — 6 `zrs-conservation`, 4 `shh-grem1-fgf-loop`, 2 `digit-turing`; the other
+**27 say so explicitly** rather than reaching for the nearest study. Two of the twelve are
+qualified rather than clean: `mol-zrs-designed-hypomorph` is linked only on its
+gain-of-function half (§3.1 below), and `org-cetacean-hindlimb` only because dolphin is one of
+the 16 species in the ZRS reporter panel — no cetacean ZRS was taken to knock-in, so there is
+no phenotype rung for it.
+
+**Build integrity.** `build.py` assembles the file from `parts/`, derives `sources` from the
+routes' own evidence entries (so a PMID cannot appear in the source list without a route using
+it, and read-levels cannot drift between the two), and refuses on: a scale key not on the
+page's list, any declared scale with zero routes, an unknown study id, a study set but not
+named in the prose, a recommendation pointing at a missing route, a missing required field, a
+bad `evidence_strength`, a bad read-level, duplicate ids, or a judge-gene `key_pmid` absent
+from `sources`. Each of those refusals was tested against a case it must flag **and** an
+unmutated control that must pass; all six trials behaved correctly.
 
 ---
 

@@ -27,10 +27,11 @@
     "lethality_risk": "This is the mechanism that REMOVES lethality risk, by letting the gene do its early non-limb jobs before being deleted. It is the reason Shh can be studied in the limb at all without cyclopia.",
     "specificity": "Temporal; spatial specificity comes from the driver, not from the inducibility.",
     "difficulty": "low-medium. Standard, well-characterised, widely available reagents.",
-    "what_we_would_run": "Encode in the coupling layer that a genotype-to-phenotype claim with no time index is not composable. Naiche's three-outcomes-from-one-lesion is the anchoring example and it is a one-record change.",
+    "what_we_would_run": "Encode in the coupling layer that a genotype-to-phenotype claim with no time index is not composable. Naiche's three-outcomes-from-one-lesion is the anchoring example and it is a one-record change. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Tamoxifen itself affects pregnancy and embryonic development; the published designs handle this, but any new stage series needs vehicle controls."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "timing-prx1-cre-limb-restricted",
@@ -53,10 +54,11 @@
     "lethality_risk": "This is the single most important lethality-reducing reagent in the design space, and the reason a viable limb-reduced mouse is reachable by routes whose germline nulls are not.",
     "specificity": "Limb MESENCHYME only. It does not reach the AER, so ectoderm-acting targets (Wnt3, beta-catenin, p63, AER-FGFs) need a different driver. The craniofacial subset is a real caveat.",
     "difficulty": "low. One of the most widely used drivers in skeletal biology.",
-    "what_we_would_run": "Nothing computational. This route is the page's answer to 'how do you get a limbless mouse that is alive', and it is a reagent, not an idea.",
+    "what_we_would_run": "Nothing computational. This route is the page's answer to 'how do you get a limbless mouse that is alive', and it is a reagent, not an idea. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "The craniofacial mesenchyme domain means any Prx1-Cre phenotype needs skull assessment before being called limb-specific."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "timing-degron-acute-depletion",
@@ -86,11 +88,12 @@
     "lethality_risk": "Low by design: the protein is present for every requirement outside the chosen window.",
     "specificity": "Temporal and protein-level; NOT spatial. The ligand reaches the whole embryo, so a degron depletes the target everywhere at once. Pairing it with a tissue-restricted system is not solved.",
     "difficulty": "high but decreasing. The honest caveats are in the second paper: tags sometimes cause phenotypes on their own, efficiency varies by protein and route, and one of the two tagging systems showed no in vivo activity at all.",
-    "what_we_would_run": "Nothing. This is a clearly-labelled proposal and belongs on the page as the frontier method rather than as a result. It is also the most likely answer if a modern reviewer asks 'why would you make a germline mutant at all'.",
+    "what_we_would_run": "Nothing. This is a clearly-labelled proposal and belongs on the page as the frontier method rather than as a result. It is also the most likely answer if a modern reviewer asks 'why would you make a germline mutant at all'. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Does transient depletion of a limb signal give a REVERSIBLE limb defect, a permanent one, or none? Unknown, and it is the experiment that would most change how this subject is taught.",
       "Degron depletion is systemic. Combining acute temporal control with limb-restricted delivery is an open engineering problem."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "timing-prx1-creer-fgf10",
@@ -127,10 +130,11 @@
     "lethality_risk": "LOW, and this is the entire point. The germline Fgf10 null is perinatally lethal from lung agenesis; a Prx1-restricted deletion should not touch the lung. We say 'should' because we found no published viability data for this exact cross.",
     "specificity": "Limb mesenchyme, both pairs, with a craniofacial caveat from the driver. A single-pair version (Tbx5 for forelimb, Tbx4 for hindlimb) is substantially more likely to give a viable adult.",
     "difficulty": "medium. Every component is an existing, published reagent; the work is breeding, dosing and skeletal analysis, not invention.",
-    "what_we_would_run": "Before any animal: score the predicted severity ordering across induction times with our pattern simulators, pre-register it, and state explicitly that the simulation is not calibrated and the prediction is a hypothesis. We have no animal facility, no IACUC protocol and no wet-lab arm; the proposal is a design, and we would present it as one.",
+    "what_we_would_run": "Before any animal: score the predicted severity ordering across induction times with our pattern simulators, pre-register it, and state explicitly that the simulation is not calibrated and the prediction is a hypothesis. We have no animal facility, no IACUC protocol and no wet-lab arm; the proposal is a design, and we would present it as one. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Does a Prx1-CreER;Fgf10-flox animal survive to adulthood? Unknown to us.",
       "Is mesenchymal Fgf10 deletion after E10.5 sufficient to remove a limb, or has the AER already become self-sustaining? The Barrow beta-catenin result shows an existing AER CAN be made to disappear, but that was an ectodermal manipulation, not a mesenchymal one."
-    ]
+    ],
+    "study": null
   }
 ]

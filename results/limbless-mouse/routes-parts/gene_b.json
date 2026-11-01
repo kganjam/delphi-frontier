@@ -27,10 +27,11 @@
     "lethality_risk": "Medium-high; Meis factors are broad organogenesis regulators and the LPM gives rise to much more than limbs. We did not retrieve viability data and will not assert it.",
     "specificity": "LPM-restricted rather than limb-restricted - a larger territory than Prx1-Cre.",
     "difficulty": "medium-high: a two-gene conditional cross with four floxed alleles plus a driver.",
-    "what_we_would_run": "This is the best published example of DOSE producing a qualitatively different phenotype (agenesis versus posterior-element loss), which is the shape of claim our Lean threshold-interval family is written for. Stating that as a law about a model - monotone activity to ordered element count - and then mutating the law to check Lean rejects the mutants is a real, bounded job, and it proves consistency of our reasoning, not anything about mice.",
+    "what_we_would_run": "This is the best published example of DOSE producing a qualitatively different phenotype (agenesis versus posterior-element loss), which is the shape of claim our Lean threshold-interval family is written for. Stating that as a law about a model - monotone activity to ordered element count - and then mutating the law to check Lean rejects the mutants is a real, bounded job, and it proves consistency of our reasoning, not anything about mice. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Does the Meis dose series have a measured activity readout, or only allele count? A threshold law needs a continuous variable and allele count is a proxy."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "gene-aer-fgf4-fgf8",
@@ -67,10 +68,11 @@
     "lethality_risk": "Low-medium when restricted to limb ectoderm; Fgf8 has major non-limb roles so the driver carries the risk, not the gene.",
     "specificity": "Both limbs; element-selective at intermediate doses, which makes it a partial-loss route rather than an all-or-nothing one.",
     "difficulty": "medium-high: two floxed genes plus an AER-specific driver, and the stage of inactivation has to be controlled because it sets severity.",
-    "what_we_would_run": "This is the one route whose mechanism is explicitly QUANTITATIVE - cell number and survival - and so the one our reaction-diffusion and growth simulators can actually represent. We can simulate bud size as a function of FGF source strength and ask at what point the pattern-forming domain falls below the size that supports digit condensations. That is a simulated result and would be labelled as such; we have no calibration that would let us attach a skeletal count to it.",
+    "what_we_would_run": "This is the one route whose mechanism is explicitly QUANTITATIVE - cell number and survival - and so the one our reaction-diffusion and growth simulators can actually represent. We can simulate bud size as a function of FGF source strength and ask at what point the pattern-forming domain falls below the size that supports digit condensations. That is a simulated result and would be labelled as such; we have no calibration that would let us attach a skeletal count to it.\n\nSTUDY: `shh-grem1-fgf-loop` bears on this route: AER-FGF output is the loop's drive term, and Lu et al.'s result that FGF4 fully substitutes for FGF8 says the ODE should carry total FGF dose, not per-gene identity.",
     "open_questions": [
       "Lu et al. show FGF4 can replace FGF8 entirely, so AER-FGF identity does not matter but AER-FGF LEVEL does. Any model that scores per-gene rather than per-total-dose will get this wrong."
-    ]
+    ],
+    "study": "shh-grem1-fgf-loop"
   },
   {
     "id": "gene-grem1",
@@ -93,10 +95,11 @@
     "lethality_risk": "HIGH and certain: neonatal lethal from renal agenesis. Another case where the limb phenotype is never seen in a living adult.",
     "specificity": "Poor; the same BMP-antagonism requirement operates in kidney and lung.",
     "difficulty": "low to make, not viable.",
-    "what_we_would_run": "Grem1 is the inhibitor arm of the self-terminating loop (see tissue-shh-grem1-fgf-loop), so it is the parameter our activator-inhibitor simulators would move first. We can run it; we cannot calibrate it, and we would say so.",
+    "what_we_would_run": "Grem1 is the inhibitor arm of the self-terminating loop (see tissue-shh-grem1-fgf-loop), so it is the parameter our activator-inhibitor simulators would move first. We can run it; we cannot calibrate it, and we would say so.\n\nSTUDY: `shh-grem1-fgf-loop` bears on this route: GREM1 is the loop's inhibitor arm and therefore the first parameter the ODE would move.",
     "open_questions": [
       "A limb-mesenchyme-restricted conditional should separate the limb from the kidney phenotype; our search did not retrieve one and we will not assume it exists."
-    ]
+    ],
+    "study": "shh-grem1-fgf-loop"
   },
   {
     "id": "gene-shh-gli3",
@@ -140,10 +143,11 @@
     "lethality_risk": "Very high and for reasons unrelated to limbs - cyclopia and axial skeleton loss. Nobody should propose Shh-null as a route to a limbless mouse, and the page should say so explicitly because it is the gene everyone names first.",
     "specificity": "Terrible. This is the least limb-specific route in the design space, which is exactly why the ZRS exists as an alternative: the enhancer separates the limb function from all the others.",
     "difficulty": "low to make, useless as an animal.",
-    "what_we_would_run": "Use the Shh/ZRS contrast as the page's central argument: the SAME gene, approached through its coding sequence or through one of its enhancers, gives a dead cyclopic embryo or a viable limb-reduced mouse. That contrast is the strongest single thing we can show a judge about why cis-regulation is the interesting layer.",
+    "what_we_would_run": "Use the Shh/ZRS contrast as the page's central argument: the SAME gene, approached through its coding sequence or through one of its enhancers, gives a dead cyclopic embryo or a viable limb-reduced mouse. That contrast is the strongest single thing we can show a judge about why cis-regulation is the interesting layer. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "The te Welscher result means ZRS-null truncation is a failure to RELIEVE GLI3 repression rather than a failure to deliver a positive signal. Any model of 'enhancer activity to skeletal element count' that treats SHH as an instructive morphogen has the sign of the mechanism wrong, even if it fits the data."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "gene-p63",
@@ -173,10 +177,11 @@
     "lethality_risk": "High in practice. Born alive, but with no stratified skin and no epidermal appendages a pup cannot maintain barrier function; this is a severe phenotype in the welfare sense even though the embryo reaches term. The two papers report birth, not survival.",
     "specificity": "Poor as a germline allele - it is an ectodermal phenotype, of which the limb is one part. A limb-ectoderm conditional would in principle fix this and we found no such study.",
     "difficulty": "low as germline; medium for the conditional that would actually be worth making.",
-    "what_we_would_run": "Nothing computational. p63 earns its place because it is a THIRD mechanism class the existing dossier omits: not induction failure (Fgf10, Wnt3), not signalling-centre output failure (ZRS, Fgf4/8), but failure of the signalling centre's epithelium to differentiate at all.",
+    "what_we_would_run": "Nothing computational. p63 earns its place because it is a THIRD mechanism class the existing dossier omits: not induction failure (Fgf10, Wnt3), not signalling-centre output failure (ZRS, Fgf4/8), but failure of the signalling centre's epithelium to differentiate at all. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Why is the phenotype 'absent OR truncated' rather than uniform? Variable expressivity in an amelia-class allele is itself informative and we did not read the bodies to find out."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "gene-hand2",
@@ -213,9 +218,10 @@
     "lethality_risk": "High for germline - HAND2 is required in heart and branchial arches. Limb-restricted conditional is mandatory.",
     "specificity": "Limb mesenchyme if conditional; posterior-biased within the limb.",
     "difficulty": "medium.",
-    "what_we_would_run": "Hand2 is the node that links the mouse genetics to the cetacean natural experiment, and the page should draw that line explicitly: whales lost hindlimbs with Hand2 absent from the bud and Shh never established, which is upstream of the ZRS lesion snakes have. Two independent natural limb losses, two different layers of the same network.",
+    "what_we_would_run": "Hand2 is the node that links the mouse genetics to the cetacean natural experiment, and the page should draw that line explicitly: whales lost hindlimbs with Hand2 absent from the bud and Shh never established, which is upstream of the ZRS lesion snakes have. Two independent natural limb losses, two different layers of the same network. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Is the dolphin Hand2 absence a cause or a consequence? Thewissen et al. report association, and we are reading an abstract. We would not state causation."
-    ]
+    ],
+    "study": null
   }
 ]

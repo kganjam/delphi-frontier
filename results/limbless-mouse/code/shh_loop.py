@@ -403,6 +403,16 @@ def _pct(x):
     return f"{x * 100:g}%"
 
 
+def _count_phrase(n, noun, verb_sg="is", verb_pl="are"):
+    """Render a derived count as readable prose: 0 becomes 'none is', not '0 are'.
+    The number still comes from the data; only its wording is adjusted."""
+    if n == 0:
+        return f"none {verb_sg} {noun}"
+    if n == 1:
+        return f"1 {verb_sg} {noun}"
+    return f"{n} {verb_pl} {noun}"
+
+
 PHENOTYPE_CLASSES = {
     "no-limb": f"The loop never engages (AER FGF never exceeds F_on = {F_ON:g}) and accumulated "
                f"outgrowth is below {_pct(CUT_NO_LIMB)} of the wild-type control. In the model "
@@ -1008,7 +1018,8 @@ def main():
             f"removes {n_nondim} parameters (d_S is fixed to 1 by the time unit; b_prod is "
             f"fixed by d_B so that maximal BMP is 1) and makes every Hill constant readable "
             f"as a fraction of maximum. {n_assumed} of the {n_par} parameters remain free, "
-            f"and all {n_assumed} are labelled assumed. {n_sourced} are labelled sourced."),
+            f"and all {n_assumed} are labelled assumed; "
+            f"{_count_phrase(n_sourced, 'labelled sourced')}."),
         parameter_status_counts=dict(total=n_par, assumed=n_assumed,
                                      nondimensional=n_nondim, sourced=n_sourced),
         knobs=KNOB_DOC,
@@ -1034,7 +1045,8 @@ def main():
         "The model is a caricature of a signalling TOPOLOGY. It is not calibrated to any "
         "measured mouse limb bud: no concentration, rate, diffusion length or developmental "
         "time in it was fitted to data, and none should be read as one.",
-        f"{n_assumed} of the {n_par} parameters are assumed and {n_sourced} are sourced; the "
+        f"{n_assumed} of the {n_par} parameters are assumed and "
+        f"{_count_phrase(n_sourced, 'sourced')}; the "
         f"other {n_nondim} are fixed by the non-dimensionalisation. They were chosen so the "
         f"wild-type arm initiates, is maintained and self-terminates -- that is, the control "
         f"arm's qualitative behaviour was an input to parameter choice, not an independent "

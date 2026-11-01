@@ -3860,7 +3860,13 @@
         "note": "Sharpness of the outgrowth readout. Set high deliberately: at n=6 the sub-threshold FGF leak integrates, over the 80-time-unit window, into a spurious 3%-of-wild-type 'rudiment' in arms where the loop never engages. That number was an artifact of the readout, not a result."
       }
     ],
-    "nondimensionalisation": "Time is measured in SHH turnover times (d_S = 1 by definition). Each species is scaled by its own maximum, so the unantagonised BMP steady state and the underepressed AER FGF steady state are both 1.0 at wild-type settings. This removes two parameters (d_S is fixed to 1 by the time unit; b_prod is fixed by d_B so that maximal BMP is 1) and makes every Hill constant readable as a fraction of maximum. 21 of the 23 parameters remain free, and all 21 are labelled assumed. None is labelled sourced.",
+    "nondimensionalisation": "Time is measured in SHH turnover times (d_S = 1 by definition). Each species is scaled by its own maximum, so the unantagonised BMP steady state and the underepressed AER FGF steady state are both 1.0 at wild-type settings. This removes 2 parameters (d_S is fixed to 1 by the time unit; b_prod is fixed by d_B so that maximal BMP is 1) and makes every Hill constant readable as a fraction of maximum. 21 of the 23 parameters remain free, and all 21 are labelled assumed; none is labelled sourced.",
+    "parameter_status_counts": {
+      "total": 23,
+      "assumed": 21,
+      "nondimensional": 2,
+      "sourced": 0
+    },
     "knobs": {
       "s": {
         "label": "ZPA Shh transcriptional output  s",
@@ -5548,7 +5554,7 @@
       "threshold_definition": "Value of the knob at which AER FGF first exceeds F_on = 0.35 at some time, i.e. the ignition bifurcation of the loop. Located by 45-step bisection.",
       "threshold_bisection_half_width": 2.98023217215615e-10,
       "threshold_uncertainty": 0.0001,
-      "threshold_uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
+      "threshold_uncertainty_basis": "Full spread of the bisected threshold across 4 integrator/tolerance settings, floored at 0.0001 (below which the number is not meaningful for an uncalibrated model)."
     },
     "phi": {
       "knob": "phi",
@@ -7187,7 +7193,7 @@
       "threshold_definition": "Value of the knob at which AER FGF first exceeds F_on = 0.35 at some time, i.e. the ignition bifurcation of the loop. Located by 45-step bisection.",
       "threshold_bisection_half_width": 2.98023217215615e-10,
       "threshold_uncertainty": 0.0001,
-      "threshold_uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
+      "threshold_uncertainty_basis": "Full spread of the bisected threshold across 4 integrator/tolerance settings, floored at 0.0001 (below which the number is not meaningful for an uncalibrated model)."
     },
     "g": {
       "knob": "g",
@@ -8824,7 +8830,7 @@
       "threshold_definition": "Value of the knob at which AER FGF first exceeds F_on = 0.35 at some time, i.e. the ignition bifurcation of the loop. Located by 45-step bisection.",
       "threshold_bisection_half_width": 2.98023217215615e-10,
       "threshold_uncertainty": 0.0001,
-      "threshold_uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
+      "threshold_uncertainty_basis": "Full spread of the bisected threshold across 4 integrator/tolerance settings, floored at 0.0001 (below which the number is not meaningful for an uncalibrated model)."
     },
     "bmp": {
       "knob": "bmp",
@@ -10464,7 +10470,7 @@
       "threshold": null,
       "threshold_note": "BMP is not monotone: the loop needs enough BMP to switch OFF (lower edge) and few enough to switch ON (upper edge), so it has a window rather than a threshold.",
       "threshold_uncertainty": 0.0001,
-      "threshold_uncertainty_basis": "Bisection half-width only, floored at 1e-4. The bmp edges were not re-bisected under the refinement arm's four integrator settings, unlike s, phi and g."
+      "threshold_uncertainty_basis": "Bisection half-width only, floored at 0.0001. The bmp edges were not re-bisected under the refinement arm's 4 integrator settings, unlike s, phi and g."
     }
   },
   "phase_map": {
@@ -18474,7 +18480,7 @@
         "spread": 6.399999999961992e-07,
         "reported": 0.3075,
         "uncertainty": 0.0001,
-        "uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
+        "uncertainty_basis": "Full spread of the bisected threshold across 4 integrator/tolerance settings, floored at 0.0001 (below which the number is not meaningful for an uncalibrated model)."
       },
       "phi": {
         "by_setting": {
@@ -18486,7 +18492,7 @@
         "spread": 1.9999999989472883e-08,
         "reported": 0.5862,
         "uncertainty": 0.0001,
-        "uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
+        "uncertainty_basis": "Full spread of the bisected threshold across 4 integrator/tolerance settings, floored at 0.0001 (below which the number is not meaningful for an uncalibrated model)."
       },
       "g": {
         "by_setting": {
@@ -18498,7 +18504,7 @@
         "spread": 9.000000000813912e-08,
         "reported": 0.5549,
         "uncertainty": 0.0001,
-        "uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
+        "uncertainty_basis": "Full spread of the bisected threshold across 4 integrator/tolerance settings, floored at 0.0001 (below which the number is not meaningful for an uncalibrated model)."
       }
     },
     "control_outgrowth": {
@@ -18542,7 +18548,8 @@
         "outgrowth": 195.315
       }
     ],
-    "finding": "In this parameterisation the Scherz 2004 descendant-zone ratchet is what terminates the loop: removing it, the loop never switches off within 200 time units. Removing the Verheyden & Sun 2008 FGF-|Grem1 repression instead leaves termination intact and lengthens the window by about 4%. The two published mechanisms are therefore NOT equal partners here, and the model leans almost entirely on one of them.",
+    "window_change_without_fgf_repression_pct": 3.99,
+    "finding": "In this parameterisation the Scherz 2004 descendant-zone ratchet is what terminates the loop: removing it, the loop never switches off within 200 time units. Removing the Verheyden & Sun 2008 FGF-|Grem1 repression instead leaves termination intact and lengthens the window by +4.0%. The two published mechanisms are therefore NOT equal partners here, and the model leans almost entirely on one of them.",
     "caveat": "This is a property of this parameter set, not a claim about which mechanism dominates in a limb bud. No parameter scan was run, and k_Z is assumed."
   },
   "numerical_checks": {
@@ -18550,7 +18557,7 @@
       "name": "null (all production zero, zero initial condition)",
       "max_abs_state": 0.0,
       "passed": true,
-      "expectation": "all six states identically zero for all t"
+      "expectation": "all 6 states identically zero for all t"
     },
     "positive_control_of_classifier": [
       {
@@ -18596,12 +18603,19 @@
       "name": "no RNG in the model",
       "passed": true,
       "expectation": "model uses no random numbers; the run is reproducible without a seed"
+    },
+    "derived_counts": {
+      "name": "derived counts match the data they describe",
+      "problems": [],
+      "passed": true,
+      "positive_control_flags_a_broken_copy": true,
+      "expectation": "no prose count disagrees with the table it describes"
     }
   },
   "phenotype_classes": {
-    "no-limb": "The loop never engages (AER FGF never exceeds F_on) and accumulated outgrowth is below 5% of the wild-type control. In the model this means 'this feedback loop contributed no outgrowth'. It does NOT mean amelia in an embryo: the model contains no SHH-independent proximal outgrowth, so it cannot distinguish a Shh-null limb (which in mice still forms a stylopod) from true limb absence.",
+    "no-limb": "The loop never engages (AER FGF never exceeds F_on = 0.35) and accumulated outgrowth is below 5% of the wild-type control. In the model this means 'this feedback loop contributed no outgrowth'. It does NOT mean amelia in an embryo: the model contains no SHH-independent proximal outgrowth, so it cannot distinguish a Shh-null limb (which in mice still forms a stylopod) from true limb absence.",
     "truncated": "The loop engages and self-terminates, but accumulated outgrowth is between 5% and 85% of the wild-type control.",
-    "normal": "The loop engages, self-terminates, and accumulated outgrowth is within 85-115% of the wild-type control.",
+    "normal": "The loop engages, self-terminates, and accumulated outgrowth is within 85%-115% of the wild-type control.",
     "overgrowth": "The loop engages and self-terminates, but accumulated outgrowth exceeds 115% of the wild-type control.",
     "fails-to-terminate": "AER FGF is still above F_on at the end of the simulated window (t = 80 SHH turnover times). The loop has no off switch in this parameter regime."
   },
@@ -18699,8 +18713,12 @@
   ],
   "provenance": {
     "generator": "shh_loop.py",
-    "source_verification": "Every PMID and DOI above was resolved through the PubMed E-utilities MCP tools (search_articles / lookup_article_by_citation / get_article_metadata). Read level is 'abstract' for all eleven: the regulatory edges are taken from statements made in the abstracts, not from figures or supplementary data.",
+    "source_count": 11,
+    "read_levels_present": [
+      "abstract"
+    ],
+    "source_verification": "Every PMID and DOI above was resolved through the PubMed E-utilities MCP tools (search_articles / lookup_article_by_citation / get_article_metadata). Read level is abstract for all 11: the regulatory edges are taken from statements made in the abstracts, not from figures or supplementary data.",
     "attribution": "Bibliographic metadata retrieved from PubMed.",
-    "runtime_seconds": 241.99
+    "runtime_seconds": 306.67
   }
 }

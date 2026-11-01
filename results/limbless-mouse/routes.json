@@ -19,8 +19,13 @@
     },
     {
       "key": "tissue",
-      "label": "Tissue / pattern formation",
-      "blurb": "The circuits that decide how big the bud gets and how many digits it carries: a self-terminating SHH-GREM1-FGF loop and a BMP-SOX9-WNT Turing system whose wavelength distal Hox dose sets. These explain limb FORM. None of them has been shown to explain limb ABSENCE, and the page says so."
+      "label": "Tissue / maintenance loop",
+      "blurb": "The circuit that decides how long the bud keeps growing: a SHH-GREM1-FGF loop that is self-promoting AND self-terminating, because rising FGF activity represses Grem1. It sets limb SIZE and when outgrowth stops. Nobody has shown that triggering it early removes a limb, and the page says so."
+    },
+    {
+      "key": "pattern",
+      "label": "Pattern formation",
+      "blurb": "The reaction-diffusion system that decides how many digits the autopod carries and how they are spaced: a BMP-SOX9-WNT Turing network whose wavelength distal Hox dose sets. This explains autopod FORM. Both published knobs move it toward MORE digits, not fewer, so nothing here has been shown to explain limb absence."
     },
     {
       "key": "timing",
@@ -60,11 +65,12 @@
       "lethality_risk": "Low. ZRS-null mice are alive and of comparable body size at two weeks of age; Kvon et al. photographed them. Mouse ZRS reporter assays show no reproducible activity outside the limb and ZRS deletion studies report no phenotypes beyond limb defects, so there is no known non-limb organ requirement.",
       "specificity": "Limb only, both pairs, posterior-distal. It removes the autopod and zeugopod and spares the stylopod and girdle. It does not touch lung, kidney, allantois, neural tube or craniofacial structures.",
       "difficulty": "low-to-medium. The exact sgRNA, donor design, homology arms and genotyping primers are published; the line already exists in at least one lab. Cost is a standard CRISPR knock-in campaign plus a mouse colony.",
-      "what_we_would_run": "Score the published ortholog series with a genome language model (we have an Evo 2 7B pipeline that has produced one real paired result on zebrafish regulatory windows) and ask whether the model's ranking reproduces the measured ranking: human ~ coelacanth (normal) > python (weak residual) > cobra (none). Pre-register the prediction. Controls: dinucleotide shuffles and GC-matched random windows, as in the run we already did.",
+      "what_we_would_run": "Score the published ortholog series with a genome language model (we have an Evo 2 7B pipeline that has produced one real paired result on zebrafish regulatory windows) and ask whether the model's ranking reproduces the measured ranking: human ~ coelacanth (normal) > python (weak residual) > cobra (none). Pre-register the prediction. Controls: dinucleotide shuffles and GC-matched random windows, as in the run we already did.\n\nSTUDY: The study `zrs-conservation` IS this route's assay: it is the ZRS ortholog panel, and the measured knock-in ranking (human ~ coelacanth normal > python weak residual > cobra none) is the answer key any score would be checked against.",
       "open_questions": [
         "Does a sequence model separate cobra from coelacanth, given that coelacanth shares LESS sequence identity with human ZRS (57%) than python does (59%) yet behaves like wild type? This is the single sharpest test in the dataset and it is an explicit identity-versus-function dissociation.",
         "Boa ZRS retained ZPA reporter activity but was never taken to knock-in, so the 'ordered series' is four knock-in phenotypes plus reporter data, not a uniform assay."
-      ]
+      ],
+      "study": "zrs-conservation"
     },
     {
       "id": "mol-zrs-deletion",
@@ -94,11 +100,12 @@
       "lethality_risk": "Low; this is the only route in the whole design space with a published photograph of a limb-reduced mouse alive at two weeks and of normal body size.",
       "specificity": "Limb only, both pairs. Spares girdle and stylopod.",
       "difficulty": "low. Two independent alleles published, one of them CRISPR-made specifically to exclude neo-cassette and background effects.",
-      "what_we_would_run": "Nothing new computationally - this is the reference phenotype everything else is scored against, and it is the anchor for the honest claim that 'limbless mouse' in the ZRS literature means limb-REDUCED and viable, not amelia.",
+      "what_we_would_run": "Nothing new computationally - this is the reference phenotype everything else is scored against, and it is the anchor for the honest claim that 'limbless mouse' in the ZRS literature means limb-REDUCED and viable, not amelia.\n\nSTUDY: `zrs-conservation` bears on this route as its anchor: the ZRS-null is the wild-type-to-null endpoint the ortholog series is read against, and it is the reference phenotype for the whole molecular scale.",
       "open_questions": [
         "Welfare: a viable animal with truncated limbs is the ethically harder case precisely because it lives. See the welfare section.",
         "No published long-term (adult, >2 week) husbandry or behavioural data was found in our search."
-      ]
+      ],
+      "study": "zrs-conservation"
     },
     {
       "id": "mol-zrs-e1-ets-site",
@@ -121,10 +128,11 @@
       "lethality_risk": "None beyond the background allele.",
       "specificity": "Limb only.",
       "difficulty": "low. Published allele, published sequence.",
-      "what_we_would_run": "Ask a genome language model for the effect of the 17 bp indel in BOTH directions and on BOTH backgrounds (mouse ZRS minus 17 bp; python ZRS plus 17 bp). A model that reports a symmetric effect has failed a test with a known answer. This is a cheap, pre-registerable, falsifiable experiment, and the published asymmetry means we know the right answer before scoring.",
+      "what_we_would_run": "Ask a genome language model for the effect of the 17 bp indel in BOTH directions and on BOTH backgrounds (mouse ZRS minus 17 bp; python ZRS plus 17 bp). A model that reports a symmetric effect has failed a test with a known answer. This is a cheap, pre-registerable, falsifiable experiment, and the published asymmetry means we know the right answer before scoring.\n\nSTUDY: `zrs-conservation` bears on this route directly, and this is the sharpest test in it: the 17 bp E1 indel has a published ASYMMETRIC effect, so a model scored on that panel has a known-in-advance right answer to fail.",
       "open_questions": [
         "Kvon et al. explicitly say ETS-site loss alone cannot explain snake ZRS deactivation and point at homeodomain motifs with a similar snake-specific substitution increase. So E1 is necessary-in-context, not the mechanism."
-      ]
+      ],
+      "study": "zrs-conservation"
     },
     {
       "id": "mol-zrs-designed-hypomorph",
@@ -154,10 +162,11 @@
       "lethality_risk": "Low, by analogy with the deletion.",
       "specificity": "Limb only.",
       "difficulty": "high, because the loss-of-function side of the map is not the side that was measured. Building it means a new in-vivo panel.",
-      "what_we_would_run": "Score the Kvon 2020 panel and report rank correlation against the published in-vivo calls - but label it for what it is: a benchmark on the POLYDACTYLY (gain) direction, used as a proxy for whether the model has any grip on this element at all. Reporting it as a limb-loss benchmark would be a category error.",
+      "what_we_would_run": "Score the Kvon 2020 panel and report rank correlation against the published in-vivo calls - but label it for what it is: a benchmark on the POLYDACTYLY (gain) direction, used as a proxy for whether the model has any grip on this element at all. Reporting it as a limb-loss benchmark would be a category error.\n\nSTUDY: `zrs-conservation` bears on this route, but only on its gain-of-function half - the panel it would be scored against was assayed for polydactyly, not limb reduction, and that has to be stated wherever the number is reported.",
       "open_questions": [
         "Is a model that ranks gain-of-function ZRS variants well also good at loss-of-function ZRS variants? Nothing in the literature we read answers this, and assuming transfer is exactly the kind of assumption that has failed before."
-      ]
+      ],
+      "study": "zrs-conservation"
     },
     {
       "id": "mol-shh-zrs-ctcf-contact",
@@ -180,11 +189,12 @@
       "lethality_risk": "Not applicable in mouse (no phenotype). In humans acheiropodia is compatible with life.",
       "specificity": "Would be limb-restricted if it worked, because the contact being broken is the limb enhancer's.",
       "difficulty": "high, and currently unsolved: nobody has engineered a mouse allele that reproduces the human architectural lesion. It would require re-deriving the CTCF motif arrangement for the mouse locus rather than copying the human deletion.",
-      "what_we_would_run": "Encode this as an explicit REFUSAL in our cross-scale coupling layer: a human-to-mouse transfer of a CTCF-motif-dependent claim is not composable, and the layer should say so with the Ushiki result as the stated reason rather than emitting a score. This is a one-record change and it is the kind of thing the layer exists for.",
+      "what_we_would_run": "Encode this as an explicit REFUSAL in our cross-scale coupling layer: a human-to-mouse transfer of a CTCF-motif-dependent claim is not composable, and the layer should say so with the Ushiki result as the stated reason rather than emitting a score. This is a one-record change and it is the kind of thing the layer exists for. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Which mouse CTCF sites would have to be removed to phenocopy acheiropodia? Nobody has published an answer.",
         "Would a sequence model trained on human data flag the mouse orthologous deletion as benign? If it does, that is the correct answer and worth demonstrating."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "mol-tad-boundary",
@@ -207,10 +217,11 @@
       "lethality_risk": "Locus-dependent; the published alleles are viable.",
       "specificity": "Depends entirely on which domain is broken. A boundary move is a blunt instrument: it changes everything in the domain, not one enhancer-promoter pair.",
       "difficulty": "high. Large structural variants are harder to make and harder to genotype than a 1.3 kb replacement, and the outcome is not predictable from sequence alone.",
-      "what_we_would_run": "Nothing yet. A sequence model that scores 1 kb windows has no representation of a megabase-scale boundary, so this route is a good argument for why 'score the enhancer' is not the same as 'predict the phenotype', and it belongs on the page as that argument.",
+      "what_we_would_run": "Nothing yet. A sequence model that scores 1 kb windows has no representation of a megabase-scale boundary, so this route is a good argument for why 'score the enhancer' is not the same as 'predict the phenotype', and it belongs on the page as that argument. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Can any current sequence model predict the direction of a boundary-disruption phenotype? We found no evidence that one can, and our search did not cover the chromatin-model literature."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "mol-pitx1-hindlimb-enhancer",
@@ -240,10 +251,11 @@
       "specificity": "Hindlimb only, if the mouse element behaves like the stickleback one. Note the mouse Pitx1 null ALSO loses proximal mandibular bone, so the gene is not hindlimb-exclusive even if the enhancer is.",
       "lethality_risk": "Low for an enhancer deletion by the stickleback precedent; high for the null in laboratory animals per Chan et al.",
       "difficulty": "high, because the mouse enhancer has to be found first and the Ushiki result (above) is a standing warning that a cis-element's behaviour does not transfer between species.",
-      "what_we_would_run": "This is the single best test case for a sequence model doing something useful rather than reproducing a known answer: use the model to nominate candidate hindlimb-specific Pitx1 enhancers in mouse, then check the nominations against published limb-bud ATAC/ChIP data. That is a retrieval task with an external answer key, not a self-graded one.",
+      "what_we_would_run": "This is the single best test case for a sequence model doing something useful rather than reproducing a known answer: use the model to nominate candidate hindlimb-specific Pitx1 enhancers in mouse, then check the nominations against published limb-bud ATAC/ChIP data. That is a retrieval task with an external answer key, not a self-graded one. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Is there a single mouse Pitx1 hindlimb enhancer, or distributed redundancy? Enhancer redundancy is the standard reason a cis-deletion gives no phenotype, and we did not search the Pitx1 regulatory-landscape literature."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-fgf10-null",
@@ -273,10 +285,11 @@
       "lethality_risk": "HIGH and certain: perinatal lethal from lung agenesis. No Fgf10-null mouse has ever drawn a breath, so there is no viable limbless adult by this route.",
       "specificity": "Poor. FGF10 is the major ligand for FGFR2b across many organs: Fgf10-null mice also lack thyroid, pituitary and salivary glands, with minor defects in teeth, kidney, hair follicles and digestive organs.",
       "difficulty": "low to make, impossible to make viable as a constitutive allele. The conditional version is the route worth proposing (see timing-prx1-creer-fgf10).",
-      "what_we_would_run": "Nothing computational adds value here; this is the ground-truth amelia phenotype the whole page is calibrated against. If the judge's mice were tetra-amelic AND died at birth, this is the likely mechanism class.",
+      "what_we_would_run": "Nothing computational adds value here; this is the ground-truth amelia phenotype the whole page is calibrated against. If the judge's mice were tetra-amelic AND died at birth, this is the likely mechanism class. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "The two founding papers DISAGREE about whether the limb bud initiates: Min et al. say initiation was abolished; Sekine et al. say bud formation initiated but outgrowth did not occur. We preserve that disagreement rather than reconciling it, and it matters because it decides whether the lesion is in induction or in maintenance."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-fgfr2b-null",
@@ -306,10 +319,11 @@
       "lethality_risk": "High - viable until birth only, with lung and pituitary agenesis.",
       "specificity": "Poor; multi-organ, by construction (the whole point of the receptor is that it serves many epithelia).",
       "difficulty": "low to make; same viability dead end as Fgf10.",
-      "what_we_would_run": "Nothing new. This route earns its place by being the mechanistic mirror of Fgf10 and by showing that 'initiates then apoptoses' is a THIRD phenotypic class distinct from both amelia and truncation - a distinction the existing dossier does not draw.",
+      "what_we_would_run": "Nothing new. This route earns its place by being the mechanistic mirror of Fgf10 and by showing that 'initiates then apoptoses' is a THIRD phenotypic class distinct from both amelia and truncation - a distinction the existing dossier does not draw. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Is the limb defect in Fgfr2-IIIb nulls the same as the Fgf10 null, or milder because other FGFR2b ligands partially compensate? The abstracts do not settle it and we did not read the bodies."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-wnt3-bcatenin-ectoderm",
@@ -346,10 +360,11 @@
       "lethality_risk": "High for germline Wnt3 (early embryonic lethal in mouse). The ectoderm-restricted beta-catenin conditional avoids that.",
       "specificity": "beta-catenin is the least specific molecule in this entire design space - it is the canonical WNT effector in essentially every tissue. Restriction comes entirely from the Cre driver, not from the gene.",
       "difficulty": "medium. Floxed beta-catenin and limb-ectoderm Cre drivers are standard.",
-      "what_we_would_run": "Nothing new computationally. The value of this route on the page is that it names the human condition the judge is most likely to have in mind if their work is human genetics, and that it separates AER ESTABLISHMENT from AER MAINTENANCE as two different targets.",
+      "what_we_would_run": "Nothing new computationally. The value of this route on the page is that it names the human condition the judge is most likely to have in mind if their work is human genetics, and that it separates AER ESTABLISHMENT from AER MAINTENANCE as two different targets. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "The human-versus-mouse viability discordance for WNT3 is flagged by Niemann et al. themselves and is a second instance of the Ushiki lesson: the same gene, two species, different tolerability."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-rspo2",
@@ -372,11 +387,12 @@
       "lethality_risk": "High in the full loss-of-function state - lung aplasia accompanies the human amelia, the same coupling as Fgf10. A graded allele from the human series is the way round it, which is what makes the allelic series valuable.",
       "specificity": "Whole-organism WNT modulation; not limb-restricted.",
       "difficulty": "medium-high. Point alleles from the human series are straightforward to knock in; interpreting them needs the lung phenotype controlled.",
-      "what_we_would_run": "If a sequence/protein model is going to be tested on 'does this variant abolish limb development', the RSPO2 allelic series is a better-posed coding benchmark than anything in the ZRS literature, because severity is graded, the biochemistry is measured per allele, and the phenotype is recorded per family.",
+      "what_we_would_run": "If a sequence/protein model is going to be tested on 'does this variant abolish limb development', the RSPO2 allelic series is a better-posed coding benchmark than anything in the ZRS literature, because severity is graded, the biochemistry is measured per allele, and the phenotype is recorded per family. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "What is the mouse Rspo2 limb phenotype, and does it match the human? We did not retrieve it; stating it would be fabrication.",
         "This gene is absent from the existing dossier and is arguably a stronger candidate than WNT3 for 'the gene for limblessness' in human genetics."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-tbx5-forelimb",
@@ -406,10 +422,11 @@
       "lethality_risk": "Medium. TBX5 is a cardiac transcription factor and the germline null has heart defects; a limb-restricted conditional removes that problem. This is the whole argument for conditional over germline.",
       "specificity": "Forelimb only - the single most specific route in the gene scale. Hindlimbs untouched.",
       "difficulty": "low-medium. Floxed Tbx5 and limb Cre drivers are standard reagents.",
-      "what_we_would_run": "Our pattern simulators can model an initiation failure (no FGF10 source) versus a maintenance failure (source decays) and ask whether the two give distinguishable bud-size trajectories. That is a model-internal claim about our own simulator, not a claim about mice, and we would label it as such.",
+      "what_we_would_run": "Our pattern simulators can model an initiation failure (no FGF10 source) versus a maintenance failure (source decays) and ask whether the two give distinguishable bud-size trajectories. That is a model-internal claim about our own simulator, not a claim about mice, and we would label it as such. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "A forelimb-only animal still has hindlimbs and so can locomote, thermoregulate and reach food - which is why this route, not tetra-amelia, is the one with a plausible welfare case. Whether a mouse without forelimbs can groom adequately is a question for a veterinary assessment, not for us."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-tbx4-pitx1-hindlimb",
@@ -453,10 +470,11 @@
       "lethality_risk": "The germline Tbx4 null is lethal at E10.5 for an allantoic reason entirely unrelated to limbs - a textbook case of a non-limb phenotype masquerading as a limb result. The conditional allele is what makes the route usable at all.",
       "specificity": "Hindlimb only, if conditional. The germline allele also hits the allantois; Pitx1 also hits the mandible.",
       "difficulty": "medium. Conditional allele and stage-specific Cre both published.",
-      "what_we_would_run": "Encode the Tbx4 timing result as a test case for our coupling layer: the SAME genetic lesion produces three different phenotypes depending only on when it is applied. Any claim of the form 'gene X -> phenotype Y' that carries no time index should be refused by the layer, and this is the cleanest published example to anchor that rule on.",
+      "what_we_would_run": "Encode the Tbx4 timing result as a test case for our coupling layer: the SAME genetic lesion produces three different phenotypes depending only on when it is applied. Any claim of the form 'gene X -> phenotype Y' that carries no time index should be refused by the layer, and this is the cleanest published example to anchor that rule on. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Is there an equivalently narrow window for Tbx5 in the forelimb? Rallis et al. report two requirements but we did not find a stage-resolved series as fine as Naiche's."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-meis1-meis2-lpm",
@@ -486,10 +504,11 @@
       "lethality_risk": "Medium-high; Meis factors are broad organogenesis regulators and the LPM gives rise to much more than limbs. We did not retrieve viability data and will not assert it.",
       "specificity": "LPM-restricted rather than limb-restricted - a larger territory than Prx1-Cre.",
       "difficulty": "medium-high: a two-gene conditional cross with four floxed alleles plus a driver.",
-      "what_we_would_run": "This is the best published example of DOSE producing a qualitatively different phenotype (agenesis versus posterior-element loss), which is the shape of claim our Lean threshold-interval family is written for. Stating that as a law about a model - monotone activity to ordered element count - and then mutating the law to check Lean rejects the mutants is a real, bounded job, and it proves consistency of our reasoning, not anything about mice.",
+      "what_we_would_run": "This is the best published example of DOSE producing a qualitatively different phenotype (agenesis versus posterior-element loss), which is the shape of claim our Lean threshold-interval family is written for. Stating that as a law about a model - monotone activity to ordered element count - and then mutating the law to check Lean rejects the mutants is a real, bounded job, and it proves consistency of our reasoning, not anything about mice. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Does the Meis dose series have a measured activity readout, or only allele count? A threshold law needs a continuous variable and allele count is a proxy."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-aer-fgf4-fgf8",
@@ -526,10 +545,11 @@
       "lethality_risk": "Low-medium when restricted to limb ectoderm; Fgf8 has major non-limb roles so the driver carries the risk, not the gene.",
       "specificity": "Both limbs; element-selective at intermediate doses, which makes it a partial-loss route rather than an all-or-nothing one.",
       "difficulty": "medium-high: two floxed genes plus an AER-specific driver, and the stage of inactivation has to be controlled because it sets severity.",
-      "what_we_would_run": "This is the one route whose mechanism is explicitly QUANTITATIVE - cell number and survival - and so the one our reaction-diffusion and growth simulators can actually represent. We can simulate bud size as a function of FGF source strength and ask at what point the pattern-forming domain falls below the size that supports digit condensations. That is a simulated result and would be labelled as such; we have no calibration that would let us attach a skeletal count to it.",
+      "what_we_would_run": "This is the one route whose mechanism is explicitly QUANTITATIVE - cell number and survival - and so the one our reaction-diffusion and growth simulators can actually represent. We can simulate bud size as a function of FGF source strength and ask at what point the pattern-forming domain falls below the size that supports digit condensations. That is a simulated result and would be labelled as such; we have no calibration that would let us attach a skeletal count to it.\n\nSTUDY: `shh-grem1-fgf-loop` bears on this route: AER-FGF output is the loop's drive term, and Lu et al.'s result that FGF4 fully substitutes for FGF8 says the ODE should carry total FGF dose, not per-gene identity.",
       "open_questions": [
         "Lu et al. show FGF4 can replace FGF8 entirely, so AER-FGF identity does not matter but AER-FGF LEVEL does. Any model that scores per-gene rather than per-total-dose will get this wrong."
-      ]
+      ],
+      "study": "shh-grem1-fgf-loop"
     },
     {
       "id": "gene-grem1",
@@ -552,10 +572,11 @@
       "lethality_risk": "HIGH and certain: neonatal lethal from renal agenesis. Another case where the limb phenotype is never seen in a living adult.",
       "specificity": "Poor; the same BMP-antagonism requirement operates in kidney and lung.",
       "difficulty": "low to make, not viable.",
-      "what_we_would_run": "Grem1 is the inhibitor arm of the self-terminating loop (see tissue-shh-grem1-fgf-loop), so it is the parameter our activator-inhibitor simulators would move first. We can run it; we cannot calibrate it, and we would say so.",
+      "what_we_would_run": "Grem1 is the inhibitor arm of the self-terminating loop (see tissue-shh-grem1-fgf-loop), so it is the parameter our activator-inhibitor simulators would move first. We can run it; we cannot calibrate it, and we would say so.\n\nSTUDY: `shh-grem1-fgf-loop` bears on this route: GREM1 is the loop's inhibitor arm and therefore the first parameter the ODE would move.",
       "open_questions": [
         "A limb-mesenchyme-restricted conditional should separate the limb from the kidney phenotype; our search did not retrieve one and we will not assume it exists."
-      ]
+      ],
+      "study": "shh-grem1-fgf-loop"
     },
     {
       "id": "gene-shh-gli3",
@@ -599,10 +620,11 @@
       "lethality_risk": "Very high and for reasons unrelated to limbs - cyclopia and axial skeleton loss. Nobody should propose Shh-null as a route to a limbless mouse, and the page should say so explicitly because it is the gene everyone names first.",
       "specificity": "Terrible. This is the least limb-specific route in the design space, which is exactly why the ZRS exists as an alternative: the enhancer separates the limb function from all the others.",
       "difficulty": "low to make, useless as an animal.",
-      "what_we_would_run": "Use the Shh/ZRS contrast as the page's central argument: the SAME gene, approached through its coding sequence or through one of its enhancers, gives a dead cyclopic embryo or a viable limb-reduced mouse. That contrast is the strongest single thing we can show a judge about why cis-regulation is the interesting layer.",
+      "what_we_would_run": "Use the Shh/ZRS contrast as the page's central argument: the SAME gene, approached through its coding sequence or through one of its enhancers, gives a dead cyclopic embryo or a viable limb-reduced mouse. That contrast is the strongest single thing we can show a judge about why cis-regulation is the interesting layer. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "The te Welscher result means ZRS-null truncation is a failure to RELIEVE GLI3 repression rather than a failure to deliver a positive signal. Any model of 'enhancer activity to skeletal element count' that treats SHH as an instructive morphogen has the sign of the mechanism wrong, even if it fits the data."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-p63",
@@ -632,10 +654,11 @@
       "lethality_risk": "High in practice. Born alive, but with no stratified skin and no epidermal appendages a pup cannot maintain barrier function; this is a severe phenotype in the welfare sense even though the embryo reaches term. The two papers report birth, not survival.",
       "specificity": "Poor as a germline allele - it is an ectodermal phenotype, of which the limb is one part. A limb-ectoderm conditional would in principle fix this and we found no such study.",
       "difficulty": "low as germline; medium for the conditional that would actually be worth making.",
-      "what_we_would_run": "Nothing computational. p63 earns its place because it is a THIRD mechanism class the existing dossier omits: not induction failure (Fgf10, Wnt3), not signalling-centre output failure (ZRS, Fgf4/8), but failure of the signalling centre's epithelium to differentiate at all.",
+      "what_we_would_run": "Nothing computational. p63 earns its place because it is a THIRD mechanism class the existing dossier omits: not induction failure (Fgf10, Wnt3), not signalling-centre output failure (ZRS, Fgf4/8), but failure of the signalling centre's epithelium to differentiate at all. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Why is the phenotype 'absent OR truncated' rather than uniform? Variable expressivity in an amelia-class allele is itself informative and we did not read the bodies to find out."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "gene-hand2",
@@ -672,10 +695,11 @@
       "lethality_risk": "High for germline - HAND2 is required in heart and branchial arches. Limb-restricted conditional is mandatory.",
       "specificity": "Limb mesenchyme if conditional; posterior-biased within the limb.",
       "difficulty": "medium.",
-      "what_we_would_run": "Hand2 is the node that links the mouse genetics to the cetacean natural experiment, and the page should draw that line explicitly: whales lost hindlimbs with Hand2 absent from the bud and Shh never established, which is upstream of the ZRS lesion snakes have. Two independent natural limb losses, two different layers of the same network.",
+      "what_we_would_run": "Hand2 is the node that links the mouse genetics to the cetacean natural experiment, and the page should draw that line explicitly: whales lost hindlimbs with Hand2 absent from the bud and Shh never established, which is upstream of the ZRS lesion snakes have. Two independent natural limb losses, two different layers of the same network. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Is the dolphin Hand2 absence a cause or a consequence? Thewissen et al. report association, and we are reading an abstract. We would not state causation."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "cell-aer-surgical-removal",
@@ -705,10 +729,11 @@
       "lethality_risk": "Low in chick; the manipulation is local.",
       "specificity": "One limb, one bud, at one time - the most spatially and temporally precise intervention available anywhere in this design space.",
       "difficulty": "low in chick (a classical embryology technique), impractical in mouse in utero.",
-      "what_we_would_run": "This is the physical ground truth for the timing axis. Our growth simulators can reproduce 'stop distal outgrowth at time t and see what is already specified', and the chick excision series is the only dataset that could calibrate such a model - except that we cannot read Summerbell's numbers from the PubMed record, so the calibration is not available to us today.",
+      "what_we_would_run": "This is the physical ground truth for the timing axis. Our growth simulators can reproduce 'stop distal outgrowth at time t and see what is already specified', and the chick excision series is the only dataset that could calibrate such a model - except that we cannot read Summerbell's numbers from the PubMed record, so the calibration is not available to us today. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "We could not access the numerical series. Any claim we make about the quantitative relationship between excision stage and truncation level would be unsupported by what we actually read."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "cell-aer-genetic-ablation",
@@ -738,10 +763,11 @@
       "lethality_risk": "Depends entirely on promoter leakiness; an attenuated toxin is used precisely to keep ablation local.",
       "specificity": "As specific as the promoter. An AER-only driver would be the most limb-specific cellular intervention possible.",
       "difficulty": "medium-high, and the honest difficulty is finding a driver that is on in AER precursors and nowhere that matters.",
-      "what_we_would_run": "Nothing. This route is on the page as a clearly-labelled PROPOSAL, to show the shape of the design space rather than to claim a result. Presenting it as established would be the exact failure mode the page exists to avoid.",
+      "what_we_would_run": "Nothing. This route is on the page as a clearly-labelled PROPOSAL, to show the shape of the design space rather than to claim a result. Presenting it as established would be the exact failure mode the page exists to avoid. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Does an AER-specific driver with the right onset exist? Our search covered 'diphtheria toxin ablation apical ectodermal ridge genetic mouse' on PubMed and returned four records, none of them an AER ablation. That is the scope of our negative, not a statement about the literature."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "cell-zpa-shh-timing",
@@ -771,10 +797,11 @@
       "lethality_risk": "Low when induction is late enough to miss the early Shh requirements in notochord and neural tube - which is exactly the advantage of the inducible allele over the germline null (compare gene-shh-gli3, which is catastrophic).",
       "specificity": "Autopod, both limbs, graded.",
       "difficulty": "low-medium; the alleles are published and tamoxifen dosing is routine.",
-      "what_we_would_run": "This is the best-posed quantitative dataset in the whole design space for our Lean threshold work: an ordered stimulus (induction time) mapping to an ordered, countable outcome (digit number). Stating 'given a monotone map from signal duration to element count, an ordered duration series implies an ordered count series', then mutating the monotonicity and the threshold and showing Lean rejects both mutants, is a bounded job. It proves our reasoning is consistent; it proves nothing about mice, and the page must say that in the same sentence.",
+      "what_we_would_run": "This is the best-posed quantitative dataset in the whole design space for our Lean threshold work: an ordered stimulus (induction time) mapping to an ordered, countable outcome (digit number). Stating 'given a monotone map from signal duration to element count, an ordered duration series implies an ordered count series', then mutating the monotonicity and the threshold and showing Lean rejects both mutants, is a bounded job. It proves our reasoning is consistent; it proves nothing about mice, and the page must say that in the same sentence.\n\nSTUDY: `shh-grem1-fgf-loop`, the ODE of the maintenance loop, bears on this route: Scherz et al.'s loop termination by expansion of former-ZPA descendants is a termination mechanism the ODE would have to represent, and a model with no spatial term cannot.",
       "open_questions": [
         "Scherz et al. make loop termination a consequence of CELL LINEAGE geometry rather than of a transcriptional timer. A model with no spatial representation of former-ZPA descendants cannot express that mechanism at all."
-      ]
+      ],
+      "study": "shh-grem1-fgf-loop"
     },
     {
       "id": "cell-fgf10-ligand-stability",
@@ -797,10 +824,11 @@
       "lethality_risk": "Unknown for a destabilised germline allele. If it behaves as a graded Fgf10 hypomorph the lung phenotype scales with it, so the lethality that sinks the Fgf10 null is likely to scale too.",
       "specificity": "Poor at the gene level (FGF10 serves many organs) but unusual at the BIOPHYSICAL level: nothing else on this page proposes to tune a phenotype by changing a protein's folding stability rather than its sequence-level function.",
       "difficulty": "high, and genuinely novel - we found no published destabilised-FGF10 animal.",
-      "what_we_would_run": "This is the one route where a protein-structure model, rather than a genome model, is the right tool: predict melting temperature for designed FGF10 variants and check against the measured STAB series, which gives a held-out numerical benchmark with real values. We have not run it and have no structure pipeline today.",
+      "what_we_would_run": "This is the one route where a protein-structure model, rather than a genome model, is the right tool: predict melting temperature for designed FGF10 variants and check against the measured STAB series, which gives a held-out numerical benchmark with real values. We have not run it and have no structure pipeline today. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Does a destabilised FGF10 produce a graded limb phenotype, or does the limb buffer ligand half-life entirely? Unknown; the published direction is the stabilising one."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "tissue-shh-grem1-fgf-loop",
@@ -837,14 +865,15 @@
       "lethality_risk": "Low if limb-restricted.",
       "specificity": "Both limbs; the loop is limb-bud-specific in its Shh/Grem1 arm.",
       "difficulty": "high. The circuit is the thing everyone understands least well in quantitative terms, which is why 'trigger it early' is a sentence and not a protocol.",
-      "what_we_would_run": "This is the one route our existing reaction-diffusion and pattern simulators represent natively: an activator-inhibitor system with delayed negative feedback. We can run it and show how termination time moves with the inhibitory-loop gain. We CANNOT calibrate it - we have no registered calibration anywhere in our system - so the output is a simulated trajectory labelled 'simulated, not observed', and the bridge from it to a skeletal element count is exactly the kind our coupling layer refuses.",
+      "what_we_would_run": "This is the one route our existing reaction-diffusion and pattern simulators represent natively: an activator-inhibitor system with delayed negative feedback. We can run it and show how termination time moves with the inhibitory-loop gain. We CANNOT calibrate it - we have no registered calibration anywhere in our system - so the output is a simulated trajectory labelled 'simulated, not observed', and the bridge from it to a skeletal element count is exactly the kind our coupling layer refuses.\n\nSTUDY: `shh-grem1-fgf-loop` IS this route: the ODE is the model of exactly this circuit, and the route is the biology it claims to represent.",
       "open_questions": [
         "Mouse and chick terminate the loop in a different SEQUENCE, which is what led Verheyden & Sun to the inhibitory loop in the first place. A single model fitted to one species is not transferable to the other without saying so."
-      ]
+      ],
+      "study": "shh-grem1-fgf-loop"
     },
     {
       "id": "tissue-bmp-sox9-wnt-turing",
-      "scale": "tissue",
+      "scale": "pattern",
       "title": "Detune the digit-patterning Turing network",
       "mechanism": "Digits emerge from undifferentiated mesenchyme through a self-organising periodic mechanism. Combined experiment and modelling implicate a Turing network implemented by BMP, SOX9 and WNT, modulated by morphogen gradients; a two-dimensional simulation of this network reproduces wild-type and perturbed Sox9 expression patterns. Changing the network's parameters changes the periodic pattern, and in principle a sufficiently detuned network produces no periodic skeletal pattern at all.",
       "intervention": "Pharmacological or genetic modulation of BMP and WNT in the autopod field, guided by the published model.",
@@ -863,14 +892,15 @@
       "lethality_risk": "BMP and WNT are systemic; any whole-animal manipulation is dangerous and any explant manipulation is not an animal.",
       "specificity": "Autopod pattern only.",
       "difficulty": "medium in explant, high in vivo.",
-      "what_we_would_run": "We have 12 tissue-scale and 4 developmental-scale reaction-diffusion runs recorded, each with a manifest, numerical checks, input hashes and a verified figure, each labelled simulated-not-observed. Re-instantiating that machinery on the published BMP-SOX9-WNT network is the single most direct reuse of what we already have. It would produce a simulated digit pattern, not a prediction about a mouse.",
+      "what_we_would_run": "We have 12 tissue-scale and 4 developmental-scale reaction-diffusion runs recorded, each with a manifest, numerical checks, input hashes and a verified figure, each labelled simulated-not-observed. Re-instantiating that machinery on the published BMP-SOX9-WNT network is the single most direct reuse of what we already have. It would produce a simulated digit pattern, not a prediction about a mouse.\n\nSTUDY: `digit-turing`, the BMP-SOX9-WNT reaction-diffusion model, IS this route: the published network and the model on this page are the same object.",
       "open_questions": [
         "A Turing model explains how digits are SPACED. Nothing in it explains why a limb bud exists. Conflating the two is the most likely way a cross-scale system gets this subject wrong, and the page should say so."
-      ]
+      ],
+      "study": "digit-turing"
     },
     {
       "id": "tissue-hox-turing-wavelength",
-      "scale": "tissue",
+      "scale": "pattern",
       "title": "Use Hox dose to set the wavelength of the digit pattern",
       "mechanism": "Progressive removal of Hoxa13 and Hoxd11-Hoxd13 from a Gli3-null background produces progressively more severe polydactyly with thinner, more densely packed digits. Read through a Turing framework, distal Hox dose modulates the period, or wavelength, of the digit/non-digit pattern. The resemblance of the extreme phenotype to fish fin endoskeleton suggests the pentadactyl state is a modified ancestral version of the same mechanism.",
       "intervention": "Graded removal of distal Hox genes, on a Gli3-null background, as published.",
@@ -889,10 +919,11 @@
       "lethality_risk": "Not retrieved; the compound mutants are described as analysed, not as viable adults, and we will not assert either.",
       "specificity": "Autopod.",
       "difficulty": "high - this is a large multi-allele breeding programme.",
-      "what_we_would_run": "Sheth et al. give an ordered dose mapped to an ordered wavelength, which is a second, independent instance of the same claim shape as the ZRS series and the Shh timing series. Three independent ordered-dose datasets in one subject is unusual, and it is the honest reason to call limb development a good benchmark domain - not because we can predict it, but because it is unusually well ordered.",
+      "what_we_would_run": "Sheth et al. give an ordered dose mapped to an ordered wavelength, which is a second, independent instance of the same claim shape as the ZRS series and the Shh timing series. Three independent ordered-dose datasets in one subject is unusual, and it is the honest reason to call limb development a good benchmark domain - not because we can predict it, but because it is unusually well ordered.\n\nSTUDY: `digit-turing` bears on this route: distal Hox dose is the published wavelength parameter of that model, and Sheth et al.'s allelic series is the only measured dose-to-wavelength data the model could be checked against.",
       "open_questions": [
         "Does wavelength modulation ever reach a regime with ZERO digits, or does the pattern simply get finer until the field runs out? The published direction goes the other way and we have no evidence for the zero limit."
-      ]
+      ],
+      "study": "digit-turing"
     },
     {
       "id": "timing-creer-stage-selected",
@@ -922,10 +953,11 @@
       "lethality_risk": "This is the mechanism that REMOVES lethality risk, by letting the gene do its early non-limb jobs before being deleted. It is the reason Shh can be studied in the limb at all without cyclopia.",
       "specificity": "Temporal; spatial specificity comes from the driver, not from the inducibility.",
       "difficulty": "low-medium. Standard, well-characterised, widely available reagents.",
-      "what_we_would_run": "Encode in the coupling layer that a genotype-to-phenotype claim with no time index is not composable. Naiche's three-outcomes-from-one-lesion is the anchoring example and it is a one-record change.",
+      "what_we_would_run": "Encode in the coupling layer that a genotype-to-phenotype claim with no time index is not composable. Naiche's three-outcomes-from-one-lesion is the anchoring example and it is a one-record change. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Tamoxifen itself affects pregnancy and embryonic development; the published designs handle this, but any new stage series needs vehicle controls."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "timing-prx1-cre-limb-restricted",
@@ -948,10 +980,11 @@
       "lethality_risk": "This is the single most important lethality-reducing reagent in the design space, and the reason a viable limb-reduced mouse is reachable by routes whose germline nulls are not.",
       "specificity": "Limb MESENCHYME only. It does not reach the AER, so ectoderm-acting targets (Wnt3, beta-catenin, p63, AER-FGFs) need a different driver. The craniofacial subset is a real caveat.",
       "difficulty": "low. One of the most widely used drivers in skeletal biology.",
-      "what_we_would_run": "Nothing computational. This route is the page's answer to 'how do you get a limbless mouse that is alive', and it is a reagent, not an idea.",
+      "what_we_would_run": "Nothing computational. This route is the page's answer to 'how do you get a limbless mouse that is alive', and it is a reagent, not an idea. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "The craniofacial mesenchyme domain means any Prx1-Cre phenotype needs skull assessment before being called limb-specific."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "timing-degron-acute-depletion",
@@ -981,11 +1014,12 @@
       "lethality_risk": "Low by design: the protein is present for every requirement outside the chosen window.",
       "specificity": "Temporal and protein-level; NOT spatial. The ligand reaches the whole embryo, so a degron depletes the target everywhere at once. Pairing it with a tissue-restricted system is not solved.",
       "difficulty": "high but decreasing. The honest caveats are in the second paper: tags sometimes cause phenotypes on their own, efficiency varies by protein and route, and one of the two tagging systems showed no in vivo activity at all.",
-      "what_we_would_run": "Nothing. This is a clearly-labelled proposal and belongs on the page as the frontier method rather than as a result. It is also the most likely answer if a modern reviewer asks 'why would you make a germline mutant at all'.",
+      "what_we_would_run": "Nothing. This is a clearly-labelled proposal and belongs on the page as the frontier method rather than as a result. It is also the most likely answer if a modern reviewer asks 'why would you make a germline mutant at all'. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Does transient depletion of a limb signal give a REVERSIBLE limb defect, a permanent one, or none? Unknown, and it is the experiment that would most change how this subject is taught.",
         "Degron depletion is systemic. Combining acute temporal control with limb-restricted delivery is an open engineering problem."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "timing-prx1-creer-fgf10",
@@ -1022,11 +1056,12 @@
       "lethality_risk": "LOW, and this is the entire point. The germline Fgf10 null is perinatally lethal from lung agenesis; a Prx1-restricted deletion should not touch the lung. We say 'should' because we found no published viability data for this exact cross.",
       "specificity": "Limb mesenchyme, both pairs, with a craniofacial caveat from the driver. A single-pair version (Tbx5 for forelimb, Tbx4 for hindlimb) is substantially more likely to give a viable adult.",
       "difficulty": "medium. Every component is an existing, published reagent; the work is breeding, dosing and skeletal analysis, not invention.",
-      "what_we_would_run": "Before any animal: score the predicted severity ordering across induction times with our pattern simulators, pre-register it, and state explicitly that the simulation is not calibrated and the prediction is a hypothesis. We have no animal facility, no IACUC protocol and no wet-lab arm; the proposal is a design, and we would present it as one.",
+      "what_we_would_run": "Before any animal: score the predicted severity ordering across induction times with our pattern simulators, pre-register it, and state explicitly that the simulation is not calibrated and the prediction is a hypothesis. We have no animal facility, no IACUC protocol and no wet-lab arm; the proposal is a design, and we would present it as one. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Does a Prx1-CreER;Fgf10-flox animal survive to adulthood? Unknown to us.",
         "Is mesenchymal Fgf10 deletion after E10.5 sufficient to remove a limb, or has the AER already become self-sustaining? The Barrow beta-catenin result shows an existing AER CAN be made to disappear, but that was an ectodermal manipulation, not a mesenchymal one."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "org-snakes",
@@ -1063,10 +1098,11 @@
       "lethality_risk": "Not applicable.",
       "specificity": "Whole-lineage; forelimb loss in snakes is attributed to expanded axial Hox domains, a different mechanism from the hindlimb ZRS lesion. Two mechanisms in one animal.",
       "difficulty": "Not applicable; this is comparative evidence.",
-      "what_we_would_run": "The ZRS ortholog series across 16 species IS the benchmark dataset, and it is the one piece of this subject that maps directly onto what a genome language model emits a score for. We have not scored it.",
+      "what_we_would_run": "The ZRS ortholog series across 16 species IS the benchmark dataset, and it is the one piece of this subject that maps directly onto what a genome language model emits a score for. We have not scored it.\n\nSTUDY: `zrs-conservation` bears on this route: the 16-species ZRS reporter panel and the four ortholog knock-ins are what turn 'snakes lost their limbs' into a graded, scoreable dataset.",
       "open_questions": [
         "Forelimb loss (Hox-mediated) and hindlimb reduction (ZRS-mediated) are different mechanisms in the same animal. Any single-locus account of 'the gene for snake limblessness' is incomplete by the field's own statement."
-      ]
+      ],
+      "study": "zrs-conservation"
     },
     {
       "id": "org-squamate-shh-duration",
@@ -1110,11 +1146,12 @@
       "lethality_risk": "Not applicable.",
       "specificity": "Clade-specific, and that is the finding: there is no single squamate mechanism of limb reduction.",
       "difficulty": "Not applicable.",
-      "what_we_would_run": "Nothing. This route is on the page to refute the framing that there is 'a' mechanism for limb loss. Four independent squamate radiations reduce limbs by at least partly different routes, and that is the empirical case for presenting a DESIGN SPACE rather than an answer.",
+      "what_we_would_run": "Nothing. This route is on the page to refute the framing that there is 'a' mechanism for limb loss. Four independent squamate radiations reduce limbs by at least partly different routes, and that is the empirical case for presenting a DESIGN SPACE rather than an answer. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "We found NO molecular (sequence or expression) mechanism published for Lerista limb reduction - the most-cited example of repeated limb loss. Our searches covered 'Lerista limb reduction skink evolution' on PubMed and returned four records, all taxonomic, morphometric or macroevolutionary. That is the scope of our negative; we did not search non-English sources, theses, or preprint servers.",
         "The Camaiti girdle result raises a question we cannot answer: is the converged clavicle shape a locomotor adaptation or a developmental consequence of forelimb loss? The authors give both as possibilities."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "org-cetacean-hindlimb",
@@ -1151,11 +1188,12 @@
       "lethality_risk": "Not applicable.",
       "specificity": "Hindlimb only - forelimbs became flippers with webbed digits and hyperphalangy, a gain-of-structure change in the same animal.",
       "difficulty": "Not applicable.",
-      "what_we_would_run": "Nothing, but this is the strongest comparative argument for the MAINTENANCE class of routes: the one natural limb loss where we know the AER formed and then failed is also the one where loss is complete. If you want a limbless animal rather than a truncated one, removing maintenance may beat blocking induction.",
+      "what_we_would_run": "Nothing, but this is the strongest comparative argument for the MAINTENANCE class of routes: the one natural limb loss where we know the AER formed and then failed is also the one where loss is complete. If you want a limbless animal rather than a truncated one, removing maintenance may beat blocking induction.\n\nSTUDY: `zrs-conservation` bears on this route only partially: dolphin is one of the 16 species in the ZRS reporter panel, where its ortholog was active in the ZPA but with activity expanded anteriorly. No cetacean ZRS was taken to knock-in, so there is no phenotype rung for it.",
       "open_questions": [
         "Thewissen et al. report an ASSOCIATION between absent HAND2 and failure to establish a ZPA. We read the abstract; we would not restate it as causation.",
         "The 41 Ma and 34 Ma dates are the authors' integration of fossil and developmental data, i.e. their inference, not a measurement."
-      ]
+      ],
+      "study": "zrs-conservation"
     },
     {
       "id": "org-stickleback-pelvic",
@@ -1178,10 +1216,11 @@
       "lethality_risk": "None - these are wild, reproducing fish.",
       "specificity": "Pelvis only.",
       "difficulty": "Not applicable.",
-      "what_we_would_run": "Two independent natural experiments (stickleback Pitx1, snake ZRS) converge on the same engineering principle: to remove an appendage without killing the animal, delete a tissue-specific enhancer, not the gene. That principle is the page's single transferable conclusion, and it is supported by evidence from two phyla rather than by our opinion.",
+      "what_we_would_run": "Two independent natural experiments (stickleback Pitx1, snake ZRS) converge on the same engineering principle: to remove an appendage without killing the animal, delete a tissue-specific enhancer, not the gene. That principle is the page's single transferable conclusion, and it is supported by evidence from two phyla rather than by our opinion. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Does the equivalent mouse Pitx1 hindlimb enhancer exist and is it single or redundant? See mol-pitx1-hindlimb-enhancer; unknown to us."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "vitro-budoids",
@@ -1211,11 +1250,12 @@
       "lethality_risk": "None. No animal.",
       "specificity": "Limb-bud-like cell types specifically; no systemic physiology at all, which is both the advantage and the limit.",
       "difficulty": "medium. A published step-by-step protocol exists, the reagents are small molecules, and the scale is >1,000 budoids per differentiation.",
-      "what_we_would_run": "This is the route a modern reviewer asks for first and it is the only one on this page we could actually execute without an animal facility. It is also where our cross-scale coupling layer has something concrete to refuse: 'AER-like cell proportion in a budoid' to 'skeletal element present in a mouse' is a scale change, a context change and an organism-to-culture change with no registered calibration. We have ZERO registered calibrations today, so that bridge is refused by construction, and saying so is a result about our system rather than about limbs.",
+      "what_we_would_run": "This is the route a modern reviewer asks for first and it is the only one on this page we could actually execute without an animal facility. It is also where our cross-scale coupling layer has something concrete to refuse: 'AER-like cell proportion in a budoid' to 'skeletal element present in a mouse' is a scale change, a context change and an organism-to-culture change with no registered calibration. We have ZERO registered calibrations today, so that bridge is refused by construction, and saying so is a result about our system rather than about limbs. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Do budoids form a real AER with the stratified epithelium p63 maintains, or AER-LIKE cells by marker expression? The abstract says 'AER properties'; we read an abstract, and the distinction decides what a p63 experiment in budoids would mean.",
         "Budoids break symmetry via chondrogenesis. Whether that is the same symmetry breaking as proximodistal limb outgrowth is not established in what we read."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "vitro-human-ipsc-limb-bud-mesenchyme",
@@ -1252,10 +1292,11 @@
       "lethality_risk": "None.",
       "specificity": "Limb-bud mesenchyme; MESENCHYME ONLY - there is no ectoderm, no AER, no signalling centre. Every AER-dependent route on this page is out of scope for this system.",
       "difficulty": "medium; defined, xeno-free and published as a protocol.",
-      "what_we_would_run": "If a judge asks what we could test tomorrow with no animal, the honest answer is a human mesenchymal readout of a limb genotype. We have no cell-culture arm either, so this too is a proposal - but it is a proposal with a published protocol attached, which is a different kind of claim from a sentence.",
+      "what_we_would_run": "If a judge asks what we could test tomorrow with no animal, the honest answer is a human mesenchymal readout of a limb genotype. We have no cell-culture arm either, so this too is a proposal - but it is a proposal with a published protocol attached, which is a different kind of claim from a sentence. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "A mesenchyme-only system cannot test the AER-centred half of the design space. Pairing ExpLBM cells with an AER-like population (as budoids do in mouse) has not been published for human that we found."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "vitro-limb-bud-explant",
@@ -1292,10 +1333,11 @@
       "lethality_risk": "Animals are still used to source the buds, so this is a REFINEMENT and a partial reduction, not a replacement. Saying otherwise would overstate it.",
       "specificity": "One bud, one stage, one manipulation.",
       "difficulty": "low-medium; a standard embryology technique with a published methods chapter.",
-      "what_we_would_run": "Nothing today. This matters for the welfare section: it is the route that takes a question out of a born animal and into a dissected embryo, which is the single most effective refinement available for this subject.",
+      "what_we_would_run": "Nothing today. This matters for the welfare section: it is the route that takes a question out of a born animal and into a dissected embryo, which is the single most effective refinement available for this subject. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Underhill and Arostegui state plainly that no organoid system effectively models limb-development complexity. That was written in 2021; budoids appeared in 2025. The page should present that as a moving front, not a settled verdict."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "vitro-recombinant-limb",
@@ -1318,10 +1360,11 @@
       "lethality_risk": "Uses chick host embryos and a donor ectoderm, so animals are still involved.",
       "specificity": "Skeletal elements from a defined cell mixture - the one system that separates 'which cells' from 'which position in the body'.",
       "difficulty": "high; microsurgical, low throughput, and requires chick embryology.",
-      "what_we_would_run": "Nothing. It is in the design space because it answers a question none of the others can: is limb loss a property of the CELLS or of the SIGNALS they sit in? Putting ZRS-null mesenchyme into a wild-type ectodermal jacket is the experiment that separates those, and as far as our search went it has not been done.",
+      "what_we_would_run": "Nothing. It is in the design space because it answers a question none of the others can: is limb loss a property of the CELLS or of the SIGNALS they sit in? Putting ZRS-null mesenchyme into a wild-type ectodermal jacket is the experiment that separates those, and as far as our search went it has not been done. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Has anyone run a recombinant limb with mesenchyme from a defined limb-loss genotype? We did not find one; our search was 'limb bud organoid' and 'micromass culture limb bud mesenchyme chondrogenesis screening' on PubMed only."
-      ]
+      ],
+      "study": null
     },
     {
       "id": "vitro-gastruloid-trunk",
@@ -1351,10 +1394,11 @@
       "lethality_risk": "None.",
       "specificity": "Trunk axial structures. No limb.",
       "difficulty": "low-medium to make TLSs; unsolved to add a limb field.",
-      "what_we_would_run": "Nothing. Listing this honestly is the point: the obvious question 'could you just do it in a dish at embryo scale' has the answer 'not yet, because the dish does not make limbs', and the page is stronger for saying so than for implying otherwise.",
+      "what_we_would_run": "Nothing. Listing this honestly is the point: the obvious question 'could you just do it in a dish at embryo scale' has the answer 'not yet, because the dish does not make limbs', and the page is stronger for saying so than for implying otherwise. No study on this page bears on this route; naming one would stretch the link past what it supports.",
       "open_questions": [
         "Has anyone reported lateral plate mesoderm or a limb field in a gastruloid or TLS? Our search on PubMed ('trunk-like structure gastruloid somite organoid mouse embryonic stem cells') returned ONE record and we followed it plus the 2020 Science paper. We did not search bioRxiv, which is where this would appear first. That is the scope of this negative."
-      ]
+      ],
+      "study": null
     }
   ],
   "recommendation": {

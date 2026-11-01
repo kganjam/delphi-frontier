@@ -34,10 +34,11 @@
     "lethality_risk": "Not applicable.",
     "specificity": "Whole-lineage; forelimb loss in snakes is attributed to expanded axial Hox domains, a different mechanism from the hindlimb ZRS lesion. Two mechanisms in one animal.",
     "difficulty": "Not applicable; this is comparative evidence.",
-    "what_we_would_run": "The ZRS ortholog series across 16 species IS the benchmark dataset, and it is the one piece of this subject that maps directly onto what a genome language model emits a score for. We have not scored it.",
+    "what_we_would_run": "The ZRS ortholog series across 16 species IS the benchmark dataset, and it is the one piece of this subject that maps directly onto what a genome language model emits a score for. We have not scored it.\n\nSTUDY: `zrs-conservation` bears on this route: the 16-species ZRS reporter panel and the four ortholog knock-ins are what turn 'snakes lost their limbs' into a graded, scoreable dataset.",
     "open_questions": [
       "Forelimb loss (Hox-mediated) and hindlimb reduction (ZRS-mediated) are different mechanisms in the same animal. Any single-locus account of 'the gene for snake limblessness' is incomplete by the field's own statement."
-    ]
+    ],
+    "study": "zrs-conservation"
   },
   {
     "id": "org-squamate-shh-duration",
@@ -81,11 +82,12 @@
     "lethality_risk": "Not applicable.",
     "specificity": "Clade-specific, and that is the finding: there is no single squamate mechanism of limb reduction.",
     "difficulty": "Not applicable.",
-    "what_we_would_run": "Nothing. This route is on the page to refute the framing that there is 'a' mechanism for limb loss. Four independent squamate radiations reduce limbs by at least partly different routes, and that is the empirical case for presenting a DESIGN SPACE rather than an answer.",
+    "what_we_would_run": "Nothing. This route is on the page to refute the framing that there is 'a' mechanism for limb loss. Four independent squamate radiations reduce limbs by at least partly different routes, and that is the empirical case for presenting a DESIGN SPACE rather than an answer. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "We found NO molecular (sequence or expression) mechanism published for Lerista limb reduction - the most-cited example of repeated limb loss. Our searches covered 'Lerista limb reduction skink evolution' on PubMed and returned four records, all taxonomic, morphometric or macroevolutionary. That is the scope of our negative; we did not search non-English sources, theses, or preprint servers.",
       "The Camaiti girdle result raises a question we cannot answer: is the converged clavicle shape a locomotor adaptation or a developmental consequence of forelimb loss? The authors give both as possibilities."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "org-cetacean-hindlimb",
@@ -122,11 +124,12 @@
     "lethality_risk": "Not applicable.",
     "specificity": "Hindlimb only - forelimbs became flippers with webbed digits and hyperphalangy, a gain-of-structure change in the same animal.",
     "difficulty": "Not applicable.",
-    "what_we_would_run": "Nothing, but this is the strongest comparative argument for the MAINTENANCE class of routes: the one natural limb loss where we know the AER formed and then failed is also the one where loss is complete. If you want a limbless animal rather than a truncated one, removing maintenance may beat blocking induction.",
+    "what_we_would_run": "Nothing, but this is the strongest comparative argument for the MAINTENANCE class of routes: the one natural limb loss where we know the AER formed and then failed is also the one where loss is complete. If you want a limbless animal rather than a truncated one, removing maintenance may beat blocking induction.\n\nSTUDY: `zrs-conservation` bears on this route only partially: dolphin is one of the 16 species in the ZRS reporter panel, where its ortholog was active in the ZPA but with activity expanded anteriorly. No cetacean ZRS was taken to knock-in, so there is no phenotype rung for it.",
     "open_questions": [
       "Thewissen et al. report an ASSOCIATION between absent HAND2 and failure to establish a ZPA. We read the abstract; we would not restate it as causation.",
       "The 41 Ma and 34 Ma dates are the authors' integration of fossil and developmental data, i.e. their inference, not a measurement."
-    ]
+    ],
+    "study": "zrs-conservation"
   },
   {
     "id": "org-stickleback-pelvic",
@@ -149,9 +152,10 @@
     "lethality_risk": "None - these are wild, reproducing fish.",
     "specificity": "Pelvis only.",
     "difficulty": "Not applicable.",
-    "what_we_would_run": "Two independent natural experiments (stickleback Pitx1, snake ZRS) converge on the same engineering principle: to remove an appendage without killing the animal, delete a tissue-specific enhancer, not the gene. That principle is the page's single transferable conclusion, and it is supported by evidence from two phyla rather than by our opinion.",
+    "what_we_would_run": "Two independent natural experiments (stickleback Pitx1, snake ZRS) converge on the same engineering principle: to remove an appendage without killing the animal, delete a tissue-specific enhancer, not the gene. That principle is the page's single transferable conclusion, and it is supported by evidence from two phyla rather than by our opinion. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Does the equivalent mouse Pitx1 hindlimb enhancer exist and is it single or redundant? See mol-pitx1-hindlimb-enhancer; unknown to us."
-    ]
+    ],
+    "study": null
   }
 ]

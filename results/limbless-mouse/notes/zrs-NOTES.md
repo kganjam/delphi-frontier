@@ -79,6 +79,44 @@ elephant_shark  CAAGGAAATC  score  3.8
 
 6/6 limbed or finned vertebrates, 0/5 snakes.
 
+### 2a. Exactly what `has_e1_ets_site` is, and what it is not
+
+This matters for how the page words the claim, so it is stated precisely.
+
+**It is the inferred JASPAR MA0098.3 scan — the same scan used everywhere else in this analysis.
+It does NOT come from Kvon et al.'s coordinates.** I never had their coordinates: the E0–E4 site
+positions are in the supplementary material I could not retrieve (§5). Concretely,
+`has_e1_ets_site` is true for a species when an ETS1 PWM hit at p < 0.0032 overlaps alignment
+columns 1002–1019.
+
+Both halves of the claim are independently derived:
+
+- **The block's position** was found by alignment — the longest run of columns gapped in snakes and
+  present in non-snakes — *before* comparing to the paper. It matches Kvon et al.'s description
+  (17 bp against lizard, highly conserved, overlapping an ETS site), which is corroboration, not
+  the source.
+- **The ETS1 call inside it** is a PWM sequence match. It is not a measurement of binding, and no
+  site here is asserted to be "the" E1 of that paper. Every motif in `ets_sites` carries
+  `inferred: true`, and so does `e1_deletion`.
+
+**The split, with the missing datum named.** 6 True / 5 False / **1 null**, over 12 rows:
+
+| | n | species |
+|---|---|---|
+| `true` | 6 | mouse, human, chicken, green anole, coelacanth, elephant shark — i.e. all limbed/finned |
+| `false` | 5 | dwarf sand boa, Burmese python, king cobra, tiger rattlesnake, garter snake — all snakes |
+| `null` | 1 | **corn snake — no ZRS detected at all, so there is nothing to score** (§7) |
+
+So it is a clean 6-vs-5 split **among species with data**, and the page should not call it 11/11 or
+12/12: the corn snake is a twelfth species that drops out of this column entirely. (Arguably it is
+the strongest case of enhancer loss in the set, but it cannot be scored on this feature.)
+
+**One row needs a caveat if the page names species individually.** For four of the five snakes the
+`false` is doubly supported — the 17 bp is deleted *and* no ETS1 motif scores. For
+**tiger rattlesnake** only the motif evidence applies: MAFFT puts unrelated sequence in those
+columns rather than a gap (`absent_in: 0`), so the deletion is *not assessable* there (§6). Its
+`false` rests on the PWM scan alone.
+
 ## 3. What I actually fetched
 
 Every sequence was fetched directly from NCBI; accession, exact URL, coordinates, HTTP status,

@@ -27,11 +27,12 @@
     "lethality_risk": "None. No animal.",
     "specificity": "Limb-bud-like cell types specifically; no systemic physiology at all, which is both the advantage and the limit.",
     "difficulty": "medium. A published step-by-step protocol exists, the reagents are small molecules, and the scale is >1,000 budoids per differentiation.",
-    "what_we_would_run": "This is the route a modern reviewer asks for first and it is the only one on this page we could actually execute without an animal facility. It is also where our cross-scale coupling layer has something concrete to refuse: 'AER-like cell proportion in a budoid' to 'skeletal element present in a mouse' is a scale change, a context change and an organism-to-culture change with no registered calibration. We have ZERO registered calibrations today, so that bridge is refused by construction, and saying so is a result about our system rather than about limbs.",
+    "what_we_would_run": "This is the route a modern reviewer asks for first and it is the only one on this page we could actually execute without an animal facility. It is also where our cross-scale coupling layer has something concrete to refuse: 'AER-like cell proportion in a budoid' to 'skeletal element present in a mouse' is a scale change, a context change and an organism-to-culture change with no registered calibration. We have ZERO registered calibrations today, so that bridge is refused by construction, and saying so is a result about our system rather than about limbs. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Do budoids form a real AER with the stratified epithelium p63 maintains, or AER-LIKE cells by marker expression? The abstract says 'AER properties'; we read an abstract, and the distinction decides what a p63 experiment in budoids would mean.",
       "Budoids break symmetry via chondrogenesis. Whether that is the same symmetry breaking as proximodistal limb outgrowth is not established in what we read."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "vitro-human-ipsc-limb-bud-mesenchyme",
@@ -68,10 +69,11 @@
     "lethality_risk": "None.",
     "specificity": "Limb-bud mesenchyme; MESENCHYME ONLY - there is no ectoderm, no AER, no signalling centre. Every AER-dependent route on this page is out of scope for this system.",
     "difficulty": "medium; defined, xeno-free and published as a protocol.",
-    "what_we_would_run": "If a judge asks what we could test tomorrow with no animal, the honest answer is a human mesenchymal readout of a limb genotype. We have no cell-culture arm either, so this too is a proposal - but it is a proposal with a published protocol attached, which is a different kind of claim from a sentence.",
+    "what_we_would_run": "If a judge asks what we could test tomorrow with no animal, the honest answer is a human mesenchymal readout of a limb genotype. We have no cell-culture arm either, so this too is a proposal - but it is a proposal with a published protocol attached, which is a different kind of claim from a sentence. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "A mesenchyme-only system cannot test the AER-centred half of the design space. Pairing ExpLBM cells with an AER-like population (as budoids do in mouse) has not been published for human that we found."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "vitro-limb-bud-explant",
@@ -108,10 +110,11 @@
     "lethality_risk": "Animals are still used to source the buds, so this is a REFINEMENT and a partial reduction, not a replacement. Saying otherwise would overstate it.",
     "specificity": "One bud, one stage, one manipulation.",
     "difficulty": "low-medium; a standard embryology technique with a published methods chapter.",
-    "what_we_would_run": "Nothing today. This matters for the welfare section: it is the route that takes a question out of a born animal and into a dissected embryo, which is the single most effective refinement available for this subject.",
+    "what_we_would_run": "Nothing today. This matters for the welfare section: it is the route that takes a question out of a born animal and into a dissected embryo, which is the single most effective refinement available for this subject. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Underhill and Arostegui state plainly that no organoid system effectively models limb-development complexity. That was written in 2021; budoids appeared in 2025. The page should present that as a moving front, not a settled verdict."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "vitro-recombinant-limb",
@@ -134,10 +137,11 @@
     "lethality_risk": "Uses chick host embryos and a donor ectoderm, so animals are still involved.",
     "specificity": "Skeletal elements from a defined cell mixture - the one system that separates 'which cells' from 'which position in the body'.",
     "difficulty": "high; microsurgical, low throughput, and requires chick embryology.",
-    "what_we_would_run": "Nothing. It is in the design space because it answers a question none of the others can: is limb loss a property of the CELLS or of the SIGNALS they sit in? Putting ZRS-null mesenchyme into a wild-type ectodermal jacket is the experiment that separates those, and as far as our search went it has not been done.",
+    "what_we_would_run": "Nothing. It is in the design space because it answers a question none of the others can: is limb loss a property of the CELLS or of the SIGNALS they sit in? Putting ZRS-null mesenchyme into a wild-type ectodermal jacket is the experiment that separates those, and as far as our search went it has not been done. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Has anyone run a recombinant limb with mesenchyme from a defined limb-loss genotype? We did not find one; our search was 'limb bud organoid' and 'micromass culture limb bud mesenchyme chondrogenesis screening' on PubMed only."
-    ]
+    ],
+    "study": null
   },
   {
     "id": "vitro-gastruloid-trunk",
@@ -167,9 +171,10 @@
     "lethality_risk": "None.",
     "specificity": "Trunk axial structures. No limb.",
     "difficulty": "low-medium to make TLSs; unsolved to add a limb field.",
-    "what_we_would_run": "Nothing. Listing this honestly is the point: the obvious question 'could you just do it in a dish at embryo scale' has the answer 'not yet, because the dish does not make limbs', and the page is stronger for saying so than for implying otherwise.",
+    "what_we_would_run": "Nothing. Listing this honestly is the point: the obvious question 'could you just do it in a dish at embryo scale' has the answer 'not yet, because the dish does not make limbs', and the page is stronger for saying so than for implying otherwise. No study on this page bears on this route; naming one would stretch the link past what it supports.",
     "open_questions": [
       "Has anyone reported lateral plate mesoderm or a limb field in a gastruloid or TLS? Our search on PubMed ('trunk-like structure gastruloid somite organoid mouse embryonic stem cells') returned ONE record and we followed it plus the 2020 Science paper. We did not search bioRxiv, which is where this would appear first. That is the scope of this negative."
-    ]
+    ],
+    "study": null
   }
 ]
