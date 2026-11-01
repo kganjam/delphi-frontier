@@ -129,6 +129,17 @@ def cards():
             parameter_unknowns=["Generic kinetics; growth speed is in pattern units, not measured fin-fold speed."],
             open_questions=["Map the speed threshold onto measured fin-fold outgrowth rates and ray-patterning timing."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless."])
+    if (A/"claude-tissue-uniform2d-y0/uniform2d_y0.json").exists():
+        y0 = J("claude-tissue-uniform2d-y0/uniform2d_y0.json"); sm = y0["summary"]
+        C["claude-tissue-uniform2d-y0"] = dict(
+            title="Does ray-like stripe orientation need a starting fold shorter than one pattern wavelength? (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; mechanism test for claude-tissue-uniform2d",
+            model=dict(name="2-D Schnakenberg, uniform proximo-distal growth from different starting lengths Y0", context=f"Y0 in {y0['meta'].get('Y0S')}, final length {y0['meta']['Y1']}, d=10 (stripe regime), lambda ~ 11"),
+            equations=[{"label": "Uniform growth, comoving", "tex": "u_t=f(u,v)-\\tfrac{\\dot L}{L}u+u_{xx}+L^{-2}u_{\\eta\\eta}", "source": "Crampin et al. 1999 form"}],
+            numerical_results=[f"Y0={v['b']}, speed {v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}" for v in sm.values()],
+            parameter_unknowns=["Starting fin-fold geometry at patterning onset is not measured here."],
+            open_questions=["Measure fin-fold length vs ray spacing at the onset of ray patterning."],
+            limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; generic kinetics."])
     if (A/"claude-tissue-uniform2d/uniform2d.json").exists():
         u2 = J("claude-tissue-uniform2d/uniform2d.json"); sm = u2["summary"]
         C["claude-tissue-uniform2d"] = dict(

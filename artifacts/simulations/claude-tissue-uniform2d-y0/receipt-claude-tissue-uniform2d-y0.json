@@ -1,0 +1,30 @@
+{
+ "code_matches_repo": true,
+ "code_sha256": {
+  "simulations/claude_tissue/uniform2d_y0_gpu.py": "c479a1460a92c3b01ad1428d19d247657bb697b76f61f2b44842a1eea8629288"
+ },
+ "collected_utc": "2026-11-01T16:16:34Z",
+ "collector_sha256": {
+  "simulations/claude_tissue/collect_gpu2.py": "b1c4a80ad352f1d1f3662110da3434f89c868cf564b29f4102e4fcbb5fc47ead"
+ },
+ "command": "python3 /work/uniform2dy0.py (args in META)",
+ "compute": "Nebius aijob-e00dy3kv6127nqa3dj (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "input_sha256": {},
+ "job": "aijob-e00dy3kv6127nqa3dj",
+ "job_state": "COMPLETED",
+ "name": "claude-tissue-uniform2d-y0",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-uniform2d-y0/job-log.txt": "a67cbd7b8f6fa52f05a0561b6156396997d7aafe754012c8b74382e175746bb2",
+  "artifacts/simulations/claude-tissue-uniform2d-y0/uniform2d_y0.json": "56a74ff650800b98c68014494ead8bae611d2de3d720339c21692c0e808afc91",
+  "artifacts/simulations/claude-tissue-uniform2d-y0/uniform2d_y0.png": "ec2e033df25c232651d400d9b2c66f4bbfe24bd60217ccfa39e97f799cfd3028"
+ },
+ "seed": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "wall_s": 307.9
+}

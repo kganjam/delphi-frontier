@@ -223,6 +223,19 @@ speeds and seeds, but every row stretches instead of new rows being added at the
 Under marginal (edge) outgrowth, but not uniform outgrowth, speeding up outgrowth beyond a threshold would disorder them.
 The follow-up job `claude-tissue-edge2d-cases` narrows that threshold and tests other stripe-regime kinetics.
 
+**Starting-length test** (`claude-tissue-uniform2d-y0`, job `aijob-e00dy3kv6127nqa3dj`, COMPLETED, 307.9 s). Uniform growth
+at d = 10 to the same final length 192, starting from different lengths Y0. λ ≈ 11, so Y0 = 96 starts about 9
+wavelengths long.
+
+| Starting length Y0 | 8 | 24 | 48 | 96 |
+|---|---|---|---|---|
+| A at speed 0.4 | 0.99 | 0.93 | 0.93 | 0.87 |
+| A at speed 0.1 | 1.00 | 0.98 | 0.92 | 0.74 ± 0.20 |
+
+**Reading.** The short-start hypothesis is only partly supported. A start shorter than one wavelength gives perfect
+stripes, but even a long starting fold ends mostly proximo-distally oriented with residual defects. The dominant
+orienting factor is **anisotropic stretching along the growth axis**; a short start removes the remaining defects.
+
 ## 3. fin-growth: morphogen production → pectoral/SL ratio (molecular → organ)
 
 **Model.** 1-D quasi-steady distal-source gradient m(x) with a saturating local growth law. The growth law is declared,
