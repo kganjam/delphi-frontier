@@ -1,0 +1,32 @@
+{"variant": "v3b", "ns": 24, "nc": 8, "rule": "original", "normals": "source", "CL_a4": 0.16094278581251215, "CL_a0": -0.0701652158419411, "n_colloc_outside_panel": 20, "solve_s": 0.8790385723114014}
+/data/worktrees/delphi-frontier/claude-organ/engineering/organ_sims/r1_v3b_convergence.py:160: RuntimeWarning: invalid value encountered in scalar divide
+  row[f"lift_share_pectoral_a{a_:g}"] = float(sum(F[o == f].sum(0) @ ld for f in ("pectoral_L", "pectoral_R")) / (F.sum(0) @ ld))
+{"variant": "v3b", "ns": 24, "nc": 8, "rule": "original", "normals": "flat", "CL_a4": 0.23185975903262573, "CL_a0": 0.0, "n_colloc_outside_panel": 20, "solve_s": 1.1709816455841064}
+{"variant": "v3b", "ns": 24, "nc": 8, "rule": "consistent", "normals": "source", "CL_a4": 0.15361143094321406, "CL_a0": -0.07764694041205515, "n_colloc_outside_panel": 0, "solve_s": 0.8371083736419678}
+{"variant": "v3b", "ns": 24, "nc": 8, "rule": "consistent", "normals": "flat", "CL_a4": 0.23196879976038914, "CL_a0": 0.0, "n_colloc_outside_panel": 0, "solve_s": 0.8438560962677002}
+{"variant": "v3b", "ns": 36, "nc": 12, "rule": "original", "normals": "source", "CL_a4": 0.20808523226616157, "CL_a0": 0.006831342739773099, "n_colloc_outside_panel": 62, "solve_s": 5.069423675537109}
+{"variant": "v3b", "ns": 36, "nc": 12, "rule": "original", "normals": "flat", "CL_a4": 0.20248816978073186, "CL_a0": 0.0, "n_colloc_outside_panel": 62, "solve_s": 4.674232244491577}
+{"variant": "v3b", "ns": 36, "nc": 12, "rule": "consistent", "normals": "source", "CL_a4": 0.162921425556133, "CL_a0": -0.0659581131332653, "n_colloc_outside_panel": 0, "solve_s": 3.972430467605591}
+{"variant": "v3b", "ns": 36, "nc": 12, "rule": "consistent", "normals": "flat", "CL_a4": 0.2298256351062219, "CL_a0": 0.0, "n_colloc_outside_panel": 0, "solve_s": 3.9455552101135254}
+{"variant": "v3b", "ns": 48, "nc": 16, "rule": "original", "normals": "source", "CL_a4": 0.24568598974192513, "CL_a0": 0.07161882862997503, "n_colloc_outside_panel": 64, "solve_s": 12.873421430587769}
+{"variant": "v3b", "ns": 48, "nc": 16, "rule": "original", "normals": "flat", "CL_a4": 0.17563721383016725, "CL_a0": 0.0, "n_colloc_outside_panel": 64, "solve_s": 14.778207302093506}
+{"variant": "v3b", "ns": 48, "nc": 16, "rule": "consistent", "normals": "source", "CL_a4": 0.16133147510411847, "CL_a0": -0.06647737893545301, "n_colloc_outside_panel": 0, "solve_s": 13.432939291000366}
+{"variant": "v3b", "ns": 48, "nc": 16, "rule": "consistent", "normals": "flat", "CL_a4": 0.22870373528733712, "CL_a0": 0.0, "n_colloc_outside_panel": 0, "solve_s": 13.991487503051758}
+{"variant": "v3b", "ns": 24, "nc": 16, "rule": "original", "normals": "source", "CL_a4": 0.2758035546334381, "CL_a0": 0.10381036314493568, "n_colloc_outside_panel": 84, "solve_s": 3.905416250228882}
+{"variant": "v3b", "ns": 24, "nc": 16, "rule": "original", "normals": "flat", "CL_a4": 0.1736021848999025, "CL_a0": 0.0, "n_colloc_outside_panel": 84, "solve_s": 3.3515050411224365}
+{"variant": "v3b", "ns": 24, "nc": 16, "rule": "consistent", "normals": "source", "CL_a4": 0.16286266671415156, "CL_a0": -0.06819039245686238, "n_colloc_outside_panel": 0, "solve_s": 3.6541013717651367}
+{"variant": "v3b", "ns": 24, "nc": 16, "rule": "consistent", "normals": "flat", "CL_a4": 0.23197817792659303, "CL_a0": 0.0, "n_colloc_outside_panel": 0, "solve_s": 3.2167959213256836}
+{"variant": "v3b", "ns": 24, "nc": 24, "rule": "original", "normals": "source", "CL_a4": 0.32841221722746866, "CL_a0": 0.19520928005842167, "n_colloc_outside_panel": 170, "solve_s": 7.242377519607544}
+{"variant": "v3b", "ns": 24, "nc": 24, "rule": "original", "normals": "flat", "CL_a4": 0.1345657104060168, "CL_a0": 0.0, "n_colloc_outside_panel": 170, "solve_s": 6.99878716468811}
+{"variant": "v3b", "ns": 24, "nc": 24, "rule": "consistent", "normals": "source", "CL_a4": 0.16216410004122064, "CL_a0": -0.06895737038523206, "n_colloc_outside_panel": 0, "solve_s": 7.2400195598602295}
+{"variant": "v3b", "ns": 24, "nc": 24, "rule": "consistent", "normals": "flat", "CL_a4": 0.2319796558585468, "CL_a0": 0.0, "n_colloc_outside_panel": 0, "solve_s": 7.838271379470825}
+{"variant": "v3b", "ns": 48, "nc": 8, "rule": "original", "normals": "source", "CL_a4": 0.1706831565553605, "CL_a0": -0.05483448750747531, "n_colloc_outside_panel": 10, "solve_s": 4.432021856307983}
+{"variant": "v3b", "ns": 48, "nc": 8, "rule": "original", "normals": "flat", "CL_a4": 0.2264424908996705, "CL_a0": 0.0, "n_colloc_outside_panel": 10, "solve_s": 4.571027040481567}
+{"variant": "v3b", "ns": 48, "nc": 8, "rule": "consistent", "normals": "source", "CL_a4": 0.16660678277644864, "CL_a0": -0.06120192885641598, "n_colloc_outside_panel": 0, "solve_s": 3.6516172885894775}
+{"variant": "v3b", "ns": 48, "nc": 8, "rule": "consistent", "normals": "flat", "CL_a4": 0.22870727836917595, "CL_a0": 0.0, "n_colloc_outside_panel": 0, "solve_s": 3.621912717819214}
+{"variant": "v3b", "ns": 48, "nc": 24, "rule": "original", "normals": "source", "CL_a4": 0.3935180763466207, "CL_a0": 0.30693898263927044, "n_colloc_outside_panel": 136, "solve_s": 43.058046102523804}
+{"variant": "v3b", "ns": 48, "nc": 24, "rule": "original", "normals": "flat", "CL_a4": 0.08927836027894136, "CL_a0": 0.0, "n_colloc_outside_panel": 136, "solve_s": 32.385613679885864}
+{"variant": "v3b", "ns": 48, "nc": 24, "rule": "consistent", "normals": "source", "CL_a4": 0.1589992833839292, "CL_a0": -0.06888045846801866, "n_colloc_outside_panel": 0, "solve_s": 35.011966705322266}
+{"variant": "v3b", "ns": 48, "nc": 24, "rule": "consistent", "normals": "flat", "CL_a4": 0.22870040194333263, "CL_a0": 0.0, "n_colloc_outside_panel": 0, "solve_s": 34.03853464126587}
+{"variant": "v3b", "ns": 72, "nc": 24, "rule": "original", "normals": "source", "CL_a4": 0.1816916701384702, "CL_a0": -0.03421680340773493, "n_colloc_outside_panel": 90, "solve_s": 889.4714689254761}
+{"variant": "v3b", "ns": 72, "nc": 24, "rule": "consistent", "normals": "source", "CL_a4": 0.16195336185334155, "CL_a0": -0.06485500084062758, "n_colloc_outside_panel": 0, "solve_s": 585.3081004619598}

@@ -1,0 +1,2745 @@
+{
+ "schema": "frontier.organ-sim.manifest/1",
+ "id": "r1-v3b-convergence",
+ "title": "v3b VLM non-convergence diagnosis: collocation-placement defect, corrected lattice, camber effect",
+ "evidence_kind": "simulated, not observed",
+ "scales": [
+  "organ"
+ ],
+ "does_not_establish": "No fin load, flight or biological claim: an inviscid thin-surface lattice-convergence diagnosis of three designed fin geometries; no body, viscosity or separation.",
+ "scope": "simulated, not observed",
+ "command": "/data/worktrees/delphi-frontier/claude-organ/engineering/organ_sims/r1_v3b_convergence.py report2",
+ "seed": null,
+ "git_head_at_run": "44fe835",
+ "python": "3.13.12",
+ "ran_utc": "2026-11-01T15:17:42Z",
+ "inputs": {
+  "artifacts/fish3d/fish3d-v3a-fan/panels.json": {
+   "sha256": "1f64a9759de289118e22e6a9edc5d76c63e6daef5c4a5b84e294e80021a1d33d",
+   "bytes": 143735
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/panels.json": {
+   "sha256": "0dcb6555c2334bc538eb69784fe131a381b092da38c4b17eb0757ccd171870cf",
+   "bytes": 143605
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/panels.json": {
+   "sha256": "ce6018059e4450532de9f87db811dac5d136a74391705ca29b81ff36d1fd1311",
+   "bytes": 143769
+  },
+  "engineering/cfd3d/vlm.py": {
+   "sha256": "f9dd43a97243234880fef5c4d99e77ee34458980c6246a284762763a12acb6d3",
+   "bytes": 21367
+  },
+  "artifacts/cfd3d/vlm/controls.json": {
+   "sha256": "726898cda93d13214cf4a01494ef0bc429cc81638a85a70f9adda7001e63646c",
+   "bytes": 812
+  }
+ },
+ "code_sha256": {
+  "engineering/organ_sims/common.py": "9958dc52b7a07560cb696c639c23d01a19be431c0e101e35361ba71249f23115",
+  "engineering/organ_sims/index.py": "9d25969238579345755b2651004dd3ae01320fec60ab397d22d5d609e5c6f93b",
+  "engineering/organ_sims/r1_v3b_convergence.py": "539630b87142f4223eddfe268915bf41aab0a3fdfba94bf067553fa22f2846ed",
+  "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
+  "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
+  "engineering/organ_sims/r4_aeroelastic_stiffness.py": "c2eecffe07310b33f3b09421b5a92d42fd7cf099b5e58a978c47f7b85c61f1e1",
+  "engineering/organ_sims/r5_school_launch.py": "7e71f81984e458c2b2bd1991f41e60627a2259791ccb17ba60becf505267e34a"
+ },
+ "git_dirty_paths_at_run": [
+  " M artifacts/organ-sims/index.json",
+  " M artifacts/organ-sims/review/README.md",
+  " M engineering/organ_sims/r1_v3b_convergence.py",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3a.log",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3b.log",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3c.log",
+  "?? artifacts/organ-sims/logs/r1-report2-run1-exit3.log",
+  "?? artifacts/organ-sims/logs/r1-report2.log",
+  "?? artifacts/organ-sims/r1-v3b-convergence/",
+  "?? artifacts/organ-sims/review/flash-prompt.txt",
+  "?? artifacts/organ-sims/review/flash-response.md"
+ ],
+ "results": {
+  "summary": {
+   "v3a/original/source": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.24966490097877073,
+     0.2518077263080749,
+     0.2477344315032767,
+     0.24646079194931975
+    ],
+    "diagonal_rel_steps": [
+     0.008582805676342842,
+     0.016176210573518035,
+     0.005141148714082222
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.24966490097877073,
+     0.23842558776589412,
+     0.21740582731709998
+    ],
+    "nc_sensitivity_ns24": 0.14838182609805983,
+    "CL_a0_finest": -2.3165881257889604e-06,
+    "max_colloc_outside_panel": 36
+   },
+   "v3a/original/flat": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.24966786921137676,
+     0.25181045960239523,
+     0.24773567551095754
+    ],
+    "diagonal_rel_steps": [
+     0.008581762634439993,
+     0.01618194930374106
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.24966786921137676,
+     0.23842585970271327,
+     0.21740562577095218
+    ],
+    "nc_sensitivity_ns24": 0.14839654367736776,
+    "CL_a0_finest": 0.0,
+    "max_colloc_outside_panel": 22
+   },
+   "v3a/consistent/source": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.25188421109617154,
+     0.24991316594695032,
+     0.24876681278028082,
+     0.24769167142646678
+    ],
+    "diagonal_rel_steps": [
+     0.007825203257653457,
+     0.004587005899932661,
+     0.0043218841846224265
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.25188421109617154,
+     0.25188943146182263,
+     0.25189061878723673
+    ],
+    "nc_sensitivity_ns24": 2.5439034218477374e-05,
+    "CL_a0_finest": -2.5852748975769713e-06,
+    "max_colloc_outside_panel": 0,
+    "nc16_to_24_rel": 4.713676978074233e-06
+   },
+   "v3a/consistent/flat": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.2518883535306556,
+     0.24991704048452065,
+     0.24876815968950322
+    ],
+    "diagonal_rel_steps": [
+     0.007826138122321025,
+     0.004597048655786251
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.2518883535306556,
+     0.251892808589249,
+     0.2518935987385923
+    ],
+    "nc_sensitivity_ns24": 2.0823542903780634e-05,
+    "CL_a0_finest": 0.0,
+    "max_colloc_outside_panel": 0
+   },
+   "v3b/original/source": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.16094278581251215,
+     0.20808523226616157,
+     0.24568598974192513,
+     0.1816916701384702
+    ],
+    "diagonal_rel_steps": [
+     0.29291431868569306,
+     0.18069882742888965,
+     0.2604719938270643
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.16094278581251215,
+     0.2758035546334381,
+     0.32841221722746866
+    ],
+    "nc_sensitivity_ns24": 1.0405525825186568,
+    "CL_a0_finest": -0.03421680340773493,
+    "max_colloc_outside_panel": 90
+   },
+   "v3b/original/flat": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.23185975903262573,
+     0.20248816978073186,
+     0.17563721383016725
+    ],
+    "diagonal_rel_steps": [
+     0.12667825315802606,
+     0.13260506023458396
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.23185975903262573,
+     0.1736021848999025,
+     0.1345657104060168
+    ],
+    "nc_sensitivity_ns24": 0.723022591216214,
+    "CL_a0_finest": 0.0,
+    "max_colloc_outside_panel": 64
+   },
+   "v3b/consistent/source": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.15361143094321406,
+     0.162921425556133,
+     0.16133147510411847,
+     0.16195336185334155
+    ],
+    "diagonal_rel_steps": [
+     0.06060743367699373,
+     0.009759001595936456,
+     0.003854714331606557
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.15361143094321406,
+     0.16286266671415156,
+     0.16216410004122064
+    ],
+    "nc_sensitivity_ns24": 0.060224917599768,
+    "CL_a0_finest": -0.06485500084062758,
+    "max_colloc_outside_panel": 0,
+    "nc16_to_24_rel": 0.004289298996663304
+   },
+   "v3b/consistent/flat": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.23196879976038914,
+     0.2298256351062219,
+     0.22870373528733712
+    ],
+    "diagonal_rel_steps": [
+     0.009239021180352802,
+     0.004881526024571814
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.23196879976038914,
+     0.23197817792659303,
+     0.2319796558585468
+    ],
+    "nc_sensitivity_ns24": 4.6799820358822686e-05,
+    "CL_a0_finest": 0.0,
+    "max_colloc_outside_panel": 0
+   },
+   "v3c/original/source": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.25293860217127273,
+     0.251457825139185,
+     0.25109450854616794,
+     0.2437419040446428
+    ],
+    "diagonal_rel_steps": [
+     0.00585429435988194,
+     0.00144484106953513,
+     0.02928221944835263
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.25293860217127273,
+     0.2374815814325299,
+     0.22801948999392616
+    ],
+    "nc_sensitivity_ns24": 0.10928500970689115,
+    "CL_a0_finest": -7.838075966404894e-06,
+    "max_colloc_outside_panel": 66
+   },
+   "v3c/original/flat": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.2529491808810579,
+     0.2514657869178308,
+     0.2511015101712585
+    ],
+    "diagonal_rel_steps": [
+     0.005864395204049466,
+     0.001448613551120359
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.2529491808810579,
+     0.2374882680524872,
+     0.2280259771691004
+    ],
+    "nc_sensitivity_ns24": 0.10929984390977898,
+    "CL_a0_finest": 0.0,
+    "max_colloc_outside_panel": 44
+   },
+   "v3c/consistent/source": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.25385071060507525,
+     0.2515696499610759,
+     0.2505357911683204,
+     0.249399019985112
+    ],
+    "diagonal_rel_steps": [
+     0.008985835172815704,
+     0.00410963243346496,
+     0.004537360422266823
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.25385071060507525,
+     0.25385496487803355,
+     0.2538548681052422
+    ],
+    "nc_sensitivity_ns24": 1.675895627073487e-05,
+    "CL_a0_finest": -7.97485907334592e-06,
+    "max_colloc_outside_panel": 0,
+    "nc16_to_24_rel": 3.812129157898525e-07
+   },
+   "v3c/consistent/flat": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.25386160456081575,
+     0.251578464771545,
+     0.2505429763780892
+    ],
+    "diagonal_rel_steps": [
+     0.008993639637709716,
+     0.00411596594484398
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.25386160456081575,
+     0.2538629192198344,
+     0.2538631867578134
+    ],
+    "nc_sensitivity_ns24": 6.232517912208024e-06,
+    "CL_a0_finest": 0.0,
+    "max_colloc_outside_panel": 0
+   }
+  },
+  "rows": [
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005288431699731851,
+    "colloc_fraction_min": -0.004433668491332471,
+    "colloc_fraction_max": 1.355092102034007,
+    "n_colloc_upstream_of_own_bound_vortex": 4,
+    "n_colloc_outside_panel": 18,
+    "CL_a0": -2.974626607679884e-06,
+    "lift_share_pectoral_a0": 2.3721729762002757,
+    "CL_a4": 0.24966490097877073,
+    "lift_share_pectoral_a4": 0.8494683426439327,
+    "solve_s": 0.9980192184448242
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005288431699731851,
+    "colloc_fraction_min": -0.004433668491332471,
+    "colloc_fraction_max": 1.355092102034007,
+    "n_colloc_upstream_of_own_bound_vortex": 4,
+    "n_colloc_outside_panel": 18,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24966786921137676,
+    "lift_share_pectoral_a4": 0.8494864267720884,
+    "solve_s": 0.9270801544189453
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005288431699731851,
+    "colloc_fraction_min": 0.7499999999997936,
+    "colloc_fraction_max": 0.7500000000001769,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -4.154493249513726e-06,
+    "lift_share_pectoral_a0": 1.9512562660755264,
+    "CL_a4": 0.25188421109617154,
+    "lift_share_pectoral_a4": 0.8544024903257431,
+    "solve_s": 0.9566676616668701
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005288431699731851,
+    "colloc_fraction_min": 0.7499999999997936,
+    "colloc_fraction_max": 0.7500000000001769,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2518883535306556,
+    "lift_share_pectoral_a4": 0.8544205172825724,
+    "solve_s": 0.8076376914978027
+   },
+   {
+    "variant": "v3a",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005288348722034572,
+    "colloc_fraction_min": 0.5358749958331456,
+    "colloc_fraction_max": 1.2567409098202007,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 14,
+    "CL_a0": -2.7257099923661997e-06,
+    "lift_share_pectoral_a0": 1.9879952883108734,
+    "CL_a4": 0.2518077263080749,
+    "lift_share_pectoral_a4": 0.8555035713503402,
+    "solve_s": 4.738587856292725
+   },
+   {
+    "variant": "v3a",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005288348722034572,
+    "colloc_fraction_min": 0.5358749958331456,
+    "colloc_fraction_max": 1.2567409098202007,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 14,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.25181045960239523,
+    "lift_share_pectoral_a4": 0.8555157934401821,
+    "solve_s": 4.559860706329346
+   },
+   {
+    "variant": "v3a",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005288348722034572,
+    "colloc_fraction_min": 0.7499999999992049,
+    "colloc_fraction_max": 0.7500000000007951,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -3.873235450434641e-06,
+    "lift_share_pectoral_a0": 1.722107535126555,
+    "CL_a4": 0.24991316594695032,
+    "lift_share_pectoral_a4": 0.853264216274163,
+    "solve_s": 4.086524724960327
+   },
+   {
+    "variant": "v3a",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005288348722034572,
+    "colloc_fraction_min": 0.7499999999992049,
+    "colloc_fraction_max": 0.7500000000007951,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24991704048452065,
+    "lift_share_pectoral_a4": 0.8532776374010251,
+    "solve_s": 4.660420894622803
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005291725830206287,
+    "colloc_fraction_min": 0.294431889774157,
+    "colloc_fraction_max": 1.1811122773055294,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 22,
+    "CL_a0": -1.2269499154816237e-06,
+    "lift_share_pectoral_a0": 2.895621542730282,
+    "CL_a4": 0.2477344315032767,
+    "lift_share_pectoral_a4": 0.8516828520830111,
+    "solve_s": 12.97257399559021
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005291725830206287,
+    "colloc_fraction_min": 0.294431889774157,
+    "colloc_fraction_max": 1.1811122773055294,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 22,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24773567551095754,
+    "lift_share_pectoral_a4": 0.851692945171157,
+    "solve_s": 14.576846599578857
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005291725830206287,
+    "colloc_fraction_min": 0.7499999999969393,
+    "colloc_fraction_max": 0.7500000000023543,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -1.330364840643833e-06,
+    "lift_share_pectoral_a0": 2.7032102081747573,
+    "CL_a4": 0.24876681278028082,
+    "lift_share_pectoral_a4": 0.8529050584346701,
+    "solve_s": 13.523858070373535
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005291725830206287,
+    "colloc_fraction_min": 0.7499999999969393,
+    "colloc_fraction_max": 0.7500000000023543,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24876815968950322,
+    "lift_share_pectoral_a4": 0.8529149223712925,
+    "solve_s": 14.020173072814941
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005288431699731852,
+    "colloc_fraction_min": -0.8925072503329278,
+    "colloc_fraction_max": 1.9843235291997874,
+    "n_colloc_upstream_of_own_bound_vortex": 22,
+    "n_colloc_outside_panel": 90,
+    "CL_a0": -2.5486789625482785e-07,
+    "lift_share_pectoral_a0": 13.122425225408456,
+    "CL_a4": 0.23842558776589412,
+    "lift_share_pectoral_a4": 0.8398008604182615,
+    "solve_s": 3.1821579933166504
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005288431699731852,
+    "colloc_fraction_min": -0.8925072503329278,
+    "colloc_fraction_max": 1.9843235291997874,
+    "n_colloc_upstream_of_own_bound_vortex": 22,
+    "n_colloc_outside_panel": 90,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.23842585970271327,
+    "lift_share_pectoral_a4": 0.8398139537131009,
+    "solve_s": 3.518726110458374
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005288431699731852,
+    "colloc_fraction_min": 0.7499999999994104,
+    "colloc_fraction_max": 0.7500000000006486,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -3.373179304238392e-06,
+    "lift_share_pectoral_a0": 1.8395423920993597,
+    "CL_a4": 0.25188943146182263,
+    "lift_share_pectoral_a4": 0.8544156243387616,
+    "solve_s": 3.626919984817505
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005288431699731852,
+    "colloc_fraction_min": 0.7499999999994104,
+    "colloc_fraction_max": 0.7500000000006486,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.251892808589249,
+    "lift_share_pectoral_a4": 0.8544287664198748,
+    "solve_s": 3.04062819480896
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005288431699731851,
+    "colloc_fraction_min": -1.780580832174496,
+    "colloc_fraction_max": 2.6135549563655567,
+    "n_colloc_upstream_of_own_bound_vortex": 68,
+    "n_colloc_outside_panel": 174,
+    "CL_a0": 2.155186799783343e-07,
+    "lift_share_pectoral_a0": -14.742001882173605,
+    "CL_a4": 0.21740582731709998,
+    "lift_share_pectoral_a4": 0.8248745431424063,
+    "solve_s": 6.891498565673828
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005288431699731851,
+    "colloc_fraction_min": -1.780580832174496,
+    "colloc_fraction_max": 2.6135549563655567,
+    "n_colloc_upstream_of_own_bound_vortex": 68,
+    "n_colloc_outside_panel": 174,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.21740562577095218,
+    "lift_share_pectoral_a4": 0.8248899323917446,
+    "solve_s": 6.86397123336792
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005288431699731851,
+    "colloc_fraction_min": 0.7499999999991156,
+    "colloc_fraction_max": 0.7500000000009729,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -2.9785555392340216e-06,
+    "lift_share_pectoral_a0": 1.9407534783566909,
+    "CL_a4": 0.25189061878723673,
+    "lift_share_pectoral_a4": 0.8544174437239366,
+    "solve_s": 7.252415657043457
+   },
+   {
+    "variant": "v3a",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005288431699731851,
+    "colloc_fraction_min": 0.7499999999991156,
+    "colloc_fraction_max": 0.7500000000009729,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2518935987385923,
+    "lift_share_pectoral_a4": 0.8544302448239894,
+    "solve_s": 8.044687032699585
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005291725830206287,
+    "colloc_fraction_min": 0.5332529692722087,
+    "colloc_fraction_max": 0.9605018111032579,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -6.4230277762715775e-06,
+    "lift_share_pectoral_a0": 1.5351410508241334,
+    "CL_a4": 0.2486053919296888,
+    "lift_share_pectoral_a4": 0.852449691869929,
+    "solve_s": 3.532637357711792
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005291725830206287,
+    "colloc_fraction_min": 0.5332529692722087,
+    "colloc_fraction_max": 0.9605018111032579,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24861179425607563,
+    "lift_share_pectoral_a4": 0.8524672587587113,
+    "solve_s": 4.461452960968018
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005291725830206287,
+    "colloc_fraction_min": 0.7499999999988228,
+    "colloc_fraction_max": 0.7500000000007063,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -6.11540258220643e-06,
+    "lift_share_pectoral_a0": 1.5454891524978234,
+    "CL_a4": 0.24876681902805936,
+    "lift_share_pectoral_a4": 0.8529076722048035,
+    "solve_s": 4.237136125564575
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005291725830206287,
+    "colloc_fraction_min": 0.7499999999988228,
+    "colloc_fraction_max": 0.7500000000007063,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24877291933942836,
+    "lift_share_pectoral_a4": 0.8529246346637692,
+    "solve_s": 3.1665449142456055
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005291725830206286,
+    "colloc_fraction_min": 0.0556108102761027,
+    "colloc_fraction_max": 1.401722743507811,
+    "n_colloc_upstream_of_own_bound_vortex": 14,
+    "n_colloc_outside_panel": 68,
+    "CL_a0": -1.4112568597802472e-06,
+    "lift_share_pectoral_a0": 2.904949733151464,
+    "CL_a4": 0.24267494188292082,
+    "lift_share_pectoral_a4": 0.8485227519378777,
+    "solve_s": 39.8027925491333
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005291725830206286,
+    "colloc_fraction_min": 0.0556108102761027,
+    "colloc_fraction_max": 1.401722743507811,
+    "n_colloc_upstream_of_own_bound_vortex": 14,
+    "n_colloc_outside_panel": 68,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24267636283890898,
+    "lift_share_pectoral_a4": 0.8485346783847906,
+    "solve_s": 32.9206907749176
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005291725830206286,
+    "colloc_fraction_min": 0.749999999995409,
+    "colloc_fraction_max": 0.7500000000035315,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -1.7565446740586095e-06,
+    "lift_share_pectoral_a0": 2.4999771586814257,
+    "CL_a4": 0.24876200262402093,
+    "lift_share_pectoral_a4": 0.8529192517159354,
+    "solve_s": 35.82533526420593
+   },
+   {
+    "variant": "v3a",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005291725830206286,
+    "colloc_fraction_min": 0.749999999995409,
+    "colloc_fraction_max": 0.7500000000035315,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24876376717872165,
+    "lift_share_pectoral_a4": 0.852930848943563,
+    "solve_s": 34.84606575965881
+   },
+   {
+    "variant": "v3a",
+    "ns": 72,
+    "nc": 24,
+    "panels": 6912,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.0052927027183197065,
+    "colloc_fraction_min": 0.10108789694323425,
+    "colloc_fraction_max": 1.4318568454453842,
+    "n_colloc_upstream_of_own_bound_vortex": 12,
+    "n_colloc_outside_panel": 36,
+    "CL_a0": -2.3165881257889604e-06,
+    "lift_share_pectoral_a0": 2.133435602570891,
+    "CL_a4": 0.24646079194931975,
+    "lift_share_pectoral_a4": 0.8515879725356159,
+    "solve_s": 891.3328809738159
+   },
+   {
+    "variant": "v3a",
+    "ns": 72,
+    "nc": 24,
+    "panels": 6912,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.0052927027183197065,
+    "colloc_fraction_min": 0.7499999999912714,
+    "colloc_fraction_max": 0.7500000000079351,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -2.5852748975769713e-06,
+    "lift_share_pectoral_a0": 2.0238257868568397,
+    "CL_a4": 0.24769167142646678,
+    "lift_share_pectoral_a4": 0.8524195900373411,
+    "solve_s": 581.1150059700012
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005184828302261746,
+    "colloc_fraction_min": 0.09650545238734294,
+    "colloc_fraction_max": 1.2843995192823676,
+    "n_colloc_upstream_of_own_bound_vortex": 8,
+    "n_colloc_outside_panel": 20,
+    "CL_a0": -0.0701652158419411,
+    "lift_share_pectoral_a0": 1.138438095786427,
+    "CL_a4": 0.16094278581251215,
+    "lift_share_pectoral_a4": 0.7252284755738249,
+    "solve_s": 0.8790385723114014
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005184828302261746,
+    "colloc_fraction_min": 0.09650545238734294,
+    "colloc_fraction_max": 1.2843995192823676,
+    "n_colloc_upstream_of_own_bound_vortex": 8,
+    "n_colloc_outside_panel": 20,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.23185975903262573,
+    "lift_share_pectoral_a4": 0.8555706070801241,
+    "solve_s": 1.1709816455841064
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005184828302261746,
+    "colloc_fraction_min": 0.7499999999996592,
+    "colloc_fraction_max": 0.7500000000001704,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -0.07764694041205515,
+    "lift_share_pectoral_a0": 1.1692964229836071,
+    "CL_a4": 0.15361143094321406,
+    "lift_share_pectoral_a4": 0.6853916273368498,
+    "solve_s": 0.8371083736419678
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005184828302261746,
+    "colloc_fraction_min": 0.7499999999996592,
+    "colloc_fraction_max": 0.7500000000001704,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.23196879976038914,
+    "lift_share_pectoral_a4": 0.8526957789007792,
+    "solve_s": 0.8438560962677002
+   },
+   {
+    "variant": "v3b",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005194214530041942,
+    "colloc_fraction_min": -0.4018800822446122,
+    "colloc_fraction_max": 1.474723020326556,
+    "n_colloc_upstream_of_own_bound_vortex": 22,
+    "n_colloc_outside_panel": 62,
+    "CL_a0": 0.006831342739773099,
+    "lift_share_pectoral_a0": -0.44052124961474576,
+    "CL_a4": 0.20808523226616157,
+    "lift_share_pectoral_a4": 0.7879514211534279,
+    "solve_s": 5.069423675537109
+   },
+   {
+    "variant": "v3b",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005194214530041942,
+    "colloc_fraction_min": -0.4018800822446122,
+    "colloc_fraction_max": 1.474723020326556,
+    "n_colloc_upstream_of_own_bound_vortex": 22,
+    "n_colloc_outside_panel": 62,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.20248816978073186,
+    "lift_share_pectoral_a4": 0.8354440127681644,
+    "solve_s": 4.674232244491577
+   },
+   {
+    "variant": "v3b",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005194214530041942,
+    "colloc_fraction_min": 0.749999999999234,
+    "colloc_fraction_max": 0.750000000000766,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -0.0659581131332653,
+    "lift_share_pectoral_a0": 1.0858587312583,
+    "CL_a4": 0.162921425556133,
+    "lift_share_pectoral_a4": 0.7501135919932149,
+    "solve_s": 3.972430467605591
+   },
+   {
+    "variant": "v3b",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005194214530041942,
+    "colloc_fraction_min": 0.749999999999234,
+    "colloc_fraction_max": 0.750000000000766,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2298256351062219,
+    "lift_share_pectoral_a4": 0.8519495578870383,
+    "solve_s": 3.9455552101135254
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005199446269570648,
+    "colloc_fraction_min": -0.9080375931587394,
+    "colloc_fraction_max": 1.6626845009275006,
+    "n_colloc_upstream_of_own_bound_vortex": 26,
+    "n_colloc_outside_panel": 64,
+    "CL_a0": 0.07161882862997503,
+    "lift_share_pectoral_a0": 0.8470435871258283,
+    "CL_a4": 0.24568598974192513,
+    "lift_share_pectoral_a4": 0.8173586110146802,
+    "solve_s": 12.873421430587769
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005199446269570648,
+    "colloc_fraction_min": -0.9080375931587394,
+    "colloc_fraction_max": 1.6626845009275006,
+    "n_colloc_upstream_of_own_bound_vortex": 26,
+    "n_colloc_outside_panel": 64,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.17563721383016725,
+    "lift_share_pectoral_a4": 0.8120517801296803,
+    "solve_s": 14.778207302093506
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005199446269570648,
+    "colloc_fraction_min": 0.7499999999981853,
+    "colloc_fraction_max": 0.750000000001361,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -0.06647737893545301,
+    "lift_share_pectoral_a0": 1.1093369437297433,
+    "CL_a4": 0.16133147510411847,
+    "lift_share_pectoral_a4": 0.7381947919204833,
+    "solve_s": 13.432939291000366
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005199446269570648,
+    "colloc_fraction_min": 0.7499999999981853,
+    "colloc_fraction_max": 0.750000000001361,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.22870373528733712,
+    "lift_share_pectoral_a4": 0.8515280559546147,
+    "solve_s": 13.991487503051758
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005184828302261747,
+    "colloc_fraction_min": -0.610097585443649,
+    "colloc_fraction_max": 1.8740817474559321,
+    "n_colloc_upstream_of_own_bound_vortex": 38,
+    "n_colloc_outside_panel": 84,
+    "CL_a0": 0.10381036314493568,
+    "lift_share_pectoral_a0": 0.8040639050664808,
+    "CL_a4": 0.2758035546334381,
+    "lift_share_pectoral_a4": 0.8111094459401375,
+    "solve_s": 3.905416250228882
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005184828302261747,
+    "colloc_fraction_min": -0.610097585443649,
+    "colloc_fraction_max": 1.8740817474559321,
+    "n_colloc_upstream_of_own_bound_vortex": 38,
+    "n_colloc_outside_panel": 84,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.1736021848999025,
+    "lift_share_pectoral_a4": 0.8214135431281937,
+    "solve_s": 3.3515050411224365
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005184828302261747,
+    "colloc_fraction_min": 0.7499999999993183,
+    "colloc_fraction_max": 0.7500000000002368,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -0.06819039245686238,
+    "lift_share_pectoral_a0": 1.125651199101996,
+    "CL_a4": 0.16286266671415156,
+    "lift_share_pectoral_a4": 0.731480997476017,
+    "solve_s": 3.6541013717651367
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005184828302261747,
+    "colloc_fraction_min": 0.7499999999993183,
+    "colloc_fraction_max": 0.7500000000002368,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.23197817792659303,
+    "lift_share_pectoral_a4": 0.8527098762960937,
+    "solve_s": 3.2167959213256836
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005184828302261747,
+    "colloc_fraction_min": -1.316700623274628,
+    "colloc_fraction_max": 2.4637639756296537,
+    "n_colloc_upstream_of_own_bound_vortex": 74,
+    "n_colloc_outside_panel": 170,
+    "CL_a0": 0.19520928005842167,
+    "lift_share_pectoral_a0": 0.726994114438007,
+    "CL_a4": 0.32841221722746866,
+    "lift_share_pectoral_a4": 0.7581454432930437,
+    "solve_s": 7.242377519607544
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005184828302261747,
+    "colloc_fraction_min": -1.316700623274628,
+    "colloc_fraction_max": 2.4637639756296537,
+    "n_colloc_upstream_of_own_bound_vortex": 74,
+    "n_colloc_outside_panel": 170,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.1345657104060168,
+    "lift_share_pectoral_a4": 0.8061944439478274,
+    "solve_s": 6.99878716468811
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005184828302261747,
+    "colloc_fraction_min": 0.7499999999988071,
+    "colloc_fraction_max": 0.7500000000003408,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -0.06895737038523206,
+    "lift_share_pectoral_a0": 1.150454955388026,
+    "CL_a4": 0.16216410004122064,
+    "lift_share_pectoral_a4": 0.7189989380115405,
+    "solve_s": 7.2400195598602295
+   },
+   {
+    "variant": "v3b",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005184828302261747,
+    "colloc_fraction_min": 0.7499999999988071,
+    "colloc_fraction_max": 0.7500000000003408,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2319796558585468,
+    "lift_share_pectoral_a4": 0.852712331882614,
+    "solve_s": 7.838271379470825
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005199446269570649,
+    "colloc_fraction_min": -0.045252662181644726,
+    "colloc_fraction_max": 1.183899188965565,
+    "n_colloc_upstream_of_own_bound_vortex": 8,
+    "n_colloc_outside_panel": 10,
+    "CL_a0": -0.05483448750747531,
+    "lift_share_pectoral_a0": 1.2081478303087585,
+    "CL_a4": 0.1706831565553605,
+    "lift_share_pectoral_a4": 0.7281437769311239,
+    "solve_s": 4.432021856307983
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005199446269570649,
+    "colloc_fraction_min": -0.045252662181644726,
+    "colloc_fraction_max": 1.183899188965565,
+    "n_colloc_upstream_of_own_bound_vortex": 8,
+    "n_colloc_outside_panel": 10,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2264424908996705,
+    "lift_share_pectoral_a4": 0.8500537117501415,
+    "solve_s": 4.571027040481567
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005199446269570649,
+    "colloc_fraction_min": 0.7499999999995272,
+    "colloc_fraction_max": 0.750000000001361,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -0.06120192885641598,
+    "lift_share_pectoral_a0": 1.17509437968253,
+    "CL_a4": 0.16660678277644864,
+    "lift_share_pectoral_a4": 0.7256553576676337,
+    "solve_s": 3.6516172885894775
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005199446269570649,
+    "colloc_fraction_min": 0.7499999999995272,
+    "colloc_fraction_max": 0.750000000001361,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.22870727836917595,
+    "lift_share_pectoral_a4": 0.8515476025224585,
+    "solve_s": 3.621912717819214
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005199446269570648,
+    "colloc_fraction_min": -1.7708225241358029,
+    "colloc_fraction_max": 2.1414698128895546,
+    "n_colloc_upstream_of_own_bound_vortex": 68,
+    "n_colloc_outside_panel": 136,
+    "CL_a0": 0.30693898263927044,
+    "lift_share_pectoral_a0": 0.9405061967133664,
+    "CL_a4": 0.3935180763466207,
+    "lift_share_pectoral_a4": 0.8722428360595755,
+    "solve_s": 43.058046102523804
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.005199446269570648,
+    "colloc_fraction_min": -1.7708225241358029,
+    "colloc_fraction_max": 2.1414698128895546,
+    "n_colloc_upstream_of_own_bound_vortex": 68,
+    "n_colloc_outside_panel": 136,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.08927836027894136,
+    "lift_share_pectoral_a4": 0.6498576629693326,
+    "solve_s": 32.385613679885864
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005199446269570648,
+    "colloc_fraction_min": 0.7499999999965975,
+    "colloc_fraction_max": 0.7500000000020415,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -0.06888045846801866,
+    "lift_share_pectoral_a0": 1.1219469155260746,
+    "CL_a4": 0.1589992833839292,
+    "lift_share_pectoral_a4": 0.7271599226704538,
+    "solve_s": 35.011966705322266
+   },
+   {
+    "variant": "v3b",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.005199446269570648,
+    "colloc_fraction_min": 0.7499999999965975,
+    "colloc_fraction_max": 0.7500000000020415,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.22870040194333263,
+    "lift_share_pectoral_a4": 0.8515468345531345,
+    "solve_s": 34.03853464126587
+   },
+   {
+    "variant": "v3b",
+    "ns": 72,
+    "nc": 24,
+    "panels": 6912,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.005201387033128973,
+    "colloc_fraction_min": -1.005725202538561,
+    "colloc_fraction_max": 2.0393504018884347,
+    "n_colloc_upstream_of_own_bound_vortex": 36,
+    "n_colloc_outside_panel": 90,
+    "CL_a0": -0.03421680340773493,
+    "lift_share_pectoral_a0": 1.3129018827657768,
+    "CL_a4": 0.1816916701384702,
+    "lift_share_pectoral_a4": 0.749355653686516,
+    "solve_s": 889.4714689254761
+   },
+   {
+    "variant": "v3b",
+    "ns": 72,
+    "nc": 24,
+    "panels": 6912,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.005201387033128973,
+    "colloc_fraction_min": 0.7499999999908259,
+    "colloc_fraction_max": 0.7500000000038247,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -0.06485500084062758,
+    "lift_share_pectoral_a0": 1.1371159238081128,
+    "CL_a4": 0.16195336185334155,
+    "lift_share_pectoral_a4": 0.7292488993682366,
+    "solve_s": 585.3081004619598
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.006764344638541908,
+    "colloc_fraction_min": -0.07528837217389503,
+    "colloc_fraction_max": 1.3331889374858084,
+    "n_colloc_upstream_of_own_bound_vortex": 4,
+    "n_colloc_outside_panel": 16,
+    "CL_a0": -1.0601942208589765e-05,
+    "lift_share_pectoral_a0": 0.5456460230826166,
+    "CL_a4": 0.25293860217127273,
+    "lift_share_pectoral_a4": 0.8918793597262846,
+    "solve_s": 1.1103169918060303
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.006764344638541908,
+    "colloc_fraction_min": -0.07528837217389503,
+    "colloc_fraction_max": 1.3331889374858084,
+    "n_colloc_upstream_of_own_bound_vortex": 4,
+    "n_colloc_outside_panel": 16,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2529491808810579,
+    "lift_share_pectoral_a4": 0.8918648516215747,
+    "solve_s": 0.8038074970245361
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.006764344638541908,
+    "colloc_fraction_min": 0.749999999999644,
+    "colloc_fraction_max": 0.7500000000002968,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -1.091844874816792e-05,
+    "lift_share_pectoral_a0": 0.5848014124247083,
+    "CL_a4": 0.25385071060507525,
+    "lift_share_pectoral_a4": 0.8938668060191256,
+    "solve_s": 0.988112211227417
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.006764344638541908,
+    "colloc_fraction_min": 0.749999999999644,
+    "colloc_fraction_max": 0.7500000000002968,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.25386160456081575,
+    "lift_share_pectoral_a4": 0.8938535044398147,
+    "solve_s": 0.9229629039764404
+   },
+   {
+    "variant": "v3c",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.006774025255402584,
+    "colloc_fraction_min": 0.46262558416107064,
+    "colloc_fraction_max": 1.0075366492465072,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 2,
+    "CL_a0": -7.973321215086354e-06,
+    "lift_share_pectoral_a0": 0.4446439750466518,
+    "CL_a4": 0.251457825139185,
+    "lift_share_pectoral_a4": 0.8930579276822902,
+    "solve_s": 4.837807655334473
+   },
+   {
+    "variant": "v3c",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.006774025255402584,
+    "colloc_fraction_min": 0.46262558416107064,
+    "colloc_fraction_max": 1.0075366492465072,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 2,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2514657869178308,
+    "lift_share_pectoral_a4": 0.8930437255612927,
+    "solve_s": 4.414557695388794
+   },
+   {
+    "variant": "v3c",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.006774025255402584,
+    "colloc_fraction_min": 0.7499999999992997,
+    "colloc_fraction_max": 0.7500000000010004,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -8.830316288142912e-06,
+    "lift_share_pectoral_a0": 0.5053931806510452,
+    "CL_a4": 0.2515696499610759,
+    "lift_share_pectoral_a4": 0.8929870728202731,
+    "solve_s": 3.867727041244507
+   },
+   {
+    "variant": "v3c",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.006774025255402584,
+    "colloc_fraction_min": 0.7499999999992997,
+    "colloc_fraction_max": 0.7500000000010004,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.251578464771545,
+    "lift_share_pectoral_a4": 0.892973480163383,
+    "solve_s": 4.444842576980591
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.006774036152173499,
+    "colloc_fraction_min": 0.3533253924704765,
+    "colloc_fraction_max": 1.274325829621546,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 44,
+    "CL_a0": -7.0045315803554856e-06,
+    "lift_share_pectoral_a0": 0.29679339847297903,
+    "CL_a4": 0.25109450854616794,
+    "lift_share_pectoral_a4": 0.8932242662324202,
+    "solve_s": 12.800669431686401
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.006774036152173499,
+    "colloc_fraction_min": 0.3533253924704765,
+    "colloc_fraction_max": 1.274325829621546,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 44,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2511015101712585,
+    "lift_share_pectoral_a4": 0.8932076463147709,
+    "solve_s": 14.780369758605957
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.006774036152173499,
+    "colloc_fraction_min": 0.7499999999993064,
+    "colloc_fraction_max": 0.7500000000009479,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -7.189976485948281e-06,
+    "lift_share_pectoral_a0": 0.3096100001913951,
+    "CL_a4": 0.2505357911683204,
+    "lift_share_pectoral_a4": 0.8925941765314661,
+    "solve_s": 13.004836559295654
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.006774036152173499,
+    "colloc_fraction_min": 0.7499999999993064,
+    "colloc_fraction_max": 0.7500000000009479,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2505429763780892,
+    "lift_share_pectoral_a4": 0.8925774610059615,
+    "solve_s": 14.06392240524292
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.006764344638541907,
+    "colloc_fraction_min": -1.029466210940824,
+    "colloc_fraction_max": 1.938971055021972,
+    "n_colloc_upstream_of_own_bound_vortex": 26,
+    "n_colloc_outside_panel": 108,
+    "CL_a0": -6.69157664649026e-06,
+    "lift_share_pectoral_a0": 0.24038390324744288,
+    "CL_a4": 0.2374815814325299,
+    "lift_share_pectoral_a4": 0.8845877882979012,
+    "solve_s": 3.1347320079803467
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.006764344638541907,
+    "colloc_fraction_min": -1.029466210940824,
+    "colloc_fraction_max": 1.938971055021972,
+    "n_colloc_upstream_of_own_bound_vortex": 26,
+    "n_colloc_outside_panel": 108,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2374882680524872,
+    "lift_share_pectoral_a4": 0.8845696694563248,
+    "solve_s": 3.02580189704895
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.006764344638541907,
+    "colloc_fraction_min": 0.7499999999994066,
+    "colloc_fraction_max": 0.7500000000005341,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -7.962565387338597e-06,
+    "lift_share_pectoral_a0": 0.373066069946594,
+    "CL_a4": 0.25385496487803355,
+    "lift_share_pectoral_a4": 0.8938717675742902,
+    "solve_s": 3.1436965465545654
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 16,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.006764344638541907,
+    "colloc_fraction_min": 0.7499999999994066,
+    "colloc_fraction_max": 0.7500000000005341,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2538629192198344,
+    "lift_share_pectoral_a4": 0.8938554424704123,
+    "solve_s": 2.961646795272827
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.006764344638541909,
+    "colloc_fraction_min": -1.9836440497077528,
+    "colloc_fraction_max": 2.5447531725581727,
+    "n_colloc_upstream_of_own_bound_vortex": 66,
+    "n_colloc_outside_panel": 220,
+    "CL_a0": -6.500422757883269e-06,
+    "lift_share_pectoral_a0": 0.31129148857052513,
+    "CL_a4": 0.22801948999392616,
+    "lift_share_pectoral_a4": 0.882031258494768,
+    "solve_s": 6.977977275848389
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.006764344638541909,
+    "colloc_fraction_min": -1.9836440497077528,
+    "colloc_fraction_max": 2.5447531725581727,
+    "n_colloc_upstream_of_own_bound_vortex": 66,
+    "n_colloc_outside_panel": 220,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2280259771691004,
+    "lift_share_pectoral_a4": 0.8820150414194632,
+    "solve_s": 7.494715929031372
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.006764344638541909,
+    "colloc_fraction_min": 0.7499999999989317,
+    "colloc_fraction_max": 0.7500000000009792,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -8.335302280500929e-06,
+    "lift_share_pectoral_a0": 0.4040521406981689,
+    "CL_a4": 0.2538548681052422,
+    "lift_share_pectoral_a4": 0.8938719284034937,
+    "solve_s": 7.239721298217773
+   },
+   {
+    "variant": "v3c",
+    "ns": 24,
+    "nc": 24,
+    "panels": 2304,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.006764344638541909,
+    "colloc_fraction_min": 0.7499999999989317,
+    "colloc_fraction_max": 0.7500000000009792,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2538631867578134,
+    "lift_share_pectoral_a4": 0.8938558618580036,
+    "solve_s": 8.805464506149292
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.006774036152173498,
+    "colloc_fraction_min": 0.5614169898630138,
+    "colloc_fraction_max": 1.0072287331184309,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 2,
+    "CL_a0": -1.0407663996428447e-05,
+    "lift_share_pectoral_a0": 0.4950108541289826,
+    "CL_a4": 0.2509956805872436,
+    "lift_share_pectoral_a4": 0.8929484047067535,
+    "solve_s": 3.9775924682617188
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.006774036152173498,
+    "colloc_fraction_min": 0.5614169898630138,
+    "colloc_fraction_max": 1.0072287331184309,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 2,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.25100607111441614,
+    "lift_share_pectoral_a4": 0.892931901593284,
+    "solve_s": 4.367400407791138
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.006774036152173498,
+    "colloc_fraction_min": 0.749999999999526,
+    "colloc_fraction_max": 0.7500000000000949,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -1.0383226017487936e-05,
+    "lift_share_pectoral_a0": 0.49083014224021076,
+    "CL_a4": 0.25053566636533575,
+    "lift_share_pectoral_a4": 0.8926039230740664,
+    "solve_s": 3.489388942718506
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 8,
+    "panels": 1536,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.006774036152173498,
+    "colloc_fraction_min": 0.749999999999526,
+    "colloc_fraction_max": 0.7500000000000949,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.2505460322853363,
+    "lift_share_pectoral_a4": 0.8925872686458152,
+    "solve_s": 3.4508237838745117
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.006774036152173498,
+    "colloc_fraction_min": 0.14523379507794118,
+    "colloc_fraction_max": 1.5414229261246561,
+    "n_colloc_upstream_of_own_bound_vortex": 10,
+    "n_colloc_outside_panel": 102,
+    "CL_a0": -7.97089786592379e-06,
+    "lift_share_pectoral_a0": 0.40974586952325,
+    "CL_a4": 0.24971291925062739,
+    "lift_share_pectoral_a4": 0.8931634884688291,
+    "solve_s": 40.111692905426025
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "original",
+    "normals": "flat",
+    "S_lattice_m2": 0.006774036152173498,
+    "colloc_fraction_min": 0.14523379507794118,
+    "colloc_fraction_max": 1.5414229261246561,
+    "n_colloc_upstream_of_own_bound_vortex": 10,
+    "n_colloc_outside_panel": 102,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.24972087990571049,
+    "lift_share_pectoral_a4": 0.893148079698064,
+    "solve_s": 34.03863525390625
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.006774036152173498,
+    "colloc_fraction_min": 0.7499999999982228,
+    "colloc_fraction_max": 0.7500000000024881,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -7.49150356451987e-06,
+    "lift_share_pectoral_a0": 0.37526003529969315,
+    "CL_a4": 0.2505322975061375,
+    "lift_share_pectoral_a4": 0.8926034669016712,
+    "solve_s": 34.590250730514526
+   },
+   {
+    "variant": "v3c",
+    "ns": 48,
+    "nc": 24,
+    "panels": 4608,
+    "rule": "consistent",
+    "normals": "flat",
+    "S_lattice_m2": 0.006774036152173498,
+    "colloc_fraction_min": 0.7499999999982228,
+    "colloc_fraction_max": 0.7500000000024881,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": 0.0,
+    "lift_share_pectoral_a0": NaN,
+    "CL_a4": 0.25053977721311277,
+    "lift_share_pectoral_a4": 0.8925880160002985,
+    "solve_s": 34.873971939086914
+   },
+   {
+    "variant": "v3c",
+    "ns": 72,
+    "nc": 24,
+    "panels": 6912,
+    "rule": "original",
+    "normals": "source",
+    "S_lattice_m2": 0.006776608091449151,
+    "colloc_fraction_min": -0.1607679912098079,
+    "colloc_fraction_max": 1.3820799840714686,
+    "n_colloc_upstream_of_own_bound_vortex": 26,
+    "n_colloc_outside_panel": 66,
+    "CL_a0": -7.838075966404894e-06,
+    "lift_share_pectoral_a0": 0.3993100935535453,
+    "CL_a4": 0.2437419040446428,
+    "lift_share_pectoral_a4": 0.8908433986100982,
+    "solve_s": 896.7630715370178
+   },
+   {
+    "variant": "v3c",
+    "ns": 72,
+    "nc": 24,
+    "panels": 6912,
+    "rule": "consistent",
+    "normals": "source",
+    "S_lattice_m2": 0.006776608091449151,
+    "colloc_fraction_min": 0.7499999999912146,
+    "colloc_fraction_max": 0.7500000000079867,
+    "n_colloc_upstream_of_own_bound_vortex": 0,
+    "n_colloc_outside_panel": 0,
+    "CL_a0": -7.97485907334592e-06,
+    "lift_share_pectoral_a0": 0.40195445303479116,
+    "CL_a4": 0.249399019985112,
+    "lift_share_pectoral_a4": 0.8921764996952951,
+    "solve_s": 584.6165788173676
+   }
+  ],
+  "predecessor_ladder": [
+   {
+    "variant": "v3a",
+    "arm": "all",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "S_lattice_m2": 0.005288431699731851,
+    "CL": 0.24966490097877064,
+    "lift_N_per_q": {
+     "pectoral_L": 0.00028039586098035744,
+     "pectoral_R": 0.0002803958609803575,
+     "pelvic_L": 4.96880831812794e-05,
+     "pelvic_R": 4.96880831812794e-05
+    },
+    "solve_s": 1.9292380809783936,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.02166118617353133,
+     "pectoral_R": 0.02166118617353133,
+     "pelvic_L": 0.010610513318995715,
+     "pelvic_R": 0.010610513318995715
+    }
+   },
+   {
+    "variant": "v3b",
+    "arm": "all",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "S_lattice_m2": 0.005184828302261746,
+    "CL": 0.16094278581251215,
+    "lift_N_per_q": {
+     "pectoral_L": 0.00015129366732769917,
+     "pectoral_R": 0.0001512936673276991,
+     "pelvic_L": 5.732151040369129e-05,
+     "pelvic_R": 5.732151040369129e-05
+    },
+    "solve_s": 1.1675152778625488,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.021649199767427647,
+     "pectoral_R": 0.021649199767427647,
+     "pelvic_L": 0.01047266313208583,
+     "pelvic_R": 0.01047266313208583
+    }
+   },
+   {
+    "variant": "v3c",
+    "arm": "all",
+    "ns": 24,
+    "nc": 8,
+    "panels": 768,
+    "S_lattice_m2": 0.006764344638541908,
+    "CL": 0.25293860217127273,
+    "lift_N_per_q": {
+     "pectoral_L": 0.0003814933418898658,
+     "pectoral_R": 0.0003814933418898659,
+     "pelvic_L": 4.624762747951715e-05,
+     "pelvic_R": 4.624762747951718e-05
+    },
+    "solve_s": 1.030043601989746,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.021690953187246967,
+     "pectoral_R": 0.021690953187246967,
+     "pelvic_L": 0.010854312762420826,
+     "pelvic_R": 0.010854312762420826
+    }
+   },
+   {
+    "variant": "v3a",
+    "arm": "all",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "S_lattice_m2": 0.005288348722034572,
+    "CL": 0.25180772630807485,
+    "lift_N_per_q": {
+     "pectoral_L": 0.0002848072055317236,
+     "pectoral_R": 0.0002848072055317236,
+     "pelvic_L": 4.810456137321029e-05,
+     "pelvic_R": 4.810456137321028e-05
+    },
+    "solve_s": 3.5712668895721436,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.021556109215643146,
+     "pectoral_R": 0.021556109215643146,
+     "pelvic_L": 0.010614998889705353,
+     "pelvic_R": 0.010614998889705353
+    }
+   },
+   {
+    "variant": "v3b",
+    "arm": "all",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "S_lattice_m2": 0.005194214530041942,
+    "CL": 0.20808523226616144,
+    "lift_N_per_q": {
+     "pectoral_L": 0.0002129122228919581,
+     "pectoral_R": 0.00021291222289195817,
+     "pelvic_L": 5.729761133905444e-05,
+     "pelvic_R": 5.7297611339054504e-05
+    },
+    "solve_s": 4.0756378173828125,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.021550768477089127,
+     "pectoral_R": 0.021550768477089127,
+     "pelvic_L": 0.010466892133429011,
+     "pelvic_R": 0.010466892133429011
+    }
+   },
+   {
+    "variant": "v3c",
+    "arm": "all",
+    "ns": 36,
+    "nc": 12,
+    "panels": 1728,
+    "S_lattice_m2": 0.006774025255402584,
+    "CL": 0.251457825139185,
+    "lift_N_per_q": {
+     "pectoral_L": 0.00038030462342242104,
+     "pectoral_R": 0.0003803046234224211,
+     "pelvic_L": 4.554079111794028e-05,
+     "pelvic_R": 4.554079111794027e-05
+    },
+    "solve_s": 3.9146573543548584,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.021569360050480196,
+     "pectoral_R": 0.021569360050480196,
+     "pelvic_L": 0.010849145164855531,
+     "pelvic_R": 0.010849145164855531
+    }
+   },
+   {
+    "variant": "v3a",
+    "arm": "all",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "S_lattice_m2": 0.005291725830206287,
+    "CL": 0.24773443150327681,
+    "lift_N_per_q": {
+     "pectoral_L": 0.000279126852330424,
+     "pectoral_R": 0.000279126852330424,
+     "pelvic_L": 4.860882022391583e-05,
+     "pelvic_R": 4.860882022391584e-05
+    },
+    "solve_s": 8.139296054840088,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.02151929465855201,
+     "pectoral_R": 0.02151929465855201,
+     "pelvic_L": 0.010612335895203351,
+     "pelvic_R": 0.010612335895203351
+    }
+   },
+   {
+    "variant": "v3b",
+    "arm": "all",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "S_lattice_m2": 0.005199446269570648,
+    "CL": 0.24568598974192507,
+    "lift_N_per_q": {
+     "pectoral_L": 0.00026102982797298924,
+     "pectoral_R": 0.00026102982797298924,
+     "pelvic_L": 5.832794773936686e-05,
+     "pelvic_R": 5.8327947739366816e-05
+    },
+    "solve_s": 11.285785675048828,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.021516285344299467,
+     "pectoral_R": 0.021516285344299467,
+     "pelvic_L": 0.010462095520978302,
+     "pelvic_R": 0.010462095520978302
+    }
+   },
+   {
+    "variant": "v3c",
+    "arm": "all",
+    "ns": 48,
+    "nc": 16,
+    "panels": 3072,
+    "S_lattice_m2": 0.006774036152173499,
+    "CL": 0.25109450854616794,
+    "lift_N_per_q": {
+     "pectoral_L": 0.00037982648683983986,
+     "pectoral_R": 0.00037982648683983986,
+     "pelvic_L": 4.5404332786154645e-05,
+     "pelvic_R": 4.5404332786154645e-05
+    },
+    "solve_s": 9.298363208770752,
+    "min_dist_to_other_fin_trailing_leg_m": {
+     "pectoral_L": 0.021526759240193996,
+     "pectoral_R": 0.021526759240193996,
+     "pelvic_L": 0.010848560592001415,
+     "pelvic_R": 0.010848560592001415
+    }
+   }
+  ],
+  "v3b_pose_decomposition": [
+   {
+    "u_mm": [
+     -1.716543735853928e-05,
+     12.103070853232117
+    ],
+    "chord_slope_deg_TE_up_positive": 0.48600425038762296,
+    "camber_over_chord": 0.01847364633134456
+   },
+   {
+    "u_mm": [
+     12.103070853232117,
+     24.20615887190159
+    ],
+    "chord_slope_deg_TE_up_positive": 0.28494804514751476,
+    "camber_over_chord": 0.037254994242459906
+   },
+   {
+    "u_mm": [
+     24.20615887190159,
+     36.309246890571075
+    ],
+    "chord_slope_deg_TE_up_positive": 2.5490586090335974,
+    "camber_over_chord": 0.05673099514973565
+   },
+   {
+    "u_mm": [
+     36.309246890571075,
+     48.41233490924054
+    ],
+    "chord_slope_deg_TE_up_positive": 6.155962764064506,
+    "camber_over_chord": 0.03854421127176855
+   },
+   {
+    "u_mm": [
+     48.41233490924054,
+     60.515422927910016
+    ],
+    "chord_slope_deg_TE_up_positive": 9.012616827597716,
+    "camber_over_chord": 0.02890896910262888
+   },
+   {
+    "u_mm": [
+     60.515422927910016,
+     72.61851094657949
+    ],
+    "chord_slope_deg_TE_up_positive": 10.790598943163173,
+    "camber_over_chord": 0.016805386191138246
+   },
+   {
+    "u_mm": [
+     72.61851094657949,
+     84.72159896524896
+    ],
+    "chord_slope_deg_TE_up_positive": 12.524392283577832,
+    "camber_over_chord": -0.016836509536865725
+   }
+  ],
+  "v3a_pose_decomposition_control": [
+   {
+    "u_mm": [
+     -1.7328102668923806e-05,
+     12.734978145762119
+    ],
+    "chord_slope_deg_TE_up_positive": 6.519540959547778e-07,
+    "camber_over_chord": 1.8368790223065558e-07
+   },
+   {
+    "u_mm": [
+     12.734978145762119,
+     25.46997361962691
+    ],
+    "chord_slope_deg_TE_up_positive": -1.0307821919964323e-05,
+    "camber_over_chord": 3.3130146337868606e-07
+   },
+   {
+    "u_mm": [
+     25.46997361962691,
+     38.2049690934917
+    ],
+    "chord_slope_deg_TE_up_positive": 1.2642747808846803e-05,
+    "camber_over_chord": -8.326773108950144e-08
+   },
+   {
+    "u_mm": [
+     38.2049690934917,
+     50.93996456735648
+    ],
+    "chord_slope_deg_TE_up_positive": 2.2846969485036394e-05,
+    "camber_over_chord": 9.411309149694237e-07
+   },
+   {
+    "u_mm": [
+     50.93996456735648,
+     63.67496004122127
+    ],
+    "chord_slope_deg_TE_up_positive": -6.482491784568463e-05,
+    "camber_over_chord": -2.0172121777709088e-06
+   },
+   {
+    "u_mm": [
+     63.67496004122127,
+     76.40995551508605
+    ],
+    "chord_slope_deg_TE_up_positive": 2.6582068000983788e-05,
+    "camber_over_chord": 2.341775933100959e-07
+   },
+   {
+    "u_mm": [
+     76.40995551508605,
+     89.14495098895084
+    ],
+    "chord_slope_deg_TE_up_positive": 4.4393718380418445e-05,
+    "camber_over_chord": 4.033808831592095e-09
+   }
+  ],
+  "diagnosis": "vlm.lattice places each collocation point on the polygon chord at mid-span (cm) while bound vortices use the panel-edge chords; on curved outlines the point leaves its panel (up to ~2 chords upstream at nc=24). Errors grow with chordwise refinement, so CL drifts with nc for every variant; v3b's diagonal ladder looked worst because its cambered (glide-pose) normals add an alpha-independent term that the misplaced points sample differently at each lattice."
+ },
+ "checks": [
+  {
+   "name": "control: predecessor ladder reproduced (v3a 24x8) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.24966490097877073,
+    0.24966490097877064
+   ]
+  },
+  {
+   "name": "control: predecessor ladder reproduced (v3b 24x8) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.16094278581251215,
+    0.16094278581251215
+   ]
+  },
+  {
+   "name": "control: predecessor ladder reproduced (v3c 24x8) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.25293860217127273,
+    0.25293860217127273
+   ]
+  },
+  {
+   "name": "control: predecessor ladder reproduced (v3a 36x12) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.2518077263080749,
+    0.25180772630807485
+   ]
+  },
+  {
+   "name": "control: predecessor ladder reproduced (v3b 36x12) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.20808523226616157,
+    0.20808523226616144
+   ]
+  },
+  {
+   "name": "control: predecessor ladder reproduced (v3c 36x12) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.251457825139185,
+    0.251457825139185
+   ]
+  },
+  {
+   "name": "control: predecessor ladder reproduced (v3a 48x16) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.2477344315032767,
+    0.24773443150327681
+   ]
+  },
+  {
+   "name": "control: predecessor ladder reproduced (v3b 48x16) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.24568598974192513,
+    0.24568598974192507
+   ]
+  },
+  {
+   "name": "control: predecessor ladder reproduced (v3c 48x16) to 1e-9",
+   "pass": true,
+   "detail": [
+    0.25109450854616794,
+    0.25109450854616794
+   ]
+  },
+  {
+   "name": "control: consistent rule puts every collocation point at 0.75 chord of its own panel",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "name": "control: pose decomposition of planar v3a gives |slope| < 1e-3 deg and |camber/chord| < 1e-4 (input stored to 1e-7 m)",
+   "pass": true,
+   "detail": [
+    {
+     "u_mm": [
+      -1.7328102668923806e-05,
+      12.734978145762119
+     ],
+     "chord_slope_deg_TE_up_positive": 6.519540959547778e-07,
+     "camber_over_chord": 1.8368790223065558e-07
+    },
+    {
+     "u_mm": [
+      12.734978145762119,
+      25.46997361962691
+     ],
+     "chord_slope_deg_TE_up_positive": -1.0307821919964323e-05,
+     "camber_over_chord": 3.3130146337868606e-07
+    },
+    {
+     "u_mm": [
+      25.46997361962691,
+      38.2049690934917
+     ],
+     "chord_slope_deg_TE_up_positive": 1.2642747808846803e-05,
+     "camber_over_chord": -8.326773108950144e-08
+    },
+    {
+     "u_mm": [
+      38.2049690934917,
+      50.93996456735648
+     ],
+     "chord_slope_deg_TE_up_positive": 2.2846969485036394e-05,
+     "camber_over_chord": 9.411309149694237e-07
+    },
+    {
+     "u_mm": [
+      50.93996456735648,
+      63.67496004122127
+     ],
+     "chord_slope_deg_TE_up_positive": -6.482491784568463e-05,
+     "camber_over_chord": -2.0172121777709088e-06
+    },
+    {
+     "u_mm": [
+      63.67496004122127,
+      76.40995551508605
+     ],
+     "chord_slope_deg_TE_up_positive": 2.6582068000983788e-05,
+     "camber_over_chord": 2.341775933100959e-07
+    },
+    {
+     "u_mm": [
+      76.40995551508605,
+      89.14495098895084
+     ],
+     "chord_slope_deg_TE_up_positive": 4.4393718380418445e-05,
+     "camber_over_chord": 4.033808831592095e-09
+    }
+   ]
+  },
+  {
+   "name": "control: flat-normal arms give CL(alpha=0) = 0 exactly (no camber)",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "name": "control: committed VLM analytic controls (elliptic AR6/AR20, camber, symmetry) all pass in the record",
+   "pass": true,
+   "detail": "artifacts/cfd3d/vlm/controls.json"
+  },
+  {
+   "name": "finding reproduced: v3b committed-lattice diagonal ladder changes > 5% per step",
+   "pass": true,
+   "detail": [
+    0.29291431868569306,
+    0.18069882742888965,
+    0.2604719938270643
+   ]
+  },
+  {
+   "name": "v3a: consistent lattice converges (last diagonal step <= 2% and ns24 nc16->24 change <= 1%)",
+   "pass": true,
+   "detail": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.25188421109617154,
+     0.24991316594695032,
+     0.24876681278028082,
+     0.24769167142646678
+    ],
+    "diagonal_rel_steps": [
+     0.007825203257653457,
+     0.004587005899932661,
+     0.0043218841846224265
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.25188421109617154,
+     0.25188943146182263,
+     0.25189061878723673
+    ],
+    "nc_sensitivity_ns24": 2.5439034218477374e-05,
+    "CL_a0_finest": -2.5852748975769713e-06,
+    "max_colloc_outside_panel": 0,
+    "nc16_to_24_rel": 4.713676978074233e-06
+   }
+  },
+  {
+   "name": "v3b: consistent lattice converges (last diagonal step <= 2% and ns24 nc16->24 change <= 1%)",
+   "pass": true,
+   "detail": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.15361143094321406,
+     0.162921425556133,
+     0.16133147510411847,
+     0.16195336185334155
+    ],
+    "diagonal_rel_steps": [
+     0.06060743367699373,
+     0.009759001595936456,
+     0.003854714331606557
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.15361143094321406,
+     0.16286266671415156,
+     0.16216410004122064
+    ],
+    "nc_sensitivity_ns24": 0.060224917599768,
+    "CL_a0_finest": -0.06485500084062758,
+    "max_colloc_outside_panel": 0,
+    "nc16_to_24_rel": 0.004289298996663304
+   }
+  },
+  {
+   "name": "v3c: consistent lattice converges (last diagonal step <= 2% and ns24 nc16->24 change <= 1%)",
+   "pass": true,
+   "detail": {
+    "diagonal_lattices": [
+     [
+      24,
+      8
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      48,
+      16
+     ],
+     [
+      72,
+      24
+     ]
+    ],
+    "diagonal_CL_a4": [
+     0.25385071060507525,
+     0.2515696499610759,
+     0.2505357911683204,
+     0.249399019985112
+    ],
+    "diagonal_rel_steps": [
+     0.008985835172815704,
+     0.00410963243346496,
+     0.004537360422266823
+    ],
+    "ns24_nc_8_16_24_CL_a4": [
+     0.25385071060507525,
+     0.25385496487803355,
+     0.2538548681052422
+    ],
+    "nc_sensitivity_ns24": 1.675895627073487e-05,
+    "CL_a0_finest": -7.97485907334592e-06,
+    "max_colloc_outside_panel": 0,
+    "nc16_to_24_rel": 3.812129157898525e-07
+   }
+  },
+  {
+   "name": "recorded finding: v3b's nc=8 lattices are under-resolved even with the consistent lattice (nc 8 -> 16 change)",
+   "pass": true,
+   "detail": {
+    "v3a": 2.5439034218477374e-05,
+    "v3b": 0.060224917599768,
+    "v3c": 1.675895627073487e-05
+   }
+  }
+ ],
+ "design_implications": {
+  "see": "docs/organ-sims.md"
+ },
+ "figures": [
+  "artifacts/organ-sims/r1-v3b-convergence/ladder2.png"
+ ]
+}

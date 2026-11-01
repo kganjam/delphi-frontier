@@ -6,10 +6,23 @@
  "runs": [
   {
    "id": "r1-v3b-convergence",
+   "title": "v3b VLM non-convergence diagnosis: collocation-placement defect, corrected lattice, camber effect",
    "scales": [
     "organ"
    ],
-   "status": "no manifest (run not completed)"
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No fin load, flight or biological claim: an inviscid thin-surface lattice-convergence diagnosis of three designed fin geometries; no body, viscosity or separation.",
+   "checks_passed": 18,
+   "checks_total": 18,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T15:17:42Z",
+   "manifest": "artifacts/organ-sims/r1-v3b-convergence/manifest.json",
+   "manifest_sha256": "c8012d3d73592ed76241b636b6dc9090a285ed1f1756d72855f59f52192c18ac",
+   "figures": [
+    "artifacts/organ-sims/r1-v3b-convergence/ladder2.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
   },
   {
    "id": "r2-glide-sweep",
