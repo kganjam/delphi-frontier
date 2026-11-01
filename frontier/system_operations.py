@@ -24,6 +24,7 @@ from .system_status import ROOT, now_iso, read_small, sha256
 
 SCHEMA = "frontier.system-operations/1"
 PINS = "deploy/system/operations-pins.json"
+MODULE = "frontier/system_operations.py"
 SITE_PATH = "artifacts/system-operations/operations.json"
 SOURCES = {                                               # id -> repo-relative path; the allowlist
     "queue": "results/infra/queue.json",
@@ -33,6 +34,7 @@ SOURCES = {                                               # id -> repo-relative 
     "ledger": "results/resources/team-job-ownership.json",
     "runtime": "results/resources/terminal-runtime-receipts.json",
     "progress": "results/resources/current-job-progress.json",
+    "rd_inverse": "results/resources/rd-inverse-completion.json",
     "recovery_base": "results/resources/backup-recovery-20261101.json",
     "recovery_service": "results/resources/backup-recovery-service-20261101.json",
     "recovery_stable": "results/resources/backup-recovery-stable-addons-20261101.json",
@@ -58,9 +60,10 @@ def _ts(s):
 
 
 # ------------------------------------------------------------------ pins and loading
-def load_sources(root: Path, pins_rel: str = PINS) -> tuple[dict, list]:
+def load_sources(root: Path, pins_rel: str = PINS, read=None) -> tuple[dict, list]:
     """Returns ({id: parsed|None}, [source rows]). Status is one of verified, changed, missing, unparseable, not-pinned, pins-invalid."""
-    raw, why = read_small(root, pins_rel)
+    read = read or (lambda rel: read_small(root, rel))
+    raw, why = read(pins_rel)
     pins, pins_status = {}, "ok"
     if raw is None:
         pins_status = "pins file " + why
@@ -72,7 +75,7 @@ def load_sources(root: Path, pins_rel: str = PINS) -> tuple[dict, list]:
     data, rows = {}, []
     for sid, rel in SOURCES.items():
         pin = pins.get(sid) or {}
-        blob, why = read_small(root, rel)
+        blob, why = read(rel)
         row = {"id": sid, "path": rel, "href": REPO_BLOB + rel, "pinned_sha256": pin.get("sha256"), "actual_sha256": sha256(blob) if blob is not None else None}
         parsed = None
         if blob is None:
@@ -172,8 +175,12 @@ def plans_section(d, rows):
     if u2:
         for w in (u2.get("historical_gpu_telemetry") or [])[:20]:
             sampled["windows"].append({k: w.get(k) for k in ("task_label", "window_utc", "samples", "sample_period_ms", "gpu_utilization_pct_mean", "gpu_utilization_pct_max")})
+    rd = d.get("rd_inverse") or {}
+    w = rd.get("gpu_telemetry")
+    if isinstance(w, dict) and not any(x.get("task_label") == w.get("task_label") for x in sampled["windows"]):
+        sampled["windows"].append({k: w.get(k) for k in ("task_label", "window_utc", "samples", "sample_period_ms", "gpu_utilization_pct_mean", "gpu_utilization_pct_max")})
     sampled["status"] = ("no current sample: utilization is unknown right now" if sampled["current_gpu_utilization_pct"] is None else "a current sample is recorded")
-    sampled["note"] = "Windows are historical sampled intervals of finished work. They are not current occupancy, and an unsampled period is unknown, not zero or idle."
+    sampled["note"] = "Windows are historical sampled intervals of finished work (including setup and artifact emission). They are not current occupancy, and an unsampled period is unknown, not zero or idle."
     return {"status": "ok", "plans": plan, "plans_note": "Recorded stage text copied from the queue. It mixes planned and finished work; the page does not rank or count it as success.",
             "provider_state": prov, "sampled_utilization": sampled}
 
@@ -212,7 +219,7 @@ def audits_section(d, rows):
     rr = q.get("regulatory_recovery") or {}
     return {"status": "ok", "not_complete": items,
             "partial": [{"task": "regulatory recovery", "recorded_state": rr.get("state"), "usable": rr.get("usable_union"), "expected": rr.get("expected_union"), "unresolved": rr.get("unresolved")}] if rr else [],
-            "note": "The queue has no audit-queue field. These are rows whose recorded state does not begin with `complete`; they are not a count of pending audits, and `complete` rows may still carry a failed or retained result."}
+            "note": "This is not an audit queue: the queue has no audit field. These are rows whose recorded state does not begin with `complete`; they are not a count of pending audits, and `complete` rows may still carry a failed or retained result."}
 
 
 def shared_section(d, rows):
@@ -311,6 +318,7 @@ def recovery_section(d, rows):
                                         "scope": _c(drill.get("scope"), 200), "applies_to_latest_source_or_database": False,
                                         "meaning": "A real application and MCP drill on a separate host, at this older source and database only. It does not cover the later source, records or media."},
             "snapshot_chain": snaps, "failed_attempts_preserved": preserved, "remaining_per_source": remaining,
+            "later_work_note": "Receipts after the cutoffs above are not part of this view, including additive archives written since and a full current-release backup that is in progress. None is claimed complete here.",
             "not_established": ["Application restore at the latest source and database", "Restore without fresh credentials", "A public-domain cutover", "Anything written after the cutoffs above"]}
 
 
@@ -319,11 +327,15 @@ def documents():
 
 
 # ------------------------------------------------------------------ the projection
-def project(root=ROOT, at: str | None = None, pins_rel: str = PINS) -> dict:
+NOW = "now"
+
+
+def project(root=ROOT, at: str | None = NOW, pins_rel: str = PINS, read=None) -> dict:
     root = Path(root)
-    data, rows = load_sources(root, pins_rel)
+    data, rows = load_sources(root, pins_rel, read)
     q = data.get("queue") or {}
-    shown_at = at or now_iso()
+    shown_at = now_iso() if at == NOW else at              # None: a deterministic build stamps no generation time
+    code = read(MODULE)[0] if read else Path(__file__).read_bytes()
     qobs = _ts(q.get("observed_at_utc"))
     for r in rows:                                          # each source's own observation time and whether it is a historical cutoff
         r["observed"] = observed_at(r["id"], data.get(r["id"]) or {})
@@ -331,7 +343,9 @@ def project(root=ROOT, at: str | None = None, pins_rel: str = PINS) -> dict:
         r["historical_cutoff"] = bool(qobs and t and (qobs - t).total_seconds() > HIST_AFTER_S) if t else None
     sections = {"queue": queue_section, "plans": plans_section, "runs": runs_section, "audits": audits_section, "shared_jobs": shared_section, "limits": limits_section,
                 "spend": spend_section, "recovery": recovery_section}
-    out = {"schema": SCHEMA, "projected_at_utc": shown_at, "scope": "A bounded projection of committed queue and receipt files, each pinned by sha256. It measures nothing and starts nothing.",
+    stamps = sorted(r["observed"] for r in rows if r.get("observed") and _ts(r["observed"]))
+    out = {"schema": SCHEMA, "projected_at_utc": shown_at, "projector_sha256": sha256(code) if code else None,
+           "latest_source_observation_utc": max(stamps, key=lambda x: _ts(x)) if stamps else None, "scope": "A bounded projection of committed queue and receipt files, each pinned by sha256. It measures nothing and starts nothing.",
            "event_scope": "Provider and queue records of this hackathon only.", "sources": rows, "documents": documents(),
            "agents": {"status": "not published", "reason": "No receipt gives a current active-agent total, so none is shown."}}
     for k, fn in sections.items():
@@ -343,8 +357,14 @@ def project(root=ROOT, at: str | None = None, pins_rel: str = PINS) -> dict:
 
 
 def build(ins, out: dict, root=ROOT) -> dict:
-    """Publisher adapter: add the projection as a static site file. `ins` is build_site's Inputs (unused: reads go through the pinned allowlist)."""
-    p = project(root)
+    """Publisher adapter. Deterministic: no wall clock (`projected_at_utc` is null; `latest_source_observation_utc` is the newest time a source states). Every consumed
+    file (pins, the 12 receipts, this module) is read through `ins`, so build_site records its path, sha256 and size; reads still pass the allowlist checks."""
+    def read(rel):
+        blob, why = read_small(Path(root), rel)
+        if blob is None:
+            return None, why
+        return ins.read(rel), "ok"
+    p = project(root, None, PINS, read)
     out["@" + SITE_PATH] = (json.dumps(p, indent=1, sort_keys=True) + "\n").encode()
     return {"href": SITE_PATH, "status": {k: (p[k] or {}).get("status") for k in ("queue", "runs", "recovery", "shared_jobs")}}
 

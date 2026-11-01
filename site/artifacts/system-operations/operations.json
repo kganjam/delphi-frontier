@@ -77,16 +77,11 @@
    },
    {
     "next_acceptance": null,
-    "recorded_state": "admitted_image_pulling",
-    "task": "Six synthetic-target inverse Schnakenberg comparison"
-   },
-   {
-    "next_acceptance": null,
-    "recorded_state": "running_original_controls_returned",
-    "task": "Paired corrected-collocation aeroelastic comparison"
+    "recorded_state": "source_and_protocol_preparation_only",
+    "task": "Minimal time-resolved epithelial threshold comparison"
    }
   ],
-  "note": "The queue has no audit-queue field. These are rows whose recorded state does not begin with `complete`; they are not a count of pending audits, and `complete` rows may still carry a failed or retained result.",
+  "note": "This is not an audit queue: the queue has no audit field. These are rows whose recorded state does not begin with `complete`; they are not a count of pending audits, and `complete` rows may still carry a failed or retained result.",
   "partial": [
    {
     "expected": 330,
@@ -113,6 +108,7 @@
   }
  ],
  "event_scope": "Provider and queue records of this hackathon only.",
+ "latest_source_observation_utc": "2026-11-01T07:39:28.658877+00:00",
  "limits": {
   "limits": {
    "foreign_waiting_policy": "yield;nevercanceltheirjobs",
@@ -398,7 +394,7 @@
     "job_id": "aijob-e00grxtt94bh26a9c0",
     "owner": "claude-14 science; infra_director admission/collection",
     "priority": null,
-    "recorded_state": "admitted_image_pulling",
+    "recorded_state": "complete_native_controls_and_cardinality_checked_independent_analysis_pending",
     "task": "Six synthetic-target inverse Schnakenberg comparison"
    },
    {
@@ -406,56 +402,54 @@
     "job_id": null,
     "owner": "claude-07 science; infra_director admission/collection",
     "priority": null,
-    "recorded_state": "running_original_controls_returned",
+    "recorded_state": "complete_51_arms_with_two_model_domain_exits_independent_analysis_pending",
     "task": "Paired corrected-collocation aeroelastic comparison"
+   },
+   {
+    "budget": "Candidate 4\u20138 vCPU, <=12 GiB, <=1800 s science, <=100 MB outputs; owner must first measure and freeze exact smaller scope.",
+    "job_id": null,
+    "owner": "claude-09 prepares; infra_director sole dispatcher",
+    "priority": null,
+    "recorded_state": "source_and_protocol_preparation_only",
+    "task": "Minimal time-resolved epithelial threshold comparison"
    }
   ],
   "plans_note": "Recorded stage text copied from the queue. It mixes planned and finished work; the page does not rank or count it as success.",
   "provider_state": {
    "google_compute": {
-    "active_allocated_vcpus": 20,
-    "active_cpu_vms": 2,
+    "active_allocated_vcpus": 16,
+    "active_cpu_vms": 1,
     "active_gpu_vms": 0,
     "global_cpu_limit": 32.0,
     "gpu_quota_granted": 1.0,
-    "observed_utc": "2026-11-01T07:26:42.960058+00:00"
+    "observed_utc": "2026-11-01T07:39:29.742145+00:00"
    },
    "meaning": "Requested capacity of nonterminal jobs, including startup. RUNNING is not measured GPU utilization. Kernel utilization is unknown until sampled telemetry is collected.",
-   "nebius_active_gpu_jobs": 1,
+   "nebius_active_gpu_jobs": 0,
    "nebius_allocation": {
-    "gpus": 1,
-    "instances": 1,
+    "gpus": 0,
+    "instances": 0,
     "interpretation": "Requested capacity of nonterminal jobs, including startup. RUNNING is not measured GPU utilization. Kernel utilization is unknown until sampled telemetry is collected.",
     "jobs_with_unknown_capacity": 0,
-    "memory_gb": 200,
-    "pulling_instances": 1,
+    "memory_gb": 0,
+    "pulling_instances": 0,
     "running_instances": 0,
-    "vcpus": 16
+    "vcpus": 0
    },
    "running_or_starting_per_queue": {
     "running": [
-     {
-      "task": "coupled-collocation-v1",
-      "vm": "frontier-cpu-20261031-04"
-     },
      {
       "task": "original_CPU_cylinder_controls",
       "vm": "frontier-cpu-20261031-03"
      }
     ],
-    "starting": [
-     {
-      "job_id": "aijob-e00grxtt94bh26a9c0",
-      "provider_state": "IMAGE_PULLING",
-      "task": "inverse_Schnakenberg_six_targets"
-     }
-    ]
+    "starting": []
    }
   },
   "sampled_utilization": {
    "current_gpu_utilization_pct": null,
    "google_cpu_utilization": null,
-   "note": "Windows are historical sampled intervals of finished work. They are not current occupancy, and an unsampled period is unknown, not zero or idle.",
+   "note": "Windows are historical sampled intervals of finished work (including setup and artifact emission). They are not current occupancy, and an unsampled period is unknown, not zero or idle.",
    "status": "no current sample: utilization is unknown right now",
    "windows": [
     {
@@ -589,19 +583,31 @@
       "2026-11-01T01:39:46.828000Z",
       "2026-11-01T01:51:49.981000Z"
      ]
+    },
+    {
+     "gpu_utilization_pct_max": 37.0,
+     "gpu_utilization_pct_mean": 32.269972451790636,
+     "sample_period_ms": 1000.0,
+     "samples": 363,
+     "task_label": "Inverse Schnakenberg six synthetic targets",
+     "window_utc": [
+      "2026-11-01T07:27:44.034000Z",
+      "2026-11-01T07:33:46.106000Z"
+     ]
     }
    ]
   },
   "status": "ok"
  },
- "projected_at_utc": "2026-11-01T07:40:00Z",
+ "projected_at_utc": null,
+ "projector_sha256": "e1a6366a468c365027d089feed7515274ecec8418e013e78070d30066b828c8a",
  "queue": {
   "horizon_note": "The planning horizon is the window the queue was planned for. It is a plan, not a record of what ran.",
   "horizon_utc": [
    "2026-10-31T23:28:04.655084+00:00",
    "2026-11-01T23:28:04.655084+00:00"
   ],
-  "observed_utc": "2026-11-01T07:26:41.862530Z",
+  "observed_utc": "2026-11-01T07:39:28.658877Z",
   "policies": {
    "foreign_waiting": "yield;nevercanceltheirjobs",
    "gpus_per_job": 1,
@@ -613,16 +619,15 @@
   "status": "ok",
   "task_state_counts": {
    "CANCELLED": 1,
-   "COMPLETED": 19,
-   "FAILED": 7,
-   "IMAGE_PULLING": 1
+   "COMPLETED": 20,
+   "FAILED": 7
   },
   "tasks": [
    {
     "job_id": "aijob-e00se2hy8rdykbfrbf",
     "owner": "GPUops",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "2Dlow-Reynolds, notflight",
     "task": "N1meshCUDAparity/grid"
@@ -631,7 +636,7 @@
     "job_id": "aijob-e00pywdm4ta362pwrh",
     "owner": "bioservices",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Noadditionalgeneration;harnesssafeguardstoprespected",
     "task": "Evo2armBexistingrun"
@@ -640,7 +645,7 @@
     "job_id": "aijob-e00h6cqxa1c7cwts6y",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "33 previously sensitive cells +48 controls;2 patterned-mode differences remain; no biological validity claim",
     "task": "RD timestep-quarter81cells"
@@ -649,7 +654,7 @@
     "job_id": "aijob-e00cqbmnzwmvms8ayr",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "357 missing relative 1e-10 initial-state noise checks plus48 fixed repeats; not physical parameter robustness",
     "task": "Atlas missing initial-state perturbation checks"
@@ -658,7 +663,7 @@
     "job_id": "aijob-e00saz7cewggkp50d2",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "All six angle/grid cases passed frozen numerical bounds; Re80 2D sagittal projection, span ignored",
     "task": "Fish angle/grid controls and original artifact recovery"
@@ -667,7 +672,7 @@
     "job_id": "aijob-e00vga5krqxr3xxc94",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Frozen numerical gates passed; literature bands source-unverified, physical benchmark agreement not established; corrected v2 video retained.",
     "task": "Re100 cylinder outflow and refinement"
@@ -676,7 +681,7 @@
     "job_id": "aijob-e00a3q798jsc6fdbas",
     "owner": "infra_director",
     "provider_state": "FAILED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Stopped at finite-difference force control; no production trajectory. Original failure and exact state preserved.",
     "task": "Collagen MD first attempt"
@@ -685,7 +690,7 @@
     "job_id": "aijob-e00h8rra7x8ams6jyn",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Three100ps actualH100CUDA trajectories;303finite savedstates. Numerical controls/parity passed; biological accuracy/cross-scale transfer unknown.",
     "task": "Collagen MD derivative-oracle repair"
@@ -694,7 +699,7 @@
     "job_id": "aijob-e00bqeswtkd7dexff4",
     "owner": "infra_director",
     "provider_state": "FAILED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "CPU-only4vCPU,3one-thread arms,3000s each; generic model, nofishcalibration. Prior local partial run retained.",
     "task": "Morpheus full-horizon baseline/feedback-off/seed-repeat"
@@ -703,7 +708,7 @@
     "job_id": "aijob-e00q8z2et1q0zf5qaq",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Allthree arms through originalt2;256/128/263 finalcells; genericmodel, nofishcalibration/convergence.",
     "task": "Morpheus all-arm artifact recovery"
@@ -712,7 +717,7 @@
     "job_id": "aijob-e00s3bqbccez3bjpm9",
     "owner": "infra_director",
     "provider_state": "FAILED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "GeometrymetadataSHA failed despite12matchingSTLs; noCFDran. Ownerdiagnosingexactmetadata difference; no gate relaxation.",
     "task": "Controlled3D WaterLily first packet"
@@ -721,7 +726,7 @@
     "job_id": "aijob-e00cz0vk0jepf7j2fc",
     "owner": "infra_director",
     "provider_state": "FAILED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "FrozenNNCPU/CUDAtolerance failed0.001191914>0.001; solverparitypassed;trainingblockedbeforeweights/holdouts.",
     "task": "Conditional RD diffusion control, training and held-out evaluation"
@@ -730,7 +735,7 @@
     "job_id": "aijob-e00m8v3m77z86n5ads",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Default cloud reproduces failed hash; disabling specified AVX512 dispatch matches original pin. Three float64 widths differ by1\u20132ULP; allSTLs already matched. N",
     "task": "CFD candidate metadata CPU-only diagnosis"
@@ -739,7 +744,7 @@
     "job_id": "aijob-e00qxektzctnk69zwg",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Three900psCUDAbranches,all33hashesand303savedstateschecked;originalcontrols pass;windowdriftFALSE,FALSE,TRUE retained.",
     "task": "Exact-state molecular900ps conditional extensions"
@@ -748,7 +753,7 @@
     "job_id": "aijob-e00k0jpm34h4na3b99",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Four controlled3D numerical cases,12pressure arrays,2actual videos; exactgeometry/platformgates pass. PhysicalsphereC1FAIL retained; noflightvalidation.",
     "task": "Controlled3D GPU retry after exact metadata diagnosis"
@@ -757,7 +762,7 @@
     "job_id": "aijob-e00qazx6sby3vav47b",
     "owner": "infra_director",
     "provider_state": "FAILED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Original1800s timeout/full-runFAIL. Exact30k-step finitecheckpoint and301logs recovered; no evaluation/examples. Training loss is not held-outperformance.",
     "task": "DDPM default-vs-explicitFP32 control and conditional training"
@@ -766,7 +771,7 @@
     "job_id": "aijob-e00qzdzsh5mj8pvbd2",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Five training-only configs,960rows returned. Independent full metric reproduction FAILED at66near-uniform power ratios; original ratios/modes retained; no conve",
     "task": "Training-only RD five-point discretization audit"
@@ -775,7 +780,7 @@
     "job_id": "aijob-e00fb6jhvdt12fgsje",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Exact checkpoint recovery, strict completeness passed; original primary timeout FAIL retained; no retraining or speedup claim.",
     "task": "Exact-checkpoint evaluation-only recovery"
@@ -784,7 +789,7 @@
     "job_id": "aijob-e00dw01t3zcsg4az55",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Structural coverage passes; strict exact-W1 metric audit FAILED, all raw metrics retained. No retraining.",
     "task": "Preregistered exact-W1/amplitude-stratified secondary evaluation"
@@ -793,7 +798,7 @@
     "job_id": "aijob-e00rhs6hdan4n57kv8",
     "owner": "infra_director + mechanobio_sim",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": "results/resources/nca-completion.json",
     "scope": "4 models x2000steps and52 evaluation runs completed;0/48 design predicates,4/4 absorbing negatives. Original metadata parse failure retained; exact outer/part a",
     "task": "Four-model inverse NCA comparison"
@@ -802,7 +807,7 @@
     "job_id": "aijob-e00jmvgx169vje8ywk",
     "owner": "infra_director",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": "results/resources/nca-seed-completion.json",
     "scope": "No biological validation. Controls and negative outcomes retained.",
     "task": "Seed-placement NCA controlled comparison"
@@ -811,7 +816,7 @@
     "job_id": "aijob-e00dydgq6ps3hkzjfv",
     "owner": "infra_director",
     "provider_state": "FAILED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": "results/resources/cfd-h100-calibration-completion.json",
     "scope": "No biological validation. Controls and negative outcomes retained.",
     "task": "H100 cylinder controls and calibration only"
@@ -820,7 +825,7 @@
     "job_id": "aijob-e00gjhtd6nk55b266v",
     "owner": "infra_director",
     "provider_state": "CANCELLED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Cancelled while IMAGE_PULLING before science after discovering silent warm-worker budget clamp; original failure retained.",
     "task": "R2 frozen cylinder assay"
@@ -829,7 +834,7 @@
     "job_id": "aijob-e00wmj8t8ndzvcpfja",
     "owner": "infra_director admission / native or CFD owner interpretation",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Synthetic fin pattern, independently frozen200probes, not genomic or biological validation.",
     "task": "Eight-model paired NCA damage curriculum"
@@ -838,7 +843,7 @@
     "job_id": "aijob-e00mednyphzqff68gx",
     "owner": "infra_director admission / native or CFD owner interpretation",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Exact original science archive and criteria; predecessor cancelled before science; all same-job controls required.",
     "task": "R2 cylinder assay after explicit wrapper-budget repair"
@@ -847,7 +852,7 @@
     "job_id": "aijob-e00rbmygvays5hjd49",
     "owner": "infra_director admission / native or CFD owner interpretation",
     "provider_state": "COMPLETED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Same source equations and criteria, CUDA backend explicitly declared; original CPU partials retained; no fish/flight validation.",
     "task": "Separately declared CUDA R1/M1/R3 control comparison"
@@ -856,7 +861,7 @@
     "job_id": "aijob-e00wfnzb38fccw6k57",
     "owner": "infra_director",
     "provider_state": "FAILED",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "Native COMPILE_FAIL; no scientific cases; forty actual GPU samples all zero percent. No retry.",
     "task": "Voxcraft modern CUDA compatibility control"
@@ -864,15 +869,15 @@
    {
     "job_id": "aijob-e00grxtt94bh26a9c0",
     "owner": "infra_director",
-    "provider_state": "IMAGE_PULLING",
-    "provider_state_observed_utc": "2026-11-01T07:26:41.862530Z",
+    "provider_state": "COMPLETED",
+    "provider_state_observed_utc": "2026-11-01T07:39:28.658877Z",
     "receipt": null,
     "scope": "One H100, six synthetic targets; two methods with equal 64 actual solver evaluations each. Same-job numerical gates precede endpoints; no biological claim.",
     "task": "Six synthetic-target inverse Schnakenberg comparison"
    }
   ],
   "tasks_note": "28 queue rows listed. This is the queue's own task list, not every provider job (see shared jobs), and a provider state is not a scientific outcome.",
-  "updated_utc": "2026-11-01T07:28:48.829736+00:00"
+  "updated_utc": "2026-11-01T07:40:51.406740+00:00"
  },
  "recovery": {
   "database_cutoff": {
@@ -888,6 +893,7 @@
    "stable_failed_captures": 2,
    "studies_preparation_failures": 4
   },
+  "later_work_note": "Receipts after the cutoffs above are not part of this view, including additive archives written since and a full current-release backup that is in progress. None is claimed complete here.",
   "latest_file_and_source_checkpoint": {
    "later_static_delta": {
     "files_restored": 18,
@@ -1341,9 +1347,7 @@
   "breakdown_sums_to_total": true,
   "current_gpu_jobs": {
    "other_or_unattributed": {},
-   "ours": {
-    "IMAGE_PULLING": 1
-   }
+   "ours": {}
   },
   "earlier_team_exact_id_ledger": 15,
   "earliest_listed_creation": "2026-10-31T01:46:14.195638Z",
@@ -1351,7 +1355,7 @@
   "ledger_matches_breakdown": true,
   "listed_total": 94,
   "meaning": "Unattributed means no exact record attributes the job to this team. It does not say another team owns it. Jobs are counted, not owned: this page claims no authority over others' jobs and offers no cancel control.",
-  "observed_utc": "2026-11-01T07:26:41.862530+00:00",
+  "observed_utc": "2026-11-01T07:39:28.658877+00:00",
   "states_by_group": {
    "other_or_unattributed": {
     "CANCELLED": 2,
@@ -1360,9 +1364,8 @@
    },
    "ours": {
     "CANCELLED": 4,
-    "COMPLETED": 48,
-    "FAILED": 10,
-    "IMAGE_PULLING": 1
+    "COMPLETED": 49,
+    "FAILED": 10
    }
   },
   "status": "ok",
@@ -1370,43 +1373,43 @@
  },
  "sources": [
   {
-   "actual_sha256": "7a4699044afc321c4c89b20360ba92819b2feb95d660513e891779005b0157c8",
+   "actual_sha256": "af978d4315edc3a0b1bbf0166609351957163d6cabb09e9c73b158a34a955435",
    "historical_cutoff": false,
    "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/infra/queue.json",
    "id": "queue",
-   "observed": "2026-11-01T07:26:41.862530Z",
+   "observed": "2026-11-01T07:39:28.658877Z",
    "path": "results/infra/queue.json",
-   "pinned_sha256": "7a4699044afc321c4c89b20360ba92819b2feb95d660513e891779005b0157c8",
+   "pinned_sha256": "af978d4315edc3a0b1bbf0166609351957163d6cabb09e9c73b158a34a955435",
    "status": "verified"
   },
   {
-   "actual_sha256": "407c620a558326091b5b53a15a2c91b4ffdc7a420a73a0973c5f8276d58a456d",
+   "actual_sha256": "d18a9bfd0ce48fc491d3fc3f0c14a3869b5ecfe1749cb7813b9537d93a7c8912",
    "historical_cutoff": false,
    "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/hackathon-usage.json",
    "id": "usage",
-   "observed": "2026-11-01T07:26:41.862530Z",
+   "observed": "2026-11-01T07:39:28.658877Z",
    "path": "results/resources/hackathon-usage.json",
-   "pinned_sha256": "407c620a558326091b5b53a15a2c91b4ffdc7a420a73a0973c5f8276d58a456d",
+   "pinned_sha256": "d18a9bfd0ce48fc491d3fc3f0c14a3869b5ecfe1749cb7813b9537d93a7c8912",
    "status": "verified"
   },
   {
-   "actual_sha256": "f5e02e3037d89eb9261c61bf36b1ed044311ea074fede786583270aa6688b9d5",
+   "actual_sha256": "6901748b19528bce19ff24b0561bdb44a66546553893c8e9146e84d39dced85f",
    "historical_cutoff": false,
    "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/resource-inventory.json",
    "id": "inventory",
-   "observed": "2026-11-01T07:26:41.862530Z",
+   "observed": "2026-11-01T07:39:28.658877Z",
    "path": "results/resources/resource-inventory.json",
-   "pinned_sha256": "f5e02e3037d89eb9261c61bf36b1ed044311ea074fede786583270aa6688b9d5",
+   "pinned_sha256": "6901748b19528bce19ff24b0561bdb44a66546553893c8e9146e84d39dced85f",
    "status": "verified"
   },
   {
-   "actual_sha256": "d95f437f5fb92f715c1e246feb4833a5b5e23908ded75d263b63c8ed9848bee0",
+   "actual_sha256": "a935b0a12e963e0f1733856eb4d85cb75d134d520478062bceff769579fc8233",
    "historical_cutoff": false,
    "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/shared-job-counts.json",
    "id": "shared",
-   "observed": "2026-11-01T07:26:41.862530+00:00",
+   "observed": "2026-11-01T07:39:28.658877+00:00",
    "path": "results/resources/shared-job-counts.json",
-   "pinned_sha256": "d95f437f5fb92f715c1e246feb4833a5b5e23908ded75d263b63c8ed9848bee0",
+   "pinned_sha256": "a935b0a12e963e0f1733856eb4d85cb75d134d520478062bceff769579fc8233",
    "status": "verified"
   },
   {
@@ -1437,6 +1440,16 @@
    "observed": "2026-11-01T03:24:14.286425+00:00",
    "path": "results/resources/current-job-progress.json",
    "pinned_sha256": "2981d4b19d16d338c2c575402f557cc83db8026db52480c8c74b5b3baf3f4d8e",
+   "status": "verified"
+  },
+  {
+   "actual_sha256": "09fdd97dda0dad7723e9aef5ff5b5250db05be6a866124650c662742437a3c16",
+   "historical_cutoff": false,
+   "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/resources/rd-inverse-completion.json",
+   "id": "rd_inverse",
+   "observed": "2026-11-01T07:38:11.998585+00:00",
+   "path": "results/resources/rd-inverse-completion.json",
+   "pinned_sha256": "09fdd97dda0dad7723e9aef5ff5b5250db05be6a866124650c662742437a3c16",
    "status": "verified"
   },
   {

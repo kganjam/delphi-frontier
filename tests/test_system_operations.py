@@ -87,7 +87,7 @@ def test_historical_cutoffs_are_flagged():
 
 def test_adapter_stages_only_the_projection_file():
     out = {}
-    so.build(None, out, REAL)
+    so.build(Ins(REAL), out, REAL)
     assert list(out) == ["@" + so.SITE_PATH]
     assert json.loads(out["@" + so.SITE_PATH])["schema"] == so.SCHEMA
 
@@ -95,4 +95,68 @@ def test_adapter_stages_only_the_projection_file():
 def test_committed_site_file_equals_projection():
     f = REAL / "site" / so.SITE_PATH
     committed = json.loads(f.read_text())
-    assert so.project(REAL, committed["projected_at_utc"]) == committed
+    assert committed["projected_at_utc"] is None
+    assert so.project(REAL, None) == committed
+
+
+class Ins:
+    """Stand-in for build_site.Inputs: reads under `root` and remembers path, sha256 and size."""
+
+    def __init__(self, root):
+        self.root, self.seen = Path(root), {}
+
+    def read(self, rel):
+        b = (self.root / rel).read_bytes()
+        self.seen[rel] = {"sha256": so.sha256(b), "bytes": len(b)}
+        return b
+
+
+def run_build(root):
+    ins, out = Ins(root), {}
+    so.build(ins, out, root)
+    return ins, out["@" + so.SITE_PATH]
+
+
+def test_build_is_deterministic_and_stamps_no_wall_clock():
+    a_ins, a = run_build(REAL)
+    _, b = run_build(REAL)
+    assert a == b
+    p = json.loads(a)
+    assert p["projected_at_utc"] is None and p["latest_source_observation_utc"]
+    assert a == (REAL / "site" / so.SITE_PATH).read_bytes()          # same bytes as the CLI-written committed file
+
+
+def test_build_records_every_consumed_input():
+    ins, _ = run_build(REAL)
+    want = {so.PINS, so.MODULE, *so.SOURCES.values()}
+    assert want <= set(ins.seen)
+    assert ins.seen[so.MODULE]["sha256"] == so.sha256((REAL / so.MODULE).read_bytes())
+
+
+def test_changing_a_pinned_source_changes_output_and_is_refused(tmp_path):
+    root = sandbox(tmp_path)
+    (root / "frontier").mkdir(exist_ok=True)
+    shutil.copy(REAL / so.MODULE, root / so.MODULE)
+    _, before = run_build(root)
+    f = root / so.SOURCES["shared"]
+    d = json.loads(f.read_text())
+    d["listed_total"] += 1
+    f.write_text(json.dumps(d))
+    ins, after = run_build(root)
+    assert after != before and so.SOURCES["shared"] in ins.seen          # the changed file was still recorded
+    p = json.loads(after)
+    assert p["shared_jobs"]["status"] == "unavailable" and p["queue"]["status"] == "ok"
+
+
+def test_inverse_rd_telemetry_is_a_historical_window_not_current():
+    s = so.project(REAL)["plans"]["sampled_utilization"]
+    w = next(x for x in s["windows"] if "Inverse Schnakenberg" in x["task_label"])
+    assert (w["samples"], round(w["gpu_utilization_pct_mean"], 2), w["gpu_utilization_pct_max"]) == (363, 32.27, 37.0)
+    assert "not current" in s["note"] or "not current occupancy" in s["note"]
+
+
+def test_recovery_cutoffs_unchanged_and_in_progress_backup_not_claimed():
+    r = so.project(REAL)["recovery"]
+    assert r["database_cutoff"]["captured_utc"] == "2026-11-01T07:04:11.807435+00:00"
+    assert r["latest_file_and_source_checkpoint"]["release_revision"].startswith("d87e5d1")
+    assert "in progress" in r["later_work_note"] and "None is claimed complete" in r["later_work_note"]

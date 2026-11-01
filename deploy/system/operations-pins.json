@@ -5,26 +5,26 @@
   {
    "id": "queue",
    "path": "results/infra/queue.json",
-   "sha256": "7a4699044afc321c4c89b20360ba92819b2feb95d660513e891779005b0157c8",
-   "bytes": 58053
+   "sha256": "af978d4315edc3a0b1bbf0166609351957163d6cabb09e9c73b158a34a955435",
+   "bytes": 59042
   },
   {
    "id": "usage",
    "path": "results/resources/hackathon-usage.json",
-   "sha256": "407c620a558326091b5b53a15a2c91b4ffdc7a420a73a0973c5f8276d58a456d",
-   "bytes": 64141
+   "sha256": "d18a9bfd0ce48fc491d3fc3f0c14a3869b5ecfe1749cb7813b9537d93a7c8912",
+   "bytes": 63941
   },
   {
    "id": "inventory",
    "path": "results/resources/resource-inventory.json",
-   "sha256": "f5e02e3037d89eb9261c61bf36b1ed044311ea074fede786583270aa6688b9d5",
-   "bytes": 46956
+   "sha256": "6901748b19528bce19ff24b0561bdb44a66546553893c8e9146e84d39dced85f",
+   "bytes": 47353
   },
   {
    "id": "shared",
    "path": "results/resources/shared-job-counts.json",
-   "sha256": "d95f437f5fb92f715c1e246feb4833a5b5e23908ded75d263b63c8ed9848bee0",
-   "bytes": 2477
+   "sha256": "a935b0a12e963e0f1733856eb4d85cb75d134d520478062bceff769579fc8233",
+   "bytes": 2326
   },
   {
    "id": "ledger",
@@ -43,6 +43,12 @@
    "path": "results/resources/current-job-progress.json",
    "sha256": "2981d4b19d16d338c2c575402f557cc83db8026db52480c8c74b5b3baf3f4d8e",
    "bytes": 5009
+  },
+  {
+   "id": "rd_inverse",
+   "path": "results/resources/rd-inverse-completion.json",
+   "sha256": "09fdd97dda0dad7723e9aef5ff5b5250db05be6a866124650c662742437a3c16",
+   "bytes": 3891
   },
   {
    "id": "recovery_base",
