@@ -27,9 +27,9 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 - In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
   pattern is spots) and growth along the fin axis.
 - With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
-  the proliferating zone to be wider than about **half a pattern wavelength**. The switch scales with λ across three
-  rate scales (12 seeds each). Above it, newly grown tissue is almost perfectly ray-like (distal-half A 0.94–1.00).
-  One unexplained exception remains: γ = 2, L_p = 10.
+  a proliferating zone wider than **L_p* ≈ 0.38 λ**: 0.37, 0.39 and 0.39 at three rate scales, and a prediction made
+  from two of them was confirmed on the third (12 seeds each). Above the switch, newly grown tissue is almost perfectly
+  ray-like (distal-half A 0.94–1.00). One unexplained exception remains, a narrow failure window at γ = 2 near L_p ≈ 10.
 - With row insertion from a very short fold, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern
   units. That threshold tracks λ·σ (pooled slope 0.50). A reversal of orientation behind a moving front is a known
   phenomenon.
@@ -494,8 +494,24 @@ The γ = 1 switch is therefore at about **4.25 ≈ 0.39 λ**.
 
 The γ = 2 switch is sharp, between 2.75 and 3: about **2.9 ≈ 0.37 λ**.
 
-So two rate scales give **L_p* ≈ 0.37–0.39 λ**. That predicts about 6.0 at γ = 0.5, where it is currently bracketed
-between 6 and 7. A finer γ = 0.5 run is testing this (`claude-tissue-pzone-g05f`).
+So two rate scales give **L_p* ≈ 0.37–0.39 λ**, which predicts about 6.0 at γ = 0.5.
+
+**Finer γ = 0.5** (`claude-tissue-pzone-g05f`, job `aijob-e00hypmth0jdhj7zkb`, COMPLETED, 397.1 s):
+
+| L_p | 6 (earlier run) | 6.25 | 6.5 | 6.75 |
+|---|---|---|---|---|
+| Distal A | −0.10 | 0.54 | 0.71 | 0.84 |
+
+The switch is about **6.1 ≈ 0.39 λ**. **The prediction holds.**
+
+**Result.** Across a fourfold change in rate scale (λ from 7.9 to 15.8), the proliferation zone width at which newly
+grown tissue switches from edge-parallel bands to ray-like proximo-distal stripes is
+
+  **L_p* ≈ 0.38 λ** (0.37, 0.39, 0.39).
+
+That is a dimensionless rule: a fold whose proliferating zone is narrower than about 0.4 ray spacings gives bands;
+a wider zone gives rays. Caveats: one model family (Schnakenberg), one diffusion ratio (d = 10), one speed (v = 0.1),
+and the unexplained γ = 2 failure window near 1.27 λ.
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and
