@@ -1,0 +1,8 @@
+{
+ "amends": "transport_amendment.json (sha256 048e4745\u2026, left unedited): only the pre-send reservation rule",
+ "consequence": "a request of exactly the remaining cap is refused; with 512 KiB ranges and caps of 8 MiB, 64 MiB and 400 MiB this removes at most one chunk per window",
+ "frozen_before": "the reservation repair; trigger: second source review (strict cap edge)",
+ "invariant": "no ledger ever exceeds its cap, including when the server sends more than the requested range",
+ "reservation": "the transport reads expected_length+1 bytes (the sentinel that detects an oversized body), so every attempt, including each retry, reserves expected_length+1 against the global, library and window caps before it is sent; a request whose reservation would exceed any remaining cap is refused unsent",
+ "schema": "frontier.reg-proxy.transport-amendment/2"
+}
