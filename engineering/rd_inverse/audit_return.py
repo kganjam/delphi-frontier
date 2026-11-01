@@ -66,6 +66,8 @@ def audit(out):
     res["raw_concentration_negative_cells"] = {k: (sum(v.get("negative_cells_u", 0) + v.get("negative_cells_v", 0) for v in vs.values()) if "cells" not in vs else vs["negative_cells_u"] + vs["negative_cells_v"]) for k, vs in cs.items() if isinstance(vs, dict)}
     res["design_success"] = {m: [{"target": r["target"], "gate_A_met": r["gate_A_met"], "gate_B_success": r["gate_B_success"], "score": r.get("score"), "status": r.get("status")} for r in sel["selection"][m]] for m in sel["selection"]}
     res["design_success"]["n_B_success"] = {m: sum(bool(r["gate_B_success"]) for r in sel["selection"][m]) for m in sel["selection"]}
+    res["display_status"] = {"scope": "display label only; the booleans above are unchanged native/audit values",
+                             "targets": [{"target": r["target"], "status": "unpatterned; amplitude gate failed; design success undefined" if not r["gate_A_met"] else "patterned; gate B evaluated"} for r in sel["selection"]["optimizer"]]}
     res["biology"] = "unknown; synthetic model-unit exercise, n=6, no DDPM acceleration claim, optimizer worse or failed is a legitimate outcome"
     res["unaudited"] = "GPU runtime and CUDA parity are read from receipt/control.json, not recomputed here"
     return res

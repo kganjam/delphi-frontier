@@ -94,6 +94,35 @@
    }
   ]
  },
+ "display_status": {
+  "scope": "display label only; the booleans above are unchanged native/audit values",
+  "targets": [
+   {
+    "status": "patterned; gate B evaluated",
+    "target": "T0"
+   },
+   {
+    "status": "patterned; gate B evaluated",
+    "target": "T1"
+   },
+   {
+    "status": "patterned; gate B evaluated",
+    "target": "T2"
+   },
+   {
+    "status": "patterned; gate B evaluated",
+    "target": "T3"
+   },
+   {
+    "status": "patterned; gate B evaluated",
+    "target": "T4"
+   },
+   {
+    "status": "unpatterned; amplitude gate failed; design success undefined",
+    "target": "T5"
+   }
+  ]
+ },
  "numerical_validity": {
   "all_counts_64": true,
   "negative_ok_on_patterned": true,
