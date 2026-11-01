@@ -190,6 +190,27 @@ write(base("sbml-hedgehog-pathway-perturbations", "Hedgehog pathway ODE (BIOMD00
            ["Model is unusable for Ptc/Sufu predictions until re-specified.", "Default Hh in the SBML saturates the target; s2 perturbations at that dose were uninformative."],
            time_units="model time units (unconverted)"))
 
+# --- subcellular: RA/FGF switch ---
+s1 = json.loads((R / "s1_ra_fgf_switch_perturbations.json").read_text())["perturbations"]
+rng = lambda k: s1[k]["bistable_x_range"]
+write(base("sbml-ra-fgf-bistable-switch", "RA/FGF mutual-inhibition switch (BIOMD0000000275): where the bistable boundary sits when synthesis rates change",
+           "subcellular", "SIMULATED: published-model ODE dynamics, not fit to fish data", "libRoadRunner 2.11.0 CVODE, rtol 1e-10, deterministic; two initial states per position to detect bistability",
+           "Goldbeter-Gonze-Pourquie 2007 somitogenesis switch, swept at 51 positions x (0-50) for 8 parameter settings. Used here as a generic two-morphogen switch, NOT as a fin model.",
+           [R / "s1_ra_fgf_switch_perturbations.json", R / "s1_receipt.json"],
+           ["any fin or limb bud boundary position (the model is a presomitic-mesoderm model in arbitrary position units)",
+            "that RA/FGF sets flying-fish pectoral fin proportions", "the Cyp26-loss case, which never reached steady state and is reported as invalid"],
+           [{"name": "baseline bistable window (model position units)", "result": f"x {rng('baseline')[0]:.0f}-{rng('baseline')[1]:.0f} ({s1['baseline']['n_bistable_points']} of 51 positions)"},
+            {"name": "FGF synthesis x2 / x4", "result": f"window moves to x {rng('fgf_over_ks3x2')[0]:.0f}-{rng('fgf_over_ks3x2')[1]:.0f} / {rng('fgf_over_ks3x4')[0]:.0f}-{rng('fgf_over_ks3x4')[1]:.0f}"},
+            {"name": "RA synthesis x0.5 / x2", "result": f"x {rng('ra_synth_x0.5')[0]:.0f}-{rng('ra_synth_x0.5')[1]:.0f} / {rng('ra_synth_x2')[0]:.0f}-{rng('ra_synth_x2')[1]:.0f}"},
+            {"name": "FGF loss", "result": "bistability disappears entirely (0 of 51 positions)"},
+            {"name": "steady-state residual, all valid runs", "result": f"max |dy/dt| {max(v['max_residual_rate_all_runs'] for k, v in s1.items() if 'cyp26' not in k):.1e}"},
+            {"name": "Cyp26 loss", "result": f"max |dy/dt| {s1['cyp26_loss_V0=Vsc=0']['max_residual_rate_all_runs']:.1f}: NOT a steady state, RA accumulates without bound. Reported as a model defect, not a result."}],
+           ["Every rate constant is the published model's; none measured in any fish."],
+           ["Does the boundary in a real fin bud show hysteresis, i.e. depend on treatment history?"],
+           ["The model has no Cyp26-independent RA clearance, so RA-degradation knockouts cannot be simulated in it.",
+            "Local sensitivity near this switch is not a derivative (see s3); the bistable window location is the usable output."],
+           time_units="model time units (unconverted); steady states only"))
+
 # --- cellular: bioelectric Kcnk5b ---
 s5 = json.loads((R / "s5_bioelectric_kcnk5b_sweep.json").read_text())
 st = s5["kcnk5b_step_from_1x_state"]
