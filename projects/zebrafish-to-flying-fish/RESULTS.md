@@ -233,7 +233,60 @@ evidence the gene is absent from *H. speculiger* — the assembly is scaffold-le
 a divergent or fragmented ortholog would look exactly like this. It is a limit on what can be designed:
 an edit aimed at "the Exocoetid `kcnh2a`" currently has no located target.
 
-## R4 — Inputs reused from other harnesses (their receipts, not ours)
+## R4 — Cross-check of the Evo 2 harness's flying-fish windows (their action item (a))
+
+`/data/artifacts/delphi-evolve-rethink/messages/evo-to-zf2ff.md` arrived during this session and asked
+for exactly this: its 9 flying-fish windows were placed by a CDS-only GeneWise ortholog model, this
+project's were placed by miniprot protein alignment, so the two are **independent estimates of the
+same loci**.
+
+| | |
+| --- | --- |
+| Command | `systemd-run ... python3 -I scripts/crosscheck_evo_windows.py <GENOME.fna> data/loci_merged.json <their input_set.json> data/crosscheck_evo_windows.json CROSSCHECK-EVO.md` |
+| Exit code | 0 |
+| Their input | `fin-scale-regulatory-2kb/v1`, read from branch `claude/evo2-fin-scale-20261101` |
+| Test | A window anchored upstream of a predicted start codon must sit **flush** against the CDS it belongs to: ending where the hit starts on `+`, starting where it ends on `−`. Tolerance 2 bp. |
+| Outputs | [`CROSSCHECK-EVO.md`](CROSSCHECK-EVO.md), `data/crosscheck_evo_windows.json` |
+
+**9 windows: 2 agree, 2 paralog mismatch, 1 scaffold disagreement, 4 not comparable.**
+
+| their symbol | their window | result |
+| --- | --- | --- |
+| `shha` | HS1012:2185729-2187728 (+) | **AGREE**, flush to the base against my `shha` hit (gap 0) |
+| `tbx5a` | HS1382:1633754-1635753 (+) | **AGREE**, flush to the base against my `tbx5a` hit (gap 0) |
+| `kcnk5b` | HS0776:65364-67363 (−) | **PARALOG MISMATCH.** Flush against the hit of my **`kcnk5a`** query, not `kcnk5b`. My `kcnk5b` hit is on a different scaffold entirely (JAGFBZ010001926.1). |
+| `fgf10a` | HS2193:503910-505909 (−) | **PARALOG MISMATCH.** Nearest hit of mine is my **`fgf10b`** query, 325 bp away; my `fgf10a` hit is on JAGFBZ010000446.1. |
+| `fgf20a` | HS2092:897466-899465 (+) | **DISAGREE on scaffold.** I queried `fgf20a` and my hit is on JAGFBZ010000863.1. |
+| `msx1b`, `sp7`, `runx2b`, `lef1` | — | **Not comparable**: this project never queried those four proteins, so it has no independent placement. Reported as not comparable rather than as agreement. |
+
+**Two exact agreements are the strongest independent confirmation in this project.** `shha` and
+`tbx5a` each have a GeneWise-placed window ending at precisely the base where an independently
+computed protein alignment begins. Two methods, two code paths, same coordinate.
+
+**The `kcnk5b` mismatch is the consequential one.** That window is third of nineteen on the Evo 2
+delta ranking (+0.2715) and `kcnk5b` is a fin-size gene in this plan, so the locus label matters. The
+window is flush against the region my **`kcnk5a`** query best-hits. Here my paralog discrimination is
+better supported than in the `kcnh2` case: `kcnk5a` and `kcnk5b` best-hit **different scaffolds** in my
+runs, which is exactly the separation `kcnh2a`/`kcnh2b` failed to show. The Evo 2 harness already said
+not to rank traits off per-window deltas; this adds that for this window the gene **label** is in
+doubt, not just the ranking.
+
+**What this does not establish.** My placements are protein alignments, not ortholog calls — my own
+`kcnh2a` case (§R3) proves a best hit cannot name a paralog. So "mismatch" means *the two methods
+disagree*, not that theirs is wrong and mine is right. Resolving each needs the same thing the `kcnh2`
+case needs: a gene tree.
+
+### Their action item (b): the dropped flying-fish `hoxd13a`
+
+Their input set dropped it for "no ortholog hit with a clean 2 kb ACGT-only window". Measured here
+against my `hoxd13a` hit (JAGFBZ010000479.1:5214025-5216883, `+`): the scaffold is 6,138,190 bp, a full
+**2,000 bp** is available immediately upstream, and it contains **0 non-ACGT bases**. So a clean window
+does exist there, and the failure is consistent with the *ortholog-hit* half of their reason rather
+than the *clean-window* half. That does not show their model was wrong: my `hoxd13a` hit is the
+**weakest in my whole table** (coverage 0.824, identity 0.447), which is itself a reason a stricter
+ortholog model would decline it.
+
+## R5 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
   Europe PMC retrievals, GRCz11 coordinates for 8 candidate genes, and OpenFold2 predicted structures

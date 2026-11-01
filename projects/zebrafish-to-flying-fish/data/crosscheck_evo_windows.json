@@ -1,0 +1,216 @@
+{
+ "scope": "Cross-check of two independent computational placements on the same unannotated assembly: claude-evo's CDS-only GeneWise ortholog windows and this project's miniprot protein-to-genome best hits. Neither is an annotation or an orthology proof, so an agreement means two methods agree, not that a locus is correct.",
+ "their_input_set": "fin-scale-regulatory-2kb/v1",
+ "their_windows_checked": 9,
+ "agree": 2,
+ "paralog_mismatch": 2,
+ "different_gene": 0,
+ "disagree_on_scaffold": 1,
+ "not_comparable_i_never_queried_it": 4,
+ "windows": [
+  {
+   "their_symbol": "fgf20a",
+   "their_region": "HS2092:897466-899465",
+   "their_strand": 1,
+   "their_scaffold_expanded": "JAGFBZ010002092.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "FGF20_MOUSE Fibroblast growth factor 20 OS=Mus musculus GN=Fgf20 PE=2 SV=2",
+   "their_paralog_flag": false,
+   "my_best_hit_scaffolds_for_this_symbol": [
+    "JAGFBZ010000863.1"
+   ],
+   "scaffold_agrees_with_my_same_symbol_hit": false,
+   "my_nearest_hit_on_their_scaffold": null,
+   "gap_bp": null,
+   "window_is_flush_against_that_hit": null,
+   "verdict": "DISAGREE on scaffold: I queried fgf20a and my hit is on JAGFBZ010000863.1, not on their JAGFBZ010002092.1"
+  },
+  {
+   "their_symbol": "shha",
+   "their_region": "HS1012:2185729-2187728",
+   "their_strand": 1,
+   "their_scaffold_expanded": "JAGFBZ010001012.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "SHH_CHICK Sonic hedgehog protein OS=Gallus gallus GN=SHH PE=1 SV=1",
+   "their_paralog_flag": true,
+   "my_best_hit_scaffolds_for_this_symbol": [
+    "JAGFBZ010001012.1"
+   ],
+   "scaffold_agrees_with_my_same_symbol_hit": true,
+   "my_nearest_hit_on_their_scaffold": {
+    "query": "shha",
+    "round": "round1",
+    "start": 2187728,
+    "end": 2194143,
+    "strand": "+",
+    "coverage": 1.0,
+    "identity": 0.743
+   },
+   "gap_bp": 0,
+   "window_is_flush_against_that_hit": true,
+   "verdict": "AGREE: flush against my hit for the same gene"
+  },
+  {
+   "their_symbol": "msx1b",
+   "their_region": "HS2207:4758774-4760773",
+   "their_strand": -1,
+   "their_scaffold_expanded": "JAGFBZ010002207.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "MSX1_LEPED Homeobox protein MSX-1 (Fragment) OS=Lepilemur edwardsi GN=MSX1 PE=3 SV=1",
+   "their_paralog_flag": false,
+   "my_best_hit_scaffolds_for_this_symbol": [],
+   "scaffold_agrees_with_my_same_symbol_hit": false,
+   "my_nearest_hit_on_their_scaffold": null,
+   "gap_bp": null,
+   "window_is_flush_against_that_hit": null,
+   "verdict": "NOT COMPARABLE: I never queried msx1b, so I have no independent placement for it"
+  },
+  {
+   "their_symbol": "sp7",
+   "their_region": "HS0074:3788160-3790159",
+   "their_strand": -1,
+   "their_scaffold_expanded": "JAGFBZ010000074.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "SP7_HUMAN Transcription factor Sp7 OS=Homo sapiens GN=SP7 PE=1 SV=1",
+   "their_paralog_flag": false,
+   "my_best_hit_scaffolds_for_this_symbol": [],
+   "scaffold_agrees_with_my_same_symbol_hit": false,
+   "my_nearest_hit_on_their_scaffold": null,
+   "gap_bp": null,
+   "window_is_flush_against_that_hit": null,
+   "verdict": "NOT COMPARABLE: I never queried sp7, so I have no independent placement for it"
+  },
+  {
+   "their_symbol": "runx2b",
+   "their_region": "HS2275:410708-412707",
+   "their_strand": -1,
+   "their_scaffold_expanded": "JAGFBZ010002275.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "RUNX2_MOUSE Runt-related transcription factor 2 OS=Mus musculus GN=Runx2 PE=1 SV=2",
+   "their_paralog_flag": true,
+   "my_best_hit_scaffolds_for_this_symbol": [],
+   "scaffold_agrees_with_my_same_symbol_hit": false,
+   "my_nearest_hit_on_their_scaffold": null,
+   "gap_bp": null,
+   "window_is_flush_against_that_hit": null,
+   "verdict": "NOT COMPARABLE: I never queried runx2b, so I have no independent placement for it"
+  },
+  {
+   "their_symbol": "lef1",
+   "their_region": "HS0865:1690350-1692349",
+   "their_strand": 1,
+   "their_scaffold_expanded": "JAGFBZ010000865.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "LEF1_HUMAN Lymphoid enhancer-binding factor 1 OS=Homo sapiens GN=LEF1 PE=1 SV=1",
+   "their_paralog_flag": true,
+   "my_best_hit_scaffolds_for_this_symbol": [],
+   "scaffold_agrees_with_my_same_symbol_hit": false,
+   "my_nearest_hit_on_their_scaffold": {
+    "query": "hhip",
+    "round": "round2",
+    "start": 2512,
+    "end": 37451,
+    "strand": "-",
+    "coverage": 1.0,
+    "identity": 0.768
+   },
+   "gap_bp": 1652899,
+   "window_is_flush_against_that_hit": false,
+   "verdict": "NOT COMPARABLE: I never queried lef1, so I have no independent placement for it"
+  },
+  {
+   "their_symbol": "tbx5a",
+   "their_region": "HS1382:1633754-1635753",
+   "their_strand": 1,
+   "their_scaffold_expanded": "JAGFBZ010001382.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "TBX5_CHICK T-box transcription factor TBX5 OS=Gallus gallus GN=TBX5 PE=1 SV=1",
+   "their_paralog_flag": true,
+   "my_best_hit_scaffolds_for_this_symbol": [
+    "JAGFBZ010001382.1"
+   ],
+   "scaffold_agrees_with_my_same_symbol_hit": true,
+   "my_nearest_hit_on_their_scaffold": {
+    "query": "tbx5a",
+    "round": "round1",
+    "start": 1635753,
+    "end": 1651051,
+    "strand": "+",
+    "coverage": 1.0,
+    "identity": 0.782
+   },
+   "gap_bp": 0,
+   "window_is_flush_against_that_hit": true,
+   "verdict": "AGREE: flush against my hit for the same gene"
+  },
+  {
+   "their_symbol": "fgf10a",
+   "their_region": "HS2193:503910-505909",
+   "their_strand": -1,
+   "their_scaffold_expanded": "JAGFBZ010002193.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "FGF10_HUMAN Fibroblast growth factor 10 OS=Homo sapiens GN=FGF10 PE=1 SV=1",
+   "their_paralog_flag": true,
+   "my_best_hit_scaffolds_for_this_symbol": [
+    "JAGFBZ010000446.1"
+   ],
+   "scaffold_agrees_with_my_same_symbol_hit": false,
+   "my_nearest_hit_on_their_scaffold": {
+    "query": "fgf10b",
+    "round": "round3",
+    "start": 497969,
+    "end": 503585,
+    "strand": "-",
+    "coverage": 0.765,
+    "identity": 0.753
+   },
+   "gap_bp": 325,
+   "window_is_flush_against_that_hit": false,
+   "verdict": "PARALOG MISMATCH: nearest hit of mine on this scaffold is 'fgf10b' (325 bp away), and my own fgf10a hit is on JAGFBZ010000446.1"
+  },
+  {
+   "their_symbol": "kcnk5b",
+   "their_region": "HS0776:65364-67363",
+   "their_strand": -1,
+   "their_scaffold_expanded": "JAGFBZ010000776.1",
+   "their_window_basis": "upstream of PREDICTED START CODON (CDS-only GeneWise model); no TSS/UTR",
+   "their_blast_best_hit": "KCNK5_HUMAN Potassium channel subfamily K member 5 OS=Homo sapiens GN=KCNK5 PE=1 SV=1",
+   "their_paralog_flag": true,
+   "my_best_hit_scaffolds_for_this_symbol": [
+    "JAGFBZ010001926.1"
+   ],
+   "scaffold_agrees_with_my_same_symbol_hit": false,
+   "my_nearest_hit_on_their_scaffold": {
+    "query": "kcnk5a",
+    "round": "round3",
+    "start": 49243,
+    "end": 65363,
+    "strand": "-",
+    "coverage": 1.0,
+    "identity": 0.691
+   },
+   "gap_bp": 1,
+   "window_is_flush_against_that_hit": true,
+   "verdict": "PARALOG MISMATCH: their 'kcnk5b' window is flush against MY 'kcnk5a' hit"
+  }
+ ],
+ "dropped_hoxd13a": {
+  "my_hit": {
+   "query": "hoxd13a",
+   "round": "round1",
+   "scaffold": "JAGFBZ010000479.1",
+   "start": 5214025,
+   "end": 5216883,
+   "strand": "+",
+   "coverage": 0.824,
+   "identity": 0.447
+  },
+  "scaffold_len": 6138190,
+  "upstream_2kb_requested": 2000,
+  "upstream_2kb_available": 2000,
+  "non_ACGT_bases_in_window": 0,
+  "window_would_be_truncated": false,
+  "their_stated_drop_reason": "no ortholog hit with a clean 2 kb ACGT-only window",
+  "finding": "A clean 2 kb ACGT-only window DOES exist immediately upstream of my hoxd13a hit on this strand. Their drop reason was 'no ortholog hit with a clean 2 kb ACGT-only window'; the two halves of that reason are separable, and this result is consistent with the ORTHOLOG-HIT half failing in their GeneWise model rather than the window being unclean. It does not show their model was wrong: my hit is a protein alignment, not an ortholog call, and my hoxd13a hit is the weakest in my table (coverage 0.824, identity 0.447)."
+ }
+}

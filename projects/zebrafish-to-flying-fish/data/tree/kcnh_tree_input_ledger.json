@@ -1,0 +1,209 @@
+{
+ "scope": "Input assembly for a protein gene tree. Sequences are UniProt reference proteins and miniprot predictions from an unannotated assembly. A tree over these is a sequence-similarity phylogeny of predictions, not an orthology proof and not evidence of expression or function.",
+ "built_utc": "2026-11-01T15:34:33+00:00",
+ "n_sequences": 20,
+ "fasta_bytes": 22166,
+ "fasta_sha256": "7ace646d362dd37862787cd3b95fefd3d9aeaa964d5fa254417147bd4697d051",
+ "question": "Does the JAGFBZ010001591.1 prediction group fall with zebrafish kcnh2a or kcnh2b?",
+ "positive_control": "The JAGFBZ010001790.1 group must fall with kcnh6a. If it does not, the tree is not trustworthy for the question above.",
+ "entries": [
+  {
+   "name": "ZF_kcnh1a",
+   "kind": "reference_protein",
+   "uniprot": "Q108P3",
+   "url": "https://rest.uniprot.org/uniprotkb/Q108P3.fasta",
+   "len": 959,
+   "sha256": "9931e7f3fb9d5260f49fe872e57b8a3f872e59b46b5540dbee4b2694f8959007"
+  },
+  {
+   "name": "ZF_kcnh1b",
+   "kind": "reference_protein",
+   "uniprot": "K4EHU2",
+   "url": "https://rest.uniprot.org/uniprotkb/K4EHU2.fasta",
+   "len": 956,
+   "sha256": "ca79d60f8be33a60e0af4310452274970a7bf9b5c7bbcbf2aeb9660068dc1547"
+  },
+  {
+   "name": "ZF_kcnh2a",
+   "kind": "reference_protein",
+   "uniprot": "Q108P2",
+   "url": "https://rest.uniprot.org/uniprotkb/Q108P2.fasta",
+   "len": 1253,
+   "sha256": "2561941b8d69e8d512675fc996370415cf7311c8f180e8f87955827b850805f7"
+  },
+  {
+   "name": "ZF_kcnh2b",
+   "kind": "reference_protein",
+   "uniprot": "A0AC58ISX0",
+   "url": "https://rest.uniprot.org/uniprotkb/A0AC58ISX0.fasta",
+   "len": 837,
+   "sha256": "4a8b2cc85d307f9c8b6c865fef315528f769582f3cec7714bff4969b032bec3a"
+  },
+  {
+   "name": "ZF_kcnh3",
+   "kind": "reference_protein",
+   "uniprot": "A0AC58GGN5",
+   "url": "https://rest.uniprot.org/uniprotkb/A0AC58GGN5.fasta",
+   "len": 1132,
+   "sha256": "ebc7cc7f94b085b40ea0a3705028c8ea5634ef8378d33a49702c576f9dec1a4f"
+  },
+  {
+   "name": "ZF_kcnh4a",
+   "kind": "reference_protein",
+   "uniprot": "A0A142J9E8",
+   "url": "https://rest.uniprot.org/uniprotkb/A0A142J9E8.fasta",
+   "len": 1151,
+   "sha256": "6749d7464ca2be6f840a52b663c1d97dedc31a495381fd97914f1797167700fa"
+  },
+  {
+   "name": "ZF_kcnh5a",
+   "kind": "reference_protein",
+   "uniprot": "B3DJV7",
+   "url": "https://rest.uniprot.org/uniprotkb/B3DJV7.fasta",
+   "len": 1093,
+   "sha256": "8aeb0d6e9aec35ac09f1d4f9b9e1c87244f74191fe7bb9dc46b21680274c0557"
+  },
+  {
+   "name": "ZF_kcnh6a",
+   "kind": "reference_protein",
+   "uniprot": "Q8JH78",
+   "url": "https://rest.uniprot.org/uniprotkb/Q8JH78.fasta",
+   "len": 1186,
+   "sha256": "096d988b015e28f71e921b5fbc618e03040103b99ee04c625359b679c3fbcb8f"
+  },
+  {
+   "name": "ZF_kcnh6b",
+   "kind": "reference_protein",
+   "uniprot": "A0A8M9QEL7",
+   "url": "https://rest.uniprot.org/uniprotkb/A0A8M9QEL7.fasta",
+   "len": 893,
+   "sha256": "b9ba530e9a08bbf0d16b866a215b224b03492ff41feeda53f503cc8baccae2f5"
+  },
+  {
+   "name": "ZF_kcnh7",
+   "kind": "reference_protein",
+   "uniprot": "A0AB32TVI3",
+   "url": "https://rest.uniprot.org/uniprotkb/A0AB32TVI3.fasta",
+   "len": 1158,
+   "sha256": "73b61e7499a44746c22b6b10626ceb5165dd8f481816592cd6e7a3c42767dc03"
+  },
+  {
+   "name": "HUMAN_KCNH2_OUTGROUP",
+   "kind": "reference_protein",
+   "uniprot": "Q12809",
+   "url": "https://rest.uniprot.org/uniprotkb/Q12809.fasta",
+   "len": 1159,
+   "sha256": "1cc8a2020fb4ef6ceaadeb9c712d91a3e539ccbe1d3d0882e123ac1c8074fda3"
+  },
+  {
+   "name": "HUMAN_KCNH1_OUTGROUP",
+   "kind": "reference_protein",
+   "uniprot": "O95259",
+   "url": "https://rest.uniprot.org/uniprotkb/O95259.fasta",
+   "len": 989,
+   "sha256": "9193ecb1d01e7f5e435b9abd8fb2c09514db145fbc9142b339eeb720298a17b9"
+  },
+  {
+   "name": "HSPEC_ambiguous",
+   "kind": "miniprot_prediction_group",
+   "scaffold": "JAGFBZ010001591.1",
+   "why": "the collision region: both kcnh2a and kcnh2b queries best-hit it",
+   "n_taken": 4,
+   "lengths": [
+    1325,
+    1154,
+    1052,
+    818
+   ],
+   "reciprocal_best_each": [
+    "kcnh2a",
+    "kcnh2a",
+    "kcnh2a",
+    "kcnh2b"
+   ]
+  },
+  {
+   "name": "HSPEC_control_kcnh6alike",
+   "kind": "miniprot_prediction_group",
+   "scaffold": "JAGFBZ010001790.1",
+   "why": "POSITIVE CONTROL: the reciprocal test called this kcnh6a-like, 10/10 predictions",
+   "n_taken": 4,
+   "lengths": [
+    1199,
+    1144,
+    1135,
+    1057
+   ],
+   "reciprocal_best_each": [
+    "kcnh6a",
+    "kcnh6a",
+    "kcnh6a",
+    "kcnh6a"
+   ]
+  },
+  {
+   "name": "HSPEC_ambiguous_1_len1325_from_kcnh2a",
+   "kind": "miniprot_predicted_protein",
+   "scaffold": "JAGFBZ010001591.1",
+   "predicted_from_query": "kcnh2a",
+   "len": 1325,
+   "sha256": "e6172628b3d19ca3d53c47dab5437172ffece9da902eef9b2e1c7c223406cf3d"
+  },
+  {
+   "name": "HSPEC_ambiguous_2_len1154_from_kcnh6a",
+   "kind": "miniprot_predicted_protein",
+   "scaffold": "JAGFBZ010001591.1",
+   "predicted_from_query": "kcnh6a",
+   "len": 1154,
+   "sha256": "14e10670bb60d0c1c5184257c4eadf03728277b858e86fafc64964fcf1dd725a"
+  },
+  {
+   "name": "HSPEC_ambiguous_3_len1052_from_kcnh7",
+   "kind": "miniprot_predicted_protein",
+   "scaffold": "JAGFBZ010001591.1",
+   "predicted_from_query": "kcnh7",
+   "len": 1052,
+   "sha256": "e5d9bd27f1ed4c0ce4d478e5391707b1a95d94bab67850cc3460a9ac6d07949c"
+  },
+  {
+   "name": "HSPEC_ambiguous_4_len818_from_kcnh2b",
+   "kind": "miniprot_predicted_protein",
+   "scaffold": "JAGFBZ010001591.1",
+   "predicted_from_query": "kcnh2b",
+   "len": 818,
+   "sha256": "8bffec89b1f3155b8550c448bab78f12dc5d7b06332ae53bde631e8336502eee"
+  },
+  {
+   "name": "HSPEC_control_kcnh6alike_1_len1199_from_kcnh6a",
+   "kind": "miniprot_predicted_protein",
+   "scaffold": "JAGFBZ010001790.1",
+   "predicted_from_query": "kcnh6a",
+   "len": 1199,
+   "sha256": "e2ca6a43ed58beabc7939e81f86b7788826ac2885819d0d7e067836e8d71e144"
+  },
+  {
+   "name": "HSPEC_control_kcnh6alike_2_len1144_from_kcnh7",
+   "kind": "miniprot_predicted_protein",
+   "scaffold": "JAGFBZ010001790.1",
+   "predicted_from_query": "kcnh7",
+   "len": 1144,
+   "sha256": "368b07fcdff5655a88d3d36b7f77e1ca6d2dcded09ba955ef79ea71339c9e834"
+  },
+  {
+   "name": "HSPEC_control_kcnh6alike_3_len1135_from_kcnh2a",
+   "kind": "miniprot_predicted_protein",
+   "scaffold": "JAGFBZ010001790.1",
+   "predicted_from_query": "kcnh2a",
+   "len": 1135,
+   "sha256": "203af53a178be995cf8e1ab7df118c246d66c951716eb6a01bc642de0532034a"
+  },
+  {
+   "name": "HSPEC_control_kcnh6alike_4_len1057_from_kcnh3",
+   "kind": "miniprot_predicted_protein",
+   "scaffold": "JAGFBZ010001790.1",
+   "predicted_from_query": "kcnh3",
+   "len": 1057,
+   "sha256": "bf5119190b7d770c792d492557515aff066290bdbe2f39ec319dc85ee298848e"
+  }
+ ]
+}
