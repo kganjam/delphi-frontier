@@ -212,5 +212,114 @@
     "kind": "global sensitivity of that model (same code; default path reproduced within 1e-9 on the cloud CPU)"
    }
   ]
+ },
+ "j2-m3-atlas": {
+  "model_name": "M3 plant and controller over 112 lateral and 20 longitudinal r3-daane variants: nonlinear-saturation Monte Carlo (GPU) plus exact linear delayed stability (CPU pool)",
+  "context": "It maps where a delayed vestibular/visual controller acting through the pectoral and pelvic fins keeps the glider within attitude limits. Axes: caudal-fin area, dihedral, mass, static margin, canal and vision delays, sensor set and gust level. It ran as Nebius H100 job claude-neuro-j2-m3-atlas-a2; the first attempt's output was lost in transport and no result is claimed from it.",
+  "time_units": "5 s of glide per trajectory, 2 ms step",
+  "equations": [
+   {
+    "label": "Failure probability",
+    "tex": "P_{fail}=\\Pr\\big(\\max_{t\\le 5s}|\\phi(t)|>45^\\circ\\big)\\ \\text{(roll)};\\ \\max|\\theta|>30^\\circ\\ \\text{(pitch)}",
+    "source": "failure rule as in M3"
+   }
+  ],
+  "sources": [
+   "park_choi2010",
+   "saro_cortes2022"
+  ],
+  "parameter_unknowns": [
+   "The caudal-fin vertical-surface fraction and arm, fin lag and authority, and noise levels are assumptions; the plant is linear and quasi-steady."
+  ],
+  "open_questions": [
+   "Which caudal-fin area and dihedral does the printed r3-daane actually have, measured as a vertical-surface fraction?"
+  ],
+  "perturbation_sweep": "Full factorial: lateral 2 masses x 8 dihedrals x 7 k_v; longitudinal 2 masses x 10 static margins; MC delays canal 0-80 ms x vision 0-200 ms; sensor sets vision/otolith/rate-only/passive; gust 0.5/1/2 m/s; 2048 trajectories per cell. Linear atlas: canal 0-100 ms x vision 0-200 ms x gain 0.3/1/3.",
+  "experiment_design": "Fly instrumented prints with two or three caudal-fin areas and dihedrals chosen from the atlas's boundary cells, under measured gusts, and compare the observed upset rates with these predictions. In animals, measure the fin EMG latency after an imposed roll to place a fish on the delay axis.",
+  "does_not_establish": [
+   "SIMULATED, not observed: a linear quasi-steady plant with assumed fin authority and lag; no unsteady aerodynamics or ground effect.",
+   "The Monte Carlo applies the same-step actuator state, one step (2 ms) less lag than the linear atlas (see integration_note).",
+   "A stable controller shows feasibility, not what fish do."
+  ],
+  "couplings": [
+   {
+    "to": "neuro-m3-glide-stabilizer",
+    "kind": "same plant/controller, full design space"
+   }
+  ]
+ },
+ "j3-m5-mcell": {
+  "model_name": "Leaky integrate-and-fire Mauthner cell with feedforward inhibition, driven by three candidate looming encoders (Preuss kappa, LGMD eta, pure angle)",
+  "context": "This is the first simulated neuron in the project. It asks which encoding reproduces measured looming-escape signatures, using criteria preregistered in the code before the run. The response angles and latencies of the consistent sets are candidates to replace M1's assumed threshold and latency priors. It ran as Nebius H100 job claude-neuro-j3-m5-mcell-a2.",
+  "time_units": "seconds of stimulus (0.5 ms step) from looming onset at 5 deg",
+  "equations": [
+   {
+    "label": "M-cell",
+    "tex": "\\tau_m\\dot V=-V+g_E d(t)-g_I I(t)+\\sigma\\sqrt{\\tau_m}\\xi,\\ \\tau_I\\dot I=d-I,\\ V\\ge1\\Rightarrow\\text{escape}",
+    "source": "reduced LIF with feedforward inhibition (assumption)"
+   },
+   {
+    "label": "Encoders",
+    "tex": "d_\\kappa=\\theta e^{-\\beta\\theta},\\ d_\\eta=\\dot\\theta e^{-\\beta\\theta},\\ d_\\theta=\\theta\\ (\\text{delayed by }\\delta)",
+    "source": "Preuss 2006; Hatsopoulos 1995 / Gabbiani 2002"
+   }
+  ],
+  "sources": [
+   "preuss2006",
+   "eaton2001"
+  ],
+  "parameter_unknowns": [
+   "All neuron parameters (delay, gains, time constants, noise) are swept assumptions; no fish electrophysiology is fitted."
+  ],
+  "open_questions": [
+   "Do flying fish escape at a fixed looming angle (as larval zebrafish do), and at what angle?"
+  ],
+  "perturbation_sweep": "8 neuron parameters x 3 encoders (16,384 scrambled-Sobol sets each) x 7 approach parameters l/v 10-240 ms x 32 noisy trials.",
+  "experiment_design": "Present looming disks with l/v 10-240 ms to captive flying-fish juveniles or halfbeaks, with high-speed video. Measure the response angle and latency for each l/v: a fixed-angle threshold separates the theta/kappa-like encoders from eta. Pharmacological reduction of inhibition (glycine/GABA antagonists, as in the M-cell literature) tests the role of the feedforward-inhibition parameter.",
+  "does_not_establish": [
+   "SIMULATED: a single reduced neuron, not the tectum-to-M-cell circuit.",
+   "Criteria come from abstracts of goldfish (Preuss 2006) and larval zebrafish (Bhattacharyya 2017; Temizer 2015) studies, not flying fish.",
+   "Passing the criteria shows consistency only; it does not identify a mechanism."
+  ],
+  "couplings": [
+   {
+    "to": "neuro-m1-fast-start",
+    "kind": "candidate replacement for the theta_thr and latency priors"
+   }
+  ]
+ },
+ "j4-m3-sobol": {
+  "model_name": "Saltelli/Sobol global sensitivity of the M3 lateral loop over 14 design, neural, fin-muscle and environment inputs",
+  "context": "It answers which parameter, measured or redesigned, most changes the glider's chance of staying upright. Outputs: Monte Carlo failure probability (128 trajectories per point), exact linear instability and log spectral radius. It ran as Nebius H100 job claude-neuro-j4-m3-sobol-a1.",
+  "time_units": "none: variance decomposition (each point is a 5 s Monte Carlo)",
+  "equations": [
+   {
+    "label": "Total index (Jansen)",
+    "tex": "S_{T,i}=\\frac{\\tfrac{1}{2N}\\sum_j(f(A)_j-f(A_B^{(i)})_j)^2}{V(Y)}",
+    "source": "as in J1"
+   }
+  ],
+  "sources": [
+   "park_choi2010",
+   "ehrlich_schoppik2017"
+  ],
+  "parameter_unknowns": [
+   "The indices depend on the declared input boxes (sobol_m3.IN)."
+  ],
+  "open_questions": [
+   "Is the decisive parameter a design choice (caudal area, dihedral) or a neural one (delays, gains)? See the indices."
+  ],
+  "perturbation_sweep": "All 14 inputs vary jointly: N 2048, 32,768 points, 4.2M trajectories.",
+  "experiment_design": "Prioritise measurements by total index: geometry (caudal vertical-surface area, dihedral) from the specimen or print; neural delays from fin EMG latency after imposed roll; fin actuator lag and authority from muscle twitch kinetics and range of motion.",
+  "does_not_establish": [
+   "SIMULATED: ranks the model's priors; linear quasi-steady plant.",
+   "Monte Carlo noise is part of the failure variance; its share is reported."
+  ],
+  "couplings": [
+   {
+    "to": "neuro-m3-glide-stabilizer",
+    "kind": "global sensitivity of the lateral loop"
+   }
+  ]
  }
 }

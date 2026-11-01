@@ -10,7 +10,8 @@ import numpy as np
 
 from engineering.neuro import common as C
 
-JOBS = {"j1": ("claude-neuro-j1-m1-sobol-a1", "j1-m1-sobol", "out/sobol_m1.json"),
+JOBS = {"j4": ("claude-neuro-j4-m3-sobol-a1", "j4-m3-sobol", "out/sobol_m3.json.gz"),
+        "j1": ("claude-neuro-j1-m1-sobol-a1", "j1-m1-sobol", "out/sobol_m1.json"),
         "j2": ("claude-neuro-j2-m3-atlas-a2", "j2-m3-atlas", "out/m3_atlas.json.gz"),
         "j3": ("claude-neuro-j3-m5-mcell-a2", "j3-m5-mcell", "out/m5_mcell.json.gz")}
 
@@ -113,6 +114,9 @@ def j2():
     fig.tight_layout(); fig.savefig(dst / "figure.png", dpi=100); plt.close(fig)
     m = base_manifest(rid, name, cr, R, "Glide stabiliser design-space atlas: failure probability and exact delayed stability over every r3-daane variant", ["organ", "organism"],
                       "engineering.neuro.m3_atlas", cr["submission"]["spec"]["command"])
+    m["integration_note"] = ("The Monte Carlo loop applies the actuator state updated in the same 2 ms step (the same order as glide_stab.mc, which the committed "
+                             "CPU rows used and which control 3 compares against statistically). The exact linear radius applies the previous step's actuator state. "
+                             "The MC therefore has one step (2 ms) less effective fin lag than the linear atlas. Control 1 checks the linear ordering only.")
     m["summary"] = summ | {"mc_trajectories": R["mc_trajectories"], "mc_elapsed_s": R["mc_elapsed_s"], "linear_radii": len(lin), "linear_elapsed_s": R["linear_elapsed_s"], "gpu": R.get("gpu"), "n_mc": R["n_mc"]}
     write(dst, rid, m, cr, name)
 
@@ -150,5 +154,24 @@ def j3():
     write(dst, rid, m, cr, name)
 
 
+def j4():
+    name, rid, cr, col, dst, R = receipt_and_dirs("j4")
+    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(1, 3, figsize=(18, 6)); summ = {}
+    for a_, o in zip(ax, ("fail_prob", "linear_unstable", "log_radius")):
+        d = R["outputs"][o]; ST, S1 = d["ST"], d["S1"]; top = sorted(ST, key=lambda k: -ST[k]); y = np.arange(len(top))[::-1]
+        ci = np.array([d["ST_ci95"][k] for k in top]); st = np.array([ST[k] for k in top])
+        a_.barh(y, st, xerr=[st - ci[:, 0], ci[:, 1] - st], color="C0", alpha=.7, label="total ST (95% bootstrap)")
+        a_.barh(y, [max(S1[k], 0) for k in top], height=.4, color="C3", label="first order S1"); a_.set_yticks(y, top, fontsize=8); a_.set_xlim(0, 1.05)
+        a_.set_title(f"{o} (mean {d['mean']:.3g})" + (f"; MC noise share {d['mc_noise_share_of_variance']:.3f}" if "mc_noise_share_of_variance" in d else ""), fontsize=9); a_.legend(fontsize=7)
+        summ[o] = {"mean": d["mean"], "top_ST": [[k, round(ST[k], 4), [round(x, 4) for x in d["ST_ci95"][k]], round(S1[k], 4)] for k in top[:6]]} | ({"mc_noise_share_of_variance": d["mc_noise_share_of_variance"]} if "mc_noise_share_of_variance" in d else {})
+    fig.suptitle(f"J4 Sobol sensitivity of glide roll stabilisation ({R['points']:,} points x {R['trials']} trajectories, {R.get('gpu')}); SIMULATED", fontsize=11)
+    fig.tight_layout(); fig.savefig(dst / "figure.png", dpi=100); plt.close(fig)
+    m = base_manifest(rid, name, cr, R, "Global sensitivity of glide roll stabilisation: design vs neural vs fin-muscle vs environment parameters", ["organ", "organism"],
+                      "engineering.neuro.sobol_m3", cr["submission"]["spec"]["command"])
+    m["summary"] = summ | {"linear_vs_mc_agreement": R["linear_vs_mc_agreement"], "points": R["points"], "trials": R["trials"], "elapsed": R["elapsed"], "gpu": R.get("gpu")}
+    write(dst, rid, m, cr, name)
+
+
 if __name__ == "__main__":
-    {"j1": j1, "j2": j2, "j3": j3}[sys.argv[1]]()
+    {"j1": j1, "j2": j2, "j3": j3, "j4": j4}[sys.argv[1]]()
