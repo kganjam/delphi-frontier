@@ -209,6 +209,7 @@
       html: html`<section class="pagehead"><h1>Studio</h1><p class="lede">Design projects, each broken into subsystems by scale. ${snap.projects.note}</p></section>
         <section class="panel goalpanel">${goalForm(goal)}</section><div id="goalout"></div>
         <section class="panel"><h2 class="sr">Projects</h2>${snap.projects.projects.filter((p) => !p.template).map((p) => html`<article class="card pform"><h3>${p.title} ${p.featured ? U.pill("featured", "gen") : ""} ${U.pill(p.status, "st-unk")}</h3><p><b>Goal.</b> ${p.goal}</p><p class="small">${p.summary}</p><p><a class="btn" href="${DF.href("/studio/" + p.id)}">Open studio</a></p></article>`)}
+        ${DF.limbless && snap.limbless ? html`<h2 class="small">Design spaces</h2><p class="small faint">A design space is not a design: it maps the routes to a stated outcome across scales, each with its own evidence level, and runs the models we can run. Nothing in one has been attempted here.</p>${DF.limbless.card(snap)}` : ""}
         ${reuseList(snap)}<p class="note small">${snap.projects.other_projects_note}</p><p class="small faint">Starting a new project needs a Project record and a credentialed submission route; this page does not create one.</p></section>`,
       async after(root) {
         DF.bindForm(root, "goal", (v) => DF.href("/studio", { goal: v.goal }));
@@ -286,6 +287,9 @@
 
   function projectStudio(snap, route, id) {
     const p = snap.projects.projects.find((x) => x.id === id);
+    /* Design spaces are not entries in projects.json: that file's digest is pinned by the reuse studies' publication receipt, so adding a
+     * row there would silently un-stamp two stored Projects. They carry their own content block instead and are routed by id here. */
+    if (id === "limbless-mouse" && DF.limbless && snap.limbless) return DF.limbless.page(snap, route);
     if (p && p.template === "reuse-study") return reuseStudy(snap, p);
     if (!p) return { html: html`<section class="pagehead"><h1>No such project</h1><p class="lede">There is no project “${id}” in this snapshot. <a href="${DF.href("/studio")}">See the projects</a>.</p></section>` };
     const m = snap.mission; const scale = route.params.scale && p.panels[route.params.scale] ? route.params.scale : "organism"; const pan = p.panels[scale]; const sc = m.scales.find((s) => s.key === scale);

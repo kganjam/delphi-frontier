@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs fc93b3062bbd",
- "input_fingerprint": "fc93b3062bbd269ac60e4604506537409ba945b29cf6f77b7dc62edc50e25235",
+ "label": "snapshot of inputs 6261277819f8",
+ "input_fingerprint": "6261277819f8a59c68b46cf93c50933beee400b9c2872a275d6cbe3a701c20ff",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -4059,6 +4059,11 @@
    "bytes": 66447
   },
   {
+   "path": "results/limbless-mouse/index.json",
+   "sha256": "7444c32e67fd9803cd28afb2399cc6fd49fb936146760aa27f8fbb112059a615",
+   "bytes": 5473
+  },
+  {
    "path": "results/resources/agent-contributors.json",
    "sha256": "d576ef7b76fd2f2b7db4e6c7ae245f87480d811da17068d17b7338b85911c44b",
    "bytes": 62280
@@ -4137,6 +4142,11 @@
    "path": "site/content/design-review.json",
    "sha256": "6459a378571e502d4e143402bea5c21d5ba86aa01ef01f5210f41a43cdcf226e",
    "bytes": 4235
+  },
+  {
+   "path": "site/content/limbless-mouse.json",
+   "sha256": "295869402bdfd5a54bf38d7ae9ccc9978878b77cbd8d4c44e06e384afd54174f",
+   "bytes": 7417
   },
   {
    "path": "site/content/mission.json",
@@ -75485,6 +75495,232 @@
    "href": "data/docs/blog-whats-unfinished.md.txt"
   }
  ],
+ "limbless": {
+  "schema": "limbless-mouse-page-0.1",
+  "id": "limbless-mouse",
+  "title": "Limbless mouse",
+  "group": "Design space",
+  "status": "design space, mapped and partly simulated",
+  "goal": "A judge asked whether we could make a limbless mouse. Rather than answer with one gene, map the whole design space: every route we can source, at every scale, with what each one would actually produce.",
+  "summary": "There is no single answer. Published mouse genetics already contains alleles that remove limbs entirely, alleles that truncate them, and alleles that take one limb pair and leave the other. They sit at different scales and they are not interchangeable. This page lays the routes out side by side, runs the models we can run on three of them, and says plainly where the chain between scales is uncalibrated.",
+  "answer": {
+   "headline": "Yes, several ways — and they do not give you the same animal.",
+   "paragraphs": [
+    "The honest answer to “could you make a limbless mouse?” is that the mouse literature already contains more than one way, and the first question back is which phenotype is wanted. Complete absence of all four limbs (amelia) is the Fgf10-null phenotype, and in humans the WNT3 Q83X tetra-amelia phenotype: the apical ectodermal ridge never forms, so there is no limb at all. Truncation is a different outcome reached by a different lesion: the limb bud starts, the SHH–GREM1–FGF loop fails to sustain it, and a stunted proximal element is left behind.",
+    "The sharpest precedent for getting there by editing regulation rather than by deleting a gene is Kvon et al. 2016. Replacing the mouse ZRS — the limb enhancer of Shh, about a megabase away inside an intron of Lmbr1 — with the king cobra ortholog abolished limb-bud Shh expression and truncated both limb pairs, while the human and coelacanth orthologs in the same assay gave normal limbs. A 17-base-pair stretch spanning an ETS site was enough to change the outcome. That is the resolution at which this is a design problem rather than a knockout.",
+    "If the goal is a viable adult animal rather than an embryonic phenotype, the realistic route is one limb pair, not four: a conditional Tbx5 allele for the forelimb, Tbx4 or Pitx1 for the hindlimb, switched after the body plan is laid down. Tetra-amelia alleles are generally severe and often lethal for reasons that have nothing to do with limbs.",
+    "And if the point is the mechanism rather than the mouse, the first thing a reviewer will ask for in 2026 is a limb-bud explant or organoid, not an animal. That route is on this page too."
+   ],
+   "precision_note": "Truncation is not amelia, and a page that blurs them is answering a question nobody asked. Every route below states which of the two — or which of micromelia, digit loss, or one-pair loss — it predicts."
+  },
+  "scales": [
+   {
+    "key": "molecular",
+    "label": "Molecular · sequence",
+    "blurb": "Edit the regulatory sequence rather than the gene: enhancer swaps, single transcription-factor binding sites, enhancer deletion, topology."
+   },
+   {
+    "key": "gene",
+    "label": "Gene · coding",
+    "blurb": "Null and hypomorphic alleles of the ligands, receptors and transcription factors that induce and maintain the limb field."
+   },
+   {
+    "key": "cellular",
+    "label": "Cellular · signalling",
+    "blurb": "Remove or fail to maintain the signalling centres themselves — the apical ectodermal ridge and the zone of polarising activity — or exhaust the progenitor pool."
+   },
+   {
+    "key": "tissue",
+    "label": "Tissue · feedback",
+    "blurb": "Break the self-sustaining SHH–GREM1–FGF loop that keeps the bud growing, instead of removing any one of its parts."
+   },
+   {
+    "key": "pattern",
+    "label": "Pattern · skeleton",
+    "blurb": "Change the patterning system that lays down skeletal elements: the wavelength of the Turing-like network, or the size of the field it runs on."
+   },
+   {
+    "key": "developmental",
+    "label": "Developmental · timing",
+    "blurb": "Keep the allele and choose when it fires. Conditional, inducible and degron systems move the lesion off fertilisation and away from lethality."
+   },
+   {
+    "key": "organism",
+    "label": "Organism · comparative",
+    "blurb": "Nature's own limbless vertebrates — snakes, limb-reduced skinks, cetaceans — reached it repeatedly and not by the same mechanism each time."
+   },
+   {
+    "key": "invitro",
+    "label": "In vitro · non-animal",
+    "blurb": "Limb-bud explants, micromass and organoids: the route that answers the mechanistic question without an animal, and the one a modern review asks for first."
+   }
+  ],
+  "chain": {
+   "title": "The chain across scales, and where it is not calibrated",
+   "intro": "The three models on this page are not independent demonstrations. They are meant to be read as one chain, and the chain has two junctions we refuse to call calibrated.",
+   "links": [
+    {
+     "from": "A ZRS allele",
+     "to": "ZPA Shh output",
+     "status": "scenario",
+     "note": "The sequence analysis measures divergence and motif content. It does not predict enhancer activity. Mapping an allele onto a fraction of wild-type Shh output is a scenario parameter, not a calibrated transfer."
+    },
+    {
+     "from": "ZPA Shh output",
+     "to": "Outgrowth duration",
+     "status": "model",
+     "note": "This junction is inside the SHH–GREM1–FGF model, so it is at least explicit: the model says how a reduction in Shh production shortens the window in which FGF stays above threshold."
+    },
+    {
+     "from": "Outgrowth duration",
+     "to": "Limb-bud domain size",
+     "status": "scenario",
+     "note": "A shorter outgrowth window means a smaller paddle, but the model has no geometry. Converting one to the other needs a growth law we have not fitted."
+    },
+    {
+     "from": "Domain size",
+     "to": "Skeletal element count",
+     "status": "model",
+     "note": "This junction is inside the Turing model, which gives a critical domain size in units of its own pattern wavelength."
+    }
+   ],
+   "verdict": "Two of the four junctions are within a single model and are explicit. Two cross between models and have no calibration behind them, so the end-to-end statement — “this allele gives that many digits” — is refused. The chain is a map of what would have to be measured, not a prediction."
+  },
+  "not_claimed": [
+   "No mouse was made, no embryo was used, and no wet-lab experiment was run for this page.",
+   "The three computational studies are simulations and a sequence analysis. None is an observation, and none is calibrated to a measured mouse limb bud.",
+   "No route on this page is a protocol. Each names published evidence and what would have to be done; none has been attempted here.",
+   "The sequence analysis is correlational over a handful of orthologs. It is not a predictor of enhancer activity and must not be used as one.",
+   "A threshold in a model is not a threshold in an embryo."
+  ],
+  "closing": {
+   "title": "Why this is on a design platform and not in a review article",
+   "text": "The useful thing here is not the list — a specialist could write the list. It is that every row carries its evidence level, every junction between scales carries a refusal or a label, and the three models can be re-run from the repository. The question “can you make a limbless mouse?” has a dozen answers whose differences only show up when you are forced to say which phenotype, at which scale, with what evidence, and at what cost. That is what this workspace is for."
+  },
+  "content_sha256": "295869402bdfd5a54bf38d7ae9ccc9978878b77cbd8d4c44e06e384afd54174f",
+  "index_sha256": "7444c32e67fd9803cd28afb2399cc6fd49fb936146760aa27f8fbb112059a615",
+  "generated_at": null,
+  "routes": {
+   "title": "Routes to a limbless or limb-reduced mouse",
+   "data": "results/limbless-mouse/routes.json",
+   "note": "Published perturbations and bounded proposals, grouped by the scale they act at. Every row carries its own evidence level and read levels on its sources. None has been attempted here.",
+   "sha256": null,
+   "present": false,
+   "href": null
+  },
+  "studies": [
+   {
+    "id": "zrs-conservation",
+    "title": "The ZRS across species: what changes when a limb enhancer is swapped",
+    "scale": "molecular",
+    "kind": "sequence analysis",
+    "question": "Kvon et al. replaced the mouse ZRS with orthologs and got normal limbs from some species and truncated limbs from others. What, in the sequence itself, separates the two groups?",
+    "summary": "Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS-motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the one that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page.",
+    "code": "results/limbless-mouse/code/zrs_analysis.py",
+    "data": null,
+    "present": false,
+    "sha256": null,
+    "figures": [
+     {
+      "file": "zrs-conservation.png",
+      "alt": "Per-column conservation of aligned ZRS orthologs with ETS motif positions marked, species coloured by the limb phenotype their knock-in produced",
+      "caption": "Sequence analysis. Per-column conservation across the ZRS orthologs retrieved, with ETS motif positions marked.",
+      "state": "declared_but_missing",
+      "href": null,
+      "sha256": null
+     }
+    ],
+    "data_path": "results/limbless-mouse/zrs-analysis.json",
+    "data_href": null
+   },
+   {
+    "id": "shh-grem1-fgf-loop",
+    "title": "The SHH–GREM1–FGF loop: where a weakened enhancer stops being a weaker limb and starts being no limb",
+    "scale": "tissue",
+    "kind": "simulation (ODE)",
+    "question": "The limb bud is held open by a feedback loop. If a ZRS allele lowers ZPA Shh output, is the result proportionally smaller, or is there a threshold below which the loop never engages at all?",
+    "summary": "An ODE model of the SHH–GREM1–BMP–FGF feedback loop, built from the published topology with every rate constant marked sourced or assumed. The wild-type control must initiate, sustain and self-terminate before any sweep is read. Three knobs are then swept — ZPA Shh output, AER-inducing FGF10 input, and GREM1 production — because three different routes on this page act on three different parts of the same loop.",
+    "code": "results/limbless-mouse/code/shh_loop.py",
+    "data": null,
+    "present": false,
+    "sha256": null,
+    "figures": [
+     {
+      "file": "shh-loop-control.png",
+      "alt": "Simulated time courses of SHH, GREM1, BMP and FGF under wild-type parameters, showing the loop engaging and then self-terminating",
+      "caption": "Simulation, control arm. Wild-type parameters: the loop engages, is sustained for a bounded window, and self-terminates.",
+      "state": "declared_but_missing",
+      "href": null,
+      "sha256": null
+     },
+     {
+      "file": "shh-loop-threshold.png",
+      "alt": "Simulated outgrowth duration against the fraction of wild-type ZPA Shh output, showing a sharp threshold",
+      "caption": "Simulation. Outgrowth duration against the fraction of wild-type ZPA Shh output. The threshold is a property of this model, not a measurement in an embryo.",
+      "state": "declared_but_missing",
+      "href": null,
+      "sha256": null
+     },
+     {
+      "file": "shh-loop-phasemap.png",
+      "alt": "Simulated two-dimensional phase map over Shh output and FGF10 input, coloured by phenotype class",
+      "caption": "Simulation. Two knobs at once: the same phenotype class is reachable from different directions, which is the point of a design space.",
+      "state": "declared_but_missing",
+      "href": null,
+      "sha256": null
+     }
+    ],
+    "data_path": "results/limbless-mouse/shh-loop.json",
+    "data_href": null
+   },
+   {
+    "id": "digit-turing",
+    "title": "Skeletal elements as a Turing pattern: how small a limb bud can be and still make a digit",
+    "scale": "pattern",
+    "kind": "simulation (reaction–diffusion)",
+    "question": "If a truncated bud is a smaller field, how small does the field have to get before it patterns no complete skeletal element at all?",
+    "summary": "A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shaped domain, with its own linear-stability analysis as an internal control. Element counts come from a pre-declared objective criterion, not from looking at the pictures, and the spread across random seeds is reported because Turing patterns are seed-dependent.",
+    "code": "results/limbless-mouse/code/digit_turing.py",
+    "data": null,
+    "present": false,
+    "sha256": null,
+    "figures": [
+     {
+      "file": "digit-turing-normal.png",
+      "alt": "Simulated digit-like pattern in a limb-bud-shaped domain",
+      "caption": "Simulation. The pattern the model makes in a full-size paddle.",
+      "state": "declared_but_missing",
+      "href": null,
+      "sha256": null
+     },
+     {
+      "file": "digit-turing-series.png",
+      "alt": "A strip of simulated patterns across the parameter sweep, from several elements down to none, each labelled with its element count",
+      "caption": "Simulation. The same model across the sweep, from several elements down to none.",
+      "state": "declared_but_missing",
+      "href": null,
+      "sha256": null
+     },
+     {
+      "file": "digit-turing-domain.png",
+      "alt": "Simulated element count against domain size, with the critical domain size marked",
+      "caption": "Simulation. Element count against domain size, in units of the pattern's own wavelength.",
+      "state": "declared_but_missing",
+      "href": null,
+      "sha256": null
+     }
+    ],
+    "data_path": "results/limbless-mouse/digit-turing.json",
+    "data_href": null
+   }
+  ],
+  "counts": {
+   "routes": 0,
+   "studies_present": 0,
+   "studies_declared": 3,
+   "figures_present": 0
+  }
+ },
  "resource_inventory": {
   "$schema": "resource-inventory.schema.json",
   "schema_version": "frontier.resource-inventory/1",
