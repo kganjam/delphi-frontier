@@ -326,7 +326,22 @@ Full result file: `results/limbless-mouse/shh-loop.json`. Code: `results/limbles
 
 A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shaped domain, with its own linear-stability analysis as an internal control. Element counts come from a pre-declared objective criterion, not from looking at the pictures, and the spread across random seeds is reported because Turing patterns are seed-dependent.
 
-**Declared and not present.** The result file `results/limbless-mouse/digit-turing.json` is not in this tree. It is listed rather than hidden.
+- Figure `digit-turing-normal.png`: Simulation. The pattern the model makes in a full-size paddle.
+- Figure `digit-turing-series.png`: Simulation. The same model across the sweep, from several elements down to none.
+- Figure `digit-turing-domain.png`: Simulation. Element count against domain size, in units of the pattern's own wavelength.
+- Figure `digit-turing.mp4`: Simulation. The pattern forming in the full-size paddle, from the seeded noise it starts in. No sound.
+
+20 parameters, of which 9 are assumed rather than sourced.
+
+- NO GROWTH. The real limb bud grows while it patterns, and raspopovic2014's and onimaru2016's simulations both run on growing meshes. On a static domain the elements form as condensations in a distal band rather than elongating into proximodistally running digit rays. This study measures element NUMBER, not element SHAPE, and the shapes here should not be read as digit morphology.
+- The five-element wild-type-like outcome is IMPOSED by the chosen paddle width, not predicted. Only the changes in element count across the sweeps are model predictions.
+- The mouse parameter set of raspopovic2014 was not obtainable. The numbers used come from onimaru2016's CATSHARK FIN simulation of the same network, and one of them (alpha_W) had to be changed to obtain a Turing instability at all.
+- All lengths are model length units. The model as published carries no physical length scale that I can verify, so no result here is in micrometres and no statement is made about the real size of any limb bud.
+- The linear-stability wavelength and the simulated wavelength differ by a factor of about two (see measured_wavelength). The simulated value is the one used for the critical domain size.
+- The classification into phenotype classes is a threshold rule on a simulated scalar field. It is objective and pre-declared, but 'normal digit number' here means 'five counted components in this simulation', not a mouse phenotype.
+- Only one noise model, one domain shape, and one gradient shape were explored. Turing element counts are sensitive to all three.
+
+Full result file: `results/limbless-mouse/digit-turing.json`. Code: `results/limbless-mouse/code/digit_turing.py`.
 
 ## The chain across scales, and where it is not calibrated
 

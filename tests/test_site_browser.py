@@ -2463,7 +2463,7 @@ def test_limbless_mouse_design_space_shows_routes_studies_and_its_own_refusals(b
     assert "Truncation is not amelia" in text, "the distinction the whole page turns on"
     assert pg.locator(".lmroute").count() == block["counts"]["routes"]
     assert pg.locator(".lmstudy").count() == block["counts"]["studies_declared"]
-    assert pg.locator(".lmfigs img").count() == block["counts"]["figures_present"]
+    assert pg.locator(".lmfigs img, .lmfigs video").count() == block["counts"]["figures_present"]
     absent = [s for s in block["studies"] if not s["present"]]
     assert pg.locator(".lmstudy .lmabsent").count() == len(absent)   # its own class: other notes in a study also use .note.warn
 

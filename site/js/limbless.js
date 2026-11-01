@@ -173,8 +173,22 @@
 
   /* The threshold of each design knob, with the numerical uncertainty taken from the refinement arm when the sweep itself
    * does not carry one. A threshold with no uncertainty beside it is reported as "not reported", never as exact. */
+  /* A sweep arrives in one of two shapes: a knob with a threshold (the ODE study) or a series of runs (the Turing study).
+   * Rendering both from one function keeps the page honest about which it has, instead of printing an empty threshold column. */
+  function sweepSeries(d) {
+    const sweeps = d.sweeps || {}; const desc = d.sweep_descriptions || {};
+    const keys = Object.keys(sweeps).filter((k) => Array.isArray(sweeps[k])); if (!keys.length) return "";
+    return html`<h4>What each knob does, run by run</h4>
+      <p class="small faint">Element counts are the mean over the recorded seeds, with their spread: a Turing pattern is seed-dependent and an average alone would hide that. The class is assigned by a rule declared before the sweep was read.</p>
+      ${keys.map((k) => { const rows = sweeps[k]; return html`<details><summary><b>${k.replace(/_/g, " ")}</b> <span class="faint small">${rows.length} settings</span></summary>
+        ${desc[k] ? html`<p class="small">${desc[k]}</p>` : ""}
+        <div class="tablewrap"><table><thead><tr><th scope="col">Setting</th><th scope="col">Elements (mean ± sd)</th><th scope="col">Seeds</th><th scope="col">Class</th>${rows[0] && rows[0].ap_extent_in_wavelengths !== undefined ? html`<th scope="col">AP width (wavelengths)</th>` : ""}</tr></thead>
+        <tbody>${rows.map((r) => html`<tr><td>${DF.fmt(r.value, 3)}</td><td>${DF.fmt(r.element_count_mean, 3)} ± ${DF.fmt(r.element_count_sd, 2)}</td><td>${r.n_seeds === undefined ? "" : r.n_seeds}</td><td class="small">${r.cls || r.class || ""}</td>${r.ap_extent_in_wavelengths !== undefined ? html`<td>${DF.fmt(r.ap_extent_in_wavelengths, 3)}</td>` : ""}</tr>`)}</tbody></table></div></details>`; })}`;
+  }
+
   function sweepTable(d) {
-    const sweeps = d.sweeps || {}; const keys = Object.keys(sweeps); if (!keys.length) return "";
+    const all = d.sweeps || {}; const sweeps = Object.fromEntries(Object.entries(all).filter(([, v]) => v && !Array.isArray(v)));
+    const keys = Object.keys(sweeps); if (!keys.length) return sweepSeries(d);
     const ref = ((d.refinement_arm || {}).thresholds) || {};
     const unc = (k, s) => {
       const u = s.threshold_uncertainty !== undefined && s.threshold_uncertainty !== null ? s.threshold_uncertainty : (ref[k] || {}).uncertainty;
@@ -184,7 +198,8 @@
     return html`<h4>What each knob does, and where it breaks</h4>
       <p class="small faint">A threshold is the value of that knob below which this model's loop never engages. It is a property of the model; the uncertainty beside it is how far the number moved across integrators and tolerances, which is not the same as being right.</p>
       <div class="tablewrap"><table><thead><tr><th scope="col">Knob</th><th scope="col">What it stands for</th><th scope="col">Threshold</th><th scope="col">Numerical uncertainty</th></tr></thead>
-      <tbody>${keys.map((k) => { const s = sweeps[k] || {}; return html`<tr><td><code>${k}</code>${s.label ? html`<br><span class="small faint">${s.label}</span>` : ""}</td><td class="small">${s.meaning || s.description || ""}${s.source ? html`<br><span class="faint">${s.source}</span>` : ""}</td><td>${s.threshold === undefined || s.threshold === null ? html`<span class="faint">none in the range swept</span>` : DF.fmt(s.threshold, 3)}${s.threshold_note ? html`<br><span class="small faint">${s.threshold_note}</span>` : ""}</td><td class="small">${unc(k, s)}</td></tr>`; })}</tbody></table></div>`;
+      <tbody>${keys.map((k) => { const s = sweeps[k] || {}; return html`<tr><td><code>${k}</code>${s.label ? html`<br><span class="small faint">${s.label}</span>` : ""}</td><td class="small">${s.meaning || s.description || ""}${s.source ? html`<br><span class="faint">${s.source}</span>` : ""}</td><td>${s.threshold === undefined || s.threshold === null ? html`<span class="faint">none in the range swept</span>` : DF.fmt(s.threshold, 3)}${s.threshold_note ? html`<br><span class="small faint">${s.threshold_note}</span>` : ""}</td><td class="small">${unc(k, s)}</td></tr>`; })}</tbody></table></div>
+      ${sweepSeries(d)}`;
   }
 
   function listOf(title, items, cls) {
@@ -204,15 +219,28 @@
       ${s.present ? "" : html`<p class="note warn lmabsent"><b>Declared and not present.</b> The result file <code>${s.data_path || ""}</code> is not in this build, so nothing below is shown for it. It is listed rather than hidden.</p>`}
       ${s.summary ? html`<p>${s.summary}</p>` : ""}
       ${s.question ? html`<p class="small"><b>The design question it answers.</b> ${s.question}</p>` : ""}
-      ${figs.length ? html`<div class="lmfigs">${figs.map((f) => html`<figure><img src="${f.href}" alt="${f.alt || f.caption || s.title}" loading="lazy"><figcaption class="small">${f.caption || ""} <span class="faint">${/simulation/i.test(s.kind || "") ? "Simulation output" : "Analysis output"}, not an observation. sha256 ${U.sha(f.sha256)}</span></figcaption></figure>`)}</div>` : ""}
+      ${figs.length ? html`<div class="lmfigs">${figs.map((f) => html`<figure>${/\.(mp4|webm)$/.test(f.file) ? html`<video controls playsinline muted loop preload="metadata" src="${f.href}" aria-label="${f.alt || f.caption || s.title}"></video>` : html`<img src="${f.href}" alt="${f.alt || f.caption || s.title}" loading="lazy">`}<figcaption class="small">${f.caption || ""} <span class="faint">${/simulation/i.test(s.kind || "") ? "Simulation output" : "Analysis output"}, not an observation. sha256 ${U.sha(f.sha256)}</span></figcaption></figure>`)}</div>` : ""}
       ${missing.length ? html`<p class="small faint">${missing.length} declared figure${missing.length === 1 ? "" : "s"} not in this build: ${missing.map((f) => f.file).join(", ")}.</p>` : ""}
       ${d.headline ? html`<p class="lmhead"><b>${d.headline}</b></p>` : ""}
       ${eqs.length ? html`<h4>The model, as written</h4><div class="lmeqs">${eqs.map((e) => html`<div class="eqcard">${typeof e === "string" ? DF.texSpan(e, true) : html`${e.name ? html`<h5>${e.name}</h5>` : ""}${DF.texSpan(e.latex || e.tex || "", true)}${e.note ? html`<p class="small faint">${e.note}</p>` : ""}`}</div>`)}</div>` : ""}
       ${(model.edges || []).length ? html`<details><summary><b>${model.edges.length} regulatory edges</b> <span class="faint small">each one's source, or marked assumed</span></summary><ul class="small">${model.edges.map((e) => html`<li><code>${e.from || e.source_node || "?"} → ${e.to || e.target || "?"}</code> ${e.sign ? U.pill(e.sign, e.sign === "activates" || e.sign === "+" ? "ok" : "no") : ""} ${e.note || e.description || ""} ${e.source && e.source !== "assumed" ? html`<span class="faint">[${e.source}]</span>` : U.pill("assumed", "warn")}</li>`)}</ul></details>` : ""}
       ${paramTable(model.parameters || d.parameters)}
       ${sweepTable(d)}
-      ${d.critical_domain_size ? html`<p class="lmhead"><b>Critical domain size.</b> ${DF.fmt(d.critical_domain_size.value, 3)} ${d.critical_domain_size.units || ""}${d.critical_domain_size.uncertainty ? " (± " + DF.fmt(d.critical_domain_size.uncertainty, 2) + ")" : ""} — below this the field cannot hold a complete element.</p>` : ""}
-      ${d.linear_stability ? html`<p class="small"><b>Internal control.</b> Linear stability predicts a wavelength of ${DF.fmt(d.linear_stability.predicted_wavelength, 3)}; the simulated pattern measures ${d.measured_wavelength === undefined ? "not reported" : DF.fmt(d.measured_wavelength, 3)}. A disagreement is reported, not tuned away.</p>` : ""}
+      ${d.critical_domain_size ? (() => { const c = d.critical_domain_size;
+        return html`<div class="lmcrit"><h4>Critical domain size</h4>
+          ${c.value === null || c.value === undefined
+            ? html`<p class="small"><b>Not resolved to a number by this sweep.</b> ${c.definition ? "It is defined as: " + c.definition : ""}</p>`
+            : html`<p class="lmhead"><b>${DF.fmt(c.value, 3)} ${c.units || ""}</b>${c.uncertainty ? " ± " + DF.fmt(c.uncertainty, 2) : ""}${c.axis ? html` <span class="small faint">measured on the ${c.axis}</span>` : ""}</p>`}
+          ${c.reading ? html`<p class="small">${c.reading}</p>` : ""}</div>`; })() : ""}
+      ${d.linear_stability ? (() => { const L = d.linear_stability; const m = d.measured_wavelength; const cmp = (m && m.comparison_to_linear_prediction) || {};
+        return html`<div class="lmctrl"><h4>Internal control: does the pattern have the wavelength the maths predicts?</h4>
+          <p class="small">Linear stability analysis predicts ${DF.fmt(L.predicted_wavelength, 4)} ${L.predicted_wavelength_units || ""}${L.predicted_at_F !== undefined ? " at the operating point used" : ""}. ${typeof m === "number" ? "The simulated pattern measures " + DF.fmt(m, 4) + "." : (m && m.two_d_AP_element_spacing !== undefined ? "The simulated two-dimensional pattern measures " + DF.fmt(m.two_d_AP_element_spacing, 4) + "." : "")}</p>
+          ${cmp.verdict ? html`<p class="note warn small"><b>Verdict.</b> ${cmp.verdict}</p>` : ""}
+          ${L.published_set_check ? html`<details><summary><b>Could the published parameter set be reproduced?</b> <span class="faint small">${L.published_set_check.answer || ""}</span></summary>
+            <p class="small"><b>Question.</b> ${L.published_set_check.question}</p><p class="small"><b>Scope of the search.</b> ${L.published_set_check.scope}</p>
+            ${L.published_set_check.diagnosis ? html`<p class="small"><b>Diagnosis.</b> ${L.published_set_check.diagnosis}</p>` : ""}
+            ${L.published_set_check.what_this_does_and_does_not_mean ? html`<p class="note small">${L.published_set_check.what_this_does_and_does_not_mean}</p>` : ""}</details>` : ""}
+          <details><summary class="small">Method</summary><p class="small">${L.method || ""}</p></details></div>`; })() : ""}
       ${d.control_arm ? html`<details><summary><b>Control arm</b> <span class="faint small">run first; the design sweep is only read if this passes</span></summary><pre class="small lmjson">${JSON.stringify(d.control_arm, null, 1)}</pre></details>` : ""}
       ${d.refinement_arm ? html`<details><summary><b>Refinement arm</b> <span class="faint small">a tighter solver or a finer grid; how far the answer moved</span></summary><pre class="small lmjson">${JSON.stringify(d.refinement_arm, null, 1)}</pre></details>` : ""}
       ${Object.keys(d).filter((k) => /_ablation$/.test(k)).map((k) => { const ab = d[k] || {}; const arms = ab.arms || [];
@@ -238,7 +266,8 @@
           <tbody>${d.summary_table.map((row) => html`<tr>${cols.map((k) => html`<td class="small">${cell(row[k])}</td>`)}</tr>`)}</tbody></table></div>
           <p class="small faint">An em dash means the field is not applicable or was not tested, never that it was measured as zero.</p>`;
       })() : ""}
-      ${(d.limitations || []).length ? html`<div class="lmlimits"><h4>What this study does not establish</h4><ul class="small">${d.limitations.map((x) => html`<li>${x}</li>`)}</ul></div>` : ""}
+      ${(d.limitations || []).length || (d.what_this_does_not_establish || []).length ? html`<div class="lmlimits"><h4>What this study does not establish</h4>
+        <ul class="small">${[...(d.what_this_does_not_establish || []), ...(d.limitations || [])].map((x) => html`<li>${typeof x === "string" ? x : (x.claim || x.text || JSON.stringify(x))}</li>`)}</ul></div>` : ""}
       ${sources.length ? html`<details><summary><b>${sources.length} sources</b> <span class="faint small">with read levels</span></summary><ul class="small">${sources.map((x) => html`<li>${x.cite || x.title || ""} ${x.read_level ? U.pill(x.read_level + " read", "rl") : ""}${x.pmid ? html`<br><a href="https://pubmed.ncbi.nlm.nih.gov/${String(x.pmid)}/" target="_blank" rel="noopener noreferrer">PMID ${x.pmid}</a>` : ""}${x.doi ? html` <span class="faint">doi ${x.doi}</span>` : ""}</li>`)}</ul></details>` : ""}
       <p class="small faint">${s.code ? html`Code: <code>${s.code}</code>. ` : ""}${s.data_href ? html`<a href="${s.data_href}" download>Download the full result file</a> · ` : ""}sha256 ${U.sha(s.sha256)}</p></section>`;
   }

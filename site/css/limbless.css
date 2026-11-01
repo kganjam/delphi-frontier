@@ -109,3 +109,6 @@
 .lmroute .lmdet h5 { margin: .7rem 0 .2rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; color: var(--faint); }
 .lmroute .lmevlist li { margin-bottom: .5rem; }
 .lmphen { font-size: .88rem; }
+.lmfigs video { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fffdf8; display: block; }
+.lmcrit, .lmctrl { margin: 1rem 0; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.lmcrit h4, .lmctrl h4 { margin: 0 0 .35rem; }
