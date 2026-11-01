@@ -1,0 +1,25 @@
+{
+ "protocol_sha256": "615db02e41e6bc5444692ae4d4e4b90f4f8eb2b79d0b65a9a954c3b3dd58be99",
+ "code_sha256": "2db017e93ae9b7e11aeddfbc725e50dd759f13fcd95b56202e75c46941ee0c31",
+ "python": "3.12.3",
+ "controls": {
+  "matched_pair_accepted": true,
+  "alias_danRer11_GRCz11_equal": true,
+  "swapped_replicate_refused": true,
+  "missing_replicate_unresolved": true,
+  "assembly_mismatch_refused": true,
+  "missing_assembly_refused": true,
+  "many_to_many_ambiguous": true,
+  "shared_barcode_strings_do_not_pair": true,
+  "label_reused_across_biosamples_conflict": true,
+  "wrong_organism_unresolved": true,
+  "run_complete_keeps_everything": true,
+  "byte_bound_refused_partial_kept": true,
+  "total_byte_bound_stops": true,
+  "oversized_series_refused": true,
+  "host_allowlist_enforced": true,
+  "non_accession_url_refused": true,
+  "existing_output_refused": true,
+  "unavailable_series_status": true
+ }
+}

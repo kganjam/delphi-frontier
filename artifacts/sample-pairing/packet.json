@@ -1,0 +1,71 @@
+{
+ "archive": {
+  "bytes": 8326,
+  "path": "artifacts/sample-pairing/packet.tar.gz",
+  "sha256": "0cfafcf8d4d7aadb14d3293615b48c28109a0b7ba95e73fcc2e20b9efab9c04f"
+ },
+ "contract": {
+  "COPS_OUT": "exact fresh output directory (must not exist)",
+  "hard_runtime_s": 600,
+  "max_output_bytes": 20971520,
+  "memory_bytes": 4294967296,
+  "network": "metadata only: www.ncbi.nlm.nih.gov, finite URL rule in protocol.json",
+  "numeric_threads": 1,
+  "retries": "none; no budget expansion in the runner",
+  "tasks_max": 128,
+  "workers": 1
+ },
+ "dependencies": "none (standard library only)",
+ "entry_argv": [
+  "python3",
+  "-m",
+  "engineering.sample_pairing.audit",
+  "--run",
+  "--out",
+  "$COPS_OUT"
+ ],
+ "extract": "into a NEW empty directory; run every command with that directory as cwd",
+ "members": [
+  {
+   "bytes": 0,
+   "path": "engineering/__init__.py",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "bytes": 0,
+   "path": "engineering/sample_pairing/__init__.py",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "bytes": 12848,
+   "path": "engineering/sample_pairing/audit.py",
+   "sha256": "2db017e93ae9b7e11aeddfbc725e50dd759f13fcd95b56202e75c46941ee0c31"
+  },
+  {
+   "bytes": 7015,
+   "path": "engineering/sample_pairing/controls.py",
+   "sha256": "4b6a041671c648bfbf1e16fc5b0b0c0d1ab25ac4ad1d905a170c48685c8ea3da"
+  },
+  {
+   "bytes": 4873,
+   "path": "engineering/sample_pairing/protocol.json",
+   "sha256": "615db02e41e6bc5444692ae4d4e4b90f4f8eb2b79d0b65a9a954c3b3dd58be99"
+  }
+ ],
+ "outputs": [
+  "results.json",
+  "receipt.json",
+  "raw/*.soft.txt"
+ ],
+ "preflight_argv": [
+  "python3",
+  "-m",
+  "engineering.sample_pairing.audit",
+  "--preflight"
+ ],
+ "protocol_sha256": "615db02e41e6bc5444692ae4d4e4b90f4f8eb2b79d0b65a9a954c3b3dd58be99",
+ "python": ">=3.10",
+ "results_schema": "frontier.sample-pairing.results/1",
+ "schema": "frontier.sample-pairing.packet/1",
+ "source_commit": "d17677bddfefe9d44f733228e05318d422358101"
+}
