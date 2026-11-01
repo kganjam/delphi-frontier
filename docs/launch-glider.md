@@ -150,6 +150,9 @@ Artifact: `artifacts/launch-glider/r1-dynamics.json`. Same nominal coefficients 
    - **Pectoral:** σ_max 6.1 MPa at the doubler end; in-plane root 5.4 MPa; allowable 14.3 MPa. Worst tip 3.5% of
      span; cruise tip 0.58–0.94% (limit 3%).
    - **Pelvic:** 2.7 MPa (6.7 MPa in plane).
+   - **Orientation case** (k_z = 0.5 on the allowable, a declared knockdown for stress across print layers, not
+     measured): everything still passes. The tightest margin is the pelvic in-plane root, at 6.65 MPa against
+     7.17 MPa (7%).
    - **Catch:** the bond perimeter needed is 1.2–2.0 mm, against about 68 mm available.
 
    The mass cases run up to the heaviest swept ballast plus adhesive and tape: 24.3 g (light) and 29.0 g (strong).

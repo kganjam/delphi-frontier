@@ -29,6 +29,8 @@ from . import sweep as sw
 SCHEMA = "frontier.glider.flight-model/1"
 TOLERANCE = {"mass_rel": 0.005, "cg_m": 0.5e-3}
 REVISIONS = ("artifacts/glider/r1-light", "artifacts/glider/r1-strong")
+K_Z = {"values": [1.0, 0.5], "status": "declared strength knockdown for stress across print layers (orientation case); "
+                                     "not measured for this resin or printer"}
 SHOT_NOTE = "ballast from claude-05's bay fill model (packed from the front, shot density assumed by claude-05)"
 
 
@@ -137,7 +139,9 @@ def fin_check(rec: dict, mat: dict, m_kg: float, S_paired: float) -> dict:
                     "spar_h_profile": prof, "membrane_t_m": t, "root_doubler": d, "worst": w, "cruise": cr,
                     "inplane_root": ip, "allowable_Pa": allow,
                     "pass": bool(w["sigma_max_Pa"] <= allow and ip["sigma_Pa"] <= allow
-                                 and w["small_deformation"]["valid"] and cr["tip_over_span"] <= lim)}
+                                 and w["small_deformation"]["valid"] and cr["tip_over_span"] <= lim),
+                    "stress_pass_by_k_z": {str(k): bool(max(w["sigma_max_Pa"], ip["sigma_Pa"]) <= k * allow)
+                                           for k in K_Z["values"]}}
     return {"mass_case_kg": m_kg, "loads": ld, "fins": out}
 
 
@@ -161,6 +165,7 @@ def catch_check(rec: dict, verts: np.ndarray, mat: dict, m_kg: float) -> dict:
             "body_depth_at_seat_m": dpt, "allowable_shear_Pa": tau, "bond_perimeter_needed_m": p_need,
             "bond_perimeter_estimate_m": p_have, "bearing_Pa_on_seat": bearing,
             "pass": bool(p_have >= p_need),
+            "pass_by_k_z": {str(k): bool(p_have >= p_need / k) for k in K_Z["values"]},
             "rule": "tau = F / (P t) <= 0.5 UTS / SF; mesh extent is the outer body at the seat, not the liner"}
 
 

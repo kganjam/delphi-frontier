@@ -267,6 +267,10 @@
       "bond_perimeter_needed_m": 0.0012443970857186311,
       "design_force_N": 53.50907468590114,
       "pass": true,
+      "pass_by_k_z": {
+       "0.5": true,
+       "1.0": true
+      },
       "peak_force_N": 17.836358228633713,
       "rule": "tau = F / (P t) <= 0.5 UTS / SF; mesh extent is the outer body at the seat, not the liner",
       "wall_t_m": 0.002
@@ -323,6 +327,10 @@
          ]
         },
         "spar_w_m": 0.0016,
+        "stress_pass_by_k_z": {
+         "0.5": true,
+         "1.0": true
+        },
         "worst": {
          "root_moment_N_m": 0.020109950866975285,
          "root_shear_N": 0.46519667808938503,
@@ -393,6 +401,10 @@
          ]
         },
         "spar_w_m": 0.0012,
+        "stress_pass_by_k_z": {
+         "0.5": true,
+         "1.0": true
+        },
         "worst": {
          "root_moment_N_m": 0.0033876712104462248,
          "root_shear_N": 0.1131439058264529,
@@ -437,6 +449,10 @@
       "bond_perimeter_needed_m": 0.0016921950849872146,
       "design_force_N": 72.76438865445023,
       "pass": true,
+      "pass_by_k_z": {
+       "0.5": true,
+       "1.0": true
+      },
       "peak_force_N": 24.254796218150076,
       "rule": "tau = F / (P t) <= 0.5 UTS / SF; mesh extent is the outer body at the seat, not the liner",
       "wall_t_m": 0.002
@@ -493,6 +509,10 @@
          ]
         },
         "spar_w_m": 0.0016,
+        "stress_pass_by_k_z": {
+         "0.5": true,
+         "1.0": true
+        },
         "worst": {
          "root_moment_N_m": 0.020109950866975285,
          "root_shear_N": 0.46519667808938503,
@@ -563,6 +583,10 @@
          ]
         },
         "spar_w_m": 0.0012,
+        "stress_pass_by_k_z": {
+         "0.5": true,
+         "1.0": true
+        },
         "worst": {
          "root_moment_N_m": 0.0033876712104462248,
          "root_shear_N": 0.1131439058264529,
@@ -782,6 +806,10 @@
       "bond_perimeter_needed_m": 0.0014405831420413158,
       "design_force_N": 61.94507510777659,
       "pass": true,
+      "pass_by_k_z": {
+       "0.5": true,
+       "1.0": true
+      },
       "peak_force_N": 20.64835836925886,
       "rule": "tau = F / (P t) <= 0.5 UTS / SF; mesh extent is the outer body at the seat, not the liner",
       "wall_t_m": 0.002
@@ -838,6 +866,10 @@
          ]
         },
         "spar_w_m": 0.0016,
+        "stress_pass_by_k_z": {
+         "0.5": true,
+         "1.0": true
+        },
         "worst": {
          "root_moment_N_m": 0.020109950866975285,
          "root_shear_N": 0.46519667808938503,
@@ -908,6 +940,10 @@
          ]
         },
         "spar_w_m": 0.0012,
+        "stress_pass_by_k_z": {
+         "0.5": true,
+         "1.0": true
+        },
         "worst": {
          "root_moment_N_m": 0.0033876712104462248,
          "root_shear_N": 0.1131439058264529,
@@ -952,6 +988,10 @@
       "bond_perimeter_needed_m": 0.0020212415067600445,
       "design_force_N": 86.91338479068192,
       "pass": true,
+      "pass_by_k_z": {
+       "0.5": true,
+       "1.0": true
+      },
       "peak_force_N": 28.97112826356064,
       "rule": "tau = F / (P t) <= 0.5 UTS / SF; mesh extent is the outer body at the seat, not the liner",
       "wall_t_m": 0.002
@@ -1008,6 +1048,10 @@
          ]
         },
         "spar_w_m": 0.0016,
+        "stress_pass_by_k_z": {
+         "0.5": true,
+         "1.0": true
+        },
         "worst": {
          "root_moment_N_m": 0.020109950866975285,
          "root_shear_N": 0.46519667808938503,
@@ -1078,6 +1122,10 @@
          ]
         },
         "spar_w_m": 0.0012,
+        "stress_pass_by_k_z": {
+         "0.5": true,
+         "1.0": true
+        },
         "worst": {
          "root_moment_N_m": 0.0033876712104462248,
          "root_shear_N": 0.1131439058264529,

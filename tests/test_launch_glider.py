@@ -497,3 +497,7 @@ def test_r1_small_run_flies_both_revisions():
     assert all(x["static_margin"] == pytest.approx(sw.SM_TARGET, abs=1e-6) for x in r["rows"])
     for rev in ("r1-light", "r1-strong"):
         assert r["checks"][rev]["recompute"]["status"] == "AGREES"
+        fin = r["checks"][rev]["structure"]["dry_plus_non_mesh"]["fin"]["fins"]["pectoral"]
+        sig = max(fin["worst"]["sigma_max_Pa"], fin["inplane_root"]["sigma_Pa"])
+        for k, ok in fin["stress_pass_by_k_z"].items():   # the knockdown is applied to the allowable, not the load
+            assert ok == (sig <= float(k) * fin["allowable_Pa"])
