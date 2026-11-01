@@ -1,0 +1,150 @@
+{
+ "accounting": "every parameter/IC trajectory counts as one true evaluation; a batched call is never one evaluation; initialization counts; a ledger per (target, replicate, arm) refuses to exceed budget and must end at exactly 512/512/128; no dummy trajectories are generated to fill batches. Target (true-parameter) field solves under training IC seeds are reference data and are counted separately as reference_trajectories, not as candidate evaluations.",
+ "amplitude_admissibility": "a (target, IC seed) pair is admissible only when the TRUE field's u peak-to-peak >= 0.10 absolute (the original gate A). Training pairs failing it are reported and flag their run (no replacement). A test pair failing it is excluded from test metrics and counted; a target with fewer than 8 admissible test seeds of 16 gets endpoint 'insufficient admissible test seeds' and is excluded from the support rule, shown, not repaired.",
+ "arms": {
+  "A_single_IC_matched": {
+   "K": 1,
+   "candidates_per_round": 64,
+   "role": "primary comparator: one training IC, more candidates",
+   "rounds": 8,
+   "trajectories": 512
+  },
+  "B_multi_IC_matched": {
+   "K": 4,
+   "candidates_per_round": 16,
+   "role": "primary: four training ICs per candidate, fewer candidates",
+   "rounds": 8,
+   "trajectories": 512
+  },
+  "C_single_IC_candidate_matched": {
+   "K": 1,
+   "candidates_per_round": 16,
+   "role": "SECONDARY, deliberately NOT budget matched (a quarter of the budget): same candidate count as B, to separate the candidate-count effect from the objective",
+   "rounds": 8,
+   "trajectories": 128
+  }
+ },
+ "bounds": {
+  "gpus": 1,
+  "image": "nvcr.io/nvidia/pytorch@sha256:11e9976339d08669ede155cdbc601b1df5f57772fcee772b23527efc54e05602",
+  "local_test_cap": "1 CPU, 2 GiB, 128 tasks, no full endpoint locally",
+  "max_output_mib_compressed": 48,
+  "output_size_estimate": "23040 training trajectories x 1024 B = 23.6 MB raw float64 before compression plus small JSON; estimated under 30 MB compressed, unmeasured",
+  "runtime_estimate": "UNMEASURED for this design. Basis: the original job ran 355.13 s on one H100 (phases: control 1.08, targets 6.1, search 30.6 for 768 trajectories in 5 calls, controls 24.4, sparse independent checks 293). New work: 8 training rounds of 2880 trajectories each, one test call of about 1040, sparse checks on 15 candidates x 3 configs (the original ran 18 per config). If cost scaled linearly with batch size the training would take about 360 s, tests about 16 s, sparse checks about 300 s, so under about 800 s; the GPU may do better (launch-bound) or worse (memory). That is an estimate, not a guarantee.",
+  "scientific_tree_hard_cap_s": 1800,
+  "soft_deadline_rule": "no new phase or round starts after it; an unfinished training makes the matched comparison void (reported incomplete, no claim); later phases are named as not run",
+  "soft_deadline_s": 1500,
+  "threads": "torch and numpy threads bounded to 1; one bundled allocation, all seeds and arms; no separate seed jobs, no automatic retries"
+ },
+ "controls": {
+  "batch_equivalence": "one heterogeneous-L trajectory solved alone equals the same trajectory inside a batch, max abs < 1e-10 (CPU test and in-job)",
+  "parity": "same-job CPU vs CUDA tiny solver max abs < 1e-9, float64; CUDA required; backend flags recorded AFTER they are set (the original receipt recorded them before)",
+  "positive_oracle": "true parameters evaluated under every test seed; RMS must be < 1e-12; separate from every population, never selected",
+  "source_mutation": "preflight refuses on any pinned source byte change (tested by a one-byte flip)",
+  "wrong_IC": "true parameters under test seed s versus the true field under test seed s' (s' = next seed in the manifest, cyclic); informative for a target if the median RMS over admissible pairs exceeds 0.02. If it fails for a target, the claim that test seeds discriminate IC-specific fits is blocked for that target and H1 is reported blocked for it; the threshold is not repaired.",
+  "wrong_parameter": "per target and test seed: (min(1.5*d_true,40), L_true) and (d_true, opposite L bound); informative for a target if for at least one of the two perturbations the median over admissible test seeds of RMS exceeds 0.02 (predicate max(wrong_d, wrong_L) > 0.02; at least one perturbation, not both)"
+ },
+ "design_choice_named": "The primary comparison A vs B is a compute-allocation comparison at equal true solver trajectories. A has 4x the candidates; B has 4 ICs per candidate. It is not a pure isolated loss-function effect. Arm C exists to expose the candidate-count component and is not budget matched.",
+ "fresh_test_seeds": {
+  "count": 16,
+  "manifest_schema": {
+   "fields": {
+    "count": 16,
+    "excluded": "list of intervals/values excluded: all integers < 1000000 (covers every prior target, check, training and Sobol/proposal seed and 20261101), plus the 60 training seeds, stated explicitly",
+    "generation_rule": "free text; generated independently by infra, not by this harness",
+    "generator_id": "string",
+    "protocol_sha256": "sha256 of this protocol.json bytes",
+    "seeds": "list of 16 unique integers in [2000000, 2000000000)"
+   },
+   "schema": "frontier.rd-multiic.test-seeds/1"
+  },
+  "scope": "one shared list used for all five targets",
+  "sealing": "infra independently generates and commits the exact manifest; the job receives its path and expected sha256 as argv; preflight may test only that the path exists. The job writes barrier.json (sha256 of selections.json and training_traces.json, fsynced) BEFORE opening the manifest. An early-read negative guard makes any read before the barrier raise. This is source-order sealing, not cryptographic secrecy; it is a statement about order in the code, verified by a test, not by observation of the job."
+ },
+ "hypothesis": "H1: at a matched ACTUAL budget of true solver trajectories per target per run, selecting (d, L) by an objective averaged over K=4 initial-condition seeds yields a lower error on fresh held-out IC seeds than selecting by the same search with a single training IC. Descriptive on 20 paired target-replicate cases; no significance test.",
+ "never_read": "No outcome of the original RD/DDPM holdouts is read or used. The original rd-inverse outcomes are not used to set any constant here (the optimizer constants are carried over unchanged by design, and that origin is stated).",
+ "objective": "per candidate and IC: raw RMS over both channels and all 64 cells between the candidate field and the true-parameter field under the SAME IC seed; multi-IC loss = arithmetic mean of the K per-IC RMS values; single-IC loss = its one RMS. A candidate with any nonfinite field or |field|>1000 has loss None and ranks last (frozen failure rule, unchanged).",
+ "optimizer": {
+  "blind": "proposal functions receive points and losses only; no target parameter or field",
+  "name": "batched elite Gaussian search, diagonal (the original rule, constants unchanged)",
+  "round1": "first P points of SobolEngine(2, scramble=True, seed=5000+100*r+10*i) (P=64 for A, 16 for B and C; same seed so B and C round 1 are the prefix of A round 1: paired initialization)",
+  "rounds_2_to_8": "unit-square coordinates; mean and population sd of the 4 lowest-loss evaluated points so far; sd floor 0.03; P draws ~ Normal(mean, sd) with torch.Generator seeded 6000+1000*r+100*i+10*arm_index+round (arm_index A=0,B=1,C=2); clip to [0,1]; failed candidates rank last",
+  "tuning": "none; no change after any outcome"
+ },
+ "predeclared_scope_change": "T5 is excluded because its amplitude gate failed in the original assay (u peak-to-peak 2e-6) and its wrong-IC control failed there. This is a scope change for the new hypothesis only; the original assay, its failed control and all native fields are preserved unchanged.",
+ "replication": {
+  "note": "smallest useful paired replication under one bounded job; each replicate changes training ICs, Sobol seed and proposal seeds",
+  "replicates": 4,
+  "runs": "5 targets x 4 replicates x 3 arms = 60 runs; 20 paired A-vs-B cases"
+ },
+ "retention": "all target and candidate fields (float64), all per-IC scores and losses, optimizer traces, selections with hashes, barrier receipt, test fields for selected candidates and true parameters, concentration minima and negative-cell counts for every phase (reporting only), partial and failed runs, traces_partial after every round",
+ "schema": "frontier.rd-multiic.protocol/1",
+ "scope": "Robust fitting inside one synthetic numerical model (Schnakenberg, model units). Reuses the five previously patterned targets T0-T4 as explicitly reused, preselected cases; NOT a new independent target set. Says nothing about real fish patterning, DNA, uniqueness/identifiability, or general optimizer superiority.",
+ "selection": "each run selects the lowest-loss evaluated candidate by TRAINING loss only (ties to the earlier evaluation); no test information enters selection; all selections and training-trace hashes are committed before the test seeds are read",
+ "sources": {
+  "physics": "unchanged: u_t=u_xx+(a-u+u^2 v), v_t=d v_xx+(b-u^2 v), zero-flux, Strang exact DCT diffusion + RK4 reaction, a=.15 b=.9 tau=200 N64 dt .02 float64; same continuous cosine IC ic_modal(seed,K=20,L,N,eps*|u0|,eps*|v0|)",
+  "pins": {
+   "config": {
+    "path": "engineering/rd_diffusion/config.json",
+    "sha256": "bc77ebc55010b9c8ac910c2b31868ec0dbf2d1e3785a06ec3ef1aa028ea2b210"
+   },
+   "original_design": {
+    "path": "engineering/rd_inverse/design.py",
+    "sha256": "203a83e8fe47a84d3b3dc441001b2b7fca1b27eaa8001f583055a41098d6310e",
+    "use": "solve_batch, rms, to_params, bounds, imported unmodified"
+   },
+   "original_protocol": {
+    "path": "engineering/rd_inverse/protocol.json",
+    "sha256": "8f6fee6f15856bfeae105bcb73bbeea853e8f52196bf3e59ce80cb938e8ce346",
+    "use": "target parameters T0-T4 and ic generation rule"
+   },
+   "projection": {
+    "path": "engineering/rd_numerics/audit.py",
+    "sha256": "ff8fe2498919227dc272c121be1268380af7ba9423e49d872f71e3be64e59e2c"
+   },
+   "solver": {
+    "path": "engineering/rd_diffusion/rd_ddpm.py",
+    "sha256": "25455430ef138b49e6bac151a144e338269a81ce5c2f576387f8805bbb1a400a"
+   }
+  }
+ },
+ "sparse_resolution_controls": {
+  "scope": "arms A and B selected candidates for replicate 0 plus the true parameters, five targets, the first admissible test seed per target, N64 dt .005, N128 dt .005, N256 dt .005, compared on the common 64-point grid; consistency check only, no convergence claim; runs last and is skipped (named) past the soft deadline"
+ },
+ "status": "FROZEN before any new endpoint, training trace, test field or test seed is computed or read. Additive to the original rd-inverse study (publication tip 194f11b, results tip db26ac6 lineage); nothing of that study is edited.",
+ "targets": {
+  "bounds": {
+   "L": [
+    30.0,
+    70.0
+   ],
+   "d": [
+    10.0,
+    40.0
+   ]
+  },
+  "ids": [
+   "T0",
+   "T1",
+   "T2",
+   "T3",
+   "T4"
+  ],
+  "parameters": "taken from the pinned original protocol.json (d_true, L_true); never visible to any arm except through scores"
+ },
+ "test_metrics": {
+  "also": [
+   "fraction of admissible test seeds with RMS <= 0.02 (original gate B value, reuse only)",
+   "range-normalised parameter error |d_sel-d_true|/30 and |L_sel-L_true|/40 per run, against known synthetic truth (not identifiability)",
+   "arm C reported alongside, flagged unmatched"
+  ],
+  "paired_effect": "D = E_A - E_B per (target, replicate); positive favours multi-IC. All 20 values, each test seed's RMS and every failure are reported individually, not only a mean.",
+  "primary": "for each (target, replicate, arm): E = mean over admissible test seeds of RMS(selected candidate field, true-parameter field under the same test seed), N64 dt .02 raw u,v",
+  "support_rule_H1": "descriptively supported only if D>0 in at least 15 of the 20 pairs AND the per-target median of D over replicates is >0 for at least 4 of the 5 targets (targets with insufficient admissible seeds excluded from the second count and listed) AND every control below is informative. Otherwise reported as not supported, or blocked, exactly as computed. No p-value, no mean-only claim."
+ },
+ "training_ic_seeds": {
+  "disjoint_from_prior": "all prior seeds are < 921000 (910000-910005 targets, 920000-920052 checks); training seeds are in [930000, 933404)",
+  "rule": "seed(r,i,k) = 930000 + 1000*r + 100*i + k, r=0..3 replicate, i=0..4 target index, k=0..3",
+  "single_IC_arms_use": "k=0 only (paired: the single-IC arms' one IC is the multi-IC arm's first IC)"
+ }
+}
