@@ -1,0 +1,479 @@
+{
+  "bundle_sha256": "e553e1158e77c13fa19f5a48fcbe849bdfec5cb52270a5fc226665336c0f7f49",
+  "exporting_node": "delphi-frontier",
+  "policy_version": "frontier-independent-review-0.1",
+  "records": [
+    {
+      "created_at": "2026-11-01T09:00:00+00:00",
+      "id": "validation-cycle-candidate-rejected",
+      "issuer": "validation-cycle",
+      "kind": "Claim",
+      "namespace": "delphi-frontier",
+      "payload": {
+        "assumptions": [
+          "EI is an assumed range, not measured."
+        ],
+        "context": "A statement about the pinned assembly files and the end-loaded cantilever slice, not about an organism.",
+        "limitations": [
+          "Prepared documentary records only: no DB submission, import, lease, lifecycle, acceptance or independent review.",
+          "Mechanical slice only: assumed EI, small deflection, declared point; no biological calibration.",
+          "The sequence reference is unresolved and no functional readout has been measured.",
+          "No aggregate or biological success probability exists."
+        ],
+        "origin": "derived",
+        "source": {
+          "access": "Immutable git blob read and hashed; pointers only",
+          "content_available": false,
+          "content_sha256": "7c1712aabdcad4a1090e4a9b16e894ee18ffed3e39247cc0203bfae8a18b0bfc",
+          "license": null,
+          "locator": "git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/validation-cycle/summary.json",
+          "source_version": "4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf",
+          "uri": null
+        },
+        "statement": "Under the frozen protocol (version 2) the mechanical slice passes (FEM versus the closed form; 8 of 8 negative controls are refused for their intended reasons; V1 and V2 both hold) while the growth-to-EI bridge and the sequence reference are missing, so the working-assembly claim is rejected.",
+        "title": "fish3d-v3a is rejected as a working assembly; its end-loaded mechanical slice passes at the declared point"
+      },
+      "predecessor": null,
+      "schema_version": "frontier-record-0.1",
+      "source_uri": "urn:frontier:validation-cycle:documentary",
+      "version": "6cf0e59a8167a5ff19f6b42094dc9390a1eab723cb55aceaf471c0d99480492a",
+      "visibility": "public"
+    },
+    {
+      "created_at": "2026-11-01T09:00:00+00:00",
+      "id": "validation-cycle-replay",
+      "issuer": "validation-cycle",
+      "kind": "Action",
+      "namespace": "delphi-frontier",
+      "payload": {
+        "acceptance_criteria": [
+          "Frozen protocol pins match; every required check is reported with its status; negative controls rejected for their intended reasons."
+        ],
+        "cache_key": {
+          "acceptance_policy": "frontier-independent-review-0.1",
+          "code": "d8af7d7d6172221032820ea2557afcae2b08ece8933f9be59381a4cdd3de4096",
+          "environment": "286352776587b36d595fb36d8e053f4e111e271076905b6a3685bdc4889e9627",
+          "input": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+          "model": "finmech-eb-cantilever-linear-static/1",
+          "parameters": "d0120cb682ac47a11fc2b4bb734f352e7efd9b49015660e587369d8f1547f729",
+          "scope": "documentary already-executed local validation; not consumed before the run",
+          "target": "6cf0e59a8167a5ff19f6b42094dc9390a1eab723cb55aceaf471c0d99480492a"
+        },
+        "cost_stop_bounds": "Local deterministic replay of seconds; no provider job; dollar cost not applicable.",
+        "required_capabilities": [
+          "Python, NumPy and SciPy, one CPU, no network"
+        ],
+        "target": {
+          "id": "validation-cycle-candidate-rejected",
+          "kind": "Claim",
+          "namespace": "delphi-frontier",
+          "version": "6cf0e59a8167a5ff19f6b42094dc9390a1eab723cb55aceaf471c0d99480492a"
+        },
+        "title": "Recorded replay of the validation cycle (local, deterministic); no Store lifecycle"
+      },
+      "predecessor": null,
+      "schema_version": "frontier-record-0.1",
+      "source_uri": "urn:frontier:validation-cycle:documentary",
+      "version": "407e5600dd6e8c502c6b156cbac9552c8a7b97797a3fd934e6e3b9d0bd39c4c0",
+      "visibility": "public"
+    },
+    {
+      "created_at": "2026-11-01T09:00:00+00:00",
+      "id": "validation-cycle-mechanical-evidence",
+      "issuer": "validation-cycle",
+      "kind": "Evidence",
+      "namespace": "delphi-frontier",
+      "payload": {
+        "artifacts": [
+          {
+            "availability": "referenced",
+            "byte_size": 12099,
+            "license": null,
+            "media_type": "application/json",
+            "role": "output",
+            "sha256": "f5dbc18b16f683a142a6fb09bdbcef224c7f6f11f9a724c1b9266edc24e82a70",
+            "title": "output: artifacts/validation-cycle/mechanical-evidence.json [git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/validation-cycle/mechanical-evidence.json]",
+            "uri": "urn:sha256:f5dbc18b16f683a142a6fb09bdbcef224c7f6f11f9a724c1b9266edc24e82a70"
+          },
+          {
+            "availability": "referenced",
+            "byte_size": 6388,
+            "license": null,
+            "media_type": "application/json",
+            "role": "protocol",
+            "sha256": "d0120cb682ac47a11fc2b4bb734f352e7efd9b49015660e587369d8f1547f729",
+            "title": "protocol: artifacts/validation-cycle/protocol.json [git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/validation-cycle/protocol.json]",
+            "uri": "urn:sha256:d0120cb682ac47a11fc2b4bb734f352e7efd9b49015660e587369d8f1547f729"
+          },
+          {
+            "availability": "referenced",
+            "byte_size": 36324,
+            "license": null,
+            "media_type": "application/json",
+            "role": "log",
+            "sha256": "4b5276edd3597735bd5b43b40e1b5bea04999dfbc2a0e2e35a5e34761ec6180f",
+            "title": "log: artifacts/validation-cycle/check-history.json [git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/validation-cycle/check-history.json]",
+            "uri": "urn:sha256:4b5276edd3597735bd5b43b40e1b5bea04999dfbc2a0e2e35a5e34761ec6180f"
+          }
+        ],
+        "assumptions": [
+          "Euler-Bernoulli, linear elastic, static, constant EI."
+        ],
+        "context": "End-loaded cantilever, assumed EI = 2 x the end-loaded critical value, declared P and L from the pinned receipt.",
+        "created_time": {
+          "basis": "unknown",
+          "value": null
+        },
+        "evidence_kind": "simulated",
+        "limitations": [
+          "Prepared documentary records only: no DB submission, import, lease, lifecycle, acceptance or independent review.",
+          "Mechanical slice only: assumed EI, small deflection, declared point; no biological calibration.",
+          "The sequence reference is unresolved and no functional readout has been measured.",
+          "No aggregate or biological success probability exists."
+        ],
+        "method": "Executed: FEM versus closed form with the strict validity gate; law, unit, context and domain negative controls; V1 and V2 on the saved section. Reused (not rerun): the pinned fin_mechanics receipt and analytic controls.",
+        "produced_by": {
+          "id": "validation-cycle-replay",
+          "kind": "Action",
+          "namespace": "delphi-frontier",
+          "version": "407e5600dd6e8c502c6b156cbac9552c8a7b97797a3fd934e6e3b9d0bd39c4c0"
+        },
+        "provenance": {
+          "adapter": "engineering.biodesign_compiler.validation_cycle",
+          "executed": [
+            "c-fem-vs-analytic",
+            "c-negative-controls",
+            "c-virtual-V1",
+            "c-virtual-V2"
+          ],
+          "reused": [
+            "c-reused-receipt",
+            "c-observed-allometry"
+          ],
+          "store_execution": false
+        },
+        "relation": "supports",
+        "retrieved_time": {
+          "basis": "declared",
+          "value": "2026-11-01T09:00:00+00:00"
+        },
+        "source": {
+          "access": "Immutable git blob read and hashed; pointers only",
+          "content_available": false,
+          "content_sha256": "f5dbc18b16f683a142a6fb09bdbcef224c7f6f11f9a724c1b9266edc24e82a70",
+          "license": null,
+          "locator": "git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/validation-cycle/mechanical-evidence.json",
+          "source_version": "4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf",
+          "uri": null
+        },
+        "source_dependence": {
+          "group": "shares fin_mechanics.beam with the producer receipt",
+          "independent_replication": false
+        },
+        "target": {
+          "id": "validation-cycle-candidate-rejected",
+          "kind": "Claim",
+          "namespace": "delphi-frontier",
+          "version": "6cf0e59a8167a5ff19f6b42094dc9390a1eab723cb55aceaf471c0d99480492a"
+        },
+        "uncertainty": "Numerical only; EI is assumed."
+      },
+      "predecessor": null,
+      "schema_version": "frontier-record-0.1",
+      "source_uri": "urn:frontier:validation-cycle:documentary",
+      "version": "5f42497e0bc14ad8c81324fcf08a3416610d0ec9e963295e430122f925ce9166",
+      "visibility": "public"
+    },
+    {
+      "created_at": "2026-11-01T09:00:00+00:00",
+      "id": "validation-cycle-observed-allometry-separate",
+      "issuer": "validation-cycle",
+      "kind": "Evidence",
+      "namespace": "delphi-frontier",
+      "payload": {
+        "artifacts": [
+          {
+            "availability": "referenced",
+            "byte_size": 44062,
+            "license": null,
+            "media_type": "application/json",
+            "role": "output",
+            "sha256": "75264dce2491c236840ee4008972b0244e2a21b364c5db3c78354b2daedc41dc",
+            "title": "output: artifacts/observed-allometry/run/update.json [git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/observed-allometry/run/update.json]",
+            "uri": "urn:sha256:75264dce2491c236840ee4008972b0244e2a21b364c5db3c78354b2daedc41dc"
+          }
+        ],
+        "assumptions": [
+          "As the producer states."
+        ],
+        "context": "Preserved-specimen allometry only; separate from fin mechanics and sequence-function.",
+        "created_time": {
+          "basis": "unknown",
+          "value": null
+        },
+        "evidence_kind": "predicted",
+        "limitations": [
+          "Prepared documentary records only: no DB submission, import, lease, lifecycle, acceptance or independent review.",
+          "Mechanical slice only: assumed EI, small deflection, declared point; no biological calibration.",
+          "The sequence reference is unresolved and no functional readout has been measured.",
+          "No aggregate or biological success probability exists.",
+          "Not fin mechanics evidence and not sequence-function evidence."
+        ],
+        "method": "Reused (not rerun) observed-subset allometry update: held-out error worsened.",
+        "provenance": {
+          "not_fin_validation": true,
+          "reused_receipt": {
+            "path": "artifacts/observed-allometry/run/receipt.json",
+            "sha256": "080141abc334ea52dbcbdf8c0545d67e81434d00034ff50be093b823ea8cf9c4"
+          }
+        },
+        "relation": "context_only",
+        "retrieved_time": {
+          "basis": "declared",
+          "value": "2026-11-01T09:00:00+00:00"
+        },
+        "source": {
+          "access": "Immutable git blob read and hashed; pointers only",
+          "content_available": false,
+          "content_sha256": "75264dce2491c236840ee4008972b0244e2a21b364c5db3c78354b2daedc41dc",
+          "license": null,
+          "locator": "git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/observed-allometry/run/update.json",
+          "source_version": "4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf",
+          "uri": null
+        },
+        "source_dependence": {
+          "group": "same data and code as the observed-allometry bundle",
+          "independent_replication": false
+        },
+        "target": {
+          "id": "validation-cycle-candidate-rejected",
+          "kind": "Claim",
+          "namespace": "delphi-frontier",
+          "version": "6cf0e59a8167a5ff19f6b42094dc9390a1eab723cb55aceaf471c0d99480492a"
+        },
+        "uncertainty": "Working bands; not a calibrated population confidence."
+      },
+      "predecessor": null,
+      "schema_version": "frontier-record-0.1",
+      "source_uri": "urn:frontier:validation-cycle:documentary",
+      "version": "5787dc816ecdbdf4f4bf9d1eaf3f56e99fc0db19d9eb389b706683e7d83a646d",
+      "visibility": "public"
+    },
+    {
+      "created_at": "2026-11-01T09:00:00+00:00",
+      "id": "validation-cycle-growth-to-EI-bridge",
+      "issuer": "validation-cycle",
+      "kind": "Problem",
+      "namespace": "delphi-frontier",
+      "payload": {
+        "acceptance_criteria": [
+          "A calibrated EI with unit and bounds for the stated tissue and stage, measured against the frozen readout."
+        ],
+        "approach": "measurement",
+        "completeness": "actionable",
+        "context_tags": [
+          "assumed-EI",
+          "missing-bridge"
+        ],
+        "cost_stop_bounds": "Declared assumed cost units only; no dollar cost.",
+        "data_access": "No measurement exists; a physical readout is proposed, not executed.",
+        "dependencies": [
+          {
+            "id": "validation-cycle-candidate-rejected",
+            "kind": "Claim",
+            "namespace": "delphi-frontier",
+            "version": "6cf0e59a8167a5ff19f6b42094dc9390a1eab723cb55aceaf471c0d99480492a"
+          }
+        ],
+        "downstream_uses": [
+          "I3 growth-to-EI interface",
+          "aeroelastic assumptions"
+        ],
+        "falsifiers": [
+          "The measured EI lies outside the assumed range that the slice used, or the bound is too wide to separate the candidates."
+        ],
+        "known_state": "EI is an assumed range; no specimen, calibration or species bridge exists, so the mechanical pass licenses nothing biological.",
+        "next_action": "Run the selected prospective measurement design under its stated assumptions after review.",
+        "novelty_status": "bridge gap, not a new biological discovery",
+        "problem_kind": "project_gap",
+        "question": "a calibrated EI of the candidate's rays in the stated tissue and stage, with unit and bounds; EI is an assumed range here",
+        "required_capabilities": [
+          "bench mechanical testing of fin rays (proposed)"
+        ],
+        "scales": [
+          "organ",
+          "tissue"
+        ],
+        "source": {
+          "access": "Immutable git blob read and hashed; pointers only",
+          "content_available": false,
+          "content_sha256": "4b5276edd3597735bd5b43b40e1b5bea04999dfbc2a0e2e35a5e34761ec6180f",
+          "license": null,
+          "locator": "git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/validation-cycle/check-history.json",
+          "source_version": "4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf",
+          "uri": null
+        },
+        "title": "What is the flexural rigidity EI of this candidate's rays in the stated tissue and stage?"
+      },
+      "predecessor": null,
+      "schema_version": "frontier-record-0.1",
+      "source_uri": "urn:frontier:validation-cycle:documentary",
+      "version": "c820f70e477fe7cfa50520bfc245b194733b6daa77d5041755f1a84122d45815",
+      "visibility": "public"
+    },
+    {
+      "created_at": "2026-11-01T09:00:00+00:00",
+      "id": "validation-cycle-sequence-reference",
+      "issuer": "validation-cycle",
+      "kind": "Problem",
+      "namespace": "delphi-frontier",
+      "payload": {
+        "acceptance_criteria": [
+          "An exact sequence artifact with a pinned digest and the stated matched readout in the same context."
+        ],
+        "approach": "measurement",
+        "completeness": "actionable",
+        "context_tags": [
+          "unresolved-sequence"
+        ],
+        "cost_stop_bounds": "Read-only curation first; assay only after review.",
+        "data_access": "Ledger entry only; no sequence read.",
+        "dependencies": [
+          {
+            "id": "validation-cycle-candidate-rejected",
+            "kind": "Claim",
+            "namespace": "delphi-frontier",
+            "version": "6cf0e59a8167a5ff19f6b42094dc9390a1eab723cb55aceaf471c0d99480492a"
+          }
+        ],
+        "downstream_uses": [
+          "I1 DNA-to-expression interface"
+        ],
+        "falsifiers": [
+          "The resolved sequence does not drive the readout in the stated context."
+        ],
+        "known_state": "The ledger carries the tested element only as an unresolved reference (coordinates unresolved); no sequence is claimed and none is generated.",
+        "next_action": "Resolve the reference, then request the proposed functional readout.",
+        "novelty_status": "sequence-resolution gap",
+        "problem_kind": "project_gap",
+        "question": "Context-matched reporter or endogenous expression, independently measured",
+        "required_capabilities": [
+          "sequence curation",
+          "reporter assay (proposed)"
+        ],
+        "scales": [
+          "molecular",
+          "cellular"
+        ],
+        "source": {
+          "access": "Immutable git blob read and hashed; pointers only",
+          "content_available": false,
+          "content_sha256": "b4d34d42cab74ea70900ceb12ae5d7614f4977d3408cc35392208d6aab4715b4",
+          "license": null,
+          "locator": "git:delphi-frontier@4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf:artifacts/sequence-evidence/ledger.json",
+          "source_version": "4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf",
+          "uri": null
+        },
+        "title": "Which exact sequence carries the tested element, and what functional readout would validate it?"
+      },
+      "predecessor": null,
+      "schema_version": "frontier-record-0.1",
+      "source_uri": "urn:frontier:validation-cycle:documentary",
+      "version": "3b5ca1918f36236e619d075527ad65537777c1790b71934e6a2fddd0124fa1c1",
+      "visibility": "public"
+    },
+    {
+      "created_at": "2026-11-01T09:00:00+00:00",
+      "id": "validation-cycle-next-measurement",
+      "issuer": "validation-cycle",
+      "kind": "Action",
+      "namespace": "delphi-frontier",
+      "payload": {
+        "acceptance_criteria": [
+          "Review accepts the stated priors, noise and cost assumptions before any physical work."
+        ],
+        "cache_key": {
+          "acceptance_policy": "frontier-independent-review-0.1",
+          "code": "c053d5bb563c6051c964435a8967c523b944c7b54e850623e65d7f2a47d533a9",
+          "environment": "local deterministic linear algebra",
+          "input": "1b2184b04d3210f2b35f92cfdc4f36bbe308840db3880ffe3de1d845b57b0d9f",
+          "model": "linear-gaussian-prospective-covariance",
+          "parameters": "d3540bfed6d2f4f64cb5405081a10af500cd27aeb940ae306c95af0a7b826ccf",
+          "scope": "proposal only; no response data",
+          "target": "c820f70e477fe7cfa50520bfc245b194733b6daa77d5041755f1a84122d45815"
+        },
+        "cost_stop_bounds": "Declared assumed cost units only; no lab or cloud job is submitted.",
+        "inputs": [
+          {
+            "id": "validation-cycle-candidate-rejected",
+            "kind": "Claim",
+            "namespace": "delphi-frontier",
+            "version": "6cf0e59a8167a5ff19f6b42094dc9390a1eab723cb55aceaf471c0d99480492a"
+          }
+        ],
+        "proposal": {
+          "alternatives": [
+            {
+              "description": "One direct load-scale and one deflection read",
+              "label": "mixed-load-deflection",
+              "tradeoff": "expected target-variance reduction per assumed cost 0.1705"
+            },
+            {
+              "description": "Two deflection reads at different nominal force settings",
+              "label": "deflection-only",
+              "tradeoff": "expected target-variance reduction per assumed cost 0.0635"
+            }
+          ],
+          "analysis_plan": "Exact linear-Gaussian conditioning; compare predeclared variance reduction per cost; report the cells where the selection flips.",
+          "assumptions": [
+            "priors, noise and costs are declared, not calibrated; selection is by expected target-variance reduction per assumed cost"
+          ],
+          "controls": [
+            "Repeated-force deflections share one sensitivity row and remain rank one.",
+            "An independent load-scale readout supplies the second direction."
+          ],
+          "decision_context": "Choose which readout design to propose to a lab after review.",
+          "expected_information": "Expected reduction in the variance of log stiffness per assumed cost unit.",
+          "expected_outputs": [
+            "A calibrated EI with bounds if executed later; nothing now."
+          ],
+          "intent": "experiment",
+          "limitations": [
+            "Prepared documentary records only: no DB submission, import, lease, lifecycle, acceptance or independent review.",
+            "Mechanical slice only: assumed EI, small deflection, declared point; no biological calibration.",
+            "The sequence reference is unresolved and no functional readout has been measured.",
+            "No aggregate or biological success probability exists."
+          ],
+          "method": "Prospective linear-Gaussian comparison of equal-cost readout designs for log stiffness, with a noise and cost sensitivity grid.",
+          "outcomes": [
+            {
+              "criterion": "mixed_load_deflection has the greater reduction per cost across the stated grid",
+              "decision_consequence": "Propose that design for review; no execution.",
+              "label": "selected-design"
+            }
+          ],
+          "selection_basis": "declared_utility",
+          "selection_rationale": "Highest expected target-variance reduction per assumed cost under the declared priors."
+        },
+        "required_capabilities": [
+          "bench mechanical testing of fin rays (proposed)"
+        ],
+        "target": {
+          "id": "validation-cycle-growth-to-EI-bridge",
+          "kind": "Problem",
+          "namespace": "delphi-frontier",
+          "version": "c820f70e477fe7cfa50520bfc245b194733b6daa77d5041755f1a84122d45815"
+        },
+        "title": "PROPOSED, not executed: prospective EI measurement design selected under explicit assumptions"
+      },
+      "predecessor": null,
+      "schema_version": "frontier-record-0.1",
+      "source_uri": "urn:frontier:validation-cycle:documentary",
+      "version": "ea93e4be1282df9596112b2aa646f13a74cb6bedcc56c9dca79890e3e3203593",
+      "visibility": "public"
+    }
+  ],
+  "review_claims": [],
+  "schema_version": "frontier-bundle-0.1",
+  "trust": "Digest proves integrity only; reviews require receiving-node policy."
+}

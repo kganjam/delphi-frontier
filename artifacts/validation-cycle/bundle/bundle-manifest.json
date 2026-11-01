@@ -1,0 +1,111 @@
+{
+  "bundle_sha256": "e553e1158e77c13fa19f5a48fcbe849bdfec5cb52270a5fc226665336c0f7f49",
+  "checks": [
+    {
+      "detail": "artifacts/assurance-experiments/controls.json: producer states sha256 53c1ea0dc73366e4..., blob at 4a2df219083b hashes to 53c1ea0dc73366e4...",
+      "id": "reused-pin:analytic_controls",
+      "ok": true
+    },
+    {
+      "detail": "engineering/fin_mechanics/artifacts/result.json: producer states sha256 dc93441487af7bfc..., blob at 4a2df219083b hashes to dc93441487af7bfc...",
+      "id": "reused-pin:fin_mechanics_receipt",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/observed-allometry/run/receipt.json: producer states sha256 080141abc334ea52..., blob at 4a2df219083b hashes to 080141abc334ea52...",
+      "id": "reused-pin:observed_allometry_receipt",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/observed-allometry/run/update.json: producer states sha256 75264dce2491c236..., blob at 4a2df219083b hashes to 75264dce2491c236...",
+      "id": "reused-pin:observed_allometry_update",
+      "ok": true
+    },
+    {
+      "detail": "artifacts/biodesign-compiler/assemblies/fish3d-v3a.json: producer states sha256 ebc2c69f2ed4218e..., blob at 4a2df219083b hashes to ebc2c69f2ed4218e...",
+      "id": "candidate-assembly",
+      "ok": true
+    },
+    {
+      "detail": "target -> Claim/validation-cycle-candidate-rejected@6cf0e59a8167",
+      "id": "validation-cycle-replay.target",
+      "ok": true
+    },
+    {
+      "detail": "target -> Claim/validation-cycle-candidate-rejected@6cf0e59a8167",
+      "id": "validation-cycle-mechanical-evidence.target",
+      "ok": true
+    },
+    {
+      "detail": "produced_by -> Action/validation-cycle-replay@407e5600dd6e",
+      "id": "validation-cycle-mechanical-evidence.produced_by",
+      "ok": true
+    },
+    {
+      "detail": "Evidence and the Action that produced it target the same exact Claim version",
+      "id": "validation-cycle-mechanical-evidence.produced_by_same_target",
+      "ok": true
+    },
+    {
+      "detail": "output availability=referenced license=None",
+      "id": "validation-cycle-mechanical-evidence.artifact.f5dbc18b16",
+      "ok": true
+    },
+    {
+      "detail": "protocol availability=referenced license=None",
+      "id": "validation-cycle-mechanical-evidence.artifact.d0120cb682",
+      "ok": true
+    },
+    {
+      "detail": "log availability=referenced license=None",
+      "id": "validation-cycle-mechanical-evidence.artifact.4b5276edd3",
+      "ok": true
+    },
+    {
+      "detail": "target -> Claim/validation-cycle-candidate-rejected@6cf0e59a8167",
+      "id": "validation-cycle-observed-allometry-separate.target",
+      "ok": true
+    },
+    {
+      "detail": "output availability=referenced license=None",
+      "id": "validation-cycle-observed-allometry-separate.artifact.75264dce24",
+      "ok": true
+    },
+    {
+      "detail": "dependencies -> Claim/validation-cycle-candidate-rejected@6cf0e59a8167",
+      "id": "validation-cycle-growth-to-EI-bridge.dependencies",
+      "ok": true
+    },
+    {
+      "detail": "dependencies -> Claim/validation-cycle-candidate-rejected@6cf0e59a8167",
+      "id": "validation-cycle-sequence-reference.dependencies",
+      "ok": true
+    },
+    {
+      "detail": "target -> Problem/validation-cycle-growth-to-EI-bridge@c820f70e477f",
+      "id": "validation-cycle-next-measurement.target",
+      "ok": true
+    },
+    {
+      "detail": "inputs -> Claim/validation-cycle-candidate-rejected@6cf0e59a8167",
+      "id": "validation-cycle-next-measurement.inputs",
+      "ok": true
+    }
+  ],
+  "counts": {
+    "Action": 2,
+    "Claim": 1,
+    "Evidence": 2,
+    "Problem": 2
+  },
+  "created_at": "2026-11-01T09:00:00+00:00",
+  "not_claimed": [
+    "Prepared documentary records only: no DB submission, import, lease, lifecycle, acceptance or independent review.",
+    "Mechanical slice only: assumed EI, small deflection, declared point; no biological calibration.",
+    "The sequence reference is unresolved and no functional readout has been measured.",
+    "No aggregate or biological success probability exists."
+  ],
+  "schema": "frontier.validation-cycle.bundle/1",
+  "source_commit": "4a2df219083b277fbf9a5c9cc68f39e0e6c5acaf",
+  "status": "PREPARED ONLY; no DB, import, lease, review or acceptance"
+}
