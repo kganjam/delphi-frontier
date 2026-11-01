@@ -538,9 +538,11 @@ project has now documented three times.
 
 **Where this leaves the question.** The most parsimonious reading of all the evidence — two gene trees
 under two substitution models with passing controls, a family census, and an independently annotated
-relative in the same order — is that **`kcnh2a` was lost in Beloniformes, not dropped by this draft
-assembly**. That is a stronger and more interesting statement than the one withdrawn above, and it is
-still an inference from annotation and similarity, not from a sequenced Exocoetid transcript. A tree
+relative in the same order — was that **`kcnh2a` was lost in Beloniformes, not dropped by this draft
+assembly**. §R7e tightens this further and takes some of it back again: because Takifugu's single
+`kcnh2` is *named* `kcnh2a` while medaka's is *named* `kcnh2b`, the suffixes are per-species
+annotation labels and the word "loss" is not yet earned. What is solid is that these Beloniformes
+carry **one** `kcnh2` gene and it is not the zebrafish `kcnh2a` of the `longfin` literature. A tree
 with medaka KCNH proteins as Beloniformes outgroups (`claude-zf2ff-beloniform-tree-1`) was submitted
 to test the direct prediction: the single flying-fish `kcnh2`-like locus should group with medaka
 `kcnh2b`.
@@ -554,6 +556,43 @@ not claim the paper is wrong.
 **One thing that could not be checked.** Zebrafish `kcnh2b`'s GRCz11 position: Ensembl has no
 `kcnh2b` symbol for zebrafish, so the *b*-block assignment in zebrafish is inferred from medaka's
 arrangement plus the `aoc1`/`sspo` neighbours of zebrafish `slc12a7b`, not read directly. `U`.
+
+## R7e — Beloniformes outgroups: the prediction holds, and the naming convention bites
+
+**`claude-zf2ff-beloniform-tree-1`** (`aijob-e00fx0t755je2ghg49`), CLI-read `COMPLETED`. Manifest:
+[`data/tree5/MANIFEST.md`](data/tree5/MANIFEST.md). The census tree plus 10 medaka KCNH proteins.
+
+The prediction was written into the input ledger **before** the job ran: if Beloniformes retain only
+the *b* paralog, the flying-fish `kcnh2`-like locus should group with medaka `kcnh2b`. It does, as its
+single closest relative among all 20 reference proteins:
+
+```
+(ZF_kcnh2a , (ZF_kcnh2b , (OL_kcnh2b , HSPEC_locus01)99.5/100 )97.5/99 )99.5/100
+```
+
+Medaka–zebrafish same-name paralogs pair correctly throughout (`kcnh6a` 99.3/100, `kcnh7` 99.9/100,
+`kcnh4a` 98.8/99, `kcnh1b` 99.2/76), so the medaka sequences behave and the placement can be read.
+
+**The informative part of the topology:** zebrafish `kcnh2a` and `kcnh2b` are **not** sister to each
+other. Zebrafish `kcnh2b` is closer to the two Beloniform genes than to zebrafish `kcnh2a`, which is
+what a duplication **predating** the zebrafish–Beloniformes split looks like. A cyprinid-specific
+duplication would have put the two zebrafish genes together.
+
+**Then the naming convention bit.** *Takifugu rubripes*, a non-Beloniform acanthomorph, has a single
+`kcnh2` gene that Ensembl names **`kcnh2a`** — while medaka's single gene is named **`kcnh2b`**. So
+the `a`/`b` suffixes are **per-species annotation labels, not orthology statements**. This weakens the
+symbol-absence argument of §R7d (medaka "has no `kcnh2a`" is partly a naming fact) and means the word
+**"loss" is not yet earned**.
+
+That control was therefore run rather than argued: `claude-zf2ff-outgroup-tree-1` adds the Takifugu
+protein to the same tree. If it falls with zebrafish `kcnh2a`, the `a` copy existed in acanthomorphs
+and the Beloniform lineage lost it. If it falls with the `kcnh2b`/Beloniformes clade, "loss" is the
+wrong description and the single Beloniform gene is simply *the* `kcnh2`.
+
+**Where the engineering consequence stands regardless.** Under every version of this analysis there
+is exactly **one** `kcnh2`-like gene in the flying-fish assembly, and it is not the zebrafish
+`kcnh2a` that the `longfin` literature characterises. So perturbation row P1 cannot be transferred
+gene-for-gene from zebrafish, whatever the right historical description turns out to be.
 
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
