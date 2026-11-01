@@ -228,3 +228,47 @@ scale with composition. Treat flying-fish-vs-zebrafish excess as descriptive.
 Per-motif results are secondary and Holm-corrected in `motif/motif_hits.json`;
 no individual motif claim is made here. And a PWM hit is a sequence match, **not
 binding** — nothing here shows a transcription factor occupies these sites.
+
+## 9. Where in each window the structure sits (tiling perturbation)
+
+`aijob-e00ep572741570h1f8`, `EVOTL_RC=0`, 1× H100, 54.3 s. Each 1 kb held-out
+window split into 20 tiles of 50 bp; one tile at a time replaced by a
+dinucleotide-preserving shuffle **of that tile**, everything else byte-identical,
+rescored conditioned on the window's own prompt. `delta = baseline − perturbed`,
+so positive means the intact tile's **order** carried likelihood.
+
+Gate: a sequence rebuilt through the same splice expression with the tile left
+unmodified must score identically. `identity_delta` = **0.0** exactly. All 380
+perturbations verified for identical length, identical base composition and
+byte-identity outside the tile.
+
+| | value |
+| --- | --- |
+| tiles scored / skipped | 380 / 0 |
+| mean tile delta | **+0.01063**, CI [+0.00903, +0.01224] |
+| positive tiles | **345/380 (91%)**, one-sample t=13.02, p=2.8×10⁻³² |
+| range | +0.0964 (runx2b zebrafish, 50–100 bp) to −0.0037 |
+| zebrafish / flying fish mean | +0.01359 / +0.00735 |
+
+**The decomposition adds up, which is the real check here.** Summing a window's
+20 tile deltas and comparing with that window's whole-window real-vs-shuffle
+effect from §7 gives a ratio of **1.21 (median 1.23, sd 0.36)**. So the localised
+measurements account for the aggregate effect to within about 20%, mildly
+superadditively — expected, because scrambling one tile also degrades the context
+available for predicting its neighbours, so each delta carries a little of its
+neighbours' cost and summing double-counts it. A localisation that summed to a
+small fraction of the aggregate, or to several times it, would have meant the
+tiling was measuring something else.
+
+**Structure is distributed, not a hotspot.** Per-window maximum deltas run 3–9×
+that window's mean, so there is real localisation, but no window has a single
+tile carrying its signal. Anyone hoping for one crisp 50 bp element per gene
+will not find it here.
+
+**Limits.** Each v1 tile delta rests on a **single** scramble, so it is a
+one-sample estimate and the per-tile ranking is noisy; the replicate job
+(`aijob-e00vjsseen85f1j3ac`, 5 shuffles per tile) exists to fix exactly that and
+its SDs should be read before trusting any individual tile. Several top tiles sit
+at window edges (0–50, 950–1000), which may be boundary effects rather than
+biology. And a tile Evo 2 relies on is **not** a binding site, **not** an
+enhancer, and **not** an edit worth making in a fish.

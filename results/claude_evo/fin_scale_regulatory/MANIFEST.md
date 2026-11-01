@@ -12,15 +12,19 @@
 | `aijob-e00cd0nepn7c42q9sm` | `claude-evo-finscale-a1` | COMPLETED | `EVOFS_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 965.5 s |
 | `aijob-e00pya60nwmwjd5df7` | `claude-evo-finscale-baseline-a1` | COMPLETED | `EVOBL_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 22.7 s |
 | `aijob-e00bvd85xvypgq1j6a` | `claude-evo-finscale-cond-a1` | COMPLETED | `EVOCD_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 29.8 s |
+| `aijob-e00zx1288cyng43ag5` | `claude-evo-finscale-motif-a1` | COMPLETED | `MOTIF_RC=0` | cpu-d3 2vcpu-8gb | 323.8 s |
+| `aijob-e00ep572741570h1f8` | `claude-evo-finscale-tiling-a1` | COMPLETED | `EVOTL_RC=0` | 1× NVIDIA H100 80GB HBM3, cap 9.0 | 54.3 s |
+| `aijob-e00vjsseen85f1j3ac` | `claude-evo-finscale-tiling-a2` | in flight at time of writing | — | 1× H100 | 5 shuffles/tile |
 
-The JASPAR motif scan has **no Nebius job id**: it needs no GPU and was written
-as a CPU job, but `compute.instance.non-gpu.vcpu` is saturated tenant-wide
-(limit 24; 8, 4 and 2 vCPU presets all refused with `ResourceExhausted`). Other
-teams hold that quota and nothing was cancelled to make room. It ran locally
-under the mandated `systemd-run` cap; `motif/local_run.log.gz` is its full log
-and `experiments/.../run_motif.sh` + `motif_scan_job.py.gz.b64` are the
-submittable bundle, ready if CPU frees. Its result is therefore **not** backed by
-a Nebius job receipt and is labelled local throughout.
+**The motif scan now has a Nebius receipt, and an unusually strong one.** It was
+first blocked — `compute.instance.non-gpu.vcpu` was saturated tenant-wide (limit
+24; 8, 4 and 2 vCPU all refused) and nothing was cancelled to make room — so it
+ran locally under the mandated `systemd-run` cap. CPU quota later freed and it
+was submitted as `aijob-e00zx1288cyng43ag5`. The two runs are **bit-identical**:
+**57/57 real hit counts and 57/57 shuffle hit vectors match exactly**, across
+Python 3.13.12 locally and 3.12.16 in the container, with different
+`pip freeze` hashes (`da651762f3020b56` vs `0ad8196a11c1b978`). Both are kept:
+`motif/` is the local run, `motif_nebius/` the job.
 
 Submitted by me this session. Prior work I did **not** re-run and do **not**
 claim: `aijob-e00pwp8khfdwnwm9ps` (run 1), `aijob-e00qkdb12x8zv9yckb`
@@ -81,6 +85,19 @@ Python 3.12.3, torch `2.10.0a0+b4e4ee81d3.nv25.12`, `flash_attn 2.7.4.post1`,
 | `motif/motif_hits.json` | `06cbb8d8d2919466e24aa6ebd6e9b06cfb6ccfbdd6070007522d05a1e86b56fa` |
 | `motif/manifest.json` | `6fd884dad6039939b7ae2a393ddffa46383319845362759d7342504e58a50a97` |
 | `motif/local_run.log.gz` | `f04b869cbf7fede042f2a7100da55c5c3e6895f48ec3ffb5b504049d9a1599d9` |
+| `motif_nebius/motif_hits.json` | `56cf260451396aff96247b3226184b2b9c6a0dba7304e3433acb75326c361e21` |
+| `motif_nebius/manifest.json` | `bca373613dafa3f326f0256f45cc27cb161dfead0f8424c313a2a3ae4a30610a` |
+| `motif_nebius/job_log_aijob-e00zx1288cyng43ag5.log.gz` | `0c7e30ed8158ceb17451b4d9e5d6eb79e224f4e016fa8dcc32bed4bb8a8ff35b` |
+| `tiling_v1/tile_deltas.json` | `e39d386baa13e8e4178603c9ba2d5000f1f921083a2f5aeabf3eca66b87098f0` |
+| `tiling_v1/manifest.json` | `477734361f09a924aae2036ad3e3ee385bf146d1abb7229d067331702bb77ccc` |
+| `tiling_v1/scoring_self_check.json` | `0ec454cb7cb06eee7e76371065f10f3ca597ad2ef249fa8a110d2696b6fa8229` |
+| `tiling_v1/job_log_aijob-e00ep572741570h1f8.log.gz` | `f756c437e749f80c98b73840bdf969b0ddb9384e408f8c314fee788129df5474` |
+
+**Script provenance for the tiling job.** `evo2_tiling_job.py` in the repo is now
+**v2** (sha256 `feb6aefddd3b97eb…`, 5 shuffles per tile). The v1 job printed
+`019ae6166d67f8c1…` inside the container, which matches the version committed at
+`b4cdadd` exactly — so v1's code is recoverable from git history rather than
+merely described.
 
 The two `scoring_self_check.json` files are the same file by hash because both
 jobs produced bit-identical self-checks.
@@ -94,9 +111,19 @@ jobs: `iid_random` **−1.3996587991714478**, `poly_C` −0.0192153826,
 bit-identical to each other **and** to the earlier bioservices `score-a2` value
 of −1.3997, across three independently submitted jobs.
 
-**Determinism across jobs.** The 19 real held-out windows were scored
-independently in both of my jobs: **19/19 bit-identical, max |difference|
-exactly 0.0**.
+**Determinism across jobs, now four independent submissions.** The 19 real
+held-out windows were scored in both scoring jobs: **19/19 bit-identical, max
+|difference| exactly 0.0**. The conditional baselines agree with the tiling
+job's baselines **19/19 bit-identical** as well, and the `iid_random` self-check
+is identical to four decimals across every job including the earlier bioservices
+`score-a2`.
+
+**Identity-perturbation gate (tiling).** The tiling job re-scores a sequence
+rebuilt through the *same* splice expression the real perturbation uses, with
+the tile left unmodified. Required exact no-op; measured `identity_delta` =
+**0.0**. Every perturbed sequence was additionally verified for identical
+length, identical base composition and byte-identity outside the tile, in-job
+and again on CPU for all 380 tiles before submission.
 
 **Hash chain.** 19/19 scored held-out sequences hash to the frozen input set;
 the input set is internally self-consistent 19/19 on both the `prompt_sha256`

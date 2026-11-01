@@ -6,5 +6,5 @@ base64 -d /work/input_set.json.gz.b64     | gunzip > /work/input_set.json || exi
 sha256sum /work/evo2_tiling_job.py /work/input_set.json
 pip install -q --no-deps evo2 vtx || exit 1
 pip install -q biopython huggingface_hub || exit 1
-python3 /work/evo2_tiling_job.py --input-set /work/input_set.json --out-dir /work/out --model evo2_7b --tile-bp 50 --budget-seconds 2400
+python3 /work/evo2_tiling_job.py --input-set /work/input_set.json --out-dir /work/out --model evo2_7b --tile-bp 50 --shuffles-per-tile 5 --budget-seconds 2700
 echo "EVOTL_RC=$?"

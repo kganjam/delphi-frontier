@@ -34,6 +34,7 @@ import hashlib
 import json
 import os
 import random
+import statistics as st
 import subprocess
 import sys
 import time
@@ -122,6 +123,10 @@ def main() -> int:
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--model", default="evo2_7b")
     ap.add_argument("--tile-bp", type=int, default=TILE_BP)
+    ap.add_argument("--shuffles-per-tile", type=int, default=1,
+                    help="replicates per tile; >1 averages over independent "
+                         "scrambles, because a single scramble makes each tile "
+                         "delta a one-sample estimate and the profile noisy")
     ap.add_argument("--budget-seconds", type=float, default=2400.0)
     args = ap.parse_args()
     started = time.time()
@@ -207,23 +212,35 @@ def main() -> int:
         for i in range(n_tiles):
             a, b = i * args.tile_bp, (i + 1) * args.tile_bp
             tile = h[a:b]
-            try:
-                scrambled = dinucleotide_shuffle(tile, rng)
-            except RuntimeError:
-                # A short tile can have no Eulerian path; record and skip rather
-                # than substituting a weaker control silently.
+            scores, ndiffs, failed = [], [], 0
+            for _rep in range(args.shuffles_per_tile):
+                try:
+                    scrambled = dinucleotide_shuffle(tile, rng)
+                except RuntimeError:
+                    failed += 1
+                    continue
+                mut = h[:a] + scrambled + h[b:]
+                if len(mut) != len(h) or comp(mut) != comp(h):
+                    raise RuntimeError(f"perturbation changed length or composition at tile {i}")
+                if mut[:a] != h[:a] or mut[b:] != h[b:]:
+                    raise RuntimeError(f"perturbation changed sequence outside tile {i}")
+                ndiffs.append(sum(1 for x, y in zip(mut, h) if x != y))
+                scores.append(cond(p, mut))
+            if not scores:
+                # No Eulerian path for this tile in any replicate. Recorded and
+                # skipped rather than silently substituting a weaker control.
                 tiles.append({"tile": i, "start": a, "end": b, "skipped":
-                              "no dinucleotide-preserving shuffle for this tile"})
+                              "no dinucleotide-preserving shuffle for this tile",
+                              "failed_replicates": failed})
                 continue
-            mut = h[:a] + scrambled + h[b:]
-            if len(mut) != len(h) or comp(mut) != comp(h):
-                raise RuntimeError(f"perturbation changed length or composition at tile {i}")
-            n_diff = sum(1 for x, y in zip(mut, h) if x != y)
-            score = cond(p, mut)
+            mean_score = sum(scores) / len(scores)
             tiles.append({"tile": i, "start": a, "end": b,
-                          "n_positions_changed": n_diff,
-                          "perturbed_cond_logprob": score,
-                          "delta_vs_baseline": base - score})
+                          "n_replicates": len(scores), "failed_replicates": failed,
+                          "n_positions_changed_mean": round(sum(ndiffs) / len(ndiffs), 1),
+                          "perturbed_cond_logprob_mean": mean_score,
+                          "perturbed_cond_logprob_all": scores,
+                          "delta_vs_baseline": base - mean_score,
+                          "delta_sd": (st.stdev(scores) if len(scores) > 1 else None)})
         rows.append({"target": t["key"], "species": t["species"], "symbol": t["symbol"],
                      "region": t["region"], "held_out_sha256": t["held_out_sha256"],
                      "baseline_cond_logprob": base, "tile_bp": args.tile_bp,
@@ -235,8 +252,9 @@ def main() -> int:
             log(f"{t['key']}: base {base:.4f}, {len(done)} tiles, "
                 f"max delta {top['delta_vs_baseline']:+.4f} at {top['start']}-{top['end']}")
     json.dump({
-        "job": "fin-scale-evo2-tiling-perturbation/v1", "model": args.model,
+        "job": "fin-scale-evo2-tiling-perturbation/v2", "model": args.model,
         "precision": "bfloat16", "tile_bp": args.tile_bp, "seed": SEED,
+        "shuffles_per_tile": args.shuffles_per_tile,
         "question": "which tiles of each window does Evo 2's likelihood depend on?",
         "method": "replace one tile with a dinucleotide-preserving shuffle OF THAT "
                   "TILE, leave the rest byte-identical, rescore conditioned on the "

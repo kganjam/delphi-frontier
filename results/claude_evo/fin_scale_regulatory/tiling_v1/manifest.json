@@ -1,0 +1,47 @@
+{
+  "job": "fin-scale-evo2-tiling-perturbation/v1",
+  "model": "evo2_7b",
+  "precision": "bfloat16",
+  "tile_bp": 50,
+  "seed": 0,
+  "question": "which tiles of each window does Evo 2's likelihood depend on?",
+  "method": "replace one tile with a dinucleotide-preserving shuffle OF THAT TILE, leave the rest byte-identical, rescore conditioned on the window's own 1 kb prompt; delta = baseline - perturbed",
+  "outcome_kind": "computed likelihood sensitivity; NOT binding, NOT function, NOT an edit recommendation",
+  "controls": "identity perturbation must be an exact no-op; every perturbed sequence verified for identical length and identical base composition before scoring",
+  "self_check": {
+    "iid_random": -1.3996587991714478,
+    "expected_about": -1.3863,
+    "scoring_path_sane": true,
+    "identity_baseline": -1.2123793363571167,
+    "identity_reconstructed": -1.2123793363571167,
+    "identity_delta": 0.0,
+    "identity_is_exact_noop": true
+  },
+  "inputs": {
+    "input_set_id": "fin-scale-regulatory-2kb/v1",
+    "n_targets": 19
+  },
+  "software": {
+    "python": "3.12.3",
+    "torch": "2.10.0a0+b4e4ee81d3.nv25.12",
+    "evo2": "present",
+    "transformer_engine": "2.10.0+769ed778",
+    "flash_attn": "2.7.4.post1",
+    "vortex": "present",
+    "pip_freeze_sha256": "f3487791bb834b0a43a3ed26f48500d70c83a913444e4e6683c26a052c8ea44c"
+  },
+  "gpu": {
+    "count": 1,
+    "name": "NVIDIA H100 80GB HBM3",
+    "capability": [
+      9,
+      0
+    ],
+    "total_memory_gb": 85.0
+  },
+  "runtime": {
+    "load_seconds": 13.6,
+    "total_seconds": 54.3,
+    "n_windows": 19
+  }
+}
