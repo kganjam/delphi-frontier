@@ -1,0 +1,17 @@
+{
+ "name": "claude-neuro-j3-m5-mcell-a1",
+ "platform": "gpu-h100-sxm",
+ "preset": "1gpu-16vcpu-200gb",
+ "timeout": "1h",
+ "disk": "80Gi",
+ "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+ "pip": "scipy",
+ "question": "Which looming encoder (Preuss kappa, LGMD eta, pure angle) with feedforward inhibition into a LIF Mauthner cell reproduces the measured looming-escape signatures (p 0.70-0.91; angle invariance; latency rising with l/v), and what response angle/latency does it predict for M1?",
+ "gpu_justification": "3 encoders x 16384 parameter sets x 7 l/v x 32 noisy trials = 11M neuron-trials, up to 11k steps at 0.5 ms",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_mcell --out /work/out --sets 16384 --trials 32 --seed 20261101",
+ "files": {
+  "engineering/__init__.py": "engineering/__init__.py",
+  "engineering/neuro/__init__.py": "engineering/neuro/__init__.py",
+  "engineering/neuro/m5_mcell.py": "engineering/neuro/m5_mcell.py"
+ }
+}
