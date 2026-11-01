@@ -1,0 +1,290 @@
+{
+ "schema": "f002-assay-audit/v1",
+ "created_utc": "2026-11-01T17:05:00Z",
+ "author": "claude (fseries worktree), unreviewed",
+ "epistemic_status": "Literature audit plus arithmetic on published values. No new measurement, no model run, no GPU job.",
+ "chosen_system": {
+  "name": "Zebrafish blastula BMP2b / Chordin extracellular transport (dorsal-ventral patterning)",
+  "primary_source": {
+   "citation": "Pomreinke AP, Soh GH, Rogers KW, Bergmann JK, Blassle AJ, Mueller P. Dynamics of BMP signaling and distribution during zebrafish dorsal-ventral patterning. eLife 2017;6:e25861",
+   "doi": "10.7554/eLife.25861",
+   "pmid": "28857744",
+   "pmcid": "PMC5658070",
+   "licence": "CC BY 4.0 (stated in the article XML)",
+   "retrieved": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5658070/fullTextXML, HTTP 200, 2026-11-01T16:44:46Z",
+   "read_status": "full text (main text, figure legends, methods) read as XML-to-text; figure images and source-data files not read"
+  },
+  "same_lab_same_assay_comparator": {
+   "citation": "Mueller P, Rogers KW, Jordan BM, Lee JS, Robson D, Ramanathan S, Schier AF. Differential diffusivity of Nodal and Lefty underlies a reaction-diffusion patterning system. Science 2012;336:721-724",
+   "pmid": "22499809",
+   "pmcid": "PMC3525670 (NIH author manuscript)",
+   "retrieved": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3525670/, HTTP 200, 2026-11-01T16:43Z",
+   "read_status": "main text and figure legends of the author manuscript; supplementary Texts S1-S7 and figs S1-S26 not read"
+  },
+  "why_chosen": "Only system found in this session where effective diffusivity (FRAP), free/local diffusivity (FCS), extracellular clearance (FDAP) and a measured protein distribution from a defined source were all reported in one open-access paper, same organism, same stage window, same fusion-protein family. It is NOT a fin system.",
+  "rejected_or_unread": [
+   {
+    "system": "Zebrafish Fgf8 (Yu et al. 2009 Nature 461:533, PMID 19741606)",
+    "status": "abstract only (Europe PMC: not open access; nature.com redirected to login). Values ~50-80 um2/s FCS and ~2 um2/s FRAP are taken only from the secondary review Mueller et al. 2013 Development 140:1621 (PMC3621481, read 2026-11-01T16:44:11Z) and are not used in calculations."
+   },
+   {
+    "system": "Drosophila wing disc Dpp (Kicheva 2007; Zhou 2012)",
+    "status": "not read; different phylum and tissue, not considered a closer match"
+   },
+   {
+    "system": "Fin-specific (pectoral fin bud, fin fold, regenerating fin) Shh/Fgf/BMP D_eff, k or lambda",
+    "status": "none found in one web search (2026-11-01, query recorded in F002.md); search not exhaustive. A 2025 bioRxiv 'Measuring morphogen transport over multiple spatial scales in live zebrafish embryos' (10.1101/2025.02.06.636788) was seen in results and not read."
+   }
+  ]
+ },
+ "project_molecular_predictions": {
+  "note": "These are the project's own structure predictions. All are computed, none observed. None reports Kd, kon/koff, turnover or diffusivity.",
+  "openfold2_dummy_msa_monomers": [
+   {
+    "protein": "Fgf10a",
+    "uniprot": "Q8AY90",
+    "length_aa": 201,
+    "mean_plddt": 48.77,
+    "n_res_plddt_ge_70": 5
+   },
+   {
+    "protein": "Hoxd13a",
+    "uniprot": "Q90472",
+    "length_aa": 256,
+    "mean_plddt": 42.55,
+    "n_res_plddt_ge_70": 10
+   },
+   {
+    "protein": "Shha (full precursor)",
+    "uniprot": "Q92008",
+    "length_aa": 418,
+    "mean_plddt": 41.22,
+    "n_res_plddt_ge_70": 7
+   },
+   {
+    "protein": "Kcnk5b",
+    "uniprot": "Q6PFU3",
+    "length_aa": 448,
+    "mean_plddt": 56.1,
+    "n_res_plddt_ge_70": 66
+   }
+  ],
+  "openfold2_source": "branch claude/bioservices-20261101 @ 5c07a938, results/bioservices/claude-20261101/openfold2/{fgf10a_Q8AY90,hoxd13a_Q90472,shha_Q92008,kcnk5b_Q6PFU3}_receipt.json, field metrics.mean_plddt and metrics.n_plddt_ge_70; summary line in results/bioservices/claude-20261101/README.md line 14",
+  "kcnj13_openfold2": {
+   "protein": "Kcnj13 (Kir7.1)",
+   "uniprot": "Q0KIZ7",
+   "length_aa": 362,
+   "mean_plddt": 52.86,
+   "fraction_plddt_ge_70": 0.182,
+   "ptm": 0.273,
+   "source": "this branch: artifacts/bio-services/kcnj13_openfold2/metrics.json (provider_metrics.plddt)"
+  },
+  "later_msa_runs": {
+   "summary": "With PDB70 MSAs, Boltz-2 ShhN (Shha 24-197) mean pLDDT 85.1; Fgf10a core + Fgfr2b D2-D3 chain pLDDT 86.7/85.1 but the non-cognate Fgfr2c negative control scored higher (confidence 0.83-0.84 vs 0.77); ShhN closest PDB70 template 95 % identity over 100 % coverage (6N7G_C). The authors of that run conclude the complex says nothing about isoform specificity and ShhN confidence is mostly template recall.",
+   "source": "branch claude/mol-sims-20261101 @ f9e79f85 (commit c97ff8d4 and later), results/mol-sims/claude-20261101/README.md, sections 'Structure predictions on the Nebius Scientific AI MCP' and 'How much of this is template recall?'; per-model numbers in results/mol-sims/claude-20261101/structures/summary.json (not re-parsed here)"
+  },
+  "gpu_decision_record": "/data/artifacts/delphi-evolve-rethink/messages/claude-mol-status.md: 'No Nebius GPU jobs started (none justified: pLDDT 41-56, longest >=70 run <=17 aa)'",
+  "claim_ledger_row": "delphi-evolve @ 6c968101, planning/rethink/CLAIM-LEDGER.md line 38, row P06 'BioNeMo-to-effective-diffusion bridge': needs calibrated hydrodynamic/transport relation, binding/turnover measurements and matched context; forbidden: 'Rg=hydrodynamic radius; structure gives Kd or tissue diffusivity'"
+ },
+ "audit_table": [
+  {
+   "quantity": "Effective (tissue-scale) diffusivity D_eff",
+   "measured": true,
+   "assay": "FRAP of uniformly expressed fusion protein, fitted with a production-diffusion-clearance model in 3D embryo-like geometry; clearance constrained by FDAP k1",
+   "values": {
+    "BMP2b-Dendra2": "2.0 +/- 0.4 um2/s",
+    "BMP2b-sfGFP": "2.6 +/- 0.7 um2/s",
+    "Chordin-Dendra2": "6.0 +/- 0.7 um2/s",
+    "Chordin-sfGFP": "7.3 +/- 3.9 um2/s",
+    "Sizzled-sfGFP": "9.7 +/- 3.2 um2/s (n=12)"
+   },
+   "uncertainty": "standard error (Fig. 4E legend); n BMP2b-Dendra2 = 6, BMP2b-sfGFP = 8",
+   "quote": "We found effective diffusion coefficients of 2-3 um2/s for BMPs (BMP2b-Dendra2: 2.0 +/- 0.4 um2/s; BMP2b-sfGFP: 2.6 +/- 0.7 um2/s ...) and of 6-7 um2/s for Chordin (Chordin-Dendra2: 6.0 +/- 0.7 um2/s; Chordin-sfGFP: 7.3 +/- 3.9 um2/s)",
+   "organism_stage_tissue": "zebrafish, blastula stages, whole blastoderm, mRNA-overexpressed fusion proteins",
+   "source": "Pomreinke 2017, Results (FRAP paragraph), Fig. 4C-E",
+   "caveats": "Model-dependent: D is a fit parameter of an SDD model with k1 fixed, so D_eff and k1 are not independent observations. Overexpressed tagged protein, not endogenous.",
+   "fin_match": "No. Fin bud/fin fold is a later-stage, ECM-rich (actinotrichia), bilayered epidermis-over-mesenchyme tissue; tortuosity, HSPG content and receptor density differ."
+  },
+  {
+   "quantity": "Free / local diffusivity D_free",
+   "measured": true,
+   "assay": "FCS in small extracellular volumes away from cell surfaces, calibrated against Alexa 488 (435 um2/s)",
+   "values": {
+    "BMP2b-sfGFP": "46 +/- 1 um2/s",
+    "Chordin-sfGFP": "59 +/- 2 um2/s"
+   },
+   "uncertainty": "reported +/-; alternative free fits within ~20-30 %",
+   "quote": "BMP2b-sfGFP (free diffusion coefficient: D f = 46 +/- 1 um2/s) and Chordin-sfGFP (free diffusion coefficient: D f = 59 +/- 2 um2/s)",
+   "organism_stage_tissue": "zebrafish blastula, extracellular space",
+   "source": "Pomreinke 2017, Results, Fig. 4F; Methods FCS",
+   "caveats": "D_free/D_eff = 23 (BMP2b) and 9.8 (Chordin). The gap combines tortuosity / extracellular volume fraction (affects inert tracers too: secreted GFP FCS ~90 vs FRAP ~40 um2/s, Mueller 2013 review, secondary) and ligand-specific binding/uptake. Neither is predicted by a structure.",
+   "fin_match": "No (stage and tissue)."
+  },
+  {
+   "quantity": "Extracellular clearance rate constant k1",
+   "measured": true,
+   "assay": "FDAP (fluorescence decrease after Dendra2 photoconversion), single-exponential fit",
+   "values": {
+    "BMP2b-Dendra2": "(8.9 +/- 0.1) x 10^-5 /s, half-life 130 min",
+    "Chordin-Dendra2": "(9.6 +/- 0.3) x 10^-5 /s, half-life 120 min"
+   },
+   "uncertainty": "reported +/-; n BMP2b = 22, Chordin = 6 (Fig. 4A+B legend; error bars SD)",
+   "quote": "For BMP2b-Dendra2, we found a clearance rate constant of k 1 = (8.9 +/- 0.1) x 10^-5 /s (half-life 130 min ...). For Chordin-Dendra2, we measured a similar clearance rate constant of k 1 = (9.6 +/- 0.3) x 10^-5 /s (half-life 120 min",
+   "organism_stage_tissue": "zebrafish blastula, extracellular signal",
+   "source": "Pomreinke 2017, Results (FDAP paragraph), Fig. 4A+B",
+   "caveats": "Measured on Dendra2 fusions only; sfGFP gradients use the Dendra2 k1. Lumps receptor uptake, degradation and any immobilisation.",
+   "fin_match": "No."
+  },
+  {
+   "quantity": "Measured gradient extent from a defined source",
+   "measured": true,
+   "assay": "light-sheet imaging of sfGFP gradients from ~50-75 transplanted cells (sphere stage, 5-5.5 hpf hosts)",
+   "values": {
+    "BMP2b-sfGFP": "50 % of maximal at 30-40 um from source boundary, 60 min post-transplant (n=8)",
+    "Chordin-sfGFP": "50 % at 50-60 um, 60 min post-transplant (n=5)"
+   },
+   "uncertainty": "range as quoted; per-embryo profiles are in Fig. 3H+I (image, not digitised here)",
+   "quote": "60 min post-transplantation the BMP2b-sfGFP signal drops to 50% of the maximal concentration at a distance of 30-40 um, whereas the gradient formed by Chordin-sfGFP reaches 50% of its maximal concentration at a distance of 50-60 um from the source boundary",
+   "organism_stage_tissue": "zebrafish sphere/dome stage blastoderm",
+   "source": "Pomreinke 2017, Results, Fig. 3F-I",
+   "caveats": "Transient, not steady state (k1*t = 0.32 at 60 min), so lambda = sqrt(D/k) does not apply directly. This is the natural held-out observable. Fluorescent-protein maturation time and receptor saturation near the source are not accounted for in sdd_check.py.",
+   "fin_match": "No."
+  },
+  {
+   "quantity": "Endogenous signaling readout",
+   "measured": true,
+   "assay": "pSmad1/5/9 immunostaining, light-sheet 3D, sphere to 60 % epiboly; wild type and chordin-/-",
+   "values": "image data; not quantified here",
+   "source": "Pomreinke 2017 Fig. 1-2, Videos 1-6",
+   "fin_match": "No."
+  },
+  {
+   "quantity": "Ligand-inhibitor binding (BMP-Chordin) Kd, kon, koff",
+   "measured": false,
+   "assay": "none in the paper; the model uses an assumed association constant kappa (e.g. 400 x 10^3 m3/(mol s) in Model 1, 4 x 10^3 in Model 2)",
+   "source": "Pomreinke 2017 Methods, model parameter lists",
+   "caveats": "kappa values are model parameters, not measurements. Receptor Kd and receptor density also not measured.",
+   "fin_match": "n/a"
+  },
+  {
+   "quantity": "Production rate / source flux",
+   "measured": false,
+   "assay": "assumed in models (e.g. Chordin flux 5 x 10^-14 mol/(m2 s); rho_BMP(x) = 0.57e-9 e^-5000x mol/m3)",
+   "source": "Pomreinke 2017 Methods",
+   "fin_match": "n/a"
+  },
+  {
+   "quantity": "Source geometry (clone radius / shape)",
+   "measured": "partly",
+   "assay": "cell count reported ('approximately 50-75 cells'); clone radius not stated in the text read",
+   "source": "Pomreinke 2017 Methods (Transplantations)",
+   "caveats": "sdd_check.py shows the 60-min x50 depends strongly on this unreported radius.",
+   "fin_match": "n/a"
+  },
+  {
+   "quantity": "Tissue geometry / extracellular volume fraction / tortuosity",
+   "measured": false,
+   "assay": "embryo modelled as 300 um blastoderm (1D models) or 3D embryo-like geometry from Mueller 2012; no ECS volume fraction reported in text read",
+   "source": "Pomreinke 2017 Methods; Mueller 2013 review (PMC3621481) discusses secreted-GFP FCS ~90 vs FRAP ~40 um2/s as tortuosity evidence (secondary)",
+   "fin_match": "No fin measurement known to us."
+  },
+  {
+   "quantity": "Temperature during FRAP/FDAP/FCS imaging",
+   "measured": "not stated in text read",
+   "assay": "embryos incubated at 28 C before transplantation; imaging temperature not found",
+   "source": "Pomreinke 2017 Methods",
+   "fin_match": "Fin experiments typically 28 C larvae / 26-33 C regenerates (not checked)."
+  },
+  {
+   "quantity": "Stage",
+   "measured": true,
+   "assay": "staging",
+   "values": "blastula; transplants at sphere stage 5-5.5 hpf; gradients imaged at dome",
+   "source": "Pomreinke 2017 Fig. 3 legend and Videos 7-8",
+   "fin_match": "No. Pectoral fin bud appears ~24-36 hpf (project s1 run cites 24-36 hpf; not re-checked)."
+  },
+  {
+   "quantity": "Comparator: Nodal/Lefty D_eff and k1 (same assays)",
+   "measured": true,
+   "assay": "FRAP (GFP fusions) and FDAP (Dendra2 fusions), blastula",
+   "values": {
+    "Cyclops": "D 0.7 +/- 0.2 um2/s; k1 (1.22 +/- 0.13) x 10^-4 /s",
+    "Squint": "D 3.2 +/- 0.5; k1 (1.00 +/- 0.06) x 10^-4",
+    "Lefty1": "D 11.1 +/- 0.6; k1 (0.53 +/- 0.05) x 10^-4",
+    "Lefty2": "D 18.9 +/- 3.0; k1 (0.69 +/- 0.07) x 10^-4"
+   },
+   "quote": "We obtained effective diffusion coefficients of 0.7 +/- 0.2 um2/s for Cyclops-GFP, 3.2 +/- 0.5 um2/s for Squint-GFP, 11.1 +/- 0.6 um2/s for Lefty1-GFP, and 18.9 +/- 3.0 um2/s for Lefty2-GFP",
+   "source": "Mueller 2012 (PMC3525670), Results and Fig. 3-4",
+   "caveats": "Gradient profiles shown only as normalised plots (Fig. 2); no numeric gradient length in main text. Authors state simulations with measured D and k1 'yield distribution profiles similar to' measured ones (fig. S26, not read).",
+   "fin_match": "No."
+  }
+ ],
+ "what_structure_prediction_can_supply": {
+  "can": [
+   "a 3D coordinate hypothesis for a monomer or complex, with model-internal confidence (pLDDT, PAE, pTM/ipTM)",
+   "a hydrodynamic radius estimate via a separate hydrodynamics calculation (e.g. HYDROPRO) only if the structure is confident and glycosylation/tags are modelled; this bounds D_free in water, not D_eff in tissue",
+   "candidate interface residues to design binding mutants for a wet-lab test"
+  ],
+  "cannot": [
+   "Kd, kon, koff",
+   "clearance/turnover k1",
+   "D_eff in tissue (set by tortuosity, ECS fraction, binding to HSPG/receptors)",
+   "production rate",
+   "gradient length"
+  ],
+  "binding_models": "Docking/complex prediction (Boltz-2, AF3-type) or a ddG predictor gives a geometry or a relative score. It becomes evidence for Kd only after calibration against measured Kd for the same protein family (e.g. SPR/BLI of BMP-Chordin or FGF-FGFR) with a pre-set error bound and a negative control. The project's own Fgfr2c negative control already failed that test (scored above the cognate pair)."
+ },
+ "bionemo_decision": {
+  "justified_now": false,
+  "reason": "The measured gap in the chosen system is D_free/D_eff ~10-23 and depends on tissue hindrance and the source geometry, neither of which a structure model computes. For the fin proteins the project predicted, the dummy-MSA OpenFold2 monomers are low confidence (mean pLDDT 41-56) and the MSA-based improvements are largely template recall. No measured fin transport quantity exists to compare against.",
+  "not_justified_until": [
+   "a matched measurement exists (fin-stage FRAP/FDAP/FCS for the same ligand, or Kd by SPR/BLI for the same pair)",
+   "a pre-registered mapping from model output to a measurable quantity (e.g. predicted Rh -> D_free compared with FCS D_free; tolerance set in advance)",
+   "a negative control that the model passes"
+  ]
+ },
+ "held_out_calibration_design": {
+  "system": "zebrafish blastula BMP2b-sfGFP and Chordin-sfGFP clones (Pomreinke 2017)",
+  "model": "source-diffusion-clearance (SDD) in 3D embryo geometry, production in the clone, uniform D and k1",
+  "fixed_inputs": [
+   "k1 from FDAP",
+   "D_eff from FRAP",
+   "clone geometry (needs per-embryo measurement or the authors' mesh)",
+   "production rate (free scale; profiles are normalised)"
+  ],
+  "held_out": "gradient profile shape at 60-75 min post-transplant (Fig. 3H+I), never used for fitting",
+  "metric": "x50 (distance to 50 % of maximum) and RMS difference of the normalised profile",
+  "tolerance": "pre-set: predicted x50 within the reported band widened by x1.5; profile RMS within the between-embryo SE",
+  "documented_insufficiency_if": [
+   "predicted x50 changes by more than the tolerance when the unmeasured clone radius is varied over a plausible range (this is what sdd_check.py shows for a 1D and a spherical surrogate)",
+   "the per-embryo profiles cannot be obtained (figure images only)",
+   "the gradient-fit D and FRAP D_eff disagree beyond their SE (authors report 4 um2/s from gradient fits vs FRAP 2.0 +/- 0.4 (Dendra2, ~5 SE apart) and 2.6 +/- 0.7 (sfGFP, ~2 SE apart); no SE given for the gradient-fit value, so this is not a demonstrated inconsistency)"
+  ],
+  "status": "designed, not executed with the 3D model",
+  "surrogate_result": "1D planar Dirichlet surrogate fails the pre-set x1.5 tolerance for all constructs (x50 70-132 um vs reported 30-60 um). Spherical Dirichlet surrogate passes or fails depending only on the assumed clone radius R (BMP2b passes for R >= 35 um, Chordin for R >= 50 um). Conclusion: with D_eff and k1 fixed, the held-out observable is controlled by unmeasured source geometry and source kinetics, so a crude surrogate cannot validate or falsify the published values. The authors' own 3D model is reported to agree (Fig. 3-figure supplement 2E-H, not re-run here)."
+ },
+ "computation_record": {
+  "script": "docs/open-problems/F002/sdd_check.py",
+  "command": "python3 -I docs/open-problems/F002/sdd_check.py docs/open-problems/F002/sdd_check_output.json > docs/open-problems/F002/sdd_check_output.txt",
+  "python": "3.13.12, standard library only",
+  "outputs": [
+   "docs/open-problems/F002/sdd_check_output.txt",
+   "docs/open-problems/F002/sdd_check_output.json"
+  ]
+ },
+ "gemini_critique": {
+  "model": "gemini-3.8-flash",
+  "when_utc": "2026-11-01T17:10Z",
+  "tokens_total": 10414,
+  "accepted_changes": [
+   "stated that the Dirichlet source is a surrogate for a volumetric production source (script header and output)",
+   "added R=35 um and a stated (unverified) cell-size bound R ~28-42 um",
+   "softened the FRAP vs gradient-fit D comparison to SE terms",
+   "split D_free/D_eff gap into tortuosity and binding",
+   "added sfGFP maturation and receptor-saturation caveats"
+  ],
+  "not_adopted": [
+   "Gemini's specific numbers for sfGFP maturation half-time and blastomere diameter: not verified against a source, so used only as qualitative caveats"
+  ]
+ }
+}

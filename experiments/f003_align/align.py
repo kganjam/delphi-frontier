@@ -37,8 +37,8 @@ def horizon(c):
 
 def run_group(args):
     key, cells, arm, outdir, specdir = args
-    model, N = key
-    out_f = Path(outdir) / f"{arm}_{model}_{N}.jsonl"
+    model, N, chunk = key
+    out_f = Path(outdir) / f"{arm}_{model}_{N}_{chunk}.jsonl"
     if out_f.exists():
         return str(out_f), 0.0
     t0 = time.time()
@@ -78,6 +78,10 @@ def run_group(args):
     snaps = {i: {} for i in range(B)}
     diverged = np.zeros(B, bool)
     alive = np.arange(B)
+    nT_arr = np.array(n_T)
+    event_steps = set()
+    for nT, ne in zip(n_T, n_end):
+        event_steps |= {int(round(0.9 * nT)), nT, nT + 1, int(round(1.8 * nT)), 2 * nT, ne}
     k = 0
     kmax = max(n_end)
     while k < kmax and len(alive):
@@ -108,24 +112,28 @@ def run_group(args):
                 if step <= n_T[i]:
                     diverged[i] = True
                 snaps[i]["diverged_at_step"] = step
-        for j, i in enumerate(alive):
-            nT = n_T[i]
-            if step <= nT and step % REC_EVERY == 0:
+        if step % REC_EVERY == 0:
+            for j in np.where(nT_arr[alive] >= step)[0]:
+                i = alive[j]
                 rec[i]["std"].append(float(ua[j].std()))
                 rec[i]["spec"].append(np.abs(dct(ua[j] - ua[j].mean(), type=2, norm="ortho")).astype(np.float32))
-            if step == int(round(0.9 * nT)):
-                snaps[i]["u09"] = ua[j].copy()
-            if step == nT:
-                snaps[i]["uT"] = ua[j].copy()
-                snaps[i]["vT"] = va[j].copy()
-            if step == nT + 1:
-                snaps[i]["dudt_inf"] = float(np.abs(ua[j] - snaps[i]["uT"]).max() / DT)
-            if step == int(round(1.8 * nT)):
-                snaps[i]["u18"] = ua[j].copy()
-            if step == 2 * nT:
-                snaps[i]["u2T"] = ua[j].copy()
-        keep = np.array([("diverged_at_step" not in snaps[i]) and step < n_end[i] for i in alive], bool)
-        alive = alive[keep]
+        if step in event_steps:
+            for j, i in enumerate(alive):
+                nT = n_T[i]
+                if step == int(round(0.9 * nT)):
+                    snaps[i]["u09"] = ua[j].copy()
+                if step == nT:
+                    snaps[i]["uT"] = ua[j].copy()
+                    snaps[i]["vT"] = va[j].copy()
+                if step == nT + 1:
+                    snaps[i]["dudt_inf"] = float(np.abs(ua[j] - snaps[i]["uT"]).max() / DT)
+                if step == int(round(1.8 * nT)):
+                    snaps[i]["u18"] = ua[j].copy()
+                if step == 2 * nT:
+                    snaps[i]["u2T"] = ua[j].copy()
+        if step in event_steps or k % 200 == 0:
+            keep = np.array([("diverged_at_step" not in snaps[i]) and step < n_end[i] for i in alive], bool)
+            alive = alive[keep]
         k += 1
     lines = []
     specs = {}
@@ -145,7 +153,7 @@ def run_group(args):
             specs[f"w0u_{c['id']}"] = w0u[i]
             specs[f"w0v_{c['id']}"] = w0v[i]
     if arm == "base":
-        sp = Path(specdir) / f"{model}_{N}.npz"
+        sp = Path(specdir) / f"{model}_{N}_{chunk}.npz"
         np.savez_compressed(sp, **specs)
         sh = hashlib.sha256(sp.read_bytes()).hexdigest()
         for r in lines:
@@ -176,6 +184,8 @@ def main():
     if only:
         m, n = only.split(":")
         groups = {k: v for k, v in groups.items() if k == (m, int(n))}
+    CH = 48
+    groups = {(m, n, j // CH): v[j:j + CH] for (m, n), v in groups.items() for j in range(0, len(v), CH)}
     # largest work first
     order = sorted(groups.items(), key=lambda kv: -sum(c["_T"] for c in kv[1]) * kv[0][1])
     jobs = [(k, v, arm, outdir, specdir) for k, v in order]
