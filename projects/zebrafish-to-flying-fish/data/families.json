@@ -1,0 +1,45 @@
+{
+ "kcnh": {
+  "scaffold": "JAGFBZ010001591.1",
+  "why": "kcnh2a and kcnh2b best-hit the same region of this scaffold from the identical start coordinate, with the b query scoring higher",
+  "members": {
+   "kcnh1a": "Q108P3",
+   "kcnh1b": "K4EHU2",
+   "kcnh2a": "Q108P2",
+   "kcnh2b": "A0AC58ISX0",
+   "kcnh3": "A0AC58GGN5",
+   "kcnh4a": "A0A142J9E8",
+   "kcnh5a": "B3DJV7",
+   "kcnh6a": "Q8JH78",
+   "kcnh6b": "A0A8M9QEL7",
+   "kcnh7": "A0AB32TVI3"
+  }
+ },
+ "hedgehog": {
+  "scaffold": "JAGFBZ010001012.1",
+  "why": "shha and shhb/twhh best-hit the same region of this scaffold (overlap 6364 bp)",
+  "members": {
+   "shha": "Q1MTB5",
+   "shhb": "Q6DBX7",
+   "ihha": "A3KNS3",
+   "ihhb": "Q98862",
+   "dhh": "Q4PLX3"
+  }
+ },
+ "kcnh_alt_scaffold": {
+  "scaffold": "JAGFBZ010001790.1",
+  "why": "kcnh2a's second-best hit (AS 2569, coverage 0.899) lies here and the kcnh2b query does NOT hit this scaffold at all, so it is the candidate for the kcnh2a-like locus",
+  "members": {
+   "kcnh1a": "Q108P3",
+   "kcnh1b": "K4EHU2",
+   "kcnh2a": "Q108P2",
+   "kcnh2b": "A0AC58ISX0",
+   "kcnh3": "A0AC58GGN5",
+   "kcnh4a": "A0A142J9E8",
+   "kcnh5a": "B3DJV7",
+   "kcnh6a": "Q8JH78",
+   "kcnh6b": "A0A8M9QEL7",
+   "kcnh7": "A0AB32TVI3"
+  }
+ }
+}

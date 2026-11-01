@@ -2,8 +2,8 @@
 
 **The question:** what would it actually take to get from *Danio rerio* to an Exocoetid-like gliding
 fish? **The answer this project produced:** a sourced decomposition of the problem, a candidate-gene
-table with explicit evidence levels, three comparative-genomics runs that can be reproduced from this
-directory, a perturbation table whose most useful output is the conflicts it exposes, and eleven
+table with explicit evidence levels, four comparative-genomics analyses that can be reproduced from this
+directory, a perturbation table whose most useful output is the conflicts it exposes, and twelve
 record drafts in the repo's own format.
 
 **A plan is not a result.** Read [`PLAN.md`](PLAN.md) as a plan. The only results are in
@@ -23,7 +23,7 @@ Nothing here demonstrates that a flying fish can be built.
 | [`SPAN-AUDIT.md`](SPAN-AUDIT.md) | Generated: assembly-gap fraction, largest intron and frameshift counts per best hit, so long spans can be discounted. |
 | [`SOURCES.md`](SOURCES.md) | Generated: 45 Europe PMC queries, 227 saved records, 154 distinct PMIDs, each with the request URL and response sha256. Read-level is `abstract` for every row. |
 | [`REVIEW.md`](REVIEW.md) | What an LLM critique found, which findings were verified and acted on, and which were rejected and why. |
-| [`claims/zf2ff-claims.json`](claims/zf2ff-claims.json) | 8 Claim and 3 Problem drafts, validated against `frontier/models.py`. Validated is not true (SPEC-001). |
+| [`claims/zf2ff-claims.json`](claims/zf2ff-claims.json) | 9 Claim and 3 Problem drafts, validated against `frontier/models.py`. Validated is not true (SPEC-001). |
 | `scripts/` | Everything that produced the above. |
 | `data/` | Verbatim API responses, ledgers with hashes, PAF alignments, and the machine-readable summaries. |
 
@@ -40,6 +40,7 @@ python3 scripts/map_proteins_round2.py   <GENOME.fna> <miniprot> data/queries_ro
 python3 scripts/map_proteins_round2.py   <GENOME.fna> <miniprot> data/queries_round3.json data/round3
 python3 scripts/merge_and_check_hits.py  data/mapping_summary.json,data/round2/mapping_summary_round2.json,data/round3/mapping_summary_round3.json data/loci_merged.json LOCI.md
 python3 scripts/audit_long_spans.py      <GENOME.fna> data/miniprot.paf,data/round2/miniprot_round2.paf,data/round3/miniprot_round3.paf data/span_audit.json SPAN-AUDIT.md
+python3 scripts/reciprocal_check.py      <GENOME.fna> <miniprot> data/families.json data/reciprocal
 python3 scripts/make_claims.py           claims/zf2ff-claims.json
 ```
 
@@ -60,9 +61,13 @@ process; it is reviewed here, not re-run.
 3. **The plan designed the blade and forgot the root.** The pectoral girdle and fin musculature were
    missing until review caught it. They are plausibly the binding constraint and the
    worst-sourced part of the document.
-4. **A computed check killed a headline row.** Paralog controls run after review show the `kcnh2b`
-   query aligns to the same region as `kcnh2a` at higher identity, so the plan's primary candidate
-   locus is not assigned to a paralog. Without that control it would have been reported clean.
+4. **A computed check killed a headline row, and the follow-up check could not revive it.** Paralog
+   controls run after review show the `kcnh2b` query aligning to the same region as `kcnh2a` at higher
+   identity. A reciprocal best-hit test then **resolved** the parallel `shha`/`shhb` collision cleanly
+   (5 of 5 predictions) but **failed to resolve** the `kcnh2` one: alignment score and percent identity
+   rank the same predicted sequence differently. So after three mapping rounds, a span audit and a
+   reciprocal test, the plan's primary candidate locus has no located target — reported as the
+   non-result it is, not rounded to a conclusion.
 
 ## Status
 

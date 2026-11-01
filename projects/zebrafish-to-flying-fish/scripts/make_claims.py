@@ -200,6 +200,34 @@ CLAIMS = [
         origin="source_statement",
     ),
     dict(
+        id="zf2ff-claim-kcnh2-paralog-unresolved",
+        title="The one kcnh2-like region found in the Hirundichthys speculiger assembly cannot be assigned to kcnh2a or kcnh2b",
+        statement=(
+            "Three computed tests leave the paralog identity of this region open. (1) Forward mapping: the "
+            "kcnh2a and kcnh2b queries best-hit the same region of JAGFBZ010001591.1 from the identical "
+            "start coordinate 1301510, with kcnh2b at higher identity (0.762 vs 0.610). (2) Reciprocal "
+            "test: miniprot --trans predicted 8 distinct proteins from that scaffold and each was aligned "
+            "against all 10 zebrafish kcnh family members (Biopython PairwiseAligner, global, BLOSUM62); "
+            "5 rank kcnh2b first and 3 rank kcnh2a first, and for the longest and most complete prediction "
+            "(1325 aa) kcnh2a wins on alignment score by 631 while kcnh2b wins on percent identity over "
+            "aligned columns (0.827 vs 0.674). The verdict therefore depends on a scoring choice. (3) The "
+            "obvious alternative region, kcnh2a's second-best forward hit on JAGFBZ010001790.1, is "
+            "accounted for: all 10 predicted proteins there rank kcnh6a first with margins 325-1544. By "
+            "contrast the same reciprocal test resolves the shha/shhb collision cleanly, with 5 of 5 "
+            "predicted proteins from JAGFBZ010001012.1 ranking shha first."),
+        context=("kcnh2a is this project's primary candidate locus for fin-size engineering, so an "
+                 "unresolved paralog assignment means the proposed edit has no located target in the only "
+                 "public Exocoetidae assembly. " + SCOPE),
+        assumptions=["ASSUMED: that a miniprot protein prediction from an unannotated assembly is a usable proxy for the protein the region encodes.",
+                     "ASSUMED: that the 10 UniProt entries used represent the zebrafish kcnh family adequately; kcnh8a and kcnh8b were not retrievable and are missing."],
+        limitations=["This is a negative result about method resolution, not evidence that kcnh2a is absent from Hirundichthys speculiger. The assembly is scaffold-level and unannotated; a divergent or fragmented ortholog would look the same.",
+                     "No gene tree, no outgroup species and no synteny analysis was run, and a gene tree is what this question needs.",
+                     "Global BLOSUM62 score rewards aligning more of a longer protein, which is the likely mechanical cause of the score/identity disagreement; that explanation was not tested.",
+                     "Hypothesis offered and untested: the region holds more than one kcnh-like gene, or a collapsed or tandem duplication."],
+        source=computed_source("data/reciprocal/reciprocal_check.json"),
+        origin="derived",
+    ),
+    dict(
         id="zf2ff-claim-timing-edit-hypothesis",
         title="Hypothesis: the flying-fish pectoral wing is reachable by extending outgrowth duration in ray mesenchyme alone",
         statement=(

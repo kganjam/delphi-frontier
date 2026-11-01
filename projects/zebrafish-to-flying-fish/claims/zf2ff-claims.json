@@ -4,7 +4,7 @@
  "issuer": "claude-zf2ff",
  "note": "These are proposed drafts validated against frontier/models.py. SPEC-001: a record being schema-valid is not a scientific claim of any kind. None of these has been submitted to a store, assessed, or reviewed by a second party.",
  "counts": {
-  "Claim": 8,
+  "Claim": 9,
   "Problem": 3
  },
  "validated_against": "frontier.models.Draft",
@@ -231,6 +231,43 @@
   {
    "namespace": "delphi-frontier",
    "kind": "Claim",
+   "id": "zf2ff-claim-kcnh2-paralog-unresolved",
+   "issuer": "claude-zf2ff",
+   "source_uri": "urn:frontier:project:zebrafish-to-flying-fish:zf2ff-claim-kcnh2-paralog-unresolved",
+   "visibility": "public",
+   "predecessor": null,
+   "payload": {
+    "title": "The one kcnh2-like region found in the Hirundichthys speculiger assembly cannot be assigned to kcnh2a or kcnh2b",
+    "statement": "Three computed tests leave the paralog identity of this region open. (1) Forward mapping: the kcnh2a and kcnh2b queries best-hit the same region of JAGFBZ010001591.1 from the identical start coordinate 1301510, with kcnh2b at higher identity (0.762 vs 0.610). (2) Reciprocal test: miniprot --trans predicted 8 distinct proteins from that scaffold and each was aligned against all 10 zebrafish kcnh family members (Biopython PairwiseAligner, global, BLOSUM62); 5 rank kcnh2b first and 3 rank kcnh2a first, and for the longest and most complete prediction (1325 aa) kcnh2a wins on alignment score by 631 while kcnh2b wins on percent identity over aligned columns (0.827 vs 0.674). The verdict therefore depends on a scoring choice. (3) The obvious alternative region, kcnh2a's second-best forward hit on JAGFBZ010001790.1, is accounted for: all 10 predicted proteins there rank kcnh6a first with margins 325-1544. By contrast the same reciprocal test resolves the shha/shhb collision cleanly, with 5 of 5 predicted proteins from JAGFBZ010001012.1 ranking shha first.",
+    "context": "kcnh2a is this project's primary candidate locus for fin-size engineering, so an unresolved paralog assignment means the proposed edit has no located target in the only public Exocoetidae assembly. Danio rerio and public sequence only. No observation of any Exocoetid fish was made by this project. Not claimed: that a flying fish can be built, that any zebrafish value transfers to an Exocoetid, or that any edit below has been performed.",
+    "assumptions": [
+     "ASSUMED: that a miniprot protein prediction from an unannotated assembly is a usable proxy for the protein the region encodes.",
+     "ASSUMED: that the 10 UniProt entries used represent the zebrafish kcnh family adequately; kcnh8a and kcnh8b were not retrievable and are missing."
+    ],
+    "limitations": [
+     "This is a negative result about method resolution, not evidence that kcnh2a is absent from Hirundichthys speculiger. The assembly is scaffold-level and unannotated; a divergent or fragmented ortholog would look the same.",
+     "No gene tree, no outgroup species and no synteny analysis was run, and a gene tree is what this question needs.",
+     "Global BLOSUM62 score rewards aligning more of a longer protein, which is the likely mechanical cause of the score/identity disagreement; that explanation was not tested.",
+     "Hypothesis offered and untested: the region holds more than one kcnh-like gene, or a collapsed or tandem duplication."
+    ],
+    "source": {
+     "uri": null,
+     "locator": "git:delphi-frontier@claude/zf2ff-20261101:projects/zebrafish-to-flying-fish/data/reciprocal/reciprocal_check.json",
+     "source_version": "git:delphi-frontier@claude/zf2ff-20261101",
+     "content_sha256": "5e19ee6f68e2989e3feaebba5708604961d3a47e39ae01a68602de23bbb7f3fc",
+     "content_available": true,
+     "access": "Files in this repository at the branch named in the locator. The computation was run by this project; nobody has re-run it, so it is not independent evidence.",
+     "license": null
+    },
+    "origin": "derived",
+    "prior_review": {
+     "status": "none: single operator (claude-zf2ff), not reviewed by anyone"
+    }
+   }
+  },
+  {
+   "namespace": "delphi-frontier",
+   "kind": "Claim",
    "id": "zf2ff-claim-timing-edit-hypothesis",
    "issuer": "claude-zf2ff",
    "source_uri": "urn:frontier:project:zebrafish-to-flying-fish:zf2ff-claim-timing-edit-hypothesis",
@@ -253,7 +290,7 @@
      "uri": null,
      "locator": "git:delphi-frontier@claude/zf2ff-20261101:projects/zebrafish-to-flying-fish/PLAN.md",
      "source_version": "git:delphi-frontier@claude/zf2ff-20261101",
-     "content_sha256": "0a71d1fcf184157e06c12d0dfb8df84bfbdac5fc3ff47a1b9fa2597b28014666",
+     "content_sha256": "42e0534ec5b38dc6ee1261e07d6e6daed37cfd123dd46efc7a4ef9553c715ff6",
      "content_available": true,
      "access": "Files in this repository at the branch named in the locator. The computation was run by this project; nobody has re-run it, so it is not independent evidence.",
      "license": null
@@ -289,7 +326,7 @@
      "uri": null,
      "locator": "git:delphi-frontier@claude/zf2ff-20261101:projects/zebrafish-to-flying-fish/PLAN.md",
      "source_version": "git:delphi-frontier@claude/zf2ff-20261101",
-     "content_sha256": "0a71d1fcf184157e06c12d0dfb8df84bfbdac5fc3ff47a1b9fa2597b28014666",
+     "content_sha256": "42e0534ec5b38dc6ee1261e07d6e6daed37cfd123dd46efc7a4ef9553c715ff6",
      "content_available": true,
      "access": "Files in this repository at the branch named in the locator. The computation was run by this project; nobody has re-run it, so it is not independent evidence.",
      "license": null

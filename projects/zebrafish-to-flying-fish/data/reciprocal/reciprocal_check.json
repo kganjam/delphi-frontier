@@ -1,0 +1,1672 @@
+{
+ "scope": "Reciprocal best-hit check on one scaffold per paralog collision. Inputs are an unannotated assembly and miniprot's own protein prediction, so a result here is a sequence-similarity ranking, not an orthology proof, not a gene tree, and not evidence of expression or function.",
+ "tool": "0.18-r281",
+ "aligner": "Biopython PairwiseAligner, global, BLOSUM62, gap open -11 extend -1, free end gaps",
+ "utc": "2026-11-01T15:04:19+00:00",
+ "families": {
+  "kcnh": {
+   "scaffold": "JAGFBZ010001591.1",
+   "scaffold_len": 2317043,
+   "why": "kcnh2a and kcnh2b best-hit the same region of this scaffold from the identical start coordinate, with the b query scoring higher",
+   "query_ledger": [
+    {
+     "gene": "kcnh1a",
+     "uniprot": "Q108P3",
+     "len": 959,
+     "url": "https://rest.uniprot.org/uniprotkb/Q108P3.fasta",
+     "sha256": "9931e7f3fb9d5260f49fe872e57b8a3f872e59b46b5540dbee4b2694f8959007"
+    },
+    {
+     "gene": "kcnh1b",
+     "uniprot": "K4EHU2",
+     "len": 956,
+     "url": "https://rest.uniprot.org/uniprotkb/K4EHU2.fasta",
+     "sha256": "ca79d60f8be33a60e0af4310452274970a7bf9b5c7bbcbf2aeb9660068dc1547"
+    },
+    {
+     "gene": "kcnh2a",
+     "uniprot": "Q108P2",
+     "len": 1253,
+     "url": "https://rest.uniprot.org/uniprotkb/Q108P2.fasta",
+     "sha256": "2561941b8d69e8d512675fc996370415cf7311c8f180e8f87955827b850805f7"
+    },
+    {
+     "gene": "kcnh2b",
+     "uniprot": "A0AC58ISX0",
+     "len": 837,
+     "url": "https://rest.uniprot.org/uniprotkb/A0AC58ISX0.fasta",
+     "sha256": "4a8b2cc85d307f9c8b6c865fef315528f769582f3cec7714bff4969b032bec3a"
+    },
+    {
+     "gene": "kcnh3",
+     "uniprot": "A0AC58GGN5",
+     "len": 1132,
+     "url": "https://rest.uniprot.org/uniprotkb/A0AC58GGN5.fasta",
+     "sha256": "ebc7cc7f94b085b40ea0a3705028c8ea5634ef8378d33a49702c576f9dec1a4f"
+    },
+    {
+     "gene": "kcnh4a",
+     "uniprot": "A0A142J9E8",
+     "len": 1151,
+     "url": "https://rest.uniprot.org/uniprotkb/A0A142J9E8.fasta",
+     "sha256": "6749d7464ca2be6f840a52b663c1d97dedc31a495381fd97914f1797167700fa"
+    },
+    {
+     "gene": "kcnh5a",
+     "uniprot": "B3DJV7",
+     "len": 1093,
+     "url": "https://rest.uniprot.org/uniprotkb/B3DJV7.fasta",
+     "sha256": "8aeb0d6e9aec35ac09f1d4f9b9e1c87244f74191fe7bb9dc46b21680274c0557"
+    },
+    {
+     "gene": "kcnh6a",
+     "uniprot": "Q8JH78",
+     "len": 1186,
+     "url": "https://rest.uniprot.org/uniprotkb/Q8JH78.fasta",
+     "sha256": "096d988b015e28f71e921b5fbc618e03040103b99ee04c625359b679c3fbcb8f"
+    },
+    {
+     "gene": "kcnh6b",
+     "uniprot": "A0A8M9QEL7",
+     "len": 893,
+     "url": "https://rest.uniprot.org/uniprotkb/A0A8M9QEL7.fasta",
+     "sha256": "b9ba530e9a08bbf0d16b866a215b224b03492ff41feeda53f503cc8baccae2f5"
+    },
+    {
+     "gene": "kcnh7",
+     "uniprot": "A0AB32TVI3",
+     "len": 1158,
+     "url": "https://rest.uniprot.org/uniprotkb/A0AB32TVI3.fasta",
+     "sha256": "73b61e7499a44746c22b6b10626ceb5165dd8f481816592cd6e7a3c42767dc03"
+    }
+   ],
+   "predictions": [
+    {
+     "predicted_protein_len": 1325,
+     "predicted_by_queries": [
+      "kcnh2a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 3843.0,
+       "identity_over_aligned_columns": 0.674,
+       "aligned_columns": 1229
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 3212.0,
+       "identity_over_aligned_columns": 0.827,
+       "aligned_columns": 813
+      },
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 3177.0,
+       "identity_over_aligned_columns": 0.631,
+       "aligned_columns": 1137
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 3000.0,
+       "identity_over_aligned_columns": 0.601,
+       "aligned_columns": 1142
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2302.0,
+       "identity_over_aligned_columns": 0.587,
+       "aligned_columns": 871
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1267.0,
+       "identity_over_aligned_columns": 0.388,
+       "aligned_columns": 1033
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1225.0,
+       "identity_over_aligned_columns": 0.396,
+       "aligned_columns": 908
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1189.0,
+       "identity_over_aligned_columns": 0.41,
+       "aligned_columns": 881
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1155.0,
+       "identity_over_aligned_columns": 0.38,
+       "aligned_columns": 961
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1131.0,
+       "identity_over_aligned_columns": 0.399,
+       "aligned_columns": 953
+      }
+     ],
+     "reciprocal_best": "kcnh2a",
+     "margin_over_second": 631.0
+    },
+    {
+     "predicted_protein_len": 1154,
+     "predicted_by_queries": [
+      "kcnh6a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 3548.0,
+       "identity_over_aligned_columns": 0.673,
+       "aligned_columns": 1139
+      },
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 3264.0,
+       "identity_over_aligned_columns": 0.647,
+       "aligned_columns": 1098
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2951.0,
+       "identity_over_aligned_columns": 0.606,
+       "aligned_columns": 1083
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2894.0,
+       "identity_over_aligned_columns": 0.789,
+       "aligned_columns": 776
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2258.0,
+       "identity_over_aligned_columns": 0.601,
+       "aligned_columns": 824
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1362.0,
+       "identity_over_aligned_columns": 0.402,
+       "aligned_columns": 961
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1262.0,
+       "identity_over_aligned_columns": 0.4,
+       "aligned_columns": 894
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1242.0,
+       "identity_over_aligned_columns": 0.405,
+       "aligned_columns": 897
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1206.0,
+       "identity_over_aligned_columns": 0.417,
+       "aligned_columns": 882
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1180.0,
+       "identity_over_aligned_columns": 0.36,
+       "aligned_columns": 947
+      }
+     ],
+     "reciprocal_best": "kcnh2a",
+     "margin_over_second": 284.0
+    },
+    {
+     "predicted_protein_len": 1052,
+     "predicted_by_queries": [
+      "kcnh7"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 3395.0,
+       "identity_over_aligned_columns": 0.719,
+       "aligned_columns": 1011
+      },
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 3098.0,
+       "identity_over_aligned_columns": 0.674,
+       "aligned_columns": 991
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 3034.0,
+       "identity_over_aligned_columns": 0.645,
+       "aligned_columns": 1009
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2647.0,
+       "identity_over_aligned_columns": 0.796,
+       "aligned_columns": 690
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2269.0,
+       "identity_over_aligned_columns": 0.663,
+       "aligned_columns": 716
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1315.0,
+       "identity_over_aligned_columns": 0.436,
+       "aligned_columns": 801
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1255.0,
+       "identity_over_aligned_columns": 0.406,
+       "aligned_columns": 822
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1214.0,
+       "identity_over_aligned_columns": 0.409,
+       "aligned_columns": 807
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1185.0,
+       "identity_over_aligned_columns": 0.4,
+       "aligned_columns": 803
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1157.0,
+       "identity_over_aligned_columns": 0.425,
+       "aligned_columns": 788
+      }
+     ],
+     "reciprocal_best": "kcnh2a",
+     "margin_over_second": 297.0
+    },
+    {
+     "predicted_protein_len": 818,
+     "predicted_by_queries": [
+      "kcnh2b"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 3303.0,
+       "identity_over_aligned_columns": 0.844,
+       "aligned_columns": 782
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2798.0,
+       "identity_over_aligned_columns": 0.732,
+       "aligned_columns": 788
+      },
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2491.0,
+       "identity_over_aligned_columns": 0.682,
+       "aligned_columns": 792
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2318.0,
+       "identity_over_aligned_columns": 0.665,
+       "aligned_columns": 762
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2289.0,
+       "identity_over_aligned_columns": 0.615,
+       "aligned_columns": 788
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1208.0,
+       "identity_over_aligned_columns": 0.408,
+       "aligned_columns": 733
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1196.0,
+       "identity_over_aligned_columns": 0.426,
+       "aligned_columns": 690
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1167.0,
+       "identity_over_aligned_columns": 0.398,
+       "aligned_columns": 746
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1142.0,
+       "identity_over_aligned_columns": 0.411,
+       "aligned_columns": 755
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1134.0,
+       "identity_over_aligned_columns": 0.387,
+       "aligned_columns": 783
+      }
+     ],
+     "reciprocal_best": "kcnh2b",
+     "margin_over_second": 505.0
+    },
+    {
+     "predicted_protein_len": 752,
+     "predicted_by_queries": [
+      "kcnh6b"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2884.0,
+       "identity_over_aligned_columns": 0.797,
+       "aligned_columns": 748
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2598.0,
+       "identity_over_aligned_columns": 0.736,
+       "aligned_columns": 746
+      },
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2414.0,
+       "identity_over_aligned_columns": 0.7,
+       "aligned_columns": 736
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2341.0,
+       "identity_over_aligned_columns": 0.643,
+       "aligned_columns": 746
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2272.0,
+       "identity_over_aligned_columns": 0.662,
+       "aligned_columns": 734
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1175.0,
+       "identity_over_aligned_columns": 0.404,
+       "aligned_columns": 691
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1155.0,
+       "identity_over_aligned_columns": 0.38,
+       "aligned_columns": 729
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1151.0,
+       "identity_over_aligned_columns": 0.404,
+       "aligned_columns": 711
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1136.0,
+       "identity_over_aligned_columns": 0.409,
+       "aligned_columns": 702
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1134.0,
+       "identity_over_aligned_columns": 0.404,
+       "aligned_columns": 732
+      }
+     ],
+     "reciprocal_best": "kcnh2b",
+     "margin_over_second": 286.0
+    },
+    {
+     "predicted_protein_len": 713,
+     "predicted_by_queries": [
+      "kcnh3"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2293.0,
+       "identity_over_aligned_columns": 0.725,
+       "aligned_columns": 687
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2223.0,
+       "identity_over_aligned_columns": 0.683,
+       "aligned_columns": 698
+      },
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2172.0,
+       "identity_over_aligned_columns": 0.675,
+       "aligned_columns": 686
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2077.0,
+       "identity_over_aligned_columns": 0.664,
+       "aligned_columns": 688
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 1990.0,
+       "identity_over_aligned_columns": 0.624,
+       "aligned_columns": 678
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1273.0,
+       "identity_over_aligned_columns": 0.44,
+       "aligned_columns": 696
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1179.0,
+       "identity_over_aligned_columns": 0.421,
+       "aligned_columns": 674
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1162.0,
+       "identity_over_aligned_columns": 0.39,
+       "aligned_columns": 684
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1154.0,
+       "identity_over_aligned_columns": 0.429,
+       "aligned_columns": 697
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1086.0,
+       "identity_over_aligned_columns": 0.401,
+       "aligned_columns": 658
+      }
+     ],
+     "reciprocal_best": "kcnh2b",
+     "margin_over_second": 70.0
+    },
+    {
+     "predicted_protein_len": 482,
+     "predicted_by_queries": [
+      "kcnh1a",
+      "kcnh1b",
+      "kcnh5a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2349.0,
+       "identity_over_aligned_columns": 0.942,
+       "aligned_columns": 482
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2292.0,
+       "identity_over_aligned_columns": 0.915,
+       "aligned_columns": 482
+      },
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2228.0,
+       "identity_over_aligned_columns": 0.88,
+       "aligned_columns": 482
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2141.0,
+       "identity_over_aligned_columns": 0.858,
+       "aligned_columns": 479
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2079.0,
+       "identity_over_aligned_columns": 0.805,
+       "aligned_columns": 482
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1225.0,
+       "identity_over_aligned_columns": 0.495,
+       "aligned_columns": 477
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1203.0,
+       "identity_over_aligned_columns": 0.488,
+       "aligned_columns": 477
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1177.0,
+       "identity_over_aligned_columns": 0.499,
+       "aligned_columns": 477
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1165.0,
+       "identity_over_aligned_columns": 0.478,
+       "aligned_columns": 477
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1134.0,
+       "identity_over_aligned_columns": 0.498,
+       "aligned_columns": 480
+      }
+     ],
+     "reciprocal_best": "kcnh2b",
+     "margin_over_second": 57.0
+    },
+    {
+     "predicted_protein_len": 478,
+     "predicted_by_queries": [
+      "kcnh4a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2335.0,
+       "identity_over_aligned_columns": 0.937,
+       "aligned_columns": 478
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2262.0,
+       "identity_over_aligned_columns": 0.906,
+       "aligned_columns": 478
+      },
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2206.0,
+       "identity_over_aligned_columns": 0.872,
+       "aligned_columns": 478
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2115.0,
+       "identity_over_aligned_columns": 0.851,
+       "aligned_columns": 475
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2049.0,
+       "identity_over_aligned_columns": 0.797,
+       "aligned_columns": 478
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1199.0,
+       "identity_over_aligned_columns": 0.496,
+       "aligned_columns": 476
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1177.0,
+       "identity_over_aligned_columns": 0.493,
+       "aligned_columns": 467
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1153.0,
+       "identity_over_aligned_columns": 0.486,
+       "aligned_columns": 467
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1139.0,
+       "identity_over_aligned_columns": 0.512,
+       "aligned_columns": 471
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1121.0,
+       "identity_over_aligned_columns": 0.478,
+       "aligned_columns": 467
+      }
+     ],
+     "reciprocal_best": "kcnh2b",
+     "margin_over_second": 73.0
+    }
+   ]
+  },
+  "hedgehog": {
+   "scaffold": "JAGFBZ010001012.1",
+   "scaffold_len": 3047427,
+   "why": "shha and shhb/twhh best-hit the same region of this scaffold (overlap 6364 bp)",
+   "query_ledger": [
+    {
+     "gene": "shha",
+     "uniprot": "Q1MTB5",
+     "len": 418,
+     "url": "https://rest.uniprot.org/uniprotkb/Q1MTB5.fasta",
+     "sha256": "2f93ad831a2e139056f067b20980c0d2b3405ef00a9cd3b865fa3974c9c34c52"
+    },
+    {
+     "gene": "shhb",
+     "uniprot": "Q6DBX7",
+     "len": 416,
+     "url": "https://rest.uniprot.org/uniprotkb/Q6DBX7.fasta",
+     "sha256": "9581f95ca8f060c26116f4ac03af0121b8a0b63833429839a57a2ca8551e9898"
+    },
+    {
+     "gene": "ihha",
+     "uniprot": "A3KNS3",
+     "len": 413,
+     "url": "https://rest.uniprot.org/uniprotkb/A3KNS3.fasta",
+     "sha256": "f6bcd6081c33b2e25470de4636cd6576fd92d3174857999bb6e7f79f3b152d5b"
+    },
+    {
+     "gene": "ihhb",
+     "uniprot": "Q98862",
+     "len": 412,
+     "url": "https://rest.uniprot.org/uniprotkb/Q98862.fasta",
+     "sha256": "7583cfb8b52a30790ca8c837c01d5758a9efff17ff644ed0309d85044c0d2582"
+    },
+    {
+     "gene": "dhh",
+     "uniprot": "Q4PLX3",
+     "len": 447,
+     "url": "https://rest.uniprot.org/uniprotkb/Q4PLX3.fasta",
+     "sha256": "7e3d9283ebfd1160bb8db1da1152c6cd75095d7f2cb9a7876c92d0f94e2d6397"
+    }
+   ],
+   "predictions": [
+    {
+     "predicted_protein_len": 415,
+     "predicted_by_queries": [
+      "shha"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "shha",
+       "score": 1594.0,
+       "identity_over_aligned_columns": 0.76,
+       "aligned_columns": 412
+      },
+      {
+       "zebrafish_gene": "shhb",
+       "score": 1503.0,
+       "identity_over_aligned_columns": 0.724,
+       "aligned_columns": 410
+      },
+      {
+       "zebrafish_gene": "ihha",
+       "score": 1267.0,
+       "identity_over_aligned_columns": 0.629,
+       "aligned_columns": 402
+      },
+      {
+       "zebrafish_gene": "ihhb",
+       "score": 1236.0,
+       "identity_over_aligned_columns": 0.615,
+       "aligned_columns": 405
+      },
+      {
+       "zebrafish_gene": "dhh",
+       "score": 971.0,
+       "identity_over_aligned_columns": 0.529,
+       "aligned_columns": 401
+      }
+     ],
+     "reciprocal_best": "shha",
+     "margin_over_second": 91.0
+    },
+    {
+     "predicted_protein_len": 411,
+     "predicted_by_queries": [
+      "ihhb"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "shha",
+       "score": 1589.0,
+       "identity_over_aligned_columns": 0.762,
+       "aligned_columns": 408
+      },
+      {
+       "zebrafish_gene": "shhb",
+       "score": 1508.0,
+       "identity_over_aligned_columns": 0.727,
+       "aligned_columns": 407
+      },
+      {
+       "zebrafish_gene": "ihha",
+       "score": 1274.0,
+       "identity_over_aligned_columns": 0.636,
+       "aligned_columns": 398
+      },
+      {
+       "zebrafish_gene": "ihhb",
+       "score": 1240.0,
+       "identity_over_aligned_columns": 0.621,
+       "aligned_columns": 401
+      },
+      {
+       "zebrafish_gene": "dhh",
+       "score": 971.0,
+       "identity_over_aligned_columns": 0.529,
+       "aligned_columns": 401
+      }
+     ],
+     "reciprocal_best": "shha",
+     "margin_over_second": 81.0
+    },
+    {
+     "predicted_protein_len": 407,
+     "predicted_by_queries": [
+      "ihha"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "shha",
+       "score": 1584.0,
+       "identity_over_aligned_columns": 0.765,
+       "aligned_columns": 404
+      },
+      {
+       "zebrafish_gene": "shhb",
+       "score": 1507.0,
+       "identity_over_aligned_columns": 0.732,
+       "aligned_columns": 403
+      },
+      {
+       "zebrafish_gene": "ihha",
+       "score": 1274.0,
+       "identity_over_aligned_columns": 0.636,
+       "aligned_columns": 398
+      },
+      {
+       "zebrafish_gene": "ihhb",
+       "score": 1236.0,
+       "identity_over_aligned_columns": 0.622,
+       "aligned_columns": 397
+      },
+      {
+       "zebrafish_gene": "dhh",
+       "score": 963.0,
+       "identity_over_aligned_columns": 0.528,
+       "aligned_columns": 396
+      }
+     ],
+     "reciprocal_best": "shha",
+     "margin_over_second": 77.0
+    },
+    {
+     "predicted_protein_len": 399,
+     "predicted_by_queries": [
+      "shhb"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "shha",
+       "score": 1575.0,
+       "identity_over_aligned_columns": 0.768,
+       "aligned_columns": 397
+      },
+      {
+       "zebrafish_gene": "shhb",
+       "score": 1514.0,
+       "identity_over_aligned_columns": 0.749,
+       "aligned_columns": 395
+      },
+      {
+       "zebrafish_gene": "ihha",
+       "score": 1267.0,
+       "identity_over_aligned_columns": 0.651,
+       "aligned_columns": 387
+      },
+      {
+       "zebrafish_gene": "ihhb",
+       "score": 1233.0,
+       "identity_over_aligned_columns": 0.627,
+       "aligned_columns": 389
+      },
+      {
+       "zebrafish_gene": "dhh",
+       "score": 968.0,
+       "identity_over_aligned_columns": 0.533,
+       "aligned_columns": 390
+      }
+     ],
+     "reciprocal_best": "shha",
+     "margin_over_second": 61.0
+    },
+    {
+     "predicted_protein_len": 363,
+     "predicted_by_queries": [
+      "dhh"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "shha",
+       "score": 1433.0,
+       "identity_over_aligned_columns": 0.778,
+       "aligned_columns": 361
+      },
+      {
+       "zebrafish_gene": "shhb",
+       "score": 1408.0,
+       "identity_over_aligned_columns": 0.772,
+       "aligned_columns": 359
+      },
+      {
+       "zebrafish_gene": "ihha",
+       "score": 1213.0,
+       "identity_over_aligned_columns": 0.67,
+       "aligned_columns": 361
+      },
+      {
+       "zebrafish_gene": "ihhb",
+       "score": 1160.0,
+       "identity_over_aligned_columns": 0.639,
+       "aligned_columns": 355
+      },
+      {
+       "zebrafish_gene": "dhh",
+       "score": 975.0,
+       "identity_over_aligned_columns": 0.558,
+       "aligned_columns": 355
+      }
+     ],
+     "reciprocal_best": "shha",
+     "margin_over_second": 25.0
+    }
+   ]
+  },
+  "kcnh_alt_scaffold": {
+   "scaffold": "JAGFBZ010001790.1",
+   "scaffold_len": 6813063,
+   "why": "kcnh2a's second-best hit (AS 2569, coverage 0.899) lies here and the kcnh2b query does NOT hit this scaffold at all, so it is the candidate for the kcnh2a-like locus",
+   "query_ledger": [
+    {
+     "gene": "kcnh1a",
+     "uniprot": "Q108P3",
+     "len": 959,
+     "url": "https://rest.uniprot.org/uniprotkb/Q108P3.fasta",
+     "sha256": "9931e7f3fb9d5260f49fe872e57b8a3f872e59b46b5540dbee4b2694f8959007"
+    },
+    {
+     "gene": "kcnh1b",
+     "uniprot": "K4EHU2",
+     "len": 956,
+     "url": "https://rest.uniprot.org/uniprotkb/K4EHU2.fasta",
+     "sha256": "ca79d60f8be33a60e0af4310452274970a7bf9b5c7bbcbf2aeb9660068dc1547"
+    },
+    {
+     "gene": "kcnh2a",
+     "uniprot": "Q108P2",
+     "len": 1253,
+     "url": "https://rest.uniprot.org/uniprotkb/Q108P2.fasta",
+     "sha256": "2561941b8d69e8d512675fc996370415cf7311c8f180e8f87955827b850805f7"
+    },
+    {
+     "gene": "kcnh2b",
+     "uniprot": "A0AC58ISX0",
+     "len": 837,
+     "url": "https://rest.uniprot.org/uniprotkb/A0AC58ISX0.fasta",
+     "sha256": "4a8b2cc85d307f9c8b6c865fef315528f769582f3cec7714bff4969b032bec3a"
+    },
+    {
+     "gene": "kcnh3",
+     "uniprot": "A0AC58GGN5",
+     "len": 1132,
+     "url": "https://rest.uniprot.org/uniprotkb/A0AC58GGN5.fasta",
+     "sha256": "ebc7cc7f94b085b40ea0a3705028c8ea5634ef8378d33a49702c576f9dec1a4f"
+    },
+    {
+     "gene": "kcnh4a",
+     "uniprot": "A0A142J9E8",
+     "len": 1151,
+     "url": "https://rest.uniprot.org/uniprotkb/A0A142J9E8.fasta",
+     "sha256": "6749d7464ca2be6f840a52b663c1d97dedc31a495381fd97914f1797167700fa"
+    },
+    {
+     "gene": "kcnh5a",
+     "uniprot": "B3DJV7",
+     "len": 1093,
+     "url": "https://rest.uniprot.org/uniprotkb/B3DJV7.fasta",
+     "sha256": "8aeb0d6e9aec35ac09f1d4f9b9e1c87244f74191fe7bb9dc46b21680274c0557"
+    },
+    {
+     "gene": "kcnh6a",
+     "uniprot": "Q8JH78",
+     "len": 1186,
+     "url": "https://rest.uniprot.org/uniprotkb/Q8JH78.fasta",
+     "sha256": "096d988b015e28f71e921b5fbc618e03040103b99ee04c625359b679c3fbcb8f"
+    },
+    {
+     "gene": "kcnh6b",
+     "uniprot": "A0A8M9QEL7",
+     "len": 893,
+     "url": "https://rest.uniprot.org/uniprotkb/A0A8M9QEL7.fasta",
+     "sha256": "b9ba530e9a08bbf0d16b866a215b224b03492ff41feeda53f503cc8baccae2f5"
+    },
+    {
+     "gene": "kcnh7",
+     "uniprot": "A0AB32TVI3",
+     "len": 1158,
+     "url": "https://rest.uniprot.org/uniprotkb/A0AB32TVI3.fasta",
+     "sha256": "73b61e7499a44746c22b6b10626ceb5165dd8f481816592cd6e7a3c42767dc03"
+    }
+   ],
+   "predictions": [
+    {
+     "predicted_protein_len": 1199,
+     "predicted_by_queries": [
+      "kcnh6a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 4563.0,
+       "identity_over_aligned_columns": 0.778,
+       "aligned_columns": 1170
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 3019.0,
+       "identity_over_aligned_columns": 0.603,
+       "aligned_columns": 1152
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2945.0,
+       "identity_over_aligned_columns": 0.61,
+       "aligned_columns": 1105
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2873.0,
+       "identity_over_aligned_columns": 0.672,
+       "aligned_columns": 878
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2413.0,
+       "identity_over_aligned_columns": 0.647,
+       "aligned_columns": 827
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1349.0,
+       "identity_over_aligned_columns": 0.392,
+       "aligned_columns": 981
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1263.0,
+       "identity_over_aligned_columns": 0.384,
+       "aligned_columns": 933
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1254.0,
+       "identity_over_aligned_columns": 0.398,
+       "aligned_columns": 908
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1233.0,
+       "identity_over_aligned_columns": 0.376,
+       "aligned_columns": 965
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1160.0,
+       "identity_over_aligned_columns": 0.42,
+       "aligned_columns": 880
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 1544.0
+    },
+    {
+     "predicted_protein_len": 1144,
+     "predicted_by_queries": [
+      "kcnh7"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 4072.0,
+       "identity_over_aligned_columns": 0.791,
+       "aligned_columns": 1075
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 3056.0,
+       "identity_over_aligned_columns": 0.597,
+       "aligned_columns": 1118
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2984.0,
+       "identity_over_aligned_columns": 0.594,
+       "aligned_columns": 1113
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2629.0,
+       "identity_over_aligned_columns": 0.682,
+       "aligned_columns": 809
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2331.0,
+       "identity_over_aligned_columns": 0.651,
+       "aligned_columns": 787
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1315.0,
+       "identity_over_aligned_columns": 0.398,
+       "aligned_columns": 950
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1220.0,
+       "identity_over_aligned_columns": 0.405,
+       "aligned_columns": 875
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1198.0,
+       "identity_over_aligned_columns": 0.392,
+       "aligned_columns": 892
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1182.0,
+       "identity_over_aligned_columns": 0.395,
+       "aligned_columns": 871
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1121.0,
+       "identity_over_aligned_columns": 0.411,
+       "aligned_columns": 870
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 1016.0
+    },
+    {
+     "predicted_protein_len": 1135,
+     "predicted_by_queries": [
+      "kcnh2a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 4109.0,
+       "identity_over_aligned_columns": 0.768,
+       "aligned_columns": 1086
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 3085.0,
+       "identity_over_aligned_columns": 0.617,
+       "aligned_columns": 1087
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2896.0,
+       "identity_over_aligned_columns": 0.606,
+       "aligned_columns": 1063
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2674.0,
+       "identity_over_aligned_columns": 0.686,
+       "aligned_columns": 797
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2362.0,
+       "identity_over_aligned_columns": 0.66,
+       "aligned_columns": 768
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1308.0,
+       "identity_over_aligned_columns": 0.397,
+       "aligned_columns": 911
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1257.0,
+       "identity_over_aligned_columns": 0.396,
+       "aligned_columns": 904
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1236.0,
+       "identity_over_aligned_columns": 0.382,
+       "aligned_columns": 899
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1204.0,
+       "identity_over_aligned_columns": 0.384,
+       "aligned_columns": 911
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1139.0,
+       "identity_over_aligned_columns": 0.437,
+       "aligned_columns": 822
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 1024.0
+    },
+    {
+     "predicted_protein_len": 1057,
+     "predicted_by_queries": [
+      "kcnh3"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2641.0,
+       "identity_over_aligned_columns": 0.679,
+       "aligned_columns": 907
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2229.0,
+       "identity_over_aligned_columns": 0.602,
+       "aligned_columns": 922
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2187.0,
+       "identity_over_aligned_columns": 0.628,
+       "aligned_columns": 802
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2164.0,
+       "identity_over_aligned_columns": 0.604,
+       "aligned_columns": 869
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2116.0,
+       "identity_over_aligned_columns": 0.562,
+       "aligned_columns": 842
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1415.0,
+       "identity_over_aligned_columns": 0.397,
+       "aligned_columns": 1000
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1320.0,
+       "identity_over_aligned_columns": 0.375,
+       "aligned_columns": 999
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1278.0,
+       "identity_over_aligned_columns": 0.387,
+       "aligned_columns": 851
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1266.0,
+       "identity_over_aligned_columns": 0.38,
+       "aligned_columns": 851
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1233.0,
+       "identity_over_aligned_columns": 0.358,
+       "aligned_columns": 959
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 412.0
+    },
+    {
+     "predicted_protein_len": 904,
+     "predicted_by_queries": [
+      "kcnh6b"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 3483.0,
+       "identity_over_aligned_columns": 0.793,
+       "aligned_columns": 888
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2897.0,
+       "identity_over_aligned_columns": 0.673,
+       "aligned_columns": 871
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2485.0,
+       "identity_over_aligned_columns": 0.64,
+       "aligned_columns": 872
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2478.0,
+       "identity_over_aligned_columns": 0.654,
+       "aligned_columns": 835
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2396.0,
+       "identity_over_aligned_columns": 0.648,
+       "aligned_columns": 819
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1179.0,
+       "identity_over_aligned_columns": 0.382,
+       "aligned_columns": 791
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1178.0,
+       "identity_over_aligned_columns": 0.398,
+       "aligned_columns": 779
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1157.0,
+       "identity_over_aligned_columns": 0.368,
+       "aligned_columns": 836
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1105.0,
+       "identity_over_aligned_columns": 0.361,
+       "aligned_columns": 864
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1099.0,
+       "identity_over_aligned_columns": 0.399,
+       "aligned_columns": 808
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 586.0
+    },
+    {
+     "predicted_protein_len": 862,
+     "predicted_by_queries": [
+      "kcnh1b"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2894.0,
+       "identity_over_aligned_columns": 0.731,
+       "aligned_columns": 855
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2452.0,
+       "identity_over_aligned_columns": 0.653,
+       "aligned_columns": 851
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2346.0,
+       "identity_over_aligned_columns": 0.662,
+       "aligned_columns": 796
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2159.0,
+       "identity_over_aligned_columns": 0.669,
+       "aligned_columns": 695
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2102.0,
+       "identity_over_aligned_columns": 0.622,
+       "aligned_columns": 711
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1540.0,
+       "identity_over_aligned_columns": 0.405,
+       "aligned_columns": 845
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1502.0,
+       "identity_over_aligned_columns": 0.396,
+       "aligned_columns": 843
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1476.0,
+       "identity_over_aligned_columns": 0.409,
+       "aligned_columns": 842
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1440.0,
+       "identity_over_aligned_columns": 0.403,
+       "aligned_columns": 841
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1236.0,
+       "identity_over_aligned_columns": 0.399,
+       "aligned_columns": 769
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 442.0
+    },
+    {
+     "predicted_protein_len": 804,
+     "predicted_by_queries": [
+      "kcnh1a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2987.0,
+       "identity_over_aligned_columns": 0.803,
+       "aligned_columns": 804
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2504.0,
+       "identity_over_aligned_columns": 0.705,
+       "aligned_columns": 786
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2367.0,
+       "identity_over_aligned_columns": 0.682,
+       "aligned_columns": 770
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2197.0,
+       "identity_over_aligned_columns": 0.679,
+       "aligned_columns": 676
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2193.0,
+       "identity_over_aligned_columns": 0.719,
+       "aligned_columns": 636
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1548.0,
+       "identity_over_aligned_columns": 0.432,
+       "aligned_columns": 773
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1487.0,
+       "identity_over_aligned_columns": 0.413,
+       "aligned_columns": 783
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1455.0,
+       "identity_over_aligned_columns": 0.424,
+       "aligned_columns": 778
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1450.0,
+       "identity_over_aligned_columns": 0.416,
+       "aligned_columns": 770
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1255.0,
+       "identity_over_aligned_columns": 0.436,
+       "aligned_columns": 723
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 483.0
+    },
+    {
+     "predicted_protein_len": 771,
+     "predicted_by_queries": [
+      "kcnh2b"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2892.0,
+       "identity_over_aligned_columns": 0.785,
+       "aligned_columns": 741
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2567.0,
+       "identity_over_aligned_columns": 0.706,
+       "aligned_columns": 724
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2405.0,
+       "identity_over_aligned_columns": 0.701,
+       "aligned_columns": 720
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2355.0,
+       "identity_over_aligned_columns": 0.671,
+       "aligned_columns": 736
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2248.0,
+       "identity_over_aligned_columns": 0.68,
+       "aligned_columns": 704
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1183.0,
+       "identity_over_aligned_columns": 0.429,
+       "aligned_columns": 693
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1171.0,
+       "identity_over_aligned_columns": 0.397,
+       "aligned_columns": 721
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1140.0,
+       "identity_over_aligned_columns": 0.387,
+       "aligned_columns": 729
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1122.0,
+       "identity_over_aligned_columns": 0.409,
+       "aligned_columns": 679
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1091.0,
+       "identity_over_aligned_columns": 0.438,
+       "aligned_columns": 681
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 325.0
+    },
+    {
+     "predicted_protein_len": 707,
+     "predicted_by_queries": [
+      "kcnh5a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2915.0,
+       "identity_over_aligned_columns": 0.88,
+       "aligned_columns": 676
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2486.0,
+       "identity_over_aligned_columns": 0.785,
+       "aligned_columns": 670
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2357.0,
+       "identity_over_aligned_columns": 0.754,
+       "aligned_columns": 667
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2176.0,
+       "identity_over_aligned_columns": 0.819,
+       "aligned_columns": 526
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2137.0,
+       "identity_over_aligned_columns": 0.754,
+       "aligned_columns": 548
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1480.0,
+       "identity_over_aligned_columns": 0.437,
+       "aligned_columns": 689
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1435.0,
+       "identity_over_aligned_columns": 0.461,
+       "aligned_columns": 666
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1430.0,
+       "identity_over_aligned_columns": 0.453,
+       "aligned_columns": 660
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1427.0,
+       "identity_over_aligned_columns": 0.452,
+       "aligned_columns": 660
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1233.0,
+       "identity_over_aligned_columns": 0.457,
+       "aligned_columns": 610
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 429.0
+    },
+    {
+     "predicted_protein_len": 679,
+     "predicted_by_queries": [
+      "kcnh4a"
+     ],
+     "ranked_zebrafish_family_members": [
+      {
+       "zebrafish_gene": "kcnh6a",
+       "score": 2971.0,
+       "identity_over_aligned_columns": 0.885,
+       "aligned_columns": 678
+      },
+      {
+       "zebrafish_gene": "kcnh2a",
+       "score": 2533.0,
+       "identity_over_aligned_columns": 0.792,
+       "aligned_columns": 673
+      },
+      {
+       "zebrafish_gene": "kcnh7",
+       "score": 2410.0,
+       "identity_over_aligned_columns": 0.76,
+       "aligned_columns": 672
+      },
+      {
+       "zebrafish_gene": "kcnh2b",
+       "score": 2198.0,
+       "identity_over_aligned_columns": 0.81,
+       "aligned_columns": 537
+      },
+      {
+       "zebrafish_gene": "kcnh6b",
+       "score": 2144.0,
+       "identity_over_aligned_columns": 0.764,
+       "aligned_columns": 542
+      },
+      {
+       "zebrafish_gene": "kcnh4a",
+       "score": 1518.0,
+       "identity_over_aligned_columns": 0.462,
+       "aligned_columns": 673
+      },
+      {
+       "zebrafish_gene": "kcnh1a",
+       "score": 1404.0,
+       "identity_over_aligned_columns": 0.442,
+       "aligned_columns": 661
+      },
+      {
+       "zebrafish_gene": "kcnh1b",
+       "score": 1404.0,
+       "identity_over_aligned_columns": 0.45,
+       "aligned_columns": 658
+      },
+      {
+       "zebrafish_gene": "kcnh5a",
+       "score": 1400.0,
+       "identity_over_aligned_columns": 0.442,
+       "aligned_columns": 661
+      },
+      {
+       "zebrafish_gene": "kcnh3",
+       "score": 1270.0,
+       "identity_over_aligned_columns": 0.462,
+       "aligned_columns": 611
+      }
+     ],
+     "reciprocal_best": "kcnh6a",
+     "margin_over_second": 438.0
+    }
+   ]
+  }
+ }
+}

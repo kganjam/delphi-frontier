@@ -34,11 +34,22 @@ verified against the data or rejected with a reason.
 | R3 | That `and1`/`and2` and `hoxa13a`/`hoxd13a` secondary hits should have been cross-checked for overlap. | The merge script already checks overlaps across **all** best hits of all queries in all rounds, which is how both flagged pairs were found; `and1`/`and2` and the two `hox13` queries do not overlap. Checking *secondary* hits for overlap would be uninterpretable given finding 2 (secondary-hit sets are chunk artefacts). Declined with that reason. |
 | R4 | That specific future-dated PMIDs are "fabricated". | Every PMID cited is backed by a saved Europe PMC response body with a recorded sha256 and request URL (`SOURCES.md`). The retrievals are receipted; the reviewer's model cutoff is not evidence about them. The *provenance* half of the same finding was accepted — see 10. |
 
+## Follow-up run after the review
+
+Finding 3 left the paralog question open, so analysis G2 was then run as well
+(`scripts/reciprocal_check.py`, exit 0, `RESULTS.md` §R3): miniprot `--trans` predictions from each
+collision scaffold, aligned back against every member of the zebrafish gene family. It **resolved**
+the `shha`/`shhb` collision in favour of `shha` (5 of 5 predictions), showed that `kcnh2a`'s
+second-best scaffold is a `kcnh6a`-like locus, and **did not resolve** the `kcnh2a`/`kcnh2b`
+collision: alignment score and percent identity rank the same predicted sequence differently. That
+non-resolution is reported as such and carried as claim `zf2ff-claim-kcnh2-paralog-unresolved`. A
+gene tree with outgroups is now the top open item.
+
 ## What the review did not fix
 
-The three deepest limitations are untouched by this round: **no full text was read for any source**;
-**no orthology test was run** (no reciprocal best hit, no gene tree), which is now the top blocker
-given finding 3; and traits T3, T5, T6 and T8 still have **no candidate gene**. Nothing in this
+The deepest limitations are untouched by this round: **no full text was read for any source**;
+**no gene tree or synteny analysis was run**, which is what the unresolved `kcnh2` collision needs;
+and traits T3, T5, T6 and T8 still have **no candidate gene**. Nothing in this
 review made the project an observation of a flying fish, and nothing in it was run on a fish.
 
 A second critique pass was not run. The changes above are unreviewed.

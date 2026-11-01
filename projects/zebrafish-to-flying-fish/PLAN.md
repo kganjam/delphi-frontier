@@ -171,7 +171,8 @@ Constraints, measured or read, that bound what is runnable at all:
 | G1 | **Protein-to-genome mapping of candidate loci onto `GCA_018398805.1`** | **Done.** `C-here`, three rounds, 27 distinct candidate proteins + 4 controls. See `RESULTS.md`. | zebrafish UniProt proteins; the assembly | Shows the locus is detectable and how diverged the best-aligning region is. Does **not** establish orthology, copy number or expression. Secondary-hit counts are per-chunk artefacts and must not be read as copy number. |
 | G1b | **Span audit of every best hit** (assembly-gap fraction, largest intron, frameshifts) | **Done.** `C-here`, `SPAN-AUDIT.md`. Added after review, because two hits span ~0.3 Mb. | G1 alignments + the assembly | Separates "large-intron gene" from "possible chaining artefact". Does not decide which; it reports the numbers that let a reader discount a row. |
 | G1c | **Paralog controls** (`kcnh2b`, `tbx5b`, `fgf10b`, `kcnk5a` mapped alongside their `a` paralogs) | **Done.** `C-here`, round 3. Added after review: with the teleost whole-genome duplication, an `a`-paralog query could best-hit the `b` region. | UniProt; the assembly | Shows whether the `a` and `b` queries resolve to different scaffolds. Still not an orthology test. |
-| G2 | Reciprocal-best-hit orthology with medaka as the annotated proxy | Yes — needs the medaka proteome (Ensembl) plus a reverse mapping. Not run. | Ensembl medaka | Would upgrade G1 from "detectable" to "best reciprocal candidate". Still not an expression or function claim. |
+| G2 | **Reciprocal best-hit test within each gene family** (miniprot `--trans` prediction from the collision scaffold, aligned back against every zebrafish family member) | **Done.** `C-here`, `RESULTS.md` §R3. Run instead of the medaka-proxy version because the collisions are between zebrafish paralogs, which medaka cannot arbitrate. | the assembly; 15 zebrafish family proteins | **Resolved** the `shha`/`shhb` collision (5/5 predictions rank `shha` first) and **did not resolve** the `kcnh2a`/`kcnh2b` one: score and percent-identity rankings disagree on the same sequence. Also showed `kcnh2a`'s second-best scaffold is a `kcnh6a`-like locus. Not an orthology proof; a gene tree is still owed. |
+| G2b | Gene tree for the `kcnh2` region with outgroup species | **Not run.** This is what the unresolved collision actually needs. | the predicted proteins (already on disk), plus outgroup sequences | Would settle the paralog assignment. Nothing else in this project can. |
 | G3 | Scaffold co-occurrence / micro-synteny of the candidate loci | Yes, partially: scaffold identity per hit is already in the round-1/round-2 summaries. Weak because the assembly is scaffold-level. | G1 output | Would show whether neighbouring zebrafish genes land on the same Exocoetid scaffold. Fragmentation will cause false negatives; a negative is uninformative. |
 | G4 | Coding-change screen at `lat4a`/`kcnh2a` (does the Exocoetid allele carry the convergent residue?) | Yes in principle: extract the aligned region from the assembly and inspect the codon. Not run; blocked on the identifier problem in §2.1 and on not having read which residue PMID 40689752 means. | G1 alignments | Would be a direct, cheap test of a published claim in a *different* Exocoetid species than the paper used. Species mismatch must be stated. |
 | G5 | Conserved-non-coding-element scan around candidate loci (zebrafish/medaka/*H. speculiger*) | Yes technically (whole-genome alignment of the three), heavy; not run. | assemblies | Would produce candidate elements. Conservation is not activity: a conserved element is a hypothesis, not a driver (SPEC-012). |
@@ -275,8 +276,10 @@ all 27 distinct candidate zebrafish query proteins have a detectable best-aligni
 `GCA_018398805.1`; controls behaved (conserved actb1 at 0.989 identity, and all three shuffled
 negative controls returned no hit); best-hit amino-acid identity spans 0.447 (hoxd13a) to 0.989 (the
 actb1 control); `msxb` mapped identically in two independent runs. Three results limit the rest:
-`shha`/`shhb` best-hit the same region; **`kcnh2a` and `kcnh2b` best-hit the same region with the `b`
-query scoring higher, so the plan's primary candidate locus cannot be assigned to the `a` paralog**;
+`shha`/`shhb` best-hit the same region, and a reciprocal test resolves that one in favour of `shha`
+(5 of 5 predicted proteins); **`kcnh2a` and `kcnh2b` best-hit the same region, and a reciprocal
+test flips its answer depending on whether alignment score or percent identity is used, so the plan's
+primary candidate locus cannot be assigned to a paralog at all**;
 and the `kcnh2a`, `kcnh2b` and `cacna1g` spans are each dominated by one ~0.1 Mb gap with 2–4
 frameshifts, so those three are "something channel-like is there", not located genes. These are
 alignments, not orthology calls.
@@ -284,7 +287,8 @@ alignments, not orthology calls.
 **Unknown** (declared, not filled):
 the coordinates and sequence of **every** regulatory element this plan would use; which UniProt
 paralog the papers' `lat4a` is; **whether the detected `kcnh2`-like region is the `a` or the `b`
-paralog**; whether any Exocoetid locus is expressed, where or when; T3 caudal asymmetry, T5 ray
+paralog**; whether the single detected `kcnh2`-like region holds one gene or more; whether any Exocoetid locus
+is expressed, where or when; T3 caudal asymmetry, T5 ray
 material properties, T6 launch muscle and T8 behaviour have no candidate gene; T11 girdle and T12
 locomotor cost are sourced in zebrafish only; the *result* of the one published wildtype-vs-longfin
 performance comparison, whose abstract was read but whose findings were not;
@@ -294,9 +298,11 @@ abstract sentences this plan leans on, since **no full text was read**.
 
 ## 7. Next actions, in order of information gained per unit cost
 
-1. **G2, reciprocal best hits against medaka** — promoted to first by the review. Until the
-   `kcnh2a`/`kcnh2b` collision is resolved, the plan's primary candidate locus is unassigned and every
-   edit designed at it is designed at an unknown paralog. Pure computation; medaka labelled a proxy.
+1. **G2b, a gene tree for the `kcnh2`-like region with outgroups.** G2 has been run (`RESULTS.md`
+   §R3) and it did **not** settle the paralog assignment: the ranking flips between alignment score
+   and percent identity on the same predicted sequence. Until a tree settles it, the plan's primary
+   candidate locus has no located target and every edit designed at it is designed at an unknown
+   paralog. The predicted proteins are already on disk.
 2. **Read the result of PMID 38232499** (wildtype vs longfin locomotor performance). One abstract-
    to-full-text step that can invalidate the whole programme, which makes it the cheapest possible
    kill test.

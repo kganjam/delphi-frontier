@@ -176,7 +176,64 @@ artefact, and this project did not decide either.
 
 ---
 
-## R3 — Inputs reused from other harnesses (their receipts, not ours)
+## R3 — Reciprocal best-hit test (analysis G2), run to resolve the paralog collisions
+
+| | |
+| --- | --- |
+| Command | `systemd-run ... python3 -I scripts/reciprocal_check.py <GENOME.fna> <miniprot> data/families.json data/reciprocal` |
+| Exit code | 0 |
+| Method | For each collision: cut the one scaffold out of the assembly, let miniprot predict the proteins that region encodes (`--trans`, whole gene family as queries), then align each distinct predicted protein against **every** zebrafish family member with Biopython 1.88 `PairwiseAligner` (global, BLOSUM62, gap open −11 / extend −1, free end gaps) and rank them. |
+| Families | `kcnh` (10 zebrafish members: kcnh1a/1b/2a/2b/3/4a/5a/6a/6b/7), `hedgehog` (5: shha, shhb, ihha, ihhb, dhh). Per-member accession, length and FASTA sha256 in `data/reciprocal/reciprocal_check.json`. |
+| Outputs | `data/reciprocal/reciprocal_check.json`, per-family predicted proteins and query FASTAs |
+
+### Result 1 — the hedgehog collision resolves: the region is `shha`-like
+
+All **5** distinct predicted proteins from JAGFBZ010001012.1 rank `shha` first, with `shhb` second
+every time (margins 25–91, identity 0.760–0.778 vs 0.724–0.772). Consistent across every prediction,
+so the forward run's `shha` assignment survives the reciprocal test and the `shha`/`shhb` ambiguity in
+`LOCI.md` is resolved in favour of `shha`. Still not an orthology proof.
+
+### Result 2 — the `kcnh2` collision does **not** resolve, and the answer flips with the metric
+
+Eight distinct predicted proteins came out of JAGFBZ010001591.1. Five rank `kcnh2b` first, three rank
+`kcnh2a` first — and the disagreement is systematic, not noise:
+
+| predicted protein | predicted from | reciprocal best (by score) | score margin | `kcnh2a` id | `kcnh2b` id |
+| --- | --- | --- | --- | --- | --- |
+| **1325 aa** (the longest and most complete) | `kcnh2a` query | **`kcnh2a`** (3843) | 631 | 0.674 | **0.827** |
+| 1154 aa | `kcnh6a` query | `kcnh2a` (3548) | 284 | 0.673 | — |
+| 1052 aa | `kcnh7` query | `kcnh2a` (3395) | 297 | 0.719 | — |
+| 818 aa | `kcnh2b` query | **`kcnh2b`** (3303) | 505 | 0.732 | 0.844 |
+| 752 / 713 / 482 / 478 aa | various | `kcnh2b` | 57–286 | 0.683–0.915 | 0.725–0.942 |
+
+**The two rankings disagree on the same sequence.** For the longest prediction, `kcnh2a` wins on
+alignment *score* (by 631) while `kcnh2b` wins on percent *identity over aligned columns* (0.827 vs
+0.674) — because a global BLOSUM62 score rewards aligning more of a longer protein, and `kcnh2a` is
+1253 aa against `kcnh2b`'s 837 aa entry. Neither metric is wrong; they answer different questions.
+
+**Conclusion, stated as the non-result it is: the paralog identity of this region remains unresolved.**
+The forward run favoured `kcnh2b` (higher identity), the reciprocal run favours `kcnh2a` on score and
+`kcnh2b` on identity, and the test's verdict depends on a scoring choice this project has no principled
+reason to make. `H`, not tested here: the region holds more than one `kcnh`-like gene, or a collapsed or
+tandem duplication, which would explain why differently-truncated predictions prefer different
+paralogs. Settling it needs a gene tree with outgroups and synteny — **neither was run**.
+
+### Result 3 — `kcnh2a`'s second-best scaffold is a `kcnh6a`-like locus, not a second `kcnh2a`
+
+`kcnh2a`'s second-best forward hit (JAGFBZ010001790.1, AS 2569, coverage 0.899) is on a scaffold the
+`kcnh2b` query does not hit at all, which made it the obvious candidate for a separate `kcnh2a`-like
+locus. It is not: all **10** distinct predicted proteins there rank `kcnh6a` first, with margins
+325–1544 — the largest and most consistent margins anywhere in this test. So that scaffold is
+accounted for, and no second `kcnh2a`-like region was found.
+
+**What this means for the plan.** `kcnh2a` is `PLAN.md`'s primary candidate locus. After three mapping
+rounds, a span audit and a reciprocal test, this project **cannot say which paralog the one detected
+`kcnh2`-like region is**, and has found no separate region that is unambiguously `kcnh2a`. That is not
+evidence the gene is absent from *H. speculiger* — the assembly is scaffold-level and unannotated, and
+a divergent or fragmented ortholog would look exactly like this. It is a limit on what can be designed:
+an edit aimed at "the Exocoetid `kcnh2a`" currently has no located target.
+
+## R4 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
   Europe PMC retrievals, GRCz11 coordinates for 8 candidate genes, and OpenFold2 predicted structures
@@ -193,9 +250,12 @@ artefact, and this project did not decide either.
 ## Failures and things not done
 
 - **No full text was read, for any source.** Every literature statement in `PLAN.md` is abstract-level.
-- Analyses G2–G6 in `PLAN.md` §3 were **not run**: no reciprocal-best-hit orthology, no synteny
-  analysis beyond recording scaffold identity, no convergent-residue inspection, no conserved-element
-  scan, no phylogenomic scan (the 35-species data behind PMID 34534441 is not public here).
+- Analyses G3–G6 in `PLAN.md` §3 were **not run**: no synteny analysis beyond recording scaffold
+  identity, no convergent-residue inspection, no conserved-element scan, no phylogenomic scan (the
+  35-species data behind PMID 34534441 is not public here). G2 was run (§R3) and returned a
+  resolution for the hedgehog collision and a **non-resolution** for the `kcnh2` collision.
+- No gene tree was built, which is what the `kcnh2` question actually needs, and no outgroup species
+  was used anywhere in this project.
 - No GPU job was submitted by this project. No Nebius job carries the `claude-zf2ff-` prefix.
 - The `lat4a` ↔ `slc43a2a`/`slc43a2b` identifier question is **unresolved**, and it blocks G4 and
   perturbation row P2.
