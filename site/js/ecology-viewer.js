@@ -327,14 +327,14 @@ export function mountEcologyViewer(host, opts = {}) {
     [["height", "height z (m)"], ["speed", "speed |v| (m/s)"], ...scal.map((k) => [k, k]), ...finIds().map((c) => ["fin:" + c, `fin angle ${c} (rad)`]),
      ...FORCE_KEYS.filter((k) => k in f[0].fish[0]).map((k) => ["norm:" + k, `|${k}| (not drawn where null)`])].forEach(([v, l]) => { const o = el("option", null, l); o.value = v; metric.append(o); });
     metric.onchange = drawChart;
-    receipt.textContent = ""; receipt.append(el("h4", null, "Run file"));
+    receipt.textContent = ""; receipt.append(el("h3", "lbl", "Run file"));
     const cs = tr.case && typeof tr.case === "object" ? tr.case : {};
     receipt.append(el("p", null, `${caseId(tr)}${tr.title ? " — " + tr.title : ""}${"feedback" in cs ? ` (feedback: ${cs.feedback}, neighbors: ${cs.neighbors})` : ""}${tr.scenario ? " — " + tr.scenario : ""}`));
     receipt.append(el("p", "mono", `from the file: ${f.length} saved states, ${f[0].fish.length} fish, ${fmt(f[f.length - 1].time_s - f[0].time_s, 3)} s` + (finite(tr.dt_s) ? `, integrator step ${tr.dt_s} s` : "") + (S.sha ? `, sha256 ${S.sha}` : "")));
     S.notes.forEach((n) => receipt.append(el("p", "ev-warn", n)));
     ["world_axes", "body_axes", "orientation_order", "angular_velocity_frame", "assumptions", "model_xml_sha256", "seed"].forEach((k) => { if (tr[k] !== undefined) receipt.append(el("p", "mono", `${k}: ${show(tr[k])}`)); });
     if (tr.provenance) Object.entries(tr.provenance).forEach(([k, v]) => receipt.append(el("p", "mono", `${k}: ${show(v)}`)));
-    if (tr.summary && typeof tr.summary === "object") { receipt.append(el("h4", null, "Summary (from the run file)")); flatten(tr.summary).forEach(([k, v]) => receipt.append(el("p", "mono" + (v === false ? " ev-false" : ""), `${k}: ${show(v)}`))); }
+    if (tr.summary && typeof tr.summary === "object") { receipt.append(el("h3", "lbl", "Summary (from the run file)")); flatten(tr.summary).forEach(([k, v]) => receipt.append(el("p", "mono" + (v === false ? " ev-false" : ""), `${k}: ${show(v)}`))); }
     (S.receipts || []).forEach((r) => { const d = el("details", "ev-rcpt"); d.append(el("summary", null, `${r.label}${r.falseCount ? ` — ${r.falseCount} false flag(s)` : ""}`));
       r.rows.forEach(([k, v]) => d.append(el("p", "mono" + (v === false ? " ev-false" : ""), `${k}: ${show(v)}`))); if (r.falseCount) d.open = true; receipt.append(d); });
     links.textContent = "";

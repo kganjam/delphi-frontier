@@ -2,7 +2,9 @@
  * does not run Lean. A family whose files changed since its receipt is shown as stale and its source is withheld. Lean checks the stated mathematics,
  * not organism viability, a genotype-to-fin link or any empirical fact. All file text is inserted by the renderer's escaping, never as HTML. */
 (function () {
-  const DF = window.DF; const { html } = DF; const U = DF.ui;
+  const DF = window.DF;
+  /* The file types frontier/web.py serves from site/artifacts (MIME + ARTIFACT_MIME). Anything else would be a dead link on the live site. */
+  const SERVED = /\.(html|css|js|mjs|json|svg|png|jpe?g|gif|webp|ico|txt|md|csv|woff2|stl|obj|glb|fasta|fa|lean|trig|vtt|mp4|webm|xz|zip)$/i; const { html } = DF; const U = DF.ui;
   const STATUS = { current: ["recorded compile matches these files", "ok"], stale: ["stale: the files changed since the receipt, so nothing is shown as compiled", "no"], receipt_failed: ["the recorded run did not pass", "no"], missing: ["receipt or source missing", "no"] };
   const sec = (s) => (typeof s === "number" ? s.toFixed(1) + " s" : "time not recorded");
   const lines = (text) => String(text).replace(/\n$/, "").split("\n");
@@ -27,7 +29,7 @@
       <p class="proof-sum">${f.summary}</p>
       ${PLAIN[f.id] ? html`<p class="proof-plain"><span class="eyebrow">In plain terms</span> ${PLAIN[f.id]}</p>` : ""}
       <p class="proof-badges">${U.pill(f.theorems.length + " statements", "ev")} ${U.pill(rejected + " of " + f.negative_blocks.length + " mutants rejected", rejected === f.negative_blocks.length ? "ok" : "no")} ${U.pill("exit " + pos.exit + " (positive run)", pos.exit === 0 ? "ok" : "no")}${pos.only_standard_axioms ? html` ${U.pill("standard axioms only", "ok")}` : ""}</p>
-      <div class="proofeq">${f.equations.map((e) => html`<div class="eqcard"><h4>${e.label}</h4><div class="eq-math">${DF.texSpan(e.tex, true)}</div></div>`)}</div>
+      <div class="proofeq">${f.equations.map((e) => html`<div class="eqcard"><h3 class="lbl">${e.label}</h3><div class="eq-math">${DF.texSpan(e.tex, true)}</div></div>`)}</div>
       ${f.figure_href ? html`<figure class="prooffigure"><img src="${f.figure_href}" alt="Sphere and one-sided slab geometry with normalized model-only center oxygen response curves and diffusion limits"><figcaption class="small">Pinned geometry/control figure. Its threshold curves are conditional model implications, not biological measurements.</figcaption></figure>` : ""}
       <div class="proof-cols"><div><h3>Assumptions</h3><ul class="small">${f.assumptions.map((a) => html`<li>${a}</li>`)}</ul>${f.proves ? html`<p class="small"><b>Proves:</b> ${f.proves}</p>` : ""}</div>
         ${f.does_not_prove ? html`<div><h3>What it does not prove</h3><ul class="small">${f.does_not_prove.map((x) => html`<li>${x}</li>`)}</ul></div>` : ""}</div>
@@ -41,7 +43,7 @@
         <tr><td data-label="Run">Positive: the theorems compile</td><td data-label="Exit">${pos.exit}</td><td data-label="Time">${sec(pos.seconds)}</td><td data-label="Axioms">${(pos.axioms || []).join(", ")}${pos.only_standard_axioms ? html` ${U.pill("standard axioms only", "ok")}` : html` ${U.pill("non-standard axioms", "no")}`}</td><td data-label="Meaning" class="small">Lean accepted every theorem; exit 0.</td></tr>
         <tr><td data-label="Run">Negative: mutated statements</td><td data-label="Exit">${neg.exit}</td><td data-label="Time">${sec(neg.seconds)}</td><td data-label="Axioms">not applicable</td><td data-label="Meaning" class="small">Exit 1 is the expected result: every mutated block must fail to compile.</td></tr></tbody></table></div>
       <p class="small">Receipt <a href="${f.receipt.href}">${f.receipt.path.split("/").pop()}</a> ${sha(f.receipt.sha256)}${f.assembled_sources_match === true ? html` · the sources that were compiled were rebuilt from the current files and match the receipt` : ""}. Every pinned input still has its pinned bytes.</p>`)}
-      ${fold("Downloads", downloads.length + " files", html`<ul class="small prooffiles">${downloads.map((x) => html`<li><a href="${x.path}" download>${x.name}</a> <span class="faint">${x.role}</span> ${sha(x.sha256)}</li>`)}</ul>${f.statement_origin ? html`<p class="small faint">${f.statement_origin}.</p>` : ""}`)}
+      ${fold("Downloads", downloads.length + " files", html`<ul class="small prooffiles">${downloads.map((x) => html`<li>${SERVED.test(x.path) ? html`<a href="${x.path}" download>${x.name}</a>` : html`<code>${x.name}</code> <span class="faint">(in the repository at <code>site/${x.path}</code>; this site does not serve this file type)</span>`} <span class="faint">${x.role}</span> ${sha(x.sha256)}</li>`)}</ul>${f.statement_origin ? html`<p class="small faint">${f.statement_origin}.</p>` : ""}`)}
     </section>`;
   }
 

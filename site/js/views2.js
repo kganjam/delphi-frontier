@@ -46,7 +46,7 @@
     host.appendChild(cap);
     const t3 = snap && (snap.simulation_manifests || []).find((m) => m.id === "fish3d-render" && m.video_state === "present_verified");
     if (t3) { const tv = document.createElement("div"); tv.className = "turntable"; tv.innerHTML = html`<h3 class="small">3D model turntable</h3><video controls loop muted playsinline preload="metadata" ${t3.poster_href ? html`poster="${t3.poster_href}"` : ""} src="${t3.video_href}" aria-label="Turntable of the 3D model of candidate N1"></video>
-      <p class="small faint">Path-traced render of the N1 candidate mesh, with assumed fin thickness and an assumed scale lattice: not an organism and not an aerodynamic result. <a href="${t3.video_href}" download="fish3d-N1-turntable.mp4">Download MP4</a> · <a href="${DF.href("/simulations")}#sim-fish3d-render">limits and hashes</a></p>`.toString(); host.appendChild(tv); }
+      <p class="small faint">Path-traced render of the N1 candidate mesh, with assumed fin thickness and an assumed scale lattice: not an organism and not an aerodynamic result. <a href="${t3.video_href}" download="fish3d-N1-turntable.mp4">Download MP4</a> · <a href="${DF.href("/simulations", { q: "path-traced turntable" })}">limits and hashes</a></p>`.toString(); host.appendChild(tv); }
     const forms = ((snap && snap.print_forms && snap.print_forms.forms) || []).filter((f) => f.files && f.files.stl);
     if (!forms.length) return;
     const id = "pm" + Math.random().toString(36).slice(2, 7);
@@ -411,7 +411,7 @@
 
       <section class="panel" aria-labelledby="ev-r"><h2 id="ev-r">Replayable results</h2>
         <p class="note small">These two records were produced by earlier work and are shown with their own caveats. The cavefish result is a reproduction on public data, not a discovery; its biological interpretation is labelled separately in the document. The KCNE1 protocol stopped at its preregistered floor: a failed input gate is evidence about the proposed action.</p>
-        <div class="cards">${docs.filter((d) => /results/.test(d.path)).map((d) => html`<article class="card"><h3>${d.title}</h3><p>${d.status_line ? d.status_line : ""}</p><p class="small">${U.src("doc:" + d.id, "Open the full document")} · sha256 ${U.sha(d.sha256)} · <a href="${d.href}">raw file</a></p></article>`)}</div></section>
+        <div class="cards">${docs.filter((d) => /results/.test(d.path)).map((d) => html`<article class="card"><h3>${raw(DF.mdInline(d.title))}</h3><p>${d.status_line ? d.status_line : ""}</p><p class="small">${U.src("doc:" + d.id, "Open the full document")} · sha256 ${U.sha(d.sha256)} · <a href="${d.href}">raw file</a></p></article>`)}</div></section>
 
       ${attestationSection(snap)}
 
@@ -494,7 +494,7 @@
         <article><h3>Does it cover the question?</h3><p>Direct ${fit.direct || 0}, partial ${fit.partial || 0}. Only <b>${t.clean_yes_and_direct_no_flags}</b> of ${A.n} are a clean yes and direct with no flag.</p></article></div>
       <p class="small">The gap this shows: a quote can be present and still not state what the stance claims, or answer only part of the question. A hash or a matched string establishes neither. ${U.src("doc:" + A.readme, "Read the full write-up")}</p>
       <div class="tablewrap"><table><thead><tr><th>Item</th><th>Stance</th><th>Quote in source</th><th>Supports stance</th><th>Covers question</th><th>Flags and the reviewer's note</th></tr></thead><tbody>
-        ${A.items.map((x) => html`<tr><td><b>${x.slug}</b><br><span class="faint small">${x.source || ""}${x.article_year ? " · " + x.article_year : ""}</span></td><td>${x.stance}</td><td>${x.mechanical_status}</td><td>${U.pill(x.supports, x.supports === "yes" ? "ok" : x.supports === "no" ? "no" : "warn")}</td><td>${U.pill(x.fit, x.fit === "direct" ? "ok" : "warn")}</td><td>${(x.flags || []).map((f) => U.pill(f.replace(/_/g, " "), "grp"))}<br><span class="small">${x.note}</span></td></tr>`)}</tbody></table></div></section>`;
+        ${A.items.map((x) => html`<tr><td><b>${x.slug}</b><br><span class="faint small">${x.source || ""}${x.article_year ? " · " + x.article_year : ""}</span></td><td>${x.stance}</td><td>${x.mechanical_status}</td><td>${U.pill(x.supports, x.supports === "yes" ? "ok" : x.supports === "no" ? "no" : "warn")}</td><td>${U.pill(x.fit, x.fit === "direct" ? "ok" : "warn")}</td><td>${(x.flags || []).map((f) => html`${U.pill(f.replace(/_/g, " "), "grp")} `)}<br><span class="small">${x.note}</span></td></tr>`)}</tbody></table></div></section>`;
   }
 
   /* ---------------- BELIEF ---------------- */

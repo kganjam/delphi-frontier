@@ -66,7 +66,8 @@
     t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
     return t;
   }
-  function markdown(src) {
+  function markdown(src, opts) {   // opts.shift: added to the "#" count (default 1, for a body under an h1 or h2 title the caller already drew)
+    const shift = opts && Number.isInteger(opts.shift) ? opts.shift : 1;
     const lines = String(src).replace(/\r/g, "").split("\n");
     const out = []; let i = 0; let para = []; let list = null;
     const flush = () => { if (para.length) { out.push("<p>" + inline(para.join(" ")) + "</p>"); para = []; } };
@@ -79,7 +80,7 @@
         out.push("<pre><code>" + esc(buf.join("\n")) + "</code></pre>"); i++; continue;
       }
       const h = /^(#{1,6})\s+(.*)$/.exec(l);
-      if (h) { flush(); endList(); const n = Math.min(h[1].length + 1, 6); out.push(`<h${n}>${inline(h[2])}</h${n}>`); i++; continue; }
+      if (h) { flush(); endList(); const n = Math.max(1, Math.min(h[1].length + shift, 6)); out.push(`<h${n}>${inline(h[2])}</h${n}>`); i++; continue; }
       if (/^\|.*\|\s*$/.test(l) && i + 1 < lines.length && /^\|[\s:|-]+\|\s*$/.test(lines[i + 1])) {
         flush(); endList();
         const cells = (r) => r.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
@@ -118,5 +119,5 @@
   const exact = (s) => { const r = rational(s); return r ? (r.d === 1n ? r.text : `${r.text} (≈ ${DF.fmt(r.approx, 6)})`) : String(s); };
 
   const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  Object.assign(DF, { rational, exact, raw, esc, html, safeUrl, fmt, num, tex, texSpan, mixedSpan, mixed, renderMath, markdown, slug, Raw, isProse });
+  Object.assign(DF, { rational, exact, raw, esc, html, safeUrl, fmt, num, tex, texSpan, mixedSpan, mixed, renderMath, markdown, mdInline: inline, slug, Raw, isProse });
 })();

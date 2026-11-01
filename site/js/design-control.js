@@ -5,7 +5,7 @@
   const DF = window.DF; const { html, esc } = DF;
   const REPO = "https://github.com/kganjam/delphi-frontier/blob/";
   const v = (x) => { const r = x && typeof x === "object" && !Array.isArray(x) && "value" in x ? x.value : x;
-    return r === null || r === undefined ? "unknown" : typeof r === "object" ? JSON.stringify(r) : String(r); };
+    return r === null || r === undefined ? "unknown" : Array.isArray(r) && r.every((e) => typeof e === "string" || typeof e === "number") ? r.join("; ") : typeof r === "object" ? JSON.stringify(r) : String(r); };   // a list of statements reads as text, not as a JSON array
   const chip = (st) => html`<span class="chip dc-${esc(st)}" data-bound="${esc(st)}">${st}</span>`;
   const pre = (id) => `dc-${id}`;
   const field = (k, body) => html`<div class="dc-f"><dt>${k}</dt><dd>${body}</dd></div>`;

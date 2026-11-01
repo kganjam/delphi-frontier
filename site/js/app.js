@@ -34,6 +34,7 @@
       <form class="gsearch" role="search" id="gs"><label class="sr" for="gq">Search the catalog</label><input id="gq" type="search" placeholder="Search records" value="${route.view === "search" ? route.params.q || "" : ""}"><button class="btn small" type="submit">Search</button></form>
       <span class="mode ${live ? "live" : "snap"}" title="${esc(s.reason)}">${live ? "Live runtime" : "Snapshot"}</span></div>
       ${live && !s.publicAccess && s.authenticated === false ? html`<div class="banner" role="status" id="sessbanner"><b>Runtime reachable, not signed in.</b> Records need a session: <a href="/login">sign in</a>. Until then the catalog, artifacts and solver are unavailable, and the page shows the snapshot.</div>` : ""}
+      ${live && s.sessionError ? html`<div class="banner" role="status" id="sessbanner"><b>Runtime reachable, session check unanswered</b> (${s.sessionError}). Until it answers, records, artifacts and the solver come from the snapshot; reload to try again.</div>` : ""}
       ${live ? "" : html`<div class="banner" role="status"><b>Snapshot, not live.</b> No runtime answered (${s.reason}). Everything shown comes from <code>${snap ? snap.label : "the committed snapshot"}</code>. Local controls are calculations in this browser; nothing is submitted.</div>`}`;
   }
 
@@ -95,7 +96,7 @@
     el.querySelector(".dbody").innerHTML = "<p>Loading…</p>"; el.querySelector("#dtitle").textContent = "Source";
     try {
       const r = await drawerContent(id);
-      el.querySelector("#dtitle").textContent = r.title; el.querySelector(".dbody").innerHTML = r.body.toString(); DF.renderMath(el);
+      el.querySelector("#dtitle").innerHTML = DF.mdInline(String(r.title)); el.querySelector(".dbody").innerHTML = r.body.toString(); DF.renderMath(el);
     } catch (e) {
       el.querySelector("#dtitle").textContent = "Source not available"; el.querySelector(".dbody").innerHTML = html`<p class="empty">Could not open “${id}”: ${e.message}. Nothing is shown in its place.</p>`.toString();
     }
@@ -152,7 +153,7 @@
       document.getElementById("retry").addEventListener("click", () => location.reload()); return;
     }
     const foot = document.getElementById("foot");
-    foot.innerHTML = html`<p><b>${snap.label}</b> · ${snap.inputs.length} input files hashed · <a href="data/snapshot.json">snapshot.json</a> · <a href="data/catalog.json">catalog.json</a> · KaTeX 0.16.47 (MIT, <a href="vendor/katex/LICENSE">licence</a>)</p>
+    foot.innerHTML = html`<p><b>${snap.label}</b> · ${snap.inputs.length} input files hashed · <a href="data/snapshot.json">snapshot.json</a> · <a href="data/catalog.json">catalog.json</a> · KaTeX 0.16.47 (MIT, <a href="vendor/katex/LICENSE.txt">licence</a>)</p>
       <details><summary>Input files and sha256</summary><div class="tablewrap"><table><tbody>${snap.inputs.map((i) => html`<tr><td><code>${i.path}</code></td><td><code>${i.sha256}</code></td><td>${i.bytes} bytes</td></tr>`)}</tbody></table></div></details>
       <p class="small faint">Design geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.</p>`.toString();
     document.addEventListener("click", (e) => { const a = e.target.closest("a[data-src]"); if (a) opener = a; });

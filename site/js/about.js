@@ -46,7 +46,7 @@
     try {
       const r = await fetch(b.href, { cache: "no-store" }); if (!r.ok) throw new Error("HTTP " + r.status);
       const body = (await r.text()).split("\n").filter((l, k) => !(k === 0 && l.startsWith("# ")) && !/^(Date|Summary):/.test(l)).join("\n");
-      host.innerHTML = DF.markdown(body).toString();
+      host.innerHTML = DF.markdown(body, { shift: 0 }).toString();   // the "# title" line is dropped and drawn as the page h1, so "##" is an h2
     } catch (e) { host.textContent = "This post could not be loaded (" + e.message + ")."; }
   };
   const team = () => html`
@@ -106,7 +106,7 @@
       <article><h3>Multiscale mechanobiology</h3><p>A body of work in mechanobiology treats forces, cell behavior and tissue structure as one connected problem rather than three separate ones. That framing shapes how we model a fin: the same tissue has to grow, carry load and move fluid.</p><p>Transferring any such model to a fish still needs its own calibration, which is why our coupling layer refuses the transfer until one exists.</p>${link("/simulations", "See the mechanics and tissue runs")}</article>
       <article><h3>Knowledge that carries its context</h3><p>The ASK paper motivates addressable, traceable and contestable knowledge whose applicability travels with it. Frontier applies that discipline to design actions and computational artifacts.</p><a href="https://doi.org/10.2139/ssrn.7416579" target="_blank" rel="noopener noreferrer">ASK paper ↗</a></article>
       <article><h3>Generative models of mechanisms</h3><p>Physics-informed diffusion and simulator surrogates show how forward simulations can train generative models. Generators propose; equations, checks and experiments decide. Structure-prediction tools make the same point: many designs, then filter and test.</p>${link("/generative", "Read the proposal and related work")}</article>
-      <article><h3>Computationally designed organisms</h3><p>Xenobot research shows organisms designed in simulation and then built. It is a precedent for the design loop we want to make routine, with the evidence trail kept.</p><a href="https://xenobot.github.io/" target="_blank" rel="noopener noreferrer">Xenobots ↗</a></article>
+      <article><h3>Computationally designed organisms</h3><p>Xenobot research shows organisms designed in simulation and then built. It is a precedent for the design loop we want to make routine, with the evidence trail kept.</p><a href="https://cdorgs.github.io/" target="_blank" rel="noopener noreferrer">Xenobots ↗</a></article>
       <article><h3>Open claims and shared records</h3><p>The Delphi project of distributed, contestable scientific claims supplies the idea of a claim as a record with conditions, and of nanopublications as one of the formats we import.</p>${link("/faq", "Questions about claims and nanopublications")}</article>
     </div></section>
     <section class="about-feature about-future" id="next"><div><p class="eyebrow">Where it could go</p><h2>From one fish to a method.</h2><p>The same machinery applies to smaller design problems that cross only a few scales, such as a neural circuit or a metabolic switch. Each design adds laws, calibrations and open questions that the next one starts from.</p></div><div class="about-actions">${link("/about/blog/whats-unfinished", "Read: what is unfinished and what comes next")}${link("/about/blog", "All posts")}</div></section>`;

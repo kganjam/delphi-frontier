@@ -1754,6 +1754,19 @@ def test_session_limit_shows_a_retry_state_and_public_reads_stay_available(brows
     pg.wait_for_function("!document.querySelector('#sessbanner')", timeout=15000)
 
 
+def test_an_unanswered_session_probe_is_not_reported_as_signed_out(browser, base):
+    # Under load the session probe can time out or fail; that is unknown, not "not signed in", and must not send a reader to a sign-in link.
+    pg = page(browser)
+    pg.route("**/api/health", lambda r: r.fulfill(json={"mode": "live", "status": "ok"}))
+    pg.route("**/api/session", lambda r: r.abort())
+    pg.goto(base + "#/home")
+    pg.wait_for_selector("#sessbanner", timeout=15000)
+    t = pg.locator("#sessbanner").text_content()
+    assert "session check unanswered" in t and "sign in" not in t.lower() and pg.locator("#sessbanner a[href='/login']").count() == 0
+    assert pg.evaluate("DF.api.isLive()") is False, "an unanswered probe must not unlock live reads"
+    assert pg.locator("h1").count() >= 1
+
+
 def test_blueprints_show_actors_claim_ledger_cell_programs_and_filters_that_are_not_validation(browser, base):
     src = json.loads((ROOT / "artifacts/genetic-blueprints/blueprints.json").read_text())
     G = json.loads((ROOT / "site/data/snapshot.json").read_text())["genetic_blueprints"]
@@ -2427,7 +2440,8 @@ def test_about_blog_docs_groups_and_lean_page_are_readable(browser, base, width)
     pg = page(browser, width, 900)
     pg.goto(base + "#/about/blog"); pg.wait_for_selector(".about-posts article")
     assert pg.locator(".about-posts article").count() == len(posts) and _overflow(pg) <= 0
-    pg.goto(base + "#/about/blog/lean-for-biology"); pg.wait_for_selector("#post-body h3")
+    pg.goto(base + "#/about/blog/lean-for-biology"); pg.wait_for_selector("#post-body h2")
+    assert pg.evaluate("[...document.querySelectorAll('#post-body h2,#post-body h3,#post-body h4')][0].tagName") == "H2"   # "##" under the page h1 is an h2: no h1 -> h3 skip
     body = pg.locator("#post-body").inner_text()
     assert "What Lean cannot tell you" in body and "Loading" not in body and "Date:" not in body and _overflow(pg) <= 0
     assert pg.locator('#post-body a[href="#/proofs"]').count() == 1       # in-site links work and are not opened in a new tab

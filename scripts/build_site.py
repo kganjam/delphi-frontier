@@ -79,9 +79,10 @@ class Inputs:
 def doc_meta(rel: str, text: str) -> dict:
     title = next((l[2:].strip() for l in text.splitlines() if l.startswith("# ")), Path(rel).stem)
     status = None
-    m = re.search(r"\*\*(?:Final status|Verdict):[^\n]*", text)
+    # The bold status may wrap onto following lines; read to its closing ** within the paragraph, else fall back to the first line.
+    m = re.search(r"\*\*((?:Final status|Verdict):(?:(?!\n\s*\n).)*?)\*\*", text, re.S) or re.search(r"\*\*((?:Final status|Verdict):[^\n]*)", text)
     if m:
-        status = re.sub(r"\*\*", "", m.group(0)).strip()
+        status = " ".join(re.sub(r"\*\*", "", m.group(1)).split())
     return {"id": Path(rel).stem, "title": title, "status_line": status, "path": rel}
 
 
@@ -1741,7 +1742,8 @@ def resource_inventory(ins: Inputs) -> dict | None:
 
 
 def checklist(text: str) -> list[dict]:
-    return [{"done": m.group(1) == "x", "text": m.group(2).strip()} for m in re.finditer(r"^- \[([ x])\] (.+)$", text, re.M)]
+    # An item may wrap onto indented continuation lines; read them all, or the page shows a sentence cut mid-clause.
+    return [{"done": m.group(1) == "x", "text": " ".join(m.group(2).split())} for m in re.finditer(r"^- \[([ x])\] (.+(?:\n[ \t]+\S.*)*)", text, re.M)]
 
 
 def system_block(ins: Inputs, files: dict, docs: list, board: list, lean, sim, attestation) -> dict:

@@ -30,7 +30,9 @@
       const h = await getJSON("api/health", 2500);
       if (h && (h.status === "ok" || h.ok === true || h.status === "live")) {
         state.mode = "live"; state.health = h; state.reason = "runtime answered /api/health";
-        try { const s = await getJSON("api/session", 3000); state.authenticated = !!s.authenticated; state.publicAccess = s.public_access === true; } catch (e) { state.authenticated = false; state.publicAccess = false; }
+        state.sessionError = null;
+        try { const s = await getJSON("api/session", 3000); state.authenticated = !!s.authenticated; state.publicAccess = s.public_access === true; }
+        catch (e) { state.authenticated = null; state.publicAccess = null; state.sessionError = e.name === "AbortError" ? "timeout" : e.message; }   // unanswered is unknown, not "signed out": isLive() stays false and the page says why
       }
       else { state.reason = "/api/health answered but did not report ok"; }
     } catch (e) { state.reason = "runtime unavailable (" + (e.name === "AbortError" ? "timeout" : e.message) + ")"; }
