@@ -1,0 +1,19 @@
+{
+ "name": "claude-neuro-j6-m5-design-a1",
+ "platform": "gpu-h100-sxm",
+ "preset": "1gpu-16vcpu-200gb",
+ "timeout": "1h",
+ "disk": "80Gi",
+ "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+ "pip": "scipy==1.17.1",
+ "question": "Which looming protocol (onset angle, l/v range) and how many fish would discriminate the M5 encoders that J3's abstract-level criteria could not?",
+ "gpu_justification": "631 consistent sets x 3 protocols x 7-8 l/v x 64 trials, up to 57k steps at 0.5 ms (l/v 500 ms from a 2 deg onset)",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design --out /work/out --j3 /work/repo/j3_consistent_sets.json --trials 64",
+ "files": {
+  "engineering/__init__.py": "engineering/__init__.py",
+  "engineering/neuro/__init__.py": "engineering/neuro/__init__.py",
+  "engineering/neuro/m5_mcell.py": "engineering/neuro/m5_mcell.py",
+  "engineering/neuro/m5_design.py": "engineering/neuro/m5_design.py",
+  "j3_consistent_sets.json": "artifacts/neuro/jobs/inputs/j3_consistent_sets.json"
+ }
+}
