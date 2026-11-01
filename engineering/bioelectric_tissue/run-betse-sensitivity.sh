@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT=/work/frontier
-SOURCE="$ROOT/src"
+SOURCE="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 VENV="$ROOT/betse-venv"
 WORK="$ROOT/betse-work"
 
