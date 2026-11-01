@@ -527,7 +527,19 @@ Accepted, and how each point is handled:
 - The switch is about **4.75 ≈ 0.43 λ**, against about 4.25 ≈ 0.39 λ at v = 0.1.
 - So a 2.5× faster outgrowth moves the switch up by roughly 12%, a modest dependence on speed.
 - Below the switch, faster growth gives true edge-parallel bands rather than unoriented tissue.
-- A v = 0.4 run is queued (`claude-tissue-pzone-g1v40`).
+- **v = 0.4** (`claude-tissue-pzone-g1v40`, job `aijob-e00snmkfw2d3s4kfbe`, COMPLETED, 242.4 s): distal A is −1.00 at
+  L_p = 4.5, −0.97 at 5.0, 0.50 at 5.5, 0.74 at 6.0 and 0.84 at 7.0. The switch is about **5.25 ≈ 0.48 λ**.
+
+**Speed dependence at γ = 1:**
+
+| v | 0.1 | 0.25 | 0.4 |
+|---|---|---|---|
+| L_p* | 4.25 | 4.75 | 5.25 |
+| L_p* / λ | 0.39 | 0.43 | 0.48 |
+
+Roughly linear, **L_p* ≈ 3.9 + 3.3·v** (three points). The rule therefore needs a speed term:
+**L_p* ≈ 0.35 λ + c·v**, where c is a time scale of a few pattern units. A γ = 2 run at v = 0.25 tests whether this
+collapses across rate scales (`claude-tissue-pzone-g2v25`).
 2. **Below the switch is not always "bands".** At γ = 1 and 0.5 the tissue just below the switch is *unoriented*
    (distal A ≈ −0.1 to 0). Edge-parallel bands appear only for the narrowest zones, for example L_p ≤ 2.75 at γ = 2.
 3. **Resolution.** At γ = 2 the switch zone is only 2–3 cells wide, so "0.37" is not resolved to two digits. A
