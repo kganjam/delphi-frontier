@@ -1,0 +1,101 @@
+{
+ "job": "aijob-e00z0r6npj1x0h6nxn",
+ "parts": [
+  {
+   "part": "zeron1-s1-x1.0",
+   "bytes": 64064,
+   "declared_bytes": 64064,
+   "sha256": "957594cde22278be20e3ec671062a62cbecd6c407f26317226782650d6ae8c18",
+   "sha_ok": true
+  },
+  {
+   "part": "equaln1-s1-x1.0",
+   "bytes": 65857,
+   "declared_bytes": 65857,
+   "sha256": "d036d6b1225559d3ac74f5125804dcb1f72468093fbd2a3a2af3a3e18115a76e",
+   "sha_ok": true
+  },
+  {
+   "part": "dahn1-s2-x1.0",
+   "bytes": 44850,
+   "declared_bytes": 44850,
+   "sha256": "1a0d9dd57c35c34f483b0efb62c9755817e788d7ce503dcb8153f33c705d63d2",
+   "sha_ok": true
+  },
+  {
+   "part": "equaln1-s2-x1.0",
+   "bytes": 45951,
+   "declared_bytes": 45951,
+   "sha256": "cb710ef3642b79c015043003b8550a4e016fd8896caba93fc83b58b6b572cfe9",
+   "sha_ok": true
+  },
+  {
+   "part": "zeron1-s2-x1.0",
+   "bytes": 43719,
+   "declared_bytes": 43719,
+   "sha256": "41c35fd0dc5b8f17587d798d9ab2e8745aefaf493b5c2d9e424067a36b630e5c",
+   "sha_ok": true
+  },
+  {
+   "part": "dahn1-s1-x1.0",
+   "bytes": 70092,
+   "declared_bytes": 70092,
+   "sha256": "eb4bb121104c91aef6c4505a4d6d321fdbd784e520673d6a85613234cf4413f2",
+   "sha_ok": true
+  },
+  {
+   "part": "zerorep6-s1-x1.0",
+   "bytes": 386164,
+   "declared_bytes": 386164,
+   "sha256": "3b0045b223f082ccfc6da1c2f0cd92db77bec2996ba85338859eeaefb501a903",
+   "sha_ok": true
+  },
+  {
+   "part": "zerorep2-s2-x1.0",
+   "bytes": 206233,
+   "declared_bytes": 206233,
+   "sha256": "db12a60e24b32d0d344a1f38600758ce135d52cdda17aaa635285bf49cfddece",
+   "sha_ok": true
+  },
+  {
+   "part": "zerorep2-s1-x1.0",
+   "bytes": 386188,
+   "declared_bytes": 386188,
+   "sha256": "196545180b31acc6e85f75a2b2c98dd017bd3598e4f86e6d808ffb6c577070c8",
+   "sha_ok": true
+  },
+  {
+   "part": "zerorep6-s2-x1.0",
+   "bytes": 206157,
+   "declared_bytes": 206157,
+   "sha256": "a8510f84e08c98f63110d2994a4f7c6b66c4556d948479f59fefafe2b7fa1b10",
+   "sha_ok": true
+  }
+ ],
+ "status_lines": [
+  "XM_START 2026-11-01T17:34:25Z nproc=40",
+  "XM_BUNDLE b94c64aded647eb58c51639bf08ebf36b656fcbc580dc03e79bf3b25f0ce3d2e  /in/bundle.b64",
+  "XM_INPUT e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  engineering/xenomorph/__init__.py",
+  "XM_INPUT 131eaaf53b52474b3b57465781aacf5ac87ff4f8807ecd646191d13c2395e986  engineering/xenomorph/analyze.py",
+  "XM_INPUT 10da85a94cda7fe24d5f338a021af51146e6fbafaf3845b47720ac753217a750  engineering/xenomorph/cpm_model.py",
+  "XM_INPUT fe6ac40daa22bb84221662d6868f026b79cc5d4e9829ec87a820da45bfdd39df  engineering/xenomorph/offlattice.py",
+  "XM_INPUT 18db4347f05c274ea5aec5b3ce4a9c30e1a2d5b911ddb2c0fd7f6bd906342288  engineering/xenomorph/pack_fields.py",
+  "XM_INPUT b4e329baeb9a1274f4ef01c984a2d3066bbfca205f15769b71f23e7ec97a3e4f  engineering/xenomorph/protocol.json",
+  "XM_PY 2.1.2 2.5.1+cu124 True",
+  "XM_BINARY 3d9a6e5a4cb86824b745500df1474596d39cce5deed24f767c0841df0f94d5ad  /w/morpheus-2.3.9",
+  "XM_RUN_DONE zeron1 s1 x1.0 run=0 analyze=0 pack=0 17:36:37",
+  "XM_RUN_DONE equaln1 s1 x1.0 run=0 analyze=0 pack=0 17:36:38",
+  "XM_RUN_DONE dahn1 s2 x1.0 run=0 analyze=0 pack=0 17:36:38",
+  "XM_RUN_DONE equaln1 s2 x1.0 run=0 analyze=0 pack=0 17:36:38",
+  "XM_RUN_DONE zeron1 s2 x1.0 run=0 analyze=0 pack=0 17:36:38",
+  "XM_RUN_DONE dahn1 s1 x1.0 run=0 analyze=0 pack=0 17:36:39",
+  "XM_RUN_DONE zerorep6 s1 x1.0 run=0 analyze=0 pack=0 17:43:48",
+  "XM_RUN_DONE zerorep2 s2 x1.0 run=0 analyze=0 pack=0 17:43:50",
+  "XM_RUN_DONE zerorep2 s1 x1.0 run=0 analyze=0 pack=0 17:43:50",
+  "XM_RUN_DONE zerorep6 s2 x1.0 run=0 analyze=0 pack=0 17:43:56",
+  "XM_ALL_DONE 2026-11-01T17:43:56Z"
+ ],
+ "job_log_sha256": "483f61b864595351eea180a42e4f30663f6ac04886d13b58d28e94b5e10a7056",
+ "job_log_bytes": 2046020,
+ "job_log_note": "raw log (base64 parts) not committed; decoded parts are under results/xenomorph/runs and results/xenomorph/sweeps"
+}

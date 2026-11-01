@@ -1,0 +1,85 @@
+{
+ "schema": "frontier.xenomorph.diagnosis/1",
+ "addendum_2_sha256": "949be53a0a81eae5ef54bd7fdb15e912c445b65666d638ae002e6124972f8f8d",
+ "job": "aijob-e00z0r6npj1x0h6nxn",
+ "runs": [
+  {
+   "run": "dahn1-s1-x1.0",
+   "rg_ratio": 1.0199,
+   "final_n_aggregates": 121,
+   "final_lcf": 0.015625,
+   "final_core_shell": -0.037872
+  },
+  {
+   "run": "dahn1-s2-x1.0",
+   "rg_ratio": 1.0224,
+   "final_n_aggregates": 122,
+   "final_lcf": 0.015625,
+   "final_core_shell": -0.030864
+  },
+  {
+   "run": "equaln1-s1-x1.0",
+   "rg_ratio": 1.0187,
+   "final_n_aggregates": 122,
+   "final_lcf": 0.015625,
+   "final_core_shell": -0.037122
+  },
+  {
+   "run": "equaln1-s2-x1.0",
+   "rg_ratio": 1.0205,
+   "final_n_aggregates": 120,
+   "final_lcf": 0.023438,
+   "final_core_shell": -0.031193
+  },
+  {
+   "run": "zeron1-s1-x1.0",
+   "rg_ratio": 1.0205,
+   "final_n_aggregates": 128,
+   "final_lcf": 0.007812,
+   "final_core_shell": -0.038445
+  },
+  {
+   "run": "zeron1-s2-x1.0",
+   "rg_ratio": 1.0205,
+   "final_n_aggregates": 128,
+   "final_lcf": 0.007812,
+   "final_core_shell": -0.030049
+  },
+  {
+   "run": "zerorep2-s1-x1.0",
+   "rg_ratio": 1.4202,
+   "final_n_aggregates": 117,
+   "final_lcf": 0.015625,
+   "final_core_shell": -0.00256
+  },
+  {
+   "run": "zerorep2-s2-x1.0",
+   "rg_ratio": 1.4562,
+   "final_n_aggregates": 116,
+   "final_lcf": 0.023438,
+   "final_core_shell": -0.03223
+  },
+  {
+   "run": "zerorep6-s1-x1.0",
+   "rg_ratio": 1.5097,
+   "final_n_aggregates": 128,
+   "final_lcf": 0.007812,
+   "final_core_shell": 0.016846
+  },
+  {
+   "run": "zerorep6-s2-x1.0",
+   "rg_ratio": 1.4733,
+   "final_n_aggregates": 127,
+   "final_lcf": 0.015625,
+   "final_core_shell": -0.053322
+  }
+ ],
+ "rule_applied": "neighbourhood_artifact (zero-n1 passed in both seeds)",
+ "post_diagnosis_readable_result": {
+  "dah-n1_compaction": "FAIL (rg ratio 1.020, 1.022; 121-122 aggregates)",
+  "equal-n1_compaction": "FAIL",
+  "dah-n1_sorting": "FAIL (core-shell -0.04, -0.03)"
+ },
+ "interpretation": "In the order-1 lattice nothing aggregates in any arm: at T=3 nearest-neighbour membrane fluctuations do not bridge the 1-voxel initial gap within 20000 MCS (kinetically frozen), so the zero-n1 pass is trivial and the order-1 re-run cannot discriminate. Mildly repulsive contact (J_cc +2, +6) turns the order-2 zero arm from compaction (rg ratio 0.78-0.85) to expansion (1.42-1.51). Reading: with the order-2 / distance-2.5 neighbourhood, J_cc = 2 J_cM is not contact-neutral; it acts as a weak effective adhesion smaller than +2 J units per face pair (the designed arms have gamma 6-9). This explains the frozen zero failure but does not license re-scoring any frozen arm.",
+ "verdict": "CPM aggregation result remains UNREADABLE under the frozen protocol. Next step (not run): a new preregistered protocol that first calibrates the empirically neutral offset (zero arm at J_cc offsets between 0 and +2) and then tests dah/equal against that calibrated control."
+}
