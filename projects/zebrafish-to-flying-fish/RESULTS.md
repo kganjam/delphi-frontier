@@ -635,6 +635,48 @@ perturbation row **P1 has no target gene to edit** — not a placement problem b
 design resting on the published flying-fish `kcnh2a` signal needs that paper's own gene identifiers
 read in full text first; this project has not read its methods and does not claim it is wrong.
 
+## R7g — Sensitivity on the outgroup control: model-independent
+
+**`claude-zf2ff-outgroup-sens-1`** (`aijob-e00gkgndd9krr9rcrt`), CLI-read `COMPLETED`. Same input
+digest as §R7f, re-run under **ModelFinder** (which chose `JTT+F+R4`) and seed **4242**.
+
+- Takifugu `kcnh2a` + zebrafish `kcnh2a`: **100/100**, unchanged.
+- flying-fish `locus01` + medaka `kcnh2b`: **99.5/100**, unchanged.
+
+So the conclusion in §R7f does not depend on the substitution model or the seed. Both of this
+project's tree-based conclusions have now been checked under two models each.
+
+## R7h — The second named locus (`lat4a`/SLC43): two LAT4-like loci found, and the reason the identifier question was unanswerable
+
+**`claude-zf2ff-slc43-tree-1`** (`aijob-e00bkn68ckf6jkqdsh`), CLI-read `COMPLETED`. Manifest:
+[`data/census_slc43/MANIFEST.md`](data/census_slc43/MANIFEST.md). The same census-then-tree machinery
+that settled `kcnh2`, pointed at the **other** locus the flying-fish study names.
+
+The genome scan found **two full-length LAT4-like loci**, not one: `slc43locus01`
+(JAGFBZ010000485.1, 593 aa) and `slc43locus02` (JAGFBZ010001224.1, 570 aa) — the second on the
+scaffold where only the **153 aa fragment** query had hit in round 2, so it is a real locus rather
+than a fragment artefact. Six more map to the `slc43a1`/`slc43a3` subfamilies.
+
+In the tree, **both** LAT4-like loci fall on the `slc43a2b` side (locus01 pairs with medaka
+`slc43a2b` at 100/99) and **neither** resolves to `slc43a2a`.
+
+**That is a limit of the input, not a finding, and the distinction matters.** The only zebrafish
+`slc43a2a` sequence available in UniProt is a 153 aa fragment, which carries almost no phylogenetic
+signal — so this tree *could not have* placed a locus with `slc43a2a` even if one belonged there. The
+Problem record `zf2ff-problem-lat4a-identifier` therefore stays open, but now for a specific and
+fixable reason rather than for not having looked.
+
+**And the fix exists.** Ensembl carries a full-length zebrafish `slc43a2a` —
+`ENSDARG00000036848`, chromosome 15, longest translation **577 aa** — which UniProt simply does not
+have. The tree was rebuilt with it in place of the fragment and submitted as
+`claude-zf2ff-slc43-full-tree-1` (`data/tree9/`), whose ledger states the question before the answer
+exists: does either flying-fish LAT4-like locus group with full-length `slc43a2a` rather than
+`slc43a2b`?
+
+Three `slc43a3`-side assignments carry 33.3/55 support and are to be read as **unresolved**. Nothing
+here is evidence of transport activity, and none of it identifies the published `lat4a` amino-acid
+change — that still needs the paper's full text.
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/

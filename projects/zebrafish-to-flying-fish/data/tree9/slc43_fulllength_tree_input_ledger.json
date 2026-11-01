@@ -1,0 +1,15 @@
+{
+ "scope": "SLC43 tree rebuilt with a FULL-LENGTH zebrafish slc43a2a from Ensembl in place of UniProt's 153 aa fragment. A gene tree places sequences; it does not prove orthology.",
+ "why": "The first SLC43 tree could not discriminate the a and b paralogs of slc43a2 because the only zebrafish slc43a2a reference available in UniProt is a 153 aa fragment, which carries almost no phylogenetic signal. Ensembl has the full-length protein (ENSDARG00000036848, canonical translation 571 aa; longest isoform used here). This is the data the open Problem zf2ff-problem-lat4a-identifier was blocked on.",
+ "question": "Does either flying-fish LAT4-like locus group with the full-length zebrafish slc43a2a rather than with slc43a2b?",
+ "zebrafish_slc43a2a": {
+  "ensembl_gene": "ENSDARG00000036848",
+  "chromosome": 15,
+  "protein_len": 577,
+  "sha256": "bfe8d2960bee4ac1bf78af3c920bc8b247796661a703a6ffb5c6d1dcd50f8108"
+ },
+ "fragment_dropped": "ZF_slc43a2a_FRAGMENT (UniProt Q7ZUS0, 153 aa) is removed from this input; it is retained in data/census_slc43/ for the record.",
+ "n_sequences": 16,
+ "fasta_bytes": 8700,
+ "fasta_sha256": "82e89eb4b5f948ac6729ebb6886adf6bd04a9e0538d21106cf9fe42da466fbe7"
+}
