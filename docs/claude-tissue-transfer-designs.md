@@ -659,7 +659,26 @@ term explains this. Physical v was fixed at 0.1, so the dimensionless speed v/�
 respectively, and faster dimensionless outgrowth pushes the switch up (refined γ = 1 at v = 0.4: 0.5 λ).
 
 So **the switch is one function of dimensionless speed, not a single constant**: about λ/3 at the slowest speeds,
-rising to about λ/2 at 4× faster outgrowth. An upper-bracket refined γ = 0.5 run is running (`claude-tissue-pzone-refine-g05b`).
+rising to about λ/2 at 4× faster outgrowth. **Refined γ = 0.5, upper bracket** (`claude-tissue-pzone-refine-g05b`, job `aijob-e00ds7xy5py0c5ntvb`, COMPLETED,
+1586.8 s); distal A:
+
+| Physical L_p | 6.0 (earlier refined run) | 6.25 | 6.5 | 7.0 |
+|---|---|---|---|---|
+| Distal A | −0.40 | 0.49 | 0.81 | 0.88 |
+
+The refined switch is about **6.2 ≈ 0.39 λ**; at γ = 0.5 refinement barely moved it (coarse 6.1).
+
+**Consolidated refined-grid result (sharp-edged zone, 12 seeds each):**
+
+| γ | Physical v | Dimensionless speed v/√γ | L_p* | L_p* / λ |
+|---|---|---|---|---|
+| 2 | 0.1 | 0.07 | ≈ 2.55 | 0.32 |
+| 1 | 0.1 | 0.10 | ≈ 3.8 | 0.35 |
+| 0.5 | 0.1 | 0.14 | ≈ 6.2 | 0.39 |
+| 1 | 0.4 | 0.40 | ≈ 5.4 | 0.50 |
+
+The zone width needed for ray-like tissue grows steadily with dimensionless outgrowth speed. It is roughly linear over
+the slow range and flattens by v/√γ = 0.4. With a smooth zone edge (width 1, γ = 1, coarse grid) it drops to about 0.25 λ.
 
 **Smooth zone edge** (`claude-tissue-pzone-smooth`, job `aijob-e00k9ebxtrnpnnmpe3`, COMPLETED, 613.7 s). The step-shaped
 zone is replaced by a logistic edge of width 1, and growth is normalised so total elongation is exactly v (final length
