@@ -20,6 +20,31 @@ Code: `engineering/organ_sims/`. Logs: `artifacts/organ-sims/logs/`.
 | R7 `r7-aeroelastic-flight` | 6-DOF flights with R4b's fin-flexibility correction (Nebius) | 0 | 3/3 |
 | R5 `r5-school-launch` | Collective launch in PyBullet (6-DOF, contacts, wake coupling) | 0 (run 2; run 1 exited 3, see R5) | 8/8 |
 
+## Summary: design changes and the constraints they touch
+
+All of these are simulated, not observed. Each line names the run that supports it.
+
+1. **VLM lattice:** fix `vlm.lattice` collocation, so each point sits at the bilinear 3/4 chord of its own panel
+   (R1; independently found earlier on `work/vlm-diagnostic`). v3a and v3c numbers stand to within 1%.
+2. **v3b pose:** reverse the ray-wise camber sign, ×−0.5 (R1b): +61% CL(4°) over v3b as built. ×−1 risks tip stall.
+   Camber is an assumed deployment knob, with no source for the fish.
+3. **Glider trim:** print a dec+6 pelvic key and move the CG aft to ≈ 58.5 mm (less nose ballast) (R5, R6).
+4. **Glider wing:** pectorals ×1.4 area at ×0.85 AR (R6, R5c). +39% mean and +28% P10 range in a collective launch.
+   R2's ×1.8 / ×0.7 "best" does not survive trim.
+   - Constraints: needs a new pelvic print; CG near the 60 mm window edge; static margin 0.12.
+5. **Pectoral spar:** place it near 0.25 c, never aft of about 0.3 c (R4b). On the leading ray it costs 1.5–8% CL from
+   washout; aft of the aerodynamic centre it heads toward torsional divergence. R7 shows a 0.2–4% range cost at
+   6–10 m/s with the spar on the leading ray.
+6. **Water:** keep the fins folded or detachable (R3). A spread printed pectoral reaches half its UTS at 2–3 m/s in
+   water. Folding cuts rigid drag 17–31%.
+7. **Collective launch:** alternate lanes with ≥ 100 ms between releases. That allows 0.25 m lanes (an 8-fish rig
+   1.75 m wide instead of 4.2 m) at a wake cost under 2% (R5, R5b, R5c).
+8. **Biology:** within these models, bluegill-stiff rays (Alben 2007) × 15 would leave the small-deflection regime at
+   glide loads (R4). This is a hypothesis about flying-fish ray stiffness, not a finding about fish.
+
+Unchanged violations: every printed configuration fails the soft hand-launch mass rule (R2). The fins must be
+slingshot-launched, not hand-thrown.
+
 ## Project scales and what each run does NOT establish
 
 `artifacts/organ-sims/index.json` (written by `engineering/organ_sims/index.py`) holds one card per run with its
@@ -32,6 +57,11 @@ project scale(s), its "does not establish" statement, the check tally and the ma
 | R3 | organism | Drag at the target Re, or swimming and taxiing. |
 | R4 | organ, tissue | Flying-fish fin stiffness (the source is bluegill), twist, or membrane mechanics. |
 | R5 | **collective**, organism | Any schooling behaviour. Rigid gliders, assumed dispersion, no control. Population and behaviour layers are ff-eco's. |
+| R1b | organ | Measured fin pose or lift. Inviscid VLM on rebuilt designed geometry. |
+| R4b | organ, tissue | Measured torsional stiffness. GJ swept; print estimate uses an assumed ν. |
+| R5b, R5c | **collective**, organism | Observed schooling. Assumed release timing and dispersion, straight wakes. |
+| R6, R6b | organism | A flight test. Computed trims, assumed polars. |
+| R7 | organism, organ | Fin dynamics or flutter. Quasi-static lift multiplier. |
 
 ## R1. v3b non-convergence is a lattice defect, plus a pose that is mostly negative twist
 
