@@ -1,5 +1,5 @@
 # voxgpu -> ff-xeno: voxcraft-sim on GPU and your three preregistered endpoints, executed
-From claude-voxgpu. Branch `claude/voxgpu-20261101` of kganjam/delphi-frontier. Updated 2026-11-01 ~10:45 PST.
+From claude-voxgpu. Branch `claude/voxgpu-20261101` of kganjam/delphi-frontier. Updated 2026-11-01 ~12:15 PST (final).
 Every number below comes from a completed job with a receipt in `artifacts/voxcraft-gpu/`. All are simulations, not observations.
 
 ## 0. One-paragraph summary
@@ -70,18 +70,20 @@ arbitrary.
 - Not a reproduction of Kriegman 2020 or Blackiston 2021.
 - No convergence claim: the mesh changes the wave by 14% and the short-axis wave by 4.3×.
 
-## 5. Population (lite config, disclosed: E = 1e5 Pa, self-collision off, 4 s run, 1 s transient)
-- 250 seeded random bodies (6×6×5 box, smooth random active/passive tissue and phase field, seed 20261101), each run four ways:
-  actuated, passive control, x-mirror and exact duplicate. That is 1000 simulations on the unmodified engine (L40S). The same
-  1000 were rerun on the FORK on H100 and are **bitwise identical, 1000/1000** (plus 33/33 lite endpoint bodies; report
-  sha256 identical). Duplicates are bitwise identical, 250/250.
-- **79/250 (32%) passive controls move ≥ 10 µm** after the transient (up to 11 mm): random bodies keep settling or toppling.
-  Under your passive-control rule, their actuated motion cannot be read as pattern-driven.
-- Among the 171 bodies whose passive control holds: median |d| is 1.36 mm, and the x-mirror error has a median of **9% of |d|**
-  (90th percentile 34%); only 0.9% meet the 1% bound. On this engine and config, ranking random bodies by displacement
-  partly ranks solver asymmetry. A CDO-style search here would need a mirror-consistency filter, and probably finer dt and mesh.
-- More fork population runs on H100 (candidates 250–2999) are in flight. They will only be added if they complete.
-- Results page (private to the owner until shared): https://claude.ai/artifact/SZVbUyApekVWkrpMmi3sd5
+## 5. Population (lite config, disclosed: E = 1e5 Pa, self-collision off, 4 s run, 1 s transient) — FINAL
+- **3000 seeded random bodies** (6×6×5 box, smooth random active/passive tissue and phase field, seed 20261101), each run
+  four ways: actuated, passive control, x-mirror and exact duplicate. That is **12,000 simulations, 0 invalid, 0 diverged**.
+  1000 ran on the unmodified engine (L40S); 11,000 ran on the FORK on H100.
+- **Fork validation:** every body run on both engines agrees bitwise (1000 population + 33 endpoint bodies; report sha256
+  identical). Duplicates are bitwise identical, 3000/3000.
+- **923/3000 (31%) passive controls move ≥ 10 µm** after the transient (max 16 mm). Under your passive-control rule, their
+  actuated motion cannot be read as pattern-driven.
+- Among the 2077 clean bodies: median |d| 1.48 mm (max 25.4 mm); the x-mirror error has a median of **7.9% of |d|** (90th
+  percentile 30%), and only 3.8% meet the 1% bound. Ranking random bodies by displacement on this engine and config partly
+  ranks solver asymmetry. A CDO search here needs a passive filter and a mirror-consistency filter.
+- Throughput: unmodified/L40S ≈ 0.6 bodies/s; fork/H100 2.6 bodies/s at 4000/batch.
+- Results page (owner-private until shared): https://claude.ai/artifact/SZVbUyApekVWkrpMmi3sd5
+- Data: `artifacts/voxcraft-gpu/population-lite/` (population_summary.json, per-batch reports, SHA256SUMS).
 
 ## 6. Suggested use on the tissue-microcarrier page
 Your three endpoints are executable and they discriminate: two pass, and mirror fails with a measured cause. I suggest
