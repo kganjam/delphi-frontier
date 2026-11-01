@@ -26,18 +26,25 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 `-edge2d-cases`, `-edge2d-gamma`, `-fan`, `-fan-video`, `-growing-rd`, `-rd-wavelength`).
 - In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
   pattern is spots) and growth along the fin axis.
-- With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
-  a proliferating zone wider than about **one third of a pattern wavelength** at slow outgrowth (refined grid: 0.32 λ at
-  γ = 2 and 0.35 λ at γ = 1), rising to about half a wavelength at 4× faster outgrowth (refined, γ = 1). These values
-  are for a sharp-edged zone with b = 0.9 and d = 10. A smooth (logistic) edge gives rays from still narrower zones,
-  so the sharpness of the proliferation boundary also matters. A second stripe-regime kinetics (b = 1.8, d = 30) gives
-  rays below 0.28 λ, so the threshold fraction also depends on the kinetics. The robust statement is qualitative: an
-  apical zone narrower than a kinetics-dependent fraction of λ (about 0.25–0.5 here) gives bands; a wider zone gives rays. Refinement also removed the γ = 2 failure window as a discretisation artifact.
-  Coarse-grid values, biased upward: 0.37, 0.39 and 0.39 at three rate scales, and a
-  prediction made from two of them was confirmed on the third (12 seeds each). The switch rises with outgrowth speed,
-  reaching 0.48 λ at v = 0.4 (L_p* ≈ 3.9 + 3.3·v at γ = 1). This is partly a scaling consistency check, and grid
-  sensitivity is under test. Above the switch, newly grown tissue is almost perfectly
-  ray-like (distal-half A 0.94–1.00). The earlier γ = 2 failure window near L_p ≈ 10 was a coarse-grid artifact.
+- **Orientation measure.** A ranges from −1 to +1 and compares Fourier power in modes varying across the fold with power
+  in modes varying along it. **A = +1** means stripes run proximo-distally (ray-like); **A = −1** means bands parallel to
+  the distal edge; **A ≈ 0** means unoriented (spots or labyrinth). "Distal A" is measured on the distal half of the
+  final fold, which is newly grown tissue.
+- **Zone width.** When growth is confined to a narrow distal proliferation zone, the new tissue forms bands parallel to
+  the edge. It becomes ray-like once the zone is wider than a switch width L_p*. That is defined as the first upward
+  crossing of distal A = 0.5, with 12 seeds per point; values are from `zone-rule.json`.
+- **Sharp-edged zone, b = 0.9, d = 10, refined grid:** L_p* = 0.33 λ at γ = 2, 0.36 λ at γ = 1 and 0.40 λ at γ = 0.5,
+  all at v = 0.1. It rises to 0.49 λ at 4× faster outgrowth (γ = 1).
+- **Speed dependence.** The switch rises with dimensionless outgrowth speed v/√γ. Coarse-grid points from different γ
+  and speeds follow approximately one rising trend, with deviations up to about 0.02 λ.
+- **Edge sharpness.** A smooth zone edge (logistic, width 1) lowers the switch to 0.26 λ (coarse grid). With width 2,
+  rays appear at every nominal width tested, because the soft edge itself spreads growth.
+- **Kinetics.** b = 1.1, d = 13 gives about 0.35 λ, but b = 1.8, d = 30 gives rays below 0.28 λ.
+- **Robust statement.** It is qualitative: a narrow, sharp-edged apical zone gives bands, and a zone wider than a
+  kinetics-, speed- and edge-dependent fraction of λ (about 0.25–0.5 across all runs here) gives rays.
+- **Numerical checks.** Grid refinement lowered the coarse-grid switch by up to about 0.04 λ and removed a coarse-grid
+  failure window at γ = 2 (an artifact). Above the switch, newly grown tissue is almost perfectly ray-like
+  (distal A 0.94–1.00).
 - With row insertion from a very short fold, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern
   units. That threshold tracks λ·σ (pooled slope 0.50). A reversal of orientation behind a moving front is a known
   phenomenon.
@@ -701,7 +708,8 @@ the slow range and flattens by v/√γ = 0.4. With a smooth zone edge (width 1, 
 | Coarse, smooth edge (width 1) | 0.10 | 0.26 |
 
 **Reading.**
-- Coarse points from different γ and speeds fall on **one rising curve** in v/√γ. The γ = 2, v = 0.4 point
+- Coarse points from different γ and speeds follow **approximately one rising trend** in v/√γ, with non-monotone
+  deviations up to about 0.02 λ. The γ = 2, v = 0.4 point
   (v/√γ = 0.28) lands next to the γ = 1, v = 0.25 point (0.25). So the switch is consistent with a single function of
   dimensionless outgrowth speed.
 - The refined grid lowers the curve by up to about 0.04 λ at the slowest speeds.
@@ -725,7 +733,8 @@ exactly 192). γ = 1, v = 0.1, coarse grid, 12 seeds; distal A:
   |---|---|---|---|---|
   | Distal A | −0.60 | −0.69 | −0.47 | **0.85** |
 
-  The smooth-edge switch (edge width 1) is about **2.75 ≈ 0.25 λ**, against about 0.35 λ for a sharp edge.
+  The smooth-edge switch (edge width 1) is about **2.87 ≈ 0.26 λ** (A = 0.5 crossing), against 0.39 λ for a sharp edge on
+  the same coarse grid.
 - **Edge width 2** (`claude-tissue-pzone-smooth-w2`, job `aijob-e00pdmxrn7ry8c1b5x`, COMPLETED, 630.0 s): distal A is
   0.88–0.89 at **every** nominal L_p from 1.5 to 3.5, so the switch lies below 1.5.
 - **Reading.** With a soft edge, growth extends a few units into the tissue whatever the nominal L_p. What must exceed
@@ -748,7 +757,7 @@ stripe-regime cell, b = 1.8 and d = 30 (λ ≈ 10.5, σ_max ≈ 0.062, close to 
 - The two cells have nearly the same wavelength and pattern-formation rate. So **the zone-width switch also depends on
   the kinetics, beyond λ and σ**, and "about λ/3" is not universal.
 - The robust qualitative statement is: a narrow apical zone gives edge-parallel bands, and a zone wider than a
-  kinetics-dependent fraction of λ (about 0.25–0.4 here) gives rays.
+  kinetics-, speed- and edge-dependent fraction of λ (about 0.25–0.5 across all runs here) gives rays.
 - **Third cell, b = 1.1 and d = 13** (`claude-tissue-pzone-kin2`, job `aijob-e00y1g0v1b3ecchbh1`, COMPLETED, 576.1 s;
   λ ≈ 10.8):
 
@@ -897,6 +906,13 @@ interval. The tenfold spread does not depend on those two rows: l = 0.01 (0.08) 
 6. Wet-lab rungs move to medaka or zebrafish, with local inducible perturbation and fin length and SL reported separately.
 7. The sequential addition of fin rays is noted, and the uniform-growth doubling regime is recast as a rejected-mechanism contrast.
 8. The 0.81 vs 0.729 slope difference is explained: it comes from the misspecified fixed-L0 fit.
+11. A final `gemini-4-argon` pass over the summary and the zone-width conclusions (saved as
+    `artifacts/simulations/claude-tissue-pzone/review-gemini-4-argon-final.txt`) flagged six problems, all fixed:
+    - prose numbers now match the formal table (0.33/0.36/0.40/0.49 λ, smooth edge 0.26 λ);
+    - one range (0.25–0.5 λ) is used throughout;
+    - "one rising curve" is softened to "approximately one rising trend";
+    - the orientation measure A is defined in the summary;
+    - stale running-job text and a duplicated sentence are removed.
 10. A second `gemini-3.8-flash` pass on the summary and section 2b flagged four more overgeneralisations, all reworded:
     static patterning gives labyrinths, not rays; the speed threshold is specific to edge growth; a short start is not
     necessary; and "no spots to stripes" is limited to the two cells tested.
