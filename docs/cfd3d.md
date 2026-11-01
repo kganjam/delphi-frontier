@@ -162,6 +162,16 @@ Curated in `artifacts/cfd3d/gpu-v1/` with `receipt.json`. The transport hash was
   - After GO, an arm whose own projection no longer fits when it would start is not started, and is recorded so.
   - The step bounds are assumptions frozen in the packet (`calibration.steps_basis`). M1's upper bound uses
     WaterLily's dt = 1/(max flux + 5 nu), which reproduces its measured start-up dt (0.120 vs 0.122).
+- **The combined CUDA cylinder result: the control FAILS.** All four runs came back from the H100 (R2 from 751a23c3,
+  the arms from b8f9543b; every run CUDA, none CPU). The frozen `cyl2d_eval.py` combined them, unchanged, in
+  `artifacts/cfd3d/cyl2d/cuda-combined-eval.json`, with input hashes in `cuda-combined-receipt.json`.
+  - R2_fidelity fails on total Cd: 1.2056 vs 1.326 (-9.1 %, half-width 2 %). R1 (-10.4 %) and R3_domain
+    (-10.3 % vs 1.315) fail the same way. Cd_p and St pass on all three, within 0.3 % and 0.9 %.
+  - grid_pair (1.5 %), mutant and periodicity pass. control_passes is false, so pressure_coupling_allowed is false.
+  - Given this R1, no R2 could have passed both grid_pair and R2_fidelity. grid_pair allows R2 Cd up to
+    R1 / 0.97 = 1.2244, and the fidelity band starts at 1.2995.
+  - The shortfall is in the viscous share, Cd - Cd_p: 0.20 to 0.22 here, against 0.338 in the reference. That is an
+    inference from the reported means, not a separate check.
 - **C1 is untouched.** The 3-D sphere gate C1 stays FAILED. A cylinder pass would not change it, and would not
   validate fins or flight.
 

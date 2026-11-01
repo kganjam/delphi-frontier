@@ -1,0 +1,135 @@
+{
+ "schema": "cfd3d-cuda-combined-receipt-0.1",
+ "what": "R1, R3_domain, M1_mutant (H100, arms packet b8f9543b) and R2 (H100, R2 packet 751a23c3) combined by the frozen cyl2d_eval.py. No new run; evaluator, contract and band unchanged.",
+ "evaluator": {
+  "used": "arms packet cyl2d_eval.py, as returned in packet-source",
+  "sha256": "072191a5684abad25850dba44b1ef61727295244cdb8ab6bcb9b100daed2c497",
+  "cross_check": {
+   "sha256": "ab56628471254cfc642db09c48997249d69ccd900b2267b79f398cca8e106512",
+   "what": "R2 packet cyl2d_eval.py",
+   "identical_apart_from_reported_backend_fields": true
+  }
+ },
+ "contract_sha256": "cea01ce89373a11b82b98cad1e53c6b3d7e0e23c5e0067274d2a8572b0d0a4c2",
+ "band_sha256": "113a0cc2895d366b7c9d0ed43f646207af8b00099daf84af1f9b33e84f59ee39",
+ "same_band_and_contract_in_both_returns": true,
+ "packet_sources_match_manifests": "all 9 members of each return's packet-source match cfd3d-arms-packet-manifest.json and cfd3d-r2-packet-manifest.json by sha256",
+ "output": "artifacts/cfd3d/cyl2d/cuda-combined-eval.json",
+ "output_sha256": "29301dbc845798973d55da652a76dfa8d39809c96cc3de65880f758a9abda896",
+ "runs": {
+  "R1": {
+   "returned_gz": "/data/worktrees/delphi-frontier/infra-director/results/infra/cfd-h100-arms-v2/results/infra34-h100-frozen-cuda-control-arms/parts/00-same-source-cuda-controls-and-three-arms/science/runs/R1.json.gz",
+   "gz_sha256": "4db491f272d79645bf98169919d922f28a484ba646fac97d48979a91eeccce66",
+   "json_sha256": "8ea90d09a0630bcfb21b9c878eee4e1c40c225f95051cc9293b48aae615bc41d",
+   "packet_sha256": "b8f9543bd94e305243a02f3ae9037632f775992b839c50faecf23d27cbbd28dd",
+   "gpu": true,
+   "n_D": 32,
+   "H": 60,
+   "Re": 100,
+   "steps": 62596,
+   "t_end_reached": 600.0049438476562,
+   "wall_s": 352.3,
+   "script_sha256": "2786e2c43bb0bf2e07bcff43d453a84262ed3b0c62f1f1fea9c1c7046e4a13d9",
+   "contract_sha256": "cea01ce89373a11b82b98cad1e53c6b3d7e0e23c5e0067274d2a8572b0d0a4c2",
+   "native_eval_identical": true,
+   "derived_Cd_minus_Cd_p": 0.2014187529967636
+  },
+  "R3_domain": {
+   "returned_gz": "/data/worktrees/delphi-frontier/infra-director/results/infra/cfd-h100-arms-v2/results/infra34-h100-frozen-cuda-control-arms/parts/00-same-source-cuda-controls-and-three-arms/science/runs/R3_domain.json.gz",
+   "gz_sha256": "8d9984d6fb0fbf2c3efeba49ed708c4b951f78f6797380199d8abd60d11111c6",
+   "json_sha256": "59e0180ade5fe3e9cfdcba35fe2416f387f1cc74b134602ba5e49b3e8c0c7fd8",
+   "packet_sha256": "b8f9543bd94e305243a02f3ae9037632f775992b839c50faecf23d27cbbd28dd",
+   "gpu": true,
+   "n_D": 32,
+   "H": 120,
+   "Re": 100,
+   "steps": 62487,
+   "t_end_reached": 600.0093994140625,
+   "wall_s": 1164.7,
+   "script_sha256": "2786e2c43bb0bf2e07bcff43d453a84262ed3b0c62f1f1fea9c1c7046e4a13d9",
+   "contract_sha256": "cea01ce89373a11b82b98cad1e53c6b3d7e0e23c5e0067274d2a8572b0d0a4c2",
+   "native_eval_identical": true,
+   "derived_Cd_minus_Cd_p": 0.2004821337803644
+  },
+  "M1_mutant": {
+   "returned_gz": "/data/worktrees/delphi-frontier/infra-director/results/infra/cfd-h100-arms-v2/results/infra34-h100-frozen-cuda-control-arms/parts/00-same-source-cuda-controls-and-three-arms/science/runs/M1_mutant.json.gz",
+   "gz_sha256": "4503d1609e24fbf9a0f7bcdd0d6a180f5f99ebaad4375ae3345af9cd5596134b",
+   "json_sha256": "3019576aaa48aa709b4e10e301ab90c6acf2bfcd94eb65f5da5b5bdc3526caee",
+   "packet_sha256": "b8f9543bd94e305243a02f3ae9037632f775992b839c50faecf23d27cbbd28dd",
+   "gpu": true,
+   "n_D": 32,
+   "H": 60,
+   "Re": 25,
+   "steps": 150340,
+   "t_end_reached": 600.0015869140625,
+   "wall_s": 830.8,
+   "script_sha256": "2786e2c43bb0bf2e07bcff43d453a84262ed3b0c62f1f1fea9c1c7046e4a13d9",
+   "contract_sha256": "cea01ce89373a11b82b98cad1e53c6b3d7e0e23c5e0067274d2a8572b0d0a4c2",
+   "native_eval_identical": true,
+   "derived_Cd_minus_Cd_p": 0.4627354815409095
+  },
+  "R2": {
+   "returned_gz": "/data/worktrees/delphi-frontier/infra-director/results/infra/cfd-r2-h100-v2/results/infra32-h100-r2-frozen-assay/parts/00-r2-frozen-controls-then-assay/science/runs/R2.json.gz",
+   "gz_sha256": "694303c4e7761f6e3a4341b536cf078052f2ff3b55a3d5bc857811faba394004",
+   "json_sha256": "9b349d9c1a0532bd183f93c13a314ab4bf076129f5b40f4daab2be58e344da04",
+   "packet_sha256": "751a23c334b15cb3913441ef41b617b9d45502434527530d9805d6691dec0153",
+   "gpu": true,
+   "n_D": 64,
+   "H": 60,
+   "Re": 100,
+   "steps": 186748,
+   "t_end_reached": 600.0025634765625,
+   "wall_s": 3512.9,
+   "script_sha256": "2786e2c43bb0bf2e07bcff43d453a84262ed3b0c62f1f1fea9c1c7046e4a13d9",
+   "contract_sha256": "cea01ce89373a11b82b98cad1e53c6b3d7e0e23c5e0067274d2a8572b0d0a4c2",
+   "native_eval_identical": true,
+   "derived_Cd_minus_Cd_p": 0.2200922945747471
+  }
+ },
+ "verdict": {
+  "R2_fidelity": false,
+  "grid_pair_rel": {
+   "Cd": 0.01490860246849454,
+   "Cd_p": 0.0007097912036538928,
+   "St": 0.0033734663740335024
+  },
+  "grid_pair": true,
+  "mutant": true,
+  "backends": {
+   "R1": "cuda",
+   "R2": "cuda",
+   "R3_domain": "cuda",
+   "M1_mutant": "cuda"
+  },
+  "mixed_backends": false,
+  "invalid_runs": [],
+  "periodic_R1_R2_R3": true,
+  "surface_internal": true,
+  "control_passes": false,
+  "missing": [],
+  "pressure_coupling_allowed": false
+ },
+ "failures_kept": {
+  "R2_fidelity": "FAIL: R2 total Cd 1.205614 vs 1.326 (rel -0.0908, half-width 0.02); Cd_p and St pass",
+  "R1_band": "FAIL: total Cd 1.187640 (rel -0.1043); Cd_p and St pass",
+  "R3_domain_band": "FAIL (diagnostic, not required): total Cd 1.180028 vs 1.315 (rel -0.1026); Cd_p and St pass",
+  "control_passes": false,
+  "pressure_coupling_allowed": false,
+  "C1_sphere_3d": "FAILED and unchanged; blocks physical-validation wording"
+ },
+ "grid_pair_bound_check": {
+  "rule": "|Cd(R2) - Cd(R1)| / Cd(R2) <= 0.03 (ENGINEERING assumption, not from the source); reported for St and Cd_p too",
+  "R2_Cd_range_allowed_by_grid_pair_given_R1": [
+   1.1530489582038428,
+   1.2243715741752146
+  ],
+  "R2_fidelity_Cd_range": [
+   1.29948,
+   1.3525200000000002
+  ],
+  "overlap": false,
+  "meaning": "with this R1, no R2 could have passed both grid_pair and R2_fidelity; the denominator is Cd(R2), read from the evaluator and the band"
+ },
+ "backend": "every run here is CUDA (gpu true). No CPU run is in this set, and the VM03 CPU record is a separate record, not combined or relabelled.",
+ "derived_not_criteria": "derived_Cd_minus_Cd_p is total minus pressure drag (the viscous share), reported only; the reference's share is 1.326 - 0.988 = 0.338"
+}
