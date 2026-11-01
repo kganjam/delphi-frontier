@@ -674,7 +674,14 @@ exactly 192). γ = 1, v = 0.1, coarse grid, 12 seeds; distal A:
   the coarse grid and 3.8 refined.
 - **So the switch depends on how sharp the zone edge is, not only on its width.** "About λ/3" holds for a sharp step
   edge; a softer edge gives rays from narrower zones.
-- The smooth-edge lower bracket (L_p = 1.5–3.0) is running (`claude-tissue-pzone-smooth-b`).
+- **Smooth-edge lower bracket** (`claude-tissue-pzone-smooth-b`, job `aijob-e00vp1wzr0th26xza9`, COMPLETED, 490.7 s):
+
+  | L_p | 1.5 | 2.0 | 2.5 | 3.0 |
+  |---|---|---|---|---|
+  | Distal A | −0.60 | −0.69 | −0.47 | **0.85** |
+
+  The smooth-edge switch (edge width 1) is about **2.75 ≈ 0.25 λ**, against about 0.35 λ for a sharp edge.
+  An edge-width-2 run is running (`claude-tissue-pzone-smooth-w2`).
 - For biology, the comparison to make is between the sharpness of the distal proliferation boundary and the ray
   spacing, not just the zone width.
 
