@@ -223,6 +223,26 @@ speeds and seeds, but every row stretches instead of new rows being added at the
 Under marginal (edge) outgrowth, but not uniform outgrowth, speeding up outgrowth beyond a threshold would disorder them.
 The follow-up job `claude-tissue-edge2d-cases` narrows that threshold and tests other stripe-regime kinetics.
 
+**Speed threshold and other kinetics** (`claude-tissue-edge2d-cases`, job `aijob-e00ya0sp5zmqdstjxs`, COMPLETED, 978.3 s).
+This extends the edge-growth run to two more stripe-regime cells from the phase map, with 4 seeds each.
+
+| Kinetics | Edge speed 0.4 | 0.3 | 0.2 | 0.15 | 0.1 | 0.04 | Static |
+|---|---|---|---|---|---|---|---|
+| b = 0.9, d = 10 | −0.53* | −0.33 | 0.51 | 0.67 ± 0.47 | 0.99* | 1.00* | −0.06* |
+| b = 1.1, d = 13 | −0.59 | — | 0.59 | — | 0.98 | 1.00 | −0.25 |
+| b = 1.8, d = 30 | −0.63 | — | 0.51 | — | 0.99 | 1.00 | −0.15 |
+
+\* from the first edge2d run.
+
+**Result.** The edge-growth transition is **the same for all three stripe-regime kinetics**:
+- At edge speeds of 0.1 or below, stripes are fully proximo-distal (ray-like).
+- Around 0.2 the stripes are partly oriented.
+- At 0.3–0.4 the pattern becomes oblique or edge-parallel bands.
+
+The threshold, roughly 0.15–0.25 wavelength-units of new tissue per unit pattern time, therefore depends little on
+the particular kinetics. That makes it a candidate model-independent prediction, though it was tested here only within
+Schnakenberg.
+
 **Starting-length test** (`claude-tissue-uniform2d-y0`, job `aijob-e00dy3kv6127nqa3dj`, COMPLETED, 307.9 s). Uniform growth
 at d = 10 to the same final length 192, starting from different lengths Y0. λ ≈ 11, so Y0 = 96 starts about 9
 wavelengths long.

@@ -62,6 +62,31 @@ if kind in ("edge2d", "uniform2d", "edge2d_cases", "uniform2d_y0"):
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-threads", "1", "-framerate", "10", "-i", f"{tmp}/f%03d.png", "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2",
                         "-pix_fmt", "yuv420p", "-c:v", "libx264", str(OUT/f"{kind}.mp4")], check=True)
         subprocess.run(["cp", f"{tmp}/f{fr[-1]['k']:03d}.png", str(OUT/"poster.png")], check=True); outs += [OUT/f"{kind}.mp4", OUT/"poster.png"]
+elif kind == "fan":
+    OUT = ROOT/"artifacts/simulations/claude-tissue-fan"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/fan_gpu.py"
+    summ = {}
+    for d in meta["ds"]:
+        for v in meta["speeds"]:
+            rs = [r for r in rows if r["d"] == d and r["speed"] == v]
+            if not rs: continue
+            cnt = np.array([r["peaks_along_arc"] for r in rs]); exp = np.array(rs[0]["expected_r_theta_over_lambda"])
+            summ[f"d={d},v={v}"] = dict(d=d, speed=v, radii=rs[0]["radii"], peaks_mean=cnt.mean(0).tolist(), peaks_by_seed=cnt.tolist(),
+                                        expected=exp.tolist(), inner_to_outer_increase=float(cnt[:, -1].mean() - cnt[:, 0].mean()),
+                                        expected_increase=float(exp[-1] - exp[0]),
+                                        radial_orientation_A=float(np.mean([r["radial_orientation_A"] for r in rs])))
+    res = dict(job=job, job_state=state, meta=meta, done=done, n_rows=len(rows), summary=summ, rows=rows,
+               reading="If stripes run radially and keep their spacing, the count along the arc rises with radius as r*THETA/lambda (stripes inserted or branched); a flat count means stripes fan out and widen instead.")
+    (OUT/"fan.json").write_text(json.dumps(res, indent=1))
+    fig = plt.figure(figsize=(15, 5)); ax = fig.add_subplot(1, 4, 1)
+    for (k, v), c in zip(summ.items(), ["tab:red", "tab:blue", "tab:gray", "tab:green"]):
+        ax.plot(v["radii"], v["peaks_mean"], "o-", color=c, label=("static" if v["speed"] == 0 else f"edge speed {v['speed']}") + f", d={v['d']}")
+    v0 = next(iter(summ.values())); ax.plot(v0["radii"], v0["expected"], "k--", label="r*THETA/lambda*")
+    ax.set_xlabel("radius r"); ax.set_ylabel("stripes counted along the arc"); ax.legend(fontsize=7); ax.set_title("SIMULATED fan: stripe count vs radius", fontsize=9)
+    for i, sn in enumerate(sorted(snaps, key=lambda s: -s["speed"] if s["speed"] else 1)[:3]):
+        a2 = fig.add_subplot(1, 4, 2 + i); a2.imshow(img(sn), cmap="magma", origin="lower"); a2.axis("off")
+        a2.set_title(f"d={sn['d']}, {'static' if sn['speed']==0 else 'edge speed '+str(sn['speed'])} (base at bottom)", fontsize=8)
+    fig.tight_layout(); fig.savefig(OUT/"fan.png", dpi=100); plt.close(fig)
+    outs = [OUT/"fan.json", OUT/"fan.png"]
 else:
     OUT = ROOT/"artifacts/simulations/claude-tissue-phase-map"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/phase_map_gpu.py"
     grid = {}
@@ -99,7 +124,7 @@ else:
     fig.tight_layout(); fig.savefig(OUT/"phase-map.png", dpi=100); plt.close(fig)
     outs = [OUT/"phase-map.json", OUT/"phase-map.png"]
 ok = state == "COMPLETED" and done is not None
-rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0'}[kind] }.py (args in META)", job=job, job_state=state,
+rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan'}[kind] }.py (args in META)", job=job, job_state=state,
            exit_code=0 if ok else 1, seed=meta.get("seeds"), wall_s=(done or {}).get("wall_s"),
            compute=f"Nebius {job} ({meta.get('gpu')}), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
            code_sha256={script: meta["script_sha256"]}, code_matches_repo=bool(meta["script_sha256"] == sha(ROOT/script)),

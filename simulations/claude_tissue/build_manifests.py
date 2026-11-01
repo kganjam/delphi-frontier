@@ -140,6 +140,18 @@ def cards():
             parameter_unknowns=["Starting fin-fold geometry at patterning onset is not measured here."],
             open_questions=["Measure fin-fold length vs ray spacing at the onset of ray patterning."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; generic kinetics."])
+    if (A/"claude-tissue-fan/fan.json").exists():
+        fn = J("claude-tissue-fan/fan.json"); sm = fn["summary"]
+        C["claude-tissue-fan"] = dict(
+            title="Turing stripes on a fan-shaped fin fold growing at its distal arc: do ray-like stripes multiply as the fin widens? (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; fan geometry is idealised",
+            model=dict(name="2-D Schnakenberg on an annular sector (polar grid), rows activated at the distal arc", context=f"R0={fn['meta']['R0']}, R_end={fn['meta']['R0'] + fn['meta']['NR_END']}, THETA={fn['meta']['THETA']} rad, d in {fn['meta']['ds']}"),
+            equations=[{"label": "Polar Laplacian", "tex": "\\nabla^2u=u_{rr}+\\tfrac{1}{r}u_r+\\tfrac{1}{r^2}u_{\\theta\\theta}", "source": "standard"},
+                       {"label": "Fixed-spacing expectation", "tex": "N(r)=r\\Theta/\\lambda^*", "source": "lambda* from claude-tissue-rd-wavelength v2"}],
+            numerical_results=[f"d={v['d']}, {'static' if v['speed']==0 else 'edge speed '+str(v['speed'])}: stripes along arc {[round(x, 1) for x in v['peaks_mean']]} at r {[round(x) for x in v['radii']]} (fixed-spacing expectation {[round(x, 1) for x in v['expected']]}); radial orientation A {v['radial_orientation_A']:.2f}" for v in sm.values()],
+            parameter_unknowns=["Real fin fan angle, growth law and patterning timing are not measured here."],
+            open_questions=["Compare with how rays are added or branch as real pectoral fins widen distally."],
+            limitations=["Does not establish that fin rays are Turing patterns or how rays bifurcate in fish.", "Dimensionless; generic kinetics; peak counting on rings may miss edge peaks."])
     if (A/"claude-tissue-uniform2d/uniform2d.json").exists():
         u2 = J("claude-tissue-uniform2d/uniform2d.json"); sm = u2["summary"]
         C["claude-tissue-uniform2d"] = dict(
