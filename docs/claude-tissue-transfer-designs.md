@@ -643,7 +643,21 @@ were biased upward by under-resolving the zone. **Refined speed term** (`claude-
   3.3 on the coarse grid.
 - **Refined rule:** L_p* ≈ λ/3 at slow outgrowth, rising to about λ/2 at v = 0.4.
 
-A refined γ = 0.5 run is running (`claude-tissue-pzone-refine-g05`).
+**Refined γ = 0.5** (`claude-tissue-pzone-refine-g05`, job `aijob-e00v75w09fwhswm2e1`, COMPLETED, 1578.8 s), physical
+v = 0.1; distal A:
+
+| Physical L_p | 5.0 | 5.5 | 6.0 |
+|---|---|---|---|
+| Distal A | −0.20 | −0.26 | −0.40 |
+
+All three are unoriented, with wide CIs (±0.43), so the refined switch is **at or above 6.0 (≥ 0.38 λ)**.
+
+**Reading.** On the refined grid, L_p*/λ rises as γ falls: 0.32 (γ = 2), 0.35 (γ = 1), ≥ 0.38 (γ = 0.5). The speed
+term explains this. Physical v was fixed at 0.1, so the dimensionless speed v/√γ is about 0.07, 0.10 and 0.14
+respectively, and faster dimensionless outgrowth pushes the switch up (refined γ = 1 at v = 0.4: 0.5 λ).
+
+So **the switch is one function of dimensionless speed, not a single constant**: about λ/3 at the slowest speeds,
+rising to about λ/2 at 4× faster outgrowth. An upper-bracket refined γ = 0.5 run is running (`claude-tissue-pzone-refine-g05b`).
 
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
