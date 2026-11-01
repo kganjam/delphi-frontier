@@ -1,0 +1,50 @@
+{
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+  "simulations/claude_tissue/growing_rd_v2.py": "daf29f9ab143409d5385c1369f695e05ab6c1c1358bbf6ed26a27c33280b22cb"
+ },
+ "command": "python3 simulations/claude_tissue/growing_rd_v2.py",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {},
+ "name": "claude-tissue-growing-rd-v2",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-growing-rd/growing-rd-v2.png": "03bb34777920d12a9760b5414302a0826968edd0eae4c07b6b89259f566bd31b",
+  "artifacts/simulations/claude-tissue-growing-rd/sweep-v2.json": "c47dc90519e04880cd4014024beed4a9ccf546d605fc338db63f32794d83ae59"
+ },
+ "parameters": {
+  "A": 0.1,
+  "B": 0.9,
+  "DS": [
+   15,
+   20,
+   30
+  ],
+  "N": 384,
+  "TGROW": [
+   250.0,
+   1000.0,
+   4000.0
+  ],
+  "W0": 12.0,
+  "W_END": 144.0,
+  "dt": 0.02,
+  "gamma": 1.0,
+  "relax": 200.0
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "wall_s": 735.925
+}

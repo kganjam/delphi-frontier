@@ -1,0 +1,38 @@
+{
+ "L0": 0.45,
+ "SL0": 1.5,
+ "SL_END": 24.0,
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+  "simulations/claude_tissue/fin_growth.py": "15653ce43228ad2dd207899110b8a6b98b0a8e15c6c674d66566be8a4d03f69b"
+ },
+ "command": "python3 simulations/claude_tissue/fin_growth.py",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {
+  "artifacts/observed-allometry/source-observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703"
+ },
+ "name": "claude-tissue-fin-growth",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-fin-growth/fin-growth.mp4": "5941e5e52e4b14df2e3b364af2b54bc93b0159b9b331d788090ab91155d7a731",
+  "artifacts/simulations/claude-tissue-fin-growth/fin-growth.png": "90ac6771793a43398c362a8475271c29f0f4d1648b504567c7a70349b06bbcd7",
+  "artifacts/simulations/claude-tissue-fin-growth/summary.json": "6b4f1293534c3f7c49dc3b6eb45ee3d330f97edad70870596710c361f78dbf0c"
+ },
+ "parameters": {
+  "D": 0.02,
+  "K": 0.5,
+  "P": 0.01,
+  "k": 0.02,
+  "r": 0.22302582412886715,
+  "s": 0.2
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": "deterministic (ODE; no RNG)",
+ "wall_s": 25.913
+}

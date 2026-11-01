@@ -1,0 +1,140 @@
+{
+  "base_commit": "caffef4b5d143cda81ba4e8ab1f3ef3a8a990bfb",
+  "code_sha256": {
+    "simulations/claude_tissue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "simulations/claude_tissue/build_manifests.py": "60e5acc26098791257d97b5033c1dfe5bd66e695d0b04f0f4acb3db30d663970",
+    "simulations/claude_tissue/collect_rd_v2.py": "0e12867daab7054d0bd22d3d9dfaeea63d38f77a4b20076e2bd1a6471cf9325e",
+    "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+    "simulations/claude_tissue/dev_programme.py": "ff9f4336262a7f650edfc4185c7b247da697a5a87321d117d3bc11928e33a070",
+    "simulations/claude_tissue/fin_growth.py": "15653ce43228ad2dd207899110b8a6b98b0a8e15c6c674d66566be8a4d03f69b",
+    "simulations/claude_tissue/growing_rd.py": "3381bbce05e514d73d23051dd2614d4a6179e2f6ef09d7901ddafa0d6fc81d3d",
+    "simulations/claude_tissue/growing_rd_v2.py": "daf29f9ab143409d5385c1369f695e05ab6c1c1358bbf6ed26a27c33280b22cb",
+    "simulations/claude_tissue/identifiability.py": "bbb3d4eead39125f928f6798ec3e055ad29699a688aaa20f7133cab9410b0404",
+    "simulations/claude_tissue/identifiability_v2.py": "7359c0ae9acc946361fce480b36f3d0a6343af9081b7137178332a4f6c82cfa7",
+    "simulations/claude_tissue/rd_convergence.py": "b23b305e794d2095505cb170eed0f155b559a4b9fa387f1dba3f31e84f482bf6",
+    "simulations/claude_tissue/rd_wavelength.py": "cb0d94c7ef51ce28ff426a5d93310b01d9954569bfca2dccdd3c675ac12559d8",
+    "simulations/claude_tissue/rd_wavelength_v2_gpu.py": "793c452a83d0288827d6054924a961a5c141cc164cc6aaa3080c9b55469dad54",
+    "simulations/claude_tissue/transfer_regimes.py": "59d228120ae335b3f903ecf9e311dc4f40654c2845a8c492146c03f9c17d2b1a"
+  },
+  "does_not_establish": [
+    "which molecule (if any) forms the gradient; the model's morphogen is hypothetical",
+    "r, s, D, k, P or K individually; only the composite c and the offset a are fitted",
+    "growth trajectories: specimens are cross-sectional and species are pooled within groups",
+    "anything about the early (phase-1) outgrowth: the smallest specimen is 1.68 cm SL, where flying-fish fin/SL is already about 0.54, so an early larval head start is neither shown nor excluded",
+    "independent replication: species are pooled within groups without phylogenetic correction, so bootstrap CIs are anticonservative",
+    "that flying-fish fins are an evolutionary consequence of a change in c or a",
+    "aerodynamic or behavioural consequences of the proportions"
+  ],
+  "evidence_kind": "computed model fitted to observed museum-specimen measurements (cross-sectional); model curves are not growth trajectories",
+  "experiment_design": "docs/claude-tissue-transfer-designs.md",
+  "files": {
+    "programme.json": {
+      "bytes": 5286,
+      "sha256": "2bb5b392e8fb906ba7c4ef1fb8da5db0aed7edf0f1f1c73a3cb90ded0b404350"
+    },
+    "programme.png": {
+      "bytes": 132332,
+      "sha256": "344f22ec7c192b66f50c9113b0b20f0d5ff6ec43b0d8af947b8085162456b25e"
+    },
+    "receipt-claude-tissue-dev-programme.json": {
+      "bytes": 1171,
+      "sha256": "6a0e5e439575312f7bef503631f530cc5a40f481c51c0bfacd0bb570668539e0"
+    },
+    "review-gemini-4-argon.txt": {
+      "bytes": 5463,
+      "sha256": "06763976940bb43ce8ac7f24f28548d09e9c2f600ca1444bad6e628afeeb7096"
+    }
+  },
+  "id": "claude-tissue-dev-programme",
+  "input_sha256": {
+    "artifacts/observed-allometry/source-observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703"
+  },
+  "measurement_rows": 0,
+  "runs": [
+    {
+      "code_changed_since_run": null,
+      "command": "python3 simulations/claude_tissue/dev_programme.py",
+      "compute": "none used (CPU numpy); no Nebius job started",
+      "exit_code": 0,
+      "job_state": null,
+      "receipt": "receipt-claude-tissue-dev-programme.json",
+      "run": "claude-tissue-dev-programme",
+      "seed": 20261101,
+      "superseded": null,
+      "wall_s": 5.892
+    }
+  ],
+  "scales": [
+    "developmental",
+    "organ"
+  ],
+  "schema": "frontier.claude-tissue-simulation.manifest/1",
+  "status": "computed_not_observed",
+  "studio_card": {
+    "couplings": [],
+    "equations": [
+      {
+        "label": "Fin growth per unit body growth (model form, declared)",
+        "source": "this harness; saturating growth law is an assumption",
+        "tex": "\\frac{dL}{dSL}=\\frac{r}{s}\\int_0^{L}\\frac{m(x)}{K+m(x)}\\,dx"
+      },
+      {
+        "label": "Tip-saturated limit (where the flying-fish best fit runs; other regimes not excluded)",
+        "source": "identifiability-v2 best fit: l -> 0.009 cm",
+        "tex": "\\frac{dL}{dSL}\\to c=\\frac{r}{s}\\sqrt{D/k}\\,\\ln(1+p)"
+      },
+      {
+        "label": "Adult proportion",
+        "source": "solution of the limit; a = offset laid down before the observed size range",
+        "tex": "\\frac{L}{SL}=c+\\frac{a}{SL}\\ \\xrightarrow{SL\\to\\infty}\\ c"
+      }
+    ],
+    "evidence_kind": "computed model fitted to observed museum-specimen measurements (cross-sectional); model curves are not growth trajectories",
+    "id": "claude-tissue-dev-programme",
+    "limitations": [
+      "which molecule (if any) forms the gradient; the model's morphogen is hypothetical",
+      "r, s, D, k, P or K individually; only the composite c and the offset a are fitted",
+      "growth trajectories: specimens are cross-sectional and species are pooled within groups",
+      "anything about the early (phase-1) outgrowth: the smallest specimen is 1.68 cm SL, where flying-fish fin/SL is already about 0.54, so an early larval head start is neither shown nor excluded",
+      "independent replication: species are pooled within groups without phylogenetic correction, so bootstrap CIs are anticonservative",
+      "that flying-fish fins are an evolutionary consequence of a change in c or a",
+      "aerodynamic or behavioural consequences of the proportions"
+    ],
+    "manifest": "artifacts/simulations/claude-tissue-dev-programme/manifest.json",
+    "model": {
+      "context": "Flying fish, flying halfbeaks, halfbeaks and needlefish from the repo's observed allometry (Daane 2021 Data S1A copy).",
+      "name": "Two-phase distal growth-zone programme: tip-saturated limit of a morphogen-gradient fin-growth model"
+    },
+    "native": true,
+    "numerical_results": [
+      "flying fish: c = 0.729 (95% CI 0.704-0.750), a = -0.33 cm, n = 49",
+      "flying halfbeak: c = 0.245 (95% CI 0.187-0.299), a = 0.56 cm, n = 19",
+      "halfbeak: c = 0.152 (95% CI 0.140-0.168), a = -0.13 cm, n = 22",
+      "needlefish: c = 0.075 (95% CI 0.068-0.087), a = 0.33 cm, n = 19",
+      "Flying fish minus halfbeak fin/SL at SL 20 cm: 0.566, of which 0.576 from c and -0.010 from a"
+    ],
+    "open_questions": [
+      "Is the high flying-fish c a higher outgrowth rate, a longer-lived growth zone, or a larger saturated zone? Longitudinal imaging of the distal fin margin and a graded perturbation series would separate them.",
+      "Data-compatible gradient lengths predict production elasticities of fin/SL from 0.08 to 0.99: a dose series discriminates them.",
+      "Phase 1 (below 1.68 cm SL) is unobserved; larval specimens are needed to test whether an early burst exists.",
+      "The flying-halfbeak group mixes two species with different proportions; per-species fits need more specimens."
+    ],
+    "parameter_unknowns": [
+      "r, s, D, k, P, K are not separately identified; only the composite c and the extrapolated intercept a are fitted.",
+      "A power law L = b SL^alpha fits modestly better (AIC) in every group; the linear programme is an interpretable, untested reading, not the preferred statistical form.",
+      "The morphogen is hypothetical; no molecule is assigned to m(x)."
+    ],
+    "scales": [
+      "developmental",
+      "organ"
+    ],
+    "sources": [
+      {
+        "label": "Observed allometry",
+        "locator": "artifacts/observed-allometry/source-observations.csv"
+      }
+    ],
+    "title": "Developmental growth-zone programme linking adult pectoral-fin proportion to fin outgrowth rate (fitted to observed allometry)"
+  },
+  "title": "Developmental growth-zone programme linking adult pectoral-fin proportion to fin outgrowth rate (fitted to observed allometry)"
+}

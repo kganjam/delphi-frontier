@@ -1,0 +1,33 @@
+{
+ "code_matches_repo": true,
+ "code_sha256": {
+  "simulations/claude_tissue/rd_wavelength_v2_gpu.py": "793c452a83d0288827d6054924a961a5c141cc164cc6aaa3080c9b55469dad54"
+ },
+ "collected_utc": "2026-11-01T14:34:45Z",
+ "collector_sha256": {
+  "simulations/claude_tissue/collect_rd_v2.py": "0e12867daab7054d0bd22d3d9dfaeea63d38f77a4b20076e2bd1a6471cf9325e"
+ },
+ "command": "python3 /work/rdwl.py 256 128 600",
+ "compute": "Nebius aijob-e00n2jw5g99ejffr8t (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+ "environment": {
+  "device": "cuda",
+  "numpy": "2.1.0",
+  "torch": "2.10.0a0+b4e4ee81d3.nv25.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "input_sha256": {},
+ "job_state": "COMPLETED",
+ "name": "claude-tissue-rd-wavelength-v2",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-rd-wavelength/job-log-v2.txt": "be39d21a7be6e69c92b971c6469b41f4055634fafb1633c1a59d9449afde6396",
+  "artifacts/simulations/claude-tissue-rd-wavelength/sweep-v2.json": "96889b16b4a68798810e1b1eba44b4c21603e7bd97d6d64a70fb0f81352348dc",
+  "artifacts/simulations/claude-tissue-rd-wavelength/wavelength-sweep-v2.png": "f8158960dbd8ad441681dffb71903c8192dc17d9bfe357702371aab5b4686abc"
+ },
+ "seed": [
+  11,
+  22,
+  33
+ ],
+ "wall_s": 147.5
+}

@@ -1,0 +1,179 @@
+{
+ "n_obs": 49,
+ "data": "artifacts/observed-allometry/source-observations.csv, group=flying fish",
+ "jacobian_singular_values": [
+  5.047435124515603,
+  0.4510282941413431,
+  0.027892491527565226,
+  0.0064073435921108614,
+  9.282152513807471e-07,
+  8.692101696608694e-15
+ ],
+ "rank_6_native": 4,
+ "null_space_directions_in_log_theta": [
+  {
+   "P": 0.316,
+   "D": 0.632,
+   "k": 0.632,
+   "K": -0.316,
+   "r": -0.0,
+   "s": -0.0
+  },
+  {
+   "P": 0.707,
+   "D": 0.0,
+   "k": 0.0,
+   "K": 0.707,
+   "r": -0.0,
+   "s": -0.0
+  }
+ ],
+ "reduction_max_abs_log10_error": 0.0015794703344698124,
+ "reduced_fit": {
+  "names": [
+   "p=P*l/(D*K)",
+   "l=sqrt(D/k) cm",
+   "rho=r/s"
+  ],
+  "estimate": [
+   395.6129111062994,
+   0.05232423628791567,
+   2.573872166620594
+  ],
+  "se_log": [
+   176.62671066658856,
+   33.21328279124525,
+   6.450208171057607
+  ],
+  "bootstrap_log_sd": [
+   0.18858128723294806,
+   0.3504864709963866,
+   0.37386335315747954
+  ],
+  "bootstrap_n": 30,
+  "bootstrap_q05": [
+   370.20930388929116,
+   0.018315638888842377,
+   2.495383553799731
+  ],
+  "bootstrap_q95": [
+   403.3657391301268,
+   0.054559718245344925,
+   7.645914329856962
+  ],
+  "residual_sigma_log10": 0.08081471977379338,
+  "rss": 0.3004268708773706
+ },
+ "profile_rss": {
+  "P": {
+   "factors": [
+    0.25,
+    0.5,
+    1,
+    2,
+    4
+   ],
+   "rss": [
+    0.3004287991826079,
+    0.3004573719791737,
+    0.3038126708096837,
+    0.3102991446510896,
+    0.302050363850241
+   ]
+  },
+  "D": {
+   "factors": [
+    0.25,
+    0.5,
+    1,
+    2,
+    4
+   ],
+   "rss": [
+    0.304262021237704,
+    0.3009831324218048,
+    0.30052619326084756,
+    0.3005283189728938,
+    0.3005344477878411
+   ]
+  },
+  "k": {
+   "factors": [
+    0.25,
+    0.5,
+    1,
+    2,
+    4
+   ],
+   "rss": [
+    0.3004346333695581,
+    0.3004371198627289,
+    0.30043343580126625,
+    0.3004318903233254,
+    0.3004189333180794
+   ]
+  },
+  "K": {
+   "factors": [
+    0.25,
+    0.5,
+    1,
+    2,
+    4
+   ],
+   "rss": [
+    0.3099347890983368,
+    0.3101249229540039,
+    0.3094510796339476,
+    0.31021361195287656,
+    0.3004215894076461
+   ]
+  },
+  "r": {
+   "factors": [
+    0.25,
+    0.5,
+    1,
+    2,
+    4
+   ],
+   "rss": [
+    0.2972182837506587,
+    0.29857401956182517,
+    0.2984615958362702,
+    0.29017778928370525,
+    0.2801213477265
+   ]
+  },
+  "s": {
+   "factors": [
+    0.25,
+    0.5,
+    1,
+    2,
+    4
+   ],
+   "rss": [
+    0.3004354070142943,
+    0.30043033233066,
+    0.30046062544360785,
+    0.30043050943295146,
+    0.300464645299678
+   ]
+  }
+ },
+ "rank_by_added_readout": {
+  "cross-sectional L(SL) only": 4,
+  "+ longitudinal L(t),SL(t)": 4,
+  "+ longitudinal + gradient length": 4,
+  "+ longitudinal + gradient length + calibrated amplitude": 4
+ },
+ "wavelength_elasticity_dlogLambda_dlogParam": {
+  "d": 0.21043216006527643,
+  "g": -0.504086205514523,
+  "a": -0.04208501242067436,
+  "b": -0.46301323317674536
+ },
+ "wavelength_note": "No observed Turing wavelength or ray spacing is in the repo; these parameters have zero data constraint.",
+ "caveat": "Cross-sectional pooled specimens of 3 species are treated as one growth trajectory (strong assumption); residual sigma mixes measurement error, species differences and model misspecification."
+}

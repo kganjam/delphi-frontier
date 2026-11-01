@@ -1,0 +1,26 @@
+{
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+  "simulations/claude_tissue/dev_programme.py": "ff9f4336262a7f650edfc4185c7b247da697a5a87321d117d3bc11928e33a070"
+ },
+ "command": "python3 simulations/claude_tissue/dev_programme.py",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {
+  "artifacts/observed-allometry/source-observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703"
+ },
+ "name": "claude-tissue-dev-programme",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-dev-programme/programme.json": "2bb5b392e8fb906ba7c4ef1fb8da5db0aed7edf0f1f1c73a3cb90ded0b404350",
+  "artifacts/simulations/claude-tissue-dev-programme/programme.png": "344f22ec7c192b66f50c9113b0b20f0d5ff6ec43b0d8af947b8085162456b25e"
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": 20261101,
+ "wall_s": 5.892
+}

@@ -1,0 +1,203 @@
+{
+ "model": "two-phase distal growth-zone programme (tip-saturated limit of the fin-growth gradient model)",
+ "equations": {
+  "growth law": "dL/dSL = (r/s) * int_0^L m/(K+m) dx",
+  "tip-saturated limit": "dL/dSL -> c = (r/s) sqrt(D/k) ln(1+p)",
+  "observed-phase solution": "L = a + c SL",
+  "adult proportion": "L/SL = c + a/SL -> c"
+ },
+ "data": "artifacts/observed-allometry/source-observations.csv",
+ "sl_ref_cm": 20.0,
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20261101,
+  "resample": "specimens within group"
+ },
+ "groups": {
+  "flying fish": {
+   "n": 49,
+   "sl_range_cm": [
+    1.68,
+    24.0
+   ],
+   "programme_fit": {
+    "a_cm": -0.3322649760796748,
+    "c": 0.7285761994238171,
+    "a_ci95": [
+     -0.5385170965269528,
+     -0.13109352699145801
+    ],
+    "c_ci95": [
+     0.7039437255933514,
+     0.7500158190809718
+    ],
+    "ratio_at_SLref": 0.7119629506198334,
+    "ratio_at_SLref_ci95": [
+     0.6946670442001195,
+     0.7271704129788145
+    ],
+    "rmse_cm": 0.4832683973468876,
+    "aic": -67.26394297466588
+   },
+   "power_law_fit": {
+    "b": 0.5843277628842831,
+    "alpha": 1.0674943809149107,
+    "rmse_cm": 0.46907801965943513,
+    "aic": -70.18464477295561
+   },
+   "observed_mean_ratio": 0.6738989104884957
+  },
+  "flying halfbeak": {
+   "n": 19,
+   "sl_range_cm": [
+    3.2,
+    25.0
+   ],
+   "programme_fit": {
+    "a_cm": 0.5626243694878365,
+    "c": 0.24503726830783493,
+    "a_ci95": [
+     -0.07754685979585514,
+     1.612291857830075
+    ],
+    "c_ci95": [
+     0.18650575400050182,
+     0.2988107786116931
+    ],
+    "ratio_at_SLref": 0.27316848678222677,
+    "ratio_at_SLref_ci95": [
+     0.2526725955701337,
+     0.30123227384284157
+    ],
+    "rmse_cm": 0.781338283299923,
+    "aic": -5.376389104293715
+   },
+   "power_law_fit": {
+    "b": 0.5077006034283886,
+    "alpha": 0.7935054050579737,
+    "rmse_cm": 0.734470015453445,
+    "aic": -7.727032076401441
+   },
+   "observed_mean_ratio": 0.2845897180120451
+  },
+  "halfbeak": {
+   "n": 22,
+   "sl_range_cm": [
+    2.6,
+    23.6
+   ],
+   "programme_fit": {
+    "a_cm": -0.1321214583723271,
+    "c": 0.152433029209618,
+    "a_ci95": [
+     -0.2985666565180153,
+     -0.022976063474867997
+    ],
+    "c_ci95": [
+     0.1397376548964302,
+     0.1676197179985856
+    ],
+    "ratio_at_SLref": 0.14582695629100162,
+    "ratio_at_SLref_ci95": [
+     0.13841032759256136,
+     0.15397027424100942
+    ],
+    "rmse_cm": 0.18423594750075978,
+    "aic": -70.42767285685096
+   },
+   "power_law_fit": {
+    "b": 0.10913900969557769,
+    "alpha": 1.0979889010925772,
+    "rmse_cm": 0.18168686772263337,
+    "aic": -71.04070555061887
+   },
+   "observed_mean_ratio": 0.14040953679030924
+  },
+  "needlefish": {
+   "n": 19,
+   "sl_range_cm": [
+    13.0,
+    53.0
+   ],
+   "programme_fit": {
+    "a_cm": 0.32650773479042566,
+    "c": 0.0745379632928623,
+    "a_ci95": [
+     0.019606759208170725,
+     0.4986150170834847
+    ],
+    "c_ci95": [
+     0.0675381442202379,
+     0.08743336105105522
+    ],
+    "ratio_at_SLref": 0.09086335003238358,
+    "ratio_at_SLref_ci95": [
+     0.08535217570860588,
+     0.09546989566039026
+    ],
+    "rmse_cm": 0.23372811256375345,
+    "aic": -51.23667654895796
+   },
+   "power_law_fit": {
+    "b": 0.13813777982191108,
+    "alpha": 0.8612273629068409,
+    "rmse_cm": 0.23230900047291295,
+    "aic": -51.46810200680126
+   },
+   "observed_mean_ratio": 0.08865799793978357
+  }
+ },
+ "decomposition": {
+  "flying fish - flying halfbeak": {
+   "delta_ratio_at_SLref": 0.4387944638376066,
+   "from_growth_zone_c": 0.48353893111598223,
+   "from_early_offset_a": -0.04474446727837557,
+   "c_share": 1.1019713578130628,
+   "delta_c_ci95": [
+    0.42406594428503386,
+    0.5437820872043956
+   ],
+   "delta_a_term_ci95": [
+    -0.09772952960851075,
+    -0.010044189050032588
+   ]
+  },
+  "flying fish - halfbeak": {
+   "delta_ratio_at_SLref": 0.5661359943288318,
+   "from_growth_zone_c": 0.5761431702141991,
+   "from_early_offset_a": -0.010007175885367385,
+   "c_share": 1.0176762756397977,
+   "delta_c_ci95": [
+    0.5479354324101645,
+    0.6025029243695812
+   ],
+   "delta_a_term_ci95": [
+    -0.02164088534313691,
+    0.0020506288723366136
+   ]
+  },
+  "flying fish - needlefish": {
+   "delta_ratio_at_SLref": 0.6210996005874498,
+   "from_growth_zone_c": 0.6540382361309548,
+   "from_early_offset_a": -0.03293863554350503,
+   "c_share": 1.0530327752784752,
+   "delta_c_ci95": [
+    0.6268410549935542,
+    0.6768590006958013
+   ],
+   "delta_a_term_ci95": [
+    -0.0458670080707628,
+    -0.01406931199799093
+   ]
+  }
+ },
+ "does_not_establish": [
+  "which molecule (if any) forms the gradient; the model's morphogen is hypothetical",
+  "r, s, D, k, P or K individually; only the composite c and the offset a are fitted",
+  "growth trajectories: specimens are cross-sectional and species are pooled within groups",
+  "anything about the early (phase-1) outgrowth: the smallest specimen is 1.68 cm SL, where flying-fish fin/SL is already about 0.54, so an early larval head start is neither shown nor excluded",
+  "independent replication: species are pooled within groups without phylogenetic correction, so bootstrap CIs are anticonservative",
+  "that flying-fish fins are an evolutionary consequence of a change in c or a",
+  "aerodynamic or behavioural consequences of the proportions"
+ ]
+}

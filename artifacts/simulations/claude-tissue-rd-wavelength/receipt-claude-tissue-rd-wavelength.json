@@ -1,0 +1,48 @@
+{
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "011825fe29b288e7c82d112fd33bbcd1c4331c84f75b7e30fab2e5c441e8231c",
+  "simulations/claude_tissue/rd_wavelength.py": "cb0d94c7ef51ce28ff426a5d93310b01d9954569bfca2dccdd3c675ac12559d8"
+ },
+ "command": "python3 simulations/claude_tissue/rd_wavelength.py",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {},
+ "name": "claude-tissue-rd-wavelength",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-rd-wavelength/sweep.json": "3ec7323a02161521e6423fe9d9e82dbab47a2a78fbd7960b285dd4825bf05a8e",
+  "artifacts/simulations/claude-tissue-rd-wavelength/wavelength-sweep.png": "d86ed6a88faadd326bf4a3e9a69845ee351ea2347466a2411b5d52f640ec373a"
+ },
+ "parameters": {
+  "L": 32.0,
+  "N": 64,
+  "a": 0.1,
+  "b": 0.9,
+  "ds": [
+   10,
+   14,
+   20,
+   30,
+   45
+  ],
+  "dt": 0.02,
+  "gammas": [
+   0.5,
+   1.0,
+   2.0
+  ],
+  "t_end": 150.0
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": [
+  11,
+  22,
+  33
+ ],
+ "wall_s": 141.777
+}

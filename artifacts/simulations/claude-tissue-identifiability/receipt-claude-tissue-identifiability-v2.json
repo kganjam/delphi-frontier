@@ -1,0 +1,34 @@
+{
+ "baseline": {
+  "D": 0.02,
+  "K": 0.5,
+  "P": 0.01,
+  "k": 0.02,
+  "r": 0.22302582412886715,
+  "s": 0.2
+ },
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+  "simulations/claude_tissue/identifiability_v2.py": "7359c0ae9acc946361fce480b36f3d0a6343af9081b7137178332a4f6c82cfa7"
+ },
+ "command": "python3 simulations/claude_tissue/identifiability_v2.py",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {
+  "artifacts/observed-allometry/source-observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703"
+ },
+ "name": "claude-tissue-identifiability-v2",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-identifiability/identifiability-v2.json": "3d440b2ccd847858fe3b9ea3bbb7a38655d292b9993f91bcfbb46ff19642cb6c",
+  "artifacts/simulations/claude-tissue-identifiability/identifiability-v2.png": "d58fc28c2ca32159779dd6bf0de5cfa7060a80276268e922cb421ff4dc61ec03"
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": "deterministic (no RNG)",
+ "wall_s": 655.69
+}

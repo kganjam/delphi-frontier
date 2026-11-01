@@ -1,0 +1,26 @@
+{
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+  "simulations/claude_tissue/transfer_regimes.py": "59d228120ae335b3f903ecf9e311dc4f40654c2845a8c492146c03f9c17d2b1a"
+ },
+ "command": "python3 simulations/claude_tissue/transfer_regimes.py",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {
+  "artifacts/observed-allometry/source-observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703"
+ },
+ "name": "claude-tissue-transfer-regimes",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-identifiability/transfer-regimes.json": "ccda36fd64443b0608e7dcba49e40cd00084e0c6d1a7b7a23b65508189f13cdc",
+  "artifacts/simulations/claude-tissue-identifiability/transfer-regimes.png": "6c4ce8889813352794c8a057e84c06790045a6942d9fb42833257a5534c1e115"
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": "deterministic (no RNG)",
+ "wall_s": 385.094
+}
