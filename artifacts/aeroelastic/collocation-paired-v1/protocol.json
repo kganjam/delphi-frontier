@@ -1,0 +1,212 @@
+{
+ "schema": "frontier.aeroelastic.collocation-paired-protocol/1",
+ "status": "FROZEN before any repaired coupled arm exists. Source audit: cfd04's audit of its extended VLM-diagnostic return (work/vlm-diagnostic b976001, artifacts/cfd3d/vlm-diag/extended-return/audit.json; 372 exact solves, 76 re-derived classifications, verdicts re-derived without importing its runner) is recorded and confirmed by infra (infra-to-coupled-collocation.md). It is an OWNER audit; no third-party review of the repair exists. Controls K1/K2 here are a separate check: this implementation, over the root-branch vlm.py bytes (not cfd04's refactor), must reproduce cfd04's returned repaired and core values within 1e-12. If any later audit changes the repair definition or those values, this protocol is void and is re-frozen under a new name; nothing here is edited in place. Infra alone admits.",
+ "base_commit": "d87e5d1 (root branch codex/frontier-demo-20261031)",
+ "question": "With physics, assumed EI, beam, glide, contexts and the five ladder lattices unchanged, and only the VLM collocation point moved by the reviewed panel-consistent repair: (1) does the fidelity-v1 ladder become resolvable under the UNCHANGED fidelity-v1 rules, and (2) how much does each coupled effect change between the production collocation and the repaired one, at identical contexts and lattices?",
+ "evidence_kind": "computed numerical-method sensitivity of an assumed-EI scaffold; not measurement, not fish function",
+ "mechanism_from_cfd04_source_and_return": {
+  "read": "work/vlm-diagnostic b976001: engineering/cfd3d/vlm_diag.py (repair_colloc, builders, colloc_decision), vlm_diag_contract.json, vlm_diag_addendum_repair.json, artifacts/cfd3d/vlm-diag/extended-return/{audit.json,analysis.json,native/science/*}; messages vlm-diagnostic-to-infra.md, vlm-return-audit-to-infra.md, cfd04-vlm-diagnostic-to-coupled-fidelity.md",
+  "identified": [
+   "In vlm.lattice each bound vortex joins the quarter-chord points of the two strip-EDGE chords, while the collocation point uses the strip-MIDPOINT chord (H_colloc). On a curved outline the collocation point is displaced relative to its own panel by an amount that does not shrink with chordwise refinement, so chord refinement diverges.",
+   "Frozen core decision D_scheme 'indicated' (smooth ellipses misbehave under chord refinement); frozen addendum D_colloc 'supported' on the extended families (32-192 strips, 8-48 chordwise).",
+   "Repaired four-fin rigid CL holds at 0.25018 from nc 4 to 48 at ns 32 (unrepaired 0.2502 -> 0.1272 at nc 48); repaired span family at nc 8 is monotone 8 -> 192."
+  ],
+  "not_identified_or_unresolved": [
+   "D_colloc is 'unknown' on the core families; 'supported' on the extended families rests on one N2 sign change of 3.7e-4 (128 -> 192 strips).",
+   "D_law 'unknown', D_sampling 'unknown', D_interaction 'confounded' (frozen core verdicts).",
+   "D_fins_after_repair, applied literally: 'not explained by H_colloc' - the repaired fin chord families stay 'irregular' under the 1e-12 rule at a ~8e-6 plateau; whether that residual is noise or a second mechanism is not established.",
+   "Whether the repaired scheme makes COUPLED effects (deformed lattices, feedback) converge on the fidelity-v1 ladder, which refines span and chord together from 16x4: untested. cfd04's repaired span family is only shown regular in its extended 32-192 range by its classifier.",
+   "No converged absolute reference exists: the 48x16 upstream force reference is unrepaired and carries an O(1%) chord bias (cfd04)."
+  ],
+  "independent_audit_of_cfd04_return": "recorded as cfd04's owner audit b976001 (audit.json); root's message called it pending at 23:56 PDT and infra confirmed it pushed afterwards; no third-party audit"
+ },
+ "variants": {
+  "baseline": {
+   "definition": "production code unchanged: engineering.aeroelastic.run.solve_arm with model.setup and the root-branch engineering/cfd3d/vlm.py (sha256 f9dd43a97243234880fef5c4d99e77ee34458980c6246a284762763a12acb6d3, the f9dd43a9 bytes the fidelity-v1 ladder ran)",
+   "source_of_values": "the audited fidelity-v1 return (45/45 valid, audit clean, d732065), pinned by its collection receipt; not rerun except the equivalence arms below",
+   "fidelity_v1_return": "/data/artifacts/delphi-evolve-rethink/gcp/aeroelastic-fidelity-v1/frontier-cpu-20261031-04/final-678c747967c7472ebb9460a5a8a3cffb",
+   "fidelity_v1_collection_receipt_sha256": "d8dde7f6a3235d115ca3d8780586a1cdb5e81430ef1a829c3cd892d2e1f7db79",
+   "fidelity_v1_summary_sha256": "da9f21ffa05316ebc30ab2245b06622ca3fc156dfe840a0845703db2f8d772cd"
+  },
+  "repaired": {
+   "definition": "panel-consistent collocation exactly as cfd04 vlm_diag.repair_colloc: C = origin + um e_u + wc e_w with um = 0.5 (u_i + u_{i+1}) and wc = 0.5 [(w_front_i + 0.75 (w_rear_i - w_front_i)) + (w_front_{i+1} + 0.75 (w_rear_{i+1} - w_front_{i+1}))] from the lattice's own corners lat['uw']; ONLY C changes; A, B, N (sampled at the unrepaired point, as cfd04), area, Response stations, beam, transfer, solve and glide are the unchanged production code",
+   "source": {
+    "commit": "b976001",
+    "file": "engineering/cfd3d/vlm_diag.py",
+    "function": "repair_colloc",
+    "addendum_sha256": "6a68b13da4a17e379507372c80df955681eee87896e50abacb90aee805ae921d"
+   },
+   "implementation": "engineering/aeroelastic/collocation.py repair() and repaired_setup(); installed per task by replacing the module names run.setup and fidelity.setup inside that worker and restoring them afterwards, so no production file is edited and the variant is pinned by its own file hash",
+   "version": "collocation-repair/1 (diagnostic variant; NOT the production solver; vlm.py unchanged)"
+  }
+ },
+ "physics_unchanged": {
+  "statement": "original protocol.json physics (EI, alpha 4 deg, rho, speeds, mass, CD0, e, height, dt, gates, underrelaxation, iteration budget); no twist, no new stiffness; EI stays the assumed scaffold",
+  "original_protocol": {
+   "path": "artifacts/aeroelastic/protocol.json",
+   "sha256": "2343dd6e80cc9da394e9379e4daaa36082599344522d9774d240aab75386b24a",
+   "bytes": 9658
+  }
+ },
+ "criteria": {
+  "fidelity_v1_protocol": {
+   "path": "artifacts/aeroelastic/fidelity-v1/protocol.json",
+   "sha256": "94cbdb19529eaebf95e83df3f542b98e817f987ce1112fd8aaea2af076912f3f"
+  },
+  "rule": "fidelity.effects, fidelity.classify(series, floor, <fidelity-v1 protocol object>) and fidelity.decide applied verbatim to the repaired arms; triples T2 (main, l32x8, l64x16) and T1.5 (main, fine, l36x9); no rule, threshold or lattice changed"
+ },
+ "contexts": [
+  {
+   "compliance": 0.8,
+   "speed_m_s": 20.0,
+   "why": "strongest coupling and feedback; bending side 'retain'; baseline one-way tip/span 0.09934 at l36x9, 0.7% inside the 0.1 gate, so a repaired domain exit is a live outcome"
+  },
+  {
+   "compliance": 0.8,
+   "speed_m_s": 16.0,
+   "why": "same decision side as chi0.8-u20 with tip/span <= 0.063, so the retain-side test survives a chi0.8-u20 domain exit"
+  },
+  {
+   "compliance": 0.2,
+   "speed_m_s": 20.0,
+   "why": "the only context on the 'reject' side of the 1% bending convention (baseline -0.53%)"
+  }
+ ],
+ "lattices": "exactly fidelity-v1's five (main 16x4, fine 24x6, l32x8, l36x9, l64x16); no finer or new lattice",
+ "arm_set": {
+  "repaired": "3 contexts x 5 lattices x {rigid, one-way-frozen-load, two-way-static-feedback} = 45 arms; every one is required by the frozen triples and paired effects",
+  "baseline_equivalence": "6 baseline arms re-executed with the current root-branch run.py (which gained default-neutral scenario/pressure-policy parameters in 30a24f7 after fidelity-v1 ran): chi0.8-u20 and chi0.2-u20 at l32x8, all three arms, compared with the audited fidelity-v1 returns",
+  "minimality": "no lattice can be dropped without changing the frozen triples; no context duplicates another's decision role (u16 is kept only as the domain-safe retain-side test); rigid arms of the two u20 contexts are identical physics and are kept as a bitwise determinism control rather than deduplicated",
+  "not_run": "no baseline ladder rerun (the audited fidelity-v1 return is the baseline), no finer ladder, no new context, no twist or stiffness change"
+ },
+ "baseline_references": [
+  {
+   "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.8-u20-l32x8-rigid/result.json",
+   "sha256": "9116553bfdcb2101198999c737bda31ab0476a92e45bd9ad4246ed744d7cd3d5",
+   "bytes": 9186,
+   "collected_as": "science/arms/chi0.8-u20-l32x8-rigid/result.json"
+  },
+  {
+   "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.8-u20-l32x8-one-way-frozen-load/result.json",
+   "sha256": "0b8ecb295a3d3cdf5cf2d40c2691d87df639c40e46e6aa4acb63522698a1a5c1",
+   "bytes": 15114,
+   "collected_as": "science/arms/chi0.8-u20-l32x8-one-way-frozen-load/result.json"
+  },
+  {
+   "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.8-u20-l32x8-two-way-static-feedback/result.json",
+   "sha256": "2f9b35c562913babb4aae6619656ed2cc0d66f1c49370bb6d1bfccd7ec3581fc",
+   "bytes": 108968,
+   "collected_as": "science/arms/chi0.8-u20-l32x8-two-way-static-feedback/result.json"
+  },
+  {
+   "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.2-u20-l32x8-rigid/result.json",
+   "sha256": "c8598fece39bf2053727a4997822ad6e891e35a50b0396bd665980e15bd5e337",
+   "bytes": 9184,
+   "collected_as": "science/arms/chi0.2-u20-l32x8-rigid/result.json"
+  },
+  {
+   "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.2-u20-l32x8-one-way-frozen-load/result.json",
+   "sha256": "ed95b312cb5e39eee001c47f2e2e9160e2a0e6c109917b93d642e3460ce997be",
+   "bytes": 15145,
+   "collected_as": "science/arms/chi0.2-u20-l32x8-one-way-frozen-load/result.json"
+  },
+  {
+   "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.2-u20-l32x8-two-way-static-feedback/result.json",
+   "sha256": "3d67a2b8eae7b2e61cde663f4b4c1ec080a8a995ebe2ce0661eea7eacacc465c",
+   "bytes": 97550,
+   "collected_as": "science/arms/chi0.2-u20-l32x8-two-way-static-feedback/result.json"
+  }
+ ],
+ "controls": {
+  "K1_exact_repair": {
+   "gating": true,
+   "rule": "repaired rigid CL (unit solve, fixed source area) equals cfd04's returned repaired value within 1e-12 relative at every pinned point: four fins combined at 16x8 24x8 32x8 48x8 64x8 32x4 32x6 32x12 32x16; vlm.elliptic(6) at 32x4 32x8 32x16 96x8 32x24; rectangle (span 1, chord 0.25) at 32x8",
+   "references": "vlm-references.json"
+  },
+  "K2_baseline_unchanged": {
+   "gating": true,
+   "rule": "the same points with the variant NOT installed equal cfd04's returned core values within 1e-12 relative (the four-fin ones are also owner07's ladder-diagnostic values)"
+  },
+  "K3_rectangle_invariance": {
+   "gating": true,
+   "rule": "on the rectangle the repaired C equals the unrepaired C within 1e-12 x chord and CL within 1e-12 relative (a straight-edged planform has no collocation inconsistency)"
+  },
+  "K4a_law_repaired": {
+   "gating": true,
+   "rule": "repaired vlm.elliptic(6): |CL_alpha / Helmbold(6) - 1| <= 0.03 at 96x8 and 32x24 (the frozen gates_vlm V1 tolerance)",
+   "limit": "the unrepaired scheme also passes this; it rejects gross collocation errors only"
+  },
+  "K4b_quarter_chord_mutant_rejected": {
+   "gating": true,
+   "rule": "the repair formula with f = 0.25 (collocation on the bound vortex line) must be rejected: nonfinite or |CL_alpha / Helmbold - 1| > 0.03 at 96x8 or 32x24"
+  },
+  "K4c_chord_plateau_discriminates": {
+   "gating": true,
+   "rule": "at ns 32, nc {4, 8, 16}: (max - min) / |mean| of rigid CL <= 1e-4 for the repaired four fins AND the repaired ellipse, and > 1e-3 for the unrepaired four fins AND the unrepaired ellipse (so the control can reject the production collocation)"
+  },
+  "K4d_one_sided_mutant_power": {
+   "gating": false,
+   "rule": "the repair using only the inboard edge chord (wc = w_front_i + 0.75 (w_rear_i - w_front_i)) on the four fins and the ellipse at ns 32, nc {4, 8, 16}; reported as rejected if the plateau range exceeds 1e-4. Reported, not gating: its outcome is not predicted, and a non-rejection would mean K4c has no power against that error"
+  },
+  "K5_coupled_lattice_controls": {
+   "gating": true,
+   "rule": "fidelity.lattice_controls on each of the five REPAIRED lattices; every check must pass except upstream_force",
+   "upstream_force": "reported, not gating: it compares with an unrepaired 48x16 reference (3% tolerance) that carries an O(1%) chord bias, so it cannot judge a repaired lattice; unit and doubled-force mutation checks and the thin-airfoil bound remain gating"
+  },
+  "K6_determinism": {
+   "gating": true,
+   "rule": "repaired rigid arms of chi0.8-u20 and chi0.2-u20 are identical at every lattice (final CL and both ranges bitwise)"
+  },
+  "K7_baseline_equivalence": {
+   "gating": true,
+   "rule": "fidelity.reproduction on the 6 baseline arms: status and iteration counts equal and every CL history value, tip/span and both ranges within 1e-10 abs + 1e-9 rel of the audited fidelity-v1 returns"
+  },
+  "original_controls": {
+   "gating": true,
+   "rule": "engineering.aeroelastic.controls.run passes, as in fidelity-v1"
+  }
+ },
+ "validity": "study_valid only if every gating control passes. Otherwise the repaired classification is still computed and reported, labelled INVALID with the failed controls named, and no repaired decision is stated.",
+ "failure_policy": "All failed, unconverged, partial, not-started and model-domain-exit arms are saved with their native status and never repaired, rerun or replaced. A context with any such repaired arm is not_assessable for the repaired variant, exactly as fidelity-v1. The fidelity-v1 results (45 arms, 27 sign_resolved, all decisions undetermined) are preserved unchanged; production decisions stay those.",
+ "analysis": {
+  "summary": "per context: native statuses, descriptive series, fidelity-v1 classification and decisions for the repaired variant, controls, validity",
+  "paired_comparison": "per context, effect and lattice: baseline (fidelity-v1 return), repaired, repaired - baseline and its ratio to |baseline|; triple behaviours of both; decisions of both",
+  "numerical_error_estimates": "reported per effect: fixed-point and dt floors (fidelity-v1 definitions), Roache GCI where a triple is monotone, the five-lattice spread, and the repaired-baseline difference at each lattice as the collocation-scheme sensitivity",
+  "visuals": "actual values per lattice for both variants with the frozen triples; the K4c chord plateau for both variants; the unchanged render.render of the repaired finest-lattice chi0.8-u20 arms"
+ },
+ "expectations_not_criteria": [
+  "From cfd04's repaired four-fin span family (nc 8: 0.25466 at 16, 0.25018 at 32, 0.24793 at 64; successive-step ratios about 0.5-0.6) and its flat chord plateau, the repaired rigid-CL T2 triple is expected monotone with observed order near 1. This is an expectation from rigid solves, not a prediction for coupled effects.",
+  "Whether paired coupled effects resolve, and whether chi0.8-u20 stays inside the 0.1 tip/span gate, is not predicted."
+ ],
+ "decision_relevance": "If the repaired effects resolve, the v1 rules give bending retain/reject and feedback one-way/two-way decisions CONDITIONAL on the diagnostic collocation variant, which would justify a separate, labelled production VLM change by its owner; they do not change production decisions by themselves. If they do not resolve, the remaining irregularity is shown not to be the collocation mismatch alone on this ladder, and a finer ladder is not the remedy. Either way the repaired-baseline difference bounds how much the production collocation biases each coupled effect at these lattices.",
+ "resources": {
+  "CPU_vCPU": 4,
+  "workers": 4,
+  "threads_per_worker": 1,
+  "hard_seconds": 1200,
+  "soft_no_new_work_seconds": 1000,
+  "tree_memory_GiB": 12,
+  "tasks": 128,
+  "output_cap_bytes": 64000000,
+  "GPU": 0
+ },
+ "runtime_basis": {
+  "measured_on": "fidelity-v1 VM04 return (same lattices, contexts, arm code path, 4 workers; the repair changes no solve size)",
+  "repaired_arms_worker_seconds": 1610.5,
+  "lattice_controls_seconds": 112.1,
+  "baseline_equivalence_seconds": 63.3,
+  "longest_arm_seconds": 363.1,
+  "longest_arm": "chi0.8-u20-l64x16-two-way-static-feedback (18 iterations)",
+  "fidelity_v1_actual": {
+   "wall_seconds": 466.7,
+   "cpu": "28 min 49 s",
+   "memory_peak": "3.6 GB",
+   "output_bytes": 41826885
+  },
+  "collocation_controls_seconds": "measured in the local preflight (rigid unit solves only)",
+  "estimate": "about 1,830 worker-seconds plus collocation controls; wall about 500-560 s on 4 workers (critical path the chi0.8-u20 l64x16 group, about 445 s; v1 ran 1.08x its work/4); output about 46 MB",
+  "note": "my fidelity-v1 a priori estimate was 1.7x low; this basis is measured"
+ },
+ "exit_code": "nonzero when a task crashed, a gating control failed or is missing, an arm is missing, partial or not started, the output cap is exceeded, or setup fails; every result is kept either way. A model-domain exit is a result, not a nonzero exit.",
+ "scope": "Bending-only, torsion-rigid, fixed-alpha scaffold with assumed constant EI; inviscid thin-surface VLM with fixed straight wake, here in a labelled diagnostic collocation variant; separate rigidized-shape point-mass descent. No tissue measurement, trimmed glide, continuous FSI or fish-function claim. biological_success_probability is null."
+}

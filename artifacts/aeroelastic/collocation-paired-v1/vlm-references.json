@@ -1,0 +1,81 @@
+{
+ "schema": "frontier.aeroelastic.collocation-references/1",
+ "source": {
+  "repository_commit": "b976001",
+  "branch": "work/vlm-diagnostic",
+  "owner": "cfd04",
+  "files": {
+   "core-f3": {
+    "path": "artifacts/cfd3d/vlm-diag/extended-return/native/science/core-f3/results.json",
+    "sha256": "f33286ad3e1d1bd72fc727ff28f9ee5c72cb338272b055033a176d2b52d13d1b"
+   },
+   "repair-f3": {
+    "path": "artifacts/cfd3d/vlm-diag/extended-return/native/science/repair-f3/results.json",
+    "sha256": "25d4db71eb4928cf35cc71876fafbe310fdd1491fca00c498721fe1052c3a502"
+   },
+   "core-rest": {
+    "path": "artifacts/cfd3d/vlm-diag/extended-return/native/science/core-rest/results.json",
+    "sha256": "87eb11eaf68cf3e1b24f705b8dbf49246f8ae93f7876c5c0952b7dea79e201ae"
+   },
+   "repair-rest": {
+    "path": "artifacts/cfd3d/vlm-diag/extended-return/native/science/repair-rest/results.json",
+    "sha256": "aa28e41c6f35c7e2f87f0d4d4ee8082e4a7e7003e06455f49996a72423599cf2"
+   }
+  },
+  "variant_names": {
+   "baseline": "cfd04 'core' (unchanged vlm.lattice)",
+   "repaired": "cfd04 'repair' (vlm_diag.repair_colloc, addendum)"
+  }
+ },
+ "unit": "CL at alpha 4 deg on S_ref (fins: summed area_flat_m2; ellipse: b^2/AR), unit free stream",
+ "values": {
+  "baseline": {
+   "F3_four_fins_combined": {
+    "16x8": 0.24219045883800855,
+    "24x8": 0.24943330625078972,
+    "32x8": 0.2498656853271448,
+    "48x8": 0.24852949109688166,
+    "64x8": 0.24796330001373817,
+    "32x4": 0.25016390827889173,
+    "32x6": 0.25004960368793716,
+    "32x12": 0.24929366359202546,
+    "32x16": 0.24832347898580515
+   },
+   "A1_elliptic_AR6_dense": {
+    "32x4": 0.3118651145322261,
+    "32x8": 0.312789923873919,
+    "32x16": 0.31459497670435016,
+    "96x8": 0.30814281100846835,
+    "32x24": 0.3163655550199638
+   },
+   "A3_rectangle_AR4": {
+    "32x8": 0.2575433031528973
+   }
+  },
+  "repaired": {
+   "F3_four_fins_combined": {
+    "16x8": 0.2546572347446349,
+    "24x8": 0.25165092990502774,
+    "32x8": 0.2501761475008821,
+    "48x8": 0.24869049893231887,
+    "64x8": 0.24793346259137167,
+    "32x4": 0.25018653231635346,
+    "32x6": 0.25018151920876924,
+    "32x12": 0.2501785630236258,
+    "32x16": 0.250179363016626
+   },
+   "A1_elliptic_AR6_dense": {
+    "32x4": 0.31067705522516187,
+    "32x8": 0.3106795838974467,
+    "32x16": 0.31068389738608965,
+    "96x8": 0.30791162491994434,
+    "32x24": 0.3106847657420013
+   },
+   "A3_rectangle_AR4": {
+    "32x8": 0.2575433031528973
+   }
+  }
+ },
+ "addendum_sha256": "6a68b13da4a17e379507372c80df955681eee87896e50abacb90aee805ae921d",
+ "vlm_py_sha256_at_source": "044a6dc281a50db17f522d66d2c1efa0fbb0bf0d38f71b5885763a88f7f0a06a"
+}

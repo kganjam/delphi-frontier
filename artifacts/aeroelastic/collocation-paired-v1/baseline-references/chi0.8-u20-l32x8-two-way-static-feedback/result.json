@@ -1,0 +1,3101 @@
+{
+  "schema": "frontier.aeroelastic.arm/1",
+  "compliance": 0.8,
+  "speed_m_s": 20.0,
+  "mesh": "l32x8",
+  "actual_lattice": {
+    "span": 32,
+    "chord": 8
+  },
+  "local_control_not_production_arm": true,
+  "arm": "two-way-static-feedback",
+  "status": "converged static feedback",
+  "valid_for_declared_transfer": true,
+  "EI_Nm2": {
+    "pectoral_L": 0.0013395903188222812,
+    "pectoral_R": 0.0013395903188222816,
+    "pelvic_L": 0.00010814221549199866,
+    "pelvic_R": 0.00010814221549199867
+  },
+  "iterations": [
+    {
+      "iteration": 0,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24986568532714448,
+      "total_force_N": [
+        -0.022216598503318245,
+        -5.648148041189683e-18,
+        0.3177121605553203
+      ],
+      "shape_residual_over_span": 0.09890293850028617,
+      "CL_change": null,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.0,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.0,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.0,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.0,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.0,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.0,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.0,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.0,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.0688766242721592e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009465638917347401,
+            -0.014528871835557735,
+            0.1353649430635292
+          ],
+          "total_moment_root_world_Nm": [
+            0.0061701423886736445,
+            -0.0018002429739864486,
+            0.00023912457310472926
+          ],
+          "constraint_force_world_N": [
+            -0.009465638917347401,
+            0.0020607847692294956,
+            0.00025303255300525236
+          ],
+          "constraint_moment_root_world_Nm": [
+            1.734723475976807e-18,
+            -0.0018002429739864486,
+            0.00023912457310472926
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 4.0748179725894835e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.2953921310676028e-16,
+          "total_force_world_N": [
+            -0.009465638917347403,
+            0.014528871835557736,
+            0.1353649430635292
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006170142388673647,
+            -0.0018002429739864486,
+            -0.0002391245731047292
+          ],
+          "constraint_force_world_N": [
+            -0.009465638917347403,
+            -0.002060784769229495,
+            0.00025303255300525193
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.336808689942018e-18,
+            -0.0018002429739864486,
+            -0.0002391245731047292
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 2.944618916043488e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016426603343117397,
+            -0.0009179326527267807,
+            0.02349113721413104
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006964064830930729,
+            -0.00033396388738312347,
+            3.5559568946806845e-05
+          ],
+          "constraint_force_world_N": [
+            -0.0016426603343117397,
+            0.0007212011815958264,
+            5.0431299398891e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            0.0,
+            -0.00033396388738312347,
+            3.5559568946806845e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 1.475002216702687e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.001642660334311741,
+            0.0009179326527267808,
+            0.023491137214131038
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006964064830930735,
+            -0.0003339638873831234,
+            -3.555956894680687e-05
+          ],
+          "constraint_force_world_N": [
+            -0.001642660334311741,
+            -0.0007212011815958266,
+            5.0431299398891013e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            -1.0842021724855044e-19,
+            -0.0003339638873831234,
+            -3.555956894680687e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 1,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24709814115495327,
+      "total_force_N": [
+        -0.021970524627134475,
+        2.5726524734093488e-17,
+        0.3141931401775204
+      ],
+      "shape_residual_over_span": 0.048710458171587076,
+      "CL_change": 0.0027675441721912164,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.049451469250143085,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.06455273585478913,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.049451469250143085
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.04945146925014304,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.06455273585478911,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.04945146925014304
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.046788879628974836,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.06109848609454222,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.046788879628974836
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.046788879628974836,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.06109848609454223,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.046788879628974836
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 4.0987582897175923e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009343695335667455,
+            -0.021447257879152505,
+            0.1336210685997761
+          ],
+          "total_moment_root_world_Nm": [
+            0.006136316012720331,
+            -0.00179191806436018,
+            0.00013415610935381392
+          ],
+          "constraint_force_world_N": [
+            -0.009343695335667455,
+            -0.00496578916596115,
+            -0.0006097222422789263
+          ],
+          "constraint_moment_root_world_Nm": [
+            1.0664178283119677e-05,
+            -0.00179191806436018,
+            0.00013415610935381392
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 8.197516579435182e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.00934369533566746,
+            0.021447257879152526,
+            0.13362106859977615
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006136316012720339,
+            -0.00179191806436018,
+            -0.00013415610935381408
+          ],
+          "constraint_force_world_N": [
+            -0.00934369533566746,
+            0.004965789165961148,
+            -0.0006097222422789256
+          ],
+          "constraint_moment_root_world_Nm": [
+            -1.0664178283123146e-05,
+            -0.00179191806436018,
+            -0.00013415610935381408
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 2.937003748394058e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.001641566977899777,
+            -0.0020424348258907747,
+            0.0234755014889839
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006969307207868088,
+            -0.0003345021172728884,
+            1.727140338467094e-05
+          ],
+          "constraint_force_world_N": [
+            -0.001641566977899777,
+            -0.0003989172388208167,
+            -2.789501074004535e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            6.826453777139486e-07,
+            -0.0003345021172728884,
+            1.727140338467094e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 4.405505622591085e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9804549838772466e-16,
+          "total_force_world_N": [
+            -0.0016415669778997778,
+            0.002042434825890776,
+            0.023475501488983908
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006969307207868094,
+            -0.00033450211727288864,
+            -1.7271403384670936e-05
+          ],
+          "constraint_force_world_N": [
+            -0.0016415669778997778,
+            0.00039891723882081733,
+            -2.789501074004547e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            -6.826453777142739e-07,
+            -0.00033450211727288864,
+            -1.7271403384670936e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 2,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24560747307090536,
+      "total_force_N": [
+        -0.02183798312075818,
+        1.5658896263820787e-17,
+        0.3122977083296713
+      ],
+      "shape_residual_over_span": 0.023930808079459732,
+      "CL_change": 0.001490668084047908,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.07380669833593656,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.09634155340473906,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.07380669833593656
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.07380669833593659,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.09634155340473907,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.07380669833593659
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.07009216611779381,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.09150029884616265,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.07009216611779381
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.07009216611779386,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.09150029884616269,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.07009216611779386
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.1132390824667042e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009279373898445275,
+            -0.02480592066659628,
+            0.1327012291929099
+          ],
+          "total_moment_root_world_Nm": [
+            0.006126716156145916,
+            -0.0017868116951973974,
+            8.29393911511716e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009279373898445275,
+            -0.008385833280490671,
+            -0.0010296508571499964
+          ],
+          "constraint_moment_root_world_Nm": [
+            2.6478914973826657e-05,
+            -0.0017868116951973974,
+            8.29393911511716e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 5.125357617172688e-17,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 2.6224324081410204e-16,
+          "total_force_world_N": [
+            -0.00927937389844528,
+            0.02480592066659628,
+            0.1327012291929099
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0061267161561459164,
+            -0.0017868116951973983,
+            -8.293939115117147e-05
+          ],
+          "constraint_force_world_N": [
+            -0.00927937389844528,
+            0.008385833280490666,
+            -0.0010296508571499981
+          ],
+          "constraint_moment_root_world_Nm": [
+            -2.647891497382579e-05,
+            -0.0017868116951973983,
+            -8.293939115117147e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 3.073069045793339e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9862605875373775e-16,
+          "total_force_world_N": [
+            -0.001639617661933801,
+            -0.0026012613569391533,
+            0.023447624971925606
+          ],
+          "total_moment_root_world_Nm": [
+            0.000697502616415725,
+            -0.00033440181345338024,
+            8.168059517468164e-06
+          ],
+          "constraint_force_world_N": [
+            -0.001639617661933801,
+            -0.0009569643698379038,
+            -6.691746752629247e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            2.1062608309377773e-06,
+            -0.00033440181345338024,
+            8.168059517468164e-06
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 1.7294744939203062e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.986260587537378e-16,
+          "total_force_world_N": [
+            -0.0016396176619338015,
+            0.002601261356939154,
+            0.023447624971925606
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006975026164157251,
+            -0.00033440181345338013,
+            -8.16805951746816e-06
+          ],
+          "constraint_force_world_N": [
+            -0.0016396176619338015,
+            0.0009569643698379044,
+            -6.691746752629247e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            -2.1062608309378858e-06,
+            -0.00033440181345338013,
+            -8.16805951746816e-06
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 3,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.2448439704856556,
+      "total_force_N": [
+        -0.02177009692673949,
+        -1.931034942031567e-17,
+        0.3113268905255711
+      ],
+      "shape_residual_over_span": 0.011742879686036033,
+      "CL_change": 0.0007635025852497646,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.08577210237566643,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11195653990586493,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.08577210237566643
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.0857721023756664,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11195653990586492,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0857721023756664
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.08164167461388999,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.10655250152014549,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.08164167461388999
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.08164167461388998,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.1065525015201455,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.08164167461388998
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.9022587566519733e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.3142871682819548e-16,
+          "total_force_world_N": [
+            -0.009246781914615676,
+            -0.026442711065948317,
+            0.13223514210951853
+          ],
+          "total_moment_root_world_Nm": [
+            0.006123683051300309,
+            -0.001784064206088497,
+            5.791704779707063e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009246781914615676,
+            -0.010054692180181376,
+            -0.001234560964357423
+          ],
+          "constraint_moment_root_world_Nm": [
+            3.675752417428308e-05,
+            -0.001784064206088497,
+            5.791704779707063e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 4.3001569332265913e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009246781914615674,
+            0.026442711065948307,
+            0.1322351421095185
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0061236830513003064,
+            -0.0017840642060884975,
+            -5.791704779707074e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009246781914615674,
+            0.010054692180181376,
+            -0.001234560964357425
+          ],
+          "constraint_moment_root_world_Nm": [
+            -3.675752417428048e-05,
+            -0.0017840642060884975,
+            -5.791704779707074e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 5.865497644415962e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9898487854084047e-16,
+          "total_force_world_N": [
+            -0.0016382665487540663,
+            -0.002877370536833818,
+            0.023428303153267157
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006978374732226671,
+            -0.0003342509159355005,
+            3.6672395549824633e-06
+          ],
+          "constraint_force_world_N": [
+            -0.0016382665487540663,
+            -0.001233074550662733,
+            -8.622497221651933e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            3.075730924430851e-06,
+            -0.0003342509159355005,
+            3.6672395549824633e-06
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 2.931317863927034e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9898487854084035e-16,
+          "total_force_world_N": [
+            -0.001638266548754066,
+            0.00287737053683382,
+            0.023428303153267167
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006978374732226677,
+            -0.00033425091593550075,
+            -3.6672395549824633e-06
+          ],
+          "constraint_force_world_N": [
+            -0.001638266548754066,
+            0.0012330745506627355,
+            -8.62249722165193e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            -3.075730924431393e-06,
+            -0.00033425091593550075,
+            -3.6672395549824633e-06
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 4,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24446151688090656,
+      "total_force_N": [
+        -0.021736091384234896,
+        1.6329577613201232e-17,
+        0.3108405886113331
+      ],
+      "shape_residual_over_span": 0.005758935222407969,
+      "CL_change": 0.00038245360474903345,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09164354221868445,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11961749808733316,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09164354221868445
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09164354221868441,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11961749808733314,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09164354221868441
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.0873502302327463,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11398423944484931,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0873502302327463
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.08735023023274631,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11398423944484933,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.08735023023274631
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.5664426907312047e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009230556014727751,
+            -0.02724251850458033,
+            0.1320031009305065
+          ],
+          "total_moment_root_world_Nm": [
+            0.00612259802694686,
+            -0.0017826595551813074,
+            4.5675144982353446e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009230556014727751,
+            -0.010870688690213508,
+            -0.0013347527375400226
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.2399867705596e-05,
+            -0.0017826595551813074,
+            4.5675144982353446e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 4.114320621676877e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009230556014727755,
+            0.027242518504580347,
+            0.13200310093050652
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006122598026946864,
+            -0.0017826595551813076,
+            -4.567514498235357e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009230556014727755,
+            0.010870688690213503,
+            -0.0013347527375400217
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.2399867705596866e-05,
+            -0.0017826595551813076,
+            -4.567514498235357e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 5.87229912576443e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016374896773896758,
+            -0.003013542984749626,
+            0.02341719337516062
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006980060861540371,
+            -0.00033414751710200203,
+            1.4469101223937618e-06
+          ],
+          "constraint_force_world_N": [
+            -0.0016374896773896758,
+            -0.0013693574792623705,
+            -9.575480293581691e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            3.618879168039088e-06,
+            -0.00033414751710200203,
+            1.4469101223937618e-06
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 4.3994614746004926e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016374896773896765,
+            0.0030135429847496266,
+            0.02341719337516062
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006980060861540366,
+            -0.0003341475171020021,
+            -1.44691012239376e-06
+          ],
+          "constraint_force_world_N": [
+            -0.0016374896773896765,
+            0.0013693574792623708,
+            -9.575480293581696e-05
+          ],
+          "constraint_moment_root_world_Nm": [
+            -3.6188791680387628e-06,
+            -0.0003341475171020021,
+            -1.44691012239376e-06
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 5,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24427192153724048,
+      "total_force_N": [
+        -0.021719233672769494,
+        -1.1414837681603116e-17,
+        0.3105995121058157
+      ],
+      "shape_residual_over_span": 0.0028235109405046355,
+      "CL_change": 0.00018959534366608244,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09452300982988837,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12337388422701544,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09452300982988837
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09452300982988836,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12337388422701548,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09452300982988836
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09016730578095161,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11764751355323569,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09016730578095161
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09016730578095161,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11764751355323567,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09016730578095161
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 8.218421764498352e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009222543620540488,
+            -0.027633931407418415,
+            0.1318885183553172
+          ],
+          "total_moment_root_world_Nm": [
+            0.006122163054844558,
+            -0.0017819574545174775,
+            3.9680720635693655e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009222543620540488,
+            -0.011270148291945324,
+            -0.0013838002093371127
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.531028054383882e-05,
+            -0.0017819574545174775,
+            3.9680720635693655e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 8.21842176449835e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.3166223696328356e-16,
+          "total_force_world_N": [
+            -0.009222543620540485,
+            0.027633931407418422,
+            0.13188851835531726
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006122163054844558,
+            -0.0017819574545174775,
+            -3.9680720635693594e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009222543620540485,
+            0.011270148291945328,
+            -0.0013838002093371129
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.531028054383622e-05,
+            -0.0017819574545174775,
+            -3.9680720635693594e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 4.4102565743527355e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.001637073215844258,
+            -0.0030806489790315248,
+            0.02341123769759085
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006980859959757979,
+            -0.00033408768747591967,
+            3.526326023034841e-07
+          ],
+          "constraint_force_world_N": [
+            -0.001637073215844258,
+            -0.001436551373140431,
+            -0.0001004534577167801
+          ],
+          "constraint_moment_root_world_Nm": [
+            3.902399166556543e-06,
+            -0.00033408768747591967,
+            3.526326023034841e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 3.0201903200024163e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9928714986720005e-16,
+          "total_force_world_N": [
+            -0.0016370732158442584,
+            0.0030806489790315243,
+            0.023411237697590855
+          ],
+          "total_moment_root_world_Nm": [
+            -0.000698085995975798,
+            -0.0003340876874759195,
+            -3.5263260230348864e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016370732158442584,
+            0.0014365513731404316,
+            -0.00010045345771678007
+          ],
+          "constraint_moment_root_world_Nm": [
+            -3.902399166556651e-06,
+            -0.0003340876874759195,
+            -3.5263260230348864e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 6,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24417840455909945,
+      "total_force_N": [
+        -0.021710918688845702,
+        -7.511230095900019e-19,
+        0.3104806022957916
+      ],
+      "shape_residual_over_span": 0.0013841375577575967,
+      "CL_change": 9.351697814102833e-05,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09593476530014082,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.1252152238852108,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09593476530014082
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09593476530014078,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12521522388521078,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09593476530014078
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09155609041632824,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11945133897402672,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09155609041632824
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09155609041632823,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.11945133897402668,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09155609041632823
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.1170283249633858e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009218602409636635,
+            -0.027825634286094032,
+            0.13183215641353388
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121973346525172,
+            -0.0017816101895948367,
+            3.6744075250006644e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009218602409636635,
+            -0.011465821567127957,
+            -0.0014078258665108452
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.677158186368498e-05,
+            -0.0017816101895948367,
+            3.6744075250006644e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 2.5672739400730795e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009218602409636635,
+            0.02782563428609402,
+            0.13183215641353382
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121973346525169,
+            -0.0017816101895948362,
+            -3.67440752500066e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009218602409636635,
+            0.011465821567127962,
+            -0.0014078258665108445
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.677158186368324e-05,
+            -0.0017816101895948362,
+            -3.67440752500066e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 5.862500313713249e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016368569347862078,
+            -0.0031137028687021977,
+            0.023408144734362035
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981227839824009,
+            -0.00033405525340918045,
+            -1.8635879529017181e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016368569347862078,
+            -0.0014696596523619087,
+            -0.00010276861413167394
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.045913898271017e-06,
+            -0.00033405525340918045,
+            -1.8635879529017181e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 8.7970862201841945e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016368569347862088,
+            0.003113702868702199,
+            0.023408144734362035
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981227839824014,
+            -0.0003340552534091806,
+            1.8635879529017425e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016368569347862088,
+            0.0014696596523619098,
+            -0.00010276861413167378
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.045913898271017e-06,
+            -0.0003340552534091806,
+            1.8635879529017425e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 7,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24413239273060572,
+      "total_force_N": [
+        -0.021706827585584666,
+        1.7312241711134628e-17,
+        0.3104220967934346
+      ],
+      "shape_residual_over_span": 0.0006784879207118317,
+      "CL_change": 4.601182849373053e-05,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09662683407901962,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12611770401039774,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09662683407901962
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.0966268340790196,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12611770401039774,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0966268340790196
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09224026895884094,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12033890563500067,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09224026895884094
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09224026895884094,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12033890563500067,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09224026895884094
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.1171365995898231e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.3171948156895026e-16,
+          "total_force_world_N": [
+            -0.00921666739289607,
+            -0.02791956263763965,
+            0.13180448438492595
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121886118031199,
+            -0.001781439290636093,
+            3.530507165502482e-05
+          ],
+          "constraint_force_world_N": [
+            -0.00921666739289607,
+            -0.011561702116749164,
+            -0.0014195985176952163
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.749619575844001e-05,
+            -0.001781439290636093,
+            3.530507165502482e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 2.296357059068266e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.3171948156895021e-16,
+          "total_force_world_N": [
+            -0.009216667392896073,
+            0.02791956263763965,
+            0.13180448438492595
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121886118031202,
+            -0.0017814392906360939,
+            -3.5305071655024973e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009216667392896073,
+            0.01156170211674916,
+            -0.0014195985176952163
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.749619575844001e-05,
+            -0.0017814392906360939,
+            -3.5305071655024973e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 4.39459311178671e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.993679866851547e-16,
+          "total_force_world_N": [
+            -0.0016367463998962918,
+            -0.003129977554008221,
+            0.023406564011791604
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981394617641599,
+            -0.0003340382025441231,
+            -4.5171833250934866e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016367463998962918,
+            -0.0014859651426395492,
+            -0.00010390880508396484
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.117517722782818e-06,
+            -0.0003340382025441231,
+            -4.5171833250934866e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 8.796812416959215e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016367463998962922,
+            0.0031299775540082207,
+            0.023406564011791597
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981394617641599,
+            -0.00033403820254412306,
+            4.517183325093553e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016367463998962922,
+            0.0014859651426395492,
+            -0.00010390880508396494
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.11751772278271e-06,
+            -0.00033403820254412306,
+            4.517183325093553e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 8,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.2441097829052173,
+      "total_force_N": [
+        -0.021704817251863923,
+        -1.1171428205830811e-17,
+        0.3103933476818288
+      ],
+      "shape_residual_over_span": 0.0003325775984877854,
+      "CL_change": 2.2609825388431037e-05,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09696607803937543,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12655999936722653,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09696607803937543
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09696607803937543,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12655999936722653,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09696607803937543
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09257714916333211,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12077538416275867,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09257714916333211
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09257714916333207,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12077538416275865,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09257714916333207
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 4.1795372251180174e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009215718216507837,
+            -0.027965593872986284,
+            0.1317909105301791
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121844800088236,
+            -0.0017813553901708465,
+            3.4599848685053676e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009215718216507837,
+            -0.01160869159622396,
+            -0.0014253681002995855
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.7853378861581475e-05,
+            -0.0017813553901708465,
+            3.4599848685053676e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 2.11718942949606e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.3172874925046288e-16,
+          "total_force_world_N": [
+            -0.009215718216507839,
+            0.027965593872986284,
+            0.13179091053017908
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121844800088233,
+            -0.0017813553901708467,
+            -3.4599848685053595e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009215718216507839,
+            0.011608691596223965,
+            -0.0014253681002995855
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.7853378861581475e-05,
+            -0.0017813553901708467,
+            -3.4599848685053595e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 7.360745262996265e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9938172853964435e-16,
+          "total_force_world_N": [
+            -0.001636690409424107,
+            -0.0031379878616500847,
+            0.023405763310735378
+          ],
+          "total_moment_root_world_Nm": [
+            0.000698146955600601,
+            -0.00033402938532515965,
+            -5.823085892898906e-07
+          ],
+          "constraint_force_world_N": [
+            -0.001636690409424107,
+            -0.00149399219042422,
+            -0.00010447011094486521
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.152990647795997e-06,
+            -0.00033402938532515965,
+            -5.823085892898906e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 3.0198513242110675e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9938172853964423e-16,
+          "total_force_world_N": [
+            -0.0016366904094241067,
+            0.0031379878616500864,
+            0.023405763310735374
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981469556006008,
+            -0.0003340293853251598,
+            5.823085892898854e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366904094241067,
+            0.0014939921904242209,
+            -0.00010447011094486553
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.152990647795672e-06,
+            -0.0003340293853251598,
+            5.823085892898854e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 9,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24409868005999094,
+      "total_force_N": [
+        -0.021703830051663462,
+        -4.6343422475548916e-18,
+        0.3103792300612337
+      ],
+      "shape_residual_over_span": 0.00016315004256216693,
+      "CL_change": 1.1102845226346192e-05,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09713236683861938,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12677675638982033,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09713236683861938
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09713236683861937,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12677675638982033,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09713236683861937
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09274295344588764,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12098993155823262,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09274295344588764
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09274295344588762,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12098993155823261,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09274295344588762
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 1.2334696322026089e-15,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.317332949915067e-16,
+          "total_force_world_N": [
+            -0.009215252823676176,
+            -0.02798815459538248,
+            0.1317842551026153
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121824918921162,
+            -0.0017813142486907216,
+            3.425421284059707e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009215252823676176,
+            -0.011631722290509572,
+            -0.0014281959139847333
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.802893952107756e-05,
+            -0.0017813142486907216,
+            3.425421284059707e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 1.0282832024648523e-15,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.3173329499150677e-16,
+          "total_force_world_N": [
+            -0.009215252823676169,
+            0.027988154595382467,
+            0.13178425510261524
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121824918921157,
+            -0.001781314248690721,
+            -3.42542128405971e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009215252823676169,
+            0.011631722290509561,
+            -0.001428195913984733
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.802893952107496e-05,
+            -0.001781314248690721,
+            -3.42542128405971e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 2.9296661749805183e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9938863111516387e-16,
+          "total_force_world_N": [
+            -0.0016366622021555446,
+            -0.003141929208276219,
+            0.02340535992800164
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981503035067496,
+            -0.0003340248708168592,
+            -6.465516106315883e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366622021555446,
+            -0.0014979424286060998,
+            -0.00010474633850734197
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.170500865301879e-06,
+            -0.0003340248708168592,
+            -6.465516106315883e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 2.9296661749805173e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.001636662202155545,
+            0.003141929208276221,
+            0.023405359928001652
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981503035067501,
+            -0.00033402487081685936,
+            6.465516106315896e-07
+          ],
+          "constraint_force_world_N": [
+            -0.001636662202155545,
+            0.0014979424286061009,
+            -0.0001047463385073418
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.170500865301988e-06,
+            -0.00033402487081685936,
+            6.465516106315896e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 10,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24409322989378884,
+      "total_force_N": [
+        -0.021703345454692304,
+        1.5715018814021285e-17,
+        0.31037230000168115
+      ],
+      "shape_residual_over_span": 8.024325777902299e-05,
+      "CL_change": 5.450166202097817e-06,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09721387650952874,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12688298154116467,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09721387650952874
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09721387650952866,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12688298154116456,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09721387650952866
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09282452846716865,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12109534820251078,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09282452846716865
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.0928245284671687,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12109534820251079,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0928245284671687
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 6.1673849929973e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 2.634710471890725e-16,
+          "total_force_world_N": [
+            -0.0092150246833231,
+            -0.027999212587832504,
+            0.1317809925435661
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121815275347991,
+            -0.001781294085915705,
+            3.408480806140531e-05
+          ],
+          "constraint_force_world_N": [
+            -0.0092150246833231,
+            -0.011643010690377138,
+            -0.0014295819552057668
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.8115109689848834e-05,
+            -0.001781294085915705,
+            3.408480806140531e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 8.23208242911582e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 2.6347104718907247e-16,
+          "total_force_world_N": [
+            -0.009215024683323095,
+            0.0279992125878325,
+            0.13178099254356607
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121815275347994,
+            -0.001781294085915707,
+            -3.408480806140544e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009215024683323095,
+            0.011643010690377136,
+            -0.0014295819552057672
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.81151096898497e-05,
+            -0.001781294085915707,
+            -3.408480806140544e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 1.5099105747884728e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016366480440230722,
+            -0.003143867903685052,
+            0.023405157457274322
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981517928516898,
+            -0.000334022574608042,
+            -6.781447713428363e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366480440230722,
+            -0.001499885779629194,
+            -0.0001048822308488737
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.179127769800262e-06,
+            -0.000334022574608042,
+            -6.781447713428363e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 1.4648284200211645e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016366480440230724,
+            0.0031438679036850502,
+            0.023405157457274315
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981517928516897,
+            -0.00033402257460804193,
+            6.781447713428478e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366480440230724,
+            0.0014998857796291935,
+            -0.00010488223084887371
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.1791277698003705e-06,
+            -0.00033402257460804193,
+            6.781447713428478e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 11,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24409055511234887,
+      "total_force_N": [
+        -0.021703107628736895,
+        3.521248310634135e-18,
+        0.31036889893206576
+      ],
+      "shape_residual_over_span": 3.945517505802735e-05,
+      "CL_change": 2.674781439976348e-06,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09725382994000395,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12693503846003812,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09725382994000395
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09725382994000384,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12693503846003815,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09725382994000384
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09286465009605824,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12114712550584884,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09286465009605824
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09286465009605822,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12114712550584883,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09286465009605822
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.2964628109073103e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.3173661594642706e-16,
+          "total_force_world_N": [
+            -0.00921491285739356,
+            -0.028004632744800712,
+            0.131779393358269
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121810578587381,
+            -0.0017812842071147147,
+            3.400177700780662e-05
+          ],
+          "constraint_force_world_N": [
+            -0.00921491285739356,
+            -0.011648543785401498,
+            -0.0014302613338487678
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.815737572083211e-05,
+            -0.0017812842071147147,
+            3.400177700780662e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 2.5675234764944965e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 2.6347323189285417e-16,
+          "total_force_world_N": [
+            -0.009214912857393558,
+            0.02800463274480069,
+            0.13177939335826902
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121810578587377,
+            -0.0017812842071147142,
+            -3.400177700780671e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214912857393558,
+            0.011648543785401488,
+            -0.0014302613338487672
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.8157375720827775e-05,
+            -0.0017812842071147142,
+            -3.400177700780671e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 1.6377255154308436e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016366409569748969,
+            -0.0031448212572154728,
+            0.02340505610776363
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981524529958224,
+            -0.0003340214123376177,
+            -6.936766326734905e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366409569748969,
+            -0.0015008415467369445,
+            -0.00010494906459567954
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.183373484794141e-06,
+            -0.0003340214123376177,
+            -6.936766326734905e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 1.4648262323956993e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016366409569748966,
+            0.00314482125721547,
+            0.023405056107763625
+          ],
+          "total_moment_root_world_Nm": [
+            -0.000698152452995822,
+            -0.0003340214123376176,
+            6.936766326734779e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366409569748966,
+            0.0015008415467369439,
+            -0.00010494906459567937
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.183373484793924e-06,
+            -0.0003340214123376176,
+            6.936766326734779e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 12,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24408924260096967,
+      "total_force_N": [
+        -0.021702990927885066,
+        -3.874583472369836e-18,
+        0.3103672300321306
+      ],
+      "shape_residual_over_span": 1.93947837445269e-05,
+      "CL_change": 1.3125113791923049e-06,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09727341385413453,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12696054949996702,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09727341385413453
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09727341385413447,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12696054949996696,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09727341385413447
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09288437768358726,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12117254858017372,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09288437768358726
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09288437768358722,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.1211725485801737,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09288437768358722
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.1936961630195056e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009214858046806225,
+            -0.028007289517989715,
+            0.13177860953035228
+          ],
+          "total_moment_root_world_Nm": [
+            0.0061218082864059305,
+            -0.0017812793675720273,
+            3.396108021431788e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214858046806225,
+            -0.011651255912399208,
+            -0.001430594341171295
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.8178100152850706e-05,
+            -0.0017812793675720273,
+            3.396108021431788e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 2.117237131502558e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009214858046806223,
+            0.028007289517989708,
+            0.13177860953035223
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121808286405931,
+            -0.0017812793675720273,
+            -3.3961080214318e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214858046806223,
+            0.011651255912399197,
+            -0.0014305943411712936
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.817810015285157e-05,
+            -0.0017812793675720273,
+            -3.3961080214318e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 7.324126029234201e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9939467461705883e-16,
+          "total_force_world_N": [
+            -0.0016366374171363155,
+            -0.003145289948776343,
+            0.023405005485713472
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981527445754534,
+            -0.000334020826263496,
+            -7.013102013795232e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366374171363155,
+            -0.0015013114802746403,
+            -0.00010498192554979583
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.1854616357046804e-06,
+            -0.000334020826263496,
+            -7.013102013795232e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 7.32641446110671e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9939467461705883e-16,
+          "total_force_world_N": [
+            -0.0016366374171363155,
+            0.0031452899487763412,
+            0.023405005485713466
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981527445754531,
+            -0.000334020826263496,
+            7.013102013795108e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366374171363155,
+            0.0015013114802746395,
+            -0.00010498192554979543
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.185461635704572e-06,
+            -0.000334020826263496,
+            7.013102013795108e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 13,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24408859862210947,
+      "total_force_N": [
+        -0.02170293366904304,
+        7.743456089790606e-18,
+        0.31036641119254177
+      ],
+      "shape_residual_over_span": 9.531499641486363e-06,
+      "CL_change": 6.439788602097263e-07,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09728301330093876,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12697305143519477,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09728301330093876
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09728301330093869,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12697305143519474,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09728301330093869
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09289407507545948,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.121185027772831,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09289407507545948
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09289407507545945,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12118502777283092,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09289407507545945
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.5675289575786664e-17,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 3.9521224102501348e-16,
+          "total_force_world_N": [
+            -0.009214831182270074,
+            -0.02800859178950259,
+            0.13177822534958655
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121807166574267,
+            -0.0017812769968486178,
+            3.3941132967487334e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214831182270074,
+            -0.011652585313266883,
+            -0.001430757571073095
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.818826040989266e-05,
+            -0.0017812769968486178,
+            3.3941132967487334e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 2.42220197418061e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 3.9521224102501348e-16,
+          "total_force_world_N": [
+            -0.00921483118227007,
+            0.02800859178950257,
+            0.1317782253495865
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121807166574269,
+            -0.001781276996848617,
+            -3.394113296748748e-05
+          ],
+          "constraint_force_world_N": [
+            -0.00921483118227007,
+            0.011652585313266881,
+            -0.0014307575710730933
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.818826040989266e-05,
+            -0.001781276996848617,
+            -3.394113296748748e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 7.324123617723421e-17,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.00163663565225147,
+            -0.003145520314430497,
+            0.023404980246684325
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981528728885245,
+            -0.0003340205316587966,
+            -7.050609240731058e-07
+          ],
+          "constraint_force_world_N": [
+            -0.00163663565225147,
+            -0.001501542481274412,
+            -0.0001049980787132655
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.186488190697818e-06,
+            -0.0003340205316587966,
+            -7.050609240731058e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 1.6377238284841246e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016366356522514716,
+            0.0031455203144304983,
+            0.02340498024668434
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981528728885248,
+            -0.00033402053165879677,
+            7.05060924073099e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366356522514716,
+            0.0015015424812744125,
+            -0.0001049980787132654
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.18648819069771e-06,
+            -0.00033402053165879677,
+            7.05060924073099e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 14,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24408828268277596,
+      "total_force_N": [
+        -0.021702905577561455,
+        -9.181486423656893e-18,
+        0.3103660094656375
+      ],
+      "shape_residual_over_span": 4.683186524664966e-06,
+      "CL_change": 3.159393335006033e-07,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09728771867952905,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12697917812711446,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09728771867952905
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09728771867952905,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12697917812711443,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09728771867952905
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09289884082528028,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12119115162006774,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09289884082528028
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09289884082528023,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12119115162006776,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09289884082528023
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 2.1936984575429098e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.3173754225285904e-16,
+          "total_force_world_N": [
+            -0.009214818015092885,
+            -0.02800923012905179,
+            0.13177803705018004
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121806619190276,
+            -0.0017812758355378558,
+            3.3931355913094045e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214818015092885,
+            -0.011653236948984423,
+            -0.0014308375818785414
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.8193241151006476e-05,
+            -0.0017812758355378558,
+            3.3931355913094045e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 0.0,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 2.6347508450571814e-16,
+          "total_force_world_N": [
+            -0.00921481801509288,
+            0.028009230129051793,
+            0.13177803705017999
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121806619190277,
+            -0.001781275835537855,
+            -3.393135591309413e-05
+          ],
+          "constraint_force_world_N": [
+            -0.00921481801509288,
+            0.011653236948984418,
+            -0.0014308375818785407
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.819324115100821e-05,
+            -0.001781275835537855,
+            -3.393135591309413e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 7.326410914080781e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 3.987906318819667e-16,
+          "total_force_world_N": [
+            -0.0016366347736878383,
+            -0.0031456335163568164,
+            0.023404967682638993
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981529291232687,
+            -0.0003340203839614157,
+            -7.069033680143876e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366347736878383,
+            -0.0015016560066526247,
+            -0.00010500601718103865
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.186992691751273e-06,
+            -0.0003340203839614157,
+            -7.069033680143876e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 1.5644332482154478e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9939531594098327e-16,
+          "total_force_world_N": [
+            -0.0016366347736878394,
+            0.0031456335163568172,
+            0.023404967682639014
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981529291232689,
+            -0.0003340203839614159,
+            7.069033680143891e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366347736878394,
+            0.0015016560066526254,
+            -0.00010500601718103875
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.186992691751165e-06,
+            -0.0003340203839614159,
+            7.069033680143891e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 15,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24408812769222102,
+      "total_force_N": [
+        -0.021702891796705853,
+        -5.508420692117226e-18,
+        0.31036581239022076
+      ],
+      "shape_residual_over_span": 2.300558588722084e-06,
+      "CL_change": 1.5499055494583303e-07,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09729002513328229,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12698218056947905,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09729002513328229
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09729002513328225,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12698218056947896,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09729002513328225
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09290118241854253,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12119415596704013,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09290118241854253
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09290118241854257,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12119415596704017,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09290118241854257
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 6.247070777202775e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.00921481156141849,
+            -0.02800954302826042,
+            0.13177794475833657
+          ],
+          "total_moment_root_world_Nm": [
+            0.00612180635154572,
+            -0.00178127526666683,
+            3.3926563712688785e-05
+          ],
+          "constraint_force_world_N": [
+            -0.00921481156141849,
+            -0.011653556364680028,
+            -0.0014308768011944708
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.819568271568781e-05,
+            -0.00178127526666683,
+            3.3926563712688785e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 6.162072656382166e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009214811561418491,
+            0.02800954302826041,
+            0.13177794475833657
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121806351545721,
+            -0.0017812752666668296,
+            -3.3926563712688846e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214811561418491,
+            0.011653556364680032,
+            -0.0014308768011944714
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.819568271568868e-05,
+            -0.0017812752666668296,
+            -3.3926563712688846e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 2.952447946644534e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016366343369344058,
+            -0.0031456891327512468,
+            0.02340496143677397
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981529536534148,
+            -0.0003340203100851244,
+            -7.078082118850672e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366343369344058,
+            -0.0015017117870477928,
+            -0.00010500991772624174
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.187240565077521e-06,
+            -0.0003340203100851244,
+            -7.078082118850672e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 5.859297559208134e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9939542162781663e-16,
+          "total_force_world_N": [
+            -0.001636634336934406,
+            0.003145689132751246,
+            0.023404961436773973
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981529536534147,
+            -0.00033402031008512433,
+            7.078082118850735e-07
+          ],
+          "constraint_force_world_N": [
+            -0.001636634336934406,
+            0.0015017117870477932,
+            -0.0001050099177262417
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.187240565077521e-06,
+            -0.00033402031008512433,
+            7.078082118850735e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 16,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24408805166307357,
+      "total_force_N": [
+        -0.021702885036637636,
+        -5.00963078274775e-18,
+        0.31036571571674326
+      ],
+      "shape_residual_over_span": 1.1299096839909234e-06,
+      "CL_change": 7.602914744997413e-08,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09729115570157154,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12698365194381248,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09729115570157154
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09729115570157149,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12698365194381248,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09729115570157149
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.09290233269783693,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.1211956295386054,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09290233269783693
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09290233269783693,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12119562953860538,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09290233269783693
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 8.280037020480353e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009214808398240484,
+            -0.028009696404943933,
+            0.13177789952278357
+          ],
+          "total_moment_root_world_Nm": [
+            0.0061218062206586195,
+            -0.0017812749880033812,
+            3.392421481798232e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214808398240484,
+            -0.01165371293512744,
+            -0.001430896025628109
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.8196879555943185e-05,
+            -0.0017812749880033812,
+            3.392421481798232e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 8.220108341219292e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.009214808398240482,
+            0.028009696404943923,
+            0.13177789952278354
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121806220658621,
+            -0.0017812749880033803,
+            -3.39242148179825e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214808398240482,
+            0.011653712935127425,
+            -0.001430896025628107
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.819687955594405e-05,
+            -0.0017812749880033803,
+            -3.39242148179825e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 5.930390680957792e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.001636634120078349,
+            -0.0031457164521800692,
+            0.023404958335587818
+          ],
+          "total_moment_root_world_Nm": [
+            0.0006981529642951209,
+            -0.0003340202732079461,
+            -7.082524956465817e-07
+          ],
+          "constraint_force_world_N": [
+            -0.001636634120078349,
+            -0.0015017391893420622,
+            -0.00010501183388131983
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.1873623245221704e-06,
+            -0.0003340202732079461,
+            -7.082524956465817e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 5.49309127277971e-17,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.9939547402790182e-16,
+          "total_force_world_N": [
+            -0.0016366341200783477,
+            0.0031457164521800684,
+            0.02340495833558782
+          ],
+          "total_moment_root_world_Nm": [
+            -0.00069815296429512,
+            -0.00033402027320794604,
+            7.082524956465851e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366341200783477,
+            0.0015017391893420613,
+            -0.00010501183388131978
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.187362324521628e-06,
+            -0.00033402027320794604,
+            7.082524956465851e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    },
+    {
+      "iteration": 17,
+      "iteration_is_NOT_physical_time": true,
+      "CL_on_fixed_source_area": 0.24408801436973734,
+      "total_force_N": [
+        -0.021702881720732013,
+        -7.074753356435388e-18,
+        0.31036566829708095
+      ],
+      "shape_residual_over_span": 5.548544830866222e-07,
+      "CL_change": 3.729333622470854e-08,
+      "shape_validity": {
+        "pectoral_L": {
+          "tip_over_L": 0.09729170988142011,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12698437300397997,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09729170988142011
+        },
+        "pectoral_R": {
+          "tip_over_L": 0.09729170988142014,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.1269843730039799,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09729170988142014
+        },
+        "pelvic_L": {
+          "tip_over_L": 0.0929028976526789,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.1211963521329512,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.0929028976526789
+        },
+        "pelvic_R": {
+          "tip_over_L": 0.09290289765267888,
+          "tip_over_L_limit": 0.1,
+          "tip_ok": true,
+          "max_slope_rad": 0.12119635213295112,
+          "slope_limit_rad": 0.2,
+          "slope_ok": true,
+          "valid": true,
+          "flag": "OK",
+          "max_sampled_deflection_over_span": 0.09290289765267888
+        }
+      },
+      "transfer": {
+        "pectoral_L": {
+          "force_relative_residual": 5.135061178967107e-17,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.317376512773483e-16,
+          "total_force_world_N": [
+            -0.009214806847843456,
+            -0.02800977158734817,
+            0.13177787735107285
+          ],
+          "total_moment_root_world_Nm": [
+            0.006121806156643967,
+            -0.0017812748514984802,
+            3.39230635043951e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214806847843456,
+            -0.011653789682823441,
+            -0.0014309054490602617
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.8197466237014965e-05,
+            -0.0017812748514984802,
+            3.39230635043951e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pectoral_R": {
+          "force_relative_residual": 2.729322454486673e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 1.317376512773483e-16,
+          "total_force_world_N": [
+            -0.009214806847843454,
+            0.028009771587348145,
+            0.13177787735107283
+          ],
+          "total_moment_root_world_Nm": [
+            -0.006121806156643968,
+            -0.001781274851498479,
+            -3.392306350439516e-05
+          ],
+          "constraint_force_world_N": [
+            -0.009214806847843454,
+            0.011653789682823434,
+            -0.0014309054490602602
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.819746623701583e-05,
+            -0.001781274851498479,
+            -3.392306350439516e-05
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_L": {
+          "force_relative_residual": 2.929648631227285e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016366340125225259,
+            -0.00314572986952139,
+            0.023404956797467902
+          ],
+          "total_moment_root_world_Nm": [
+            0.000698152968881667,
+            -0.00033402025483282935,
+            -7.08470598541256e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366340125225259,
+            -0.0015017526484275188,
+            -0.00010501277503225742
+          ],
+          "constraint_moment_root_world_Nm": [
+            4.18742212328837e-06,
+            -0.00033402025483282935,
+            -7.08470598541256e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        },
+        "pelvic_R": {
+          "force_relative_residual": 7.326410008549947e-16,
+          "moment_relative_residual": 0.0,
+          "virtual_work_relative_residual": 0.0,
+          "total_force_world_N": [
+            -0.0016366340125225252,
+            0.0031457298695213892,
+            0.02340495679746789
+          ],
+          "total_moment_root_world_Nm": [
+            -0.0006981529688816669,
+            -0.0003340202548328293,
+            7.084705985412444e-07
+          ],
+          "constraint_force_world_N": [
+            -0.0016366340125225252,
+            0.0015017526484275181,
+            -0.0001050127750322574
+          ],
+          "constraint_moment_root_world_Nm": [
+            -4.187422123288261e-06,
+            -0.0003340202548328293,
+            7.084705985412444e-07
+          ],
+          "constraint_scope": "Tangential/axial and torsional/chordwise reactions are retained; finite torsional compliance is NOT modeled",
+          "passed": true
+        }
+      }
+    }
+  ],
+  "static_state_artifact": {
+    "path": "/work/frontier/out-fidelity/science/arms/chi0.8-u20-l32x8-two-way-static-feedback/static-states.npz",
+    "sha256": "9be22dc572239f4c39ab2f26decc9007d1b2d28ea2177ddfdfec48ca74168a49",
+    "bytes": 1435987
+  },
+  "flight": {
+    "main": {
+      "range_m": 28.608723917980768,
+      "time_s": 1.4712137130575913,
+      "end_reason": 0,
+      "actual_integrated_saved_states": 736,
+      "dt_s": 0.002,
+      "CL_fixed": 0.24408801436973734,
+      "reference_area_m2": 0.005293341921704028,
+      "AR": 7.281049816333778,
+      "mass_kg": 0.05,
+      "initial_energy_J": 11.96133,
+      "last_saved_energy_J": 10.054350173209457,
+      "drag_work_J": -1.9069800056807014,
+      "saved_state_energy_balance_residual_J": 1.7889015802019514e-07,
+      "time_adapter": "Actual active post-step states relabeled from upstream k*dt to(k+1)*dt; initialstate explicit; interpolated event endpoint remains scalar result, not a trajectory frame",
+      "scope": "Final static shape is rigidized and its CL atalpha4 held fixed during a separate flight proxy. Shape does NOT continuously relax as speed changes. No continuousFSI, no biological motor/energy calibration. Assumeddrag; no prescribed air thrust.",
+      "artifact": {
+        "path": "/work/frontier/out-fidelity/science/arms/chi0.8-u20-l32x8-two-way-static-feedback/glide-main.npz",
+        "sha256": "d0b0c7b523d794f45dfbc62b105d781fa44707a762d90cdc869d8fcb571a93ed",
+        "bytes": 35770
+      }
+    },
+    "half": {
+      "range_m": 28.608728580402104,
+      "time_s": 1.471213961945293,
+      "end_reason": 0,
+      "actual_integrated_saved_states": 1472,
+      "dt_s": 0.001,
+      "CL_fixed": 0.24408801436973734,
+      "reference_area_m2": 0.005293341921704028,
+      "AR": 7.281049816333778,
+      "mass_kg": 0.05,
+      "initial_energy_J": 11.96133,
+      "last_saved_energy_J": 10.052981978909596,
+      "drag_work_J": -1.9083480658383987,
+      "saved_state_energy_balance_residual_J": 4.4747994421001636e-08,
+      "time_adapter": "Actual active post-step states relabeled from upstream k*dt to(k+1)*dt; initialstate explicit; interpolated event endpoint remains scalar result, not a trajectory frame",
+      "scope": "Final static shape is rigidized and its CL atalpha4 held fixed during a separate flight proxy. Shape does NOT continuously relax as speed changes. No continuousFSI, no biological motor/energy calibration. Assumeddrag; no prescribed air thrust.",
+      "artifact": {
+        "path": "/work/frontier/out-fidelity/science/arms/chi0.8-u20-l32x8-two-way-static-feedback/glide-half.npz",
+        "sha256": "c96f2fdc55fe0925c98b7d5bdaa861cfe41611aec0baaf647afe5a90d934cf02",
+        "bytes": 68439
+      }
+    },
+    "range_relative_difference": 1.6297198678431232e-07,
+    "dt_gate_passed": true,
+    "scope": "Final static shape is rigidized and its CL atalpha4 held fixed during a separate flight proxy. Shape does NOT continuously relax as speed changes. No continuousFSI, no biological motor/energy calibration. Assumeddrag; no prescribed air thrust."
+  },
+  "biological_success_probability": null
+}

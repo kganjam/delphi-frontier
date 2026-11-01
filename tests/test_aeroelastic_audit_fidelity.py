@@ -115,8 +115,17 @@ def test_whole_return_identity_and_completeness(tmp_path):
     report = audit.audit(out, tmp_path / "audit.json")
     kinds = report["finding_counts"]
     identity = [x["subject"] for x in report["findings"] if x["kind"] == "identity"]
-    # tests may run unpinned; the audit must then say so and nothing else
-    assert identity == ([] if np.__version__ == "2.5.4" else ["environment"])
+    # tests may run unpinned, and later commits may change packed sources (30a24f7 changed run.py and
+    # flight.py after fidelity-v1 ran); the audit must name exactly those and nothing else
+    packed = json.loads((audit.FID / "packet.json").read_text())["files"]
+    changed = [
+        x["path"]
+        for x in packed
+        if x["path"].startswith("engineering/")
+        and sha256((audit.ROOT / x["path"]).read_bytes()).hexdigest() != x["sha256"]
+    ]
+    expected = changed + ([] if np.__version__ == "2.5.4" else ["environment"])
+    assert sorted(identity) == sorted(expected)
     assert "reproduction" not in kinds
     assert kinds["missing"] == 44 + 5  # 44 arms and 5 lattice controls not returned
     assert report["native_statuses"]["chi0.8-u20-l32x8-rigid"] == "computed rigid"
