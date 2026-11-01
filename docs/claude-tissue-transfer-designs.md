@@ -40,6 +40,21 @@ The studio gap text asks for a model that links adult proportions to a developme
 the growth-zone coefficient c, not by the intercept. Whether flying fish also have an early larval head start cannot be
 decided: their fin/SL is already about 0.54 at 1.68 cm, and no smaller specimens exist in the repo.
 
+**Species-level check** (`dev_programme_species.py`, exit 0; answers the pseudoreplication point). Each species is fitted
+separately, and group c is estimated by a two-stage bootstrap (species, then specimens; 4000 draws).
+- **Flying fish:** all three species agree. *H. rondeleti* 0.711, *C. furcatus* 0.730, *E. volitans* 0.765.
+- **Flying halfbeak:** the two species differ. *E. velox* 0.274, *O. micropterus* 0.397.
+- **Contrasts on c, flying fish minus each group:**
+
+| Comparison | Δc | 95% CI |
+|---|---|---|
+| vs flying halfbeak | +0.38 | 0.25–0.49 |
+| vs halfbeak | +0.59 | 0.53–0.64 |
+| vs needlefish | +0.65 | 0.59–0.70 |
+
+The group difference survives species-level resampling. With only 2–3 species per group, these intervals are coarse,
+and no phylogenetic covariance is modelled.
+
 **Alternative model.** A power law L = b·SL^α, fitted by nonlinear least squares on the same raw-length scale (corrected
 after review), is modestly preferred in every group, by ΔAIC 0.3 to 2.9.
 - Flying fish: α = 1.07, a mild positive allometry.

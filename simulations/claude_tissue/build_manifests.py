@@ -31,7 +31,10 @@ def cards():
                    {"label": "Tip-saturated limit (where the flying-fish best fit runs; other regimes not excluded)", "tex": "\\frac{dL}{dSL}\\to c=\\frac{r}{s}\\sqrt{D/k}\\,\\ln(1+p)", "source": "identifiability-v2 best fit: l -> 0.009 cm"},
                    {"label": "Adult proportion", "tex": "\\frac{L}{SL}=c+\\frac{a}{SL}\\ \\xrightarrow{SL\\to\\infty}\\ c", "source": "solution of the limit; a = offset laid down before the observed size range"}],
         numerical_results=[f"{k}: c = {v['programme_fit']['c']:.3f} (95% CI {v['programme_fit']['c_ci95'][0]:.3f}-{v['programme_fit']['c_ci95'][1]:.3f}), a = {v['programme_fit']['a_cm']:.2f} cm, n = {v['n']}" for k, v in g.items()]
-            + [f"Flying fish minus halfbeak fin/SL at SL {prog['sl_ref_cm']:g} cm: {d_hb['delta_ratio_at_SLref']:.3f}, of which {d_hb['from_growth_zone_c']:.3f} from c and {d_hb['from_early_offset_a']:.3f} from a"],
+            + [f"Flying fish minus halfbeak fin/SL at SL {prog['sl_ref_cm']:g} cm: {d_hb['delta_ratio_at_SLref']:.3f}, of which {d_hb['from_growth_zone_c']:.3f} from c and {d_hb['from_early_offset_a']:.3f} from a"]
+            + ([f"Species level ({k}): delta c {v['delta_c']:.3f}, two-stage bootstrap 95% CI {v['ci95'][0]:.3f}-{v['ci95'][1]:.3f}" for k, v in J("claude-tissue-dev-programme/programme-species.json")["contrasts"].items()]
+               + ["Per-species c: " + ", ".join(f"{k} {v['c']:.3f}" for k, v in J("claude-tissue-dev-programme/programme-species.json")["species"].items())]
+               if (A/"claude-tissue-dev-programme/programme-species.json").exists() else []),
         parameter_unknowns=["r, s, D, k, P, K are not separately identified; only the composite c and the extrapolated intercept a are fitted.",
                             "A power law L = b SL^alpha fits modestly better (AIC) in every group; the linear programme is an interpretable, untested reading, not the preferred statistical form.",
                             "The morphogen is hypothetical; no molecule is assigned to m(x)."],
