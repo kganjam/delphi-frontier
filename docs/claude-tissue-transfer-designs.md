@@ -438,7 +438,7 @@ The γ = 1 whole-domain values reproduce the earlier run exactly, a determinism 
   whole-domain run). That is about 0.6–0.9 × λ/2: **the switch scales with the pattern wavelength.**
 - The proximal quarter keeps the starting-fold pattern; its A is mostly negative.
 
-**Still unexplained.** At γ = 2, L_p = 10 (≈ 1.3 λ), even the distal half is unoriented (0.01 ± 0.13 over 12 seeds),
+**Later resolved as a grid artifact (see Grid refinement).** At γ = 2, L_p = 10 (≈ 1.3 λ), even the distal half is unoriented (0.01 ± 0.13 over 12 seeds),
 while L_p = 8 and 12 give 0.99. The follow-up `claude-tissue-pzone-g2r2` (job `aijob-e00zamme1qkx4bgsxj`, COMPLETED, 403.3 s)
 shows the dip is isolated to exactly L_p = 10:
 
@@ -462,7 +462,7 @@ centred near L_p ≈ 10 ≈ 1.27 λ. A resonance between zone width and waveleng
 | Distal A | 0.97 | 0.95 | 0.98 | 0.97 | 0.96 |
 
 **There is no window at γ = 1.** The γ = 2 failure near L_p ≈ 10 is therefore not a general zone-to-wavelength
-resonance. It remains **unexplained**, observed only at γ = 2. **γ = 0.5 regional run** (`claude-tissue-pzone-g05r`, job `aijob-e00wxw6fcavbvv05j5`, COMPLETED, 760.2 s):
+resonance. It remained unexplained at that point. **The grid-refinement run below later showed it to be a coarse-grid discretisation artifact.** **γ = 0.5 regional run** (`claude-tissue-pzone-g05r`, job `aijob-e00wxw6fcavbvv05j5`, COMPLETED, 760.2 s):
 
 | L_p | 4 | 6 | 7 | 8 | 10 | 12 |
 |---|---|---|---|---|---|---|
