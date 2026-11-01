@@ -1,0 +1,144 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "j6-m5-design",
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Looming-protocol design: how many fish and which l/v range would discriminate Mauthner-cell encoding hypotheses",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design --out /work/out --j3 /work/repo/j3_consistent_sets.json --trials 64",
+ "python_module": "engineering.neuro.m5_design",
+ "seed": 20261101,
+ "nebius_job": {
+  "name": "claude-neuro-j6-m5-design-a1",
+  "id": "aijob-e00b6srzd4nxzwce8c",
+  "spec": {
+   "name": "claude-neuro-j6-m5-design-a1",
+   "platform": "gpu-h100-sxm",
+   "preset": "1gpu-16vcpu-200gb",
+   "timeout": "1h",
+   "disk": "80Gi",
+   "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+   "pip": "scipy==1.17.1",
+   "question": "Which looming protocol (onset angle, l/v range) and how many fish would discriminate the M5 encoders that J3's abstract-level criteria could not?",
+   "gpu_justification": "631 consistent sets x 3 protocols x 7-8 l/v x 64 trials, up to 57k steps at 0.5 ms (l/v 500 ms from a 2 deg onset)",
+   "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design --out /work/out --j3 /work/repo/j3_consistent_sets.json --trials 64"
+  }
+ },
+ "injected_sources": {
+  "engineering/__init__.py": {
+   "source": "engineering/__init__.py",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "engineering/neuro/__init__.py": {
+   "source": "engineering/neuro/__init__.py",
+   "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+   "bytes": 487
+  },
+  "engineering/neuro/m5_design.py": {
+   "source": "engineering/neuro/m5_design.py",
+   "sha256": "00b5719df55378be2aab4183b898e5a8dc3e13057507e98a5991801145e53e57",
+   "bytes": 6712
+  },
+  "engineering/neuro/m5_mcell.py": {
+   "source": "engineering/neuro/m5_mcell.py",
+   "sha256": "d1c4a01a4f55785a211c3853699dde20071c4c241b2d8b1601dc06eb217c925e",
+   "bytes": 12855
+  },
+  "j3_consistent_sets.json": {
+   "source": "artifacts/neuro/jobs/inputs/j3_consistent_sets.json",
+   "sha256": "17ca7adc5191205bf56c017d557a04ac760bb9fd5fe572aaf7a2633567623dd7",
+   "bytes": 8286
+  }
+ },
+ "bundle_sha256": "590089d7b9e7057a9f2e6a331c5169a5b32cda61e276065c9590c1d72d9fe042",
+ "git_head_at_submit": "6da38785",
+ "env": {
+  "python": "3.11.10",
+  "numpy": "2.1.2",
+  "torch": "2.5.1+cu124",
+  "scipy": "1.17.1"
+ },
+ "elapsed_s": 178.6702105998993,
+ "checks": [
+  {
+   "name": "control: J3 parameter sets regenerated exactly (sha256 of float64 array)",
+   "pass": true,
+   "detail": "b1727de1fb517e54"
+  },
+  {
+   "name": "control: P_J3 reproduces J3's per-set mean response probability (median |diff| <= 0.06 with new noise draws)",
+   "pass": true,
+   "detail": {
+    "kappa": 0.017828571428571416,
+    "eta": 0.017889285714285663,
+    "theta": 0.013414285714285712
+   }
+  }
+ ],
+ "all_checks_pass": true,
+ "ran": {
+  "utc": "2026-11-01T16:44:10Z"
+ },
+ "summary": {
+  "discrimination_accuracy": {
+   "P_J3": {
+    "1": 0.53,
+    "2": 0.6083333333333333,
+    "4": 0.705,
+    "8": 0.8125,
+    "16": 0.8866666666666666,
+    "32": 0.9508333333333333
+   },
+   "P_onset2": {
+    "1": 0.4483333333333333,
+    "2": 0.5183333333333333,
+    "4": 0.5983333333333334,
+    "8": 0.6983333333333335,
+    "16": 0.8133333333333332,
+    "32": 0.8641666666666665
+   },
+   "P_wide": {
+    "1": 0.4258333333333333,
+    "2": 0.5525,
+    "4": 0.5908333333333333,
+    "8": 0.715,
+    "16": 0.8183333333333335,
+    "32": 0.895
+   }
+  },
+  "kappa": {
+   "n_consistent_sets": 260,
+   "angle_slope_deg_per_log2_lv": {
+    "P_J3": -2.1961545991886515,
+    "P_onset2": -1.0647791883098923,
+    "P_wide": -0.9670802791554607
+   }
+  },
+  "eta": {
+   "n_consistent_sets": 220,
+   "angle_slope_deg_per_log2_lv": {
+    "P_J3": -2.399331073231881,
+    "P_onset2": -1.210524755447199,
+    "P_wide": -1.144526318081081
+   }
+  },
+  "theta": {
+   "n_consistent_sets": 151,
+   "angle_slope_deg_per_log2_lv": {
+    "P_J3": -3.07167561865299,
+    "P_onset2": -1.4424987750736433,
+    "P_wide": -1.0627638696384745
+   }
+  }
+ },
+ "outputs": {
+  "figure.png": "dd5f81e82859891a636ff5e77c8d742d1d532f7fb2b32595b5295d2161b8ab23",
+  "job_stderr.log": "f91a77bbeb863b68783b3bbcdd65688e6834b8f9d3144253f6b5b3d6314831fc",
+  "job_stdout.log": "62e53d3312f8e04a6d2f15ed0855ba95e695e8454cd673e2a0f82705577c5c8a",
+  "m5_design.json.gz": "813d50432bf2980cd642fccc071674f7dbe36aff2a6c6722b96a1ddaed74bdd5"
+ }
+}

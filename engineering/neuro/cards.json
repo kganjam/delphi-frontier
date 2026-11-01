@@ -413,9 +413,10 @@
    "Is the 2 deg onset feasible on a real display at the fish's viewing distance?"
   ],
   "perturbation_sweep": "3 protocols (J3's; 2 deg onset; 2 deg onset with l/v 5-500 ms) x 3 encoders x consistent sets x 64 trials; accuracy for 1-32 fish.",
-  "experiment_design": "Use the protocol and fish count with the highest discrimination accuracy (see numerical checks): a looming-disk series spanning l/v 5-500 ms from a 2 deg onset, recording response angle and latency per trial.",
+  "experiment_design": "Result: the J3-like protocol (5 deg onset, l/v 10-240 ms) discriminates the three encoder hypotheses best, at 81% accuracy with 8 fish and 89% with 16 (chance 33%). The 2 deg onset and wide 5-500 ms protocols did worse (72% and 70% with 8 fish). Plan: at least 16 fish per hypothesis, a looming-disk series at l/v 10-240 ms, response angle and latency per trial.",
   "does_not_establish": [
-   "SIMULATED sizing: assumes the real encoder is one of the three model forms, and that fish vary like the consistent parameter sets."
+   "SIMULATED sizing: assumes the real encoder is one of the three model forms, and that fish vary like the consistent parameter sets.",
+   "Selection bias: the consistent sets were selected under the J3 protocol, so they cluster most tightly there; the advantage of that protocol may be partly an artefact of that selection."
   ],
   "couplings": [
    {

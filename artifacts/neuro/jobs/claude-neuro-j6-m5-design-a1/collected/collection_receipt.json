@@ -1,0 +1,73 @@
+{
+ "name": "claude-neuro-j6-m5-design-a1",
+ "job_id": "aijob-e00b6srzd4nxzwce8c",
+ "collected_utc": "2026-11-01T16:44:10Z",
+ "archive_sha256": "892712ae5d4107de91c01e8f5d33dd003eeb420db1ee990a7bb0af0f446223f4",
+ "archive_bytes": 6671,
+ "container_rc": 0,
+ "rc_line": "NEURO-RC 0 2026-11-01T16:43:22Z",
+ "chunks": 1,
+ "files": {
+  "out/m5_design.json.gz": {
+   "sha256": "813d50432bf2980cd642fccc071674f7dbe36aff2a6c6722b96a1ddaed74bdd5",
+   "bytes": 5500
+  },
+  "out/stderr.log": {
+   "sha256": "f91a77bbeb863b68783b3bbcdd65688e6834b8f9d3144253f6b5b3d6314831fc",
+   "bytes": 377
+  },
+  "out/stdout.log": {
+   "sha256": "62e53d3312f8e04a6d2f15ed0855ba95e695e8454cd673e2a0f82705577c5c8a",
+   "bytes": 864
+  }
+ },
+ "submission": {
+  "name": "claude-neuro-j6-m5-design-a1",
+  "submitted_utc": "2026-11-01T16:35:36Z",
+  "spec": {
+   "name": "claude-neuro-j6-m5-design-a1",
+   "platform": "gpu-h100-sxm",
+   "preset": "1gpu-16vcpu-200gb",
+   "timeout": "1h",
+   "disk": "80Gi",
+   "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+   "pip": "scipy==1.17.1",
+   "question": "Which looming protocol (onset angle, l/v range) and how many fish would discriminate the M5 encoders that J3's abstract-level criteria could not?",
+   "gpu_justification": "631 consistent sets x 3 protocols x 7-8 l/v x 64 trials, up to 57k steps at 0.5 ms (l/v 500 ms from a 2 deg onset)",
+   "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design --out /work/out --j3 /work/repo/j3_consistent_sets.json --trials 64"
+  },
+  "injected": {
+   "engineering/__init__.py": {
+    "source": "engineering/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+   },
+   "engineering/neuro/__init__.py": {
+    "source": "engineering/neuro/__init__.py",
+    "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+    "bytes": 487
+   },
+   "engineering/neuro/m5_design.py": {
+    "source": "engineering/neuro/m5_design.py",
+    "sha256": "00b5719df55378be2aab4183b898e5a8dc3e13057507e98a5991801145e53e57",
+    "bytes": 6712
+   },
+   "engineering/neuro/m5_mcell.py": {
+    "source": "engineering/neuro/m5_mcell.py",
+    "sha256": "d1c4a01a4f55785a211c3853699dde20071c4c241b2d8b1601dc06eb217c925e",
+    "bytes": 12855
+   },
+   "j3_consistent_sets.json": {
+    "source": "artifacts/neuro/jobs/inputs/j3_consistent_sets.json",
+    "sha256": "17ca7adc5191205bf56c017d557a04ac760bb9fd5fe572aaf7a2633567623dd7",
+    "bytes": 8286
+   }
+  },
+  "runner_sha256": "a62e9cab56ea2afc0365daca485a6448dd4d55a45d0da18f6ae75ab857d9afa5",
+  "bundle_tar_xz_sha256": "590089d7b9e7057a9f2e6a331c5169a5b32cda61e276065c9590c1d72d9fe042",
+  "bundle_b64_bytes": 13088,
+  "cli_rc": 0,
+  "git_head": "6da38785",
+  "job_id": "aijob-e00b6srzd4nxzwce8c"
+ }
+}

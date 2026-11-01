@@ -1,0 +1,12 @@
+{
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design --out /work/out --j3 /work/repo/j3_consistent_sets.json --trials 64",
+ "python_module": "engineering.neuro.m5_design",
+ "exit_code": 0,
+ "where": "Nebius AI job claude-neuro-j6-m5-design-a1 (aijob-e00b6srzd4nxzwce8c)",
+ "platform": "gpu-h100-sxm 1gpu-16vcpu-200gb",
+ "archive_sha256": "892712ae5d4107de91c01e8f5d33dd003eeb420db1ee990a7bb0af0f446223f4",
+ "collected_utc": "2026-11-01T16:44:10Z",
+ "submitted_utc": "2026-11-01T16:35:36Z",
+ "manifest_sha256": "9a3c28d5ef54c06f31bd7dfaa18c819ff3850d865d9d8b5743ac0c6357efd022",
+ "collection_receipt": "artifacts/neuro/jobs/claude-neuro-j6-m5-design-a1/collected/collection_receipt.json"
+}

@@ -1,0 +1,4 @@
+/work/repo/engineering/neuro/m5_design.py:31: RuntimeWarning: Mean of empty slice
+  ang = np.stack([np.degrees(np.nanmean(np.where(out[lv][0], out[lv][2], np.nan), 1)) for lv in lvs], 1)
+/work/repo/engineering/neuro/m5_design.py:32: RuntimeWarning: Mean of empty slice
+  lat = np.stack([np.nanmean(np.where(out[lv][0], out[lv][1], np.nan), 1) + P["motor_s"] for lv in lvs], 1)
