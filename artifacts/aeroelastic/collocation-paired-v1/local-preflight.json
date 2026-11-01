@@ -1,0 +1,99 @@
+{
+ "schema": "frontier.aeroelastic.collocation-local-preflight/1",
+ "frozen_protocol_sha256": "20c5895364a90ad24e0a1348da171d675135cc5ce774e8518adde8d8ba0e836f",
+ "source_commit": "5a8f5c9",
+ "exit_code": 0,
+ "failure": null,
+ "wall_seconds": 68.99077449552715,
+ "environment": {
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.17.1",
+  "device": "CPU"
+ },
+ "cap": "systemd-run scope, 1 CPU, 4 GiB, swap 0, 128 tasks, 600 s; 1 worker",
+ "collocation_controls": {
+  "checks": {
+   "K2_baseline_unchanged": true,
+   "K1_exact_repair": true,
+   "K3_rectangle_invariance": true,
+   "K4a_law_repaired": true,
+   "K4b_quarter_chord_mutant_rejected": true,
+   "K4c_chord_plateau_discriminates": true
+  },
+  "passed": true,
+  "chord_plateau_relative_range": {
+   "baseline": {
+    "fins": 0.0073779183669779895,
+    "ellipse": 0.00871928281567156
+   },
+   "repaired": {
+    "fins": 4.1509262154761636e-05,
+    "ellipse": 2.2023165280153522e-05
+   },
+   "one_sided_mutant": {
+    "fins": 4.961604746119037,
+    "ellipse": 0.4870414983149741
+   }
+  },
+  "K4d_one_sided_mutant_rejected_by_plateau": {
+   "fins": true,
+   "ellipse": true
+  },
+  "law_check": {
+   "repaired": {
+    "96x8": {
+     "CL_alpha_over_Helmbold_minus_1": -0.026090389016272364,
+     "within_3pct": true
+    },
+    "32x24": {
+     "CL_alpha_over_Helmbold_minus_1": -0.017319078417282197,
+     "within_3pct": true
+    }
+   },
+   "quarter_chord_mutant": {
+    "96x8": {
+     "CL_alpha_over_Helmbold_minus_1": -0.9767301027702106,
+     "within_3pct": false
+    },
+    "32x24": {
+     "CL_alpha_over_Helmbold_minus_1": -0.9879709302751044,
+     "within_3pct": false
+    }
+   }
+  },
+  "rectangle": {
+   "max_abs_C_change_m": 0.0,
+   "CL_relative_change": 0.0
+  },
+  "wall_seconds": 61.51794967241585
+ },
+ "collocation_controls_worst_relative_error_to_cfd04": {
+  "baseline": 0.0,
+  "repaired": 0.0
+ },
+ "non_ladder_8x2": {
+  "lattice_controls_failed_checks": [
+   "upstream_force"
+  ],
+  "arms": [
+   {
+    "id": "chi0.8-u20-p8x2-rigid",
+    "status": "computed rigid",
+    "valid_for_declared_transfer": true
+   },
+   {
+    "id": "chi0.8-u20-p8x2-one-way-frozen-load",
+    "status": "model-domain exit: proposed linear-beam shape",
+    "valid_for_declared_transfer": false
+   },
+   {
+    "id": "chi0.8-u20-p8x2-two-way-static-feedback",
+    "status": "model-domain exit: proposed linear-beam shape",
+    "valid_for_declared_transfer": false
+   }
+  ],
+  "note": "path test on a lattice outside the ladder; the chi0.8 coupled arms exit the linear-beam domain there and upstream_force (reported, not gating) fails; both kept as returned"
+ },
+ "scope": "no ladder lattice was solved; this is not a study result"
+}

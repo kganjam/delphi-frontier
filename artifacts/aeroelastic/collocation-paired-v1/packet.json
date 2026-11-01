@@ -1,0 +1,312 @@
+{
+  "schema": "frontier.aeroelastic.collocation-cpu-packet/1",
+  "admission_condition": "FROZEN before any repaired coupled arm exists. Source audit: cfd04's audit of its extended VLM-diagnostic return (work/vlm-diagnostic b976001, artifacts/cfd3d/vlm-diag/extended-return/audit.json; 372 exact solves, 76 re-derived classifications, verdicts re-derived without importing its runner) is recorded and confirmed by infra (infra-to-coupled-collocation.md). It is an OWNER audit; no third-party review of the repair exists. Controls K1/K2 here are a separate check: this implementation, over the root-branch vlm.py bytes (not cfd04's refactor), must reproduce cfd04's returned repaired and core values within 1e-12. If any later audit changes the repair definition or those values, this protocol is void and is re-frozen under a new name; nothing here is edited in place. Infra alone admits.",
+  "source_commit": "5a8f5c90731cc3e707ea549d6dabea5ce4618e62",
+  "archive_path": "artifacts/aeroelastic/collocation-paired-v1/collocation-cpu-packet.tar.gz",
+  "archive_sha256": "4be2b9ec79134e4a46afd9e0cf0ea35dd65fcf55fed6735faa9ceb063c5dfffa",
+  "archive_bytes": 138185,
+  "entry_argv": [
+    "python",
+    "-m",
+    "engineering.aeroelastic.collocation",
+    "run",
+    "--out",
+    "output"
+  ],
+  "requirements": "engineering/aeroelastic/requirements.txt",
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "resources": {
+    "CPU_vCPU": 4,
+    "workers": 4,
+    "threads_per_worker": 1,
+    "hard_seconds": 1200,
+    "soft_no_new_work_seconds": 1000,
+    "tree_memory_GiB": 12,
+    "tasks": 128,
+    "output_cap_bytes": 64000000,
+    "GPU": 0
+  },
+  "runtime_basis": {
+    "measured_on": "fidelity-v1 VM04 return (same lattices, contexts, arm code path, 4 workers; the repair changes no solve size)",
+    "repaired_arms_worker_seconds": 1610.5,
+    "lattice_controls_seconds": 112.1,
+    "baseline_equivalence_seconds": 63.3,
+    "longest_arm_seconds": 363.1,
+    "longest_arm": "chi0.8-u20-l64x16-two-way-static-feedback (18 iterations)",
+    "fidelity_v1_actual": {
+      "wall_seconds": 466.7,
+      "cpu": "28 min 49 s",
+      "memory_peak": "3.6 GB",
+      "output_bytes": 41826885
+    },
+    "collocation_controls_seconds": "measured in the local preflight (rigid unit solves only)",
+    "estimate": "about 1,830 worker-seconds plus collocation controls; wall about 500-560 s on 4 workers (critical path the chi0.8-u20 l64x16 group, about 445 s; v1 ran 1.08x its work/4); output about 46 MB",
+    "note": "my fidelity-v1 a priori estimate was 1.7x low; this basis is measured"
+  },
+  "local_preflight": {
+    "schema": "frontier.aeroelastic.collocation-local-preflight/1",
+    "frozen_protocol_sha256": "20c5895364a90ad24e0a1348da171d675135cc5ce774e8518adde8d8ba0e836f",
+    "source_commit": "5a8f5c9",
+    "exit_code": 0,
+    "failure": null,
+    "wall_seconds": 68.99077449552715,
+    "environment": {
+      "python": "3.12.3",
+      "numpy": "2.5.4",
+      "scipy": "1.17.1",
+      "device": "CPU"
+    },
+    "cap": "systemd-run scope, 1 CPU, 4 GiB, swap 0, 128 tasks, 600 s; 1 worker",
+    "collocation_controls": {
+      "checks": {
+        "K2_baseline_unchanged": true,
+        "K1_exact_repair": true,
+        "K3_rectangle_invariance": true,
+        "K4a_law_repaired": true,
+        "K4b_quarter_chord_mutant_rejected": true,
+        "K4c_chord_plateau_discriminates": true
+      },
+      "passed": true,
+      "chord_plateau_relative_range": {
+        "baseline": {
+          "fins": 0.0073779183669779895,
+          "ellipse": 0.00871928281567156
+        },
+        "repaired": {
+          "fins": 4.1509262154761636e-05,
+          "ellipse": 2.2023165280153522e-05
+        },
+        "one_sided_mutant": {
+          "fins": 4.961604746119037,
+          "ellipse": 0.4870414983149741
+        }
+      },
+      "K4d_one_sided_mutant_rejected_by_plateau": {
+        "fins": true,
+        "ellipse": true
+      },
+      "law_check": {
+        "repaired": {
+          "96x8": {
+            "CL_alpha_over_Helmbold_minus_1": -0.026090389016272364,
+            "within_3pct": true
+          },
+          "32x24": {
+            "CL_alpha_over_Helmbold_minus_1": -0.017319078417282197,
+            "within_3pct": true
+          }
+        },
+        "quarter_chord_mutant": {
+          "96x8": {
+            "CL_alpha_over_Helmbold_minus_1": -0.9767301027702106,
+            "within_3pct": false
+          },
+          "32x24": {
+            "CL_alpha_over_Helmbold_minus_1": -0.9879709302751044,
+            "within_3pct": false
+          }
+        }
+      },
+      "rectangle": {
+        "max_abs_C_change_m": 0.0,
+        "CL_relative_change": 0.0
+      },
+      "wall_seconds": 61.51794967241585
+    },
+    "collocation_controls_worst_relative_error_to_cfd04": {
+      "baseline": 0.0,
+      "repaired": 0.0
+    },
+    "non_ladder_8x2": {
+      "lattice_controls_failed_checks": [
+        "upstream_force"
+      ],
+      "arms": [
+        {
+          "id": "chi0.8-u20-p8x2-rigid",
+          "status": "computed rigid",
+          "valid_for_declared_transfer": true
+        },
+        {
+          "id": "chi0.8-u20-p8x2-one-way-frozen-load",
+          "status": "model-domain exit: proposed linear-beam shape",
+          "valid_for_declared_transfer": false
+        },
+        {
+          "id": "chi0.8-u20-p8x2-two-way-static-feedback",
+          "status": "model-domain exit: proposed linear-beam shape",
+          "valid_for_declared_transfer": false
+        }
+      ],
+      "note": "path test on a lattice outside the ladder; the chi0.8 coupled arms exit the linear-beam domain there and upstream_force (reported, not gating) fails; both kept as returned"
+    },
+    "scope": "no ladder lattice was solved; this is not a study result"
+  },
+  "files": [
+    {
+      "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.2-u20-l32x8-one-way-frozen-load/result.json",
+      "sha256": "ed95b312cb5e39eee001c47f2e2e9160e2a0e6c109917b93d642e3460ce997be",
+      "bytes": 15145
+    },
+    {
+      "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.2-u20-l32x8-rigid/result.json",
+      "sha256": "c8598fece39bf2053727a4997822ad6e891e35a50b0396bd665980e15bd5e337",
+      "bytes": 9184
+    },
+    {
+      "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.2-u20-l32x8-two-way-static-feedback/result.json",
+      "sha256": "3d67a2b8eae7b2e61cde663f4b4c1ec080a8a995ebe2ce0661eea7eacacc465c",
+      "bytes": 97550
+    },
+    {
+      "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.8-u20-l32x8-one-way-frozen-load/result.json",
+      "sha256": "0b8ecb295a3d3cdf5cf2d40c2691d87df639c40e46e6aa4acb63522698a1a5c1",
+      "bytes": 15114
+    },
+    {
+      "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.8-u20-l32x8-rigid/result.json",
+      "sha256": "9116553bfdcb2101198999c737bda31ab0476a92e45bd9ad4246ed744d7cd3d5",
+      "bytes": 9186
+    },
+    {
+      "path": "artifacts/aeroelastic/collocation-paired-v1/baseline-references/chi0.8-u20-l32x8-two-way-static-feedback/result.json",
+      "sha256": "2f9b35c562913babb4aae6619656ed2cc0d66f1c49370bb6d1bfccd7ec3581fc",
+      "bytes": 108968
+    },
+    {
+      "path": "artifacts/aeroelastic/collocation-paired-v1/protocol.json",
+      "sha256": "20c5895364a90ad24e0a1348da171d675135cc5ce774e8518adde8d8ba0e836f",
+      "bytes": 17521
+    },
+    {
+      "path": "artifacts/aeroelastic/collocation-paired-v1/vlm-references.json",
+      "sha256": "e3b31165bf4fe57860b95505661f03f56f9b302e25ae6e4fa29ed9db8e9a0182",
+      "bytes": 2655
+    },
+    {
+      "path": "artifacts/aeroelastic/fidelity-v1/protocol.json",
+      "sha256": "94cbdb19529eaebf95e83df3f542b98e817f987ce1112fd8aaea2af076912f3f",
+      "bytes": 15044
+    },
+    {
+      "path": "artifacts/aeroelastic/protocol.json",
+      "sha256": "2343dd6e80cc9da394e9379e4daaa36082599344522d9774d240aab75386b24a",
+      "bytes": 9658
+    },
+    {
+      "path": "artifacts/cfd3d/vlm/fish3d-v3a-fan/vlm.json",
+      "sha256": "4b11b6221547005ee57a35e394a3a642680cdecd18c740b624b8b929a82db7f7",
+      "bytes": 121762
+    },
+    {
+      "path": "artifacts/fish3d/fish3d-v3a-fan/candidate.json",
+      "sha256": "e8c2b666874a0658bf5be95a6603b68463e68dd67ac2c0a0be8728abb7e5763e",
+      "bytes": 17197
+    },
+    {
+      "path": "artifacts/fish3d/fish3d-v3a-fan/components.json",
+      "sha256": "5ec2c13d65de88d875c1f8c5bc8f5bd202cf058efed900ebf9ffcf02a09574b7",
+      "bytes": 23894
+    },
+    {
+      "path": "artifacts/fish3d/fish3d-v3a-fan/panels.json",
+      "sha256": "1f64a9759de289118e22e6a9edc5d76c63e6daef5c4a5b84e294e80021a1d33d",
+      "bytes": 143735
+    },
+    {
+      "path": "artifacts/fish3d/fish3d-v3a-fan/rays.json",
+      "sha256": "e644ff48d23e3ab6d616b1bdcbbaea532ed16b36f28970dda5eb75dfa8cb26e8",
+      "bytes": 126933
+    },
+    {
+      "path": "engineering/aeroelastic/__init__.py",
+      "sha256": "bb3fe4dded3f2adb8ff185d997892939bfae494212fbd7fe553abbadcd19077c",
+      "bytes": 85
+    },
+    {
+      "path": "engineering/aeroelastic/collocation.py",
+      "sha256": "9080fc90ecca46366bb39521280cfe833b6e76ed7b54f2f414dd799fd9190fca",
+      "bytes": 28480
+    },
+    {
+      "path": "engineering/aeroelastic/controls.py",
+      "sha256": "a715ab263302fc45dfbbcc85f654897d961394d199e273d998137b0e4bbf1c75",
+      "bytes": 6709
+    },
+    {
+      "path": "engineering/aeroelastic/fidelity.py",
+      "sha256": "24f74dbd824daac389b92301d45cffa7c072620f0b727ea6eb263a5b0045aa71",
+      "bytes": 35131
+    },
+    {
+      "path": "engineering/aeroelastic/flight.py",
+      "sha256": "9fce167422fd25101648d07b3283a092e58ba10ecf401abcf76162c27ad3eef2",
+      "bytes": 2297
+    },
+    {
+      "path": "engineering/aeroelastic/model.py",
+      "sha256": "7eb236b82e66a782d9b40b51e2bed9ccd663cbfce0dd29f2e4ed91dfea03a001",
+      "bytes": 8465
+    },
+    {
+      "path": "engineering/aeroelastic/requirements.txt",
+      "sha256": "64f661a009ca94167f3df24906806375f890d3accda95697bd541d71ef88f782",
+      "bytes": 27
+    },
+    {
+      "path": "engineering/aeroelastic/run.py",
+      "sha256": "03550fd04769f3363c23149bb5901f57fcf3663dac0bd771e39b9fed6375f8ce",
+      "bytes": 17870
+    },
+    {
+      "path": "engineering/cfd3d/gates_vlm.json",
+      "sha256": "f9ede945cfd28f284c2ec08e8dd87b1a38d5684af1912fe3f4ced80cedbc4d58",
+      "bytes": 2617
+    },
+    {
+      "path": "engineering/cfd3d/vlm.py",
+      "sha256": "f9dd43a97243234880fef5c4d99e77ee34458980c6246a284762763a12acb6d3",
+      "bytes": 21367
+    },
+    {
+      "path": "engineering/fin_mechanics/__init__.py",
+      "sha256": "8ff9253d5eb8e401cf2f2fbc573ad9580189531f9ee72d735d91e5194e800541",
+      "bytes": 390
+    },
+    {
+      "path": "engineering/fin_mechanics/beam.py",
+      "sha256": "4dfceb004a2eddef9cad27f09b744710de2a8b9b7f9f9e232b756e3cb4683b5d",
+      "bytes": 8191
+    },
+    {
+      "path": "engineering/simulation/__init__.py",
+      "sha256": "d7ff2108d1c58d5da04f5972a4f64e49f3a7d8758c6a197c36743420f3574ec7",
+      "bytes": 381
+    },
+    {
+      "path": "engineering/simulation/glide.py",
+      "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+      "bytes": 4371
+    },
+    {
+      "path": "engineering/simulation/schema.py",
+      "sha256": "94b4f003be514ac5055ed184b0e2695a68bf0de8689e387238e9583c8e62b944",
+      "bytes": 4760
+    }
+  ],
+  "outputs": [
+    "output/controls-original.json",
+    "output/collocation-controls.json",
+    "output/repaired/{arms,progress,lattice-controls}/...",
+    "output/baseline-equivalence/{arms,progress}/...",
+    "output/summary.json",
+    "output/receipt.json",
+    "output/failure.json and output/task-failures.json if any"
+  ],
+  "input_network_required": false,
+  "no_credentials_or_model_inference": true
+}
