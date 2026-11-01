@@ -17,6 +17,7 @@ import zlib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TILE = 1 << 14
+ALLOWED_HEADERS = ("Content-Length", "Content-Range", "Content-Type", "Date", "ETag", "Last-Modified", "Accept-Ranges")  # recovery_contract.json; nothing else is logged
 INDEX_MAX_EXPANDED = 64 << 20  # the index is <= 1 MiB compressed; anything expanding past 64 MiB is refused
 USABLE = ('ok', 'beyond_last_interval')
 EXIT_CODES = {'complete': 0, 'stopped_on_bound': 2, 'partial_data': 3, 'stopped_on_error': 4}  # transport_amendment.json
@@ -72,8 +73,9 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 class HttpRange:
     """The one transport. `get(url, start, end)` returns bytes[start..end] inclusive or raises Refused."""
 
-    def __init__(self, proto, budget, allowed_hosts=None, scheme=None, timeout=None, log=None):
+    def __init__(self, proto, budget, allowed_hosts=None, scheme=None, timeout=None, log=None, sleep=time.sleep, recovery=False):
         t = proto["transport"]
+        self.sleep, self.recovery = sleep, recovery  # recovery: log allow-listed headers and timing, classify an empty 206
         self.hosts = allowed_hosts or [t["host"]]
         self.scheme = scheme or t["scheme"]
         self.timeout = timeout or t["timeout_s"]
@@ -81,21 +83,32 @@ class HttpRange:
         self.budget, self.log = budget, log if log is not None else []
         self.opener = urllib.request.build_opener(NoRedirect)
 
-    def get(self, url, start, end, total):
+    def get(self, url, start, end, total, schedule=None):
+        """schedule: waits (s) before each attempt, e.g. [0, 15, 45]; default is the frozen attempts with no wait."""
         u = urllib.parse.urlparse(url)
         if u.scheme != self.scheme or u.hostname not in self.hosts and f"{u.hostname}:{u.port}" not in self.hosts:
             raise Refused("host_refused", url)
         expected = end - start + 1
         last = None
-        for attempt in range(1, self.attempts + 1):
+        waits = list(schedule) if schedule else [0] * self.attempts
+        for attempt, wait in enumerate(waits, 1):
+            if wait:
+                if self.budget.clock() - self.budget.t0 + wait > self.budget.b["runtime_hard_s"]:
+                    raise Refused("stopped_on_bound", "runtime")  # never sleep past the hard bound
+                self.sleep(wait)
             self.budget.check()
             self.budget.precheck(expected + 1)  # reserve the sentinel byte too, per attempt; cap refusals are final: never retried
             self.budget.requests += 1
             rec = {"url": url, "range": f"{start}-{end}", "attempt": attempt, "t": time.time(), "bytes_charged": 0}
+            t_attempt = self.budget.clock()
+            if self.recovery:
+                rec["wait_before_s"], rec["t_clock"] = wait, t_attempt  # t_clock: the injected clock, which the waits advance (t is wall time)
             r = None
             try:
                 r = self.opener.open(urllib.request.Request(url, headers={"Range": f"bytes={start}-{end}"}), timeout=self.timeout)
                 rec["http_status"] = r.status
+                if self.recovery:
+                    rec["headers"] = {h: r.headers.get(h) for h in ALLOWED_HEADERS if r.headers.get(h) is not None}
                 if r.status != 206:
                     raise Refused("unsupported_range", f"HTTP {r.status}")  # no body byte is read
                 if r.headers.get("Content-Range") != f"bytes {start}-{end}/{total}":
@@ -105,6 +118,8 @@ class HttpRange:
                     raise Refused("transport_error", err)
                 if len(body) > expected:
                     raise Refused("oversized_response", f">{expected}")
+                if self.recovery and not body:
+                    raise Refused("empty_206", f"0 of {expected}")
                 if len(body) != expected:
                     raise Refused("short_read", f"{len(body)} of {expected}")
                 rec.update(ok=True, bytes=len(body), sha256=hashlib.sha256(body).hexdigest())
@@ -116,9 +131,14 @@ class HttpRange:
             except (urllib.error.URLError, OSError, http.client.HTTPException) as e:
                 last = Refused("transport_error", type(e).__name__)
                 rec.update(ok=False, failure=type(e).__name__)
+                if self.recovery and isinstance(e, urllib.error.HTTPError):
+                    rec["http_status"] = e.code
+                    rec["headers"] = {h: e.headers.get(h) for h in ALLOWED_HEADERS if e.headers.get(h) is not None}
             finally:
                 if r is not None:
                     r.close()
+                if self.recovery:
+                    rec["elapsed_s"] = round(self.budget.clock() - t_attempt, 3)
             self.log.append(rec)
             if last.status in ("unsupported_range", "range_mismatch", "oversized_response"):
                 break  # deterministic server behaviour: a second attempt cannot differ
@@ -308,7 +328,7 @@ def build_windows(controls):
     return wins
 
 
-def run(out, proto, controls, make_fetch, clock=time.monotonic, budget=None):
+def run(out, proto, controls, make_fetch, clock=time.monotonic, budget=None, index_schedule=None, extra_receipt=None):
     """make_fetch(url, total, budget) -> fetch(start,end). Writes results.json/receipt.json into the NEW directory `out`.
     completion_status follows transport_amendment.json: complete only when all expected identities are present and usable."""
     if os.path.exists(out):
@@ -328,7 +348,8 @@ def run(out, proto, controls, make_fetch, clock=time.monotonic, budget=None):
             try:
                 if lib["index_bytes"] > proto["bounds"]["index_download_max_bytes"]:
                     raise Refused("index_too_large", str(lib["index_bytes"]))
-                idx = read_index(make_fetch(lib["index_url"], lib["index_bytes"], budget)(0, lib["index_bytes"] - 1))
+                fi = make_fetch(lib["index_url"], lib["index_bytes"], budget)
+                idx = read_index(fi(0, lib["index_bytes"] - 1, **({"schedule": index_schedule} if index_schedule else {})))
                 if idx["format"] != 65536:
                     raise Refused("bad_index", f"format {idx['format']}")
                 fetch = make_fetch(lib["fragments_url"], lib["fragments_bytes"], budget)
@@ -372,6 +393,7 @@ def run(out, proto, controls, make_fetch, clock=time.monotonic, budget=None):
            "amendment_sha256": hashlib.sha256(open(os.path.join(HERE, "transport_amendment.json"), "rb").read()).hexdigest(),
            "amendment2_sha256": hashlib.sha256(open(os.path.join(HERE, "transport_amendment_2.json"), "rb").read()).hexdigest(),
            "results_sha256": hashlib.sha256(open(p, "rb").read()).hexdigest()}
+    rec.update(extra_receipt or {})
     json.dump(rec, open(os.path.join(out, "receipt.json"), "w"), indent=1, sort_keys=True)
     return doc, rec
 
@@ -397,10 +419,10 @@ def summarise(rows, libraries):
     return out
 
 
-def http_fetch_factory(proto, log, allowed_hosts=None, scheme=None):
+def http_fetch_factory(proto, log, allowed_hosts=None, scheme=None, sleep=time.sleep, recovery=False):
     def make(url, total, budget):
-        h = HttpRange(proto, budget, allowed_hosts, scheme, log=log)
-        return lambda a, b: h.get(url, a, b, total)
+        h = HttpRange(proto, budget, allowed_hosts, scheme, log=log, sleep=sleep, recovery=recovery)
+        return lambda a, b, schedule=None: h.get(url, a, b, total, schedule)
     return make
 
 

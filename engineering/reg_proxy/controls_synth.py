@@ -94,6 +94,7 @@ class Server:
     def __init__(self, files):
         outer = self
         self.files, self.mode, self.fail_first, self.hits, self.sent = files, "ok", 0, 0, 0
+        self.empty_first, self.extra_headers, self.paths = 0, False, []
 
         class H(http.server.BaseHTTPRequestHandler):
             def log_message(self, *a):
@@ -101,6 +102,7 @@ class Server:
 
             def do_GET(self):
                 outer.hits += 1
+                outer.paths.append(self.path)
                 blob = outer.files[self.path]
                 if outer.mode == "redirect":
                     self.send_response(302)
@@ -118,6 +120,16 @@ class Server:
                     self.end_headers()
                     self.wfile.write(blob[a0:a0 + 7])  # fewer bytes than promised, then close: IncompleteRead
                     return
+                if rng0 and (outer.mode in ("empty_206", "empty_206_declared0") or outer.empty_first > 0):
+                    if outer.empty_first > 0:
+                        outer.empty_first -= 1
+                    a0, b0 = map(int, rng0.split("=")[1].split("-"))
+                    b0 = min(b0, len(blob) - 1)
+                    self.send_response(206)
+                    self.send_header("Content-Range", f"bytes {a0}-{b0}/{len(blob)}")
+                    self.send_header("Content-Length", "0" if outer.mode == "empty_206_declared0" else str(b0 - a0 + 1))
+                    self.end_headers()
+                    return  # the headers promise a body and none is sent
                 if outer.mode == "chunked_trunc" and rng0:
                     a0, b0 = map(int, rng0.split("=")[1].split("-"))
                     b0 = min(b0, len(blob) - 1)
@@ -155,6 +167,10 @@ class Server:
                 self.send_response(206)
                 self.send_header("Content-Range", cr)
                 self.send_header("Content-Length", str(len(body)))
+                if outer.extra_headers:
+                    for k, v in (("Set-Cookie", "session=SECRET-COOKIE-VALUE"), ("Authorization", "Bearer SECRET-TOKEN"), ("X-Secret", "SECRET-X"),
+                                 ("ETag", '"abc123"'), ("Last-Modified", "Sat, 31 Oct 2026 00:00:00 GMT"), ("Accept-Ranges", "bytes"), ("Content-Type", "application/gzip")):
+                        self.send_header(k, v)
                 self.end_headers()
                 self.wfile.write(body)
 

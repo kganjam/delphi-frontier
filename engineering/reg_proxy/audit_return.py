@@ -19,6 +19,15 @@ STATUSES = {"ok", "beyond_last_interval", "chrom_absent", "unsorted_refused", "w
 USABLE = {"ok", "beyond_last_interval"}
 FORBIDDEN_KEYS = {"probability", "confidence", "score", "pvalue", "p_value", "rank", "threshold", "significant"}
 HOST = "ftp.ncbi.nlm.nih.gov"
+ALLOWED_HEADERS = {"Content-Length", "Content-Range", "Content-Type", "Date", "ETag", "Last-Modified", "Accept-Ranges"}
+V1 = {"pins": PIN, "statuses": STATUSES, "requests_max": 3000, "bytes_max": 419430400, "library_max": 67108864, "window_max": 8388608,
+      "elapsed_max": 1200, "libraries": None, "index_attempts": 2, "recovery": False}
+# recovery profile: values restated from recovery_contract.json (frozen at 8543c5d) on purpose, not imported
+RECOVERY = {"pins": PIN | {"contract_sha256": "c7edb1c59657e81bca262ad0d5206c845ed888cf22a392d7b7c9305c045bcd8e",
+                           "parent_results_sha256": "f2eb5178787e371cb53f58f4b725feaa8a2f26ae4df5e4c0f2b99b776a31ac8a"},
+            "statuses": STATUSES | {"empty_206"}, "requests_max": 1000, "bytes_max": 157286400, "library_max": 67108864, "window_max": 8388608,
+            "elapsed_max": 900, "libraries": ["0dpa1", "0dpa2", "1dpa1", "1dpa2", "2dpa1"], "index_attempts": 3, "recovery": True,
+            "index_waits": [0, 15, 45]}
 
 
 def expected_windows(controls):
@@ -41,8 +50,28 @@ def keys_in(o):
             yield from keys_in(v)
 
 
-def audit(d, controls=None, host_prefix=f"https://{HOST}/", n_expected=330):
+def summary_rows(rows):
+    """Frozen summary rule: per non-comparison window, count, per kb, the two comparison counts and the ratio to their mean."""
+    by = {(r["library"], r["window"]): r for r in rows}
+    want = []
+    for r in rows:
+        if r["kind"] == "comparison":
+            continue
+        s = {"library": r["library"], "window": r["window"], "kind": r["kind"], "status": r["status"]}
+        if r["status"] in USABLE:
+            comp = [by.get((r["library"], f"{r['window']}+{o}")) for o in (250000, 500000)]
+            cc = [c["fragment_rows"] for c in comp if c and c["status"] in USABLE]
+            mean = (cc[0] + cc[1]) / 2 if len(cc) == 2 else None
+            s.update(fragment_rows=r["fragment_rows"], per_kb=round(r["fragment_rows"] / ((r["end0"] - r["start0"]) / 1000), 4),
+                     comparison_counts=cc, ratio_to_comparison_median=round(r["fragment_rows"] / mean, 4) if mean else None)
+        want.append(s)
+    return want
+
+
+def audit(d, controls=None, host_prefix=f"https://{HOST}/", n_expected=330, profile=None):
+    P = profile or V1
     controls = controls or json.load(open(os.path.join(HERE, "controls.json")))
+    libs = [lib for lib in controls["libraries"] if P["libraries"] is None or lib["label"] in P["libraries"]]
     checks, obs = [], {}
 
     def chk(cid, ok, detail):
@@ -58,11 +87,11 @@ def audit(d, controls=None, host_prefix=f"https://{HOST}/", n_expected=330):
     reqs = json.load(open(os.path.join(d, "requests.json")))
     rows = res["windows"]
 
-    bad = [k for k, want in PIN.items() if rec.get(k) != want]
+    bad = [k for k, want in P["pins"].items() if rec.get(k) != want]
     chk("C2_pins", rec.get("results_sha256") == hashlib.sha256(raw).hexdigest() and not bad, f"results hash match={rec.get('results_sha256') == hashlib.sha256(raw).hexdigest()}; pin mismatches={bad}")
 
     exp_w = expected_windows(controls)
-    exp_ids = {(lib["label"], w[0]): w for lib in controls["libraries"] for w in exp_w}
+    exp_ids = {(lib["label"], w[0]): w for lib in libs for w in exp_w}
     got = [(r["library"], r["window"]) for r in rows]
     dup = len(got) - len(set(got))
     missing = sorted(set(exp_ids) - set(got))
@@ -75,7 +104,7 @@ def audit(d, controls=None, host_prefix=f"https://{HOST}/", n_expected=330):
     problems = []
     for r in rows:
         k = (r["library"], r["window"])
-        if r["status"] not in STATUSES:
+        if r["status"] not in P["statuses"]:
             problems.append((k, "status", r["status"]))
         elif r["status"] in USABLE:
             n, dd, bc = r.get("fragment_rows"), r.get("dup_count_sum"), r.get("distinct_barcodes")
@@ -96,7 +125,7 @@ def audit(d, controls=None, host_prefix=f"https://{HOST}/", n_expected=330):
 
     url_lib = {}
     sizes_by_url = {}
-    for lib in controls["libraries"]:
+    for lib in libs:
         for u, n in ((lib["fragments_url"], lib["fragments_bytes"]), (lib["index_url"], lib["index_bytes"])):
             url_lib[u], sizes_by_url[u] = lib["label"], n
     bp, per_lib, tot = [], defaultdict(int), 0
@@ -115,36 +144,35 @@ def audit(d, controls=None, host_prefix=f"https://{HOST}/", n_expected=330):
                 bp.append(("ok_fields", q["range"]))
         elif not q.get("failure"):
             bp.append(("failure_unrecorded", q["range"]))
-    prev = None  # attempts are read in log order: a request starts at 1; attempt 2 only follows a failed attempt 1 of the same url and range
+    prev = None  # attempts are read in log order: a request starts at 1; attempt n follows a failed attempt n-1 of the same url and range
+    idx_range = {lib["index_url"]: f"0-{lib['index_bytes'] - 1}" for lib in libs}
     for q in reqs:
         n = q.get("attempt")
+        limit = P["index_attempts"] if idx_range.get(q["url"]) == q["range"] else 2
         if n == 1:
             pass
-        elif not (n == 2 and prev and prev["attempt"] == 1 and not prev.get("ok") and (prev["url"], prev["range"]) == (q["url"], q["range"])):
+        elif not (n <= limit and prev and prev["attempt"] == n - 1 and not prev.get("ok") and (prev["url"], prev["range"]) == (q["url"], q["range"])):
             bp.append(("attempts", q["range"], n))
+        if P["recovery"]:
+            if "headers" in q and not set(q["headers"]) <= ALLOWED_HEADERS:
+                bp.append(("headers", sorted(set(q["headers"]) - ALLOWED_HEADERS)))
+            if "wait_before_s" not in q or "elapsed_s" not in q or "t_clock" not in q:
+                bp.append(("recovery_fields_missing", q["range"]))
+            elif idx_range.get(q["url"]) == q["range"] and 2 <= n <= len(P["index_waits"]):
+                want = P["index_waits"][n - 1]
+                if q["wait_before_s"] != want or (prev and q["t_clock"] - prev["t_clock"] < want - 0.5):
+                    bp.append(("schedule", q["range"], n, q["wait_before_s"], round(q["t_clock"] - prev["t_clock"], 2) if prev else None))
         prev = q
-    win_over = [r for r in rows if r.get("window_bytes_charged", 0) > 8388608]
-    chk("C6_budget", not bp and len(reqs) == rec["requests"] <= 3000 and tot == rec["compressed_bytes"] <= 419430400
-        and max(per_lib.values(), default=0) <= 67108864 and not win_over and rec["elapsed_s"] <= 1200,
+    win_over = [r for r in rows if r.get("window_bytes_charged", 0) > P["window_max"]]
+    chk("C6_budget", not bp and len(reqs) == rec["requests"] <= P["requests_max"] and tot == rec["compressed_bytes"] <= P["bytes_max"]
+        and max(per_lib.values(), default=0) <= P["library_max"] and not win_over and rec["elapsed_s"] <= P["elapsed_max"],
         f"requests={len(reqs)} (receipt {rec['requests']}) charged={tot} (receipt {rec['compressed_bytes']}) max_library={max(per_lib.values(), default=0)} "
         f"elapsed_s={rec['elapsed_s']} problems={bp[:3]}")
     oks = {(q["range"], q["sha256"]) for q in reqs if q.get("ok")}
     unlinked = [(r["library"], r["window"], x["range"]) for r in rows for x in r.get("responses", []) if (x["range"], x["sha256"]) not in oks]
     chk("C6b_linkage", not unlinked, f"{sum(len(r.get('responses', [])) for r in rows)} responses; unlinked={len(unlinked)} {unlinked[:2]}")
 
-    by = {(r["library"], r["window"]): r for r in rows}
-    want = []
-    for r in rows:
-        if r["kind"] == "comparison":
-            continue
-        s = {"library": r["library"], "window": r["window"], "kind": r["kind"], "status": r["status"]}
-        if r["status"] in USABLE:
-            comp = [by.get((r["library"], f"{r['window']}+{o}")) for o in (250000, 500000)]
-            cc = [c["fragment_rows"] for c in comp if c and c["status"] in USABLE]
-            mean = (cc[0] + cc[1]) / 2 if len(cc) == 2 else None
-            s.update(fragment_rows=r["fragment_rows"], per_kb=round(r["fragment_rows"] / ((r["end0"] - r["start0"]) / 1000), 4),
-                     comparison_counts=cc, ratio_to_comparison_median=round(r["fragment_rows"] / mean, 4) if mean else None)
-        want.append(s)
+    want = summary_rows(rows)
     chk("C7_summary", want == res["summary"], f"{len(want)} recomputed summary rows; equal={want == res['summary']}")
 
     lim = res.get("claim_limits", "")
@@ -160,7 +188,7 @@ def audit(d, controls=None, host_prefix=f"https://{HOST}/", n_expected=330):
     obs["positives_with_zero_fragments"] = sorted(f"{r['library']}:{r['window']}" for r in rows if r["kind"] == "reporter_positive" and r.get("fragment_rows") == 0)
     obs["undefined_ratio_windows"] = sum(1 for s in want if s.get("status") in USABLE and s.get("ratio_to_comparison_median") is None)
     obs["fragment_rows_by_library"] = {lib["label"]: {r["window"]: r["fragment_rows"] for r in rows if r["library"] == lib["label"] and r["kind"] != "comparison" and "fragment_rows" in r}
-                                       for lib in controls["libraries"]}
+                                       for lib in libs}
     ok = all(c["passed"] for c in checks)
     return {"schema": "frontier.reg-proxy.return-audit/1", "checks": checks, "observations": obs,
             "verdict": "consistent" if ok else "inconsistent",
@@ -197,11 +225,11 @@ def transport_diagnosis(reqs, controls=None):
 def main(argv=None):
     a = list(sys.argv[1:] if argv is None else argv)
     if not a:
-        raise SystemExit("usage: audit_return DIR [--diagnose]")
+        raise SystemExit("usage: audit_return DIR [--diagnose] [--recovery]")
     if "--diagnose" in a:
         print(json.dumps(transport_diagnosis(json.load(open(os.path.join(a[0], "requests.json")))), indent=1, sort_keys=True))
         return 0
-    r = audit(a[0])
+    r = audit(a[0], profile=RECOVERY, n_expected=165) if "--recovery" in a else audit(a[0])
     print(json.dumps(r, indent=1, sort_keys=True))
     return 0 if r["verdict"] == "consistent" else 1
 
