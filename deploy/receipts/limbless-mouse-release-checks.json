@@ -1,32 +1,32 @@
 {
   "schema": "frontier.release.checks/1",
-  "sha": "cf85908bf783ee91f9af2a4205860d70d8a68d38",
+  "sha": "52183b1455ee1b26291918141ff85ac4198c9c24",
   "checks": [
     {
-      "name": "Limbless design space: page, data block and generated twin",
-      "command": "python3 -m pytest tests/test_limbless_site.py tests/test_site_browser.py -q -k 'limbless or studio or home or project or reuse'",
+      "name": "Home doorway, studio pages and the limbless design space",
+      "command": "python3 -m pytest tests/test_site_browser.py tests/test_limbless_site.py -q",
       "exit": 0,
-      "passed": 26,
-      "total": 26,
-      "result": "26 passed,104 deselected in 68.59s. Covers the new page at 1440 and 390, the figure digests, the declared-and-absent path, and the markdown twin's --check in both directions.",
-      "at": "2026-11-01T20:59:49.796775+00:00",
-      "tested_commit": "cf85908bf783ee91f9af2a4205860d70d8a68d38"
+      "passed": 130,
+      "total": 130,
+      "result": "130 passed in 176.45s - the whole browser suite plus the limbless unit tests. An earlier run of the same selection had 8 failures from a ReferenceError this change introduced in the project page; it was fixed before this run.",
+      "at": "2026-11-01T21:27:53.396543+00:00",
+      "tested_commit": "52183b1455ee1b26291918141ff85ac4198c9c24"
     },
     {
       "name": "Snapshot reproducibility",
       "command": "python3 scripts/build_site.py --check",
       "exit": 0,
       "result": "stale=[]",
-      "at": "2026-11-01T20:59:49.796775+00:00",
-      "tested_commit": "cf85908bf783ee91f9af2a4205860d70d8a68d38"
+      "at": "2026-11-01T21:27:53.396543+00:00",
+      "tested_commit": "52183b1455ee1b26291918141ff85ac4198c9c24"
     },
     {
       "name": "Generated markdown twin is current",
       "command": "python3 scripts/limbless_doc.py --check",
       "exit": 0,
       "result": "docs/dossier/13-limbless-mouse-design-space.md is current",
-      "at": "2026-11-01T20:59:49.796775+00:00",
-      "tested_commit": "cf85908bf783ee91f9af2a4205860d70d8a68d38"
+      "at": "2026-11-01T21:27:53.396543+00:00",
+      "tested_commit": "52183b1455ee1b26291918141ff85ac4198c9c24"
     },
     {
       "name": "Full suite compared against the previous main",
@@ -34,7 +34,7 @@
       "exit": 0,
       "passed": 1588,
       "total": 1628,
-      "result": "8 failed,1588 passed,32 skipped,24 errors at 04eecc59 against 9 failed,1580 passed,32 skipped,24 errors at f8c19cd3. ZERO failures and ZERO collection errors unique to this branch; the 8 and the 24 are all pre-existing on main and were reproduced there first. NOT run at the release sha: four commits landed after 04eecc59 (e8ef248a among them) and they change captions, one figure, one authored summary and the regenerated files only. The three checks above WERE re-run at the release sha cf85908b.",
+      "result": "8 failed,1588 passed,32 skipped,24 errors at 04eecc59 against 9 failed,1580 passed,32 skipped,24 errors at f8c19cd3. ZERO failures and ZERO collection errors unique to this branch; the 8 and the 24 are all pre-existing on main and were reproduced there first. NOT run at the release sha: the commits after 04eecc59 change captions, one figure, one authored summary and the home page's entry section. The other four checks WERE run at the release sha.",
       "at": "2026-11-01T20:57:10.120598+00:00",
       "tested_commit": "04eecc59"
     },
@@ -45,8 +45,8 @@
       "passed": 68,
       "total": 68,
       "result": "0 hits over 68 files. gitleaks is NOT installed on this host, so this is a pattern grep and not a full secret scan; its scope is the added and changed files only. Positive controls: a planted AKIA key and a planted ghp_ token were both flagged, and a clean file was not, so the zero is a measured zero.",
-      "at": "2026-11-01T20:59:49.796775+00:00",
-      "tested_commit": "cf85908bf783ee91f9af2a4205860d70d8a68d38"
+      "at": "2026-11-01T21:27:53.396543+00:00",
+      "tested_commit": "52183b1455ee1b26291918141ff85ac4198c9c24"
     }
   ]
 }
