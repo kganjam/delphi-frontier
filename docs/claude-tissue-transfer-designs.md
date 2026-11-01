@@ -749,7 +749,16 @@ stripe-regime cell, b = 1.8 and d = 30 (λ ≈ 10.5, σ_max ≈ 0.062, close to 
   the kinetics, beyond λ and σ**, and "about λ/3" is not universal.
 - The robust qualitative statement is: a narrow apical zone gives edge-parallel bands, and a zone wider than a
   kinetics-dependent fraction of λ (about 0.25–0.4 here) gives rays.
-- A lower-bracket run (`claude-tissue-pzone-kinb`) and a third cell, b = 1.1 and d = 13 (`claude-tissue-pzone-kin2`), are running.
+- **Third cell, b = 1.1 and d = 13** (`claude-tissue-pzone-kin2`, job `aijob-e00y1g0v1b3ecchbh1`, COMPLETED, 576.1 s;
+  λ ≈ 10.8):
+
+  | L_p | 3.0 | 3.5 | 4.0 | 4.5 | 5.0 |
+  |---|---|---|---|---|---|
+  | Distal A | 0.02 | −0.30 | 0.70 | 0.82 | 0.99 |
+
+  The switch is about **3.8 ≈ 0.35 λ**, close to b = 0.9 and d = 10 (0.39 λ on the coarse grid). So two of the three
+  kinetics sit near 0.35–0.39 λ, while b = 1.8 and d = 30 (the most strongly driven cell) is lower.
+- A lower-bracket run for b = 1.8 and d = 30 is running (`claude-tissue-pzone-kinb`).
 
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
