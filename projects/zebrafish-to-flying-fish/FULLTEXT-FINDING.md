@@ -99,3 +99,43 @@ evidence and the tree evidence now point the same way by independent means.
 - Nothing here measures transport activity, expression or any phenotype. The paper reports in vivo
   zebrafish work for that; this project has read it, not reproduced it.
 - One operator, not independently reviewed.
+
+---
+
+## 5. Negative controls, from the paper's own lineage distribution — and one new wrinkle
+
+The paper reports F326L in flying fishes and in the **flying** halfbeaks (*Oxyporhamphus*,
+*Euleptorhamphus*). That gives free negative controls: Beloniformes which are **not** gliders should
+carry F. Three public assemblies were tested with the same pipeline
+(`scripts/f326l_controls.sh` → `scripts/check_f326l_controls.py`,
+`data/f326l_controls/controls_result.json`), each genome's FASTA sha256 recorded:
+
+| species | gliding? | residue at the F326 column | aligned context | context identity to zebrafish window |
+| --- | --- | --- | --- | --- |
+| zebrafish `slc43a2a` (reference) | — | **F** | `SFMRSI`**F**`SPIFML` | — |
+| *Hirundichthys speculiger* (flying fish) | **yes** | **L** | `SFMKSI`**L**`SPIFLL` | 11/13 |
+| *Hemiramphus limbatus* (halfbeak, **not** a flying halfbeak) | no | **F** | `SFMKSV`**F**`SPIFLL` | 10/13 |
+| *Xenentodon cancila* (needlefish) | no | **F** | `SFMKSI`**F**`SPIFML` | 12/13 |
+| *Cololabis saira* (Pacific saury) | no | **I** | `SFMKSI`**I**`SPIFLL` | 10/13 |
+
+**The control passes: no non-gliding Beloniform carries L.** The flying fish's L is therefore not an
+artefact of this pipeline — the same miniprot-and-align procedure recovers F in two non-gliders and L
+only in the glider, with homologous flanking context in every case.
+
+**The wrinkle, reported because it is in this project's own data.** *Cololabis saira* carries
+**isoleucine** at that exact position, not phenylalanine. The paper describes the substitution as
+sitting in "a highly conserved region", and one of the three non-gliders tested here differs at the
+site itself. That does **not** contradict the glider-specific L — I is not L — but it does mean the
+position is not strictly invariant outside gliding lineages, which a convergence argument resting on a
+single site should take into account. The paper's own sampling included a saury of a different genus
+(*Scomberesox*), so *C. saira* is a data point outside its set rather than a disagreement with it.
+
+**Method caution repeated.** The "from query" label on each prediction names the query protein that
+produced it, **not** a paralog assignment — the same distinction that this project has now had to
+make four times. In every one of these species the homologous locus was recovered by the `slc43a2b`
+query, exactly as in the flying fish, so the comparison is like-for-like.
+
+**What none of this shows.** Four residues at one column in four draft or chromosome assemblies.
+No transport assay, no expression, no fin measurement, and no test of whether the substitution
+changes anything. The paper reports in vivo zebrafish work for the functional half; this project read
+that and did not reproduce it.

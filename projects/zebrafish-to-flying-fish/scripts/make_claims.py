@@ -345,7 +345,11 @@ CLAIMS = [
             "public draft assembly by a different route than the paper used, the paper's numbering is "
             "on the a paralog, and the flying-fish locus is slc43locus02 -- the same locus three gene "
             "trees had tentatively placed on the a side at sub-threshold support (36.2/65, then "
-            "66.7/78)."),
+            "66.7/78). Negative controls drawn from the paper's own lineage distribution then passed: "
+            "Hemiramphus limbatus, a halfbeak but not one of the two FLYING halfbeak genera, carries F, "
+            "and the needlefish Xenentodon cancila carries F, while the Pacific saury Cololabis saira "
+            "carries isoleucine. No non-gliding Beloniform tested carries L, so the flying-fish L is "
+            "not an artefact of this pipeline."),
         context=("This is the one place where this project's computation and a published comparative "
                  "result meet and agree, by independent means. It also resolves the identifier half of "
                  "Problem zf2ff-problem-lat4a-identifier. " + SCOPE),
@@ -355,6 +359,8 @@ CLAIMS = [
                      "slc43locus05 and slc43locus06 also show L at the aligned column, but their flanking context is NON-homologous; they are slc43a3-family loci and those matches are coincidental. Only slc43locus02's match is in context.",
                      "This measures a residue, not transport activity, expression or any phenotype. The paper reports in vivo zebrafish work for that; this project read it and did not reproduce it.",
                      "Agreement with a published result is not independent confirmation of the paper's biological conclusion: both this check and the paper rest on the same assumption that the substitution matters, which neither establishes here.",
+                     "Cololabis saira carries I rather than F at the same position, so the site is NOT strictly invariant outside gliding lineages even though no non-glider carries L. The paper describes the region as highly conserved; this is a data point outside its sampling (it used a saury of a different genus, Scomberesox) and it matters for any convergence argument resting on one site.",
+                     "Four residues at one alignment column in four assemblies is the whole of this evidence.",
                      "One operator, not independently reviewed. PMID 40689752's full text was not retrieved."],
         source=computed_source("data/census_slc43/lat4a_f326l_check.json"),
         origin="derived",

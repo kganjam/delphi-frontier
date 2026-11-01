@@ -361,7 +361,7 @@
    "predecessor": null,
    "payload": {
     "title": "The published flying-fish Lat4a F326L substitution is independently reproduced in Hirundichthys speculiger, and lat4a is the a paralog of slc43a2",
-    "statement": "The full text of PMID 34534441 (PMC9172250, read 2026-11-01, the first full text this project has read) states the convergent substitution as F326L in lat4a, present in both flying-halfbeak lineages and in all sequenced Exocoetidae except the sailfin flying fish Parexocoetus brachypterus, and cites Guetg et al. 2015 identifying Lat4 as Slc43a2. H. speculiger is an Exocoetid and is not P. brachypterus, so L is predicted at that position. Testing that against the two SLC43A2-family loci this project predicted from GCA_018398805.1: position 326 of zebrafish slc43a2a (Ensembl ENSDARG00000036848, 577 aa) is F, as F326L requires, while the same position in slc43a2b is D; slc43locus02 on JAGFBZ010001224.1 carries L in conserved flanking context (zebrafish SFMRSIFSPIFML vs flying fish SFMKSILSPIFLL); and slc43locus01, the locus confidently assigned to slc43a2b, carries S. So the substitution is reproduced in a different Exocoetid species from a public draft assembly by a different route than the paper used, the paper's numbering is on the a paralog, and the flying-fish locus is slc43locus02 -- the same locus three gene trees had tentatively placed on the a side at sub-threshold support (36.2/65, then 66.7/78).",
+    "statement": "The full text of PMID 34534441 (PMC9172250, read 2026-11-01, the first full text this project has read) states the convergent substitution as F326L in lat4a, present in both flying-halfbeak lineages and in all sequenced Exocoetidae except the sailfin flying fish Parexocoetus brachypterus, and cites Guetg et al. 2015 identifying Lat4 as Slc43a2. H. speculiger is an Exocoetid and is not P. brachypterus, so L is predicted at that position. Testing that against the two SLC43A2-family loci this project predicted from GCA_018398805.1: position 326 of zebrafish slc43a2a (Ensembl ENSDARG00000036848, 577 aa) is F, as F326L requires, while the same position in slc43a2b is D; slc43locus02 on JAGFBZ010001224.1 carries L in conserved flanking context (zebrafish SFMRSIFSPIFML vs flying fish SFMKSILSPIFLL); and slc43locus01, the locus confidently assigned to slc43a2b, carries S. So the substitution is reproduced in a different Exocoetid species from a public draft assembly by a different route than the paper used, the paper's numbering is on the a paralog, and the flying-fish locus is slc43locus02 -- the same locus three gene trees had tentatively placed on the a side at sub-threshold support (36.2/65, then 66.7/78). Negative controls drawn from the paper's own lineage distribution then passed: Hemiramphus limbatus, a halfbeak but not one of the two FLYING halfbeak genera, carries F, and the needlefish Xenentodon cancila carries F, while the Pacific saury Cololabis saira carries isoleucine. No non-gliding Beloniform tested carries L, so the flying-fish L is not an artefact of this pipeline.",
     "context": "This is the one place where this project's computation and a published comparative result meet and agree, by independent means. It also resolves the identifier half of Problem zf2ff-problem-lat4a-identifier. Danio rerio and public sequence only. No observation of any Exocoetid fish was made by this project. Not claimed: that a flying fish can be built, that any zebrafish value transfers to an Exocoetid, or that any edit below has been performed.",
     "assumptions": [
      "ASSUMED, by inference and not read from the paper: that F326 is numbered on zebrafish slc43a2a. The inference is that position 326 of that sequence is F while the same position of slc43a2b is D.",
@@ -372,6 +372,8 @@
      "slc43locus05 and slc43locus06 also show L at the aligned column, but their flanking context is NON-homologous; they are slc43a3-family loci and those matches are coincidental. Only slc43locus02's match is in context.",
      "This measures a residue, not transport activity, expression or any phenotype. The paper reports in vivo zebrafish work for that; this project read it and did not reproduce it.",
      "Agreement with a published result is not independent confirmation of the paper's biological conclusion: both this check and the paper rest on the same assumption that the substitution matters, which neither establishes here.",
+     "Cololabis saira carries I rather than F at the same position, so the site is NOT strictly invariant outside gliding lineages even though no non-glider carries L. The paper describes the region as highly conserved; this is a data point outside its sampling (it used a saury of a different genus, Scomberesox) and it matters for any convergence argument resting on one site.",
+     "Four residues at one alignment column in four assemblies is the whole of this evidence.",
      "One operator, not independently reviewed. PMID 40689752's full text was not retrieved."
     ],
     "source": {
@@ -414,7 +416,7 @@
      "uri": null,
      "locator": "git:delphi-frontier@claude/zf2ff-20261101:projects/zebrafish-to-flying-fish/PLAN.md",
      "source_version": "git:delphi-frontier@claude/zf2ff-20261101",
-     "content_sha256": "42d49ae0774f4d1cfecb0f10a0720d08d018ad1899a9fa118716bb324f893cb2",
+     "content_sha256": "5c0747f99bb84a1d6eb4f33440b1d16670618f94132564605316fe08a6225cc0",
      "content_available": true,
      "access": "Files in this repository at the branch named in the locator. The computation was run by this project; nobody has re-run it, so it is not independent evidence.",
      "license": null
@@ -450,7 +452,7 @@
      "uri": null,
      "locator": "git:delphi-frontier@claude/zf2ff-20261101:projects/zebrafish-to-flying-fish/PLAN.md",
      "source_version": "git:delphi-frontier@claude/zf2ff-20261101",
-     "content_sha256": "42d49ae0774f4d1cfecb0f10a0720d08d018ad1899a9fa118716bb324f893cb2",
+     "content_sha256": "5c0747f99bb84a1d6eb4f33440b1d16670618f94132564605316fe08a6225cc0",
      "content_available": true,
      "access": "Files in this repository at the branch named in the locator. The computation was run by this project; nobody has re-run it, so it is not independent evidence.",
      "license": null

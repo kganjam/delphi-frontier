@@ -1,0 +1,51 @@
+{
+ "scope": "Residue check at one alignment column in three Beloniformes that the published lineage distribution predicts should NOT carry the substitution. Every sequence is a miniprot prediction from a public assembly, not a sequenced transcript. Nothing here measures transport activity or phenotype.",
+ "prediction": "Hemiramphus limbatus is a halfbeak but not a FLYING halfbeak; Cololabis saira and Xenentodon cancila are non-gliding. All three should carry F.",
+ "falsifier": "If any of the three carries L in homologous context, the flying-fish L is an artefact of this pipeline rather than a lineage signal.",
+ "numbering_reference": "ZF_slc43a2a_ENSEMBL_FULLLENGTH",
+ "reference_window_320_332": "SFMRSIFSPIFML",
+ "results": [
+  {
+   "species_dir": "halfbeak",
+   "genome_fasta_sha256": "4eb5eacf08983a12c93ca6013504ff12dd9205a7347a5b51bee986fc30b30cb3",
+   "n_slc43a2_candidate_predictions": 3,
+   "best_homologous": {
+    "from_query": "ZF_slc43a2b_LAT4",
+    "protein_len": 570,
+    "residue": "F",
+    "context": "SFMKSVFSPIFLL",
+    "context_identity_to_reference_window": 10
+   },
+   "carries_published_L": false,
+   "carries_reference_F": true
+  },
+  {
+   "species_dir": "needlefish",
+   "genome_fasta_sha256": "2665735e8a7f1763c55e282e7521c541eaf26f7d9ae9080ce2d2c2387dff1198",
+   "n_slc43a2_candidate_predictions": 3,
+   "best_homologous": {
+    "from_query": "ZF_slc43a2b_LAT4",
+    "protein_len": 592,
+    "residue": "F",
+    "context": "SFMKSIFSPIFML",
+    "context_identity_to_reference_window": 12
+   },
+   "carries_published_L": false,
+   "carries_reference_F": true
+  },
+  {
+   "species_dir": "saury",
+   "genome_fasta_sha256": "d55f4b7465ef5362a728120245f5ae3221d899106e06b0e9672a4ead21ea1d5f",
+   "n_slc43a2_candidate_predictions": 3,
+   "best_homologous": {
+    "from_query": "ZF_slc43a2b_LAT4",
+    "protein_len": 569,
+    "residue": "I",
+    "context": "SFMKSIISPIFLL",
+    "context_identity_to_reference_window": 10
+   },
+   "carries_published_L": false,
+   "carries_reference_F": false
+  }
+ ]
+}

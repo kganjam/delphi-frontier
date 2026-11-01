@@ -826,6 +826,39 @@ F326 is numbered on `slc43a2a` is an inference from residue matching, not a read
 (`slc43a3`-family loci, coincidental). Nothing here measures transport activity, expression or
 phenotype.
 
+## R7m — Negative controls for F326L pass, and one new data point complicates the paper's wording
+
+The paper's lineage distribution supplies free controls: Beloniformes that are **not** gliders should
+carry F. Three public assemblies were run through the same pipeline
+(`scripts/f326l_controls.sh`, `scripts/check_f326l_controls.py`,
+`data/f326l_controls/controls_result.json`), each genome digest recorded.
+
+| species | gliding? | residue | context | ctx identity |
+| --- | --- | --- | --- | --- |
+| zebrafish `slc43a2a` (reference) | — | **F** | `SFMRSI`**F**`SPIFML` | — |
+| *Hirundichthys speculiger* (flying fish) | **yes** | **L** | `SFMKSI`**L**`SPIFLL` | 11/13 |
+| *Hemiramphus limbatus* (halfbeak, not a *flying* halfbeak) | no | **F** | `SFMKSV`**F**`SPIFLL` | 10/13 |
+| *Xenentodon cancila* (needlefish) | no | **F** | `SFMKSI`**F**`SPIFML` | 12/13 |
+| *Cololabis saira* (saury) | no | **I** | `SFMKSI`**I**`SPIFLL` | 10/13 |
+
+**The control passes: no non-glider carries L.** The same procedure recovers F in two non-gliders and
+L only in the glider, with homologous context throughout, so the flying-fish L is not a pipeline
+artefact.
+
+**The wrinkle, reported because it is in this project's own data:** *C. saira* carries **isoleucine**
+at that exact position. The paper calls the region "highly conserved", and one of three non-gliders
+tested here differs at the site itself. It does not contradict the glider-specific L — I is not L —
+but the position is not strictly invariant outside gliding lineages, which matters for a convergence
+argument resting on one site. The paper sampled a saury of a different genus (*Scomberesox*), so
+*C. saira* sits outside its dataset rather than against it.
+
+**Caution repeated for the fourth time in this project:** the "from query" label names the query that
+produced a prediction, not a paralog assignment. In every species here the homologous locus came from
+the `slc43a2b` query, as in the flying fish, so the comparison is like-for-like.
+
+**What this is not:** four residues at one column. No transport assay, no expression, no fin
+measurement, no test that the substitution changes anything.
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
