@@ -1,0 +1,1133 @@
+{
+  "schema": "frontier.aeroelastic.collocation-return-audit/1",
+  "basis": "Per-arm checks are the frozen fidelity-v1 return audit (audit_fidelity.py, sha256 fac619cac2dfc22d536e881c03f04de63356370c77a597fcdd3953f170022cf2, protocol dbee169ced142ca6ac3b2d1571c533b88691fc720422f3dfed62fae8f6f736a7), unchanged, with the arm's own variant installed. The study-specific checks here were written after the return arrived and after its native summary.json had been read; they apply the frozen collocation-paired-v1 protocol's thresholds and change none.",
+  "collocation_protocol_sha256": "20c5895364a90ad24e0a1348da171d675135cc5ce774e8518adde8d8ba0e836f",
+  "audit_code_sha256": "e00befd59d67b485da8d3caa23ac9a528ac992d3cfe1cc2d6768125408d5bc9c",
+  "raw_return": "/data/artifacts/delphi-evolve-rethink/gcp/coupled-collocation-v1/coupled-collocation-v1/frontier-cpu-20261031-04/final-9aab24f5032f4cfca540705a27d64e6d",
+  "identity": {
+    "collection_receipt_sha256": "8a6486815104c37b666d3f68f66d8d804ab350711eba5d891c373f42f14543aa",
+    "collection_artifacts": 233,
+    "collection_bytes": 45469659,
+    "collection_complete": true,
+    "admitted_archive_sha256": "4be2b9ec79134e4a46afd9e0cf0ea35dd65fcf55fed6735faa9ceb063c5dfffa",
+    "source_commit": "5a8f5c90731cc3e707ea549d6dabea5ce4618e62",
+    "receipt_sha256": "259dc27a4ed1d22be95c3937ce92f736af2058e3b55960a4b33abb0ccaf344b0",
+    "executed_sources": 15,
+    "environment": {
+      "python": "3.12.3",
+      "numpy": "2.5.4",
+      "scipy": "1.17.1",
+      "device": "CPU"
+    },
+    "native_failure": null,
+    "wall_seconds": 541.744853917,
+    "output_bytes": 45416228,
+    "output_cap_exceeded": false
+  },
+  "declared_arms": {
+    "repaired": 45,
+    "baseline_equivalence": 6
+  },
+  "native_statuses": {
+    "chi0.8-u20-main-rigid": "computed rigid",
+    "chi0.8-u20-main-one-way-frozen-load": "model-domain exit: proposed linear-beam shape",
+    "chi0.8-u20-main-two-way-static-feedback": "model-domain exit: proposed linear-beam shape",
+    "chi0.8-u20-fine-rigid": "computed rigid",
+    "chi0.8-u20-fine-one-way-frozen-load": "computed one-way",
+    "chi0.8-u20-fine-two-way-static-feedback": "converged static feedback",
+    "chi0.8-u20-l32x8-rigid": "computed rigid",
+    "chi0.8-u20-l32x8-one-way-frozen-load": "computed one-way",
+    "chi0.8-u20-l32x8-two-way-static-feedback": "converged static feedback",
+    "chi0.8-u20-l36x9-rigid": "computed rigid",
+    "chi0.8-u20-l36x9-one-way-frozen-load": "computed one-way",
+    "chi0.8-u20-l36x9-two-way-static-feedback": "converged static feedback",
+    "chi0.8-u20-l64x16-rigid": "computed rigid",
+    "chi0.8-u20-l64x16-one-way-frozen-load": "computed one-way",
+    "chi0.8-u20-l64x16-two-way-static-feedback": "converged static feedback",
+    "chi0.8-u16-main-rigid": "computed rigid",
+    "chi0.8-u16-main-one-way-frozen-load": "computed one-way",
+    "chi0.8-u16-main-two-way-static-feedback": "converged static feedback",
+    "chi0.8-u16-fine-rigid": "computed rigid",
+    "chi0.8-u16-fine-one-way-frozen-load": "computed one-way",
+    "chi0.8-u16-fine-two-way-static-feedback": "converged static feedback",
+    "chi0.8-u16-l32x8-rigid": "computed rigid",
+    "chi0.8-u16-l32x8-one-way-frozen-load": "computed one-way",
+    "chi0.8-u16-l32x8-two-way-static-feedback": "converged static feedback",
+    "chi0.8-u16-l36x9-rigid": "computed rigid",
+    "chi0.8-u16-l36x9-one-way-frozen-load": "computed one-way",
+    "chi0.8-u16-l36x9-two-way-static-feedback": "converged static feedback",
+    "chi0.8-u16-l64x16-rigid": "computed rigid",
+    "chi0.8-u16-l64x16-one-way-frozen-load": "computed one-way",
+    "chi0.8-u16-l64x16-two-way-static-feedback": "converged static feedback",
+    "chi0.2-u20-main-rigid": "computed rigid",
+    "chi0.2-u20-main-one-way-frozen-load": "computed one-way",
+    "chi0.2-u20-main-two-way-static-feedback": "converged static feedback",
+    "chi0.2-u20-fine-rigid": "computed rigid",
+    "chi0.2-u20-fine-one-way-frozen-load": "computed one-way",
+    "chi0.2-u20-fine-two-way-static-feedback": "converged static feedback",
+    "chi0.2-u20-l32x8-rigid": "computed rigid",
+    "chi0.2-u20-l32x8-one-way-frozen-load": "computed one-way",
+    "chi0.2-u20-l32x8-two-way-static-feedback": "converged static feedback",
+    "chi0.2-u20-l36x9-rigid": "computed rigid",
+    "chi0.2-u20-l36x9-one-way-frozen-load": "computed one-way",
+    "chi0.2-u20-l36x9-two-way-static-feedback": "converged static feedback",
+    "chi0.2-u20-l64x16-rigid": "computed rigid",
+    "chi0.2-u20-l64x16-one-way-frozen-load": "computed one-way",
+    "chi0.2-u20-l64x16-two-way-static-feedback": "converged static feedback"
+  },
+  "baseline_equivalence_statuses": {
+    "chi0.8-u20-l32x8-rigid": "computed rigid",
+    "chi0.8-u20-l32x8-one-way-frozen-load": "computed one-way",
+    "chi0.8-u20-l32x8-two-way-static-feedback": "converged static feedback",
+    "chi0.2-u20-l32x8-rigid": "computed rigid",
+    "chi0.2-u20-l32x8-one-way-frozen-load": "computed one-way",
+    "chi0.2-u20-l32x8-two-way-static-feedback": "converged static feedback"
+  },
+  "arms": [
+    {
+      "id": "chi0.8-u20-main-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.568112793132336,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-main-one-way-frozen-load",
+      "status": "model-domain exit: proposed linear-beam shape",
+      "iterations": 1,
+      "valid_for_declared_transfer": false,
+      "domain_exit": {
+        "kind": "proposed",
+        "fins_outside_domain": [
+          "pectoral_L",
+          "pectoral_R"
+        ],
+        "closed_form": {
+          "pectoral_L": {
+            "tip_over_L": 0.10127239434753825,
+            "max_slope_rad": 0.13230032342615947,
+            "max_sampled_deflection_over_span": 0.10127239434753825,
+            "valid": false
+          },
+          "pectoral_R": {
+            "tip_over_L": 0.10127239434753817,
+            "max_slope_rad": 0.13230032342615938,
+            "max_sampled_deflection_over_span": 0.10127239434753817,
+            "valid": false
+          },
+          "pelvic_L": {
+            "tip_over_L": 0.09278816801185041,
+            "max_slope_rad": 0.12127262422492323,
+            "max_sampled_deflection_over_span": 0.09278816801185041,
+            "valid": true
+          },
+          "pelvic_R": {
+            "tip_over_L": 0.09278816801185044,
+            "max_slope_rad": 0.12127262422492326,
+            "max_sampled_deflection_over_span": 0.09278816801185044,
+            "valid": true
+          }
+        }
+      }
+    },
+    {
+      "id": "chi0.8-u20-main-two-way-static-feedback",
+      "status": "model-domain exit: proposed linear-beam shape",
+      "iterations": 1,
+      "valid_for_declared_transfer": false,
+      "domain_exit": {
+        "kind": "proposed",
+        "fins_outside_domain": [
+          "pectoral_L",
+          "pectoral_R"
+        ],
+        "closed_form": {
+          "pectoral_L": {
+            "tip_over_L": 0.10127239434753825,
+            "max_slope_rad": 0.13230032342615947,
+            "max_sampled_deflection_over_span": 0.10127239434753825,
+            "valid": false
+          },
+          "pectoral_R": {
+            "tip_over_L": 0.10127239434753817,
+            "max_slope_rad": 0.13230032342615938,
+            "max_sampled_deflection_over_span": 0.10127239434753817,
+            "valid": false
+          },
+          "pelvic_L": {
+            "tip_over_L": 0.09278816801185041,
+            "max_slope_rad": 0.12127262422492323,
+            "max_sampled_deflection_over_span": 0.09278816801185041,
+            "valid": true
+          },
+          "pelvic_R": {
+            "tip_over_L": 0.09278816801185044,
+            "max_slope_rad": 0.12127262422492326,
+            "max_sampled_deflection_over_span": 0.09278816801185044,
+            "valid": true
+          }
+        }
+      }
+    },
+    {
+      "id": "chi0.8-u20-fine-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.28783230802764,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-fine-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.750241639202503,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-fine-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 18,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.75806086856396,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l32x8-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.15271868930545,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l32x8-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.62773722570982,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l32x8-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 18,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.63534826521674,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l36x9-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.10746152324002,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l36x9-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.58651500565097,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l36x9-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 18,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.594065690538283,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l64x16-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.951327293270772,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l64x16-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.44495343282592,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l64x16-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 18,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.45227128656038,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-main-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 19.00014669526282,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-main-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.89668123721066,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-main-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 17,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.897536930035525,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-fine-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.917384671693696,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-fine-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.81757256026691,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-fine-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 17,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.818398006897805,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l32x8-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.877099954353497,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l32x8-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.779011870298756,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l32x8-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 17,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.77982141303669,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l36x9-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.863548556917888,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l36x9-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.76600858520613,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l36x9-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 17,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.766814477963063,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l64x16-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.816574079069657,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l64x16-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.721062547378832,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u16-l64x16-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 17,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 18.72184967354125,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-main-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.568112793132336,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-main-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.43651214622149,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-main-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 16,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.436870945433768,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-fine-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.28783230802764,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-fine-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.162473586729813,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-fine-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 16,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.16281694096604,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l32x8-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.15271868930545,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l32x8-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.030266252892044,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l32x8-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 16,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.03060198757403,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l36x9-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.10746152324002,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l36x9-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.98594874414882,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l36x9-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 16,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.9862821530398,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l64x16-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.951327293270772,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l64x16-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.833176446465927,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l64x16-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 16,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.833500737075497,
+        "dt_gate_passed": true
+      }
+    }
+  ],
+  "baseline_equivalence_arms": [
+    {
+      "id": "chi0.8-u20-l32x8-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.124475917166468,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l32x8-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.601029739162886,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.8-u20-l32x8-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 18,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 28.608723917980768,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l32x8-rigid",
+      "status": "computed rigid",
+      "iterations": 1,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.124475917166468,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l32x8-one-way-frozen-load",
+      "status": "computed one-way",
+      "iterations": 2,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.002457454539964,
+        "dt_gate_passed": true
+      }
+    },
+    {
+      "id": "chi0.2-u20-l32x8-two-way-static-feedback",
+      "status": "converged static feedback",
+      "iterations": 16,
+      "valid_for_declared_transfer": true,
+      "final_pose_resolved": true,
+      "flight": {
+        "range_main_m": 29.002796865968964,
+        "dt_gate_passed": true
+      }
+    }
+  ],
+  "collocation_controls": {
+    "rederived": {
+      "K1_exact_repair": true,
+      "K2_baseline_unchanged": true,
+      "K3_rectangle_invariance": true,
+      "K4a_law_repaired": true,
+      "K4b_quarter_chord_mutant_rejected": true,
+      "K4c_chord_plateau_discriminates": true
+    },
+    "K4d_reported": {
+      "fins": true,
+      "ellipse": true
+    },
+    "chord_plateau_relative_range": {
+      "baseline": {
+        "fins": 0.0073779183669779895,
+        "ellipse": 0.00871928281567156
+      },
+      "repaired": {
+        "fins": 4.1509262154761636e-05,
+        "ellipse": 2.2023165280153522e-05
+      },
+      "one_sided_mutant": {
+        "fins": 4.961604746119037,
+        "ellipse": 0.4870414983149741
+      }
+    },
+    "law_check": {
+      "repaired": {
+        "96x8": {
+          "CL_alpha_over_Helmbold_minus_1": -0.026090389016272364,
+          "within_3pct": true
+        },
+        "32x24": {
+          "CL_alpha_over_Helmbold_minus_1": -0.017319078417282197,
+          "within_3pct": true
+        }
+      },
+      "quarter_chord_mutant": {
+        "96x8": {
+          "CL_alpha_over_Helmbold_minus_1": -0.9767301027702106,
+          "within_3pct": false
+        },
+        "32x24": {
+          "CL_alpha_over_Helmbold_minus_1": -0.9879709302751044,
+          "within_3pct": false
+        }
+      }
+    },
+    "local_recompute_wall_seconds": 51.52034956775606,
+    "returned_wall_seconds": 198.913371918
+  },
+  "coupled_controls": {
+    "lattice_controls": {
+      "main": {
+        "K5": true,
+        "upstream_force_reported": false,
+        "failed_checks": [
+          "upstream_force"
+        ]
+      },
+      "fine": {
+        "K5": true,
+        "upstream_force_reported": true,
+        "failed_checks": []
+      },
+      "l32x8": {
+        "K5": true,
+        "upstream_force_reported": true,
+        "failed_checks": []
+      },
+      "l36x9": {
+        "K5": true,
+        "upstream_force_reported": true,
+        "failed_checks": []
+      },
+      "l64x16": {
+        "K5": true,
+        "upstream_force_reported": true,
+        "failed_checks": []
+      }
+    },
+    "K5_coupled_lattice_controls": true,
+    "K6_per_lattice": {
+      "main": true,
+      "fine": true,
+      "l32x8": true,
+      "l36x9": true,
+      "l64x16": true
+    },
+    "K6_determinism": true,
+    "K7": [
+      {
+        "id": "chi0.8-u20-l32x8-rigid",
+        "present": true,
+        "status_and_counts_equal": true,
+        "within_roundoff": true,
+        "compared_values_exact": true
+      },
+      {
+        "id": "chi0.8-u20-l32x8-one-way-frozen-load",
+        "present": true,
+        "status_and_counts_equal": true,
+        "within_roundoff": true,
+        "compared_values_exact": true
+      },
+      {
+        "id": "chi0.8-u20-l32x8-two-way-static-feedback",
+        "present": true,
+        "status_and_counts_equal": true,
+        "within_roundoff": true,
+        "compared_values_exact": true
+      },
+      {
+        "id": "chi0.2-u20-l32x8-rigid",
+        "present": true,
+        "status_and_counts_equal": true,
+        "within_roundoff": true,
+        "compared_values_exact": true
+      },
+      {
+        "id": "chi0.2-u20-l32x8-one-way-frozen-load",
+        "present": true,
+        "status_and_counts_equal": true,
+        "within_roundoff": true,
+        "compared_values_exact": true
+      },
+      {
+        "id": "chi0.2-u20-l32x8-two-way-static-feedback",
+        "present": true,
+        "status_and_counts_equal": true,
+        "within_roundoff": true,
+        "compared_values_exact": true
+      }
+    ],
+    "K7_baseline_equivalence": true,
+    "original_controls": true
+  },
+  "gating_rederived": {
+    "K1_exact_repair": true,
+    "K2_baseline_unchanged": true,
+    "K3_rectangle_invariance": true,
+    "K4a_law_repaired": true,
+    "K4b_quarter_chord_mutant_rejected": true,
+    "K4c_chord_plateau_discriminates": true,
+    "K5_coupled_lattice_controls": true,
+    "K6_determinism": true,
+    "K7_baseline_equivalence": true,
+    "original_controls": true
+  },
+  "study_valid_rederived": true,
+  "recomputed_effects_and_decisions": {
+    "chi0.8-u20": {
+      "assessable": false
+    },
+    "chi0.8-u16": {
+      "assessable": true,
+      "dCL_one_way_minus_rigid": "resolved",
+      "dCL_two_way_minus_one_way": "resolved",
+      "CL_rigid": "resolved",
+      "decision": {
+        "bending": "retain_bending",
+        "feedback": "one_way_sufficient"
+      },
+      "series": {
+        "bending": {
+          "main": -0.003737438766218515,
+          "fine": -0.0036474302707459882,
+          "l32x8": -0.0036046823834903208,
+          "l36x9": -0.0035913430338475327,
+          "l64x16": -0.003539890357891623
+        },
+        "feedback": {
+          "main": 3.10861320084177e-05,
+          "fine": 3.0352564244884306e-05,
+          "l32x8": 2.994276869736079e-05,
+          "l36x9": 2.9839102500262005e-05,
+          "l64x16": 2.9351522735615587e-05
+        }
+      }
+    },
+    "chi0.2-u20": {
+      "assessable": true,
+      "dCL_one_way_minus_rigid": "resolved",
+      "dCL_two_way_minus_one_way": "resolved",
+      "CL_rigid": "resolved",
+      "decision": {
+        "bending": "reject_bending",
+        "feedback": "one_way_sufficient"
+      },
+      "series": {
+        "bending": {
+          "main": -0.0013910817101389084,
+          "fine": -0.0013583593119379511,
+          "l32x8": -0.0013428789056796064,
+          "l36x9": -0.0013380074829490718,
+          "l64x16": -0.0013193818418518188
+        },
+        "feedback": {
+          "main": 3.806097512437656e-06,
+          "fine": 3.7349437551625897e-06,
+          "l32x8": 3.6940496925819133e-06,
+          "l36x9": 3.684168211032235e-06,
+          "l64x16": 3.634249632705755e-06
+        }
+      }
+    }
+  },
+  "agreement_with_native_summary": [
+    {
+      "context": "chi0.8-u20",
+      "assessable": [
+        false,
+        false
+      ]
+    },
+    {
+      "context": "chi0.8-u16",
+      "assessable": [
+        true,
+        true
+      ],
+      "dCL_one_way_minus_rigid": [
+        "resolved",
+        "resolved"
+      ],
+      "dCL_two_way_minus_one_way": [
+        "resolved",
+        "resolved"
+      ],
+      "CL_rigid": [
+        "resolved",
+        "resolved"
+      ],
+      "decision": [
+        {
+          "bending": "retain_bending",
+          "feedback": "one_way_sufficient"
+        },
+        {
+          "bending": "retain_bending",
+          "feedback": "one_way_sufficient"
+        }
+      ]
+    },
+    {
+      "context": "chi0.2-u20",
+      "assessable": [
+        true,
+        true
+      ],
+      "dCL_one_way_minus_rigid": [
+        "resolved",
+        "resolved"
+      ],
+      "dCL_two_way_minus_one_way": [
+        "resolved",
+        "resolved"
+      ],
+      "CL_rigid": [
+        "resolved",
+        "resolved"
+      ],
+      "decision": [
+        {
+          "bending": "reject_bending",
+          "feedback": "one_way_sufficient"
+        },
+        {
+          "bending": "reject_bending",
+          "feedback": "one_way_sufficient"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "kind": "native_model-domain_exit",
+      "subject": "chi0.8-u20-main-one-way-frozen-load",
+      "detail": "model-domain exit: proposed linear-beam shape"
+    },
+    {
+      "kind": "native_model-domain_exit",
+      "subject": "chi0.8-u20-main-two-way-static-feedback",
+      "detail": "model-domain exit: proposed linear-beam shape"
+    }
+  ],
+  "finding_counts": {
+    "native_model-domain_exit": 2
+  },
+  "comparisons": {
+    "count": 6493,
+    "exact": 4103,
+    "within_roundoff": 6493,
+    "worst": [
+      {
+        "subject": "chi0.2-u20-l64x16-two-way-static-feedback.4.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 2.1649348980190553e-15
+      },
+      {
+        "subject": "chi0.8-u20-l64x16-two-way-static-feedback.13.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 2.0816681711721685e-15
+      },
+      {
+        "subject": "chi0.8-u20-l64x16-two-way-static-feedback.5.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.7763568394002505e-15
+      },
+      {
+        "subject": "chi0.8-u20-l64x16-two-way-static-feedback.10.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.7486012637846216e-15
+      },
+      {
+        "subject": "chi0.8-u20-l36x9-two-way-static-feedback.15.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.3600232051658168e-15
+      },
+      {
+        "subject": "chi0.2-u20-l64x16-two-way-static-feedback.2.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.3600232051658168e-15
+      },
+      {
+        "subject": "chi0.2-u20-l64x16-two-way-static-feedback.10.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.3600232051658168e-15
+      },
+      {
+        "subject": "chi0.8-u20-l64x16-one-way-frozen-load.1.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.1379786002407855e-15
+      },
+      {
+        "subject": "chi0.2-u20-l32x8-two-way-static-feedback.10.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.0824674490095276e-15
+      },
+      {
+        "subject": "chi0.2-u20-l64x16-two-way-static-feedback.11.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.0547118733938987e-15
+      },
+      {
+        "subject": "chi0.8-u20-l64x16-two-way-static-feedback.3.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.0269562977782698e-15
+      },
+      {
+        "subject": "chi0.2-u20-l32x8-two-way-static-feedback.4.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 1.0269562977782698e-15
+      },
+      {
+        "subject": "chi0.8-u16-l64x16-two-way-static-feedback.1.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 9.71445146547012e-16
+      },
+      {
+        "subject": "chi0.8-u16-l64x16-two-way-static-feedback.3.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 9.43689570931383e-16
+      },
+      {
+        "subject": "chi0.8-u16-l64x16-two-way-static-feedback.7.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 9.43689570931383e-16
+      },
+      {
+        "subject": "chi0.2-u20-l32x8-two-way-static-feedback.8.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 9.43689570931383e-16
+      },
+      {
+        "subject": "chi0.8-u20-l32x8-two-way-static-feedback.6.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 9.159339953157541e-16
+      },
+      {
+        "subject": "chi0.2-u20-l64x16-two-way-static-feedback.14.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 8.881784197001252e-16
+      },
+      {
+        "subject": "chi0.8-u20-l36x9-two-way-static-feedback.2.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 8.604228440844963e-16
+      },
+      {
+        "subject": "chi0.8-u20-l32x8-two-way-static-feedback.4.CL",
+        "exact": false,
+        "within_roundoff": true,
+        "max_abs_difference": 8.604228440844963e-16
+      }
+    ]
+  },
+  "blocking_kinds": [
+    "analysis_disagreement",
+    "control",
+    "identity",
+    "missing",
+    "reproduction"
+  ],
+  "audit_passed": true,
+  "scope": "Offline reproduction and consistency of the returned bytes and saved states, local rigid unit-solve recompute of the collocation controls, and an independent recomputation of the frozen classification. No arm is rerun; not empirical validation, not fish performance."
+}
