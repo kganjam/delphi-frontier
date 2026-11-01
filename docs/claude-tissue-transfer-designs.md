@@ -469,7 +469,15 @@ The switch lies between L_p = 6 and 7.
 | 0.5 | 15.8 | ≈ 6.5 | 0.41 |
 
 The switch grows with the wavelength at roughly 0.3–0.45 λ. The brackets are about 1 unit wide, so a precise scaling
-exponent is not determined; a finer γ = 1 run is queued (`claude-tissue-pzone-g1f`).
+exponent is not determined.
+
+**Finer γ = 1** (`claude-tissue-pzone-g1f`, job `aijob-e00qgy5b2vwv66xzjw`, COMPLETED, 397.6 s):
+
+| L_p | 4 | 4.5 | 5 | 5.5 |
+|---|---|---|---|---|
+| Distal A | −0.04 | 0.79 | 0.91 | 0.97 |
+
+The γ = 1 switch is therefore at about **4.25 ≈ 0.39 λ**. Finer runs at γ = 2 and γ = 0.5 are queued (`claude-tissue-pzone-g2f`, `-g05f`).
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and

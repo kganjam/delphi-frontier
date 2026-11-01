@@ -90,8 +90,8 @@ if kind in ("edge2d", "uniform2d", "edge2d_cases", "uniform2d_y0", "edge2d_gamma
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-threads", "1", "-framerate", "10", "-i", f"{tmp}/f%03d.png", "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2",
                         "-pix_fmt", "yuv420p", "-c:v", "libx264", str(OUT/f"{kind}.mp4")], check=True)
         subprocess.run(["cp", f"{tmp}/f{fr[-1]['k']:03d}.png", str(OUT/"poster.png")], check=True); outs += [OUT/f"{kind}.mp4", OUT/"poster.png"]
-elif kind in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r", "pzone_g05r", "pzone_g2r2", "pzone_g2r3", "pzone_g1f", "pzone_g1res"):
-    OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/" + ("pzone_regional_gpu.py" if (kind.endswith("r") or kind[-2:] in ("r2", "r3") or kind in ("pzone_g1f", "pzone_g1res")) and kind.startswith("pzone_g") else ("pzone_gamma_gpu.py" if kind.startswith("pzone_g") else "pzone_gpu.py"))
+elif kind in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r", "pzone_g05r", "pzone_g2r2", "pzone_g2r3", "pzone_g1f", "pzone_g1res", "pzone_g2f", "pzone_g05f"):
+    OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/" + ("pzone_regional_gpu.py" if (kind.endswith("r") or kind[-2:] in ("r2", "r3") or kind in ("pzone_g1f", "pzone_g1res", "pzone_g2f", "pzone_g05f")) and kind.startswith("pzone_g") else ("pzone_gamma_gpu.py" if kind.startswith("pzone_g") else "pzone_gpu.py"))
     summ = {}
     for r in rows:
         k = f"lp={r['lp_label']},v={r['speed']}"
@@ -206,7 +206,7 @@ else:
     fig.tight_layout(); fig.savefig(OUT/"phase-map.png", dpi=100); plt.close(fig)
     outs = [OUT/"phase-map.json", OUT/"phase-map.png"]
 ok = state == "COMPLETED" and done is not None
-rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan', 'edge2d_gamma': 'edge2dg', 'fan_video': 'fanv', 'edge2d_gamma_fine': 'edge2dg', 'pzone': 'pzone', 'pzone_y8': 'pzone', 'pzone_lp': 'pzone', 'pzone_g0p5': 'pzoneg', 'pzone_g2p0': 'pzoneg', 'pzone_g2b': 'pzoneg', 'pzone_g1b': 'pzoneg', 'pzone_g2r': 'pzoner', 'pzone_g1r': 'pzoner', 'pzone_g05r': 'pzoner', 'pzone_g2r2': 'pzoner', 'pzone_g2r3': 'pzoner', 'pzone_g1f': 'pzoner', 'pzone_g1res': 'pzoner'}[kind] }.py (args in META)", job=job, job_state=state,
+rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan', 'edge2d_gamma': 'edge2dg', 'fan_video': 'fanv', 'edge2d_gamma_fine': 'edge2dg', 'pzone': 'pzone', 'pzone_y8': 'pzone', 'pzone_lp': 'pzone', 'pzone_g0p5': 'pzoneg', 'pzone_g2p0': 'pzoneg', 'pzone_g2b': 'pzoneg', 'pzone_g1b': 'pzoneg', 'pzone_g2r': 'pzoner', 'pzone_g1r': 'pzoner', 'pzone_g05r': 'pzoner', 'pzone_g2r2': 'pzoner', 'pzone_g2r3': 'pzoner', 'pzone_g1f': 'pzoner', 'pzone_g1res': 'pzoner', 'pzone_g2f': 'pzoner', 'pzone_g05f': 'pzoner'}[kind] }.py (args in META)", job=job, job_state=state,
            exit_code=0 if ok else 1, seed=meta.get("seeds"), wall_s=(done or {}).get("wall_s"),
            compute=f"Nebius {job} ({meta.get('gpu')}), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
            code_sha256={script: meta["script_sha256"]}, code_matches_repo=bool(meta["script_sha256"] == sha(ROOT/script)),
