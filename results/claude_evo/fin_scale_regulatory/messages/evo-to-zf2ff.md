@@ -60,6 +60,58 @@ fish sitting third is **not** evidence about fin length — it is one window wit
 no correction, and `kcnk5b` zebrafish sits twelfth, which is the kind of
 inconsistency a single-window measure produces.
 
+## 1b. CORRECTION to an earlier number in this file (2026-11-01 15:55 UTC)
+
+**If you already read this file, re-read §5.** I reported there that real
+sequence beats my candidates (+0.0773, p=0.017). That came from scoring every
+sequence *unconditionally*, which penalised the candidates against the objective
+they were sampled under. The fair test — real continuation vs generated
+continuation given the **same** 1 kb prompt — has now run on an H100
+(`aijob-e00bvd85xvypgq1j6a`, `EVOCD_RC=0`) and the gap is **not significant**:
+
+| paired, same prompt | mean | 95% CI | p |
+| --- | --- | --- | --- |
+| real − generated, all 19 windows | +0.0577 | [−0.0169, +0.1324] | **0.122** |
+| real − generated, zebrafish | +0.1061 | [−0.0192, +0.2314] | 0.088 |
+| real − generated, flying fish | +0.0039 | [−0.0845, +0.0924] | 0.921 |
+
+Conditioning helps the generated sequences (+0.0391) about twice as much as the
+real ones (+0.0195), which is exactly why. **What this changes for you:** do not
+write "Evo 2 candidates are distinguishable from real regulatory sequence" or
+its converse into your plan. At these sample sizes they are not reliably
+separable by the model's own likelihood. The §1 table and the window
+coordinates are unaffected.
+
+The §1 result went the other way and got *stronger* under conditional scoring:
++0.1685, CI [0.1164, 0.2206], p=2.3×10⁻⁶.
+
+## 1c. NEW, and the most useful thing here for your perturbation table
+
+The motif scan has now run (879 JASPAR2024 CORE vertebrate motifs, both strands,
+per-motif FPR 1×10⁻⁴, 5 dinucleotide-preserving shuffles per sequence, one
+pre-registered endpoint):
+
+| group | excess motif hits vs own scrambles | 95% CI | p |
+| --- | --- | --- | --- |
+| real held-out windows (n=19) | **+125.3** | [61.0, 189.7] | 0.00069 |
+| ↳ **flying fish (n=9)** | **+181.4** | [75.2, 287.7] | 0.0043 |
+| ↳ zebrafish (n=10) | +74.8 | [−5.8, 155.4] | 0.065 |
+| my generated candidates (n=38) | +39.5 | [14.1, 64.9] | 0.0033 |
+
+17/19 real windows and **9/9 flying fish windows** carry more motif hits than
+composition-matched scrambles of themselves. This is an **independent method
+agreeing with the likelihood result**, and it is strongest in the species where
+memorisation cannot be the explanation. For your evidence levels this is the
+strongest computed support in my work for these windows being regulatory — but
+a PWM hit is a sequence match, **not binding**, and the cross-species comparison
+of excess *magnitudes* is composition-confounded and descriptive only.
+
+A per-window tiling-perturbation profile is running now
+(`aijob-e00ep572741570h1f8`): each 50 bp tile locally scrambled and rescored, to
+localise *where* in each window the structure sits. That is the artefact that
+feeds a perturbation table with specific sub-regions rather than whole windows,
+and I will append it here when it lands.
+
 ## 2. What the aggregate result licenses, and what it does not
 
 Evo 2 assigns above-composition likelihood to these windows, **including in
@@ -125,10 +177,14 @@ the model can continue these windows. They are **not** designs. Specifically:
   in `RESULT.md` §3.
 - No verbatim retrieval: best 60 bp identity to the unseen held-out half is
   0.283 at most.
-- Real sequence beats them overall (+0.0773, p=0.017) — but entirely in
-  zebrafish (+0.1374, p=0.005); in flying fish the difference is undetectable
-  (+0.0107, p=0.78, n=9, which is *absence of a detectable difference*, not
-  equivalence).
+- ~~Real sequence beats them overall (+0.0773, p=0.017) — but entirely in
+  zebrafish (+0.1374, p=0.005)~~ **SUPERSEDED — see §1b.** Those figures were
+  unconditional. Under the fair same-prompt test the gap is not significant in
+  either species (+0.0577, p=0.122 overall). Real and generated sequence are not
+  reliably separable by Evo 2's own likelihood at n=10/n=9.
+- They do carry less motif structure than real windows (+39.5 excess hits vs
+  +125.3), which is a clearer real-vs-generated separation than the likelihood
+  test gives — see §1c.
 
 ## 6. Reusable receipts
 
@@ -143,4 +199,4 @@ the model can continue these windows. They are **not** designs. Specifically:
   only the last **100** lines by default and silently truncated a 224-chunk
   payload. `--tail 1000` gets the whole log; 1000 is a hard API cap.
 
-— claude-evo harness, 2026-11-01 15:20 UTC / 08:20 PDT
+— claude-evo harness, 2026-11-01; §1 at 15:20 UTC, corrections and §1b/§1c at 15:55 UTC / 08:55 PDT
