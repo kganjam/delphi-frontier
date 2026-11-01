@@ -1,0 +1,35 @@
+{
+ "replicas": [
+  {
+   "seed": 20261101,
+   "job": "aijob-e00jkrrepqcyqndjg3",
+   "first_ns_mean": 1.3332,
+   "last_2ns_mean": 4.186205,
+   "last_2ns_slope_A_per_ns": -0.11119005475136952,
+   "max": 4.792,
+   "rmsf_vs_plddt": {
+    "p": 1.8642707743870642e-20,
+    "rho": -0.6277476767549538
+   }
+  },
+  {
+   "seed": 777000,
+   "job": "aijob-e00fh453w6m5m3ds9t",
+   "first_ns_mean": 2.0020300000000004,
+   "last_2ns_mean": 4.17045,
+   "last_2ns_slope_A_per_ns": 0.9831064276606906,
+   "max": 5.166,
+   "rmsf_vs_plddt": {
+    "p": 2.05071738624954e-18,
+    "rho": -0.6002915834164079
+   }
+  }
+ ],
+ "cross_replica_rmsf_spearman": {
+  "rho": 0.9103562922736654,
+  "p": 8.248192357767379e-68
+ },
+ "cross_replica_rmsf_pearson_r": 0.9112029844077081,
+ "rmsf_ratio_median": 1.1137270447290968,
+ "scope": "SIMULATED: two 10 ns replicas of one PREDICTED structure. Agreement between replicas is reproducibility, not accuracy."
+}

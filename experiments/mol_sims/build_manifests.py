@@ -128,17 +128,25 @@ if mdp.exists():
               {"name": "radius of gyration, first vs last frame", "result": f"{a['rg_ca_A_first_last'][0]:.2f} -> {a['rg_ca_A_first_last'][1]:.2f} A (no unfolding)"},
               {"name": "all saved values finite", "result": str(a["all_finite"])},
               {"name": "throughput", "result": f"{a['ns_per_day']:.0f} ns/day on one H100, {a['n_atoms']} atoms"}]
+    rcp = R / "md_shhN_replica_comparison.json"
+    srcs = [R / "md_shhN/md_receipt.json", R / "md_shhN/md_summary.json", R / "md_shhN/final_frame_protein.pdb", R / "md_shhN/job_log.txt", R / "structures/shhN/model_0.cif"]
+    if rcp.exists():
+        rc = json.loads(rcp.read_text()); r1, r2 = rc["replicas"]
+        checks.append({"name": "SECOND REPLICA (seed {}), same correlation".format(r2["seed"]), "result": f"Spearman rho {r2['rmsf_vs_plddt']['rho']:.2f} (p={r2['rmsf_vs_plddt']['p']:.1e}): the confidence-flexibility relation reproduces across seeds"})
+        checks.append({"name": "cross-replica agreement on which residues move", "result": f"Spearman rho {rc['cross_replica_rmsf_spearman']['rho']:.2f} between the two replicas' per-residue RMSF (median ratio {rc['rmsf_ratio_median']:.2f})"})
+        checks.append({"name": "convergence, honestly", "result": f"the replicas DISAGREE on drift: last-2-ns slope {r1['last_2ns_slope_A_per_ns']:+.2f} vs {r2['last_2ns_slope_A_per_ns']:+.2f} A/ns at similar RMSD ({r1['last_2ns_mean']:.2f} vs {r2['last_2ns_mean']:.2f} A). 10 ns is NOT converged; only the ranking of mobile residues is stable"})
+        srcs += [rcp, R / "md_shhN_rep2/md_receipt.json", R / "md_shhN_rep2/md_summary.json", R / "md_shhN_rep2/final_frame_protein.pdb", R / "md_shhN_rep2/job_log.txt"]
     write(base("openmm-shhN-md", "10 ns explicit-solvent MD of the predicted Shha signalling domain: the fold holds and flexibility tracks predictor confidence",
                "macromolecular", "SIMULATED classical MD of a PREDICTED structure; not an observation",
                f"OpenMM 8.6.1 CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl, seed {a['seed']}",
-               "Start: the Boltz-2 ShhN model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT; CA frames every 10 ps. One replica. Run as a Nebius AI job on one H100; results read from the job log, which the service splits and can return out of order, so the summary and final frame are reassembled and checked (JSON parse, gzip) before use.",
-               [R / "md_shhN/md_receipt.json", R / "md_shhN/md_summary.json", R / "md_shhN/final_frame_protein.pdb", R / "md_shhN/job_log.txt", R / "structures/shhN/model_0.cif"],
-               ["that the predicted fold is correct (MD stability is not accuracy)", "any equilibrium property, free energy or binding quantity from one 10 ns replica",
+               "Start: the Boltz-2 ShhN model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT; CA frames every 10 ps. TWO independent replicas (seeds 20261101 and 777000). Run as a Nebius AI job on one H100; results read from the job log, which the service splits and can return out of order, so the summary and final frame are reassembled and checked (JSON parse, gzip) before use.",
+               srcs,
+               ["that the predicted fold is correct (MD stability is not accuracy)", "a converged simulation: the two replicas disagree on drift", "any equilibrium property, free energy or binding quantity from one 10 ns replica",
                 "Zn2+/Ca2+ site behaviour: this is an apo run with no ions bound", "anything about fin size, Shh gradient range or flight"],
                checks,
                ["Force-field and water-model error are not quantified here.", "Protonation states are PDBFixer defaults at pH 7."],
-               ["Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site? Do independent replicas agree?"],
-               ["Single replica, 10 ns: far too short to sample conformational change (argon).", "The start is a prediction, so every number inherits that uncertainty."],
+               ["Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site?", "What does the +0.98 A/ns drift in replica 2 settle to over hundreds of ns?"],
+               ["10 ns per replica: far too short to sample conformational change (argon), and the two replicas disagree on whether the RMSD has settled.", "The start is a prediction, so every number inherits that uncertainty."],
                time_units="nanoseconds of simulated time"))
 
 # --- macromolecular: MD of the predicted FGF complex, with the non-cognate control ---

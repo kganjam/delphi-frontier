@@ -8,7 +8,7 @@
  "evidence_kind": "SIMULATED classical MD of a PREDICTED structure; not an observation",
  "model": {
   "name": "OpenMM 8.6.1 CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl, seed 20261101",
-  "context": "Start: the Boltz-2 ShhN model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT; CA frames every 10 ps. One replica. Run as a Nebius AI job on one H100; results read from the job log, which the service splits and can return out of order, so the summary and final frame are reassembled and checked (JSON parse, gzip) before use."
+  "context": "Start: the Boltz-2 ShhN model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT; CA frames every 10 ps. TWO independent replicas (seeds 20261101 and 777000). Run as a Nebius AI job on one H100; results read from the job log, which the service splits and can return out of order, so the summary and final frame are reassembled and checked (JSON parse, gzip) before use."
  },
  "time": {
   "units": "nanoseconds of simulated time",
@@ -35,6 +35,18 @@
   {
    "name": "throughput",
    "result": "469 ns/day on one H100, 54508 atoms"
+  },
+  {
+   "name": "SECOND REPLICA (seed 777000), same correlation",
+   "result": "Spearman rho -0.60 (p=2.1e-18): the confidence-flexibility relation reproduces across seeds"
+  },
+  {
+   "name": "cross-replica agreement on which residues move",
+   "result": "Spearman rho 0.91 between the two replicas' per-residue RMSF (median ratio 1.11)"
+  },
+  {
+   "name": "convergence, honestly",
+   "result": "the replicas DISAGREE on drift: last-2-ns slope -0.11 vs +0.98 A/ns at similar RMSD (4.19 vs 4.17 A). 10 ns is NOT converged; only the ranking of mobile residues is stable"
   }
  ],
  "parameter_unknowns": [
@@ -42,14 +54,16 @@
   "Protonation states are PDBFixer defaults at pH 7."
  ],
  "open_questions": [
-  "Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site? Do independent replicas agree?"
+  "Does a holo run with Zn2+/Ca2+ reduce the motion at the metal site?",
+  "What does the +0.98 A/ns drift in replica 2 settle to over hundreds of ns?"
  ],
  "limitations": [
-  "Single replica, 10 ns: far too short to sample conformational change (argon).",
+  "10 ns per replica: far too short to sample conformational change (argon), and the two replicas disagree on whether the RMSD has settled.",
   "The start is a prediction, so every number inherits that uncertainty."
  ],
  "does_not_establish": [
   "that the predicted fold is correct (MD stability is not accuracy)",
+  "a converged simulation: the two replicas disagree on drift",
   "any equilibrium property, free energy or binding quantity from one 10 ns replica",
   "Zn2+/Ca2+ site behaviour: this is an apo run with no ions bound",
   "anything about fin size, Shh gradient range or flight"
@@ -60,7 +74,12 @@
   "results/mol-sims/claude-20261101/md_shhN/md_summary.json": "0037ecaf0b0385fa99094d62b72e19c3663056cff419e3c0a14149afab0bf3eb",
   "results/mol-sims/claude-20261101/md_shhN/final_frame_protein.pdb": "2383111dc87ca2c9ab203d07ff53884dff3208a67fc8b7fda23301c1c58d0cbd",
   "results/mol-sims/claude-20261101/md_shhN/job_log.txt": "1eea56ecb4321243daf3f12a57a056e6bfc295d49b8f572b50fc5034814eae3c",
-  "results/mol-sims/claude-20261101/structures/shhN/model_0.cif": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c"
+  "results/mol-sims/claude-20261101/structures/shhN/model_0.cif": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c",
+  "results/mol-sims/claude-20261101/md_shhN_replica_comparison.json": "57e4d46c3ba155ed9cc263ef493cfa25a5981dc7f4172bba4e9ca05dba106f53",
+  "results/mol-sims/claude-20261101/md_shhN_rep2/md_receipt.json": "61a4efc7e0b22c3c98dd2d836a02e986eae799896b8b266d96f02c90aeb6aa54",
+  "results/mol-sims/claude-20261101/md_shhN_rep2/md_summary.json": "29854e5306c87ca576e9cf17e24637518d1197745c2ac9a789ce01abf605b44c",
+  "results/mol-sims/claude-20261101/md_shhN_rep2/final_frame_protein.pdb": "a9042c6b0bbf4aa5f4291fe4191196b03995661724b8a0944b12617b142c47b9",
+  "results/mol-sims/claude-20261101/md_shhN_rep2/job_log.txt": "453c6d339af5e871ce0eac220095719fe3daac15cd5257d4f0a9ca857b4ce4b6"
  },
  "producer": "claude-mol harness, branch claude/mol-sims-20261101"
 }

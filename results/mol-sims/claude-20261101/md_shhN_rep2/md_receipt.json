@@ -1,0 +1,47 @@
+{
+ "analysis": {
+  "all_finite": true,
+  "job_id": "aijob-e00fh453w6m5m3ds9t",
+  "job_state_text": [
+   "State:    COMPLETED"
+  ],
+  "n_atoms": 54667,
+  "ns_per_day": 465.1175936756949,
+  "rg_ca_A_first_last": [
+   16.497,
+   16.157
+  ],
+  "rmsd_ca_A": {
+   "first_ns_mean": 2.0020300000000004,
+   "last_2ns_mean": 4.17045,
+   "last_2ns_slope_A_per_ns": 0.9831064276606906,
+   "max": 5.166
+  },
+  "rmsf_vs_start_plddt_spearman": {
+   "p": 2.05071738624954e-18,
+   "rho": -0.6002915834164079
+  },
+  "seed": 777000,
+  "top10_rmsf_residues_1based": [
+   1,
+   2,
+   3,
+   4,
+   174,
+   5,
+   168,
+   6,
+   169,
+   173
+  ]
+ },
+ "command": "python experiments/mol_sims/collect_md.py aijob-e00fh453w6m5m3ds9t results/mol-sims/claude-20261101/md_shhN_rep2 results/mol-sims/claude-20261101/structures/shhN/model_0.cif",
+ "evidence_kind": "simulated",
+ "exit_code": 0,
+ "scope": "SIMULATED classical MD of a PREDICTED structure; 10 ns single replica; not observed; no equilibrium or binding claim",
+ "sha256": {
+  "final_frame": "a9042c6b0bbf4aa5f4291fe4191196b03995661724b8a0944b12617b142c47b9",
+  "job_log": "453c6d339af5e871ce0eac220095719fe3daac15cd5257d4f0a9ca857b4ce4b6",
+  "start_cif": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c"
+ }
+}
