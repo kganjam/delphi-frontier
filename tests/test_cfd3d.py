@@ -10,6 +10,7 @@ import sys
 import tarfile
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -490,3 +491,34 @@ def test_cyl2d_eval_reports_each_runs_backend_and_never_relabels(tmp_path):
     v = _cyl_eval(tmp_path, **runs)["verdict"]
     assert v["backends"] == {"R1": "cuda", "M1_mutant": "cuda", "R2": "cuda", "R3_domain": "cpu"}
     assert v["mixed_backends"] is True and v["control_passes"]          # reported; no criterion changed
+
+
+# ---------------------------------------------------------------- VLM refinement diagnostic (vlm_diag_contract.json)
+@pytest.mark.parametrize(("seq", "status"), [
+    ((1.0, 0.5, 0.25), "monotone_convergent"),         # R = 0.5
+    ((1.0, 0.5, 0.75), "oscillatory_convergent"),      # R = -0.5
+    ((1.0, 1.5, 2.5), "divergent"),                    # R = 2: the linear-in-n drift of the core chord families
+    ((0.3, 0.3, 0.3), "converged_roundoff"),
+])
+def test_vlm_diag_triple_classifies_by_R(seq, status):
+    assert _load("vlm_diag").triple(*seq)["status"] == status
+
+
+def test_vlm_diag_family_flags_a_linear_drift_and_passes_geometric_convergence():
+    d = _load("vlm_diag")
+    tri, dec, tail = [[16, 32, 64], [24, 48, 96]], [[16, 32, 64], [24, 48, 96]], [24, 32, 48, 64, 96]
+    ns = [16, 24, 32, 48, 64, 96]
+    assert d.family({n: 1 + 1 / n for n in ns}, tri, dec, tail)["verdict"] == "regular"
+    assert d.family({n: 1 + 1e-4 * n for n in ns}, tri, dec, tail)["verdict"] == "irregular"
+    assert d.family({n: 1 + 1 / n for n in ns if n != 96}, tri, dec, tail)["verdict"] == "incomplete"
+
+
+def test_vlm_diag_repair_moves_collocation_only_where_the_outline_bends():
+    d = _load("vlm_diag")
+    rect = d.vlm.lattice(d.RECT, *d.PLANAR, 12, 6)
+    assert np.allclose(d.repair_colloc(rect, *d.PLANAR[:3])["C"], rect["C"], rtol=0, atol=1e-15)
+    ell, _ = d.vlm.elliptic(6, 12, 6)
+    moved = np.abs(d.repair_colloc(ell, *d.PLANAR[:3])["C"] - ell["C"]).max()
+    assert moved > 1e-6
+    for k in ("A", "B", "N", "area"):
+        assert d.repair_colloc(ell, *d.PLANAR[:3])[k] is ell[k]

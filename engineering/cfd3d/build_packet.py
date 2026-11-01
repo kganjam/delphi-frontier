@@ -7,7 +7,8 @@ pinned revision under fish3d_src/, so the container rebuilds the exact STLs inst
 Writes cfd3d-packet.tar.xz (deterministic) and packet-manifest.json (per-file git blob + sha256, archive sha256).
 --diag, --cpu, --r2 and --arms build the candidate-diagnostic and the 2-D cylinder CPU, R2 CUDA and CUDA
 control-arm packets (<name>-manifest.json beside them); a cylinder packet's file list is its own *_packet.json
-"files".
+"files". --vlmdiag builds the CPU VLM refinement-diagnostic packet the same way; its vlmdiag_packet.json lists
+repo-root-relative files ("root_relative") and it is not an injected packet, so the inject limit is reported only.
 """
 from __future__ import annotations
 
@@ -44,12 +45,14 @@ def main() -> int:
     ap.add_argument("--cpu", action="store_true", help="build the 2-D cylinder CPU worker packet (no fish3d)")
     ap.add_argument("--r2", action="store_true", help="build the 2-D cylinder R2 CUDA packet (no fish3d)")
     ap.add_argument("--arms", action="store_true", help="build the 2-D cylinder CUDA R1/R3/M1 arms packet (no fish3d)")
+    ap.add_argument("--vlmdiag", action="store_true", help="build the CPU VLM refinement-diagnostic packet (no fish3d)")
     a = ap.parse_args()
     head = git("rev-parse", "HEAD").decode().strip()
     fish = git("rev-parse", a.fish3d_rev).decode().strip()
-    cyl = "cpu" if a.cpu else "r2" if a.r2 else "arms" if a.arms else None
+    cyl = "cpu" if a.cpu else "r2" if a.r2 else "arms" if a.arms else "vlmdiag" if a.vlmdiag else None
     if cyl:
-        own = ["engineering/cfd3d/" + f for f in json.loads(git("show", f"HEAD:{CYL2D.format(cyl)}"))["files"]]
+        spec = json.loads(git("show", f"HEAD:{CYL2D.format(cyl)}"))
+        own = [f if spec.get("root_relative") else "engineering/cfd3d/" + f for f in spec["files"]]
     else:
         own = DIAG if a.diag else OWN
     name = f"cfd3d-{cyl}-packet" if cyl else "cfd3d-diag-packet" if a.diag else "cfd3d-packet"
@@ -81,7 +84,7 @@ def main() -> int:
     (out / f"{name}-manifest.json" if a.diag or cyl else out / "packet-manifest.json").write_text(json.dumps(man, indent=1))
     print(json.dumps({k: man[k] for k in ("archive_bytes", "inject_total_raw", "raw_bytes",
                                           "archive_sha256", "fits_inject_limit")}))
-    return 0 if man["fits_inject_limit"] else 1
+    return 0 if man["fits_inject_limit"] or a.vlmdiag else 1
 
 
 if __name__ == "__main__":

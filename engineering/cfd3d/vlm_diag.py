@@ -176,7 +176,9 @@ def family(vals: dict[int, float], triples: list, decisive: list, tail: list) ->
     d = [vals[b] - vals[a] for a, b in itertools.pairwise(tail)]
     tol = TOL_ROUND * abs(vals[tail[-1]])
     same = all(x > 0 for x in d) or all(x < 0 for x in d) or all(abs(x) <= tol for x in d)
-    out.update(decisive=dec, tail=tail, tail_differences=d, tail_same_sign=same)
+    tv = [vals[n] for n in tail]
+    out.update(decisive=dec, tail=tail, tail_differences=d, tail_same_sign=same,
+               tail_range_rel_descriptive=(max(tv) - min(tv)) / abs(sum(tv) / len(tv)))   # reported, never a criterion
     out["verdict"] = "regular" if same and all(v["status"] in ok for v in dec.values()) else "irregular"
     return out
 
@@ -327,6 +329,9 @@ def merge(out: Path, dirs: list[Path]) -> dict:
     variants: dict[str, dict] = {"core": {}, "repair": {}}
     src, extended = [], False
     for d in dirs:
+        if not (d / "results.json").exists():
+            src.append({"dir": str(d), "missing": True})     # a process that never wrote: kept as missing
+            continue
         r = json.loads((d / "results.json").read_text())
         src.append({"dir": str(d), "variant": r.get("variant", "core"), "mode": r["mode"], "status": r["status"],
                     "runner_sha256": r["runner_sha256"], "elapsed_s": r.get("elapsed_s")})

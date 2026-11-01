@@ -1,0 +1,67 @@
+{
+ "schema": "cfd3d-vlmdiag-packet-0.1",
+ "what": "Extended families of the frozen VLM refinement diagnostic (vlm_diag_contract.json execution.extended; useful_if fired because A1 and A2 are irregular) for the core arms AND the labelled post-hoc REPAIR arms (vlm_diag_addendum_repair.json). CPU only, no GPU, no CFD, no fish ladder.",
+ "root_relative": true,
+ "files": [
+  "engineering/cfd3d/vlm.py",
+  "engineering/cfd3d/vlm_diag.py",
+  "engineering/cfd3d/vlm_diag_contract.json",
+  "engineering/cfd3d/vlm_diag_addendum_repair.json",
+  "engineering/cfd3d/gates_vlm.json",
+  "engineering/cfd3d/vlm_diag_run.sh",
+  "engineering/cfd3d/vlm_diag_requirements.txt",
+  "engineering/cfd3d/vlmdiag_packet.json",
+  "artifacts/fish3d/fish3d-v3a-fan/panels.json"
+ ],
+ "entry_argv": [
+  "sh",
+  "engineering/cfd3d/vlm_diag_run.sh",
+  "output"
+ ],
+ "requirements": "engineering/cfd3d/vlm_diag_requirements.txt",
+ "interpreter": "python 3.12 with numpy==2.5.4 only (python 3.12.3 + numpy 2.5.4 locally; vlm.py imports numpy only)",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "MKL_NUM_THREADS": "1",
+  "VLM_DIAG_DEADLINE": "700"
+ },
+ "resources": {
+  "CPU_vCPU": 4,
+  "workers": 4,
+  "threads_per_worker": 1,
+  "hard_seconds": 900,
+  "soft_no_new_solve_seconds": 700,
+  "tree_memory_GiB": 8,
+  "tasks": 128,
+  "output_cap_bytes": 5000000,
+  "GPU": 0
+ },
+ "processes": {
+  "core-f3": "F3 four fins, core, extended families",
+  "repair-f3": "F3, repair, extended",
+  "core-rest": "R0 (owner07 reproduction) + N1 + A1-A4 + N2 + F1 + F2, core, extended",
+  "repair-rest": "A1-A4 + N2 + F1 + F2, repair, extended"
+ },
+ "runtime_projection": {
+  "basis": "wall per solve (solve + local-KJ diagnostic) fitted on the two local probes (python 3.12.3, numpy 2.5.4, one thread, shared 8-vCPU host): wall ~ N^2.23, 13.3-13.6 s at 3072 panels measured; 6144 panels projected 62 s",
+  "single_thread_seconds_this_host": {
+   "core-f3": 222,
+   "repair-f3": 222,
+   "core-rest": 126,
+   "repair-rest": 104
+  },
+  "critical_path_seconds": 222,
+  "margin": "a worker 2x slower than this host needs about 450 s; no solve starts after 700 s, and the largest single solve (6144 panels) is about 62 s here, so even at 2x it ends by about 825 s, inside the 900 s hard limit",
+  "peak_memory_note": "273 MB peak RSS at <= 3072 panels locally; 6144 panels hold a 302 MB matrix plus chunked temporaries, about 1-1.5 GB per F3 process"
+ },
+ "outputs": {
+  "per_process": "OUTDIR/<process>/results.json (atomic after every solve) and OUTDIR/<process>.log",
+  "merged": "OUTDIR/merged.json: decisions_core, decisions_extended, addendum_core, addendum_extended",
+  "exit_codes": "OUTDIR/exit-codes.json",
+  "expected_bytes": "under 1 MB in total"
+ },
+ "preservation": "A failed solve is recorded in place ({state: failed, error}) and never retried; a solve not started before the deadline is {state: not_run_deadline}; a process that never writes is listed as missing by the merge. Collect the whole OUTDIR on any exit, including a kill at the hard limit. Nothing is relabelled: core and REPAIR results stay in separate variants.",
+ "refusals": "vlm.py and panels.json are checked against the contract's sha256 at start (exit 2 on mismatch); R0 must reproduce owner07's 11 values to 1e-12 or core-rest stops with exit 3 and its results kept.",
+ "scope": "Rigid, fixed-alpha, inviscid VLM solves of the unchanged vlm.py (core) and of the labelled collocation REPAIR variant, on analytic planforms and the v3a fin panels. No coupled arm, beam, glide, CFD or biological claim; no existing output is modified."
+}
