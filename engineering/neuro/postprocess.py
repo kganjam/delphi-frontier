@@ -10,7 +10,8 @@ import numpy as np
 
 from engineering.neuro import common as C
 
-JOBS = {"j7": ("claude-neuro-j7-m3-atlas-refined-a1", "j7-m3-atlas-refined", "out/m3_atlas.json.gz"),
+JOBS = {"j8": ("claude-neuro-j8-m5-design-fair-a1", "j8-m5-design-fair", "out/m5_design_fair.json.gz"),
+        "j7": ("claude-neuro-j7-m3-atlas-refined-a1", "j7-m3-atlas-refined", "out/m3_atlas.json.gz"),
         "j5": ("claude-neuro-j5-m1-m5prior-a1", "m1-fast-start-m5prior", "out/m1-fast-start-m5prior/manifest.json"),
         "j6": ("claude-neuro-j6-m5-design-a1", "j6-m5-design", "out/m5_design.json.gz"),
         "j4": ("claude-neuro-j4-m3-sobol-a1", "j4-m3-sobol", "out/sobol_m3.json.gz"),
@@ -224,5 +225,20 @@ def j6():
     m["summary"] = summ; write(dst, rid, m, cr, name)
 
 
+def j8():
+    name, rid, cr, col, dst, R = receipt_and_dirs("j8")
+    import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(figsize=(7.5, 5))
+    for pk, v in R["by_protocol"].items():
+        if v["accuracy"]:
+            ns = sorted(int(n) for n in v["accuracy"]); ax.plot(ns, [v["accuracy"][str(n)] for n in ns], "o-", label=f"{pk} (selected {v['n_selected']})")
+    ax.axhline(1 / 3, color="k", ls=":", label="chance"); ax.set_xscale("log", base=2); ax.set_xlabel("fish per encoder hypothesis"); ax.set_ylabel("held-out classification accuracy")
+    ax.legend(fontsize=7); ax.set_title("J8 protocol-fair encoder discrimination (selection and features on disjoint trials); SIMULATED", fontsize=9)
+    fig.tight_layout(); fig.savefig(dst / "figure.png", dpi=110); plt.close(fig)
+    m = base_manifest(rid, name, cr, R, "Protocol-fair looming-experiment design: encoder discrimination with selection and features on disjoint trials", ["organism"],
+                      "engineering.neuro.m5_design fair", cr["submission"]["spec"]["command"])
+    m["summary"] = {pk: v for pk, v in R["by_protocol"].items()}; write(dst, rid, m, cr, name)
+
+
 if __name__ == "__main__":
-    {"j1": j1, "j2": j2, "j3": j3, "j4": j4, "j5": j5, "j6": j6, "j7": lambda: j2("j7")}[sys.argv[1]]()
+    {"j8": j8, "j1": j1, "j2": j2, "j3": j3, "j4": j4, "j5": j5, "j6": j6, "j7": lambda: j2("j7")}[sys.argv[1]]()

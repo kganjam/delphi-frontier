@@ -459,5 +459,38 @@
     "kind": "same plant/controller, full design space"
    }
   ]
+ },
+ "j8-m5-design-fair": {
+  "model_name": "Protocol-fair M5 experiment design: fresh parameter sets; for each protocol, C1-C3 selection on half the trials and classification on the held-out half",
+  "context": "It tests J6's selection-bias caveat. It ran as Nebius H100 job claude-neuro-j8-m5-design-fair-a1.",
+  "time_units": "seconds of stimulus from looming onset (0.5 ms step)",
+  "equations": [
+   {
+    "label": "Classifier",
+    "tex": "\\hat e=\\arg\\min_e\\lVert \\bar z_{fish}-\\mu_e\\rVert^2,\\ z=\\text{standardised}(\\theta_{resp}(l/v),\\log t_{resp}(l/v))",
+    "source": "nearest standardised centroid (design choice)"
+   }
+  ],
+  "sources": [
+   "preuss2006"
+  ],
+  "parameter_unknowns": [
+   "The candidate fish are drawn from J3's consistent sets; real between-fish variability is unknown."
+  ],
+  "open_questions": [
+   "Is the 2 deg onset feasible on a real display at the fish's viewing distance?"
+  ],
+  "perturbation_sweep": "8,192 fresh sets (seed 20261102) x 3 encoders x 3 protocols x 32 trials (16 for selection, 16 held out).",
+  "experiment_design": "Use the protocol with the highest held-out accuracy in this card (numerical checks) to plan the looming experiment; compare with J6, which was biased toward the J3 protocol.",
+  "does_not_establish": [
+   "SIMULATED sizing: assumes the real encoder is one of the three model forms, and that fish vary like the consistent parameter sets.",
+   "It still assumes the true encoder is one of the three model forms."
+  ],
+  "couplings": [
+   {
+    "to": "neuro-j3-m5-mcell",
+    "kind": "re-simulates its consistent sets"
+   }
+  ]
  }
 }
