@@ -1,0 +1,1847 @@
+{
+ "job": "aijob-e00tqm60xz297scrcv",
+ "job_state": "COMPLETED",
+ "meta": {
+  "model": "Schnakenberg phase map",
+  "a": 0.1,
+  "bs": [
+   0.3,
+   0.5,
+   0.7,
+   0.9,
+   1.1,
+   1.4,
+   1.8,
+   2.4
+  ],
+  "ds": [
+   6,
+   8,
+   10,
+   13,
+   17,
+   22,
+   30,
+   45
+  ],
+  "seeds": [
+   11,
+   22,
+   33
+  ],
+  "N": 128,
+  "L": 80.0,
+  "t_end": 800.0,
+  "dt": 0.02,
+  "device": "cuda",
+  "scipy": true,
+  "torch": "2.10.0a0+b4e4ee81d3.nv25.12",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "script_sha256": "3e58dd2d888ccf392b4ec3e0f7ec2810112c1750a87088f379b111a3aab9f09b"
+ },
+ "done": {
+  "wall_s": 110.9
+ },
+ "n_rows": 100,
+ "grid": {
+  "0.3,6": {
+   "b": 0.3,
+   "d": 6,
+   "turing_unstable": false
+  },
+  "0.3,8": {
+   "b": 0.3,
+   "d": 8,
+   "turing_unstable": false
+  },
+  "0.3,10": {
+   "b": 0.3,
+   "d": 10,
+   "turing_unstable": false
+  },
+  "0.3,13": {
+   "b": 0.3,
+   "d": 13,
+   "turing_unstable": false
+  },
+  "0.3,17": {
+   "b": 0.3,
+   "d": 17,
+   "turing_unstable": false
+  },
+  "0.3,22": {
+   "b": 0.3,
+   "d": 22,
+   "turing_unstable": false
+  },
+  "0.3,30": {
+   "b": 0.3,
+   "d": 30,
+   "turing_unstable": false
+  },
+  "0.3,45": {
+   "b": 0.3,
+   "d": 45,
+   "turing_unstable": false
+  },
+  "0.5,6": {
+   "b": 0.5,
+   "d": 6,
+   "turing_unstable": false
+  },
+  "0.5,8": {
+   "b": 0.5,
+   "d": 8,
+   "turing_unstable": false
+  },
+  "0.5,10": {
+   "b": 0.5,
+   "d": 10,
+   "turing_unstable": false
+  },
+  "0.5,13": {
+   "b": 0.5,
+   "d": 13,
+   "turing_unstable": false
+  },
+  "0.5,17": {
+   "b": 0.5,
+   "d": 17,
+   "turing_unstable": false
+  },
+  "0.5,22": {
+   "b": 0.5,
+   "d": 22,
+   "turing_unstable": false
+  },
+  "0.5,30": {
+   "b": 0.5,
+   "d": 30,
+   "turing_unstable": false
+  },
+  "0.5,45": {
+   "b": 0.5,
+   "d": 45,
+   "turing_unstable": false
+  },
+  "0.7,6": {
+   "b": 0.7,
+   "d": 6,
+   "turing_unstable": false
+  },
+  "0.7,8": {
+   "b": 0.7,
+   "d": 8,
+   "turing_unstable": false
+  },
+  "0.7,10": {
+   "b": 0.7,
+   "d": 10,
+   "turing_unstable": false
+  },
+  "0.7,13": {
+   "b": 0.7,
+   "d": 13,
+   "turing_unstable": false
+  },
+  "0.7,17": {
+   "b": 0.7,
+   "d": 17,
+   "turing_unstable": false
+  },
+  "0.7,22": {
+   "b": 0.7,
+   "d": 22,
+   "turing_unstable": false
+  },
+  "0.7,30": {
+   "b": 0.7,
+   "d": 30,
+   "turing_unstable": false
+  },
+  "0.7,45": {
+   "b": 0.7,
+   "d": 45,
+   "turing_unstable": false
+  },
+  "0.9,6": {
+   "b": 0.9,
+   "d": 6,
+   "turing_unstable": false
+  },
+  "0.9,8": {
+   "b": 0.9,
+   "d": 8,
+   "turing_unstable": false
+  },
+  "0.9,10": {
+   "b": 0.9,
+   "d": 10,
+   "turing_unstable": true,
+   "component_density_mean": 0.1836734693877551,
+   "labels": [
+    "stripes/labyrinth",
+    "stripes/labyrinth",
+    "stripes/labyrinth"
+   ],
+   "wavelength_mean": 11.428571428571429,
+   "amplitude_mean": 0.2951857752588309
+  },
+  "0.9,13": {
+   "b": 0.9,
+   "d": 13,
+   "turing_unstable": true,
+   "component_density_mean": 0.9270833333333334,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 10.952380952380954,
+   "amplitude_mean": 0.5155456646233304
+  },
+  "0.9,17": {
+   "b": 0.9,
+   "d": 17,
+   "turing_unstable": true,
+   "component_density_mean": 0.9795918367346937,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 11.428571428571429,
+   "amplitude_mean": 0.6746035740336112
+  },
+  "0.9,22": {
+   "b": 0.9,
+   "d": 22,
+   "turing_unstable": true,
+   "component_density_mean": 0.9115646258503403,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 11.428571428571429,
+   "amplitude_mean": 0.8094688433286962
+  },
+  "0.9,30": {
+   "b": 0.9,
+   "d": 30,
+   "turing_unstable": true,
+   "component_density_mean": 0.8367346938775512,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 11.428571428571429,
+   "amplitude_mean": 0.9600981319716527
+  },
+  "0.9,45": {
+   "b": 0.9,
+   "d": 45,
+   "turing_unstable": true,
+   "component_density_mean": 0.9629629629629631,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 13.333333333333334,
+   "amplitude_mean": 1.1526133808020356
+  },
+  "1.1,6": {
+   "b": 1.1,
+   "d": 6,
+   "turing_unstable": false
+  },
+  "1.1,8": {
+   "b": 1.1,
+   "d": 8,
+   "turing_unstable": false
+  },
+  "1.1,10": {
+   "b": 1.1,
+   "d": 10,
+   "turing_unstable": false
+  },
+  "1.1,13": {
+   "b": 1.1,
+   "d": 13,
+   "turing_unstable": true,
+   "component_density_mean": 0.070046768707483,
+   "labels": [
+    "stripes/labyrinth",
+    "stripes/labyrinth",
+    "stripes/labyrinth"
+   ],
+   "wavelength_mean": 10.952380952380954,
+   "amplitude_mean": 0.3266213838690251
+  },
+  "1.1,17": {
+   "b": 1.1,
+   "d": 17,
+   "turing_unstable": true,
+   "component_density_mean": 0.9647108843537415,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 10.952380952380954,
+   "amplitude_mean": 0.5929741037152912
+  },
+  "1.1,22": {
+   "b": 1.1,
+   "d": 22,
+   "turing_unstable": true,
+   "component_density_mean": 0.9338860544217686,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 10.952380952380954,
+   "amplitude_mean": 0.7858337633651433
+  },
+  "1.1,30": {
+   "b": 1.1,
+   "d": 30,
+   "turing_unstable": true,
+   "component_density_mean": 0.9387755102040818,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 11.428571428571429,
+   "amplitude_mean": 0.9789975535846841
+  },
+  "1.1,45": {
+   "b": 1.1,
+   "d": 45,
+   "turing_unstable": true,
+   "component_density_mean": 0.8435374149659864,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 11.428571428571429,
+   "amplitude_mean": 1.21106368952514
+  },
+  "1.4,6": {
+   "b": 1.4,
+   "d": 6,
+   "turing_unstable": false
+  },
+  "1.4,8": {
+   "b": 1.4,
+   "d": 8,
+   "turing_unstable": false
+  },
+  "1.4,10": {
+   "b": 1.4,
+   "d": 10,
+   "turing_unstable": false
+  },
+  "1.4,13": {
+   "b": 1.4,
+   "d": 13,
+   "turing_unstable": false
+  },
+  "1.4,17": {
+   "b": 1.4,
+   "d": 17,
+   "turing_unstable": true,
+   "component_density_mean": 0.015625,
+   "labels": [
+    null,
+    "stripes/labyrinth",
+    null
+   ],
+   "wavelength_mean": 10.0,
+   "amplitude_mean": 0.019857812758848164
+  },
+  "1.4,22": {
+   "b": 1.4,
+   "d": 22,
+   "turing_unstable": true,
+   "component_density_mean": 0.4322916666666667,
+   "labels": [
+    "stripes/labyrinth",
+    "stripes/labyrinth",
+    "spots"
+   ],
+   "wavelength_mean": 10.0,
+   "amplitude_mean": 0.5912642541088794
+  },
+  "1.4,30": {
+   "b": 1.4,
+   "d": 30,
+   "turing_unstable": true,
+   "component_density_mean": 0.8177083333333334,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 10.0,
+   "amplitude_mean": 0.9218144779684567
+  },
+  "1.4,45": {
+   "b": 1.4,
+   "d": 45,
+   "turing_unstable": true,
+   "component_density_mean": 0.9727891156462585,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 11.428571428571429,
+   "amplitude_mean": 1.2407029657867297
+  },
+  "1.8,6": {
+   "b": 1.8,
+   "d": 6,
+   "turing_unstable": false
+  },
+  "1.8,8": {
+   "b": 1.8,
+   "d": 8,
+   "turing_unstable": false
+  },
+  "1.8,10": {
+   "b": 1.8,
+   "d": 10,
+   "turing_unstable": false
+  },
+  "1.8,13": {
+   "b": 1.8,
+   "d": 13,
+   "turing_unstable": false
+  },
+  "1.8,17": {
+   "b": 1.8,
+   "d": 17,
+   "turing_unstable": false
+  },
+  "1.8,22": {
+   "b": 1.8,
+   "d": 22,
+   "turing_unstable": false
+  },
+  "1.8,30": {
+   "b": 1.8,
+   "d": 30,
+   "turing_unstable": true,
+   "component_density_mean": 0.046875,
+   "labels": [
+    "stripes/labyrinth",
+    "stripes/labyrinth",
+    "stripes/labyrinth"
+   ],
+   "wavelength_mean": 10.0,
+   "amplitude_mean": 0.6110806112465279
+  },
+  "1.8,45": {
+   "b": 1.8,
+   "d": 45,
+   "turing_unstable": true,
+   "component_density_mean": 0.859375,
+   "labels": [
+    "spots",
+    "spots",
+    "spots"
+   ],
+   "wavelength_mean": 10.0,
+   "amplitude_mean": 1.1498129831535533
+  },
+  "2.4,6": {
+   "b": 2.4,
+   "d": 6,
+   "turing_unstable": false
+  },
+  "2.4,8": {
+   "b": 2.4,
+   "d": 8,
+   "turing_unstable": false
+  },
+  "2.4,10": {
+   "b": 2.4,
+   "d": 10,
+   "turing_unstable": false
+  },
+  "2.4,13": {
+   "b": 2.4,
+   "d": 13,
+   "turing_unstable": false
+  },
+  "2.4,17": {
+   "b": 2.4,
+   "d": 17,
+   "turing_unstable": false
+  },
+  "2.4,22": {
+   "b": 2.4,
+   "d": 22,
+   "turing_unstable": false
+  },
+  "2.4,30": {
+   "b": 2.4,
+   "d": 30,
+   "turing_unstable": false
+  },
+  "2.4,45": {
+   "b": 2.4,
+   "d": 45,
+   "turing_unstable": true,
+   "component_density_mean": 0.020833333333333332,
+   "labels": [
+    "stripes/labyrinth",
+    "stripes/labyrinth",
+    "stripes/labyrinth"
+   ],
+   "wavelength_mean": 10.0,
+   "amplitude_mean": 0.5469033986438374
+  }
+ },
+ "rows": [
+  {
+   "b": 0.3,
+   "d": 6,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.005,
+   "simulated": false
+  },
+  {
+   "b": 0.3,
+   "d": 8,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.3586459114778695,
+   "simulated": false
+  },
+  {
+   "b": 0.3,
+   "d": 10,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.3406639159789948,
+   "simulated": false
+  },
+  {
+   "b": 0.3,
+   "d": 13,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.32168292073018256,
+   "simulated": false
+  },
+  {
+   "b": 0.3,
+   "d": 17,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.30370092523130787,
+   "simulated": false
+  },
+  {
+   "b": 0.3,
+   "d": 22,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.2877169292323081,
+   "simulated": false
+  },
+  {
+   "b": 0.3,
+   "d": 30,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.2697349337334334,
+   "simulated": false
+  },
+  {
+   "b": 0.3,
+   "d": 45,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.24775693923480874,
+   "simulated": false
+  },
+  {
+   "b": 0.5,
+   "d": 6,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.005,
+   "simulated": false
+  },
+  {
+   "b": 0.5,
+   "d": 8,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.45355088772193053,
+   "simulated": false
+  },
+  {
+   "b": 0.5,
+   "d": 10,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.4305738934733684,
+   "simulated": false
+  },
+  {
+   "b": 0.5,
+   "d": 13,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.4065978994748688,
+   "simulated": false
+  },
+  {
+   "b": 0.5,
+   "d": 17,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.38362090522630665,
+   "simulated": false
+  },
+  {
+   "b": 0.5,
+   "d": 22,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.36364091022755696,
+   "simulated": false
+  },
+  {
+   "b": 0.5,
+   "d": 30,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.3406639159789948,
+   "simulated": false
+  },
+  {
+   "b": 0.5,
+   "d": 45,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.3116929232308077,
+   "simulated": false
+  },
+  {
+   "b": 0.7,
+   "d": 6,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.005,
+   "simulated": false
+  },
+  {
+   "b": 0.7,
+   "d": 8,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.5314728682170543,
+   "simulated": false
+  },
+  {
+   "b": 0.7,
+   "d": 10,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.5044998749687423,
+   "simulated": false
+  },
+  {
+   "b": 0.7,
+   "d": 13,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.4765278819704927,
+   "simulated": false
+  },
+  {
+   "b": 0.7,
+   "d": 17,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.4495548887221806,
+   "simulated": false
+  },
+  {
+   "b": 0.7,
+   "d": 22,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.425578894723681,
+   "simulated": false
+  },
+  {
+   "b": 0.7,
+   "d": 30,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.3986059014753689,
+   "simulated": false
+  },
+  {
+   "b": 0.7,
+   "d": 45,
+   "turing_unstable": false,
+   "homogeneous_stable": false,
+   "k_theory": 0.3656389097274319,
+   "simulated": false
+  },
+  {
+   "b": 0.9,
+   "d": 6,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 0.9,
+   "d": 8,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 0.9,
+   "d": 10,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5644398599649914,
+   "growth_rate": 0.057190952538975104,
+   "simulated": true,
+   "wall_s": 6.4,
+   "amplitude": 0.29915938960088445,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 5,
+   "component_density": 0.10204081632653063,
+   "largest_component_fraction": 0.098876953125,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 0.9,
+   "d": 10,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5644398599649914,
+   "growth_rate": 0.057190952538975104,
+   "simulated": true,
+   "wall_s": 6.4,
+   "amplitude": 0.2911515031367392,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 10,
+   "component_density": 0.20408163265306126,
+   "largest_component_fraction": 0.21807861328125,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 0.9,
+   "d": 10,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5644398599649914,
+   "growth_rate": 0.057190952538975104,
+   "simulated": true,
+   "wall_s": 6.4,
+   "amplitude": 0.29524643303886894,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 12,
+   "component_density": 0.24489795918367346,
+   "largest_component_fraction": 0.1185302734375,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 0.9,
+   "d": 13,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5334708677169293,
+   "growth_rate": 0.14377358409823415,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.5150713140697197,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 50,
+   "component_density": 0.78125,
+   "largest_component_fraction": 0.00970458984375,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 13,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5334708677169293,
+   "growth_rate": 0.14377358409823415,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.5140314294965619,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 50,
+   "component_density": 1.0204081632653061,
+   "largest_component_fraction": 0.00933837890625,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 13,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5334708677169293,
+   "growth_rate": 0.14377358409823415,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.5175342503037097,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 48,
+   "component_density": 0.9795918367346939,
+   "largest_component_fraction": 0.0084228515625,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 17,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5035008752188047,
+   "growth_rate": 0.2210341550860866,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.6734995823255311,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 47,
+   "component_density": 0.9591836734693877,
+   "largest_component_fraction": 0.00933837890625,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 17,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5035008752188047,
+   "growth_rate": 0.2210341550860866,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.6752343654930594,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 49,
+   "component_density": 1.0,
+   "largest_component_fraction": 0.0089111328125,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 17,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5035008752188047,
+   "growth_rate": 0.2210341550860866,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.6750767742822432,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 48,
+   "component_density": 0.9795918367346939,
+   "largest_component_fraction": 0.00885009765625,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 22,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4775268817204302,
+   "growth_rate": 0.2863941511972534,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.8095546564730407,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 45,
+   "component_density": 0.9183673469387756,
+   "largest_component_fraction": 0.00885009765625,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 22,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4775268817204302,
+   "growth_rate": 0.2863941511972534,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.8087875070153991,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 45,
+   "component_density": 0.9183673469387756,
+   "largest_component_fraction": 0.00885009765625,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 22,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4775268817204302,
+   "growth_rate": 0.2863941511972534,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.8100643664976489,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 44,
+   "component_density": 0.8979591836734694,
+   "largest_component_fraction": 0.00927734375,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 30,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.44655788947236813,
+   "growth_rate": 0.35527743881773777,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.9607943141342928,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 42,
+   "component_density": 0.8571428571428572,
+   "largest_component_fraction": 0.00799560546875,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 30,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.44655788947236813,
+   "growth_rate": 0.35527743881773777,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.9582698510008065,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 41,
+   "component_density": 0.8367346938775511,
+   "largest_component_fraction": 0.00927734375,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 30,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.44655788947236813,
+   "growth_rate": 0.35527743881773777,
+   "simulated": true,
+   "wall_s": 5.9,
+   "amplitude": 0.9612302307798588,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 40,
+   "component_density": 0.816326530612245,
+   "largest_component_fraction": 0.0091552734375,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 45,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4105938984746187,
+   "growth_rate": 0.4318173426307865,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 1.1546180559962622,
+   "k_peak": 0.47123889803846897,
+   "wavelength": 13.333333333333334,
+   "n_components": 34,
+   "component_density": 0.9444444444444445,
+   "largest_component_fraction": 0.00909423828125,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 45,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4105938984746187,
+   "growth_rate": 0.4318173426307865,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 1.1501827025406228,
+   "k_peak": 0.47123889803846897,
+   "wavelength": 13.333333333333334,
+   "n_components": 36,
+   "component_density": 1.0,
+   "largest_component_fraction": 0.00909423828125,
+   "label": "spots"
+  },
+  {
+   "b": 0.9,
+   "d": 45,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4105938984746187,
+   "growth_rate": 0.4318173426307865,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 1.153039383869222,
+   "k_peak": 0.47123889803846897,
+   "wavelength": 13.333333333333334,
+   "n_components": 34,
+   "component_density": 0.9444444444444445,
+   "largest_component_fraction": 0.0098876953125,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 6,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.1,
+   "d": 8,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.1,
+   "d": 10,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.1,
+   "d": 13,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5794248562140536,
+   "growth_rate": 0.04638909527099244,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.3325667966018552,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 5,
+   "component_density": 0.10204081632653063,
+   "largest_component_fraction": 0.0997314453125,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.1,
+   "d": 13,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5794248562140536,
+   "growth_rate": 0.04638909527099244,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.3249300910831412,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 3,
+   "component_density": 0.046875,
+   "largest_component_fraction": 0.19683837890625,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.1,
+   "d": 13,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5794248562140536,
+   "growth_rate": 0.04638909527099244,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.3223672639220791,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 3,
+   "component_density": 0.061224489795918366,
+   "largest_component_fraction": 0.2491455078125,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.1,
+   "d": 17,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5484558639659916,
+   "growth_rate": 0.13800941893391805,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.5922177459726885,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 52,
+   "component_density": 0.8125,
+   "largest_component_fraction": 0.01361083984375,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 17,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5484558639659916,
+   "growth_rate": 0.13800941893391805,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.5927659334562287,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 51,
+   "component_density": 1.0408163265306123,
+   "largest_component_fraction": 0.0096435546875,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 17,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5484558639659916,
+   "growth_rate": 0.13800941893391805,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.5939386317169566,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 51,
+   "component_density": 1.0408163265306123,
+   "largest_component_fraction": 0.01580810546875,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 22,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.520483870967742,
+   "growth_rate": 0.21577535415531557,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.7868064041083482,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 50,
+   "component_density": 0.78125,
+   "largest_component_fraction": 0.009033203125,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 22,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.520483870967742,
+   "growth_rate": 0.21577535415531557,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.7857982436859103,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 50,
+   "component_density": 1.0204081632653061,
+   "largest_component_fraction": 0.00885009765625,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 22,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.520483870967742,
+   "growth_rate": 0.21577535415531557,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.7848966423011714,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 49,
+   "component_density": 1.0,
+   "largest_component_fraction": 0.00897216796875,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 30,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4885158789697425,
+   "growth_rate": 0.29796976432067623,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.9785435845925492,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 46,
+   "component_density": 0.9387755102040818,
+   "largest_component_fraction": 0.009033203125,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 30,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4885158789697425,
+   "growth_rate": 0.29796976432067623,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.9802764878851822,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 46,
+   "component_density": 0.9387755102040818,
+   "largest_component_fraction": 0.008544921875,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 30,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4885158789697425,
+   "growth_rate": 0.29796976432067623,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.9781725882763213,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 46,
+   "component_density": 0.9387755102040818,
+   "largest_component_fraction": 0.0086669921875,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 45,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.44855588897224313,
+   "growth_rate": 0.38956577988875196,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.2121016365996578,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 42,
+   "component_density": 0.8571428571428572,
+   "largest_component_fraction": 0.0079345703125,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 45,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.44855588897224313,
+   "growth_rate": 0.38956577988875196,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.2096134951560982,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 41,
+   "component_density": 0.8367346938775511,
+   "largest_component_fraction": 0.009033203125,
+   "label": "spots"
+  },
+  {
+   "b": 1.1,
+   "d": 45,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.44855588897224313,
+   "growth_rate": 0.38956577988875196,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.2114759368196646,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 41,
+   "component_density": 0.8367346938775511,
+   "largest_component_fraction": 0.00909423828125,
+   "label": "spots"
+  },
+  {
+   "b": 1.4,
+   "d": 6,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.4,
+   "d": 8,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.4,
+   "d": 10,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.4,
+   "d": 13,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.4,
+   "d": 17,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.6034008502125532,
+   "growth_rate": 0.005226635765360754,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.01569109703931611,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0
+  },
+  {
+   "b": 1.4,
+   "d": 17,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.6034008502125532,
+   "growth_rate": 0.005226635765360754,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.025528022711685618,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 1,
+   "component_density": 0.015625,
+   "largest_component_fraction": 0.50152587890625,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.4,
+   "d": 17,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.6034008502125532,
+   "growth_rate": 0.005226635765360754,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.01835431852554276,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0
+  },
+  {
+   "b": 1.4,
+   "d": 22,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5744298574643661,
+   "growth_rate": 0.09960388599937176,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.5957114170186819,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 37,
+   "component_density": 0.578125,
+   "largest_component_fraction": 0.0391845703125,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.4,
+   "d": 22,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5744298574643661,
+   "growth_rate": 0.09960388599937176,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.5868481522846942,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 6,
+   "component_density": 0.09375,
+   "largest_component_fraction": 0.14349365234375,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.4,
+   "d": 22,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5744298574643661,
+   "growth_rate": 0.09960388599937176,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.591233193023262,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 40,
+   "component_density": 0.625,
+   "largest_component_fraction": 0.05291748046875,
+   "label": "spots"
+  },
+  {
+   "b": 1.4,
+   "d": 30,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5404638659664917,
+   "growth_rate": 0.20000148193040523,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.9211957908916251,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 53,
+   "component_density": 0.828125,
+   "largest_component_fraction": 0.00836181640625,
+   "label": "spots"
+  },
+  {
+   "b": 1.4,
+   "d": 30,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5404638659664917,
+   "growth_rate": 0.20000148193040523,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.9184220820114892,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 52,
+   "component_density": 0.8125,
+   "largest_component_fraction": 0.0093994140625,
+   "label": "spots"
+  },
+  {
+   "b": 1.4,
+   "d": 30,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5404638659664917,
+   "growth_rate": 0.20000148193040523,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.9258255610022558,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 52,
+   "component_density": 0.8125,
+   "largest_component_fraction": 0.00762939453125,
+   "label": "spots"
+  },
+  {
+   "b": 1.4,
+   "d": 45,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4985058764691173,
+   "growth_rate": 0.3126033058874764,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.2400766850105953,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 48,
+   "component_density": 0.9795918367346939,
+   "largest_component_fraction": 0.0084228515625,
+   "label": "spots"
+  },
+  {
+   "b": 1.4,
+   "d": 45,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4985058764691173,
+   "growth_rate": 0.3126033058874764,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.2430760389999076,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 47,
+   "component_density": 0.9591836734693877,
+   "largest_component_fraction": 0.0086669921875,
+   "label": "spots"
+  },
+  {
+   "b": 1.4,
+   "d": 45,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.4985058764691173,
+   "growth_rate": 0.3126033058874764,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.2389561733496866,
+   "k_peak": 0.5497787143782138,
+   "wavelength": 11.428571428571429,
+   "n_components": 48,
+   "component_density": 0.9795918367346939,
+   "largest_component_fraction": 0.00860595703125,
+   "label": "spots"
+  },
+  {
+   "b": 1.8,
+   "d": 6,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.8,
+   "d": 8,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.8,
+   "d": 10,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.8,
+   "d": 13,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.8,
+   "d": 17,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.8,
+   "d": 22,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 1.8,
+   "d": 30,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5954088522130533,
+   "growth_rate": 0.06215438006410423,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.6025132346277702,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 7,
+   "component_density": 0.109375,
+   "largest_component_fraction": 0.0712890625,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.8,
+   "d": 30,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5954088522130533,
+   "growth_rate": 0.06215438006410423,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.6288143462597029,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 1,
+   "component_density": 0.015625,
+   "largest_component_fraction": 0.49871826171875,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.8,
+   "d": 30,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5954088522130533,
+   "growth_rate": 0.06215438006410423,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 0.6019142528521106,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 1,
+   "component_density": 0.015625,
+   "largest_component_fraction": 0.4952392578125,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 1.8,
+   "d": 45,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5524518629657416,
+   "growth_rate": 0.19965223278174804,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.1469440331295104,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 55,
+   "component_density": 0.859375,
+   "largest_component_fraction": 0.00885009765625,
+   "label": "spots"
+  },
+  {
+   "b": 1.8,
+   "d": 45,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5524518629657416,
+   "growth_rate": 0.19965223278174804,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.1465252740503717,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 55,
+   "component_density": 0.859375,
+   "largest_component_fraction": 0.0081787109375,
+   "label": "spots"
+  },
+  {
+   "b": 1.8,
+   "d": 45,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.5524518629657416,
+   "growth_rate": 0.19965223278174804,
+   "simulated": true,
+   "wall_s": 6.0,
+   "amplitude": 1.1559696422807775,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 55,
+   "component_density": 0.859375,
+   "largest_component_fraction": 0.00836181640625,
+   "label": "spots"
+  },
+  {
+   "b": 2.4,
+   "d": 6,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 2.4,
+   "d": 8,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 2.4,
+   "d": 10,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 2.4,
+   "d": 13,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 2.4,
+   "d": 17,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 2.4,
+   "d": 22,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 2.4,
+   "d": 30,
+   "turing_unstable": false,
+   "homogeneous_stable": true,
+   "k_theory": null,
+   "simulated": false
+  },
+  {
+   "b": 2.4,
+   "d": 45,
+   "seed": 11,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.6143898474618655,
+   "growth_rate": 0.02668574190162687,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.5493498530627646,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 2,
+   "component_density": 0.03125,
+   "largest_component_fraction": 0.40850830078125,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 2.4,
+   "d": 45,
+   "seed": 22,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.6143898474618655,
+   "growth_rate": 0.02668574190162687,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.5218999040287423,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 1,
+   "component_density": 0.015625,
+   "largest_component_fraction": 0.5185546875,
+   "label": "stripes/labyrinth"
+  },
+  {
+   "b": 2.4,
+   "d": 45,
+   "seed": 33,
+   "turing_unstable": true,
+   "homogeneous_stable": true,
+   "k_theory": 0.6143898474618655,
+   "growth_rate": 0.02668574190162687,
+   "simulated": true,
+   "wall_s": 6.1,
+   "amplitude": 0.5694604388400053,
+   "k_peak": 0.6283185307179586,
+   "wavelength": 10.0,
+   "n_components": 1,
+   "component_density": 0.015625,
+   "largest_component_fraction": 0.50311279296875,
+   "label": "stripes/labyrinth"
+  }
+ ],
+ "classifier": "component density = n_components(u>mean)*lambda^2/area; > 0.6 spots, else stripes/labyrinth (synthetic check: stripes 0.25, hexagonal spots 1.0)"
+}

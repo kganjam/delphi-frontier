@@ -1,0 +1,104 @@
+"""Collect the edge2d and phasemap Nebius jobs: parse the saved job log (META/RESULT/SNAP/FRAME/DONE lines),
+write results JSON, figure (and video for edge2d), and a receipt that records job id, state and script hash.
+Usage: collect_gpu2.py edge2d|phasemap <job_id> <saved_log> <state>"""
+import json, sys, time, base64, pathlib, subprocess, tempfile, numpy as np
+import matplotlib; matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+from claude_tissue.common import ROOT, sha
+
+kind, job, logp, state = sys.argv[1], sys.argv[2], pathlib.Path(sys.argv[3]).resolve(), sys.argv[4]
+meta, rows, snaps, frames, done = None, [], [], [], None
+for line in logp.read_text().splitlines():
+    for tag in ("META ", "RESULT ", "SNAP ", "FRAME ", "DONE "):
+        i = line.find(tag)
+        if i == 0 or (i > 0 and line[i-1] == " "):
+            obj = json.loads(line[i+len(tag):])
+            {"META ": lambda o: None, "RESULT ": rows.append, "SNAP ": snaps.append, "FRAME ": frames.append, "DONE ": lambda o: None}[tag](obj)
+            if tag == "META ": meta = obj
+            if tag == "DONE ": done = obj
+            break
+assert meta, "no META line"
+def img(s, key="u8"):
+    shp = s.get("shape") or [s["n"], s["n"]]; return np.frombuffer(base64.b64decode(s[key]), dtype=np.uint8).reshape(shp)
+
+if kind == "edge2d":
+    OUT = ROOT/"artifacts/simulations/claude-tissue-edge2d"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/edge2d_gpu.py"
+    summ = {}
+    for d in meta["ds"]:
+        for v in meta["speeds"]:
+            rs = [r for r in rows if r["d"] == d and r["speed"] == v]
+            if rs: summ[f"d={d},v={v}"] = dict(d=d, speed=v, n=len(rs), orientation_A_mean=float(np.mean([r["orientation_A"] for r in rs])),
+                                              orientation_A_sd=float(np.std([r["orientation_A"] for r in rs])), stripes_across_width=[r["stripes_across_width"] for r in rs],
+                                              top2_power_fraction_mean=float(np.mean([r["top2_power_fraction"] for r in rs])))
+    res = dict(job=job, job_state=state, meta=meta, done=done, n_rows=len(rows), summary=summ, rows=rows,
+               reading="orientation_A > 0: stripes running proximo-distally (along growth, ray-like); ~0: isotropic; < 0: stripes parallel to the growing edge.")
+    (OUT/"edge2d.json").write_text(json.dumps(res, indent=1))
+    fig = plt.figure(figsize=(16, 8)); ax = fig.add_subplot(2, 1, 1)
+    for d, c in zip(meta["ds"], ["tab:red", "tab:green", "tab:blue"]):
+        xs = [s for s in meta["speeds"] if f"d={d},v={s}" in summ]
+        ax.errorbar(range(len(xs)), [summ[f"d={d},v={s}"]["orientation_A_mean"] for s in xs], [summ[f"d={d},v={s}"]["orientation_A_sd"] for s in xs], marker="o", color=c, label=f"d={d}")
+    ax.set_xticks(range(len(meta["speeds"]))); ax.set_xticklabels([("static (all at once)" if s == 0 else f"edge speed {s}") for s in meta["speeds"]])
+    ax.axhline(0, color="k", lw=0.5); ax.set_ylabel("orientation index A (+1 = proximo-distal stripes)"); ax.legend()
+    ax.set_title(f"SIMULATED 2-D distal-edge growth vs static patterning ({len(meta['seeds'])} seeds each); dimensionless")
+    for i, s in enumerate(sorted(snaps, key=lambda s: (s["d"], -s["speed"] if s["speed"] else 1))[:12]):
+        a2 = fig.add_subplot(2, 12, 13 + i); a2.imshow(img(s), cmap="magma", origin="lower", aspect="auto"); a2.axis("off")
+        a2.set_title(f"d={s['d']}\n{'static' if s['speed']==0 else 'v='+str(s['speed'])}", fontsize=7)
+    fig.text(0.5, 0.02, "panels: final field, seed 1, distal (growing) edge at top", ha="center", fontsize=8)
+    fig.tight_layout(rect=(0, 0.03, 1, 1)); fig.savefig(OUT/"edge2d.png", dpi=100); plt.close(fig)
+    outs = [OUT/"edge2d.json", OUT/"edge2d.png"]
+    if frames:
+        tmp = tempfile.mkdtemp(prefix="e2v-"); fr = sorted(frames, key=lambda f: f["k"])
+        for f in fr:
+            fg, a = plt.subplots(figsize=(4, 7)); a.imshow(img(f), cmap="magma", origin="lower"); a.axis("off")
+            a.set_title(f"SIMULATED d={f['d']}, edge speed {f['speed']}\nframe {f['k']} (distal edge grows upward)", fontsize=8)
+            fg.savefig(f"{tmp}/f{f['k']:03d}.png", dpi=90); plt.close(fg)
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-threads", "1", "-framerate", "10", "-i", f"{tmp}/f%03d.png", "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2",
+                        "-pix_fmt", "yuv420p", "-c:v", "libx264", str(OUT/"edge2d.mp4")], check=True)
+        subprocess.run(["cp", f"{tmp}/f{fr[-1]['k']:03d}.png", str(OUT/"poster.png")], check=True); outs += [OUT/"edge2d.mp4", OUT/"poster.png"]
+else:
+    OUT = ROOT/"artifacts/simulations/claude-tissue-phase-map"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/phase_map_gpu.py"
+    grid = {}
+    for b in meta["bs"]:
+        for d in meta["ds"]:
+            rs = [r for r in rows if r["b"] == b and r["d"] == d]
+            if not rs: continue
+            if not rs[0].get("simulated"):
+                grid[f"{b},{d}"] = dict(b=b, d=d, turing_unstable=False); continue
+            dens = [r.get("component_density") for r in rs if r.get("component_density") is not None]
+            grid[f"{b},{d}"] = dict(b=b, d=d, turing_unstable=True, component_density_mean=float(np.mean(dens)) if dens else None,
+                                    labels=[r.get("label") for r in rs], wavelength_mean=float(np.mean([r["wavelength"] for r in rs])),
+                                    amplitude_mean=float(np.mean([r["amplitude"] for r in rs])))
+    res = dict(job=job, job_state=state, meta=meta, done=done, n_rows=len(rows), grid=grid, rows=rows,
+               classifier="component density = n_components(u>mean)*lambda^2/area; > 0.6 spots, else stripes/labyrinth (synthetic check: stripes 0.25, hexagonal spots 1.0)")
+    (OUT/"phase-map.json").write_text(json.dumps(res, indent=1))
+    fig, ax = plt.subplots(1, 2, figsize=(15, 6))
+    M = np.full((len(meta["bs"]), len(meta["ds"])), np.nan)
+    for i, b in enumerate(meta["bs"]):
+        for j, d in enumerate(meta["ds"]):
+            gcell = grid.get(f"{b},{d}")
+            if gcell and gcell["turing_unstable"] and gcell["component_density_mean"] is not None: M[i, j] = gcell["component_density_mean"]
+    im = ax[0].imshow(M, origin="lower", cmap="coolwarm", vmin=0, vmax=1.4, aspect="auto")
+    ax[0].set_xticks(range(len(meta["ds"]))); ax[0].set_xticklabels(meta["ds"]); ax[0].set_yticks(range(len(meta["bs"]))); ax[0].set_yticklabels(meta["bs"])
+    ax[0].set_xlabel("diffusion ratio d"); ax[0].set_ylabel("kinetic parameter b"); fig.colorbar(im, ax=ax[0], label="component density (blue: stripes, red: spots); blank = no Turing pattern")
+    ax[0].set_title("SIMULATED Schnakenberg stripe/spot phase map (a=0.1, 3 seeds)")
+    sn = {(s["b"], s["d"]): s for s in snaps}; nb, nd = len(meta["bs"]), len(meta["ds"])
+    tsz = next(iter(sn.values()))["n"] if sn else 64; P = tsz + 2
+    canvas = np.full((nb*P, nd*P), 255, np.uint8)
+    for i, b in enumerate(meta["bs"]):
+        for j, d in enumerate(meta["ds"]):
+            if (b, d) in sn: canvas[i*P:i*P+tsz, j*P:j*P+tsz] = img(sn[(b, d)])
+    ax[1].imshow(canvas, cmap="magma", origin="lower"); ax[1].set_xticks([j*P + tsz//2 for j in range(nd)]); ax[1].set_xticklabels(meta["ds"])
+    ax[1].set_yticks([i*P + tsz//2 for i in range(nb)]); ax[1].set_yticklabels(meta["bs"]); ax[1].set_xlabel("d"); ax[1].set_ylabel("b"); ax[1].set_title("final fields (seed 11, 64x64 downsample)")
+    fig.tight_layout(); fig.savefig(OUT/"phase-map.png", dpi=100); plt.close(fig)
+    outs = [OUT/"phase-map.json", OUT/"phase-map.png"]
+ok = state == "COMPLETED" and done is not None
+rec = dict(name=f"claude-tissue-{kind}", command=f"python3 /work/{'edge2d' if kind == 'edge2d' else 'phasemap'}.py (args in META)", job=job, job_state=state,
+           exit_code=0 if ok else 1, seed=meta.get("seeds"), wall_s=(done or {}).get("wall_s"),
+           compute=f"Nebius {job} ({meta.get('gpu')}), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+           code_sha256={script: meta["script_sha256"]}, code_matches_repo=bool(meta["script_sha256"] == sha(ROOT/script)),
+           collector_sha256={"simulations/claude_tissue/collect_gpu2.py": sha(ROOT/"simulations/claude_tissue/collect_gpu2.py")},
+           input_sha256={}, output_sha256={str(p.relative_to(ROOT)): sha(p) for p in outs + [logp]},
+           evidence_kind="simulated; not observed", collected_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+(OUT/f"receipt-claude-tissue-{kind}.json").write_text(json.dumps(rec, indent=1, sort_keys=True))
+print(json.dumps(dict(kind=kind, rows=len(rows), snaps=len(snaps), frames=len(frames), done=done, code_matches_repo=rec["code_matches_repo"])))

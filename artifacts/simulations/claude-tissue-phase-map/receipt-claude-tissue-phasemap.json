@@ -1,0 +1,29 @@
+{
+ "code_matches_repo": true,
+ "code_sha256": {
+  "simulations/claude_tissue/phase_map_gpu.py": "3e58dd2d888ccf392b4ec3e0f7ec2810112c1750a87088f379b111a3aab9f09b"
+ },
+ "collected_utc": "2026-11-01T15:43:17Z",
+ "collector_sha256": {
+  "simulations/claude_tissue/collect_gpu2.py": "054d08e6a61cc3490ff703dd1459edff2a248e3970ba97cfd56aa9517b89a054"
+ },
+ "command": "python3 /work/phasemap.py (args in META)",
+ "compute": "Nebius aijob-e00tqm60xz297scrcv (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "input_sha256": {},
+ "job": "aijob-e00tqm60xz297scrcv",
+ "job_state": "COMPLETED",
+ "name": "claude-tissue-phasemap",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-phase-map/job-log.txt": "ee58e1badd7f9992782399a7f5d777b777ecdbe8fb1a41207be2251979af0960",
+  "artifacts/simulations/claude-tissue-phase-map/phase-map.json": "9439817354dfd4326cebae230bdb2ff3de5d5b50f880a3bd2b1f0ad61a8beb2e",
+  "artifacts/simulations/claude-tissue-phase-map/phase-map.png": "3a3ec446c2d58ca9795e70a8919710bbede13b08e2427f0c0955f818e0d8688c"
+ },
+ "seed": [
+  11,
+  22,
+  33
+ ],
+ "wall_s": 110.9
+}

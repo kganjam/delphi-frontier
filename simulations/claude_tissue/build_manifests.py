@@ -91,6 +91,33 @@ def cards():
         parameter_unknowns=["Real fin outgrowth geometry (where and how fast tissue is added) is not measured here; both growth modes are idealised."],
         open_questions=["Live imaging of ray-primordium insertion events (+1 at margin vs synchronous splitting) discriminates the growth modes.", "Edge model predicts new-ray spacing widens when outgrowth slows (e.g. temperature series in medaka)."],
         limitations=["Does not establish how fin rays are added in any species.", "Interior-peak counting may under-count edge peaks."])
+    if (A/"claude-tissue-phase-map/phase-map.json").exists():
+        pm = J("claude-tissue-phase-map/phase-map.json"); gr_ = pm["grid"]
+        tur = [v for v in gr_.values() if v["turing_unstable"]]
+        stripes = [f"b={v['b']}, d={v['d']}" for v in tur if v.get("component_density_mean") is not None and v["component_density_mean"] < 0.6]
+        C["claude-tissue-phase-map"] = dict(
+            title="Where Turing kinetics give stripes (ray-like) vs spots: Schnakenberg phase map over b and d, on an H100 (simulated)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; stripes -> rays and spots -> scales are assumptions",
+            model=dict(name="Schnakenberg 2-D periodic, IMEX spectral, 128^2, t=800, 3 seeds per cell", context=f"a=0.1; b in {pm['meta']['bs']}; d in {pm['meta']['ds']}"),
+            equations=[{"label": "Schnakenberg", "tex": "u_t=a-u+u^2v+\\nabla^2u,\\quad v_t=b-u^2v+d\\nabla^2v", "source": "Murray, Mathematical Biology"},
+                       {"label": "Stripe/spot classifier", "tex": "\\rho_c=N_{\\text{comp}}(u>\\bar u)\\,\\lambda^2/A;\\ \\rho_c>0.6\\Rightarrow\\text{spots}", "source": "this harness; synthetic check stripes 0.25, hexagonal spots 1.0"}],
+            numerical_results=[f"{len(tur)} of {len(gr_)} cells Turing-unstable", "Stripe/labyrinth cells: " + "; ".join(stripes),
+                               "Stripes occur only in the band adjacent to onset (smallest unstable d for each b); spots everywhere deeper in the Turing region"],
+            parameter_unknowns=["Kinetics are generic, not fitted to any fish pathway."],
+            open_questions=["Static patterning gives ray-like stripes only near onset; does directional (edge) growth widen the stripe regime? (claude-tissue-edge2d)"],
+            limitations=["Does not establish that fin rays or scales are Turing patterns.", "Coarse 8x8 grid; boundaries between cells are not resolved.",
+                         "Classifier threshold is heuristic; cell b=1.4, d=17 is weak (amplitude 0.02) and near onset."])
+    if (A/"claude-tissue-edge2d/edge2d.json").exists():
+        e2 = J("claude-tissue-edge2d/edge2d.json"); sm = e2["summary"]
+        C["claude-tissue-edge2d"] = dict(
+            title="Fin fold growing at its distal edge: does directional growth orient Turing patterns into proximo-distal (ray-like) stripes? (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; video renders model state, not tissue",
+            model=dict(name="2-D Schnakenberg, rows activated at the distal edge at speed v; static control patterned all at once", context=f"width {e2['meta']['X']}, length {e2['meta']['Y0']}->{e2['meta']['Y1']}, dx=1, {len(e2['meta']['seeds'])} seeds per condition"),
+            equations=[{"label": "Orientation index", "tex": "A=\\frac{P_{|k_x|>|k_y|}-P_{|k_y|>|k_x|}}{P_{|k_x|>|k_y|}+P_{|k_y|>|k_x|}}", "source": "this harness; +1 = stripes along the growth axis"}],
+            numerical_results=[f"d={v['d']}, {'static' if v['speed']==0 else 'edge speed '+str(v['speed'])}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}, stripes across width {v['stripes_across_width']}" for v in sm.values()],
+            parameter_unknowns=["Real fin-fold growth geometry and speed are not measured here."],
+            open_questions=["Is orientation caused by edge growth specifically, or by any growth along the proximo-distal axis? A uniform-growth control is needed."],
+            limitations=["Does not establish that fin rays form by a Turing mechanism or that fin folds grow only at the edge.", "Dimensionless; generic kinetics."])
     return C
 
 SUPERSEDED = {"receipt-claude-tissue-rd-wavelength.json": "v1 (L=32) superseded by receipt-claude-tissue-rd-wavelength-v2.json",
