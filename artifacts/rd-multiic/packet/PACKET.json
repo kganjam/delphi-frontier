@@ -1,0 +1,95 @@
+{
+ "archive": {
+  "bytes": 38193,
+  "name": "rd-multiic-source.tgz",
+  "sha256": "4e7cf995fefc0bcc703487fe7373341fef4c960fb41e1f59943c110935df8858"
+ },
+ "argv": "tar -xzf rd-multiic-source.tgz && OUT=out MANIFEST=/data/worktrees/delphi-frontier/infra-director/inputs/rd-multiic/test-seeds.json MANIFEST_SHA256=0d48b3b80107b9c9b21e7f5c6a72987c3cf4919f5d0da3598b7ab1cad38dab8c bash rd-multiic/engineering/rd_multiic/job.sh",
+ "claim_limits": "synthetic numerical model only; 5 reused targets; compute-allocation comparison, not a pure loss effect; no identifiability, no biology",
+ "env": {
+  "MKL_NUM_THREADS": "1",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "OUT": "out",
+  "credentials": "none",
+  "network": "none needed"
+ },
+ "estimates_unmeasured": "runtime under about 800 s (basis: the 355.13 s original run); a discarded tau=2 full-plan CPU smoke wrote about 24 MB compressed (not representative of tau=200 fields)",
+ "expected_outputs": [
+  "control.json",
+  "reference.json",
+  "reference_fields.npz",
+  "training_traces.json",
+  "training_round_NN.json (x8)",
+  "training_round_NN.npz (x8)",
+  "selections.json",
+  "barrier.json",
+  "test_fields.npz",
+  "controls.json",
+  "endpoints.json",
+  "sparse_controls.json",
+  "sparse_fields.npz",
+  "traces_partial.json",
+  "receipt.json"
+ ],
+ "files": {
+  "engineering/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "engineering/rd_diffusion/config.json": "bc77ebc55010b9c8ac910c2b31868ec0dbf2d1e3785a06ec3ef1aa028ea2b210",
+  "engineering/rd_diffusion/rd_ddpm.py": "25455430ef138b49e6bac151a144e338269a81ce5c2f576387f8805bbb1a400a",
+  "engineering/rd_inverse/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "engineering/rd_inverse/design.py": "203a83e8fe47a84d3b3dc441001b2b7fca1b27eaa8001f583055a41098d6310e",
+  "engineering/rd_inverse/protocol.json": "8f6fee6f15856bfeae105bcb73bbeea853e8f52196bf3e59ce80cb938e8ce346",
+  "engineering/rd_multiic/CLARIFICATION_1.md": "49df718d8d971ed1b6fb2e98963b1258233e3a5931515bb5355a2a2ad4f9557e",
+  "engineering/rd_multiic/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "engineering/rd_multiic/job.sh": "5e093a1a9eeeac7312a8627e50170cef2da3d9cb9843b9cfc0cd1e2afa7fdad8",
+  "engineering/rd_multiic/multiic.py": "68c4a99a6d2af39c4f8561235046665fdc322f36754262a49e6e182d62db0a34",
+  "engineering/rd_multiic/protocol.json": "4404254c82aa6a33df114280e6755ac9b363e3a9d66eb6da264f0cb4b3329b8d",
+  "engineering/rd_numerics/__init__.py": "a92f3a7cb56bf869573a1143e1d075b17341adf4bd513a80ddf37b582a2d676c",
+  "engineering/rd_numerics/audit.py": "ff8fe2498919227dc272c121be1268380af7ba9423e49d872f71e3be64e59e2c"
+ },
+ "image": "nvcr.io/nvidia/pytorch@sha256:11e9976339d08669ede155cdbc601b1df5f57772fcee772b23527efc54e05602",
+ "limits": {
+  "gpus": 1,
+  "hard_cap_s": 1800,
+  "host_ram": "< 8 GiB",
+  "max_output_mib_compressed": 48,
+  "soft_deadline_s": 1500
+ },
+ "manifest": {
+  "note": "infra-generated; never opened by this harness; the job opens it only after barrier.json",
+  "path": "/data/worktrees/delphi-frontier/infra-director/inputs/rd-multiic/test-seeds.json",
+  "sha256": "0d48b3b80107b9c9b21e7f5c6a72987c3cf4919f5d0da3598b7ab1cad38dab8c"
+ },
+ "pins": {
+  "config": {
+   "path": "engineering/rd_diffusion/config.json",
+   "sha256": "bc77ebc55010b9c8ac910c2b31868ec0dbf2d1e3785a06ec3ef1aa028ea2b210"
+  },
+  "original_design": {
+   "path": "engineering/rd_inverse/design.py",
+   "sha256": "203a83e8fe47a84d3b3dc441001b2b7fca1b27eaa8001f583055a41098d6310e",
+   "use": "solve_batch, rms, to_params, bounds, imported unmodified"
+  },
+  "original_protocol": {
+   "path": "engineering/rd_inverse/protocol.json",
+   "sha256": "8f6fee6f15856bfeae105bcb73bbeea853e8f52196bf3e59ce80cb938e8ce346",
+   "use": "target parameters T0-T4 and ic generation rule"
+  },
+  "projection": {
+   "path": "engineering/rd_numerics/audit.py",
+   "sha256": "ff8fe2498919227dc272c121be1268380af7ba9423e49d872f71e3be64e59e2c"
+  },
+  "solver": {
+   "path": "engineering/rd_diffusion/rd_ddpm.py",
+   "sha256": "25455430ef138b49e6bac151a144e338269a81ce5c2f576387f8805bbb1a400a"
+  }
+ },
+ "preflight": {
+  "cmd": "tar -xzf rd-multiic-source.tgz && PREFLIGHT=1 bash rd-multiic/engineering/rd_multiic/job.sh",
+  "no_gpu_needed": true
+ },
+ "protocol_sha256": "4404254c82aa6a33df114280e6755ac9b363e3a9d66eb6da264f0cb4b3329b8d",
+ "requires": "CUDA; float64; TF32 flags set false and recorded AFTER setting; the job refuses on CPU.",
+ "schema": "frontier.rd-multiic.packet/1",
+ "status": "ready"
+}

@@ -1,0 +1,1 @@
+{"queue_id": "infra-rd-multiic", "max_wall_s": 1980, "margin_s": 60, "max_part_bytes": 50331648, "workloads": [{"id": "rd-multiic-matched-budget-one-ic-vs-multi-ic", "argv": ["python3", "-m", "frontier_compute.portable_entry", "artifacts/rd-multiic/packet/portable-source.tar.xz", "artifacts/rd-multiic/packet/portable.json"], "timeout_s": 1860, "max_part_bytes": 50331648}]}
