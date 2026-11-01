@@ -210,10 +210,23 @@
   },
   {
    "id": "r6b-trim-map-fine",
+   "title": "Refined trim map around R6's optimum (6-DOF, moment-balance trim, dispersion)",
    "scales": [
     "organism"
    ],
-   "status": "no manifest (run not completed)"
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No flight test: refined 6-DOF trim map with assumed polars, CLmax and dispersion; pelvic keys 5-7 deg do not exist as prints; rigid fins (see R7).",
+   "checks_passed": 2,
+   "checks_total": 2,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T16:50:54Z",
+   "manifest": "artifacts/organ-sims/r6b-trim-map-fine/manifest.json",
+   "manifest_sha256": "6613e6040c20721821ac9c12c9ef0de56a1914ebb15306ef45724b8a6be9c216",
+   "figures": [
+    "artifacts/organ-sims/r6b-trim-map-fine/trim_map.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
   },
   {
    "id": "r5-school-launch",

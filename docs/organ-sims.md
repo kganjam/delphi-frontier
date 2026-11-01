@@ -17,6 +17,7 @@ Code: `engineering/organ_sims/`. Logs: `artifacts/organ-sims/logs/`.
 | R5b `r5b-staggered-release` | Staggered collective release (Nebius) | 0 | 2/2 |
 | R6 `r6-trim-map` | R2 designs in 6-DOF with real trim (Nebius) | 0 (attempt a2; a1 failed at import) | 3/3 |
 | R5c `r5c-integrated-launch` | R6 designs with the R5b release rule (Nebius) | 0 | 2/2 |
+| R6b `r6b-trim-map-fine` | Refined trim map (Nebius) | 0 | 2/2 |
 | R7 `r7-aeroelastic-flight` | 6-DOF flights with R4b's fin-flexibility correction (Nebius) | 0 | 3/3 |
 | R5 `r5-school-launch` | Collective launch in PyBullet (6-DOF, contacts, wake coupling) | 0 (run 2; run 1 exited 3, see R5) | 8/8 |
 
@@ -29,7 +30,8 @@ All of these are simulated, not observed. Each line names the run that supports 
 2. **v3b pose:** reverse the ray-wise camber sign, ×−0.5 (R1b): +61% CL(4°) over v3b as built. ×−1 risks tip stall.
    Camber is an assumed deployment knob, with no source for the fish.
 3. **Glider trim:** print a dec+6 pelvic key and move the CG aft to ≈ 58.5 mm (less nose ballast) (R5, R6).
-4. **Glider wing:** pectorals ×1.4 area at ×0.85 AR (R6, R5c). +39% mean and +28% P10 range in a collective launch.
+4. **Glider wing:** pectorals ×1.4 area at ×0.85 AR (R6, R5c). R6b found a narrow, aggressive peak at ×1.5 / ×0.8 /
+   dec+7 (+9% mean), whose CG sits 0.5 mm from the window edge. +39% mean and +28% P10 range in a collective launch.
    R2's ×1.8 / ×0.7 "best" does not survive trim.
    - Constraints: needs a new pelvic print; CG near the 60 mm window edge; static margin 0.12.
 5. **Pectoral spar:** place it near 0.25 c, never aft of about 0.3 c (R4b). On the leading ray it costs 1.5–8% CL from
@@ -415,6 +417,27 @@ zero lift (argon #4). R6 replaces that rule with moment-balance trim.
   0.07–0.12 are thinner than the 10–20% the hand-NP plan targeted.
 - **Not established:** quasi-steady 6-DOF with assumed polars and CLmax; no aeroelasticity (R4b) or launch-stroke
   loads; assumed dispersion.
+
+## R6b. Refined trim map around R6's optimum (Nebius job, `r6b-trim-map-fine`)
+
+**Setup.** Area ×1.3–1.6, AR ×0.8–0.95, root shift 0 or +2 mm, pelvic keys 5/6/7°, CG shift 0–8 mm in 1 mm steps,
+V0 8 and 10 m/s, 32 seeds.
+
+**Run record.**
+- Job `aijob-e00vk32zhy5a2qy1d8`, code `7ac74df`, env `R6_FINE=1`; exit 0 in 360 s; tarball SHA-256 matched.
+- Checks 2/2. R6's recommended point reproduces R6's static trim exactly.
+- Totals: 864 static trims, 4,752 flights, 72 admissible configurations, of which 47 meet every R2 hard constraint.
+
+**Result.**
+- **Best feasible design:** pectoral ×1.5 area, ×0.8 AR, dec+7, CG 59.5 mm, 25.3 g, static margin 0.125, L_fin 111 mm.
+  At 8 m/s: mean 9.38 m and P10 6.58 m, against 8.59 / 5.92 m for R6's ×1.4 / ×0.85 / dec+6 point (+9% / +11%).
+- **It is a narrow peak.** No other feasible configuration reaches within 5% of its mean. Its CG is 0.5 mm inside
+  the 60 mm window.
+- **The infeasible "best"** (×1.6, ×0.95) breaks the 115 mm print length and the biological pectoral/SL band.
+- **Design recommendation:** keep R6's ×1.4 / ×0.85 / dec+6 as the robust choice. Record ×1.5 / ×0.8 / dec+7 as the
+  aggressive option, to try only with a CG tolerance under ±0.5 mm.
+- **Caution:** ranges at V0 = 10 m/s (≈ 20–24 m) include a large zoom-climb from the 1.35 m release. The 6-DOF model
+  has no stall hysteresis or gusts. Do not read them as achievable throws.
 
 ## R5c. Integrated collective launch (Nebius job, `r5c-integrated-launch`)
 
