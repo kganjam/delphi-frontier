@@ -8,7 +8,10 @@ SHA="$1"; RID="$2"; MOD="$3"; shift 3
 echo "ORGAN-JOB start $(date -u +%FT%TZ) sha=$SHA rid=$RID mod=$MOD args=$*"
 nproc; python3 --version
 cd /tmp && git clone -q --filter=blob:none --no-checkout https://github.com/kganjam/delphi-frontier.git repo && cd repo || exit 20
-git sparse-checkout init --cone && git sparse-checkout set engineering artifacts/glider/r4-daane-printfix artifacts/organ-sims artifacts/fish3d/fish3d-v3a-fan || exit 21
+# non-cone sparse set: every input any organ-sims module reads (a1 of r6 failed on a missing r3-daane input)
+git sparse-checkout set --no-cone '/engineering/' '/artifacts/organ-sims/' '/artifacts/glider/r4-daane-printfix/' '/artifacts/glider/r3-daane/*.json' \
+  '/artifacts/cfd3d/vlm/' '/artifacts/fish3d/fish3d-v3a-fan/' '/artifacts/fish3d/fish3d-v3b-glide-pose/panels.json' \
+  '/artifacts/fish3d/fish3d-v3c-daane-length/*.json' '/artifacts/aeroelastic/protocol.json' || exit 21
 git checkout -q "$SHA" || exit 22
 [ "$(git rev-parse HEAD)" = "$SHA" ] || { echo "HEAD mismatch"; exit 23; }
 python3 -m pip install -q --no-cache-dir numpy==2.2.6 matplotlib==3.10.3 pybullet==3.2.7 2>&1 | tail -2

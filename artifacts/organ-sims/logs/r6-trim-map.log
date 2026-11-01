@@ -1,0 +1,10 @@
+pybullet build time: Nov  1 2026 15:44:10
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/tmp/repo/engineering/organ_sims/r6_trim_map.py", line 18, in <module>
+    from engineering.organ_sims import r2_glide_sweep as R2
+  File "/tmp/repo/engineering/organ_sims/r2_glide_sweep.py", line 31, in <module>
+    H = json.load(open(C.ROOT / FM)); M = json.load(open(C.ROOT / MAN)); V = json.load(open(C.ROOT / VLM)); K = json.load(open(C.ROOT / CAND))
+                  ^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/repo/artifacts/glider/r3-daane/flight_model.json'

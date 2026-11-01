@@ -1,0 +1,49 @@
+{
+ "job_name": "claude-organ-r6-trim-map-a1",
+ "job_id": "aijob-e00yvx4yvv90cwh3qz",
+ "collected_utc": "2026-11-01T15:45:44Z",
+ "state": "FAILED",
+ "status": {
+  "instances": [
+   {
+    "state": "RUNNING",
+    "compute_instance_id": "computeinstance-e00mn6nft7tn7jffer",
+    "compute_instance_state": "RUNNING",
+    "private_ip": "10.0.0.240"
+   }
+  ],
+  "state": "FAILED",
+  "state_details": {
+   "code": "ContainerFailed",
+   "message": "Container exited with non-zero exit code."
+  },
+  "started_at": "2026-11-01T15:43:47.876567910Z",
+  "finished_at": "2026-11-01T15:45:13.576255273Z"
+ },
+ "log_bytes": 1883,
+ "log_sha256": "3a32f275c598a6db2e8ff298cb8f562ac6a81e96e569bae70f094818795ce5c9",
+ "science_rc": 1,
+ "science_wall_s": 0,
+ "log_head": [
+  "ORGAN-JOB start 2026-11-01T15:43:48Z sha=63bf80b1123a08dbef13dd54b7e7d6467ea17672 rid=r6-trim-map mod=engineering.organ_sims.r6_trim_map args=16 38",
+  "Python 3.12.7",
+  "pkgs 2.2.6 3.10.3",
+  "ORGAN-JOB science rc=1 wall_s=0"
+ ],
+ "output": {
+  "declared_sha256": "1faee25911176269cd4f506cebb68641e1ffd60b5195cfe5093174dcee423e22",
+  "declared_bytes": 627,
+  "decoded_bytes": 627,
+  "sha256_match": true
+ },
+ "files": {
+  "artifacts/organ-sims/logs/r6-trim-map.log": {
+   "sha256": "35b6af3669c5653410ea005f528e59d99f16245227d6ad030171d3d47e513b7c",
+   "bytes": 694
+  },
+  "artifacts/organ-sims/logs/r6-trim-map.job.json": {
+   "sha256": "16c92d9e4f35e5c2d0575a3e1dbde4dddf10dc234e96c027ddb4197953281400",
+   "bytes": 196
+  }
+ }
+}
