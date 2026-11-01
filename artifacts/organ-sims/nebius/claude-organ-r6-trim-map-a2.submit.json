@@ -1,0 +1,4 @@
+{"job_name": "claude-organ-r6-trim-map-a2", "job_id": "aijob-e00b8s2q52mwhxyj79", "submitted_utc": "2026-11-01T15:47:42Z", "platform": "gpu-l40s-a", "preset": "1gpu-40vcpu-160gb",
+ "why_gpu_platform": "cpu-d3 create returned ResourceExhausted (non-GPU vCPU quota full); CPU-only workload, GPU idle",
+ "image": "python:3.12.7-bookworm", "timeout": "2h", "disk": "50Gi", "command": "bash /work/run_job.sh 4edab8ec83b6f32727647a3ab75ab097769828ef r6-trim-map engineering.organ_sims.r6_trim_map 16 38",
+ "code_commit": "4edab8ec83b6f32727647a3ab75ab097769828ef", "run_job_sh_sha256": "d8bf7d09f53deca6a232d57002f05faa0c2bf7bc2c81e421101a24fb129dfae0"}

@@ -87,6 +87,42 @@
    "manifest_has_scale_fields": false
   },
   {
+   "id": "r5b-staggered-release",
+   "title": "Staggered collective release of printed gliders (PyBullet 6-DOF, wake coupling, contacts)",
+   "scales": [
+    "collective",
+    "organism"
+   ],
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No observed schooling or launch: rigid printed gliders released with assumed timing offsets and dispersion; no sensing, control or behaviour (ff-eco); straight horseshoe wakes, no wake roll-up or decay.",
+   "checks_passed": 2,
+   "checks_total": 2,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T15:47:17Z",
+   "manifest": "artifacts/organ-sims/r5b-staggered-release/manifest.json",
+   "manifest_sha256": "c008f2d791d33e6f5ce70574c7837c8208e2da47d818d7d15073baba5f07e445",
+   "figures": [
+    "artifacts/organ-sims/r5b-staggered-release/stagger.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
+  },
+  {
+   "id": "r6-trim-map",
+   "scales": [
+    "organism"
+   ],
+   "status": "no manifest (run not completed)"
+  },
+  {
+   "id": "r4b-torsion",
+   "scales": [
+    "organ",
+    "tissue"
+   ],
+   "status": "no manifest (run not completed)"
+  },
+  {
    "id": "r5-school-launch",
    "title": "Collective launch of printed gliders in PyBullet (6-DOF, quasi-steady per-surface aero, contacts)",
    "scales": [

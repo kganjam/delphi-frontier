@@ -10,13 +10,43 @@ ROOT = Path(__file__).resolve().parents[3]
 CLI = os.path.expanduser("~/.nebius/bin/nebius")
 
 
+def _fmt(ns):
+    sec, frac = divmod(ns, 10 ** 9)
+    return time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime(sec)) + f".{frac:09d}Z"
+
+
+def _query(jid, a, b):
+    out = subprocess.run([CLI, "--profile", "hackathon", "ai", "job", "logs", jid, "--since", _fmt(a), "--until", _fmt(b), "--tail", "1000"],
+                         capture_output=True, text=True)
+    if out.returncode != 0:
+        raise RuntimeError(out.stderr[:300])
+    return out.stdout.splitlines()
+
+
+def fetch_log(jid, a, b, stats):
+    """The log API returns at most 1000 lines per query (newest first-truncated), so bisect [a, b) in time until every
+    window holds < 1000 lines.  Completeness is verified downstream by the tarball sha256."""
+    lines = _query(jid, a, b); stats["queries"] += 1
+    if len(lines) < 1000:
+        return lines
+    if b - a <= 1000:
+        raise RuntimeError("cannot split window below 1 us")
+    m = (a + b) // 2
+    return fetch_log(jid, a, m, stats) + fetch_log(jid, m, b, stats)
+
+
 def main():
     name, jid = sys.argv[1], sys.argv[2]
     st = json.loads(subprocess.run([CLI, "--profile", "hackathon", "ai", "job", "get", jid, "--format", "json"], capture_output=True, text=True).stdout)
     state = st["status"]["state"]
-    log = subprocess.run([CLI, "--profile", "hackathon", "ai", "job", "logs", jid], capture_output=True, text=True).stdout
+    import datetime as dt
+    t0 = dt.datetime.fromisoformat(st["metadata"]["created_at"].replace("Z", "+00:00")[:26] + "+00:00")
+    a = int(t0.timestamp()) * 10 ** 9 - 60 * 10 ** 9
+    b = (int(time.time()) + 60) * 10 ** 9
+    stats = {"queries": 0}
+    log = "\n".join(fetch_log(jid, a, b, stats)) + "\n"
     rec = {"job_name": name, "job_id": jid, "collected_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "state": state,
-           "status": st["status"], "log_bytes": len(log), "log_sha256": hashlib.sha256(log.encode()).hexdigest()}
+           "status": st["status"], "log_queries": stats["queries"], "log_bytes": len(log), "log_sha256": hashlib.sha256(log.encode()).hexdigest()}
     m = re.search(r"ORGAN-OUT-BEGIN sha256=([0-9a-f]{64}) bytes=(\d+)\n(.*?)\nORGAN-OUT-END", log, re.S)
     sci = re.search(r"ORGAN-JOB science rc=(\d+) wall_s=(\d+)", log)
     rec["science_rc"] = int(sci.group(1)) if sci else None

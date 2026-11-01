@@ -12,6 +12,7 @@ Code: `engineering/organ_sims/`. Logs: `artifacts/organ-sims/logs/`.
 | R2 `r2-glide-sweep` | Wing area, AR and placement vs launch-glide range, under printed-mass constraints | 0 | 8/8 |
 | R3 `r3-underwater-drag` | Underwater drag of the same bodies, fins spread vs folded | 0 | 13/13 |
 | R4 `r4-aeroelastic-stiffness` | Fin bending over the sourced fin-ray stiffness range | 0 | 6/6 |
+| R5b `r5b-staggered-release` | Staggered collective release (Nebius) | 0 | 2/2 |
 | R5 `r5-school-launch` | Collective launch in PyBullet (6-DOF, contacts, wake coupling) | 0 (run 2; run 1 exited 3, see R5) | 8/8 |
 
 ## Project scales and what each run does NOT establish
@@ -227,6 +228,38 @@ landing deviation from each fish's own lane.
 - **Constraints violated:** a launcher holding 8 lanes at 0.6 m is 4.2 m wide, far beyond a hand or slingshot rig, so a practical collective launch needs a staggered release (not simulated). Biologically, real flying fish do not hold lanes and steer; this run has no sensing or control, so it does not establish anything about schooling behaviour. That layer is ff-eco's.
 - **Not modelled:** unsteady wakes, the band and hook stroke, splash.
 - **Dispersion is an assumed scenario:** no launch has been measured.
+
+## R5b. Staggered collective release (Nebius job, `r5b-staggered-release`)
+
+**Setup.**
+- Same 6-DOF model, pelvic key dec+4 and dispersion scenarios as R5. Only the release timing changes.
+- Lane spacing: 0.25, 0.30, 0.40 m.
+- Offset between consecutive releases: 0, 50, 100, 200 ms.
+- Release pattern: lanes in sequence, or alternating (even lanes first).
+- 16 seeds per cell; wake on, plus wake-off twins at 100 ms; 864 eight-fish launches in total.
+
+**Run record.**
+- Job `aijob-e00dg72tscvj43r3mc` on an L40S host (40 vCPU, GPU idle). Code `a422be6`; science step exit 0 in 332 s.
+- The output tarball was recovered from the job log by time-bisected paging: 45 queries, SHA-256 matched
+  (`nebius/claude-organ-r5b-stagger-a1.*`).
+- Checks 2/2. The zero-offset arm reproduces the committed R5 rows exactly.
+
+**Fraction of launches with a mid-air contact:**
+
+| Spacing | Simultaneous (small / large spread) | 50 ms, alternating | 100 ms, either pattern |
+|---|---|---|---|
+| 0.25 m | 0.69 / 0.56 | 0.06 / 0.00 | 0.00 / 0–0.06 |
+| 0.30 m | 0.44 / 0.44 | 0.06 / 0.00 | 0.00 / 0.00 |
+| 0.40 m | 0.13 / 0.25 | 0.00 / 0.00 | 0.00 / 0.00 |
+
+**Flying in earlier fishes' wakes** (100 ms offset, paired wake-on minus wake-off): mean range change −0.054 to
+0.000 m, 10th percentile ≥ −0.10 m (< 2% of the ≈ 6 m range).
+
+- **Design change:** release in alternating lanes with ≥ 100 ms between releases. That allows 0.25 m lanes, about
+  1.1 wingspans, so an 8-fish launcher is 1.75 m wide instead of the 4.2 m that simultaneous release needs.
+- **Wake cost to followers:** negligible in this model.
+- **Not established:** a straight horseshoe wake (no roll-up, descent or decay); no wake impingement on the water
+  surface; assumed dispersion; no real launcher.
 
 ## LLM review
 

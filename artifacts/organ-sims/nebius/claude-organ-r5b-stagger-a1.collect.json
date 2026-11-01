@@ -1,0 +1,75 @@
+{
+ "job_name": "claude-organ-r5b-stagger-a1",
+ "job_id": "aijob-e00dg72tscvj43r3mc",
+ "collected_utc": "2026-11-01T15:50:03Z",
+ "state": "COMPLETED",
+ "status": {
+  "instances": [
+   {
+    "state": "RUNNING",
+    "compute_instance_id": "computeinstance-e00vvennzgf8fhdqb9",
+    "compute_instance_state": "RUNNING",
+    "private_ip": "10.0.0.95"
+   }
+  ],
+  "state": "COMPLETED",
+  "started_at": "2026-11-01T15:40:19.657971335Z",
+  "finished_at": "2026-11-01T15:47:17.596935224Z"
+ },
+ "log_queries": 45,
+ "log_bytes": 312228,
+ "log_sha256": "ab3ad50658832bd5649187f890efc1549af0f064dc7f14d0015c899c0e8afec3",
+ "science_rc": 0,
+ "science_wall_s": 332,
+ "log_head": [
+  "ORGAN-JOB start 2026-11-01T15:40:20Z sha=a422be6221b7ba1702c91eead51703098bb4a746 rid=r5b-staggered-release mod=engineering.organ_sims.r5b_stagger args=16 38",
+  "Python 3.12.7",
+  "pkgs 2.2.6 3.10.3",
+  "ORGAN-JOB science rc=0 wall_s=332"
+ ],
+ "output": {
+  "declared_sha256": "a2d7316aea64129770dfd0c5498bcc1e90eb7bfa1fbabee0599979ebc455cfc5",
+  "declared_bytes": 231723,
+  "decoded_bytes": 231723,
+  "sha256_match": true
+ },
+ "files": {
+  "artifacts/organ-sims/r5b-staggered-release/manifest.json": {
+   "sha256": "c008f2d791d33e6f5ce70574c7837c8208e2da47d818d7d15073baba5f07e445",
+   "bytes": 721372
+  },
+  "artifacts/organ-sims/r5b-staggered-release/stagger.png": {
+   "sha256": "e39c92b6bf34ec89edf37a96dc98c34016e1d28cf9010c5aee7d65f1536fada9",
+   "bytes": 85295
+  },
+  "artifacts/organ-sims/logs/r5b-staggered-release.log": {
+   "sha256": "e8b40e1369b74a89be873fde8fd4d08b3222c2c75c6e68aa7ada0add137dddd8",
+   "bytes": 13897
+  },
+  "artifacts/organ-sims/logs/r5b-staggered-release.job.json": {
+   "sha256": "0cf3af48a443181355ad1f5a140645477e105a87688ff7e17eee04833d55ab52",
+   "bytes": 206
+  }
+ },
+ "manifest_checks": [
+  [
+   "control: stagger 0 reproduces R5 simultaneous rows exactly (collision pairs, mean range 1e-9)",
+   true
+  ],
+  [
+   "every launch finished (no timeouts, all ranges finite)",
+   true
+  ]
+ ],
+ "manifest_code_sha256": {
+  "engineering/organ_sims/common.py": "e0ad67f7b2d692ccc94ef10b3bf70ab85d51cba09b77af1e4e517c0616f7520c",
+  "engineering/organ_sims/index.py": "9d25969238579345755b2651004dd3ae01320fec60ab397d22d5d609e5c6f93b",
+  "engineering/organ_sims/r1_v3b_convergence.py": "539630b87142f4223eddfe268915bf41aab0a3fdfba94bf067553fa22f2846ed",
+  "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
+  "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
+  "engineering/organ_sims/r4_aeroelastic_stiffness.py": "c2eecffe07310b33f3b09421b5a92d42fd7cf099b5e58a978c47f7b85c61f1e1",
+  "engineering/organ_sims/r5_school_launch.py": "38355f200b5c1a0189ae169f4e7a0e61a36adc1ec3d6f6c56e761443567a0741",
+  "engineering/organ_sims/r5b_stagger.py": "64920881ab02ecc69b8ee577f793c46056dc30fb21723841154dcd7410aeaeab"
+ },
+ "manifest_git_head_at_run": "a422be6"
+}
