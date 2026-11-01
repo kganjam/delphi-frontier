@@ -82,3 +82,60 @@ objects: zebrafish ones are TSS-anchored on GRCz11, flying-fish ones are anchore
 *predicted* start codon in an unannotated assembly, and two of the nine are at loci this project's
 own cross-check flags as paralog mismatches (`CROSSCHECK-EVO.md`). One run, one operator, not
 independently reviewed.
+
+---
+
+# Manifest — claude-zf2ff-motif-robust-1 (the robustness re-run, which overturned the result above)
+
+| | |
+| --- | --- |
+| Nebius job | `aijob-e00msbsq47zkq8nwt7`, name `claude-zf2ff-motif-robust-1` |
+| State read from the CLI | `COMPLETED` |
+| Platform / preset | `gpu-l40s-a` / `1gpu-8vcpu-32gb` — again CPU-only work on a GPU preset, because a `cpu-d3 4vcpu-16gb` submit was refused for the same tenant quota |
+| Container start → done | `2026-11-01T15:53:58Z` → `2026-11-01T15:55:56Z` (118 s) |
+| Input FASTA | sha256 `c9dd35a2…1a037ca850d`, **re-hashed in-container to the same digest** |
+| JASPAR | sha256 `2a6c7c24…04eaacb59` — **identical to the first run**, so the motif set is held constant |
+| Code | `scripts/job_motif_robust.py`, 20 shuffles per window, seed 12345 |
+| Log | `job_log_aijob-e00msbsq47zkq8nwt7.log`; result `motif_robust_result.json` |
+
+## What changed versus the first run
+
+1. **20 dinucleotide-preserving shuffles per window** (Altschul–Erikson Euler-path), instead of 2.
+   The job **asserts that every shuffle reproduces its source's exact doublet counts** and aborts
+   otherwise: `ZF2FF_SHUFFLES_DOUBLET_VERIFIED=380` — 19 × 20, all verified.
+2. **Each window's threshold comes from its own shuffles** (95th percentile per motif), so no
+   threshold is shared between windows and GC cannot enter through the threshold.
+
+## Result — the first run's species asymmetry does not survive
+
+| set | n | mean real − shuffle | 95% CI | t | windows positive | mean z |
+| --- | --- | --- | --- | --- | --- | --- |
+| zebrafish | 10 | **+51.7** | [37.3, 66.2] | 7.02 | **10/10** | 4.21 |
+| flying fish | 9 | **+57.4** | [39.1, 75.7] | 6.15 | **9/9** | 4.41 |
+
+**19 of 19 windows are positive and the two species are now indistinguishable in effect size.** The
+first run's null zebrafish arm (+7.0, CI [−11.0, +25.0]) was an artefact of exactly the two
+weaknesses flagged before this job was submitted: a pooled threshold that let effect size track GC,
+and n = 2 shuffles against a shuffle-to-shuffle spread of median 21 motifs. **The earlier conclusion
+is withdrawn, and the withdrawal was predicted in advance, not discovered afterwards.**
+
+## Independent agreement
+
+The Evo 2 harness ran its own motif scan separately (`messages/evo-to-zf2ff.md` §1c, appended after
+this project's first run): 879 JASPAR 2024 motifs, per-motif FPR 1×10⁻⁴, 5 shuffles per sequence —
+a different thresholding rule and a different shuffle count. It reports real windows at **+125.3**
+excess hits [61.0, 189.7], flying fish **+181.4**, zebrafish **+74.8** [−5.8, 155.4]. Different
+magnitudes, because the thresholds differ; **the same direction, and 17/19 and 19/19 windows
+positive respectively**. Two independently written implementations agree that these windows carry
+above-composition motif structure.
+
+## Remaining weakness, stated
+
+The per-window z-scores are **anti-conservative**: the threshold is fitted on the same 20 shuffles
+whose counts form the null, which deflates the null's spread. A held-out split (calibrate on 10,
+test on 10) would fix it and was not run. The direction of the result does not depend on it —
+19/19 windows positive, and the aggregate differences are large — but the individual z values
+should not be read as exact.
+
+**Scope is unchanged:** a motif match is a sequence-pattern match, not a bound transcription factor,
+not an enhancer, not expression, not function.

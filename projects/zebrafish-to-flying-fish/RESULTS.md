@@ -370,16 +370,80 @@ it is **not** offered as a biological finding, for two reasons visible in this r
    are GC-richer (0.349–0.577 vs 0.256–0.408).
 
 So the reportable result here is the **aggregate above-composition motif signal**, and the species
-asymmetry is **unresolved**. A follow-up job (`claude-zf2ff-motif-robust-1`) was submitted to test
-both weaknesses directly: 20 dinucleotide shuffles per window generated in-container with a declared
-seed and a doublet-count assertion that aborts the run on failure, and each window's threshold taken
-from **its own** shuffles.
+asymmetry was **held as unresolved** pending a follow-up job designed to test exactly those two
+weaknesses. That job has since run, and it overturned the asymmetry — see §R6b.
+
+### R6b — Robustness re-run: the species asymmetry does not survive
+
+**`claude-zf2ff-motif-robust-1`** (`aijob-e00msbsq47zkq8nwt7`), CLI-read `COMPLETED`, 118 s. Same
+input FASTA digest, **same JASPAR digest** so the motif set is held constant. Changes: 20
+dinucleotide-preserving shuffles per window instead of 2, generated in-container (Altschul–Erikson,
+seed 12345) with an assertion that each reproduces its source's exact doublet counts — 
+`ZF2FF_SHUFFLES_DOUBLET_VERIFIED=380`, all 19 × 20 verified — and **each window's threshold taken
+from its own shuffles**, so no threshold is shared and GC cannot enter through it.
+
+| set | n | mean real − shuffle | 95% CI | t | positive | mean z |
+| --- | --- | --- | --- | --- | --- | --- |
+| zebrafish | 10 | **+51.7** | [37.3, 66.2] | 7.02 | **10/10** | 4.21 |
+| flying fish | 9 | **+57.4** | [39.1, 75.7] | 6.15 | **9/9** | 4.41 |
+
+**19 of 19 windows positive, and the two species are indistinguishable in effect size.** The first
+run's null zebrafish arm was an artefact of the pooled threshold and of n = 2 shuffles against a
+shuffle-to-shuffle spread of median 21. **§R6's species asymmetry is withdrawn** — and the withdrawal
+was predicted before the job was submitted, not discovered after.
+
+**Independent agreement.** The Evo 2 harness ran its own motif scan separately (`§1c` of the handoff,
+appended after this project's first run) with a different thresholding rule (per-motif FPR 1×10⁻⁴)
+and 5 shuffles per sequence: real windows **+125.3** [61.0, 189.7], flying fish +181.4, zebrafish
++74.8. Different magnitudes because the thresholds differ; **the same direction**, 17/19 and 19/19
+windows positive. Two independently written implementations agree.
+
+**Remaining weakness, stated rather than buried.** The per-window z-scores are anti-conservative: the
+threshold is fitted on the same 20 shuffles that form the null, which deflates its spread. A held-out
+split would fix it and was not run. The direction does not depend on it (19/19 positive, large
+aggregate differences), but individual z values are not exact.
 
 **Scope.** A motif match is a sequence-pattern match: not a bound factor, not an enhancer, not
 expression, not function. Two of the nine flying-fish windows sit at loci this project's own
 cross-check (§R5) flags as paralog mismatches.
 
-## R7 — Inputs reused from other harnesses (their receipts, not ours)
+## R7 — Second gene tree: no `kcnh2a`-like region exists anywhere in this assembly
+
+**`claude-zf2ff-kcnh2a-hunt-tree-1`** (`aijob-e00k03g7vbmk6smbkh`), CLI-read `COMPLETED`. Input sha256
+`585d9bd5…147a28830`, re-hashed in-container to the same digest; treefile sha256 `cf70f399…533b905e`.
+Same method as §R4 (MAFFT → IQ-TREE 2, LG+G4, 1000 UFBoot + 1000 SH-aLRT, seed 12345).
+
+A low-stringency whole-assembly search with the `kcnh2a` query alone (`-N 20 --outs=0.3 --outc=0.05`,
+`scripts/hunt_kcnh2a.sh`, exit 0) found **no new region**: the same **7** `kcnh2a`-aligning regions.
+Two were already assigned. This tree tested the other five, carrying one sequence from each assigned
+region forward as a control.
+
+**Both carried-forward controls reproduce in an independent run with a different sequence set:**
+`HSPEC_ambiguous_1` pairs with `ZF_kcnh2b` (99.3/100) and the `kcnh6a`-like control pairs with
+`ZF_kcnh6a` (99.6/100).
+
+| region | closest zebrafish paralog | support |
+| --- | --- | --- |
+| JAGFBZ010002515.1 | `kcnh6b` | 100/100 |
+| JAGFBZ010000289.1 | `kcnh7` | 100/100 |
+| JAGFBZ010000779.1 | `kcnh7` | 63.4/74 |
+| JAGFBZ010002447.1 | `kcnh4a` | 99.6/100 |
+| JAGFBZ010000590.1 | `kcnh5a` | 99.3/100 |
+
+**Every one of the seven regions in `GCA_018398805.1` that aligns to zebrafish `kcnh2a` is better
+explained as a different KCNH paralog** — `kcnh2b`, `kcnh6a`, `kcnh6b`, `kcnh7` ×2, `kcnh4a`,
+`kcnh5a`. No `kcnh2a`-like region was found anywhere in the assembly.
+
+**What this does and does not mean.** It means the `longfin` gene has **no located target** in the
+only public Exocoetidae assembly, so an edit designed at "the Exocoetid `kcnh2a`" cannot currently be
+placed. It does **not** mean Exocoetidae lack `kcnh2a`: `GCA_018398805.1` is an explicitly *draft*,
+scaffold-level, unannotated assembly, and a missing or fragmented gene is the expected failure mode
+of such an assembly. Note also that the published flying-fish phylogenomics that names `kcnh2a`
+(PMID 34534441) used 35 species with its own sequencing, not this assembly. A family-wide census is
+running to ask whether `kcnh2a` is specifically absent while its paralogs are present, or whether
+this is general draft incompleteness; until that lands, **the cause is unknown**.
+
+## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
   Europe PMC retrievals, GRCz11 coordinates for 8 candidate genes, and OpenFold2 predicted structures

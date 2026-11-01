@@ -1,0 +1,57 @@
+{
+ "controls": [
+  {
+   "seq": "HSPEC_ambiguous_1_len1325_from_kcnh2a",
+   "expected_partner": "ZF_kcnh2b",
+   "clade": [
+    "HSPEC_ambiguous_1_len1325_from_kcnh2a",
+    "ZF_kcnh2b"
+   ],
+   "support": "99.3/100",
+   "pass": true
+  },
+  {
+   "seq": "HSPEC_control_kcnh6alike_1_len1199_from_kcnh6a",
+   "expected_partner": "ZF_kcnh6a",
+   "clade": [
+    "HSPEC_control_kcnh6alike_1_len1199_from_kcnh6a",
+    "ZF_kcnh6a"
+   ],
+   "support": "99.6/100",
+   "pass": true
+  }
+ ],
+ "candidates": [
+  {
+   "seq": "HSPEC_cand_HS02515_len725",
+   "closest_zebrafish_paralog": "ZF_kcnh6b",
+   "mrca_clade_size": 2,
+   "support": "100/100"
+  },
+  {
+   "seq": "HSPEC_cand_HS00289_len864",
+   "closest_zebrafish_paralog": "ZF_kcnh7",
+   "mrca_clade_size": 3,
+   "support": "100/100"
+  },
+  {
+   "seq": "HSPEC_cand_HS00779_len1083",
+   "closest_zebrafish_paralog": "ZF_kcnh7",
+   "mrca_clade_size": 2,
+   "support": "63.4/74"
+  },
+  {
+   "seq": "HSPEC_cand_HS02447_len783",
+   "closest_zebrafish_paralog": "ZF_kcnh4a",
+   "mrca_clade_size": 2,
+   "support": "99.6/100"
+  },
+  {
+   "seq": "HSPEC_cand_HS00590_len491",
+   "closest_zebrafish_paralog": "ZF_kcnh5a",
+   "mrca_clade_size": 2,
+   "support": "99.3/100"
+  }
+ ],
+ "verdict": "No candidate region is kcnh2a-like. Every one of the 7 kcnh2a-aligning regions in the assembly is better explained as a different KCNH paralog."
+}
