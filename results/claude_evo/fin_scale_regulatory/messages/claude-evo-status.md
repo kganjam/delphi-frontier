@@ -4,12 +4,13 @@
 2026-11-01). My predecessor left no status file at this path, so nothing here is
 attributed to them; where I rely on their work I name the commit or job id.
 
-- **Updated:** 2026-11-01 15:25 UTC / 08:25 PDT
+- **Updated:** 2026-11-01 16:05 UTC / 09:05 PDT
 - **Worktree:** /data/worktrees/delphi-frontier/claude-evo
-- **Branch:** `claude/evo2-fin-scale-20261101` @ `412fdcb` (pushed)
+- **Branch:** `claude/evo2-fin-scale-20261101` @ `96a4f4e` (pushed)
 - **Job prefix:** `claude-evo-`
-- **State: GOAL MET.** Both my jobs COMPLETED, outputs recovered and verified,
-  manifest written, handoff delivered. No blockers.
+- **State: brief satisfied; continuing with follow-on work.** The brief's two
+  legs are complete, verified and handed off. I am now extending rather than
+  idling, keeping a job in flight.
 
 ## Jobs — CLI-read states, exit codes from the job logs
 
@@ -17,6 +18,71 @@ attributed to them; where I rely on their work I name the commit or job id.
 | --- | --- | --- | --- |
 | `aijob-e00cd0nepn7c42q9sm` | `claude-evo-finscale-a1` | **COMPLETED** | `EVOFS_RC=0` |
 | `aijob-e00pya60nwmwjd5df7` | `claude-evo-finscale-baseline-a1` | **COMPLETED** | `EVOBL_RC=0` |
+| `aijob-e00bvd85xvypgq1j6a` | `claude-evo-finscale-cond-a1` | **COMPLETED** | `EVOCD_RC=0` |
+| `aijob-e00zx1288cyng43ag5` | `claude-evo-finscale-motif-a1` (cpu-d3) | **COMPLETED** | `MOTIF_RC=0` |
+| `aijob-e00ep572741570h1f8` | `claude-evo-finscale-tiling-a1` | **COMPLETED** | `EVOTL_RC=0` |
+| `aijob-e00vjsseen85f1j3ac` | `claude-evo-finscale-tiling-a2` | **IN FLIGHT** | 5 shuffles/tile |
+
+Six jobs submitted by me this session, five terminal and all five rc=0. Never
+more than two at once; I touched no job I did not start.
+
+## Headline corrections and additions since 15:25 UTC
+
+**A claim of mine was overturned and is marked as such.** I had committed that
+the real-vs-generated likelihood gap "exists only where the genome is in
+corpus" (p=0.017; zebrafish p=0.005) from *unconditional* scoring. Under the
+fair same-prompt test (`aijob-e00bvd85xvypgq1j6a`) it is **not significant**:
++0.0577 CI [−0.0169, +0.1324] p=0.122; zebrafish p=0.088; flying fish p=0.921.
+Conditioning helps generated sequence (+0.0391) about twice as much as real
+(+0.0195), because the candidates were sampled under that prompt. The species
+*ordering* survives; the reliable-gap claim does not. `RESULT.md` §2 keeps the
+old text with the correction at its head, and the zf2ff handoff carries a dated
+correction block — they were blocked on that file, so a stale number there was
+worse than none.
+
+**The headline result strengthened and replicated by an independent method.**
+Conditional real − own shuffle: **+0.1685** CI [0.1164, 0.2206] p=2.3×10⁻⁶.
+Motif scan, 879/879 JASPAR2024 CORE vertebrate motifs: real windows carry
+**+125.3** excess hits over composition-matched scrambles of themselves,
+CI [61.0, 189.7], p=0.00069, **17/19** windows and **9/9 flying fish** windows
+positive. Strongest in the out-of-corpus species, where memorisation cannot
+explain it. Generated candidates +39.5 — a clearer real-vs-generated separation
+than the likelihood test that just lost significance.
+
+**Tiling localises it and the decomposition adds up.** 380 tiles of 50 bp, mean
+delta +0.01063 CI [+0.00903, +0.01224], 345/380 positive. Summing each window's
+tile deltas against its whole-window effect gives ratio **1.21** (median 1.23) —
+the localised measurements account for the aggregate to within ~20%, mildly
+superadditively as expected. Structure is **distributed**: per-window maxima are
+only 3–9× the window mean, so there is no single crisp 50 bp element per gene.
+
+**The motif scan reproduced bit-exactly on two platforms.** Blocked on Nebius at
+first, run locally, then submitted when quota freed: **57/57 real hit counts and
+57/57 shuffle hit vectors identical** across Python 3.13.12 and 3.12.16 with
+different pip-freeze hashes.
+
+## BLOCKER (RESOLVED 16:00 UTC) — Nebius non-GPU vCPU quota was saturated
+
+The JASPAR motif scan needs no GPU and was written as a CPU job. It **cannot be
+submitted**: `compute.instance.non-gpu.vcpu` is at **limit 24** for tenant
+`tenant-e00spm0smz8kvpxn83`, and 8, 4 and 2 vCPU presets were all refused
+(`ResourceExhausted`, requested 32 / 28 / 26 against the limit of 24). Other
+teams hold that quota. I did not cancel anything to make room.
+
+Mitigation at the time: the scan ran locally under the mandated `systemd-run`
+cap. **Resolved** — CPU quota later freed and it was submitted as
+`aijob-e00zx1288cyng43ag5`, whose output is bit-identical to the local run, so
+the result now carries a Nebius receipt *and* a cross-platform reproduction.
+I cancelled nothing to make room at any point.
+
+## A limit I had wrong, now corrected
+
+The `--inject-file` cap is **65536 bytes of base64 payload**, i.e. only
+**~49152 bytes of raw plaintext** across all files — not 65536 raw, as the
+inherited bioservices note and my own earlier commit said. A 53,124 B set was
+rejected with exactly 53124×4/3 = 70832 > 65536, and every accepted set obeys
+the 4/3 rule (43,314 / 33,054 / 32,718). Fix: inject the job script gzip+base64
+too and print its sha256 inside the job, so the log proves which code ran.
 
 Both 1× NVIDIA H100 80GB HBM3 (capability 9.0), `evo2_7b`, bfloat16, seed 0,
 image `nvcr.io/nvidia/pytorch:25.12-py3`. Two jobs was my limit and I stayed at
@@ -160,8 +226,38 @@ group comparison is apples-to-apples.
 - `nebius ai job list` takes no `--page-size`; `ai job get <id>` has no `--id`
   flag.
 
+## Follow-on results already added
+
+**Positional analysis** (CPU, from data already recovered — no new job). The
+mean advantage is **not** a boundary artefact: 9 of 10 bins across the full 1 kb
+exclude zero. The species differ in the direction that matters — zebrafish is
+front-loaded and decays (+0.306 at 200–300 bp to +0.027 in the final bin, whose
+CI includes zero; ρ = −0.60, p = 0.067), flying fish is flat with no trend at
+all (ρ = +0.03, p = 0.93) and its **last** bin still excludes zero (+0.146).
+For the out-of-corpus species the advantage is position-independent. Held weak:
+10 bins, Spearman on 10 points, two marginal p values.
+
+## In progress
+
+1. `aijob-e00bvd85xvypgq1j6a` — conditional scoring: given the **same** 1 kb
+   prompt, is the real continuation likelier than the model's own sample? This
+   is the quantity generation actually optimised, which arm A never scored.
+2. JASPAR motif scan, running locally because of the quota blocker above:
+   879 CORE vertebrate motifs, both strands, per-motif FPR thresholds, 5
+   dinucleotide-preserving shuffles per sequence, one pre-registered primary
+   endpoint. Turns "structure above k=2" into a motif-level question.
+   Prototyping caught two bugs that would have produced meaningless numbers
+   silently: zero-count PWM positions make `threshold_fpr` return NaN so only
+   **6 of 879** motifs built (JASPAR sqrt(N)/4 pseudocounts fix it, 879/879),
+   and my first draft swallowed that in an `except: continue`. Now counted and
+   hard-gated at 95%.
+
 ## Next action
-None required for the brief. If more GPU budget appears, the open pieces are a
-JASPAR/FIMO motif scan on these 19 windows against their shuffles (CPU, would
-turn "structure above k=2" into motif-level evidence) and the miniprot/window
-cross-check I handed to claude-zf2ff.
+Recover `aijob-e00vjsseen85f1j3ac` (5 shuffles per tile) when terminal, verify
+its identity gate and replicate SDs, commit with receipts, append the per-window
+tile profile to the zf2ff handoff, and queue the next job. Current open pieces,
+in value order: (1) the per-tile ranking needs the v2 SDs before any individual
+tile is quoted; (2) statistical power is the binding limit everywhere — n=19
+windows, 9–10 per species — so expanding the input set with more fin/scale genes
+or more windows per gene would do more for every result here than any further
+re-analysis of these 19; (3) the miniprot/window cross-check handed to zf2ff.
