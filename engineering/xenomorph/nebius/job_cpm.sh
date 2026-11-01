@@ -4,12 +4,16 @@
 set -u
 echo "XM_START $(date -u +%FT%TZ) nproc=$(nproc)"
 mkdir -p /w/engineering/xenomorph && cd /w
-cp /in/__init__.py engineering/__init__.py
-for f in __init__.py cpm_model.py analyze.py pack_fields.py protocol.json; do cp /in/$f engineering/xenomorph/$f; done
+touch engineering/__init__.py
+touch engineering/xenomorph/__init__.py
+base64 -d /in/bundle.b64 | tar xz -C engineering/xenomorph
+echo "XM_BUNDLE $(sha256sum /in/bundle.b64)"
 sha256sum engineering/xenomorph/* | sed 's/^/XM_INPUT /'
 export DEBIAN_FRONTEND=noninteractive
 (apt-get update -qq && apt-get install -y -qq curl ca-certificates >/dev/null) 2>&1 | tail -2
-pip install -q numpy==2.4.4 scipy scikit-image tifffile 2>&1 | tail -2
+pip install -q scipy scikit-image tifffile 2>&1 | tail -2
+python -m engineering.xenomorph.offlattice --write-default engineering/xenomorph/offlattice_sweep.json
+python -c 'import numpy,torch;print("XM_PY",numpy.__version__,torch.__version__,torch.cuda.is_available())'
 curl -sL -o /w/morpheus-2.3.9 "https://gitlab.com/morpheus.lab/morpheus/-/package_files/178666119/download"
 echo "XM_BINARY $(sha256sum /w/morpheus-2.3.9)"
 echo "3d9a6e5a4cb86824b745500df1474596d39cce5deed24f767c0841df0f94d5ad  /w/morpheus-2.3.9" | sha256sum -c - || { echo XM_BINARY_HASH_FAIL; exit 3; }
@@ -57,6 +61,14 @@ one() {
   flock /w/emit.lock bash -c "emit $arm-s$seed-x$scale $d"
 }
 export -f one
+# GPU sweep (separate engine) runs concurrently with the CPU Morpheus batch
+nvidia-smi --query-gpu=timestamp,name,utilization.gpu,memory.used --format=csv -l 10 > /w/gpu_telemetry.csv 2>&1 &
+TEL=$!
+( python -m engineering.xenomorph.offlattice --sweep engineering/xenomorph/offlattice_sweep.json --out /w/sweep > /w/sweep.log 2>&1; echo "sweep_exit=$?" >> /w/sweep.log; echo "XM_SWEEP_DONE $(tail -1 /w/sweep.log) $(date -u +%T)" ) &
+SWP=$!
 mkdir -p /w/runs
 xargs -P 16 -L 1 bash -c 'one $0 $1 $2' < runs.txt
+wait $SWP; kill $TEL
+mkdir -p /w/sweepret && cp -r /w/sweep /w/sweep.log /w/gpu_telemetry.csv /w/sweepret/ 2>/dev/null
+emit sweep /w/sweepret
 echo "XM_ALL_DONE $(date -u +%FT%TZ)"

@@ -157,7 +157,7 @@ def run(cfg: dict, out: Path, device: str) -> dict:
     wall = time.time() - t0
     out.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(out / "trajectory.npz", metrics=rec.cpu().numpy(), metric_names=np.array(list(hist)),
-                        positions=pos_rec.cpu().numpy().astype(np.float32), types=ty.cpu().numpy().astype(np.int8),
+                        positions=pos_rec.cpu().numpy().astype(np.float16), types=ty.cpu().numpy().astype(np.int8),
                         snapshot_times=np.array(snaps))
     summ = {"schema": "frontier.xenomorph.offlattice/1", "device": str(dev),
             "gpu": torch.cuda.get_device_name(0) if dev.type == "cuda" else None,
