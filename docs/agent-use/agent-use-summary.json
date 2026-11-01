@@ -1,0 +1,1082 @@
+{
+ "observed_at": {
+  "local": "2026-11-01 08:48 PST",
+  "utc": "2026-11-01T16:48:15Z",
+  "clock": "system clock (tmux/process/pane-state observation); other observation times are given per snapshot entry and in the markdown"
+ },
+ "repositories": [
+  {
+   "name": "kganjam/delphi-frontier",
+   "commit": "53489c88a9272fc70edaa1cca5c421e6f16b3afe",
+   "default_branch": "main"
+  },
+  {
+   "name": "kganjam/delphi-evolve",
+   "commit": "51a38057aebe7e7e0801d8f67af7fd4a81a8935f",
+   "default_branch": "main"
+  }
+ ],
+ "snapshot": [
+  {
+   "metric": "agent identities, named (floor)",
+   "value": 34,
+   "floor": true,
+   "source": "tmux ls (14 ff-*, 9 dx roles, 4 codex) + 7 native hosts with recorded actions (review-corrections.json, agent-contributors.json, messages/)",
+   "label": "measured"
+  },
+  {
+   "metric": "ff-* harnesses",
+   "value": 14,
+   "floor": false,
+   "source": "tmux ls",
+   "label": "measured"
+  },
+  {
+   "metric": "delphi-evolve roles (sessions)",
+   "value": "9 (12)",
+   "floor": false,
+   "source": "tmux ls",
+   "label": "measured"
+  },
+  {
+   "metric": "codex sessions",
+   "value": 4,
+   "floor": false,
+   "source": "tmux ls",
+   "label": "measured"
+  },
+  {
+   "metric": "native contributors supported by the identity audit",
+   "value": 3,
+   "floor": true,
+   "source": "results/resources/agent-contributors.json counts.native_contributors_supported_minimum",
+   "label": "quoted"
+  },
+  {
+   "metric": "distinct contributing harness ids, supported minimum (identity audit)",
+   "value": 11,
+   "floor": true,
+   "source": "results/resources/agent-contributors.json counts",
+   "label": "quoted"
+  },
+  {
+   "metric": "Claude top-level transcripts started since 2026-10-30T00:00Z (all projects on host)",
+   "value": 737,
+   "floor": false,
+   "source": "conc.py over ~/.claude/projects and ~/Orchestra/data/claude_creds/*/projects",
+   "label": "measured"
+  },
+  {
+   "metric": "subagent transcripts (files modified since 2026-10-30)",
+   "value": 49,
+   "floor": false,
+   "source": "paths under subagents/",
+   "label": "measured"
+  },
+  {
+   "metric": "tmux sessions at observation",
+   "value": 47,
+   "floor": false,
+   "source": "tmux ls at 2026-11-01T16:48Z",
+   "label": "measured"
+  },
+  {
+   "metric": "agent processes under tmux / system-wide",
+   "value": "45 / 51",
+   "floor": false,
+   "source": "procs.py (ps -eo, descendants of tmux pane pids)",
+   "label": "measured"
+  },
+  {
+   "metric": "max top-level sessions active in a 180 s window",
+   "value": 16,
+   "floor": false,
+   "source": "conc.py; window ending 2026-10-31T19:30:09+00:00",
+   "label": "measured"
+  },
+  {
+   "metric": "max sessions in 180 s (identity audit, own definition)",
+   "value": 18,
+   "floor": false,
+   "source": "results/resources/agent-contributors.json max_sessions_active_within_180s",
+   "label": "quoted"
+  },
+  {
+   "metric": "Nebius jobs listed (CLI cap 100)",
+   "value": 100,
+   "floor": true,
+   "source": "nebius --profile hackathon ai job list --format json at 2026-11-01T16:43:46Z; oldest listed 2026-10-31T21:26:14.056803Z",
+   "label": "measured"
+  },
+  {
+   "metric": "Nebius jobs ours in listed window",
+   "value": 91,
+   "floor": true,
+   "source": "name prefixes claude-<harness>- and delphi-evolve-ops-",
+   "label": "measured",
+   "states": {
+    "IMAGE_PULLING": 2,
+    "RUNNING": 9,
+    "COMPLETED": 68,
+    "CANCELLED": 2,
+    "FAILED": 9,
+    "ERROR": 1
+   }
+  },
+  {
+   "metric": "Nebius jobs ours (identity audit, its own time)",
+   "value": 46,
+   "floor": false,
+   "source": "results/resources/agent-contributors.json counts.provider_jobs_own",
+   "label": "quoted"
+  },
+  {
+   "metric": "commits delphi-frontier (origin/* refs)",
+   "value": 1619,
+   "floor": false,
+   "source": "git log --remotes=origin; author dates 2026-10-31T14:49:44Z..2026-11-01T16:37:50Z",
+   "label": "measured"
+  },
+  {
+   "metric": "commits delphi-frontier on origin/main",
+   "value": 1353,
+   "floor": false,
+   "source": "git log origin/main",
+   "label": "measured"
+  },
+  {
+   "metric": "commits delphi-evolve (all refs)",
+   "value": 438,
+   "floor": false,
+   "source": "mirror clone; author dates 2026-10-31T06:58:05Z..2026-10-31T20:52:35Z",
+   "label": "measured"
+  },
+  {
+   "metric": "Claude tokens since 2026-10-30 (deduplicated, all projects)",
+   "value": {
+    "input": 74312,
+    "output": 41193752,
+    "cache_read": 8935881007,
+    "cache_creation": 124490378,
+    "messages": 35710
+   },
+   "floor": false,
+   "source": "tokens.py; dedupe message.id+requestId; window by message timestamp",
+   "label": "measured"
+  },
+  {
+   "metric": "Claude tokens all time (deduplicated)",
+   "value": {
+    "input": 20443747,
+    "output": 226038734,
+    "cache_read": 68309003437,
+    "cache_creation": 1126181678,
+    "messages": 296455
+   },
+   "floor": false,
+   "source": "tokens.py over 18199 files",
+   "label": "measured"
+  },
+  {
+   "metric": "Claude messages by model since 2026-10-30",
+   "value": {
+    "claude-sonnet-5-5": 16040,
+    "claude-opus-5-5": 9803,
+    "claude-opus-5": 4877,
+    "claude-haiku-5-5": 4374,
+    "<synthetic>": 317,
+    "claude-opus-4-8": 291,
+    "claude-fable-5-1": 8
+   },
+   "floor": false,
+   "source": "tokens.py",
+   "label": "measured"
+  },
+  {
+   "metric": "Codex tokens",
+   "value": "not counted",
+   "floor": false,
+   "source": "scan of 6,778 ~/.codex/sessions files did not finish in budget",
+   "label": "not counted"
+  },
+  {
+   "metric": "spend",
+   "value": "unknown (not $0)",
+   "floor": false,
+   "source": "codex-02 usage limit and codex-03 spend cap visible in panes",
+   "label": "measured"
+  }
+ ],
+ "identities": [
+  {
+   "id": "claude-15",
+   "kind": "native-child",
+   "role": "native host; lead that took over Codex role, spawned dx-*-r1/dx-corpus/dx-critic-r1",
+   "up": "2026-10-31T12:51Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: idle)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "claude-17",
+   "kind": "native-child",
+   "role": "native host; 2026-11-01 lead, spawned all ff-*",
+   "up": "2026-11-01T13:08Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "codex-01",
+   "kind": "harness",
+   "role": "codex-01",
+   "up": "2026-10-29T22:08Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: idle)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "codex-02",
+   "kind": "harness",
+   "role": "codex-02",
+   "up": "2026-10-31T06:19Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: error (provider quota/spend limit))",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "codex-03",
+   "kind": "harness",
+   "role": "Frontier coordinator (root/infra in messages)",
+   "up": "2026-10-31T17:48Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: error (provider quota/spend limit))",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "codex-api",
+   "kind": "harness",
+   "role": "codex-api",
+   "up": "2026-10-31T13:50Z",
+   "down": "2026-11-01T01:50:41Z",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "delphi-rethink-director",
+   "kind": "harness",
+   "role": "delphi-evolve director",
+   "up": "2026-10-31T12:57Z",
+   "down": "2026-11-01T13:07:44Z",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-collab",
+   "kind": "harness",
+   "role": "delphi-evolve role: collab",
+   "up": "2026-10-31T13:05Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-corpus",
+   "kind": "harness",
+   "role": "delphi-evolve role: corpus",
+   "up": "2026-10-31T15:06Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-critic-r1",
+   "kind": "harness",
+   "role": "delphi-evolve role: critic-r1",
+   "up": "2026-10-31T18:32Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-fable-lead",
+   "kind": "harness",
+   "role": "delphi-evolve role: fable-lead",
+   "up": "2026-10-31T13:16Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-gpuops",
+   "kind": "harness",
+   "role": "delphi-evolve role: gpuops",
+   "up": "2026-10-31T13:05Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-gpuops-r1",
+   "kind": "harness",
+   "role": "delphi-evolve role: gpuops-r1",
+   "up": "2026-10-31T18:16Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-guilds",
+   "kind": "harness",
+   "role": "delphi-evolve role: guilds",
+   "up": "2026-10-31T13:21Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-market",
+   "kind": "harness",
+   "role": "delphi-evolve role: market",
+   "up": "2026-10-31T13:21Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-market-r1",
+   "kind": "harness",
+   "role": "delphi-evolve role: market-r1",
+   "up": "2026-10-31T18:14Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: auth-blocked)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-submit",
+   "kind": "harness",
+   "role": "delphi-evolve role: submit",
+   "up": "2026-10-31T14:13Z",
+   "down": "2026-11-01T02:13:51Z",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "dx-submit-retired-1",
+   "kind": "harness",
+   "role": "delphi-evolve role: submit-retired-1",
+   "up": "2026-10-31T13:05Z",
+   "down": "2026-10-31T14:15:25Z",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-agentuse",
+   "kind": "harness",
+   "role": "Frontier harness: agentuse",
+   "up": "2026-11-01T16:37Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-eco",
+   "kind": "harness",
+   "role": "Frontier harness: eco",
+   "up": "2026-11-01T14:18Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: idle)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-evo",
+   "kind": "harness",
+   "role": "Frontier harness: evo",
+   "up": "2026-11-01T14:11Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: idle)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-fseries",
+   "kind": "harness",
+   "role": "Frontier harness: fseries",
+   "up": "2026-11-01T16:37Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-mol",
+   "kind": "harness",
+   "role": "Frontier harness: mol",
+   "up": "2026-11-01T14:11Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: idle)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-neuro",
+   "kind": "harness",
+   "role": "Frontier harness: neuro",
+   "up": "2026-11-01T14:18Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-organ",
+   "kind": "harness",
+   "role": "Frontier harness: organ",
+   "up": "2026-11-01T14:11Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: idle)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-sitecritic",
+   "kind": "harness",
+   "role": "Frontier harness: sitecritic",
+   "up": "2026-11-01T16:04Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-tissue",
+   "kind": "harness",
+   "role": "Frontier harness: tissue",
+   "up": "2026-11-01T14:11Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: idle)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-voxgpu",
+   "kind": "harness",
+   "role": "Frontier harness: voxgpu",
+   "up": "2026-11-01T15:57Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-xeno",
+   "kind": "harness",
+   "role": "Frontier harness: xeno",
+   "up": "2026-11-01T15:57Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: idle)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-xenomodel",
+   "kind": "harness",
+   "role": "Frontier harness: xenomodel",
+   "up": "2026-11-01T15:57Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-xenomorph",
+   "kind": "harness",
+   "role": "Frontier harness: xenomorph",
+   "up": "2026-11-01T16:12Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "ff-zf2ff",
+   "kind": "harness",
+   "role": "Frontier harness: zf2ff",
+   "up": "2026-11-01T14:11Z",
+   "down": "alive at 2026-11-01T16:48:15Z (state: working)",
+   "clock": "tmux session_created / dead-pane time (host zone America/Los_Angeles, converted)"
+  },
+  {
+   "id": "claude-02",
+   "kind": "native-child",
+   "role": "native host with a recorded action in window (ledger/handoff/review)",
+   "up": "tmux session_created predates window",
+   "down": "alive at 2026-11-01T16:48:15Z (idle)",
+   "clock": "tmux"
+  },
+  {
+   "id": "claude-04",
+   "kind": "native-child",
+   "role": "native host with a recorded action in window (ledger/handoff/review)",
+   "up": "tmux session_created predates window",
+   "down": "alive at 2026-11-01T16:48:15Z (idle)",
+   "clock": "tmux"
+  },
+  {
+   "id": "claude-05",
+   "kind": "native-child",
+   "role": "native host with a recorded action in window (ledger/handoff/review)",
+   "up": "tmux session_created predates window",
+   "down": "alive at 2026-11-01T16:48:15Z (idle)",
+   "clock": "tmux"
+  },
+  {
+   "id": "claude-13",
+   "kind": "native-child",
+   "role": "native host with a recorded action in window (ledger/handoff/review)",
+   "up": "tmux session_created predates window",
+   "down": "alive at 2026-11-01T16:48:15Z (idle)",
+   "clock": "tmux"
+  },
+  {
+   "id": "claude-14",
+   "kind": "native-child",
+   "role": "native host with a recorded action in window (ledger/handoff/review)",
+   "up": "tmux session_created predates window",
+   "down": "alive at 2026-11-01T16:48:15Z (idle)",
+   "clock": "tmux"
+  },
+  {
+   "id": "frontier-adapters (MCP client name)",
+   "kind": "external",
+   "role": "client name used against the Delphi MCP",
+   "up": "first added 2026-10-31T18:46:04Z (commit 7f485f9d author date)",
+   "down": "n/a",
+   "clock": "git author date"
+  },
+  {
+   "id": "subagent transcripts",
+   "kind": "nested-child",
+   "role": "49 in-session subagent transcripts in files modified since 2026-10-30, not attributed to a project",
+   "up": "various",
+   "down": "various",
+   "clock": "transcript timestamps"
+  }
+ ],
+ "processes_at_observation": {
+  "working": 9,
+  "idle": 23,
+  "auth_blocked": 9,
+  "error": 2,
+  "unknown": 0,
+  "dead_panes_no_process": 4,
+  "observed_at": "2026-11-01T16:48:15Z",
+  "method": "last 10 non-blank lines of tmux capture-pane; heuristic",
+  "per_session": {
+   "claude-01": "idle",
+   "claude-02": "idle",
+   "claude-03": "idle",
+   "claude-04": "idle",
+   "claude-05": "idle",
+   "claude-06": "idle",
+   "claude-07": "idle",
+   "claude-08": "idle",
+   "claude-09": "idle",
+   "claude-10": "idle",
+   "claude-11": "idle",
+   "claude-12": "idle",
+   "claude-13": "idle",
+   "claude-14": "idle",
+   "claude-15": "idle",
+   "claude-16": "idle",
+   "claude-17": "working",
+   "codex-01": "idle",
+   "codex-02": "error (provider quota/spend limit)",
+   "codex-03": "error (provider quota/spend limit)",
+   "codex-api": "no live process (pane dead)",
+   "delphi-rethink-director": "no live process (pane dead)",
+   "dx-collab": "auth-blocked",
+   "dx-corpus": "auth-blocked",
+   "dx-critic-r1": "auth-blocked",
+   "dx-fable-lead": "auth-blocked",
+   "dx-gpuops": "auth-blocked",
+   "dx-gpuops-r1": "auth-blocked",
+   "dx-guilds": "auth-blocked",
+   "dx-market": "auth-blocked",
+   "dx-market-r1": "auth-blocked",
+   "dx-submit": "no live process (pane dead)",
+   "dx-submit-retired-1": "no live process (pane dead)",
+   "ff-agentuse": "working",
+   "ff-eco": "idle",
+   "ff-evo": "idle",
+   "ff-fseries": "working",
+   "ff-mol": "idle",
+   "ff-neuro": "working",
+   "ff-organ": "idle",
+   "ff-sitecritic": "working",
+   "ff-tissue": "idle",
+   "ff-voxgpu": "working",
+   "ff-xeno": "idle",
+   "ff-xenomodel": "working",
+   "ff-xenomorph": "working",
+   "ff-zf2ff": "working"
+  }
+ },
+ "timeline": {
+  "window": {
+   "start": "2026-10-31T06:58:05Z",
+   "end": "2026-11-01T16:48:15Z",
+   "clock": "git author date (start); observation system clock (end)"
+  },
+  "hourly_csv": "hour_utc,commits_frontier,commits_evolve,sessions_started,jobs_submitted,jobs_finished,sessions_started_claude_toplevel,sessions_started_codex\n2026-10-31T06:00Z,0,2,nc,nc,nc,10,nc\n2026-10-31T07:00Z,0,84,nc,nc,nc,19,nc\n2026-10-31T08:00Z,0,62,nc,nc,nc,10,nc\n2026-10-31T09:00Z,0,16,nc,nc,nc,6,nc\n2026-10-31T10:00Z,0,0,nc,nc,nc,6,nc\n2026-10-31T11:00Z,0,0,nc,nc,nc,6,nc\n2026-10-31T12:00Z,0,2,nc,nc,nc,11,nc\n2026-10-31T13:00Z,0,78,nc,nc,nc,15,nc\n2026-10-31T14:00Z,2,91,nc,nc,nc,6,nc\n2026-10-31T15:00Z,0,40,nc,nc,nc,7,nc\n2026-10-31T16:00Z,6,27,nc,nc,nc,7,nc\n2026-10-31T17:00Z,17,6,nc,nc,nc,6,nc\n2026-10-31T18:00Z,70,13,nc,nc,nc,11,nc\n2026-10-31T19:00Z,133,8,nc,nc,nc,6,nc\n2026-10-31T20:00Z,119,9,nc,nc,nc,8,nc\n2026-10-31T21:00Z,89,0,nc,6,4,6,nc\n2026-10-31T22:00Z,176,0,nc,10,9,6,nc\n2026-10-31T23:00Z,140,0,nc,0,3,6,nc\n2026-11-01T00:00Z,143,0,nc,2,2,6,nc\n2026-11-01T01:00Z,99,0,nc,1,1,6,nc\n2026-11-01T02:00Z,94,0,nc,3,2,6,nc\n2026-11-01T03:00Z,88,0,nc,3,1,6,nc\n2026-11-01T04:00Z,67,0,nc,0,2,6,nc\n2026-11-01T05:00Z,71,0,nc,0,0,6,nc\n2026-11-01T06:00Z,112,0,nc,1,1,6,nc\n2026-11-01T07:00Z,77,0,nc,1,1,6,nc\n2026-11-01T08:00Z,2,0,nc,0,0,6,nc\n2026-11-01T09:00Z,0,0,nc,0,0,6,nc\n2026-11-01T10:00Z,0,0,nc,0,0,6,nc\n2026-11-01T11:00Z,0,0,nc,0,0,6,nc\n2026-11-01T12:00Z,0,0,nc,0,0,6,nc\n2026-11-01T13:00Z,6,0,nc,1,1,7,nc\n2026-11-01T14:00Z,16,0,nc,5,2,14,nc\n2026-11-01T15:00Z,40,0,nc,22,17,9,nc\n2026-11-01T16:00Z,52,0,nc,36,31,9,nc",
+  "columns_note": "commits by git author date (%aI) in UTC; sessions_started = Claude top-level + Codex, nc while Codex is not counted; sessions_started_claude_toplevel covers all projects on the host; jobs_* only our 91 listed Nebius jobs, nc before the list window (2026-10-31T21Z)",
+  "quiet_stretches": [
+   {
+    "start": "2026-10-31T09:28:47Z",
+    "end": "2026-10-31T12:56:25Z",
+    "hours": 3.46,
+    "running": "not counted"
+   },
+   {
+    "start": "2026-11-01T08:01:31Z",
+    "end": "2026-11-01T13:17:59Z",
+    "hours": 5.27,
+    "running": "no listed Nebius job; dx-* auth-blocked; director pane died 13:07:44Z; claude-17 up 13:08Z; ff-* up from 14:11Z"
+   }
+  ]
+ },
+ "dynamics": {
+  "structure": [
+   {
+    "when": "2026-10-31T12:51Z",
+    "what": "claude-15 up; spawned delphi-rethink-electric 14:37Z, dx-corpus 15:02Z, dx-market-r1 18:14Z, dx-gpuops-r1 18:15Z, dx-critic-r1 18:32Z",
+    "source": "transcript 9fd16842 (tmux new-session tool calls)"
+   },
+   {
+    "when": "2026-10-31T12:57Z",
+    "what": "delphi-rethink-director up (down 2026-11-01T13:07:44Z); dx-collab/dx-gpuops/dx-submit-retired-1 13:05Z, dx-fable-lead 13:16Z, dx-guilds/dx-market 13:21Z, dx-submit 14:13Z; parentage by the director is ESTIMATED from timing and director-to-* messages",
+    "source": "tmux ls; messages/director-to-*.md",
+    "label": "estimated"
+   },
+   {
+    "when": "2026-10-31T17:48Z",
+    "what": "codex-03 up: Frontier coordinator (root/infra); spend cap at observation",
+    "source": "tmux; messages/*-to-codex03.md"
+   },
+   {
+    "when": "2026-11-01T13:08Z",
+    "what": "claude-17 up; spawned ff-evo/mol/organ/tissue/zf2ff 14:11Z, ff-eco/neuro 14:18Z, ff-voxgpu/xeno/xenomodel 15:57Z, ff-sitecritic 16:04Z, ff-xenomorph 16:12Z, ff-agentuse/fseries 16:37Z",
+    "source": "transcript 507442cb; tmux session_created"
+   }
+  ],
+  "assignment": [
+   {
+    "when": "2026-11-01T14:11Z..16:36Z",
+    "what": "harness briefs (19 files) in /data/artifacts/delphi-evolve-rethink/harness-briefs/",
+    "source": "ls -l harness-briefs"
+   },
+   {
+    "when": "from 2026-10-31T13:00Z",
+    "what": "597 message files <from>-to-<to>.md: work orders, returns, status",
+    "source": "ls messages | wc -l"
+   },
+   {
+    "when": "2026-11-01",
+    "what": "GitHub issues kganjam/delphi-frontier #1-#6 (F-series), #8",
+    "source": "gh issue view; claude-fseries-status.md"
+   },
+   {
+    "when": "2026-11-01",
+    "what": "one branch per harness (13 claude* branches ahead of main, 6-45 commits)",
+    "source": "git rev-list --count origin/main..<branch>"
+   }
+  ],
+  "waiting": [
+   {
+    "when": "<=2026-10-31T13:40Z",
+    "what": "Nebius CPU job creation refused ResourceExhausted, tenant non-GPU vCPU limit 24 (20 in use)",
+    "source": "messages/gpuops-to-director-primary-01.md",
+    "start": "<=2026-10-31T13:40Z",
+    "end": "request never met",
+    "unblocked_by": "4-vCPU job accepted instead"
+   },
+   {
+    "when": "2026-11-01 before 16:20Z",
+    "what": "claude-evo CPU motif scan dry-run refused ResourceExhausted, limit 24 vs aggregate 28",
+    "source": "messages/claude-evo-status.md lines 82,98-102",
+    "start": "before 2026-11-01T16:20Z",
+    "end": "not recorded",
+    "unblocked_by": "ran locally under systemd-run; later submitted when quota freed"
+   },
+   {
+    "when": "2026-11-01",
+    "what": "claude-zf2ff-motif-scan-1 ERROR QuotaExceeded at provisioning",
+    "source": "nebius ai job list",
+    "start": "2026-11-01",
+    "end": "terminal",
+    "unblocked_by": "not resubmitted under that id"
+   },
+   {
+    "when": "2026-10-31T13:05Z..18:18:56Z",
+    "what": "dx-market and dx-gpuops: OAuth token revoked (credential fixed in process env)",
+    "source": "messages/claude15-auth-recovery.md",
+    "start": "2026-10-31 (process start 13:05-13:21Z)",
+    "end": "2026-10-31T18:18:56Z",
+    "unblocked_by": "claude-15 relaunched same conversations as -r1 via managed allocation"
+   },
+   {
+    "when": "2026-11-01T16:48Z",
+    "what": "all 9 live dx-* panes (including -r1) show OAuth token revoked",
+    "source": "tmux capture-pane",
+    "start": "not recorded",
+    "end": "still blocked at observation",
+    "unblocked_by": "none"
+   },
+   {
+    "when": "2026-10-31T14:18Z",
+    "what": "delphi-rethink-electric OAuth token revoked with uncommitted files",
+    "source": "messages/director-needs-electric-recovery.md",
+    "start": "~2026-10-31T14:18Z",
+    "end": "not recorded",
+    "unblocked_by": "recovery requested of primary/host"
+   },
+   {
+    "when": "2026-10-31 before 16:31Z",
+    "what": "codex-02 usage limit (provider: retry Nov 6th)",
+    "source": "messages/host-takeover-from-codex.md; pane",
+    "start": "before 2026-10-31T16:31:47Z",
+    "end": "not unblocked",
+    "unblocked_by": "claude-15 took over role"
+   },
+   {
+    "when": "2026-11-01T16:48Z",
+    "what": "codex-03 spend cap, stopped at Request increase? prompt (No)",
+    "source": "pane text",
+    "start": "not recorded",
+    "end": "not unblocked at observation",
+    "unblocked_by": "none; un-re-reviewed items labelled single-reader"
+   },
+   {
+    "when": "2026-11-01T00:55Z",
+    "what": "paid Google L4 GPU calibration waited for root approval",
+    "source": "messages/infra-to-cfd-gcp-l4.md",
+    "start": "not recorded",
+    "end": "2026-11-01T00:55:48Z (file mtime)",
+    "unblocked_by": "root approval of one L4 calibration"
+   },
+   {
+    "when": "n/a",
+    "what": "agent stopped at interactive model-switch prompt: record not located",
+    "source": "not counted",
+    "start": "not counted",
+    "end": "not counted",
+    "unblocked_by": "not counted"
+   }
+  ],
+  "review_changed_decision": [
+   {
+    "when": "commit 4d9628f",
+    "what": "DOE decision exercise: misclassification 0.50/0.13/0.10 -> 0.043/0.028/0.023; claim retracted",
+    "source": "results/coordination/review-corrections.json#doe-centered-margin",
+    "before": "0.50/0.13/0.10",
+    "after": "0.043/0.028/0.023",
+    "shared_git_identity": true,
+    "shared_model": "not recorded",
+    "reviewer": "root session",
+    "author": "claude-14"
+   },
+   {
+    "when": "commit 1a084328",
+    "what": "genotype compiler typed-input holes fixed; 17/19 then 29/29 (different check sets)",
+    "source": "review-corrections.json#sequence-compiler-typed-inputs",
+    "before": "17/19 scoped checks",
+    "after": "29/29 declared conditions (different set)",
+    "shared_git_identity": true,
+    "shared_model": "not recorded",
+    "reviewer": "separate review harness",
+    "author": "claude-02"
+   },
+   {
+    "when": "commits f2f0c69,68117a9,189c0e5",
+    "what": "compiler cache false passes -> typed blocked results",
+    "source": "review-corrections.json#compiler-cache-and-pins",
+    "before": "stale cache passes",
+    "after": "blocked results",
+    "shared_git_identity": true,
+    "shared_model": "not recorded",
+    "reviewer": "native mechanobio review then root",
+    "author": "claude-14"
+   },
+   {
+    "when": "commit 474fb8e",
+    "what": "contributor headline 4 -> floor 11; 31 no longer called active",
+    "source": "review-corrections.json#contributor-count-labels",
+    "before": "4",
+    "after": "11 (floor)",
+    "shared_git_identity": true,
+    "shared_model": "not recorded",
+    "reviewer": "root",
+    "author": "claude-14"
+   },
+   {
+    "when": "commit 895487f",
+    "what": "DOE mutant control made able to fail: 86/192 flags change",
+    "source": "review-corrections.json#doe-mutant-control",
+    "before": "control could not fail",
+    "after": "86 of 192 flags change",
+    "shared_git_identity": true,
+    "shared_model": "n/a (self-correction)",
+    "reviewer": "none",
+    "author": "claude-14"
+   },
+   {
+    "when": "commit 130b3f4b (2026-11-01T06:30:44Z)",
+    "what": "Voxelyze coarse/fine agreement ~2.74% withdrawn; raw SI difference 15.5739%",
+    "source": "docs/audits/voxelyze-review-2026-10-31.md lines 27-30",
+    "before": "~2.74% agreement",
+    "after": "15.5739% raw difference; agreement withdrawn",
+    "shared_git_identity": true,
+    "shared_model": "not recorded (no trailer on 130b3f4b)",
+    "reviewer": "independent bounded review",
+    "author": "owner of e6f10331 outputs"
+   }
+  ],
+  "duplicated_or_abandoned": [
+   {
+    "when": "2026-11-01T16:20Z",
+    "what": "claude-xeno announced its running 464-run sweep (aijob-e00xmm28kekfg1czwv) so claude-voxgpu would not duplicate it",
+    "source": "messages/claude-xeno-to-voxgpu.md"
+   },
+   {
+    "when": "2026-11-01T02:20Z",
+    "what": "order: native mechanobio preparing v3a FEM/VLM bridge, do NOT duplicate",
+    "source": "messages/infra-to-cfd-h100-and-next.md"
+   },
+   {
+    "when": "2026-11-01T00:55Z",
+    "what": "L4 approval with explicit no duplicate full assay",
+    "source": "messages/infra-to-cfd-gcp-l4.md"
+   },
+   {
+    "when": "2026-11-01T14:11Z",
+    "what": "ff-* successors resumed tasks of predecessor workers stopped to move billing; claude-evo cites predecessor commits/job ids",
+    "source": "harness-briefs/_common.md; messages/claude-evo-status.md"
+   },
+   {
+    "when": "2026-10-31",
+    "what": "dx-submit-retired-1 replaced by dx-submit; dx-market/dx-gpuops replaced by -r1",
+    "source": "tmux ls"
+   },
+   {
+    "when": "2026-10-31",
+    "what": "DOE v1 outputs overwritten before commit, irrecoverable (abandoned)",
+    "source": "review-corrections.json#doe-centered-margin limits"
+   }
+  ],
+  "failures_kept": [
+   {
+    "when": "2026-10-31T21:57Z..2026-11-01T15:54Z",
+    "what": "9 FAILED (ContainerFailed), 2 CANCELLED, 1 ERROR (QuotaExceeded) among our 91 listed Nebius jobs; records retained on provider",
+    "source": "nebius ai job list"
+   },
+   {
+    "when": "2026-11-01T06:26:25Z",
+    "what": "voxcraft GPU probe COMPILE_FAIL",
+    "source": "artifacts/voxcraft-gpu-probe/probe.json (a896380b)"
+   },
+   {
+    "when": "2026-10-31T18:08:32Z",
+    "what": "KCNE1 binding ddG STOPPED at preregistered floor: coverage 20.27% vs 75%, D76N absent",
+    "source": "results/2026-10-31-kcne1-binding-ddg-STOPPED.md (3272d3e4)"
+   },
+   {
+    "when": "2026-10-31T23:31:34Z",
+    "what": "fish3d v3b VLM NOT CONVERGED",
+    "source": "artifacts/cfd3d/vlm/fish3d-v3b-glide-pose/vlm.json (b98f32b6)"
+   }
+  ],
+  "channels": [
+   {
+    "when": "from 2026-10-31T13:00Z",
+    "what": "message files: orders, returns, reviews, status (597)",
+    "source": "/data/artifacts/delphi-evolve-rethink/messages/"
+   },
+   {
+    "when": "2026-11-01",
+    "what": "harness briefs (19)",
+    "source": "harness-briefs/"
+   },
+   {
+    "when": "window",
+    "what": "git branches/commits (160+29 branches; 1619+438 commits)",
+    "source": "git"
+   },
+   {
+    "when": "2026-11-01",
+    "what": "GitHub issues #1-#6, #8",
+    "source": "gh"
+   },
+   {
+    "when": "window",
+    "what": "tmux new-session launches; send-keys injection later forbidden by user rule",
+    "source": "tmux; dx-gpuops pane text"
+   },
+   {
+    "when": "2026-10-31..",
+    "what": "Delphi MCP (client frontier-adapters, 9 tool names); Nebius Scientific AI MCP (calls not counted)",
+    "source": "frontier_adapters/delphi_mcp.py; inventory.json"
+   }
+  ]
+ },
+ "use_cases": [
+  {
+   "use_case": "claim import and adaptation from Delphi",
+   "agents": "adapter authors (count not counted)",
+   "accomplished": "5 adapter modules; 44 distinct claim-ids cited in frontier_adapters/results/docs",
+   "status": "merged on main",
+   "sources": [
+    "7f485f9d",
+    "0e3222cd",
+    "b5414a49"
+   ]
+  },
+  {
+   "use_case": "Delphi claim reuse (delphi-evolve)",
+   "agents": "evolve sessions",
+   "accomplished": "6 files in artifacts/claim_reuse/delphi_records incl. .trig; 24 distinct w3id.org IRIs",
+   "status": "on main",
+   "sources": [
+    "18bcd7d"
+   ]
+  },
+  {
+   "use_case": "flying-fish design mission",
+   "agents": "ff-* harnesses + earlier native hosts",
+   "accomplished": "Nebius jobs listed: organ 9, neuro 11, tissue 10, zf2ff 12, evo 8, mol 4",
+   "status": "in progress on branches",
+   "sources": [
+    "claude/*-20261101 branches"
+   ]
+  },
+  {
+   "use_case": "Evo 2",
+   "agents": "ff-evo",
+   "accomplished": "8 claude-evo-* jobs COMPLETED (provider); predicate state in claude-evo-status.md (quoted, not re-checked)",
+   "status": "provider completed",
+   "sources": [
+    "claude/evo2-fin-scale-20261101"
+   ]
+  },
+  {
+   "use_case": "OpenMM / molecular",
+   "agents": "ff-mol; dx ops",
+   "accomplished": "claude-mol 3 completed 1 running; infra14 collagen-md FAILED",
+   "status": "provider mixed; predicate not counted",
+   "sources": [
+    "claude/mol-sims-20261101"
+   ]
+  },
+  {
+   "use_case": "Morpheus / BETSE",
+   "agents": "ff-xenomorph; dx ops",
+   "accomplished": "claude-xenomorph 1 running; infra16 morpheus FAILED",
+   "status": "provider running/failed",
+   "sources": [
+    "claude/xenomorph-20261101"
+   ]
+  },
+  {
+   "use_case": "voxel / xenobot",
+   "agents": "ff-voxgpu, ff-xeno, ff-xenomodel",
+   "accomplished": "voxgpu 4 completed 2 running; xeno 2 running; Voxelyze agreement claim withdrawn",
+   "status": "provider mixed",
+   "sources": [
+    "docs/audits/voxelyze-review-2026-10-31.md"
+   ]
+  },
+  {
+   "use_case": "genotype compiler",
+   "agents": "claude-02, claude-14, review harness",
+   "accomplished": "3 recorded review corrections",
+   "status": "fixed, author-run rechecks",
+   "sources": [
+    "results/coordination/review-corrections.json"
+   ]
+  },
+  {
+   "use_case": "review and audit",
+   "agents": "root, review harnesses, ff-sitecritic",
+   "accomplished": "6 decision changes; 10 files in docs/audits",
+   "status": "recorded",
+   "sources": [
+    "review-corrections.json",
+    "docs/audits/"
+   ]
+  },
+  {
+   "use_case": "enzyme planner and replay (delphi-evolve)",
+   "agents": "9 dx-* roles",
+   "accomplished": "438 commits 2026-10-31T06:58Z-20:52Z; 28 delphi-evolve-ops jobs (20 completed, 7 failed, 1 cancelled)",
+   "status": "stopped: dx-* auth-blocked at observation",
+   "sources": [
+    "delphi-evolve main 51a38057"
+   ]
+  },
+  {
+   "use_case": "OpenFold2 / ESM2 / neural CA / Lean / live node / site",
+   "agents": "not counted separately",
+   "accomplished": "see results/resources/bio-model-usage.json, nca-*.json (quoted, not re-checked)",
+   "status": "not counted",
+   "sources": []
+  },
+  {
+   "use_case": "nanopubs",
+   "agents": "evolve claim-reuse",
+   "accomplished": ".trig records present; publication state not counted",
+   "status": "not counted",
+   "sources": [
+    "18bcd7d"
+   ]
+  },
+  {
+   "use_case": "this record",
+   "agents": "ff-agentuse (1 Opus 5.5 session)",
+   "accomplished": "docs/agent-use/*",
+   "status": "written",
+   "sources": [
+    "claude/agentuse-20261101"
+   ]
+  }
+ ],
+ "delphi_touchpoints": [
+  {
+   "when": "2026-10-31T18:46:04Z",
+   "what": "Delphi claim + MCP adapters added (client name frontier-adapters v0.2)",
+   "source": "commit 7f485f9d author date"
+  },
+  {
+   "when": "2026-10-31T20:34:13Z",
+   "what": "delphi_live inventory retrieved_at; 9 Delphi MCP tool names used (endpoint hostname omitted)",
+   "source": "frontier_adapters/examples/delphi_live/inventory.json"
+  },
+  {
+   "when": "2026-10-31T07:59:04Z",
+   "what": "first Delphi records in delphi-evolve (claim_reuse/delphi_records, incl. .trig)",
+   "source": "delphi-evolve commit 18bcd7d"
+  },
+  {
+   "when": "observation",
+   "what": "our files cite 44 distinct claim-ids (frontier) and 24 w3id.org IRIs (evolve)",
+   "source": "git grep"
+  },
+  {
+   "when": "observation",
+   "what": "anything of Delphi depending on a result of ours: none found on our side; Delphi repo not inspected (rule 7)",
+   "source": "n/a"
+  }
+ ],
+ "not_established": [
+  "Codex token usage (scan did not finish in budget)",
+  "Nebius jobs older than newest 100 (CLI cannot page)",
+  "Google Cloud job counts",
+  "spend",
+  "pre-2026-10-31 work by older native hosts and who spawned claude-01..14",
+  "director spawn calls (estimated from timing)",
+  "Delphi MCP call time windows; number of Delphi versions read",
+  "nanopub publication state",
+  "model-switch-prompt block record",
+  "session, concurrency and token counts are host-wide, not scoped to these repos",
+  "process states are a single point in time via a text heuristic",
+  "collective-versus-single-agent advantage: not shown; no counterfactual run; all reviewers share git identity and fleet",
+  "this record is written by a member of the fleet it describes"
+ ],
+ "commands_run": [
+  "git fetch origin; git rev-parse origin/main",
+  "git clone --mirror https://github.com/kganjam/delphi-evolve <scratch>/evolve.git; git -C evolve.git rev-parse HEAD",
+  "git log --remotes=origin --format=%H | sort -u | wc -l   # 1619",
+  "git log origin/main --format=%H | wc -l   # 1353",
+  "git -C evolve.git log --all --format=%H | sort -u | wc -l   # 438",
+  "git branch -r | wc -l; git -C evolve.git branch | wc -l",
+  "git log --remotes=origin --format='%(trailers:key=Co-Authored-By,valueonly)' | sed 's/ <.*//' | sort | uniq -c",
+  "git log --remotes=origin --format=%an | sort | uniq -c",
+  "python3 hourly.py: git log --remotes=origin (frontier) and --all (evolve) --date=iso-strict --format=%H|%aI, dedupe by hash, bucket by UTC hour, gaps > 1 h",
+  "gh repo view kganjam/delphi-frontier --json createdAt,defaultBranchRef; same for delphi-evolve",
+  "tmux ls -F '#{session_name}|#{session_created}|#{session_activity}'",
+  "tmux list-panes -a -F '#{session_name}|#{pane_pid}|#{pane_current_command}|#{pane_dead}'",
+  "python3 procs.py: ps -eo pid,ppid,lstart,comm,args; descendants of each pane pid whose comm/args is claude or codex; readlink /proc/<pid>/cwd",
+  "python3 state.py: tmux capture-pane -p -S -15; last 10 non-blank lines; 'esc to interrupt' or spinner -> working, 'OAuth token revoked'/'/login' -> auth-blocked, usage limit/spend cap -> error, prompt -> idle, dead pane -> no process",
+  "nebius --profile hackathon ai job list --format json   # 100 items + next_page_token; --page-size/--page-token unsupported; -f request file ignored page_token",
+  "nebius --profile hackathon ai list --page-size 1000   # still 100",
+  "python3 tokens.py: stream every *.jsonl under ~/.claude/projects and ~/Orchestra/data/claude_creds/*/projects; assistant messages with usage; dedupe (message.id, requestId); window by message timestamp >= 2026-10-30T00:00Z",
+  "python3 conc.py: files with mtime >= 2026-10-30; per top-level file (not under subagents/) the set of assistant-message seconds; sliding 180 s window max distinct files; first timestamp per file bucketed by hour",
+  "python3 codex.py: per ~/.codex/sessions file, max cumulative total_token_usage; window = max minus last value before 2026-10-30",
+  "find ~/.codex/sessions -name \"*.jsonl\" | wc -l   # 6778",
+  "grep -l -i -E \"<pattern>\" /data/artifacts/delphi-evolve-rethink/messages/*   # ResourceExhausted, revoked, spend cap|usage limit, duplicat, COMPILE_FAIL, KCNE1, v3b",
+  "ls /data/artifacts/delphi-evolve-rethink/messages | wc -l   # 597",
+  "python3 -c json.load(results/coordination/review-corrections.json) entries",
+  "grep -n \"2.74|15.57\" docs/audits/voxelyze-review-2026-10-31.md",
+  "git log --remotes=origin --diff-filter=A --format=\"%h %aI\" -- frontier_adapters/delphi_*.py",
+  "git grep -h -o -E 'claim-[a-z0-9]+(-[a-z0-9]+)+' -- frontier_adapters results docs | sort -u | wc -l   # 44",
+  "git -C evolve.git grep -h -o -E 'https?://w3id\\.org/[a-z]+/[A-Za-z0-9_-]+' HEAD | sort -u | wc -l   # 24",
+  "for b in origin/claude*: git rev-list --count origin/main..$b",
+  "grep tmux new-session -d -s in transcripts 507442cb (claude-17) and 9fd16842 (claude-15)"
+ ]
+}
