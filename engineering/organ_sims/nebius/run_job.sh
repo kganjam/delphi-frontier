@@ -11,10 +11,10 @@ cd /tmp && git clone -q --filter=blob:none --no-checkout https://github.com/kgan
 # non-cone sparse set: every input any organ-sims module reads (a1 of r6 failed on a missing r3-daane input)
 git sparse-checkout set --no-cone '/engineering/' '/artifacts/organ-sims/' '/artifacts/glider/r4-daane-printfix/' '/artifacts/glider/r3-daane/*.json' \
   '/artifacts/cfd3d/vlm/' '/artifacts/fish3d/fish3d-v3a-fan/' '/artifacts/fish3d/fish3d-v3b-glide-pose/panels.json' \
-  '/artifacts/fish3d/fish3d-v3c-daane-length/*.json' '/artifacts/aeroelastic/protocol.json' || exit 21
+  '/artifacts/fish3d/fish3d-v3c-daane-length/*.json' '/artifacts/aeroelastic/protocol.json' '/artifacts/scales/erk-wave/receipt.json' || exit 21
 git checkout -q "$SHA" || exit 22
 [ "$(git rev-parse HEAD)" = "$SHA" ] || { echo "HEAD mismatch"; exit 23; }
-python3 -m pip install -q --no-cache-dir numpy==2.2.6 matplotlib==3.10.3 pybullet==3.2.7 2>&1 | tail -2
+python3 -m pip install -q --no-cache-dir numpy==2.2.6 matplotlib==3.10.3 pybullet==3.2.7 manifold3d==3.5.4 trimesh==5.2.0 2>&1 | tail -2
 python3 -c "import numpy, matplotlib, pybullet; print('pkgs', numpy.__version__, matplotlib.__version__)"
 mkdir -p artifacts/organ-sims/logs
 T0=$(date +%s)
