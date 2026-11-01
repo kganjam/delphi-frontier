@@ -79,7 +79,8 @@ def sphere_voxels(r: float) -> int:
     return int(np.count_nonzero(X**2 + Y**2 + Z**2 <= r * r))
 
 
-def build_xml(proto: dict, arm: str, seed: int, scale: float, horizon: int | None) -> tuple[str, dict]:
+def build_xml(proto: dict, arm: str, seed: int, scale: float, horizon: int | None,
+              connectivity: bool = False) -> tuple[str, dict]:
     ip = proto["initial_population"]
     size = int(round(proto["lattice"]["base_size"] * scale))
     r = ip["cell_radius_base"] * scale
@@ -94,6 +95,9 @@ def build_xml(proto: dict, arm: str, seed: int, scale: float, horizon: int | Non
     lam = proto["cells"]["volume_strength"]
     stop = horizon if horizon is not None else int(round(proto["time_horizon_mcs_base"] * scale**2))
     snap = int(round(proto["snapshot_interval_mcs_base"] * scale**2))
+
+    # addendum 1: optional ConnectivityConstraint; default off leaves the frozen XML byte-identical
+    cc = "\n            <ConnectivityConstraint/>" if connectivity else ""
 
     def pop(tname: str) -> str:
         arr = []
@@ -131,10 +135,10 @@ Not a Xenobot, not any organism; no frog parameter is used.</Details>
     <CellTypes>
         <CellType class="medium" name="medium"/>
         <CellType class="biological" name="A">
-            <VolumeConstraint strength="{lam}" target="{vt}"/>
+            <VolumeConstraint strength="{lam}" target="{vt}"/>{cc}
         </CellType>
         <CellType class="biological" name="B">
-            <VolumeConstraint strength="{lam}" target="{vt}"/>
+            <VolumeConstraint strength="{lam}" target="{vt}"/>{cc}
         </CellType>
     </CellTypes>
     <CPM>
@@ -182,11 +186,13 @@ def main(argv=None):
     ap.add_argument("--binary", default=os.environ.get("MORPHEUS_BIN", str(Path.home() / "opt/morpheus/morpheus-2.3.9")))
     ap.add_argument("--horizon-mcs", type=int, default=None)
     ap.add_argument("--no-run", action="store_true")
+    ap.add_argument("--connectivity", action="store_true", help="addendum 1 supplementary arm")
     a = ap.parse_args(argv)
     proto = load_protocol()
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    xml, meta = build_xml(proto, a.arm, a.seed, a.scale, a.horizon_mcs)
+    xml, meta = build_xml(proto, a.arm, a.seed, a.scale, a.horizon_mcs, a.connectivity)
+    meta["connectivity_constraint"] = a.connectivity
     (out / "model.xml").write_text(xml)
     (out / "init_cells.json").write_text(json.dumps(meta) + "\n")
     if a.no_run:

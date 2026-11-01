@@ -1,0 +1,17 @@
+{
+  "schema": "frontier.xenomorph.protocol-addendum/1",
+  "amends": "engineering/xenomorph/protocol.json sha256 b4e329baeb9a1274f4ef01c984a2d3066bbfca205f15769b71f23e7ec97a3e4f",
+  "written": "2026-11-01 ~09:05 PST, while production batch aijob-e00vzbhpapp9q8hrmr was running and before any of its results were read",
+  "erratum": {
+    "refinement.verdict_rule": "The frozen text says 'change between scale 1.0 and 1.5', but the frozen scales are [0.75, 1.0, 1.25]; 1.5 was the pre-revision value. The comparison is therefore scale 1.0 vs 1.25 (the only finer level), with 0.75 reported as the coarse point. The rule is otherwise unchanged. Found by the gemini-4-argon review."
+  },
+  "known_limitation_recorded_before_results": "The refinement arm keeps J, T and volume strength fixed while cells grow by s^3 voxels (as frozen). The ratio of surface to volume-constraint energy and the acceptance statistics therefore change with s; s^2 time rescaling is an assumption. A resolution difference in this arm is not evidence about any physical scale. (gemini-4-argon review item 1.)",
+  "supplementary_arms": {
+    "why": "A pilot field (seed 98, dah, 3000 MCS) showed CPM cell fragmentation without a connectivity constraint: 6% of cell voxels lie outside each cell's main 6-connected body, 65/128 cells are split even under 26-connectivity, worst cell 49/257 voxels detached. This biases cell centroids used by the cell-resolved print.",
+    "runs": "dah, equal, zero x seeds 1, 2 at scale 1.0, identical to the frozen arms except <ConnectivityConstraint/> in both cell types (cpm_model.py --connectivity; default XML verified byte-identical to the frozen generator)",
+    "gates": "the frozen controls_and_falsifiers rules are evaluated on these runs too and reported as SUPPLEMENTARY; they do not replace the frozen-arm verdicts",
+    "print_rule": "if the connectivity arm's dah run passes compaction, the cell-resolved print series is built from BOTH the frozen dah seed 1 and the connectivity dah seed 1, and both are published; the frozen one stays the primary record"
+  },
+  "posthoc_metrics": "engineering/xenomorph/posthoc.py: core_shell_index_largest, A/B medium exposure, 26-neighbourhood aggregate count, fragmented_cells. Labelled post-hoc everywhere.",
+  "offlattice_size_arm": "GPU: off-lattice engine at N=1024 cells (vs 256 in the main sweep), c_AA in {0, 1, 2}, ratio in {1, 0.25}, D=0.005, dt=0.01, seeds 1-4, ball scaled to keep volume fraction; a finite-size check, reported as such."
+}
