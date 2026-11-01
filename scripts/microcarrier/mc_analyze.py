@@ -117,10 +117,28 @@ def e3(R):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("dirs", nargs="+"); ap.add_argument("--out", required=True)
+    ap.add_argument("--diagnosis", help="diagnosis JSON for an E1 FAIL; E1 stays FAIL, E2/E3 read frozen + strict")
+    ap.add_argument("--artifact-bound-L", type=float, default=0.0, help="passive artifact bound added to tolerances (strict variant)")
     a = ap.parse_args(); R = load(a.dirs)
     res = {"schema": "frontier.microcarrier-verdicts/1", "protocol": "artifacts/microcarrier/protocol.json", "E1": e1(R)}
     if res["E1"]["verdict"] == "PASS":
         res["E2"] = e2(R); res["E3"] = e3(R)
+    elif a.diagnosis:
+        dg = json.load(open(a.diagnosis)); b = a.artifact_bound_L
+        res["gate"] = {"status": "E1 FAIL diagnosed as numerical; endpoints read after diagnosis (post-freeze deviation, disclosed)",
+                       "diagnosis_file": a.diagnosis, "diagnosis": dg["diagnosis"], "artifact_bound_L": b}
+        e2f, e3f = e2(R), e3(R)
+        # strict variant (never looser than frozen): E2 needs D > R_env + 2b; E3 needs e_abs + 2b <= tol
+        if "D_L_by_level" in e2f:
+            e2f["strict_verdict"] = "PASS" if all(D > e2f["R_envelope_L"] + 2 * b for D in e2f["D_L_by_level"].values()) else "NO CLAIM"
+        for key in ("primary_M_vs_My", "secondary_A_vs_Ax"):
+            rows = e3f[key].get("rows", [])
+            for r in rows:
+                if "e_abs_L" in r: r["strict_pass"] = r["e_abs_L"] + 2 * b <= r["tol_L"]
+            if rows and all("strict_pass" in r for r in rows):
+                e3f[key]["strict_verdict"] = "PASS" if all(r["strict_pass"] for r in rows) else "FAIL"
+        e3f["strict_verdict"] = e3f["primary_M_vs_My"].get("strict_verdict")
+        res["E2"], res["E3"] = e2f, e3f
     else:
         res["E2"] = res["E3"] = {"verdict": "NOT READ", "reason": f"E1 is {res['E1']['verdict']}; protocol gate"}
     json.dump(res, open(a.out, "w"), indent=1)

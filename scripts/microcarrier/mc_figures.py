@@ -68,7 +68,10 @@ def fig_families(R, od):
         v = np.array(groups[k]); ax.scatter(v, i + rng.uniform(-0.18, 0.18, v.size), s=12, color=C[0], alpha=0.75, edgecolors=SURF, linewidths=0.5)
         ax.plot([np.median(v)] * 2, [i - 0.3, i + 0.3], color=INK, lw=2)
         ax.annotate(f"n={v.size}", (1.005, i), xycoords=("axes fraction", "data"), va="center", fontsize=7, color=INK2)
-    ax.set_yticks(range(len(order))); ax.set_yticklabels(order); ax.invert_yaxis(); ax.set_xscale("log")
+    NAMES = {"A": "wave k=1 bwd (A)", "B": "wave k=2 bwd (B)", "M": "oblique wave 30deg (M)", "C": "2-segment alternating (C)", "U": "uniform in-phase (U)",
+             "T05b": "wave k=0.5 bwd", "T05f": "wave k=0.5 fwd", "S4b": "4-segment bwd", "St1": "standing wave k=1", "H1": "helical wave",
+             "R1": "random smooth (seed)", "I1": "random per-voxel (seed)"}
+    ax.set_yticks(range(len(order))); ax.set_yticklabels([NAMES.get(k, k) for k in order], fontsize=8); ax.invert_yaxis(); ax.set_xscale("log")
     ax.set_xlabel("|net displacement| per cycle, body lengths (log; passive floored at 1e-9)"); ax.grid(axis="y", visible=False)
     fig.suptitle("All sweep patterns at 10 Hz, mesh 1: displacement by family (dots = patterns, bar = median)", fontsize=10, x=0.01, ha="left")
     fig.text(0.01, 0.005, FOOT + "\nMagnitude includes the y component; at mesh 1 that contains a lateral solver-anisotropy artifact (see mirror results), so random families are likely inflated.", fontsize=6.5, color=INK2)
@@ -77,21 +80,24 @@ def fig_families(R, od):
 def fig_refinement(R, V, od):
     e2 = V.get("E2", {})
     if "d_A_L" not in e2: return None
-    fig, axes = plt.subplots(1, 2, figsize=(9, 3.6), sharey=True)
-    dts = ["0.5", "0.25", "0.125", "0.0625"]; ms = ["1", "2", "3"]
+    fig, axes = plt.subplots(2, 2, figsize=(9, 6.4), sharex="col")
+    dts = ["0.5", "0.25", "0.125", "0.0625"]; ms = ["1", "2", "3"]; n = 5
     for i, (t, name) in enumerate([("A", "A: k=1 wave"), ("B", "B: k=2 wave")]):
-        d = e2[f"d_{t}_L"]; n = 5
-        axes[0].plot([float(x) for x in dts], [d[f"m1-dt{x}"][0] / n for x in dts], "-o", color=C[i], lw=2, ms=5, label=name)
-        axes[1].plot([int(m) for m in ms], [d[f"m{m}-dt0.5"][0] / n for m in ms], "-o", color=C[i], lw=2, ms=5, label=name)
-        axes[1].plot([2], [d["m2-dt0.25"][0] / n], "s", color=C[i], ms=6, mfc=SURF, mew=1.5)
-    axes[0].set_xscale("log", base=2); axes[0].invert_xaxis(); axes[0].set_xlabel("dt / recommended dt (mesh 1)")
-    axes[1].set_xticks([1, 2, 3]); axes[1].set_xticklabels(["8x4x4", "16x8x8", "24x12x12"]); axes[1].set_xlabel("mesh (dt 0.5; open square: mesh 2 at dt 0.25)")
-    axes[0].set_ylabel("x displacement per cycle, cycles 2-6 (body lengths)")
-    for ax in axes: ax.axhline(0, color=INK2, lw=0.8)
-    axes[0].legend(frameon=False, fontsize=8)
-    fig.suptitle(f"Endpoint 2 refinement series: D_min = {min(e2['D_L_by_level'].values()):.3g} L vs envelope R = {e2['R_envelope_L']:.3g} L -> {e2['verdict']}", fontsize=10, x=0.01, ha="left")
-    fig.text(0.01, 0.005, FOOT + " · mesh-consistent damping", fontsize=6.5, color=INK2)
-    fig.tight_layout(rect=(0, 0.04, 1, 0.95)); p = os.path.join(od, "refinement.png"); fig.savefig(p, dpi=150); plt.close(fig); return p
+        d = e2[f"d_{t}_L"]
+        for row, comp in ((0, 0), (1, 1)):
+            axes[row, 0].plot([float(x) for x in dts], [d[f"m1-dt{x}"][comp] / n for x in dts], "-o", color=C[i], lw=2, ms=5, label=name)
+            axes[row, 1].plot([int(m) for m in ms], [d[f"m{m}-dt0.5"][comp] / n for m in ms], "-o", color=C[i], lw=2, ms=5, label=name)
+            axes[row, 1].plot([2], [d["m2-dt0.25"][comp] / n], "s", color=C[i], ms=6, mfc=SURF, mew=1.5)
+    axes[1, 0].set_xscale("log", base=2); axes[1, 0].invert_xaxis(); axes[1, 0].set_xlabel("dt / recommended dt (mesh 1)")
+    axes[1, 1].set_xticks([1, 2, 3]); axes[1, 1].set_xticklabels(["8x4x4", "16x8x8", "24x12x12"]); axes[1, 1].set_xlabel("mesh (dt 0.5; open square: mesh 2 at dt 0.25)")
+    axes[0, 0].set_ylabel("x per cycle (body lengths)"); axes[1, 0].set_ylabel("y (lateral) per cycle (body lengths)")
+    for ax in axes.flat: ax.axhline(0, color=INK2, lw=0.8)
+    axes[0, 0].legend(frameon=False, fontsize=8)
+    axes[1, 1].annotate("B's lateral drift at mesh 1 vanishes\nwith refinement: a solver artifact", xy=(1, e2["d_B_L"]["m1-dt0.5"][1] / n), xytext=(1.6, 0.0045), fontsize=7.5, color=INK, arrowprops=dict(arrowstyle="-", color=INK2, lw=0.8))
+    fig.suptitle(f"Endpoint 2 refinement series: D at mesh 3 = {e2['D_L_by_level']['m3-dt0.5']:.2g} L vs envelope R = {e2['R_envelope_L']:.2g} L -> {e2['verdict']}\n"
+                 "In x, the k=1 and k=2 waves converge to nearly the same speed; the mesh-1 difference was lateral artifact.", fontsize=9.5, x=0.01, ha="left")
+    fig.text(0.01, 0.005, FOOT + "\nmesh-consistent damping · E1 FAILED at mesh 3 (diagnosed numerical, <= 7.3e-6 L)", fontsize=6.5, color=INK2)
+    fig.tight_layout(rect=(0, 0.05, 1, 0.92)); p = os.path.join(od, "refinement.png"); fig.savefig(p, dpi=150); plt.close(fig); return p
 
 def fig_robust(R, od):
     pats = collections.OrderedDict()
@@ -105,7 +111,10 @@ def fig_robust(R, od):
         v = np.array([max(x[3], 1e-9) for x in pats[k]])
         ax.scatter(v, np.full(v.size, i) + np.linspace(-0.2, 0.2, v.size), s=10, color=C[2], alpha=0.8, edgecolors=SURF, linewidths=0.4)
         ax.plot([np.median(v)] * 2, [i - 0.3, i + 0.3], color=INK, lw=2)
-    ax.set_yticks(range(len(order))); ax.set_yticklabels(order); ax.invert_yaxis(); ax.set_xscale("log"); ax.grid(axis="y", visible=False)
+    NAMES = {"A": "wave k=1 bwd (A)", "B": "wave k=2 bwd (B)", "M": "oblique wave 30deg (M)", "C": "2-segment alternating (C)", "U": "uniform in-phase (U)",
+             "T05b": "wave k=0.5 bwd", "T05f": "wave k=0.5 fwd", "S4b": "4-segment bwd", "St1": "standing wave k=1", "H1": "helical wave",
+             "R1": "random smooth (seed)", "I1": "random per-voxel (seed)"}
+    ax.set_yticks(range(len(order))); ax.set_yticklabels([NAMES.get(k, k) for k in order], fontsize=8); ax.invert_yaxis(); ax.set_xscale("log"); ax.grid(axis="y", visible=False)
     ax.set_xlabel("|net displacement| per cycle, body lengths (27 combinations of friction x amplitude x modulus per pattern)")
     fig.suptitle("Exploratory robustness grid: does the ranking survive the three assumed parameters?", fontsize=10, x=0.01, ha="left")
     fig.text(0.01, 0.005, FOOT + " · not preregistered", fontsize=6.5, color=INK2)

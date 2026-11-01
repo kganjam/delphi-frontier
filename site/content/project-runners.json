@@ -1,0 +1,140 @@
+{
+ "schema": "frontier.project-runners/1",
+ "note": "Runner results attached to authored projects. Kept apart from projects.json so the authored proposal (and the stored records bound to its digest) stay unchanged; build_site merges 'runner' and 'overrides' into the project at build time.",
+ "runners": {
+  "tissue-microcarrier": {
+   "runner": {
+    "name": "Voxelyze soft-voxel batch runner (mc_runner)",
+    "status": "endpoints executed: 1 FAIL (diagnosed), 1 NO CLAIM, 1 FAIL",
+    "summary": "A 1 mm x 0.5 mm x 0.5 mm block of soft voxels (assumed E 20 kPa, density 1050 kg/m3, buoyant weight only) rests on a rigid floor with Coulomb friction. Each voxel receives a prescribed sinusoidal volumetric strain (amplitude and phase set by the pattern), with the same total actuation (mean square 1) for every pattern. Displacement is the centre-of-mass shift, sampled once per cycle, after a sin-squared ramp over cycle 1. Equations of motion: explicit Euler on beam-linked voxels, with damping c = 2 zeta sqrt(m E s).",
+    "mechanism_note": "The cited sources (Kriegman 2020; Blackiston 2021, abstracts only) report CILIARY locomotion. This runner models muscle-like CONTRACTION as prescribed thermal-style strain. That is a different mechanism, chosen by this project, and prescribed strain is not measured cellular contractility.",
+    "engine": "Voxelyze @4287e365 (LGPL-3.0-or-later), built with -O3 -ffp-contract=off; results bitwise identical across two compilers and hosts",
+    "protocol": "artifacts/microcarrier/protocol.json",
+    "protocol_sha256": "e00e43c45a771a302f77afca47599d23028fc65800727eddca8ac2cba5d527cd",
+    "frozen_commit": "cf702ada",
+    "scale": "organ-scale construct body (1 mm), not an organism, not tissue",
+    "endpoints": [
+     {
+      "id": "passive-control",
+      "verdict": "FAIL",
+      "result": "Actuation off. Mesh 8x4x4 (two dt values) and 16x8x8 stay within 1e-6 body lengths (1.6e-8 to 6.7e-8). At mesh 24x12x12 the body drifted 5.7e-6 L, above the 1e-6 L tolerance. Diagnosis with 8 one-factor runs: the drift disappears when dt is halved (5.9e-9 L), without friction (1.7e-14 L), without gravity (0) or with a 1 s settle (1.8e-7 L), and it decays within about 1.2 s. It is a slow frictional settling drift that the preregistered settle check (an oscillation envelope) missed. The 'settled shape' condition was therefore not met. The verdict stays FAIL; the other endpoints were read only after this diagnosis, with the drift bound (7.3e-6 L) added to their tolerances as a disclosed deviation."
+     },
+     {
+      "id": "pattern-dependence",
+      "verdict": "NO CLAIM",
+      "result": "A = backward wave of 1 wavelength, B = 2 wavelengths, equal total actuation. Both move the body backward, about 0.006 L per cycle at 10 Hz. At the coarse mesh B also drifts sideways by 0.03 L, but that drift disappears with refinement (0.00005 L at 24x12x12). At the finest mesh the A-B difference is 0.0008 L, much smaller than B's own refinement change (0.031 L). No pattern-to-motion statement is made."
+     },
+     {
+      "id": "mirror-symmetry",
+      "verdict": "FAIL",
+      "result": "An oblique wave and its y-mirror should give mirrored displacements within 1%. The error is 1.7 to 1.8% at mesh 8x4x4 at every dt (so dt is not the cause), and 0.6%, 0.5% and 0.05% at the finer meshes. The secondary x-mirror test also fails at the coarse and middle meshes (1.1 to 1.3%). This flags an anisotropy artifact in the solver at coarse resolution, as the falsifier says. Reversing voxel creation order changed nothing (bitwise identical), so update order is ruled out."
+     }
+    ],
+    "sweep": {
+     "summary": "Beyond the endpoints: 464 sweep runs (travelling waves of 0.25 to 4 wavelengths, mostly at 10 Hz with subsets at 2.5, 5 and 20 Hz, in both directions and several angles, plus standing, segmented, helical, ramped and random patterns, each with seed and receipt), a 324-run grid over friction, amplitude and modulus, and 800 random smooth patterns with 12 frictionless controls. Run on Nebius CPU and a GCP VM; all 1,662 exited 0. Robust findings: a wave's travel direction sets the motion direction, and the body moves the same way as the wave; frictionless controls never move (at most 2e-11 L), so friction is what turns deformation into motion here; a uniform in-phase drive barely moves (about 1e-6 L per cycle). Not robust: speeds at the coarse mesh roughly halve at the next mesh for several patterns, displacement per cycle depends on frequency, and large sideways drifts at 2+ wavelengths are solver artifacts. Rankings are exploratory and were not preregistered."
+    },
+    "media": [
+     {
+      "title": "Best clean mover",
+      "path": "artifacts/microcarrier/render-best.mp4",
+      "sha256": "2609097103d7709c5ff0d7f6eb05aa840ad31446af0d86346e829e098e12e0dd",
+      "kind": "video",
+      "caption": "A 0.75-wavelength contraction wave travels toward -x at 2.5 Hz and the body moves toward -x. Colour is the prescribed drive strain. Mesh 8x4x4.",
+      "not_established": "that any pattern propels a real construct; a render is a picture of a simulation, never an observation"
+     },
+     {
+      "title": "Largest displacement, an artifact",
+      "path": "artifacts/microcarrier/render-artifact.mp4",
+      "sha256": "17af661ff717a3c4bfda3632bb77769a7f4d9035b4869be9ccad288b85d990e0",
+      "kind": "video",
+      "caption": "2.5 wavelengths at 2.5 Hz: the body yaws and tips onto its end. The turn direction comes from solver anisotropy, not from the pattern.",
+      "not_established": "that any pattern propels a real construct; a render is a picture of a simulation, never an observation"
+     },
+     {
+      "title": "Symmetric control",
+      "path": "artifacts/microcarrier/render-uniform.mp4",
+      "sha256": "349005d57aeb2783fcfb5ac2bf0756e438e9141f1d02bcd85e71bd7db280fcdb",
+      "kind": "video",
+      "caption": "A uniform in-phase drive: the body breathes and does not travel.",
+      "not_established": "that any pattern propels a real construct; a render is a picture of a simulation, never an observation"
+     },
+     {
+      "title": "Refinement series (endpoint 2)",
+      "path": "artifacts/microcarrier/refinement.png",
+      "sha256": "69bc21e726928721f177d92f81a799951e756e8a38e8dd4db511fc0db4ce9c01",
+      "kind": "png",
+      "caption": "x and y displacement per cycle for patterns A and B across four dt values and three meshes. The coarse-mesh difference between A and B was a lateral artifact.",
+      "not_established": "convergence beyond the three meshes shown"
+     },
+     {
+      "title": "Pattern versus displacement",
+      "path": "artifacts/microcarrier/pattern-vs-displacement.png",
+      "sha256": "237b95fd39aace1144cb0c0cb92fe7e215484909746de6fe6a59928236c035f8",
+      "kind": "png",
+      "caption": "Signed x displacement per cycle against wavelength count, by frequency, for forward and backward waves (mesh 8x4x4).",
+      "not_established": "mesh-converged speeds (the next mesh gives about half for several patterns)"
+     },
+     {
+      "title": "Pattern families",
+      "path": "artifacts/microcarrier/sweep-families.png",
+      "sha256": "c67a8a2d2ce1a457136703277dbda7fbc789841ad667428f7aa8b96a8c5decea",
+      "kind": "png",
+      "caption": "Displacement magnitude per cycle by pattern family across the sweep.",
+      "not_established": "that the y component is physical: it contains the anisotropy artifact"
+     },
+     {
+      "title": "Robustness grid",
+      "path": "artifacts/microcarrier/robustness.png",
+      "sha256": "fcd6331f3fe00a5d15c75ff3e18161f1a1d16abd63571e7702ac476b00726eee",
+      "kind": "png",
+      "caption": "12 patterns x 27 combinations of friction, amplitude and modulus. A and B overlap throughout, which agrees with endpoint 2.",
+      "not_established": "that any assumed parameter is the real value for a construct"
+     }
+    ],
+    "couplings": [
+     {
+      "port": "cell actuation to tissue stress",
+      "status": "refused",
+      "why": "no sourced parameter; the runner prescribes strain directly, so this port is skipped, not closed"
+     },
+     {
+      "port": "tissue stress to construct deformation",
+      "status": "scenario",
+      "why": "computed with an assumed modulus (20 kPa; the grid also tries 10 and 40 kPa). No measured modulus exists."
+     },
+     {
+      "port": "deformation to net motion on a surface",
+      "status": "scenario",
+      "why": "modelled for a frictional floor only, with assumed friction coefficients. Motion in fluid is not modelled; the sources' constructs swim with cilia."
+     },
+     {
+      "port": "simulated design to built construct",
+      "status": "refused",
+      "why": "no transfer rule exists; nothing here was built or measured"
+     }
+    ],
+    "not_established": [
+     "anything about Xenopus cells, tissue or xenobots",
+     "ciliary propulsion, which is what the cited sources report",
+     "motion in fluid (no hydrodynamics)",
+     "a calibrated actuation, modulus or friction value",
+     "mesh convergence of speeds beyond the 3-mesh series; several patterns change by about 2x between the first two meshes",
+     "that the endpoint 2 and 3 results are clean: they were read after a diagnosed passive-control failure",
+     "transfer of any ranking to another engine (a cross-engine check with voxcraft-sim was offered, not done)"
+    ],
+    "receipts": "artifacts/microcarrier/receipts.jsonl (1,662 runs), runs.csv, verdicts.json, diagnostics/, simulation-manifest.json, media-manifest.json"
+   },
+   "overrides": {
+    "status": "proposed; runner executed (simulation only)",
+    "summary": "A batch runner now exists: Voxelyze at a pinned commit, with the body, patterns and analysis frozen before any endpoint run. 1,662 simulations completed with exit 0. The passive control FAILED at the finest mesh and was diagnosed as a numerical settling drift. Pattern dependence gave NO CLAIM and mirror symmetry FAILED at the coarse mesh. Generic soft-body mechanics on a frictional floor; no frog or fish parameter is used.",
+    "missing_couplings": [
+     "Cell actuation (contraction or cilia) to tissue stress: refused. No sourced parameter and no model; the runner prescribes strain directly.",
+     "Tissue stress to construct deformation: scenario only. Computed with an assumed modulus; none is measured here.",
+     "Deformation to net motion: scenario on a frictional floor only; motion in fluid is not modelled.",
+     "Simulated design to built construct: refused. The source reports a pipeline, not a transfer rule for any runner in this node."
+    ],
+    "virtual_instrument_status": "executed as a batch runner (endpoints r1); see the verdicts above"
+   }
+  }
+ }
+}

@@ -27,6 +27,7 @@ from build_flying_fish_project import CATALOG  # noqa: E402
 from frontier.models import Draft, digest, make_record  # noqa: E402
 
 PROJECTS = ROOT / "site/content/projects.json"
+RUNNERS = ROOT / "site/content/project-runners.json"   # executed runners, kept apart so projects.json (and its stored-record binding) is unchanged
 OUT = ROOT / "projects"
 ISSUER = "additional-projects"   # placeholder: the importing operator re-issues under their authenticated actor
 
@@ -50,13 +51,17 @@ EXTRA_MEMBERS = {
 # scale -> (status, note). 'implemented_model' would mean a runnable model for THIS project; none exists for either study.
 COVERAGE = {
     "tissue-microcarrier": [("cellular", "source_only", "Two abstracts report cell constructs; no parameter or model is attached."),
-                            ("tissue", "unimplemented", "No contractile-tissue model exists in this node."),
-                            ("organ", "unimplemented", "The proposed soft-voxel runner is not delivered; no shape or motion result exists.")],
+                            ("tissue", "unimplemented", "No contractile-tissue model exists in this node; the runner's body is a generic soft-voxel block with an assumed modulus, not tissue."),
+                            ("organ", "implemented_model", "A Voxelyze batch runner (artifacts/microcarrier/protocol.json, frozen) simulates construct-level shape change and net displacement on a frictional floor. Generic mechanics with assumed parameters; passive control FAIL (diagnosed), pattern dependence NO CLAIM, mirror symmetry FAIL.")],
     "epithelial-repair": [("subcellular", "unimplemented", "Protrusion and contractility are inputs of the published models; none is modelled here."),
                           ("cellular", "source_only", "Two abstracts describe cell mechanics and adhesion; no parameter is sourced here."),
                           ("tissue", "source_only", "Two published models of closure are known at abstract level; none has been run here."),
                           ("organ", "unimplemented", "No barrier-geometry readout exists.")],
 }
+
+
+def runners() -> dict:
+    return json.loads(RUNNERS.read_text()).get("runners", {}) if RUNNERS.is_file() else {}
 
 
 def studies() -> list[dict]:
@@ -86,13 +91,14 @@ def build(created_at: str | None = None) -> dict[str, dict]:
         reqs.append(dict(id="req-non-goals", kind="non_goal", text="This project is not " + "; not ".join(x[0].lower() + x[1:] for x in p["context"]["not_this"]) + ".", stage="declared"))
         payload = {
             "title": p["title"],
-            "mission": p["goal"] + " " + p["summary"],
+            "mission": p["goal"] + " " + runners().get(p["id"], {}).get("overrides", {}).get("summary", p["summary"]),
             "source": {"uri": "https://github.com/kganjam/delphi-frontier", "locator": f"site/content/projects.json#{p['id']}", "source_version": sha[:12],
                        "content_sha256": sha, "content_available": False, "access": "public repository file; member refs are snapshot-catalog refs", "license": None},
             "limitations": ["Every member ref is a snapshot-catalog ref (namespace 'snapshot'), not a live-store version: re-pin before submitting.",
                             "The cited papers have no record in the catalog, so they are not members. They appear as sources on the page, read at abstract level only.",
                             "No calibration bridges any pair of scales; every coupling is absent or scenario-level.",
-                            "No runner exists for this project; every instrument is proposed. Nothing here is a simulation or an observation."],
+                            ("A generic soft-voxel batch runner executed the preregistered endpoints (simulation only, never an observation): passive control FAIL (diagnosed numerical), pattern dependence NO CLAIM, mirror symmetry FAIL. The physical instrument is proposed."
+                             if p["id"] in runners() else "No runner exists for this project; every instrument is proposed. Nothing here is a simulation or an observation.")],
             "scale_coverage": [dict(scale=s, status=st, note=n) for s, st, n in COVERAGE[p["id"]]],
             "members": members, "requirements": reqs, "open_questions": questions}
         draft = {"namespace": "snapshot", "kind": "Project", "id": "project-" + p["id"], "issuer": ISSUER,

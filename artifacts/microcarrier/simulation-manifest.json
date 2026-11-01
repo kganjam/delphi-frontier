@@ -1,0 +1,85 @@
+{
+ "evidence_kind": "simulated",
+ "project": "tissue-microcarrier",
+ "scale": "Project scale: a 1 mm x 0.5 mm x 0.5 mm soft voxel block (organ-scale construct body in the project's scale ladder, not an organism) on a rigid frictional floor with buoyant weight only. Generic soft-body mechanics.",
+ "engine": {
+  "name": "Voxelyze",
+  "commit": "4287e365e11416dd108f2f361e9ec4c5a011a16c",
+  "licence": "LGPL-3.0-or-later (source headers)"
+ },
+ "protocol": {
+  "title": "protocol.json",
+  "path": "artifacts/microcarrier/protocol.json",
+  "sha256": "e00e43c45a771a302f77afca47599d23028fc65800727eddca8ac2cba5d527cd",
+  "byte_size": 15654,
+  "media_type": "application/json",
+  "role": "protocol",
+  "availability": "in-repo"
+ },
+ "code_files": {
+  "scripts/microcarrier/build.sh": "ca59be07a47db52e6a6c69305efed0787f8d50cf0bf60c744425461b194504cb",
+  "scripts/microcarrier/job_entry.sh": "8af1b145e526872351f07ac22cf8ed882ab8c3e8bec8d7e76c8bfabfe04ad9fe",
+  "scripts/microcarrier/job_entry_diag.sh": "d70da5818d0c21afebcf75f3113664522ab25f4f7b52f8f331e2a13de050dfcf",
+  "scripts/microcarrier/mc_analyze.py": "c3f2fe67141ac3f65a2b5f0e8cbb90e207a25d0213423e7a77d8b1774f4e2564",
+  "scripts/microcarrier/mc_figures.py": "efee96085026989a310ddbf10eeaf78241b423faa433eb6cdc32e1066575f51c",
+  "scripts/microcarrier/mc_job.py": "084a0955ae0aade94dce1cea7a12a8a281c80d92909813fce63ca5417e87d41c",
+  "scripts/microcarrier/mc_patterns.py": "d0dc831d21e884d9b8e468dbed62ec8f4f11ffe83a9a3ee51823eb4c6c64bc7f",
+  "scripts/microcarrier/mc_plan.py": "71b7f599aebf1d0caac43845b3e35966d4cbb1107ac7b410721922468ef6b596",
+  "scripts/microcarrier/mc_plan_diag.py": "5bc0fd51584b3caf94ad44053a1fcc84effe871a44187f2fbab631c615bc476c",
+  "scripts/microcarrier/mc_plan_robust.py": "ca40f5586d401a2edebbcf210a00bab3993752d7f53d3685701d7aa356015beb",
+  "scripts/microcarrier/mc_plan_wide.py": "996d050cbf2f686e02ff35ec61abeb5757f26b26fae76007f11d87868405d05e",
+  "scripts/microcarrier/mc_publish.py": "82b3c628e1e9a3763b477d87d8432e14bfacd62fa08716c98de1467ef6409272",
+  "scripts/microcarrier/mc_render.py": "7c655c339b74789d414c816c630a4a4e5522d4760c228763aad02dd00f8ec99c",
+  "scripts/microcarrier/mc_runner.cpp": "691f57ab0177b36504bc0d547f3d4d5bcb880ac0c787971ff84b73c4cbd3c4f3"
+ },
+ "mechanism_note": "Sources (Kriegman 2020; Blackiston 2021, abstracts only) report ciliary locomotion. These runs model contraction as prescribed volumetric strain: a different mechanism, chosen by this project.",
+ "schema": "frontier.microcarrier.simulation-manifest/1",
+ "id": "microcarrier-endpoints-r1",
+ "what_it_does": "Executes the three preregistered endpoints (passive control, pattern dependence, mirror symmetry) with dt and mesh refinement series.",
+ "artifacts": [
+  {
+   "title": "verdicts.json",
+   "path": "artifacts/microcarrier/verdicts.json",
+   "sha256": "de9db0baed56b2e30f7a672a1866e2845ee2b5c3b0d39795b7a43c8e1a13108a",
+   "byte_size": 10276,
+   "media_type": "application/json",
+   "role": "certificate",
+   "availability": "in-repo"
+  },
+  {
+   "title": "e1-mesh3-creep.json",
+   "path": "artifacts/microcarrier/diagnostics/e1-mesh3-creep.json",
+   "sha256": "0bfbd5d5506bacfa6f2b32910b2887044c5efff1aeba0c4804a2cff27bd05470",
+   "byte_size": 6831,
+   "media_type": "application/json",
+   "role": "diagnosis",
+   "availability": "in-repo"
+  },
+  {
+   "title": "runs.csv",
+   "path": "artifacts/microcarrier/runs.csv",
+   "sha256": "34576434e4af6998a01e8d32fcebd26f4e8c8c34207d24d134acf122df413f1d",
+   "byte_size": 639503,
+   "media_type": "text/csv",
+   "role": "output",
+   "availability": "in-repo"
+  },
+  {
+   "title": "receipts.jsonl",
+   "path": "artifacts/microcarrier/receipts.jsonl",
+   "sha256": "abb8c93930dc30e7c1e25f2feda4cad117287989574015ca0b89feb7aef7bf92",
+   "byte_size": 2946288,
+   "media_type": "application/x-ndjson",
+   "role": "receipt",
+   "availability": "in-repo"
+  }
+ ],
+ "does_not_establish": [
+  "anything about Xenopus cells, tissue or xenobots",
+  "ciliary propulsion, which is what the cited sources report; contraction here is this project's modelling choice",
+  "motion in fluid (no hydrodynamics)",
+  "a calibrated actuation-to-stress or stress-to-deformation relation (no measured modulus or contractile strain)",
+  "transfer of any ranking to another engine, body or to matter",
+  "spatial convergence beyond what the reported mesh series shows"
+ ]
+}

@@ -1700,6 +1700,37 @@ def project_drafts(ins: Inputs) -> dict:
     return out
 
 
+RUNNERS = "site/content/project-runners.json"
+
+
+def attach_runners(ins: Inputs, projects: dict) -> None:
+    """Merge executed-runner results (site/content/project-runners.json) into authored projects. projects.json itself stays
+    byte-identical, so stored records bound to its digest keep their binding. Each runner's media is shown by the page only
+    after its sha256 matches; here we refuse a runner whose media digests do not match the files in site/."""
+    if not (ROOT / RUNNERS).is_file():
+        return
+    data = ins.json(RUNNERS)
+    by_id = {p["id"]: p for p in projects["projects"]}
+    for pid, item in data.get("runners", {}).items():
+        p = by_id.get(pid)
+        if p is None or p.get("runner") is not None:
+            raise SystemExit(f"project-runners: {pid!r} is not an authored project without a runner")
+        runner = item["runner"]
+        for m in runner.get("media", []):
+            f = ROOT / "site" / m["path"]
+            if not f.is_file() or sha256(f.read_bytes()).hexdigest() != m["sha256"]:
+                raise SystemExit(f"project-runners: media {m['path']} missing or digest mismatch")
+        ov = item.get("overrides", {})
+        p["runner"] = runner
+        for k in ("status", "summary", "missing_couplings"):
+            if k in ov:
+                p["authored_" + k] = p[k]
+                p[k] = ov[k]
+        if "virtual_instrument_status" in ov and p.get("proposed_instruments", {}).get("virtual"):
+            p["proposed_instruments"]["virtual"][0]["status"] = ov["virtual_instrument_status"]
+        p["runner_source"] = {"path": RUNNERS, "sha256": ins.seen[RUNNERS]["sha256"]}
+
+
 ASSURANCE = "artifacts/assurance/map.json"
 
 
@@ -1797,6 +1828,7 @@ def build() -> dict[str, bytes]:
     problems = ins.json("seeds/frontier-problems.json")
     mission = ins.json("site/content/mission.json")
     projects = ins.json("site/content/projects.json")
+    attach_runners(ins, projects)
     board = parse_board(ins.text("tasks/BUILD.md"))
     spec_text = ins.text("specs/SPEC-005-agentic-engineering-demo.md")
     mcp_text = ins.text("docs/mcp.md")

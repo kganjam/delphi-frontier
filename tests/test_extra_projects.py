@@ -38,7 +38,11 @@ def test_draft_validates_and_every_ref_is_the_catalogs(pid):
     pl = d["draft"]["payload"]
     assert pl["members"] and all(m["ref"] == BY_ID[m["ref"]["id"]] and m["causal_bridge"] == "none_declared" for m in pl["members"])
     assert all(q["problem"] == BY_ID[q["problem"]["id"]] for q in pl["open_questions"] if q.get("problem"))
-    assert not any(c["status"] == "implemented_model" for c in pl["scale_coverage"])      # no runner exists for either study
+    implemented = [c for c in pl["scale_coverage"] if c["status"] == "implemented_model"]
+    if pid in B.runners():   # an executed runner may implement exactly one (organ) scale, and must say what failed
+        assert [c["scale"] for c in implemented] == ["organ"] and "FAIL" in implemented[0]["note"]
+    else:
+        assert not implemented                                                          # no runner exists for this study
     assert d["grounding"]["members_grounded"] == d["grounding"]["members_in_catalog"] == len(pl["members"])
 
 

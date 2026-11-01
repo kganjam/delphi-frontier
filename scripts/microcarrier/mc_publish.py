@@ -50,6 +50,7 @@ if __name__ == "__main__":
     ends = dict(base, schema="frontier.microcarrier.simulation-manifest/1", id="microcarrier-endpoints-r1",
                 what_it_does="Executes the three preregistered endpoints (passive control, pattern dependence, mirror symmetry) with dt and mesh refinement series.",
                 artifacts=[art(a.repo, "artifacts/microcarrier/verdicts.json", "certificate", "application/json"),
+                           art(a.repo, "artifacts/microcarrier/diagnostics/e1-mesh3-creep.json", "diagnosis", "application/json"),
                            art(a.repo, "artifacts/microcarrier/runs.csv", "output", "text/csv"),
                            art(a.repo, "artifacts/microcarrier/receipts.jsonl", "receipt", "application/x-ndjson")],
                 does_not_establish=NOT_EST + ["spatial convergence beyond what the reported mesh series shows"])

@@ -1,0 +1,193 @@
+{
+ "schema": "frontier.microcarrier-diagnosis/1",
+ "subject": "E1 passive-control FAIL at mesh 3 (dt0.5): net 5.72e-6 L > 1e-6 L",
+ "e1_verdict_unchanged": "FAIL (preregistered verdict stands; this file diagnoses it, it does not overturn it)",
+ "replication": "local (g++ 13.3) replicate of E1-passive-m3-dt0.5 is bitwise identical to the Nebius run (net_dx -3.485139664383e-10 m both)",
+ "archive": {
+  "uri": "gs://delphi-frontier-cpu-artifacts-20261031/jobs/claude-xeno/diag-final.tar.xz",
+  "sha256": "179ba3802ca0c5e178f6d0b580a37b0cd450632cbad72d10a70f7597fe393e50",
+  "nebius_job": "aijob-e00rwx5690sk2fta7g"
+ },
+ "one_factor_runs": [
+  {
+   "id": "D-m2-cycles12",
+   "change": "mesh 2, 12-cycle window",
+   "exit_code": 0,
+   "argv": [
+    "mc_runner",
+    "--pattern=/w/out/D-m2-cycles12.pattern.txt",
+    "--out=/w/out/D-m2-cycles12",
+    "--dtScale=0.5",
+    "--freq=10.0",
+    "--passive=1",
+    "--zetaGlob=0.05",
+    "--zetaInt=2.0",
+    "--cycles=12"
+   ],
+   "wall_s": 802.153,
+   "net_disp_L": 6.21349706078635e-08,
+   "post_transient_disp_L": 3.790222253537874e-08,
+   "within_1e-6_L": true,
+   "output_sha256": "065a58ac77fd00301f4c67d8e5fbef4779ea40c3eee5fc16dbe9d3558fa555e6"
+  },
+  {
+   "id": "D-m3-constzeta",
+   "change": "constant zeta (0.1/1.0) instead of mesh-consistent policy",
+   "exit_code": 0,
+   "argv": [
+    "mc_runner",
+    "--pattern=/w/out/D-m3-constzeta.pattern.txt",
+    "--out=/w/out/D-m3-constzeta",
+    "--dtScale=0.5",
+    "--freq=10.0",
+    "--passive=1",
+    "--zetaGlob=0.1",
+    "--zetaInt=1.0"
+   ],
+   "wall_s": 2699.638,
+   "net_disp_L": 1.6426700798621427e-08,
+   "post_transient_disp_L": 1.2220113012975297e-08,
+   "within_1e-6_L": true,
+   "output_sha256": "da2416c0223d280eccf50b8dadc7b31cc6956bae0e6423cab0fe1b157ec6f84e"
+  },
+  {
+   "id": "D-m3-cycles12",
+   "change": "12-cycle window instead of 6",
+   "exit_code": 0,
+   "argv": [
+    "mc_runner",
+    "--pattern=/w/out/D-m3-cycles12.pattern.txt",
+    "--out=/w/out/D-m3-cycles12",
+    "--dtScale=0.5",
+    "--freq=10.0",
+    "--passive=1",
+    "--zetaGlob=0.03333333333333333",
+    "--zetaInt=3.0",
+    "--cycles=12"
+   ],
+   "wall_s": 4419.533,
+   "net_disp_L": 7.226077980926968e-06,
+   "post_transient_disp_L": 7.10849289137234e-06,
+   "within_1e-6_L": false,
+   "output_sha256": "1569766cd79829a3c08e58e8e019a22b1b16dee12aa28970593ac64a5b7dbb45"
+  },
+  {
+   "id": "D-m3-dt0.25",
+   "change": "dtScale 0.25 instead of 0.5",
+   "exit_code": 0,
+   "argv": [
+    "mc_runner",
+    "--pattern=/w/out/D-m3-dt0.25.pattern.txt",
+    "--out=/w/out/D-m3-dt0.25",
+    "--dtScale=0.25",
+    "--freq=10.0",
+    "--passive=1",
+    "--zetaGlob=0.03333333333333333",
+    "--zetaInt=3.0"
+   ],
+   "wall_s": 5208.565,
+   "net_disp_L": 5.857776321486706e-09,
+   "post_transient_disp_L": 5.113051737873811e-09,
+   "within_1e-6_L": true,
+   "output_sha256": "318a534439fd6d645fe1a109a7ff0caae0014f671fe844a1be689e1a67635aa1"
+  },
+  {
+   "id": "D-m3-mu0",
+   "change": "frictionless floor (muS=muK=0)",
+   "exit_code": 0,
+   "argv": [
+    "mc_runner",
+    "--pattern=/w/out/D-m3-mu0.pattern.txt",
+    "--out=/w/out/D-m3-mu0",
+    "--dtScale=0.5",
+    "--freq=10.0",
+    "--passive=1",
+    "--zetaGlob=0.03333333333333333",
+    "--zetaInt=3.0",
+    "--muK=0.0",
+    "--muS=0.0"
+   ],
+   "wall_s": 2651.752,
+   "net_disp_L": 1.727364089603072e-14,
+   "post_transient_disp_L": 1.548559932012863e-14,
+   "within_1e-6_L": true,
+   "output_sha256": "2962ee21dc2456a33b23e2a7ff104de9431cc68eef7eb86375088122dae4e11e"
+  },
+  {
+   "id": "D-m3-nograv",
+   "change": "gravity off",
+   "exit_code": 0,
+   "argv": [
+    "mc_runner",
+    "--pattern=/w/out/D-m3-nograv.pattern.txt",
+    "--out=/w/out/D-m3-nograv",
+    "--dtScale=0.5",
+    "--freq=10.0",
+    "--passive=1",
+    "--zetaGlob=0.03333333333333333",
+    "--zetaInt=3.0",
+    "--gravity=0.0"
+   ],
+   "wall_s": 2640.888,
+   "net_disp_L": 0.0,
+   "post_transient_disp_L": 0.0,
+   "within_1e-6_L": true,
+   "output_sha256": "44383f98b0267364c3803497e2cc812849031bcb2b80225021dd5cadf79837a4"
+  },
+  {
+   "id": "D-m3-settle1",
+   "change": "settle 1.0 s instead of 0.3 s",
+   "exit_code": 0,
+   "argv": [
+    "mc_runner",
+    "--pattern=/w/out/D-m3-settle1.pattern.txt",
+    "--out=/w/out/D-m3-settle1",
+    "--dtScale=0.5",
+    "--freq=10.0",
+    "--passive=1",
+    "--zetaGlob=0.03333333333333333",
+    "--zetaInt=3.0",
+    "--settle=1.0"
+   ],
+   "wall_s": 4472.282,
+   "net_disp_L": 1.8488097046360283e-07,
+   "post_transient_disp_L": 1.865010744368519e-07,
+   "within_1e-6_L": true,
+   "output_sha256": "ca6ab366e479c32d1a9a699ff2da06a6446e29d0be1516ec3dd5ab5f10e02eb3"
+  },
+  {
+   "id": "D-m3-zcoll2",
+   "change": "collision damping doubled",
+   "exit_code": 0,
+   "argv": [
+    "mc_runner",
+    "--pattern=/w/out/D-m3-zcoll2.pattern.txt",
+    "--out=/w/out/D-m3-zcoll2",
+    "--dtScale=0.5",
+    "--freq=10.0",
+    "--passive=1",
+    "--zetaGlob=0.03333333333333333",
+    "--zetaInt=3.0",
+    "--zetaColl=2.0"
+   ],
+   "wall_s": 2642.95,
+   "net_disp_L": 2.6820307089993107e-06,
+   "post_transient_disp_L": 2.4364823349329297e-06,
+   "within_1e-6_L": false,
+   "output_sha256": "c2bcf12abce86371c10109f091a1c71e44deb27edf298d51d9da206b26a83c7f"
+  }
+ ],
+ "creep_time_course_12cycle": {
+  "y_increment_nm_per_0.3s": [
+   2.056714900006227,
+   3.6989216000045397,
+   1.1620584999903065,
+   0.2749683000009221
+  ],
+  "reading": "the drift decelerates (about 2.0, 3.7, 1.2, 0.3 nm per 0.3 s) and is essentially over about 1.2 s after start: a slowly relaxing settle transient, not a steady propulsion"
+ },
+ "diagnosis": "Numerical, not physical: a slow frictional settling drift of the mesh-3 body at dtScale 0.5. It vanishes when dt is halved (5.9e-9 L), when friction is removed (1.7e-14 L), without gravity (exactly 0), with the 1 s settle (1.8e-7 L) and with the stiffer-damped constant-zeta policy (1.6e-8 L); doubling collision damping only halves it. The preregistered settle criterion (peak-to-peak COM envelope over the last 0.05 s) measures oscillation, not drift, so it passed (2.15e-7 L) while the body was still creeping. Mesh 1 and 2 do not show it (12-cycle m2: 6.2e-8 L).",
+ "what_is_wrong_with_the_protocol": "the settle criterion missed a drift mode, and dtScale 0.5 is not small enough for passive rest at mesh 3. Both are runner/setup defects, as the falsifier anticipates.",
+ "consequence_for_E2_E3": "the same 0.3 s settle at dt0.5 was used for the mesh-3 endpoint runs, so each carries a passive artifact of at most about 7.2e-6 L (the 12-cycle value). Endpoints 2 and 3 are read with the frozen rules unchanged AND with that bound added to every tolerance (stricter, never looser); a verdict is reported as a claim only if it holds under both.",
+ "not_done": "the endpoint series was not rerun with a 1 s settle; that would be the clean fix and is listed as next work."
+}

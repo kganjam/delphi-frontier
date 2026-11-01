@@ -9,7 +9,7 @@
     "Every member ref is a snapshot-catalog ref (namespace 'snapshot'), not a live-store version: re-pin before submitting.",
     "The cited papers have no record in the catalog, so they are not members. They appear as sources on the page, read at abstract level only.",
     "No calibration bridges any pair of scales; every coupling is absent or scenario-level.",
-    "No runner exists for this project; every instrument is proposed. Nothing here is a simulation or an observation."
+    "A generic soft-voxel batch runner executed the preregistered endpoints (simulation only, never an observation): passive control FAIL (diagnosed numerical), pattern dependence NO CLAIM, mirror symmetry FAIL. The physical instrument is proposed."
    ],
    "members": [
     {
@@ -55,7 +55,7 @@
      "subsystem": "experiment planning"
     }
    ],
-   "mission": "Ask one question about a Xenopus-inspired contractile tissue construct: how does a chosen actuation pattern turn into deformation, and how much of that deformation becomes net motion? A bounded proposal. A generic soft-body mechanics runner and existing cell-scale tools are named as instruments. No simulation of this construct exists in this node yet, and no frog or fish parameter is used.",
+   "mission": "Ask one question about a Xenopus-inspired contractile tissue construct: how does a chosen actuation pattern turn into deformation, and how much of that deformation becomes net motion? A batch runner now exists: Voxelyze at a pinned commit, with the body, patterns and analysis frozen before any endpoint run. 1,662 simulations completed with exit 0. The passive control FAILED at the finest mesh and was diagnosed as a numerical settling drift. Pattern dependence gave NO CLAIM and mirror symmetry FAILED at the coarse mesh. Generic soft-body mechanics on a frictional floor; no frog or fish parameter is used.",
    "open_questions": [
     {
      "blocks": [],
@@ -103,14 +103,14 @@
      "status": "source_only"
     },
     {
-     "note": "No contractile-tissue model exists in this node.",
+     "note": "No contractile-tissue model exists in this node; the runner's body is a generic soft-voxel block with an assumed modulus, not tissue.",
      "scale": "tissue",
      "status": "unimplemented"
     },
     {
-     "note": "The proposed soft-voxel runner is not delivered; no shape or motion result exists.",
+     "note": "A Voxelyze batch runner (artifacts/microcarrier/protocol.json, frozen) simulates construct-level shape change and net displacement on a frictional floor. Generic mechanics with assumed parameters; passive control FAIL (diagnosed), pattern dependence NO CLAIM, mirror symmetry FAIL.",
      "scale": "organ",
-     "status": "unimplemented"
+     "status": "implemented_model"
     }
    ],
    "source": {
