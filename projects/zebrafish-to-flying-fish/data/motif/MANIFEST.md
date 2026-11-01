@@ -139,3 +139,46 @@ should not be read as exact.
 
 **Scope is unchanged:** a motif match is a sequence-pattern match, not a bound transcription factor,
 not an enhancer, not expression, not function.
+
+---
+
+# Manifest — claude-zf2ff-motif-heldout-1 (third pass: the held-out split)
+
+| | |
+| --- | --- |
+| Nebius job | `aijob-e00wxbf9hepvn719p6`, name `claude-zf2ff-motif-heldout-1` |
+| State read from the CLI | `COMPLETED` |
+| Platform / preset | `gpu-l40s-a` / `1gpu-8vcpu-32gb` — CPU-only work, same quota reason |
+| Code | `scripts/job_motif_heldout.py` (pass two's code with one change) |
+| Input FASTA | sha256 `c9dd35a2…1a037ca850d`, re-hashed in-container to the same digest |
+| JASPAR | sha256 `2a6c7c24…04eaacb59` — identical across all three passes |
+| Shuffles | `ZF2FF_SPLIT=held_out calibrate_on_first=10 null_is_last=10`; `ZF2FF_SHUFFLES_DOUBLET_VERIFIED=380` |
+| Log / result | `job_log_aijob-e00wxbf9hepvn719p6.log`, `motif_heldout_result.json` |
+
+This closes the weakness **pass two declared about itself**: there, the threshold was fitted on the
+same 20 shuffles whose counts formed the null, deflating the null's spread. Here the 20 shuffles are
+split — the first 10 calibrate the per-motif threshold, the last 10 are the null. Seed, motif set and
+sequences are unchanged, so the split is the only difference.
+
+## Result — the direction holds, the effect halves, and per-window claims do not survive
+
+| pass | design | zebrafish | flying fish |
+| --- | --- | --- | --- |
+| 1 | pooled GC-matched threshold, 2 shuffles | +7.0 [−11.0, +25.0] | +55.7 [+29.6, +81.8] |
+| 2 | own-shuffle threshold, 20 shuffles, no split | +51.7 [37.3, 66.2] | +57.4 [39.1, 75.7] |
+| **3** | **held-out split, 10 calibrate / 10 test** | **+27.1 [7.9, 46.3]**, t 2.77, 8/10 | **+26.8 [12.0, 41.6]**, t 3.54, 8/9 |
+
+What survives all three designs: **real windows carry more motif matches than composition-matched
+shuffles of themselves, in both species, with the aggregate CI excluding zero.** The species
+symmetry seen in pass two survives; pass one's asymmetry does not.
+
+What does not survive: **the effect size and the per-window significance.** Mean |z| falls from 4.21
+and 4.41 to **1.39 and 1.57**, and only **2 of 10** zebrafish and **4 of 9** flying-fish windows reach
+z > 2. So pass two's z values were indeed anti-conservative, exactly as its own manifest predicted,
+and **no per-window statement is supportable** — the finding is aggregate-only, which is also what
+the Evo 2 harness said about its own per-window deltas.
+
+Taking the three passes together, the honest summary is: one aggregate result, direction-robust across
+three thresholding designs and corroborated by an independently written implementation in another
+harness, with **no** per-window or per-gene inference available from it. A motif match remains a
+sequence-pattern match, not binding, not an enhancer, not function.

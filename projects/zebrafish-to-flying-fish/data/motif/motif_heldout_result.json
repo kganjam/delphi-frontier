@@ -1,0 +1,185 @@
+{
+ "per_window": [
+  {
+   "label": "dan:fgf20a",
+   "real": 100,
+   "shuffle_mean": 87.2,
+   "shuffle_sd": 24.8,
+   "z": 0.516,
+   "diff": 12.8
+  },
+  {
+   "label": "hir:fgf20a",
+   "real": 149,
+   "shuffle_mean": 102.0,
+   "shuffle_sd": 18.11,
+   "z": 2.595,
+   "diff": 47.0
+  },
+  {
+   "label": "dan:shha",
+   "real": 104,
+   "shuffle_mean": 105.7,
+   "shuffle_sd": 16.43,
+   "z": -0.103,
+   "diff": -1.7
+  },
+  {
+   "label": "hir:shha",
+   "real": 99,
+   "shuffle_mean": 80.2,
+   "shuffle_sd": 17.38,
+   "z": 1.082,
+   "diff": 18.8
+  },
+  {
+   "label": "dan:msx1b",
+   "real": 109,
+   "shuffle_mean": 89.1,
+   "shuffle_sd": 24.1,
+   "z": 0.826,
+   "diff": 19.9
+  },
+  {
+   "label": "hir:msx1b",
+   "real": 116,
+   "shuffle_mean": 82.1,
+   "shuffle_sd": 9.19,
+   "z": 3.687,
+   "diff": 33.9
+  },
+  {
+   "label": "dan:sp7",
+   "real": 105,
+   "shuffle_mean": 98.2,
+   "shuffle_sd": 26.65,
+   "z": 0.255,
+   "diff": 6.8
+  },
+  {
+   "label": "hir:sp7",
+   "real": 104,
+   "shuffle_mean": 93.2,
+   "shuffle_sd": 23.85,
+   "z": 0.453,
+   "diff": 10.8
+  },
+  {
+   "label": "dan:runx2b",
+   "real": 167,
+   "shuffle_mean": 95.8,
+   "shuffle_sd": 19.67,
+   "z": 3.62,
+   "diff": 71.2
+  },
+  {
+   "label": "hir:runx2b",
+   "real": 146,
+   "shuffle_mean": 98.5,
+   "shuffle_sd": 18.94,
+   "z": 2.508,
+   "diff": 47.5
+  },
+  {
+   "label": "dan:lef1",
+   "real": 198,
+   "shuffle_mean": 110.0,
+   "shuffle_sd": 15.05,
+   "z": 5.848,
+   "diff": 88.0
+  },
+  {
+   "label": "hir:lef1",
+   "real": 180,
+   "shuffle_mean": 121.0,
+   "shuffle_sd": 28.82,
+   "z": 2.047,
+   "diff": 59.0
+  },
+  {
+   "label": "dan:tbx5a",
+   "real": 82,
+   "shuffle_mean": 86.6,
+   "shuffle_sd": 14.65,
+   "z": -0.314,
+   "diff": -4.6
+  },
+  {
+   "label": "hir:tbx5a",
+   "real": 105,
+   "shuffle_mean": 100.8,
+   "shuffle_sd": 24.82,
+   "z": 0.169,
+   "diff": 4.2
+  },
+  {
+   "label": "dan:hoxd13a",
+   "real": 95,
+   "shuffle_mean": 86.6,
+   "shuffle_sd": 19.85,
+   "z": 0.423,
+   "diff": 8.4
+  },
+  {
+   "label": "dan:fgf10a",
+   "real": 122,
+   "shuffle_mean": 86.1,
+   "shuffle_sd": 24.41,
+   "z": 1.471,
+   "diff": 35.9
+  },
+  {
+   "label": "hir:fgf10a",
+   "real": 93,
+   "shuffle_mean": 103.1,
+   "shuffle_sd": 28.69,
+   "z": -0.352,
+   "diff": -10.1
+  },
+  {
+   "label": "dan:kcnk5b",
+   "real": 125,
+   "shuffle_mean": 90.5,
+   "shuffle_sd": 24.77,
+   "z": 1.393,
+   "diff": 34.5
+  },
+  {
+   "label": "hir:kcnk5b",
+   "real": 118,
+   "shuffle_mean": 88.0,
+   "shuffle_sd": 15.56,
+   "z": 1.928,
+   "diff": 30.0
+  }
+ ],
+ "zebrafish_only": {
+  "set": "zebrafish",
+  "n": 10,
+  "mean_diff": 27.12,
+  "se": 9.797,
+  "t": 2.768,
+  "ci95": [
+   7.92,
+   46.32
+  ],
+  "windows_positive": 8,
+  "mean_z": 1.393,
+  "windows_z_gt_2": 2
+ },
+ "flyingfish_only": {
+  "set": "flying fish",
+  "n": 9,
+  "mean_diff": 26.789,
+  "se": 7.57,
+  "t": 3.539,
+  "ci95": [
+   11.95,
+   41.63
+  ],
+  "windows_positive": 8,
+  "mean_z": 1.569,
+  "windows_z_gt_2": 4
+ },
+ "note": "Each window's null is its own dinucleotide shuffles, so no threshold is shared between windows and composition cannot enter through the threshold. The two species are aggregated separately and never compared, per the handoff's stated confounds."
+}

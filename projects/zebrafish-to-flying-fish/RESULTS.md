@@ -398,10 +398,34 @@ and 5 shuffles per sequence: real windows **+125.3** [61.0, 189.7], flying fish 
 +74.8. Different magnitudes because the thresholds differ; **the same direction**, 17/19 and 19/19
 windows positive. Two independently written implementations agree.
 
-**Remaining weakness, stated rather than buried.** The per-window z-scores are anti-conservative: the
-threshold is fitted on the same 20 shuffles that form the null, which deflates its spread. A held-out
-split would fix it and was not run. The direction does not depend on it (19/19 positive, large
-aggregate differences), but individual z values are not exact.
+### R6c — Held-out split: the direction survives, the effect halves, per-window claims die
+
+**`claude-zf2ff-motif-heldout-1`** (`aijob-e00wxbf9hepvn719p6`), CLI-read `COMPLETED`. Pass two
+declared its own weakness — the threshold was fitted on the same 20 shuffles that formed the null,
+deflating its spread — so this pass splits them: 10 shuffles calibrate the per-motif threshold, 10
+are the null. Same seed, same motif digest, same sequences; the split is the only change. All 380
+shuffles doublet-verified again.
+
+| pass | design | zebrafish | flying fish |
+| --- | --- | --- | --- |
+| 1 | pooled threshold, 2 shuffles | +7.0 [−11.0, +25.0] | +55.7 [+29.6, +81.8] |
+| 2 | own-shuffle threshold, 20, no split | +51.7 [37.3, 66.2] | +57.4 [39.1, 75.7] |
+| **3** | **held-out, 10 calibrate / 10 test** | **+27.1 [7.9, 46.3]** t 2.77, 8/10 | **+26.8 [12.0, 41.6]** t 3.54, 8/9 |
+
+**What survives all three designs:** real windows carry more motif matches than composition-matched
+shuffles of themselves, in **both** species, aggregate CI excluding zero. Pass two's species symmetry
+holds; pass one's asymmetry does not.
+
+**What does not survive:** effect size and per-window significance. Mean |z| falls from 4.21/4.41 to
+**1.39/1.57**, with only **2 of 10** zebrafish and **4 of 9** flying-fish windows at z > 2. Pass two's
+z values were anti-conservative exactly as its own manifest predicted, so **no per-window or per-gene
+statement is supportable here** — which is also what the Evo 2 harness said about its per-window
+deltas.
+
+**Final reading of §R6–R6c:** one aggregate result, direction-robust across three thresholding
+designs and corroborated by an independently written implementation in another harness, with no
+per-window inference. A motif match is a sequence-pattern match, not binding, not an enhancer, not
+function.
 
 **Scope.** A motif match is a sequence-pattern match: not a bound factor, not an enhancer, not
 expression, not function. Two of the nine flying-fish windows sit at loci this project's own
@@ -439,9 +463,33 @@ only public Exocoetidae assembly, so an edit designed at "the Exocoetid `kcnh2a`
 placed. It does **not** mean Exocoetidae lack `kcnh2a`: `GCA_018398805.1` is an explicitly *draft*,
 scaffold-level, unannotated assembly, and a missing or fragmented gene is the expected failure mode
 of such an assembly. Note also that the published flying-fish phylogenomics that names `kcnh2a`
-(PMID 34534441) used 35 species with its own sequencing, not this assembly. A family-wide census is
-running to ask whether `kcnh2a` is specifically absent while its paralogs are present, or whether
-this is general draft incompleteness; until that lands, **the cause is unknown**.
+(PMID 34534441) used 35 species with its own sequencing, not this assembly. A family-wide census has now answered which of
+those it is — see §R7b.
+
+### R7b — Family census: the gap is `kcnh2a`-specific, not general incompleteness
+
+**`claude-zf2ff-kcnh-census-tree-1`** (`aijob-e00nvq278rsze2f6bp`), CLI-read `COMPLETED`. All 10
+zebrafish KCNH queries were mapped over the whole assembly (`-N 10 --outs=0.5 --trans`, exit 0), 65
+raw hit intervals merged into **14 distinct KCNH-like loci**, each taken as its longest predicted
+protein and placed on one tree with the zebrafish family and two human outgroups. Input sha256
+`771f8160…399b9c84`, re-hashed in-container; manifest at
+[`data/census/MANIFEST.md`](data/census/MANIFEST.md).
+
+**9 of the 10 zebrafish paralogs have at least one flying-fish locus placed with them. The single
+exception is `kcnh2a`:** `kcnh1a`, `kcnh1b`, `kcnh2b`, `kcnh6a`, `kcnh6b` get 1 locus each, `kcnh3`,
+`kcnh5a`, `kcnh7` get 2 each, `kcnh4a` gets 3, and `kcnh2a` gets **none**.
+
+So the KCNH family is **well represented** in this assembly — 14 loci across 9 paralogs — and the
+`kcnh2a` gap is **specific**, not a symptom of the assembly being generally thin here. That is the
+sharper of the two explanations §R7 left open.
+
+**Still a statement about the assembly, not the species.** A draft assembly can miss one gene, and a
+sufficiently divergent Exocoetid `kcnh2a` could be placed with a neighbouring paralog rather than
+appearing as a `kcnh2a` sister. Three assignments are weakly supported and should be read as
+unresolved (`locus03` 42.7/68, `locus14` 23.4/62, `locus11` no recovered support); dropping all three
+does not touch the headline, since none was assigned to `kcnh2a`. A model-sensitivity re-run with
+ModelFinder instead of a fixed `LG+G4` and a different seed
+(`claude-zf2ff-census-sensitivity-1`) was submitted to check the conclusion is not model-dependent.
 
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 

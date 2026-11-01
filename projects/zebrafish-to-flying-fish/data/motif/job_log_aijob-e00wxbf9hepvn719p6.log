@@ -1,0 +1,223 @@
+token from NEBIUS_IAM_TOKEN env is used
+Provisioning resources for the workload
+Workload initialization started
+Downloading container image
+Starting workload container
+NVIDIA L40S
+ZF2FF_JOB=motif-heldout ZF2FF_START=2026-11-01T16:01:59Z
+ZF2FF_APT_RC=0
+ZF2FF_PY=3.11.2 ZF2FF_NUMPY=1.24.2
+ZF2FF_FASTA_SHA256=c9dd35a2ef6fc0e6725ba89f47164c284668a372f3fa2cb94c57f1a037ca850d
+ZF2FF_JASPAR_CURL_RC=0
+ZF2FF_JASPAR_SHA256=2a6c7c24afb0614ed418c9f02b68845adebf38f80f6cebabbcd5de804eaacb59
+ZF2FF_N_REAL=19 ZF2FF_N_MOTIFS=879 ZF2FF_N_SHUFFLES=20 ZF2FF_SEED=12345
+ZF2FF_SPLIT=held_out calibrate_on_first=10 null_is_last=10
+ZF2FF_WINDOW dan:fgf20a real=100 shuf_mean=87.2 shuf_sd=24.8 z=0.52
+ZF2FF_WINDOW hir:fgf20a real=149 shuf_mean=102.0 shuf_sd=18.1 z=2.60
+ZF2FF_WINDOW dan:shha real=104 shuf_mean=105.7 shuf_sd=16.4 z=-0.10
+ZF2FF_WINDOW hir:shha real=99 shuf_mean=80.2 shuf_sd=17.4 z=1.08
+ZF2FF_WINDOW dan:msx1b real=109 shuf_mean=89.1 shuf_sd=24.1 z=0.83
+ZF2FF_WINDOW hir:msx1b real=116 shuf_mean=82.1 shuf_sd=9.2 z=3.69
+ZF2FF_WINDOW dan:sp7 real=105 shuf_mean=98.2 shuf_sd=26.6 z=0.26
+ZF2FF_WINDOW hir:sp7 real=104 shuf_mean=93.2 shuf_sd=23.8 z=0.45
+ZF2FF_WINDOW dan:runx2b real=167 shuf_mean=95.8 shuf_sd=19.7 z=3.62
+ZF2FF_WINDOW hir:runx2b real=146 shuf_mean=98.5 shuf_sd=18.9 z=2.51
+ZF2FF_WINDOW dan:lef1 real=198 shuf_mean=110.0 shuf_sd=15.0 z=5.85
+ZF2FF_WINDOW hir:lef1 real=180 shuf_mean=121.0 shuf_sd=28.8 z=2.05
+ZF2FF_WINDOW dan:tbx5a real=82 shuf_mean=86.6 shuf_sd=14.6 z=-0.31
+ZF2FF_WINDOW hir:tbx5a real=105 shuf_mean=100.8 shuf_sd=24.8 z=0.17
+ZF2FF_WINDOW dan:hoxd13a real=95 shuf_mean=86.6 shuf_sd=19.9 z=0.42
+ZF2FF_WINDOW dan:fgf10a real=122 shuf_mean=86.1 shuf_sd=24.4 z=1.47
+ZF2FF_WINDOW hir:fgf10a real=93 shuf_mean=103.1 shuf_sd=28.7 z=-0.35
+ZF2FF_WINDOW dan:kcnk5b real=125 shuf_mean=90.5 shuf_sd=24.8 z=1.39
+ZF2FF_WINDOW hir:kcnk5b real=118 shuf_mean=88.0 shuf_sd=15.6 z=1.93
+ZF2FF_SHUFFLES_DOUBLET_VERIFIED=380
+ZF2FF_RESULT_BEGIN
+{
+ "per_window": [
+  {
+   "label": "dan:fgf20a",
+   "real": 100,
+   "shuffle_mean": 87.2,
+   "shuffle_sd": 24.8,
+   "z": 0.516,
+   "diff": 12.8
+  },
+  {
+   "label": "hir:fgf20a",
+   "real": 149,
+   "shuffle_mean": 102.0,
+   "shuffle_sd": 18.11,
+   "z": 2.595,
+   "diff": 47.0
+  },
+  {
+   "label": "dan:shha",
+   "real": 104,
+   "shuffle_mean": 105.7,
+   "shuffle_sd": 16.43,
+   "z": -0.103,
+   "diff": -1.7
+  },
+  {
+   "label": "hir:shha",
+   "real": 99,
+   "shuffle_mean": 80.2,
+   "shuffle_sd": 17.38,
+   "z": 1.082,
+   "diff": 18.8
+  },
+  {
+   "label": "dan:msx1b",
+   "real": 109,
+   "shuffle_mean": 89.1,
+   "shuffle_sd": 24.1,
+   "z": 0.826,
+   "diff": 19.9
+  },
+  {
+   "label": "hir:msx1b",
+   "real": 116,
+   "shuffle_mean": 82.1,
+   "shuffle_sd": 9.19,
+   "z": 3.687,
+   "diff": 33.9
+  },
+  {
+   "label": "dan:sp7",
+   "real": 105,
+   "shuffle_mean": 98.2,
+   "shuffle_sd": 26.65,
+   "z": 0.255,
+   "diff": 6.8
+  },
+  {
+   "label": "hir:sp7",
+   "real": 104,
+   "shuffle_mean": 93.2,
+   "shuffle_sd": 23.85,
+   "z": 0.453,
+   "diff": 10.8
+  },
+  {
+   "label": "dan:runx2b",
+   "real": 167,
+   "shuffle_mean": 95.8,
+   "shuffle_sd": 19.67,
+   "z": 3.62,
+   "diff": 71.2
+  },
+  {
+   "label": "hir:runx2b",
+   "real": 146,
+   "shuffle_mean": 98.5,
+   "shuffle_sd": 18.94,
+   "z": 2.508,
+   "diff": 47.5
+  },
+  {
+   "label": "dan:lef1",
+   "real": 198,
+   "shuffle_mean": 110.0,
+   "shuffle_sd": 15.05,
+   "z": 5.848,
+   "diff": 88.0
+  },
+  {
+   "label": "hir:lef1",
+   "real": 180,
+   "shuffle_mean": 121.0,
+   "shuffle_sd": 28.82,
+   "z": 2.047,
+   "diff": 59.0
+  },
+  {
+   "label": "dan:tbx5a",
+   "real": 82,
+   "shuffle_mean": 86.6,
+   "shuffle_sd": 14.65,
+   "z": -0.314,
+   "diff": -4.6
+  },
+  {
+   "label": "hir:tbx5a",
+   "real": 105,
+   "shuffle_mean": 100.8,
+   "shuffle_sd": 24.82,
+   "z": 0.169,
+   "diff": 4.2
+  },
+  {
+   "label": "dan:hoxd13a",
+   "real": 95,
+   "shuffle_mean": 86.6,
+   "shuffle_sd": 19.85,
+   "z": 0.423,
+   "diff": 8.4
+  },
+  {
+   "label": "dan:fgf10a",
+   "real": 122,
+   "shuffle_mean": 86.1,
+   "shuffle_sd": 24.41,
+   "z": 1.471,
+   "diff": 35.9
+  },
+  {
+   "label": "hir:fgf10a",
+   "real": 93,
+   "shuffle_mean": 103.1,
+   "shuffle_sd": 28.69,
+   "z": -0.352,
+   "diff": -10.1
+  },
+  {
+   "label": "dan:kcnk5b",
+   "real": 125,
+   "shuffle_mean": 90.5,
+   "shuffle_sd": 24.77,
+   "z": 1.393,
+   "diff": 34.5
+  },
+  {
+   "label": "hir:kcnk5b",
+   "real": 118,
+   "shuffle_mean": 88.0,
+   "shuffle_sd": 15.56,
+   "z": 1.928,
+   "diff": 30.0
+  }
+ ],
+ "zebrafish_only": {
+  "set": "zebrafish",
+  "n": 10,
+  "mean_diff": 27.12,
+  "se": 9.797,
+  "t": 2.768,
+  "ci95": [
+   7.92,
+   46.32
+  ],
+  "windows_positive": 8,
+  "mean_z": 1.393,
+  "windows_z_gt_2": 2
+ },
+ "flyingfish_only": {
+  "set": "flying fish",
+  "n": 9,
+  "mean_diff": 26.789,
+  "se": 7.57,
+  "t": 3.539,
+  "ci95": [
+   11.95,
+   41.63
+  ],
+  "windows_positive": 8,
+  "mean_z": 1.569,
+  "windows_z_gt_2": 4
+ },
+ "note": "Each window's null is its own dinucleotide shuffles, so no threshold is shared between windows and composition cannot enter through the threshold. The two species are aggregated separately and never compared, per the handoff's stated confounds."
+}
+ZF2FF_RESULT_END
+ZF2FF_SCAN_RC=0
+ZF2FF_DONE=2026-11-01T16:03:56Z
