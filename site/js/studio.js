@@ -227,6 +227,41 @@
     return html`<h2 class="small">Reuse studies</h2><p class="small faint">Secondary, bounded proposals that reuse tools and records from the main project. None is a designed organism or a clinical claim, and none changes the featured project.</p>
       ${rs.map((p) => html`<article class="card pform"><h3>${p.title} ${U.pill(p.group, "grp")} ${storeChip(p)}</h3><p><b>Question.</b> ${p.goal}</p><p class="small">${DF.reuseStudies ? DF.reuseStudies.brief(snap, p) : p.summary}</p><p><a class="btn ghost" href="${DF.href("/studio/" + p.id)}">Open reuse study</a></p></article>`)}`;
   }
+
+  /* ---------------------------------------------------------------- executed runner (reuse studies with a frozen protocol).
+   * Media is shown only after the browser recomputes its sha256 and it equals the declared digest. */
+  const verdictTone = (v) => ({ PASS: "ok", FAIL: "no", "NO CLAIM": "warn", INCOMPLETE: "warn", "NOT READ": "warn" }[v] || "st-unk");
+  function runnerPanel(p) {
+    const r = p.runner; if (!r) return "";
+    const fig = (m) => html`<figure class="card rmedia" data-media-src="${m.path}" data-sha256="${m.sha256}" data-kind="${m.kind}"><div class="rmedia-slot"><p class="small faint">Checking sha256 ${U.sha(m.sha256)} before display…</p></div><figcaption class="small"><b>${m.title}.</b> ${m.caption}${m.not_established ? html`<br><span class="faint">Does not establish: ${m.not_established}</span>` : ""}</figcaption></figure>`;
+    return html`<section class="panel" aria-labelledby="rs-run"><h2 id="rs-run">Runner and executed endpoints</h2>
+      <p>${U.pill("runner: " + r.name, "gen")} ${U.pill(r.status, "warn")} ${U.pill("simulation, not observation", "st-unk")}</p>
+      <p class="small">${r.summary}</p>
+      <p class="note warn small"><b>Mechanism.</b> ${r.mechanism_note}</p>
+      <p class="small"><b>Engine.</b> ${r.engine} · <b>Protocol</b> <code>${r.protocol}</code> ${U.sha(r.protocol_sha256)}, frozen at commit <code>${r.frozen_commit}</code> before any endpoint run · <b>Scale.</b> ${r.scale}</p>
+      <div class="tablewrap"><table class="qtable"><caption class="sr">Preregistered endpoints and their verdicts</caption><thead><tr><th scope="col">Endpoint</th><th scope="col">Verdict</th><th scope="col">What was measured</th></tr></thead>
+        <tbody>${r.endpoints.map((e) => html`<tr><td class="small"><b>${e.id}</b></td><td>${U.pill(e.verdict, verdictTone(e.verdict))}</td><td class="small">${e.result}</td></tr>`)}</tbody></table></div>
+      ${r.sweep ? html`<h3>Breadth: actuation-pattern sweep (exploratory, not preregistered claims)</h3><p class="small">${r.sweep.summary}</p>` : ""}
+      ${r.media && r.media.length ? html`<h3>Figures and renders</h3><div class="cards">${r.media.map(fig)}</div>` : ""}
+      <h3>Couplings after these runs</h3><ul class="small">${r.couplings.map((c) => html`<li><b>${c.port}:</b> ${U.pill(c.status, c.status === "refused" ? "no" : "warn")} ${c.why}</li>`)}</ul>
+      <details><summary>What these runs do not establish</summary><ul class="small">${r.not_established.map((x) => html`<li>${x}</li>`)}</ul></details>
+      <p class="small faint">Receipts: <code>${r.receipts}</code>. Every run records argv, exit code, input hashes, seed and host.</p></section>`;
+  }
+  async function verifyMedia(root) {
+    const hex = (b) => [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, "0")).join("");
+    for (const f of root.querySelectorAll("figure.rmedia")) {
+      const slot = f.querySelector(".rmedia-slot"); const want = f.dataset.sha256;
+      try {
+        const res = await fetch(f.dataset.mediaSrc); if (!res.ok) throw new Error("HTTP " + res.status);
+        const buf = await res.arrayBuffer(); const got = globalThis.crypto && crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", buf)) : null;
+        if (got !== want) { slot.innerHTML = '<p class="note warn small">Withheld: the file bytes do not match the declared sha256.</p>'; continue; }
+        const url = URL.createObjectURL(new Blob([buf], { type: f.dataset.kind === "video" ? "video/mp4" : f.dataset.kind === "gif" ? "image/gif" : "image/png" }));
+        const el = document.createElement(f.dataset.kind === "video" ? "video" : "img");
+        if (f.dataset.kind === "video") { el.controls = true; el.loop = true; el.muted = true; el.playsInline = true; } else { el.alt = f.querySelector("figcaption").textContent.slice(0, 160); }
+        el.src = url; el.style.maxWidth = "100%"; slot.replaceChildren(el);
+      } catch (e) { slot.innerHTML = '<p class="note warn small">Media unavailable: ' + String(e.message || e).replace(/[<>&]/g, "") + "</p>"; }
+    }
+  }
   const entityLink = (r) => html`<a href="${DF.href("/entity/" + r.kind + "/" + r.id, { v: r.version, ns: r.namespace || "snapshot" })}">${r.id}</a> <span class="faint small">@${r.version.slice(0, 12)}…</span>`;
   function reuseStudy(snap, p) {
     const PD = (snap.project_drafts || {})[p.draft_key]; const sc = (k) => (snap.mission.scales.find((s) => s.key === k) || { label: k }).label;
@@ -241,6 +276,7 @@
           <p>${DF.reuseStudies ? DF.reuseStudies.brief(snap, p) : p.summary}</p><p class="small"><b>Base context.</b> ${p.context.base}</p>
           <details><summary>Scope and Project provenance</summary>${p.live_ref ? html`<p class="small">Project ${entityLink(p.live_ref)} was imported as an unreviewed proposal. This page combines the authored proposal with separately identified computational studies; storage does not establish biological validity.</p>` : html`<p class="note warn small"><b>An authored proposal, not a stored Project.</b> No Project record has been imported and no import receipt exists. ${PD ? html`The draft file <code>${PD.path}</code> (sha256 ${U.sha(PD.sha256)}) validates against the Project schema and has not been submitted. ` : ""}The design remains proposed.</p>`}
           ${studies.length ? html`<p class="small"><b>Original proposal, retained as history:</b> ${p.summary}</p>` : ""}<ul class="small">${p.context.not_this.map((x) => html`<li>${x}</li>`)}</ul></details></section>
+        ${runnerPanel(p)}
         ${DF.reuseStudies ? DF.reuseStudies.render(snap, p.id) : ""}
         ${DF.reuseStudies ? DF.reuseStudies.oxygen(snap, p.id) : ""}
         <section class="panel" aria-labelledby="rs-sc"><h2 id="rs-sc">Scales involved</h2><ol class="small">${p.scales.map((s) => html`<li><b>${sc(s.scale)}.</b> ${s.role}</li>`)}</ol></section>
@@ -252,11 +288,12 @@
         <section class="panel" aria-labelledby="rs-ch"><h2 id="rs-ch">Intended reuse chain</h2><p class="small">The proposal pins one exact record. This chain describes intended biological transfer; separately recorded computations do not establish that transfer.</p>
           <ol class="small">${p.chain.map((c) => html`<li><b>${c.role}.</b> ${c.ref || c.kind ? entityLink(c.ref || c) : ""} ${c.label || ""}${c.note ? html`<br><span class="faint">${c.note}</span>` : ""}</li>`)}</ol></section>
         <section class="panel" aria-labelledby="rs-gap"><h2 id="rs-gap">Missing couplings</h2><ul class="small">${p.missing_couplings.map((x) => html`<li>${x}</li>`)}</ul></section>
-        <section class="panel" aria-labelledby="rs-ep"><h2 id="rs-ep">Falsifiable endpoints (proposed)</h2><div class="tablewrap"><table class="qtable"><caption class="sr">Endpoints and what would falsify each</caption><thead><tr><th scope="col">Endpoint</th><th scope="col">What would falsify it</th></tr></thead><tbody>${p.endpoints.map((e) => html`<tr><td class="small">${e.text}</td><td class="small">${e.falsifier}</td></tr>`)}</tbody></table></div></section>
-        <section class="panel" aria-labelledby="rs-in"><h2 id="rs-in">Proposed instruments</h2><p class="note small">${studies.length ? "Recorded model runs are available above. The proposed biological instruments still need calibration, and this page does not offer an interactive simulation runner." : "These instruments are proposed. No runner is available on this page; a control surface requires a supported runner."}</p>
+        <section class="panel" aria-labelledby="rs-ep"><h2 id="rs-ep">Falsifiable endpoints ${p.runner ? "(preregistered; verdicts above)" : "(proposed)"}</h2><div class="tablewrap"><table class="qtable"><caption class="sr">Endpoints and what would falsify each</caption><thead><tr><th scope="col">Endpoint</th><th scope="col">What would falsify it</th></tr></thead><tbody>${p.endpoints.map((e) => html`<tr><td class="small">${e.text}</td><td class="small">${e.falsifier}</td></tr>`)}</tbody></table></div></section>
+        <section class="panel" aria-labelledby="rs-in"><h2 id="rs-in">Proposed instruments</h2><p class="note small">${p.runner ? "A batch runner executed the preregistered endpoints (see Runner and executed endpoints above). The physical instrument is still proposed, and this page does not run simulations interactively." : studies.length ? "Recorded model runs are available above. The proposed biological instruments still need calibration, and this page does not offer an interactive simulation runner." : "These instruments are proposed. No runner is available on this page; a control surface requires a supported runner."}</p>
           <h3>Virtual</h3><ul>${p.proposed_instruments.virtual.map(inst)}</ul><h3>Physical</h3><ul>${p.proposed_instruments.physical.map(inst)}</ul></section>
         <section class="panel" aria-labelledby="rs-q"><h2 id="rs-q">Questions in the original proposal</h2><ul class="small">${p.open_questions.map((q) => html`<li>${q}</li>`)}</ul>${p.related_problem ? html`<p class="small">Registered related question: ${entityLink(p.related_problem)}</p>` : html`<p class="small faint">This proposal retains its original questions. Separately registered problems are linked with the recorded studies above.</p>`}</section>
         ${PD ? projectDraftPanel(PD) : ""}`,
+      after(root) { if (p.runner) verifyMedia(root); },
     };
   }
 
