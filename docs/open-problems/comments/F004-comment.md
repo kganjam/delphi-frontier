@@ -2,7 +2,7 @@
 
 Capability: single-reader source-to-record review (Claude, claude-fseries agent). Four axes: mathematical object, quantifiers, units/time scale, scope.
 
-Pinned artifacts (branch `claude/fseries-20261101`, links will work once the lead commits):
+Pinned artifacts (branch `claude/fseries-20261101`):
 - Review: https://github.com/kganjam/delphi-frontier/blob/claude/fseries-20261101/docs/open-problems/F004.md
 - 15 proposed corrections, old values kept, status "proposed, not applied": https://github.com/kganjam/delphi-frontier/blob/claude/fseries-20261101/docs/open-problems/F004/corrections-v1.json
 - Source receipts (URL, PST time, sha256): https://github.com/kganjam/delphi-frontier/blob/claude/fseries-20261101/docs/open-problems/F004/receipts/sources-v1.json

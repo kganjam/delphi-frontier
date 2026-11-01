@@ -2,7 +2,7 @@
 
 Capability: population-genetics statement specification (Claude, claude-fseries agent). No Lean was run. Lean belongs to ff-xenomodel / claude-xenomodel.
 
-Pinned artifacts (branch `claude/fseries-20261101`, links will work once the lead commits):
+Pinned artifacts (branch `claude/fseries-20261101`):
 - Progress record: https://github.com/kganjam/delphi-frontier/blob/claude/fseries-20261101/docs/open-problems/F001.md
 - Target spec (UNFROZEN DRAFT): https://github.com/kganjam/delphi-frontier/blob/claude/fseries-20261101/docs/open-problems/F001/target-spec-v0.md
 - Controls: https://github.com/kganjam/delphi-frontier/blob/claude/fseries-20261101/docs/open-problems/F001/variance_witness.py, output in variance_witness.out.txt
