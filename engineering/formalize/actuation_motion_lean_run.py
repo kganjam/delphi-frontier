@@ -70,6 +70,16 @@ def main():
                            "Theorem 1' (heterogeneous linear damping, periodic orbit) - paper derivation only", "anything about tissue, cilia, Xenopus or a built construct"],
         "caps": "systemd-run --user --scope MemoryMax=12G MemorySwapMax=0 TasksMax=128 RuntimeMaxSec=3000",
     }
+    # fields read by scripts/lean_gallery.py's generic family branch (same meaning as in the cantilever receipt)
+    rec["files_sha256"] = {POS: sha(HERE / POS), NEG: sha(HERE / NEG)}
+    rec["provenance"] = {"mathlib_rev": rec["mathlib"]["revision"], "lean_toolchain_file": rec["mathlib"]["toolchain_file"], "lake_manifest_sha256": rec["mathlib"]["manifest_sha256"]}
+    rec["positive"]["axioms_per_theorem"] = per
+    rec["positive"]["warnings_note"] = "compiled with linter warnings only (unused variables / deprecated names); no errors"
+    first = next((l for l in neg["out"].splitlines() if ": error" in l), "")
+    rec["negative_corrupt_law"] = {"exit": neg["exit"], "seconds": neg["seconds"],
+                                   "rejected": neg["exit"] != 0 and all(m["rejected"] for m in mutants) and not any(t["rejected"] for t in twins) and not unattributed,
+                                   "first_error": re.sub(r"^\S*/(\w+\.lean)", r"\1", first)[-200:],
+                                   "note": f"{len(mutants)} mutant blocks, each rejected; {len(twins)} correct twins compile; see negative.mutants"}
     out = ROOT / "artifacts/xenomodel/lean-receipt.json"; out.write_text(json.dumps(rec, indent=1, sort_keys=True) + "\n")
     print(json.dumps({"status": rec["status"], "pos_exit": pos["exit"], "n_theorems": len(per), "neg_exit": neg["exit"],
                       "mutants_rejected": [m["label"] for m in mutants if m["rejected"]], "twins_rejected": [t["label"] for t in twins if t["rejected"]], "unattributed": unattributed}))

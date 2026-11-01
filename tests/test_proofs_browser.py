@@ -75,7 +75,7 @@ def test_each_family_shows_real_source_receipt_mutants_and_downloads(browser, ba
     t = pg.locator("#main").inner_text()
     for must in ("recorded runs", "mathematics, not biology", "Mathlib", "proposal checker", "does not compile it"):
         assert must in t, must
-    assert pg.locator(".proof").count() == 5 and pg.locator("h1").text_content() == "Lean proofs"
+    assert pg.locator(".proof").count() == len(L.FAMILIES) and pg.locator("h1").text_content() == "Lean proofs"
     for f in gallery["families"]:
         sec = pg.locator(f"#proof-{f['id']}")
         assert "recorded compile matches these files" in sec.inner_text()

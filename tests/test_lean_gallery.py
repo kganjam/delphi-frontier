@@ -41,11 +41,11 @@ def run(root):
     return L.build(Ins(root), out, root=root), out
 
 
-def test_five_recorded_families_are_current_and_only_pinned_files_are_published(monkeypatch):
+def test_six_recorded_families_are_current_and_only_pinned_files_are_published(monkeypatch):
     monkeypatch.setattr(subprocess, "run", lambda *a, **k: (_ for _ in ()).throw(AssertionError("the helper must not run any process")))
     g, out = run(ROOT)
     fams = {f["id"]: f for f in g["families"]}
-    assert set(fams) == {"geometric-similarity", "unit-algebra", "cantilever-guard", "steady-oxygen-bound", "scaled-threshold-intervals"} and g["refused"] == []
+    assert set(fams) == {"geometric-similarity", "unit-algebra", "cantilever-guard", "steady-oxygen-bound", "scaled-threshold-intervals", "actuation-motion"} and g["refused"] == []
     assert all(f["status"] == "current" and not f["reasons"] for f in fams.values())
     # the assembled sources that were compiled are rebuilt from the current files and equal the receipt's hashes
     assert fams["geometric-similarity"]["assembled_sources_match"] is True and fams["unit-algebra"]["assembled_sources_match"] is True
@@ -53,6 +53,9 @@ def test_five_recorded_families_are_current_and_only_pinned_files_are_published(
     assert names["geometric-similarity"] == ["GeometricSimilarity.lean", "MutantRefutations.lean", "NegativeControls.lean", "RECEIPT.json"]
     assert names["cantilever-guard"] == ["CantileverGuard.lean", "CantileverGuard_negative_corrupt_law.lean", "RECEIPT.json"]
     assert names["steady-oxygen-bound"] == ["OxygenDiffusionBound.lean", "OxygenDiffusionBound_negative_corrupt_law.lean", "lean-receipt.json"]
+    assert names["actuation-motion"] == ["ActuationMotion.lean", "ActuationMotionNegative.lean", "lean-receipt.json"]
+    assert {"com_fixed_absolute_damping", "com_fixed_uniform_damping_ratio", "drag_weighted_centroid_fixed_ab2", "crawler_zero_iff_isotropic",
+            "crawler_step_equivariant", "heterogeneous_mass_breaks_com"} <= {t["name"] for t in fams["actuation-motion"]["theorems"]}
     published = [x["path"] for f in fams.values() for x in f["files"]]
     published += [x["path"] for f in fams.values() for x in f.get("display_artifacts", []) if x["status"] == "verified"]
     assert sorted(out) == sorted("@" + x for x in published) and all(k.startswith("@artifacts/lean-gallery/") for k in out)

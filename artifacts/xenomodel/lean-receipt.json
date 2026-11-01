@@ -6,6 +6,10 @@
   "Theorem 1' (heterogeneous linear damping, periodic orbit) - paper derivation only",
   "anything about tissue, cilia, Xenopus or a built construct"
  ],
+ "files_sha256": {
+  "ActuationMotion.lean": "e432e44d1f083b1b68a459e1ffa53319261a3f6acaadd80c5ebca5646f3ecc35",
+  "ActuationMotionNegative.lean": "f45de5d2e8d65ecf5d7f43512168df3441915a3b51d19ddfe8ae6fb91aa72bdf"
+ },
  "lean_version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
  "mathlib": {
   "manifest_sha256": "81340aac923d17d46dc761408dbb4f105f547f44e3767db83a280b75ebefc1de",
@@ -175,9 +179,16 @@
    }
   ],
   "no_twin_rejected": true,
-  "seconds": 400.5,
+  "seconds": 99.7,
   "stdout": "Try this:\n  [apply] ring_nf\n  \n  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.\n    \n  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.\nengineering/formalize/lean/ActuationMotionNegative.lean:38:64: error: unsolved goals\nN : \u2115\nmass : Fin N \u2192 \u211d\nm C dt : \u211d\nFint Fext p : Fin N \u2192 \u211d\nhint : \u2211 i, Fint i = 0\ni : Fin N\n\u22a2 p i - p i * dt * C * (mass i)\u207b\u00b9 + dt * Fint i + dt * Fext i = p i - p i * dt * C * m\u207b\u00b9 + dt * Fint i + dt * Fext i\nTry this:\n  [apply] ring_nf\n  \n  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.\n    \n  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.\nengineering/formalize/lean/ActuationMotionNegative.lean:47:29: error: unsolved goals\nx0 x1 p0 p1 : Fin 2 \u2192 \u211d\nhp : \u2200 (i : Fin 2), p1 i = momentumStep 1 1 (1 / 2) 0 0 (p0 i)\nhx : \u2200 (i : Fin 2), x1 i = x0 i + 1 / 2 * p1 i / 1\n\u22a2 x0 0 + p0 0 * (1 / 4) + x0 1 + p0 1 * (1 / 4) = x0 0 + x0 1\nengineering/formalize/lean/ActuationMotionNegative.lean:56:61: error: unsolved goals\n\u22a2 False\nTry this:\n  [apply] ring_nf\n  \n  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.\n    \n  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.\nengineering/formalize/lean/ActuationMotionNegative.lean:61:37: error: unsolved goals\n\u03bep \u03bem A : \u211d\nhp : 0 < \u03bep\nhm : 0 < \u03bem\n\u22a2 A * \u03bem - A * \u03bep = 0\nengineering/formalize/lean/ActuationMotionNegative.lean:73:36: error: unsolved goals\n\u22a2 False\nengineering/formalize/lean/ActuationMotionNegative.lean:84:13: error: linarith failed to find a contradiction\ncase mp\n\u03bep \u03bem A : \u211d\nhp : 0 < \u03bep\nhm : 0 < \u03bem\nhA : 0 < A\nhs : 0 < \u03bep + \u03bem\nh : 0 < A * (\u03bem - \u03bep)\na\u271d : \u03bep \u2264 \u03bem\n\u22a2 False\nfailed\nengineering/formalize/lean/ActuationMotionNegative.lean:85:13: error: linarith failed to find a contradiction\ncase mpr\n\u03bep \u03bem A : \u211d\nhp : 0 < \u03bep\nhm : 0 < \u03bem\nhA : 0 < A\nhs : 0 < \u03bep + \u03bem\nh : \u03bem < \u03bep\na\u271d : A * (\u03bem - \u03bep) \u2264 0\n\u22a2 False\nfailed\nengineering/formalize/lean/ActuationMotionNegative.lean:90:83: error: unsolved goals\na\u271d : fric 1 3 (-1 / 4) + fric 1 3 (3 / 4) = 0\n\u22a2 False\nengineering/formalize/lean/ActuationMotionNegative.lean:99:83: error: unsolved goals\n\u22a2 False\nengineering/formalize/lean/ActuationMotionNegative.lean:112:75: error: unsolved goals\n\u22a2 False\n",
   "unattributed_error_lines": []
+ },
+ "negative_corrupt_law": {
+  "exit": 1,
+  "first_error": "ActuationMotionNegative.lean:38:64: error: unsolved goals",
+  "note": "9 mutant blocks, each rejected; 5 correct twins compile; see negative.mutants",
+  "rejected": true,
+  "seconds": 99.7
  },
  "positive": {
   "argv": [
@@ -185,11 +196,128 @@
    "-j2",
    "engineering/formalize/lean/ActuationMotion.lean"
   ],
+  "axioms_per_theorem": {
+   "ActuationMotion.absolute_damping_hypotheses_satisfiable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.arithmetic_centroid_moves_with_heterogeneous_drag": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.com_fixed_absolute_damping": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.com_fixed_uniform_damping_ratio": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.com_motion_requires_external_force": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_cycle": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_forward_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_hypotheses_satisfiable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_linear_in_amplitude": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_mirror": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_path": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_step": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_step_equivariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_trajectory": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.crawler_zero_iff_isotropic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.drag_weighted_centroid_fixed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.drag_weighted_centroid_fixed_ab2": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.fric_mirror": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.heterogeneous_mass_breaks_com": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.linear_drag_near_cycle_bound": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.linear_drag_no_net_displacement": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.total_momentum_closed_form": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ],
+   "ActuationMotion.total_momentum_step": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+   ]
+  },
   "errors": [],
   "exit": 0,
   "n_theorems": 23,
   "only_standard_axioms": true,
-  "seconds": 406.0,
+  "seconds": 112.5,
   "sorryAx": false,
   "stdout": "'ActuationMotion.total_momentum_step' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.com_fixed_absolute_damping' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.total_momentum_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.com_motion_requires_external_force' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.heterogeneous_mass_breaks_com' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.absolute_damping_hypotheses_satisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.drag_weighted_centroid_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.linear_drag_no_net_displacement' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.arithmetic_centroid_moves_with_heterogeneous_drag' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'ActuationMotion.crawler_step' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_path' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_zero_iff_isotropic' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_forward_iff' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_mirror' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_linear_in_amplitude' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_hypotheses_satisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.com_fixed_uniform_damping_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.drag_weighted_centroid_fixed_ab2' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.linear_drag_near_cycle_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.fric_mirror' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_step_equivariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ActuationMotion.crawler_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
   "theorem_axiom_sets": {
@@ -333,12 +461,18 @@
    "ActuationMotion.linear_drag_no_net_displacement",
    "ActuationMotion.total_momentum_closed_form",
    "ActuationMotion.total_momentum_step"
-  ]
+  ],
+  "warnings_note": "compiled with linter warnings only (unused variables / deprecated names); no errors"
+ },
+ "provenance": {
+  "lake_manifest_sha256": "81340aac923d17d46dc761408dbb4f105f547f44e3767db83a280b75ebefc1de",
+  "lean_toolchain_file": "leanprover/lean4:v4.35.0",
+  "mathlib_rev": "56a005855ea17e0b0958f73ec801ae140b0a1679"
  },
  "proves": "A: Voxelyze-form symplectic Euler with homogeneous mass, one -C v damping, internal forces summing to zero, zero external horizontal force and zero initial momentum keeps the horizontal COM fixed for every step (and the contrapositive necessity). B: overdamped linear drag keeps the drag-weighted centroid fixed and forbids net displacement per shape cycle for any actuation. C: two-node direction-dependent-friction crawler: per-step midpoint motion kappa|delta|, pathwise kappa*TV(L), cycle A(xi_m - xi_p)/(xi_p + xi_m), zero iff isotropic, mirror negation, linearity in amplitude.",
  "runner": {
   "path": "engineering/formalize/actuation_motion_lean_run.py",
-  "sha256": "9a847c56860f0815c4fbd1de22328d300fd704a6374de2bd4cd68493ca65303f"
+  "sha256": "b70d862dcbe8a3edb38b2cfb6afa8bc473f3dada540433e56abc0b1975acd752"
  },
  "satisfiability_witnesses": [
   "absolute_damping_hypotheses_satisfiable (deforming 2-node body, COM fixed)",

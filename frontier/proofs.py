@@ -9,7 +9,7 @@ import stat
 
 from scripts import lean_gallery
 
-FAMILY_IDS = ("geometric-similarity", "unit-algebra", "cantilever-guard", "steady-oxygen-bound", "scaled-threshold-intervals")
+FAMILY_IDS = ("geometric-similarity", "unit-algebra", "cantilever-guard", "steady-oxygen-bound", "scaled-threshold-intervals", "actuation-motion")
 MAX_FILE_BYTES = 512_000
 MAX_SOURCE_CHARS = 6_000
 RECEIPTS = {
@@ -18,6 +18,7 @@ RECEIPTS = {
     "cantilever-guard": "2f5ebcb086f2dbe70a84a9f8863365736b1a59724744eb3a7101737a808c4be4",
     "steady-oxygen-bound": "2275021b43ba35a0fa5bba874e0cc5b355365b58347ef40b221991e292215f71",
     "scaled-threshold-intervals": "233b57e33c0fd95b0f9202bd7f5cc9602262cceeb60c02693776eba3eda0e69c",
+    "actuation-motion": "02cf08304a52b94a632d65d9b1f604cf729db2e973bdb01c952d4445cb8038a9",
 }
 SCOPE = "Recorded mathematical compile/control results only; not a new Lean run, scientific review, empirical finding, or proof of biological validity."
 

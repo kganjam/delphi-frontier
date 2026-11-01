@@ -26,7 +26,7 @@ class Inputs:
 @pytest.fixture
 def tree(tmp_path):
     for name in ["engineering/formal", "engineering/formalize/lean", "site/artifacts/lean-gallery",
-                 "artifacts/oxygen-diffusion-rule", "artifacts/epithelial/interval-certificate"]:
+                 "artifacts/oxygen-diffusion-rule", "artifacts/epithelial/interval-certificate", "artifacts/xenomodel"]:
         shutil.copytree(ROOT / name, tmp_path / name)
     shutil.copy2(ROOT / "engineering/constraints.py", tmp_path / "engineering/constraints.py")
     (tmp_path / "projects/reuse-studies").mkdir(parents=True)
@@ -77,13 +77,13 @@ def test_summary_and_optional_source_match_actual_published_receipts_without_exe
 ])
 def test_changed_original_dependency_or_published_bytes_withholds_family_without_cache(tree, path, family):
     catalog = ProofCatalog(tree)
-    assert len(catalog.read()["families"]) == 5
+    assert len(catalog.read()["families"]) == len(FAMILY_IDS)
     target = tree / path
     target.write_bytes(target.read_bytes() + b"\n-- mutation")
     result = catalog.read(include_source=True)
     assert family in {f["id"] for f in result["withheld"]}
     assert family not in {f["id"] for f in result["families"]}
-    assert len(result["families"]) == 4
+    assert len(result["families"]) == len(FAMILY_IDS) - 1
 
 
 def test_receipt_mutation_cannot_introduce_an_arbitrary_file_read(tree, monkeypatch):
@@ -141,7 +141,7 @@ def test_symlink_even_to_identical_bytes_is_withheld(tree, tmp_path, path, famil
 def test_missing_family_and_invalid_request_are_bounded(tree):
     (tree / "engineering/formalize/lean/RECEIPT.json").unlink()
     result = ProofCatalog(tree).read()
-    assert len(result["families"]) == 4 and result["withheld"][0]["id"] == "cantilever-guard"
+    assert len(result["families"]) == len(FAMILY_IDS) - 1 and result["withheld"][0]["id"] == "cantilever-guard"
     with pytest.raises(ValueError):
         ProofCatalog(tree).read("../../secret")
     with pytest.raises(ValueError):

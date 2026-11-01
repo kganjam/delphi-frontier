@@ -23,6 +23,7 @@ SCOPE = [
     "Nothing here shows an organism is viable, that a genotype causes a fin shape, or anything empirical.",
     "Each result is a recorded run: this site did not run Lean. A receipt counts only while the files it pinned are unchanged.",
     "The proposal checker writes Lean text but does not compile it. These theorems are hand-authored, not extracted from a language-model answer.",
+    "The actuation-motion family states momentum and friction facts about three discrete engine-form models. It does not model the ciliary locomotion the microcarrier sources report, and it does not show that any construct moves.",
     "The oxygen family is a conditional steady-transport model rule. It does not establish oxygen adequacy, cell viability, repair, actuation or organism function in either linked project.",
 ]
 
@@ -144,7 +145,26 @@ FAMILIES = [
          "The native fixed-horizon FAIL and historical local G9 pass remain separate recorded simulation results.",
      ],
      "statement_origin": "Hand-authored parametric Lean algebra with rational inputs pinned to the reviewed 3c65c17 audit; source binding is a recorded Python check, not a Lean theorem about the raw simulations."},
-
+    {"id": "actuation-motion", "title": "Actuation to motion: when an actuated soft body can and cannot translate",
+     "dir": "engineering/formalize/lean", "receipt": "lean-receipt.json",
+     "receipt_path": "artifacts/xenomodel/lean-receipt.json",
+     "receipt_sha256": "02cf08304a52b94a632d65d9b1f604cf729db2e973bdb01c952d4445cb8038a9",
+     "source_paths": {
+         "ActuationMotion.lean": "engineering/formalize/lean/ActuationMotion.lean",
+         "ActuationMotionNegative.lean": "engineering/formalize/lean/ActuationMotionNegative.lean",
+     },
+     "theory": "ActuationMotion.lean", "negative_file": "ActuationMotionNegative.lean",
+     "summary": "Three discrete models mirroring engine updates run in this repository. A: the Voxelyze-form symplectic Euler step with absolute -C v damping keeps the horizontal centre of mass fixed for every actuation pattern when the damping ratio is uniform, there is no horizontal contact force and the body starts at rest; a moved COM therefore requires an external horizontal force. B: overdamped linear drag (PhysiCell, Euler and Adams-Bashforth-2) keeps the drag-weighted centroid fixed, so no shape cycle, travelling wave or asymmetric body gives net displacement. C: a two-node crawler with direction-dependent friction moves by kappa times the total variation of its length; the displacement is zero exactly when the friction is isotropic. Satisfiability witnesses and proved counterexamples show the hypotheses are neither empty nor removable.",
+     "equations": [
+         {"label": "Total momentum under absolute damping", "tex": "P_{n+1}=(1-\\Delta t\\,\\gamma)P_n+\\Delta t\\sum_i F^{ext}_{n,i},\\quad \\gamma=C_i/m_i"},
+         {"label": "Drag-weighted centroid (overdamped, linear drag)", "tex": "\\xi_i\\dot x_i=\\sum_j F_{ij}\\ \\Rightarrow\\ \\sum_i\\xi_i x_i=\\mathrm{const}"},
+         {"label": "Crawler pathwise law", "tex": "\\Delta X=\\kappa\\,\\mathrm{TV}(L),\\quad \\kappa=\\frac{\\xi_- - \\xi_+}{2(\\xi_+ + \\xi_-)}"},
+         {"label": "Crawler cycle displacement", "tex": "D=A\\,\\frac{\\xi_- - \\xi_+}{\\xi_+ + \\xi_-},\\quad D=0\\iff\\xi_+=\\xi_-"}],
+     "assumptions": ["Internal forces cancel pairwise (Newton's third law); assumed for Voxelyze links, true by construction in the PhysiCell module.",
+                     "Model A: uniform damping ratio C_i/m_i (homogeneous Voxelyze material), zero horizontal contact force, zero initial momentum.",
+                     "Model B: overdamped, linear, lab-frame drag; no hydrodynamic interaction.",
+                     "Model C: two nodes, direction-dependent linear friction, force balance each step; realised length changes are inputs.",
+                     "Contraction is a modelling choice; the microcarrier sources report ciliary locomotion, which none of these models represent."]}
 ]
 
 
