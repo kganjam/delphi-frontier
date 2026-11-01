@@ -1,0 +1,89 @@
+{
+ "bounds": {
+  "index_download_max_bytes": 1048576,
+  "on_bound": "stop, write results and receipt with completion_status stopped_on_bound; completed windows are kept",
+  "output_max_bytes": 52428800,
+  "per_library_compressed_max_bytes": 67108864,
+  "per_window_compressed_max_bytes": 8388608,
+  "runtime_hard_s": 1000,
+  "total_compressed_max_bytes": 419430400,
+  "total_requests_max": 3000
+ },
+ "completion_status": [
+  "complete",
+  "stopped_on_bound",
+  "stopped_on_error"
+ ],
+ "count_rule": {
+  "also_recorded": "sum of the 10x duplicate-count column (col5) and number of distinct barcodes in the window",
+  "beyond_last_interval": "tile index >= number of linear entries => count 0 with status beyond_last_interval",
+  "header_lines": "lines starting with # are skipped",
+  "index_use": "linear index of the .tbi: read from the virtual offset of the 16 kb tile containing window start; stop when a record start >= window end or the chromosome changes; bins are not used",
+  "sortedness": "a start smaller than the previous start on the target chromosome refuses the window (unsorted_refused)",
+  "unit": "fragment rows overlapping the window: start < window_end and end > window_start"
+ },
+ "frozen_before": "any target-window read; only HEAD, fixed 0-1023 byte Range and one index download (0dpa1 .tbi.gz) were made before this file",
+ "google_contract": {
+  "COPS_OUT": "fresh output directory; source cwd is a new isolated directory",
+  "hard_runtime_s": 1200,
+  "memory_bytes": 4294967296,
+  "network": "ftp.ncbi.nlm.nih.gov only (https, byte ranges)",
+  "numeric_threads": 1,
+  "tasks_max": 128,
+  "workers": 1
+ },
+ "inputs": {
+  "controls": "engineering/reg_proxy/controls.json (Table S4D, GRCz11; sha256 of source xlsx inside)",
+  "libraries": "10 fragment files + 10 .tbi.gz, URLs and Content-Length pinned in controls.json"
+ },
+ "not_claimed": [
+  "accessibility is not sequence function, enhancer activity or same-cell RNA/ATAC pairing",
+  "no p-value, threshold, rank or pass/fail on 'positives exceed negative' (one negative control cannot calibrate)",
+  "LEN is excluded: exact GRCz11 interval unresolved (source is Zv9); no inferred window",
+  "no cell-type split (labels are not in GEO)",
+  "two libraries per time point is n=2; no inference"
+ ],
+ "per_window_outputs": [
+  "library",
+  "window id",
+  "class",
+  "chrom",
+  "start0",
+  "end0",
+  "status",
+  "fragment_rows",
+  "dup_count_sum",
+  "distinct_barcodes",
+  "compressed_bytes_read",
+  "requests",
+  "sha256 of every response body"
+ ],
+ "question": "For each of the 10 GSE261907 snATAC libraries (5 time points x 2 biological replicates), how many fragments overlap each source-validated reporter-positive amplicon, the one source reporter-negative amplicon, and size-matched positional comparison windows? Descriptive library counts only.",
+ "schema": "frontier.reg-proxy.protocol/1",
+ "summary_rule": {
+  "excluded": "windows with status other than ok/beyond_last_interval are listed and excluded from summaries, never imputed",
+  "per_library_context": "count, count per kb, and count divided by the median of that window's own two comparison-window counts (undefined if the median is 0; recorded as null)",
+  "replicates": "both replicates listed side by side for each time point with absolute difference; no pooling, no test"
+ },
+ "synthetic_controls": "engineering/reg_proxy/controls_synth.py runs the same index parser, block reader, counter and transport class on generated BGZF+tabix-style fixtures, a brute-force oracle, a local Range server and the real 0dpa1 index bytes",
+ "transport": {
+  "attempts": "every attempt logged; the second attempt exists because intermittent IncompleteRead was observed in 2 of ~6 probe requests; this is a declared policy, not a hidden retry; no other retry",
+  "host": "ftp.ncbi.nlm.nih.gov",
+  "max_attempts_per_request": 2,
+  "range_chunk_bytes": 524288,
+  "range_required": "HTTP 206 with Content-Range exactly bytes a-b/total equal to the pinned file size and body length b-a+1; anything else is a failed attempt (unsupported_range / range_mismatch / short_read)",
+  "redirects": "refused",
+  "scheme": "https",
+  "timeout_s": 30
+ },
+ "windows": {
+  "chrom_name_rule": "use the index sequence name equal to the control chrom ('chr24'); if absent record window status chrom_absent; no alias mapping",
+  "comparison_windows": {
+   "must_not_overlap": "any amplicon or other comparison window; checked at build and in preflight, refusal otherwise",
+   "purpose": "candidate-independent positional noise-floor context, not a library-size normaliser",
+   "rule": "for every amplicon, two windows of identical length on the same chromosome at +250000 and +500000 bp from its 0-based start"
+  },
+  "convention": "1-based inclusive in source -> 0-based half-open [start-1,end) (BED-like, matches tabix format 65536 observed in the real index)",
+  "source": "11 amplicons from controls.json"
+ }
+}
