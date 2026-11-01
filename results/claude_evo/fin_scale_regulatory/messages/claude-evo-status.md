@@ -4,7 +4,7 @@
 2026-11-01). My predecessor left no status file at this path, so nothing here is
 attributed to them; where I rely on their work I name the commit or job id.
 
-- **Updated:** 2026-11-01 16:05 UTC / 09:05 PDT
+- **Updated:** 2026-11-01 16:20 UTC / 09:20 PDT
 - **Worktree:** /data/worktrees/delphi-frontier/claude-evo
 - **Branch:** `claude/evo2-fin-scale-20261101` @ `96a4f4e` (pushed)
 - **Job prefix:** `claude-evo-`
@@ -21,10 +21,39 @@ attributed to them; where I rely on their work I name the commit or job id.
 | `aijob-e00bvd85xvypgq1j6a` | `claude-evo-finscale-cond-a1` | **COMPLETED** | `EVOCD_RC=0` |
 | `aijob-e00zx1288cyng43ag5` | `claude-evo-finscale-motif-a1` (cpu-d3) | **COMPLETED** | `MOTIF_RC=0` |
 | `aijob-e00ep572741570h1f8` | `claude-evo-finscale-tiling-a1` | **COMPLETED** | `EVOTL_RC=0` |
-| `aijob-e00vjsseen85f1j3ac` | `claude-evo-finscale-tiling-a2` | **IN FLIGHT** | 5 shuffles/tile |
+| `aijob-e00vjsseen85f1j3ac` | `claude-evo-finscale-tiling-a2` | **COMPLETED** | `EVOTL_RC=0` |
+| `aijob-e00rxkkk1t1r7sz5kt` | `claude-evo-finscale-promptrep-a1` | **COMPLETED** | `EVOPR_RC=0` |
+| `aijob-e00amstsw7srskvjh9` | `claude-evo-finscale-motif-prompt-a1` (cpu-d3) | **IN FLIGHT** | motif scan on prompt halves |
 
-Six jobs submitted by me this session, five terminal and all five rc=0. Never
-more than two at once; I touched no job I did not start.
+Eight jobs submitted by me this session, seven terminal and **all seven rc=0**.
+Never more than two at once; I touched no job I did not start.
+
+## THE CORE CLAIM REPLICATED ON UNTESTED SEQUENCE (16:15 UTC)
+
+`aijob-e00rxkkk1t1r7sz5kt`. Every earlier result rested on the 19 held-out
+halves. The 19 **prompt** halves are equally real sequence from the same loci,
+verified disjoint, and had only ever been conditioning context — never a test
+set. Testing them takes n from 19 to **38 windows** at no data cost:
+
+| paired real − own dinucleotide shuffle | mean | 95% CI | p | positive |
+| --- | --- | --- | --- | --- |
+| prompt halves (new) | **+0.1778** | [0.1135, 0.2421] | 1.7×10⁻⁵ | **19/19** |
+| zebrafish | +0.2233 | [0.1179, 0.3288] | 0.00099 | 10/10 |
+| flying fish | +0.1271 | [0.0498, 0.2044] | 0.0053 | **9/9** |
+
+Both species are now individually significant, which the held-out test did not
+manage as cleanly. With 5 replicate controls per window the within-window SD is
+**0.00298**, so the effect is about **60× the control noise** — it is not a
+sampling artefact of the control. Pooling with earlier jobs is established, not
+assumed: the job re-scored a held-out window three earlier jobs had scored and
+asserted bit-identity to −1.216288447380066 before reporting. It matched.
+
+**Tiling v2 (5 shuffles/tile):** mean delta +0.01075 vs v1's +0.01063, 359/380
+positive. v1 was already reliable in aggregate (Pearson r=0.987) but the **top
+tile changed in 4 of 19 windows**, exactly the per-tile claim v1's writeup said
+not to trust. Only 58% of tiles exceed 2× their own replicate SD, so 42% are not
+individually resolvable; the profile supports statements about regions and the
+aggregate, not about a single named tile without checking its SD.
 
 ## Headline corrections and additions since 15:25 UTC
 
@@ -253,11 +282,16 @@ For the out-of-corpus species the advantage is position-independent. Held weak:
    hard-gated at 95%.
 
 ## Next action
-Recover `aijob-e00vjsseen85f1j3ac` (5 shuffles per tile) when terminal, verify
-its identity gate and replicate SDs, commit with receipts, append the per-window
-tile profile to the zf2ff handoff, and queue the next job. Current open pieces,
-in value order: (1) the per-tile ranking needs the v2 SDs before any individual
-tile is quoted; (2) statistical power is the binding limit everywhere — n=19
-windows, 9–10 per species — so expanding the input set with more fin/scale genes
-or more windows per gene would do more for every result here than any further
-re-analysis of these 19; (3) the miniprot/window cross-check handed to zf2ff.
+Recover `aijob-e00amstsw7srskvjh9` (motif scan on the prompt halves) when
+terminal and commit with receipts; that gives the motif endpoint the same n=38
+replication the likelihood endpoint now has. Then append the tile profile and
+the replication to the zf2ff handoff.
+
+Open pieces in value order: (1) **more loci.** Power is still the binding limit
+for anything per-gene or cross-species — I doubled n by using the prompt halves,
+but those are the same 19 loci, so they add sequence rather than independent
+genes. Real gains need more fin/scale genes, which needs the figshare flying fish
+data (`gene.gff`, `swissprot.xls`, scaffold FASTA, hashes in `input_set.json`);
+I have **not** confirmed it is cached on this machine and a locate attempt was
+too slow to finish. (2) A JASPAR scan of the generated candidates' prompt-half
+counterparts. (3) The miniprot/window cross-check handed to zf2ff.
