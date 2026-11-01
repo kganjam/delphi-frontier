@@ -89,6 +89,7 @@
    "CL rule n_trim 1.5 sweep",
    "weakest-step selection coefficient reported with the Ne needed for selection to beat drift"
   ],
+  "round_2": "gemini-4-argon referee pass on the final findings (~16:45Z): restated the collective alarm finding as a speed-of-escape effect (fast swimmers get it too), listed predator-speed parameters in the collective manifest, computed (not asserted) the A range of the walk endpoints, added the dV_taxi sensitivity and the gain at maximum aerial hazard to the escape findings, and added V_exit invariance and the kinematic taxi surrogate to does_not_establish",
   "not_changed": [
    "ground effect is still omitted (stated as a limitation: it would lengthen glides of low fliers)",
    "body-shape (length-weight a) is not an evolving trait; both FishBase values are run",
@@ -117,7 +118,8 @@
   "intermediate (flying-halfbeak p): airborne 21.2 m / 2.04 s (zero-lift control 7.7 m); escape per attack H_vis 0.76, H_chase 0.53, both 0.84; launch metabolic cost (lower bound) 1.5% of an ASSUMED daily routine budget",
   "target (Exocoetus-like): airborne 37.7 m / 2.88 s (zero-lift control 12.9 m); escape per attack H_vis 0.89, H_chase 1.00, both 1.00; launch metabolic cost (lower bound) 2.5% of an ASSUMED daily routine budget",
   "H_chase only: predator burst speed (2 s burst) above which leaving the water gains < 0.01 escape probability: ancestor (halfbeak-like) 9.5 m/s; intermediate (flying-halfbeak p) 11.0 m/s; target (Exocoetus-like) 19.0 m/s. FishBase T. albacares burst rows span 5.21-20.46 m/s.",
-  "Aerial predators, 10 m/s underwater predator: the target's gain stays positive across the whole swept aerial hazard 0-0.40 /s.",
+  "Aerial predators, 10 m/s underwater predator: the target's gain stays positive across the whole swept aerial hazard 0-0.40 /s (gain 0.02 at 0.40 /s).",
+  "Taxi surrogate dependence (H_chase only, target): escape gain 0.70 with an 8 m/s taxi gain vs 0.60 with 4 m/s; the taxi gain is a kinematic assumption, not a solved force balance.",
   "Energy: at 10 attacks/day the launch cost lower bound is 25% of the assumed daily routine budget (taxi drag excluded)."
  ],
  "parameter_unknowns": [
@@ -144,6 +146,7 @@
  ],
  "does_not_establish": [
   "actual predation rates, encounter rates or escape success of any fish",
+  "taxiing mechanics: the speed gain is a kinematic surrogate scaled by tail asymmetry and fin support, not a force balance with water drag",
   "that predators of flying fish track by vision or out-run by chase (two hypotheses, both shown)",
   "energy budgets: the launch cost is a kinetic lower bound against an assumed routine metabolic rate",
   "anything about real seabird predation (aerial hazard is swept)"

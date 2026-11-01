@@ -16,6 +16,7 @@ REVIEW = {"model": "gemini-4-argon (Google), design critique 2026-11-01T14:39Z, 
                                   "predator now pursues the glider's ground track instead of its landing point (no foreknowledge); d_gap term removed from the ABM tracking rule",
                                   "faster in-water flee (5 and 10 m/s) as sensitivity cases", "correlated-G (p-c pleiotropy +-0.5) and CV_A 0.02/0.10 Lande variants",
                                   "CL rule n_trim 1.5 sweep", "weakest-step selection coefficient reported with the Ne needed for selection to beat drift"],
+          "round_2": "gemini-4-argon referee pass on the final findings (~16:45Z): restated the collective alarm finding as a speed-of-escape effect (fast swimmers get it too), listed predator-speed parameters in the collective manifest, computed (not asserted) the A range of the walk endpoints, added the dV_taxi sensitivity and the gain at maximum aerial hazard to the escape findings, and added V_exit invariance and the kinematic taxi surrogate to does_not_establish",
           "not_changed": ["ground effect is still omitted (stated as a limitation: it would lengthen glides of low fliers)", "body-shape (length-weight a) is not an evolving trait; both FishBase values are run",
                           "fitness has no fecundity/foraging term beyond the fin-cost factor"]}
 
@@ -56,8 +57,11 @@ def reach():
     clr = next((r for r in runs if r["setting"] == "CL_schedule" and r["hypothesis"] == "both"), None)
     v4 = next((r for r in runs if r["setting"] == "V_exit=4" and r["hypothesis"] == "both"), None)
     lande_ps = [r["lande"]["end"]["p"] for r in runs if r["hypothesis"] == "both"]
+    t_A = runs[0]["target"]["A"]
+    kf = [r for r in runs if r["setting"].startswith("kappa_fin") and r["hypothesis"] == "both"]
     findings = [
         f"ANSWER (default physics, H_vis + H_chase): changing all four traits together along the straight line ancestor -> target, W never decreases (max drop {b['straight_line']['max_drop']:.1e} over 200 steps) -- a monotonically improving path EXISTS when traits co-vary. With one trait changing at a time there is no strictly improving path: the least-bad route dips by {b['valley_depth_if_any']:.1e}.",
+        ("With an aquatic fin cost the co-varying straight line stays monotone in " + f"{sum(1 for r in kf if r['straight_line']['monotone_nondecreasing'])} of {len(kf)} H_vis+H_chase rows (kappa_fin " + ", ".join(f"{r['overrides']['kappa_fin']}: max drop {r['straight_line']['max_drop']:.1e}" for r in kf) + "); the ANSWER above is for escape-only fitness and a fixed exit speed (V_exit) shared by all phenotypes.") if kf else "",
         f"Default physics, H_vis + H_chase: W rises from {b['W_ancestor']:.3f} (ancestor) to {b['W_target']:.4f} (target). The best single-trait path has worst step dW = {b['maximin_worst_step_dW']:.2e}: "
         + ("a strictly improving path exists." if b["strictly_improving_path_exists"] else ("only neutral steps connect them." if b["path_only_via_neutral_steps"] else f"no strictly improving path; every path crosses a dip of at least {b['valley_depth_if_any']:.2e}.")) + f" Bottleneck step: {bstep(b)}.",
         f"H_chase only (escape requires out-running the predator's chase): the ancestor's {R['runs'][0]['ancestor']['p']:.3f} pectoral ratio gives a leap shorter than the chase, W = e_swim exactly, and the landscape is flat around it: worst step {c['maximin_worst_step_dW']:.2e}; the Lande walk does not move (ends at p = {c['lande']['end']['p']:.3f}). Under this hypothesis the model walk's first steps are neutral: in the model, only drift or an additional benefit could start it.",
@@ -67,7 +71,7 @@ def reach():
         (("Where the dip is (reach_post, default landscape): " + "; ".join(f"{h}: to the target cell worst step {post['by_hypothesis'][h]['a_target_cell']['worst_step_dW']:.1e} ({post['by_hypothesis'][h]['a_target_cell']['bottleneck_trait']}), mass free {post['by_hypothesis'][h]['b_any_mass']['worst_step_dW']:.1e} ({post['by_hypothesis'][h]['b_any_mass']['bottleneck_trait']}), mass frozen {post['by_hypothesis'][h]['c_mass_frozen_at_ancestor']['worst_step_dW']:.1e} ({post['by_hypothesis'][h]['c_mass_frozen_at_ancestor']['bottleneck_trait']})" for h in ("vis", "both"))
           + ". So the dip is not only the mass increase: in the model, escape probability peaks when the fins first carry the full body weight at water exit (lift ratio phi = 1, pectoral length about 0.3 SL) and declines slightly as fin length p and aspect ratio A rise further toward the exocoetid values.") if post else "reach_post missing"),
         ((f"H_chase plateau: {post['by_hypothesis']['chase']['d_plateau']['cells_connected_to_ancestor_with_W_equal_e_swim']} grid cells connected to the ancestor have W exactly equal to e_swim (up to p = {post['by_hypothesis']['chase']['d_plateau']['max_p_on_plateau']:.2f}); a path to the target exists with no downhill step but begins with neutral steps only -- in the H_chase model, selection alone cannot start the walk.") if post and post['by_hypothesis']['chase'].get('d_plateau') else "no H_chase plateau"),
-        f"BOTTLENECK of the selection-driven walk: across all {sum(1 for r in runs if r['hypothesis'] == 'both')} H_vis+H_chase rows the walk ends at p = {min(lande_ps):.2f}-{max(lande_ps):.2f} with broad fins (A about 2), never within 0.05 of the target. The stall is where the fins first carry the full weight at water exit; it is robust to the CL control rule (scheduled-CL variant ends at p = {clr['lande']['end']['p']:.2f}) " + (f"but not to exit speed (V_exit = 4 m/s: p = {v4['lande']['end']['p']:.2f})." if v4 else "."),
+        f"BOTTLENECK of the selection-driven walk: across all {sum(1 for r in runs if r['hypothesis'] == 'both')} H_vis+H_chase rows the walk ends at p = {min(lande_ps):.2f}-{max(lande_ps):.2f} and fin aspect ratio A = {min(r['lande']['end']['A'] for r in runs if r['hypothesis'] == 'both'):.2f}-{max(r['lande']['end']['A'] for r in runs if r['hypothesis'] == 'both'):.2f} (target A = {t_A:.1f}), never within 0.05 of the target. The stall is where the fins first carry the full weight at water exit; it is robust to the CL control rule (scheduled-CL variant ends at p = {clr['lande']['end']['p']:.2f}) " + (f"but not to exit speed (V_exit = 4 m/s: p = {v4['lande']['end']['p']:.2f})." if v4 else "."),
         (lambda rows: f"Straight-line (traits co-varying) check across the {len(rows)} sensitivity rows that ran it: monotone non-decreasing in {sum(1 for r in rows if r['straight_line']['monotone_nondecreasing'])}; largest single drop among the rest {max([r['straight_line']['max_drop'] for r in rows] or [0]):.1e}. Required single-trait dips, where present, range {min([r['valley_depth_if_any'] for r in runs if r['valley_depth_if_any'] > 0] or [0]):.1e} to {max([r['valley_depth_if_any'] for r in runs] or [0]):.1e} in W per attack; whether drift or a correlated response would cross them depends on effective population size (Ne) and the genetic covariance matrix (G), which this model does not estimate. The Ne needed for selection to dominate at the weakest positive step is given per row in sensitivity.json.")([r for r in runs if r.get("straight_line")]),
         (f"Zero-lift control: ancestor airborne {bc['ancestor_d_lift']:.2f} m with lift vs {bc['ancestor_d_no_lift']:.2f} m ballistic; target {bc['target_d_lift']:.1f} m vs {bc['target_d_no_lift']:.1f} m." if bc else "zero-lift control missing"),
     ]
@@ -83,6 +87,7 @@ def reach():
               "findings": findings,
               "parameter_unknowns": [f"{k} = {v[0]} {v[1]}: {v[2]}" for k, v in C.ASSUMPTIONS.items()],
               "does_not_establish": ["that flying fish evolved from a halfbeak-like ancestor along this or any path (phylogeny is from Lovejoy 2004; the path is a model)",
+                                     "that water-exit speed is the same for a halfbeak-like and an exocoetid-like body (V_exit is a shared assumption; 4 m/s is a sensitivity row)",
                                      "that the walk's stall near p 0.3 explains flying halfbeaks (Oxyporhamphus p = 0.337 in Daane S1A) -- a numerical coincidence in a model, not evidence",
                                      "that predator escape was the selective agent", "real fitness: no fecundity, foraging or development term; fin cost only as a swept factor",
                                      "the evolution of aspect ratio or mass: the fitness used does not favour the target's A or M", "anything about developmental feasibility (that is the developmental scale)",
@@ -103,7 +108,10 @@ def escape():
     iu = int(np.argmin(np.abs(U - 10.0))); neg = np.where(gain[:, iu] < 0)[0]
     findings = [f"{k}: airborne {v['airborne_distance_m']:.1f} m / {v['airborne_time_s']:.2f} s (zero-lift control {v['ballistic_control_distance_m']:.1f} m); escape per attack H_vis {v['escape_vis']:.2f}, H_chase {v['escape_chase']:.2f}, both {v['escape_both']:.2f}; launch metabolic cost (lower bound) {100*v['launch_cost_frac_of_assumed_daily_RMR']:.1f}% of an ASSUMED daily routine budget" for k, v in ph.items()]
     findings.append("H_chase only: predator burst speed (2 s burst) above which leaving the water gains < 0.01 escape probability: " + "; ".join(f"{k} {v} m/s" if v else f"{k} none in 2-25 m/s" for k, v in be.items()) + ". FishBase T. albacares burst rows span 5.21-20.46 m/s.")
-    findings.append("Aerial predators, 10 m/s underwater predator: " + (f"gliding stops paying for the target (gain < 0) once the aerial hazard while airborne exceeds {B[neg[0]]:.2f} /s." if len(neg) else f"the target's gain stays positive across the whole swept aerial hazard 0-{B[-1]:.2f} /s."))
+    findings.append("Aerial predators, 10 m/s underwater predator: " + (f"gliding stops paying for the target (gain < 0) once the aerial hazard while airborne exceeds {B[neg[0]]:.2f} /s." if len(neg) else f"the target's gain stays positive across the whole swept aerial hazard 0-{B[-1]:.2f} /s (gain {gain[-1, iu]:.2f} at {B[-1]:.2f} /s)."))
+    dvt = next((r for r in R["sensitivity"] if r["setting"] == "dV_taxi=4"), None); d0 = next((r for r in R["sensitivity"] if r["setting"] == "default"), None)
+    if dvt and d0:
+        findings.append(f"Taxi surrogate dependence (H_chase only, target): escape gain {d0['target (Exocoetus-like)|chase|gain']:.2f} with an 8 m/s taxi gain vs {dvt['target (Exocoetus-like)|chase|gain']:.2f} with 4 m/s; the taxi gain is a kinematic assumption, not a solved force balance.")
     findings.append(f"Energy: at 10 attacks/day the launch cost lower bound is {100*R['energy']['launch_metabolic_frac_of_daily_RMR'][-1]:.0f}% of the assumed daily routine budget (taxi drag excluded).")
     m = common_fields(d, "eco-escape-ecology", "Glide as predator escape: when does leaving the water pay? (model)", ["ecological", "organism"], "escape.mp4",
                       "claude-eco escape/1: phenotype -> launch (taxi surrogate) -> project point-mass glide -> escape probability vs predator burst speed/endurance, aerial hazard and size",
@@ -114,7 +122,8 @@ def escape():
                                    {"name": "zero-lift control", "result": "; ".join(f"{k}: {v['ballistic_control_distance_m']:.2f} m" for k, v in ph.items())}],
               "findings": findings,
               "parameter_unknowns": [f"{k} = {v[0]} {v[1]}: {v[2]}" for k, v in R["assumptions"].items()],
-              "does_not_establish": ["actual predation rates, encounter rates or escape success of any fish", "that predators of flying fish track by vision or out-run by chase (two hypotheses, both shown)",
+              "does_not_establish": ["actual predation rates, encounter rates or escape success of any fish",
+                                     "taxiing mechanics: the speed gain is a kinematic surrogate scaled by tail asymmetry and fin support, not a force balance with water drag", "that predators of flying fish track by vision or out-run by chase (two hypotheses, both shown)",
                                      "energy budgets: the launch cost is a kinetic lower bound against an assumed routine metabolic rate", "anything about real seabird predation (aerial hazard is swept)"],
               "open_questions": ["Measured predator tracking after a prey leaves the water", "Taxi energetics and re-launch frequency"],
               "caption": "Glide as predator escape under swept predator speed, aerial hazard and size. SIMULATION, not an observation."})
@@ -130,7 +139,7 @@ def collective():
     findings = [f"Solitary (N=1) capture per attack: glide {f('glide_sync',1)['P_capture_episode']:.2f}, swim {f('swim',1)['P_capture_episode']:.2f}.",
                 f"N={N2}: P(capture per episode) glide+alarm {f('glide_sync',N2)['P_capture_episode']:.3f} +- {1.96*f('glide_sync',N2)['se']:.3f} (95%), glide independent {f('glide_indep',N2)['P_capture_episode']:.3f}, swim+alarm {f('swim_sync',N2)['P_capture_episode']:.3f}, swim {f('swim',N2)['P_capture_episode']:.3f}.",
                 f"Per-capita capture per encounter at N={N2}: glide+alarm {f('glide_sync',N2)['per_capita']:.4f} vs solitary glider {f('glide_sync',1)['per_capita']:.3f} ({f('glide_sync',1)['per_capita']/max(f('glide_sync',N2)['per_capita'],1e-9):.0f}x lower); glide independent {f('glide_indep',N2)['per_capita']:.4f}; swim {f('swim',N2)['per_capita']:.4f} (dilution alone).",
-                "In this model, synchronised emergence (alarm cascade) lowers whole-school capture for gliders but not for slow swimmers: the alarm only helps if it triggers an escape that takes the target out of reach.",
+                "In this model, the alarm cascade helps any prey whose escape takes it out of the predator's reach: it lowers whole-school capture for gliders (launch at 10-18 m/s) but not for swimmers at the default 1.7 m/s flee speed. It is a speed-of-escape effect; gliding is one way to get that speed (see the U_flee = 10 m/s row).",
                 ]
     S = R.get("sensitivity", [])
     if S:
@@ -154,8 +163,10 @@ def collective():
                                    {"name": "binomial standard errors", "result": "every P has se = sqrt(P(1-P)/B) recorded in results.json"},
                                    {"name": "school connectivity", "result": "every generated school is connected on its attraction-radius graph (the generator regenerates fragmented ones). An earlier run whose generator fragmented 35% of N=32 and 83% of N=64 schools was found by inspecting the video and DISCARDED; no number from it is used."}],
               "findings": findings,
-              "parameter_unknowns": [f"{k} = {v[0]} {v[1]}: {v[2]}" for k, v in R["abm_assumptions"].items()],
-              "does_not_establish": ["that real flying-fish schools emerge synchronously or transmit alarms", "rigid-body or hydrodynamic interactions between launching fish (claude-organ's layer)",
+              "parameter_unknowns": [f"{k} = {v[0]} {v[1]}: {v[2]}" for k, v in R["abm_assumptions"].items()] + [f"{k} = {v[0]} {v[1]}: {v[2]}" for k, v in R["shared_assumptions"].items() if k in ("U_burst", "t_burst", "U_sus", "d_vis", "V_exit", "dV_taxi")],
+              "does_not_establish": ["that real flying-fish schools emerge synchronously or transmit alarms",
+                                     "that gliding is uniquely required for the alarm benefit: swimmers fleeing at 10 m/s get it too in this model",
+                                     "costs of the alarm cascade (false alarms, energy of needless launches)", "rigid-body or hydrodynamic interactions between launching fish (claude-organ's layer)",
                                      "encounter-rate scaling with school size (alpha is swept, not estimated)", "confusion strengths for any real predator (Landeau & Terborgh form only)",
                                      "any 3-D effect: the ABM is 2-D top view; airborne fish are represented by their ground track"],
               "open_questions": ["Field video of school emergence timing", "Does claude-organ's collective-launch physics change per-fish airborne distance when launches are simultaneous?"],

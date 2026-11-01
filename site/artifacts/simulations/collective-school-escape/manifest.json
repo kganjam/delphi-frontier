@@ -95,6 +95,7 @@
    "CL rule n_trim 1.5 sweep",
    "weakest-step selection coefficient reported with the Ne needed for selection to beat drift"
   ],
+  "round_2": "gemini-4-argon referee pass on the final findings (~16:45Z): restated the collective alarm finding as a speed-of-escape effect (fast swimmers get it too), listed predator-speed parameters in the collective manifest, computed (not asserted) the A range of the walk endpoints, added the dV_taxi sensitivity and the gain at maximum aerial hazard to the escape findings, and added V_exit invariance and the kinematic taxi surrogate to does_not_establish",
   "not_changed": [
    "ground effect is still omitted (stated as a limitation: it would lengthen glides of low fliers)",
    "body-shape (length-weight a) is not an evolving trait; both FishBase values are run",
@@ -126,7 +127,7 @@
   "Solitary (N=1) capture per attack: glide 0.69, swim 0.99.",
   "N=16: P(capture per episode) glide+alarm 0.133 +- 0.027 (95%), glide independent 0.773, swim+alarm 0.953, swim 0.882.",
   "Per-capita capture per encounter at N=16: glide+alarm 0.0083 vs solitary glider 0.692 (83x lower); glide independent 0.0483; swim 0.0551 (dilution alone).",
-  "In this model, synchronised emergence (alarm cascade) lowers whole-school capture for gliders but not for slow swimmers: the alarm only helps if it triggers an escape that takes the target out of reach.",
+  "In this model, the alarm cascade helps any prey whose escape takes it out of the predator's reach: it lowers whole-school capture for gliders (launch at 10-18 m/s) but not for swimmers at the default 1.7 m/s flee speed. It is a speed-of-escape effect; gliding is one way to get that speed (see the U_flee = 10 m/s row).",
   "Sensitivity (15 one-at-a-time settings, N = 1, 8, 32, B = 300): glide + alarm has lower whole-school capture than glide-independent at N = 32 in 15 of 15; per-capita capture of a glider in a school of 32 is below a solitary glider's in 15 of 15. With no confusion effect (kappa = 0) glide + alarm still drops from 0.68 (N = 1) to 0.50 (N = 32) while glide-independent rises to 0.92. If swimmers could flee at 10 m/s (= the launch exit speed), the alarm helps them too: swim + alarm 0.59 -> 0.03.",
   "Per unit time, if encounters scale with school size (alpha = 1, no dilution), risk relative to a solitary fish at N = 32 is: glide_sync 0.26, glide_indep 1.16, swim_sync 0.98, swim 0.83 (alpha = 0 and 0.5 in results.json).",
   "Episodes per estimate (B): main:1,2,4,8,16,32 B=600; main:64 B=300; sensitivity B=300. The N=64 shard at B=600 was stopped by the 1800 s process cap (exit 143, no result) and rerun at B=300."
@@ -155,10 +156,18 @@
   "kappa_air = 0.2 1: ASSUMPTION confusion from simultaneous airborne fish",
   "r_view = 8.0 m: ASSUMPTION predator view radius for retargeting / aerial confusion",
   "T_max = 12.0 s: episode cap",
-  "dt = 0.02 s: time step"
+  "dt = 0.02 s: time step",
+  "V_exit = 10.0 m/s: water-exit speed, same for all phenotypes; Fish 1990 citing Shoulejkin gives ~10 m/s before taxiing (secondary)",
+  "dV_taxi = 8.0 m/s: max taxi speed gain at full asymmetry and full aerodynamic support; 10 -> 18 m/s midpoint of Fish 1990/Shoulejkin 16-20",
+  "U_burst = 10.0 m/s: predator burst speed; inside FishBase Thunnus albacares burst rows 5.21-20.46 m/s",
+  "t_burst = 2.0 s: predator burst endurance; assumption",
+  "U_sus = 0.56 m/s: predator sustained speed; FishBase Coryphaena hippurus sustained row",
+  "d_vis = 20.0 m: H_vis: distance scale over which an airborne excursion breaks visual tracking (inf = off); assumption"
  ],
  "does_not_establish": [
   "that real flying-fish schools emerge synchronously or transmit alarms",
+  "that gliding is uniquely required for the alarm benefit: swimmers fleeing at 10 m/s get it too in this model",
+  "costs of the alarm cascade (false alarms, energy of needless launches)",
   "rigid-body or hydrodynamic interactions between launching fish (claude-organ's layer)",
   "encounter-rate scaling with school size (alpha is swept, not estimated)",
   "confusion strengths for any real predator (Landeau & Terborgh form only)",
