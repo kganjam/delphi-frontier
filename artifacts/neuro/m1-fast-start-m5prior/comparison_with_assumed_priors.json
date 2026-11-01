@@ -1,0 +1,45 @@
+{
+ "note": "Same seed and code; only theta_thr_deg and lat_M_ms priors differ (from M5/J3). Simulated.",
+ "comparison": {
+  "P_caught": {
+   "baseline_assumed_priors": 0.7327,
+   "m5_priors": 0.5372
+  },
+  "P_emerge": {
+   "baseline_assumed_priors": 0.2673,
+   "m5_priors": 0.4628
+  },
+  "U_emerge_median": {
+   "baseline_assumed_priors": 3.4281042948111997,
+   "m5_priors": 3.40169317949883
+  },
+  "t_go_median_s": {
+   "baseline_assumed_priors": 0.5879784206568541,
+   "m5_priors": 0.43230349531462087
+  },
+  "taxi_pes_P_takeoff": {
+   "baseline_assumed_priors": 0.01055,
+   "m5_priors": 0.0184
+  },
+  "taxi_opt_P_takeoff": {
+   "baseline_assumed_priors": 0.01185,
+   "m5_priors": 0.02065
+  }
+ },
+ "prior_overrides": {
+  "theta_thr_deg": {
+   "uniform": [
+    5.53,
+    18.56
+   ],
+   "basis": "M5 (J3, claude-neuro-j3-m5-mcell-a2) kappa-encoder sets meeting C1-C3: response angle 5-95% range; lower tail floored by 5 deg onset; simulated"
+  },
+  "lat_M_ms": {
+   "uniform": [
+    5.0,
+    10.0
+   ],
+   "basis": "M5 motor delay range after the M-cell spike (domenici_blake1997 recalled); M5 places the threshold at the angle at spike time"
+  }
+ }
+}

@@ -1,0 +1,419 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "m1-fast-start-m5prior",
+ "prior_overrides": {
+  "theta_thr_deg": {
+   "uniform": [
+    5.53,
+    18.56
+   ],
+   "basis": "M5 (J3, claude-neuro-j3-m5-mcell-a2) kappa-encoder sets meeting C1-C3: response angle 5-95% range; lower tail floored by 5 deg onset; simulated"
+  },
+  "lat_M_ms": {
+   "uniform": [
+    5.0,
+    10.0
+   ],
+   "basis": "M5 motor delay range after the M-cell spike (domenici_blake1997 recalled); M5 places the threshold at the angle at spike time"
+  }
+ },
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Mauthner-triggered C-start escape to surface emergence, taxi and glide release (Monte Carlo over sourced priors)",
+ "feeds": "engineering/simulation/glide.py integrate() with the glide-fixed-launch organism polar: a launch-speed distribution in place of the assumed fixed V0 = 12 m/s",
+ "command": "python -m engineering.neuro.fast_start --seed 20261101 --n 20000 --override /work/repo/override.json --rid m1-fast-start-m5prior",
+ "seed": 20261101,
+ "git_head_at_run": null,
+ "ran": {
+  "utc": "2026-11-01T16:37:59Z",
+  "seattle": null
+ },
+ "elapsed_s": 180.68472743034363,
+ "env": {
+  "python": "3.13.18",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "matplotlib": "3.10.8",
+  "platform": "Linux-6.11.0-1016-nvidia-x86_64-with-glibc2.41",
+  "OMP_NUM_THREADS": "1"
+ },
+ "code_sha256": {
+  "engineering/neuro/caudal_cpg.py": "02ce0ab2410d6f336236d27c0379ee2ae5aa31d9b486094ef0e8c1af943a5f46",
+  "engineering/neuro/common.py": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+  "engineering/neuro/fast_start.py": "7680e920eebde777b48c471dba0e08fc8ad3af3201ae2bc061bd15db488ba8de",
+  "engineering/neuro/sources.json": "89c5e364160b5e01daf8b1b99157c6bf9cc31cb96407f99a6797852b3604d455",
+  "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7"
+ },
+ "inputs": {
+  "engineering/simulation/video/manifest.json": {
+   "sha256": "e91add0f47f44ed35deb60fae47d7e2fd803b27e5f0f9078eba316ff01e74942",
+   "bytes": 3325
+  },
+  "engineering/simulation/glide.py": {
+   "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "bytes": 4371
+  },
+  "engineering/behavior/model.py": {
+   "sha256": "25729db211570bf91fc0d676c527f300e104cb45b53fc9b39a73560d00e68dce",
+   "bytes": 8552
+  }
+ },
+ "priors": {
+  "p_resp": {
+   "uniform": [
+    0.7,
+    0.91
+   ],
+   "basis": "preuss2006 abstract_verified"
+  },
+  "theta_thr_deg": {
+   "uniform": [
+    5.53,
+    18.56
+   ],
+   "basis": "M5 (J3, claude-neuro-j3-m5-mcell-a2) kappa-encoder sets meeting C1-C3: response angle 5-95% range; lower tail floored by 5 deg onset; simulated"
+  },
+  "u_pred_ms": {
+   "uniform": [
+    2,
+    6
+   ],
+   "basis": "assumption: pursuit speed of a pelagic predator"
+  },
+  "D_pred_m": {
+   "uniform": [
+    0.1,
+    0.3
+   ],
+   "basis": "assumption: predator frontal size"
+  },
+  "r0_m": {
+   "uniform": [
+    1.5,
+    4.0
+   ],
+   "basis": "assumption: predator distance at looming onset"
+  },
+  "e_pred_deg": {
+   "uniform": [
+    -150,
+    -30
+   ],
+   "basis": "assumption: threat elevation, from below"
+  },
+  "lat_M_ms": {
+   "uniform": [
+    5.0,
+    10.0
+   ],
+   "basis": "M5 motor delay range after the M-cell spike (domenici_blake1997 recalled); M5 places the threshold at the angle at spike time"
+  },
+  "t_stage1_ms": {
+   "uniform": [
+    15,
+    35
+   ],
+   "basis": "domenici_blake1997 recalled_not_reread (scaled for ~17 cm)"
+  },
+  "omega_max_deg_s": {
+   "uniform": [
+    1500,
+    5000
+   ],
+   "basis": "domenici_blake1997 recalled_not_reread (wide)"
+  },
+  "p_away": {
+   "uniform": [
+    0.5,
+    0.9
+   ],
+   "basis": "domenici2011 abstract_verified"
+  },
+  "gamma_cs_deg": {
+   "uniform": [
+    -10,
+    30
+   ],
+   "basis": "assumption: vertical component of the C-start escape path"
+  },
+  "dU_cstart_BL_s": {
+   "uniform": [
+    5,
+    15
+   ],
+   "basis": "assumption informed by fast-start reviews (recalled); stage-2 speed jump"
+  },
+  "d0_m": {
+   "uniform": [
+    0.3,
+    2.0
+   ],
+   "basis": "assumption: starting depth of an epipelagic fish"
+  },
+  "u0_ms": {
+   "uniform": [
+    0.3,
+    1.0
+   ],
+   "basis": "assumption: cruise speed before stimulus"
+  },
+  "gamma_star_deg": {
+   "uniform": [
+    20,
+    45
+   ],
+   "basis": "assumption bracketing park_choi2010 30-35 deg emergence attack angle"
+  },
+  "q_max_deg_s": {
+   "uniform": [
+    200,
+    800
+   ],
+   "basis": "assumption: burst pitch-rate cap"
+  },
+  "f_burst_Hz": {
+   "uniform": [
+    20,
+    60
+   ],
+   "basis": "assumption; upper end from edgerton_breder1941 taxi range (recalled)"
+  },
+  "f_m_Hz": {
+   "uniform": [
+    20,
+    70
+   ],
+   "basis": "wardle1975 recalled (form assumed); same range as M2 sweep"
+  },
+  "H_over_L": {
+   "uniform": [
+    0.08,
+    0.15
+   ],
+   "basis": "assumption, M2 range"
+  },
+  "lam_over_L": {
+   "uniform": [
+    0.8,
+    1.2
+   ],
+   "basis": "assumption, M2 range"
+  },
+  "k_swim": {
+   "uniform": [
+    1.0,
+    3.0
+   ],
+   "basis": "assumption, M2 range"
+  },
+  "P_musc_W_per_kg": {
+   "uniform": [
+    50,
+    250
+   ],
+   "basis": "assumption: burst white-muscle mechanical power per kg muscle, order of magnitude recalled; thrust <= eta P / U"
+  },
+  "f_taxi_Hz": {
+   "uniform": [
+    30,
+    70
+   ],
+   "basis": "edgerton_breder1941 recalled_not_reread (50-70 Hz) widened"
+  },
+  "alpha_feather_deg": {
+   "uniform": [
+    6,
+    15
+   ],
+   "basis": "assumption: passive feathering limit of the taxi lobe (drives taxi thrust; reviewer flag)"
+  },
+  "wet_frac": {
+   "uniform": [
+    0.0,
+    0.1
+   ],
+   "basis": "assumption: residual wetted-hull drag fraction during taxi (reviewer flag)"
+  },
+  "T_taxi_max_s": {
+   "uniform": [
+    0.3,
+    1.5
+   ],
+   "basis": "assumption: taxi time budget"
+  }
+ },
+ "checks": [
+  {
+   "name": "control: p_resp = 0 gives zero emergences",
+   "pass": true
+  },
+  {
+   "name": "control: stationary predator -> every responder emerges",
+   "pass": true,
+   "detail": 200
+  },
+  {
+   "name": "control: dt halving changes emergence speed < 2% (max over samples emerging in both)",
+   "pass": true,
+   "detail": 0.0007542229266698274
+  },
+  {
+   "name": "control: glide feed reproduces the glide-fixed-launch nominal range 25.14 m at V0 12 m/s, h0 1 m",
+   "pass": true,
+   "detail": 25.14228700829958
+  },
+  {
+   "name": "control: vectorised lobe thrust equals M2.lobe_thrust within 0.1%",
+   "pass": true,
+   "detail": [
+    [
+     2.2068682708965253,
+     2.930332888602797
+    ],
+    [
+     2.206872451186129,
+     2.9303546792871646
+    ]
+   ]
+  }
+ ],
+ "all_checks_pass": true,
+ "summary": {
+  "n": 20000,
+  "P_respond": 0.8857,
+  "P_caught": 0.5372,
+  "P_emerge": 0.4628,
+  "V_stall_ms": 10.819320735405796,
+  "t_go_s": {
+   "q5": 0.05966551310050035,
+   "q25": 0.26694238697734063,
+   "q50": 0.43230349531462087,
+   "q75": 0.6326265705336513,
+   "q95": 1.0373741976896111,
+   "n": 17714
+  },
+  "U_emerge_ms": {
+   "q5": 2.4767884425109554,
+   "q25": 2.9997245413893667,
+   "q50": 3.40169317949883,
+   "q75": 3.807600141415092,
+   "q95": 4.438587523274379,
+   "n": 9256
+  },
+  "gamma_emerge_deg": {
+   "q5": 21.468826070365182,
+   "q25": 27.02166310891234,
+   "q50": 33.28076891155132,
+   "q75": 39.3243635167219,
+   "q95": 43.94127510976629,
+   "n": 9256
+  },
+  "t_emerge_s": {
+   "q5": 0.5021056582990785,
+   "q25": 0.8507138029638386,
+   "q50": 1.17445686125751,
+   "q75": 1.548238586692986,
+   "q95": 2.1233782733989246,
+   "n": 9256
+  },
+  "power_to_hold_10ms_submerged_W_per_kg_muscle": {
+   "k_swim=1.0": 1624.7869165379159,
+   "k_swim=2.0": 3249.5738330758318,
+   "k_swim=3.0": 4874.360749613747
+  },
+  "direct_launch_from_emergence": {
+   "glide_range_m": {
+    "q5": 0.07877585692532907,
+    "q25": 0.8343017901892444,
+    "q50": 1.163945516277264,
+    "q75": 1.4706119690248056,
+    "q95": 2.0038809475648653,
+    "n": 9256
+   },
+   "fraction_stalled_or_splashed_within_1m": 0.3556611927398444
+  },
+  "glide_feed_note": "after-taxi release at h0=0.1 m, gamma0=0 (continuity); h0=1 m only for comparison with glide-fixed-launch",
+  "taxi_opt": {
+   "start": "V = U_emerge",
+   "P_takeoff": 0.02065,
+   "P_takeoff_given_emerge": 0.04461970613656007,
+   "V_end_ms_all_emerged": {
+    "q5": 5.7751502708162255,
+    "q25": 7.380377053910765,
+    "q50": 8.741598730664265,
+    "q75": 10.037135007433658,
+    "q95": 11.779932645166959,
+    "n": 9256
+   },
+   "taxi_time_s_takeoff": {
+    "q5": 0.8300000000000006,
+    "q25": 0.9420000000000007,
+    "q50": 1.0560000000000007,
+    "q75": 1.1940000000000008,
+    "q95": 1.360000000000001,
+    "n": 413
+   },
+   "glide_range_m_h0_0.1": {
+    "q5": 16.585822458460544,
+    "q25": 16.611378335506267,
+    "q50": 16.63681262627363,
+    "q75": 16.67338762455716,
+    "q95": 16.721753239603004,
+    "n": 413
+   },
+   "glide_range_m_h0_1.0_comparison": {
+    "q5": 24.004453060198305,
+    "q25": 24.020761788258184,
+    "q50": 24.03699704542127,
+    "q75": 24.060353469090778,
+    "q95": 24.091237854787515,
+    "n": 413
+   }
+  },
+  "taxi_pes": {
+   "start": "V = U_emerge cos(gamma_emerge)",
+   "P_takeoff": 0.0184,
+   "P_takeoff_given_emerge": 0.03975799481417459,
+   "V_end_ms_all_emerged": {
+    "q5": 5.54078853627105,
+    "q25": 7.190473516714688,
+    "q50": 8.580917466954688,
+    "q75": 9.935892657310639,
+    "q95": 11.67327494547974,
+    "n": 9256
+   },
+   "taxi_time_s_takeoff": {
+    "q5": 0.8547000000000007,
+    "q25": 0.9655000000000007,
+    "q50": 1.0940000000000007,
+    "q75": 1.229000000000001,
+    "q95": 1.3818000000000008,
+    "n": 368
+   },
+   "glide_range_m_h0_0.1": {
+    "q5": 16.586832530035615,
+    "q25": 16.611738324947297,
+    "q50": 16.64232482088007,
+    "q75": 16.679339018790195,
+    "q95": 16.731111847620717,
+    "n": 368
+   },
+   "glide_range_m_h0_1.0_comparison": {
+    "q5": 24.005097251806127,
+    "q25": 24.020991207913927,
+    "q50": 24.040519106017065,
+    "q75": 24.064147780606163,
+    "q95": 24.097221916558492,
+    "n": 368
+   }
+  }
+ },
+ "outputs": {
+  "figure.png": "247a72fa64a88224cc2967c871737b8a2c58e4e3954305a9c359b21728fa8e4f",
+  "results.json": "52a8f9d1e855b73130fa5f2253b6d15cc2b03150e2d8fa47fd7812a97756ef31"
+ }
+}

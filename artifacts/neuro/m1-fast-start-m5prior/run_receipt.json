@@ -1,0 +1,11 @@
+{
+ "command": "python3 -V; OMP_NUM_THREADS=1 MPLBACKEND=Agg python3 -m engineering.neuro.fast_start --seed 20261101 --n 20000 --override /work/repo/override.json --rid m1-fast-start-m5prior; cp -r artifacts/neuro/m1-fast-start-m5prior /work/out/",
+ "python_module": "engineering.neuro.fast_start",
+ "exit_code": 0,
+ "where": "Nebius AI job claude-neuro-j5-m1-m5prior-a1 (aijob-e00fagxg3pxt91x7h4)",
+ "platform": "cpu-d3 4vcpu-16gb",
+ "archive_sha256": "817e54c0d11de4ac4e39b1fc5d70a9b7e6ec0461ead98e5046997ee56a71b476",
+ "collected_utc": "2026-11-01T16:38:46Z",
+ "manifest_sha256": "e6911ff40c9a7a218bad7114a4fd93abbd74e8c7895604bacdcaf593ff484fa1",
+ "collection_receipt": "artifacts/neuro/jobs/claude-neuro-j5-m1-m5prior-a1/collected/collection_receipt.json"
+}
