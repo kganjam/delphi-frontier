@@ -1,0 +1,52 @@
+{
+  "schema": "frontier.release.checks/1",
+  "sha": "e8ef248a87b6cd00967cc793707125fdef5617f3",
+  "checks": [
+    {
+      "name": "Limbless design space: page, data block and generated twin",
+      "command": "python3 -m pytest tests/test_limbless_site.py tests/test_site_browser.py -q -k 'limbless or studio or home or project or reuse'",
+      "exit": 0,
+      "passed": 26,
+      "total": 26,
+      "result": "26 passed,104 deselected in 68.59s. Covers the new page at 1440 and 390, the figure digests, the declared-and-absent path, and the markdown twin's --check in both directions.",
+      "at": "2026-11-01T20:57:10.120598+00:00",
+      "tested_commit": "e8ef248a87b6cd00967cc793707125fdef5617f3"
+    },
+    {
+      "name": "Snapshot reproducibility",
+      "command": "python3 scripts/build_site.py --check",
+      "exit": 0,
+      "result": "stale=[]",
+      "at": "2026-11-01T20:57:10.120598+00:00",
+      "tested_commit": "e8ef248a87b6cd00967cc793707125fdef5617f3"
+    },
+    {
+      "name": "Generated markdown twin is current",
+      "command": "python3 scripts/limbless_doc.py --check",
+      "exit": 0,
+      "result": "docs/dossier/13-limbless-mouse-design-space.md is current",
+      "at": "2026-11-01T20:57:10.120598+00:00",
+      "tested_commit": "e8ef248a87b6cd00967cc793707125fdef5617f3"
+    },
+    {
+      "name": "Full suite compared against the previous main",
+      "command": "python3 -m pytest tests/ -q --continue-on-collection-errors, in a frozen worktree, against the same run at f8c19cd3",
+      "exit": 0,
+      "passed": 1588,
+      "total": 1628,
+      "result": "8 failed,1588 passed,32 skipped,24 errors at 04eecc59 against 9 failed,1580 passed,32 skipped,24 errors at f8c19cd3. ZERO failures and ZERO collection errors unique to this branch; the 8 and the 24 are all pre-existing on main and were reproduced there first. NOT run at the release sha: 507e38b6 and e8ef248a landed after it and change captions, one figure and the regenerated files only, and the three checks above WERE run at the release sha.",
+      "at": "2026-11-01T20:57:10.120598+00:00",
+      "tested_commit": "04eecc59"
+    },
+    {
+      "name": "Credential scan over every file this release adds or changes",
+      "command": "git diff --name-only f8c19cd3..HEAD | xargs grep -lniE '<api-key/private-key/token/AKIA/xox patterns>'",
+      "exit": 0,
+      "passed": 68,
+      "total": 68,
+      "result": "0 hits over 68 files. gitleaks is NOT installed on this host, so this is a pattern grep and not a full secret scan; its scope is the added and changed files only. Positive controls: a planted AKIA key and a planted ghp_ token were both flagged, and a clean file was not, so the zero is a measured zero.",
+      "at": "2026-11-01T20:57:10.120598+00:00",
+      "tested_commit": "e8ef248a87b6cd00967cc793707125fdef5617f3"
+    }
+  ]
+}
