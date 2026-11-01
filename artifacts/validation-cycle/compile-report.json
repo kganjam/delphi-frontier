@@ -1,0 +1,512 @@
+{
+  "compile": {
+    "assembly_unresolved_interfaces": [
+      {
+        "interface": "I1",
+        "needs": "calibrated transfer for species=not established: a design candidate, not an organism, tissue=fin ray modelled as a constant-EI cantilever (assumed), cell_state=not applicable to the mechanical slice, life_stage=not established, condition=static end load, small deflection, allele=none: no sequence is claimed, construct_context=none: the sequence reference is unresolved",
+        "state": "unknown",
+        "text": "DNA to expression in the stated cell state"
+      },
+      {
+        "interface": "I2",
+        "needs": "calibrated transfer for species=not established: a design candidate, not an organism, tissue=fin ray modelled as a constant-EI cantilever (assumed), cell_state=not applicable to the mechanical slice, life_stage=not established, condition=static end load, small deflection, allele=none: no sequence is claimed, construct_context=none: the sequence reference is unresolved",
+        "state": "unknown",
+        "text": "expression to growth/material (conductance, proliferation, deposition)"
+      },
+      {
+        "interface": "I3",
+        "needs": "calibrated transfer for species=not established: a design candidate, not an organism, tissue=fin ray modelled as a constant-EI cantilever (assumed), cell_state=not applicable to the mechanical slice, life_stage=not established, condition=static end load, small deflection, allele=none: no sequence is claimed, construct_context=none: the sequence reference is unresolved",
+        "state": "unknown",
+        "text": "growth/material to ray geometry and stiffness EI"
+      },
+      {
+        "interface": "I4",
+        "needs": "calibrated transfer for species=not established: a design candidate, not an organism, tissue=fin ray modelled as a constant-EI cantilever (assumed), cell_state=not applicable to the mechanical slice, life_stage=not established, condition=static end load, small deflection, allele=none: no sequence is claimed, construct_context=none: the sequence reference is unresolved",
+        "state": "unknown",
+        "text": "fin shape and deformation to aerodynamic performance"
+      },
+      {
+        "interface": "I5",
+        "needs": "calibrated transfer for species=not established: a design candidate, not an organism, tissue=fin ray modelled as a constant-EI cantilever (assumed), cell_state=not applicable to the mechanical slice, life_stage=not established, condition=static end load, small deflection, allele=none: no sequence is claimed, construct_context=none: the sequence reference is unresolved",
+        "state": "unknown",
+        "text": "simulated performance to organism behaviour and control"
+      }
+    ],
+    "build_plan_proposal_refs": [],
+    "candidate_sequence_artifact_refs": [],
+    "claim": "working_assembly",
+    "context": {
+      "allele": "none: no sequence is claimed",
+      "cell_state": "not applicable to the mechanical slice",
+      "condition": "static end load, small deflection",
+      "construct_context": "none: the sequence reference is unresolved",
+      "life_stage": "not established",
+      "species": "not established: a design candidate, not an organism",
+      "tissue": "fin ray modelled as a constant-EI cantilever (assumed)"
+    },
+    "design_id": "validation-cycle-fish3d-v3a",
+    "function_assurance": {
+      "interfaces_calibrated": false,
+      "level": "none",
+      "validation_all_required_pass": false
+    },
+    "interface_assessment": [],
+    "interface_state": {
+      "I1": "unknown",
+      "I2": "unknown",
+      "I3": "unknown",
+      "I4": "unknown",
+      "I5": "unknown"
+    },
+    "ledger": null,
+    "ledger_entries_consumed": [],
+    "must_not_say": [
+      "a working genome or construct was designed",
+      "homology or a marker shows a function transfers to this organism",
+      "an unresolved interface is a violated constraint",
+      "a calibration measured in one context holds in another"
+    ],
+    "proposal_eligibility": {
+      "eligible": true,
+      "reasons": []
+    },
+    "reasons": [
+      "required interfaces are not calibrated for this context: I1, I2, I3, I4, I5",
+      "required validation checks have not passed: vp-mech-end-loaded-cantilever:c-reused-receipt=not_applicable, vp-bio-bridge-growth-to-EI:c-growth-to-EI=missing, vp-seq-functional-readout:c-functional-readout=missing"
+    ],
+    "rejected_sequence_candidates": [],
+    "schema": "frontier.biodesign.genotype-report/1",
+    "scope": "evidence bookkeeping only; no DNA was generated, nothing was ordered or run, and no biological claim follows from this verdict",
+    "sequences_without_artifact": [],
+    "validation": {
+      "all_required_pass": false,
+      "attached": true,
+      "plans": [
+        {
+          "all_required_pass": true,
+          "candidate_id": "fish3d-v3a",
+          "candidate_sequence_sha256": null,
+          "checks": [
+            {
+              "endpoint": true,
+              "executable": true,
+              "id": "c-fem-vs-analytic",
+              "interface": null,
+              "licenses": "the end-loaded FEM equals the closed form at this point, inside the small-deflection domain",
+              "reason": null,
+              "ref": {
+                "path": "artifacts/validation-cycle/results/res-c-fem-vs-analytic.json",
+                "sha256": "dfafb72ce1e7885dffc1ea7d8b004f6a12ddfbadbc322bb186d84a227c7b6912"
+              },
+              "scope": "the declared point only (EI = 2 x the end-loaded critical value, assumed)",
+              "status": "pass",
+              "validator": {
+                "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+                "identity": "validation-cycle replay (this module)",
+                "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+              }
+            },
+            {
+              "endpoint": false,
+              "executable": true,
+              "id": "c-negative-controls",
+              "interface": null,
+              "licenses": "the slice refuses the wrong law, the wrong unit, the wrong load case and a domain exit",
+              "reason": null,
+              "ref": {
+                "path": "artifacts/validation-cycle/results/res-c-negative-controls.json",
+                "sha256": "b637e335f77695078c1dbcff45ee5a325061c9dbd4dbfb26f2aa984a5b8f558a"
+              },
+              "scope": "law, unit, load-case and domain controls for this slice; the gate refuses offered inputs, it does not validate the producer receipt",
+              "status": "pass",
+              "validator": {
+                "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+                "identity": "validation-cycle replay (this module)",
+                "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+              }
+            },
+            {
+              "endpoint": false,
+              "executable": true,
+              "id": "c-virtual-V1",
+              "interface": null,
+              "licenses": "V1-saved-deflection-section@1 on this saved section",
+              "reason": null,
+              "ref": {
+                "path": "artifacts/validation-cycle/results/res-c-virtual-V1.json",
+                "sha256": "138fb9f1151775e6f820b43c3da68c2ea99932589de701a27c2513a1e606558a"
+              },
+              "scope": "one saved simulated case; not a biological replicate",
+              "status": "pass",
+              "validator": {
+                "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+                "identity": "validation-cycle replay (this module)",
+                "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+              }
+            },
+            {
+              "endpoint": false,
+              "executable": true,
+              "id": "c-virtual-V2",
+              "interface": null,
+              "licenses": "V2-saved-tip-and-slope@1 on this saved summary",
+              "reason": null,
+              "ref": {
+                "path": "artifacts/validation-cycle/results/res-c-virtual-V2.json",
+                "sha256": "66bd58b5aa8eaa873873d9f1db7b09f39dc1e1dbb229327f4c6460649b191ef9"
+              },
+              "scope": "one saved simulated case; not a biological replicate",
+              "status": "pass",
+              "validator": {
+                "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+                "identity": "validation-cycle replay (this module)",
+                "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+              }
+            },
+            {
+              "endpoint": false,
+              "executable": false,
+              "id": "c-reused-receipt",
+              "interface": null,
+              "licenses": null,
+              "reason": "the pinned receipt records 3 analytic positive controls and no cantilever negative case; kept as pinned context for the executed checks, not as an acceptance check",
+              "ref": {
+                "path": "artifacts/validation-cycle/results/res-c-reused-receipt.json",
+                "sha256": "5dabecc335bddabc021037769ec578c65bc1f4f07c0c00b255968a36b1017ce5"
+              },
+              "scope": "the pinned receipt only; not rerun here",
+              "status": "not_applicable",
+              "validator": {
+                "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+                "identity": "validation-cycle replay (this module)",
+                "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+              }
+            }
+          ],
+          "counts": {
+            "blocked": 0,
+            "fail": 0,
+            "missing": 0,
+            "not_applicable": 1,
+            "not_run": 0,
+            "pass": 4,
+            "stale": 0
+          },
+          "decision": "whether the mechanical slice of the assembly may be used as a numerical stand-in; never whether the fin or animal works",
+          "endpoint": "end-loaded cantilever tip deflection and slope at the declared point, small-deflection domain",
+          "licenses": [
+            "the end-loaded FEM equals the closed form at this point, inside the small-deflection domain",
+            "the slice refuses the wrong law, the wrong unit, the wrong load case and a domain exit",
+            "V1-saved-deflection-section@1 on this saved section",
+            "V2-saved-tip-and-slope@1 on this saved summary"
+          ],
+          "plan_id": "vp-mech-end-loaded-cantilever",
+          "ref": {
+            "path": "artifacts/validation-cycle/plans/plan-vp-mech-end-loaded-cantilever.json",
+            "sha256": "6875455358c2dbaa3e845c3eca80447943744e0a56784144a4c1dcf8804dd76d"
+          },
+          "version": 2
+        },
+        {
+          "all_required_pass": false,
+          "candidate_id": "fish3d-v3a",
+          "candidate_sequence_sha256": null,
+          "checks": [
+            {
+              "endpoint": true,
+              "executable": false,
+              "id": "c-growth-to-EI",
+              "interface": "I3",
+              "reason": "no result is recorded for this required check (a missing check is not a pass and is not a failure)",
+              "status": "missing"
+            }
+          ],
+          "counts": {
+            "blocked": 0,
+            "fail": 0,
+            "missing": 1,
+            "not_applicable": 0,
+            "not_run": 0,
+            "pass": 0,
+            "stale": 0
+          },
+          "decision": "whether any functional claim may be made",
+          "endpoint": "calibrated EI of the candidate's rays in the stated tissue and stage",
+          "licenses": [],
+          "plan_id": "vp-bio-bridge-growth-to-EI",
+          "ref": {
+            "path": "artifacts/validation-cycle/plans/plan-vp-bio-bridge-growth-to-EI.json",
+            "sha256": "66c012c88c34e5502ec3e9df14c097ace2bbc87f9b6bef7ba76e7d6f3aa1a0bc"
+          },
+          "version": 2
+        },
+        {
+          "all_required_pass": false,
+          "candidate_id": "fish3d-v3a",
+          "candidate_sequence_sha256": null,
+          "checks": [
+            {
+              "endpoint": true,
+              "executable": false,
+              "id": "c-functional-readout",
+              "interface": "I1",
+              "reason": "no result is recorded for this required check (a missing check is not a pass and is not a failure)",
+              "status": "missing"
+            }
+          ],
+          "counts": {
+            "blocked": 0,
+            "fail": 0,
+            "missing": 1,
+            "not_applicable": 0,
+            "not_run": 0,
+            "pass": 0,
+            "stale": 0
+          },
+          "decision": "whether any functional claim may be made",
+          "endpoint": "matched functional readout of the exact tested sequence in the stated context",
+          "licenses": [],
+          "plan_id": "vp-seq-functional-readout",
+          "ref": {
+            "path": "artifacts/validation-cycle/plans/plan-vp-seq-functional-readout.json",
+            "sha256": "b736ceb4756b5d738c87641e159109fc4d9c07e1974a5c5db9e728c022bcd659"
+          },
+          "version": 2
+        }
+      ]
+    },
+    "validation_tests": [],
+    "verdict": "rejected"
+  },
+  "inverse": {
+    "added_sequences": 0,
+    "blocked_interfaces": [
+      {
+        "interface": "I1",
+        "needs": [
+          {
+            "note": "no experiment for this interface is recorded in the design-control map"
+          }
+        ],
+        "state": "unknown",
+        "why": "not a calibrated transfer for this context: the forward edge cannot be inverted, so no candidate can be endorsed"
+      },
+      {
+        "interface": "I2",
+        "needs": [
+          {
+            "closes": [
+              "expression-to-conductance (first step only)"
+            ],
+            "id": "wp-reg-sample-identity",
+            "kind": "computational-metadata",
+            "status": "proposed-not-executed",
+            "title": "Resolve GSE261907 barcode and replicate pairing from small metadata files"
+          }
+        ],
+        "state": "unknown",
+        "why": "not a calibrated transfer for this context: the forward edge cannot be inverted, so no candidate can be endorsed"
+      },
+      {
+        "interface": "I3",
+        "needs": [
+          {
+            "closes": [
+              "tissue-to-EI"
+            ],
+            "id": "wp-fin-EI-load",
+            "kind": "physical-measurement",
+            "status": "proposed-not-executed",
+            "title": "Measure EI(x) under target clamping and the load field"
+          }
+        ],
+        "state": "unknown",
+        "why": "not a calibrated transfer for this context: the forward edge cannot be inverted, so no candidate can be endorsed"
+      }
+    ],
+    "context": {
+      "allele": "none: no sequence is claimed",
+      "cell_state": "not applicable to the mechanical slice",
+      "condition": "static end load, small deflection",
+      "construct_context": "none: the sequence reference is unresolved",
+      "life_stage": "not established",
+      "species": "not established: a design candidate, not an organism",
+      "tissue": "fin ray modelled as a constant-EI cantilever (assumed)"
+    },
+    "endorsed_candidate_set": [],
+    "forward_design_problems": [],
+    "ineligible_candidates": [],
+    "interfaces_crossed": [
+      "I1",
+      "I2",
+      "I3"
+    ],
+    "problems": [],
+    "proposals": [
+      {
+        "endorsed": false,
+        "flags": [
+          "ortholog or homolog: function is not interchangeable across species or contexts; it needs its own context-matched measurement",
+          "sequence unresolved (ledger:LEN-P2-positive (GRCz11 coordinates unresolved)): the candidate is a hypothesis without sequence evidence and cannot be endorsed"
+        ],
+        "id": "len-element-unresolved",
+        "not_endorsed_because": [
+          "ortholog or homolog: function is not interchangeable across species or contexts; it needs its own context-matched measurement",
+          "sequence unresolved (ledger:LEN-P2-positive (GRCz11 coordinates unresolved)): the candidate is a hypothesis without sequence evidence and cannot be endorsed",
+          "an interface on the path is not a calibrated transfer for this context"
+        ],
+        "provenance": {
+          "method": "ledger entry carried as an unresolved reference; no sequence generated",
+          "proposer": "validation-cycle",
+          "source_refs": [
+            "ledger:LEN-P2-positive"
+          ]
+        },
+        "sequence": null,
+        "sequence_unresolved": "ledger:LEN-P2-positive (GRCz11 coordinates unresolved)"
+      }
+    ],
+    "request_id": "validation-cycle-inverse",
+    "rules": [
+      "proposing a candidate and endorsing it are different: a proposal needs provenance and a sequence artifact (or an explicit unresolved reference) and asserts nothing about function",
+      "an interface that is not a calibrated transfer for the stated context is never inverted: no candidate is endorsed through it, but proposals are retained as unscreened hypotheses",
+      "endorsement needs a calibrated path to the target, passing forward checks and a validation plan whose required checks all passed",
+      "an ortholog or homolog is not interchangeable: function does not transfer across species or contexts without its own context-matched measurement",
+      "the output is a candidate set with provenance and the unresolved bridges, never a single guaranteed genome, and the compiler adds no sequence of its own"
+    ],
+    "schema": "frontier.biodesign.inverse-report/1",
+    "scope": "proposals are hypotheses with provenance; an endorsed member passed the forward checks and its validation plan for the stated context, which is not a guarantee of function; no sequence was generated here",
+    "single_genome_guaranteed": false,
+    "target_node": "shape_mechanics",
+    "unresolved_bridges": [
+      {
+        "bridges": [
+          "blueprint->cell_program"
+        ],
+        "interface": "I1"
+      },
+      {
+        "bridges": [
+          "regulatory-expression-to-channel-density-conductance",
+          "regulatory-voltage-or-transport-to-proliferation-rate",
+          "regulatory-osteoblast/fibroblast-state-to-mineral-ECM-deposition",
+          "voltage-to-gene-tissue-fin",
+          "expression->growth"
+        ],
+        "interface": "I2"
+      },
+      {
+        "bridges": [
+          "regulatory-deposition-to-ray-geometry-and-EI",
+          "fin-length-to-ray-EI",
+          "fin-stiffness-calibration",
+          "growth->EI"
+        ],
+        "interface": "I3"
+      }
+    ],
+    "verdict": "proposals_only"
+  },
+  "validation_slices_I3": {
+    "boundary": "growth/material to ray geometry and stiffness EI",
+    "context_required": [
+      "species",
+      "tissue",
+      "cell_state",
+      "life_stage",
+      "condition",
+      "allele",
+      "construct_context"
+    ],
+    "context_stated": {
+      "allele": "none: no sequence is claimed",
+      "cell_state": "not applicable to the mechanical slice",
+      "condition": "static end load, small deflection",
+      "construct_context": "none: the sequence reference is unresolved",
+      "life_stage": "not established",
+      "species": "not established: a design candidate, not an organism",
+      "tissue": "fin ray modelled as a constant-EI cantilever (assumed)"
+    },
+    "controls": [
+      "a calibration beam of known EI",
+      "the same measurement on the unmodified fin",
+      "repeat on independent fins (the replicate unit is the animal)"
+    ],
+    "decision_rule": "closes only as calibrated_transfer: a measured bound pinned in a measurement artifact, equal to the bound the design states, in a context equal to the design's on every field; homology or similarity never closes it",
+    "directions": {
+      "forward": {
+        "from": "growth_material",
+        "label": "context-conditioned effect prediction",
+        "state": "unknown",
+        "to": "shape_mechanics"
+      },
+      "inverse": {
+        "from": "shape_mechanics",
+        "invertible": false,
+        "label": "candidate proposal; endorsement only through the forward path",
+        "proposable": true,
+        "to": "growth_material",
+        "why": "the forward edge is not a calibrated transfer for any context, so no candidate can be endorsed through it"
+      }
+    },
+    "from": "growth_material",
+    "input": "the growth/material state of the fin (deposition per ray) from the previous boundary",
+    "instrument_slots": [
+      {
+        "contract_ref": {
+          "instrument_id": "R1-ray-bending",
+          "instrument_version": "1",
+          "observable": "ln(delta/F) offset removed (1)",
+          "path": "artifacts/crossscale-doe/instrument-contracts.json",
+          "pointer": "/contracts/2",
+          "sha256": "c8020b03b3f31dbe95d05a1b3b708acd4f037161e412d1aa7425e53e0a37f35b",
+          "status": "proposed_uncalibrated",
+          "unit": null
+        },
+        "kind": "physical"
+      },
+      {
+        "contract_ref": {
+          "instrument_id": "R4-length",
+          "instrument_version": "1",
+          "observable": "length (m)",
+          "path": "artifacts/crossscale-doe/instrument-contracts.json",
+          "pointer": "/contracts/5",
+          "sha256": "c8020b03b3f31dbe95d05a1b3b708acd4f037161e412d1aa7425e53e0a37f35b",
+          "status": "proposed_uncalibrated",
+          "unit": null
+        },
+        "kind": "physical"
+      },
+      {
+        "contract_ref": null,
+        "gap": "no contract exists for this boundary and kind",
+        "kind": "virtual"
+      }
+    ],
+    "invalidated_by_context_change": true,
+    "invalidated_by_dna_change": true,
+    "ledger_readouts": [],
+    "observation": "ray geometry and EI(x) under the target clamping and actuation, with the load field",
+    "recorded_bridges": [
+      "regulatory-deposition-to-ray-geometry-and-EI",
+      "fin-length-to-ray-EI",
+      "fin-stiffness-calibration",
+      "growth->EI"
+    ],
+    "recorded_experiments": [
+      {
+        "closes": [
+          "tissue-to-EI"
+        ],
+        "id": "wp-fin-EI-load",
+        "kind": "physical-measurement",
+        "status": "proposed-not-executed",
+        "title": "Measure EI(x) under target clamping and the load field"
+      }
+    ],
+    "state": "unknown",
+    "to": "shape_mechanics",
+    "what_remains_unknown": "growth to flexural rigidity has no registered mapping; the nearest registered coupling is refused"
+  }
+}

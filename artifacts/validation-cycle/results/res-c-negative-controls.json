@@ -1,0 +1,110 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "cases": {
+    "negative": 8,
+    "negative_rejected": true,
+    "positive": 2
+  },
+  "check_id": "c-negative-controls",
+  "execution": {
+    "controls": [
+      {
+        "id": "law:uniform-load law applied to an end load",
+        "intended_failure": "closed form disagrees with independent quadrature",
+        "observed_rel_residual": 0.94375,
+        "rejected": true,
+        "via": "beam.control_residuals"
+      },
+      {
+        "id": "law:L^3 -> L^2 mutation",
+        "intended_failure": "closed form disagrees with independent quadrature",
+        "observed_rel_residual": 5.666666666666667,
+        "rejected": true,
+        "via": "beam.control_residuals"
+      },
+      {
+        "expected": "ContextRefused",
+        "id": "unit:EI in N mm^2",
+        "intended_failure": "wrong unit for EI",
+        "observed": "ContextRefused",
+        "refusal": "EI: unit 'N mm^2' is not the slice's 'N m^2' (no conversion is done)",
+        "rejected": true,
+        "via": "validation_cycle.mechanical_slice"
+      },
+      {
+        "expected": "ContextRefused",
+        "id": "unit:P in kgf",
+        "intended_failure": "wrong unit for the load",
+        "observed": "ContextRefused",
+        "refusal": "P: unit 'kgf' is not the slice's 'N' (no conversion is done)",
+        "rejected": true,
+        "via": "validation_cycle.mechanical_slice"
+      },
+      {
+        "expected": "ContextRefused",
+        "id": "context:uniformly loaded claim",
+        "intended_failure": "wrong load case for the slice",
+        "observed": "ContextRefused",
+        "refusal": "load case 'uniform_pressure' is not the slice's 'end_load_at_tip' (refused: uniform_pressure, uniform_line_load, distributed)",
+        "rejected": true,
+        "via": "validation_cycle.mechanical_slice"
+      },
+      {
+        "expected": "ContextRefused",
+        "id": "context:non-finite EI",
+        "intended_failure": "value not finite",
+        "observed": "ContextRefused",
+        "refusal": "EI: needs a finite positive value",
+        "rejected": true,
+        "via": "validation_cycle.mechanical_slice"
+      },
+      {
+        "expected": "SmallDeformationViolation",
+        "id": "domain:EI below the end-loaded critical",
+        "intended_failure": "small-deformation limit exceeded",
+        "observed": "SmallDeformationViolation",
+        "refusal": "LINEAR_MODEL_INVALID_SMALL_DEFORMATION_VIOLATED: tip/L=0.2 (limit 0.1), slope=0.3 rad (limit 0.2)",
+        "rejected": true,
+        "via": "validation_cycle.mechanical_slice"
+      },
+      {
+        "expected": "SmallDeformationViolation",
+        "id": "context:uniform-load critical EI used for the end load",
+        "intended_failure": "wrong load case for the stiffness threshold",
+        "observed": "SmallDeformationViolation",
+        "refusal": "LINEAR_MODEL_INVALID_SMALL_DEFORMATION_VIOLATED: tip/L=0.1333 (limit 0.1), slope=0.2 rad (limit 0.2)",
+        "rejected": true,
+        "via": "validation_cycle.mechanical_slice"
+      }
+    ],
+    "gate_limits": [
+      "the gate compares the offered unit and load case with the slice's declared ones; a metadata mismatch refuses the offered input, it does not validate the producer's receipt",
+      "no unit conversion is done and a value mislabelled with an accepted unit passes the gate; only the numerical cross-checks can catch that"
+    ],
+    "kind": "executed",
+    "positive_controls": [
+      {
+        "id": "declared context accepted by the same path",
+        "ok": true,
+        "via": "validation_cycle.mechanical_slice"
+      },
+      {
+        "id": "correct closed form passes the quadrature test",
+        "ok": true,
+        "via": "beam.control_residuals"
+      }
+    ]
+  },
+  "licenses": "the slice refuses the wrong law, the wrong unit, the wrong load case and a domain exit",
+  "plan_id": "vp-mech-end-loaded-cantilever",
+  "plan_version": 2,
+  "reused_pin": null,
+  "schema": "frontier.validation-result/1",
+  "scope": "law, unit, load-case and domain controls for this slice; the gate refuses offered inputs, it does not validate the producer receipt",
+  "status": "pass",
+  "validator": {
+    "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+    "identity": "validation-cycle replay (this module)",
+    "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+  }
+}

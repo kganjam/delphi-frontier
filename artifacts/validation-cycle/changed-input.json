@@ -1,0 +1,62 @@
+{
+  "bytes_changed": 1,
+  "changed_input": "engineering/fin_mechanics/artifacts/result.json",
+  "mechanical_checks_status_after": {
+    "c-fem-vs-analytic": "needs_rerun",
+    "c-negative-controls": "needs_rerun",
+    "c-reused-receipt": "stale",
+    "c-virtual-V1": "needs_rerun",
+    "c-virtual-V2": "needs_rerun"
+  },
+  "pins_after": {
+    "analytic_controls": "verified",
+    "assembly": "verified",
+    "beam_code": "verified",
+    "fin_mechanics_receipt": "changed",
+    "observed_allometry_update": "verified"
+  },
+  "pins_before": {
+    "analytic_controls": "verified",
+    "assembly": "verified",
+    "beam_code": "verified",
+    "fin_mechanics_receipt": "verified",
+    "observed_allometry_update": "verified"
+  },
+  "propagation": {
+    "change": {
+      "node": "shape_mechanics"
+    },
+    "invalidated_calibrations": [],
+    "invalidated_checked_layers": [
+      "fin-mechanics-numerical"
+    ],
+    "invalidated_claims": [],
+    "invalidated_interfaces": [
+      "I4",
+      "I5"
+    ],
+    "invalidated_nodes": [
+      "shape_mechanics",
+      "performance",
+      "behavior"
+    ],
+    "retained_calibrations": [],
+    "retained_checked_layers": [
+      "regulatory-map",
+      "aero-numerical",
+      "observed-allometry-update"
+    ],
+    "retained_claims": [],
+    "retained_scope": "a retained layer check is a result for its original pinned model or geometry only; it is not a result for the changed design",
+    "unverified_checked_layers": []
+  },
+  "retained_verified": [
+    "analytic_controls",
+    "observed_allometry_update",
+    "assembly",
+    "beam_code"
+  ],
+  "stale": [
+    "fin_mechanics_receipt"
+  ]
+}

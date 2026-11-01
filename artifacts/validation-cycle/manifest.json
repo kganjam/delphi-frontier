@@ -1,0 +1,99 @@
+{
+  "code_sha256": {
+    "engineering/biodesign_compiler/genotype.py": "14d47e69283e1561447f6b52c315e3c5df4ea75069f7d8dcfbb18189cbe454cb",
+    "engineering/biodesign_compiler/validation_cycle.py": "d8af7d7d6172221032820ea2557afcae2b08ece8933f9be59381a4cdd3de4096",
+    "engineering/fin_mechanics/beam.py": "4dfceb004a2eddef9cad27f09b744710de2a8b9b7f9f9e232b756e3cb4683b5d"
+  },
+  "environment": {
+    "numpy": "2.4.4",
+    "python": "3.13.12"
+  },
+  "files": [
+    {
+      "bytes": 667,
+      "path": "artifacts/validation-cycle/all-optional.json",
+      "sha256": "87e095363b6500ef6ac41163845ceb854f7a63e824275adf46c5061d14aa61d4"
+    },
+    {
+      "bytes": 1639,
+      "path": "artifacts/validation-cycle/changed-input.json",
+      "sha256": "9cca11def808af8488e9ef638ca0eda67467c8513d43455078befc29e62e82bc"
+    },
+    {
+      "bytes": 36324,
+      "path": "artifacts/validation-cycle/check-history.json",
+      "sha256": "4b5276edd3597735bd5b43b40e1b5bea04999dfbc2a0e2e35a5e34761ec6180f"
+    },
+    {
+      "bytes": 23362,
+      "path": "artifacts/validation-cycle/compile-report.json",
+      "sha256": "9f4b747838541ce7a3320a10e9a22e22a10d5dba5cdebdee12416b0696a84ab2"
+    },
+    {
+      "bytes": 9173,
+      "path": "artifacts/validation-cycle/design.json",
+      "sha256": "48929c93ad9d1e97461e98bf4b483f5b7b53f28d10a7ff276f2629c19e1be256"
+    },
+    {
+      "bytes": 12099,
+      "path": "artifacts/validation-cycle/mechanical-evidence.json",
+      "sha256": "f5dbc18b16f683a142a6fb09bdbcef224c7f6f11f9a724c1b9266edc24e82a70"
+    },
+    {
+      "bytes": 12637,
+      "path": "artifacts/validation-cycle/next-measurement.json",
+      "sha256": "e574772a7c17888dad57c8728718c5c46fee0346f84523eabdc57bafaeda3c31"
+    },
+    {
+      "bytes": 683,
+      "path": "artifacts/validation-cycle/plans/plan-vp-bio-bridge-growth-to-EI.json",
+      "sha256": "66c012c88c34e5502ec3e9df14c097ace2bbc87f9b6bef7ba76e7d6f3aa1a0bc"
+    },
+    {
+      "bytes": 2168,
+      "path": "artifacts/validation-cycle/plans/plan-vp-mech-end-loaded-cantilever.json",
+      "sha256": "6875455358c2dbaa3e845c3eca80447943744e0a56784144a4c1dcf8804dd76d"
+    },
+    {
+      "bytes": 646,
+      "path": "artifacts/validation-cycle/plans/plan-vp-seq-functional-readout.json",
+      "sha256": "b736ceb4756b5d738c87641e159109fc4d9c07e1974a5c5db9e728c022bcd659"
+    },
+    {
+      "bytes": 6388,
+      "path": "artifacts/validation-cycle/protocol.json",
+      "sha256": "d0120cb682ac47a11fc2b4bb734f352e7efd9b49015660e587369d8f1547f729"
+    },
+    {
+      "bytes": 1177,
+      "path": "artifacts/validation-cycle/results/res-c-fem-vs-analytic.json",
+      "sha256": "dfafb72ce1e7885dffc1ea7d8b004f6a12ddfbadbc322bb186d84a227c7b6912"
+    },
+    {
+      "bytes": 4594,
+      "path": "artifacts/validation-cycle/results/res-c-negative-controls.json",
+      "sha256": "b637e335f77695078c1dbcff45ee5a325061c9dbd4dbfb26f2aa984a5b8f558a"
+    },
+    {
+      "bytes": 1659,
+      "path": "artifacts/validation-cycle/results/res-c-reused-receipt.json",
+      "sha256": "5dabecc335bddabc021037769ec578c65bc1f4f07c0c00b255968a36b1017ce5"
+    },
+    {
+      "bytes": 1176,
+      "path": "artifacts/validation-cycle/results/res-c-virtual-V1.json",
+      "sha256": "138fb9f1151775e6f820b43c3da68c2ea99932589de701a27c2513a1e606558a"
+    },
+    {
+      "bytes": 1167,
+      "path": "artifacts/validation-cycle/results/res-c-virtual-V2.json",
+      "sha256": "66bd58b5aa8eaa873873d9f1db7b09f39dc1e1dbb229327f4c6460649b191ef9"
+    },
+    {
+      "bytes": 5523,
+      "path": "artifacts/validation-cycle/summary.json",
+      "sha256": "7c1712aabdcad4a1090e4a9b16e894ee18ffed3e39247cc0203bfae8a18b0bfc"
+    }
+  ],
+  "schema": "frontier.artifact-manifest/1"
+}

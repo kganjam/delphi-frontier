@@ -1,0 +1,42 @@
+{
+  "commands": [
+    {
+      "cmd": "python -m engineering.biodesign_compiler.validation_cycle run (twice)",
+      "exit": 0,
+      "replay_bytes_identical": true
+    },
+    {
+      "cmd": "python -m pytest -q tests/test_validation_cycle.py",
+      "exit": 0,
+      "summary": "19 passed, 1 skipped in 0.77s"
+    }
+  ],
+  "environment": {
+    "numpy": "2.4.4",
+    "python": "3.13.12",
+    "scipy": "1.17.1"
+  },
+  "manifest_sha256": "24a29da13bcea44b830764dc6a2a2f4397768e1e321a9388d7c190ce6aa24791",
+  "note": "the bundle test skips until the artifacts are committed; the bundle is prepared from an immutable commit afterwards",
+  "output_sha256": {
+    "all-optional.json": "87e095363b6500ef6ac41163845ceb854f7a63e824275adf46c5061d14aa61d4",
+    "changed-input.json": "9cca11def808af8488e9ef638ca0eda67467c8513d43455078befc29e62e82bc",
+    "check-history.json": "4b5276edd3597735bd5b43b40e1b5bea04999dfbc2a0e2e35a5e34761ec6180f",
+    "compile-report.json": "9f4b747838541ce7a3320a10e9a22e22a10d5dba5cdebdee12416b0696a84ab2",
+    "design.json": "48929c93ad9d1e97461e98bf4b483f5b7b53f28d10a7ff276f2629c19e1be256",
+    "manifest.json": "24a29da13bcea44b830764dc6a2a2f4397768e1e321a9388d7c190ce6aa24791",
+    "mechanical-evidence.json": "f5dbc18b16f683a142a6fb09bdbcef224c7f6f11f9a724c1b9266edc24e82a70",
+    "next-measurement.json": "e574772a7c17888dad57c8728718c5c46fee0346f84523eabdc57bafaeda3c31",
+    "plans/plan-vp-bio-bridge-growth-to-EI.json": "66c012c88c34e5502ec3e9df14c097ace2bbc87f9b6bef7ba76e7d6f3aa1a0bc",
+    "plans/plan-vp-mech-end-loaded-cantilever.json": "6875455358c2dbaa3e845c3eca80447943744e0a56784144a4c1dcf8804dd76d",
+    "plans/plan-vp-seq-functional-readout.json": "b736ceb4756b5d738c87641e159109fc4d9c07e1974a5c5db9e728c022bcd659",
+    "protocol.json": "d0120cb682ac47a11fc2b4bb734f352e7efd9b49015660e587369d8f1547f729",
+    "results/res-c-fem-vs-analytic.json": "dfafb72ce1e7885dffc1ea7d8b004f6a12ddfbadbc322bb186d84a227c7b6912",
+    "results/res-c-negative-controls.json": "b637e335f77695078c1dbcff45ee5a325061c9dbd4dbfb26f2aa984a5b8f558a",
+    "results/res-c-reused-receipt.json": "5dabecc335bddabc021037769ec578c65bc1f4f07c0c00b255968a36b1017ce5",
+    "results/res-c-virtual-V1.json": "138fb9f1151775e6f820b43c3da68c2ea99932589de701a27c2513a1e606558a",
+    "results/res-c-virtual-V2.json": "66bd58b5aa8eaa873873d9f1db7b09f39dc1e1dbb229327f4c6460649b191ef9",
+    "summary.json": "7c1712aabdcad4a1090e4a9b16e894ee18ffed3e39247cc0203bfae8a18b0bfc"
+  },
+  "schema": "frontier.validation-cycle.replay-receipt/1"
+}

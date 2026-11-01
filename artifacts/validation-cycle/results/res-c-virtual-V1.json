@@ -1,0 +1,33 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "cases": {
+    "negative": 1,
+    "negative_rejected": true,
+    "positive": 1
+  },
+  "check_id": "c-virtual-V1",
+  "execution": {
+    "kind": "executed",
+    "negative": {
+      "case": "uniformly loaded shape with the same tip",
+      "rejected": true,
+      "value": 0.0021632035573323615
+    },
+    "ok": true,
+    "positive_cases": 1,
+    "tolerance": 0.0001,
+    "value": 6.606372277932297e-11
+  },
+  "licenses": "V1-saved-deflection-section@1 on this saved section",
+  "plan_id": "vp-mech-end-loaded-cantilever",
+  "plan_version": 2,
+  "reused_pin": null,
+  "schema": "frontier.validation-result/1",
+  "scope": "one saved simulated case; not a biological replicate",
+  "status": "pass",
+  "validator": {
+    "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+    "identity": "validation-cycle replay (this module)",
+    "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+  }
+}

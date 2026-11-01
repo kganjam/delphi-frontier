@@ -1,0 +1,38 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "cases": {
+    "negative": null,
+    "negative_rejected": null,
+    "positive": 3
+  },
+  "check_id": "c-reused-receipt",
+  "execution": {
+    "analytic_cases_in_receipt": 3,
+    "changed_pins": [],
+    "controls_passed": true,
+    "kind": "reused",
+    "max_rel_residual": 1.850371707708594e-16,
+    "negative_case_note": "unavailable: the pinned receipt records positive analytic controls only, and controls.json's mutant is the glide speed law, not the cantilever",
+    "negative_cases_in_receipt": null,
+    "not_rerun": true,
+    "passed": true,
+    "positive_cases_holding": 3,
+    "receipt_verdict": "ok"
+  },
+  "licenses": null,
+  "plan_id": "vp-mech-end-loaded-cantilever",
+  "plan_version": 2,
+  "reason": "the pinned receipt records 3 analytic positive controls and no cantilever negative case; kept as pinned context for the executed checks, not as an acceptance check",
+  "reused_pin": {
+    "path": "engineering/fin_mechanics/artifacts/result.json",
+    "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+  },
+  "schema": "frontier.validation-result/1",
+  "scope": "the pinned receipt only; not rerun here",
+  "status": "not_applicable",
+  "validator": {
+    "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+    "identity": "validation-cycle replay (this module)",
+    "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+  }
+}

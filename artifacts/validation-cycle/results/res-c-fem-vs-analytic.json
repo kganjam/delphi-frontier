@@ -1,0 +1,27 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "cases": {
+    "negative": 8,
+    "negative_rejected": true,
+    "positive": 2
+  },
+  "check_id": "c-fem-vs-analytic",
+  "execution": {
+    "input_gate": "validation_cycle.mechanical_slice (units, load case, finite positive values)",
+    "kind": "executed",
+    "tip_over_L": 0.05000000006606371,
+    "tip_rel_error": 1.321274224289996e-09
+  },
+  "licenses": "the end-loaded FEM equals the closed form at this point, inside the small-deflection domain",
+  "plan_id": "vp-mech-end-loaded-cantilever",
+  "plan_version": 2,
+  "reused_pin": null,
+  "schema": "frontier.validation-result/1",
+  "scope": "the declared point only (EI = 2 x the end-loaded critical value, assumed)",
+  "status": "pass",
+  "validator": {
+    "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+    "identity": "validation-cycle replay (this module)",
+    "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)"
+  }
+}

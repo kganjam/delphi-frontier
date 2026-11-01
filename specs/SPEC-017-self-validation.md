@@ -3,6 +3,10 @@
 Status: requested October 31, 2026. Normative target; the complete loop is not yet
 implemented. Existing proof, simulation, compiler and observed-data checks are
 components to reuse, not evidence that autonomous biological validation is solved.
+One bounded worked case exists (`artifacts/validation-cycle`, protocol version 2, see
+"Status of the first implementation" below): it exercises the loop on one assembly and
+one mechanical slice, and its biological dimensions stay missing. It is a demonstration
+of the linkage, not the autonomous loop and not validation of any fin or organism.
 
 ## Outcome
 
@@ -215,3 +219,33 @@ status propagation and validation slices; experimentation owner owns observation
 operators and acquisition; sequence owner owns reference/function/context evidence;
 infrastructure owner executes admitted bounded jobs and preserves their receipts.
 These are delivery requirements, not a claim that the boxes above have passed.
+
+## Status of the first implementation (validation cycle, protocol version 2)
+
+Evidence is `artifacts/validation-cycle/` (code `engineering/biodesign_compiler/validation_cycle.py`;
+version 1 is retained unchanged under `superseded/v1-8877fdc`). The boxes above stay
+unchecked: they are delivery requirements that need root integration and review.
+
+- Mechanical slice on the exact assembly fish3d-v3a: covered. The end-loaded cantilever is
+  executed (FEM against the closed form) and kept apart from the uniformly loaded beam. The
+  receipt's critical EI belongs to the uniform load and is refused for the end load. Executed and
+  reused checks are named. Numerical wrong-law controls and the input gate's wrong-unit,
+  wrong-load-case and domain controls are separate; the gate refuses offered inputs, it does not
+  validate a producer receipt, and a value mislabelled with an accepted unit passes it.
+- Incompatible context, changed input, missing bridge: covered. A byte-changed pinned input makes
+  the dependent check stale, unaffected pins stay verified, and propagation names what is
+  invalidated and retained for the original pinned model only. The growth-to-EI bridge and the
+  unresolved sequence reference are plans with no result, reported as `missing`.
+- Prospective equal-budget comparison: covered by the planner on the frozen cantilever contract with
+  a noise and cost grid; proposed, not executed, no response data.
+- Observed-allometry update: linked as separate observed-data evidence; its held-out error worsened
+  and it is not counted as fin mechanics or sequence-function evidence.
+- Forward/inverse candidate: an unresolved sequence reference with a required functional readout and
+  no endorsement; no sequence was generated.
+- Validator identity: the checks are a same-code numerical cross-check, procedural and dependent on
+  the producer's code and inputs. They are not independent validation and no check here is.
+
+Still open: no calibrated EI or any measured biological readout exists; no exact sequence evidence for
+the tested element; no independent review or independent implementation of the checks; the project
+surface and bounded MCP tools for check history, open validation Problems and the next Action are not
+built; the prepared bundle has not been imported into any record store.

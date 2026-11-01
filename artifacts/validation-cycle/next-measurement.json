@@ -1,0 +1,362 @@
+{
+  "action_artifact": {
+    "action_proposal": {
+      "alternatives": [
+        {
+          "description": "Two normalized deflection reads at different nominal force settings.",
+          "label": "deflection-only",
+          "tradeoff": "Same sensitivity row; cannot separate stiffness from load calibration."
+        },
+        {
+          "description": "One normalized deflection read and one independent load-scale read.",
+          "label": "mixed",
+          "tradeoff": "Assumes the load-scale read is available at equal declared cost."
+        }
+      ],
+      "analysis_plan": "Use exact linear-Gaussian covariance conditioning and compare the predeclared target variance reduction per equal assumed cost.",
+      "assumptions": [
+        "Dimensionless log-ratio prior and readout-noise values are assumed, not fitted.",
+        "This abstract cantilever calculation has no species calibration."
+      ],
+      "controls": [
+        "Repeated-force deflections have the same sensitivity row and remain rank one.",
+        "An independent load-scale readout supplies the second direction.",
+        "A zero-sensitivity readout has zero expected target-variance reduction."
+      ],
+      "decision_context": "Choose an illustrative readout design that makes stiffness identifiable under the stated linear model.",
+      "expected_information": "Expected reduction in variance of dimensionless log stiffness per assumed cost unit.",
+      "expected_outputs": [
+        "Prospective covariance, rank/nullspace diagnostics, and a frozen design comparison."
+      ],
+      "intent": "experiment",
+      "limitations": [
+        "No measurements, biological parameters, empirical posterior, or physical success probability are generated.",
+        "The local proposal is not linked/submitted until exact Problem/Project refs are supplied."
+      ],
+      "method": "Compare prospective Gaussian covariance under two equal assumed-cost readout plans; no response values are used.",
+      "outcomes": [
+        {
+          "criterion": "Mixed plan has full likelihood rank and greater target variance reduction per equal cost.",
+          "decision_consequence": "Retain as the selected prospective design under this assumed model only.",
+          "label": "mixed-rank-two"
+        },
+        {
+          "criterion": "Rank or expected target-variance comparison does not meet the predeclared relation.",
+          "decision_consequence": "Keep the design comparison unresolved and inspect assumptions.",
+          "label": "not-discriminating"
+        }
+      ],
+      "plan_steps": [],
+      "selection_basis": "declared_utility",
+      "selection_rationale": "Rank candidate plans by declared expected target-variance reduction per shared assumed cost unit."
+    },
+    "artifact_kind": "prospective_experiment_design",
+    "context": {
+      "cell_state": "not_applicable",
+      "developmental_time": "not_applicable",
+      "eligibility": "abstract model only; no specimen or organism eligibility",
+      "environment": "not_applicable; static mathematical beam",
+      "genotype": "not_applicable",
+      "measurement_method": "prospective dimensionless readout model",
+      "open_gaps": [
+        "No biological calibration, species bridge, or source Claim pin is supplied.",
+        "EI of the candidate's rays is an assumed range; no specimen, species bridge or sequence is pinned."
+      ],
+      "species": "not_applicable_mathematical_cantilever"
+    },
+    "equation": {
+      "applicability": "Euler-Bernoulli static small-deflection cantilever point-load model; mathematical demonstration only.",
+      "expression": "delta = F * L^3 / (3 * EI)",
+      "model_version": "engineering.fin_mechanics.beam/point-load/1",
+      "source_sha256": "4dfceb004a2eddef9cad27f09b744710de2a8b9b7f9f9e232b756e3cb4683b5d",
+      "source_uri": "https://github.com/kganjam/delphi-frontier/blob/72df07cb22ec6458625fd01092ceccda8ea96271/engineering/fin_mechanics/beam.py",
+      "units": {
+        "EI": "N m^2",
+        "F": "N",
+        "L": "m",
+        "delta": "m",
+        "normalized_log_readout": "1",
+        "parameters": "dimensionless log-ratios"
+      }
+    },
+    "input_datasets": [],
+    "link_blockers": [
+      "Pin an exact Problem, Project, or Action Ref before submitting a versioned Action."
+    ],
+    "links": {
+      "action_ref": null,
+      "problem_ref": null,
+      "project_ref": null
+    },
+    "measurement_rows": [],
+    "normalized_contract_sha256": "1b2184b04d3210f2b35f92cfdc4f36bbe308840db3880ffe3de1d845b57b0d9f",
+    "observed_result": null,
+    "protocol_sha256": "5ad3f2a7c2a0ced49e4e75004f9243a37d786ccadc2c18acb2f885f499c03051",
+    "schema": "frontier.experimental-design.plan/1",
+    "source_claims": [],
+    "state": "proposal_unlinked"
+  },
+  "assumptions": "priors, noise and costs are declared, not calibrated; selection is by expected target-variance reduction per assumed cost",
+  "contract_sha256": "1b2184b04d3210f2b35f92cfdc4f36bbe308840db3880ffe3de1d845b57b0d9f",
+  "designs": [
+    {
+      "batch_count": 1,
+      "cost": 2.0,
+      "cost_basis": "two reads at one assumed unit each; not a dollar cost",
+      "cost_unit": "assumed_readout_cost_unit",
+      "expected_information_nats": 3.22047327031646,
+      "expected_posterior_covariance": [
+        [
+          0.018947368421052657,
+          0.009473684210526329
+        ],
+        [
+          0.009473684210526329,
+          0.00958532695374803
+        ]
+      ],
+      "expected_target_posterior_variance": 0.018947368421052657,
+      "expected_target_variance_reduction": 0.34105263157894733,
+      "expected_target_variance_reduction_per_cost": 0.17052631578947366,
+      "id": "mixed_load_deflection",
+      "identifiability": {
+        "full_rank": true,
+        "nullspace_basis": [],
+        "parameter_count": 2,
+        "rank": 2,
+        "singular_values": [
+          16.18033988749895,
+          6.180339887498948
+        ],
+        "whitened_sensitivity": [
+          [
+            0.0,
+            10.0
+          ],
+          [
+            -10.0,
+            10.0
+          ]
+        ]
+      },
+      "intervention": "Acquire an independent load-scale read plus one normalized deflection read.",
+      "measurement_rows": [],
+      "observation_count": 2,
+      "observations": [
+        {
+          "batch": "one_assumed_batch",
+          "biological_replicate": "not_applicable_mathematical_example",
+          "condition": "load_scale_sensor",
+          "readout_id": "direct_log_load_scale",
+          "technical_repeat": 1
+        },
+        {
+          "batch": "one_assumed_batch",
+          "biological_replicate": "not_applicable_mathematical_example",
+          "condition": "nominal_force_ratio=1",
+          "readout_id": "normalized_log_deflection",
+          "technical_repeat": 1
+        }
+      ],
+      "parameter_count": 2,
+      "prior_covariance": [
+        [
+          0.36,
+          0.18
+        ],
+        [
+          0.18,
+          0.25
+        ]
+      ],
+      "target_prior_variance": 0.36,
+      "title": "One direct load-scale and one deflection read"
+    },
+    {
+      "batch_count": 1,
+      "cost": 2.0,
+      "cost_basis": "two reads at one assumed unit each; not a dollar cost",
+      "cost_unit": "assumed_readout_cost_unit",
+      "expected_information_nats": 1.965912816362163,
+      "expected_posterior_covariance": [
+        [
+          0.23294117647058823,
+          0.22941176470588234
+        ],
+        [
+          0.22941176470588234,
+          0.2307843137254902
+        ]
+      ],
+      "expected_target_posterior_variance": 0.23294117647058823,
+      "expected_target_variance_reduction": 0.12705882352941175,
+      "expected_target_variance_reduction_per_cost": 0.06352941176470588,
+      "id": "deflection_only",
+      "identifiability": {
+        "full_rank": false,
+        "nullspace_basis": [
+          [
+            0.7071067811865475,
+            0.7071067811865475
+          ]
+        ],
+        "parameter_count": 2,
+        "rank": 1,
+        "singular_values": [
+          20.000000000000004,
+          0.0
+        ],
+        "whitened_sensitivity": [
+          [
+            -10.0,
+            10.0
+          ],
+          [
+            -10.0,
+            10.0
+          ]
+        ]
+      },
+      "intervention": "Set nominal force ratios 1 and 2; normalize out their known offsets.",
+      "measurement_rows": [],
+      "observation_count": 2,
+      "observations": [
+        {
+          "batch": "one_assumed_batch",
+          "biological_replicate": "not_applicable_mathematical_example",
+          "condition": "nominal_force_ratio=1",
+          "readout_id": "normalized_log_deflection",
+          "technical_repeat": 1
+        },
+        {
+          "batch": "one_assumed_batch",
+          "biological_replicate": "not_applicable_mathematical_example",
+          "condition": "nominal_force_ratio=2",
+          "readout_id": "normalized_log_deflection",
+          "technical_repeat": 1
+        }
+      ],
+      "parameter_count": 2,
+      "prior_covariance": [
+        [
+          0.36,
+          0.18
+        ],
+        [
+          0.18,
+          0.25
+        ]
+      ],
+      "target_prior_variance": 0.36,
+      "title": "Two deflection reads at different nominal force settings"
+    }
+  ],
+  "executed": false,
+  "measurement_rows": [],
+  "schema": "frontier.validation-cycle.next-measurement/1",
+  "selected_design_id": "mixed_load_deflection",
+  "selected_in_every_grid_cell": [
+    "mixed_load_deflection"
+  ],
+  "selection_flips": false,
+  "selection_objective": {
+    "basis": "analytic linear-Gaussian prospective covariance; no observed response values",
+    "cost_unit": "assumed_readout_cost_unit",
+    "name": "expected_target_variance_reduction_per_cost",
+    "target": "log_EI_ratio",
+    "target_unit": "1"
+  },
+  "sensitivity_grid": [
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 0.5,
+      "noise_multiple": 0.25,
+      "reduction_per_cost": {
+        "deflection_only": 0.0644776119402985,
+        "mixed_load_deflection": 0.3550684931506849
+      },
+      "selected": "mixed_load_deflection"
+    },
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 1.0,
+      "noise_multiple": 0.25,
+      "reduction_per_cost": {
+        "deflection_only": 0.0644776119402985,
+        "mixed_load_deflection": 0.17753424657534245
+      },
+      "selected": "mixed_load_deflection"
+    },
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 2.0,
+      "noise_multiple": 0.25,
+      "reduction_per_cost": {
+        "deflection_only": 0.0644776119402985,
+        "mixed_load_deflection": 0.08876712328767122
+      },
+      "selected": "mixed_load_deflection"
+    },
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 0.5,
+      "noise_multiple": 1.0,
+      "reduction_per_cost": {
+        "deflection_only": 0.06352941176470588,
+        "mixed_load_deflection": 0.34105263157894733
+      },
+      "selected": "mixed_load_deflection"
+    },
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 1.0,
+      "noise_multiple": 1.0,
+      "reduction_per_cost": {
+        "deflection_only": 0.06352941176470588,
+        "mixed_load_deflection": 0.17052631578947366
+      },
+      "selected": "mixed_load_deflection"
+    },
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 2.0,
+      "noise_multiple": 1.0,
+      "reduction_per_cost": {
+        "deflection_only": 0.06352941176470588,
+        "mixed_load_deflection": 0.08526315789473683
+      },
+      "selected": "mixed_load_deflection"
+    },
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 0.5,
+      "noise_multiple": 4.0,
+      "reduction_per_cost": {
+        "deflection_only": 0.06,
+        "mixed_load_deflection": 0.29454545454545455
+      },
+      "selected": "mixed_load_deflection"
+    },
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 1.0,
+      "noise_multiple": 4.0,
+      "reduction_per_cost": {
+        "deflection_only": 0.06,
+        "mixed_load_deflection": 0.14727272727272728
+      },
+      "selected": "mixed_load_deflection"
+    },
+    {
+      "deflection_only_identifiable": false,
+      "mixed_cost_multiple": 2.0,
+      "noise_multiple": 4.0,
+      "reduction_per_cost": {
+        "deflection_only": 0.06,
+        "mixed_load_deflection": 0.07363636363636364
+      },
+      "selected": "mixed_load_deflection"
+    }
+  ],
+  "status": "proposed Action only: no lab, cloud or store write; no response data was invented"
+}

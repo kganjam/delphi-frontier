@@ -1,0 +1,165 @@
+{
+  "acceptance_guard": {
+    "all_optional_not_applicable": false,
+    "no_checks": false
+  },
+  "candidate": {
+    "assembly": {
+      "path": "artifacts/biodesign-compiler/assemblies/fish3d-v3a.json",
+      "sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4"
+    },
+    "id": "fish3d-v3a",
+    "scope": "the mechanical slice of an assembly of pinned files; not a genome, not a construct and not a flyable or viable animal",
+    "sequence": "unresolved"
+  },
+  "changed_input": {
+    "input": "engineering/fin_mechanics/artifacts/result.json",
+    "invalidated_checked_layers": [
+      "fin-mechanics-numerical"
+    ],
+    "invalidated_interfaces": [
+      "I4",
+      "I5"
+    ],
+    "retained_checked_layers": [
+      "regulatory-map",
+      "aero-numerical",
+      "observed-allometry-update"
+    ],
+    "retained_verified": [
+      "analytic_controls",
+      "observed_allometry_update",
+      "assembly",
+      "beam_code"
+    ],
+    "stale": [
+      "fin_mechanics_receipt"
+    ]
+  },
+  "digest_chain": {
+    "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+    "compile_design_sha256": "0a4d83c3adb14189f3f423ee8317d7703b22de324674bd1caf04dbfdf1239516",
+    "next_measurement_contract_sha256": "1b2184b04d3210f2b35f92cfdc4f36bbe308840db3880ffe3de1d845b57b0d9f",
+    "plan_ref": "vp-mech-end-loaded-cantilever",
+    "protocol_sha256": "d0120cb682ac47a11fc2b4bb734f352e7efd9b49015660e587369d8f1547f729",
+    "result_refs": {
+      "c-fem-vs-analytic": "dfafb72ce1e7885dffc1ea7d8b004f6a12ddfbadbc322bb186d84a227c7b6912",
+      "c-negative-controls": "b637e335f77695078c1dbcff45ee5a325061c9dbd4dbfb26f2aa984a5b8f558a",
+      "c-reused-receipt": "5dabecc335bddabc021037769ec578c65bc1f4f07c0c00b255968a36b1017ce5",
+      "c-virtual-V1": "138fb9f1151775e6f820b43c3da68c2ea99932589de701a27c2513a1e606558a",
+      "c-virtual-V2": "66bd58b5aa8eaa873873d9f1db7b09f39dc1e1dbb229327f4c6460649b191ef9"
+    }
+  },
+  "dimensions": [
+    {
+      "endpoint": true,
+      "id": "c-fem-vs-analytic",
+      "kind": "executed",
+      "status": "pass"
+    },
+    {
+      "endpoint": false,
+      "id": "c-negative-controls",
+      "kind": "executed",
+      "status": "pass"
+    },
+    {
+      "endpoint": false,
+      "id": "c-virtual-V1",
+      "kind": "executed",
+      "status": "pass"
+    },
+    {
+      "endpoint": false,
+      "id": "c-virtual-V2",
+      "kind": "executed",
+      "status": "pass"
+    },
+    {
+      "endpoint": false,
+      "id": "c-reused-receipt",
+      "kind": "reused",
+      "status": "not_applicable"
+    },
+    {
+      "endpoint": true,
+      "id": "c-bio-bridge-expression-to-EI",
+      "kind": "not_run",
+      "status": "missing"
+    },
+    {
+      "endpoint": true,
+      "id": "c-sequence-reference",
+      "kind": "not_run",
+      "status": "missing"
+    },
+    {
+      "endpoint": false,
+      "id": "c-observed-allometry",
+      "kind": "reused",
+      "status": "fail"
+    }
+  ],
+  "next_action": {
+    "assumptions": "priors, noise and costs are declared, not calibrated; selection is by expected target-variance reduction per assumed cost",
+    "design": "mixed_load_deflection",
+    "objective": "expected_target_variance_reduction_per_cost",
+    "selection_flips_in_grid": false,
+    "status": "proposed, not executed"
+  },
+  "not_claimed": [
+    "a working or validated fin, ray, genome or organism",
+    "that EI of any real fin ray is known (assumed range only)",
+    "any biological success probability (none is computed)",
+    "that the observed-allometry update validates fin mechanics or sequence-function (it is separate observed-data evidence, and it worsened held-out error)",
+    "that the validator is independent: it is a same-code numerical cross-check, procedural and dependent",
+    "that the input gate validates the producer receipt (it refuses offered inputs with a wrong unit or load case; a value mislabelled with an accepted unit passes it)"
+  ],
+  "open_problems": [
+    {
+      "bridge": "growth->EI (flexural rigidity)",
+      "id": "problem-growth-to-EI",
+      "required_readout": "a calibrated EI of the candidate's rays in the stated tissue and stage, with unit and bounds; EI is an assumed range here"
+    },
+    {
+      "id": "problem-sequence-reference",
+      "required_readout": "Context-matched reporter or endogenous expression, independently measured",
+      "state": "unresolved"
+    }
+  ],
+  "reused_vs_executed": {
+    "executed": [
+      "c-fem-vs-analytic",
+      "c-negative-controls",
+      "c-virtual-V1",
+      "c-virtual-V2"
+    ],
+    "not_run": [
+      "c-bio-bridge-expression-to-EI",
+      "c-sequence-reference"
+    ],
+    "reused": [
+      "c-reused-receipt",
+      "c-observed-allometry"
+    ]
+  },
+  "schema": "frontier.validation-cycle.summary/1",
+  "separate_evidence": {
+    "observed_allometry": "held-out error worsened; context for allometry only, not fin validation"
+  },
+  "verdict": {
+    "biological_success_probability": null,
+    "function_assurance": {
+      "interfaces_calibrated": false,
+      "level": "none",
+      "validation_all_required_pass": false
+    },
+    "mechanical_slice": "pass",
+    "proposal_eligibility": {
+      "eligible": true,
+      "reasons": []
+    },
+    "reading": "The candidate is rejected as a working assembly; its end-loaded mechanical slice passes numerically at the declared point; the missing biological bridge and the unresolved sequence block any functional claim.",
+    "working_assembly_claim": "rejected"
+  }
+}

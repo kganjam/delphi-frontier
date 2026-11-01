@@ -27,6 +27,7 @@ def protocol():
 
 def test_the_protocol_is_frozen_derived_from_pinned_receipts_and_keeps_the_two_load_cases_apart(protocol):
     assert protocol == V.build_protocol(), "the committed protocol is what the module derives from the pinned files"
+    assert protocol["version"] == 2 and protocol["supersedes"]["protocol_sha256"] == V.V1["protocol_sha256"] and protocol["slice"]["load_case"] == "end_load_at_tip"
     s = protocol["slice"]
     op = s["operating_point"]
     assert op["P_exact"] == "147/6400" and op["L_exact"] == "3/20" and s["law"] == "delta = P L^3 / (3 EI)" and "q L^4" in s["not_this_law"]
@@ -46,13 +47,43 @@ def test_positive_case_the_end_loaded_fem_equals_the_closed_form_inside_the_doma
 def test_each_negative_control_is_refused_for_its_own_intended_reason(protocol):
     neg = V.check_negative_controls(protocol)
     by = {c["id"]: c for c in neg["controls"]}
-    assert neg["all_rejected"] and len(by) == 6
+    assert neg["all_rejected"] and neg["all_positive_ok"] and len(by) == 8 == len(neg["law_controls"]) + len(neg["gate_controls"])
+    assert all(c["via"] == "beam.control_residuals" for c in neg["law_controls"]) and all(c["via"] == "validation_cycle.mechanical_slice" for c in neg["gate_controls"]), "numerical law controls are kept apart from the gate controls"
     assert by["law:uniform-load law applied to an end load"]["observed_rel_residual"] > 0.5 and by["law:L^3 -> L^2 mutation"]["observed_rel_residual"] > 1
-    assert by["unit:EI in N mm^2"]["unit_accepted"] is False and by["unit:EI in N mm^2"]["ratio_if_misread"] == pytest.approx(1e-6)
-    assert by["context:uniformly loaded claim"]["uniform_over_end_tip_ratio"] == pytest.approx(3 / 8)
-    for k in ("domain:EI below critical", "context:uniform-load critical EI used for the end load"):
-        assert "LINEAR_MODEL_INVALID_SMALL_DEFORMATION_VIOLATED" in by[k]["refusal"], k
-    assert len({c["intended_failure"] for c in neg["controls"]}) >= 4, "different causes, not one check repeated"
+    for cid, kind, text in (
+        ("unit:EI in N mm^2", "ContextRefused", "EI: unit 'N mm^2'"),
+        ("unit:P in kgf", "ContextRefused", "P: unit 'kgf'"),
+        ("context:uniformly loaded claim", "ContextRefused", "load case 'uniform_pressure'"),
+        ("context:non-finite EI", "ContextRefused", "finite positive"),
+        ("domain:EI below the end-loaded critical", "SmallDeformationViolation", "LINEAR_MODEL_INVALID_SMALL_DEFORMATION_VIOLATED"),
+        ("context:uniform-load critical EI used for the end load", "SmallDeformationViolation", "LINEAR_MODEL_INVALID_SMALL_DEFORMATION_VIOLATED"),
+    ):
+        assert by[cid]["observed"] == kind and text in by[cid]["refusal"], cid
+    assert len({c["intended_failure"] for c in neg["controls"]}) >= 6, "different causes, not one check repeated"
+    assert any("producer" in x for x in neg["gate_limits"]) and any("mislabelled" in x for x in neg["gate_limits"]), "the gate's limits are stated, not hidden"
+
+
+def test_the_positive_computation_enforces_the_same_gate_the_negative_variants_go_through(protocol, monkeypatch):
+    ctx = V.declared_context(protocol)
+    assert V.mechanical_slice(protocol, ctx)["passed"]
+    bad = V.declared_context(protocol)
+    bad["EI"]["unit"] = "N mm^2"
+    with pytest.raises(V.ContextRefused) as e:
+        V.mechanical_slice(protocol, bad)
+    assert "EI: unit" in str(e.value)
+    wrong_load = V.declared_context(protocol)
+    wrong_load["load_case"] = "uniform_pressure"
+    with pytest.raises(V.ContextRefused):
+        V.mechanical_slice(protocol, wrong_load)
+    # the positive entry point itself calls the gate: replace the gate and the positive computation refuses
+    monkeypatch.setattr(V, "validate_context", lambda protocol, ctx: ["forced refusal from the shared gate"])
+    with pytest.raises(V.ContextRefused, match="forced refusal"):
+        V.check_mechanical(protocol)
+    # the gate's stated limit: a wrong value carrying an accepted unit passes it (only numerical cross-checks can catch that)
+    monkeypatch.undo()
+    mislabelled = V.declared_context(protocol)
+    mislabelled["EI"]["value"] *= 1e6
+    assert V.validate_context(protocol, mislabelled) == []
 
 
 def test_the_negative_controls_can_fail_the_correct_law_is_not_flagged(protocol):
@@ -67,6 +98,7 @@ def test_virtual_instruments_are_the_real_contracts_and_their_tolerances_come_fr
     mech = V.check_mechanical(protocol)
     virt = V.check_virtual(protocol, mech, contracts)
     assert virt["V1"]["tolerance"] == 1e-4 == protocol["tolerances"]["V1_max_abs_over_L"] and virt["V2"]["tolerance"] == 1e-7 and virt["protocol_tolerances_match_the_contracts"]
+    assert virt["V1"]["negative"]["rejected"] and virt["V2"]["negative"]["rejected"] and virt["V1"]["negative"]["value"] > 1e-4 and virt["V2"]["negative"]["value"] > 1e-7, "each virtual instrument rejects a wrong-law input, executed here"
     man = json.loads((ROOT / G.INSTRUMENT_MANIFEST).read_text())["files"]["instrument-contracts.json"]["sha256"]
     for iid in ("V1-saved-deflection-section", "V2-saved-tip-and-slope"):
         ref = virt["contract_refs"][iid]
@@ -75,11 +107,71 @@ def test_virtual_instruments_are_the_real_contracts_and_their_tolerances_come_fr
     assert V.check_virtual(broken, mech, contracts)["protocol_tolerances_match_the_contracts"] is False, "a protocol that loosened a contract tolerance is detected"
 
 
-def test_reused_and_executed_checks_are_named_and_the_reused_receipt_is_not_rerun(protocol):
+def test_reused_and_executed_checks_are_named_and_the_reused_receipt_counts_come_from_the_pinned_records(protocol):
     s = load("summary.json")
     assert s["reused_vs_executed"] == {"executed": ["c-fem-vs-analytic", "c-negative-controls", "c-virtual-V1", "c-virtual-V2"], "reused": ["c-reused-receipt", "c-observed-allometry"], "not_run": ["c-bio-bridge-expression-to-EI", "c-sequence-reference"]}
     r = V.check_reused(protocol)
+    receipt = json.loads((ROOT / V.FINMECH).read_text())["controls"]["analytic_residuals_vs_independent_quadrature"]
     assert r["passed"] and r["not_rerun"] is True and r["changed_pins"] == []
+    assert r["analytic_cases_in_receipt"] == len(receipt) == r["positive_cases_holding"] and r["negative_cases_in_receipt"] is None and "glide speed law" in r["negative_case_note"]
+    res = json.loads((OUT / "results/res-c-reused-receipt.json").read_text())
+    assert res["status"] == "not_applicable" and res["cases"] == {"positive": len(receipt), "negative": None, "negative_rejected": None} and "no cantilever negative case" in res["reason"], "no negative count is invented from an aggregate pass"
+    plan = json.loads((OUT / "plans/plan-vp-mech-end-loaded-cantilever.json").read_text())
+    reused = next(c for c in plan["required_checks"] if c["id"] == "c-reused-receipt")
+    assert reused["endpoint"] is False and reused["executable"] is False
+    tmp = Path(tempfile.mkdtemp(prefix="vc-test-"))
+    try:
+        V.stage_pinned(tmp, protocol)
+        p = tmp / V.CONTROLS
+        p.write_bytes(p.read_bytes() + b" ")
+        moved = V.check_reused(protocol, tmp)
+        assert moved["passed"] is False and V.CONTROLS in moved["changed_pins"], "a changed pinned control is not a pass"
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_pin_verification_refuses_missing_evidence_and_never_self_verifies(protocol):
+    tmp = Path(tempfile.mkdtemp(prefix="vc-test-"))
+    try:
+        V.stage_pinned(tmp, protocol)
+        assert set(V.verify_pins(protocol, tmp).values()) == {"verified"}
+        code = tmp / "engineering/fin_mechanics/beam.py"
+        code.write_bytes(code.read_bytes() + b"\n# changed\n")
+        assert V.verify_pins(protocol, tmp)["beam_code"] == "changed", "changed code is reported against the producer's pin"
+        code.write_bytes((ROOT / "engineering/fin_mechanics/beam.py").read_bytes())
+        receipt = json.loads((tmp / V.FINMECH).read_text())
+        receipt.pop("code_files_sha256")
+        (tmp / V.FINMECH).write_text(json.dumps(receipt))
+        out = V.verify_pins(protocol, tmp)
+        assert out["beam_code"] == "missing_pin" and out["fin_mechanics_receipt"] == "changed", "no pin in the receipt: the current beam.py is NOT hashed as its own expected value"
+        receipt["code_files_sha256"] = {"beam.py": "not-a-digest"}
+        (tmp / V.FINMECH).write_text(json.dumps(receipt))
+        assert V.verify_pins(protocol, tmp)["beam_code"] == "missing_pin"
+        code.unlink()
+        receipt["code_files_sha256"] = {"beam.py": "0" * 64}
+        (tmp / V.FINMECH).write_text(json.dumps(receipt))
+        assert V.verify_pins(protocol, tmp)["beam_code"] == "missing_file"
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def test_the_validator_is_labelled_a_dependent_same_code_cross_check_everywhere():
+    assert V.VALIDATOR["role"].startswith("same-code numerical cross-check") and "NOT an independent validation" in V.VALIDATOR["role"] and "shares fin_mechanics.beam" in V.VALIDATOR["dependence_identity"]
+    for f in sorted((OUT / "results").glob("*.json")):
+        v = json.loads(f.read_text())["validator"]
+        assert v == V.VALIDATOR, f.name
+    assert not any("independent checker" in f.read_text() for f in OUT.rglob("*.json") if "superseded" not in f.parts), "the retired label appears nowhere in version 2"
+
+
+def test_version_1_is_retained_unchanged_and_marked_superseded():
+    d = OUT / "superseded/v1-8877fdc"
+    marker = json.loads((d / "SUPERSEDED.json").read_text())
+    assert marker["status"].startswith("SUPERSEDED, retained unchanged") and marker["commit"] == V.V1["commit"] and len(marker["why"]) == 5
+    assert V._sha((d / "protocol.json").read_bytes()) == V.V1["protocol_sha256"] == marker["protocol_sha256"]
+    old = json.loads((d / "results/res-c-reused-receipt.json").read_text())
+    assert old["status"] == "pass" and old["cases"] == {"positive": 3, "negative": 1, "negative_rejected": True}, "the v1 record is preserved as it was, not rewritten"
+    assert json.loads((d / "bundle/bundle-manifest.json").read_text())["bundle_sha256"] == marker["bundle_sha256"]
+    assert load("protocol.json")["version"] == 2 and not (OUT / "summary.json").samefile(d / "summary.json")
 
 
 def test_a_changed_input_goes_stale_unaffected_checks_stay_verified_and_downstream_is_invalidated(protocol):
@@ -141,7 +233,7 @@ def test_the_digests_tie_candidate_protocol_plan_and_results_together_and_a_chan
             (tmp / rel).parent.mkdir(parents=True, exist_ok=True)
             shutil.copy(ROOT / rel, tmp / rel)
         ok = G.evaluate_validation(tmp, design)["plans"][0]
-        assert ok["all_required_pass"] and ok["counts"]["pass"] == 5
+        assert ok["all_required_pass"] and ok["counts"]["pass"] == 4 and ok["counts"]["not_applicable"] == 1
         p = tmp / f"{V.CYCLE}/results/res-c-fem-vs-analytic.json"
         p.write_bytes(p.read_bytes().replace(b'"pass"', b'"fail"'))
         bad = G.evaluate_validation(tmp, design)["plans"][0]
@@ -215,4 +307,6 @@ def test_the_importable_bundle_links_records_and_keeps_the_action_a_proposal(tmp
     ev = {r["id"]: r["payload"] for r in b["records"] if r["kind"] == "Evidence"}
     assert ev["validation-cycle-observed-allometry-separate"]["relation"] == "context_only" and ev["validation-cycle-mechanical-evidence"]["relation"] == "supports"
     claim = next(r for r in b["records"] if r["kind"] == "Claim")["payload"]
+    n = len(json.loads((OUT / "results/res-c-negative-controls.json").read_text())["execution"]["controls"])
+    assert f"{n} of {n} negative controls" in claim["statement"] and "four negative" not in claim["statement"], "the count comes from the immutable result"
     assert "rejected as a working assembly" in claim["title"] and "/data/" not in json.dumps(b)
