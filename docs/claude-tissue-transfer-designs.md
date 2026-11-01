@@ -173,6 +173,38 @@ ray spacing under the edge model.
    developmental literature), that would argue for non-uniform (edge) growth or a different mechanism.
    That is a model-selection experiment, not a confirmation.
 
+## 2b. Two dimensions: what turns a Turing pattern into proximo-distal "rays" (H100 runs)
+
+**Phase map** (`claude-tissue-phase-map`, job `aijob-e00tqm60xz297scrcv`, COMPLETED, 110.9 s). The map covers an 8 × 8 grid
+of the kinetic parameter b and the diffusion ratio d, with 3 seeds per cell.
+- 18 of 64 cells are Turing-unstable.
+- **Stripes appear only in the band next to onset** (the smallest unstable d for each b); spots fill the rest.
+- So a static Turing mechanism gives ray-like stripes only if the kinetics are tuned close to onset.
+
+**Distal-edge growth in 2D** (`claude-tissue-edge2d`, job `aijob-e00e9hk4jpkgxy6n3n`, COMPLETED, 1094.6 s). A 96-wide fold
+grows from 8 to 192 rows at its distal edge. There are 4 seeds per condition, compared with a static fold patterned all
+at once. The orientation index A runs from +1 (stripes along the growth axis, ray-like) through 0 (isotropic) to −1
+(bands parallel to the edge).
+
+| d | Edge speed 0.4 | Edge speed 0.1 | Edge speed 0.04 | Static |
+|---|---|---|---|---|
+| 10 (stripe regime) | −0.53 ± 0.16 (oblique / edge-parallel bands) | **0.99 ± 0.01** (9 PD stripes, all seeds) | **1.00 ± 0.00** | −0.06 ± 0.18 (labyrinth) |
+| 20 (spot regime) | −0.08 | −0.08 | 0.01 | −0.03 |
+| 30 (spot regime) | −0.10 | 0.00 | −0.13 | −0.02 |
+
+**Reading.**
+- In the stripe regime, *slow* distal growth turns an isotropic labyrinth into perfectly ray-like proximo-distal stripes.
+- *Fast* growth instead lays down oblique or edge-parallel bands.
+- Directional growth does **not** turn spots into stripes.
+- So, in this model, a ray-like pattern needs both near-onset kinetics and outgrowth slower than a threshold
+  between v = 0.1 and 0.4 (in units of λ per pattern time).
+
+**Testable prediction.** If rays were laid down by such a mechanism, accelerating early fin-fold outgrowth past a
+threshold would disorder ray orientation. Ray number across the fold would stay about width/λ, here 9.
+
+**Control pending.** The uniform-growth control (`claude-tissue-uniform2d`) tests whether the orientation comes from the
+edge specifically.
+
 ## 3. fin-growth: morphogen production → pectoral/SL ratio (molecular → organ)
 
 **Model.** 1-D quasi-steady distal-source gradient m(x) with a saturating local growth law. The growth law is declared,

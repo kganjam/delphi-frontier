@@ -1,0 +1,32 @@
+{
+ "code_matches_repo": true,
+ "code_sha256": {
+  "simulations/claude_tissue/edge2d_gpu.py": "219d919d25dc4361fc5fb8f42cd0b01e90d5f1ca0a32ab99b456c8f83c8f708e"
+ },
+ "collected_utc": "2026-11-01T15:57:53Z",
+ "collector_sha256": {
+  "simulations/claude_tissue/collect_gpu2.py": "0a5aa5752c2921ffffa48ab7bc9d200342fd33fa769f9af24f3b59349ac3b57e"
+ },
+ "command": "python3 /work/edge2d.py (args in META)",
+ "compute": "Nebius aijob-e00e9hk4jpkgxy6n3n (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "input_sha256": {},
+ "job": "aijob-e00e9hk4jpkgxy6n3n",
+ "job_state": "COMPLETED",
+ "name": "claude-tissue-edge2d",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-edge2d/edge2d.json": "0eb6b2c07443232210ce3d325356a1c7a5930666878dc8a29d16c827dec17615",
+  "artifacts/simulations/claude-tissue-edge2d/edge2d.mp4": "332d3ea026ee974eeb91d6d2235f071553cd074ba031895747e3d173f08864a0",
+  "artifacts/simulations/claude-tissue-edge2d/edge2d.png": "b38c8336a15a89f7e12b726e28161db107468712b35df569f5c6fef34376c9f7",
+  "artifacts/simulations/claude-tissue-edge2d/job-log.txt": "216e00994368775d1aa0b57fce8fa4787e12613f4bb3ec8187a549cc48bb47ee",
+  "artifacts/simulations/claude-tissue-edge2d/poster.png": "59a15408773f43594d19b227c004197d7b7489728a961817734b5713db34977f"
+ },
+ "seed": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "wall_s": 1094.6
+}

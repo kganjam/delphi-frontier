@@ -118,6 +118,18 @@ def cards():
             parameter_unknowns=["Real fin-fold growth geometry and speed are not measured here."],
             open_questions=["Is orientation caused by edge growth specifically, or by any growth along the proximo-distal axis? A uniform-growth control is needed."],
             limitations=["Does not establish that fin rays form by a Turing mechanism or that fin folds grow only at the edge.", "Dimensionless; generic kinetics."])
+    if (A/"claude-tissue-uniform2d/uniform2d.json").exists():
+        u2 = J("claude-tissue-uniform2d/uniform2d.json"); sm = u2["summary"]
+        C["claude-tissue-uniform2d"] = dict(
+            title="Control: the same fin fold growing uniformly along its length (not at the edge): pattern orientation (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; control arm for claude-tissue-edge2d",
+            model=dict(name="2-D Schnakenberg in comoving coordinates, uniform proximo-distal stretching with dilution, implicit spectral, no-flux via mirror extension",
+                       context=f"same width, lengths {u2['meta']['Y0']}->{u2['meta']['Y1']}, speeds and seeds as edge2d"),
+            equations=[{"label": "Uniform growth, comoving", "tex": "u_t=f(u,v)-\\tfrac{\\dot L}{L}u+u_{xx}+L^{-2}u_{\\eta\\eta}", "source": "Crampin et al. 1999 form, anisotropic (y only)"}],
+            numerical_results=[f"d={v['d']}, uniform speed {v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}, stripes across width {v['stripes_across_width']}" for v in sm.values()],
+            parameter_unknowns=["Real fin-fold growth geometry is not measured here."],
+            open_questions=["Compare A with edge2d at the same d and speed: a difference attributes orientation to the growth mode."],
+            limitations=["Does not establish how fin folds grow or that rays are Turing patterns.", "Dimensionless; generic kinetics."])
     return C
 
 SUPERSEDED = {"receipt-claude-tissue-rd-wavelength.json": "v1 (L=32) superseded by receipt-claude-tissue-rd-wavelength-v2.json",

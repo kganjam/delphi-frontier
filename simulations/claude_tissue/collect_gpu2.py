@@ -22,8 +22,8 @@ assert meta, "no META line"
 def img(s, key="u8"):
     shp = s.get("shape") or [s["n"], s["n"]]; return np.frombuffer(base64.b64decode(s[key]), dtype=np.uint8).reshape(shp)
 
-if kind == "edge2d":
-    OUT = ROOT/"artifacts/simulations/claude-tissue-edge2d"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/edge2d_gpu.py"
+if kind in ("edge2d", "uniform2d"):
+    OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind}"; OUT.mkdir(parents=True, exist_ok=True); script = f"simulations/claude_tissue/{kind}_gpu.py"
     summ = {}
     for d in meta["ds"]:
         for v in meta["speeds"]:
@@ -33,20 +33,20 @@ if kind == "edge2d":
                                               top2_power_fraction_mean=float(np.mean([r["top2_power_fraction"] for r in rs])))
     res = dict(job=job, job_state=state, meta=meta, done=done, n_rows=len(rows), summary=summ, rows=rows,
                reading="orientation_A > 0: stripes running proximo-distally (along growth, ray-like); ~0: isotropic; < 0: stripes parallel to the growing edge.")
-    (OUT/"edge2d.json").write_text(json.dumps(res, indent=1))
+    (OUT/f"{kind}.json").write_text(json.dumps(res, indent=1))
     fig = plt.figure(figsize=(16, 8)); ax = fig.add_subplot(2, 1, 1)
     for d, c in zip(meta["ds"], ["tab:red", "tab:green", "tab:blue"]):
         xs = [s for s in meta["speeds"] if f"d={d},v={s}" in summ]
         ax.errorbar(range(len(xs)), [summ[f"d={d},v={s}"]["orientation_A_mean"] for s in xs], [summ[f"d={d},v={s}"]["orientation_A_sd"] for s in xs], marker="o", color=c, label=f"d={d}")
     ax.set_xticks(range(len(meta["speeds"]))); ax.set_xticklabels([("static (all at once)" if s == 0 else f"edge speed {s}") for s in meta["speeds"]])
     ax.axhline(0, color="k", lw=0.5); ax.set_ylabel("orientation index A (+1 = proximo-distal stripes)"); ax.legend()
-    ax.set_title(f"SIMULATED 2-D distal-edge growth vs static patterning ({len(meta['seeds'])} seeds each); dimensionless")
+    ax.set_title(f"SIMULATED 2-D {'distal-edge growth vs static patterning' if kind == 'edge2d' else 'UNIFORM proximo-distal growth (control)'} ({len(meta['seeds'])} seeds each); dimensionless")
     for i, s in enumerate(sorted(snaps, key=lambda s: (s["d"], -s["speed"] if s["speed"] else 1))[:12]):
         a2 = fig.add_subplot(2, 12, 13 + i); a2.imshow(img(s), cmap="magma", origin="lower", aspect="auto"); a2.axis("off")
         a2.set_title(f"d={s['d']}\n{'static' if s['speed']==0 else 'v='+str(s['speed'])}", fontsize=7)
     fig.text(0.5, 0.02, "panels: final field, seed 1, distal (growing) edge at top", ha="center", fontsize=8)
-    fig.tight_layout(rect=(0, 0.03, 1, 1)); fig.savefig(OUT/"edge2d.png", dpi=100); plt.close(fig)
-    outs = [OUT/"edge2d.json", OUT/"edge2d.png"]
+    fig.tight_layout(rect=(0, 0.03, 1, 1)); fig.savefig(OUT/f"{kind}.png", dpi=100); plt.close(fig)
+    outs = [OUT/f"{kind}.json", OUT/f"{kind}.png"]
     if frames:
         tmp = tempfile.mkdtemp(prefix="e2v-"); fr = sorted(frames, key=lambda f: f["k"])
         for f in fr:
@@ -54,8 +54,8 @@ if kind == "edge2d":
             a.set_title(f"SIMULATED d={f['d']}, edge speed {f['speed']}\nframe {f['k']} (distal edge grows upward)", fontsize=8)
             fg.savefig(f"{tmp}/f{f['k']:03d}.png", dpi=90); plt.close(fg)
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-threads", "1", "-framerate", "10", "-i", f"{tmp}/f%03d.png", "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2",
-                        "-pix_fmt", "yuv420p", "-c:v", "libx264", str(OUT/"edge2d.mp4")], check=True)
-        subprocess.run(["cp", f"{tmp}/f{fr[-1]['k']:03d}.png", str(OUT/"poster.png")], check=True); outs += [OUT/"edge2d.mp4", OUT/"poster.png"]
+                        "-pix_fmt", "yuv420p", "-c:v", "libx264", str(OUT/f"{kind}.mp4")], check=True)
+        subprocess.run(["cp", f"{tmp}/f{fr[-1]['k']:03d}.png", str(OUT/"poster.png")], check=True); outs += [OUT/f"{kind}.mp4", OUT/"poster.png"]
 else:
     OUT = ROOT/"artifacts/simulations/claude-tissue-phase-map"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/phase_map_gpu.py"
     grid = {}
@@ -93,7 +93,7 @@ else:
     fig.tight_layout(); fig.savefig(OUT/"phase-map.png", dpi=100); plt.close(fig)
     outs = [OUT/"phase-map.json", OUT/"phase-map.png"]
 ok = state == "COMPLETED" and done is not None
-rec = dict(name=f"claude-tissue-{kind}", command=f"python3 /work/{'edge2d' if kind == 'edge2d' else 'phasemap'}.py (args in META)", job=job, job_state=state,
+rec = dict(name=f"claude-tissue-{kind}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap'}[kind] }.py (args in META)", job=job, job_state=state,
            exit_code=0 if ok else 1, seed=meta.get("seeds"), wall_s=(done or {}).get("wall_s"),
            compute=f"Nebius {job} ({meta.get('gpu')}), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
            code_sha256={script: meta["script_sha256"]}, code_matches_repo=bool(meta["script_sha256"] == sha(ROOT/script)),
