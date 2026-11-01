@@ -112,3 +112,18 @@ def test_full_run_retains_raw_fields(tmp_path, monkeypatch):
         assert (tmp_path / f).exists()
     z = np.load(tmp_path / "independent_fields.npz")
     assert {"seed0_true", "seed2_optimizer", "N256_dt0.005_true", "N64_dt0.005_baseline"} <= set(z.files)
+
+
+def test_return_audit_and_render_on_short_run(tmp_path, monkeypatch):
+    from engineering.rd_inverse import audit_return, render
+    _short(monkeypatch)
+    d.run(tmp_path, "cpu", False)
+    r = audit_return.audit(tmp_path)
+    assert r["transport"]["receipt_complete"] and not r["transport"]["files_hash_mismatch_or_missing"]
+    assert r["numerical_validity"]["all_counts_64"] and r["numerical_validity"]["trace_score_recompute_max_abs_diff"] < 1e-12
+    # a tampered field must be caught
+    z = dict(np.load(tmp_path / "targets.npz")); z["fields"] = z["fields"] + 1e-3
+    np.savez_compressed(tmp_path / "targets.npz", **z)
+    assert audit_return.audit(tmp_path)["transport"]["files_hash_mismatch_or_missing"] == ["targets.npz"]
+    render.render(tmp_path, tmp_path / "p.png")
+    assert (tmp_path / "p.png").stat().st_size > 10000
