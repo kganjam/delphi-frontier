@@ -39,10 +39,11 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
   and speeds follow approximately one rising trend, with deviations up to about 0.02 λ.
 - **Edge sharpness.** A smooth zone edge (logistic, width 1) lowers the switch to 0.26 λ (coarse grid). With width 2,
   rays appear at every nominal width tested, because the soft edge itself spreads growth.
-- **Kinetics.** b = 1.1, d = 13 gives about 0.35 λ on the coarse grid. b = 1.8, d = 30 gave 0.28 λ on the coarse grid,
-  but grid refinement puts it above 0.28 λ. Whether the switch depends on kinetics is unresolved (refined bracket pending).
-- **Robust statement.** It is qualitative: a narrow, sharp-edged apical zone gives bands, and a zone wider than a
-  kinetics-, speed- and edge-dependent fraction of λ (about 0.25–0.5 across all runs here) gives rays.
+- **Kinetics.** On the refined grid, three stripe-regime kinetics give 0.36, 0.35 and 0.32 λ (b = 0.9/1.1/1.8;
+  d = 10/13/30). The switch is nearly independent of kinetics; the larger coarse-grid spread was a grid artifact.
+- **Robust statement.** A narrow, sharp-edged apical zone gives bands. A zone wider than about **one third of a pattern
+  wavelength** gives rays: 0.32–0.36 λ on the refined grid across three kinetics and three rate scales at slow
+  outgrowth. The threshold rises with outgrowth speed (to about 0.5 λ) and falls with a softer zone edge (to about 0.26 λ).
 - **Numerical checks.** Grid refinement lowered the coarse-grid switch by up to about 0.04 λ and removed a coarse-grid
   failure window at γ = 2 (an artifact). Above the switch, newly grown tissue is almost perfectly ray-like
   (distal A 0.94–1.00).
@@ -753,12 +754,9 @@ stripe-regime cell, b = 1.8 and d = 30 (λ ≈ 10.5, σ_max ≈ 0.062, close to 
 |---|---|---|---|---|---|
 | Distal A | 0.69 | 0.82 | 0.80 | 0.91 | 0.95 |
 
-**Reading.**
-- The switch lies **below 3.0 (< 0.28 λ)**, against about 0.39 λ for b = 0.9 and d = 10 on the same grid.
-- The two cells have nearly the same wavelength and pattern-formation rate. So **the zone-width switch also depends on
-  the kinetics, beyond λ and σ**, and "about λ/3" is not universal.
-- The robust qualitative statement is: a narrow apical zone gives edge-parallel bands, and a zone wider than a
-  kinetics-, speed- and edge-dependent fraction of λ (about 0.25–0.5 across all runs here) gives rays.
+**First (coarse-grid) reading, superseded by the refinement below.** The coarse switch lay below 3.0 (< 0.28 λ), against
+about 0.39 λ for b = 0.9 and d = 10, which suggested a kinetics dependence beyond λ and σ. The refined-grid runs
+further down show this was mostly a coarse-grid artifact.
 - **Third cell, b = 1.1 and d = 13** (`claude-tissue-pzone-kin2`, job `aijob-e00y1g0v1b3ecchbh1`, COMPLETED, 576.1 s;
   λ ≈ 10.8):
 
@@ -777,8 +775,13 @@ stripe-regime cell, b = 1.8 and d = 30 (λ ≈ 10.5, σ_max ≈ 0.062, close to 
   −0.74). On the coarse grid, 3.0 gave 0.69.
   - So the refined switch for this cell is **above 3.0 (> 0.28 λ)**: the coarse grid biased it *low*, the opposite of
     b = 0.9.
-  - **The apparent kinetics dependence may be a grid artifact.** The claim is withdrawn pending the refined upper
-    bracket (physical L_p = 3.5–4.5, `claude-tissue-pzone-refine-kinb`).
+  - **Refined upper bracket** (`claude-tissue-pzone-refine-kinb`, job `aijob-e00qbh84bdsew31p9w`, COMPLETED, 1566.2 s):
+    distal A is 0.83, 0.92 and 0.96 at physical L_p = 3.5, 4.0 and 4.5. The refined switch is about **3.4 ≈ 0.32 λ**.
+  - **Refined b = 1.1, d = 13** (`claude-tissue-pzone-refine-kin2`, job `aijob-e00jsf77x3t7fj234e`, COMPLETED, 1539.4 s):
+    distal A is 0.00, 0.86 and 0.96 at 3.5, 4.0 and 4.5. The switch is about **3.8 ≈ 0.35 λ**.
+  - **Refined grid, all three kinetics:** 0.36 λ (b = 0.9, d = 10), 0.35 λ (b = 1.1, d = 13), 0.32 λ (b = 1.8, d = 30).
+  - **The apparent kinetics dependence on the coarse grid (0.28–0.39 λ) was mostly a grid artifact.** On the refined
+    grid the switch is about 0.32–0.36 λ across all three kinetics, a weak dependence at most.
 - **Distance from onset** (`claude-tissue-pzone-kin3`, job `aijob-e00wrk8ny0sndmatrt`, COMPLETED, 620.6 s), at b = 0.9,
   d = 11, one step deeper than d = 10:
 

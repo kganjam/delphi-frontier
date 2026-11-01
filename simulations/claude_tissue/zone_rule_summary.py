@@ -27,8 +27,10 @@ GROUPS = {   # name: (gamma, physical v, grid, edge, [(dir, kind, scale)])
     "coarse, smooth edge (w=1), gamma 1, v 0.1": (1.0, 0.1, "coarse", "smooth1", [("claude-tissue-pzone-smooth", "pzone_smooth", 1.0), ("claude-tissue-pzone-smooth-b", "pzone_smooth_b", 1.0)]),
     "coarse, sharp edge, b 1.1 d 13, gamma 1, v 0.1": (1.0, 0.1, "coarse", "kin", [("claude-tissue-pzone-kin2", "pzone_kin2", 1.0)]),
     "coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1": (1.0, 0.1, "coarse", "kin", [("claude-tissue-pzone-kin", "pzone_kin", 1.0), ("claude-tissue-pzone-kinb", "pzone_kinb", 1.0)]),
+    "refined, sharp edge, b 1.1 d 13, gamma 1, v 0.1": (1.0, 0.1, "refined", "kin", [("claude-tissue-pzone-refine-kin2", "pzone_refine_kin2", 0.5)]),
+    "refined, sharp edge, b 1.8 d 30, gamma 1, v 0.1": (1.0, 0.1, "refined", "kin", [("claude-tissue-pzone-refine-kin", "pzone_refine_kin", 0.5), ("claude-tissue-pzone-refine-kinb", "pzone_refine_kinb", 0.5)]),
 }
-LAMBDA_OVERRIDE = {"coarse, sharp edge, b 1.1 d 13, gamma 1, v 0.1": 10.83, "coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1": 10.54}   # linear-theory lambda for those kinetics
+LAMBDA_OVERRIDE = {"refined, sharp edge, b 1.1 d 13, gamma 1, v 0.1": 10.83, "refined, sharp edge, b 1.8 d 30, gamma 1, v 0.1": 10.54, "coarse, sharp edge, b 1.1 d 13, gamma 1, v 0.1": 10.83, "coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1": 10.54}   # linear-theory lambda for those kinetics
 
 def crossing(pts, level=0.5):
     pts = sorted(pts)
@@ -58,7 +60,7 @@ if __name__ == "__main__":
     pj = OUT/"zone-rule.json"; pj.write_text(json.dumps(out, indent=1))
     fig, ax = plt.subplots(1, 2, figsize=(13, 4.8))
     mk = {("refined", "sharp"): ("o", "tab:blue", "refined grid, sharp edge"), ("coarse", "sharp"): ("s", "tab:gray", "coarse grid, sharp edge"),
-          ("coarse", "smooth1"): ("^", "tab:green", "coarse grid, smooth edge (width 1)"), ("coarse", "kin"): ("D", "tab:red", "coarse grid, other kinetics (b,d)")}
+          ("coarse", "smooth1"): ("^", "tab:green", "coarse grid, smooth edge (width 1)"), ("coarse", "kin"): ("D", "tab:red", "coarse grid, other kinetics (b,d)"), ("refined", "kin"): ("D", "tab:purple", "refined grid, other kinetics (b,d)")}
     seen = set()
     for name, r in res.items():
         if r["Lp_switch_over_lambda"] is None: continue

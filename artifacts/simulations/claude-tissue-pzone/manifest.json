@@ -1,9 +1,9 @@
 {
-  "base_commit": "6bb4c8eb1acd841479b99a6b994d64fd7d48e96e",
+  "base_commit": "ca731c17a023bcf1d5ca6abb1987e0920b0a66bc",
   "code_sha256": {
     "simulations/claude_tissue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "simulations/claude_tissue/build_manifests.py": "702cb6402f992a2d46ba3a63b79abb6650193ecca8b6060384a0396b8998c33e",
-    "simulations/claude_tissue/collect_gpu2.py": "ed85d345f24fada1aae99b97ca8cade884b0892ffcc90b5a6fac4a65a5865313",
+    "simulations/claude_tissue/build_manifests.py": "81578ea927426882d133c8f8af9476649d4946ddc5ca7e8009555c55dad7f33f",
+    "simulations/claude_tissue/collect_gpu2.py": "2a103acd4ad00f1fcfe06c39268a500b82ea7af565039e592ac9cdd811d818e0",
     "simulations/claude_tissue/collect_rd_v2.py": "0e12867daab7054d0bd22d3d9dfaeea63d38f77a4b20076e2bd1a6471cf9325e",
     "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
     "simulations/claude_tissue/dev_programme.py": "ff9f4336262a7f650edfc4185c7b247da697a5a87321d117d3bc11928e33a070",
@@ -36,7 +36,7 @@
     "simulations/claude_tissue/transfer_regimes.py": "59d228120ae335b3f903ecf9e311dc4f40654c2845a8c492146c03f9c17d2b1a",
     "simulations/claude_tissue/uniform2d_gpu.py": "216a97a8916435f43782385b52668e811dfc53bee8557b514537c602eb5e3af4",
     "simulations/claude_tissue/uniform2d_y0_gpu.py": "c479a1460a92c3b01ad1428d19d247657bb697b76f61f2b44842a1eea8629288",
-    "simulations/claude_tissue/zone_rule_summary.py": "e9a80dd232066f72200ef1bee9d54e94cbdab8b3c53e29be882b75983136eb47"
+    "simulations/claude_tissue/zone_rule_summary.py": "288e245d7d6e01359b9aacd6c29b3455417deaab85cfe2fc6c4b8ed7483a1f18"
   },
   "does_not_establish": [
     "Does not establish that fin rays are Turing patterns.",
@@ -62,8 +62,8 @@
       "sha256": "7350ce6909f73c09bb39ab7b29d517f28f5b30a8a35080641e549b9a57fde960"
     },
     "receipt-claude-tissue-zone-rule-summary.json": {
-      "bytes": 3983,
-      "sha256": "f14234b2c246f96380f12281fe4cc89d2c58d92a703e7693ac1c638783bb90ce"
+      "bytes": 4431,
+      "sha256": "bee86191ab0e1cecc8740015dbb6e79964c9ade789e16b5c0b2d9b3ef2774ce7"
     },
     "review-gemini-4-argon-final.txt": {
       "bytes": 2024,
@@ -74,12 +74,12 @@
       "sha256": "0dce0a9792755942d92ab7b92c1f9181f5a2da231335ea45a8d0c0a53ce86658"
     },
     "zone-rule.json": {
-      "bytes": 8674,
-      "sha256": "78ac939f96bf10f3a327077e773da3a8dae346a87aa3c33df743b78c6569edbc"
+      "bytes": 9684,
+      "sha256": "bf9512b96ba76417dc230b342075b004aaee84b6fcc1092fe47c4ed1dc861ca1"
     },
     "zone-rule.png": {
-      "bytes": 92359,
-      "sha256": "689079ec2241c90169a65f34cb5595b026b7d4128014cafb4f9a68e6e18d276e"
+      "bytes": 95208,
+      "sha256": "a0469ff7830e6d384ce479383019b69d37bb6bb91c1829726c6c4f0356eeffe8"
     }
   },
   "id": "claude-tissue-pzone",
@@ -102,6 +102,9 @@
     "artifacts/simulations/claude-tissue-pzone-refine-g1/pzone_refine_g1.json": "4b9a0651dbfea674a83c0623539a22ee241e0bfea9742e4668d671cde9bb5506",
     "artifacts/simulations/claude-tissue-pzone-refine-g1v40/pzone_refine_g1v40.json": "ae040dc3bc86b4733fa3d85ca36a3e8f75e32318992abb23f9a82874cfb7790a",
     "artifacts/simulations/claude-tissue-pzone-refine-g2b/pzone_refine_g2b.json": "466d9f7eeda2da0e156f3a8feb4494a1e5c9cab6b09bc63035601de842c3d8e0",
+    "artifacts/simulations/claude-tissue-pzone-refine-kin/pzone_refine_kin.json": "733e2fc291a18a6a33ebc88f5d46c7dcbef22cc6aa3cb56ef9eb89d01093e56c",
+    "artifacts/simulations/claude-tissue-pzone-refine-kin2/pzone_refine_kin2.json": "5f35a15bd24de617badf1d693aa64268e2ccbbc493d9ab9bba7100315edf0f57",
+    "artifacts/simulations/claude-tissue-pzone-refine-kinb/pzone_refine_kinb.json": "a31aa83be482b20b1f2ee4c5af56d19940148d7eeaee1a9809bdc0c7f33d346e",
     "artifacts/simulations/claude-tissue-pzone-refine/pzone_refine.json": "3ca1cc757fac02b929557acb96d916475ce556cb1a018d127aaa3cd49be99c52",
     "artifacts/simulations/claude-tissue-pzone-smooth-b/pzone_smooth_b.json": "2ec439abccb99e76eac2834d448f597446061f923d6648e1408ad612d4b1bf46",
     "artifacts/simulations/claude-tissue-pzone-smooth/pzone_smooth.json": "c89f199ceefaad32a80664f2dc52184c31bb3aed41d500ec4ef37d48fc1698b7"
@@ -143,7 +146,7 @@
       "run": "claude-tissue-zone-rule-summary",
       "seed": "none (derived)",
       "superseded": null,
-      "wall_s": 0.318
+      "wall_s": 0.361
     }
   ],
   "scales": [
@@ -200,7 +203,9 @@
       "ZONE RULE (coarse, sharp edge, gamma 2, v 0.4): Lp*/lambda = 0.50 at v/sqrt(gamma) = 0.28",
       "ZONE RULE (coarse, smooth edge (w=1), gamma 1, v 0.1): Lp*/lambda = 0.26 at v/sqrt(gamma) = 0.10",
       "ZONE RULE (coarse, sharp edge, b 1.1 d 13, gamma 1, v 0.1): Lp*/lambda = 0.36 at v/sqrt(gamma) = 0.10",
-      "ZONE RULE (coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1): Lp*/lambda = 0.28 at v/sqrt(gamma) = 0.10"
+      "ZONE RULE (coarse, sharp edge, b 1.8 d 30, gamma 1, v 0.1): Lp*/lambda = 0.28 at v/sqrt(gamma) = 0.10",
+      "ZONE RULE (refined, sharp edge, b 1.1 d 13, gamma 1, v 0.1): Lp*/lambda = 0.35 at v/sqrt(gamma) = 0.10",
+      "ZONE RULE (refined, sharp edge, b 1.8 d 30, gamma 1, v 0.1): Lp*/lambda = 0.32 at v/sqrt(gamma) = 0.10"
     ],
     "open_questions": [
       "Map Lp and v onto measured distal proliferation in fin folds."
