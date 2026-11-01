@@ -1,0 +1,41 @@
+{
+ "accounting": {
+  "charge": "every byte actually read is charged to the global, library and window counters, on success and on every failure path (partial, oversized, mismatched), and each retry attempt is charged again",
+  "index_download": "charged to the library and global counters",
+  "window_cap_source": "window counter is the transport's, not only count_window's successful return"
+ },
+ "completion": {
+  "complete": "exactly the 330 expected identities present and all 330 usable; nothing else is called complete",
+  "exit_codes": {
+   "complete": 0,
+   "partial_data": 3,
+   "stopped_on_bound": 2,
+   "stopped_on_error": 4
+  },
+  "expected_identities": "330 = 10 libraries x 33 windows (11 amplicons + 22 comparison); built from controls.json, must be unique",
+  "no_promotion": "a lower or missing count is never replaced, rescaled or promoted",
+  "partial_data": "all 330 identities present but at least one unusable (failed rows are kept, excluded from summaries, never imputed)",
+  "receipt_fields": [
+   "expected_identities",
+   "present_identities",
+   "usable_identities",
+   "missing_identities",
+   "unusable_identities"
+  ],
+  "stopped_on_bound": "a runtime/request/byte bound ended the run; rows completed so far kept, missing identities listed",
+  "stopped_on_error": "an unexpected exception ended the run; rows kept, exception type recorded",
+  "usable_statuses": [
+   "ok",
+   "beyond_last_interval"
+  ]
+ },
+ "frozen_before": "any target-window read; trigger: admission review infra-to-regulatory-transport-review.md of packet b59f3501 / source 6048ee7",
+ "independent_crosscheck": "fixtures indexed and queried by htslib (pysam 0.24.1, samtools/htslib 1.24) are committed as bytes with htslib's own counts; the same reader must reproduce them; the real 0dpa1 index is checked against htslib's contig list; pysam is a test-time tool only, not a packet dependency",
+ "schema": "frontier.reg-proxy.transport-amendment/1",
+ "supersedes": "only the transport, accounting and completion-status clauses of protocol.json (sha256 7a2ec7be\u2026); windows, controls, count rule, summary rule and scientific questions are unchanged and protocol.json is not edited",
+ "transport": {
+  "bounded_read": "read at most expected_length+1 bytes; one extra byte means oversized -> refused; response closed on every path",
+  "order": "open the response, check HTTP status and Content-Range first; for any status other than 206 close the response and read zero body bytes (unsupported_range)",
+  "preflight": "before a request is sent, refuse it if its expected length would take the global, per-library or per-window total over its cap"
+ }
+}
