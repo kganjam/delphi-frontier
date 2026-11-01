@@ -343,8 +343,10 @@ whole point of §0 and an earlier draft of this section wrongly titled it "Known
 mesenchyme; a 35-species flying-fish phylogenomic study names `kcnh2a` and `lat4a` and reports a
 zebrafish phenocopy of flying-fish fin proportion; RA→`rcan2`→Kcnk5b→Ca2+→`shha` scales the pectoral
 fin bud; cell-type-specific bioelectric manipulation separates fin size from ray segment length;
-`cacna1g` loss prolongs regenerative outgrowth; `hox13` loss shifts rays toward spiny character;
-`hhip` constrains radial number; `hoxB` clusters position the pectoral fin via `tbx5a`; `and1/and2`
+`cacna1g` loss prolongs regenerative outgrowth; `hox13` loss shifts rays toward spiny character
+while spiny rays in two other teleosts form without actinotrichia at all; a `shha` timing pulse and
+`szlA`/`szlB` loss change caudal shape; `klhl41b` builds sarcomeres and supports muscle growth; `met`
+brings migrating muscle progenitors into the paired fins; `hhip` constrains radial number; `hoxB` clusters position the pectoral fin via `tbx5a`; `and1/and2`
 build actinotrichia and set fin-fold shape; `eda` loss removes scales and fin rays; a `pitx1` pelvic
 enhancer is poised then activated; three Exocoetid species share 2n = 48; exactly one Exocoetidae
 assembly is public and it is unannotated.
