@@ -1,0 +1,136 @@
+{
+  "schema": "frontier.xenomorph.protocol/1",
+  "title": "Differential-adhesion aggregation of a dissociated two-type cell population (Cellular Potts, Morpheus 2.3.9)",
+  "frozen_utc": "2026-11-01",
+  "scope": "Simulated aggregate morphology under the differential adhesion hypothesis. Not a Xenobot, not any organism. No frog parameter is used: every energy, temperature and size is generic and dimensionless (lattice units, Monte Carlo steps). Cilia are not modelled. Contraction is not modelled here at all.",
+  "engine": {
+    "name": "Morpheus",
+    "version": "2.3.9",
+    "binary_url": "https://gitlab.com/morpheus.lab/morpheus/-/package_files/178666119/download",
+    "binary_sha256": "3d9a6e5a4cb86824b745500df1474596d39cce5deed24f767c0841df0f94d5ad",
+    "source_commit": "29a26b00838736c4180f22fea075688f1d51e619",
+    "template": "Examples/CPM/CellSorting_3D.xml (Graner & Glazier 1992 extended Potts), re-parameterised and re-initialised by engineering/xenomorph/cpm_model.py"
+  },
+  "lattice": {
+    "class": "cubic",
+    "neighborhood_order": 2,
+    "boundary": "noflux (Morpheus default), all faces",
+    "base_size": 100
+  },
+  "initial_population": {
+    "description": "Dense dissociated suspension: the n sites of a simple-cubic lattice (spacing 2r+gap+2*jitter) nearest the lattice centre, each jittered by an independent seeded uniform +-jitter per axis. Neighbours along a lattice axis stay >= 2r+gap apart, so no two cells touch at t=0. Types A and B 50:50 by a seeded shuffle.",
+    "n_cells": 128,
+    "cell_radius_base": 4.0,
+    "gap_base": 1.0,
+    "jitter_base": 0.5,
+    "fraction_type_A": 0.5,
+    "placement_rng": "numpy.random.default_rng(seed)",
+    "check": "at t=0 the contact graph must have n_cells components (verified by analysis, stored in metrics)",
+    "revision_before_freeze": "A low-density random-sequential-addition placement (ball radius 38, gap >= 2, 14% packing) was piloted first with seed 99 (not a protocol seed). In 4000 MCS adhesive cells formed ~21 local clusters that did not merge and Rg did not fall; the zero-adhesion pilot also formed transient neutral contacts (largest cluster 0.22). Placement was changed to the dense suspension above before any protocol seed was run. Pilot metrics are kept in results/xenomorph/pilot/. A second pilot (seed 98) with the dense placement ran 500-3000 MCS to confirm compaction begins (8 aggregates, rg_norm 0.75 -> 0.66 at 500 MCS) and motivated the zero-adhesion gate change above. No protocol seed was run before the freeze."
+  },
+  "cells": {
+    "volume_target": "measured initial sphere voxel count (same for every cell)",
+    "volume_strength": 1.0,
+    "temperature": 3.0,
+    "mcs_duration": 1
+  },
+  "arms": {
+    "dah": {
+      "role": "main: unequal adhesion (A more cohesive) -> compaction and A-core/B-shell sorting",
+      "J": {
+        "A-A": 2,
+        "B-B": 8,
+        "A-B": 7,
+        "A-M": 10,
+        "B-M": 10
+      },
+      "surface_tensions": {
+        "gamma_AM": 9.0,
+        "gamma_BM": 6.0,
+        "gamma_AB": 2.0,
+        "engulfment_condition": "gamma_AM > gamma_AB + gamma_BM: 9 > 8, B should engulf A"
+      }
+    },
+    "equal": {
+      "role": "control: identical types; must compact but must NOT sort",
+      "J": {
+        "A-A": 4,
+        "B-B": 4,
+        "A-B": 4,
+        "A-M": 10,
+        "B-M": 10
+      },
+      "surface_tensions": {
+        "gamma_AM": 8.0,
+        "gamma_BM": 8.0,
+        "gamma_AB": 0.0
+      }
+    },
+    "zero": {
+      "role": "control: adhesion off. Contact carries no energy advantage over medium (J_xy = J_xM + J_yM for every pair, so every gamma_xM and gamma_AB is 0); the population must NOT compact",
+      "J": {
+        "A-A": 20,
+        "B-B": 20,
+        "A-B": 20,
+        "A-M": 10,
+        "B-M": 10
+      },
+      "surface_tensions": {
+        "gamma_AM": 0.0,
+        "gamma_BM": 0.0,
+        "gamma_AB": 0.0
+      }
+    }
+  },
+  "surface_tension_definition": "gamma_xM = J_xM - J_xx/2 ; gamma_AB = J_AB - (J_AA + J_BB)/2 (Glazier & Graner 1993)",
+  "seeds": {
+    "replicates": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rule": "same seed drives placement and Morpheus RandomSeed"
+  },
+  "time_horizon_mcs_base": 20000,
+  "snapshot_interval_mcs_base": 500,
+  "refinement": {
+    "arm": "dah, seeds 1-2",
+    "scales": [
+      0.75,
+      1.0,
+      1.25
+    ],
+    "rule": "lattice size, cell radius, gap and placement radius multiply by s; volume target follows; J, T, volume strength unchanged; horizon and snapshot interval multiply by s^2 (diffusive rescaling, an assumption stated here before running)",
+    "compared": "final largest_cluster_fraction, sphericity, sorting_index_homotypic, core_shell_index, normalised Rg (Rg / (N * V_cell)^(1/3))",
+    "verdict_rule": "Report the change between scale 1.0 and 1.5 for each metric. A metric is called resolution-stable only if |change| is smaller than the seed spread (max-min over seeds 1-4 at scale 1.0). Otherwise the metric is reported as resolution-dependent, and no claim depends on its exact value."
+  },
+  "measurements_per_snapshot": {
+    "n_aggregates": "connected components of the cell contact graph (two cells adjacent if any of their voxels share a face)",
+    "largest_cluster_fraction": "cells in the largest component / N",
+    "sphericity_largest": "pi^(1/3) (6V)^(2/3) / A of the largest component, A from marching cubes (level 0.5) on its binary occupancy, V voxel count",
+    "contact_area_cell_cell": "count of voxel faces between two different cells (lattice units^2)",
+    "contact_area_cell_medium": "count of voxel faces between a cell and medium",
+    "rg_all": "radius of gyration of all cell voxels about their centroid",
+    "rg_norm": "rg_all / (N * V_cell)^(1/3)",
+    "sorting_index_homotypic": "(A-A + B-B face area) / total cell-cell face area; ~0.5 for a random 50:50 mix",
+    "core_shell_index": "(mean radial distance of B voxels - mean radial distance of A voxels) / rg_all, from the centroid of all cells; >0 means A core, B shell"
+  },
+  "controls_and_falsifiers": {
+    "zero_adhesion": "PASS iff final rg_norm >= 0.95 * initial rg_norm in every seed (the population does not compact). FAIL means the setup or engine is wrong and no other arm may be read. largest_cluster_fraction is reported but NOT gated for this arm: in a dense suspension jammed cells touch without any cohesive energy (dense pilot, seed 98: 0.46 at 500 MCS with Rg unchanged).",
+    "equal_adhesion": "PASS iff |mean final core_shell_index over seeds| < 0.1 AND mean final sorting_index_homotypic < 0.60 (mixing). FAIL marks a sorting artifact.",
+    "dah_compaction": "aggregation claimed iff final largest_cluster_fraction >= 0.9 AND rg_norm falls by >= 20% from t=0, in every seed. (A perfect ball of the same volume has rg_norm = sqrt(3/5)*(3/(4 pi))^(1/3) = 0.4806, i.e. ~36% below the t=0 value of ~0.75.)",
+    "dah_sorting": "sorting claimed iff mean final core_shell_index > 0.1 AND mean final sorting_index_homotypic exceeds the equal arm's mean by more than (dah range + equal range) over seeds",
+    "equal_compaction": "reported, same rule as dah_compaction (identical-type cohesion should also compact)"
+  },
+  "field_return": {
+    "seed_1": "every 2nd snapshot (+ last)",
+    "other_seeds": "every 4th snapshot (+ last)",
+    "format": "fields.npz from pack_fields.py"
+  },
+  "compute": {
+    "production": "Nebius AI job, CPU platform, 16 Morpheus runs in parallel, 1 thread each",
+    "gpu_sweep": "engineering/xenomorph/offlattice.py on one Nebius GPU (separate engine, separate config)",
+    "cross_engine": "PhysiCell 1.14.2 three-arm check (separate config, declared in its own file)"
+  }
+}
