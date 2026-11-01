@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 73be6cd70307",
- "input_fingerprint": "73be6cd703076f8e5931e9522a357a4efd96a8f50b3e9a00888586d89735d20c",
+ "label": "snapshot of inputs 8d7f1e2366c1",
+ "input_fingerprint": "8d7f1e2366c1e0a254f62418c5cf581d3831530efbddef087ecf6e021c599cde",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3574,6 +3574,11 @@
    "bytes": 18435
   },
   {
+   "path": "deploy/system/operations-pins.json",
+   "sha256": "032e135089769132f9ee23df45b87172977b81f21c9f7488d997063f04be2b88",
+   "bytes": 2654
+  },
+  {
    "path": "docs/audits/epithelial-sweep-review-2026-11-01.md",
    "sha256": "d71f687b8e37f84de3806941ed2cd2afa46f0918e58622283fc691af43c6bef6",
    "bytes": 7054
@@ -3954,6 +3959,16 @@
    "bytes": 28357
   },
   {
+   "path": "frontier/system_operations.py",
+   "sha256": "e1a6366a468c365027d089feed7515274ecec8418e013e78070d30066b828c8a",
+   "bytes": 27159
+  },
+  {
+   "path": "frontier/system_status.py",
+   "sha256": "45c1594865929bae1ff27e5a2847ad8c238022716e172e9a43a87cf7cb8041c4",
+   "bytes": 28721
+  },
+  {
    "path": "frontier_adapters/examples/orx_run_turing/exit_code",
    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
    "bytes": 2
@@ -4039,6 +4054,11 @@
    "bytes": 66447
   },
   {
+   "path": "results/infra/queue.json",
+   "sha256": "af978d4315edc3a0b1bbf0166609351957163d6cabb09e9c73b158a34a955435",
+   "bytes": 59042
+  },
+  {
    "path": "results/resources/agent-contributors.json",
    "sha256": "d576ef7b76fd2f2b7db4e6c7ae245f87480d811da17068d17b7338b85911c44b",
    "bytes": 62280
@@ -4049,9 +4069,39 @@
    "bytes": 53846
   },
   {
+   "path": "results/resources/backup-recovery-20261101.json",
+   "sha256": "bac3def0d10368d2c807e6af2c04ef6f72958f4e49d45aa80756bef9bd84332d",
+   "bytes": 3978
+  },
+  {
+   "path": "results/resources/backup-recovery-four-film-20261101.json",
+   "sha256": "edb84ada1ac11e7fc6642a2a97fa7819dbdfb7d3ba938d1526673deb0c1d1188",
+   "bytes": 10983
+  },
+  {
+   "path": "results/resources/backup-recovery-service-20261101.json",
+   "sha256": "41b15bf237e055146bb6909dc8bf175e668b3c588079978d526f0cca28c1e805",
+   "bytes": 14010
+  },
+  {
+   "path": "results/resources/backup-recovery-stable-addons-20261101.json",
+   "sha256": "1af043d9ba3b3535011bb7626a99a620a0d7bf9d3e5b5286f1faee85fe8cd24b",
+   "bytes": 13439
+  },
+  {
+   "path": "results/resources/backup-recovery-studies-20261101.json",
+   "sha256": "2991eeb007f592e1ab6e3e6c7bdd90f533946cd8dee9e67f0d4363b68cd07967",
+   "bytes": 13020
+  },
+  {
    "path": "results/resources/bio-model-usage.json",
    "sha256": "7945a1e9958214f43994f0c5d344ee548936eb3cb2083cddb8f97cd1d854494d",
    "bytes": 35686
+  },
+  {
+   "path": "results/resources/current-job-progress.json",
+   "sha256": "2981d4b19d16d338c2c575402f557cc83db8026db52480c8c74b5b3baf3f4d8e",
+   "bytes": 5009
   },
   {
    "path": "results/resources/gcp/runtime-status.json",
@@ -4069,6 +4119,11 @@
    "bytes": 875
   },
   {
+   "path": "results/resources/rd-inverse-completion.json",
+   "sha256": "09fdd97dda0dad7723e9aef5ff5b5250db05be6a866124650c662742437a3c16",
+   "bytes": 3891
+  },
+  {
    "path": "results/resources/repository-activity-20261101-0523.json",
    "sha256": "82313a993699b83fe3256ee5083c946343e0957fed39ca0fe787f6f47032ccf3",
    "bytes": 244705
@@ -4077,6 +4132,21 @@
    "path": "results/resources/resource-inventory.json",
    "sha256": "6901748b19528bce19ff24b0561bdb44a66546553893c8e9146e84d39dced85f",
    "bytes": 47353
+  },
+  {
+   "path": "results/resources/shared-job-counts.json",
+   "sha256": "a935b0a12e963e0f1733856eb4d85cb75d134d520478062bceff769579fc8233",
+   "bytes": 2326
+  },
+  {
+   "path": "results/resources/team-job-ownership.json",
+   "sha256": "93ad1b561e3b0604e98f7b0b13b902c1f3437922fd1d7dcb8c39d3ffd14a226f",
+   "bytes": 6303
+  },
+  {
+   "path": "results/resources/terminal-runtime-receipts.json",
+   "sha256": "862e5fab170dcbbc67ff3ccb44ac93df4f78759c6effd57e1d7b15a4e5563443",
+   "bytes": 9047
   },
   {
    "path": "scripts/fidelity_site.py",
@@ -16909,6 +16979,15 @@
    "Provider-billed total spend remains unknown. Dated job counts and allocation/utilisation samples are recorded separately; they do not establish continuous or current saturation.",
    "Which commit is deployed: not derivable from files"
   ],
+  "operations": {
+   "href": "artifacts/system-operations/operations.json",
+   "status": {
+    "queue": "ok",
+    "runs": "ok",
+    "recovery": "ok",
+    "shared_jobs": "ok"
+   }
+  },
   "review_corrections": {
    "counterfactual": "For every entry it is unknown whether one agent re-reading its own work could have found the same issue; this ledger cannot answer that.",
    "entries": [

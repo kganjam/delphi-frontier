@@ -2,9 +2,8 @@
 
 Inputs are read only from this checkout (seeds/, results/, specs/, tasks/, docs/, site/content/);
 nothing is read from /home, /data or the network. Every input is recorded with its sha256 so a reader
-can check the snapshot against the bytes it was made from. A statistic with no receipt is not emitted:
-there is deliberately no test count, no job count and no "records in a store" figure, because none of
-those is derivable from a file here.
+can check the snapshot against the bytes it was made from. Counts from recorded runs retain their
+source and cutoff; they are not live activity. Database counts come from the running node, not this build.
 
     python3 scripts/build_site.py            # writes site/data/{snapshot,catalog}.json and site/data/docs/
     python3 scripts/build_site.py --check    # exit 1 if the committed output differs from a fresh build
@@ -829,6 +828,16 @@ def genotype_surface(ins: Inputs, out: dict) -> dict | None:
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module.build(ins, out, root=ROOT)
+
+
+def system_operations_surface(ins: Inputs, out: dict) -> dict:
+    sys.path.insert(0, str(ROOT))
+    try:
+        from frontier.system_operations import build
+    finally:
+        sys.path.pop(0)
+    ins.read("frontier/system_status.py")
+    return build(ins, out, root=ROOT)
 
 
 def fidelity_cards(ins: Inputs, out: dict) -> list[dict]:
@@ -1831,6 +1840,7 @@ def build() -> dict[str, bytes]:
     manifests += reuse_studies["gallery_cards"]
     couplings_m = coupling_manifest(ins, files, docs)
     system = system_block(ins, files, docs, board, lean_receipt, simulation, attestation)
+    system["operations"] = system_operations_surface(ins, extra)
     correction_path = "results/coordination/review-corrections.json"
     correction_raw = ins.read(correction_path)
     system["review_corrections"] = json.loads(correction_raw)
@@ -1927,7 +1937,7 @@ def build() -> dict[str, bytes]:
 
 
 def generated_artifact_families() -> list[str]:
-    return ["results", "fish3d", "molecular", "rd-diffusion", "lean-gallery", "genotype", "reuse-study-visuals", "voxel-actuation", "epithelial", "coordination", "observed-allometry", *(path.name for path in print_families())]
+    return ["results", "fish3d", "molecular", "rd-diffusion", "lean-gallery", "genotype", "reuse-study-visuals", "voxel-actuation", "epithelial", "coordination", "observed-allometry", "system-operations", *(path.name for path in print_families())]
 
 
 def write(out: dict[str, bytes]) -> None:
