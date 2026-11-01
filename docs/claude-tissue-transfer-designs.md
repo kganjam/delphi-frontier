@@ -27,8 +27,9 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 - In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
   pattern is spots) and growth along the fin axis.
 - With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
-  a proliferating zone wider than **L_p* ≈ 0.4 λ or less at slow outgrowth** (grid refinement at γ = 2 moved the switch
-  lower, and removed the γ = 2 failure window as a discretisation artifact). Coarse-grid values: 0.37, 0.39 and 0.39 at three rate scales, and a
+  a proliferating zone wider than about **one third of a pattern wavelength** at slow outgrowth (refined grid: 0.32 λ at
+  γ = 2 and 0.35 λ at γ = 1). Refinement also removed the γ = 2 failure window as a discretisation artifact.
+  Coarse-grid values, biased upward: 0.37, 0.39 and 0.39 at three rate scales, and a
   prediction made from two of them was confirmed on the third (12 seeds each). The switch rises with outgrowth speed,
   reaching 0.48 λ at v = 0.4 (L_p* ≈ 3.9 + 3.3·v at γ = 1). This is partly a scaling consistency check, and grid
   sensitivity is under test. Above the switch, newly grown tissue is almost perfectly
@@ -613,7 +614,24 @@ size, v = 0.1 physical; distal A:
 - The refined switch is about **3.8 ≈ 0.35 λ**, against 4.25 on the coarse grid: a downward shift of about 10%.
 - With about 4 cells across the zone at γ = 1, grid sensitivity is moderate. It is larger at γ = 2, where the zone is
   only 2–3 cells.
-- Refined γ = 2 (lower bracket) and refined γ = 0.5 runs are running (`claude-tissue-pzone-refine-g2b`, `-refine-g05`).
+**Refined γ = 2, lower bracket** (`claude-tissue-pzone-refine-g2b`, job `aijob-e00s5meh1qdnxcst63`, COMPLETED, 1526.2 s);
+distal A:
+
+| Physical L_p | 2.0 | 2.25 | 2.5 | 2.75 (earlier refined run) |
+|---|---|---|---|---|
+| Distal A | −0.73 | −0.76 | 0.09 ± 0.37 | 0.91 |
+
+The refined switch is about **2.55 ≈ 0.32 λ**.
+
+**Refined-grid rule.**
+
+| γ | Refined switch | L_p* / λ |
+|---|---|---|
+| 2 | ≈ 2.55 | 0.32 |
+| 1 | ≈ 3.8 | 0.35 |
+
+So **L_p* ≈ 0.33 λ (one third of a pattern wavelength) at slow outgrowth**. The coarse-grid values (0.37–0.39 λ)
+were biased upward by under-resolving the zone. A refined γ = 0.5 run is running (`claude-tissue-pzone-refine-g05`).
 
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
