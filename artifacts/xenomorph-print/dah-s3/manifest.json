@@ -1,0 +1,671 @@
+{
+ "schema": "frontier.xenomorph.print-manifest/1",
+ "label": "Physical model of a simulated cell-aggregate morphology at display scale. Not an organism, not a Xenobot, print preparation unvalidated (printer and resin unknown).",
+ "scope": "Physical model of a SIMULATED aggregate morphology (dimensionless Cellular Potts / differential adhesion). Not a Xenobot, not any organism, not a living construct, not a biological validation; demonstrates nothing about viability. No frog parameter is used. Published constructs move by cilia; cilia are not modelled here.",
+ "printer_resin": {
+  "printer": "unknown",
+  "resin": "unknown",
+  "layer_height": "unknown",
+  "note": "not chosen; run the docs/printing.md operator checklist in PreForm before printing"
+ },
+ "run": {
+  "command": "python -m engineering.xenomorph.printable ",
+  "code_sha256": "e3853629e62b4d54af5e658ff9c54e3c23f7617f82d8d1437215fe66562ce077",
+  "fields_sha256": "649d99fda07fc007ef89cdc8770492575f48c37c4b27b8f48f0618cc421fbdaa",
+  "metrics_sha256": "7c5c5aabebf1e766b63034d76b9474e816ed599bdc06226fcf70b97c24409c6c",
+  "box_mm": 120.0,
+  "min_wall_mm": 1.0,
+  "libraries": {
+   "manifold3d": "3.5.4",
+   "numpy": "2.4.4"
+  }
+ },
+ "scale": {
+  "biological_units": "m",
+  "prop_units": "mm",
+  "rule": "prop_mm = biological_m * 1000 * display_scale",
+  "display_scale": 75.0,
+  "voxel_length_m": 2e-05,
+  "voxel_length_note": "declared nominal assumption (no measured cell size, no frog parameter); the simulation itself is dimensionless",
+  "prop_mm_per_voxel": 1.5,
+  "print_only_additions": "connector struts r=1.25 mm, fixed, never scaled from biology"
+ },
+ "stage_rule": "Stage rule (declared before production fields were read): dissociated t=0; clustering = first snapshot with\nn_aggregates <= n/8; compacting = first with largest_cluster_fraction >= 0.95; compact = first with rg_norm within\n2% of the final value; sorted = final snapshot.  Duplicate times are dropped (stage is then reported merged).",
+ "snapshots": [
+  {
+   "id": "xm-dah-s3-0-dissociated-t0",
+   "label": "dissociated",
+   "n_cells": 128,
+   "connectivity": {
+    "pieces_at_chosen_radius": 128,
+    "radius_factor_needed_to_join_all": 1.3225,
+    "radius_factor_rule": "smallest uniform factor giving every minimum-spanning-tree pair a neck radius >= the join minimum",
+    "chosen_radius_factor": 1.0,
+    "one_body_without_struts": false,
+    "join_rule": "two cell spheres are joined iff their intersection neck radius >= 1.25 mm",
+    "thinnest_accepted_neck_diameter_mm": null
+   },
+   "print_only_struts": {
+    "count": 127,
+    "radius_mm": 1.25,
+    "rule": "minimum spanning tree between sphere pieces that do not overlap; print-only, not biological, not scaled"
+   },
+   "cells_solid": {
+    "file": "xm-dah-s3-0-dissociated-t0-cells.stl",
+    "bytes": 5790684,
+    "sha256": "abc0931dc1f9b4eac58c4e78633fd11b7b8d83c560c500f9398afce093b7b0d8",
+    "units": "mm",
+    "weld": {
+     "merged_vertices": 1,
+     "dropped_faces": 2,
+     "simplify_tolerance_mm": 0.001,
+     "pre_weld_shift_mm": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "cavities": {
+     "enclosed_cavities_filled": 0,
+     "cavity_volume_mm3": 0
+    },
+    "checks": {
+     "vertices": 57908,
+     "triangles": 115812,
+     "finite_vertices": true,
+     "min_triangle_area_mm2": 2.330147889856101e-07,
+     "degenerate_triangles": 0,
+     "edges": 173718,
+     "edges_not_shared_by_exactly_two_faces": 0,
+     "directed_edges_used_more_than_once": 0,
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "unreferenced_vertices": 0,
+     "euler_characteristic": 2,
+     "genus": 0,
+     "signed_volume_mm3": 115953.86072034431,
+     "surface_area_mm2": 59052.572792478415,
+     "bounds_mm": {
+      "min": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "max": [
+       88.4271,
+       88.3739,
+       88.0727
+      ],
+      "size": [
+       88.4271,
+       88.3739,
+       88.0727
+      ]
+     },
+     "fits_box_mm": 120.0,
+     "fits_box": true,
+     "mesh_sha256": "bf7aaaad05811f4cc916d67fac22a85b82a19633e7b9ae0a96f37bdb1afa55f0",
+     "wall_thickness": {
+      "method": "inward ray from area-weighted random face centroids (manifold3d ray_cast)",
+      "samples": 3000,
+      "seed": 7,
+      "no_hit": 0,
+      "min_mm": 2.451905405174146,
+      "p01_mm": 2.4519454883934606,
+      "median_mm": 11.918199675758075,
+      "fraction_below_1mm": 0.0
+     },
+     "min_wall_mm_required": 1.0,
+     "min_wall_ok": true,
+     "min_wall_scope": "sampled faces only; a thinner region between samples can be missed",
+     "self_intersection": "not checked",
+     "ok": true
+    },
+    "stl_round_trip": {
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "ok": true
+    },
+    "watertight_and_manifold": true,
+    "one_connected_body": true,
+    "volume_mm3": 115953.86,
+    "mass_g_at_density": 136.83,
+    "density_g_cm3": 1.18,
+    "density_note": "stated assumption, resin unknown",
+    "biological_volume_m3": 2.7485359578155687e-10,
+    "pieces_without_print_only_struts": 128
+   },
+   "surface_solid": {
+    "file": "xm-dah-s3-0-dissociated-t0-surface.stl",
+    "bytes": 4116284,
+    "sha256": "121fd140859d269186f1de40856cbe2fe8d662bcda9d4a389cd7d4274737e4a6",
+    "units": "mm",
+    "weld": {
+     "merged_vertices": 1,
+     "dropped_faces": 2,
+     "simplify_tolerance_mm": 0.001,
+     "pre_weld_shift_mm": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "cavities": {
+     "enclosed_cavities_filled": 0,
+     "cavity_volume_mm3": 0
+    },
+    "checks": {
+     "vertices": 41164,
+     "triangles": 82324,
+     "finite_vertices": true,
+     "min_triangle_area_mm2": 1.590524334460497e-08,
+     "degenerate_triangles": 0,
+     "edges": 123486,
+     "edges_not_shared_by_exactly_two_faces": 0,
+     "directed_edges_used_more_than_once": 0,
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "unreferenced_vertices": 0,
+     "euler_characteristic": 2,
+     "genus": 0,
+     "signed_volume_mm3": 93515.08320790307,
+     "surface_area_mm2": 52078.84585389332,
+     "bounds_mm": {
+      "min": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "max": [
+       88.0208,
+       87.962,
+       87.4523
+      ],
+      "size": [
+       88.0208,
+       87.962,
+       87.4523
+      ]
+     },
+     "fits_box_mm": 120.0,
+     "fits_box": true,
+     "mesh_sha256": "04273d54baab1031d19c721bdb927f3f6a2f2e73ad8a8fc11ed3df4bc928f9e3",
+     "wall_thickness": {
+      "method": "inward ray from area-weighted random face centroids (manifold3d ray_cast)",
+      "samples": 3000,
+      "seed": 7,
+      "no_hit": 0,
+      "min_mm": 2.4519031046091166,
+      "p01_mm": 2.451939525063171,
+      "median_mm": 10.971297438533448,
+      "fraction_below_1mm": 0.0
+     },
+     "min_wall_mm_required": 1.0,
+     "min_wall_ok": true,
+     "min_wall_scope": "sampled faces only; a thinner region between samples can be missed",
+     "self_intersection": "not checked",
+     "ok": true
+    },
+    "stl_round_trip": {
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "ok": true
+    },
+    "watertight_and_manifold": true,
+    "one_connected_body": true,
+    "volume_mm3": 93515.08,
+    "mass_g_at_density": 110.35,
+    "density_g_cm3": 1.18,
+    "density_note": "stated assumption, resin unknown",
+    "biological_volume_m3": 2.216653824187332e-10,
+    "pieces_without_print_only_struts": 128
+   },
+   "mcs": 0,
+   "metrics_at_snapshot": {
+    "mcs": 0,
+    "n_cells_present": 128,
+    "n_aggregates": 128,
+    "largest_cluster_fraction": 0.007812,
+    "sphericity_largest": 0.933718,
+    "contact_area_cell_cell": 0,
+    "contact_area_cell_medium": 38500,
+    "rg_all": 24.4837,
+    "rg_norm": 0.753031,
+    "sorting_index_homotypic": NaN,
+    "core_shell_index": -0.041035,
+    "min_cell_volume": 260,
+    "max_cell_volume": 284
+   }
+  },
+  {
+   "id": "xm-dah-s3-1-clustering-t2000",
+   "label": "clustering",
+   "n_cells": 128,
+   "connectivity": {
+    "pieces_at_chosen_radius": 3,
+    "radius_factor_needed_to_join_all": 1.2437,
+    "radius_factor_rule": "smallest uniform factor giving every minimum-spanning-tree pair a neck radius >= the join minimum",
+    "chosen_radius_factor": 1.0,
+    "one_body_without_struts": false,
+    "join_rule": "two cell spheres are joined iff their intersection neck radius >= 1.25 mm",
+    "thinnest_accepted_neck_diameter_mm": 2.528
+   },
+   "print_only_struts": {
+    "count": 2,
+    "radius_mm": 1.25,
+    "rule": "minimum spanning tree between sphere pieces that do not overlap; print-only, not biological, not scaled"
+   },
+   "cells_solid": {
+    "file": "xm-dah-s3-1-clustering-t2000-cells.stl",
+    "bytes": 5651584,
+    "sha256": "25a8774beb037185a69428d85de1850e0405be73cfc237a9ec9d6e0d5990ba48",
+    "units": "mm",
+    "weld": {
+     "merged_vertices": 3,
+     "dropped_faces": 6,
+     "simplify_tolerance_mm": 0.001,
+     "pre_weld_shift_mm": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "cavities": {
+     "enclosed_cavities_filled": 0,
+     "cavity_volume_mm3": 0
+    },
+    "checks": {
+     "vertices": 56081,
+     "triangles": 113030,
+     "finite_vertices": true,
+     "min_triangle_area_mm2": 9.205641982512543e-08,
+     "degenerate_triangles": 0,
+     "edges": 169545,
+     "edges_not_shared_by_exactly_two_faces": 0,
+     "directed_edges_used_more_than_once": 0,
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "unreferenced_vertices": 0,
+     "euler_characteristic": -434,
+     "genus": 218,
+     "signed_volume_mm3": 97851.85541237642,
+     "surface_area_mm2": 32635.567063542254,
+     "bounds_mm": {
+      "min": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "max": [
+       62.907,
+       67.9369,
+       68.895
+      ],
+      "size": [
+       62.907,
+       67.9369,
+       68.895
+      ]
+     },
+     "fits_box_mm": 120.0,
+     "fits_box": true,
+     "mesh_sha256": "bcef82eb2b7e0c1676c3a2e8e53ebc964a513bf3251f62443f3c99bc2cfde69e",
+     "wall_thickness": {
+      "method": "inward ray from area-weighted random face centroids (manifold3d ray_cast)",
+      "samples": 3000,
+      "seed": 7,
+      "no_hit": 0,
+      "min_mm": 2.451921081535204,
+      "p01_mm": 11.685548256790193,
+      "median_mm": 11.754493399907965,
+      "fraction_below_1mm": 0.0
+     },
+     "min_wall_mm_required": 1.0,
+     "min_wall_ok": true,
+     "min_wall_scope": "sampled faces only; a thinner region between samples can be missed",
+     "self_intersection": "not checked",
+     "ok": true
+    },
+    "stl_round_trip": {
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "ok": true
+    },
+    "watertight_and_manifold": true,
+    "one_connected_body": true,
+    "volume_mm3": 97851.86,
+    "mass_g_at_density": 115.47,
+    "density_g_cm3": 1.18,
+    "density_note": "stated assumption, resin unknown",
+    "biological_volume_m3": 2.3194513875526264e-10,
+    "pieces_without_print_only_struts": 3
+   },
+   "surface_solid": {
+    "file": "xm-dah-s3-1-clustering-t2000-surface.stl",
+    "bytes": 798384,
+    "sha256": "666407195a2023075fed8e6c7cf087e11dc0d70512a050b464782272df75b182",
+    "units": "mm",
+    "weld": {
+     "merged_vertices": 0,
+     "dropped_faces": 0,
+     "simplify_tolerance_mm": 0.001,
+     "pre_weld_shift_mm": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "cavities": {
+     "enclosed_cavities_filled": 0,
+     "cavity_volume_mm3": 0
+    },
+    "checks": {
+     "vertices": 7985,
+     "triangles": 15966,
+     "finite_vertices": true,
+     "min_triangle_area_mm2": 5.902256816625595e-08,
+     "degenerate_triangles": 0,
+     "edges": 23949,
+     "edges_not_shared_by_exactly_two_faces": 0,
+     "directed_edges_used_more_than_once": 0,
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "unreferenced_vertices": 0,
+     "euler_characteristic": 2,
+     "genus": 0,
+     "signed_volume_mm3": 109075.98037520982,
+     "surface_area_mm2": 12049.386032557153,
+     "bounds_mm": {
+      "min": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "max": [
+       60.6653,
+       66.831,
+       67.2244
+      ],
+      "size": [
+       60.6653,
+       66.831,
+       67.2244
+      ]
+     },
+     "fits_box_mm": 120.0,
+     "fits_box": true,
+     "mesh_sha256": "baf4f261366f3171771e55c5b8c4120367ee76a42ab06c16e14c2df914cc58b1",
+     "wall_thickness": {
+      "method": "inward ray from area-weighted random face centroids (manifold3d ray_cast)",
+      "samples": 3000,
+      "seed": 7,
+      "no_hit": 0,
+      "min_mm": 2.451928437939208,
+      "p01_mm": 9.666121508036525,
+      "median_mm": 57.34040680166338,
+      "fraction_below_1mm": 0.0
+     },
+     "min_wall_mm_required": 1.0,
+     "min_wall_ok": true,
+     "min_wall_scope": "sampled faces only; a thinner region between samples can be missed",
+     "self_intersection": "not checked",
+     "ok": true
+    },
+    "stl_round_trip": {
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "ok": true
+    },
+    "watertight_and_manifold": true,
+    "one_connected_body": true,
+    "volume_mm3": 109075.98,
+    "mass_g_at_density": 128.71,
+    "density_g_cm3": 1.18,
+    "density_note": "stated assumption, resin unknown",
+    "biological_volume_m3": 2.5855047200049736e-10,
+    "pieces_without_print_only_struts": 31
+   },
+   "mcs": 2000,
+   "metrics_at_snapshot": {
+    "mcs": 2000,
+    "n_cells_present": 128,
+    "n_aggregates": 2,
+    "largest_cluster_fraction": 0.992188,
+    "sphericity_largest": 0.720951,
+    "contact_area_cell_cell": 28657,
+    "contact_area_cell_medium": 10192,
+    "rg_all": 15.5914,
+    "rg_norm": 0.487307,
+    "sorting_index_homotypic": 0.794186,
+    "core_shell_index": 0.326822,
+    "min_cell_volume": 253,
+    "max_cell_volume": 259
+   }
+  },
+  {
+   "id": "xm-dah-s3-2-sorted-t20000",
+   "label": "sorted",
+   "n_cells": 128,
+   "connectivity": {
+    "pieces_at_chosen_radius": 1,
+    "radius_factor_needed_to_join_all": 0.9133,
+    "radius_factor_rule": "smallest uniform factor giving every minimum-spanning-tree pair a neck radius >= the join minimum",
+    "chosen_radius_factor": 1.0,
+    "one_body_without_struts": true,
+    "join_rule": "two cell spheres are joined iff their intersection neck radius >= 1.25 mm",
+    "thinnest_accepted_neck_diameter_mm": 2.523
+   },
+   "print_only_struts": {
+    "count": 0,
+    "radius_mm": 1.25,
+    "rule": "minimum spanning tree between sphere pieces that do not overlap; print-only, not biological, not scaled"
+   },
+   "cells_solid": {
+    "file": "xm-dah-s3-2-sorted-t20000-cells.stl",
+    "bytes": 5607384,
+    "sha256": "eadba9d30bd538a9b7ebf10eee58e2e2598e57082b68c031897913611d7703bd",
+    "units": "mm",
+    "weld": {
+     "merged_vertices": 7,
+     "dropped_faces": 14,
+     "simplify_tolerance_mm": 0.001,
+     "pre_weld_shift_mm": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "cavities": {
+     "enclosed_cavities_filled": 0,
+     "cavity_volume_mm3": 0
+    },
+    "checks": {
+     "vertices": 55637,
+     "triangles": 112146,
+     "finite_vertices": true,
+     "min_triangle_area_mm2": 4.918547347187996e-09,
+     "degenerate_triangles": 0,
+     "edges": 168219,
+     "edges_not_shared_by_exactly_two_faces": 0,
+     "directed_edges_used_more_than_once": 0,
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "unreferenced_vertices": 0,
+     "euler_characteristic": -436,
+     "genus": 219,
+     "signed_volume_mm3": 97502.00228434747,
+     "surface_area_mm2": 32772.7071569261,
+     "bounds_mm": {
+      "min": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "max": [
+       62.8415,
+       63.9712,
+       63.9068
+      ],
+      "size": [
+       62.8415,
+       63.9712,
+       63.9068
+      ]
+     },
+     "fits_box_mm": 120.0,
+     "fits_box": true,
+     "mesh_sha256": "3e0d58fe93e5f7ca789596e83ff0cfe7c920a0a2f55d1fef0030d41cf82dad75",
+     "wall_thickness": {
+      "method": "inward ray from area-weighted random face centroids (manifold3d ray_cast)",
+      "samples": 3000,
+      "seed": 7,
+      "no_hit": 0,
+      "min_mm": 11.658382831342704,
+      "p01_mm": 11.685536801631189,
+      "median_mm": 11.753906516303005,
+      "fraction_below_1mm": 0.0
+     },
+     "min_wall_mm_required": 1.0,
+     "min_wall_ok": true,
+     "min_wall_scope": "sampled faces only; a thinner region between samples can be missed",
+     "self_intersection": "not checked",
+     "ok": true
+    },
+    "stl_round_trip": {
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "ok": true
+    },
+    "watertight_and_manifold": true,
+    "one_connected_body": true,
+    "volume_mm3": 97502.0,
+    "mass_g_at_density": 115.05,
+    "density_g_cm3": 1.18,
+    "density_note": "stated assumption, resin unknown",
+    "biological_volume_m3": 2.3111585726660143e-10,
+    "pieces_without_print_only_struts": 1
+   },
+   "surface_solid": {
+    "file": "xm-dah-s3-2-sorted-t20000-surface.stl",
+    "bytes": 753684,
+    "sha256": "0329bd11431ffe911e125f87fcbdb29c6c28d1130cb44b539ca7afc3d03a421d",
+    "units": "mm",
+    "weld": {
+     "merged_vertices": 1,
+     "dropped_faces": 2,
+     "simplify_tolerance_mm": 0.001,
+     "pre_weld_shift_mm": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "cavities": {
+     "enclosed_cavities_filled": 0,
+     "cavity_volume_mm3": 0
+    },
+    "checks": {
+     "vertices": 7538,
+     "triangles": 15072,
+     "finite_vertices": true,
+     "min_triangle_area_mm2": 2.1439450835412537e-08,
+     "degenerate_triangles": 0,
+     "edges": 22608,
+     "edges_not_shared_by_exactly_two_faces": 0,
+     "directed_edges_used_more_than_once": 0,
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "unreferenced_vertices": 0,
+     "euler_characteristic": 2,
+     "genus": 0,
+     "signed_volume_mm3": 109307.06347046288,
+     "surface_area_mm2": 11361.781230485187,
+     "bounds_mm": {
+      "min": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "max": [
+       59.9117,
+       61.3021,
+       60.3139
+      ],
+      "size": [
+       59.9117,
+       61.3021,
+       60.3139
+      ]
+     },
+     "fits_box_mm": 120.0,
+     "fits_box": true,
+     "mesh_sha256": "6430391658216267a0281f8bc6ffcdba5b2d6a3a418fedfefb420e3cb0111498",
+     "wall_thickness": {
+      "method": "inward ray from area-weighted random face centroids (manifold3d ray_cast)",
+      "samples": 3000,
+      "seed": 7,
+      "no_hit": 0,
+      "min_mm": 47.42735099794132,
+      "p01_mm": 51.275066282775754,
+      "median_mm": 57.96867639632483,
+      "fraction_below_1mm": 0.0
+     },
+     "min_wall_mm_required": 1.0,
+     "min_wall_ok": true,
+     "min_wall_scope": "sampled faces only; a thinner region between samples can be missed",
+     "self_intersection": "not checked",
+     "ok": true
+    },
+    "stl_round_trip": {
+     "closed_two_manifold": true,
+     "consistently_oriented": true,
+     "face_connected_components": 1,
+     "ok": true
+    },
+    "watertight_and_manifold": true,
+    "one_connected_body": true,
+    "volume_mm3": 109307.06,
+    "mass_g_at_density": 128.98,
+    "density_g_cm3": 1.18,
+    "density_note": "stated assumption, resin unknown",
+    "biological_volume_m3": 2.5909822452257867e-10,
+    "pieces_without_print_only_struts": 20
+   },
+   "mcs": 20000,
+   "metrics_at_snapshot": {
+    "mcs": 20000,
+    "n_cells_present": 128,
+    "n_aggregates": 1,
+    "largest_cluster_fraction": 1.0,
+    "sphericity_largest": 0.753502,
+    "contact_area_cell_cell": 29475,
+    "contact_area_cell_medium": 9436,
+    "rg_all": 15.4112,
+    "rg_norm": 0.481879,
+    "sorting_index_homotypic": 0.805462,
+    "core_shell_index": 0.34908,
+    "min_cell_volume": 252,
+    "max_cell_volume": 259
+   }
+  }
+ ],
+ "files": {
+  "stl/xm-dah-s3-0-dissociated-t0-cells.stl": "abc0931dc1f9b4eac58c4e78633fd11b7b8d83c560c500f9398afce093b7b0d8",
+  "stl/xm-dah-s3-0-dissociated-t0-surface.stl": "121fd140859d269186f1de40856cbe2fe8d662bcda9d4a389cd7d4274737e4a6",
+  "stl/xm-dah-s3-1-clustering-t2000-cells.stl": "25a8774beb037185a69428d85de1850e0405be73cfc237a9ec9d6e0d5990ba48",
+  "stl/xm-dah-s3-1-clustering-t2000-surface.stl": "666407195a2023075fed8e6c7cf087e11dc0d70512a050b464782272df75b182",
+  "stl/xm-dah-s3-2-sorted-t20000-cells.stl": "eadba9d30bd538a9b7ebf10eee58e2e2598e57082b68c031897913611d7703bd",
+  "stl/xm-dah-s3-2-sorted-t20000-surface.stl": "0329bd11431ffe911e125f87fcbdb29c6c28d1130cb44b539ca7afc3d03a421d"
+ }
+}

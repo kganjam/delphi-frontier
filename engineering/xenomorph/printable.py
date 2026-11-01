@@ -199,6 +199,9 @@ def arrays(m: mf.Manifold):
     mesh = m.to_mesh()
     V = np.asarray(mesh.vert_properties)[:, :3].astype(np.float64)
     T = np.asarray(mesh.tri_verts).astype(np.int64)
+    # snap to a 0.1 um grid first: vertices ~1e-5 mm apart (boolean by-products) would otherwise survive as adjacent
+    # float32 values and form sub-1e-10 mm^2 slivers; validate.check re-derives closure/orientation afterwards
+    V = np.round(V, 4)
     V, T, info = VAL.weld_float32(V, T)
     return V, T, info
 
@@ -212,14 +215,22 @@ SIMPLIFY_MM = (1e-3, 1e-2, 5e-2)  # escalating sliver-collapse tolerances (mm), 
 
 def export(m: mf.Manifold, path: Path, header: str, pieces_without_struts: int | None) -> dict:
     m, cav = fill_cavities(m)
-    for tol in SIMPLIFY_MM:  # boolean unions can leave sub-1e-10 mm^2 slivers; collapse them, keep the first clean one
-        ms = m.simplify(tol)
-        V, T, weld = arrays(ms)
-        tri = V[T]
-        area = 0.5 * np.linalg.norm(np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0]), axis=1)
-        if not (area < 1e-10).any():
+    done = False
+    # boolean unions and STL's float32 weld can leave sub-1e-10 mm^2 slivers: collapse short edges, and if a sliver is
+    # created by float32 rounding, retry with a tiny rigid pre-shift (removed again when the part is re-zeroed)
+    for off in ((0.0, 0.0, 0.0), (0.0137, 0.0291, 0.0173), (0.0211, 0.0059, 0.0263)):
+        for tol in SIMPLIFY_MM:
+            ms = m.simplify(tol).translate(off)
+            V, T, weld = arrays(ms)
+            tri = V[T]
+            area = 0.5 * np.linalg.norm(np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0]), axis=1)
+            if not (area < 1e-10).any():
+                done = True
+                break
+        if done:
             break
     weld["simplify_tolerance_mm"] = tol
+    weld["pre_weld_shift_mm"] = list(off)
     V = V - V.min(axis=0)  # sit on the build plate origin
     chk = VAL.check(V, T, BOX_MM, thickness=True, min_wall_mm=MIN_WALL_MM)
     data = VAL.stl_bytes(V, T, header)
