@@ -17,23 +17,75 @@
     "precision_note": "Truncation is not amelia, and a page that blurs them is answering a question nobody asked. Every route below states which of the two — or which of micromelia, digit loss, or one-pair loss — it predicts."
   },
   "scales": [
-    {"key": "molecular", "label": "Molecular · sequence", "blurb": "Edit the regulatory sequence rather than the gene: enhancer swaps, single transcription-factor binding sites, enhancer deletion, topology."},
-    {"key": "gene", "label": "Gene · coding", "blurb": "Null and hypomorphic alleles of the ligands, receptors and transcription factors that induce and maintain the limb field."},
-    {"key": "cellular", "label": "Cellular · signalling", "blurb": "Remove or fail to maintain the signalling centres themselves — the apical ectodermal ridge and the zone of polarising activity — or exhaust the progenitor pool."},
-    {"key": "tissue", "label": "Tissue · feedback", "blurb": "Break the self-sustaining SHH–GREM1–FGF loop that keeps the bud growing, instead of removing any one of its parts."},
-    {"key": "pattern", "label": "Pattern · skeleton", "blurb": "Change the patterning system that lays down skeletal elements: the wavelength of the Turing-like network, or the size of the field it runs on."},
-    {"key": "developmental", "label": "Developmental · timing", "blurb": "Keep the allele and choose when it fires. Conditional, inducible and degron systems move the lesion off fertilisation and away from lethality."},
-    {"key": "organism", "label": "Organism · comparative", "blurb": "Nature's own limbless vertebrates — snakes, limb-reduced skinks, cetaceans — reached it repeatedly and not by the same mechanism each time."},
-    {"key": "invitro", "label": "In vitro · non-animal", "blurb": "Limb-bud explants, micromass and organoids: the route that answers the mechanistic question without an animal, and the one a modern review asks for first."}
+    {
+      "key": "molecular",
+      "label": "Molecular · sequence",
+      "blurb": "Edit the regulatory sequence rather than the gene: enhancer swaps, single transcription-factor binding sites, enhancer deletion, topology."
+    },
+    {
+      "key": "gene",
+      "label": "Gene · coding",
+      "blurb": "Null and hypomorphic alleles of the ligands, receptors and transcription factors that induce and maintain the limb field."
+    },
+    {
+      "key": "cell",
+      "label": "Cellular · signalling",
+      "blurb": "Remove or fail to maintain the signalling centres themselves — the apical ectodermal ridge and the zone of polarising activity — or exhaust the progenitor pool."
+    },
+    {
+      "key": "tissue",
+      "label": "Tissue · feedback",
+      "blurb": "Break the self-sustaining SHH–GREM1–FGF loop that keeps the bud growing, instead of removing any one of its parts."
+    },
+    {
+      "key": "pattern",
+      "label": "Pattern · skeleton",
+      "blurb": "Change the patterning system that lays down skeletal elements: the wavelength of the Turing-like network, or the size of the field it runs on."
+    },
+    {
+      "key": "timing",
+      "label": "Developmental · timing",
+      "blurb": "Keep the allele and choose when it fires. Conditional, inducible and degron systems move the lesion off fertilisation and away from lethality."
+    },
+    {
+      "key": "organism",
+      "label": "Organism · comparative",
+      "blurb": "Nature's own limbless vertebrates — snakes, limb-reduced skinks, cetaceans — reached it repeatedly and not by the same mechanism each time."
+    },
+    {
+      "key": "invitro",
+      "label": "In vitro · non-animal",
+      "blurb": "Limb-bud explants, micromass and organoids: the route that answers the mechanistic question without an animal, and the one a modern review asks for first."
+    }
   ],
   "chain": {
     "title": "The chain across scales, and where it is not calibrated",
     "intro": "The three models on this page are not independent demonstrations. They are meant to be read as one chain, and the chain has two junctions we refuse to call calibrated.",
     "links": [
-      {"from": "A ZRS allele", "to": "ZPA Shh output", "status": "scenario", "note": "The sequence analysis measures divergence and motif content. It does not predict enhancer activity. Mapping an allele onto a fraction of wild-type Shh output is a scenario parameter, not a calibrated transfer."},
-      {"from": "ZPA Shh output", "to": "Outgrowth duration", "status": "model", "note": "This junction is inside the SHH–GREM1–FGF model, so it is at least explicit: the model says how a reduction in Shh production shortens the window in which FGF stays above threshold."},
-      {"from": "Outgrowth duration", "to": "Limb-bud domain size", "status": "scenario", "note": "A shorter outgrowth window means a smaller paddle, but the model has no geometry. Converting one to the other needs a growth law we have not fitted."},
-      {"from": "Domain size", "to": "Skeletal element count", "status": "model", "note": "This junction is inside the Turing model, which gives a critical domain size in units of its own pattern wavelength."}
+      {
+        "from": "A ZRS allele",
+        "to": "ZPA Shh output",
+        "status": "scenario",
+        "note": "The sequence analysis measures divergence and motif content. It does not predict enhancer activity. Mapping an allele onto a fraction of wild-type Shh output is a scenario parameter, not a calibrated transfer."
+      },
+      {
+        "from": "ZPA Shh output",
+        "to": "Outgrowth duration",
+        "status": "model",
+        "note": "This junction is inside the SHH–GREM1–FGF model, so it is at least explicit: the model says how a reduction in Shh production shortens the window in which FGF stays above threshold."
+      },
+      {
+        "from": "Outgrowth duration",
+        "to": "Limb-bud domain size",
+        "status": "scenario",
+        "note": "A shorter outgrowth window means a smaller paddle, but the model has no geometry. Converting one to the other needs a growth law we have not fitted."
+      },
+      {
+        "from": "Domain size",
+        "to": "Skeletal element count",
+        "status": "model",
+        "note": "This junction is inside the Turing model, which gives a critical domain size in units of its own pattern wavelength."
+      }
     ],
     "verdict": "Two of the four junctions are within a single model and are explicit. Two cross between models and have no calibration behind them, so the end-to-end statement — “this allele gives that many digits” — is refused. The chain is a map of what would have to be measured, not a prediction."
   },

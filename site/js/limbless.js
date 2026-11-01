@@ -50,7 +50,7 @@
       [70, 240, "gene", "Limb-field induction", "Tbx5 for the forelimb, Tbx4 and Pitx1 for the hindlimb, Meis1/2 proximally. Remove the field and nothing starts at all."],
       [205, 310, "molecular", "ZPA and its ZRS enhancer", "Shh is switched on in the ZPA by the ZRS, which sits about a megabase away inside an intron of Lmbr1. This is the cis-regulatory route: edit the switch, not the gene."],
       [330, 374, "gene", "Ridge induction", "Fgf10 from the mesenchyme and Wnt3 / β-catenin in the ectoderm raise the apical ectodermal ridge. Lose it and there is no limb at all — this is the amelia route."],
-      [398, 168, "cellular", "Ridge maintenance", "The ridge itself: p63, Fgf4 and Fgf8, or physical ablation. The bud starts and then stops, which is truncation rather than absence."],
+      [398, 168, "cell", "Ridge maintenance", "The ridge itself: p63, Fgf4 and Fgf8, or physical ablation. The bud starts and then stops, which is truncation rather than absence."],
       [352, 240, "pattern", "Skeletal patterning", "BMP–SOX9–WNT sets how many elements the field makes and how far apart. A small enough field makes none."],
       [740, 200, "tissue", "The maintenance loop", "SHH → GREM1 ⊣ BMP ⊣ FGF → SHH. Break any arm and the bud stops being held open, whichever arm you break."],
     ];
