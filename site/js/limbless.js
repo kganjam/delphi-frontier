@@ -37,6 +37,9 @@
     page(snap, route) { return page(snap, route); },
   };
 
+  /* A short alias, so the page can be shared as #/limbless-mouse as well as from inside the Studio. */
+  DF.views["limbless-mouse"] = function (snap, route) { return page(snap, route); };
+
   /* ----------------------------------------------------------------- where each family of routes acts, drawn once.
    * A schematic of a limb bud, not a measurement and not to scale: it exists so a reader can see that the routes on this page
    * act at different places in one system rather than being a list of interchangeable genes. Each pin filters the routes below. */
@@ -149,10 +152,20 @@
       <tbody>${params.map((p) => html`<tr><td><code>${p.name}</code></td><td>${typeof p.value === "number" ? DF.fmt(p.value, 4) : String(p.value)}</td><td class="small">${p.units || ""}</td><td>${U.pill(String(p.status || "not stated").replace(/_/g, " "), tone[p.status] || "st-unk")}</td><td class="small">${p.source || p.justification || ""}</td></tr>`)}</tbody></table></div></details>`;
   }
 
-  function sweepTable(sweeps) {
-    const keys = Object.keys(sweeps || {}); if (!keys.length) return "";
-    return html`<h4>What each knob does</h4><div class="tablewrap"><table><thead><tr><th scope="col">Knob</th><th scope="col">What it stands for</th><th scope="col">Threshold</th><th scope="col">Numerical uncertainty</th></tr></thead>
-      <tbody>${keys.map((k) => { const s = sweeps[k] || {}; return html`<tr><td><code>${k}</code></td><td class="small">${s.meaning || s.description || ""}</td><td>${s.threshold === undefined || s.threshold === null ? html`<span class="faint">none found</span>` : DF.fmt(s.threshold, 3)}</td><td class="small">${s.threshold_uncertainty === undefined || s.threshold_uncertainty === null ? "not reported" : (typeof s.threshold_uncertainty === "number" ? "± " + DF.fmt(s.threshold_uncertainty, 2) : String(s.threshold_uncertainty))}</td></tr>`; })}</tbody></table></div>`;
+  /* The threshold of each design knob, with the numerical uncertainty taken from the refinement arm when the sweep itself
+   * does not carry one. A threshold with no uncertainty beside it is reported as "not reported", never as exact. */
+  function sweepTable(d) {
+    const sweeps = d.sweeps || {}; const keys = Object.keys(sweeps); if (!keys.length) return "";
+    const ref = ((d.refinement_arm || {}).thresholds) || {};
+    const unc = (k, s) => {
+      const u = s.threshold_uncertainty !== undefined && s.threshold_uncertainty !== null ? s.threshold_uncertainty : (ref[k] || {}).uncertainty;
+      if (u === undefined || u === null) return html`<span class="faint">not reported</span>`;
+      return typeof u === "number" ? "± " + DF.fmt(u, 2) : String(u);
+    };
+    return html`<h4>What each knob does, and where it breaks</h4>
+      <p class="small faint">A threshold is the value of that knob below which this model's loop never engages. It is a property of the model; the uncertainty beside it is how far the number moved across integrators and tolerances, which is not the same as being right.</p>
+      <div class="tablewrap"><table><thead><tr><th scope="col">Knob</th><th scope="col">What it stands for</th><th scope="col">Threshold</th><th scope="col">Numerical uncertainty</th></tr></thead>
+      <tbody>${keys.map((k) => { const s = sweeps[k] || {}; return html`<tr><td><code>${k}</code>${s.label ? html`<br><span class="small faint">${s.label}</span>` : ""}</td><td class="small">${s.meaning || s.description || ""}${s.source ? html`<br><span class="faint">${s.source}</span>` : ""}</td><td>${s.threshold === undefined || s.threshold === null ? html`<span class="faint">none in the range swept</span>` : DF.fmt(s.threshold, 3)}</td><td class="small">${unc(k, s)}</td></tr>`; })}</tbody></table></div>`;
   }
 
   function listOf(title, items, cls) {
@@ -178,12 +191,14 @@
       ${eqs.length ? html`<h4>The model, as written</h4><div class="lmeqs">${eqs.map((e) => html`<div class="eqcard">${typeof e === "string" ? DF.texSpan(e, true) : html`${e.name ? html`<h5>${e.name}</h5>` : ""}${DF.texSpan(e.latex || e.tex || "", true)}${e.note ? html`<p class="small faint">${e.note}</p>` : ""}`}</div>`)}</div>` : ""}
       ${(model.edges || []).length ? html`<details><summary><b>${model.edges.length} regulatory edges</b> <span class="faint small">each one's source, or marked assumed</span></summary><ul class="small">${model.edges.map((e) => html`<li><code>${e.from || e.source_node || "?"} → ${e.to || e.target || "?"}</code> ${e.sign ? U.pill(e.sign, e.sign === "activates" || e.sign === "+" ? "ok" : "no") : ""} ${e.note || e.description || ""} ${e.source && e.source !== "assumed" ? html`<span class="faint">[${e.source}]</span>` : U.pill("assumed", "warn")}</li>`)}</ul></details>` : ""}
       ${paramTable(model.parameters || d.parameters)}
-      ${sweepTable(d.sweeps)}
+      ${sweepTable(d)}
       ${d.critical_domain_size ? html`<p class="lmhead"><b>Critical domain size.</b> ${DF.fmt(d.critical_domain_size.value, 3)} ${d.critical_domain_size.units || ""}${d.critical_domain_size.uncertainty ? " (± " + DF.fmt(d.critical_domain_size.uncertainty, 2) + ")" : ""} — below this the field cannot hold a complete element.</p>` : ""}
       ${d.linear_stability ? html`<p class="small"><b>Internal control.</b> Linear stability predicts a wavelength of ${DF.fmt(d.linear_stability.predicted_wavelength, 3)}; the simulated pattern measures ${d.measured_wavelength === undefined ? "not reported" : DF.fmt(d.measured_wavelength, 3)}. A disagreement is reported, not tuned away.</p>` : ""}
       ${d.control_arm ? html`<details><summary><b>Control arm</b> <span class="faint small">run first; the design sweep is only read if this passes</span></summary><pre class="small lmjson">${JSON.stringify(d.control_arm, null, 1)}</pre></details>` : ""}
       ${d.refinement_arm ? html`<details><summary><b>Refinement arm</b> <span class="faint small">a tighter solver or a finer grid; how far the answer moved</span></summary><pre class="small lmjson">${JSON.stringify(d.refinement_arm, null, 1)}</pre></details>` : ""}
       ${listOf("Controls", d.controls)}
+      ${listOf("Numerical checks", d.numerical_checks)}
+      ${d.phenotype_classes ? html`<details><summary><b>How each run was classified</b> <span class="faint small">declared before the sweep was read</span></summary><dl class="lmmeta small">${Object.entries(d.phenotype_classes).map(([k, v]) => html`<dt>${k}</dt><dd>${v}</dd>`)}</dl></details>` : ""}
       ${(d.retrievals || []).length ? html`<details><summary><b>${d.retrievals.length} retrievals</b> <span class="faint small">every sequence fetched, with its accession and digest</span></summary>
         <div class="tablewrap"><table><thead><tr><th scope="col">Species</th><th scope="col">Accession</th><th scope="col">Coordinates</th><th scope="col">HTTP</th><th scope="col">Bytes</th><th scope="col">sha256</th><th scope="col">Retrieved</th></tr></thead>
         <tbody>${d.retrievals.map((r) => html`<tr><td class="small">${r.species || ""}</td><td class="small">${r.url ? html`<a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.accession || r.url}</a>` : (r.accession || "")}</td><td class="small">${r.coords || ""}</td><td>${r.http_status === undefined ? "" : r.http_status}</td><td>${r.bytes === undefined ? "" : r.bytes}</td><td>${r.sha256 ? U.sha(r.sha256) : ""}</td><td class="small">${r.retrieved_at || ""}</td></tr>`)}</tbody></table></div></details>` : ""}

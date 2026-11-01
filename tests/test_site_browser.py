@@ -2443,3 +2443,51 @@ def test_about_blog_docs_groups_and_lean_page_are_readable(browser, base, width)
     assert pg.locator("details.pfold:not([open])").count() >= fams * 3 and _overflow(pg) <= 0
     assert not pg.errors
     pg.close()
+
+
+@pytest.mark.parametrize("width", [1440, 390])
+def test_limbless_mouse_design_space_shows_routes_studies_and_its_own_refusals(browser, base, width):
+    """The design space is the page a judge is pointed at, so it has to carry its limits as prominently as its results.
+
+    What is pinned here: the route count on the page equals the count the snapshot computed (the page cannot quietly drop a
+    row); every declared study renders and an absent one says so rather than disappearing; the cross-scale chain names its
+    uncalibrated junctions; and selecting a pin on the schematic really filters, rather than only looking as if it does.
+    """
+    snapshot = json.loads((ROOT / "site/data/snapshot.json").read_text())
+    block = snapshot["limbless"]
+    pg = page(browser, width, 900)
+    pg.goto(base + "#/studio/limbless-mouse")
+    pg.wait_for_selector("#lm-a")
+    text = pg.locator("#main").inner_text()
+
+    assert "Truncation is not amelia" in text, "the distinction the whole page turns on"
+    assert pg.locator(".lmroute").count() == block["counts"]["routes"]
+    assert pg.locator(".lmstudy").count() == block["counts"]["studies_declared"]
+    assert pg.locator(".lmfigs img").count() == block["counts"]["figures_present"]
+    absent = [s for s in block["studies"] if not s["present"]]
+    assert pg.locator(".lmstudy .note.warn").count() == len(absent)
+
+    # Every junction between two models is labelled, and at least one of them is refused rather than asserted.
+    assert pg.locator(".lmlink").count() == len(block["chain"]["links"])
+    assert pg.locator(".lmlink.scenario").count() >= 1
+    assert "no calibration behind them" in text
+
+    # The page states what it does not claim, in its own section, not only in passing.
+    assert pg.locator(".lmnot li").count() >= len(block["not_claimed"])
+    assert "No mouse was made" in text
+
+    # The schematic is a figure with a real description, and its pins drive the filter.
+    assert pg.locator(".lmbud svg desc").count() == 1
+    if block["counts"]["routes"]:
+        total = pg.locator(".lmroute").count()
+        pin = pg.locator(".lmpin:not(.off)").first
+        pin.click()
+        pg.wait_for_function("document.querySelectorAll('.lmroute:not([hidden])').length < %d" % total)
+        shown = pg.locator(".lmroute:not([hidden])").count()
+        assert 0 < shown < total
+        assert "showing %d of %d routes" % (shown, total) in pg.locator("#lmcount").inner_text()
+
+    assert "[object Object]" not in text and "undefined" not in text
+    assert pg.locator("#main .tex-fallback").count() == 0
+    assert _overflow(pg) <= 0 and not pg.errors
+    pg.close()
