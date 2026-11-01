@@ -1,0 +1,102 @@
+{
+ "mesh_reset": [
+  {
+   "variant": "drag",
+   "initial": "0fb5c87756ffceef",
+   "after_input": "94b2e956caa232a3",
+   "input_changed": true,
+   "after_reset": "b983784ed0a576f0",
+   "reset_equals_initial": false,
+   "settle_s_after_reset": 0.8
+  },
+  {
+   "variant": "keys",
+   "initial": "0fb5c87756ffceef",
+   "after_input": "f065e7f80ee20fee",
+   "input_changed": true,
+   "after_reset": "717e25e1f6a48303",
+   "reset_equals_initial": false,
+   "settle_s_after_reset": 0.8
+  },
+  {
+   "variant": "keys-key0",
+   "initial": "0fb5c87756ffceef",
+   "after_input": "f065e7f80ee20fee",
+   "input_changed": true,
+   "after_reset": "68a70dd87d305dd8",
+   "reset_equals_initial": false,
+   "settle_s_after_reset": 0.8
+  },
+  {
+   "variant": "zoom-keys",
+   "initial": "0fb5c87756ffceef",
+   "after_input": "4b09a2d041d25a24",
+   "input_changed": true,
+   "after_reset": "717e25e1f6a48303",
+   "reset_equals_initial": false,
+   "settle_s_after_reset": 0.8
+  },
+  {
+   "variant": "pick",
+   "initial": "0fb5c87756ffceef",
+   "after_input": "8067dee49e5116e4",
+   "input_changed": true,
+   "after_reset": "8067dee49e5116e4",
+   "reset_equals_initial": false,
+   "settle_s_after_reset": 0.8
+  }
+ ],
+ "neighbourhood_graph": {
+  "choice_links": [
+   [
+    "#/graph/Claim/fisher-ftns?v=b19aa7f3a263c300f99373a375437022ffe03751bec89f21bcdd0aff56c05dd0&ns=delphi-frontier",
+    "delphi-frontier \u00b7 version b19aa7f3a263\u2026"
+   ],
+   [
+    "#/graph/Claim/fisher-ftns?v=48fe6ed5db4126a3bb6adfc0e6790036858f0239c9c19af36de7b5f71a081301&ns=node-a",
+    "node-a \u00b7 version 48fe6ed5db41\u2026"
+   ]
+  ],
+  "after_choice": {
+   "svg": true,
+   "nodes": 1,
+   "edges": 0,
+   "zoomctl": 3,
+   "text": "CLAIM FISHER-FTNS / NEIGHBOURHOOD\n\nNeighbourhood graph\n\nFrom the runtime's /api/graph. artifact uri fetch: never; pointers are metadata and bytes_verified is always false; depth: 1; depth boundary open: false; edge origin: explicit_reference: a Ref in the reco"
+  },
+  "zoom_in_transform": [
+   "translate(0 0) scale(1)",
+   "translate(0 0) scale(1.25)"
+  ],
+  "node_click_detail": "CLAIM\n\nFisher's fundamental theorem of natural selection (partial-change form)\n\nlocal status: propos"
+ },
+ "math_on_claim_pages": {
+  "#/knowledge/fisher-ftns": {
+   "rendered": 3,
+   "errors": 0,
+   "raw_tex_in_text": false,
+   "sample_aria": [
+    "\\Delta_{NS}\\bar{w} = V_A(w)/\\bar{w}",
+    "\\left.\\frac{d\\bar{m}}{dt}\\right|_{NS} = V_A(m)"
+   ],
+   "h1": "Knowledge"
+  },
+  "#/knowledge/fisher-infinitesimal": {
+   "rendered": 5,
+   "errors": 0,
+   "raw_tex_in_text": false,
+   "sample_aria": [
+    "Cov(z_i, z_j) = 2\\Theta_{ij} V_A + \\Delta_{ij} V_D",
+    "M \\to \\infty"
+   ],
+   "h1": "Knowledge"
+  },
+  "#/entity/Claim/fisher-ftns": {
+   "rendered": 0,
+   "errors": 0,
+   "raw_tex_in_text": false,
+   "sample_aria": [],
+   "h1": "Claim fisher-ftns: more than one record"
+  }
+ }
+}

@@ -1,0 +1,122 @@
+{
+ "label": "50352fd-run1 (file was first named rehearsal-d531330 before I checked the snapshot hash; snapshot matched 50352fd)",
+ "chromium": "145.0.7632.6",
+ "live_snapshot_sha256_16": "035388ce988766c8",
+ "matches_target_snapshot": true,
+ "home_mesh": {
+  "mode": "interactive",
+  "ready_s": 3.9,
+  "status": "Interactive: actual fish-adult-fao.glb, 4.78 MB, 191.2 \u00d7 52.5 \u00d7 198.8 mm (length \u00d7 height \u00d7 width). sha256 matches appearance-adult-fao.json. Colours: GLB materials with vertex colours (COLOR_0). Drag to orbit, scroll to zoom.",
+  "reset_disabled": [
+   false
+  ],
+  "canvas_box": {
+   "x": 74,
+   "y": 445.234375,
+   "width": 955.5,
+   "height": 455
+  },
+  "pixels": {
+   "initial": "0fb5c87756ffceef",
+   "after_6_arrow_left": "f065e7f80ee20fee",
+   "after_drag": "d475a25bee6e5a11",
+   "after_reset": "9f67c94c358901e7"
+  },
+  "orbit_by_keys_changed_pixels": true,
+  "orbit_by_drag_changed_pixels": true,
+  "reset_restored_initial_pixels": false,
+  "detail_before_pick": "Click a part of the mesh or a list entry to see its provenance.",
+  "picks": [
+   {
+    "at": [
+     0.5,
+     0.5
+    ],
+    "detail": "SCALES (GLB NODE \"SCALES\")\n\nGLB node extras: components.json#/components/scales (candidate e8c2b6668",
+    "selected_li": []
+   },
+   {
+    "at": [
+     0.4,
+     0.5
+    ],
+    "detail": "Click a part of the mesh or a list entry to see its provenance.",
+    "selected_li": []
+   },
+   {
+    "at": [
+     0.6,
+     0.45
+    ],
+    "detail": "Click a part of the mesh or a list entry to see its provenance.",
+    "selected_li": []
+   },
+   {
+    "at": [
+     0.3,
+     0.6
+    ],
+    "detail": "PECTORAL_L (GLB NODE \"PECTORAL_L\")\n\nGLB node extras: components.json#/components/pectoral_L (candida",
+    "selected_li": []
+   }
+  ],
+  "components": 13,
+  "page_errors": []
+ },
+ "graph": {
+  "#/knowledge?tab=graph": {
+   "svg": true,
+   "nodes": 21,
+   "text": "Knowledge\n\nClaims, equations, proofs, data and the context that bounds them. Equation, evidence kind and assumptions are always shown with the claim. A claim's upstream label is an assertion made else",
+   "detail_before": "Select a node or an edge\n\nNodes are claims, grouped by upstream topic. Edges are",
+   "detail_after_click": "SELECTION AND INHERITANCE\n\nFisher's infinitesimal model of quantitative inherita",
+   "hash_after_click": "#/knowledge/fisher-infinitesimal?tab=graph",
+   "transform_before_zoom": null,
+   "transform_after_zoom": null,
+   "zoom_changed_transform": false
+  },
+  "#/graph/Claim/fisher-ftns": {
+   "svg": false,
+   "nodes": 0,
+   "text": "CLAIM FISHER-FTNS / NEIGHBOURHOOD\n\nNeighbourhood graph\n\nMore than one namespace or version holds this id and none is pinned. Choose one; nothing is picked for you.\n\ndelphi-frontier \u00b7 version b19aa7f3a"
+  },
+  "page_errors": []
+ },
+ "math": {
+  "#/knowledge": {
+   "katex_global": true,
+   "rendered": 0,
+   "katex_err": 0,
+   "raw_tex": false,
+   "sample": []
+  },
+  "#/frontier": {
+   "katex_global": true,
+   "rendered": 0,
+   "katex_err": 0,
+   "raw_tex": false,
+   "sample": []
+  },
+  "#/knowledge/claims": {
+   "katex_global": true,
+   "rendered": 0,
+   "katex_err": 0,
+   "raw_tex": false,
+   "sample": []
+  },
+  "#/evidence": {
+   "katex_global": true,
+   "rendered": 0,
+   "katex_err": 0,
+   "raw_tex": false,
+   "sample": []
+  },
+  "#/about/docs": {
+   "katex_global": true,
+   "rendered": 0,
+   "katex_err": 0,
+   "raw_tex": false,
+   "sample": []
+  }
+ }
+}

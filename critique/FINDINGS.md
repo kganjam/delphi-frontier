@@ -52,3 +52,31 @@ Not covered: the 150 unvisited links; any logged-in/contributor flow; any write 
 ## Reproduce / files
 `critique/crawl.py` (bulk), `interact.py`, `followup.py`, `followup2.py`, `recheck_blank.py`; outputs `critique/<tag>/routes.json`, `interactions.json`, `followup*.json`, `screens/`.
 Under `systemd-run --user --scope -p TasksMax=256 -p MemoryMax=4G -p MemorySwapMax=0 -p CPUQuota=100%`. `TasksMax=256` was needed for Chromium.
+
+---
+# Addendum: focused Home mesh / graph / math check on 50352fd (completes items 7, 10, 13 of the first audit)
+
+**Release check, 17:45 PDT.** Live `index.html` + all 27 `js/`/`css/` files (28 files) are byte-identical (sha256) to commit `50352fd` and live
+`data/snapshot.json` sha256 prefix is `035388ce988766c8`, the value in `50352fd` (it was `1ffb82fa…`, `d531330`'s, at 17:38). So the focus runs below
+ran against 50352fd content. Readiness was awaited by app state (`.mv-stage[data-mode=interactive]`, then pixel settling, then `.katex` presence), never networkidle.
+Files: `critique/focus/focus-50352fd-run1.json` (first run; its label says it was first misnamed "rehearsal-d531330" before I checked the hash),
+`focus3-50352fd.json`, `focus4-50352fd.json`, screenshots in `critique/focus/screens/`. **Superseded:** `focus2.py` crashed without output on its first attempt; its
+second attempt (`focus2-50352fd.json`, partial) is **confounded** (one page reused, a same-hash `goto` does not reload, so each "initial" was the previous run's end state;
+mid-reset captures). Do not cite it. `focus3` left the canvas focused (a focus ring enters a canvas screenshot), so `focus4` blurs before every capture.
+
+**Home 3D mesh (actual `fish-adult-fao.glb`, 4.78 MB, status line says sha256 matches `appearance-adult-fao.json`: that is the page's statement, I did not recompute it).**
+- Interactive in 3.9 s (single timing); WebGL available in this Chromium; 13 components listed.
+- **Orbit:** 6 ArrowLeft presses and a mouse drag each changed the canvas pixels. The scene is static without input (identical captures 1.5 s apart). Observed in 5 fresh contexts: first-paint hash identical every time (`0fb5c877…`).
+- **Pick:** of 4 clicks, 2 selected a part and filled the detail panel (SCALES, PECTORAL_L, with GLB node/provenance text), 2 hit no part and left the default prompt. Which list item is highlighted: NOT verified (my selector guess matched nothing).
+- **Reset view:** after keyboard orbit or zoom, `Reset view` and key `0` give the same final image, and it matches the first-paint image to within noise (0 pixels differ by >30 of 435,936; mean abs diff 0.07; the hashes still differ). **After one mouse drag, Reset leaves a visibly different framing:** 38,247 pixels (8.8%) differ by >30, mean abs 7.15 (`50352fd-mesh-drag-reset.png` vs `-first-paint.png`, viewed side by side: the fish sits slightly larger and shifted). One drag, one run; cause not investigated.
+- **Reset does not clear a pick:** after a click-pick, `Reset view` left the pixels unchanged (selection highlight remained). Whether that is intended is not established.
+- Not tested: touch orbit/pinch, scroll-wheel zoom, "Show all components", component checkboxes, the fallback (static render) path.
+
+**Graphs.**
+- Claim graph `#/knowledge?tab=graph` (21 nodes): clicking a node opened its detail and changed the hash to `#/knowledge/fisher-infinitesimal?tab=graph`. **I found no zoom or pan control there and the wheel changed no transform** (no `g[transform]` exists), so zoom is absent or undetected on this graph.
+- Neighbourhood graph: unpinned `#/graph/Claim/fisher-ftns` asks the visitor to choose a namespace (`delphi-frontier` or `node-a`; "nothing is picked for you"). Pinned (`ns=delphi-frontier&v=…`): the page says it is from the runtime's `/api/graph`, draws **1 node and 0 edges**, the `Zoom in` control changed `scale(1)` to `scale(1.25)`, and clicking the node opened its claim detail. Zoom out, reset, wheel and drag-pan were not exercised. A one-node graph is a weak test of node-to-node interaction.
+
+**Math.** `#/knowledge/fisher-ftns`: 3 `.katex` elements, 0 `katex-error`, no raw `\frac`/`\Delta` in the text; `#/knowledge/fisher-infinitesimal`: 5 `.katex`, 0 errors, same. Each carries its TeX source in `aria-label` (e.g. `\Delta_{NS}\bar{w} = V_A(w)/\bar{w}`).
+Only these 2 of the snapshot's 21 claims were checked (the snapshot holds 27 `\frac` occurrences overall); `#/entity/Claim/fisher-ftns` is the ambiguous-namespace page and shows no math. Visual correctness of the typesetting beyond these two screenshots was not judged.
+
+Scope reminders unchanged: Chromium headless shell 145 only; no Safari/Firefox; no touch; the first audit's pre-fix findings, labels and false-positive notes stand.

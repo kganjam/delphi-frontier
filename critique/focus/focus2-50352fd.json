@@ -1,0 +1,45 @@
+{
+ "mesh_reset_experiment": [
+  {
+   "variant": "drag-then-button",
+   "initial": "0fb5c87756ffceef",
+   "initial_1.5s_later": "0fb5c87756ffceef",
+   "scene_static_without_input": true,
+   "after_input": "03ce919c253af733",
+   "input_changed_pixels": true,
+   "after_reset": "21d62ca61fe6ef4a",
+   "reset_equals_initial": false
+  },
+  {
+   "variant": "keys-then-button",
+   "initial": "ead3bd054c921984",
+   "initial_1.5s_later": "ead3bd054c921984",
+   "scene_static_without_input": true,
+   "after_input": "ce29eb4a486f9761",
+   "input_changed_pixels": true,
+   "after_reset": "717e25e1f6a48303",
+   "reset_equals_initial": false
+  },
+  {
+   "variant": "keys-then-key0",
+   "initial": "717e25e1f6a48303",
+   "initial_1.5s_later": "717e25e1f6a48303",
+   "scene_static_without_input": true,
+   "after_input": "f065e7f80ee20fee",
+   "input_changed_pixels": true,
+   "after_reset": "68a70dd87d305dd8",
+   "reset_equals_initial": false
+  },
+  {
+   "variant": "pick-then-button",
+   "initial": "68a70dd87d305dd8",
+   "initial_1.5s_later": "68a70dd87d305dd8",
+   "scene_static_without_input": true,
+   "after_input": "04d7f00cca89e16b",
+   "input_changed_pixels": true,
+   "after_reset": "8067dee49e5116e4",
+   "reset_equals_initial": false
+  }
+ ],
+ "incomplete_if_missing_keys": true
+}
