@@ -205,6 +205,28 @@ Artifact: `artifacts/launch-glider/r2-light-dynamics.json`.
   8 m/s release. It is not a flight limit. Above it, the model releases below trim and the glide gain falls with
   mass, as these maps show.
 
+## Corrections to the frozen `print-requirements.json` (ac293117…; the artifact is kept unchanged)
+These answer the independent review (`launchable-fish-review`, c2ec8f0). Each was re-checked here.
+1. **Safety factor wording.** The artifact's SF status string says SF 3 "covers" notches, layer lines, cure and
+   handling. The correct statement: SF 3 is a **declared** allowance on bulk-coupon UTS, and its coverage of
+   notches, layers, cure and handling is unknown and unvalidated.
+2. **Minimum-spar rows are on the limit and not mesh-converged.** Re-run here at n_el 64, 256 and 1024, the
+   pectoral t 0.5 mm, h 1.2 mm row gives tip/L 0.09847, 0.10062 and 0.10007 against a limit of 0.10. That matches
+   the review to every digit.
+   - Every min_spar_h row is therefore deflection-bound by construction. Read it as "at the limit", not as a
+     margin.
+   - The issued R1 spar (1.6 × 2.0 mm, tapering to 1.2) is not on the limit: tip/L 0.0360/0.0358 at 256/1024
+     elements on r1's bytes.
+   - `flight_model.fin_check` now uses 1024 elements and records the 256-element value beside it.
+3. **Pelvic minimum spar 0.4 mm is the grid floor, not a derived minimum.** The pelvic passes at every height on
+   the grid. The issued R2 (1.2 × 1.2 mm) is a declared choice.
+4. **NP bracket.**
+   - Helmbold is applied unswept. Half-chord sweep (10.7° pectoral, 23.5° pelvic per the review) would lower CL_α
+     by about 1.4% and 7.6%.
+   - The pair AR overcounts exposed span by about 3 mm.
+   - Both are small against the 54.5–59.0 mm bracket's width, and the VLM replaces the bracket.
+   - CL 0.4–0.6 and C_N,max 1.2 are uncited assumptions.
+
 ## Limits
 - Pitch plane only: no roll, yaw, spiral or Dutch roll. Lateral behaviour is reported as static derivatives once
   cfd04 provides β = 5°.

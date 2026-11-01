@@ -439,16 +439,16 @@
          "sigma_root_Pa": 868816.591421244,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.00818709222861712,
+          "max_slope_rad": 0.008262322569960148,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.005807482231644213,
+          "tip_over_L": 0.005874788008682861,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0005177075432309188,
-         "tip_over_span": 0.005807482231644213
+         "tip_m": 0.0005237075113902809,
+         "tip_over_span": 0.005874788008682861
         },
         "inplane_root": {
          "a_inplane_m_s2": 1000.0,
@@ -482,6 +482,16 @@
          "0.5": true,
          "1.0": true
         },
+        "tip_convergence": {
+         "n_el": [
+          256,
+          1024
+         ],
+         "worst_tip_over_span": [
+          0.03598253055216277,
+          0.03583887888445056
+         ]
+        },
         "worst": {
          "root_moment_N_m": 0.020109950866975285,
          "root_shear_N": 0.46519667808938503,
@@ -490,16 +500,16 @@
          "sigma_root_Pa": 5347621.601505952,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.04998142272101798,
+          "max_slope_rad": 0.05043897500121218,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.03543143634513984,
+          "tip_over_L": 0.03583887888445056,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0031585325846432643,
-         "tip_over_span": 0.03543143634513984
+         "tip_m": 0.0031948540175156643,
+         "tip_over_span": 0.03583887888445056
         }
        },
        "pelvic": {
@@ -513,16 +523,16 @@
          "sigma_root_Pa": 359426.21126780164,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.003251539111239406,
+          "max_slope_rad": 0.003290702444745372,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.0022981621728851106,
+          "tip_over_L": 0.0023295752842885397,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.00013985771245554138,
-         "tip_over_span": 0.0022981621728851106
+         "tip_m": 0.00014176939908663722,
+         "tip_over_span": 0.0023295752842885397
         },
         "inplane_root": {
          "a_inplane_m_s2": 1000.0,
@@ -556,6 +566,16 @@
          "0.5": true,
          "1.0": true
         },
+        "tip_convergence": {
+         "n_el": [
+          256,
+          1024
+         ],
+         "worst_tip_over_span": [
+          0.015415946893443878,
+          0.015349124969379282
+         ]
+        },
         "worst": {
          "root_moment_N_m": 0.0033876712104462248,
          "root_shear_N": 0.1131439058264529,
@@ -564,16 +584,16 @@
          "sigma_root_Pa": 2389004.011664303,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.02148517110205942,
+          "max_slope_rad": 0.021735800893915806,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.015148798967885601,
+          "tip_over_L": 0.015349124969379282,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0009219002884542139,
-         "tip_over_span": 0.015148798967885601
+         "tip_m": 0.0009340913934357648,
+         "tip_over_span": 0.015349124969379282
         }
        }
       },
@@ -622,16 +642,16 @@
          "sigma_root_Pa": 1181461.4343212957,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.011133228604117335,
+          "max_slope_rad": 0.011235530687048585,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.007897312683646848,
+          "tip_over_L": 0.007988838536932075,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0007040053132318665,
-         "tip_over_span": 0.007897312683646848
+         "tip_m": 0.0007121643781685135,
+         "tip_over_span": 0.007988838536932075
         },
         "inplane_root": {
          "a_inplane_m_s2": 1000.0,
@@ -665,6 +685,16 @@
          "0.5": true,
          "1.0": true
         },
+        "tip_convergence": {
+         "n_el": [
+          256,
+          1024
+         ],
+         "worst_tip_over_span": [
+          0.03598253055216277,
+          0.03583887888445056
+         ]
+        },
         "worst": {
          "root_moment_N_m": 0.020109950866975285,
          "root_shear_N": 0.46519667808938503,
@@ -673,16 +703,16 @@
          "sigma_root_Pa": 5347621.601505952,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.04998142272101798,
+          "max_slope_rad": 0.05043897500121218,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.03543143634513984,
+          "tip_over_L": 0.03583887888445056,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0031585325846432643,
-         "tip_over_span": 0.03543143634513984
+         "tip_m": 0.0031948540175156643,
+         "tip_over_span": 0.03583887888445056
         }
        },
        "pelvic": {
@@ -696,16 +726,16 @@
          "sigma_root_Pa": 488766.2267158939,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.0044216099232549325,
+          "max_slope_rad": 0.004474866236324211,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.0031251589850950865,
+          "tip_over_L": 0.003167876147752493,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.00019018570224161915,
-         "tip_over_span": 0.0031251589850950865
+         "tip_m": 0.00019278531193076304,
+         "tip_over_span": 0.003167876147752493
         },
         "inplane_root": {
          "a_inplane_m_s2": 1000.0,
@@ -739,6 +769,16 @@
          "0.5": true,
          "1.0": true
         },
+        "tip_convergence": {
+         "n_el": [
+          256,
+          1024
+         ],
+         "worst_tip_over_span": [
+          0.015415946893443878,
+          0.015349124969379282
+         ]
+        },
         "worst": {
          "root_moment_N_m": 0.0033876712104462248,
          "root_shear_N": 0.1131439058264529,
@@ -747,16 +787,16 @@
          "sigma_root_Pa": 2389004.011664303,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.02148517110205942,
+          "max_slope_rad": 0.021735800893915806,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.015148798967885601,
+          "tip_over_L": 0.015349124969379282,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0009219002884542139,
-         "tip_over_span": 0.015148798967885601
+         "tip_m": 0.0009340913934357648,
+         "tip_over_span": 0.015349124969379282
         }
        }
       },
@@ -1130,16 +1170,16 @@
          "sigma_root_Pa": 1005790.313631641,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.00947783242362081,
+          "max_slope_rad": 0.009564923242743257,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.006723063800635414,
+          "tip_over_L": 0.0068009807042320606,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0005993269896283889,
-         "tip_over_span": 0.006723063800635414
+         "tip_m": 0.0006062728858237113,
+         "tip_over_span": 0.0068009807042320606
         },
         "inplane_root": {
          "a_inplane_m_s2": 1000.0,
@@ -1173,6 +1213,16 @@
          "0.5": true,
          "1.0": true
         },
+        "tip_convergence": {
+         "n_el": [
+          256,
+          1024
+         ],
+         "worst_tip_over_span": [
+          0.03598253055216277,
+          0.03583887888445056
+         ]
+        },
         "worst": {
          "root_moment_N_m": 0.020109950866975285,
          "root_shear_N": 0.46519667808938503,
@@ -1181,16 +1231,16 @@
          "sigma_root_Pa": 5347621.601505952,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.04998142272101798,
+          "max_slope_rad": 0.05043897500121218,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.03543143634513984,
+          "tip_over_L": 0.03583887888445056,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0031585325846432643,
-         "tip_over_span": 0.03543143634513984
+         "tip_m": 0.0031948540175156643,
+         "tip_over_span": 0.03583887888445056
         }
        },
        "pelvic": {
@@ -1204,16 +1254,16 @@
          "sigma_root_Pa": 416091.7336616543,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.003764162165836677,
+          "max_slope_rad": 0.003809499814632479,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.0026604801007095143,
+          "tip_over_L": 0.002696845662190004,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.00016190705134250873,
-         "tip_over_span": 0.0026604801007095143
+         "tip_m": 0.00016412012590305536,
+         "tip_over_span": 0.002696845662190004
         },
         "inplane_root": {
          "a_inplane_m_s2": 1000.0,
@@ -1247,6 +1297,16 @@
          "0.5": true,
          "1.0": true
         },
+        "tip_convergence": {
+         "n_el": [
+          256,
+          1024
+         ],
+         "worst_tip_over_span": [
+          0.015415946893443878,
+          0.015349124969379282
+         ]
+        },
         "worst": {
          "root_moment_N_m": 0.0033876712104462248,
          "root_shear_N": 0.1131439058264529,
@@ -1255,16 +1315,16 @@
          "sigma_root_Pa": 2389004.011664303,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.02148517110205942,
+          "max_slope_rad": 0.021735800893915806,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.015148798967885601,
+          "tip_over_L": 0.015349124969379282,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0009219002884542139,
-         "tip_over_span": 0.015148798967885601
+         "tip_m": 0.0009340913934357648,
+         "tip_over_span": 0.015349124969379282
         }
        }
       },
@@ -1313,16 +1373,16 @@
          "sigma_root_Pa": 1411195.973131255,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.013298078902681703,
+          "max_slope_rad": 0.013420273570473342,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.009432940876418022,
+          "tip_over_L": 0.009542263882519962,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0008408987667604569,
-         "tip_over_span": 0.009432940876418022
+         "tip_m": 0.0008506443574743229,
+         "tip_over_span": 0.009542263882519962
         },
         "inplane_root": {
          "a_inplane_m_s2": 1000.0,
@@ -1356,6 +1416,16 @@
          "0.5": true,
          "1.0": true
         },
+        "tip_convergence": {
+         "n_el": [
+          256,
+          1024
+         ],
+         "worst_tip_over_span": [
+          0.03598253055216277,
+          0.03583887888445056
+         ]
+        },
         "worst": {
          "root_moment_N_m": 0.020109950866975285,
          "root_shear_N": 0.46519667808938503,
@@ -1364,16 +1434,16 @@
          "sigma_root_Pa": 5347621.601505952,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.04998142272101798,
+          "max_slope_rad": 0.05043897500121218,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.03543143634513984,
+          "tip_over_L": 0.03583887888445056,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0031585325846432643,
-         "tip_over_span": 0.03543143634513984
+         "tip_m": 0.0031948540175156643,
+         "tip_over_span": 0.03583887888445056
         }
        },
        "pelvic": {
@@ -1387,16 +1457,16 @@
          "sigma_root_Pa": 583806.5559374433,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.0052813895885133666,
+          "max_slope_rad": 0.00534500156264431,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.0037328444645293433,
+          "tip_over_L": 0.0037838679564305847,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.00022716720948635303,
-         "tip_over_span": 0.0037328444645293433
+         "tip_m": 0.00023027231187773166,
+         "tip_over_span": 0.0037838679564305847
         },
         "inplane_root": {
          "a_inplane_m_s2": 1000.0,
@@ -1430,6 +1500,16 @@
          "0.5": true,
          "1.0": true
         },
+        "tip_convergence": {
+         "n_el": [
+          256,
+          1024
+         ],
+         "worst_tip_over_span": [
+          0.015415946893443878,
+          0.015349124969379282
+         ]
+        },
         "worst": {
          "root_moment_N_m": 0.0033876712104462248,
          "root_shear_N": 0.1131439058264529,
@@ -1438,16 +1518,16 @@
          "sigma_root_Pa": 2389004.011664303,
          "small_deformation": {
           "flag": "OK",
-          "max_slope_rad": 0.02148517110205942,
+          "max_slope_rad": 0.021735800893915806,
           "slope_limit_rad": 0.2,
           "slope_ok": true,
           "tip_ok": true,
-          "tip_over_L": 0.015148798967885601,
+          "tip_over_L": 0.015349124969379282,
           "tip_over_L_limit": 0.1,
           "valid": true
          },
-         "tip_m": 0.0009219002884542139,
-         "tip_over_span": 0.015148798967885601
+         "tip_m": 0.0009340913934357648,
+         "tip_over_span": 0.015349124969379282
         }
        }
       },

@@ -29,6 +29,7 @@ from . import sweep as sw
 SCHEMA = "frontier.glider.flight-model/1"
 TOLERANCE = {"mass_rel": 0.005, "cg_m": 0.5e-3}
 REVISIONS = ("artifacts/glider/r1-light", "artifacts/glider/r1-strong")
+N_EL = 1024   # beam elements: the doubler step is not on an element boundary, so tip deflection converges slowly
 K_Z = {"values": [1.0, 0.5], "status": "declared strength knockdown for stress across print layers (orientation case); "
                                      "not measured for this resin or printer"}
 SHOT_NOTE = "ballast from claude-05's bay fill model (packed from the front, shot density assumed by claude-05)"
@@ -147,14 +148,17 @@ def fin_check(rec: dict, mat: dict, m_kg: float, S_paired: float) -> dict:
         ws, hs, prof = _spar(surf, pf)
         s = surf["_record"]
         t, d = s["membrane_mm"] * 1e-3, s["root_doubler"]
-        kw = dict(t_root=d["thickness_mm"] * 1e-3, root_len=d["full_to_u_mm"] * 1e-3)
+        kw = dict(t_root=d["thickness_mm"] * 1e-3, root_len=d["full_to_u_mm"] * 1e-3, n_el=N_EL)
         w = pr.fin_case(pf, mat, t, ws, hs, ld["p_worst_Pa"], ld["a_normal_to_fin_m_s2"], **kw)
         cr = pr.fin_case(pf, mat, t, ws, hs, m_kg * pr.G / S_paired, 0.0, **kw)
+        w4 = pr.fin_case(pf, mat, t, ws, hs, ld["p_worst_Pa"], ld["a_normal_to_fin_m_s2"], **(kw | {"n_el": N_EL // 4}))
         ip = pr.inplane_root(pf, mat, t, ws, hs(0.0), kw["t_root"], kw["root_len"], ld["a_peak_m_s2"])
         lim = pr.SCENARIO["tip_deflection_over_span_cruise_max"]["value"]
         out[sid] = {"area_flat_m2": surf["area_flat_m2"], "span_m": pf["span_m"], "spar_w_m": ws,
                     "spar_h_profile": prof, "membrane_t_m": t, "root_doubler": d, "worst": w, "cruise": cr,
                     "inplane_root": ip, "allowable_Pa": allow,
+                    "tip_convergence": {"n_el": [N_EL // 4, N_EL], "worst_tip_over_span": [w4["tip_over_span"],
+                                                                                          w["tip_over_span"]]},
                     "pass": bool(w["sigma_max_Pa"] <= allow and ip["sigma_Pa"] <= allow
                                  and w["small_deformation"]["valid"] and cr["tip_over_span"] <= lim),
                     "stress_pass_by_k_z": {str(k): bool(max(w["sigma_max_Pa"], ip["sigma_Pa"]) <= k * allow)
