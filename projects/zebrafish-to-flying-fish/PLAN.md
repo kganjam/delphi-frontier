@@ -164,7 +164,7 @@ What they are and are not, stated at the same level of care their author used:
 | --- | --- |
 | What they are | Windows **anchored** on a gene: TSS-anchored for zebrafish, upstream of a *predicted* start codon for flying fish, where no TSS or UTR annotation exists. |
 | Evidence that they carry structure | `C-other`: all 19 beat their own dinucleotide scramble on Evo 2 likelihood, aggregate +0.1444, CI [0.0980, 0.1908], n = 19. Flying fish alone +0.0993, CI [0.0453, 0.1533]. |
-| Evidence added here | `C-here`: a motif scan (`RESULTS.md` §R6) finds +30.05 more passing JASPAR motifs than their own shuffles in aggregate — but the zebrafish arm alone is **null**, and the design weaknesses are under test. |
+| Evidence added here | `C-here`: three motif-scan passes (`RESULTS.md` §R6–R6c). Under the honest held-out design, real windows exceed composition-matched shuffles of themselves in **both** species (zebrafish +27.1 [7.9, 46.3]; flying fish +26.8 [12.0, 41.6]). **Aggregate only** — only 2/10 and 4/9 windows reach z > 2, so these windows cannot be ranked against each other. |
 | Independently placed? | `C-here`: 2 of 9 flying-fish windows (`shha`, `tbx5a`) are confirmed **flush to the base** by this project's independent protein mapping. 2 (`kcnk5b`, `fgf10a`) are at loci this project assigns to a **different paralog**, and 1 (`fgf20a`) disagrees on scaffold (`CROSSCHECK-EVO.md`). |
 | What they are **not** | Not enhancers. Not validated elements. Not functional. Their author states plainly that the per-window ranking is exploratory and that the cross-species comparison is void; this plan does not use either. |
 
@@ -216,7 +216,9 @@ Constraints, measured or read, that bound what is runnable at all:
 | G1c | **Paralog controls** (`kcnh2b`, `tbx5b`, `fgf10b`, `kcnk5a` mapped alongside their `a` paralogs) | **Done.** `C-here`, round 3. Added after review: with the teleost whole-genome duplication, an `a`-paralog query could best-hit the `b` region. | UniProt; the assembly | Shows whether the `a` and `b` queries resolve to different scaffolds. Still not an orthology test. |
 | G2 | **Reciprocal best-hit test within each gene family** (miniprot `--trans` prediction from the collision scaffold, aligned back against every zebrafish family member) | **Done.** `C-here`, `RESULTS.md` §R3. Run instead of the medaka-proxy version because the collisions are between zebrafish paralogs, which medaka cannot arbitrate. | the assembly; 15 zebrafish family proteins | **Resolved** the `shha`/`shhb` collision (5/5 predictions rank `shha` first) and **did not resolve** the `kcnh2a`/`kcnh2b` one: score and percent-identity rankings disagree on the same sequence. Also showed `kcnh2a`'s second-best scaffold is a `kcnh6a`-like locus. Not an orthology proof; a gene tree is still owed. |
 | G2b | **Gene tree for the `kcnh2` region with outgroups and a positive control** | **Done.** `C-here`, Nebius CPU job `claude-zf2ff-kcnh-tree-1`, `RESULTS.md` §R4 and `data/tree/MANIFEST.md`. | 20 proteins: the family, 2 human outgroups, 4 predictions from the collision scaffold, 4 from a control scaffold | **Settled the paralog assignment**: the region is `kcnh2b`-like (99/100), control passes (94.4/97). Still not orthology without synteny. |
-| G3b | Synteny around the `kcnh2b`-like region | **Not run.** Now the only remaining route to an orthology claim. | the assembly; neighbouring gene queries | Would turn "places with `kcnh2b`" into an orthology argument. Scaffold fragmentation will limit it. |
+| G3b | **Synteny around zebrafish `kcnh2a`'s neighbourhood** | **Running** (`scripts/synteny_kcnh2a.py`): the 36 protein-coding genes flanking `kcnh2a` on GRCz11 chr2, mapped onto the assembly. | Ensembl GRCz11; the assembly | Distinguishes "the whole neighbourhood is missing" from "the neighbourhood is present with a gap where `kcnh2a` should be". Scaffold fragmentation limits it; a negative is uninformative. |
+| G9b | **Family-wide KCNH census** | **Done.** `C-here`, job `claude-zf2ff-kcnh-census-tree-1`, `RESULTS.md` §R7b. | all 10 zebrafish KCNH proteins; the assembly | **9 of 10 paralogs have a flying-fish locus; `kcnh2a` has none.** The gap is gene-specific in this assembly, not general incompleteness. Not a statement about the species. |
+| G8b | **Motif-scan robustness: two re-designs** | **Done.** `C-here`, jobs `…motif-robust-1` and `…motif-heldout-1`, `RESULTS.md` §R6b/§R6c. | the same windows and motif set, held constant by digest | Pass 1's species asymmetry **withdrawn**; the aggregate signal survives in both species; **no per-window claim survives**. |
 | G3 | Scaffold co-occurrence / micro-synteny of the candidate loci | Yes, partially: scaffold identity per hit is already in the round-1/round-2 summaries. Weak because the assembly is scaffold-level. | G1 output | Would show whether neighbouring zebrafish genes land on the same Exocoetid scaffold. Fragmentation will cause false negatives; a negative is uninformative. |
 | G4 | Coding-change screen at `lat4a`/`kcnh2a` (does the Exocoetid allele carry the convergent residue?) | Yes in principle: extract the aligned region from the assembly and inspect the codon. Not run; blocked on the identifier problem in §2.1 and on not having read which residue PMID 40689752 means. | G1 alignments | Would be a direct, cheap test of a published claim in a *different* Exocoetid species than the paper used. Species mismatch must be stated. |
 | G5 | Conserved-non-coding-element scan around candidate loci (zebrafish/medaka/*H. speculiger*) | Yes technically (whole-genome alignment of the three), heavy; not run. | assemblies | Would produce candidate elements. Conservation is not activity: a conserved element is a hypothesis, not a driver (SPEC-012). |
@@ -344,12 +346,15 @@ abstract sentences this plan leans on, since **no full text was read**.
 
 ## 7. Next actions, in order of information gained per unit cost
 
-1. **Find the Exocoetid `kcnh2a`, or establish that this assembly does not contain it.** G2b is done
-   (`RESULTS.md` §R4): the one `kcnh2`-like region is `kcnh2b`-like with a passing control, and the
-   second candidate scaffold is `kcnh2b`'s neighbour in similarity only — it is `kcnh6a`-like. So the
-   `longfin` gene has no located target here. The cheap next step is a lower-stringency search of the
-   whole assembly with the `kcnh2a` query alone (`--outs` lowered, `-N` raised) followed by the same
-   tree test on anything new, plus G3b synteny on the region already found.
+1. **Settled this session, and it went against the plan.** The Exocoetid `kcnh2a` is not findable in
+   this assembly: the one `kcnh2`-like region is `kcnh2b`-like with a passing control (§R4), a
+   low-stringency hunt found no new region (G9), a second tree assigned all five untested regions to
+   other paralogs (§R7), and a family census found 9 of 10 KCNH paralogs do have a flying-fish locus
+   while `kcnh2a` has none (§R7b). So the `longfin` gene has **no located target** in the only public
+   Exocoetidae assembly and perturbation row **P1 cannot be designed against this genome**. Whether
+   that is an assembly gap or a lineage fact is not decidable from public data: G3b synteny is
+   running, and settling it properly needs **new sequencing of an Exocoetid**, which is beyond this
+   project.
 2. **Read the result of PMID 38232499** (wildtype vs longfin locomotor performance). One abstract-
    to-full-text step that can invalidate the whole programme, which makes it the cheapest possible
    kill test.

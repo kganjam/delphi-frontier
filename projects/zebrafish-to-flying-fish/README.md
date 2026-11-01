@@ -23,8 +23,8 @@ Nothing here demonstrates that a flying fish can be built.
 | [`SPAN-AUDIT.md`](SPAN-AUDIT.md) | Generated: assembly-gap fraction, largest intron and frameshift counts per best hit, so long spans can be discounted. |
 | [`SOURCES.md`](SOURCES.md) | Generated: 45 Europe PMC queries, 227 saved records, 154 distinct PMIDs, each with the request URL and response sha256. Read-level is `abstract` for every row. |
 | [`REVIEW.md`](REVIEW.md) | What an LLM critique found, which findings were verified and acted on, and which were rejected and why. |
-| [`claims/zf2ff-claims.json`](claims/zf2ff-claims.json) | 9 Claim and 3 Problem drafts, validated against `frontier/models.py`. Validated is not true (SPEC-001). |
-| [`data/tree/MANIFEST.md`](data/tree/MANIFEST.md) | Manifest for the Nebius gene-tree job: job id, preset, image, software versions, every input and output digest, and the quota refusal that forced a smaller preset. |
+| [`claims/zf2ff-claims.json`](claims/zf2ff-claims.json) | 11 Claim and 3 Problem drafts, validated against `frontier/models.py`. Validated is not true (SPEC-001). |
+| `data/*/MANIFEST.md` | One manifest per Nebius job (`data/tree/`, `data/tree2/`, `data/census/`, `data/motif/`): job id, CLI-read state, preset, image, software versions, every input and output digest, the in-container re-hash of each input, and the quota refusals — including a job that failed at provisioning, kept rather than hidden. |
 | [`CROSSCHECK-EVO.md`](CROSSCHECK-EVO.md) | Generated: the Evo 2 harness's 9 flying-fish windows checked against this project's independent placements. |
 | `scripts/` | Everything that produced the above. |
 | `data/` | Verbatim API responses, ledgers with hashes, PAF alignments, and the machine-readable summaries. |
@@ -49,7 +49,7 @@ python3 scripts/make_claims.py           claims/zf2ff-claims.json
 Round 1 (`scripts/map_proteins.py`, `data/mapping_summary.json`) was produced by a predecessor
 process; it is reviewed here, not re-run.
 
-## The four things worth taking away
+## The five things worth taking away
 
 1. **Fin size has a real genetic handle; the rest of the phenotype does not.** `kcnh2a` and `lat4a`
    are named by a flying-fish phylogenomic study whose abstract reports that their interaction in
@@ -70,14 +70,22 @@ process; it is reviewed here, not re-run.
 3. **The plan designed the blade and forgot the root.** The pectoral girdle and fin musculature were
    missing until review caught it. They are plausibly the binding constraint and the
    worst-sourced part of the document.
-4. **A computed check killed a headline row, and a gene tree then settled it against the plan.**
-   Paralog controls run after review showed the `kcnh2b` query aligning to the same region as
-   `kcnh2a`, at higher identity. A reciprocal best-hit test resolved the parallel `shha`/`shhb`
-   collision but not this one. A maximum-likelihood gene tree with human outgroups **and a positive
-   control that passes** (Nebius job `claude-zf2ff-kcnh-tree-1`) places that region with **`kcnh2b`**
-   at 99/100 support, `kcnh2a` outside. So the plan's primary candidate locus — `kcnh2a`, the
-   `longfin` gene — is **not located** in the only public Exocoetidae assembly, and the conclusion
-   went against the project's own working hypothesis.
+4. **Six Nebius jobs went looking for the plan's primary candidate gene and did not find it.**
+   Paralog controls showed the `kcnh2b` query hitting the same region as `kcnh2a`. A gene tree with
+   human outgroups and a **passing positive control** placed that region with `kcnh2b` (99/100). A
+   low-stringency hunt found no new region. A second tree assigned all five remaining candidates to
+   other paralogs, both carried-forward controls reproducing. A family census then placed 14
+   KCNH-like loci and found **9 of 10 zebrafish paralogs have a flying-fish locus while `kcnh2a` has
+   none** — so the gap is gene-specific in this assembly, not general incompleteness. `kcnh2a` is the
+   `longfin` gene and this plan's primary candidate, so the headline edit **has no located target**.
+   That is a statement about a draft, scaffold-level, unannotated assembly, not about the species —
+   and it went against the project's own working hypothesis.
+5. **A robustness pass overturned one of this project's own results.** The first motif scan reported a
+   null zebrafish arm and a strong flying-fish one. Its manifest named two design weaknesses *before*
+   the follow-up ran; the follow-up removed them and the asymmetry vanished. A third pass with a
+   held-out threshold halved the effect and killed every per-window claim. What survives is one
+   aggregate result, direction-robust across three designs and matched independently by another
+   harness's own implementation.
 
 ## Status
 
