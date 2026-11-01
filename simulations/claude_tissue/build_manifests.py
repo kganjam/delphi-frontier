@@ -166,7 +166,7 @@ def cards():
             parameter_unknowns=["Generic kinetics; speeds in pattern units."],
             open_questions=["Measure outgrowth speed / (ray spacing x patterning rate) in a fin at ray-patterning onset."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; 4 seeds per point."])
-    for _nm in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r", "pzone_g05r", "pzone_g2r2", "pzone_g2r3", "pzone_g1f", "pzone_g1res", "pzone_g2f", "pzone_g05f", "pzone_g1v25", "pzone_refine", "pzone_g1v40", "pzone_g2v25", "pzone_g2v40", "pzone_refine_g1", "pzone_refine_g2b", "pzone_refine_g05", "pzone_refine_g1v40", "pzone_smooth", "pzone_refine_g05b"):
+    for _nm in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r", "pzone_g05r", "pzone_g2r2", "pzone_g2r3", "pzone_g1f", "pzone_g1res", "pzone_g2f", "pzone_g05f", "pzone_g1v25", "pzone_refine", "pzone_g1v40", "pzone_g2v25", "pzone_g2v40", "pzone_refine_g1", "pzone_refine_g2b", "pzone_refine_g05", "pzone_refine_g1v40", "pzone_smooth", "pzone_refine_g05b", "pzone_smooth_b"):
       _dir = "claude-tissue-" + _nm.replace("_", "-")
       if (A/f"{_dir}/{_nm}.json").exists():
         pz = J(f"{_dir}/{_nm}.json"); sm = pz["summary"]
@@ -197,7 +197,8 @@ def cards():
                    "pzone_refine_g05": "Grid refinement (half cell size) of the gamma=0.5 zone-width switch (simulated, H100)",
                    "pzone_refine_g1v40": "Grid refinement (half cell size) of the speed term: gamma=1 at v=0.4 (simulated, H100)",
                    "pzone_smooth": "Smooth (logistic) proliferation-zone edge instead of a step: does the switch move? gamma=1 (simulated, H100)",
-                   "pzone_refine_g05b": "Grid refinement (half cell size): upper bracket of the gamma=0.5 switch (simulated, H100)"}[_nm],
+                   "pzone_refine_g05b": "Grid refinement (half cell size): upper bracket of the gamma=0.5 switch (simulated, H100)",
+                   "pzone_smooth_b": "Smooth zone edge: lower bracket of the switch, gamma=1 (simulated, H100)"}[_nm],
             scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; 12 seeds per condition",
             model=dict(name="2-D Schnakenberg, finite-volume growth confined to a distal zone of width Lp (apical to uniform); cells split, no rows inserted at steady state",
                        context=f"start length {pz['meta']['Y0']} (>4 wavelengths) -> {pz['meta']['Y1']}, d={pz['meta']['d']}, Lp in {pz['meta']['lps']} (0 = uniform)"),

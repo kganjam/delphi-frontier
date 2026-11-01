@@ -659,6 +659,23 @@ respectively, and faster dimensionless outgrowth pushes the switch up (refined �
 So **the switch is one function of dimensionless speed, not a single constant**: about λ/3 at the slowest speeds,
 rising to about λ/2 at 4× faster outgrowth. An upper-bracket refined γ = 0.5 run is running (`claude-tissue-pzone-refine-g05b`).
 
+**Smooth zone edge** (`claude-tissue-pzone-smooth`, job `aijob-e00k9ebxtrnpnnmpe3`, COMPLETED, 613.7 s). The step-shaped
+zone is replaced by a logistic edge of width 1, and growth is normalised so total elongation is exactly v (final length
+exactly 192). γ = 1, v = 0.1, coarse grid, 12 seeds; distal A:
+
+| L_p | 3.5 | 4.0 | 4.5 | 5.0 | 6.0 |
+|---|---|---|---|---|---|
+| Distal A | 0.81 | 0.88 | 0.87 | 0.96 | 0.98 |
+
+**Reading.**
+- With a smooth edge, newly grown tissue is already ray-like at L_p = 3.5. With a step edge, the switch was 4.25 on
+  the coarse grid and 3.8 refined.
+- **So the switch depends on how sharp the zone edge is, not only on its width.** "About λ/3" holds for a sharp step
+  edge; a softer edge gives rays from narrower zones.
+- The smooth-edge lower bracket (L_p = 1.5–3.0) is running (`claude-tissue-pzone-smooth-b`).
+- For biology, the comparison to make is between the sharpness of the distal proliferation boundary and the ray
+  spacing, not just the zone width.
+
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
    the reviewer cites prior analyses such as Míguez et al. 2006 and Krause et al. 2021, which I have not checked here.
