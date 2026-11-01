@@ -1,0 +1,12 @@
+{
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_mcell --out /work/out --sets 16384 --trials 32 --seed 20261101",
+ "python_module": "engineering.neuro.m5_mcell",
+ "exit_code": 0,
+ "where": "Nebius AI job claude-neuro-j3-m5-mcell-a2 (aijob-e00rgpbc4k8ypfzxrm)",
+ "platform": "gpu-h100-sxm 1gpu-16vcpu-200gb",
+ "archive_sha256": "fa9c98932751f4346b5dff50b87d6ca587797e1101f1ce8a74e4161b3d9d93b4",
+ "collected_utc": "2026-11-01T16:27:04Z",
+ "submitted_utc": "2026-11-01T16:20:36Z",
+ "manifest_sha256": "9d4313af9c8336b5cb19ee80aed54648345f2c2eab6cbceafee955ad85737e23",
+ "collection_receipt": "artifacts/neuro/jobs/claude-neuro-j3-m5-mcell-a2/collected/collection_receipt.json"
+}

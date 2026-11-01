@@ -1,0 +1,63 @@
+{
+ "name": "claude-neuro-j3-m5-mcell-a2",
+ "job_id": "aijob-e00rgpbc4k8ypfzxrm",
+ "collected_utc": "2026-11-01T16:27:04Z",
+ "archive_sha256": "fa9c98932751f4346b5dff50b87d6ca587797e1101f1ce8a74e4161b3d9d93b4",
+ "archive_bytes": 410949,
+ "container_rc": 0,
+ "rc_line": "NEURO-RC 0 2026-11-01T16:26:33Z",
+ "chunks": 35,
+ "files": {
+  "out/m5_mcell.json.gz": {
+   "sha256": "c2eccb18dc7a1ef42ee2a93551e1f7f87097e25621aaa71ad51ad72882c3f769",
+   "bytes": 409195
+  },
+  "out/stderr.log": {
+   "sha256": "0bb114a6f3bdfbb875cd5f3401367c3fb51bff3296a5bb18e72e47163a5a5f7c",
+   "bytes": 976
+  },
+  "out/stdout.log": {
+   "sha256": "8403be6f84e2dd7de4486971fb0af0a9fe6405b04ab8c4d92f610a80e606b130",
+   "bytes": 977
+  }
+ },
+ "submission": {
+  "name": "claude-neuro-j3-m5-mcell-a2",
+  "submitted_utc": "2026-11-01T16:20:36Z",
+  "spec": {
+   "name": "claude-neuro-j3-m5-mcell-a2",
+   "platform": "gpu-h100-sxm",
+   "preset": "1gpu-16vcpu-200gb",
+   "timeout": "1h",
+   "disk": "80Gi",
+   "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+   "pip": "scipy",
+   "question": "Which looming encoder (Preuss kappa, LGMD eta, pure angle) with feedforward inhibition into a LIF Mauthner cell reproduces the measured looming-escape signatures (p 0.70-0.91; angle invariance; latency rising with l/v), and what response angle/latency does it predict for M1?",
+   "gpu_justification": "3 encoders x 16384 parameter sets x 7 l/v x 32 noisy trials = 11M neuron-trials, up to 11k steps at 0.5 ms",
+   "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_mcell --out /work/out --sets 16384 --trials 32 --seed 20261101"
+  },
+  "injected": {
+   "engineering/__init__.py": {
+    "source": "engineering/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+   },
+   "engineering/neuro/__init__.py": {
+    "source": "engineering/neuro/__init__.py",
+    "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+    "bytes": 487
+   },
+   "engineering/neuro/m5_mcell.py": {
+    "source": "engineering/neuro/m5_mcell.py",
+    "sha256": "d1c4a01a4f55785a211c3853699dde20071c4c241b2d8b1601dc06eb217c925e",
+    "bytes": 12855
+   }
+  },
+  "runner_sha256": "7d0e9c61c585275249c65bbe16a93e8f6facfb636d6e2073236eef09cc4860bd",
+  "bundle_tar_xz_sha256": "7337f24520f71ece41f35f2c36aeafc83075069504a75f53362420369cec3036",
+  "bundle_b64_bytes": 7436,
+  "cli_rc": 0,
+  "git_head": "daedec85",
+  "job_id": "aijob-e00rgpbc4k8ypfzxrm"
+ }
+}

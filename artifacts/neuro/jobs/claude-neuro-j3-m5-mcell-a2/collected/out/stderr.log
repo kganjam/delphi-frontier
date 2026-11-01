@@ -1,0 +1,10 @@
+/work/repo/engineering/neuro/m5_mcell.py:89: RuntimeWarning: Mean of empty slice
+  lat[:, j] = np.nanmean(np.where(spk, tsp, np.nan), 1) + P["motor_s"]
+/work/repo/engineering/neuro/m5_mcell.py:90: RuntimeWarning: Mean of empty slice
+  ang[:, j] = np.degrees(np.nanmean(np.where(spk, thsp, np.nan), 1))
+/work/repo/engineering/neuro/m5_mcell.py:93: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  rho = np.array([spearmanr(LV, lat[i]).statistic if np.isfinite(lat[i]).sum() == len(LV) else np.nan for i in range(S)])
+/work/repo/engineering/neuro/m5_mcell.py:97: RuntimeWarning: Mean of empty slice
+  C4 = (np.nanmean(lat, 1) >= 0.142) & (np.nanmean(lat, 1) <= 0.716)
+/work/repo/engineering/neuro/m5_mcell.py:152: RuntimeWarning: Mean of empty slice
+  e["per_set"] = {"p_mean": r4(sm["p"].mean(1)), "ang_lv10": r4(sm["ang"][:, 0]), "ang_lv240": r4(sm["ang"][:, -1]), "rho": r4(sm["rho"]), "lat_mean": r4(np.nanmean(sm["lat"], 1)),

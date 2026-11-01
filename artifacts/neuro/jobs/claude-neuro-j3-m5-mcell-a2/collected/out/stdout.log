@@ -1,0 +1,4 @@
+Python 3.11.10
+name, memory.total [MiB]
+NVIDIA H100 80GB HBM3, 81559 MiB
+{"checks": [["control: noise-free theta encoder spikes at theta = 1/gE (fast membrane, no inhibition), within 0.2 deg", true], ["control: dt halving (noise-free, l/v 80 ms): spike/no-spike agreement >= 0.99 and 99th-percentile angle difference <= 1 deg, every encoder", true], ["control: device and CPU agree on 256 noise-free kappa sets (spike agreement >= 0.99, angle within 0.5 deg)", true]], "fractions": {"kappa": {"C1": 0.07958984375, "C2": 0.624267578125, "C3": 0.10675048828125, "C4": 0.168212890625, "C123": 0.015869140625, "C1234": 0.0157470703125}, "eta": {"C1": 0.09033203125, "C2": 0.4862060546875, "C3": 0.15924072265625, "C4": 0.2513427734375, "C123": 0.013427734375, "C1234": 0.01080322265625}, "theta": {"C1": 0.104736328125, "C2": 0.629638671875, "C3": 0.13592529296875, "C4": 0.1546630859375, "C123": 0.00921630859375, "C1234": 0.00604248046875}}, "sweep_elapsed_s": 34.6011438369751}

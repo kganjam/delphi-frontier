@@ -19,7 +19,7 @@ from multiprocessing import Pool
 import numpy as np
 
 from engineering.neuro import glide_stab as G
-from engineering.neuro.sobol_m1 import saltelli, indices, ishigami_control
+from engineering.neuro.sobol_core import saltelli, indices, ishigami_control
 
 DEG = math.pi / 180
 IN = {"dihedral_deg": (0, 16, "lin"), "k_v": (0.05, 0.40, "lin"), "mass_kg": (0.025, 0.05, "lin"), "CL_trim": (0.4, 0.9, "lin"),

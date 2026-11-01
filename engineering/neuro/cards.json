@@ -272,14 +272,16 @@
    "All neuron parameters (delay, gains, time constants, noise) are swept assumptions; no fish electrophysiology is fitted."
   ],
   "open_questions": [
-   "Do flying fish escape at a fixed looming angle (as larval zebrafish do), and at what angle?"
+   "Do flying fish escape at a fixed looming angle (as larval zebrafish do), and at what angle?",
+   "All three encoders pass the abstract-level criteria at similar rates (1-1.6% of parameter space), so these criteria cannot discriminate them; per-l/v response-angle data would."
   ],
   "perturbation_sweep": "8 neuron parameters x 3 encoders (16,384 scrambled-Sobol sets each) x 7 approach parameters l/v 10-240 ms x 32 noisy trials.",
   "experiment_design": "Present looming disks with l/v 10-240 ms to captive flying-fish juveniles or halfbeaks, with high-speed video. Measure the response angle and latency for each l/v: a fixed-angle threshold separates the theta/kappa-like encoders from eta. Pharmacological reduction of inhibition (glycine/GABA antagonists, as in the M-cell literature) tests the role of the feedforward-inhibition parameter.",
   "does_not_establish": [
    "SIMULATED: a single reduced neuron, not the tectum-to-M-cell circuit.",
    "Criteria come from abstracts of goldfish (Preuss 2006) and larval zebrafish (Bhattacharyya 2017; Temizer 2015) studies, not flying fish.",
-   "Passing the criteria shows consistency only; it does not identify a mechanism."
+   "Passing the criteria shows consistency only; it does not identify a mechanism.",
+   "The lower tail of the consistent response angles (5.5-6 deg) sits near the 5 deg stimulus onset: a floor set by the stimulus protocol, not a measured threshold."
   ],
   "couplings": [
    {
