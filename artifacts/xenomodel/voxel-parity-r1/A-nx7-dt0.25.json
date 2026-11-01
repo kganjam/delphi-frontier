@@ -1,0 +1,13 @@
+{
+  "schema": "claude-xenomodel.voxelyze-parity/1",
+  "engine": {"name":"Voxelyze","repo":"https://github.com/jonhiller/Voxelyze","commit":"4287e365e11416dd108f2f361e9ec4c5a011a16c","lib_version_string":"voxelyze.0.9.92","license_from_source_headers":"LGPL-3.0-or-later"},
+  "pattern": "longitudinal",
+  "params": {"nx":7,"ny":3,"nz":3,"voxel_m":0.01,"E_Pa":100000,"rho_kg_m3":1000,"poisson":0.35,"mu_static":1,"mu_kinetic":0.8,"zeta_internal":1,"zeta_global":0.1,"zeta_collision":0.8,"cte_per_C":0.01,"temp_amplitude_C":10,"freq_Hz":4,"settle_s":0.25,"measure_s":5,"gravity_g":1,"floor":1,"collisions":1},
+  "numerics": {"recommended_dt_s":0.000101285594,"dt_scale":0.25,"dt_s":2.53213984e-05,"steps_settle":9873,"steps_measure":197461,"record_every":863,"diverged":false,"diverged_at_step":-1,"sim_time_s":5.249987},
+  "result": {"com_start_m":[0.030000538,0.010000035,0.009973551],"com_end_m":[0.011308505,0.009923356,0.010201240],"net_dx_m":-0.018692033,"net_dy_m":-0.000076679,"net_disp_m":0.018692190,"path_len_m":0.044269944,"cycles":20,"disp_per_cycle_m":0.000934610,"disp_in_body_lengths":0.311537,"body_len_m":0.06},
+  "rho_front_factor": 1,
+  "steps_per_cycle": 9873,
+  "cycle_com_x_m": [0.030000537813,0.028805143124,0.027884215541,0.026963350962,0.026042519014,0.025121673756,0.024200938582,0.023279981842,0.022359026630,0.021437976603,0.020517067087,0.019596090862,0.018675150448,0.017754234599,0.016833238911,0.015912316505,0.014991376532,0.014070501417,0.013149715909,0.012228991880,0.011308002971],
+  "files": {"com_csv":"/data/artifacts/claude-xenomodel/vparity-r1/A-nx7-dt0.25-com.csv"},
+  "scope": "generic soft-voxel mechanics; no organism calibration; parameters marked ASSUMED in source are not measured"
+}

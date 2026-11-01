@@ -1,0 +1,22 @@
+A-nx4-dt0.5|rc=0|wall_s=2.964568091|args=--nx=4 --pattern=longitudinal --dtScale=0.5
+B-nx5-dt0.5|rc=0|wall_s=3.309394132|args=--nx=5 --pattern=longitudinal_mirror --dtScale=0.5
+A-nx5-dt0.5|rc=0|wall_s=2.842991458|args=--nx=5 --pattern=longitudinal --dtScale=0.5
+B-nx7-dt0.5|rc=0|wall_s=4.412568444|args=--nx=7 --pattern=longitudinal_mirror --dtScale=0.5
+A-nx6-dt0.5|rc=0|wall_s=4.163915852|args=--nx=6 --pattern=longitudinal --dtScale=0.5
+B-nx5-dt0.25|rc=0|wall_s=5.548662611|args=--nx=5 --pattern=longitudinal_mirror --dtScale=0.25
+A-nx7-dt0.5|rc=0|wall_s=3.622107796|args=--nx=7 --pattern=longitudinal --dtScale=0.5
+A-nx8-dt0.5|rc=0|wall_s=4.843701095|args=--nx=8 --pattern=longitudinal --dtScale=0.5
+B-nx7-dt0.25|rc=0|wall_s=9.222568334|args=--nx=7 --pattern=longitudinal_mirror --dtScale=0.25
+A-nx9-dt0.5|rc=0|wall_s=6.055019848|args=--nx=9 --pattern=longitudinal --dtScale=0.5
+C1-long|rc=0|wall_s=2.815320880|args=--nx=5 --pattern=longitudinal --muS=0 --muK=0 --dtScale=0.5
+C1-trav|rc=0|wall_s=2.892958305|args=--nx=5 --pattern=travelling --muS=0 --muK=0 --dtScale=0.5
+A-nx10-dt0.5|rc=0|wall_s=5.908754957|args=--nx=10 --pattern=longitudinal --dtScale=0.5
+C2-het|rc=0|wall_s=2.994259746|args=--nx=5 --pattern=longitudinal --muS=0 --muK=0 --rhoFront=4 --dtScale=0.5
+C3-het-cte0|rc=0|wall_s=2.593380098|args=--nx=5 --pattern=longitudinal --muS=0 --muK=0 --rhoFront=4 --cte=0 --dtScale=0.5
+A-nx4-dt0.25|rc=0|wall_s=4.212647878|args=--nx=4 --pattern=longitudinal --dtScale=0.25
+A-nx5-dt0.25|rc=0|wall_s=6.395279926|args=--nx=5 --pattern=longitudinal --dtScale=0.25
+A-nx6-dt0.25|rc=0|wall_s=8.430233706|args=--nx=6 --pattern=longitudinal --dtScale=0.25
+A-nx7-dt0.25|rc=0|wall_s=12.999784741|args=--nx=7 --pattern=longitudinal --dtScale=0.25
+A-nx8-dt0.25|rc=0|wall_s=13.037299633|args=--nx=8 --pattern=longitudinal --dtScale=0.25
+A-nx9-dt0.25|rc=0|wall_s=13.977856377|args=--nx=9 --pattern=longitudinal --dtScale=0.25
+A-nx10-dt0.25|rc=0|wall_s=14.468207402|args=--nx=10 --pattern=longitudinal --dtScale=0.25

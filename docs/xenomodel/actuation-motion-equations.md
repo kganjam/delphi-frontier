@@ -267,6 +267,38 @@ an effect of the phase pattern itself.
 - P-V3 fails if a frictionless homogeneous body moves, which would contradict the
   source force law.
 
+### 5a. Forward test on Voxelyze (preregistered, `artifacts/xenomodel/voxel-parity-protocol.json`, frozen at commit `e9a09b9c` before any arm ran)
+
+22 runs, all exit 0, none diverged; 20 cycles each, with a mass-weighted COM.
+Metric `d̄`: mean per-cycle x-drift over cycles 6–20. Results in
+`artifacts/xenomodel/voxel-parity-results.json`: **19 of 22 checks pass.**
+
+| prediction | outcome |
+|---|---|
+| P-V1: symmetric split (even nx = 4, 6, 8, 10) drifts < 10 % of nx = 5 | **pass at both dt**: 0.09 %–2.3 % of the nx = 5 drift |
+| P-V1b: asymmetric split (odd nx = 5, 7, 9) drifts steadily, same sign at both dt, > 3× every even nx | **pass**: −1.18, −0.90, −0.52 mm/cycle |
+| P-V2: the mirrored pattern negates the drift within the dt-refinement change | **FAIL 3 of 4**: the sign reverses (nx = 5: −1.183 → +1.200 mm/cycle), but the 1.4–2.7 % mismatch exceeds the refinement change (1.0·10⁻⁵ m/cycle at nx = 5) |
+| P-V3a: frictionless + homogeneous gives zero COM motion | **pass**: exactly 0.0 for the longitudinal and travelling patterns |
+| P-V3b: frictionless + 4× front density moves | **pass**: −54 µm over 20 cycles, with no friction at all |
+| P-V3c: the same with actuation off stays still | **pass**: 0.0 |
+
+**What this establishes in the engine:**
+
+1. The drift of the stored `longitudinal` pattern comes almost entirely from the
+   split asymmetry produced by integer division. Removing the asymmetry (even nx)
+   removes 98–99.9 % of the steady drift.
+2. The damping-ratio hypothesis of the momentum theorem is the operative one.
+   With density varied at fixed E, `C/m = 2ζ√(Es/m)` becomes non-uniform and the
+   body translates with zero friction. This is propulsion by numerical damping,
+   and it would be mistaken for locomotion if density were ever varied.
+
+**What failed:** the mirror endpoint at the stated tolerance. Per the protocol's
+falsifier, this marks a residual anisotropy in body construction or solver at the
+~2 % level. Candidates include voxel and link iteration order, float32
+accumulation, and contact handling. None has been diagnosed. Until it is resolved,
+statements that compare a pattern with its mirror image are limited to
+~2 % resolution.
+
 ## 6. Ciliary versus contractile: what transfers
 
 | Item | Contractile body (modelled here) | Ciliated surface (what the sources report) |
