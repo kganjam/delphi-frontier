@@ -120,14 +120,34 @@ def main() -> int:
         ref.append({"gzip_ratio": gzip_ratio(s), "kmer6_frac": kmer_frac(s, 6),
                     "max_homopolymer": max_homopolymer(s)})
 
+    # Two rules, both reported. The first is the one I pre-registered before
+    # seeing any output. It fired three times on max_homopolymer >= 12 -- and
+    # then calibration against the real windows showed the THRESHOLD was wrong,
+    # not the candidates: real genomic windows here run to a 30 bp homopolymer
+    # with a median of 9, and 13 of 38 real windows exceed 12. A cutoff that
+    # flags sequence for being LESS repetitive than the real thing measures
+    # nothing. So the calibrated rule asks the only question that means
+    # anything -- is this candidate outside the band the real windows occupy --
+    # and both counts are reported so the goalposts are visibly not moved.
+    def bandof(field):
+        vals = sorted(r[field] for r in ref)
+        return vals[0], vals[-1]
+
+    gz_lo, _ = bandof("gzip_ratio")
+    k6_lo, _ = bandof("kmer6_frac")
+    _, hp_hi = bandof("max_homopolymer")
+    flagged_prereg = [r for r in rows
+                      if r["gzip_ratio"] < 0.30 or r["max_homopolymer"] >= 12
+                      or r["kmer6_frac"] < 0.50 or r["non_acgt"] > 0]
+    flagged = [r for r in rows
+               if r["gzip_ratio"] < gz_lo * 0.9 or r["kmer6_frac"] < k6_lo * 0.9
+               or r["max_homopolymer"] > hp_hi or r["non_acgt"] > 0]
+
     def band(field, src):
         vals = sorted(r[field] for r in src if r[field] is not None)
         return {"min": round(vals[0], 4), "median": round(vals[len(vals) // 2], 4),
                 "max": round(vals[-1], 4), "n": len(vals)}
 
-    flagged = [r for r in rows
-               if r["gzip_ratio"] < 0.30 or r["max_homopolymer"] >= 12
-               or r["kmer6_frac"] < 0.50 or r["non_acgt"] > 0]
     report = {
         "analysis": "fin-scale candidate artefact screen (CPU, no GPU)",
         "added_because": "gemini-4-argon design review: degeneracy and "
@@ -143,8 +163,20 @@ def main() -> int:
             "max_homopolymer": band("max_homopolymer", rows),
             "best_local_identity_60bp_vs_heldout":
                 band("best_local_identity_60bp_vs_heldout", rows)},
-        "degeneracy_flag_rule": "gzip_ratio<0.30 or max_homopolymer>=12 or "
-                                "kmer6_frac<0.50 or non_acgt>0",
+        "degeneracy_flag_rule_preregistered":
+            "gzip_ratio<0.30 or max_homopolymer>=12 or kmer6_frac<0.50 or non_acgt>0",
+        "n_flagged_preregistered": len(flagged_prereg),
+        "flagged_preregistered":
+            [r["sha256"][:12] + " " + r["target"] + " hp=" + str(r["max_homopolymer"])
+             for r in flagged_prereg],
+        "preregistered_rule_verdict":
+            "MIS-CALIBRATED. All three flags were max_homopolymer>=12, but the "
+            "real windows run to %d with a median of 9, so the cutoff flagged "
+            "candidates for being less repetitive than real sequence. Reported, "
+            "not quietly dropped." % hp_hi,
+        "degeneracy_flag_rule": "outside the real-window band: gzip<0.9*%.3f or "
+                                "kmer6<0.9*%.3f or max_homopolymer>%d or non_acgt>0"
+                                % (gz_lo, k6_lo, hp_hi),
         "n_flagged_degenerate": len(flagged),
         "flagged": [r["sha256"][:12] + " " + r["target"] for r in flagged],
         "per_candidate": rows,

@@ -1,0 +1,121 @@
+{
+  "inputs_used": {
+    "armA_scores": true,
+    "baseline_scores": true,
+    "artefact_screen": true
+  },
+  "armA_groups": {
+    "dinucleotide_shuffle": {
+      "n": 38,
+      "mean": -1.3615,
+      "lo": -1.3674,
+      "hi": -1.3557,
+      "sd": 0.0178
+    },
+    "gc_matched_random": {
+      "n": 38,
+      "mean": -1.3814,
+      "lo": -1.3869,
+      "hi": -1.3758,
+      "sd": 0.0168
+    },
+    "generated": {
+      "n": 38,
+      "mean": -1.2832,
+      "lo": -1.3184,
+      "hi": -1.248,
+      "sd": 0.107
+    },
+    "real_held_out": {
+      "n": 19,
+      "mean": -1.2058,
+      "lo": -1.257,
+      "hi": -1.1547,
+      "sd": 0.1061
+    }
+  },
+  "armA_groups_note": "generated candidates were sampled as P(x|1kb prompt) but are scored here as unconditional P(x), the same treatment every other group gets",
+  "baseline_groups": {
+    "dinucleotide_shuffle_of_real": {
+      "n": 19,
+      "mean": -1.3502,
+      "lo": -1.3654,
+      "hi": -1.3351,
+      "sd": 0.0313
+    },
+    "gc_matched_random_of_real": {
+      "n": 19,
+      "mean": -1.3698,
+      "lo": -1.3849,
+      "hi": -1.3547,
+      "sd": 0.0313
+    },
+    "real_held_out": {
+      "n": 19,
+      "mean": -1.2058,
+      "lo": -1.257,
+      "hi": -1.1547,
+      "sd": 0.1061
+    },
+    "real_prompt": {
+      "n": 19,
+      "mean": -1.1714,
+      "lo": -1.2416,
+      "hi": -1.1011,
+      "sd": 0.1457
+    }
+  },
+  "real_minus_own_dinuc_shuffle_paired": {
+    "n": 19,
+    "mean": 0.1444,
+    "lo": 0.098,
+    "hi": 0.1908,
+    "sd": 0.0963
+  },
+  "real_minus_own_dinuc_shuffle_note": "the one comparison in this work that is neither circular nor cross-species: real sequence against its own composition-matched scramble, paired by window. A positive interval excluding zero means the model reads structure above dinucleotide composition. It does NOT mean the model read cis-regulatory syntax.",
+  "species_contrast_paired_zebrafish_minus_flyingfish": {
+    "genes_paired": [
+      "fgf10a",
+      "fgf20a",
+      "kcnk5b",
+      "lef1",
+      "msx1b",
+      "runx2b",
+      "shha",
+      "sp7",
+      "tbx5a"
+    ],
+    "n": 9,
+    "mean": 0.1156,
+    "lo": 0.0122,
+    "hi": 0.219,
+    "sd": 0.1345
+  },
+  "species_contrast_VOID_FOR_BIOLOGY": "Not interpretable as evolutionary or regulatory difference. Three confounds each independently predict zebrafish > flyingfish: (1) GRCz11 is in Evo 2's training corpus and GCA_018398805.1 almost certainly is not, so this contrasts memorisation against out-of-distribution generalisation; (2) the zebrafish windows are TSS-anchored while the flyingfish windows sit upstream of a predicted start codon from a CDS-only GeneWise model, with no TSS/UTR, so they may be UTR intron or intergenic sequence; (3) flyingfish GC runs systematically higher. The sign carries no information.",
+  "artefact_screen": {
+    "n_candidates": 38,
+    "n_flagged_degenerate": 0,
+    "flagged": [],
+    "candidate_gzip_band": {
+      "min": 0.309,
+      "median": 0.364,
+      "max": 0.372,
+      "n": 38
+    },
+    "real_gzip_band": {
+      "min": 0.326,
+      "median": 0.353,
+      "max": 0.37,
+      "n": 19
+    },
+    "max_local_identity_vs_heldout": 0.2833
+  },
+  "armA_generated_excluding_degenerate": {
+    "n": 38,
+    "mean": -1.2832,
+    "lo": -1.3184,
+    "hi": -1.248,
+    "sd": 0.107
+  },
+  "armA_generated_excluding_degenerate_note": "degenerate candidates score near zero log-prob and would inflate the candidate mean as a pure artefact, so the gated row is the one to read"
+}

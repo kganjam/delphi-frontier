@@ -1,0 +1,50 @@
+{
+  "job": "fin-scale-evo2-regulatory-candidates/v1",
+  "model": "evo2_7b",
+  "precision": "bfloat16",
+  "outcome_kind": "computed candidate generation; NOT observed, NOT functional design; no epigenetic claim",
+  "inference": {
+    "generate_bp": 1000,
+    "temperature": 1.0,
+    "top_k": 4,
+    "samples": 2,
+    "arm": "A_native_context only"
+  },
+  "seed": 0,
+  "inputs": {
+    "input_set_id": "fin-scale-regulatory-2kb/v1",
+    "n_targets": 19
+  },
+  "self_check": {
+    "iid_random": -1.3996587991714478,
+    "expected_about": -1.3863,
+    "poly_C": -0.019215382635593414,
+    "natural_first_target": -1.216288447380066,
+    "scoring_path_sane": true
+  },
+  "software": {
+    "python": "3.12.3",
+    "torch": "2.10.0a0+b4e4ee81d3.nv25.12",
+    "evo2": "present",
+    "transformer_engine": "2.10.0+769ed778",
+    "flash_attn": "2.7.4.post1",
+    "vortex": "present",
+    "pip_freeze_sha256": "f3487791bb834b0a43a3ed26f48500d70c83a913444e4e6683c26a052c8ea44c"
+  },
+  "gpu": {
+    "count": 1,
+    "name": "NVIDIA H100 80GB HBM3",
+    "capability": [
+      9,
+      0
+    ],
+    "total_memory_gb": 85.0
+  },
+  "runtime": {
+    "load_seconds": 13.8,
+    "total_seconds": 965.5,
+    "n_candidates": 38,
+    "n_controls": 76,
+    "n_scored": 133
+  }
+}
