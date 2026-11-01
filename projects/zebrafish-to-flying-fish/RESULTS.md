@@ -859,6 +859,35 @@ the `slc43a2b` query, as in the flying fish, so the comparison is like-for-like.
 **What this is not:** four residues at one column. No transport assay, no expression, no fin
 measurement, no test that the substitution changes anything.
 
+## R7n — Four Beloniformes: the `slc43a2` a/b structure resolves, and it validates the F326L comparison
+
+**`claude-zf2ff-slc43-bel-tree-1`** (`aijob-e00wj350bydkkdkzkb`), CLI-read `COMPLETED`. Manifest:
+[`data/tree12/MANIFEST.md`](data/tree12/MANIFEST.md). The two longest `slc43a2`-family predictions from
+the halfbeak, needlefish and saury added to the tree.
+
+Each of the three control species turns out to carry **two** `slc43a2`-like loci, exactly as the
+flying fish does, and the tree splits them cleanly:
+
+| clade | members | support |
+| --- | --- | --- |
+| **`b`-side** | zebrafish, medaka, Takifugu, stickleback `slc43a2b` + the **first** locus of flying fish, halfbeak, needlefish, saury | 79.8/76 |
+| **`a`-side** | zebrafish `slc43a2a` + the **second** locus of flying fish (`slc43locus02`), halfbeak, needlefish, saury | 49.4/69 |
+
+One locus per species per side with the matching zebrafish paralog — the composition an ancestral
+duplication retained across these species should give.
+
+**Settled by composition:** `slc43locus02` is on the `a` side with its three Beloniform counterparts.
+That is the fourth version of this assignment and its support climbed as the input improved
+(36.2/65 → 66.7/78 → a coherent 1:1 pattern). **Not settled by bootstrap:** the `a`-side clade is
+**49.4/69**, below threshold. The argument rests on composition, not on the support value, and saying
+so is the honest version.
+
+**What this validates, which matters more than the assignment itself.** The F326 comparison in §R7m
+read residues from the flying fish, a halfbeak, a needlefish and a saury. This tree shows those four
+are the **`a`-side locus of each species** — so that comparison was between **homologous loci**, not
+between a glider's `a` paralog and a non-glider's `b`. Without this tree the F/L/F/F/I pattern would
+have been unvalidated; with it, it is read across one orthologous group.
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/

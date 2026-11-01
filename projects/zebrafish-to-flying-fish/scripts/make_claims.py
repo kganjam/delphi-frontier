@@ -441,9 +441,18 @@ PROBLEMS = [
                      "checked), PMID 40689752 is Integrative Zoology (access not checked). The assembly and "
                      "both alignments are already on disk in this repository."),
         completeness="actionable",
+        original={"status_note": "The IDENTIFIER half of this problem is now answered: lat4a is "
+                                 "slc43a2 (the paper's own citation of Guetg et al. 2015), the paper's "
+                                 "F326 numbering is on the a paralog (position 326 of zebrafish "
+                                 "slc43a2a is F; slc43a2b's is D), and the corresponding flying-fish "
+                                 "locus is slc43locus02 on JAGFBZ010001224.1, which a four-species "
+                                 "Beloniform tree places on the a side with its halfbeak, needlefish "
+                                 "and saury counterparts. What remains open is the FUNCTIONAL half: "
+                                 "whether the substitution does anything, which no sequence work here "
+                                 "can answer."},
         acceptance_criteria=["A full-text read of PMID 34534441 and PMID 40689752 names the gene identifier or accession used, and the residue position of the convergent change.",
                              "The named identifier is matched to one of the two mapped SLC43A2-family loci (slc43locus01 or slc43locus02), with the amino-acid position located in that alignment.",
-                             "The paralog assignment of slc43locus02 reaches usable support, which the current tree does not give it (36.2/65)."],
+                             "The paralog assignment of slc43locus02 reaches usable support. Four trees have now been run and the best is a structurally coherent 1:1 a/b pattern across four Beloniformes whose a-side clade still scores only 49.4/69, so this criterion is NOT met by bootstrap; it is met by clade composition, which is a weaker standard and is recorded as such."],
         falsifiers=["The papers use a gene identifier that corresponds to neither slc43a2a nor slc43a2b, in which case the candidate locus in this project is wrong.",
                     "The convergent change is reported only in Exocoetid species other than H. speculiger and is absent from the H. speculiger assembly."],
         next_action=("Read the two full texts for the gene identifier and residue position, then extract the "
