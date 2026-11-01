@@ -126,11 +126,23 @@ All 21 are listed with a one-line justification in `shh-loop.json` under
 
 `n_FL` (sharpness of the outgrowth readout) is 10, not the 6 first used. At `n_FL = 6`, the
 sub-threshold FGF leak in arms where **the loop never engages** integrates, over the 80-time-unit
-window, into an apparent **3%-of-wild-type "rudiment"** at `s = 0`. That looked like a result — a
-graded ZRS allelic series bottoming out in a vestige — and it was an artifact of the readout
-integrating noise over a long window. Raising `n_FL` removes it. The honest consequence is in
-§6 below: the model can no longer pretend to distinguish an Shh-null limb from true amelia,
-because it never could.
+window, into an apparent "rudiment" at `s = 0`. That looked like a result — a graded ZRS allelic
+series bottoming out in a vestige — and it was an artifact of the readout integrating leak over a
+long window.
+
+Re-measured at the shipped parameters (both arms run for this note, not quoted from the tuning
+session):
+
+| `n_FL` | `L` at `s = 0` | `L_wt` | ratio |
+|---|---|---|---|
+| 6 | 0.5917 | 16.9890 | **3.48%** of wild type |
+| 10 (shipped) | 0.0232 | 17.7055 | **0.131%** of wild type |
+
+**It does not go to zero, it goes to 0.131%**, which is below the 5% `no-limb` cut and so no
+longer changes any class. Saying "removed" would overstate it: the leak is suppressed, not
+eliminated, and a longer simulated window would grow it again. The honest consequence is in §6:
+the model can no longer appear to distinguish an Shh-null limb from true amelia, because it never
+could.
 
 ---
 
@@ -160,10 +172,28 @@ maintenance from BMP and the loop is self-sustaining. It then switches itself of
 mechanisms at once, both sourced: FGF rises past `K_FG` and represses Grem1 (Verheyden & Sun
 2008), and the former-ZPA zone `Z` expands and removes Grem1-competent mesenchyme (Scherz 2004).
 
-**`Z` is what makes termination irreversible, and it is not decorative.** With the FGF⊣Grem1 edge
-alone the system relaxes back and can re-ignite: GREM1 falls, FGF falls, the repression lifts, and
-the loop restarts. `Z` only ever increases, so it ratchets the loop shut. Removing it does not
-weaken the model slightly — it removes termination.
+### Which mechanism actually terminates the loop — measured, not assumed
+
+I first wrote here that `Z` makes termination irreversible while the FGF⊣Grem1 edge alone would
+let the loop re-ignite. **That was an assertion, so I ran the ablation, and it was wrong in its
+detail.** Knocking each mechanism out, simulated to t = 200 (`termination_ablation` in the JSON):
+
+| arm | terminates? | window | FGF at t = 200 |
+|---|---|---|---|
+| both mechanisms (wild type) | **yes** | 25.34 | 0.055 |
+| no descendant-zone ratchet (`k_Z = 0`, Scherz removed) | **no** | 196.05 | 0.809 |
+| no FGF⊣Grem1 repression (`K_FG → ∞`, Verheyden & Sun removed) | **yes** | 26.35 | 0.054 |
+| neither | **no** | 196.07 | 0.972 |
+
+Without `Z` the loop does not oscillate or re-ignite — it simply **never switches off**, sitting
+at high FGF indefinitely. And removing the FGF⊣Grem1 repression barely matters: termination
+survives and the window lengthens by **+3.99%** (25.34 -> 26.35).
+
+**So in this parameterisation the two published termination mechanisms are not equal partners,
+and the model leans almost entirely on Scherz 2004.** That is a real limitation, stated here and
+in `limitations` in the JSON: the self-termination in the control figure is mostly one mechanism,
+and nothing here establishes which dominates in an embryo. It is also a property of this
+parameter set only — `k_Z` is assumed, and no parameter scan was run.
 
 **Three failures found and fixed while building the control arm**, recorded because each one
 looked like a result:
@@ -228,6 +258,15 @@ topology, and nothing here tests it.
 | time-rescaling invariance (all rates × 3, window ÷ 3) | max trajectory difference **8.4e-13** — PASS |
 | outgrowth: ODE state vs trapezoid re-integration of its own integrand | relative difference **4.8e-6** — PASS |
 | classifier positive control (4 cases that must each return a known class) | **4/4** PASS |
+| derived counts match the tables they describe | PASS, and its own positive control flags a deliberately broken copy |
+
+**No count in the JSON is written by hand any more.** Parameter totals, the source count, the
+class cuts, the bisection depth, `F_on`, `T_end` and the ablation percentage are all f-strings
+over the constant or the table they describe, and `check_derived_counts` asserts that the prose
+and the table agree before the file is written. This exists because the opposite happened: an
+earlier copy of `limitations[2]` said "Fourteen of the eighteen parameters are assumed" while the
+parameter table held 23 entries, 21 of them assumed — a sentence that both contradicted the table
+on the same page and *understated* the assumption load, which is the direction that matters.
 
 The thresholds are reported to 4 decimal places with **± 0.0001**, which is a floor, not a
 measurement: the actual integrator spread is 3–4 orders of magnitude smaller. Quoting the true
@@ -264,6 +303,11 @@ ZPA domain size.
 result.** Parameters were chosen so the wild-type arm initiates, is maintained and self-terminates.
 That the wild type does those three things is therefore not evidence for the model. What the
 sweeps add is the *shape* of the response to each knob, which was not tuned for.
+
+**The self-termination it demonstrates is mostly one of the two published mechanisms.** The
+ablation in §4 shows the loop leans almost entirely on the Scherz 2004 descendant-zone ratchet;
+removing the Verheyden & Sun 2008 FGF⊣Grem1 repression changes the window by +3.99%. The
+control figure should not be read as evidence that both published mechanisms are doing work here.
 
 **The model is non-spatial.** SHH, GREM1, BMP and FGF are single well-mixed levels. The real loop
 is spatially organised across an epithelial–mesenchymal boundary with measured gradients, and the

@@ -2465,7 +2465,7 @@ def test_limbless_mouse_design_space_shows_routes_studies_and_its_own_refusals(b
     assert pg.locator(".lmstudy").count() == block["counts"]["studies_declared"]
     assert pg.locator(".lmfigs img").count() == block["counts"]["figures_present"]
     absent = [s for s in block["studies"] if not s["present"]]
-    assert pg.locator(".lmstudy .note.warn").count() == len(absent)
+    assert pg.locator(".lmstudy .lmabsent").count() == len(absent)   # its own class: other notes in a study also use .note.warn
 
     # Every junction between two models is labelled, and at least one of them is refused rather than asserted.
     assert pg.locator(".lmlink").count() == len(block["chain"]["links"])

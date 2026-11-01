@@ -182,7 +182,7 @@
     const missing = (s.figures || []).filter((f) => f.state !== "present");
     return html`<section class="panel lmstudy" id="study-${s.id}" aria-labelledby="st-${s.id}">
       <h3 id="st-${s.id}">${s.title} ${U.pill(s.kind || "computed", "warn")} ${s.scale ? U.pill(s.scale, "grp") : ""}</h3>
-      ${s.present ? "" : html`<p class="note warn"><b>Declared and not present.</b> The result file <code>${s.data_path || ""}</code> is not in this build, so nothing below is shown for it. It is listed rather than hidden.</p>`}
+      ${s.present ? "" : html`<p class="note warn lmabsent"><b>Declared and not present.</b> The result file <code>${s.data_path || ""}</code> is not in this build, so nothing below is shown for it. It is listed rather than hidden.</p>`}
       ${s.summary ? html`<p>${s.summary}</p>` : ""}
       ${s.question ? html`<p class="small"><b>The design question it answers.</b> ${s.question}</p>` : ""}
       ${figs.length ? html`<div class="lmfigs">${figs.map((f) => html`<figure><img src="${f.href}" alt="${f.alt || f.caption || s.title}" loading="lazy"><figcaption class="small">${f.caption || ""} <span class="faint">${/simulation/i.test(s.kind || "") ? "Simulation output" : "Analysis output"}, not an observation. sha256 ${U.sha(f.sha256)}</span></figcaption></figure>`)}</div>` : ""}
@@ -196,6 +196,14 @@
       ${d.linear_stability ? html`<p class="small"><b>Internal control.</b> Linear stability predicts a wavelength of ${DF.fmt(d.linear_stability.predicted_wavelength, 3)}; the simulated pattern measures ${d.measured_wavelength === undefined ? "not reported" : DF.fmt(d.measured_wavelength, 3)}. A disagreement is reported, not tuned away.</p>` : ""}
       ${d.control_arm ? html`<details><summary><b>Control arm</b> <span class="faint small">run first; the design sweep is only read if this passes</span></summary><pre class="small lmjson">${JSON.stringify(d.control_arm, null, 1)}</pre></details>` : ""}
       ${d.refinement_arm ? html`<details><summary><b>Refinement arm</b> <span class="faint small">a tighter solver or a finer grid; how far the answer moved</span></summary><pre class="small lmjson">${JSON.stringify(d.refinement_arm, null, 1)}</pre></details>` : ""}
+      ${Object.keys(d).filter((k) => /_ablation$/.test(k)).map((k) => { const ab = d[k] || {}; const arms = ab.arms || [];
+        if (!arms.length) return "";
+        const cols = [...new Set(arms.flatMap((a) => Object.keys(a)))];
+        return html`<h4>${k.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase())}</h4>
+          <p class="small faint">Each published mechanism removed on its own, to find out which one the result actually rests on. This is the arm most likely to contradict the author, and it is reported either way.</p>
+          <div class="tablewrap"><table><thead><tr>${cols.map((c) => html`<th scope="col">${c.replace(/_/g, " ")}</th>`)}</tr></thead>
+          <tbody>${arms.map((a) => html`<tr>${cols.map((c) => html`<td class="small">${a[c] === undefined || a[c] === null ? html`<span class="faint">—</span>` : (typeof a[c] === "number" ? DF.fmt(a[c], 4) : (a[c] === true ? U.pill("yes", "ok") : a[c] === false ? U.pill("no", "no") : String(a[c])))}</td>`)}</tr>`)}</tbody></table></div>
+          ${ab.finding ? html`<p class="note warn small"><b>What it found.</b> ${ab.finding}</p>` : ""}`; })}
       ${listOf("Controls", d.controls)}
       ${listOf("Numerical checks", d.numerical_checks)}
       ${d.phenotype_classes ? html`<details><summary><b>How each run was classified</b> <span class="faint small">declared before the sweep was read</span></summary><dl class="lmmeta small">${Object.entries(d.phenotype_classes).map(([k, v]) => html`<dt>${k}</dt><dd>${v}</dd>`)}</dl></details>` : ""}

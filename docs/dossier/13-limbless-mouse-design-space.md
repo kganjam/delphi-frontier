@@ -65,7 +65,7 @@ An ODE model of the SHH–GREM1–BMP–FGF feedback loop, built from the publis
 
 - This is a SIMULATION. No quantity in this file is an observation of any embryo.
 - The model is a caricature of a signalling TOPOLOGY. It is not calibrated to any measured mouse limb bud: no concentration, rate, diffusion length or developmental time in it was fitted to data, and none should be read as one.
-- Fourteen of the eighteen parameters are assumed. They were chosen so the wild-type arm initiates, is maintained and self-terminates -- that is, the control arm's qualitative behaviour was an input to parameter choice, not an independent result.
+- 21 of the 23 parameters are assumed and none is sourced; the other 2 are fixed by the non-dimensionalisation. They were chosen so the wild-type arm initiates, is maintained and self-terminates -- that is, the control arm's qualitative behaviour was an input to parameter choice, not an independent result.
 - A threshold in this model is a threshold in this model. It is not a prediction of the ZRS allelic series at which a mouse loses a limb, and it has no units that could be compared to one.
 - The model is non-spatial: SHH, GREM1, BMP and FGF are single well-mixed levels. The real loop is spatially organised across an epithelial-mesenchymal boundary with measured gradients, and the Scherz 2004 mechanism it borrows is explicitly geometric (an expanding descendant zone). Variable Z is a zero-dimensional stand-in for that geometry.
 - The model contains no SHH-independent proximal outgrowth, so it cannot distinguish a Shh-null limb -- which in mice still forms proximal skeleton -- from true amelia. Its 'no-limb' class means only 'this loop never engaged'.
@@ -73,6 +73,7 @@ An ODE model of the SHH–GREM1–BMP–FGF feedback loop, built from the publis
 - The knob s is held constant in time. In python hindlimb buds the reported defect is that SHH is weak AND transient (PMID 27773569); a time-varying s is not explored.
 - Only the classifier's boundaries, not the model, decide where 'truncated' ends and 'normal' begins. Those cuts (5%, 85%, 115% of the wild-type control) are assumed.
 - The outgrowth window duration is most sensitive to k_Z, a wholly assumed parameter. No sensitivity analysis over the full parameter space was run.
+- The two published termination mechanisms are not equal partners in this parameterisation. The ablation arm shows the loop leans almost entirely on the Scherz 2004 descendant-zone ratchet: without it the loop never terminates, while without the Verheyden & Sun 2008 FGF-|Grem1 repression it still terminates, about 4% later. So the self-terminating behaviour shown in the control figure is mostly one mechanism, and which mechanism dominates in a real limb bud is not addressed here.
 
 Full result file: `results/limbless-mouse/shh-loop.json`. Code: `results/limbless-mouse/code/shh_loop.py`.
 

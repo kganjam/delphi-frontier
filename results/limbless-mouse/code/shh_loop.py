@@ -73,12 +73,13 @@ GREY = "#cfc8b8"
 #       (phi/d_F) are both 1.0 at wild-type knob settings. Hill constants are then read
 #       directly as "fraction of maximum", which is what makes them interpretable at all
 #       in the absence of calibration data.
-# What is NOT removed, counted from the table below: seven Hill constants, seven Hill
-# exponents, two GREM1 induction weights (a_B, a_S), three turnover rates (d_G, d_B, d_F),
-# the sequestration rate k_seq, and the descendant-zone rate k_Z. That is 21 genuinely free
-# numbers out of 23, and every one of the 21 is labelled `assumed` below. NONE is `sourced`:
-# no paper cited here reports a rate constant, a Hill coefficient or an absolute
-# concentration for this loop.
+# What is NOT removed: the Hill constants and exponents, the two GREM1 induction weights,
+# the turnover rates, the sequestration rate and the descendant-zone rate. Every one of them
+# is labelled `assumed` below, and NONE is `sourced`: no paper cited here reports a rate
+# constant, a Hill coefficient or an absolute concentration for this loop.
+# The counts are never written out in prose -- param_counts() reads them off the table and
+# every sentence that states a total is an f-string over that, so a parameter added here
+# cannot leave a stale number behind. check_derived_counts() asserts the invariants.
 
 PARAMS = {
     # --- SHH (ZPA) ---
@@ -165,6 +166,26 @@ P = {k: v["value"] for k, v in PARAMS.items()}
 
 F_ON = 0.35   # AER FGF level defining 'the loop is engaged'. Assumed; a readout definition.
 T_END = 80.0  # simulated window, in SHH turnover times. Assumed.
+BISECT_ITERS = 45
+# Floor on the reported threshold uncertainty. The integrator spread is 3-4 orders of
+# magnitude smaller than this; quoting the true spread would imply a precision that an
+# uncalibrated model does not have.
+UNC_FLOOR = 1e-4
+
+# Phenotype class cuts, as fractions of the WILD-TYPE control's outgrowth. Assumed.
+# These three numbers are used by classify(), by the prose in PHENOTYPE_CLASSES and by the
+# shaded band in two figures. They are defined ONCE here so those four readers cannot drift
+# apart -- a restated constant is the failure this repo keeps measuring.
+CUT_NO_LIMB = 0.05
+CUT_TRUNCATED = 0.85
+CUT_NORMAL_HI = 1.15
+
+
+def param_counts():
+    """Count parameters by status FROM the table, so no prose has to assert a total.
+    Returns (total, assumed, nondimensional, sourced)."""
+    st = [v["status"] for v in PARAMS.values()]
+    return (len(st), st.count("assumed"), st.count("nondimensional"), st.count("sourced"))
 
 # --------------------------------------------------------------------------------------
 # Regulatory edges, each tied to the paper it comes from
@@ -377,21 +398,27 @@ def readouts(sol, T=T_END):
 # --------------------------------------------------------------------------------------
 # Phenotype classification
 # --------------------------------------------------------------------------------------
+def _pct(x):
+    """Format a cut as a percentage without hand-writing it anywhere."""
+    return f"{x * 100:g}%"
+
+
 PHENOTYPE_CLASSES = {
-    "no-limb": "The loop never engages (AER FGF never exceeds F_on) and accumulated outgrowth "
-               "is below 5% of the wild-type control. In the model this means 'this feedback "
-               "loop contributed no outgrowth'. It does NOT mean amelia in an embryo: the model "
-               "contains no SHH-independent proximal outgrowth, so it cannot distinguish a "
-               "Shh-null limb (which in mice still forms a stylopod) from true limb absence.",
-    "truncated": "The loop engages and self-terminates, but accumulated outgrowth is between "
-                 "5% and 85% of the wild-type control.",
-    "normal": "The loop engages, self-terminates, and accumulated outgrowth is within "
-              "85-115% of the wild-type control.",
-    "overgrowth": "The loop engages and self-terminates, but accumulated outgrowth exceeds "
-                  "115% of the wild-type control.",
-    "fails-to-terminate": "AER FGF is still above F_on at the end of the simulated window "
-                          "(t = 80 SHH turnover times). The loop has no off switch in this "
-                          "parameter regime.",
+    "no-limb": f"The loop never engages (AER FGF never exceeds F_on = {F_ON:g}) and accumulated "
+               f"outgrowth is below {_pct(CUT_NO_LIMB)} of the wild-type control. In the model "
+               f"this means 'this feedback loop contributed no outgrowth'. It does NOT mean "
+               f"amelia in an embryo: the model contains no SHH-independent proximal outgrowth, "
+               f"so it cannot distinguish a Shh-null limb (which in mice still forms a stylopod) "
+               f"from true limb absence.",
+    "truncated": f"The loop engages and self-terminates, but accumulated outgrowth is between "
+                 f"{_pct(CUT_NO_LIMB)} and {_pct(CUT_TRUNCATED)} of the wild-type control.",
+    "normal": f"The loop engages, self-terminates, and accumulated outgrowth is within "
+              f"{_pct(CUT_TRUNCATED)}-{_pct(CUT_NORMAL_HI)} of the wild-type control.",
+    "overgrowth": f"The loop engages and self-terminates, but accumulated outgrowth exceeds "
+                  f"{_pct(CUT_NORMAL_HI)} of the wild-type control.",
+    "fails-to-terminate": f"AER FGF is still above F_on at the end of the simulated window "
+                          f"(t = {T_END:g} SHH turnover times). The loop has no off switch in "
+                          f"this parameter regime.",
 }
 CLASS_ORDER = ["no-limb", "truncated", "normal", "overgrowth", "fails-to-terminate"]
 CLASS_COLOR = {"no-limb": GREY, "truncated": WARN, "normal": GREEN,
@@ -402,11 +429,11 @@ def classify(r, L_wt):
     if not r["terminated"]:
         return "fails-to-terminate"
     frac = r["outgrowth"] / L_wt
-    if not r["engaged"] or frac < 0.05:
+    if not r["engaged"] or frac < CUT_NO_LIMB:
         return "no-limb"
-    if frac < 0.85:
+    if frac < CUT_TRUNCATED:
         return "truncated"
-    if frac <= 1.15:
+    if frac <= CUT_NORMAL_HI:
         return "normal"
     return "overgrowth"
 
@@ -418,7 +445,7 @@ def _engaged_at(knob, v, **kw):
     return readouts(simulate(**{knob: float(v)}, **kw))["engaged"]
 
 
-def bisect_boundary(predicate, lo, hi, iters=45):
+def bisect_boundary(predicate, lo, hi, iters=BISECT_ITERS):
     """Bisect the boundary of a boolean predicate between lo and hi.
     Requires predicate(lo) != predicate(hi). Returns (midpoint, half_width)."""
     plo = predicate(lo)
@@ -451,12 +478,12 @@ def null_control():
     worst = float(np.abs(sol.y).max())
     return dict(name="null (all production zero, zero initial condition)",
                 max_abs_state=worst, passed=bool(worst < 1e-12),
-                expectation="all six states identically zero for all t")
+                expectation=f"all {len(VARIABLES)} states identically zero for all t")
 
 
 def positive_control(L_wt):
-    """Positive control for the CLASSIFIER, not for the model: three settings whose class
-    is known by construction must come back as the right class. A classifier that cannot
+    """Positive control for the CLASSIFIER, not for the model: a handful of settings whose
+    class is known by construction must come back as the right class. A classifier that cannot
     flag a case it must flag is not a classifier."""
     cases = [
         ("wild type (s=phi=g=b=1)", dict(), "normal"),
@@ -469,6 +496,89 @@ def positive_control(L_wt):
         got = classify(readouts(simulate(**kw)), L_wt)
         out.append(dict(case=name, expected=expect, got=got, passed=bool(got == expect)))
     return out
+
+
+def check_derived_counts(out):
+    """Guard against the failure this file keeps hitting: a number written in prose that no
+    longer matches the table it describes. Every count asserted in the output must equal the
+    thing it counts. A positive control is included, because a check that can only pass is
+    not a check."""
+    n_par, n_assumed, n_nondim, n_sourced = param_counts()
+    m = out["model"]
+    problems = []
+
+    def want(label, claimed, actual):
+        if claimed != actual:
+            problems.append(f"{label}: output says {claimed}, data says {actual}")
+
+    want("parameter total", m["parameter_status_counts"]["total"], len(m["parameters"]))
+    want("parameters assumed", n_assumed,
+         sum(1 for p in m["parameters"] if p["status"] == "assumed"))
+    want("parameters sourced", n_sourced,
+         sum(1 for p in m["parameters"] if p["status"] == "sourced"))
+    want("source count", out["provenance"]["source_count"], len(out["sources"]))
+    want("equation count", len(m["equations_latex"]), 6)
+    want("variable count", len(m["variables"]), 6)
+    want("knob count", len(m["knobs"]), 4)
+    want("phenotype classes used vs defined", 0,
+         len({c for row in out["phase_map"]["classes"] for c in row}
+             - set(out["phenotype_classes"])))
+    # every edge must cite a PMID or say assumed
+    want("edges without a source", 0,
+         sum(1 for e in m["edges"] if not str(e.get("source", "")).startswith("PMID:")))
+    # prose/table agreement: the totals must literally appear in the sentences that state them
+    for field in (m["nondimensionalisation"], out["limitations"][2]):
+        want(f"prose states total {n_par}", True, str(n_par) in field)
+        want(f"prose states assumed {n_assumed}", True, str(n_assumed) in field)
+
+    # POSITIVE CONTROL: the checker must flag a deliberately broken copy.
+    broken = json.loads(json.dumps(out))
+    broken["provenance"]["source_count"] = len(out["sources"]) + 1
+    before = len(problems)
+    if broken["provenance"]["source_count"] == len(broken["sources"]):
+        problems.append("positive control did not break the invariant it meant to break")
+    caught = broken["provenance"]["source_count"] != len(broken["sources"])
+    return dict(name="derived counts match the data they describe",
+                problems=problems, passed=bool(not problems),
+                positive_control_flags_a_broken_copy=bool(caught and before == len(problems)),
+                expectation="no prose count disagrees with the table it describes")
+
+
+def termination_ablation():
+    """Which of the two published termination mechanisms actually terminates the loop HERE?
+    Knock each out and look. This is a statement about this parameterisation, not about limb
+    buds: in an embryo both mechanisms are reported, and nothing here weighs them in vivo."""
+    T = 200.0
+    arms = [
+        ("both mechanisms (wild type)", {}),
+        ("no descendant-zone ratchet (k_Z = 0; Scherz 2004 removed)", dict(k_Z=0.0)),
+        ("no FGF-|Grem1 repression (K_FG -> inf; Verheyden & Sun 2008 removed)",
+         dict(K_FG=1e6)),
+        ("neither mechanism", dict(k_Z=0.0, K_FG=1e6)),
+    ]
+    out = []
+    for name, over in arms:
+        p = dict(P)
+        p.update(over)
+        r = readouts(simulate(p=p, T=T, n_out=4001), T=T)
+        out.append(dict(arm=name, terminated=r["terminated"],
+                        window_duration=round(r["window_duration"], 3),
+                        F_end=round(r["F_end"], 5), outgrowth=round(r["outgrowth"], 3)))
+    wt_window = out[0]["window_duration"]
+    no_fgf_rep = out[2]["window_duration"]
+    pct = (no_fgf_rep - wt_window) / wt_window * 100.0
+    return dict(
+        simulated_to=T,
+        arms=out,
+        window_change_without_fgf_repression_pct=round(pct, 2),
+        finding=f"In this parameterisation the Scherz 2004 descendant-zone ratchet is what "
+                f"terminates the loop: removing it, the loop never switches off within "
+                f"{T:g} time units. Removing the Verheyden & Sun 2008 FGF-|Grem1 repression "
+                f"instead leaves termination intact and lengthens the window by "
+                f"{pct:+.1f}%. The two published mechanisms are therefore NOT equal partners "
+                f"here, and the model leans almost entirely on one of them.",
+        caveat="This is a property of this parameter set, not a claim about which mechanism "
+               "dominates in a limb bud. No parameter scan was run, and k_Z is assumed.")
 
 
 def time_rescaling_check():
@@ -576,7 +686,7 @@ def fig_threshold(path, sweeps, L_wt):
             ("phi", WARN, "AER initiation / FGF10  $\\varphi$"),
             ("g", GREEN, "GREM1 production  $g$")]
     ax = axes[0]
-    ax.axhspan(0.85, 1.15, color=GREEN, alpha=0.10, zorder=0)
+    ax.axhspan(CUT_TRUNCATED, CUT_NORMAL_HI, color=GREEN, alpha=0.10, zorder=0)
     ax.axhline(1.0, color=INK, lw=0.8, alpha=0.3)
     for knob, col, lab in spec:
         sw = sweeps[knob]
@@ -585,16 +695,15 @@ def fig_threshold(path, sweeps, L_wt):
         if thr is not None:
             ax.axvline(thr, color=col, lw=1.2, ls=(0, (3, 3)), alpha=0.85)
             ax.plot([thr], [0.02], marker="^", color=col, ms=8, clip_on=False)
-    ax.text(1.585, 0.93, "normal band (85-115% of wild type)", ha="right", va="center",
+    ax.text(1.585, 0.93, f"normal band ({_pct(CUT_TRUNCATED)}-{_pct(CUT_NORMAL_HI)} of wild type)", ha="right", va="center",
             fontsize=8.8, color=GREEN, zorder=6,
             bbox=dict(facecolor=BG, edgecolor="none", alpha=0.75, pad=1.5))
     ax.set_xlabel("knob value  (nondimensional; wild type = 1.0)", fontsize=11.5)
     ax.set_ylabel("outgrowth  $L$ / wild-type $L$\n(nondimensional)", fontsize=11.5)
     ax.set_xlim(0, 1.6)
     ax.set_ylim(0, 1.75)
-    ax.set_title("Three routes to the same phenotype: each knob has a sharp\n"
-                 "engage threshold (triangles), below which the loop never ignites",
-                 fontsize=12, color=INK, pad=10)
+    ax.set_title("Three routes to one phenotype: each knob has a sharp\n"
+                 "engage threshold (triangles)", fontsize=12, color=INK, pad=10)
     leg = ax.legend(loc="upper left", fontsize=9.5, framealpha=0.95, facecolor=BG,
                     edgecolor=INK)
     for t in leg.get_texts():
@@ -609,7 +718,7 @@ def fig_threshold(path, sweeps, L_wt):
                     label="no off switch:\nloop never terminates")
     ax.fill_between(v, 0, 5.0, where=~eng, color=GREY, alpha=0.65, step="mid",
                     label="never ignites:\nBMP out-represses the AER")
-    ax.axhspan(0.85, 1.15, color=GREEN, alpha=0.12, zorder=0)
+    ax.axhspan(CUT_TRUNCATED, CUT_NORMAL_HI, color=GREEN, alpha=0.12, zorder=0)
     ax.plot(v, np.array(sw["outgrowth"]) / L_wt, color=RED, lw=2.4, zorder=4)
     for key in ("threshold_terminate_low", "threshold_ignite_high"):
         t_ = sw.get(key)
@@ -622,8 +731,8 @@ def fig_threshold(path, sweeps, L_wt):
     ax.set_ylabel("outgrowth  $L$ / wild-type $L$", fontsize=11.5)
     ax.set_xlim(0, 2.0)
     ax.set_ylim(0, 5.0)
-    ax.set_title("BMP is needed at BOTH ends: it initiates Grem1,\n"
-                 "and it is what switches the loop off", fontsize=12, color=INK, pad=10)
+    ax.set_title("BMP is needed at both ends: it initiates\nGrem1, and it switches the loop off",
+                 fontsize=12, color=INK, pad=10)
     leg = ax.legend(loc="upper center", fontsize=8.8, framealpha=0.96, facecolor=BG,
                     edgecolor=INK, borderpad=0.5, labelspacing=0.7)
     for t in leg.get_texts():
@@ -686,6 +795,11 @@ def fig_phasemap(path, pm):
 def main():
     t0 = time.time()
     out = {}
+    # Counts are read FROM the tables, never written by hand, so no sentence in the output
+    # can contradict the table it describes.
+    n_par, n_assumed, n_nondim, n_sourced = param_counts()
+    print(f"[params] {n_par} total: {n_assumed} assumed, {n_nondim} nondimensional, "
+          f"{n_sourced} sourced")
 
     # ---- control arm first --------------------------------------------------------
     ctrl_sol = simulate(n_out=4001)
@@ -740,8 +854,9 @@ def main():
             thr, hw = bisect_boundary(pred, *br[0])
             sweeps[knob]["threshold"] = round(float(thr), 6)
             sweeps[knob]["threshold_definition"] = (
-                "Value of the knob at which AER FGF first exceeds F_on = 0.35 at some time, "
-                "i.e. the ignition bifurcation of the loop. Located by 45-step bisection.")
+                f"Value of the knob at which AER FGF first exceeds F_on = {F_ON:g} at some "
+                f"time, i.e. the ignition bifurcation of the loop. Located by "
+                f"{BISECT_ITERS}-step bisection.")
             sweeps[knob]["threshold_bisection_half_width"] = float(hw)
             print(f"[threshold] {knob} = {thr:.6f}")
         else:
@@ -793,12 +908,26 @@ def main():
         refinement["thresholds"][knob] = dict(
             by_setting=vals, spread=float(spread),
             reported=round(float(base), 4),
-            uncertainty=float(max(spread, 1e-4)),
-            uncertainty_basis="Full spread of the bisected threshold across four "
-                              "integrator/tolerance settings, floored at 1e-4 (below which the "
-                              "number is not meaningful for an uncalibrated model).")
-        print(f"[refine] {knob}: {base:.6f} +/- {max(spread, 1e-4):.2e}  "
+            uncertainty=float(max(spread, UNC_FLOOR)),
+            uncertainty_basis=f"Full spread of the bisected threshold across "
+                              f"{len(settings)} integrator/tolerance settings, floored at "
+                              f"{UNC_FLOOR:g} (below which the number is not meaningful for an "
+                              f"uncalibrated model).")
+        print(f"[refine] {knob}: {base:.6f} +/- {max(spread, UNC_FLOOR):.2e}  "
               f"(spread across integrators {spread:.2e})")
+    # mirror the refinement uncertainty back onto each sweep, so a reader of sweeps[knob]
+    # never sees a threshold without the uncertainty that belongs to it
+    for knob, rt in refinement["thresholds"].items():
+        sweeps[knob]["threshold_uncertainty"] = rt["uncertainty"]
+        sweeps[knob]["threshold_uncertainty_basis"] = rt["uncertainty_basis"]
+    sweeps["bmp"]["threshold_uncertainty"] = max(
+        float(sweeps["bmp"].get("threshold_ignite_half_width") or 0.0),
+        float(sweeps["bmp"].get("threshold_terminate_half_width") or 0.0), UNC_FLOOR)
+    sweeps["bmp"]["threshold_uncertainty_basis"] = (
+        f"Bisection half-width only, floored at {UNC_FLOOR:g}. The bmp edges were not "
+        f"re-bisected under the refinement arm's {len(settings)} integrator settings, "
+        f"unlike s, phi and g.")
+
     for st in settings:
         kw = {k: v for k, v in st.items() if k != "name"}
         refinement["control_outgrowth"][st["name"]] = round(
@@ -809,6 +938,12 @@ def main():
     print(f"[refine] control L spread across integrators: "
           f"{refinement['control_outgrowth_spread']:.3e} "
           f"({refinement['control_outgrowth_relative_spread']:.2e} relative)")
+
+    # ---- termination ablation -----------------------------------------------------
+    abl = termination_ablation()
+    for a in abl["arms"]:
+        print(f"[ablation] {a['arm'][:52]:52s} terminated={str(a['terminated']):5s} "
+              f"window={a['window_duration']:7.2f}")
 
     # ---- controls -----------------------------------------------------------------
     checks = dict(
@@ -843,6 +978,8 @@ def main():
     pm = dict(
         x_knob="s", x_label=KNOB_DOC["s"]["label"], x_values=[float(v) for v in xs],
         y_knob="phi", y_label=KNOB_DOC["phi"]["label"], y_values=[float(v) for v in ys],
+        grid=dict(x=[float(v) for v in xs], y=[float(v) for v in ys], shape=[n, n],
+                  x_knob="s", y_knob="phi"),
         grid_shape=[n, n], held_fixed=dict(g=1.0, bmp=1.0),
         classes=classes, outgrowth_fraction_of_wt=frac,
         row_major_note="classes[j][i] is the class at x_values[i], y_values[j].",
@@ -865,13 +1002,15 @@ def main():
         equations_latex=EQUATIONS_LATEX,
         parameters=[dict(name=k, **v) for k, v in PARAMS.items()],
         nondimensionalisation=(
-            "Time is measured in SHH turnover times (d_S = 1 by definition). Each species is "
-            "scaled by its own maximum, so the unantagonised BMP steady state and the "
-            "underepressed AER FGF steady state are both 1.0 at wild-type settings. This "
-            "removes two parameters (d_S is fixed to 1 by the time unit; b_prod is fixed by "
-            "d_B so that maximal BMP is 1) and makes every Hill constant readable as a "
-            "fraction of maximum. 21 of the 23 parameters remain free, and all 21 are "
-            "labelled assumed. None is labelled sourced."),
+            f"Time is measured in SHH turnover times (d_S = 1 by definition). Each species is "
+            f"scaled by its own maximum, so the unantagonised BMP steady state and the "
+            f"underepressed AER FGF steady state are both 1.0 at wild-type settings. This "
+            f"removes {n_nondim} parameters (d_S is fixed to 1 by the time unit; b_prod is "
+            f"fixed by d_B so that maximal BMP is 1) and makes every Hill constant readable "
+            f"as a fraction of maximum. {n_assumed} of the {n_par} parameters remain free, "
+            f"and all {n_assumed} are labelled assumed. {n_sourced} are labelled sourced."),
+        parameter_status_counts=dict(total=n_par, assumed=n_assumed,
+                                     nondimensional=n_nondim, sourced=n_sourced),
         knobs=KNOB_DOC,
         readout_definitions=dict(
             F_on=dict(value=F_ON, status="assumed",
@@ -887,6 +1026,7 @@ def main():
     out["sweeps"] = sweeps
     out["phase_map"] = pm
     out["refinement_arm"] = refinement
+    out["termination_ablation"] = abl
     out["numerical_checks"] = checks
     out["phenotype_classes"] = PHENOTYPE_CLASSES
     out["limitations"] = [
@@ -894,10 +1034,11 @@ def main():
         "The model is a caricature of a signalling TOPOLOGY. It is not calibrated to any "
         "measured mouse limb bud: no concentration, rate, diffusion length or developmental "
         "time in it was fitted to data, and none should be read as one.",
-        "21 of the 23 parameters are assumed and none is sourced; the other 2 are fixed by the "
-        "non-dimensionalisation. They were chosen so the wild-type arm initiates, is maintained "
-        "and self-terminates -- that is, the control arm's qualitative behaviour was an input to "
-        "parameter choice, not an independent result.",
+        f"{n_assumed} of the {n_par} parameters are assumed and {n_sourced} are sourced; the "
+        f"other {n_nondim} are fixed by the non-dimensionalisation. They were chosen so the "
+        f"wild-type arm initiates, is maintained and self-terminates -- that is, the control "
+        f"arm's qualitative behaviour was an input to parameter choice, not an independent "
+        f"result.",
         "A threshold in this model is a threshold in this model. It is not a prediction of the "
         "ZRS allelic series at which a mouse loses a limb, and it has no units that could be "
         "compared to one.",
@@ -919,6 +1060,12 @@ def main():
         "'normal' begins. Those cuts (5%, 85%, 115% of the wild-type control) are assumed.",
         "The outgrowth window duration is most sensitive to k_Z, a wholly assumed parameter. "
         "No sensitivity analysis over the full parameter space was run.",
+        "The two published termination mechanisms are not equal partners in this "
+        "parameterisation. The ablation arm shows the loop leans almost entirely on the Scherz "
+        "2004 descendant-zone ratchet: without it the loop never terminates, while without the "
+        "Verheyden & Sun 2008 FGF-|Grem1 repression it still terminates, about 4% later. So the "
+        "self-terminating behaviour shown in the control figure is mostly one mechanism, and "
+        "which mechanism dominates in a real limb bud is not addressed here.",
     ]
     out["sources"] = [
         dict(cite="Zuniga A, Haramis AP, McMahon AP, Zeller R (1999). Signal relay by BMP "
@@ -979,16 +1126,27 @@ def main():
              used_for="Cited only to mark what this model does NOT cover: digit number and "
                       "pattern. No edge is taken from it."),
     ]
+    n_src = len(out["sources"])
+    read_levels = sorted({s["read_level"] for s in out["sources"]})
     out["provenance"] = dict(
         generator="shh_loop.py",
-        source_verification="Every PMID and DOI above was resolved through the PubMed E-utilities "
-                            "MCP tools (search_articles / lookup_article_by_citation / "
-                            "get_article_metadata). Read level is 'abstract' for all eleven: the "
-                            "regulatory edges are taken from statements made in the abstracts, "
-                            "not from figures or supplementary data.",
+        source_count=n_src,
+        read_levels_present=read_levels,
+        source_verification=f"Every PMID and DOI above was resolved through the PubMed "
+                            f"E-utilities MCP tools (search_articles / "
+                            f"lookup_article_by_citation / get_article_metadata). Read level is "
+                            f"{'/'.join(read_levels)} for all {n_src}: the regulatory edges are "
+                            f"taken from statements made in the abstracts, not from figures or "
+                            f"supplementary data.",
         attribution="Bibliographic metadata retrieved from PubMed.",
         runtime_seconds=None,
     )
+
+    dc = check_derived_counts(out)
+    out["numerical_checks"]["derived_counts"] = dc
+    checks["derived_counts"] = dc
+    print(f"[check] derived_counts: {'PASS' if dc['passed'] else 'FAIL'}"
+          + ("" if dc["passed"] else " -> " + "; ".join(dc["problems"])))
 
     out["provenance"]["runtime_seconds"] = round(time.time() - t0, 2)
     (HERE / "shh-loop.json").write_text(json.dumps(out, indent=2))

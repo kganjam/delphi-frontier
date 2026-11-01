@@ -3860,7 +3860,7 @@
         "note": "Sharpness of the outgrowth readout. Set high deliberately: at n=6 the sub-threshold FGF leak integrates, over the 80-time-unit window, into a spurious 3%-of-wild-type 'rudiment' in arms where the loop never engages. That number was an artifact of the readout, not a result."
       }
     ],
-    "nondimensionalisation": "Time is measured in SHH turnover times (d_S = 1 by definition). Each species is scaled by its own maximum, so the unantagonised BMP steady state and the underepressed AER FGF steady state are both 1.0 at wild-type settings. This removes four parameters and makes every Hill constant readable as a fraction of maximum. Fourteen free parameters remain, and all fourteen are labelled assumed.",
+    "nondimensionalisation": "Time is measured in SHH turnover times (d_S = 1 by definition). Each species is scaled by its own maximum, so the unantagonised BMP steady state and the underepressed AER FGF steady state are both 1.0 at wild-type settings. This removes two parameters (d_S is fixed to 1 by the time unit; b_prod is fixed by d_B so that maximal BMP is 1) and makes every Hill constant readable as a fraction of maximum. 21 of the 23 parameters remain free, and all 21 are labelled assumed. None is labelled sourced.",
     "knobs": {
       "s": {
         "label": "ZPA Shh transcriptional output  s",
@@ -5546,7 +5546,9 @@
       ],
       "threshold": 0.307494,
       "threshold_definition": "Value of the knob at which AER FGF first exceeds F_on = 0.35 at some time, i.e. the ignition bifurcation of the loop. Located by 45-step bisection.",
-      "threshold_bisection_half_width": 2.98023217215615e-10
+      "threshold_bisection_half_width": 2.98023217215615e-10,
+      "threshold_uncertainty": 0.0001,
+      "threshold_uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
     },
     "phi": {
       "knob": "phi",
@@ -7183,7 +7185,9 @@
       ],
       "threshold": 0.58617,
       "threshold_definition": "Value of the knob at which AER FGF first exceeds F_on = 0.35 at some time, i.e. the ignition bifurcation of the loop. Located by 45-step bisection.",
-      "threshold_bisection_half_width": 2.98023217215615e-10
+      "threshold_bisection_half_width": 2.98023217215615e-10,
+      "threshold_uncertainty": 0.0001,
+      "threshold_uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
     },
     "g": {
       "knob": "g",
@@ -8818,7 +8822,9 @@
       ],
       "threshold": 0.554926,
       "threshold_definition": "Value of the knob at which AER FGF first exceeds F_on = 0.35 at some time, i.e. the ignition bifurcation of the loop. Located by 45-step bisection.",
-      "threshold_bisection_half_width": 2.98023217215615e-10
+      "threshold_bisection_half_width": 2.98023217215615e-10,
+      "threshold_uncertainty": 0.0001,
+      "threshold_uncertainty_basis": "Full spread of the bisected threshold across four integrator/tolerance settings, floored at 1e-4 (below which the number is not meaningful for an uncalibrated model)."
     },
     "bmp": {
       "knob": "bmp",
@@ -10456,7 +10462,9 @@
       "threshold_terminate_low": 0.442106,
       "threshold_terminate_half_width": 2.98023217215615e-10,
       "threshold": null,
-      "threshold_note": "BMP is not monotone: the loop needs enough BMP to switch OFF (lower edge) and few enough to switch ON (upper edge), so it has a window rather than a threshold."
+      "threshold_note": "BMP is not monotone: the loop needs enough BMP to switch OFF (lower edge) and few enough to switch ON (upper edge), so it has a window rather than a threshold.",
+      "threshold_uncertainty": 0.0001,
+      "threshold_uncertainty_basis": "Bisection half-width only, floored at 1e-4. The bmp edges were not re-bisected under the refinement arm's four integrator settings, unlike s, phi and g."
     }
   },
   "phase_map": {
@@ -10590,6 +10598,140 @@
       1.475,
       1.5
     ],
+    "grid": {
+      "x": [
+        0.0,
+        0.025,
+        0.05,
+        0.075,
+        0.1,
+        0.125,
+        0.15,
+        0.175,
+        0.2,
+        0.225,
+        0.25,
+        0.275,
+        0.3,
+        0.325,
+        0.35,
+        0.375,
+        0.4,
+        0.425,
+        0.45,
+        0.475,
+        0.5,
+        0.525,
+        0.55,
+        0.575,
+        0.6,
+        0.625,
+        0.65,
+        0.675,
+        0.7,
+        0.725,
+        0.75,
+        0.775,
+        0.8,
+        0.825,
+        0.85,
+        0.875,
+        0.9,
+        0.925,
+        0.95,
+        0.975,
+        1.0,
+        1.025,
+        1.05,
+        1.075,
+        1.1,
+        1.125,
+        1.15,
+        1.175,
+        1.2,
+        1.225,
+        1.25,
+        1.275,
+        1.3,
+        1.325,
+        1.35,
+        1.375,
+        1.4,
+        1.425,
+        1.45,
+        1.475,
+        1.5
+      ],
+      "y": [
+        0.0,
+        0.025,
+        0.05,
+        0.075,
+        0.1,
+        0.125,
+        0.15,
+        0.175,
+        0.2,
+        0.225,
+        0.25,
+        0.275,
+        0.3,
+        0.325,
+        0.35,
+        0.375,
+        0.4,
+        0.425,
+        0.45,
+        0.475,
+        0.5,
+        0.525,
+        0.55,
+        0.575,
+        0.6,
+        0.625,
+        0.65,
+        0.675,
+        0.7,
+        0.725,
+        0.75,
+        0.775,
+        0.8,
+        0.825,
+        0.85,
+        0.875,
+        0.9,
+        0.925,
+        0.95,
+        0.975,
+        1.0,
+        1.025,
+        1.05,
+        1.075,
+        1.1,
+        1.125,
+        1.15,
+        1.175,
+        1.2,
+        1.225,
+        1.25,
+        1.275,
+        1.3,
+        1.325,
+        1.35,
+        1.375,
+        1.4,
+        1.425,
+        1.45,
+        1.475,
+        1.5
+      ],
+      "shape": [
+        61,
+        61
+      ],
+      "x_knob": "s",
+      "y_knob": "phi"
+    },
     "grid_shape": [
       61,
       61
@@ -18368,6 +18510,41 @@
     "control_outgrowth_spread": 8.60599999974454e-05,
     "control_outgrowth_relative_spread": 4.860646280903846e-06
   },
+  "termination_ablation": {
+    "simulated_to": 200.0,
+    "arms": [
+      {
+        "arm": "both mechanisms (wild type)",
+        "terminated": true,
+        "window_duration": 25.336,
+        "F_end": 0.05465,
+        "outgrowth": 17.705
+      },
+      {
+        "arm": "no descendant-zone ratchet (k_Z = 0; Scherz 2004 removed)",
+        "terminated": false,
+        "window_duration": 196.055,
+        "F_end": 0.80906,
+        "outgrowth": 193.962
+      },
+      {
+        "arm": "no FGF-|Grem1 repression (K_FG -> inf; Verheyden & Sun 2008 removed)",
+        "terminated": true,
+        "window_duration": 26.347,
+        "F_end": 0.05399,
+        "outgrowth": 21.229
+      },
+      {
+        "arm": "neither mechanism",
+        "terminated": false,
+        "window_duration": 196.07,
+        "F_end": 0.9717,
+        "outgrowth": 195.315
+      }
+    ],
+    "finding": "In this parameterisation the Scherz 2004 descendant-zone ratchet is what terminates the loop: removing it, the loop never switches off within 200 time units. Removing the Verheyden & Sun 2008 FGF-|Grem1 repression instead leaves termination intact and lengthens the window by about 4%. The two published mechanisms are therefore NOT equal partners here, and the model leans almost entirely on one of them.",
+    "caveat": "This is a property of this parameter set, not a claim about which mechanism dominates in a limb bud. No parameter scan was run, and k_Z is assumed."
+  },
   "numerical_checks": {
     "null_control": {
       "name": "null (all production zero, zero initial condition)",
@@ -18431,14 +18608,15 @@
   "limitations": [
     "This is a SIMULATION. No quantity in this file is an observation of any embryo.",
     "The model is a caricature of a signalling TOPOLOGY. It is not calibrated to any measured mouse limb bud: no concentration, rate, diffusion length or developmental time in it was fitted to data, and none should be read as one.",
-    "Fourteen of the eighteen parameters are assumed. They were chosen so the wild-type arm initiates, is maintained and self-terminates -- that is, the control arm's qualitative behaviour was an input to parameter choice, not an independent result.",
+    "21 of the 23 parameters are assumed and none is sourced; the other 2 are fixed by the non-dimensionalisation. They were chosen so the wild-type arm initiates, is maintained and self-terminates -- that is, the control arm's qualitative behaviour was an input to parameter choice, not an independent result.",
     "A threshold in this model is a threshold in this model. It is not a prediction of the ZRS allelic series at which a mouse loses a limb, and it has no units that could be compared to one.",
     "The model is non-spatial: SHH, GREM1, BMP and FGF are single well-mixed levels. The real loop is spatially organised across an epithelial-mesenchymal boundary with measured gradients, and the Scherz 2004 mechanism it borrows is explicitly geometric (an expanding descendant zone). Variable Z is a zero-dimensional stand-in for that geometry.",
     "The model contains no SHH-independent proximal outgrowth, so it cannot distinguish a Shh-null limb -- which in mice still forms proximal skeleton -- from true amelia. Its 'no-limb' class means only 'this loop never engaged'.",
     "Digit number and digit pattern are outside the model. Sheth et al. 2012 (PMID 23239739) show digit patterning is a Turing-type mechanism whose wavelength distal Hox genes set; none of that is represented here, so the model says nothing about how many digits form.",
     "The knob s is held constant in time. In python hindlimb buds the reported defect is that SHH is weak AND transient (PMID 27773569); a time-varying s is not explored.",
     "Only the classifier's boundaries, not the model, decide where 'truncated' ends and 'normal' begins. Those cuts (5%, 85%, 115% of the wild-type control) are assumed.",
-    "The outgrowth window duration is most sensitive to k_Z, a wholly assumed parameter. No sensitivity analysis over the full parameter space was run."
+    "The outgrowth window duration is most sensitive to k_Z, a wholly assumed parameter. No sensitivity analysis over the full parameter space was run.",
+    "The two published termination mechanisms are not equal partners in this parameterisation. The ablation arm shows the loop leans almost entirely on the Scherz 2004 descendant-zone ratchet: without it the loop never terminates, while without the Verheyden & Sun 2008 FGF-|Grem1 repression it still terminates, about 4% later. So the self-terminating behaviour shown in the control figure is mostly one mechanism, and which mechanism dominates in a real limb bud is not addressed here."
   ],
   "sources": [
     {
@@ -18523,6 +18701,6 @@
     "generator": "shh_loop.py",
     "source_verification": "Every PMID and DOI above was resolved through the PubMed E-utilities MCP tools (search_articles / lookup_article_by_citation / get_article_metadata). Read level is 'abstract' for all eleven: the regulatory edges are taken from statements made in the abstracts, not from figures or supplementary data.",
     "attribution": "Bibliographic metadata retrieved from PubMed.",
-    "runtime_seconds": 243.63
+    "runtime_seconds": 241.99
   }
 }
