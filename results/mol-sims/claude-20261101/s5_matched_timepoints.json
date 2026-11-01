@@ -1,0 +1,229 @@
+{
+ "baseline_before_step": {
+  "Cl_i": 34.67088553826096,
+  "EK_mV": -88.00116537606449,
+  "ENa_mV": 65.42808356636483,
+  "I_CaT_pA": -0.00042122622993526014,
+  "Ip_pA": 0.24267196646957356,
+  "K_i": 118.8080847427737,
+  "Na_i": 11.249280460895209,
+  "Vm_mV": -32.177118249424616,
+  "max_abs_rate": 5.927158155541849e-06,
+  "ok": true,
+  "t_settle_Vm_s": 1501943.9734285024
+ },
+ "correction": "Earlier text compared the passive arm at 600 s with the recruitment arm at 3600 s. Both arms are listed here at all four stored times. At every time the direction of the Vm change still separates the arms, but neither arm is at steady state at any of them: the per-point Vm change is non-zero throughout, so these are transients, not resting potentials.",
+ "direction_vs_baseline": {
+  "t=21600s": {
+   "c=0.0": "hyperpolarised",
+   "c=1.0": "depolarised"
+  },
+  "t=3600s": {
+   "c=0.0": "hyperpolarised",
+   "c=1.0": "depolarised"
+  },
+  "t=600s": {
+   "c=0.0": "hyperpolarised",
+   "c=1.0": "depolarised"
+  },
+  "t=86400s": {
+   "c=0.0": "hyperpolarised",
+   "c=1.0": "depolarised"
+  }
+ },
+ "falsification_experiment_from_round2_review": "Argon asked for a test that can falsify rather than confirm the recruitment arm: measure intracellular [Na+] (e.g. SBFI) in Kcnk5b-overexpressing cells, or hold them in Na+-free extracellular solution (NMDG+ substitution) and record Vm. The recruitment hypothesis requires a rise in [Na+]i and requires the depolarisation to DISAPPEAR without external Na+. Persistent depolarisation in zero-Na+, or no [Na+]i rise, falsifies it; the passive arm predicts hyperpolarisation in both conditions.",
+ "fold_reported": 8.0,
+ "known_tautology_risk": "The recruitment arm adds an inward Na+ conductance that scales with the same factor as the K+ conductance, so recovering a depolarisation is close to built in. It shows the data do not EXCLUDE a depolarising route, not that this route is the one used.",
+ "largest_physiological_fold_per_arm": {
+  "c=0.0": {
+   "K_i_mM": 120.5,
+   "Na_i_mM": 8.1,
+   "Vm_mV": -85.98,
+   "delta_Vm_from_baseline_mV": -53.8,
+   "largest_fold_still_physiological_at_600s": 32
+  },
+  "c=1.0": {
+   "K_i_mM": 106.9,
+   "Na_i_mM": 23.4,
+   "Vm_mV": -26.2,
+   "delta_Vm_from_baseline_mV": 5.97,
+   "largest_fold_still_physiological_at_600s": 4
+  }
+ },
+ "matched_timepoints": {
+  "t=21600s": {
+   "c=0.0": {
+    "K_i_mM": 99.7,
+    "Na_i_mM": 6.59,
+    "Vm_mV": -76.99,
+    "still_moving_mV_since_previous_point": 2.28
+   },
+   "c=1.0": {
+    "K_i_mM": 30.6,
+    "Na_i_mM": 112.38,
+    "Vm_mV": -18.01,
+    "still_moving_mV_since_previous_point": 1.29
+   }
+  },
+  "t=3600s": {
+   "c=0.0": {
+    "K_i_mM": 116.2,
+    "Na_i_mM": 6.63,
+    "Vm_mV": -79.27,
+    "still_moving_mV_since_previous_point": 1.62
+   },
+   "c=1.0": {
+    "K_i_mM": 41.7,
+    "Na_i_mM": 90.31,
+    "Vm_mV": -19.29,
+    "still_moving_mV_since_previous_point": 4.94
+   }
+  },
+  "t=600s": {
+   "c=0.0": {
+    "K_i_mM": 120.6,
+    "Na_i_mM": 8.04,
+    "Vm_mV": -80.89,
+    "still_moving_mV_since_previous_point": null
+   },
+   "c=1.0": {
+    "K_i_mM": 91.6,
+    "Na_i_mM": 38.83,
+    "Vm_mV": -24.23,
+    "still_moving_mV_since_previous_point": null
+   }
+  },
+  "t=86400s": {
+   "c=0.0": {
+    "K_i_mM": 92.1,
+    "Na_i_mM": 6.57,
+    "Vm_mV": -75.46,
+    "still_moving_mV_since_previous_point": 1.53
+   },
+   "c=1.0": {
+    "K_i_mM": 31.7,
+    "Na_i_mM": 119.86,
+    "Vm_mV": -19.35,
+    "still_moving_mV_since_previous_point": -1.34
+   }
+  }
+ },
+ "restated_conclusion": "Inside the window where the cell's ion concentrations stay physiological, the two arms still move Vm in OPPOSITE directions, but the depolarisation is small. At the largest in-range fold the recruitment arm depolarises by only a few mV with a modest K+ loss, while the passive arm hyperpolarises by tens of mV. The larger depolarisation quoted earlier (to about -19 mV) came from 8x fold at 1 h, where Na_i has run to about 90 mM and K_i to about 42 mM: that is a failing cell, not a phenotype, and is withdrawn.",
+ "rows": [
+  {
+   "Cl_i_mM": 33.3,
+   "K_i_mM": 120.6,
+   "Na_i_mM": 8.04,
+   "Vm_mV": -80.89,
+   "arm": "c=0.0",
+   "dVm_from_previous_point_mV": null,
+   "kcnk5b_fold": 8.0,
+   "outside_physiological_range": null,
+   "t_s": 600.0
+  },
+  {
+   "Cl_i_mM": 27.6,
+   "K_i_mM": 116.2,
+   "Na_i_mM": 6.63,
+   "Vm_mV": -79.27,
+   "arm": "c=0.0",
+   "dVm_from_previous_point_mV": 1.62,
+   "kcnk5b_fold": 8.0,
+   "outside_physiological_range": null,
+   "t_s": 3600.0
+  },
+  {
+   "Cl_i_mM": 11.5,
+   "K_i_mM": 99.7,
+   "Na_i_mM": 6.59,
+   "Vm_mV": -76.99,
+   "arm": "c=0.0",
+   "dVm_from_previous_point_mV": 2.28,
+   "kcnk5b_fold": 8.0,
+   "outside_physiological_range": [
+    "K_i 99.7 mM outside 100-150"
+   ],
+   "t_s": 21600.0
+  },
+  {
+   "Cl_i_mM": 6.5,
+   "K_i_mM": 92.1,
+   "Na_i_mM": 6.57,
+   "Vm_mV": -75.46,
+   "arm": "c=0.0",
+   "dVm_from_previous_point_mV": 1.53,
+   "kcnk5b_fold": 8.0,
+   "outside_physiological_range": [
+    "K_i 92.1 mM outside 100-150"
+   ],
+   "t_s": 86400.0
+  },
+  {
+   "Cl_i_mM": 35.0,
+   "K_i_mM": 91.6,
+   "Na_i_mM": 38.83,
+   "Vm_mV": -24.23,
+   "arm": "c=1.0",
+   "dVm_from_previous_point_mV": null,
+   "kcnk5b_fold": 8.0,
+   "outside_physiological_range": [
+    "Na_i 38.83 mM outside 5-30",
+    "K_i 91.6 mM outside 100-150"
+   ],
+   "t_s": 600.0
+  },
+  {
+   "Cl_i_mM": 36.7,
+   "K_i_mM": 41.7,
+   "Na_i_mM": 90.31,
+   "Vm_mV": -19.29,
+   "arm": "c=1.0",
+   "dVm_from_previous_point_mV": 4.94,
+   "kcnk5b_fold": 8.0,
+   "outside_physiological_range": [
+    "Na_i 90.31 mM outside 5-30",
+    "K_i 41.7 mM outside 100-150"
+   ],
+   "t_s": 3600.0
+  },
+  {
+   "Cl_i_mM": 47.6,
+   "K_i_mM": 30.6,
+   "Na_i_mM": 112.38,
+   "Vm_mV": -18.01,
+   "arm": "c=1.0",
+   "dVm_from_previous_point_mV": 1.29,
+   "kcnk5b_fold": 8.0,
+   "outside_physiological_range": [
+    "Na_i 112.38 mM outside 5-30",
+    "K_i 30.6 mM outside 100-150"
+   ],
+   "t_s": 21600.0
+  },
+  {
+   "Cl_i_mM": 56.3,
+   "K_i_mM": 31.7,
+   "Na_i_mM": 119.86,
+   "Vm_mV": -19.35,
+   "arm": "c=1.0",
+   "dVm_from_previous_point_mV": -1.34,
+   "kcnk5b_fold": 8.0,
+   "outside_physiological_range": [
+    "Na_i 119.86 mM outside 5-30",
+    "K_i 31.7 mM outside 100-150"
+   ],
+   "t_s": 86400.0
+  }
+ ],
+ "scope": "SIMULATED single-cell pump-leak model; a hypothesis about signs, not a measurement",
+ "source_file": {
+  "s5_bioelectric_kcnk5b_sweep.json": "124482ca1975f637d932c89bd72a48572190453bd866fa061ec04e7c4d736ac7"
+ },
+ "usable_window": {
+  "first_time_each_arm_leaves_physiological_range_s": {
+   "c=0.0": 21600.0,
+   "c=1.0": 600.0
+  },
+  "note": "Ion concentrations are flagged against roughly Na_i 5-30 mM and K_i 100-150 mM. Where an arm is flagged, its later points describe a cell that would not survive at fixed volume, so only the earliest unflagged points may be used, and only for the DIRECTION of the Vm change."
+ }
+}

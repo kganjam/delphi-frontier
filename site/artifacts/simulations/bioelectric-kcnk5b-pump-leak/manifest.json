@@ -1,6 +1,6 @@
 {
  "id": "bioelectric-kcnk5b-pump-leak",
- "title": "Single-cell Kcnk5b dose model: passive K+ leak hyperpolarises; only Na-channel recruitment reproduces the reported depolarisation",
+ "title": "Single-cell Kcnk5b dose model: passive K+ leak hyperpolarises; Na-channel recruitment gives a small depolarisation inside the physiological window",
  "scales": [
   "cellular"
  ],
@@ -27,14 +27,29 @@
   {
    "name": "Kcnj13 0-2x at baseline",
    "result": "no Vm change (Kir rectified off at about -32 mV)"
+  },
+  {
+   "name": "CORRECTION: largest fold at which each arm is still physiological at 10 min",
+   "result": "c=0.0 fold 32, Vm -86.0 mV (-53.8 from baseline), Na_i 8.1 mM, K_i 120.5 mM; c=1.0 fold 4, Vm -26.2 mV (+6.0 from baseline), Na_i 23.4 mM, K_i 106.9 mM. Screened against Na_i 5-30 mM and K_i 100-150 mM."
+  },
+  {
+   "name": "what that leaves of the sign test",
+   "result": "Inside the window where the cell's ion concentrations stay physiological, the two arms still move Vm in OPPOSITE directions, but the depolarisation is small. At the largest in-range fold the recruitment arm depolarises by only a few mV with a modest K+ loss, while the passive arm hyperpolarises by tens of mV. The larger depolarisation quoted earlier (to about -19 mV) came from 8x fold at 1 h, where Na_i has run to about 90 mM and K_i to about 42 mM: that is a failing cell, not a phenotype, and is withdrawn."
+  },
+  {
+   "name": "steady state?",
+   "result": "no arm is at steady state at any stored time: the per-point Vm change is non-zero throughout, so these are transients"
   }
  ],
  "parameter_unknowns": [
   "Every conductance, pump capacity and concentration is assumed.",
-  "Fixed cell volume; no osmotic regulation."
+  "Fixed cell volume; no osmotic regulation.",
+  "The recruitment arm scales an inward Na+ conductance by the same factor as the K+ conductance, so recovering a depolarisation is close to built in: it shows a depolarising route is not excluded, not that it is the one used.",
+  "Beyond 4x fold the recruitment arm leaves the physiological ion range within 10 min and its later points describe a failing cell."
  ],
  "open_questions": [
-  "Do hsp70:kcnk5b fin-bud cells show rising Na_i (recruitment) or falling Na_i (passive)?"
+  "Do hsp70:kcnk5b fin-bud cells show rising Na_i (recruitment) or falling Na_i (passive)?",
+  "Does the depolarisation survive Na+-free (NMDG+) extracellular solution? Recruitment requires that it does NOT; that is the falsifying test."
  ],
  "limitations": [
   "Ion steady state takes days; only the step-response window is physiologically relevant."
@@ -47,7 +62,8 @@
  "couplings": [],
  "source_files": {
   "results/mol-sims/claude-20261101/s5_bioelectric_kcnk5b_sweep.json": "124482ca1975f637d932c89bd72a48572190453bd866fa061ec04e7c4d736ac7",
-  "results/mol-sims/claude-20261101/s5_receipt.json": "7fcd7d979a57bc6dbf4255fc9f5d0bf6b5473b0f32da2cc87a9f018ccd595689"
+  "results/mol-sims/claude-20261101/s5_receipt.json": "7fcd7d979a57bc6dbf4255fc9f5d0bf6b5473b0f32da2cc87a9f018ccd595689",
+  "results/mol-sims/claude-20261101/s5_matched_timepoints.json": "1ededaeb3420b957323584ff6a9760ae0c0cb19f3b2c01ea22d72ebe7b1fa73a"
  },
  "producer": "claude-mol harness, branch claude/mol-sims-20261101"
 }

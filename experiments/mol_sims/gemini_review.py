@@ -9,6 +9,8 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE.parents[1] / "results/mol-sims/claude-20261101"
 import sys
 MODEL = sys.argv[1] if len(sys.argv) > 1 else "gemini-3.8-flash"
+ITEMS = sys.argv[2] if len(sys.argv) > 2 else "assumptions.json"   # a second round can point at another file
+TAG = Path(ITEMS).stem
 
 
 def key():
@@ -17,7 +19,7 @@ def key():
 
 
 def main():
-    items = json.loads((HERE / "assumptions.json").read_text())
+    items = json.loads((HERE / ITEMS).read_text())
     prompt = ("You are a critical reviewer of computational systems-biology models. For each model below, given its "
               "stated assumptions and results, list (a) assumptions you think are unjustified or risky for the stated use, "
               "(b) any internal inconsistency in the reported results, (c) one additional control you would require. "
@@ -34,8 +36,8 @@ def main():
         status, raw = e.code, e.read()
     resp = json.loads(raw)
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / f"gemini_review_{MODEL}.json").write_text(json.dumps({
-        "model": MODEL, "http_status": status, "seconds": round(time.time() - t0, 1), "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
+    (OUT / f"gemini_review_{TAG}_{MODEL}.json" if TAG != "assumptions" else f"gemini_review_{MODEL}.json").write_text(json.dumps({
+        "model": MODEL, "items_file": ITEMS, "http_status": status, "seconds": round(time.time() - t0, 1), "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
         "usage": resp.get("usageMetadata"), "response": resp.get("candidates", resp), "evidence_kind": "model review: a lead to check, not evidence"}, indent=1))
     print("http", status)
 

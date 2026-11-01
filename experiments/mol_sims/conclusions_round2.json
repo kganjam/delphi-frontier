@@ -1,0 +1,14 @@
+[
+ {"claim": "No FGF10-FGFR2b isoform-specificity claim is supported by this work.",
+  "evidence": "Boltz-2 scored the NON-cognate Fgf10a-Fgfr2c complex HIGHER than the cognate Fgf10a-Fgfr2b (confidence 0.84 vs 0.77, pTM 0.79 vs 0.62). PDB70 template identity x coverage is also higher for IIIc (80.6%/99.1%) than IIIb (77.9%/98.6%). In 10 ns explicit-solvent MD both interfaces persist: cognate keeps 73% of 95 initial inter-chain CA contacts (<8 A), non-cognate keeps 62% of 68.",
+  "question": "Is the conclusion 'interface persistence at 10 ns does not discriminate the isoforms' the right reading, or is the 95-vs-68 difference in the NUMBER of predicted starting contacts itself a specificity signal worth reporting? What would make that difference interpretable rather than an artefact of the predictor?"},
+ {"claim": "The earlier 'plateau' in the ShhN monomer MD was an artefact of the averaging window.",
+  "evidence": "Replica 1 last-2-ns CA RMSD slope -0.11 A/ns, replica 2 +0.98 A/ns at the same RMSD (4.19 vs 4.17 A). Recomputed over 5 ns blocks, the final blocks of both replicas are +0.20 and +0.32 A/ns. Two 40 ns replicas (seeds 20261105/20261106) are running to test whether the final 5 ns block flattens.",
+  "question": "Is a final-5-ns-block |slope| < 0.1 A/ns across two 40 ns replicas an adequate convergence criterion for this purpose, or is it still too weak? What cheaper or stronger criterion would you require, given that only CA frames every 10 ps and whole-trajectory RMSF are retrievable (frames are not saved)?"},
+ {"claim": "The RMSF-vs-start-pLDDT anticorrelation is a monomer result, not a general property.",
+  "evidence": "ShhN monomer rho -0.63 (p=2e-20) and -0.60 (p=2e-18) in two replicas, with cross-replica RMSF rho 0.91. Cognate complex rho -0.10 (p=0.053, null). Non-cognate control rho -0.20 (p=1e-4).",
+  "question": "What is the most likely reason the correlation vanishes in the complexes, and what single control would distinguish those explanations? Note the complexes are ~2-3x larger and include a receptor chain built largely from a close template."},
+ {"claim": "The pump-leak cell model supports only the Na-recruitment arm as consistent with reported Kcnk5b fin-size phenotypes.",
+  "evidence": "Single-cell GHK/pump-leak model at a -32 mV baseline. Raising Kcnk5b conductance 0-32x as a pure passive leak hyperpolarises (-32 to -81 mV at 8x within 10 min) with K_i nearly unchanged; with a Na-recruitment coupling g_NaP scaled as f^1 the cell DEPOLARISES (-32 to -19 mV at 1 h) and K_i falls to ~31 mM. Only the recruitment arm matches both the reported depolarisation and the K+ loss.",
+  "question": "Is 'only the recruitment arm matches both signs' a legitimate inference, or does it merely show the model is underdetermined? Name one measurement that would falsify the recruitment hypothesis as opposed to confirming it."}
+]

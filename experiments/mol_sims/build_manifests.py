@@ -234,14 +234,26 @@ write(base("sbml-ra-fgf-bistable-switch", "RA/FGF mutual-inhibition switch (BIOM
 s5 = json.loads((R / "s5_bioelectric_kcnk5b_sweep.json").read_text())
 st = s5["kcnk5b_step_from_1x_state"]
 g = lambda c, f, k, i: next(r for r in st[c] if r["kcnk5b_fold"] == f)["trajectory"][i][k]
-write(base("bioelectric-kcnk5b-pump-leak", "Single-cell Kcnk5b dose model: passive K+ leak hyperpolarises; only Na-channel recruitment reproduces the reported depolarisation",
+MT = json.loads((R / "s5_matched_timepoints.json").read_text()) if (R / "s5_matched_timepoints.json").exists() else None
+write(base("bioelectric-kcnk5b-pump-leak", "Single-cell Kcnk5b dose model: passive K+ leak hyperpolarises; Na-channel recruitment gives a small depolarisation inside the physiological window",
            "cellular", "SIMULATED with ASSUMED generic parameters; a sign test, not a calibrated model", "SciPy LSODA pump-leak ODE (GHK leaks, Kir, persistent Na, Na/K-ATPase)",
            "Kcnk5b 0-32x step from the 1x state, read at 10 min, 1 h, 6 h, 24 h; passive (c=0) vs Na-recruitment (g_NaP ~ fold^c) arms. Targets from Yi et al. 2024 PLoS Biol (PMID 38527087).",
-           [R / "s5_bioelectric_kcnk5b_sweep.json", R / "s5_receipt.json"],
+           [R / "s5_bioelectric_kcnk5b_sweep.json", R / "s5_receipt.json"] + ([R / "s5_matched_timepoints.json"] if MT else []),
            ["any zebrafish membrane potential value (parameters are generic)", "the Kcnk5b -> Na-channel link itself (it is assumed in the c=1 arm)", "fin size or shha induction"],
            [{"name": "passive arm, Kcnk5b x8, Vm at 10 min / 1 h", "result": f"{g('c=0.0', 8, 'Vm_mV', 0):.1f} / {g('c=0.0', 8, 'Vm_mV', 1):.1f} mV (baseline {g('c=0.0', 1, 'Vm_mV', 0):.1f})"},
             {"name": "Na-recruitment arm (c=1), Kcnk5b x8, Vm at 1 h; K_i at 6 h", "result": f"{g('c=1.0', 8, 'Vm_mV', 1):.1f} mV; {g('c=1.0', 8, 'K_i', 2):.1f} mM"},
-            {"name": "Kcnj13 0-2x at baseline", "result": "no Vm change (Kir rectified off at about -32 mV)"}],
-           ["Every conductance, pump capacity and concentration is assumed.", "Fixed cell volume; no osmotic regulation."],
-           ["Do hsp70:kcnk5b fin-bud cells show rising Na_i (recruitment) or falling Na_i (passive)?"],
+            {"name": "Kcnj13 0-2x at baseline", "result": "no Vm change (Kir rectified off at about -32 mV)"}]
+           + ([{"name": "CORRECTION: largest fold at which each arm is still physiological at 10 min",
+                "result": "; ".join(f"{k} fold {v['largest_fold_still_physiological_at_600s']}, Vm {v['Vm_mV']:.1f} mV "
+                                    f"({v['delta_Vm_from_baseline_mV']:+.1f} from baseline), Na_i {v['Na_i_mM']} mM, K_i {v['K_i_mM']} mM"
+                                    for k, v in MT["largest_physiological_fold_per_arm"].items() if v)
+                          + ". Screened against Na_i 5-30 mM and K_i 100-150 mM."},
+               {"name": "what that leaves of the sign test", "result": MT["restated_conclusion"]},
+               {"name": "steady state?", "result": "no arm is at steady state at any stored time: the per-point Vm change is non-zero throughout, so these are transients"}]
+              if MT else []),
+           ["Every conductance, pump capacity and concentration is assumed.", "Fixed cell volume; no osmotic regulation.",
+            "The recruitment arm scales an inward Na+ conductance by the same factor as the K+ conductance, so recovering a depolarisation is close to built in: it shows a depolarising route is not excluded, not that it is the one used.",
+            "Beyond 4x fold the recruitment arm leaves the physiological ion range within 10 min and its later points describe a failing cell."],
+           ["Do hsp70:kcnk5b fin-bud cells show rising Na_i (recruitment) or falling Na_i (passive)?",
+            "Does the depolarisation survive Na+-free (NMDG+) extracellular solution? Recruitment requires that it does NOT; that is the falsifying test."],
            ["Ion steady state takes days; only the step-response window is physiologically relevant."], time_units="seconds"))
