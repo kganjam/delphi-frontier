@@ -1,0 +1,27 @@
+{
+ "checks": {
+  "C1_files": "exactly the three files; total size <= 52428800 bytes",
+  "C2_pins": "receipt.results_sha256 equals sha256(results.json); protocol_sha256 7a2ec7be0132fe77140ad3647e229400affe74698f53d4b059954e35dc723dc5; amendment_sha256 048e4745f78462a43bf6790a8d7d8a528f4b9c81cb10c0cfbd41d037e5657637; amendment2_sha256 69e4d1bcb7dbcd16969bda58de962d5db32a3aba1873ee0cb3c04be68d13d5cc",
+  "C3_identities": "the (library, window) set recomputed from controls.json (10 x 33 = 330; amplicon [start-1,end), comparison +250000/+500000 same length) equals the returned set exactly: no duplicate, no extra, no missing; each row's chrom/start0/end0/kind match",
+  "C4_rows": "status in {ok, beyond_last_interval, chrom_absent, unsorted_refused, window_byte_cap, library_byte_cap, library_unavailable, stopped_on_bound, truncated_bgzf, index_file_mismatch, bad_bgzf, transport_error, unsupported_range, range_mismatch, short_read, oversized_response}; usable rows carry integer fragment_rows >= 0, dup_count_sum >= fragment_rows, distinct_barcodes <= fragment_rows; unusable rows carry no counts",
+  "C5_completion": "recompute: stopped_on_error if receipt.error; stopped_on_bound if receipt.stop_detail; complete only if all 330 present and all usable; else partial_data; must equal results.completion_status and receipt.completion_status; receipt identity counts and missing/unusable lists must equal the recomputation",
+  "C6_budget": "requests.json: every url is one of the 20 pinned URLs on https ftp.ncbi.nlm.nih.gov; ranges lie inside the pinned file size; attempts per (url, range) are 1..2 and consecutive; ok requests have http_status 206, bytes equal range length and a sha256; requests count equals receipt.requests and <= 3000; sum(bytes_charged) equals receipt.compressed_bytes and <= 419430400; per-library sum <= 67108864; per-row window_bytes_charged <= 8388608; every non-ok attempt's cause is recorded; receipt.elapsed_s <= 1200",
+  "C6b_linkage": "each response (range, sha256) listed in a result row is an ok request in requests.json with the same range and sha256",
+  "C7_summary": "results.summary recomputed from windows (count, per_kb = count / span_kb rounded 4, comparison_counts, ratio to the mean of the two comparison counts rounded 4, null when the mean is 0 or a comparison is unusable) equals the returned summary",
+  "C8_claims": "claim_limits states accessibility is context not function; no key named probability, confidence, score, pvalue, p_value, rank, threshold, significant anywhere in results.json",
+  "C9_scope": "no window id or chrom mentions LEN or lepb"
+ },
+ "frozen_before": "any returned file is read; the collector owns the data, this audit makes no network request",
+ "independence": "the audit recomputes windows, identities, completion status, budgets and the summary from controls.json and the returned files with its own code and imports nothing from window_count.py",
+ "inputs": "a returned directory containing exactly results.json, receipt.json, requests.json; pinned controls.json and protocol.json from the admitted archive 4b0e6af5\u2026",
+ "not_done": "no network, no re-read of any endpoint, no reanalysis of fragments",
+ "observations_not_judged": [
+  "status counts per library",
+  "unusable identities",
+  "positives with zero fragments in a library",
+  "comparison medians of zero (ratio undefined)",
+  "time/replicate table of counts"
+ ],
+ "schema": "frontier.reg-proxy.return-audit-criteria/1",
+ "verdict": "consistent if every check passes, else inconsistent; consistent means the returned files agree with the frozen protocol and each other, not that the biology is right and not that the counts are validated against an independent measurement"
+}
