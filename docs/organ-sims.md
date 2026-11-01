@@ -15,6 +15,7 @@ Code: `engineering/organ_sims/`. Logs: `artifacts/organ-sims/logs/`.
 | R4 `r4-aeroelastic-stiffness` | Fin bending over the sourced fin-ray stiffness range | 0 | 6/6 |
 | R5b `r5b-staggered-release` | Staggered collective release (Nebius) | 0 | 2/2 |
 | R6 `r6-trim-map` | R2 designs in 6-DOF with real trim (Nebius) | 0 (attempt a2; a1 failed at import) | 3/3 |
+| R5c `r5c-integrated-launch` | R6 designs with the R5b release rule (Nebius) | 0 | 2/2 |
 | R5 `r5-school-launch` | Collective launch in PyBullet (6-DOF, contacts, wake coupling) | 0 (run 2; run 1 exited 3, see R5) | 8/8 |
 
 ## Project scales and what each run does NOT establish
@@ -337,6 +338,31 @@ zero lift (argon #4). R6 replaces that rule with moment-balance trim.
   0.07–0.12 are thinner than the 10–20% the hand-NP plan targeted.
 - **Not established:** quasi-steady 6-DOF with assumed polars and CLmax; no aeroelasticity (R4b) or launch-stroke
   loads; assumed dispersion.
+
+## R5c. Integrated collective launch (Nebius job, `r5c-integrated-launch`)
+
+**Setup.** R6's two recommended designs and the baseline, released with R5b's rule (100 ms alternating stagger at
+0.25 and 0.30 m lanes) and with R5's rule (simultaneous at 0.60 m). 8 fish, wake on, 32 seeds per cell, both
+dispersions; 576 launches.
+
+**Run record.**
+- Job `aijob-e00wqgd3v4vd9g6f4t`, code `00972ac`; science exit 0 in 292 s; tarball SHA-256 matched.
+- Checks 2/2. The wide simultaneous school reproduces R6's single-fish dispersed means within 15%.
+
+**Results (small spread / large spread):**
+
+| Design | Contacts with stagger rule | Mean range | P10 range |
+|---|---|---|---|
+| Baseline dec+4 | 0/32 / 0/32 | 6.17 / 5.80 m | 4.47 / 2.96 m |
+| R6 best, printed key | 0/32 / 0/32 | 7.49 / 6.86 m | 4.15 / 2.55 m |
+| R6 best, new dec+6 key | 0/32 / 0/32 | 8.57 / 8.06 m | 5.72 / 3.20 m |
+
+- **The release rule carries over to the larger, re-trimmed fins.** At 0.30 m one launch in 32 had a contact, for
+  the new-key design with the small spread.
+- **The new-key design's gain survives the collective launch:** +39% mean, +28% P10 (small spread).
+- **The printed-key option raises the mean but lowers the P10.** Its thinner static margin (0.07) makes it more
+  sensitive to launch dispersion. Prefer the new key.
+- **Not established:** straight wakes, assumed dispersion, rigid fins (see R7), no real launcher.
 
 ## LLM review
 

@@ -205,6 +205,8 @@ def aero(model, R, v, w, p=None, wake=None, h=None):
             CL = s["CLa"] * alpha; CD = cf_lam(Vl * s["chord"] / NU) * 2 + gf * CL * CL / (math.pi * E_OSW * s["AR"])
         else:
             CL = math.sin(2 * alpha) * CLMAX / math.sin(2 * a_s); CD = 2 * math.sin(alpha) ** 2 + cf_lam(Vl * s["chord"] / NU) * 2
+        if s["kind"] == "pectoral" and PEC_CL_FACTOR is not None:
+            CL *= PEC_CL_FACTOR(Vl)
         if s["kind"] == "pectoral":
             CLpec.append(CL)
         lh = s["n"] - (s["n"] @ e_d) * e_d
@@ -218,6 +220,7 @@ def aero(model, R, v, w, p=None, wake=None, h=None):
 
 
 RC_FRAC = 0.05            # vortex core radius / span (assumed)
+PEC_CL_FACTOR = None      # optional f(V_local) -> multiplier on pectoral CL (quasi-static aeroelastic correction, R7); None = rigid
 
 
 def seg_induced(P, A, B, gam, rc):

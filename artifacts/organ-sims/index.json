@@ -157,9 +157,30 @@
   },
   {
    "id": "r5c-integrated-launch",
+   "title": "Integrated collective launch: R6-recommended designs with the R5b staggered release (PyBullet 6-DOF)",
    "scales": [
     "collective",
     "organism"
+   ],
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No observed launch or schooling: rigid printed gliders of computed (not hand-trimmed) designs released under an assumed timing rule and dispersion; straight horseshoe wakes; no control or behaviour (ff-eco).",
+   "checks_passed": 2,
+   "checks_total": 2,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T16:12:20Z",
+   "manifest": "artifacts/organ-sims/r5c-integrated-launch/manifest.json",
+   "manifest_sha256": "97244939a71fd0539f08917ebe13ea7fb2a4539ca0d81a6f81072ac5fede57fa",
+   "figures": [
+    "artifacts/organ-sims/r5c-integrated-launch/integrated.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
+  },
+  {
+   "id": "r7-aeroelastic-flight",
+   "scales": [
+    "organism",
+    "organ"
    ],
    "status": "no manifest (run not completed)"
   },
