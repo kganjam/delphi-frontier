@@ -1,0 +1,69 @@
+{
+ "id": "openmm-fgf10a-fgfr2b-md",
+ "title": "10 ns MD of the predicted Fgf10a-Fgfr2b complex, run alongside the non-cognate Fgfr2c control",
+ "scales": [
+  "macromolecular"
+ ],
+ "project_scale": "macromolecular",
+ "evidence_kind": "SIMULATED classical MD of a PREDICTED complex; not an observation",
+ "model": {
+  "name": "OpenMM 8.6.1 CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl, seed 20261102",
+  "context": "Start: the Boltz-2 complex model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT, CA frames every 10 ps. One replica per complex. Nebius AI job on one H100; the job log is reassembled and checked before use."
+ },
+ "time": {
+  "units": "nanoseconds of simulated time",
+  "note": ""
+ },
+ "video": null,
+ "numerical_checks": [
+  {
+   "name": "CA RMSD from the equilibrated start",
+   "result": "first 1 ns mean 1.22 A, last 2 ns mean 2.31 A, max 2.79 A; last-2-ns drift +0.15 A/ns"
+  },
+  {
+   "name": "inter-chain CA contacts retained (<8 A, from the start frame)",
+   "result": "73% over the last 2 ns, minimum 66% of 95 initial pairs; the two chains never separate (closest CA 4.4 A at the end)"
+  },
+  {
+   "name": "per-residue flexibility vs start-model pLDDT",
+   "result": "Spearman rho -0.10 (p=0.053): NOT significant, so the correlation seen for the ShhN monomer did not reproduce here"
+  },
+  {
+   "name": "radius of gyration, first vs last frame",
+   "result": "26.27 -> 26.52 A"
+  },
+  {
+   "name": "all saved values finite",
+   "result": "True"
+  },
+  {
+   "name": "throughput",
+   "result": "197 ns/day on one H100, 182108 atoms"
+  }
+ ],
+ "parameter_unknowns": [
+  "Force-field and water-model error are not quantified.",
+  "No ddG was computed: the hosted stab_ddg tool needs an upload manifest whose format is undocumented."
+ ],
+ "open_questions": [
+  "Do the two complexes separate over hundreds of ns, or under free-energy perturbation?"
+ ],
+ "limitations": [
+  "Single replica per complex, 10 ns: too short for a binding claim.",
+  "Both starts are predictions, and the predictor already failed its isoform control."
+ ],
+ "does_not_establish": [
+  "binding affinity, ddG or on/off rates",
+  "FGF10-FGFR2b isoform specificity: the non-cognate control behaves the same way",
+  "that the predicted docking pose is correct (a wrong pose can also persist for 10 ns)",
+  "anything about fin size or flight"
+ ],
+ "couplings": [],
+ "source_files": {
+  "results/mol-sims/claude-20261101/md_fgf_complex/md_receipt.json": "42d75a00a9975eb6d83d56d830df82389382f9baf2b5219a54f77a142a95217a",
+  "results/mol-sims/claude-20261101/md_fgf_complex/md_summary.json": "9537d0b70e193f8c978e1f1cf754365a2818bac0eaa1749624c47c1f27d444df",
+  "results/mol-sims/claude-20261101/md_fgf_complex/final_frame_protein.pdb": "00ec590d8b7c661121a1383168e14c9c3554341eebc0ffac7c429108e821c854",
+  "results/mol-sims/claude-20261101/md_fgf_complex/job_log.txt": "601d9670c10194f76620ba5b1dae84d8d17efbf059be9c2cf23149f9cc130bf7"
+ },
+ "producer": "claude-mol harness, branch claude/mol-sims-20261101"
+}

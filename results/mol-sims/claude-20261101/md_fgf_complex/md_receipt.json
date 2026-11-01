@@ -1,0 +1,53 @@
+{
+ "analysis": {
+  "all_finite": true,
+  "interface": {
+   "min_interchain_ca_distance_last": 4.38,
+   "n_initial_ca_pairs_lt8A": 95,
+   "retained_fraction_last_2ns_mean": 0.7316400000000001,
+   "retained_fraction_min": 0.663
+  },
+  "job_id": "aijob-e00kxeq47gf8bqrth1",
+  "job_state_text": [
+   "State:    COMPLETED"
+  ],
+  "n_atoms": 182108,
+  "ns_per_day": 197.34618904120728,
+  "rg_ca_A_first_last": [
+   26.275,
+   26.519
+  ],
+  "rmsd_ca_A": {
+   "first_ns_mean": 1.21933,
+   "last_2ns_mean": 2.3143149999999997,
+   "last_2ns_slope_A_per_ns": 0.15124450611265206,
+   "max": 2.794
+  },
+  "rmsf_vs_start_plddt_spearman": {
+   "p": 0.053313811414728914,
+   "rho": -0.10265053183222309
+  },
+  "seed": 20261102,
+  "top10_rmsf_residues_1based": [
+   299,
+   298,
+   292,
+   293,
+   145,
+   300,
+   301,
+   355,
+   297,
+   144
+  ]
+ },
+ "command": "python experiments/mol_sims/collect_md.py aijob-e00kxeq47gf8bqrth1 results/mol-sims/claude-20261101/md_fgf_complex results/mol-sims/claude-20261101/structures/fgf_complex/model_0.cif",
+ "evidence_kind": "simulated",
+ "exit_code": 0,
+ "scope": "SIMULATED classical MD of a PREDICTED structure; 10 ns single replica; not observed; no equilibrium or binding claim",
+ "sha256": {
+  "final_frame": "00ec590d8b7c661121a1383168e14c9c3554341eebc0ffac7c429108e821c854",
+  "job_log": "601d9670c10194f76620ba5b1dae84d8d17efbf059be9c2cf23149f9cc130bf7",
+  "start_cif": "c8116b29e5d47f2f8a69a02ce3aef95d5fd4426e8dbb0b725cdcb1922b6869b7"
+ }
+}

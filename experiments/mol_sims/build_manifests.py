@@ -141,6 +141,38 @@ if mdp.exists():
                ["Single replica, 10 ns: far too short to sample conformational change (argon).", "The start is a prediction, so every number inherits that uncertainty."],
                time_units="nanoseconds of simulated time"))
 
+# --- macromolecular: MD of the predicted FGF complex, with the non-cognate control ---
+fp = R / "md_fgf_complex/md_receipt.json"
+if fp.exists():
+    a = json.loads(fp.read_text())["analysis"]; iface = a["interface"]
+    checks = [{"name": "CA RMSD from the equilibrated start", "result": f"first 1 ns mean {a['rmsd_ca_A']['first_ns_mean']:.2f} A, last 2 ns mean {a['rmsd_ca_A']['last_2ns_mean']:.2f} A, max {a['rmsd_ca_A']['max']:.2f} A; last-2-ns drift {a['rmsd_ca_A']['last_2ns_slope_A_per_ns']:+.2f} A/ns"},
+              {"name": "inter-chain CA contacts retained (<8 A, from the start frame)", "result": f"{iface['retained_fraction_last_2ns_mean'] * 100:.0f}% over the last 2 ns, minimum {iface['retained_fraction_min'] * 100:.0f}% of {iface['n_initial_ca_pairs_lt8A']} initial pairs; the two chains never separate (closest CA {iface['min_interchain_ca_distance_last']:.1f} A at the end)"},
+              {"name": "per-residue flexibility vs start-model pLDDT", "result": f"Spearman rho {a['rmsf_vs_start_plddt_spearman']['rho']:.2f} (p={a['rmsf_vs_start_plddt_spearman']['p']:.3f}): NOT significant, so the correlation seen for the ShhN monomer did not reproduce here"},
+              {"name": "radius of gyration, first vs last frame", "result": f"{a['rg_ca_A_first_last'][0]:.2f} -> {a['rg_ca_A_first_last'][1]:.2f} A"},
+              {"name": "all saved values finite", "result": str(a["all_finite"])},
+              {"name": "throughput", "result": f"{a['ns_per_day']:.0f} ns/day on one H100, {a['n_atoms']} atoms"}]
+    srcs = [R / "md_fgf_complex/md_receipt.json", R / "md_fgf_complex/md_summary.json", R / "md_fgf_complex/final_frame_protein.pdb", R / "md_fgf_complex/job_log.txt"]
+    ncp = R / "md_fgf_negctrl/md_receipt.json"
+    if ncp.exists():
+        na = json.loads(ncp.read_text())["analysis"]; ni = na["interface"]
+        checks.insert(2, {"name": "SAME RUN ON THE NON-COGNATE IIIc CONTROL: contacts retained", "result": f"{ni['retained_fraction_last_2ns_mean'] * 100:.0f}% over the last 2 ns (minimum {ni['retained_fraction_min'] * 100:.0f}%) of {ni['n_initial_ca_pairs_lt8A']} initial pairs; CA RMSD last 2 ns {na['rmsd_ca_A']['last_2ns_mean']:.2f} A"})
+        checks.insert(3, {"name": "what the control implies for MD as a specificity test", "result": ("the non-cognate interface is as stable as the cognate one over 10 ns, so interface persistence here does NOT discriminate isoforms"
+                                                                                                        if ni["retained_fraction_last_2ns_mean"] > 0.6 * iface["retained_fraction_last_2ns_mean"] else
+                                                                                                        "the non-cognate interface loosened markedly more than the cognate one over 10 ns; a longer, replicated test would be needed before treating that as a specificity signal")})
+        srcs += [R / "md_fgf_negctrl/md_receipt.json", R / "md_fgf_negctrl/md_summary.json", R / "md_fgf_negctrl/final_frame_protein.pdb", R / "md_fgf_negctrl/job_log.txt"]
+    write(base("openmm-fgf10a-fgfr2b-md", "10 ns MD of the predicted Fgf10a-Fgfr2b complex, run alongside the non-cognate Fgfr2c control",
+               "macromolecular", "SIMULATED classical MD of a PREDICTED complex; not an observation",
+               f"OpenMM 8.6.1 CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl, seed {a['seed']}",
+               "Start: the Boltz-2 complex model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT, CA frames every 10 ps. One replica per complex. Nebius AI job on one H100; the job log is reassembled and checked before use.",
+               srcs,
+               ["binding affinity, ddG or on/off rates", "FGF10-FGFR2b isoform specificity: the non-cognate control behaves the same way",
+                "that the predicted docking pose is correct (a wrong pose can also persist for 10 ns)", "anything about fin size or flight"],
+               checks,
+               ["Force-field and water-model error are not quantified.", "No ddG was computed: the hosted stab_ddg tool needs an upload manifest whose format is undocumented."],
+               ["Do the two complexes separate over hundreds of ns, or under free-energy perturbation?"],
+               ["Single replica per complex, 10 ns: too short for a binding claim.", "Both starts are predictions, and the predictor already failed its isoform control."],
+               time_units="nanoseconds of simulated time"))
+
 # --- subcellular: Hedgehog pathway ODE ---
 s2b = json.loads((R / "s2b_hedgehog_perturbations_at_ec.json").read_text())
 e50 = s2b["perturbations"]["EC50"]
