@@ -242,6 +242,65 @@ CLAIMS = [
         origin="derived",
     ),
     dict(
+        id="zf2ff-claim-kcnh2a-absent-from-the-assembly",
+        title="No kcnh2a-like locus is detectable in the one public Exocoetidae assembly, while 9 of 10 other KCNH paralogs are",
+        statement=(
+            "A low-stringency whole-assembly search with the zebrafish kcnh2a protein alone (miniprot "
+            "0.18-r281, -N 20 --outs=0.3 --outc=0.05) finds no region beyond the 7 already known. A gene "
+            "tree of the 5 previously untested ones (Nebius job aijob-e00k03g7vbmk6smbkh, COMPLETED) "
+            "places each with a different paralog: kcnh6b, kcnh7 twice, kcnh4a and kcnh5a, with both "
+            "carried-forward controls reproducing at 99.3/100 and 99.6/100. A family-wide census then "
+            "mapped all 10 zebrafish KCNH queries over the whole assembly, merged 65 hit intervals into "
+            "14 distinct KCNH-like loci and placed them on one tree (job aijob-e00nvq278rsze2f6bp, "
+            "COMPLETED): 9 of the 10 zebrafish paralogs receive at least one flying-fish locus and the "
+            "single exception is kcnh2a. The KCNH family is therefore well represented in this assembly "
+            "while the kcnh2a gap is specific."),
+        context=("kcnh2a is the longfin gene and one of the two loci a flying-fish phylogenomic study "
+                 "names for paired-fin size, so it is this project's primary candidate locus. The "
+                 "consequence is that an edit aimed at the Exocoetid kcnh2a has no located target in "
+                 "the only public assembly for the family. " + SCOPE),
+        assumptions=["ASSUMED: that a miniprot prediction from an unannotated assembly is a usable proxy for the protein a region encodes.",
+                     "ASSUMED: that 10 UniProt entries adequately represent the zebrafish KCNH family; kcnh8a and kcnh8b were not retrievable, so some of the 14 loci may belong to paralogs absent from the reference set."],
+        limitations=["This is a statement about GCA_018398805.1, NOT about Hirundichthys speculiger and NOT about Exocoetidae. The assembly is an explicitly draft, scaffold-level, unannotated genome, and a missing or fragmented single gene is the expected failure mode of such an assembly.",
+                     "A sufficiently divergent Exocoetid kcnh2a could be placed with a neighbouring paralog rather than appearing as a kcnh2a sister, which would produce this same result.",
+                     "Three of the 14 locus assignments are weakly supported and should be read as unresolved (42.7/68, 23.4/62, and one with no recovered support value); none of the three was assigned to kcnh2a, so dropping them does not change the result.",
+                     "A gene tree places sequences by substitution likelihood; no synteny was used in the census.",
+                     "The published flying-fish phylogenomics that names kcnh2a (PMID 34534441) used 35 species with its own sequencing, not this assembly, so nothing here contradicts it.",
+                     "One operator, not independently reviewed; a model-sensitivity re-run was submitted separately."],
+        source=computed_source("data/census/census_analysis.json"),
+        origin="derived",
+    ),
+    dict(
+        id="zf2ff-claim-motif-structure-aggregate-only",
+        title="The candidate regulatory windows carry above-composition motif structure in aggregate, in both species, and no per-window claim survives",
+        statement=(
+            "Three Nebius passes scanned 879 JASPAR2024 CORE vertebrate motifs against claude-evo's 19 "
+            "held-out 2 kb windows and composition-matched shuffles of them, holding the motif set "
+            "constant by digest across all three. Pass 1 (pooled GC-matched thresholds, 2 shuffles per "
+            "window) gave zebrafish +7.0 [-11.0, +25.0] and flying fish +55.7 [+29.6, +81.8]. Pass 2 "
+            "(per-window thresholds from each window's own 20 doublet-verified shuffles) gave zebrafish "
+            "+51.7 [37.3, 66.2] and flying fish +57.4 [39.1, 75.7], 19/19 windows positive, withdrawing "
+            "pass 1's species asymmetry as an artefact of the pooled threshold. Pass 3 (the same 20 "
+            "shuffles split 10 to calibrate and 10 as the null) gave zebrafish +27.1 [7.9, 46.3] and "
+            "flying fish +26.8 [12.0, 41.6]. What survives all three designs is an aggregate excess of "
+            "motif matches over composition-matched shuffles in both species. What does not survive is "
+            "the effect size and every per-window claim: mean |z| falls to 1.39 and 1.57 under the "
+            "held-out design, with only 2 of 10 and 4 of 9 windows above z = 2."),
+        context=("The Evo 2 harness named this scan as the follow-up neither harness had run. It ran its "
+                 "own version independently with a different thresholding rule and reports the same "
+                 "direction (+125.3 excess hits, CI [61.0, 189.7]), so two independently written "
+                 "implementations agree on the direction. " + SCOPE),
+        assumptions=["ASSUMED: that JASPAR vertebrate PFMs are applicable to teleost sequence; no fish-specific motif set was used.",
+                     "The windows are claude-evo's computed objects, reused verbatim and hash-verified: zebrafish ones TSS-anchored on GRCz11, flying-fish ones anchored upstream of a PREDICTED start codon in an unannotated assembly."],
+        limitations=["A motif match is a sequence-pattern match. It is NOT a bound transcription factor, NOT an enhancer, and NOT evidence of expression or function.",
+                     "No per-window, per-gene or per-motif statement is supportable, so these windows cannot be ranked against each other by this result.",
+                     "Cross-species comparison of effect MAGNITUDE is composition-confounded and is not made; only the within-species aggregates are reported.",
+                     "Two of the nine flying-fish windows sit at loci this project's own cross-check assigns to a different paralog than their label (kcnk5b and fgf10a), so their gene labels are in doubt independently of this result.",
+                     "Pass 1's reported species asymmetry is withdrawn. It is retained in the record only to show what the design change did."],
+        source=computed_source("data/motif/motif_heldout_result.json"),
+        origin="derived",
+    ),
+    dict(
         id="zf2ff-claim-timing-edit-hypothesis",
         title="Hypothesis: the flying-fish pectoral wing is reachable by extending outgrowth duration in ray mesenchyme alone",
         statement=(
