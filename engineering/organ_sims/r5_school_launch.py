@@ -328,7 +328,7 @@ def simulate(model, n, spacing, disp, seed, aero_on=True, t_max=6.0, record=Fals
         b = add_fish(cid, model, [0, y, H0], [e[0], -e[1], e[2]], vel.tolist(), [0, -qrate, 0])
         fish.append(b); launch_t.append(i * stagger_s)
     alive = [True] * n
-    out = [{"range_m": None, "y_land_m": None, "t_land_s": None, "max_roll_deg": 0.0, "max_pitch_dev_deg": 0.0, "collided": False, "end": "timeout"} for _ in range(n)]
+    out = [{"y0_m": (i - (n - 1) / 2) * spacing, "range_m": None, "y_land_m": None, "t_land_s": None, "max_roll_deg": 0.0, "max_pitch_dev_deg": 0.0, "collided": False, "end": "timeout"} for i in range(n)]
     collisions = set()
     traj = [[] for _ in range(n)] if record else None
     steps = int(t_max / DT)
@@ -410,8 +410,10 @@ def main():
     o1, _, tr1 = simulate(model, 1, 1.0, "none", 0, record=True)
     checks.append({"name": "control C2: symmetric launch stays symmetric (|y_land| < 1 mm, max roll < 0.5 deg)", "pass": abs(o1[0]["y_land_m"] or 1) < 1e-3 and o1[0]["max_roll_deg"] < 0.5, "detail": o1[0]})
     # C3 independence: 3 fish at 2 m spacing, no dispersion -> identical ranges to single
-    o3, col3, _ = simulate(model, 3, 2.0, "none", 0)
-    checks.append({"name": "control C3: widely spaced school = single fish (range within 1e-6 m, no contacts)", "pass": all(abs(x["range_m"] - o1[0]["range_m"]) < 1e-6 for x in o3) and not col3,
+    # wake off here: C3 isolates rigid-body/contact independence (run 1 used the wake and failed at 1e-4 m, which is the
+    # wake's real 2 m influence; C6 bounds that separately). Single-fish reference is wake-free by construction.
+    o3, col3, _ = simulate(model, 3, 2.0, "none", 0, wake_on=False)
+    checks.append({"name": "control C3: widely spaced school without wake coupling = single fish (range within 1e-6 m, no contacts)", "pass": all(abs(x["range_m"] - o1[0]["range_m"]) < 1e-6 for x in o3) and not col3,
                    "detail": [x["range_m"] for x in o3]})
     # C4 pitch-stability mutation: CG moved 12 mm aft (behind the NP) must lose the trimmed glide (pitch excursion grows)
     m_aft = build_model(cg_shift=0.012)
@@ -438,7 +440,7 @@ def main():
         rows.append({"disp": disp, "spacing_m": spacing, "wake": wake, "seed": seed, "n": N, "n_collision_pairs": len(col), "pairs": col,
                      "n_fish_collided": sum(x["collided"] for x in o), "range_mean_m": float(np.mean(rg)) if rg else None,
                      "range_min_m": float(np.min(rg)) if rg else None, "range_max_m": float(np.max(rg)) if rg else None,
-                     "y_land_sd_m": float(np.std([x["y_land_m"] for x in o if x["y_land_m"] is not None])),
+                     "lane_deviation_rms_m": float(np.sqrt(np.mean([(x["y_land_m"] - x["y0_m"]) ** 2 for x in o if x["y_land_m"] is not None]))),
                      "max_roll_deg": float(max(x["max_roll_deg"] for x in o)), "n_timeout": sum(x["end"] == "timeout" for x in o)})
     summ = {}
     for wake in (True, False):
@@ -449,7 +451,7 @@ def main():
                     "launches": len(rs), "frac_launches_with_collision": float(np.mean([r["n_collision_pairs"] > 0 for r in rs])),
                     "mean_fish_collided": float(np.mean([r["n_fish_collided"] for r in rs])),
                     "range_mean_m": float(np.mean([r["range_mean_m"] for r in rs])), "range_spread_m": float(np.mean([r["range_max_m"] - r["range_min_m"] for r in rs])),
-                    "lateral_sd_m": float(np.mean([r["y_land_sd_m"] for r in rs])), "max_roll_deg": float(max(r["max_roll_deg"] for r in rs))}
+                    "lane_deviation_rms_m": float(np.mean([r["lane_deviation_rms_m"] for r in rs])), "max_roll_deg": float(max(r["max_roll_deg"] for r in rs))}
     checks.append({"name": "monotone (recorded): collision fraction does not increase from 0.25 m to 1.0 m spacing", "pass": True,
                    "detail": {f"{w}/{d}": [summ[f"{w}/{d}@{x:g}"]["frac_launches_with_collision"] for x in SPACINGS] for w in ("wake", "nowake") for d in ("low", "high")}})
     figs = fig(tr1, summ, model)

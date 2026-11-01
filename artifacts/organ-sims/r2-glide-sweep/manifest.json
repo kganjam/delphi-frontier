@@ -3,12 +3,17 @@
  "id": "r2-glide-sweep",
  "title": "Wing area / AR / placement sweep for launch glide range with printed-mass and constraint checks",
  "evidence_kind": "simulated, not observed",
+ "scales": [
+  "organism",
+  "organ"
+ ],
+ "does_not_establish": "No achieved range: point-mass glide with fixed CL and assumed polars; ranges are +-20% at best and nothing was printed or thrown; hand-launch feasibility is not shown.",
  "scope": "simulated, not observed",
  "command": "/data/worktrees/delphi-frontier/claude-organ/engineering/organ_sims/r2_glide_sweep.py",
  "seed": null,
- "git_head_at_run": "e839ad1",
+ "git_head_at_run": "c0a3e4d",
  "python": "3.13.12",
- "ran_utc": "2026-11-01T14:40:54Z",
+ "ran_utc": "2026-11-01T14:43:48Z",
  "inputs": {
   "artifacts/glider/r3-daane/flight_model.json": {
    "sha256": "75c50d5364eeb48d29faee81d68252077d23b435a2d08cfe2051d18612430a9b",
@@ -32,7 +37,7 @@
   }
  },
  "code_sha256": {
-  "engineering/organ_sims/common.py": "e0f0cafc7af268d9d1a44387b6038566c75ab1e242956ab24562257ec4f601ec",
+  "engineering/organ_sims/common.py": "9958dc52b7a07560cb696c639c23d01a19be431c0e101e35361ba71249f23115",
   "engineering/organ_sims/r1_v3b_convergence.py": "d2026f7ec52b61c66ac02e4f253ee8d287c5c2a73c7596198267e462a938f9f4",
   "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
   "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
@@ -40,8 +45,15 @@
   "engineering/organ_sims/r5_school_launch.py": "110af708f15ee3ece3a79fa68b5041c0f0ad8f22686373a06cc5fd32784e47c8"
  },
  "git_dirty_paths_at_run": [
-  "?? artifacts/organ-sims/",
-  "?? engineering/organ_sims/"
+  " M artifacts/organ-sims/logs/r2.log",
+  " M engineering/organ_sims/common.py",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3a.log",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3b.log",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3c.log",
+  "?? artifacts/organ-sims/logs/r4.log",
+  "?? artifacts/organ-sims/logs/r5.log",
+  "?? artifacts/organ-sims/r1-v3b-convergence/",
+  "?? artifacts/organ-sims/r4-aeroelastic-stiffness/"
  ],
  "results": {
   "summary": {

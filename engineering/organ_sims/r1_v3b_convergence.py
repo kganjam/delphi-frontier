@@ -166,7 +166,7 @@ def lad2(v):
     return C.OUT / RID / f"ladder2-{v}.jsonl"
 
 
-def ladder2(v):
+def ladder2(v, only=None):
     done = set()
     LAD = lad2(v)
     if LAD.exists():
@@ -174,7 +174,7 @@ def ladder2(v):
     for ns, nc in LATTICES2:
         for rule in ("original", "consistent"):
             for normals in ("source", "flat"):
-                if (v, ns, nc, rule, normals) in done:
+                if (v, ns, nc, rule, normals) in done or (only and (rule, normals) != only):
                     continue
                 r = run2(v, ns, nc, rule, normals)
                 with LAD.open("a") as fh:
@@ -279,7 +279,7 @@ if __name__ == "__main__":
     if sys.argv[1] == "report":
         report()
     elif sys.argv[1] == "ladder2":
-        ladder2(sys.argv[2])
+        ladder2(sys.argv[2], tuple(sys.argv[3:5]) if len(sys.argv) > 4 else None)
     elif sys.argv[1] == "report2":
         report2()
     else:

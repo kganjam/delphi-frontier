@@ -1,0 +1,98 @@
+{
+ "schema": "frontier.organ-sim.index/1",
+ "owner": "claude-organ (ff-organ)",
+ "evidence_kind": "simulated, not observed",
+ "scale_note": "collective = rigid-body physics of a simultaneous release (r5); population and behaviour layers belong to ff-eco",
+ "runs": [
+  {
+   "id": "r1-v3b-convergence",
+   "scales": [
+    "organ"
+   ],
+   "status": "no manifest (run not completed)"
+  },
+  {
+   "id": "r2-glide-sweep",
+   "title": "Wing area / AR / placement sweep for launch glide range with printed-mass and constraint checks",
+   "scales": [
+    "organism",
+    "organ"
+   ],
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No achieved range: point-mass glide with fixed CL and assumed polars; ranges are +-20% at best and nothing was printed or thrown; hand-launch feasibility is not shown.",
+   "checks_passed": 8,
+   "checks_total": 8,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T14:43:48Z",
+   "manifest": "artifacts/organ-sims/r2-glide-sweep/manifest.json",
+   "manifest_sha256": "ce28d579c5ed1442d2cfa2f757b63766e89d21fe30ef388fb2bff202036180d5",
+   "figures": [
+    "artifacts/organ-sims/r2-glide-sweep/range_maps.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
+  },
+  {
+   "id": "r3-underwater-drag",
+   "title": "Underwater rigid-body drag build-up: fish3d variants and printed glider, fins spread vs folded",
+   "scales": [
+    "organism"
+   ],
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No measured or CFD-resolved drag at the target Reynolds number; no swimming, wave drag or surface taxiing; rigid deep-water build-up only.",
+   "checks_passed": 13,
+   "checks_total": 13,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T14:43:58Z",
+   "manifest": "artifacts/organ-sims/r3-underwater-drag/manifest.json",
+   "manifest_sha256": "f0f2aee2a0eb1dc5f385c3f35426f5886e5fc5e201f67fc69f2d129ed732274c",
+   "figures": [
+    "artifacts/organ-sims/r3-underwater-drag/drag.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
+  },
+  {
+   "id": "r4-aeroelastic-stiffness",
+   "title": "Aeroelastic deflection over the sourced fin-ray stiffness range (two-way static VLM+beam)",
+   "scales": [
+    "organ",
+    "tissue"
+   ],
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No flying-fish fin stiffness: the sourced EI is bluegill rays (Alben 2007); torsion-rigid, linear beam; does not establish fin twist, membrane mechanics or in-flight deformation.",
+   "checks_passed": 6,
+   "checks_total": 6,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T14:47:35Z",
+   "manifest": "artifacts/organ-sims/r4-aeroelastic-stiffness/manifest.json",
+   "manifest_sha256": "f237a31e63cbfc2c267c67dcf5b392ba808608fcbc56a4c54dec2775b244c136",
+   "figures": [
+    "artifacts/organ-sims/r4-aeroelastic-stiffness/stiffness.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": false
+  },
+  {
+   "id": "r5-school-launch",
+   "title": "Collective launch of printed gliders in PyBullet (6-DOF, quasi-steady per-surface aero, contacts)",
+   "scales": [
+    "collective",
+    "organism"
+   ],
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No observed schooling or collective behaviour: rigid printed gliders released together under an ASSUMED dispersion; no sensing, control, decision or population dynamics (ff-eco owns those); wake model is a straight horseshoe per fish.",
+   "checks_passed": 8,
+   "checks_total": 8,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T15:04:08Z",
+   "manifest": "artifacts/organ-sims/r5-school-launch/manifest.json",
+   "manifest_sha256": "a1370baa4e58fab67ba3d4a4139fa067a8564a36b4deddcec6430287b8c01c58",
+   "figures": [
+    "artifacts/organ-sims/r5-school-launch/school.png"
+   ],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
+  }
+ ]
+}

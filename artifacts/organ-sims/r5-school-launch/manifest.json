@@ -1,0 +1,2987 @@
+{
+ "schema": "frontier.organ-sim.manifest/1",
+ "id": "r5-school-launch",
+ "title": "Collective launch of printed gliders in PyBullet (6-DOF, quasi-steady per-surface aero, contacts)",
+ "evidence_kind": "simulated, not observed",
+ "scales": [
+  "collective",
+  "organism"
+ ],
+ "does_not_establish": "No observed schooling or collective behaviour: rigid printed gliders released together under an ASSUMED dispersion; no sensing, control, decision or population dynamics (ff-eco owns those); wake model is a straight horseshoe per fish.",
+ "scope": "simulated, not observed",
+ "command": "/data/worktrees/delphi-frontier/claude-organ/engineering/organ_sims/r5_school_launch.py 8 4",
+ "seed": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007
+ ],
+ "git_head_at_run": "c0a3e4d",
+ "python": "3.13.12",
+ "ran_utc": "2026-11-01T15:04:08Z",
+ "inputs": {
+  "artifacts/glider/r4-daane-printfix/flight_model.json": {
+   "sha256": "b9bdac0a7af5351b22d587fc5ffebb2042a062212354dab16208ef2789604d24",
+   "bytes": 56011
+  },
+  "artifacts/glider/r4-daane-printfix/manifest.json": {
+   "sha256": "39ba3c544d58c4a81b61eab91ca714eaea7dc968a4d28caccf18ea0177107869",
+   "bytes": 110152
+  },
+  "artifacts/organ-sims/r3-underwater-drag/manifest.json": {
+   "sha256": "f0f2aee2a0eb1dc5f385c3f35426f5886e5fc5e201f67fc69f2d129ed732274c",
+   "bytes": 55909
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/dorsal.stl": {
+   "sha256": "86d186f8f81ece38cec404c5bf663facde71780352ea38d67c058198f82a7d00",
+   "bytes": 220284
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/anal.stl": {
+   "sha256": "259db9c30f9b1f65da0fb149f0a85b0c43e4002742211b60afc516cdd2450f6f",
+   "bytes": 161284
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/caudal.stl": {
+   "sha256": "4f9dde1324fa084d0a76abb3668b663abb70e6ee39d157131848048e2d3bd238",
+   "bytes": 681884
+  }
+ },
+ "code_sha256": {
+  "engineering/organ_sims/common.py": "9958dc52b7a07560cb696c639c23d01a19be431c0e101e35361ba71249f23115",
+  "engineering/organ_sims/index.py": "9d25969238579345755b2651004dd3ae01320fec60ab397d22d5d609e5c6f93b",
+  "engineering/organ_sims/r1_v3b_convergence.py": "d2026f7ec52b61c66ac02e4f253ee8d287c5c2a73c7596198267e462a938f9f4",
+  "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
+  "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
+  "engineering/organ_sims/r4_aeroelastic_stiffness.py": "c2eecffe07310b33f3b09421b5a92d42fd7cf099b5e58a978c47f7b85c61f1e1",
+  "engineering/organ_sims/r5_school_launch.py": "7e71f81984e458c2b2bd1991f41e60627a2259791ccb17ba60becf505267e34a"
+ },
+ "git_dirty_paths_at_run": [
+  " M artifacts/organ-sims/r2-glide-sweep/manifest.json",
+  " M artifacts/organ-sims/r2-glide-sweep/rows.json.gz",
+  " M artifacts/organ-sims/r3-underwater-drag/manifest.json",
+  " M engineering/organ_sims/common.py",
+  " M engineering/organ_sims/r5_school_launch.py",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3a.log",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3b.log",
+  "?? artifacts/organ-sims/logs/r1-ladder2-v3c.log",
+  "?? artifacts/organ-sims/logs/r4.log",
+  "?? artifacts/organ-sims/logs/r5-run1-exit3-manifest.json",
+  "?? artifacts/organ-sims/logs/r5-run1-exit3.log",
+  "?? artifacts/organ-sims/logs/r5.log",
+  "?? artifacts/organ-sims/r1-v3b-convergence/",
+  "?? artifacts/organ-sims/r4-aeroelastic-stiffness/",
+  "?? artifacts/organ-sims/r5-school-launch/",
+  "?? engineering/organ_sims/index.py"
+ ],
+ "results": {
+  "chosen_pelvic_key_decalage_deg": 4.0,
+  "static_margin_dec2_MAC": 0.09746297661227488,
+  "trim_by_key": {
+   "-1.0": null,
+   "0.0": {
+    "alpha_deg": -3.838408814986913,
+    "CL": -0.16918218262397278,
+    "dCm_dalpha_per_deg": -0.006469312396118126,
+    "L_over_D": -4.049988526728715
+   },
+   "1.0": {
+    "alpha_deg": -1.247861900882626,
+    "CL": 0.05526201186447821,
+    "dCm_dalpha_per_deg": -0.00794381981473361,
+    "L_over_D": 1.35766013824788
+   },
+   "2.0": {
+    "alpha_deg": 0.9332129289533824,
+    "CL": 0.2417167882586211,
+    "dCm_dalpha_per_deg": -0.009041511073520851,
+    "L_over_D": 5.524958735408678
+   },
+   "3.0": {
+    "alpha_deg": 2.84518443874429,
+    "CL": 0.4031976278495756,
+    "dCm_dalpha_per_deg": -0.010152393531155122,
+    "L_over_D": 8.171040740135108
+   },
+   "4.0": {
+    "alpha_deg": 4.5615737505056995,
+    "CL": 0.5465228505275556,
+    "dCm_dalpha_per_deg": -0.011143061470637502,
+    "L_over_D": 9.64039196879916
+   }
+  },
+  "single_assembled_key_dec2": {
+   "y0_m": 0.0,
+   "range_m": 5.228977791279451,
+   "y_land_m": 2.2253397595167448e-06,
+   "t_land_s": 0.653,
+   "max_roll_deg": 0.000577173320283603,
+   "max_pitch_dev_deg": 27.99115542610449,
+   "collided": false,
+   "end": "water"
+  },
+  "model": {
+   "mass_kg": 0.025023104274457742,
+   "ballast_kg": 0.00468851329132984,
+   "cg_m": [
+    0.054499693001521764,
+    -3.1216900287056776e-07,
+    0.004056988064976152
+   ],
+   "np_x_m": 0.05697014523202724,
+   "I_diag": [
+    2.7066909364447758e-05,
+    3.587704659234592e-05,
+    6.086336960067357e-05
+   ],
+   "S_wing_m2": 0.00581773617239267,
+   "AR_wing": 8.798388790328708,
+   "b_wing_m": 0.22624478938589837,
+   "surfaces": [
+    {
+     "id": "pectoral_L",
+     "r": [
+      0.0016675037829082112,
+      0.06355577077782039,
+      0.008602737127744406
+     ],
+     "n": [
+      0.03489949670250097,
+      -0.12179510389394452,
+      0.9919415193434417
+     ],
+     "t": [
+      0.9993908270190958,
+      0.004253178748303903,
+      -0.034639361146286345
+     ],
+     "S": 0.002908868086196335,
+     "AR": 7.316270457400503,
+     "chord": 0.028198897931314953,
+     "CLa": 4.796127056002501,
+     "kind": "pectoral"
+    },
+    {
+     "id": "pectoral_R",
+     "r": [
+      0.0016675037829082112,
+      -0.06355514643981465,
+      0.008602737127744406
+     ],
+     "n": [
+      0.03489949670250097,
+      0.12179510389394452,
+      0.9919415193434417
+     ],
+     "t": [
+      0.9993908270190958,
+      -0.004253178748303903,
+      -0.034639361146286345
+     ],
+     "S": 0.002908868086196335,
+     "AR": 7.316270457400503,
+     "chord": 0.028198897931314953,
+     "CLa": 4.796127056002501,
+     "kind": "pectoral"
+    },
+    {
+     "id": "pelvic_L",
+     "r": [
+      0.03592784114824941,
+      0.0420394370280792,
+      -0.00656880043057343
+     ],
+     "n": [
+      -0.03489949670250097,
+      -0.06971397998507722,
+      0.9969563611936845
+     ],
+     "t": [
+      0.9993908270190958,
+      -0.002434465825411197,
+      0.03481448328257625
+     ],
+     "S": 0.0004807731462857363,
+     "AR": 15.419475678054793,
+     "chord": 0.007896784668338375,
+     "CLa": 5.520850544782175,
+     "kind": "pelvic"
+    },
+    {
+     "id": "pelvic_R",
+     "r": [
+      0.03592784114824941,
+      -0.04203881269007346,
+      -0.00656880043057343
+     ],
+     "n": [
+      -0.03489949670250097,
+      0.06971397998507722,
+      0.9969563611936845
+     ],
+     "t": [
+      0.9993908270190958,
+      0.002434465825411197,
+      0.03481448328257625
+     ],
+     "S": 0.0004807731462857363,
+     "AR": 15.419475678054793,
+     "chord": 0.007896784668338375,
+     "CLa": 5.520850544782175,
+     "kind": "pelvic"
+    },
+    {
+     "id": "dorsal",
+     "r": [
+      0.05509474223722175,
+      3.121662108563992e-07,
+      0.008815823958290761
+     ],
+     "n": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "t": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "S": 0.00015817286974831993,
+     "AR": 0.5439818053781855,
+     "chord": 0.02411508560180664,
+     "CLa": 0.839239992820075,
+     "kind": "median"
+    },
+    {
+     "id": "anal",
+     "r": [
+      0.062388441469594484,
+      3.1217225157954035e-07,
+      -0.012340108689496556
+     ],
+     "n": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "t": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "S": 0.00010169313401240419,
+     "AR": 0.5891456562460197,
+     "chord": 0.018580161035060883,
+     "CLa": 0.9061787275696245,
+     "kind": "median"
+    },
+    {
+     "id": "caudal",
+     "r": [
+      0.1074710231126349,
+      3.121696249773607e-07,
+      -0.008048080699090996
+     ],
+     "n": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "t": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "S": 0.0007694185343461678,
+     "AR": 1.0926348699886446,
+     "chord": 0.03752829134464264,
+     "CLa": 1.6043991249485312,
+     "kind": "median"
+    }
+   ]
+  },
+  "single_nominal": {
+   "y0_m": 0.0,
+   "range_m": 6.38315643437261,
+   "y_land_m": 1.0116284973886686e-05,
+   "t_land_s": 0.79,
+   "max_roll_deg": 0.0008209730010459174,
+   "max_pitch_dev_deg": 17.251844237279876,
+   "collided": false,
+   "end": "water"
+  },
+  "rows": [
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.250503082401113,
+    "range_min_m": 4.486790569868784,
+    "range_max_m": 8.309733378326523,
+    "lane_deviation_rms_m": 0.3371187170592907,
+    "max_roll_deg": 17.019956571636595,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.169560830167148,
+    "range_min_m": 4.839882012652761,
+    "range_max_m": 8.330328738536382,
+    "lane_deviation_rms_m": 0.19036368382439048,
+    "max_roll_deg": 117.30501977216468,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.647628337145743,
+    "range_min_m": 4.120846590584337,
+    "range_max_m": 7.393921715277467,
+    "lane_deviation_rms_m": 0.4374296448277798,
+    "max_roll_deg": 169.42769375008018,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.129458654422869,
+    "range_min_m": 4.277695086518622,
+    "range_max_m": 8.142001120463945,
+    "lane_deviation_rms_m": 0.3181757676873541,
+    "max_roll_deg": 33.464228352853056,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.566606647636631,
+    "range_min_m": 5.227348980286725,
+    "range_max_m": 8.042863815522647,
+    "lane_deviation_rms_m": 0.37780297633460247,
+    "max_roll_deg": 34.009267920506886,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 3,
+    "pairs": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 5,
+    "range_mean_m": 5.727701682635029,
+    "range_min_m": 3.379780270682375,
+    "range_max_m": 7.152868835114353,
+    "lane_deviation_rms_m": 0.5327180808982235,
+    "max_roll_deg": 92.1926107937522,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 2,
+    "pairs": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "n_fish_collided": 4,
+    "range_mean_m": 5.971816720757158,
+    "range_min_m": 4.9268791246040795,
+    "range_max_m": 7.057423050412664,
+    "lane_deviation_rms_m": 0.42534412529426724,
+    "max_roll_deg": 39.99046736411083,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.939906636490848,
+    "range_min_m": 4.138619687205415,
+    "range_max_m": 8.703586687135548,
+    "lane_deviation_rms_m": 0.41738911365524384,
+    "max_roll_deg": 122.82500539222583,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.987029943260655,
+    "range_min_m": 4.494666577851408,
+    "range_max_m": 8.31817430571518,
+    "lane_deviation_rms_m": 0.2838761816262566,
+    "max_roll_deg": 174.54082817148705,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.171979152783818,
+    "range_min_m": 4.858731800002346,
+    "range_max_m": 8.319757007463235,
+    "lane_deviation_rms_m": 0.1983141035741849,
+    "max_roll_deg": 51.75192505159069,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.972336159246182,
+    "range_min_m": 4.121041895552965,
+    "range_max_m": 7.373194886761534,
+    "lane_deviation_rms_m": 0.46479447621637643,
+    "max_roll_deg": 5.327447552945723,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 3,
+    "pairs": [
+     [
+      3,
+      4
+     ],
+     [
+      5,
+      7
+     ],
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 5,
+    "range_mean_m": 6.323468615163041,
+    "range_min_m": 3.7242815927276567,
+    "range_max_m": 8.123603052372191,
+    "lane_deviation_rms_m": 0.6387940541805138,
+    "max_roll_deg": 145.94271573814834,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.673049528933202,
+    "range_min_m": 5.254053091505907,
+    "range_max_m": 8.052254551545062,
+    "lane_deviation_rms_m": 0.3892659338887998,
+    "max_roll_deg": 35.50375330359168,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.717147415383711,
+    "range_min_m": 3.359444982003544,
+    "range_max_m": 7.170358497090538,
+    "lane_deviation_rms_m": 0.4020658727425191,
+    "max_roll_deg": 22.754456418170946,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.914344161815734,
+    "range_min_m": 4.960906282083632,
+    "range_max_m": 6.867271606910338,
+    "lane_deviation_rms_m": 0.3632587314224246,
+    "max_roll_deg": 10.230267384423913,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.965343240311581,
+    "range_min_m": 4.148100636549134,
+    "range_max_m": 8.694831361124065,
+    "lane_deviation_rms_m": 0.3536363644372191,
+    "max_roll_deg": 8.93214833465184,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.657185859664418,
+    "range_min_m": 4.51043194713512,
+    "range_max_m": 8.301687327902409,
+    "lane_deviation_rms_m": 0.5821780099777634,
+    "max_roll_deg": 57.315859660716974,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.288782820983355,
+    "range_min_m": 4.868591353049447,
+    "range_max_m": 8.315515705245264,
+    "lane_deviation_rms_m": 0.19526760242490568,
+    "max_roll_deg": 7.637119984935295,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.984280188014294,
+    "range_min_m": 4.121197004679871,
+    "range_max_m": 7.376712052461761,
+    "lane_deviation_rms_m": 0.4643479449324252,
+    "max_roll_deg": 5.308682970664442,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.1667940889215505,
+    "range_min_m": 4.298604725274448,
+    "range_max_m": 8.108323993092473,
+    "lane_deviation_rms_m": 0.33814556758244874,
+    "max_roll_deg": 26.53873572661193,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.7037037878590375,
+    "range_min_m": 5.280640691427857,
+    "range_max_m": 8.030962550132912,
+    "lane_deviation_rms_m": 0.5079289945157441,
+    "max_roll_deg": 6.168187511027189,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.573975075690697,
+    "range_min_m": 3.3606600980234687,
+    "range_max_m": 7.082023318130127,
+    "lane_deviation_rms_m": 0.3352462135130481,
+    "max_roll_deg": 10.740914332416672,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.933010262922947,
+    "range_min_m": 5.032403398252022,
+    "range_max_m": 6.83278955756401,
+    "lane_deviation_rms_m": 0.3592849783557235,
+    "max_roll_deg": 5.382590586607574,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.980582130653078,
+    "range_min_m": 4.156818020173994,
+    "range_max_m": 8.694383837286946,
+    "lane_deviation_rms_m": 0.3500172507226851,
+    "max_roll_deg": 7.853934772722005,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.670722493611966,
+    "range_min_m": 4.526317481330131,
+    "range_max_m": 8.31164688778124,
+    "lane_deviation_rms_m": 0.37695611589625855,
+    "max_roll_deg": 10.010591111874287,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.297792553654661,
+    "range_min_m": 4.878176838756422,
+    "range_max_m": 8.311598638438346,
+    "lane_deviation_rms_m": 0.19444852564539297,
+    "max_roll_deg": 7.649643133032434,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.994348551438653,
+    "range_min_m": 4.1299279706883745,
+    "range_max_m": 7.381262443587135,
+    "lane_deviation_rms_m": 0.4647321631685002,
+    "max_roll_deg": 5.335528556336019,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.164696454920517,
+    "range_min_m": 4.3164764799242805,
+    "range_max_m": 8.077779838719449,
+    "lane_deviation_rms_m": 0.32684951990208333,
+    "max_roll_deg": 19.687083207570133,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.7034022067460866,
+    "range_min_m": 5.306960059031102,
+    "range_max_m": 8.048342392267829,
+    "lane_deviation_rms_m": 0.4991817670081181,
+    "max_roll_deg": 5.268186473847118,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.579410913440782,
+    "range_min_m": 3.36156634454462,
+    "range_max_m": 7.090203750903892,
+    "lane_deviation_rms_m": 0.3337367293935212,
+    "max_roll_deg": 6.701803393142221,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.948345274335848,
+    "range_min_m": 5.053390572877599,
+    "range_max_m": 6.818959469930453,
+    "lane_deviation_rms_m": 0.36139497046938823,
+    "max_roll_deg": 4.734368302809679,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.992161691846016,
+    "range_min_m": 4.164947481089134,
+    "range_max_m": 8.694450660020236,
+    "lane_deviation_rms_m": 0.34871447274643064,
+    "max_roll_deg": 7.340812524821515,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.623797344247375,
+    "range_min_m": 3.2397100048990084,
+    "range_max_m": 9.297831449882917,
+    "lane_deviation_rms_m": 0.8453471431013396,
+    "max_roll_deg": 21.073253599933118,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.566519395041343,
+    "range_min_m": 3.2410875314142884,
+    "range_max_m": 8.475977665203157,
+    "lane_deviation_rms_m": 0.43734269917854374,
+    "max_roll_deg": 179.98750624428754,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.272881143164903,
+    "range_min_m": 2.5957467865802073,
+    "range_max_m": 7.489655715810347,
+    "lane_deviation_rms_m": 0.9135865366120323,
+    "max_roll_deg": 97.31739852851344,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.141866610901077,
+    "range_min_m": 2.8173332887915947,
+    "range_max_m": 9.699596686518433,
+    "lane_deviation_rms_m": 0.8307968035414112,
+    "max_roll_deg": 179.92948224371483,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.34831362582262,
+    "range_min_m": 3.9340559342934043,
+    "range_max_m": 9.763969469922673,
+    "lane_deviation_rms_m": 0.9839920240210667,
+    "max_roll_deg": 179.98242242305292,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      1,
+      2
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 4.932069855106569,
+    "range_min_m": 2.630386351613813,
+    "range_max_m": 7.796683871088675,
+    "lane_deviation_rms_m": 0.5796267765638097,
+    "max_roll_deg": 98.31694616787729,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      0,
+      2
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.716421806221814,
+    "range_min_m": 4.010872718614806,
+    "range_max_m": 8.582308980329492,
+    "lane_deviation_rms_m": 0.7365568463000701,
+    "max_roll_deg": 46.387969356405435,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": true,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.023843559717388,
+    "range_min_m": 2.755098892757065,
+    "range_max_m": 8.249057210783135,
+    "lane_deviation_rms_m": 0.5400453911929858,
+    "max_roll_deg": 64.40080707423118,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.638342557367826,
+    "range_min_m": 3.248300283339706,
+    "range_max_m": 9.281985440242346,
+    "lane_deviation_rms_m": 0.8356859617245517,
+    "max_roll_deg": 20.196431328962195,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.8743625053043305,
+    "range_min_m": 3.2423009906331663,
+    "range_max_m": 8.483267768452201,
+    "lane_deviation_rms_m": 0.4788582405794151,
+    "max_roll_deg": 70.35613971869317,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.386844783047179,
+    "range_min_m": 2.5962098603209958,
+    "range_max_m": 7.506959139351663,
+    "lane_deviation_rms_m": 0.8559163050379576,
+    "max_roll_deg": 24.48745265114039,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.29759211840316,
+    "range_min_m": 2.8213594674123206,
+    "range_max_m": 9.693373762317973,
+    "lane_deviation_rms_m": 0.8238855398163779,
+    "max_roll_deg": 177.86238923430906,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.536280449629559,
+    "range_min_m": 3.956898131269081,
+    "range_max_m": 9.738387433139087,
+    "lane_deviation_rms_m": 0.9355649443243695,
+    "max_roll_deg": 179.73174484569813,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      1,
+      2
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 4.88786450729177,
+    "range_min_m": 2.462873501847605,
+    "range_max_m": 7.799913146688884,
+    "lane_deviation_rms_m": 0.5692197372567942,
+    "max_roll_deg": 65.24406266695229,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.250704650462575,
+    "range_min_m": 4.004810848030022,
+    "range_max_m": 6.238556024670774,
+    "lane_deviation_rms_m": 0.6630488750392634,
+    "max_roll_deg": 33.81717400623826,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": true,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 4.985340651319278,
+    "range_min_m": 2.763387251753938,
+    "range_max_m": 8.257536607092591,
+    "lane_deviation_rms_m": 0.6167946812744054,
+    "max_roll_deg": 74.07234308252778,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.655678208108718,
+    "range_min_m": 3.2572101246984246,
+    "range_max_m": 9.26509080497657,
+    "lane_deviation_rms_m": 0.8216077128466972,
+    "max_roll_deg": 22.041730489386612,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.650081366869113,
+    "range_min_m": 3.243531162074504,
+    "range_max_m": 8.483911351895491,
+    "lane_deviation_rms_m": 0.38692032902183915,
+    "max_roll_deg": 40.74556929420119,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.4002969457570345,
+    "range_min_m": 2.59644446283834,
+    "range_max_m": 7.524773682465849,
+    "lane_deviation_rms_m": 0.8575434216530058,
+    "max_roll_deg": 24.532865257011863,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.103334993650747,
+    "range_min_m": 2.825794440214752,
+    "range_max_m": 9.697879126788354,
+    "lane_deviation_rms_m": 0.6983199591440701,
+    "max_roll_deg": 77.63713719619825,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.7791129117149795,
+    "range_min_m": 3.987451948714784,
+    "range_max_m": 9.723905852396019,
+    "lane_deviation_rms_m": 1.155414401009585,
+    "max_roll_deg": 25.730882797925446,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 4.806503752431317,
+    "range_min_m": 1.9601399144635223,
+    "range_max_m": 7.7890504378507215,
+    "lane_deviation_rms_m": 0.5940699019788999,
+    "max_roll_deg": 61.877203058339454,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.281164582219503,
+    "range_min_m": 4.053108970278163,
+    "range_max_m": 6.267176268308863,
+    "lane_deviation_rms_m": 0.6468649662840018,
+    "max_roll_deg": 29.18749701657535,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": true,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.0255850269449365,
+    "range_min_m": 2.764106518824285,
+    "range_max_m": 8.275300544690033,
+    "lane_deviation_rms_m": 0.6213694135019783,
+    "max_roll_deg": 29.683483709844754,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.6642522814172995,
+    "range_min_m": 3.265850190613033,
+    "range_max_m": 9.258194713878343,
+    "lane_deviation_rms_m": 0.8249200611958718,
+    "max_roll_deg": 23.647553731790488,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.60814247523801,
+    "range_min_m": 3.252921692558098,
+    "range_max_m": 8.484253652581973,
+    "lane_deviation_rms_m": 0.3322347970162201,
+    "max_roll_deg": 40.802606806953904,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.40859718128096,
+    "range_min_m": 2.5964856024723884,
+    "range_max_m": 7.533879479715102,
+    "lane_deviation_rms_m": 0.8586336373406068,
+    "max_roll_deg": 24.555552018251763,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.101771621635792,
+    "range_min_m": 2.819443300022172,
+    "range_max_m": 9.683804176018196,
+    "lane_deviation_rms_m": 0.6958845643382012,
+    "max_roll_deg": 80.06474821578239,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.835126659190674,
+    "range_min_m": 3.9990361010235067,
+    "range_max_m": 9.719094739384884,
+    "lane_deviation_rms_m": 1.156134210233432,
+    "max_roll_deg": 17.593017233983698,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 4.802531281984739,
+    "range_min_m": 1.9602367391374722,
+    "range_max_m": 7.784932856537852,
+    "lane_deviation_rms_m": 0.5944975691413572,
+    "max_roll_deg": 64.67916676178874,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.291096309694215,
+    "range_min_m": 4.064966132899043,
+    "range_max_m": 6.275297053487835,
+    "lane_deviation_rms_m": 0.6475916818634103,
+    "max_roll_deg": 28.609963114583156,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": true,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.038274924009562,
+    "range_min_m": 2.76520605474439,
+    "range_max_m": 8.285609405160896,
+    "lane_deviation_rms_m": 0.6175047377823701,
+    "max_roll_deg": 29.919665826923264,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.312425115927805,
+    "range_min_m": 4.534303350455471,
+    "range_max_m": 8.322332554777672,
+    "lane_deviation_rms_m": 0.32529409327495284,
+    "max_roll_deg": 114.5652190059462,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.392654945808813,
+    "range_min_m": 4.887633803193865,
+    "range_max_m": 8.314761791329445,
+    "lane_deviation_rms_m": 0.19432925061985834,
+    "max_roll_deg": 51.21411576216339,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.748294099626344,
+    "range_min_m": 4.130204811887729,
+    "range_max_m": 7.386414834059186,
+    "lane_deviation_rms_m": 0.5101242562892971,
+    "max_roll_deg": 114.39025073001409,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.1784234698014835,
+    "range_min_m": 4.317011965647428,
+    "range_max_m": 8.08917549155303,
+    "lane_deviation_rms_m": 0.3146962232092401,
+    "max_roll_deg": 31.08055764075595,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.722218227689316,
+    "range_min_m": 5.315753141745179,
+    "range_max_m": 8.067250268042159,
+    "lane_deviation_rms_m": 0.3896600446031933,
+    "max_roll_deg": 43.06079399274389,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 2,
+    "pairs": [
+     [
+      1,
+      2
+     ],
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 4,
+    "range_mean_m": 5.7031134909545464,
+    "range_min_m": 3.389602257459154,
+    "range_max_m": 7.0981914786901195,
+    "lane_deviation_rms_m": 0.3672893505807383,
+    "max_roll_deg": 10.868277046756956,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 2,
+    "pairs": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "n_fish_collided": 4,
+    "range_mean_m": 6.12495530497967,
+    "range_min_m": 5.067561499732323,
+    "range_max_m": 7.35743277646218,
+    "lane_deviation_rms_m": 0.46040421995772207,
+    "max_roll_deg": 30.878724871961882,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.006076495716998,
+    "range_min_m": 4.17312493211307,
+    "range_max_m": 8.693847793679323,
+    "lane_deviation_rms_m": 0.35025520792762616,
+    "max_roll_deg": 7.2337101619276805,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.110267695068102,
+    "range_min_m": 4.534303350455471,
+    "range_max_m": 8.322332554777672,
+    "lane_deviation_rms_m": 0.3039319722010817,
+    "max_roll_deg": 179.8885389296907,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.215025365262946,
+    "range_min_m": 4.887633803193865,
+    "range_max_m": 8.314761791329445,
+    "lane_deviation_rms_m": 0.20220232802098123,
+    "max_roll_deg": 53.964354648761045,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.003753135795973,
+    "range_min_m": 4.130204811887729,
+    "range_max_m": 7.386414834059186,
+    "lane_deviation_rms_m": 0.46593961215306456,
+    "max_roll_deg": 5.365787199400419,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 2,
+    "pairs": [
+     [
+      3,
+      4
+     ],
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 4,
+    "range_mean_m": 6.327883309814052,
+    "range_min_m": 3.7718940724152334,
+    "range_max_m": 8.08917549155303,
+    "lane_deviation_rms_m": 0.5107652717101703,
+    "max_roll_deg": 101.79088751937628,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.705475935680598,
+    "range_min_m": 5.315753141745179,
+    "range_max_m": 8.067250268042159,
+    "lane_deviation_rms_m": 0.3908944767635881,
+    "max_roll_deg": 31.352514695595783,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.585818855249389,
+    "range_min_m": 3.361999132413484,
+    "range_max_m": 7.0981914786901195,
+    "lane_deviation_rms_m": 0.3333391590907892,
+    "max_roll_deg": 5.777544420311484,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.959730062889462,
+    "range_min_m": 5.067561499732323,
+    "range_max_m": 6.811339153499875,
+    "lane_deviation_rms_m": 0.3645325056304964,
+    "max_roll_deg": 4.775561607611163,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.993953809747325,
+    "range_min_m": 4.17312493211307,
+    "range_max_m": 8.693847793679323,
+    "lane_deviation_rms_m": 0.3544100543912721,
+    "max_roll_deg": 22.05812022014765,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.33064659109305,
+    "range_min_m": 4.534303350455471,
+    "range_max_m": 8.322332554777672,
+    "lane_deviation_rms_m": 0.5706249631790066,
+    "max_roll_deg": 113.80436136215924,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.308587037668115,
+    "range_min_m": 4.887633803193865,
+    "range_max_m": 8.314761791329445,
+    "lane_deviation_rms_m": 0.19420155105343392,
+    "max_roll_deg": 7.677819844506706,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.003753135795973,
+    "range_min_m": 4.130204811887729,
+    "range_max_m": 7.386414834059186,
+    "lane_deviation_rms_m": 0.4659396121530643,
+    "max_roll_deg": 5.365787199400419,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.180728830056923,
+    "range_min_m": 4.317011965647428,
+    "range_max_m": 8.08917549155303,
+    "lane_deviation_rms_m": 0.32785998219295415,
+    "max_roll_deg": 12.381705354528593,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.713183098090203,
+    "range_min_m": 5.315753141745179,
+    "range_max_m": 8.067250268042159,
+    "lane_deviation_rms_m": 0.5015244060257354,
+    "max_roll_deg": 5.219515288745586,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.585818855249389,
+    "range_min_m": 3.361999132413484,
+    "range_max_m": 7.0981914786901195,
+    "lane_deviation_rms_m": 0.33333915909078893,
+    "max_roll_deg": 5.777544420311484,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.959730062889462,
+    "range_min_m": 5.067561499732323,
+    "range_max_m": 6.811339153499875,
+    "lane_deviation_rms_m": 0.3645325056304959,
+    "max_roll_deg": 4.775561607611163,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.998836368996608,
+    "range_min_m": 4.17312493211307,
+    "range_max_m": 8.693847793679323,
+    "lane_deviation_rms_m": 0.34863083037373727,
+    "max_roll_deg": 7.2337101619276805,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.693419955244334,
+    "range_min_m": 4.534303350455471,
+    "range_max_m": 8.322332554777672,
+    "lane_deviation_rms_m": 0.37409434430786515,
+    "max_roll_deg": 4.213554442632772,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.308587037668115,
+    "range_min_m": 4.887633803193865,
+    "range_max_m": 8.314761791329445,
+    "lane_deviation_rms_m": 0.1942015510534356,
+    "max_roll_deg": 7.677819844506706,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.003753135795973,
+    "range_min_m": 4.130204811887729,
+    "range_max_m": 7.386414834059186,
+    "lane_deviation_rms_m": 0.46593961215306456,
+    "max_roll_deg": 5.365787199400419,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.180728830056923,
+    "range_min_m": 4.317011965647428,
+    "range_max_m": 8.08917549155303,
+    "lane_deviation_rms_m": 0.32785998219295504,
+    "max_roll_deg": 12.381705354528593,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.713183098090203,
+    "range_min_m": 5.315753141745179,
+    "range_max_m": 8.067250268042159,
+    "lane_deviation_rms_m": 0.5015244060257356,
+    "max_roll_deg": 5.219515288745586,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.585818855249389,
+    "range_min_m": 3.361999132413484,
+    "range_max_m": 7.0981914786901195,
+    "lane_deviation_rms_m": 0.33333915909078826,
+    "max_roll_deg": 5.777544420311484,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.959730062889462,
+    "range_min_m": 5.067561499732323,
+    "range_max_m": 6.811339153499875,
+    "lane_deviation_rms_m": 0.36453250563049544,
+    "max_roll_deg": 4.775561607611163,
+    "n_timeout": 0
+   },
+   {
+    "disp": "low",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.998836368996608,
+    "range_min_m": 4.17312493211307,
+    "range_max_m": 8.693847793679323,
+    "lane_deviation_rms_m": 0.34863083037373727,
+    "max_roll_deg": 7.2337101619276805,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.658072737081213,
+    "range_min_m": 3.266862591804234,
+    "range_max_m": 9.259071581169454,
+    "lane_deviation_rms_m": 0.8399095399670504,
+    "max_roll_deg": 23.002572121526807,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.710693269389196,
+    "range_min_m": 3.2538597576849355,
+    "range_max_m": 8.482727813231838,
+    "lane_deviation_rms_m": 0.8370269491200155,
+    "max_roll_deg": 87.55867988333294,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.22689761336551,
+    "range_min_m": 2.5965093533316796,
+    "range_max_m": 7.534638025700575,
+    "lane_deviation_rms_m": 0.7797732918902219,
+    "max_roll_deg": 99.33602081433675,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.998194133882421,
+    "range_min_m": 2.822939987187073,
+    "range_max_m": 9.666240782762907,
+    "lane_deviation_rms_m": 0.7452619426888533,
+    "max_roll_deg": 119.30357121837714,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.578069386194814,
+    "range_min_m": 4.009824729862507,
+    "range_max_m": 9.715600848217926,
+    "lane_deviation_rms_m": 1.0754611754439536,
+    "max_roll_deg": 92.09884428257445,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      1,
+      2
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 4.921401355925179,
+    "range_min_m": 2.660107864241209,
+    "range_max_m": 7.779637047825243,
+    "lane_deviation_rms_m": 0.5803426155991889,
+    "max_roll_deg": 99.4481372655722,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      0,
+      2
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.751675258145251,
+    "range_min_m": 4.071351289187632,
+    "range_max_m": 9.027943434493565,
+    "lane_deviation_rms_m": 0.711509495377683,
+    "max_roll_deg": 27.78644795850523,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.25,
+    "wake": false,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.042260511742466,
+    "range_min_m": 2.766530705453114,
+    "range_max_m": 8.295915901255194,
+    "lane_deviation_rms_m": 0.616192446648006,
+    "max_roll_deg": 30.10443818899024,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.658072737081213,
+    "range_min_m": 3.266862591804234,
+    "range_max_m": 9.259071581169454,
+    "lane_deviation_rms_m": 0.8399095399670505,
+    "max_roll_deg": 23.002572121526807,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.770127718936082,
+    "range_min_m": 3.2538597576849355,
+    "range_max_m": 8.482727813231838,
+    "lane_deviation_rms_m": 0.3923852828198076,
+    "max_roll_deg": 50.44930084297978,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.414747042469613,
+    "range_min_m": 2.5965093533316796,
+    "range_max_m": 7.534638025700575,
+    "lane_deviation_rms_m": 0.8594774457840509,
+    "max_roll_deg": 24.53666069694713,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.237120379089749,
+    "range_min_m": 2.822939987187073,
+    "range_max_m": 9.666240782762907,
+    "lane_deviation_rms_m": 0.8808514674301677,
+    "max_roll_deg": 179.934493095559,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.72124293642659,
+    "range_min_m": 4.009824729862507,
+    "range_max_m": 9.715600848217926,
+    "lane_deviation_rms_m": 1.383004963007789,
+    "max_roll_deg": 179.79848817570982,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      1,
+      2
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 4.89598394890811,
+    "range_min_m": 2.4908113088820896,
+    "range_max_m": 7.779637047825243,
+    "lane_deviation_rms_m": 0.572305851973127,
+    "max_roll_deg": 62.67104513882847,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.296253432152668,
+    "range_min_m": 4.071351289187632,
+    "range_max_m": 6.282753737110101,
+    "lane_deviation_rms_m": 0.6495281280150369,
+    "max_roll_deg": 27.78644795850523,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.3,
+    "wake": false,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.009303276979853,
+    "range_min_m": 2.766530705453114,
+    "range_max_m": 8.295915901255194,
+    "lane_deviation_rms_m": 0.611035680323957,
+    "max_roll_deg": 64.14720480768295,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.658072737081213,
+    "range_min_m": 3.266862591804234,
+    "range_max_m": 9.259071581169454,
+    "lane_deviation_rms_m": 0.8399095399670495,
+    "max_roll_deg": 23.002572121526807,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      4,
+      5
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 5.656298008733586,
+    "range_min_m": 3.2538597576849355,
+    "range_max_m": 8.482727813231838,
+    "lane_deviation_rms_m": 0.38234782026278197,
+    "max_roll_deg": 40.816072590220884,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.414747042469613,
+    "range_min_m": 2.5965093533316796,
+    "range_max_m": 7.534638025700575,
+    "lane_deviation_rms_m": 0.8594774457840509,
+    "max_roll_deg": 24.53666069694713,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.1026764326563665,
+    "range_min_m": 2.822939987187073,
+    "range_max_m": 9.666240782762907,
+    "lane_deviation_rms_m": 0.6919047554817368,
+    "max_roll_deg": 75.08772588279979,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.804196525526072,
+    "range_min_m": 4.009824729862507,
+    "range_max_m": 9.715600848217926,
+    "lane_deviation_rms_m": 1.1523395929417442,
+    "max_roll_deg": 17.484055869231437,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 4.798947809767854,
+    "range_min_m": 1.9602483235410655,
+    "range_max_m": 7.779637047825243,
+    "lane_deviation_rms_m": 0.5911719085140845,
+    "max_roll_deg": 66.47025959751113,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.296253432152668,
+    "range_min_m": 4.071351289187632,
+    "range_max_m": 6.282753737110101,
+    "lane_deviation_rms_m": 0.6495281280150367,
+    "max_roll_deg": 27.78644795850523,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.4,
+    "wake": false,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.042260511742466,
+    "range_min_m": 2.766530705453114,
+    "range_max_m": 8.295915901255194,
+    "lane_deviation_rms_m": 0.6161924466480059,
+    "max_roll_deg": 30.10443818899024,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1000,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      6,
+      7
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.658072737081213,
+    "range_min_m": 3.266862591804234,
+    "range_max_m": 9.259071581169454,
+    "lane_deviation_rms_m": 0.8399095399670474,
+    "max_roll_deg": 23.002572121526807,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1001,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.609687741308776,
+    "range_min_m": 3.2538597576849355,
+    "range_max_m": 8.482727813231838,
+    "lane_deviation_rms_m": 0.3315005637684014,
+    "max_roll_deg": 40.816072590220884,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1002,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.414747042469613,
+    "range_min_m": 2.5965093533316796,
+    "range_max_m": 7.534638025700575,
+    "lane_deviation_rms_m": 0.8594774457840507,
+    "max_roll_deg": 24.53666069694713,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1003,
+    "n": 8,
+    "n_collision_pairs": 1,
+    "pairs": [
+     [
+      3,
+      4
+     ]
+    ],
+    "n_fish_collided": 2,
+    "range_mean_m": 6.100877293709831,
+    "range_min_m": 2.8178869549491803,
+    "range_max_m": 9.666240782762907,
+    "lane_deviation_rms_m": 0.6930980703438138,
+    "max_roll_deg": 81.38515301294336,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1004,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 6.837023229356079,
+    "range_min_m": 4.009824729862507,
+    "range_max_m": 9.715600848217926,
+    "lane_deviation_rms_m": 1.1524637913983298,
+    "max_roll_deg": 17.484055869231437,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1005,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 4.798947809767854,
+    "range_min_m": 1.9602483235410655,
+    "range_max_m": 7.779637047825243,
+    "lane_deviation_rms_m": 0.5911719085140845,
+    "max_roll_deg": 66.47025959751113,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1006,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.296253432152668,
+    "range_min_m": 4.071351289187632,
+    "range_max_m": 6.282753737110101,
+    "lane_deviation_rms_m": 0.6495281280150378,
+    "max_roll_deg": 27.78644795850523,
+    "n_timeout": 0
+   },
+   {
+    "disp": "high",
+    "spacing_m": 0.6,
+    "wake": false,
+    "seed": 1007,
+    "n": 8,
+    "n_collision_pairs": 0,
+    "pairs": [],
+    "n_fish_collided": 0,
+    "range_mean_m": 5.042260511742466,
+    "range_min_m": 2.766530705453114,
+    "range_max_m": 8.295915901255194,
+    "lane_deviation_rms_m": 0.6161924466480063,
+    "max_roll_deg": 30.10443818899024,
+    "n_timeout": 0
+   }
+  ],
+  "summary": {
+   "wake/low@0.25": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.875,
+    "mean_fish_collided": 2.375,
+    "range_mean_m": 6.050397823957068,
+    "range_spread_m": 3.4668606272983036,
+    "lane_deviation_rms_m": 0.379542763697644,
+    "max_roll_deg": 169.42769375008018
+   },
+   "wake/low@0.3": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.625,
+    "mean_fish_collided": 1.625,
+    "range_mean_m": 6.090587277112241,
+    "range_spread_m": 3.4997773013381934,
+    "lane_deviation_rms_m": 0.3867507147610368,
+    "max_roll_deg": 174.54082817148705
+   },
+   "wake/low@0.4": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.125,
+    "mean_fish_collided": 0.25,
+    "range_mean_m": 6.161039276838672,
+    "range_spread_m": 3.389131387974959,
+    "lane_deviation_rms_m": 0.39155207025309297,
+    "max_roll_deg": 57.315859660716974
+   },
+   "wake/low@0.6": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.0,
+    "mean_fish_collided": 0.0,
+    "range_mean_m": 6.168860017499316,
+    "range_spread_m": 3.3745601066758644,
+    "lane_deviation_rms_m": 0.36325178302871164,
+    "max_roll_deg": 19.687083207570133
+   },
+   "wake/high@0.25": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.875,
+    "mean_fish_collided": 1.75,
+    "range_mean_m": 5.703214167527886,
+    "range_spread_m": 5.51634869257183,
+    "lane_deviation_rms_m": 0.7334117775639074,
+    "max_roll_deg": 179.98750624428754
+   },
+   "wake/high@0.3": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.625,
+    "mean_fish_collided": 1.25,
+    "range_mean_m": 5.7321665278532095,
+    "range_spread_m": 5.237979873418586,
+    "lane_deviation_rms_m": 0.7223717856316418,
+    "max_roll_deg": 179.73174484569813
+   },
+   "wake/high@0.4": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.25,
+    "mean_fish_collided": 0.5,
+    "range_mean_m": 5.712719723462044,
+    "range_spread_m": 5.292412565908141,
+    "lane_deviation_rms_m": 0.7227637631800097,
+    "max_roll_deg": 77.63713719619825
+   },
+   "wake/high@0.6": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.125,
+    "mean_fish_collided": 0.25,
+    "range_mean_m": 5.718724091806406,
+    "range_spread_m": 5.287615032911872,
+    "lane_deviation_rms_m": 0.7159251573639338,
+    "max_roll_deg": 80.06474821578239
+   },
+   "nowake/low@0.25": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.875,
+    "mean_fish_collided": 2.25,
+    "range_mean_m": 6.148520143813122,
+    "range_spread_m": 3.439276403294862,
+    "lane_deviation_rms_m": 0.36400658080782855,
+    "max_roll_deg": 114.5652190059462
+   },
+   "nowake/low@0.3": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.625,
+    "mean_fish_collided": 1.5,
+    "range_mean_m": 6.112738521188481,
+    "range_spread_m": 3.442604827709307,
+    "lane_deviation_rms_m": 0.36575192249518046,
+    "max_roll_deg": 179.8885389296907
+   },
+   "nowake/low@0.4": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.125,
+    "mean_fish_collided": 0.25,
+    "range_mean_m": 6.135160497479966,
+    "range_spread_m": 3.3744650910552827,
+    "lane_deviation_rms_m": 0.388331626212402,
+    "max_roll_deg": 113.80436136215924
+   },
+   "nowake/low@0.6": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.0,
+    "mean_fish_collided": 0.0,
+    "range_mean_m": 6.180507167998876,
+    "range_spread_m": 3.3744650910552827,
+    "lane_deviation_rms_m": 0.3637652988535096,
+    "max_roll_deg": 12.381705354528593
+   },
+   "nowake/high@0.25": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.75,
+    "mean_fish_collided": 1.5,
+    "range_mean_m": 5.735908033215756,
+    "range_spread_m": 5.53922364448804,
+    "lane_deviation_rms_m": 0.7731846820918715,
+    "max_roll_deg": 119.30357121837714
+   },
+   "nowake/high@0.3": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.625,
+    "mean_fish_collided": 1.25,
+    "range_mean_m": 5.750356434005484,
+    "range_spread_m": 5.217237001734997,
+    "lane_deviation_rms_m": 0.7735622949151233,
+    "max_roll_deg": 179.934493095559
+   },
+   "nowake/high@0.4": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.25,
+    "mean_fish_collided": 0.5,
+    "range_mean_m": 5.721681562516229,
+    "range_spread_m": 5.283557374902625,
+    "lane_deviation_rms_m": 0.7228589547018113,
+    "max_roll_deg": 75.08772588279979
+   },
+   "nowake/high@0.6": {
+    "launches": 8,
+    "frac_launches_with_collision": 0.25,
+    "mean_fish_collided": 0.5,
+    "range_mean_m": 5.719733724698562,
+    "range_spread_m": 5.284189003932362,
+    "lane_deviation_rms_m": 0.7166677368048465,
+    "max_roll_deg": 81.38515301294336
+   }
+  },
+  "dispersion_scenarios": {
+   "none": {
+    "V": 0,
+    "th": 0,
+    "psi": 0,
+    "phi": 0,
+    "q": 0
+   },
+   "low": {
+    "V": 0.05,
+    "th": 3,
+    "psi": 3,
+    "phi": 3,
+    "q": 2.0
+   },
+   "high": {
+    "V": 0.1,
+    "th": 6,
+    "psi": 6,
+    "phi": 6,
+    "q": 4.0
+   }
+  },
+  "seeds": [
+   1000,
+   1001,
+   1002,
+   1003,
+   1004,
+   1005,
+   1006,
+   1007
+  ],
+  "pybullet": "3.2.7",
+  "dt_s": 0.001,
+  "wall_s": 462.2208366394043
+ },
+ "checks": [
+  {
+   "name": "cross-check: 6-DOF static margin at the assembled key (dec+2) is 0.03-0.20 MAC (R2 trim rule targets 0.08)",
+   "pass": 1.0,
+   "detail": 0.09746297661227488
+  },
+  {
+   "name": "control C1: aero-off range = V0 sqrt(2h/g) within 0.5% (PyBullet integrator)",
+   "pass": true,
+   "detail": [
+    4.200000000000003,
+    4.196984500696014
+   ]
+  },
+  {
+   "name": "control C2: symmetric launch stays symmetric (|y_land| < 1 mm, max roll < 0.5 deg)",
+   "pass": true,
+   "detail": {
+    "y0_m": 0.0,
+    "range_m": 6.38315643437261,
+    "y_land_m": 1.0116284973886686e-05,
+    "t_land_s": 0.79,
+    "max_roll_deg": 0.0008209730010459174,
+    "max_pitch_dev_deg": 17.251844237279876,
+    "collided": false,
+    "end": "water"
+   }
+  },
+  {
+   "name": "control C3: widely spaced school without wake coupling = single fish (range within 1e-6 m, no contacts)",
+   "pass": true,
+   "detail": [
+    6.38315643437261,
+    6.38315643437261,
+    6.38315643437261
+   ]
+  },
+  {
+   "name": "control C4: CG 12 mm aft of trim (behind NP) gives a larger pitch excursion than nominal",
+   "pass": true,
+   "detail": {
+    "nominal": {
+     "y0_m": 0.0,
+     "range_m": 6.38315643437261,
+     "y_land_m": 1.0116284973886686e-05,
+     "t_land_s": 0.79,
+     "max_roll_deg": 0.0008209730010459174,
+     "max_pitch_dev_deg": 17.251844237279876,
+     "collided": false,
+     "end": "water"
+    },
+    "aft": {
+     "y0_m": 0.0,
+     "range_m": 5.23639099480888,
+     "y_land_m": -4.342285718094138e-05,
+     "t_land_s": 0.973,
+     "max_roll_deg": 179.99995077344656,
+     "max_pitch_dev_deg": 89.9642449925465,
+     "collided": false,
+     "end": "water"
+    },
+    "cg_nominal_m": 0.054499693001521764,
+    "cg_aft_m": 0.0636070724317126,
+    "np_m": 0.05697014523202724
+   }
+  },
+  {
+   "name": "bound: nominal 6-DOF range between ballistic and (h+V0^2/2g)*15",
+   "pass": true,
+   "detail": 6.38315643437261
+  },
+  {
+   "name": "control C6: wake coupling negligible at 2 m spacing (range change < 2 cm)",
+   "pass": true,
+   "detail": [
+    [
+     6.383296777001474,
+     6.38315643437261
+    ],
+    [
+     6.383403875852599,
+     6.38315643437261
+    ],
+    [
+     6.383296741729502,
+     6.38315643437261
+    ]
+   ]
+  },
+  {
+   "name": "monotone (recorded): collision fraction does not increase from 0.25 m to 1.0 m spacing",
+   "pass": true,
+   "detail": {
+    "wake/low": [
+     0.875,
+     0.625,
+     0.125,
+     0.0
+    ],
+    "wake/high": [
+     0.875,
+     0.625,
+     0.25,
+     0.125
+    ],
+    "nowake/low": [
+     0.875,
+     0.625,
+     0.125,
+     0.0
+    ],
+    "nowake/high": [
+     0.75,
+     0.625,
+     0.25,
+     0.25
+    ]
+   }
+  }
+ ],
+ "design_implications": {
+  "see": "docs/organ-sims.md"
+ },
+ "figures": [
+  "artifacts/organ-sims/r5-school-launch/school.png"
+ ]
+}

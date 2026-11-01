@@ -17,6 +17,16 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "artifacts/organ-sims"
 SCOPE = "simulated, not observed"
 
+# Project scale(s) each run belongs to (studio-page vocabulary) and what it does NOT establish, so the studio panel can
+# link a run without overclaiming.  index.json in artifacts/organ-sims repeats this per run with the manifest hash.
+SCALES = {
+    "r1-v3b-convergence": (["organ"], "No fin load, flight or biological claim: an inviscid thin-surface lattice-convergence diagnosis of three designed fin geometries; no body, viscosity or separation."),
+    "r2-glide-sweep": (["organism", "organ"], "No achieved range: point-mass glide with fixed CL and assumed polars; ranges are +-20% at best and nothing was printed or thrown; hand-launch feasibility is not shown."),
+    "r3-underwater-drag": (["organism"], "No measured or CFD-resolved drag at the target Reynolds number; no swimming, wave drag or surface taxiing; rigid deep-water build-up only."),
+    "r4-aeroelastic-stiffness": (["organ", "tissue"], "No flying-fish fin stiffness: the sourced EI is bluegill rays (Alben 2007); torsion-rigid, linear beam; does not establish fin twist, membrane mechanics or in-flight deformation."),
+    "r5-school-launch": (["collective", "organism"], "No observed schooling or collective behaviour: rigid printed gliders released together under an ASSUMED dispersion; no sensing, control, decision or population dynamics (ff-eco owns those); wake model is a straight horseshoe per fish."),
+}
+
 
 def sha(path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -28,7 +38,9 @@ def head() -> str:
 
 def manifest(run_id: str, title: str, inputs: list[str], results: dict, checks: list[dict], design: dict, seed=None,
              figures: list[str] = (), extra: dict | None = None) -> dict:
+    sc = SCALES.get(run_id, ([], None))
     m = {"schema": "frontier.organ-sim.manifest/1", "id": run_id, "title": title, "evidence_kind": SCOPE,
+         "scales": sc[0], "does_not_establish": sc[1],
          "scope": SCOPE, "command": " ".join(sys.argv), "seed": seed, "git_head_at_run": head(),
          "python": platform.python_version(), "ran_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
          "inputs": {p: {"sha256": sha(ROOT / p), "bytes": (ROOT / p).stat().st_size} for p in inputs},
