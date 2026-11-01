@@ -25,6 +25,12 @@ KEYS = (2.0, 3.0, 4.0, 6.0, 8.0)
 SHIFTS = tuple(np.round(np.arange(-0.004, 0.0121, 0.002), 4))
 V0S = (6.0, 8.0)
 import os
+if os.environ.get("R6_FINE"):              # R6b: refinement around R6's optimum (separate run id and manifest)
+    RID = "r6b-trim-map-fine"
+    KA, KAR, DX = (1.3, 1.4, 1.5, 1.6), (0.8, 0.85, 0.9, 0.95), (0.0, 0.002)
+    KEYS = (5.0, 6.0, 7.0)
+    SHIFTS = tuple(np.round(np.arange(0.0, 0.0081, 0.001), 4))
+    V0S = (8.0, 10.0)
 if os.environ.get("R6_SMOKE"):             # pipeline smoke test only: never used for a reported result
     KA, KAR, DX, KEYS, SHIFTS = (1.0, 1.8), (0.7, 1.0), (0.0, 0.004), (4.0, 8.0), (0.0, 0.008)
 
@@ -108,6 +114,24 @@ def main():
         for v0 in V0S:
             c[f"V{v0:g}"]["r2_point_mass_range_m"] = r2range(c["ka"], c["kar"], c["dx_m"], v0)
     checks = []
+    if os.environ.get("R6_FINE"):
+        r6 = json.loads((C.ROOT / "artifacts/organ-sims/r6-trim-map/manifest.json").read_text())["results"]
+        ref = [r for r in r6["static_grid"] if r["ka"] == 1.4 and r["kar"] == 0.85 and r["dx_m"] == 0.0 and r["key_deg"] == 6.0 and abs(r["cg_shift_m"] - 0.004) < 1e-9][0]
+        mine = [r for r in st if r["ka"] == 1.4 and r["kar"] == 0.85 and r["dx_m"] == 0.0 and r["key_deg"] == 6.0 and abs(r["cg_shift_m"] - 0.004) < 1e-9][0]
+        checks.append({"name": "control (fine grid): R6's recommended new-key point reproduces R6's static trim CL and margin (1e-9)",
+                       "pass": abs(mine["trim"]["CL"] - ref["trim"]["CL"]) < 1e-9 and abs(mine["static_margin_MAC"] - ref["static_margin_MAC"]) < 1e-9,
+                       "detail": [mine["trim"], ref["trim"]]})
+        checks.append({"name": "every flown range finite and positive", "pass": all(math.isfinite(o["range_m"]) and o["range_m"] > 0 for o in fo), "detail": len(fo)})
+        best = {f"V{v0:g}": max(configs, key=lambda c: c[f"V{v0:g}"]["p10_range_m"]) for v0 in V0S}
+        bestm = {f"V{v0:g}": max(configs, key=lambda c: c[f"V{v0:g}"]["mean_range_m"]) for v0 in V0S}
+        figs = fig(configs) if any(c[f"V{V0S[0]:g}"]["r2_point_mass_range_m"] for c in configs) else []
+        C.manifest(RID, "Refined trim map around R6's optimum (6-DOF, moment-balance trim, dispersion)",
+                   ["artifacts/organ-sims/r6-trim-map/manifest.json", "artifacts/glider/r4-daane-printfix/flight_model.json", "artifacts/organ-sims/r2-glide-sweep/rows.json.gz"],
+                   {"best_by_p10": best, "best_by_mean": bestm, "configs": configs, "static_grid": st, "n_static": len(st), "n_flights": len(fo), "seeds": seeds[1:], "wall_s": time.time() - t0},
+                   checks, {"see": "docs/organ-sims.md"}, seed=seeds[1:], figures=figs)
+        print(json.dumps({k: {a: v[a] for a in ("ka", "kar", "dx_m", "key_deg", "cg_x_m", "m_kg", "static_margin_MAC")} | v[k] for k, v in best.items()}, indent=1, default=float))
+        C.enforce(checks)
+        return
     base = [c for c in configs if c["ka"] == 1.0 and c["kar"] == 1.0 and c["dx_m"] == 0.0 and c["key_deg"] == 4.0]
     checks.append({"name": "control: baseline design with printed key dec+4 is admissible (R5 found CL 0.55 trim at R2's CG)", "pass": bool(base), "detail": base[0] if base else None})
     s5 = [r for r in st if r["ka"] == 1.0 and r["kar"] == 1.0 and r["dx_m"] == 0.0 and r["key_deg"] == 4.0 and r["cg_shift_m"] == 0.0]

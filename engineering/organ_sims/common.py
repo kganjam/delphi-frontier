@@ -30,6 +30,7 @@ SCALES = {
     "r1b-v3b-fix": (["organ"], "No measured fin pose or lift: inviscid thin-surface VLM on rebuilt designed geometry; camber sign and sweep are assumed deployment knobs (Park & Choi 2010 unread); no body, viscosity or separation."),
     "r5c-integrated-launch": (["collective", "organism"], "No observed launch or schooling: rigid printed gliders of computed (not hand-trimmed) designs released under an assumed timing rule and dispersion; straight horseshoe wakes; no control or behaviour (ff-eco)."),
     "r7-aeroelastic-flight": (["organism", "organ"], "No measured fin flexibility or flight: a quasi-static lift multiplier from R4b (v3a fin geometry, assumed elastic axis and Poisson ratio) applied in the 6-DOF model; no fin dynamics or flutter."),
+    "r6b-trim-map-fine": (["organism"], "No flight test: refined 6-DOF trim map with assumed polars, CLmax and dispersion; pelvic keys 5-7 deg do not exist as prints; rigid fins (see R7)."),
     "r5-school-launch": (["collective", "organism"], "No observed schooling or collective behaviour: rigid printed gliders released together under an ASSUMED dispersion; no sensing, control, decision or population dynamics (ff-eco owns those); wake model is a straight horseshoe per fish."),
 }
 

@@ -1,0 +1,4 @@
+{"job_name": "claude-organ-r7-aeroelastic-flight-a1", "job_id": "aijob-e00wt40g36kbvcayy2", "submitted_utc": "2026-11-01T16:35:48Z", "platform": "gpu-l40s-a", "preset": "1gpu-40vcpu-160gb",
+ "why_gpu_platform": "non-GPU vCPU quota full; CPU-only PyBullet workload, GPU idle", "image": "python:3.12.7-bookworm", "timeout": "2h", "disk": "50Gi",
+ "command": "bash /work/run_job.sh 3fb6667d4d44f10981f20126d0f47a1f4d0dac2f r7-aeroelastic-flight engineering.organ_sims.r7_aeroelastic_flight 32 38", "code_commit": "3fb6667d4d44f10981f20126d0f47a1f4d0dac2f", "run_job_sh_sha256": "4456ec960eb988cc05c15d3e3dc0bfe1fae479c2379f1012b46180ae85d1834c",
+ "dry_run": "clean sparse clone + job venv: R7_SMOKE rc 0"}
