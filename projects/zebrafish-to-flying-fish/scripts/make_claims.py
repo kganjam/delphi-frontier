@@ -243,7 +243,7 @@ CLAIMS = [
     ),
     dict(
         id="zf2ff-claim-kcnh2a-absent-from-the-assembly",
-        title="No kcnh2a-like locus is detectable in the one public Exocoetidae assembly, while 9 of 10 other KCNH paralogs are",
+        title="kcnh2a is most likely absent from Beloniformes, not merely missing from the flying-fish draft assembly",
         statement=(
             "A low-stringency whole-assembly search with the zebrafish kcnh2a protein alone (miniprot "
             "0.18-r281, -N 20 --outs=0.3 --outc=0.05) finds no region beyond the 7 already known. A gene "
@@ -253,21 +253,31 @@ CLAIMS = [
             "mapped all 10 zebrafish KCNH queries over the whole assembly, merged 65 hit intervals into "
             "14 distinct KCNH-like loci and placed them on one tree (job aijob-e00nvq278rsze2f6bp, "
             "COMPLETED): 9 of the 10 zebrafish paralogs receive at least one flying-fish locus and the "
-            "single exception is kcnh2a. The KCNH family is therefore well represented in this assembly "
-            "while the kcnh2a gap is specific."),
+            "single exception is kcnh2a. A sensitivity re-run with ModelFinder (JTT+F+I+G4) and a "
+            "different seed (job aijob-e00grythgcj8gee173, COMPLETED) reproduces 13 of 14 assignments "
+            "and leaves kcnh2a unassigned under both models. Independent corroboration comes from "
+            "medaka (Oryzias latipes), the nearest ANNOTATED chromosome-level Beloniformes genome: "
+            "UniProt and Ensembl both list medaka kcnh2b and no kcnh2a; medaka kcnh2b lies beside aoc1 "
+            "and sspo, which in zebrafish flank slc12a7b, placing it in the b paralogous block; and "
+            "medaka's slc12a7a block contains no kcnh2-family gene, the gene immediately 3-prime of "
+            "slc12a7a being xrn1. So a relative in the same order, with a far better assembly, also "
+            "lacks kcnh2a."),
         context=("kcnh2a is the longfin gene and one of the two loci a flying-fish phylogenomic study "
                  "names for paired-fin size, so it is this project's primary candidate locus. The "
                  "consequence is that an edit aimed at the Exocoetid kcnh2a has no located target in "
                  "the only public assembly for the family. " + SCOPE),
         assumptions=["ASSUMED: that a miniprot prediction from an unannotated assembly is a usable proxy for the protein a region encodes.",
                      "ASSUMED: that 10 UniProt entries adequately represent the zebrafish KCNH family; kcnh8a and kcnh8b were not retrievable, so some of the 14 loci may belong to paralogs absent from the reference set."],
-        limitations=["This is a statement about GCA_018398805.1, NOT about Hirundichthys speculiger and NOT about Exocoetidae. The assembly is an explicitly draft, scaffold-level, unannotated genome, and a missing or fragmented single gene is the expected failure mode of such an assembly.",
-                     "A sufficiently divergent Exocoetid kcnh2a could be placed with a neighbouring paralog rather than appearing as a kcnh2a sister, which would produce this same result.",
+        limitations=["An earlier version of this claim said no kcnh2a-like region exists anywhere in the assembly. That was WITHDRAWN after a synteny run put zebrafish kcnh2a's immediate 5-prime neighbour slc12a7a on the same scaffold as the kcnh2-like region, 181 kb away. The medaka evidence then removed the force of that co-location, because medaka's slc12a7a block carries no kcnh2 gene either. The history is kept in data/synteny/FINDING.md rather than edited away.",
+                     "The medaka evidence is an ANNOTATION fact from UniProt and Ensembl, not a genome-content proof; an unannotated or differently named medaka kcnh2a would overturn it.",
+                     "A sufficiently divergent Exocoetid kcnh2a could be placed with a neighbouring paralog rather than appearing as a kcnh2a sister, which would produce this same result. A tree with medaka Beloniformes outgroups was submitted to test the prediction that the flying-fish locus groups with medaka kcnh2b.",
+                     "Zebrafish kcnh2b's GRCz11 position could not be retrieved (Ensembl has no kcnh2b symbol for zebrafish), so the b-block assignment in zebrafish is inferred from medaka's arrangement and the aoc1/sspo neighbours of zebrafish slc12a7b, not read directly.",
                      "Three of the 14 locus assignments are weakly supported and should be read as unresolved (42.7/68, 23.4/62, and one with no recovered support value); none of the three was assigned to kcnh2a, so dropping them does not change the result.",
                      "A gene tree places sequences by substitution likelihood; no synteny was used in the census.",
-                     "The published flying-fish phylogenomics that names kcnh2a (PMID 34534441) used 35 species with its own sequencing, not this assembly, so nothing here contradicts it.",
+                     "The published flying-fish phylogenomics that names kcnh2a (PMID 34534441) used 35 species with its own sequencing, not this assembly. Its methods were NOT read here and this claim does not assert the paper is wrong; it asserts that the gene is not findable in the public Beloniformes genomes checked, which means any design resting on that paper needs the paper's own gene identifiers read first.",
+                     "Under the second substitution model kcnh1b is also unassigned, so the census is not a clean one-to-one map and '9 of 10' is model-dependent even though the kcnh2a result is not.",
                      "One operator, not independently reviewed; a model-sensitivity re-run was submitted separately."],
-        source=computed_source("data/census/census_analysis.json"),
+        source=computed_source("data/synteny/synteny.json"),
         origin="derived",
     ),
     dict(

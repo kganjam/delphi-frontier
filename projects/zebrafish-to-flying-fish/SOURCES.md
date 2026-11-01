@@ -1,6 +1,6 @@
 # Source index (Europe PMC, read-level = abstract)
 
-45 queries, 227 saved records, 154 distinct PMIDs, 222 with an abstract in the response, 160 flagged open access.
+55 queries, 307 saved records, 205 distinct PMIDs, 301 with an abstract in the response, 225 flagged open access.
 
 A row means: this record exists and this much of it was retrieved. It does not mean the
 paper supports a statement made elsewhere in this project.
@@ -636,4 +636,174 @@ paper supports a statement made elsewhere in this project.
 | 42601506 | 2026 | EMBO reports | Y | abstract | 3D chromatin organisation contributes to the regulatory logic in differentiating lymphatic endothelium. |
 | 41781333 | 2026 | Genome research | Y | abstract | Functional genomics analysis of developing zebrafish and human endoderm reveals highly conserved &lt;i&gt;cis& |
 | 41261532 | 2026 | The FEBS journal | Y | abstract | Multiple cis-regulatory elements collaborate to control mdka expression in telencephalic neural stem cells of  |
+
+## epmc3/actinodin_primary_2010
+
+- query: `actinodin AND (zebrafish OR fin) AND (knockdown OR and1 OR and2)`
+- reported hit count: 28; saved: 8
+- response sha256: `51a9a8ef476c49bb3bc330f19b4bc2809a17206bb0015157b0177e9a6c5470a2` retrieved 2026-11-01T14:53:39+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 42741580 | 2026 | iScience | Y | abstract | A collagen orientation switch reshapes fin architecture. |
+| 41885168 | 2026 | Development (Cambridge, England) | Y | abstract | An essential role for actinotrichia in zebrafish fin patterning and courtship behavior. |
+| - | 2026 | - | N | abstract | A collagen orientation switch reshapes fin architecture |
+| 39296332 | 2024 | PNAS nexus | Y | abstract | Dynamics of actinotrichia, fibrous collagen structures in zebrafish fin tissues, unveiled by novel fluorescent |
+| 36846592 | 2023 | Frontiers in cell and developmental biol | Y | abstract | Regeneration of the dermal skeleton and wound epidermis formation depend on BMP signaling in the caudal fin of |
+| 37090155 | 2023 | microPublication biology | Y | abstract | Collagen9a1c localizes to collagen fibers called actinotrichia in zebrafish fins. |
+| 39332403 | 2024 | Current biology : CB | Y | abstract | Ancient developmental genes underlie evolutionary novelties in walking fish. |
+| 41104015 | 2025 | Frontiers in cell and developmental biol | Y | abstract | The subfunctionalization of &lt;i&gt;shox&lt;/i&gt; and &lt;i&gt;shox2&lt;/i&gt; paralogs in shark highlights  |
+
+## epmc3/kcnh2a_primary_check
+
+- query: `(kcnh2a OR "ether a go go") AND zebrafish AND fin`
+- reported hit count: 88; saved: 8
+- response sha256: `5e6637bb74b95a7f4496c7f1078d862b7ce768a9ed5f1d5c0c50b62e31aaafef` retrieved 2026-11-01T14:53:41+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 42496271 | 2026 | Journal of developmental biology | Y | abstract | Evolutionary Analysis of Vertebrate KCNH Voltage-Gated Potassium Channels and Spatial Expression of &lt;i&gt;k |
+| 41728344 | 2026 | microPublication biology | Y | abstract | Increased diameter of arteries and veins in the caudal fins of &lt;i&gt;Danio rerio&lt;/i&gt; &lt;i&gt;longfin |
+| 42883807 | 2026 | International journal of molecular scien | Y | abstract | Acute Octodrine (DMHA) Exposure Disrupts Cardiac Function, Locomotor Activity, and Neuronal Activity-Responsiv |
+| 41321290 | 2025 | Development (Cambridge, England) | N | abstract | Voltage-gated calcium channels generate blastema Ca2+ fluxes restraining zebrafish fin regenerative outgrowth. |
+| 42719339 | 2026 | Nature physics | N | abstract | Decaying and expanding Erk gradients process memory of skeletal size during zebrafish fin regeneration. |
+| 41515939 | 2025 | International journal of molecular scien | Y | abstract | Integrated Assessment of the Cardiotoxic and Neurobehavioral Effects of 3,4-Methylenedioxypyrovalerone (MDPV)  |
+| 40912447 | 2025 | Developmental biology | N | abstract | Overexpression of potassium channel Kcna5 alters skeletal patterning in the zebrafish regenerating fin. |
+| 40689752 | 2026 | Integrative zoology | N | abstract | Comparative Genomic Screening Identifies Developmental Constraint Loci Underscoring the Phenotypic Evolution o |
+
+## epmc3/longfin_drag_cost
+
+- query: `zebrafish AND (longfin OR "elongated fins") AND (swimming OR drag OR performance OR cost)`
+- reported hit count: 135; saved: 8
+- response sha256: `9cd06c47984e884730f0e09b9f0ad212da6432237a3d00979107c7c1eec8c497` retrieved 2026-11-01T14:53:43+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 42154743 | 2026 | PloS one | Y | abstract | Introduction of artificial plants has no detrimental or beneficial effects on laboratory zebrafish husbandry b |
+| 42444542 | 2026 | The Journal of comparative neurology | Y | abstract | Visual Threat Location Impacts Brain-Wide Visual Adaptation Networks. |
+| 41048084 | 2025 | Journal of neurochemistry | Y | abstract | Nitrergic Signaling Mediation of Neurobehavioral Responses to Stress in Zebrafish. |
+| 38232499 | 2024 | Zoology (Jena, Germany) | N | abstract | Effects of caudal fin size on tail-flip jump performance. |
+| 40535946 | 2025 | Royal Society open science | Y | abstract | The geometry of life: testing the scaling of whole-organism surface area and volume using sharks. |
+| 42054452 | 2026 | Science advances | Y | abstract | Functional interrogation of neuronal connections by chemoptogenetic presynaptic ablation. |
+| 41362611 | 2025 | iScience | Y | abstract | A conserved teleost motor asymmetry requires evolutionary retention of vision. |
+| 39463428 | 2024 | Acta neuropsychiatrica | Y | abstract | Anxiolytic-like effects of acute serotonin-releasing agents in zebrafish models of anxiety: experimental study |
+
+## epmc3/pectoral_girdle_musculature
+
+- query: `("pectoral girdle" OR cleithrum OR scapulocoracoid OR "pectoral muscle") AND (fish OR teleost) AND (development OR evolution OR load)`
+- reported hit count: 1346; saved: 8
+- response sha256: `b4cc5fd4aa156badda6c5f3f95896335be6e2121971c2c09247748dd7f2cfb73` retrieved 2026-11-01T14:53:42+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 40442084 | 2025 | Nature communications | Y | abstract | Distinct ossification trade-offs illuminate the shoulder girdle reconfiguration at the water-to-land transitio |
+| 41107359 | 2025 | Scientific reports | Y | abstract | A new coelacanth (Actinistia, Sarcopterygii) from the Early Triassic of Anhui, China. |
+| 39060278 | 2024 | Nature communications | Y | abstract | Multiple embryonic sources converge to form the pectoral girdle skeleton in zebrafish. |
+| 41992407 | 2026 | Journal of anatomy | Y | abstract | A bristle-nosed Jurassic ray-finned fish (Actinopterygii) bears true dermal odontodes on its snout. |
+| 42685484 | 2026 | Comparative biochemistry and physiology. | N | abstract | Integrative morphological and transcriptomic analysis reveals pectoral girdle adaptation in domesticated paddy |
+| 42614056 | 2026 | Journal of morphology | Y | abstract | Ontogeny and Homology of the Shoulder Joint and Forelimb Muscles in Frogs and Toads (Lissamphibia: Anura). |
+| 42945310 | 2026 | eLife | Y | abstract | Integration of ATAC- and RNA-sequencing identifies chromatin and transcriptomic signatures in classical and no |
+| - | 2026 | - | N | abstract | Axial skeletal divergence and body depth evolution in an adaptive radiation of crater lake cichlid fishes |
+
+## epmc4/caudal_asymmetry_genetics
+
+- query: `(caudal fin OR tail fin) AND (asymmetry OR "lobe" OR hypural) AND (mutant OR gene OR signalling OR patterning) AND (zebrafish OR medaka OR teleost)`
+- reported hit count: 751; saved: 8
+- response sha256: `67e6354c2ffab852b4ab5b25079d450f4e6ed9e28405adecf1a044f3d929dbed` retrieved 2026-11-01T16:10:35+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 41885168 | 2026 | Development (Cambridge, England) | Y | abstract | An essential role for actinotrichia in zebrafish fin patterning and courtship behavior. |
+| 42653322 | 2026 | International journal of molecular scien | Y | abstract | CRISPR/Cas9-Mediated Disruption of Duplicated Sizzled Genes Induces Twin-Tail-like Caudal Bifurcation in Goldf |
+| 42320467 | 2026 | Current biology : CB | N | abstract | The origin and evolution of dorsal determination mechanisms in vertebrate paired appendages. |
+| 40853969 | 2025 | PLoS biology | Y | abstract | Caudal fin shape imprinted during late zebrafish embryogenesis is re-patterned by the Sonic hedgehog pathway. |
+| 42738806 | 2026 | Cells | Y | abstract | Asymmetric Functional Divergence of &lt;i&gt;alx4a&lt;/i&gt; and &lt;i&gt;alx4b&lt;/i&gt; in Iridophore Differ |
+| - | 2026 | - | N | abstract | Distinct positional identity at the center of the caudal fin establishes forked shape |
+| 42662783 | 2026 | iScience | Y | abstract | Complex pectoral-fin-driven locomotion underlies refined visuomotor behavior in the cichlid &lt;i&gt;Astatotil |
+| 40863930 | 2025 | Toxics | Y | abstract | Embryonic Exposure to TPhP Elicits Osteotoxicity via Metabolic Disruption in &lt;i&gt;Oryzias latipes&lt;/i&gt |
+
+## epmc4/collagen_crosslinking_fin
+
+- query: `(collagen OR "cross-link" OR lysyl) AND (fin OR actinotrichia OR dermal skeleton) AND (stiffness OR mechanics OR mutant) AND (zebrafish OR teleost)`
+- reported hit count: 1379; saved: 8
+- response sha256: `907ae4ca73fa4d8d732d174222a1251bf220812aa3b3314a82f31d8183cf6fad` retrieved 2026-11-01T16:10:39+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 41690953 | 2026 | Nature communications | Y | abstract | Actinotrichia-independent developmental mechanisms of spiny rays facilitate the morphological diversification  |
+| 42902838 | 2026 | Journal of morphology | Y | abstract | Functional Adaptations for Load-Bearing in a Dermal Bone: The Pectoral Fin Spine of the Russian Sturgeon (Huso |
+| 42849651 | 2026 | Developmental biology | N | abstract | Piezo3 is a new member of the PIEZO ion channel family in vertebrates. |
+| 41964409 | 2026 | Developmental dynamics : an official pub | N | abstract | Early ultraviolet exposure disrupts late dorsal fin skeletal development in zebrafish. |
+| 41582829 | 2026 | Development (Cambridge, England) | Y | abstract | Analysis of cranial tenocyte heterogeneity reveals a role for Wnt signaling in tendon attachments. |
+| 39320469 | 2024 | Calcified tissue international | Y | abstract | Zebrafish Models for Skeletal and Extraskeletal Osteogenesis Imperfecta Features: Unveiling Pathophysiology an |
+| 42945310 | 2026 | eLife | Y | abstract | Integration of ATAC- and RNA-sequencing identifies chromatin and transcriptomic signatures in classical and no |
+| 42622061 | 2026 | G3 (Bethesda, Md.) | Y | abstract | In vivo screen for osteoclast derived osteogenic factors using non-resorptive osteoclasts in zebrafish bone. |
+
+## epmc4/escape_launch_behaviour_genetics
+
+- query: `("C-start" OR "escape response" OR "fast start") AND (Mauthner OR neural OR circuit) AND (gene OR mutant OR genetic) AND zebrafish`
+- reported hit count: 688; saved: 8
+- response sha256: `e32fc72e015c4d181b267a8b8fac1dbf172b3374b0b815a5e75f549720050eda` retrieved 2026-11-01T16:10:38+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 42533585 | 2026 | Zoological research | Y | abstract | Circadian &lt;i&gt;per2&lt;/i&gt; regulates the zebrafish central neuronal Mauthner cell axon regeneration via |
+| 42337310 | 2026 | NPJ Regenerative medicine | Y | abstract | Circadian clocka regulates the zebrafish central neuronal Mauthner-cell axon regeneration via phosphodiesteras |
+| 42712917 | 2026 | Brain communications | Y | abstract | Induced epileptic seizures in larval zebrafish reveal a synaptic modulation associated with the post-ictal sta |
+| 42054452 | 2026 | Science advances | Y | abstract | Functional interrogation of neuronal connections by chemoptogenetic presynaptic ablation. |
+| 42819464 | 2026 | Journal of undergraduate neuroscience ed | Y | abstract | Comparative Investigations of the Neurophysiological Mechanisms of Escape Behavior: A Course-based Undergradua |
+| 42058463 | 2026 | Frontiers in molecular neuroscience | Y | abstract | CaMPARI2 enables stimulus-locked whole-brain activity mapping at cellular resolution in unrestrained larval ze |
+| 42870309 | 2026 | Skeletal muscle | Y | abstract | Klhl41b orchestrates sarcomere assembly and growth to drive skeletal muscle hypertrophy in vivo. |
+| 42827020 | 2026 | International journal of developmental n | Y | abstract | Plag1 Regulates Sensorimotor Modulation in Zebrafish. |
+
+## epmc4/fast_muscle_burst_power_genes
+
+- query: `("fast muscle" OR "white muscle" OR "fast-twitch") AND (burst OR power OR escape) AND (gene OR myod OR prdm1 OR sox6 OR "fibre type") AND (zebrafish OR teleost)`
+- reported hit count: 629; saved: 8
+- response sha256: `1f66a7e5bfe9be3eefe44942d2f7fd4b4cb781d40075cefc8115d68fb89d8033` retrieved 2026-11-01T16:10:37+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 42014596 | 2026 | Journal of natural medicines | Y | abstract | Ninjin'yoeito Kampo medicine enhances zebrafish endurance under forced-swimming conditions via muscle hypertro |
+| 42243126 | 2026 | Nature communications | Y | abstract | Myosin light chain proteins cooperatively promote sarcomere growth in fast-twitch muscle. |
+| 41187206 | 2025 | PLoS biology | Y | abstract | Zebrafish fast muscle contractions avoid the mammalian requirement for voltage-gated Na+ channels. |
+| 42870309 | 2026 | Skeletal muscle | Y | abstract | Klhl41b orchestrates sarcomere assembly and growth to drive skeletal muscle hypertrophy in vivo. |
+| 42522225 | 2026 | Developmental neurobiology | Y | abstract | Impaired Motor Function in a Zebrafish Stathmin-2 Knockout Model. |
+| - | 2026 | - | Y | abstract | Myosin-binding protein composition tunes vertebrate superfast contractility |
+| 41420688 | 2025 | Marine biotechnology (New York, N.Y.) | N | abstract | Functional Roles and Regulatory Factors of Histidine-Related Compounds in Skeletal Muscle Metabolism of Teleos |
+| 39684936 | 2024 | International journal of molecular scien | Y | abstract | Long-Term Yo-Yo Dieting Exaggerates Liver Steatosis and Lesions but Preserves Muscle Performance in Male Zebra |
+
+## epmc4/pectoral_muscle_development_genes
+
+- query: `("pectoral fin muscle" OR "appendicular muscle") AND (development OR specification) AND (gene OR tbx5 OR pax3 OR met) AND (zebrafish OR teleost)`
+- reported hit count: 73; saved: 8
+- response sha256: `d64732ce4521d75bc2d8b709fa6ba6ce92877377366ecea7154307600b30671f` retrieved 2026-11-01T16:10:40+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 42926843 | 2026 | iScience | Y | abstract | Ancient somatosensory circuit architectures employ flexible molecular strategies. |
+| 31287821 | 2019 | PloS one | Y | abstract | The zebrafish HGF receptor met controls migration of myogenic progenitor cells in appendicular development. |
+| 41582829 | 2026 | Development (Cambridge, England) | Y | abstract | Analysis of cranial tenocyte heterogeneity reveals a role for Wnt signaling in tendon attachments. |
+| 31386244 | 2019 | Developmental dynamics : an official pub | N | abstract | Anterior trunk muscle shows mix of axial and appendicular developmental patterns. |
+| 34435397 | 2022 | Developmental dynamics : an official pub | N | abstract | Genetic compensation between Pax3 and Pax7 in zebrafish appendicular muscle formation. |
+| 40004138 | 2025 | International journal of molecular scien | Y | abstract | Motor and Non-Motor Effects of Acute MPTP in Adult Zebrafish: Insights into Parkinson's Disease. |
+| 38439516 | 2024 | Development, growth & differentiation | Y | abstract | Genomic screening of fish-specific genes in gnathostomes and their functions in fin development. |
+| 35972050 | 2022 | Biology open | Y | abstract | Clonal behaviour of myogenic precursor cells throughout the vertebrate lifespan. |
+
+## epmc4/ray_mineralization_stiffness_genes
+
+- query: `(lepidotrichia OR "fin ray") AND (mineralization OR ossification OR stiffness OR modulus) AND (gene OR mutant OR osteoblast) AND (zebrafish OR teleost)`
+- reported hit count: 196; saved: 8
+- response sha256: `fb0394316627e81c323cd3d1ff537186cdef51e0cd016dd74a0538351fe46fbe` retrieved 2026-11-01T16:10:36+00:00
+
+| PMID | year | journal | OA | read | title |
+| --- | --- | --- | --- | --- | --- |
+| 42736328 | 2026 | Scientific reports | Y | abstract | Histo-anatomical atlas of Garra rufa and its thermal tolerance at human body temperature. |
+| 40863930 | 2025 | Toxics | Y | abstract | Embryonic Exposure to TPhP Elicits Osteotoxicity via Metabolic Disruption in &lt;i&gt;Oryzias latipes&lt;/i&gt |
+| 42699516 | 2026 | Integrative organismal biology (Oxford,  | Y | abstract | Effects of Ceratotrichia Diameter and Packing Density on Chimaera Pectoral Fin Kinematics. |
+| 41885168 | 2026 | Development (Cambridge, England) | Y | abstract | An essential role for actinotrichia in zebrafish fin patterning and courtship behavior. |
+| 42416798 | 2026 | Journal of toxicologic pathology | Y | metadata_only | INHAND: Non-proliferative and proliferative lesions of fish - Chapter 12. Fish skeletal and tooth. |
+| 41739864 | 2026 | PLoS genetics | Y | abstract | Combined mutations of hoxa13a, hoxa13b, and hoxd13a lead to structural shifts in zebrafish soft fin rays provi |
+| 40442084 | 2025 | Nature communications | Y | abstract | Distinct ossification trade-offs illuminate the shoulder girdle reconfiguration at the water-to-land transitio |
+| 39320469 | 2024 | Calcified tissue international | Y | abstract | Zebrafish Models for Skeletal and Extraskeletal Osteogenesis Imperfecta Features: Unveiling Pathophysiology an |
 

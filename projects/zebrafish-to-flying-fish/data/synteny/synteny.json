@@ -1,0 +1,885 @@
+{
+ "scope": "Protein-to-genome mapping of a zebrafish neighbourhood onto an unannotated assembly. Co-location of best hits is evidence about assembly content and gene order, not an orthology proof and not evidence of expression or function.",
+ "question": "Is the kcnh2a neighbourhood present in GCA_018398805.1, and is it on the same scaffold as the kcnh2b-like region?",
+ "zebrafish_region": "2:23600000-24700000",
+ "kcnh2a_gene": {
+  "id": "ENSDARG00000029881",
+  "start": 24080694,
+  "end": 24168670,
+  "note": "the longfin(t2) abstract (PMID 34061172) places the overexpressed kcnh2a on chromosome 2; Ensembl agrees, which is a consistency check on this project's reading of that abstract"
+ },
+ "target_scaffold_of_the_kcnh2b_like_region": "JAGFBZ010001591.1",
+ "n_genes_in_region": 36,
+ "n_proteins_fetched": 36,
+ "n_with_a_hit": 33,
+ "n_on_target_scaffold": 2,
+ "top_scaffolds_by_hit_count": [
+  [
+   "JAGFBZ010000844.1",
+   12
+  ],
+  [
+   "JAGFBZ010000990.1",
+   5
+  ],
+  [
+   "JAGFBZ010002604.1",
+   3
+  ],
+  [
+   "JAGFBZ010000505.1",
+   2
+  ],
+  [
+   "JAGFBZ010001591.1",
+   2
+  ]
+ ],
+ "genes": [
+  {
+   "zebrafish_symbol": "si:dkey-58b18.10",
+   "gene_id": "ENSDARG00000109911",
+   "zf_start": 23599896,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 343,
+    "scaffold": "JAGFBZ010000173.1",
+    "start": 220391,
+    "end": 221445,
+    "coverage": 0.967,
+    "identity": 0.425
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "si:dkey-58b18.9",
+   "gene_id": "ENSDARG00000106841",
+   "zf_start": 23602463,
+   "side_of_kcnh2a": "before",
+   "hit": null,
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "si:dkey-58b18.8",
+   "gene_id": "ENSDARG00000113029",
+   "zf_start": 23604654,
+   "side_of_kcnh2a": "before",
+   "hit": null,
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "rpp40",
+   "gene_id": "ENSDARG00000017605",
+   "zf_start": 23613040,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 690,
+    "scaffold": "JAGFBZ010000505.1",
+    "start": 259580,
+    "end": 263894,
+    "coverage": 1.0,
+    "identity": 0.482
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "cdyl",
+   "gene_id": "ENSDARG00000038985",
+   "zf_start": 23622788,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 1632,
+    "scaffold": "JAGFBZ010000505.1",
+    "start": 249903,
+    "end": 257292,
+    "coverage": 1.0,
+    "identity": 0.644
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "oxsr1a",
+   "gene_id": "ENSDARG00000034189",
+   "zf_start": 23677179,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 1681,
+    "scaffold": "JAGFBZ010000990.1",
+    "start": 457573,
+    "end": 467653,
+    "coverage": 1.0,
+    "identity": 0.831
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "slc22a13a",
+   "gene_id": "ENSDARG00000056551",
+   "zf_start": 23731194,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 1460,
+    "scaffold": "JAGFBZ010000990.1",
+    "start": 477659,
+    "end": 481714,
+    "coverage": 0.963,
+    "identity": 0.62
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "xirp1",
+   "gene_id": "ENSDARG00000030722",
+   "zf_start": 23749614,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 5647,
+    "scaffold": "JAGFBZ010000990.1",
+    "start": 498935,
+    "end": 505899,
+    "coverage": 0.986,
+    "identity": 0.533
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "xirp1",
+   "gene_id": "ENSDARG00000092427",
+   "zf_start": 23773078,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 82,
+    "scaffold": "JAGFBZ010000990.1",
+    "start": 515106,
+    "end": 515695,
+    "coverage": 1.0,
+    "identity": 0.398
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "csrnp1a",
+   "gene_id": "ENSDARG00000031426",
+   "zf_start": 23790748,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 959,
+    "scaffold": "JAGFBZ010000978.1",
+    "start": 581772,
+    "end": 668876,
+    "coverage": 0.994,
+    "identity": 0.479
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "gorasp1a",
+   "gene_id": "ENSDARG00000003068",
+   "zf_start": 23808640,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 850,
+    "scaffold": "JAGFBZ010000990.1",
+    "start": 536648,
+    "end": 540916,
+    "coverage": 0.648,
+    "identity": 0.728
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "vopp1a",
+   "gene_id": "ENSDARG00000038979",
+   "zf_start": 23823622,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 337,
+    "scaffold": "JAGFBZ010002952.1",
+    "start": 70044,
+    "end": 78383,
+    "coverage": 0.938,
+    "identity": 0.485
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "tgfbr1a",
+   "gene_id": "ENSDARG00000017494",
+   "zf_start": 23856045,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 1840,
+    "scaffold": "JAGFBZ010000105.1",
+    "start": 3524800,
+    "end": 3544842,
+    "coverage": 0.938,
+    "identity": 0.805
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "col15a1b",
+   "gene_id": "ENSDARG00000061848",
+   "zf_start": 23936954,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 2764,
+    "scaffold": "JAGFBZ010001666.1",
+    "start": 896766,
+    "end": 928671,
+    "coverage": 1.0,
+    "identity": 0.613
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "slc12a7a",
+   "gene_id": "ENSDARG00000073756",
+   "zf_start": 24027744,
+   "side_of_kcnh2a": "before",
+   "hit": {
+    "AS": 3462,
+    "scaffold": "JAGFBZ010001591.1",
+    "start": 1760495,
+    "end": 1814132,
+    "coverage": 1.0,
+    "identity": 0.724
+   },
+   "on_target_scaffold": true
+  },
+  {
+   "zebrafish_symbol": "kcnh2a",
+   "gene_id": "ENSDARG00000029881",
+   "zf_start": 24080694,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 3097,
+    "scaffold": "JAGFBZ010001591.1",
+    "start": 1301510,
+    "end": 1579457,
+    "coverage": 1.0,
+    "identity": 0.611
+   },
+   "on_target_scaffold": true
+  },
+  {
+   "zebrafish_symbol": "map4l",
+   "gene_id": "ENSDARG00000068745",
+   "zf_start": 24177006,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1216,
+    "scaffold": "JAGFBZ010002604.1",
+    "start": 71794,
+    "end": 152191,
+    "coverage": 1.0,
+    "identity": 0.422
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "myh7",
+   "gene_id": "ENSDARG00000079564",
+   "zf_start": 24252987,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 8279,
+    "scaffold": "JAGFBZ010000911.1",
+    "start": 22010,
+    "end": 27793,
+    "coverage": 0.997,
+    "identity": 0.837
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "myh7l",
+   "gene_id": "ENSDARG00000079782",
+   "zf_start": 24274293,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 8162,
+    "scaffold": "JAGFBZ010000911.1",
+    "start": 21998,
+    "end": 27793,
+    "coverage": 0.999,
+    "identity": 0.816
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "fitm1l",
+   "gene_id": "ENSDARG00000056464",
+   "zf_start": 24304854,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1141,
+    "scaffold": "JAGFBZ010002604.1",
+    "start": 290180,
+    "end": 295836,
+    "coverage": 0.959,
+    "identity": 0.77
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "trnau1apb",
+   "gene_id": "ENSDARG00000056475",
+   "zf_start": 24310635,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 879,
+    "scaffold": "JAGFBZ010002604.1",
+    "start": 297693,
+    "end": 305852,
+    "coverage": 0.981,
+    "identity": 0.668
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "mrpl34",
+   "gene_id": "ENSDARG00000092954",
+   "zf_start": 24317465,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 279,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 381197,
+    "end": 382313,
+    "coverage": 1.0,
+    "identity": 0.56
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "ano8a",
+   "gene_id": "ENSDARG00000076265",
+   "zf_start": 24321751,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 2998,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 387290,
+    "end": 409991,
+    "coverage": 0.979,
+    "identity": 0.69
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "pimr68",
+   "gene_id": "ENSDARG00000038955",
+   "zf_start": 24352497,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 237,
+    "scaffold": "JAGFBZ010001224.1",
+    "start": 5575295,
+    "end": 5576756,
+    "coverage": 0.85,
+    "identity": 0.369
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "plvapa",
+   "gene_id": "ENSDARG00000076972",
+   "zf_start": 24365452,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 935,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 423599,
+    "end": 427717,
+    "coverage": 1.0,
+    "identity": 0.407
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "nr2f6a",
+   "gene_id": "ENSDARG00000003607",
+   "zf_start": 24374305,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1738,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 448880,
+    "end": 461686,
+    "coverage": 1.0,
+    "identity": 0.878
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "ocln1",
+   "gene_id": "ENSDARG00000061797",
+   "zf_start": 24386453,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1185,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 463689,
+    "end": 477965,
+    "coverage": 0.97,
+    "identity": 0.554
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "marveld2l",
+   "gene_id": "ENSDARG00000061800",
+   "zf_start": 24400725,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1158,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 481559,
+    "end": 485344,
+    "coverage": 0.947,
+    "identity": 0.529
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "kcnn1a",
+   "gene_id": "ENSDARG00000091306",
+   "zf_start": 24410494,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 2574,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 507906,
+    "end": 596620,
+    "coverage": 1.0,
+    "identity": 0.66
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "insl3",
+   "gene_id": "ENSDARG00000035862",
+   "zf_start": 24487320,
+   "side_of_kcnh2a": "after",
+   "hit": null,
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "si:rp71-39b20.4",
+   "gene_id": "ENSDARG00000035861",
+   "zf_start": 24495804,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1998,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 658392,
+    "end": 662322,
+    "coverage": 1.0,
+    "identity": 0.746
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "rps28",
+   "gene_id": "ENSDARG00000035860",
+   "zf_start": 24507597,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 282,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 663337,
+    "end": 664494,
+    "coverage": 1.0,
+    "identity": 1.0
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "angptl4",
+   "gene_id": "ENSDARG00000035859",
+   "zf_start": 24536762,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1246,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 689667,
+    "end": 694864,
+    "coverage": 0.929,
+    "identity": 0.616
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "cnn2",
+   "gene_id": "ENSDARG00000035858",
+   "zf_start": 24548249,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1194,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 722504,
+    "end": 729654,
+    "coverage": 1.0,
+    "identity": 0.84
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "crtc1a",
+   "gene_id": "ENSDARG00000076068",
+   "zf_start": 24578053,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 1489,
+    "scaffold": "JAGFBZ010000172.1",
+    "start": 1820795,
+    "end": 1838475,
+    "coverage": 1.0,
+    "identity": 0.688
+   },
+   "on_target_scaffold": false
+  },
+  {
+   "zebrafish_symbol": "mast3a",
+   "gene_id": "ENSDARG00000061725",
+   "zf_start": 24638367,
+   "side_of_kcnh2a": "after",
+   "hit": {
+    "AS": 3732,
+    "scaffold": "JAGFBZ010000844.1",
+    "start": 809963,
+    "end": 851564,
+    "coverage": 1.0,
+    "identity": 0.682
+   },
+   "on_target_scaffold": false
+  }
+ ],
+ "fetch_ledger": [
+  {
+   "gene": "ENSDARG00000109911",
+   "name": "si:dkey-58b18.10",
+   "zf_start": 23599896,
+   "zf_end": 23600821,
+   "zf_strand": -1,
+   "protein_len": 214,
+   "sha256": "745e10310ebe398ed57d6b24da0cbbe5647071b61b974dfdd0f80a9a28df82c3"
+  },
+  {
+   "gene": "ENSDARG00000106841",
+   "name": "si:dkey-58b18.9",
+   "zf_start": 23602463,
+   "zf_end": 23603061,
+   "zf_strand": -1,
+   "protein_len": 152,
+   "sha256": "170e0476d2614865357ddc73a65ad62ac01c1d80409435310f07c49a2dd0c30c"
+  },
+  {
+   "gene": "ENSDARG00000113029",
+   "name": "si:dkey-58b18.8",
+   "zf_start": 23604654,
+   "zf_end": 23609082,
+   "zf_strand": -1,
+   "protein_len": 224,
+   "sha256": "c1c74cf2fc3a44bff09e9f70dab43e06ea16341a2c919a6b024048da3c25d693"
+  },
+  {
+   "gene": "ENSDARG00000017605",
+   "name": "rpp40",
+   "zf_start": 23613040,
+   "zf_end": 23620223,
+   "zf_strand": 1,
+   "protein_len": 361,
+   "sha256": "00f3e4b733a53d87ae3c757f6aff8bfb23dd19850e79e10d514a610029324ad5"
+  },
+  {
+   "gene": "ENSDARG00000038985",
+   "name": "cdyl",
+   "zf_start": 23622788,
+   "zf_end": 23677422,
+   "zf_strand": -1,
+   "protein_len": 581,
+   "sha256": "c7ec77238592bec4254a99f174b65f0259f2c0b25c891bb5a228cfd8ca650260"
+  },
+  {
+   "gene": "ENSDARG00000034189",
+   "name": "oxsr1a",
+   "zf_start": 23677179,
+   "zf_end": 23726605,
+   "zf_strand": 1,
+   "protein_len": 515,
+   "sha256": "6bcd6170f03a5019047abb1850578797a3f84f320df6e2ea1898079736483cd1"
+  },
+  {
+   "gene": "ENSDARG00000056551",
+   "name": "slc22a13a",
+   "zf_start": 23731194,
+   "zf_end": 23745290,
+   "zf_strand": 1,
+   "protein_len": 537,
+   "sha256": "7457b6f04eaa4cdaf857a2e6c63e651a224d0dfbc470c1c8bdb259674a44be3a"
+  },
+  {
+   "gene": "ENSDARG00000030722",
+   "name": "xirp1",
+   "zf_start": 23749614,
+   "zf_end": 23768832,
+   "zf_strand": -1,
+   "protein_len": 2321,
+   "sha256": "afdaa2a68aac4b875977d1831d6a234546af48e2b78843c5256accca719379e0"
+  },
+  {
+   "gene": "ENSDARG00000092427",
+   "name": "xirp1",
+   "zf_start": 23773078,
+   "zf_end": 23778180,
+   "zf_strand": -1,
+   "protein_len": 96,
+   "sha256": "0c71c9667e7a1f8f0798097fd5f53114b33338af5b65d9bd488a4925270a6ac6"
+  },
+  {
+   "gene": "ENSDARG00000031426",
+   "name": "csrnp1a",
+   "zf_start": 23790748,
+   "zf_end": 23805139,
+   "zf_strand": 1,
+   "protein_len": 514,
+   "sha256": "f7b3a3a870d9c9fb61e56c285317093e0e1645d4b8698fd80c3b4d4f6a591cf0"
+  },
+  {
+   "gene": "ENSDARG00000003068",
+   "name": "gorasp1a",
+   "zf_start": 23808640,
+   "zf_end": 23820280,
+   "zf_strand": 1,
+   "protein_len": 438,
+   "sha256": "89509925a2ac3d923f501f089795fe1e1496965f7546e0dd508bcd58618844a9"
+  },
+  {
+   "gene": "ENSDARG00000038979",
+   "name": "vopp1a",
+   "zf_start": 23823622,
+   "zf_end": 23837423,
+   "zf_strand": 1,
+   "protein_len": 162,
+   "sha256": "88c724effc4a4ada95adb86c0cdfce7d32dd14a9bfdde02982e4fb503e995e5f"
+  },
+  {
+   "gene": "ENSDARG00000017494",
+   "name": "tgfbr1a",
+   "zf_start": 23856045,
+   "zf_end": 23931536,
+   "zf_strand": -1,
+   "protein_len": 500,
+   "sha256": "f89e5455f924920543721894b7e0ae47dd94822ba83ce4ddd18547bfe01a04a1"
+  },
+  {
+   "gene": "ENSDARG00000061848",
+   "name": "col15a1b",
+   "zf_start": 23936954,
+   "zf_end": 24022085,
+   "zf_strand": -1,
+   "protein_len": 1245,
+   "sha256": "ed6e1664ef5eb1d620b76463325b672581f4fe0d1cda1b7850a2e95e83f942af"
+  },
+  {
+   "gene": "ENSDARG00000073756",
+   "name": "slc12a7a",
+   "zf_start": 24027744,
+   "zf_end": 24069434,
+   "zf_strand": -1,
+   "protein_len": 1117,
+   "sha256": "cfd3b2cf750dc9206ee5797a0c0bbddf841e3b2e92dd61ebe893425dfba7177c"
+  },
+  {
+   "gene": "ENSDARG00000029881",
+   "name": "kcnh2a",
+   "zf_start": 24080694,
+   "zf_end": 24168670,
+   "zf_strand": 1,
+   "protein_len": 1253,
+   "sha256": "123139d1303b0c9e804ef67e75e33bc0a6e1ba19d4b621784571cd0d26863edf"
+  },
+  {
+   "gene": "ENSDARG00000068745",
+   "name": "map4l",
+   "zf_start": 24177006,
+   "zf_end": 24252506,
+   "zf_strand": 1,
+   "protein_len": 1067,
+   "sha256": "2c29fcbce492008dbfdb29c9883fc66c71162b3068269dbc8ed62e8470f0f6bd"
+  },
+  {
+   "gene": "ENSDARG00000079564",
+   "name": "myh7",
+   "zf_start": 24252987,
+   "zf_end": 24270062,
+   "zf_strand": -1,
+   "protein_len": 1938,
+   "sha256": "e634119ec2f1bdf9a5dd6996cc4184f3b5469c21b2d7d4ac6d2c52f55968b5ec"
+  },
+  {
+   "gene": "ENSDARG00000079782",
+   "name": "myh7l",
+   "zf_start": 24274293,
+   "zf_end": 24289726,
+   "zf_strand": -1,
+   "protein_len": 1963,
+   "sha256": "7ce6028ee89492cb2a0f6d2aa30ba68eedbf81155c4c8a039311c1e1ab34b116"
+  },
+  {
+   "gene": "ENSDARG00000056464",
+   "name": "fitm1l",
+   "zf_start": 24304854,
+   "zf_end": 24308682,
+   "zf_strand": 1,
+   "protein_len": 290,
+   "sha256": "1237d7f4da394ced9e6b7293ff9dea421b44a6a8c4b9d5cf5d51ba2d43f78853"
+  },
+  {
+   "gene": "ENSDARG00000056475",
+   "name": "trnau1apb",
+   "zf_start": 24310635,
+   "zf_end": 24317436,
+   "zf_strand": -1,
+   "protein_len": 316,
+   "sha256": "e9d815917b5b1aad097b0e0fb07d233c10ff52204e098b751cc6bc0130882d84"
+  },
+  {
+   "gene": "ENSDARG00000092954",
+   "name": "mrpl34",
+   "zf_start": 24317465,
+   "zf_end": 24320183,
+   "zf_strand": 1,
+   "protein_len": 121,
+   "sha256": "d93baee0a367edba5f703915f670c16d8f66c9bb123d2fbfda68bea22b1e91b4"
+  },
+  {
+   "gene": "ENSDARG00000076265",
+   "name": "ano8a",
+   "zf_start": 24321751,
+   "zf_end": 24348948,
+   "zf_strand": -1,
+   "protein_len": 1010,
+   "sha256": "da1b032f34de8d2edc592d3ac3b580a6bac8741741013ebc25c109e40d98e0ea"
+  },
+  {
+   "gene": "ENSDARG00000038955",
+   "name": "pimr68",
+   "zf_start": 24352497,
+   "zf_end": 24355324,
+   "zf_strand": 1,
+   "protein_len": 246,
+   "sha256": "e78d607a372228c28cc11aa97f8d730fd4661546a94bb277252a0504f101552d"
+  },
+  {
+   "gene": "ENSDARG00000076972",
+   "name": "plvapa",
+   "zf_start": 24365452,
+   "zf_end": 24369087,
+   "zf_strand": -1,
+   "protein_len": 580,
+   "sha256": "0159d75b20f04e2660c09f87d87dd6040f6ef76a4047ae91755cbcaad7913d61"
+  },
+  {
+   "gene": "ENSDARG00000003607",
+   "name": "nr2f6a",
+   "zf_start": 24374305,
+   "zf_end": 24386382,
+   "zf_strand": 1,
+   "protein_len": 402,
+   "sha256": "1c97f0d53d7fdf30b0397ff190cccff444b48a23d39918c860a8cf200c0ebe52"
+  },
+  {
+   "gene": "ENSDARG00000061797",
+   "name": "ocln1",
+   "zf_start": 24386453,
+   "zf_end": 24403153,
+   "zf_strand": -1,
+   "protein_len": 537,
+   "sha256": "9c7b39fb8b5e547e06cc39fa8feebcb54df3225287f34b046a2dbe788c0db986"
+  },
+  {
+   "gene": "ENSDARG00000061800",
+   "name": "marveld2l",
+   "zf_start": 24400725,
+   "zf_end": 24407933,
+   "zf_strand": -1,
+   "protein_len": 526,
+   "sha256": "b772e690861533d7d5c62e0320ba4fd7721ed4ea426a31a8b4aa68d8354631ae"
+  },
+  {
+   "gene": "ENSDARG00000091306",
+   "name": "kcnn1a",
+   "zf_start": 24410494,
+   "zf_end": 24462277,
+   "zf_strand": -1,
+   "protein_len": 916,
+   "sha256": "2dbcac6e40e33b817670b6b7997fd17f3c3d832ad61bc793aa5b943a76bbf1eb"
+  },
+  {
+   "gene": "ENSDARG00000035862",
+   "name": "insl3",
+   "zf_start": 24487320,
+   "zf_end": 24488652,
+   "zf_strand": -1,
+   "protein_len": 153,
+   "sha256": "c9083c16138d452aaadb6d6c02d99d11c05c4ffca73c26e27ae633d09fcffda4"
+  },
+  {
+   "gene": "ENSDARG00000035861",
+   "name": "si:rp71-39b20.4",
+   "zf_start": 24495804,
+   "zf_end": 24505185,
+   "zf_strand": -1,
+   "protein_len": 539,
+   "sha256": "e73a7d0c1c768fd67e85406d9052b0022db21de1f39d52e229de0d5b22ed3f02"
+  },
+  {
+   "gene": "ENSDARG00000035860",
+   "name": "rps28",
+   "zf_start": 24507597,
+   "zf_end": 24509698,
+   "zf_strand": 1,
+   "protein_len": 69,
+   "sha256": "6ca58fc0e6a5f4ff877c467476a788e998dcb5f22af26e8a1ab15698b874381b"
+  },
+  {
+   "gene": "ENSDARG00000035859",
+   "name": "angptl4",
+   "zf_start": 24536762,
+   "zf_end": 24542518,
+   "zf_strand": 1,
+   "protein_len": 491,
+   "sha256": "b2badcbdede707e45ded8419c579d962c2ca7df8419811c48ce50cbaff6f9f83"
+  },
+  {
+   "gene": "ENSDARG00000035858",
+   "name": "cnn2",
+   "zf_start": 24548249,
+   "zf_end": 24554432,
+   "zf_strand": -1,
+   "protein_len": 307,
+   "sha256": "a83167e9ed5a3169e82891963a02eece6bb2ffc9c4924ee2c26e5a1220bd4406"
+  },
+  {
+   "gene": "ENSDARG00000076068",
+   "name": "crtc1a",
+   "zf_start": 24578053,
+   "zf_end": 24603325,
+   "zf_strand": -1,
+   "protein_len": 533,
+   "sha256": "ab4abf95b004463513e8189d64095739164e8aeeaa6a0da7a60397d9d8a470b4"
+  },
+  {
+   "gene": "ENSDARG00000061725",
+   "name": "mast3a",
+   "zf_start": 24638367,
+   "zf_end": 24683365,
+   "zf_strand": 1,
+   "protein_len": 1316,
+   "sha256": "88cca5c6d364cba03dc6e56dc6c4013f6c976e0068c97c61a661c170cfa98359"
+  }
+ ]
+}

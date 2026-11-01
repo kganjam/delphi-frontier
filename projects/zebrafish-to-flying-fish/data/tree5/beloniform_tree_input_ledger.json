@@ -1,0 +1,80 @@
+{
+ "scope": "Census tree plus medaka (Oryzias latipes) KCNH proteins as Beloniformes outgroups. Medaka is the nearest annotated relative of Exocoetidae available; it is a PROXY and labelled as such.",
+ "question": "Does the single kcnh2-like locus of GCA_018398805.1 group with medaka kcnh2b? If Beloniformes retain only the b paralog, it should.",
+ "why_medaka": "UniProt and Ensembl both list medaka kcnh2b and NO kcnh2a; medaka kcnh2b sits beside aoc1/sspo, the same block that carries zebrafish slc12a7b, while medaka's slc12a7a block has no kcnh2 gene at all.",
+ "n_sequences": 36,
+ "fasta_bytes": 39127,
+ "fasta_sha256": "4f54fd77b1c15159f233377061e1193d72777ddee0d9abae57543b6184f96574",
+ "medaka_ledger": [
+  {
+   "name": "OL_kcnh2b",
+   "uniprot": "H2LGS9",
+   "len": 1092,
+   "sha256": "42002224ac365a0fdedb5a3d00233df3c3a0b3fdb89a7114d8d565cb81f6a28b",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh6a",
+   "uniprot": "H2LAG3",
+   "len": 1176,
+   "sha256": "993838aca0788ce6a97b7614c719ea2dc86d6ba3fffb1cfadcae24536449c1b8",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh1a",
+   "uniprot": "H2LGI5",
+   "len": 964,
+   "sha256": "02cd5098aa2d5685081bfae69495dcb3fba750ecf886df13ede64acb6f2d59ae",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh1b",
+   "uniprot": "H2L6I2",
+   "len": 957,
+   "sha256": "35529bae7d1b8e7a91115dd3a2aa871cebfbf07cab1223cd3c0fea61add91177",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh4a",
+   "uniprot": "H2LFW8",
+   "len": 1130,
+   "sha256": "3a7e260b7e5d59173f26e496743d47adb024b60c611b29f759c7e812bd7fc38d",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh4b",
+   "uniprot": "H2LHZ5",
+   "len": 1144,
+   "sha256": "cc7e2e148bbf380dc49131fe247f5c433a0724caeb5b274bf4629910e5535577",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh5b",
+   "uniprot": "H2MUW6",
+   "len": 973,
+   "sha256": "a2e0479fe26a6d0c6372879b11fa4ceaaba117967ce1fe41cbd200c107e91ef3",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh7",
+   "uniprot": "H2MQY8",
+   "len": 1147,
+   "sha256": "655f6a0032ba339314a0c42b5f340a102173c5265151cc49659e4eb4d2d2818c",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh8",
+   "uniprot": "H2LIZ2",
+   "len": 1035,
+   "sha256": "6d86da982ffc65b61a54fe2337bd9125d9f89cd0996c5f9c30cf0431f5cae600",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  },
+  {
+   "name": "OL_kcnh5a_LOC",
+   "uniprot": "H2MSS2",
+   "len": 1024,
+   "sha256": "96681d261d70f03844420dda4ec19c260913c33988ce8e34c2267c7ac1ee43c7",
+   "species": "Oryzias latipes (Beloniformes, annotated chromosome-level)"
+  }
+ ]
+}

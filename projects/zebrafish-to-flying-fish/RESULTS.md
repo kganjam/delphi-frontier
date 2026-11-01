@@ -475,8 +475,8 @@ protein and placed on one tree with the zebrafish family and two human outgroups
 `771f8160…399b9c84`, re-hashed in-container; manifest at
 [`data/census/MANIFEST.md`](data/census/MANIFEST.md).
 
-**9 of the 10 zebrafish paralogs have at least one flying-fish locus placed with them. The single
-exception is `kcnh2a`:** `kcnh1a`, `kcnh1b`, `kcnh2b`, `kcnh6a`, `kcnh6b` get 1 locus each, `kcnh3`,
+**9 of the 10 zebrafish paralogs have at least one flying-fish locus placed with them (8 of 10 under
+the second substitution model, §R7c). The exception under both models is `kcnh2a`:** `kcnh1a`, `kcnh1b`, `kcnh2b`, `kcnh6a`, `kcnh6b` get 1 locus each, `kcnh3`,
 `kcnh5a`, `kcnh7` get 2 each, `kcnh4a` gets 3, and `kcnh2a` gets **none**.
 
 So the KCNH family is **well represented** in this assembly — 14 loci across 9 paralogs — and the
@@ -490,6 +490,70 @@ unresolved (`locus03` 42.7/68, `locus14` 23.4/62, `locus11` no recovered support
 does not touch the headline, since none was assigned to `kcnh2a`. A model-sensitivity re-run with
 ModelFinder instead of a fixed `LG+G4` and a different seed
 (`claude-zf2ff-census-sensitivity-1`) was submitted to check the conclusion is not model-dependent.
+
+## R7c — Model sensitivity: the `kcnh2a` gap is not an artefact of the substitution model
+
+**`claude-zf2ff-census-sensitivity-1`** (`aijob-e00grythgcj8gee173`), CLI-read `COMPLETED`. Same input
+digest as §R7b; IQ-TREE run with **ModelFinder** (`-m MFP`, which chose `JTT+F+I+G4`) and seed **777**
+instead of a fixed `LG+G4` and seed 12345.
+
+**13 of 14 locus assignments are identical.** The one change is `locus12`, which moves from `kcnh1b`
+to `kcnh1a` — so under the second model `kcnh1b` *also* has no assigned locus. `kcnh2a` has **no
+assigned locus under both models**.
+
+That cuts two ways and both are reported: the `kcnh2a` result is model-robust, and the appearance of a
+second unassigned paralog shows the census is **not** a clean one-to-one map, so "9 of 10" should be
+read as "9 of 10 under one model, 8 of 10 under another".
+
+## R7d — Synteny (G3b), which walked back §R7's headline, and then medaka restored it
+
+Full write-up: [`data/synteny/FINDING.md`](data/synteny/FINDING.md). Local run, exit 0: the 36
+protein-coding genes flanking `kcnh2a` on GRCz11 chr2, mapped onto the assembly.
+
+**The method validates itself.** 33 of 36 map, and twelve of them — `mrpl34` through `mast3a` — land
+on JAGFBZ010000844.1 with zebrafish order and flying-fish coordinates **monotonically matching**. A
+second ordered block of 5 sits on JAGFBZ010000990.1. So the neighbourhood is present and the assembly
+carries clean syntenic blocks.
+
+**Then the problem.** `slc12a7a` is `kcnh2a`'s immediate 5′ neighbour in zebrafish — an 11 kb gap —
+and it best-hits **JAGFBZ010001591.1**, the *same scaffold* as the `kcnh2`-like region, about 181 kb
+away. A `kcnh2` gene beside `kcnh2a`'s own neighbour is what the **`kcnh2a`** neighbourhood should
+look like. On that basis **§R7's headline was withdrawn**: "no `kcnh2a`-like region exists anywhere in
+this assembly" was too strong, and the identity of that region was recorded as unresolved.
+
+**Medaka then settled it, in favour of the trees.** *Oryzias latipes* is the nearest **annotated,
+chromosome-level** Beloniformes genome — the same order as Exocoetidae:
+
+- UniProt and Ensembl both list medaka **`kcnh2b`** and **no `kcnh2a`** at all.
+- Medaka `kcnh2b` sits beside **`aoc1`** and **`sspo`** (chr20) — and in zebrafish, `aoc1` and `sspo`
+  flank **`slc12a7b`** (chr24). So medaka's `kcnh2b` is in the ***b*** paralogous block, exactly as
+  its name says.
+- Medaka's **`slc12a7a`** block (chr17) contains **no `kcnh2`-family gene**: the gene immediately 3′
+  of `slc12a7a` is `xrn1`.
+
+So in an independently annotated Beloniformes genome the `slc12a7a` block carries no `kcnh2` gene,
+which removes the force of the flying-fish co-location: 181 kb on a draft scaffold is not adjacency,
+and the `slc12a7a`-like hit there may itself be the *b* paralog's locus — the same paralog trap this
+project has now documented three times.
+
+**Where this leaves the question.** The most parsimonious reading of all the evidence — two gene trees
+under two substitution models with passing controls, a family census, and an independently annotated
+relative in the same order — is that **`kcnh2a` was lost in Beloniformes, not dropped by this draft
+assembly**. That is a stronger and more interesting statement than the one withdrawn above, and it is
+still an inference from annotation and similarity, not from a sequenced Exocoetid transcript. A tree
+with medaka KCNH proteins as Beloniformes outgroups (`claude-zf2ff-beloniform-tree-1`) was submitted
+to test the direct prediction: the single flying-fish `kcnh2`-like locus should group with medaka
+`kcnh2b`.
+
+**Consequence for the plan, unchanged by the walk-back.** Either way, there is no Exocoetid `kcnh2a`
+to edit. If the gene is absent from the lineage, perturbation row P1 is not merely unplaceable — it is
+**targeting a gene the clade does not have**, and the published flying-fish `kcnh2a` signal needs
+re-reading before any design rests on it. This project has **not** read that paper's methods and does
+not claim the paper is wrong.
+
+**One thing that could not be checked.** Zebrafish `kcnh2b`'s GRCz11 position: Ensembl has no
+`kcnh2b` symbol for zebrafish, so the *b*-block assignment in zebrafish is inferred from medaka's
+arrangement plus the `aoc1`/`sspo` neighbours of zebrafish `slc12a7b`, not read directly. `U`.
 
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
