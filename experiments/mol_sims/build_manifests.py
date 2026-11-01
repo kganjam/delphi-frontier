@@ -135,6 +135,15 @@ if mdp.exists():
         checks.append({"name": "SECOND REPLICA (seed {}), same correlation".format(r2["seed"]), "result": f"Spearman rho {r2['rmsf_vs_plddt']['rho']:.2f} (p={r2['rmsf_vs_plddt']['p']:.1e}): the confidence-flexibility relation reproduces across seeds"})
         checks.append({"name": "cross-replica agreement on which residues move", "result": f"Spearman rho {rc['cross_replica_rmsf_spearman']['rho']:.2f} between the two replicas' per-residue RMSF (median ratio {rc['rmsf_ratio_median']:.2f})"})
         checks.append({"name": "convergence, honestly", "result": f"the replicas DISAGREE on drift: last-2-ns slope {r1['last_2ns_slope_A_per_ns']:+.2f} vs {r2['last_2ns_slope_A_per_ns']:+.2f} A/ns at similar RMSD ({r1['last_2ns_mean']:.2f} vs {r2['last_2ns_mean']:.2f} A). 10 ns is NOT converged; only the ranking of mobile residues is stable"})
+        cvp = R / "md_convergence_report.json"
+        if cvp.exists():
+            cv = json.loads(cvp.read_text())
+            sl = cv["final_block_slopes_A_per_ns"]
+            checks.append({"name": "drift measured over 5 ns blocks instead of 2 ns windows", "result":
+                           "final-5-ns-block slope per replica: " + ", ".join(f"{k} {v:+.2f} A/ns" for k, v in sl.items())
+                           + f". {cv['verdict']}. A 2 ns window is too short to read a slope from: the negative last-2-ns "
+                             "figure above is window noise, not a plateau, and should not be quoted as one."})
+            srcs.append(cvp)
         srcs += [rcp, R / "md_shhN_rep2/md_receipt.json", R / "md_shhN_rep2/md_summary.json", R / "md_shhN_rep2/final_frame_protein.pdb", R / "md_shhN_rep2/job_log.txt"]
     write(base("openmm-shhN-md", "10 ns explicit-solvent MD of the predicted Shha signalling domain: the fold holds and flexibility tracks predictor confidence",
                "macromolecular", "SIMULATED classical MD of a PREDICTED structure; not an observation",

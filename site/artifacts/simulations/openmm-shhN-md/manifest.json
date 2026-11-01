@@ -47,6 +47,10 @@
   {
    "name": "convergence, honestly",
    "result": "the replicas DISAGREE on drift: last-2-ns slope -0.11 vs +0.98 A/ns at similar RMSD (4.19 vs 4.17 A). 10 ns is NOT converged; only the ranking of mobile residues is stable"
+  },
+  {
+   "name": "drift measured over 5 ns blocks instead of 2 ns windows",
+   "result": "final-5-ns-block slope per replica: md_shhN +0.20 A/ns, md_shhN_rep2 +0.32 A/ns. not enough long replicas to judge. A 2 ns window is too short to read a slope from: the negative last-2-ns figure above is window noise, not a plateau, and should not be quoted as one."
   }
  ],
  "parameter_unknowns": [
@@ -75,6 +79,7 @@
   "results/mol-sims/claude-20261101/md_shhN/final_frame_protein.pdb": "2383111dc87ca2c9ab203d07ff53884dff3208a67fc8b7fda23301c1c58d0cbd",
   "results/mol-sims/claude-20261101/md_shhN/job_log.txt": "1eea56ecb4321243daf3f12a57a056e6bfc295d49b8f572b50fc5034814eae3c",
   "results/mol-sims/claude-20261101/structures/shhN/model_0.cif": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c",
+  "results/mol-sims/claude-20261101/md_convergence_report.json": "cc905561e03fe957d7e87755e81da1a5d8fc0a851d9fd84a3b461916dd4e26ba",
   "results/mol-sims/claude-20261101/md_shhN_replica_comparison.json": "57e4d46c3ba155ed9cc263ef493cfa25a5981dc7f4172bba4e9ca05dba106f53",
   "results/mol-sims/claude-20261101/md_shhN_rep2/md_receipt.json": "61a4efc7e0b22c3c98dd2d836a02e986eae799896b8b266d96f02c90aeb6aa54",
   "results/mol-sims/claude-20261101/md_shhN_rep2/md_summary.json": "29854e5306c87ca576e9cf17e24637518d1197745c2ac9a789ce01abf605b44c",
