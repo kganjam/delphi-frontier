@@ -312,11 +312,18 @@ def rotm_to_quat(R):
     return [x, y, z, w]
 
 
-def simulate(model, n, spacing, disp, seed, aero_on=True, t_max=6.0, record=False, stagger_s=0.0, wake_on=True, ground=True):
+def simulate(model, n, spacing, disp, seed, aero_on=True, t_max=6.0, record=False, stagger_s=0.0, wake_on=True, ground=True,
+             pattern="sequential"):
+    """stagger_s: release-time offset between consecutive releases; pattern 'sequential' releases lane 0,1,2,... in turn,
+    'alternate' releases even lanes first then odd lanes (neighbours always differ by >= one offset).  A fish does not
+    exist in the world before its release.  Random launch draws are taken in lane order up front, so stagger 0
+    reproduces the simultaneous release exactly."""
     rng = np.random.default_rng(seed)
     cid = make_world()
     d = DISP[disp]
-    fish, launch_t = [], []
+    fish, launch_t, pending = [], [], []
+    order = list(range(n)) if pattern == "sequential" else list(range(0, n, 2)) + list(range(1, n, 2))
+    slot = {lane: k for k, lane in enumerate(order)}
     for i in range(n):
         y = (i - (n - 1) / 2) * spacing
         e = [math.radians(d["phi"]) * rng.standard_normal(), math.radians(d["th"]) * rng.standard_normal(), math.radians(d["psi"]) * rng.standard_normal()]
@@ -325,8 +332,12 @@ def simulate(model, n, spacing, disp, seed, aero_on=True, t_max=6.0, record=Fals
         # euler_dev applied in world: roll about X (flight dir), pitch about Y (nose up = negative about +Y for +X flight)
         Rw = np.array(pb.getMatrixFromQuaternion(pb.getQuaternionFromEuler([e[0], -e[1], e[2]]))).reshape(3, 3)
         vel = Rw @ np.array([v, 0, 0])
-        b = add_fish(cid, model, [0, y, H0], [e[0], -e[1], e[2]], vel.tolist(), [0, -qrate, 0])
-        fish.append(b); launch_t.append(i * stagger_s)
+        pending.append(([0, y, H0], [e[0], -e[1], e[2]], vel.tolist(), [0, -qrate, 0]))
+        fish.append(None); launch_t.append(slot[i] * stagger_s)
+    for i in range(n):
+        if launch_t[i] <= 0:
+            fish[i] = add_fish(cid, model, *pending[i])
+    body_ix = {}
     alive = [True] * n
     out = [{"y0_m": (i - (n - 1) / 2) * spacing, "range_m": None, "y_land_m": None, "t_land_s": None, "max_roll_deg": 0.0, "max_pitch_dev_deg": 0.0, "collided": False, "end": "timeout"} for i in range(n)]
     collisions = set()
@@ -336,9 +347,13 @@ def simulate(model, n, spacing, disp, seed, aero_on=True, t_max=6.0, record=Fals
     states = [None] * n
     for k in range(steps):
         t = k * DT
+        for i in range(n):
+            if fish[i] is None and t >= launch_t[i] - 1e-12:
+                fish[i] = add_fish(cid, model, *pending[i])
+        body_ix = {b: i for i, b in enumerate(fish) if b is not None}
         segs = horseshoes([st for st in states], model) if (wake_on and k > 0) else None
         for i, b in enumerate(fish):
-            if not alive[i]:
+            if not alive[i] or b is None:
                 continue
             p, qn = pb.getBasePositionAndOrientation(b, physicsClientId=cid)
             v, w = pb.getBaseVelocity(b, physicsClientId=cid)
@@ -361,18 +376,18 @@ def simulate(model, n, spacing, disp, seed, aero_on=True, t_max=6.0, record=Fals
                 traj[i].append([t, *p, roll, pitch])
             if p[2] <= 0.0:
                 alive[i] = False
-                out[i].update(range_m=p[0], y_land_m=p[1], t_land_s=t, end="water")
+                out[i].update(range_m=p[0], y_land_m=p[1], t_land_s=t - launch_t[i], end="water")
                 states[i] = None                                             # a landed fish sheds no wake
                 pb.resetBaseVelocity(b, [0, 0, 0], [0, 0, 0], physicsClientId=cid)
                 pb.changeDynamics(b, -1, mass=0, physicsClientId=cid)        # freeze at contact (no splash model)
         pb.stepSimulation(physicsClientId=cid)
         for c in pb.getContactPoints(physicsClientId=cid):
             a, bb = c[1], c[2]
-            ia, ib = fish.index(a), fish.index(bb)
+            ia, ib = body_ix[a], body_ix[bb]
             if alive[ia] and alive[ib]:
                 collisions.add((min(ia, ib), max(ia, ib)))
                 out[ia]["collided"] = out[ib]["collided"] = True
-        if not any(alive):
+        if not any(alive) or all(not a for a, b in zip(alive, fish) if b is not None) and all(b is not None for b in fish):
             break
     pb.disconnect(cid)
     return out, sorted(collisions), traj

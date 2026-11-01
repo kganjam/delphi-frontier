@@ -24,6 +24,7 @@ SCALES = {
     "r2-glide-sweep": (["organism", "organ"], "No achieved range: point-mass glide with fixed CL and assumed polars; ranges are +-20% at best and nothing was printed or thrown; hand-launch feasibility is not shown."),
     "r3-underwater-drag": (["organism"], "No measured or CFD-resolved drag at the target Reynolds number; no swimming, wave drag or surface taxiing; rigid deep-water build-up only."),
     "r4-aeroelastic-stiffness": (["organ", "tissue"], "No flying-fish fin stiffness: the sourced EI is bluegill rays (Alben 2007); torsion-rigid, linear beam; does not establish fin twist, membrane mechanics or in-flight deformation."),
+    "r5b-staggered-release": (["collective", "organism"], "No observed schooling or launch: rigid printed gliders released with assumed timing offsets and dispersion; no sensing, control or behaviour (ff-eco); straight horseshoe wakes, no wake roll-up or decay."),
     "r5-school-launch": (["collective", "organism"], "No observed schooling or collective behaviour: rigid printed gliders released together under an ASSUMED dispersion; no sensing, control, decision or population dynamics (ff-eco owns those); wake model is a straight horseshoe per fish."),
 }
 
