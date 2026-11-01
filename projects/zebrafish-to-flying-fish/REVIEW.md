@@ -63,3 +63,26 @@ the takeaway now labels all five as abstract-level, downgrades the KCNH cardiac 
 family statement it is, and says plainly that the longfin performance **result** was not read. Trait
 row T12 was corrected the same way. Because the response truncated, this pass is **not** a complete
 check, and the changes made after it are themselves unreviewed.
+
+---
+
+## Self-corrections in the compute round (no external reviewer involved)
+
+The critique above came from a model. The four corrections below came from this project's own
+follow-up jobs contradicting its own earlier outputs. They are listed because the record of a
+withdrawal is part of the result.
+
+| # | What was claimed | What overturned it | Where the history lives |
+| --- | --- | --- | --- |
+| S1 | The motif scan's first pass reported a **null zebrafish arm** (+7.0, CI [−11.0, +25.0]) against a strong flying-fish one, i.e. a species asymmetry. | A follow-up with 20 doublet-verified shuffles per window and per-window thresholds: zebrafish **+51.7** [37.3, 66.2], 10/10 positive. The asymmetry was an artefact of a pooled threshold and n = 2. **Both weaknesses were named in the first manifest before the follow-up ran**, so this was a predicted withdrawal, not a discovered one. | `RESULTS.md` §R6 → §R6b; `data/motif/MANIFEST.md` |
+| S2 | The second pass's per-window z-scores (mean 4.21 / 4.41) implied per-window structure. | A held-out split of the same shuffles: mean |z| **1.39 / 1.57**, only 2/10 and 4/9 windows above z = 2. Pass two had declared this weakness about itself. **No per-window claim survives**; the result is aggregate-only. | §R6c |
+| S3 | "**No `kcnh2a`-like region exists anywhere in this assembly.**" | A synteny run put `slc12a7a` — `kcnh2a`'s immediate 11 kb neighbour in zebrafish — on the **same scaffold** as the `kcnh2`-like region, 181 kb away, which is what the `kcnh2a` neighbourhood should look like. The headline was withdrawn and the region's identity recorded as unresolved. | `data/synteny/FINDING.md`; §R7d |
+| S4 | The withdrawal in S3 was itself too cautious. | Medaka, the nearest **annotated chromosome-level** Beloniformes genome, has `kcnh2b` and **no `kcnh2a`**; its `kcnh2b` sits in the *b* block beside `aoc1`/`sspo`; and its `slc12a7a` block carries **no** `kcnh2` gene. That removed the force of the flying-fish co-location, and the claim was restated as the stronger one the evidence supports: **`kcnh2a` is most likely absent from Beloniformes**. | §R7d; claim `zf2ff-claim-kcnh2a-absent-from-the-assembly` |
+
+Two further checks are recorded as *not* overturning anything: a model-sensitivity re-run reproduced
+13 of 14 census assignments with `kcnh2a` unassigned under both substitution models (§R7c), and the
+Evo 2 harness's independently written motif scan agreed in direction with this project's (§R6b).
+
+**What the pattern means.** Of the four corrections, three came from running the test that the
+previous step's own limitations section had named. That is the intended use of those sections, and it
+is the reason they are written before the next job is submitted rather than after it returns.
