@@ -102,3 +102,10 @@
 .lmstudy table td, .lmstudy table th { overflow-wrap: normal; word-break: normal; hyphens: none; }
 .lmstudy table td:first-child, .lmstudy table th:first-child { min-width: 7.5em; }
 .lmstudy table { font-size: .88rem; }
+
+/* With 39 routes the detail has to fold, or nobody reaches the bottom of the list. */
+.lmroute .lmdet > summary { cursor: pointer; font: 600 .82rem/1.5 var(--sans); color: var(--teal-d); margin-top: .5rem; }
+.lmroute .lmdet[open] > summary { margin-bottom: .4rem; }
+.lmroute .lmdet h5 { margin: .7rem 0 .2rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; color: var(--faint); }
+.lmroute .lmevlist li { margin-bottom: .5rem; }
+.lmphen { font-size: .88rem; }

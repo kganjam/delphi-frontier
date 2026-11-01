@@ -40,6 +40,19 @@
   /* A short alias, so the page can be shared as #/limbless-mouse as well as from inside the Studio. */
   DF.views["limbless-mouse"] = function (snap, route) { return page(snap, route); };
 
+  /* An authored block whose keys ARE its headings: the route file decides what sections it has, and a section it adds later
+   * appears without a code change rather than being silently dropped. Keys are humanised; nothing is reordered or renamed. */
+  const HEAD = (k) => k.replace(/_/g, " ").replace(/\biacuc\b/i, "IACUC").replace(/^./, (c) => c.toUpperCase());
+  function blocks(obj, skip = []) {
+    if (!obj) return "";
+    return Object.entries(obj).filter(([k, v]) => !skip.includes(k) && v !== null && v !== undefined && (!Array.isArray(v) || v.length)).map(([k, v]) => {
+      if (typeof v === "string") return html`<h3>${HEAD(k)}</h3><p>${v}</p>`;
+      if (Array.isArray(v)) return html`<h3>${HEAD(k)}</h3><ul>${v.map((x) => html`<li>${typeof x === "string" ? x : (x.name || x.title ? html`<b>${x.name || x.title}.</b> ${x.note || x.text || x.detail || ""}` : Object.entries(x).map(([kk, vv]) => html`<b>${HEAD(kk)}:</b> ${String(vv)}. `))}</li>`)}</ul>`;
+      if (typeof v === "object") return html`<h3>${HEAD(k)}</h3><dl class="lmmeta">${Object.entries(v).map(([kk, vv]) => html`<dt>${HEAD(kk)}</dt><dd>${typeof vv === "string" ? vv : JSON.stringify(vv)}</dd>`)}</dl>`;
+      return html`<h3>${HEAD(k)}</h3><p>${String(v)}</p>`;
+    });
+  }
+
   /* ----------------------------------------------------------------- where each family of routes acts, drawn once.
    * A schematic of a limb bud, not a measurement and not to scale: it exists so a reader can see that the routes on this page
    * act at different places in one system rather than being a list of interchangeable genes. Each pin filters the routes below. */
@@ -51,7 +64,7 @@
       [205, 310, "molecular", "ZPA and its ZRS enhancer", "Shh is switched on in the ZPA by the ZRS, which sits about a megabase away inside an intron of Lmbr1. This is the cis-regulatory route: edit the switch, not the gene."],
       [330, 374, "gene", "Ridge induction", "Fgf10 from the mesenchyme and Wnt3 / β-catenin in the ectoderm raise the apical ectodermal ridge. Lose it and there is no limb at all — this is the amelia route."],
       [398, 168, "cell", "Ridge maintenance", "The ridge itself: p63, Fgf4 and Fgf8, or physical ablation. The bud starts and then stops, which is truncation rather than absence."],
-      [352, 240, "pattern", "Skeletal patterning", "BMP–SOX9–WNT sets how many elements the field makes and how far apart. A small enough field makes none."],
+      [352, 240, "tissue", "Skeletal patterning", "BMP–SOX9–WNT sets how many elements the field makes and how far apart. A small enough field makes none."],
       [740, 200, "tissue", "The maintenance loop", "SHH → GREM1 ⊣ BMP ⊣ FGF → SHH. Break any arm and the bud stops being held open, whichever arm you break."],
     ];
     return html`<figure class="lmbud">
@@ -104,20 +117,26 @@
   /* ----------------------------------------------------------------- routes */
   function routeCard(r, i) {
     const ev = r.evidence || [];
+    /* The card leads with the one thing that distinguishes these routes from each other — the phenotype it predicts — and
+     * folds the mechanism, the intervention and the trade-offs. With 39 routes the alternative is a page nobody finishes. */
     return html`<article class="lmroute" id="route-${r.id || "r" + i}" data-scale="${r.scale || ""}" data-strength="${r.evidence_strength || ""}" data-phen="${phenotypeKey(r)}">
       <h4>${r.title || r.id}</h4>
-      <p class="lmtags">${evPill(r.evidence_strength)} ${r.difficulty ? U.pill("difficulty: " + r.difficulty, DIFF_TONE[String(r.difficulty).toLowerCase()] || "st-unk") : ""} ${r.specificity ? U.pill(r.specificity, "grp") : ""}</p>
+      <p class="lmtags">${evPill(r.evidence_strength)} ${r.difficulty ? U.pill("difficulty: " + String(r.difficulty).split(/[.,]/)[0], DIFF_TONE[String(r.difficulty).toLowerCase().split(/[ -]/)[0]] || "st-unk") : ""}</p>
       <p class="lmphen"><b>Predicted phenotype.</b> ${r.predicted_phenotype || "not stated"}</p>
-      <p class="small"><b>Mechanism.</b> ${r.mechanism || ""}</p>
-      <p class="small"><b>What you would actually do.</b> ${r.intervention || "not stated"}</p>
-      <dl class="lmmeta small">
-        ${r.reversibility ? html`<dt>Reversible?</dt><dd>${r.reversibility}</dd>` : ""}
-        ${r.lethality_risk ? html`<dt>Lethality risk</dt><dd>${r.lethality_risk}</dd>` : ""}
-        ${r.what_we_would_run ? html`<dt>What bears on it here</dt><dd>${r.what_we_would_run}</dd>` : ""}
-      </dl>
-      ${ev.length ? html`<details class="lmev"><summary class="small"><b>${ev.length} source${ev.length === 1 ? "" : "s"}</b> <span class="faint">with read levels</span></summary><ul class="small">${ev.map((e) => html`<li>${e.cite || ""} ${e.read_level ? U.pill(e.read_level + " read", "rl") : ""}${e.pmid ? html`<br><a href="https://pubmed.ncbi.nlm.nih.gov/${String(e.pmid)}/" target="_blank" rel="noopener noreferrer">PMID ${e.pmid}</a>` : ""}${e.doi ? html` <span class="faint">doi ${e.doi}</span>` : ""}${e.finding ? html`<br><span class="small">${e.finding}</span>` : ""}</li>`)}</ul></details>`
-        : html`<p class="small faint">No source is attached to this route, so it is a proposal only.</p>`}
-      ${(r.open_questions || []).length ? html`<details class="small"><summary><b>Open questions</b></summary><ul>${r.open_questions.map((q) => html`<li>${q}</li>`)}</ul></details>` : ""}</article>`;
+      <details class="lmdet"><summary>How it works, what it costs, and the evidence${ev.length ? " (" + ev.length + ")" : ""}</summary>
+        <p class="small"><b>Mechanism.</b> ${r.mechanism || ""}</p>
+        <p class="small"><b>What you would actually do.</b> ${r.intervention || "not stated"}</p>
+        <dl class="lmmeta small">
+          ${r.specificity ? html`<dt>Specificity</dt><dd>${r.specificity}</dd>` : ""}
+          ${r.reversibility ? html`<dt>Reversible?</dt><dd>${r.reversibility}</dd>` : ""}
+          ${r.lethality_risk ? html`<dt>Lethality risk</dt><dd>${r.lethality_risk}</dd>` : ""}
+          ${r.difficulty ? html`<dt>Difficulty</dt><dd>${r.difficulty}</dd>` : ""}
+          ${r.what_we_would_run ? html`<dt>What bears on it here</dt><dd>${r.what_we_would_run}</dd>` : ""}
+        </dl>
+        ${ev.length ? html`<h5 class="small">Sources</h5><ul class="small lmevlist">${ev.map((e) => html`<li>${e.cite || ""} ${e.read_level ? U.pill(e.read_level + " read", "rl") : ""}${e.pmid ? html`<br><a href="https://pubmed.ncbi.nlm.nih.gov/${String(e.pmid)}/" target="_blank" rel="noopener noreferrer">PMID ${e.pmid}</a>` : ""}${e.doi ? html` <span class="faint">doi ${e.doi}</span>` : ""}${e.finding ? html`<br>${e.finding}` : ""}</li>`)}</ul>`
+          : html`<p class="small faint">No source is attached to this route, so it is a proposal only.</p>`}
+        ${(r.open_questions || []).length ? html`<h5 class="small">Open questions</h5><ul class="small">${r.open_questions.map((q) => html`<li>${q}</li>`)}</ul>` : ""}
+      </details></article>`;
   }
 
   function routesSection(l) {
@@ -242,12 +261,8 @@
         <p class="small"><a href="#routes">Jump to the ${(l.counts || {}).routes || 0} routes</a> · <a href="#studies">what we ran</a> · <a href="#chain">where the chain breaks</a> · <a href="#welfare">welfare and 3Rs</a></p></section>
 
       ${rec ? html`<section class="panel lmrec" aria-labelledby="lm-rec"><h2 id="lm-rec">If you asked us to actually do it</h2>
-        ${rec.headline ? html`<p class="lmhead"><b>${rec.headline}</b></p>` : ""}
-        ${rec.route ? html`<p><b>Route.</b> ${rec.route}</p>` : ""}
-        ${rec.why ? html`<p>${rec.why}</p>` : ""}
-        ${(rec.steps || []).length ? html`<h3>What that looks like</h3><ol>${rec.steps.map((x) => html`<li>${x}</li>`)}</ol>` : ""}
-        ${rec.alternative ? html`<p class="note small"><b>If the goal is a viable adult rather than an embryonic phenotype.</b> ${rec.alternative}</p>` : ""}
-        ${(rec.risks || []).length ? html`<p class="small"><b>What would sink it.</b> ${rec.risks.join(" ")}</p>` : ""}</section>` : ""}
+        ${rec.single_best_route ? html`<p class="small"><b>The route:</b> <a href="#route-${rec.single_best_route}">${(((l.routes || {}).routes || []).find((r) => r.id === rec.single_best_route) || {}).title || rec.single_best_route}</a></p>` : ""}
+        ${blocks(rec, ["single_best_route"])}</section>` : ""}
 
       <section class="panel lmbudsec" aria-labelledby="lm-bd"><h2 id="lm-bd">Where the routes act</h2>
         <p class="small">All of this happens in one structure over about two days of mouse development. The routes below are not interchangeable genes; they are interventions at different places in that structure, and that is why they give different animals.</p>
@@ -266,15 +281,15 @@
         <p class="small faint">This is the same discipline the rest of this site applies to every cross-scale coupling: a junction is composable, scenario-level, or refused. <a href="${DF.href("/studio/flying-fish", { scale: "organ" })}">The flying-fish project uses the same contract.</a></p></section>
 
       ${genes.length ? html`<section class="panel" id="genes" aria-labelledby="lm-g"><h2 id="lm-g">“He said he identified a gene for it” — what that could mean</h2>
-        <p class="small">Several genes would fit that description and they do not produce the same animal. This is written so we can answer sensibly whichever one he means, not to guess which it is.</p>
-        <div class="tablewrap"><table><caption class="sr">Candidate genes and what each would actually produce</caption><thead><tr><th scope="col">Gene</th><th scope="col">Species the evidence is in</th><th scope="col">What losing it does</th><th scope="col">Phenotype class</th><th scope="col">Evidence</th></tr></thead>
-        <tbody>${genes.map((g) => html`<tr><td><b>${g.gene || g.name}</b></td><td class="small">${g.species || ""}</td><td class="small">${g.effect || g.what_it_does || ""}</td><td class="small">${g.phenotype || ""}</td><td class="small">${g.pmid ? html`<a href="https://pubmed.ncbi.nlm.nih.gov/${String(g.pmid)}/" target="_blank" rel="noopener noreferrer">PMID ${g.pmid}</a>` : ""} ${g.read_level ? U.pill(g.read_level + " read", "rl") : ""}</td></tr>`)}</tbody></table></div></section>` : ""}
+        <p class="small">Several genes fit that description and they do not produce the same animal. This is written so we can answer sensibly whichever one he means, not to guess which it is. The last column is the question that would tell them apart.</p>
+        <div class="tablewrap"><table class="lmgenes"><caption class="sr">Candidate genes, what each would actually produce, and the question that distinguishes them</caption>
+        <thead><tr><th scope="col">Gene</th><th scope="col">Evidence is in</th><th scope="col">What it would actually produce</th><th scope="col">Why a researcher might say this</th><th scope="col">The question that tells them apart</th></tr></thead>
+        <tbody>${genes.map((g) => html`<tr><td><b>${g.gene || g.name}</b>${g.key_pmid ? html`<br><a class="small" href="https://pubmed.ncbi.nlm.nih.gov/${String(g.key_pmid)}/" target="_blank" rel="noopener noreferrer">PMID ${g.key_pmid}</a>` : ""}</td>
+          <td class="small">${g.species_of_evidence || g.species || ""}</td><td class="small">${g.what_it_would_actually_produce || g.effect || ""}</td>
+          <td class="small">${g.why_a_researcher_might_say_this || ""}</td><td class="small">${g.distinguishing_question || ""}</td></tr>`)}</tbody></table></div></section>` : ""}
 
-      ${welfare ? html`<section class="panel lmwelfare" id="welfare" aria-labelledby="lm-w"><h2 id="lm-w">${welfare.title || "Animal welfare and the 3Rs"}</h2>
-        ${(welfare.paragraphs || [welfare.text]).filter(Boolean).map((p) => html`<p>${p}</p>`)}
-        ${(welfare.refinements || []).length ? html`<h3>Refinements that change the answer</h3><ul>${welfare.refinements.map((x) => html`<li>${typeof x === "string" ? x : html`<b>${x.name}.</b> ${x.note}`}</li>`)}</ul>` : ""}
-        ${(welfare.review_turns_on || []).length ? html`<h3>What a licence or IACUC review would turn on</h3><ul class="small">${welfare.review_turns_on.map((x) => html`<li>${x}</li>`)}</ul>` : ""}
-        ${(welfare.non_animal_first || []).length ? html`<h3>What to do before any animal</h3><ul class="small">${welfare.non_animal_first.map((x) => html`<li>${x}</li>`)}</ul>` : ""}</section>` : ""}
+      ${welfare ? html`<section class="panel lmwelfare" id="welfare" aria-labelledby="lm-w"><h2 id="lm-w">Animal welfare and the 3Rs</h2>
+        ${blocks(welfare)}</section>` : ""}
 
       <section class="panel lmnot" aria-labelledby="lm-n"><h2 id="lm-n">What this page does not claim</h2>
         <ul>${(l.not_claimed || []).map((x) => html`<li>${x}</li>`)}</ul>

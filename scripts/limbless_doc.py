@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -24,6 +25,29 @@ LIVE = "https://studio.morphoswarm.ai/#/studio/limbless-mouse"
 
 EV_TEXT = {"direct_mouse_phenotype": "direct mouse phenotype", "direct_other_species": "direct, another species",
            "cis_regulatory_inference": "cis-regulatory inference", "model_only": "model only", "proposed": "proposed"}
+
+
+def head(k: str) -> str:
+    """A key is its own heading: the route file decides what sections it has, and one it adds later appears here without a
+    code change. Nothing is reordered or renamed."""
+    return re.sub(r"\biacuc\b", "IACUC", k.replace("_", " "), flags=re.I).capitalize().replace("Iacuc", "IACUC")
+
+
+def emit(w, obj, skip=()) -> None:
+    for k, v in (obj or {}).items():
+        if k in skip or v is None or (isinstance(v, (list, dict)) and not v):
+            continue
+        w(f"**{head(k)}.**\n")
+        if isinstance(v, str):
+            w(v + "\n")
+        elif isinstance(v, list):
+            for x in v:
+                w(f"- {x}" if isinstance(x, str) else "- " + "; ".join(f"**{head(kk)}:** {vv}" for kk, vv in x.items()))
+            w("")
+        elif isinstance(v, dict):
+            for kk, vv in v.items():
+                w(f"- **{head(kk)}:** {vv}")
+            w("")
 
 
 def load(rel: str):
@@ -64,20 +88,10 @@ def render() -> str:
     rec = routes.get("recommendation")
     if rec:
         w("## If you asked us to actually do it\n")
-        if rec.get("headline"):
-            w(f"**{rec['headline']}**\n")
-        if rec.get("route"):
-            w(f"**Route.** {rec['route']}\n")
-        if rec.get("why"):
-            w(rec["why"] + "\n")
-        for i, s in enumerate(rec.get("steps", []), 1):
-            w(f"{i}. {s}")
-        if rec.get("steps"):
-            w("")
-        if rec.get("alternative"):
-            w(f"**If the goal is a viable adult rather than an embryonic phenotype.** {rec['alternative']}\n")
-        if rec.get("risks"):
-            w("**What would sink it.** " + " ".join(rec["risks"]) + "\n")
+        named = next((r for r in rows if r.get("id") == rec.get("single_best_route")), None)
+        if named:
+            w(f"**The route.** {named.get('title')} (`{named['id']}`)\n")
+        emit(w, rec, skip=("single_best_route",))
 
     w(f"## The design space: {len(rows)} routes\n")
     w("Every row is a published perturbation or a bounded proposal, with its own evidence level. "
@@ -153,30 +167,21 @@ def render() -> str:
 
     genes = routes.get("judge_gene_candidates") or []
     if genes:
-        w("## \u201cHe said he identified a gene for it\u201d — what that could mean\n")
-        w("Several genes fit that description and they do not produce the same animal. This is written so the question "
-          "can be answered sensibly whichever one is meant, not to guess which it is.\n")
-        w("| Gene | Species the evidence is in | What losing it does | Phenotype class | Evidence |")
-        w("|---|---|---|---|---|")
+        w("## \u201cHe said he identified a gene for it\u201d \u2014 what that could mean\n")
+        w("Several genes fit that description and they do not produce the same animal. The last column is the question that "
+          "would tell them apart.\n")
+        w("| Gene | Evidence is in | What it would actually produce | The question that tells them apart |")
+        w("|---|---|---|---|")
         for g in genes:
-            w(f"| **{esc(g.get('gene') or g.get('name'))}** | {esc(g.get('species'))} | {esc(g.get('effect') or g.get('what_it_does'))} "
-              f"| {esc(g.get('phenotype'))} | {pmid_link(g)} {esc(g.get('read_level', ''))} |")
+            pm = f" ([PMID {g['key_pmid']}](https://pubmed.ncbi.nlm.nih.gov/{g['key_pmid']}/))" if g.get("key_pmid") else ""
+            w(f"| **{esc(g.get('gene') or g.get('name'))}**{pm} | {esc(g.get('species_of_evidence') or g.get('species'))} "
+              f"| {esc(g.get('what_it_would_actually_produce') or g.get('effect'))} | {esc(g.get('distinguishing_question'))} |")
         w("")
 
     wel = routes.get("welfare")
     if wel:
-        w(f"## {wel.get('title', 'Animal welfare and the 3Rs')}\n")
-        for para in (wel.get("paragraphs") or ([wel["text"]] if wel.get("text") else [])):
-            w(para + "\n")
-        for key, head in (("refinements", "Refinements that change the answer"),
-                          ("review_turns_on", "What a licence or IACUC review would turn on"),
-                          ("non_animal_first", "What to do before any animal")):
-            items = wel.get(key) or []
-            if items:
-                w(f"**{head}.**\n")
-                for x in items:
-                    w(f"- {x if isinstance(x, str) else '**' + str(x.get('name')) + '.** ' + str(x.get('note'))}")
-                w("")
+        w("## Animal welfare and the 3Rs\n")
+        emit(w, wel)
 
     w("## What this page does not claim\n")
     for x in page.get("not_claimed", []):

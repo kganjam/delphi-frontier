@@ -1850,6 +1850,13 @@ def limbless_block(ins: Inputs, extra: dict) -> dict | None:
         extra["@artifacts/limbless-mouse/routes.json"] = ins.read(ix["routes"]["data"])
     page["routes"] = {**ix["routes"], "sha256": routes_sha, "present": routes is not None,
                       "href": "artifacts/limbless-mouse/routes.json" if routes is not None else None, **(routes or {})}
+    # The route file declares the scales its own rows are grouped by. Where it does, it wins: one vocabulary, held by the file
+    # that uses it, so the page cannot group rows under a key the data never emits. The authored list stays as the fallback.
+    if (routes or {}).get("scales"):
+        page["scales_source"] = ix["routes"]["data"]
+        page["scales"] = routes["scales"]
+    else:
+        page["scales_source"] = content
 
     studies = []
     for s in ix["studies"]:
