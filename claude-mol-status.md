@@ -28,7 +28,11 @@ s3 local sensitivity; s4 OpenFold2 confidence; s5 Kcnk5b/Kcnj13 pump-leak sweep;
   replicas disagree on drift (-0.11 vs +0.98 A/ns), so 10 ns is NOT converged.
 - claude-mol-fgfnc-md-s1 aijob-e00nv1v66h5nrk4zpx: COMPLETED, collected. Non-cognate IIIc complex keeps 62% of its
   68 inter-chain contacts (cognate: 73% of 95) - the same range, so 10 ns interface persistence does NOT discriminate isoforms.
-No jobs of mine are running; none were cancelled.
+- claude-mol-shhn-md40-20261105 aijob-e00j94wgv579ddn7g9: RUNNING (ShhN apo 40 ns, convergence replica A)
+- claude-mol-shhn-md40-20261106 aijob-e00kp81hkyhc9yb10p: RUNNING (ShhN apo 40 ns, convergence replica B)
+  Purpose: the 10 ns pair was NOT converged. Over 5 ns blocks both 10 ns replicas drift UP (+0.21, +0.32 A/ns),
+  so the -0.11 A/ns last-2-ns figure in replica 1 was window noise, not a plateau. 40 ns x 2 tests whether the
+  final block goes flat. Only 2 of my jobs run at once; no job I did not start has been touched.
 
 ## Blockers
 Manifest-based MCP tools (OpenMM/AF3/BioEmu2/stab_ddg): schema not published; MD moved to raw H100 jobs instead.
@@ -47,5 +51,5 @@ Manifest-based MCP tools (OpenMM/AF3/BioEmu2/stab_ddg): schema not published; MD
 *.b64 inputs excluded. Status mirrored to /data/artifacts/delphi-evolve-rethink/claude-mol-status.md.
 
 ## Next
-All planned runs are collected and committed. Goal met for this harness; remaining capacity goes to additional
-macromolecular work if time allows (AlphaFold3/stab_ddg remain blocked on the undocumented upload manifest).
+Collect the two 40 ns replicas (~2.2 h each), run experiments/mol_sims/md_convergence.py over all four ShhN
+replicas, and correct the openmm-shhN-md manifest + README if the longer runs change the drift statement.

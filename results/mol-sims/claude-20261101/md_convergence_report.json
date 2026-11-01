@@ -1,0 +1,80 @@
+{
+ "cross_replica_rmsf": {
+  "md_shhN vs md_shhN_rep2": {
+   "n_residues": 174,
+   "p": 8.248192357767379e-68,
+   "rmsf_spearman_rho": 0.91
+  }
+ },
+ "final_block_slopes_A_per_ns": {
+  "md_shhN": 0.205,
+  "md_shhN_rep2": 0.321
+ },
+ "replicas": {
+  "md_shhN": {
+   "all_finite": true,
+   "blocks_5ns": [
+    {
+     "mean_rmsd_A": 2.119,
+     "ns": [
+      0,
+      5
+     ],
+     "slope_A_per_ns": 0.421
+    },
+    {
+     "mean_rmsd_A": 3.87,
+     "ns": [
+      5,
+      10
+     ],
+     "slope_A_per_ns": 0.205
+    }
+   ],
+   "last_block_slope_A_per_ns": 0.205,
+   "md_summary_sha256": "0037ecaf0b0385fa99094d62b72e19c3663056cff419e3c0a14149afab0bf3eb",
+   "n_atoms": 54508,
+   "ns_per_day": 469.2,
+   "prod_ns": 10.0,
+   "rmsf_vs_start_plddt": {
+    "p": 1.8642707743870642e-20,
+    "rho": -0.628
+   },
+   "seed": 20261101
+  },
+  "md_shhN_rep2": {
+   "all_finite": true,
+   "blocks_5ns": [
+    {
+     "mean_rmsd_A": 2.531,
+     "ns": [
+      0,
+      5
+     ],
+     "slope_A_per_ns": 0.214
+    },
+    {
+     "mean_rmsd_A": 3.735,
+     "ns": [
+      5,
+      10
+     ],
+     "slope_A_per_ns": 0.321
+    }
+   ],
+   "last_block_slope_A_per_ns": 0.321,
+   "md_summary_sha256": "29854e5306c87ca576e9cf17e24637518d1197745c2ac9a789ce01abf605b44c",
+   "n_atoms": 54667,
+   "ns_per_day": 465.1,
+   "prod_ns": 10.0,
+   "rmsf_vs_start_plddt": {
+    "p": 2.05071738624954e-18,
+    "rho": -0.6
+   },
+   "seed": 777000
+  }
+ },
+ "scope": "SIMULATED classical MD of a PREDICTED structure (apo, no Zn2+/Ca2+); convergence of the simulation, not accuracy of the structure; nothing observed",
+ "start_model_cif_sha256": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c",
+ "verdict": "not enough long replicas to judge"
+}
