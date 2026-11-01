@@ -1,0 +1,173 @@
+{
+ "schema": "frontier.preregistered-protocol/1",
+ "id": "tissue-microcarrier-endpoints-r1",
+ "project": "tissue-microcarrier (Contractile tissue microcarrier)",
+ "title": "Runner and preregistered endpoints for the contractile tissue microcarrier (generic soft-voxel mechanics)",
+ "frozen_before_outputs": true,
+ "frozen_utc": "2026-11-01T16:13:33Z",
+ "pre_freeze_disclosure": "Before this file was frozen, two diagnostic runs were made with actuation OFF on the base body: a 2 s smoke run (settle 1 s, 1 cycle at 1 Hz) and a settling diagnostic (settle 0.01 s, then 1 s sampled). They showed horizontal COM drift of 2.0e-11 m and 2.3e-11 m (about 2e-8 body lengths) and a non-decaying per-voxel speed of about 1e-5 m/s (floor-contact chatter at sub-nanometre amplitude). They informed two choices below: the settle criterion uses COM drift, not maximum voxel speed, and the settle window is 0.3 s. They are passive runs, so they bear on endpoint 1 only; they were made on a 1 Hz configuration that this protocol does not use, and they are not counted as the endpoint 1 result. No actuated run of this body existed before freezing.",
+ "scope_statement": "Generic soft-body voxel mechanics on a frictional floor. Not Xenopus tissue, not frog cells, not a xenobot reproduction, not a fish part. Contraction is modelled as prescribed isotropic volumetric strain (thermal expansion in the engine). The cited sources (Kriegman 2020 PNAS 117:1853; Blackiston 2021 Sci Robot 6:eabf1571; read at abstract level only) report CILIARY locomotion; contraction is this project's own modelling choice, and nothing here speaks to cilia. Every material value is assumed, none is measured.",
+ "engine": {
+  "name": "Voxelyze",
+  "repo": "https://github.com/jonhiller/Voxelyze",
+  "commit": "4287e365e11416dd108f2f361e9ec4c5a011a16c",
+  "licence_of_record": "LGPL-3.0-or-later (per-file source headers; no LICENSE file at this commit)",
+  "build": "upstream make with FLAGS='-O3 -ffp-contract=off -fno-fast-math -std=c++11 -Wall -I./include' (drops -DPARDISO_5=1, which leaves undefined pardiso symbols; disables FMA contraction so results do not depend on fused multiply-add availability); driver built with the same flags; g++ 13.3.0 on the reference host. Cross-host bitwise identity is NOT assumed: every receipt records host and compiler, and each endpoint series is run on one host.",
+  "determinism": "no RNG in the engine or the driver; identical inputs give identical outputs. Seeds only parameterise random PATTERNS."
+ },
+ "runner": {
+  "driver": "scripts/microcarrier/mc_runner.cpp",
+  "pattern_generator": "scripts/microcarrier/mc_patterns.py",
+  "plan": "scripts/microcarrier/mc_plan.py",
+  "hashes": {
+   "scripts/microcarrier/mc_runner.cpp": "6fc6cc8441f7bcc0bbac0917fd07c43874c2cf0d152665f5dd931de9db0cbbd4",
+   "scripts/microcarrier/mc_patterns.py": "d0dc831d21e884d9b8e468dbed62ec8f4f11ffe83a9a3ee51823eb4c6c64bc7f",
+   "scripts/microcarrier/mc_plan.py": "71b7f599aebf1d0caac43845b3e35966d4cbb1107ac7b410721922468ef6b596",
+   "plan_output_sha256": "46167de9a627c41e2d285a220e8c16e78542a68494cb57702adf10164973cafb"
+  }
+ },
+ "body": {
+  "shape": "rectangular block, 2:1:1 aspect, symmetric under x -> -x and y -> -y reflection about its centre (not under z, because the floor is at z=0)",
+  "outer_size_m": [
+   0.001,
+   0.0005,
+   0.0005
+  ],
+  "project_scale_note": "1 mm long, chosen to sit at the size of the cited cell constructs (sub-millimetre to millimetre). Size alone does not make it biological.",
+  "mesh_levels": {
+   "1": {
+    "lattice": [
+     8,
+     4,
+     4
+    ],
+    "voxel_m": 0.000125,
+    "voxels": 128
+   },
+   "2": {
+    "lattice": [
+     16,
+     8,
+     8
+    ],
+    "voxel_m": 6.25e-05,
+    "voxels": 1024
+   },
+   "3": {
+    "lattice": [
+     24,
+     12,
+     12
+    ],
+    "voxel_m": 4.1667e-05,
+    "voxels": 3456
+   }
+  },
+  "material_assumed_not_measured": {
+   "E_Pa": 20000.0,
+   "rho_kg_m3": 1050,
+   "poisson": 0.35,
+   "mu_static": 1.0,
+   "mu_kinetic": 0.8,
+   "zeta_internal": 1.0,
+   "zeta_global": 0.1,
+   "zeta_collision": 0.8,
+   "cte_per_C": 0.01,
+   "drive_amplitude_C": 10.0
+  },
+  "gravity": "0.047619 g = (1050-1000)/1050, the buoyant weight of a 1050 kg/m3 body in water. Buoyancy is the ONLY fluid effect represented; there is no hydrodynamic drag beyond the engine's isotropic global damping, which is not a fluid model.",
+  "peak_linear_strain": "cte * amplitude * a_i = 0.10 * a_i",
+  "frequency_Hz": 10.0,
+  "dimensionless_frequency": "f * L * sqrt(rho/E) = 10 * 1e-3 * sqrt(1050/2e4) = 2.29e-3, i.e. drive period far longer than the elastic wave transit: quasi-static regime. Frequency is varied in the sweep (2.5-20 Hz) to measure, not assume, this."
+ },
+ "actuation": "T_i(t) = w(t) * A * a_i * sin(2 pi f t + phi_i), t measured from the end of settling, applied to voxel i during the measurement window only; zero during settling. w(t) = sin^2(pi f t / 2) during cycle 1 (the declared transient) and 1 afterwards, so the drive switches on without a step in rest length. a_i and phi_i come from a named pattern evaluated at the voxel centre (see coordinates), so every mesh-defined pattern is the same function at every mesh level.",
+ "equal_total_actuation": "Every active pattern is normalised, discretely per mesh after sampling at voxel centres, so the volume mean of a_i^2 equals 1 (equal L2 actuation budget per cycle). The volume mean of |a_i| is reported. The two endpoint-2 patterns have a_i = 1 everywhere, so they are equal under L1, L2 and per-voxel amplitude. Under-resolution warning: a wave with k cycles per body has nx/k voxels per wavelength; at mesh 1 (nx=8) k=4 is the 2-voxel Nyquist limit and k>=2 is coarse. Sweep entries with nx/k < 4 are flagged under_resolved.",
+ "protocol_timeline": {
+  "settle_s": 0.3,
+  "settle_conditions": "zero initial velocity, voxels placed on the lattice touching the floor, actuation off, gravity on, floor on, no other forcing",
+  "settle_criterion": "peak-to-peak COM excursion over the last 0.05 s of settling (sampled every 0.5 ms) <= 1e-6 body lengths in each of x, y, z. If 0.3 s fails, the control is restated ONCE with a 1.0 s settle; if that also fails, E1 FAILS. No further retries.",
+  "measure_cycles": 6,
+  "transient_window": "cycle 1 is the declared transient; the primary displacement is the stroboscopic COM change from the end of cycle 1 to the end of cycle 6 (5 cycles)",
+  "reference_frame": "lab frame fixed to the floor; COM is the arithmetic mean of voxel centres (equal voxel masses at a given mesh level)",
+  "time_step": "dt = dtScale * recommendedTimeStep() during settling; during measurement dt_eff = period / round(period/dt), so every cycle is an exact integer number of steps and the stroboscopic samples fall exactly on cycle boundaries. dt_eff differs from dt by less than 1e-6 relative at the declared settings."
+ },
+ "endpoints": {
+  "E1_passive_control": {
+   "record_requirement": "req-passive-control",
+   "runs": "pattern off, actuation off for the whole run: mesh 1 dt 0.5 (primary), mesh 1 dt 0.25, mesh 2 dt 0.5, mesh 3 dt 0.5. All four are in the gate.",
+   "statistic": "|d| = horizontal COM displacement over the 6-cycle-length window after settling (and separately over cycles 2-6)",
+   "tolerance": "|d| <= 1e-6 body lengths (1e-9 m), four orders below the 1e-2 body-length displacements the actuated endpoints are about",
+   "verdict": "PASS if every E1 run meets the tolerance and the settle criterion. FAIL otherwise; on FAIL, endpoints 2 and 3 are NOT READ until the cause is diagnosed and recorded.",
+   "gate": "the analysis script refuses to print E2/E3 numbers unless E1 is PASS",
+   "supplement": "E1s: uniform in-phase drive on the symmetric body (mesh 1 and 2). By the x and y reflection symmetries its net horizontal displacement is zero in exact arithmetic; it tests drift under large actuated link forces and stick-slip. Reported against 1e-4 body lengths; it is NOT part of the gate."
+  },
+  "E2_pattern_dependence": {
+   "record_requirement": "req-pattern-dependence",
+   "patterns": {
+    "A": "trav:k=1,theta=0,dir=bwd (one wavelength per body, crest moving toward -x)",
+    "B": "trav:k=2,theta=0,dir=bwd (same direction, two wavelengths per body)"
+   },
+   "refinement_series": "for each of A and B: dt scale {0.5, 0.25, 0.125, 0.0625} x recommended dt at mesh 1; mesh levels {1, 2, 3} at dt 0.5; plus mesh 2 at dt 0.25",
+   "statistic": "D_l = |d_A(l) - d_B(l)| at every refinement level l where both exist, with d the post-transient horizontal COM displacement vector over cycles 2-6",
+   "refinement_change": "R = the ENVELOPE: max over X in {A,B} of max over all pairs (j,k) of levels in the declared series (dt series at mesh 1, mesh series at dt 0.5, and mesh 2 dt 0.25) of |d_X(j) - d_X(k)|. This is stricter than consecutive steps and catches slow drift.",
+   "verdict": "PASS (a pattern-to-motion statement may be made at this body and these parameters) iff D_l > R at EVERY level l. Otherwise NO CLAIM. If any run in the A or B series exits nonzero, diverges, or shows floor penetration > 0.1 voxel, the verdict is NO CLAIM. Also reported: whether successive changes decrease (convergence looks resolved) or not (unresolved, even under PASS).",
+   "design_change_before_freeze": "The first draft used B = front/back halves in antiphase. Review (gemini-4-argon) pointed out that its x-reflection equals a half-period time shift, so on this x-symmetric body its steady displacement is zero by symmetry and E2 would only test whether A moves. B was replaced by a directed pattern differing from A only in wavelength. The antiphase pattern is kept as supplementary symmetric control C (prediction |d_C| ~ 0, reported, not gating)."
+  },
+  "E3_mirror_symmetry": {
+   "record_requirement": "req-mirror-symmetry",
+   "primary": "pattern M = trav:k=1,theta=30,dir=fwd (an oblique wave, so both dx and dy are expected nonzero) and its reflection across the body's y=0 plane, M_y. Expected d(M_y) = (dx(M), -dy(M)).",
+   "secondary": "pattern A reflected across x=0 (A_x, which is the forward wave): expected d(A_x) = (-dx(A), dy(A)); and the 53 mirrored twins in the sweep",
+   "statistic": "e_abs as above, and e_rel = e_abs/|d(original)| reported",
+   "tolerance": "e_abs = |d(mirror) - S d(original)| <= max(0.01*|d(original)|, 1e-5 body lengths) at EVERY level of the refinement series",
+   "verdict": "PASS iff the primary pair meets the tolerance at every level; any nonzero exit, divergence or penetration > 0.1 voxel in the M or M_y series makes it FAIL (unevaluable). A failure is reported as an anisotropy artifact of body or solver with the level(s) at which it fails. The secondary checks are reported, not used to rescue or sink the primary.",
+   "solver_note": "Voxelyze updates links and voxels in list order (x-major creation order), so a reflected pattern is summed in a different floating-point order. Float32 link forces plus the discontinuous static/kinetic friction switch can amplify rounding differences. A failure is reported as a body/solver anisotropy artifact as the record says; the report also states whether it appears only at some levels."
+  }
+ },
+ "sweep": {
+  "purpose": "breadth after the endpoints: how net displacement depends on pattern family, wavelength, phase velocity, direction and frequency at equal L2 actuation budget. Exploratory: no sweep result is a preregistered claim.",
+  "families": "travelling waves along x (k in 10 values from 0.25 to 4 per body, both directions, f in {2.5,5,10,20} Hz, phase velocity c = f/k body lengths per second); oblique travelling waves (3 k x 8 angles); standing waves (x and y); segmented antiphase and sequential controls (x, y, z); half-body actuation; helical waves; dorsoventral-antiphase travelling waves; uniform; passive; 80 smooth random phase fields; 30 smooth random amplitude fields; 60 independent random phase-per-voxel controls (lattice-defined, not refinable); 53 y-mirrored twins; 65 mesh-2 replicates of the structured 10 Hz families",
+  "total_runs_including_endpoints": 518,
+  "seeds": "random families take the seed in their spec; non-random patterns record a seed derived from sha256(spec) for bookkeeping only",
+  "reporting": "every run gets a receipt: argv, exit code, pattern-file sha256, driver sha256, engine commit, wall time, host. A run that diverges or exits nonzero is reported as such and excluded from rankings, never silently dropped."
+ },
+ "media_rule": "Videos and figures are published only if their bytes match the sha256 recorded in the media manifest.",
+ "what_this_cannot_establish": [
+  "anything about real Xenopus cells, tissue, xenobots or any organism",
+  "anything about ciliary propulsion (the mechanism the sources report)",
+  "motion in fluid: there is no hydrodynamics, only buoyant weight and isotropic engine damping",
+  "a calibrated actuation-to-stress or stress-to-deformation relation (no measured modulus or contractile strain exists)",
+  "that a ranking here transfers to another engine, another body, or matter",
+  "spatial convergence, unless the measured mesh series shows it"
+ ],
+ "couplings_status_after_this_protocol": {
+  "cell actuation -> tissue stress": "REFUSED (not modelled; actuation is prescribed strain)",
+  "tissue stress -> construct deformation": "SCENARIO (engine elasticity with assumed E; no measured modulus)",
+  "deformation -> net motion on a surface": "SCENARIO (assumed Coulomb friction on a rigid floor; no fluid)",
+  "simulated design -> built construct": "REFUSED"
+ },
+ "coordinates": "u = (ix+0.5)/nx - 0.5 in (-1/2, 1/2) along x; v = ((iy+0.5)/ny - 0.5)*ny/nx in (-1/4, 1/4); w = ((iz+0.5)/nz - 0.5)*nz/nx in (-1/4, 1/4); all in body lengths, origin at the geometric centre of the block, so v -> -v is exactly the y=0 reflection and u -> -u the x=0 reflection. Segment boundaries use floor() and, because every declared lattice has even nx and ny, no voxel centre lies on a declared boundary.",
+ "damping_policy": {
+  "primary": "mesh-consistent: zeta_global = 0.1/m and zeta_internal = 1.0*m at mesh level m (voxel s_m = s_1/m). Reason: the engine's damping coefficient is c = 2*zeta*sqrt(m_voxel*E*s) ~ s^2 (VX_MaterialVoxel.cpp:75), so at constant zeta the global drag per unit volume scales as 1/s and the link viscosity as s; the primary policy holds both fixed in physical units so the mesh series refines one continuum model. Explicit-Euler damping stability: c*dt/m = zeta/pi at dt scale 0.5, i.e. 0.95 at zeta_internal=3, below 2. Collision damping per contact area and Coulomb friction are already mesh-consistent and are not scaled.",
+  "supplement": "constant zeta (0.1, 1.0) at mesh 2 and 3 for the E2/E3 patterns, reported separately and never substituted for the primary series."
+ },
+ "pre_freeze_review": {
+  "model": "gemini-4-argon",
+  "when": "before freezing",
+  "raised": 12,
+  "adopted": [
+   "E1 adds mesh 3 and an actuated symmetric supplement",
+   "E2 refinement change is the full envelope and D must exceed it at every level",
+   "E2 pattern B replaced (old B zero by symmetry), old B kept as control C",
+   "E3 hybrid tolerance max(1%, 1e-5 L)",
+   "normalisation stated as discrete per mesh; under-resolved sweep entries flagged",
+   "sin^2 ramp over the transient cycle",
+   "settle criterion = peak-to-peak excursion with one fixed retry",
+   "mesh-consistent damping (verified in engine source) as primary, constant zeta as supplement",
+   "-ffp-contract=off, host recorded per receipt",
+   "integer steps per cycle stated",
+   "coordinates and file hashes frozen here",
+   "divergence/penetration rule makes the endpoint unevaluable"
+  ],
+  "not_adopted": []
+ }
+}
