@@ -40,6 +40,12 @@ actually run in this repository:
   Net displacement is zero if and only if `ξp = ξm` (for nonzero actuation):
   the friction anisotropy is necessary AND sufficient here.
 
+Review additions (gemini-4-argon, 2026-11-01): the AB2 two-step update PhysiCell
+actually uses (`drag_weighted_centroid_fixed_ab2`), the damping-RATIO form that
+matches Voxelyze's `C = ζ·2√(m E s)` (`com_fixed_uniform_damping_ratio`), a
+tolerance version of the cycle theorem, node-level mirror equivariance of the
+crawler step, and the trajectory form of the pathwise law.
+
 Scope: algebra of the stated discrete models only. Nothing here shows that any
 engine implements these updates beyond the source lines cited, that any tissue
 contracts, or that a built construct moves. The sources for the project report
@@ -339,6 +345,133 @@ theorem crawler_hypotheses_satisfiable :
       ((-1/4 : ℝ) + 3/4) / 2 = kappa 1 3 * |(1 : ℝ)| ∧ cycleDisplacement 1 3 1 = 1/2 := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;> norm_num [fric, kappa, cycleDisplacement]
 
+/-! ### Additions after the gemini-4-argon review -/
+
+/-- Momentum step with a per-node damping RATIO `γ = Cᵢ/mᵢ` (Voxelyze: `C = ζ·2√(m E s)`,
+so `C/m = 2ζ√(E s / m)`: uniform for a homogeneous material, NOT uniform when density varies). -/
+noncomputable def momentumStepRatio (γ dt Fint Fext p : ℝ) : ℝ := p + dt * (Fint - γ * p + Fext)
+
+/-- **Generalised no-net-displacement theorem.** Per-node masses `mᵢ > 0` and damping
+`Cᵢ = γ mᵢ` (uniform damping ratio): the MASS-WEIGHTED horizontal COM is fixed for all
+steps when internal forces cancel, external horizontal force is zero and the initial
+momentum is zero. Homogeneous mass is the special case; `heterogeneous_mass_breaks_com`
+shows a non-uniform ratio breaks it. -/
+theorem com_fixed_uniform_damping_ratio {N : ℕ} (γ dt : ℝ) (mass : Fin N → ℝ)
+    (hmass : ∀ i, 0 < mass i)
+    (x p Fint Fext : ℕ → Fin N → ℝ)
+    (hp : ∀ n i, p (n + 1) i = momentumStepRatio γ dt (Fint n i) (Fext n i) (p n i))
+    (hx : ∀ n i, x (n + 1) i = x n i + dt * p (n + 1) i / mass i)
+    (hint : ∀ n, ∑ i, Fint n i = 0) (hext : ∀ n, ∑ i, Fext n i = 0)
+    (hp0 : ∑ i, p 0 i = 0) :
+    ∀ n, ∑ i, mass i * x n i = ∑ i, mass i * x 0 i := by
+  have hP : ∀ n, ∑ i, p n i = 0 := by
+    intro n
+    induction n with
+    | zero => exact hp0
+    | succ k ih =>
+      simp only [hp, momentumStepRatio]
+      have h1 : ∀ i, p k i + dt * (Fint k i - γ * p k i + Fext k i)
+          = (1 - dt * γ) * p k i + dt * Fint k i + dt * Fext k i := by intro i; ring
+      simp only [h1, sum_add_distrib, ← mul_sum, hint k, hext k, ih]
+      ring
+  intro n
+  induction n with
+  | zero => rfl
+  | succ k ih =>
+    have h2 : ∀ i, mass i * x (k + 1) i = mass i * x k i + dt * p (k + 1) i := by
+      intro i; rw [hx]; field_simp [ne_of_gt (hmass i)]
+    simp only [h2, sum_add_distrib, ← mul_sum, hP (k + 1), ih]
+    ring
+
+/-- **Drag-weighted centroid invariance for the Adams–Bashforth-2 update PhysiCell
+uses** (`Cell::update_position`: `x += 1.5·dt·v_n − 0.5·dt·v_{n−1}`, with
+`v = F/ξ`). The first step may use any coefficient `c₀` (PhysiCell's zero initial
+`previous_velocity` gives `c₀ = 1.5·dt`). -/
+theorem drag_weighted_centroid_fixed_ab2 {N : ℕ} (dt c0 : ℝ) (ξ : Fin N → ℝ)
+    (x F : ℕ → Fin N → ℝ)
+    (h0 : ∀ i, ξ i * (x 1 i - x 0 i) = c0 * F 0 i)
+    (hstep : ∀ n i, ξ i * (x (n + 2) i - x (n + 1) i)
+        = dt * ((3/2) * F (n + 1) i - (1/2) * F n i))
+    (hint : ∀ n, ∑ i, F n i = 0) :
+    ∀ n, ∑ i, ξ i * x n i = ∑ i, ξ i * x 0 i := by
+  have h1 : ∑ i, ξ i * x 1 i = ∑ i, ξ i * x 0 i := by
+    have : ∀ i, ξ i * x 1 i = ξ i * x 0 i + c0 * F 0 i := by intro i; have := h0 i; linarith
+    simp only [this, sum_add_distrib, ← mul_sum, hint 0]; ring
+  have hs : ∀ n, ∑ i, ξ i * x (n + 2) i = ∑ i, ξ i * x (n + 1) i := by
+    intro n
+    have : ∀ i, ξ i * x (n + 2) i
+        = ξ i * x (n + 1) i + (dt * (3/2)) * F (n + 1) i - (dt * (1/2)) * F n i := by
+      intro i; have := hstep n i; linarith
+    simp only [this, sum_sub_distrib, sum_add_distrib, ← mul_sum, hint n, hint (n + 1)]; ring
+  have key : ∀ n, ∑ i, ξ i * x n i = ∑ i, ξ i * x 0 i ∧
+      ∑ i, ξ i * x (n + 1) i = ∑ i, ξ i * x 0 i := by
+    intro n
+    induction n with
+    | zero => exact ⟨rfl, h1⟩
+    | succ k ih => exact ⟨ih.2, by rw [hs k, ih.2]⟩
+  exact fun n => (key n).1
+
+/-- **Tolerance version of the cycle theorem.** If after a cycle every node is within
+`η` of a common translation `d`, then `|d| ≤ η`. Exact periodicity is not needed. -/
+theorem linear_drag_near_cycle_bound {N : ℕ} (ξ : Fin N → ℝ) (hξ : ∀ i, 0 < ξ i)
+    (hN : 0 < N) (x0 xP : Fin N → ℝ)
+    (hfix : ∑ i, ξ i * xP i = ∑ i, ξ i * x0 i)
+    (d η : ℝ) (hnear : ∀ i, |xP i - x0 i - d| ≤ η) :
+    |d| ≤ η := by
+  set S := ∑ i, ξ i with hS
+  have hpos : 0 < S := by
+    have : (univ : Finset (Fin N)).Nonempty := ⟨⟨0, hN⟩, mem_univ _⟩
+    exact sum_pos (fun i _ => hξ i) this
+  have hsum : S * d = - ∑ i, ξ i * (xP i - x0 i - d) := by
+    have e : ∑ i, ξ i * (xP i - x0 i - d) = ∑ i, ξ i * xP i - ∑ i, ξ i * x0 i - S * d := by
+      rw [hS, sum_mul]; simp only [mul_sub, sum_sub_distrib]
+    rw [e, hfix]; ring
+  have hbound : |∑ i, ξ i * (xP i - x0 i - d)| ≤ S * η := by
+    calc |∑ i, ξ i * (xP i - x0 i - d)| ≤ ∑ i, |ξ i * (xP i - x0 i - d)| := abs_sum_le_sum_abs _ _
+      _ = ∑ i, ξ i * |xP i - x0 i - d| := by
+          congr 1; ext i; rw [abs_mul, abs_of_pos (hξ i)]
+      _ ≤ ∑ i, ξ i * η := sum_le_sum (fun i _ => mul_le_mul_of_nonneg_left (hnear i) (le_of_lt (hξ i)))
+      _ = S * η := by rw [hS, sum_mul]
+  have : S * |d| ≤ S * η := by
+    rw [← abs_of_pos hpos, ← abs_mul, hsum, abs_neg, abs_of_pos hpos]; exact hbound
+  exact le_of_mul_le_mul_left this hpos
+
+/-- Reflection identity for direction-dependent friction: mirroring a displacement and
+exchanging the forward/backward drags negates the friction force. -/
+theorem fric_mirror (ξp ξm a : ℝ) : fric ξm ξp (-a) = - fric ξp ξm a := by
+  unfold fric
+  by_cases h : 0 ≤ a
+  · by_cases h' : a = 0
+    · subst h'; simp
+    · have : ¬ (0 ≤ -a) := by intro hc; exact h' (by linarith)
+      simp [h, this]
+  · have : 0 ≤ -a := by linarith
+    simp [h, this]
+
+/-- **Node-level mirror equivariance of the crawler step.** If `(a₁, a₂)` balances
+friction with drags `(ξp, ξm)` and realises `δ`, then the reflected, relabelled pair
+`(−a₂, −a₁)` balances friction with exchanged drags `(ξm, ξp)`, realises the same `δ`,
+and its midpoint is the negated midpoint. This is the dynamical (not merely algebraic)
+content of the `mirror-symmetry` endpoint for this model. -/
+theorem crawler_step_equivariant {ξp ξm a1 a2 δ : ℝ}
+    (hbal : fric ξp ξm a1 + fric ξp ξm a2 = 0) (hlen : a2 - a1 = δ) :
+    fric ξm ξp (-a2) + fric ξm ξp (-a1) = 0 ∧ (-a1) - (-a2) = δ ∧
+      ((-a2) + (-a1)) / 2 = - ((a1 + a2) / 2) := by
+  refine ⟨?_, by linarith, by ring⟩
+  rw [fric_mirror, fric_mirror]; linarith
+
+/-- **Trajectory form of the pathwise law.** If the body midpoint `X` advances each step by
+the mean node displacement, then `X n − X 0 = κ · Σ_{k<n} |δₖ|`. -/
+theorem crawler_trajectory {ξp ξm : ℝ} (hp : 0 < ξp) (hm : 0 < ξm) (n : ℕ)
+    (X a1 a2 δ : ℕ → ℝ)
+    (hX : ∀ k, X (k + 1) - X k = (a1 k + a2 k) / 2)
+    (hbal : ∀ k, fric ξp ξm (a1 k) + fric ξp ξm (a2 k) = 0)
+    (hlen : ∀ k, a2 k - a1 k = δ k) :
+    X n - X 0 = kappa ξp ξm * ∑ k ∈ range n, |δ k| := by
+  rw [← sum_range_sub X n, mul_sum]
+  exact sum_congr rfl (fun k _ => by rw [hX k]; exact crawler_step hp hm (hbal k) (hlen k))
+
+
 #print axioms total_momentum_step
 #print axioms com_fixed_absolute_damping
 #print axioms total_momentum_closed_form
@@ -356,5 +489,11 @@ theorem crawler_hypotheses_satisfiable :
 #print axioms crawler_mirror
 #print axioms crawler_linear_in_amplitude
 #print axioms crawler_hypotheses_satisfiable
+#print axioms com_fixed_uniform_damping_ratio
+#print axioms drag_weighted_centroid_fixed_ab2
+#print axioms linear_drag_near_cycle_bound
+#print axioms fric_mirror
+#print axioms crawler_step_equivariant
+#print axioms crawler_trajectory
 
 end ActuationMotion

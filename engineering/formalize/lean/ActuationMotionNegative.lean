@@ -91,4 +91,25 @@ theorem mutant_step_drag_free :
   intro _
   norm_num
 
+-- CORRECT twin: the mirrored pair balances friction once the drags are EXCHANGED.
+example : fric 3 1 (-(3/4)) + fric 3 1 (-(-1/4)) = 0 := by norm_num [fric]
+
+-- MUTANT-8 (mirror without exchanging drags): reflect and relabel the nodes but keep
+-- (ξp, ξm) = (1, 3); the balance claim must be rejected.
+theorem mutant_mirror_without_swap : fric 1 3 (-(3/4)) + fric 1 3 (-(-1/4)) = 0 := by
+  norm_num [fric]
+
+noncomputable def momentumStepRatio (γ dt Fint Fext p : ℝ) : ℝ := p + dt * (Fint - γ * p + Fext)
+
+-- CORRECT twin: with a uniform damping ratio the MASS-WEIGHTED COM is fixed after one step
+-- (masses 1 and 2, γ = 1, dt = 1/2, internal force ±1, start at rest).
+example : let mass : Fin 2 → ℝ := ![1, 2]; let F : Fin 2 → ℝ := ![1, -1]
+    ∑ i, mass i * (0 + (1/2) * momentumStepRatio 1 (1/2) (F i) 0 0 / mass i) = 0 := by
+  norm_num [momentumStepRatio, Fin.sum_univ_two]
+
+-- MUTANT-9 (unweighted COM claimed fixed under heterogeneous mass, same instance).
+theorem mutant_unweighted_com_ratio : let mass : Fin 2 → ℝ := ![1, 2]; let F : Fin 2 → ℝ := ![1, -1]
+    ∑ i, (0 + (1/2) * momentumStepRatio 1 (1/2) (F i) 0 0 / mass i) = 0 := by
+  norm_num [momentumStepRatio, Fin.sum_univ_two]
+
 end ActuationMotionNeg

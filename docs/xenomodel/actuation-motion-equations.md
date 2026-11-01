@@ -72,17 +72,28 @@ gives `P_{n+1} = (1 − dt C/m) P_n + dt Σ F_ext`. Lean proves
 `com_motion_requires_external_force`: if the COM moved, some step carried a nonzero
 external horizontal force, or the initial momentum was nonzero.
 
+*Voxelyze's actual damping coefficient* is `C = ζ_global · 2√(m E s)`
+(`include/VX_MaterialVoxel.h:43`, `src/VX_MaterialVoxel.cpp:75`), so the damping
+ratio `C/m = 2ζ√(E s / m)` is uniform for a homogeneous material. The general form
+proved in Lean is `com_fixed_uniform_damping_ratio`: per-node masses with
+`C_i = γ m_i` keep the **mass-weighted** COM fixed. Relative (bond) damping is
+internal and cancels with `F_ij`.
+
 *Hypothesis that cannot be dropped.* Lean proves `heterogeneous_mass_breaks_com`.
 With masses 1 and 2, one damping `C` and an equal-and-opposite internal force, the
 mass-weighted COM moves. So uniform `−C·v` damping on unequal masses is itself
 a propulsion mechanism. It is a numerical-model artifact unless the damping is
-physical. Mass-proportional damping (`C_i = γ m_i`) restores the theorem.
+physical. Mass-proportional damping (`C_i = γ m_i`) restores the theorem. Voxelyze's √m scaling does **not**: varying voxel density
+at fixed E makes `C_i/m_i ∝ m_i^{-1/2}` non-uniform, which is propulsion by
+numerical damping.
 
 **Theorem 1′ (heterogeneous linear damping, periodic steady state; derived here,
 not in Lean).** For any `C_i > 0`, let `Y = Σ C_i x_i / Σ C_i` be the
 damping-weighted centroid and `M = Σ m_i`. Integrating E1 with `f ≡ 0` gives
-`M(V(t) − V₀) = −C_tot (Y(t) − Y₀)`. On a periodic orbit `V(t+T) = V(t)`, so
-`Y(t+T) = Y(t)`. And `X − Y` is a function of shape alone. So a periodic shape
+`M(V(t) − V₀) = −C_tot (Y(t) − Y₀)`. Take an orbit that is periodic in **shape
+and velocity**: `ẋ_i(t+T) = ẋ_i(t)` and `x_i − x_j` is T-periodic. Then
+`V(t+T) = V(t)`, so `Y(t+T) = Y(t)`. And `X − Y` depends only on the relative
+coordinates `x_i − x_j`, so it is T-periodic. So a periodic shape
 change gives **zero net displacement per cycle**, whatever the phase pattern or body
 asymmetry.
 
@@ -109,9 +120,13 @@ uses Adams–Bashforth-2).
 
 **Theorem 2 (linear drag).** If `f^{ext} = 0`, then `Σ ξ_i ẋ_i = 0`. The
 drag-weighted centroid is invariant at every step, for any heterogeneous `ξ_i`.
-Lean: `drag_weighted_centroid_fixed`. Corollary `linear_drag_no_net_displacement`:
+Lean: `drag_weighted_centroid_fixed` (forward Euler) and
+`drag_weighted_centroid_fixed_ab2`, the two-step Adams–Bashforth update PhysiCell
+runs, with any first-step coefficient. Corollary `linear_drag_no_net_displacement`:
 after any cycle that returns the body to a translated copy of its shape, the
-translation is zero.
+translation is zero. `linear_drag_near_cycle_bound` removes the need for exact
+periodicity: if every node lands within `η` of a common translation `d`, then
+`|d| ≤ η`.
 
 This is the substrate analogue of Purcell's scallop theorem, but **stronger**: it
 does not need reciprocal strokes. A travelling wave fails too, because the drag is
@@ -143,7 +158,16 @@ This holds for contraction and extension alike. Lean: `crawler_step`, all four s
 cases.
 
 **(E4) Pathwise law.** Over any actuation history, `ΔX = κ · TV(L)`, where
-`TV(L) = Σ|δ_k|` is the total variation of the length. Lean: `crawler_path`.
+`TV(L) = Σ|δ_k|` is the total variation of the **realised** length. Lean:
+`crawler_path`; the trajectory form with an explicit midpoint state `X(n)` is
+`crawler_trajectory`.
+
+Because E4 uses the *realised* length, the lag between prescribed rest length and
+realised length (spring stiffness, period) drops out of the comparison. It only
+sets how large `TV(L)` is. In continuous time E4 is exact, since `f(ẋ₁) + f(ẋ₂) = 0`
+holds at every instant. In discrete time the per-step balance holds for the step
+*velocities* `v_n`, but AB2 moves the node by `dt(1.5 v_n − 0.5 v_{n−1})`. That
+mismatch is the 10⁻⁴ deviation, and it vanishes as dt → 0.
 
 **(E5) Cycle law.** One contraction and one extension of amplitude `A` give
 
@@ -156,8 +180,11 @@ Properties, all proved in Lean:
 - `D = 0 ⇔ ξ₊ = ξ₋` (for `A ≠ 0`). Isotropy gives no motion, and anisotropy is
   **necessary and sufficient**: `crawler_zero_iff_isotropic`.
 - Forward motion (`D > 0`) exactly when `ξ₋ > ξ₊`: `crawler_forward_iff`.
-- Mirror law: swapping `ξ₊ ↔ ξ₋` negates `D`: `crawler_mirror`. This is the formal
-  content of the preregistered `mirror-symmetry` endpoint.
+- Mirror law: swapping `ξ₊ ↔ ξ₋` negates `D`. `crawler_mirror` states this
+  algebraically for the cycle formula. The node-level, dynamical statement is
+  `crawler_step_equivariant`: reflecting and relabelling a balanced step
+  `(a₁, a₂) → (−a₂, −a₁)` gives a balanced step for the exchanged drags, with the
+  same `δ` and the negated midpoint. It rests on `fric_mirror`.
 - `D` is linear in amplitude: `crawler_linear_in_amplitude`.
 
 **Leading-order dependences in the overdamped crawler:**
@@ -182,6 +209,13 @@ the motion. Let `R: x ↦ −x` be the mirror and suppose:
 - (i) the body is mirror-symmetric;
 - (ii) friction and damping are isotropic, so the dynamics are R-equivariant;
 - (iii) the solution is unique.
+
+**Caveat (gemini-4-argon review).** With dry Coulomb friction, (iii) can fail:
+stick-slip indeterminacy, Painlevé-type non-uniqueness, Filippov set-valued
+friction at zero slip. Nonsmooth systems also often have several coexisting
+attracting periodic orbits. The argument below is therefore conditional on (iii).
+A symmetric body can break symmetry spontaneously or through solver tie-breaking,
+and the predictions P-V1 to P-V3 partly test exactly this.
 
 Then mirroring the actuation pattern, `φ ↦ φ∘R`, maps the trajectory to its mirror,
 so `D(φ∘R) = −D(φ)`. This is the `mirror-symmetry` endpoint. If the pattern is
@@ -247,7 +281,9 @@ reported ciliary mechanism. It only says that if the construct moves by
 contraction alone on a surface or in fluid, a named symmetry-breaking ingredient
 must be present.
 
-## 7. PhysiCell results (preregistered protocol `artifacts/xenomodel/physicell-protocol.json`)
+## 7. PhysiCell results
+
+### 7a. Preregistered protocol (`artifacts/xenomodel/physicell-protocol.json`)
 
 All 18 frozen checks pass (`artifacts/xenomodel/physicell-results.json`):
 
@@ -265,8 +301,52 @@ All 18 frozen checks pass (`artifacts/xenomodel/physicell-results.json`):
   Travelling +x vs −x differ by only 0.058 µm, which still passes (it is 320× the
   refinement change) but is small.
 
-*Not established:* spatial convergence in cell number, since only one strip size was
-run. Nothing is established about any real substrate's drag anisotropy, any real
+**Correction after the convergence check (7b):** the +x vs −x difference is mostly
+a discretisation effect. The preregistered pass stands as recorded, but it does
+**not** license a claim that wave *direction* controls motion in this model. What
+survives refinement is travelling vs standing.
+
+### 7b. N-node convergence (not preregistered; requested by the argon review)
+
+`artifacts/xenomodel/physicell-chain-convergence.json`. Setup: a chain of fixed
+length 128 µm, N = 5 to 65 nodes, continuum scaling (node drag ∝ r₀, spring
+k ∝ 1/r₀, dt ∝ r₀²), ξ₋/ξ₊ = 3, λ = 64 µm.
+
+| N | standing ΔX (µm) | travelling +x | travelling −x | (+x) − (−x) |
+|---|---|---|---|---|
+| 5 | 6.351 | 12.138 | 12.054 | 0.0842 |
+| 9 | 7.386 | 10.739 | 10.708 | 0.0308 |
+| 17 | 7.883 | 10.221 | 10.211 | 0.0093 |
+| 33 | 8.105 | 10.082 | 10.077 | 0.0048 |
+| 65 | 8.207 | 10.043 | 10.039 | 0.0037 |
+
+- Standing ΔX converges at first order (successive-difference ratio ≈ 2.1),
+  extrapolating to ≈ 8.31 µm.
+- Travelling converges faster (ratio ≈ 3.6), to ≈ 10.03 µm.
+- The direction difference falls 23×. Its successive differences shrink about 4×
+  per refinement, so it approaches ≈ 0.003 µm (0.03 % of ΔX). Whether the
+  continuum limit is exactly zero is **not resolved**.
+- Travelling vs standing (≈ 18 %) persists.
+
+### 7c. Descriptive factorial sweep (not preregistered)
+
+`artifacts/xenomodel/physicell-sweep.json`: 324 strip runs over λ ∈ {standing, 40,
+80, 160, 320 µm} × direction × ε ∈ {0.05, 0.1, 0.2} × period ∈ {6, 30, 150 min}
+(k·T = 3, 15, 75) × ξ₋/ξ₊ ∈ {1, 1.5, 3, 10}. All exit 0.
+
+- **All 81 isotropic runs:** |ΔX| ≤ 1.6·10⁻¹³ µm (Theorem 2 across the whole sweep).
+- **Amplitude:** the normalised displacement per cycle,
+  `ΔX/cycle ÷ ((r−1)/(r+1) · ε · r₀)`, averages 1.455, 1.456 and 1.457 at
+  ε = 0.05, 0.1, 0.2. The motion is linear in ε, as in the crawler law.
+- **Drag ratio:** after dividing by `(r−1)/(r+1)`, the means are 1.53, 1.44 and
+  1.39 for r = 1.5, 3, 10. The crawler factor captures the leading-order
+  dependence to about ±10 %.
+- **Stiffness × period:** the strongest remaining lever. Means are 0.62, 1.34 and
+  2.41 for k·T = 3, 15, 75, because a stiffer or slower drive realises more of the
+  prescribed length change.
+- **Wave direction:** median relative effect 0.47 % (max 4.6 %), consistent with 7b.
+
+*Not established:* any of this in physical units. Nothing is established about any real substrate's drag anisotropy, any real
 tissue's contraction, or any physical-unit speed. Section 8 lists the measurements
 that would supply these.
 

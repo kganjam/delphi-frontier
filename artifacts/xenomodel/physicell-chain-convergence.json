@@ -1,0 +1,161 @@
+{
+ "schema": "claude-xenomodel.chain-convergence/1",
+ "preregistered": false,
+ "trigger": "gemini-4-argon review item 6 (artifacts/xenomodel/reviews/argon-review-1.json)",
+ "hypothesis_recorded_before_run": "argon: the +x/-x travelling-wave difference is a discretisation/boundary artifact that vanishes as N grows when drag anisotropy is strain-independent",
+ "design": "chain (NY=1) of fixed length 128 um, r0=128/(NX-1), node drag xi=(1,3)*(r0/16), spring k=0.5*(16/r0), dt_mech=dt_diff=0.1*(r0/16)^2 min, eps=0.1, T=30 min, 10 cycles, lambda=64 um",
+ "table": [
+  {
+   "nx": 5,
+   "r0_um": 32.0,
+   "standing_dX_um": 6.351172854719016,
+   "trav_plus_dX_um": 12.137925519492068,
+   "trav_minus_dX_um": 12.05372074035538,
+   "plus_minus_diff_um": 0.08420477913668734,
+   "trav_minus_stand_um": 5.7867526647730525
+  },
+  {
+   "nx": 9,
+   "r0_um": 16.0,
+   "standing_dX_um": 7.385756400642093,
+   "trav_plus_dX_um": 10.738949640720026,
+   "trav_minus_dX_um": 10.70816618843007,
+   "plus_minus_diff_um": 0.03078345228995616,
+   "trav_minus_stand_um": 3.3531932400779336
+  },
+  {
+   "nx": 17,
+   "r0_um": 8.0,
+   "standing_dX_um": 7.883008017801551,
+   "trav_plus_dX_um": 10.220604072447587,
+   "trav_minus_dX_um": 10.211282699849589,
+   "plus_minus_diff_um": 0.00932137259799859,
+   "trav_minus_stand_um": 2.3375960546460366
+  },
+  {
+   "nx": 33,
+   "r0_um": 4.0,
+   "standing_dX_um": 8.104574542359268,
+   "trav_plus_dX_um": 10.081674770928338,
+   "trav_minus_dX_um": 10.07691294777359,
+   "plus_minus_diff_um": 0.004761823154748157,
+   "trav_minus_stand_um": 1.9771002285690695
+  },
+  {
+   "nx": 65,
+   "r0_um": 2.0,
+   "standing_dX_um": 8.20725443072321,
+   "trav_plus_dX_um": 10.042619590104666,
+   "trav_minus_dX_um": 10.03896376808837,
+   "plus_minus_diff_um": 0.003655822016295218,
+   "trav_minus_stand_um": 1.835365159381455
+  }
+ ],
+ "runs": {
+  "5_stand": {
+   "exit": 0,
+   "dX_um": 6.351172854719016,
+   "t_end": 300.40000000000003,
+   "dt": 0.4,
+   "com_csv_sha256": "7fba2389de49f4cbb6f925ce9b5afd1fce0c2e06370c940a7e8f84e70e58c714"
+  },
+  "5_trav+": {
+   "exit": 0,
+   "dX_um": 12.137925519492068,
+   "t_end": 300.40000000000003,
+   "dt": 0.4,
+   "com_csv_sha256": "db03a162c4b8a412b13d0ff65c148884e9e88e425d220c7f115d02b278f1a67f"
+  },
+  "5_trav-": {
+   "exit": 0,
+   "dX_um": 12.05372074035538,
+   "t_end": 300.40000000000003,
+   "dt": 0.4,
+   "com_csv_sha256": "b3f6d7ce087581d822df29374d978da0ff2a2708ca98569837fc43c82acdff48"
+  },
+  "9_stand": {
+   "exit": 0,
+   "dX_um": 7.385756400642093,
+   "t_end": 300.09999999999974,
+   "dt": 0.1,
+   "com_csv_sha256": "ee9b8bbb5d233f1f75524dfc20e9d87bb6d435462fbf7e3d4a20921f092d7e57"
+  },
+  "9_trav+": {
+   "exit": 0,
+   "dX_um": 10.738949640720026,
+   "t_end": 300.09999999999974,
+   "dt": 0.1,
+   "com_csv_sha256": "ee5345eb4ca03b68bb9ad8c7f297a1521dd923ba813620a77d86e0b8993df901"
+  },
+  "9_trav-": {
+   "exit": 0,
+   "dX_um": 10.70816618843007,
+   "t_end": 300.09999999999974,
+   "dt": 0.1,
+   "com_csv_sha256": "2ec482e6d5d04be409a65f6a34a02d3dd1b9bd8f0ea4fdef435f9e7ef1c46875"
+  },
+  "17_stand": {
+   "exit": 0,
+   "dX_um": 7.883008017801551,
+   "t_end": 300.025000000001,
+   "dt": 0.025,
+   "com_csv_sha256": "66ea1f4e7a9a8f0075383f953aaed7477c885541e7236b87b87afecdfeffe2b2"
+  },
+  "17_trav+": {
+   "exit": 0,
+   "dX_um": 10.220604072447587,
+   "t_end": 300.025000000001,
+   "dt": 0.025,
+   "com_csv_sha256": "6fd0fa6fe62e723f4b9050b8a367dc7827020f0f65b7230f2bb6193569229872"
+  },
+  "17_trav-": {
+   "exit": 0,
+   "dX_um": 10.211282699849589,
+   "t_end": 300.025000000001,
+   "dt": 0.025,
+   "com_csv_sha256": "48175b7b95f920bb42390305c2555496e22af7a2e979c108141253213ab32bd6"
+  },
+  "33_stand": {
+   "exit": 0,
+   "dX_um": 8.104574542359268,
+   "t_end": 300.0062499999957,
+   "dt": 0.00625,
+   "com_csv_sha256": "de575195ec55732ef3b8917382276273ad819f94f97d15ff6a30d9f5be66735d"
+  },
+  "33_trav+": {
+   "exit": 0,
+   "dX_um": 10.081674770928338,
+   "t_end": 300.0062499999957,
+   "dt": 0.00625,
+   "com_csv_sha256": "c0cb7d9ede4dfa51a20416af166a91740e6770b3e2aa8d0828855467eee34302"
+  },
+  "33_trav-": {
+   "exit": 0,
+   "dX_um": 10.07691294777359,
+   "t_end": 300.0062499999957,
+   "dt": 0.00625,
+   "com_csv_sha256": "7185f4991cf601a76b15fadc3dba49384c43557be4a8116332cf480f7800eee2"
+  },
+  "65_stand": {
+   "exit": 0,
+   "dX_um": 8.20725443072321,
+   "t_end": 300.0015625000171,
+   "dt": 0.0015625,
+   "com_csv_sha256": "9587b06922828428ed9413dd9951807a80d83a168c2d895a96560b6eaf2e36a2"
+  },
+  "65_trav+": {
+   "exit": 0,
+   "dX_um": 10.042619590104666,
+   "t_end": 300.0015625000171,
+   "dt": 0.0015625,
+   "com_csv_sha256": "c0418fdf060e69ebd306511e25446ebcf23845d6811d691dfddd09506a005fff"
+  },
+  "65_trav-": {
+   "exit": 0,
+   "dX_um": 10.03896376808837,
+   "t_end": 300.0015625000171,
+   "dt": 0.0015625,
+   "com_csv_sha256": "310c3e729d9c76cafb601c63b0b755f0135893d4c7b910a845291669656cc0de"
+  }
+ }
+}
