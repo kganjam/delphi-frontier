@@ -166,7 +166,7 @@ def cards():
             parameter_unknowns=["Generic kinetics; speeds in pattern units."],
             open_questions=["Measure outgrowth speed / (ray spacing x patterning rate) in a fin at ray-patterning onset."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; 4 seeds per point."])
-    for _nm in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r", "pzone_g05r", "pzone_g2r2", "pzone_g2r3", "pzone_g1f", "pzone_g1res", "pzone_g2f", "pzone_g05f", "pzone_g1v25", "pzone_refine", "pzone_g1v40", "pzone_g2v25", "pzone_g2v40", "pzone_refine_g1", "pzone_refine_g2b", "pzone_refine_g05", "pzone_refine_g1v40", "pzone_smooth", "pzone_refine_g05b", "pzone_smooth_b", "pzone_smooth_w2", "pzone_kin", "pzone_kin2", "pzone_kinb"):
+    for _nm in ("pzone", "pzone_y8", "pzone_lp", "pzone_g0p5", "pzone_g2p0", "pzone_g2b", "pzone_g1b", "pzone_g2r", "pzone_g1r", "pzone_g05r", "pzone_g2r2", "pzone_g2r3", "pzone_g1f", "pzone_g1res", "pzone_g2f", "pzone_g05f", "pzone_g1v25", "pzone_refine", "pzone_g1v40", "pzone_g2v25", "pzone_g2v40", "pzone_refine_g1", "pzone_refine_g2b", "pzone_refine_g05", "pzone_refine_g1v40", "pzone_smooth", "pzone_refine_g05b", "pzone_smooth_b", "pzone_smooth_w2", "pzone_kin", "pzone_kin2", "pzone_kinb", "pzone_refine_kin"):
       _dir = "claude-tissue-" + _nm.replace("_", "-")
       if (A/f"{_dir}/{_nm}.json").exists():
         pz = J(f"{_dir}/{_nm}.json"); sm = pz["summary"]
@@ -202,13 +202,16 @@ def cards():
                    "pzone_smooth_w2": "Smoother zone edge (logistic width 2): where is the switch? gamma=1 (simulated, H100)",
                    "pzone_kin": "Different stripe-regime kinetics (b=1.8, d=30): does the zone-width switch hold? (simulated, H100)",
                    "pzone_kin2": "Different stripe-regime kinetics (b=1.1, d=13): does the zone-width switch hold? (simulated, H100)",
-                   "pzone_kinb": "Kinetics b=1.8, d=30: lower bracket of the zone-width switch (simulated, H100)"}[_nm],
+                   "pzone_kinb": "Kinetics b=1.8, d=30: lower bracket of the zone-width switch (simulated, H100)",
+                   "pzone_refine_kin": "Grid refinement (half cell size) of the b=1.8, d=30 zone-width switch (simulated, H100)"}[_nm],
             scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; 12 seeds per condition",
             model=dict(name="2-D Schnakenberg, finite-volume growth confined to a distal zone of width Lp (apical to uniform); cells split, no rows inserted at steady state",
                        context=f"start length {pz['meta']['Y0']} (>4 wavelengths) -> {pz['meta']['Y1']}, d={pz['meta']['d']}, Lp in {pz['meta']['lps']} (0 = uniform)"),
             equations=[{"label": "Growth with dilution in the zone", "tex": "\\partial_t(hc)=h\\,f(c)+\\text{fluxes},\\quad \\dot h_i=\\tfrac{v}{L_p}h_i\\ (i\\in\\text{zone})", "source": "this harness (finite volume)"}],
             numerical_results=[f"Lp={v['lp_label']}, v={v['speed']}: A = {v['orientation_A_mean']:.2f} +/- {1.96*v['orientation_A_sem']:.2f} (95% CI), {100*v['frac_seeds_A_gt_0_8']:.0f}% seeds A>0.8"
-                               + (f"; distal half {v['A_distal_half_mean']:.2f}, proximal quarter {v['A_proximal_quarter_mean']:.2f}" if 'A_distal_half_mean' in v else "") for v in sm.values()],
+                               + (f"; distal half {v['A_distal_half_mean']:.2f}, proximal quarter {v['A_proximal_quarter_mean']:.2f}" if 'A_distal_half_mean' in v else "") for v in sm.values()]
+                + ([f"ZONE RULE ({g}): Lp*/lambda = {r['Lp_switch_over_lambda']:.2f} at v/sqrt(gamma) = {r['dimensionless_speed']:.2f}" for g, r in J("claude-tissue-pzone/zone-rule.json")["groups"].items() if r["Lp_switch_over_lambda"]]
+                   if _nm == "pzone" and (A/"claude-tissue-pzone/zone-rule.json").exists() else []),
             parameter_unknowns=["Real proliferation-zone width and outgrowth speed of fin folds are not measured here."],
             open_questions=["Map Lp and v onto measured distal proliferation in fin folds."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; generic kinetics."])
