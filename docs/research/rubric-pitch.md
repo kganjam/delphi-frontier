@@ -297,7 +297,39 @@ was checked — a real improvement over a surrogate whose training distribution 
 calibration against real measurement is a milestone in its own right, which is where the loop
 closes.
 
-**Q10. "Why should I believe your counts?"**
+**Q11. "How would you decide which experiment to run next?"**
+
+That is the closed-loop question, and it is the next thing we would build. The brief is
+`docs/research/adaptive-experimentation.md`.
+
+**We claim none of the method.** Bayesian optimal experimental design, amortized adaptive design
+(Foster et al., ICML 2021, PMLR 139:3384–3395), variational EIG estimation (Foster et al., NeurIPS
+2019), sparse system identification (Brunton, Proctor & Kutz) and Bayesian calibration with a
+discrepancy term (Kennedy & O'Hagan, JRSS-B 2001) are all published and widely implemented.
+**Nothing we are doing makes active learning novel.**
+
+Two things we would add, both narrow. First, **expected information gain is not our objective** —
+we want uncertainty reduction that *changes a decision*, per unit cost, and in cross-scale biology
+those costs differ by orders of magnitude between a simulator sweep, an assay and an organism. A
+design that maximises information about a parameter nobody acts on is efficient and useless.
+Second, **a planned design is one more typed record**: it cites the claim licensing its prior, the
+cost model it assumed and the decision it was meant to change, so someone who was not there can
+audit it.
+
+**Status: not implemented.** No design has been planned, scored or run by this. The brief is a map
+of what the sources support, not a system.
+
+**Q12. "Which gap would it attack first?"**
+
+The bridges between scales, which is where our evidence is thinnest. Regulatory → expression →
+protein activity → cell program → ECM stiffness → fin shape → aerodynamics is seven scales and
+**six transfer functions, every one of them unpinned for this organism.** Accessibility is not
+expression; our structure prediction establishes no conductance; no sourced flying-fish stiffness
+profile exists; and the fluid–structure coupling is refused because the fins are sub-grid. Section
+7 of the brief tabulates each with its measurement type and its missing bridge. **That is a map of
+our gaps for one fish, not a claim about biology in general.**
+
+**Q10. "Why should I believe your counts?"
 
 Do not. Run `frontier_catalogue` yourself against `https://frontier.morphoswarm.ai/mcp` with no
 credential, from your laptop, right now. Every count on our slides comes from that call, and the

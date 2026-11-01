@@ -128,6 +128,28 @@ authorized.
 
 ---
 
+## Closed-loop experimental design — BRIEF ONLY, NOT BUILT
+
+`docs/research/adaptive-experimentation.md`. Supports root SPEC-013 and the native quantitative
+planner; coordinates with `docs/research/fish-regulatory-map-2026-10-31.md`.
+
+| Item | Level | Status |
+|---|---|---|
+| Four primary sources verified from publisher/preprint pages | **M** | Foster 2021 PMLR 139:3384–3395; Foster 2019 arXiv:1903.05480 (NeurIPS 2019); Brunton/Proctor/Kutz arXiv:1509.03580; Kennedy & O'Hagan JRSS-B 63(3):425–464. **All at `abstract` read-level — no full text read** |
+| The fish matrix: 7 scales, 6 bridges, each with measurement type and missing evidence | C | Drawn from the regulatory map and this repo's own artifacts. **A map of our gaps for one organism, never a universal biology claim** |
+| Any designed, scored or executed experiment | — | **NONE.** No design planned, no protocol written, no result predicted |
+| Active learning / OED as our novelty | — | **NOT CLAIMED.** Published and widely implemented. Do not imply otherwise |
+
+**Correction carried in the brief:** the commissioning note attributed *calibration confounding*
+to Kennedy & O'Hagan 2001. **That abstract does not state it** — it states the method "attempts to
+correct for model inadequacy". The confounding consequence was not verified at the level I read,
+and nothing should cite that abstract for it.
+
+**Also recorded:** while checking SINDy I first retrieved PMC4812707, which is a **bioprinting
+paper**, not SINDy. The arXiv record was cited instead.
+
+---
+
 ## Generative roadmap — NOT BUILT
 
 Full document with read-levels: `docs/research/generative-roadmap.md`. Page copy: `#/generative`.
