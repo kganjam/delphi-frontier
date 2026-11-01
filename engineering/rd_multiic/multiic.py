@@ -235,6 +235,22 @@ def support_verdict(D, admissible, controls_ok, n_pairs_required=15, n_targets_r
             "thresholds": {"pairs": n_pairs_required, "targets": n_targets_required}}
 
 
+def load_training(out):
+    """Reassembles per-run training state from the round chunks (works on a partial directory after a stop). Keys are (rep, target, arm)."""
+    out = Path(out)
+    state = {}
+    for jf in sorted(out.glob("training_round_*.json")):
+        meta = json.loads(jf.read_text())
+        z = np.load(jf.with_suffix(".npz"))
+        for run_ in meta["runs"]:
+            key = (run_["rep"], run_["target"], run_["arm"])
+            st = state.setdefault(key, {"points": [], "per_ic": [], "loss": [], "fields": []})
+            for c in run_["candidates"]:
+                st["points"].append(np.array(c["unit"])); st["per_ic"].append(c["per_ic_rms"]); st["loss"].append(c["loss"])
+            st["fields"].extend(list(z[f"r{key[0]}_t{key[1]}_{key[2][0]}"]))
+    return state
+
+
 # ------------------------------------------------------------------ run
 def run(out_dir, device, require_cuda, manifest_path, manifest_sha256, plan=None):
     start = time.time()
@@ -285,6 +301,7 @@ def run(out_dir, device, require_cuda, manifest_path, manifest_sha256, plan=None
     ledger = Ledger({run_key: plan.budget(run_key[2]) for run_key in runs})
     state = {k: {"points": [], "loss": [], "per_ic": [], "fields": []} for k in runs}
     complete_training = True
+    saved_rounds = []
     for round_no in range(1, plan.rounds + 1):
         if soft_passed():
             complete_training = False
@@ -313,25 +330,34 @@ def run(out_dir, device, require_cuda, manifest_path, manifest_sha256, plan=None
             r, i, _ = key
             sc = base.rms(res[n], ref_field[(r, i, k)])
             per_cand.setdefault((key, c), []).append((sc, res[n]))
+        chunk_runs, chunk_fields = [], {}
         for key, pts in proposals.items():
             s = state[key]
+            first = len(s["points"])
             for c, u in enumerate(pts):
                 scs, fl = zip(*per_cand[(key, c)])
                 s["points"].append(np.asarray(u))
                 s["per_ic"].append(list(scs))
                 s["loss"].append(loss_of(scs))
                 s["fields"].append(np.stack(fl))
-        dump(out / "traces_partial.json", {"after_round": round_no, "evaluation_counts": {f"{r}:{i}:{a}": n for (r, i, a), n in ledger.used.items()}})
+            r, i, a = key
+            chunk_runs.append({"rep": r, "target": i, "arm": a, "K": arms[a][0], "first_candidate_index": first, "candidates": [
+                {"unit": s["points"][c].tolist(), "params_dL": base.to_params(s["points"][c]).tolist(), "per_ic_rms": s["per_ic"][c], "loss": s["loss"][c]}
+                for c in range(first, len(s["points"]))]})
+            chunk_fields[f"r{r}_t{i}_{a[0]}"] = np.stack(s["fields"][first:])
+        # durable per-round checkpoint: this round's candidates, losses and raw fields, written once (never re-written cumulatively)
+        np.savez_compressed(out / f"training_round_{round_no:02d}.npz", **chunk_fields)
+        dump(out / f"training_round_{round_no:02d}.json", {"round": round_no, "runs": chunk_runs})
+        saved_rounds.append({"round": round_no, "json_sha256": sha(out / f"training_round_{round_no:02d}.json"), "npz_sha256": sha(out / f"training_round_{round_no:02d}.npz")})
+        dump(out / "traces_partial.json", {"after_round": round_no, "rounds_saved": saved_rounds,
+                                           "evaluation_counts": {f"{r}:{i}:{a}": n for (r, i, a), n in ledger.used.items()}})
+        receipt["training_rounds_saved"] = saved_rounds
+        dump(out / "receipt.json", receipt)
 
-    rows_out = []
-    for key in runs:
-        r, i, a = key
-        s = state[key]
-        rows_out.append({"rep": r, "target": i, "arm": a, "K": arms[a][0], "candidates": [
-            {"unit": s["points"][c].tolist(), "params_dL": base.to_params(s["points"][c]).tolist(), "per_ic_rms": s["per_ic"][c], "loss": s["loss"][c]} for c in range(len(s["points"]))]})
+    # training_traces.json is an index over the round chunks (no duplicated candidates or fields) so the retained archive stays under the output bound
     dump(out / "training_traces.json", {"evaluation_counts": {f"{r}:{i}:{a}": n for (r, i, a), n in ledger.used.items()},
-                                        "budgets": {f"{r}:{i}:{a}": b for (r, i, a), b in ledger.budgets.items()}, "runs": rows_out})
-    np.savez_compressed(out / "training_fields.npz", **{f"r{r}_t{i}_{a[0]}": np.stack(state[(r, i, a)]["fields"]) for (r, i, a) in runs if state[(r, i, a)]["fields"]})
+                                        "budgets": {f"{r}:{i}:{a}": b for (r, i, a), b in ledger.budgets.items()}, "rounds": saved_rounds,
+                                        "note": "candidates, losses, per-IC RMS and fields live in training_round_NN.json/.npz; load_training() reassembles them"})
     sel = []
     for key in runs:
         r, i, a = key
@@ -344,7 +370,7 @@ def run(out_dir, device, require_cuda, manifest_path, manifest_sha256, plan=None
                     "training_pairs_admissible": [train_admissible[f"{r}:{i}:{k}"] for k in range(arms[a][0])]})
     dump(out / "selections.json", {"selection_rule": "lowest training loss, ties to earlier evaluation; training information only", "selections": sel,
                                    "matched_budget_complete": bool(complete_training and all(ledger.used.get(k) == ledger.budgets[k] for k in runs))})
-    finish("training", ["training_traces.json", "training_fields.npz", "selections.json"])
+    finish("training", [f for rd_ in saved_rounds for f in (f"training_round_{rd_['round']:02d}.json", f"training_round_{rd_['round']:02d}.npz")] + ["training_traces.json", "selections.json"])
     if not complete_training:
         dump(out / "receipt.json", receipt)
         return receipt
@@ -455,6 +481,11 @@ def run(out_dir, device, require_cuda, manifest_path, manifest_sha256, plan=None
     np.savez_compressed(out / "sparse_fields.npz", **raw, order=np.array([f"{a}:{i}:{s}" for a, i, s, _ in rows]))
     dump(out / "sparse_controls.json", sparse)
     finish("sparse_controls", ["sparse_controls.json", "sparse_fields.npz"])
+    skipped = [c["config"] for c in sparse["configs"] if "status" in c]
+    receipt["optional_sparse_checks"] = {"configs_planned": len(plan.sparse_configs), "configs_not_run": skipped,
+                                         "status": "complete" if not skipped else f"INCOMPLETE: {len(skipped)} of {len(plan.sparse_configs)} configs not run (soft deadline)"}
+    receipt["complete_means"] = "execution reached the end only; it is not numerical validation. Validity is controls.json controls_ok and endpoints.json verdict; sparse-check completeness is optional_sparse_checks."
+    receipt["controls_ok_summary"] = controls_ok
     receipt["complete"] = True
     receipt["status"] = "complete"
     receipt["runtime_scope"] = "GPU runtime of this design unknown before this run; the hard cap and per-phase durable outputs are the bound"

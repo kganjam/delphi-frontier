@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 FILES = ["engineering/__init__.py", "engineering/rd_multiic/__init__.py", "engineering/rd_multiic/multiic.py", "engineering/rd_multiic/job.sh",
-         "engineering/rd_multiic/protocol.json", "engineering/rd_inverse/__init__.py", "engineering/rd_inverse/design.py", "engineering/rd_inverse/protocol.json",
+         "engineering/rd_multiic/protocol.json", "engineering/rd_multiic/CLARIFICATION_1.md", "engineering/rd_inverse/__init__.py", "engineering/rd_inverse/design.py", "engineering/rd_inverse/protocol.json",
          "engineering/rd_diffusion/rd_ddpm.py", "engineering/rd_diffusion/config.json", "engineering/rd_numerics/__init__.py", "engineering/rd_numerics/audit.py"]
 OUT = ROOT / "artifacts/rd-multiic/packet"
 sha = lambda b: hashlib.sha256(b).hexdigest()
@@ -34,7 +34,7 @@ def main():
               "pins": proto["sources"]["pins"],
               "limits": {"gpus": 1, "hard_cap_s": 1800, "soft_deadline_s": 1500, "max_output_mib_compressed": 48, "host_ram": "< 8 GiB"},
               "requires": "CUDA; float64; TF32 flags set false and recorded AFTER setting; the job refuses on CPU.",
-              "expected_outputs": ["control.json", "reference.json", "reference_fields.npz", "training_traces.json", "training_fields.npz", "selections.json", "barrier.json",
+              "expected_outputs": ["control.json", "reference.json", "reference_fields.npz", "training_traces.json", "training_round_NN.json (x8)", "training_round_NN.npz (x8)", "selections.json", "barrier.json",
                                    "test_fields.npz", "controls.json", "endpoints.json", "sparse_controls.json", "sparse_fields.npz", "traces_partial.json", "receipt.json"],
               "estimates_unmeasured": "runtime under about 800 s (basis: the 355.13 s original run); a discarded tau=2 full-plan CPU smoke wrote about 24 MB compressed (not representative of tau=200 fields)",
               "claim_limits": "synthetic numerical model only; 5 reused targets; compute-allocation comparison, not a pure loss effect; no identifiability, no biology"}

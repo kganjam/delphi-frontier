@@ -126,3 +126,65 @@ def test_soft_deadline_voids_matched_comparison(tmp_path):
     plan = m.Plan(**{**SMALL, "soft_s": -1.0}); path, sha = manifest(tmp_path, plan)
     r = m.run(tmp_path / "out", "cpu", False, path, sha, plan)
     assert r["status"].startswith("training_incomplete") and not r["complete"] and not (tmp_path / "out/barrier.json").exists()
+
+
+def test_completed_round_survives_a_later_round_failure(tmp_path, monkeypatch):
+    plan = m.Plan(**SMALL); path, sha = manifest(tmp_path, plan)
+    real = m.base.solve_batch
+    calls = {"n": 0}
+    def boom(*a, **k):
+        calls["n"] += 1
+        if calls["n"] == 6:  # control 3 + reference 1 + round 1 = 5 calls; the 6th is round 2
+            raise RuntimeError("simulated hard stop during round 2")
+        return real(*a, **k)
+    monkeypatch.setattr(m.base, "solve_batch", boom)
+    with pytest.raises(RuntimeError):
+        m.run(tmp_path / "out", "cpu", False, path, sha, plan)
+    out = tmp_path / "out"
+    assert (out / "training_round_01.json").exists() and (out / "training_round_01.npz").exists() and not (out / "training_round_02.json").exists()
+    st = m.load_training(out)
+    ref = np.load(out / "reference_fields.npz")
+    assert set(st) and all(len(v["fields"]) == len(v["loss"]) for v in st.values())
+    r, i, a = next(k for k in st if k[2] == "B_multi_IC_matched")
+    v = st[(r, i, a)]
+    # recovered actual fields and scores, not only counts: recompute round-1 per-IC RMS from the saved fields
+    for c in range(len(v["loss"])):
+        got = [m.base.rms(v["fields"][c][k], ref[f"r{r}_t{i}_k{k}"]) for k in range(4)]
+        assert got == pytest.approx(v["per_ic"][c], abs=1e-12)
+    part = json.loads((out / "traces_partial.json").read_text())
+    assert part["after_round"] == 1 and part["rounds_saved"][0]["json_sha256"] == m.sha(out / "training_round_01.json")
+    assert not (out / "selections.json").exists() and not (out / "barrier.json").exists()
+
+
+def test_no_cumulative_duplication_and_receipt_scope(tmp_path):
+    plan = m.Plan(**SMALL); path, sha = manifest(tmp_path, plan)
+    r = m.run(tmp_path / "out", "cpu", False, path, sha, plan)
+    out = tmp_path / "out"
+    assert not (out / "training_fields.npz").exists() and sorted(p.name for p in out.glob("training_round_*.npz")) == ["training_round_01.npz", "training_round_02.npz"]
+    idx = json.loads((out / "training_traces.json").read_text())
+    assert "runs" not in idx and len(idx["rounds"]) == 2
+    # chunk fields cover every evaluated trajectory exactly once: candidates per run * rounds
+    st = m.load_training(out)
+    assert {k[2]: len(v["loss"]) for k, v in st.items() if k[:2] == (0, 0)} == {"A_single_IC_matched": 16, "B_multi_IC_matched": 4, "C_single_IC_candidate_matched": 4}
+    assert "not numerical validation" in r["complete_means"] and r["optional_sparse_checks"]["status"] == "complete" and "controls_ok_summary" in r
+
+
+def test_incomplete_sparse_checks_reported(tmp_path):
+    plan = m.Plan(**{**SMALL, "sparse_configs": ((64, 0.02), (64, 0.005))}); path, sha = manifest(tmp_path, plan)
+    import time
+    real = m.time.time
+    t0 = real()
+    # soft deadline crossed only after the test phase: patch the clock so soft_passed() flips once endpoints are written
+    state = {"flip": False}
+    orig_finish_dump = m.dump
+    def dump(p, v):
+        orig_finish_dump(p, v)
+        if Path(p).name == "endpoints.json":
+            state["flip"] = True
+    m.dump = dump
+    m.time.time = lambda: real() + (1_600 if state["flip"] else 0)
+    try:
+        r = m.run(tmp_path / "out", "cpu", False, path, sha, plan)
+    finally:
+        m.dump = orig_finish_dump; m.time.time = real
+    assert r["optional_sparse_checks"]["status"].startswith("INCOMPLETE") and len(r["optional_sparse_checks"]["configs_not_run"]) == 2
