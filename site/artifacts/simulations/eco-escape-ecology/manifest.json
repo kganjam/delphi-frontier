@@ -1,0 +1,156 @@
+{
+ "id": "eco-escape-ecology",
+ "title": "Glide as predator escape: when does leaving the water pay? (model)",
+ "scales": [
+  "ecological",
+  "organism"
+ ],
+ "project": "flying-fish",
+ "evidence_kind": "simulated: model output under declared assumptions; not an observation of any fish, predator or lineage",
+ "model": {
+  "name": "claude-eco escape/1: phenotype -> launch (taxi surrogate) -> project point-mass glide -> escape probability vs predator burst speed/endurance, aerial hazard and size",
+  "context": "Three phenotypes (halfbeak-like ancestor, flying-halfbeak proportions, Exocoetus-like) against predators parameterised from FishBase speed and size rows. Encounter and aerial-hazard rates are swept assumptions. SIMULATION, not an observation of predation.",
+  "code": "engineering/ecology_sims/",
+  "reuses": "engineering/simulation/glide.py (project point-mass glide) unchanged"
+ },
+ "video": {
+  "file": "escape.mp4",
+  "sha256": "bf502f97dd76eac356fa968687529638ee95ca8cbfda1339992c7c303d2171ce",
+  "note": "1280x720 h264, rendered single-thread from results.json / saved states"
+ },
+ "poster": "poster.png",
+ "poster_sha256": "fbb49537a5822ae03dccb0fbac456c711308d14a4f92fc273b5acdbee08644a3",
+ "receipt": {
+  "file": "site/artifacts/simulations/eco-escape-ecology/receipt.json",
+  "sha256": "5621c88398700d751a644b2c9d3e20da5aa972e4a2b5da2c313f926b57269c67",
+  "command": "python3 engineering/ecology_sims/escape_ecology.py",
+  "exit_code": 0,
+  "seed": 20261101,
+  "started_utc": "2026-11-01T15:01:53Z",
+  "finished_utc": "2026-11-01T15:02:08Z",
+  "inputs_sha256": {
+   "engineering/ecology_sims/common.py": "73722069f59f46b729a9f3e6d1f60a044c3fc202d62b6896470cf744e1731722",
+   "engineering/ecology_sims/fishbase_parsed.json": "e830a18ba282aa941b604246bd3787e1c899cbc5dbdd0ac68ec6fb8f941a9d42",
+   "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "engineering/simulation/controlled.py": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+   "data/fish-controls/daane2021_s1a_observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703",
+   "data/fish-controls/fish1990_tables.json": "5300c509abbbd8887fdbcde38c404cbfe24aa02597a2abc50f38c94ca6649b21",
+   "__script__": "2006f5a0de5aff23cf5c4b4e35f92392c104f5a6848ef99940fabd6cab3c92b9"
+  }
+ },
+ "results": {
+  "file": "site/artifacts/simulations/eco-escape-ecology/results.json",
+  "sha256": "040033e428638370c86491ab26b0480f67b6a06e9463b959049b0eaeba7852e7"
+ },
+ "sensitivity": {
+  "file": "site/artifacts/simulations/eco-escape-ecology/sensitivity.json"
+ },
+ "sources": [
+  {
+   "id": "daane2021",
+   "cite": "Daane JM et al. (2021) Modulation of bioelectric cues in the evolution of flying fishes. Curr Biol 31:5052-5061. doi:10.1016/j.cub.2021.08.054",
+   "read_level": "full Data S1A sheet parsed (project file data/fish-controls/daane2021_s1a_observations.csv)",
+   "used_for": "pectoral length / SL per group: halfbeak 0.137 (Hyporhamphus unifasciatus median), flying halfbeak 0.337 (Oxyporhamphus), Exocoetus volitans 0.674"
+  },
+  {
+   "id": "fish1990",
+   "cite": "Fish FE (1990) Wing design and scaling of flying fish with regard to flight performance. J Zool 221:391-403",
+   "read_level": "full text, tables read from page images (project file data/fish-controls/fish1990_tables.json)",
+   "used_for": "Exocoetus wing-area fit 0.046 M^0.741 m^2, pectoral share 91.8%, pooled hypocaudal share 63.1%; taxi speed 10 -> 16-20 m/s is Fish citing Shoulejkin (secondary)"
+  },
+  {
+   "id": "fishbase",
+   "cite": "FishBase species summary, length-weight and swimming-speed pages, fetched 2026-11-01 (engineering/ecology_sims/fishbase_parsed.json)",
+   "read_level": "parsed directly from fetched HTML; primary references behind each FishBase row NOT re-read",
+   "used_for": "LW coefficients (Hyporhamphus unifasciatus a=0.00632 SL b=3; Exocoetus volitans a=0.01354 SL b=3), predator sizes (Coryphaena hippurus common 100 cm TL; Thunnus albacares common 150 cm FL), predator speeds (T. albacares burst 5.21-20.46 m/s at 62-66 cm SL, sustained 0.46-0.65 m/s; C. hippurus sustained 0.56 m/s at 67 cm SL; FishBase ref 308), Hyporhamphus caudal 'emarginate or slightly forked'"
+  },
+  {
+   "id": "oxenford1999",
+   "cite": "Oxenford HA, Hunte W (1999) Feeding habits of the dolphinfish (Coryphaena hippurus) in the eastern Caribbean. Sci Mar 63:303-315. doi:10.3989/scimar.1999.63n3-4317",
+   "read_level": "abstract (Crossref)",
+   "used_for": "dolphinfish eat flyingfish and halfbeaks: names the predator class, no rate is taken from it"
+  },
+  {
+   "id": "project_glide",
+   "cite": "engineering/simulation/glide.py (glide-pointmass/1) with polar P1_nominal CL_max 1.2, CD0 0.06, e 0.8 (project DESIGN ASSUMPTIONS) and rho 1.225",
+   "read_level": "project code, reused unchanged",
+   "used_for": "airborne phase of every phenotype"
+  }
+ ],
+ "review": {
+  "model": "gemini-4-argon (Google), design critique 2026-11-01T14:39Z, full code + summary sent",
+  "changed_in_response": [
+   "added an aquatic fin cost (kappa_fin, swept 0-1; default 0 = escape-only fitness, stated)",
+   "added a zero-lift (ballistic) control for every phenotype",
+   "added swim_sync control (alarm cascade without gliding) to separate gliding from social alarm",
+   "predator now pursues the glider's ground track instead of its landing point (no foreknowledge); d_gap term removed from the ABM tracking rule",
+   "faster in-water flee (5 and 10 m/s) as sensitivity cases",
+   "correlated-G (p-c pleiotropy +-0.5) and CV_A 0.02/0.10 Lande variants",
+   "CL rule n_trim 1.5 sweep",
+   "weakest-step selection coefficient reported with the Ne needed for selection to beat drift"
+  ],
+  "not_changed": [
+   "ground effect is still omitted (stated as a limitation: it would lengthen glides of low fliers)",
+   "body-shape (length-weight a) is not an evolving trait; both FishBase values are run",
+   "fitness has no fecundity/foraging term beyond the fin-cost factor"
+  ]
+ },
+ "couplings": [],
+ "native": true,
+ "author": "claude-eco (Claude Opus 5.5), 2026-11-01",
+ "time": {
+  "units": "seconds of one escape",
+  "note": "video: one launch of each phenotype at t = 0 with a predator under the surface at the FishBase-range burst speed"
+ },
+ "numerical_checks": [
+  {
+   "name": "dt halving",
+   "result": "ancestor (halfbeak-like): 6.1164 vs 6.1164 m; intermediate (flying-halfbeak p): 21.2302 vs 21.2302 m; target (Exocoetus-like): 37.6750 vs 37.6750 m"
+  },
+  {
+   "name": "zero-lift control",
+   "result": "ancestor (halfbeak-like): 5.24 m; intermediate (flying-halfbeak p): 7.74 m; target (Exocoetus-like): 12.93 m"
+  }
+ ],
+ "findings": [
+  "ancestor (halfbeak-like): airborne 6.1 m / 0.64 s (zero-lift control 5.2 m); escape per attack H_vis 0.48, H_chase 0.30, both 0.48; launch metabolic cost (lower bound) 1.0% of an ASSUMED daily routine budget",
+  "intermediate (flying-halfbeak p): airborne 21.2 m / 2.04 s (zero-lift control 7.7 m); escape per attack H_vis 0.76, H_chase 0.53, both 0.84; launch metabolic cost (lower bound) 1.5% of an ASSUMED daily routine budget",
+  "target (Exocoetus-like): airborne 37.7 m / 2.88 s (zero-lift control 12.9 m); escape per attack H_vis 0.89, H_chase 1.00, both 1.00; launch metabolic cost (lower bound) 2.5% of an ASSUMED daily routine budget",
+  "H_chase only: predator burst speed (2 s burst) above which leaving the water gains < 0.01 escape probability: ancestor (halfbeak-like) 9.5 m/s; intermediate (flying-halfbeak p) 11.0 m/s; target (Exocoetus-like) 19.0 m/s. FishBase T. albacares burst rows span 5.21-20.46 m/s.",
+  "Aerial predators, 10 m/s underwater predator: the target's gain stays positive across the whole swept aerial hazard 0-0.40 /s.",
+  "Energy: at 10 attacks/day the launch cost lower bound is 25% of the assumed daily routine budget (taxi drag excluded)."
+ ],
+ "parameter_unknowns": [
+  "a_LW = 0.00632 g cm^-3: FishBase Hyporhamphus LW used for the whole walk (body shape is not an evolving trait here)",
+  "w_body_frac = 0.1 1: body width / SL for span; assumption",
+  "V_exit = 10.0 m/s: water-exit speed, same for all phenotypes; Fish 1990 citing Shoulejkin gives ~10 m/s before taxiing (secondary)",
+  "dV_taxi = 8.0 m/s: max taxi speed gain at full asymmetry and full aerodynamic support; 10 -> 18 m/s midpoint of Fish 1990/Shoulejkin 16-20",
+  "h0 = 0.05 m: height at water exit; assumption",
+  "gam0_deg = 15.0 deg: exit angle above horizontal; assumption",
+  "polar = P1_nominal -: project polar (design assumption)",
+  "e_swim = 0.3 1: escape probability of a prey that does not leave the water, per attack; assumption",
+  "U_burst = 10.0 m/s: predator burst speed; inside FishBase Thunnus albacares burst rows 5.21-20.46 m/s",
+  "t_burst = 2.0 s: predator burst endurance; assumption",
+  "U_sus = 0.56 m/s: predator sustained speed; FishBase Coryphaena hippurus sustained row",
+  "d_gap = 3.0 m: H_chase: distance scale over which a lead beyond the predator's chase breaks pursuit; assumption",
+  "d_vis = 20.0 m: H_vis: distance scale over which an airborne excursion breaks visual tracking (inf = off); assumption",
+  "beta_air = 0.0 1/s: aerial predator hazard while airborne; assumption",
+  "p_max = 0.79 1: Davenport 1992 limit on pectoral length / SL",
+  "n_trim = 1.0 1: CL rule: commanded lift at exit <= n_trim x weight (1.0 = level at exit); 1.5 lets fast fish climb (argon review)",
+  "kappa_fin = 0.0 1: aquatic cost of fins: survival/fecundity factor exp(-kappa_fin * fin wetted area / body wetted area); 0 = escape-only fitness; added after argon review",
+  "k_wet = 0.4 1: body wetted area = k_wet SL^2 (ASSUMPTION for a slender fusiform fish)",
+  "RMR_W_per_kg = 0.3 W/kg: ASSUMED routine metabolic rate for a ~30 g tropical pelagic fish; not sourced; swept 0.1-1.0",
+  "muscle_efficiency = 0.2 1: ASSUMED muscle efficiency converting metabolic to mechanical work; swept 0.1-0.3"
+ ],
+ "does_not_establish": [
+  "actual predation rates, encounter rates or escape success of any fish",
+  "that predators of flying fish track by vision or out-run by chase (two hypotheses, both shown)",
+  "energy budgets: the launch cost is a kinetic lower bound against an assumed routine metabolic rate",
+  "anything about real seabird predation (aerial hazard is swept)"
+ ],
+ "open_questions": [
+  "Measured predator tracking after a prey leaves the water",
+  "Taxi energetics and re-launch frequency"
+ ],
+ "caption": "Glide as predator escape under swept predator speed, aerial hazard and size. SIMULATION, not an observation."
+}

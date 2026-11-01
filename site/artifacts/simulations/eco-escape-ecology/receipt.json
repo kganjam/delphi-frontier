@@ -1,0 +1,29 @@
+{
+ "schema": "frontier.eco.receipt/1",
+ "script": "engineering/ecology_sims/escape_ecology.py",
+ "script_sha256": "2006f5a0de5aff23cf5c4b4e35f92392c104f5a6848ef99940fabd6cab3c92b9",
+ "command": "python3 engineering/ecology_sims/escape_ecology.py",
+ "exit_code": 0,
+ "seed": 20261101,
+ "started_utc": "2026-11-01T15:01:53Z",
+ "finished_utc": "2026-11-01T15:02:08Z",
+ "git_head_at_run": "caffef4b5d143cda81ba4e8ab1f3ef3a8a990bfb",
+ "python": "3.13.12",
+ "numpy": "2.4.4",
+ "host": "sandbox-02",
+ "inputs_sha256": {
+  "engineering/ecology_sims/common.py": "73722069f59f46b729a9f3e6d1f60a044c3fc202d62b6896470cf744e1731722",
+  "engineering/ecology_sims/fishbase_parsed.json": "e830a18ba282aa941b604246bd3787e1c899cbc5dbdd0ac68ec6fb8f941a9d42",
+  "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+  "engineering/simulation/controlled.py": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+  "data/fish-controls/daane2021_s1a_observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703",
+  "data/fish-controls/fish1990_tables.json": "5300c509abbbd8887fdbcde38c404cbfe24aa02597a2abc50f38c94ca6649b21",
+  "__script__": "2006f5a0de5aff23cf5c4b4e35f92392c104f5a6848ef99940fabd6cab3c92b9"
+ },
+ "inputs_hashed_at": "start",
+ "outputs_sha256": {
+  "site/artifacts/simulations/eco-escape-ecology/results.json": "040033e428638370c86491ab26b0480f67b6a06e9463b959049b0eaeba7852e7"
+ },
+ "elapsed_s": 13.719669818878174,
+ "dt": 0.004
+}

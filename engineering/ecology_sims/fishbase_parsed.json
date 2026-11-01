@@ -1,0 +1,152 @@
+{
+ "source": "FishBase (www.fishbase.se), species summary, length-weight and swimming-speed pages, fetched 2026-11-01 by claude-eco",
+ "licence_note": "FishBase content is CC BY-NC; only the parsed numbers below are kept, with page hashes; pages are not stored",
+ "read_level": "parsed directly from the fetched HTML (values not independently re-checked against FishBase's primary references)",
+ "species": {
+  "Coryphaena hippurus": {
+   "speccode": 6,
+   "summary_url": "https://www.fishbase.se/summary/Coryphaena-hippurus.html",
+   "summary_sha256": "59d19b22a6fdff841521e86c3a732a042f3fa9cf2949ce14eb0e9b4fb96a707b",
+   "size_text": "Size / Weight / Age Maturity: L m 55.8 , range 35 - 93.1 cm Max length : 210 cm TL male/unsexed; (Ref. 9846 ); common length : 100.0 cm TL male/unsexed; (Ref. 3390 ); max. published weight: 40.0 kg (Ref. 30874 ); max. reported age: 4 years (Ref. 2885 )",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=6",
+   "lw_sha256": "33939d16c81bf55a8cf23cb33502ac06a28f7b1879e1bcc97162c9022136fcd0",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality | 0.03000 | 2.530 | female | 74.0 - 158.0 | TL | 0.813 | Colombia | Pacific coast, 2014 | 0.05510 | 2.580 | male | 55.0 - 130.0 | FL | 19 | US of America | Straits of Florida | 0.04940 | 2.590 | female | 31.0 - 128.0 | FL | 325 | US of America | North Carolina | 0.04470 | 2.602 | unsexed | FL | South Africa | Unspecified | 0.04940 | 2.633 | female | FL | 0.931 | 35 | Panama | Panama Bight (including Colombia), 1994-96 | 0.04060 | 2.659 | male | FL | 0.874 | 100 | Panama | Panama Bight (including Colombia), 1994-96 | 0.00070 | 2.669 | Yes | Unsexed | FL | 933 | Brazil | Northeastern region, 1998-2000 | 0.03210 | 2.670 | mixed | 50.0 - 120.0 | FL | 56 | Cuba | Northwest Zone | 0.01900 | 2.688 | juvenile | 2.0 - 29.0 | FL | 9799 | Pacific | 0.02950 | 2.710 | female | 50.0 - 123.0 | FL | 40 | US of America | Straits of Florida | 0.03270 | 2.711 | unsexed | 48.3 - 130.5 | FL | Hawaii | Oahu, 1951-55 | 0.02500 | 2.730 | female | FL | 0.903 | 468 | Mexico | Southern Baja California, 1992-93 | 0.02810 | 2.750 | male | 27.5 - 135.0 | FL | 176 | US of America |",
+   "speed_url": "https://www.fishbase.se/physiology/SpeedList.php?ID=6",
+   "speed_sha256": "7ddc32f4a3ac2df1d9c8def94611fb9885984dc7dd4df474f0ce9fa64537e683",
+   "speed_rows": [
+    {
+     "length_cm": 67.0,
+     "length_type": "SL",
+     "speed_m_s": 0.56,
+     "speed_L_s": 0.84,
+     "mode": "sustained",
+     "fishbase_ref": 308
+    }
+   ]
+  },
+  "Thunnus albacares": {
+   "speccode": 143,
+   "summary_url": "https://www.fishbase.se/summary/Thunnus-albacares.html",
+   "summary_sha256": "0882b952b63b299b49eec4fdbb72695e56daba0650b78c1a1d5c8937b22bc13a",
+   "size_text": "Size / Weight / Age Maturity: L m 103.3 , range 78 - 158 cm Max length : 239 cm FL male/unsexed; (Ref. 40637 ); common length : 150 cm FL male/unsexed; (Ref. 168 ); max. published weight: 200.0 kg (Ref. 26550 ); max. reported age: 18 years (Ref. 137697 )",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=143",
+   "lw_sha256": "8c058815080d8927942e2aa611a0f6a7cdaca47e4553b3be465f2aee42ec29ec",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality | 0.07350 | 2.690 | unsexed | FL | South Africa | 0.00005 | 2.780 | unsexed | 78.0 - 185.0 | FL | 753 | Indonesia | FMA 573/2016 | 0.03136 | 2.780 | unsexed | TL | 0.920 | 0.851 | 5.6921 | 29 | Australia | Western Australia: Statewide, 2011-2016. | 0.03071 | 2.788 | unsexed | TL | 0.940 | 0.751 | 5.0736 | 15 | Australia | Western Australia: Gascoyne Coast, 2011-2016. | 0.05200 | 2.798 | unsexed | 47.0 - 172.0 | FL | 0.998 | 6 | Senegal | Dakar to Pointe Noire | 0.03533 | 2.846 | unsexed | 28.0 - 136.6 | TL | 0.957 | 0.068 | 0.1213 | 309 | India | Lakshadweep / 2015-2017 | 0.02780 | 2.855 | Unsexed | 55.0 - 150.0 | FL | 0.940 | 458 | Brazil | Northeastern region, 1992-2000 | 0.03710 | 2.858 | Unsexed | South Africa | Eastern Cape | 0.02280 | 2.944 | mixed | 34.0 - 185.0 | FL | 0.980 | 0.005 | 0.0116 | 14280 | Mexico | Cabo San Lucas, Baja California Sur / 1990-2015. | 0.02140 | 2.974 | unsexed | Eastern Atlantic Ocean | 0.02160 | 2.981 | unsexed | 1.000 | Hawaii | 0.02080 | 2.986 | unsexed | Somalia | Equatorial Western Indian Ocean | 0.01920 | 2.992 |",
+   "speed_url": "https://www.fishbase.se/physiology/SpeedList.php?ID=143",
+   "speed_sha256": "64017f65e5d0dab50e34aac85634c7efe21303928fc1b312e63e1a011ffbea67",
+   "speed_rows": [
+    {
+     "length_cm": 35.0,
+     "length_type": "SL",
+     "speed_m_s": 0.46,
+     "speed_L_s": 1.31,
+     "mode": "sustained",
+     "fishbase_ref": 308
+    },
+    {
+     "length_cm": 87.0,
+     "length_type": "SL",
+     "speed_m_s": 0.5,
+     "speed_L_s": 0.57,
+     "mode": "sustained",
+     "fishbase_ref": 308
+    },
+    {
+     "length_cm": 84.0,
+     "length_type": "SL",
+     "speed_m_s": 0.65,
+     "speed_L_s": 0.77,
+     "mode": "sustained",
+     "fishbase_ref": 308
+    },
+    {
+     "length_cm": 62.0,
+     "length_type": "SL",
+     "speed_m_s": 5.21,
+     "speed_L_s": 8.4,
+     "mode": "burst",
+     "fishbase_ref": 308
+    },
+    {
+     "length_cm": 66.0,
+     "length_type": "SL",
+     "speed_m_s": 12.41,
+     "speed_L_s": 18.8,
+     "mode": "burst",
+     "fishbase_ref": 308
+    },
+    {
+     "length_cm": 66.0,
+     "length_type": "SL",
+     "speed_m_s": 20.46,
+     "speed_L_s": 31.0,
+     "mode": "burst",
+     "fishbase_ref": 308
+    }
+   ]
+  },
+  "Cheilopogon furcatus": {
+   "speccode": 1028,
+   "summary_url": "https://www.fishbase.se/summary/Cheilopogon-furcatus.html",
+   "summary_sha256": "031a48dd95cd3762323e495b6b8e1451618a63aea70d4f599abbdf63f470bb5a",
+   "size_text": "Size / Weight / Age Maturity: L m ? range ? - ? cm Max length : 35.0 cm TL male/unsexed; (Ref. 5217 ); common length : 25.0 cm TL male/unsexed; (Ref. 5217 )",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=1028",
+   "lw_sha256": "98febea481ee63e26fd44bfab0126e5c57fbe0f2dcc675e430c43651aabbb502",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality | 0.01410 | 3.000 | unsexed | 8.2 - 23.7 | SL | 6 | Not given."
+  },
+  "Exocoetus volitans": {
+   "speccode": 1032,
+   "summary_url": "https://www.fishbase.se/summary/Exocoetus-volitans.html",
+   "summary_sha256": "3d1b914294dca3ad9e88d3b66baf04fb632e83657b6f7db8742eab5ce7072951",
+   "size_text": "Size / Weight / Age Maturity: L m ? range ? - ? cm Max length : 30.0 cm TL male/unsexed; (Ref. 9987 ); common length : 20.0 cm TL male/unsexed; (Ref. 5217 )",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=1032",
+   "lw_sha256": "d6b289f8e5f8c1a7bf92a0b30949f6868e703f490c9604023c93cf2f7bd9e7d6",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality | 0.01354 | 3.000 | unsexed | 14.5 - 15.9 | SL | 3 | Not given."
+  },
+  "Hirundichthys rondeleti": {
+   "speccode": 1035,
+   "summary_url": "https://www.fishbase.se/summary/Hirundichthys-rondeleti.html",
+   "summary_sha256": "f815340b08301fbf0d034c80d1b390719db45ac88d990179aee576588add1348",
+   "size_text": "Size / Weight / Age Maturity: L m ? range ? - ? cm Max length : 30.0 cm TL male/unsexed; (Ref. 7251 ); common length : 20.0 cm TL male/unsexed; (Ref. 3397 )",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=1035",
+   "lw_sha256": "5b2ef8731d6ee0e77010de9db4515dce0909afa10fd37c3a3e367bb78ff8764e",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality | 0.01456 | 3.000 | unsexed | 13.3 - 14.0 | SL | 3 | Not given."
+  },
+  "Hemiramphus brasiliensis": {
+   "speccode": 1059,
+   "summary_url": "https://www.fishbase.se/summary/Hemiramphus-brasiliensis.html",
+   "summary_sha256": "21884eee16a2a69e6b90a14fb198ee7089a6250807fecc7fec7fbb83d4981cfe",
+   "size_text": "Size / Weight / Age Maturity: L m 19.3 range ? - ? cm Max length : 55.0 cm TL male/unsexed; (Ref. 2683 ); common length : 35.0 cm TL male/unsexed; (Ref. 3633 ); max. published weight: 208.00 g (Ref. 132328 ); max. published weight: 208.00 g",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=1059",
+   "lw_sha256": "dee7ef2fa97bc536e94f6bdc957328d4473017c5e596ba37be14ec60fd1809c3",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality | 0.10500 | 2.356 | Yes | unsexed | 27.5 - 38.0 | TL | 1.000 | 0.144 | 0.0160 | 4 | US of America | Southern Florida | 0.00928 | 3.000 | unsexed | 15.1 - 20.9 | SL | 3 | Not given. | 0.00260 | 3.050 | female | 21.5 - 45.5 | TL | 0.950 | 0.020 | 0.0348 | 3241 | Mexico | North coast of the Yucatan Peninsula / 2019-2020. | 0.00260 | 3.060 | mixed | 20.0 - 45.5 | TL | 0.950 | 0.020 | 0.0348 | 5132 | Mexico | North coast of the Yucatan Peninsula / 2019-2020. | 0.00230 | 3.100 | male | 20.0 - 40.0 | TL | 0.940 | 0.030 | 0.0607 | 1891 | Mexico | North coast of the Yucatan Peninsula / 2019-2020. | 0.00388 | 3.132 | female | US of America | Dade County, Florida, 1974-76 | 0.00545 | 3.134 | Unsexed | 12.0 - 30.0 | FL | 1329 | Brazil | Pernambuco | 0.00170 | 3.172 | Mixed | 12.8 - 36.4 | TL | 0.977 | 0.490 | 34 | Grand Cul-de-Sac Marin Bay (Guadelopue) and Bay of Fort-de-France (Martinique) | 0.00212 | 3.249 | male | US of America | Dade County, Florida, 1974-76 | 0.00256 | 3.330 | unsexed | FL | Brazil | Northeast coast | 0.00122 | 3.370 | unsexed | 19.0 - 32.0"
+  },
+  "Hyporhamphus unifasciatus": {
+   "speccode": 1060,
+   "summary_url": "https://www.fishbase.se/summary/Hyporhamphus-unifasciatus.html",
+   "summary_sha256": "d55e1f10c65012bd296a057e7ba3720eca9eebc9b7c6df6db0edf02b76989f61",
+   "size_text": "Size / Weight / Age Maturity: L m 18.9 range ? - ? cm Max length : 29.5 cm TL male/unsexed; (Ref. 132328 ); 31.0 cm TL (female); common length : 20.0 cm SL male/unsexed; (Ref. 3723 ); max. published weight: 93.00 g (Ref. 132328 ); max. published weight: 93.00 g",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=1060",
+   "lw_sha256": "c6684beceabd6ae4886fa6d3f351e2ffe8e4cab222f85863393177e0b119fee1",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality | 0.00800 | 2.760 | unsexed | 4.4 - 22.0 | SL | 0.899 | 201 | Mexico | El Conchalito swamp, Baja California, 1996-98 | 0.00632 | 3.000 | unsexed | 13.7 - 16.2 | SL | 3 | Not given. | 0.00300 | 3.000 | unsexed | 5.0 - 25.5 | SL | 0.0000 | 173 | Mexico | unprotected Yucatan Coastal Biological Corridor, southern Gulf of Mexico / 2001-2004. | 0.00250 | 3.110 | female | 21.0 - 31.0 | TL | 0.950 | 0.280 | 0.3979 | 30 | Mexico | North coast of the Yucatan Peninsula / 2019-2020. | 0.00240 | 3.130 | mixed | 20.0 - 31.0 | TL | 0.940 | 0.200 | 0.2663 | 67 | Mexico | North coast of the Yucatan Peninsula / 2019-2020. | 0.00100 | 3.230 | unsexed | 6.2 - 20.2 | TL | 0.970 | 0.543 | 94 | Brazil | Marica, Sacuarema, Araruama coastal lagoons, South western Brazil / 2011. | 0.00120 | 3.262 | Mixed | 8.3 - 18.9 | TL | 0.924 | 0.907 | 201 | Grand Cul-de-Sac Marin Bay (Guadelopue) and Bay of Fort-de-France (Martinique) | 0.00140 | 3.300 | male | 20.0 - 29.5 | TL | 0.960 | 0.240 | 0.3010 | 37 | Mexico | North coast of the Yucatan Peninsula / 2019-2020. | 0.00209 | 3.320 | U"
+  },
+  "Oxyporhamphus micropterus": {
+   "speccode": 12112,
+   "summary_url": "https://www.fishbase.se/summary/Oxyporhamphus-micropterus.html",
+   "summary_sha256": "c02509ed00c096d29442f1a640d45807e671982c067cbdd94d50fa4d2655eb60",
+   "size_text": "Size / Weight / Age Maturity: L m 12.8 , range 13 - 13 cm Max length : 18.5 cm SL male/unsexed; (Ref. 9843 )",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=12112",
+   "lw_sha256": "621df70e64f01a8f8f8ca3cfdc508562a140e9b4d58c852e2945a2e5c1794f75",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality | 0.01091 | 3.000 | unsexed | 11.4 - 12.9 | SL | 3 | Not given."
+  },
+  "Euleptorhamphus velox": {
+   "speccode": 3155,
+   "summary_url": "https://www.fishbase.se/summary/Euleptorhamphus-velox.html",
+   "summary_sha256": "7ee9043830094fd992c8469df5bc12a4c87c9b4816c16ffba551f779a8c12b23",
+   "size_text": "Size / Weight / Age Maturity: L m ? range ? - ? cm Max length : 61.0 cm TL male/unsexed; (Ref. 26340 ); common length : 35.0 cm TL male/unsexed; (Ref. 5217 )",
+   "lw_url": "https://www.fishbase.se/popdyn/LWRelationshipList.php?ID=3155",
+   "lw_sha256": "ac31698f9d567b89113325897a2d056734c65f0ba246a8fe872e358f3be13be9",
+   "lw_rows_text": "Locality | Score | a | b | Doubtful? | Sex | Length (cm) | Length | type | r | 2 | SD b | SD log | 10 | a | n | Territory | Locality"
+  }
+ }
+}
