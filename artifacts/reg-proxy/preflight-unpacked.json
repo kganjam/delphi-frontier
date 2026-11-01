@@ -63,6 +63,11 @@
    "detail": "11 controls (1 reporter-negative), no LEN window, 10 libraries, source table hash pinned"
   },
   {
+   "control": "independent htslib cross-check",
+   "passed": true,
+   "detail": "86 windows counted from an htslib-written index and file equal htslib's own fetch counts (pysam 0.24.1 / htslib 1.24); real 0dpa1 index contig list equals htslib's (26)"
+  },
+  {
    "control": "HTTP transport path equals oracle and logs every request",
    "passed": true,
    "detail": "HTTP Range path equals oracle with 2 logged requests"
@@ -90,7 +95,7 @@
   {
    "control": "declared second attempt after IncompleteRead",
    "passed": true,
-   "detail": "one IncompleteRead then success: both attempts logged (declared max 2)"
+   "detail": "one IncompleteRead (7 bytes) then success: both attempts logged and the 7 failed bytes are charged (107 total)"
   },
   {
    "control": "host allowlist",
@@ -100,12 +105,47 @@
   {
    "control": "end-to-end run keeps every row and refuses output reuse",
    "passed": true,
-   "detail": "run wrote results+receipt, retained 6 rows incl. failures; reuse of output dir refused"
+   "detail": "one unreadable window -> partial_data (6 expected, 6 present, 5 usable), the failed row kept; reuse of output dir refused"
   },
   {
    "control": "request bound stops the run and keeps partial rows",
    "passed": true,
    "detail": "request bound 1 -> stopped_on_bound after 1 requests; 1 rows kept"
+  },
+  {
+   "control": "HTTP 200 refused without consuming the body",
+   "passed": true,
+   "detail": "HTTP 200 from a server that streams forever: refused on status, 0 body bytes read or charged (server wrote 0 KiB into socket buffers)"
+  },
+  {
+   "control": "oversized 206 body bounded and charged",
+   "passed": true,
+   "detail": "206 body longer than its range: read stops at expected+1 (101), refused, 101 bytes charged"
+  },
+  {
+   "control": "failed and retried reads consume budget",
+   "passed": true,
+   "detail": "short body: both attempts charged (198 bytes, 2 requests)"
+  },
+  {
+   "control": "IncompleteRead partial bytes are charged",
+   "passed": true,
+   "detail": "chunked body cut after 7 bytes (http.client IncompleteRead): 7 bytes charged per attempt, 2 attempts, 14 total"
+  },
+  {
+   "control": "caps refuse a request before it is sent",
+   "passed": true,
+   "detail": "a 100-byte request against a 50-byte window, library or total cap is refused before it is sent"
+  },
+  {
+   "control": "index download is charged to the library",
+   "passed": true,
+   "detail": "index bytes count against the library ledger: the next read is refused (library_byte_cap) and the run is partial_data"
+  },
+  {
+   "control": "completion status needs all identities present and usable",
+   "passed": true,
+   "detail": "complete only with every identity present and usable (exit 0); error -> stopped_on_error (4); bound -> stopped_on_bound (2) with missing identities listed; real manifest expects 330"
   }
  ]
 }

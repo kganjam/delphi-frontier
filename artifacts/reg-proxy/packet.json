@@ -1,8 +1,9 @@
 {
+ "amendment_sha256": "048e4745f78462a43bf6790a8d7d8a528f4b9c81cb10c0cfbd41d037e5657637",
  "archive": {
-  "bytes": 508781,
+  "bytes": 563190,
   "path": "artifacts/reg-proxy/packet.tar.gz",
-  "sha256": "b59f3501a2d444b410478cd04f035584ef6eae891f90c2c590461aef7d70eb3f"
+  "sha256": "a06c88ad31cb36a33cea5c3e36c063d38d0a27cec00ab5602ddce5b29ef820fb"
  },
  "contract": {
   "COPS_OUT": "exact fresh output directory (must not exist)",
@@ -11,7 +12,7 @@
   "memory_bytes": 4294967296,
   "network": "ftp.ncbi.nlm.nih.gov over https, HTTP byte ranges only; bounds in protocol.json",
   "numeric_threads": 1,
-  "retries": "declared max 2 attempts per request, each logged; no other retry",
+  "retries": "declared max 2 attempts per request, each logged and charged; no other retry",
   "tasks_max": 128,
   "workers": 1
  },
@@ -25,6 +26,13 @@
   "--out",
   "$COPS_OUT"
  ],
+ "exit_codes": {
+  "0": "complete (330/330 usable)",
+  "1": "preflight failed",
+  "2": "stopped_on_bound",
+  "3": "partial_data",
+  "4": "stopped_on_error"
+ },
  "extract": "into a NEW empty directory; run every command with that directory as cwd",
  "members": [
   {
@@ -38,14 +46,14 @@
    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   {
-   "bytes": 15929,
+   "bytes": 19638,
    "path": "engineering/reg_proxy/window_count.py",
-   "sha256": "b266fb33fe74978e7fb3da935a02119fc88f7ddb5b0125fa9d6aebacfe6eb2ed"
+   "sha256": "8e0a109014ee2752ca5231ad66f3da531c131be0ad7b0e9f4303920ae7324177"
   },
   {
-   "bytes": 19584,
+   "bytes": 30348,
    "path": "engineering/reg_proxy/controls_synth.py",
-   "sha256": "0a501385f014d5be3c69df65dc09694e51e56a4984d56b3fd7f341d69a878515"
+   "sha256": "bd0f91987941cb8cc2442527352214e34e293640430c8925608ea777c7799e7d"
   },
   {
    "bytes": 4920,
@@ -58,9 +66,29 @@
    "sha256": "621bb6c12f0397092f97ea99ea5f1b923f3300272d6c865bd1b9a834a7150db1"
   },
   {
+   "bytes": 2651,
+   "path": "engineering/reg_proxy/transport_amendment.json",
+   "sha256": "048e4745f78462a43bf6790a8d7d8a528f4b9c81cb10c0cfbd41d037e5657637"
+  },
+  {
    "bytes": 492634,
    "path": "engineering/reg_proxy/fixtures/GSM8153942_0dpa1_atac_fragments.tsv.gz.tbi.gz",
    "sha256": "f456acb07e507e2d9dbef1bb25e2081b61437aaa495870d0f6d79629e9f92e19"
+  },
+  {
+   "bytes": 47942,
+   "path": "engineering/reg_proxy/fixtures/htslib_fixture.tsv.gz",
+   "sha256": "99f2b2d631b8a9b32aac53665741977af0c5ac99a0f42b61202a54a0d9e7b4f6"
+  },
+  {
+   "bytes": 208,
+   "path": "engineering/reg_proxy/fixtures/htslib_fixture.tsv.gz.tbi",
+   "sha256": "50fcd467a42f6809401516e4a05aaeba2700c6fba317b2192f60ed53be774bc0"
+  },
+  {
+   "bytes": 10358,
+   "path": "engineering/reg_proxy/fixtures/htslib_expected.json",
+   "sha256": "cf7b4f9d35e94231cbb3b7340004b672e86f12f831884f4325ebbf835c2507ee"
   }
  ],
  "outputs": [
@@ -77,5 +105,5 @@
  "protocol_sha256": "7a2ec7be0132fe77140ad3647e229400affe74698f53d4b059954e35dc723dc5",
  "python": ">=3.10",
  "schema": "frontier.reg-proxy.packet/1",
- "source_commit": "6048ee7fc729074ec5fdcc6f2b06c5798e65a66b"
+ "source_commit": "cfd17599454bde08f1904493023c7985050b2a63"
 }
