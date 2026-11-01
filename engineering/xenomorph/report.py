@@ -158,7 +158,7 @@ def main():
     for pair in a.sweeps:
         dpath, cpath = pair.split(":")
         cfg = json.loads(Path(cpath).read_text())
-        sw[Path(dpath).name] = offlattice(Path(dpath) / "trajectory.npz", cfg)
+        sw[Path(dpath).parent.name] = offlattice(Path(dpath) / "trajectory.npz", cfg)
     if sw:
         (out / "offlattice_summary.json").write_text(json.dumps(sw, indent=1) + "\n")
     print(json.dumps({k: (g.get("pass") if isinstance(g, dict) else g) for k, g in v["frozen_gates_scale1"].items()}))

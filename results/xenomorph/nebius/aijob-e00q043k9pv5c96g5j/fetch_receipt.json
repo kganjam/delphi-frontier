@@ -1,0 +1,78 @@
+{
+ "job": "aijob-e00q043k9pv5c96g5j",
+ "parts": [
+  {
+   "part": "zerocc-s1-x1.0",
+   "bytes": 313949,
+   "declared_bytes": 313949,
+   "sha256": "fbacdc647d3d6143b8ee9f3ea5cb670021ab301fd97d2e87b04c4664d2f4f7d5",
+   "sha_ok": true
+  },
+  {
+   "part": "zerocc-s2-x1.0",
+   "bytes": 169624,
+   "declared_bytes": 169624,
+   "sha256": "fc9f82eeb28e7f26e5a207147e102b625b6d4dd05237fd4bad87e4a5a8427e4f",
+   "sha_ok": true
+  },
+  {
+   "part": "equalcc-s1-x1.0",
+   "bytes": 297318,
+   "declared_bytes": 297318,
+   "sha256": "efd5c5c3bf52c606c161d1c5eee466b6bfe503af677b83cf6d40263d4818c614",
+   "sha_ok": true
+  },
+  {
+   "part": "equalcc-s2-x1.0",
+   "bytes": 160754,
+   "declared_bytes": 160754,
+   "sha256": "a484fdbe5a3b636a15fa493ca6b7b36344abc13288819d54d17e4e3dc8cc3c7f",
+   "sha_ok": true
+  },
+  {
+   "part": "dahcc-s2-x1.0",
+   "bytes": 170290,
+   "declared_bytes": 170290,
+   "sha256": "09bf4034cb0f1e0588661cc4d2a5f0669b899533581b4cd4d6fbdf588f125b8e",
+   "sha_ok": true
+  },
+  {
+   "part": "dahcc-s1-x1.0",
+   "bytes": 324397,
+   "declared_bytes": 324397,
+   "sha256": "8c52caa97916907b157aa8bde24ba8a798b829ec280194749f6f73cf4d2cd2ad",
+   "sha_ok": true
+  },
+  {
+   "part": "sizesweep",
+   "bytes": 1045248,
+   "declared_bytes": 1045248,
+   "sha256": "742cd23f0b8027dbb9b33ecea162ac96ba5c425df213a05ed0dba83592fd261c",
+   "sha_ok": true
+  }
+ ],
+ "status_lines": [
+  "XM_START 2026-11-01T16:54:39Z nproc=40",
+  "XM_BUNDLE c2bae3c2672e8641f8bf23a197341b9e2c026bf622acf71acf1e8524542c7405  /in/bundle.b64",
+  "XM_INPUT e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  engineering/xenomorph/__init__.py",
+  "XM_INPUT 131eaaf53b52474b3b57465781aacf5ac87ff4f8807ecd646191d13c2395e986  engineering/xenomorph/analyze.py",
+  "XM_INPUT b54f2cc2462688a0670f909e9f4df6dbe012c0dca8a811f10940057d16945a07  engineering/xenomorph/cpm_model.py",
+  "XM_INPUT fe6ac40daa22bb84221662d6868f026b79cc5d4e9829ec87a820da45bfdd39df  engineering/xenomorph/offlattice.py",
+  "XM_INPUT ade348ce1d8f92c859c5f008ec834690e85e6e9a65b8f4cde6eee5a007096127  engineering/xenomorph/offlattice_size_sweep.json",
+  "XM_INPUT 18db4347f05c274ea5aec5b3ce4a9c30e1a2d5b911ddb2c0fd7f6bd906342288  engineering/xenomorph/pack_fields.py",
+  "XM_INPUT b4e329baeb9a1274f4ef01c984a2d3066bbfca205f15769b71f23e7ec97a3e4f  engineering/xenomorph/protocol.json",
+  "XM_PY 2.1.2 2.5.1+cu124 True",
+  "XM_BINARY 3d9a6e5a4cb86824b745500df1474596d39cce5deed24f767c0841df0f94d5ad  /w/morpheus-2.3.9",
+  "XM_RUN_DONE zero s1 x1.0 run=0 analyze=0 pack=0 17:04:55",
+  "XM_RUN_DONE zero s2 x1.0 run=0 analyze=0 pack=0 17:05:03",
+  "XM_RUN_DONE equal s1 x1.0 run=0 analyze=0 pack=0 17:05:13",
+  "XM_RUN_DONE equal s2 x1.0 run=0 analyze=0 pack=0 17:05:17",
+  "XM_RUN_DONE dah s2 x1.0 run=0 analyze=0 pack=0 17:05:48",
+  "XM_RUN_DONE dah s1 x1.0 run=0 analyze=0 pack=0 17:05:59",
+  "XM_SWEEP_DONE sweep_exit=0 17:22:49",
+  "XM_ALL_DONE 2026-11-01T17:22:50Z"
+ ],
+ "job_log_sha256": "8ad767531e3bd19afe6c8d0203491beb217f0c696a88ee31cc42a9e78973a220",
+ "job_log_bytes": 3339247,
+ "job_log_note": "raw log (base64 parts) not committed; decoded parts are under results/xenomorph/runs and results/xenomorph/sweeps"
+}

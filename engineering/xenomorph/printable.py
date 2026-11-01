@@ -207,9 +207,19 @@ def sha(p: Path) -> str:
     return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
+SIMPLIFY_MM = (1e-3, 1e-2, 5e-2)  # escalating sliver-collapse tolerances (mm), all >= 20x below the 1 mm wall rule
+
+
 def export(m: mf.Manifold, path: Path, header: str, pieces_without_struts: int | None) -> dict:
     m, cav = fill_cavities(m)
-    V, T, weld = arrays(m)
+    for tol in SIMPLIFY_MM:  # boolean unions can leave sub-1e-10 mm^2 slivers; collapse them, keep the first clean one
+        ms = m.simplify(tol)
+        V, T, weld = arrays(ms)
+        tri = V[T]
+        area = 0.5 * np.linalg.norm(np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0]), axis=1)
+        if not (area < 1e-10).any():
+            break
+    weld["simplify_tolerance_mm"] = tol
     V = V - V.min(axis=0)  # sit on the build plate origin
     chk = VAL.check(V, T, BOX_MM, thickness=True, min_wall_mm=MIN_WALL_MM)
     data = VAL.stl_bytes(V, T, header)
