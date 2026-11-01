@@ -1,0 +1,57 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "candidate_id": "fish3d-v3a",
+  "decision": "whether the mechanical slice of the assembly may be used as a numerical stand-in; never whether the fin or animal works",
+  "endpoint": "end-loaded cantilever tip deflection and slope at the declared point, small-deflection domain",
+  "id": "vp-mech-end-loaded-cantilever",
+  "protocol_sha256": "eef454f1614e67f76b0645999a352d5e15879c2870a4406322adb7ca33d5521d",
+  "required_checks": [
+    {
+      "endpoint": true,
+      "executable": true,
+      "id": "c-fem-vs-analytic",
+      "interface": null,
+      "kind": "executed",
+      "layer": "shape_mechanics",
+      "what": "end-loaded FEM tip deflection and slope equal P L^3/(3EI) and P L^2/(2EI) at the declared point"
+    },
+    {
+      "endpoint": false,
+      "executable": true,
+      "id": "c-negative-controls",
+      "interface": null,
+      "kind": "executed",
+      "layer": "shape_mechanics",
+      "what": "a law mutant, a unit mutant, a context mix-up and a domain exit are each refused for their intended reason"
+    },
+    {
+      "endpoint": false,
+      "executable": true,
+      "id": "c-virtual-V1",
+      "interface": null,
+      "kind": "executed",
+      "layer": "shape_mechanics",
+      "what": "V1-saved-deflection-section@1 on the saved FEM section"
+    },
+    {
+      "endpoint": false,
+      "executable": true,
+      "id": "c-virtual-V2",
+      "interface": null,
+      "kind": "executed",
+      "layer": "shape_mechanics",
+      "what": "V2-saved-tip-and-slope@1 on the saved FEM summary"
+    },
+    {
+      "endpoint": false,
+      "executable": true,
+      "id": "c-reused-receipt",
+      "interface": null,
+      "kind": "reused",
+      "layer": "shape_mechanics",
+      "what": "the pinned fin_mechanics receipt and the pinned analytic controls hold"
+    }
+  ],
+  "schema": "frontier.validation-plan/1",
+  "version": 1
+}

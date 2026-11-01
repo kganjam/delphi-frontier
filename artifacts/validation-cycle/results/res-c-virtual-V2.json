@@ -1,0 +1,27 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "cases": {
+    "negative": 1,
+    "negative_rejected": true,
+    "positive": 1
+  },
+  "check_id": "c-virtual-V2",
+  "execution": {
+    "kind": "executed",
+    "ok": true,
+    "tolerance": 1e-07,
+    "value": 1.321274224289996e-09
+  },
+  "licenses": "V2-saved-tip-and-slope@1 on this saved summary",
+  "plan_id": "vp-mech-end-loaded-cantilever",
+  "plan_version": 1,
+  "reused_pin": null,
+  "schema": "frontier.validation-result/1",
+  "scope": "one saved simulated case; not a biological replicate",
+  "status": "pass",
+  "validator": {
+    "dependence_identity": "shares fin_mechanics.beam with the producer; no shared run, data or output",
+    "identity": "validation-cycle replay",
+    "role": "independent checker (same repository code, recomputed)"
+  }
+}

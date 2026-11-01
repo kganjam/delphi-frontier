@@ -1,0 +1,19 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "candidate_id": "fish3d-v3a",
+  "decision": "whether any functional claim may be made",
+  "endpoint": "calibrated EI of the candidate's rays in the stated tissue and stage",
+  "id": "vp-bio-bridge-growth-to-EI",
+  "required_checks": [
+    {
+      "endpoint": true,
+      "executable": false,
+      "id": "c-growth-to-EI",
+      "interface": "I3",
+      "kind": "not_run",
+      "what": "a calibrated EI of the candidate's rays in the stated tissue and stage, with unit and bounds; EI is an assumed range here"
+    }
+  ],
+  "schema": "frontier.validation-plan/1",
+  "version": 1
+}

@@ -1,0 +1,64 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "cases": {
+    "negative": 6,
+    "negative_rejected": true,
+    "positive": 1
+  },
+  "check_id": "c-negative-controls",
+  "execution": {
+    "controls": [
+      {
+        "id": "law:uniform-load law applied to an end load",
+        "intended_failure": "closed form disagrees with independent quadrature",
+        "observed_rel_residual": 0.94375,
+        "rejected": true
+      },
+      {
+        "id": "law:L^3 -> L^2 mutation",
+        "intended_failure": "closed form disagrees with independent quadrature",
+        "observed_rel_residual": 5.666666666666667,
+        "rejected": true
+      },
+      {
+        "id": "unit:EI in N mm^2",
+        "intended_failure": "unit mismatch with the declared N m^2",
+        "observed_unit": "N mm^2",
+        "ratio_if_misread": 1.0000000000000002e-06,
+        "rejected": true,
+        "unit_accepted": false
+      },
+      {
+        "id": "context:uniformly loaded claim",
+        "intended_failure": "wrong load case for the slice",
+        "rejected": true,
+        "uniform_over_end_tip_ratio": 0.3750000000000001
+      },
+      {
+        "id": "domain:EI below critical",
+        "intended_failure": "small-deformation limit exceeded",
+        "refusal": "LINEAR_MODEL_INVALID_SMALL_DEFORMATION_VIOLATED: tip/L=0.2 (limit 0.1), slope=0.3 rad (limit 0.2)",
+        "rejected": true
+      },
+      {
+        "id": "context:uniform-load critical EI used for the end load",
+        "intended_failure": "wrong load case for the stiffness threshold",
+        "refusal": "LINEAR_MODEL_INVALID_SMALL_DEFORMATION_VIOLATED: tip/L=0.1333 (limit 0.1), slope=0.2 rad (limit 0.2)",
+        "rejected": true
+      }
+    ],
+    "kind": "executed"
+  },
+  "licenses": "the slice refuses the wrong law, the wrong unit, the wrong load case and a domain exit",
+  "plan_id": "vp-mech-end-loaded-cantilever",
+  "plan_version": 1,
+  "reused_pin": null,
+  "schema": "frontier.validation-result/1",
+  "scope": "law, unit, context and domain controls for this slice",
+  "status": "pass",
+  "validator": {
+    "dependence_identity": "shares fin_mechanics.beam with the producer; no shared run, data or output",
+    "identity": "validation-cycle replay",
+    "role": "independent checker (same repository code, recomputed)"
+  }
+}

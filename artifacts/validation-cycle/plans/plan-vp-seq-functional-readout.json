@@ -1,0 +1,19 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "candidate_id": "fish3d-v3a",
+  "decision": "whether any functional claim may be made",
+  "endpoint": "matched functional readout of the exact tested sequence in the stated context",
+  "id": "vp-seq-functional-readout",
+  "required_checks": [
+    {
+      "endpoint": true,
+      "executable": false,
+      "id": "c-functional-readout",
+      "interface": "I1",
+      "kind": "not_run",
+      "what": "GRCz11 coordinates for the tested element are unresolved in the ledger"
+    }
+  ],
+  "schema": "frontier.validation-plan/1",
+  "version": 1
+}

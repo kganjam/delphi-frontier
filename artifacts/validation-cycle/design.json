@@ -1,0 +1,252 @@
+{
+  "checked_layers": [
+    {
+      "id": "regulatory-map",
+      "node": "expression",
+      "pins": [
+        {
+          "path": "artifacts/fish-regulatory-map/map.json",
+          "sha256": "f7782821dd36f2726faecf7d89b5eb7e2a145ff61ec9e0b71503225030525d0e"
+        }
+      ]
+    },
+    {
+      "id": "fin-mechanics-numerical",
+      "node": "shape_mechanics",
+      "pins": [
+        {
+          "path": "engineering/fin_mechanics/artifacts/result.json",
+          "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+        }
+      ]
+    },
+    {
+      "id": "aero-numerical",
+      "node": "performance",
+      "pins": [
+        {
+          "path": "artifacts/cfd3d/vlm/fish3d-v3a-fan/vlm.json",
+          "sha256": "4b11b6221547005ee57a35e394a3a642680cdecd18c740b624b8b929a82db7f7"
+        }
+      ]
+    },
+    {
+      "id": "observed-allometry-update",
+      "node": "organism_context",
+      "pins": [
+        {
+          "path": "artifacts/observed-allometry/run/update.json",
+          "sha256": "75264dce2491c236840ee4008972b0244e2a21b364c5db3c78354b2daedc41dc"
+        }
+      ]
+    }
+  ],
+  "claim": "working_assembly",
+  "context": {
+    "allele": "none: no sequence is claimed",
+    "cell_state": "not applicable to the mechanical slice",
+    "condition": "static end load, small deflection",
+    "construct_context": "none: the sequence reference is unresolved",
+    "life_stage": "not established",
+    "species": "not established: a design candidate, not an organism",
+    "tissue": "fin ray modelled as a constant-EI cantilever (assumed)"
+  },
+  "id": "validation-cycle-fish3d-v3a",
+  "interface_evidence": [],
+  "schema": "frontier.biodesign.genotype-design/1",
+  "sequence_candidates": [],
+  "validation_plans": [
+    {
+      "candidate_id": "fish3d-v3a",
+      "decision": "whether the mechanical slice of the assembly may be used as a numerical stand-in; never whether the fin or animal works",
+      "endpoint": "end-loaded cantilever tip deflection and slope at the declared point, small-deflection domain",
+      "id": "vp-mech-end-loaded-cantilever",
+      "ref": {
+        "path": "artifacts/validation-cycle/plans/plan-vp-mech-end-loaded-cantilever.json",
+        "sha256": "f9719772594299b308d78d9d5d21ea0b31e4c30bebcbbfd38e528606498ab5e5"
+      },
+      "required_checks": [
+        {
+          "endpoint": true,
+          "executable": true,
+          "id": "c-fem-vs-analytic",
+          "interface": null,
+          "kind": "executed",
+          "layer": "shape_mechanics",
+          "what": "end-loaded FEM tip deflection and slope equal P L^3/(3EI) and P L^2/(2EI) at the declared point"
+        },
+        {
+          "endpoint": false,
+          "executable": true,
+          "id": "c-negative-controls",
+          "interface": null,
+          "kind": "executed",
+          "layer": "shape_mechanics",
+          "what": "a law mutant, a unit mutant, a context mix-up and a domain exit are each refused for their intended reason"
+        },
+        {
+          "endpoint": false,
+          "executable": true,
+          "id": "c-virtual-V1",
+          "interface": null,
+          "kind": "executed",
+          "layer": "shape_mechanics",
+          "what": "V1-saved-deflection-section@1 on the saved FEM section"
+        },
+        {
+          "endpoint": false,
+          "executable": true,
+          "id": "c-virtual-V2",
+          "interface": null,
+          "kind": "executed",
+          "layer": "shape_mechanics",
+          "what": "V2-saved-tip-and-slope@1 on the saved FEM summary"
+        },
+        {
+          "endpoint": false,
+          "executable": true,
+          "id": "c-reused-receipt",
+          "interface": null,
+          "kind": "reused",
+          "layer": "shape_mechanics",
+          "what": "the pinned fin_mechanics receipt and the pinned analytic controls hold"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "candidate_id": "fish3d-v3a",
+      "decision": "whether any functional claim may be made",
+      "endpoint": "calibrated EI of the candidate's rays in the stated tissue and stage",
+      "id": "vp-bio-bridge-growth-to-EI",
+      "ref": {
+        "path": "artifacts/validation-cycle/plans/plan-vp-bio-bridge-growth-to-EI.json",
+        "sha256": "8c37298f906759818f696e0f3313dcf33c6bce2aca0ab4584b4eff8a28d46134"
+      },
+      "required_checks": [
+        {
+          "endpoint": true,
+          "executable": false,
+          "id": "c-growth-to-EI",
+          "interface": "I3",
+          "kind": "not_run",
+          "what": "a calibrated EI of the candidate's rays in the stated tissue and stage, with unit and bounds; EI is an assumed range here"
+        }
+      ],
+      "version": 1
+    },
+    {
+      "candidate_id": "fish3d-v3a",
+      "decision": "whether any functional claim may be made",
+      "endpoint": "matched functional readout of the exact tested sequence in the stated context",
+      "id": "vp-seq-functional-readout",
+      "ref": {
+        "path": "artifacts/validation-cycle/plans/plan-vp-seq-functional-readout.json",
+        "sha256": "3624d16cd2cd36e3ed546f053b56d517218ce090ac49dc7289915cc201e764db"
+      },
+      "required_checks": [
+        {
+          "endpoint": true,
+          "executable": false,
+          "id": "c-functional-readout",
+          "interface": "I1",
+          "kind": "not_run",
+          "what": "GRCz11 coordinates for the tested element are unresolved in the ledger"
+        }
+      ],
+      "version": 1
+    }
+  ],
+  "validation_results": [
+    {
+      "candidate_sequence_sha256": null,
+      "cases": {
+        "negative": 6,
+        "negative_rejected": true,
+        "positive": 2
+      },
+      "check_id": "c-fem-vs-analytic",
+      "licenses": "the end-loaded FEM equals the closed form at this point, inside the small-deflection domain",
+      "plan_id": "vp-mech-end-loaded-cantilever",
+      "plan_version": 1,
+      "ref": {
+        "path": "artifacts/validation-cycle/results/res-c-fem-vs-analytic.json",
+        "sha256": "eef33c7b7e20ec7a640cc9b946b4a757c1c6b8b13688f65aca108fc81d56d604"
+      },
+      "scope": "the declared point only (EI = 2 x the end-loaded critical value, assumed)",
+      "status": "pass"
+    },
+    {
+      "candidate_sequence_sha256": null,
+      "cases": {
+        "negative": 6,
+        "negative_rejected": true,
+        "positive": 1
+      },
+      "check_id": "c-negative-controls",
+      "licenses": "the slice refuses the wrong law, the wrong unit, the wrong load case and a domain exit",
+      "plan_id": "vp-mech-end-loaded-cantilever",
+      "plan_version": 1,
+      "ref": {
+        "path": "artifacts/validation-cycle/results/res-c-negative-controls.json",
+        "sha256": "2c1bbbe18b6a91badfa1743987df7c0fbd676ce149515329745750b7cbd9c9a2"
+      },
+      "scope": "law, unit, context and domain controls for this slice",
+      "status": "pass"
+    },
+    {
+      "candidate_sequence_sha256": null,
+      "cases": {
+        "negative": 1,
+        "negative_rejected": true,
+        "positive": 1
+      },
+      "check_id": "c-virtual-V1",
+      "licenses": "V1-saved-deflection-section@1 on this saved section",
+      "plan_id": "vp-mech-end-loaded-cantilever",
+      "plan_version": 1,
+      "ref": {
+        "path": "artifacts/validation-cycle/results/res-c-virtual-V1.json",
+        "sha256": "ab0a2e8688a9986df368ef5b4b365cb631e82a3b0fd8d2546a9cbee9f109b557"
+      },
+      "scope": "one saved simulated case; not a biological replicate",
+      "status": "pass"
+    },
+    {
+      "candidate_sequence_sha256": null,
+      "cases": {
+        "negative": 1,
+        "negative_rejected": true,
+        "positive": 1
+      },
+      "check_id": "c-virtual-V2",
+      "licenses": "V2-saved-tip-and-slope@1 on this saved summary",
+      "plan_id": "vp-mech-end-loaded-cantilever",
+      "plan_version": 1,
+      "ref": {
+        "path": "artifacts/validation-cycle/results/res-c-virtual-V2.json",
+        "sha256": "c30ca1d9311034a0386266d5fc7de7996a1011b828cfa177d287036f95785ae3"
+      },
+      "scope": "one saved simulated case; not a biological replicate",
+      "status": "pass"
+    },
+    {
+      "candidate_sequence_sha256": null,
+      "cases": {
+        "negative": 1,
+        "negative_rejected": true,
+        "positive": 3
+      },
+      "check_id": "c-reused-receipt",
+      "licenses": "the producer's recorded controls held (analytic residuals, FEM vs analytic over the sweep)",
+      "plan_id": "vp-mech-end-loaded-cantilever",
+      "plan_version": 1,
+      "ref": {
+        "path": "artifacts/validation-cycle/results/res-c-reused-receipt.json",
+        "sha256": "efa166c765dfe45f3a05b73e3c9028eaeece6514d2ef5780999b59fe776ff1e6"
+      },
+      "scope": "the pinned receipt only; not rerun here",
+      "status": "pass"
+    }
+  ]
+}

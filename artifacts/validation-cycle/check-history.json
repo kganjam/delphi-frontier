@@ -1,0 +1,951 @@
+{
+  "candidate": "fish3d-v3a",
+  "checks": [
+    {
+      "endpoint": true,
+      "id": "c-fem-vs-analytic",
+      "kind": "executed",
+      "pin": {
+        "result": {
+          "path": "artifacts/validation-cycle/results/res-c-fem-vs-analytic.json",
+          "sha256": "eef33c7b7e20ec7a640cc9b946b4a757c1c6b8b13688f65aca108fc81d56d604"
+        }
+      },
+      "status": "pass",
+      "what": "end-loaded FEM tip deflection and slope equal P L^3/(3EI) and P L^2/(2EI) at the declared point"
+    },
+    {
+      "endpoint": false,
+      "id": "c-negative-controls",
+      "kind": "executed",
+      "pin": {
+        "result": {
+          "path": "artifacts/validation-cycle/results/res-c-negative-controls.json",
+          "sha256": "2c1bbbe18b6a91badfa1743987df7c0fbd676ce149515329745750b7cbd9c9a2"
+        }
+      },
+      "status": "pass",
+      "what": "a law mutant, a unit mutant, a context mix-up and a domain exit are each refused for their intended reason"
+    },
+    {
+      "endpoint": false,
+      "id": "c-virtual-V1",
+      "kind": "executed",
+      "pin": {
+        "result": {
+          "path": "artifacts/validation-cycle/results/res-c-virtual-V1.json",
+          "sha256": "ab0a2e8688a9986df368ef5b4b365cb631e82a3b0fd8d2546a9cbee9f109b557"
+        }
+      },
+      "status": "pass",
+      "what": "V1-saved-deflection-section@1 on the saved FEM section"
+    },
+    {
+      "endpoint": false,
+      "id": "c-virtual-V2",
+      "kind": "executed",
+      "pin": {
+        "result": {
+          "path": "artifacts/validation-cycle/results/res-c-virtual-V2.json",
+          "sha256": "c30ca1d9311034a0386266d5fc7de7996a1011b828cfa177d287036f95785ae3"
+        }
+      },
+      "status": "pass",
+      "what": "V2-saved-tip-and-slope@1 on the saved FEM summary"
+    },
+    {
+      "endpoint": false,
+      "id": "c-reused-receipt",
+      "kind": "reused",
+      "pin": {
+        "result": {
+          "path": "artifacts/validation-cycle/results/res-c-reused-receipt.json",
+          "sha256": "efa166c765dfe45f3a05b73e3c9028eaeece6514d2ef5780999b59fe776ff1e6"
+        }
+      },
+      "status": "pass",
+      "what": "the pinned fin_mechanics receipt and the pinned analytic controls hold"
+    },
+    {
+      "endpoint": true,
+      "id": "c-bio-bridge-expression-to-EI",
+      "kind": "not_run",
+      "reason": "no calibrated EI exists; EI is an assumed range; interface I3 state unknown",
+      "recorded_bridges": [
+        "regulatory-deposition-to-ray-geometry-and-EI",
+        "fin-length-to-ray-EI",
+        "fin-stiffness-calibration",
+        "growth->EI"
+      ],
+      "required_readout": "a calibrated EI of the candidate's rays in the stated tissue and stage, with unit and bounds; EI is an assumed range here",
+      "status": "missing",
+      "what": "growth->EI (flexural rigidity) in the candidate's rays"
+    },
+    {
+      "endorsed": 0,
+      "endpoint": true,
+      "id": "c-sequence-reference",
+      "inverse_verdict": "proposals_only",
+      "kind": "not_run",
+      "reason": "GRCz11 coordinates for the tested element are unresolved in the ledger",
+      "required_readout": "Context-matched reporter or endogenous expression, independently measured",
+      "status": "missing",
+      "what": "functional readout for the tested element"
+    },
+    {
+      "endpoint": false,
+      "heldout_after": [
+        {
+          "SL_cm": 23.0,
+          "catalog_original": "722,6223,27301,27302",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-001",
+          "observed_cm": 17.4,
+          "outside_training_SL_range": false,
+          "predicted_cm": 16.724318822272178,
+          "predicted_log10": 1.2233484380839332,
+          "residual_cm": 0.6756811777278209,
+          "residual_log10": 0.017200810198666483,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            13.254638159236293,
+            21.102261465666697
+          ],
+          "working_prediction_variance_log10": 0.002654479541392905
+        },
+        {
+          "SL_cm": 19.5,
+          "catalog_original": "722,6223,27301,27302",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-002",
+          "observed_cm": 12.8,
+          "outside_training_SL_range": false,
+          "predicted_cm": 13.936060884656138,
+          "predicted_log10": 1.1441400350381885,
+          "residual_cm": -1.1360608846561373,
+          "residual_log10": -0.03693006539032018,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            11.137124048511874,
+            17.438415172074283
+          ],
+          "working_prediction_variance_log10": 0.002467897967317028
+        },
+        {
+          "SL_cm": 23.0,
+          "catalog_original": "722,6223,27301,27302",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-003",
+          "observed_cm": 15.8,
+          "outside_training_SL_range": false,
+          "predicted_cm": 16.724318822272178,
+          "predicted_log10": 1.2233484380839332,
+          "residual_cm": -0.924318822272177,
+          "residual_log10": -0.024691351129510597,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            13.254638159236293,
+            21.102261465666697
+          ],
+          "working_prediction_variance_log10": 0.002654479541392905
+        },
+        {
+          "SL_cm": 18.2,
+          "catalog_original": "722,6223,27301,27302",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-004",
+          "observed_cm": 13.0,
+          "outside_training_SL_range": false,
+          "predicted_cm": 12.91326143083958,
+          "predicted_log10": 1.1110359434695827,
+          "residual_cm": 0.08673856916042055,
+          "residual_log10": 0.002907408837254044,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            10.347828046616652,
+            16.114717023707286
+          ],
+          "working_prediction_variance_log10": 0.0024084311245172753
+        },
+        {
+          "SL_cm": 12.7,
+          "catalog_original": "156319",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-005",
+          "observed_cm": 9.0,
+          "outside_training_SL_range": false,
+          "predicted_cm": 8.677360838589367,
+          "predicted_log10": 0.9383876574898221,
+          "residual_cm": 0.322639161410633,
+          "residual_log10": 0.015854851949502757,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            6.9968076397044525,
+            10.761563701680515
+          ],
+          "working_prediction_variance_log10": 0.0022751654550512627
+        },
+        {
+          "SL_cm": 11.2,
+          "catalog_original": "156319",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-006",
+          "observed_cm": 8.2,
+          "outside_training_SL_range": false,
+          "predicted_cm": 7.552314414593243,
+          "predicted_log10": 0.8780800620210073,
+          "residual_cm": 0.647685585406756,
+          "residual_log10": 0.035733790362709406,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            6.082929590730613,
+            9.37664198904893
+          ],
+          "working_prediction_variance_log10": 0.002298566430700737
+        },
+        {
+          "SL_cm": 4.91,
+          "catalog_original": "156301",
+          "flags": [
+            "outside_working_prediction_band"
+          ],
+          "inside_working_band": false,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-007",
+          "observed_cm": 4.04,
+          "outside_training_SL_range": false,
+          "predicted_cm": 3.036702092988295,
+          "predicted_log10": 0.48240218878448393,
+          "residual_cm": 1.0032979070117052,
+          "residual_log10": 0.12397917632612099,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            2.3385864093858313,
+            3.9432195297762345
+          ],
+          "working_prediction_variance_log10": 0.003350451848363807
+        },
+        {
+          "SL_cm": 2.65,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-008",
+          "observed_cm": 1.71,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.5363527445572849,
+          "predicted_log10": 0.18649094058267923,
+          "residual_cm": 0.1736472554427151,
+          "residual_log10": 0.046505169809474584,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.1111020540836432,
+            2.1243590964786514
+          ],
+          "working_prediction_variance_log10": 0.005156088171249482
+        },
+        {
+          "SL_cm": 3.05,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-009",
+          "observed_cm": 2.3,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.7945056643213773,
+          "predicted_log10": 0.25394483351330177,
+          "residual_cm": 0.5054943356786226,
+          "residual_log10": 0.10778300250429107,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.3183725574368663,
+            2.442595274845682
+          ],
+          "working_prediction_variance_log10": 0.004667757627729115
+        },
+        {
+          "SL_cm": 2.4,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-010",
+          "observed_cm": 1.83,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.3770358324858814,
+          "predicted_log10": 0.13894524138141046,
+          "residual_cm": 0.4529641675141187,
+          "residual_log10": 0.12350584834901901,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            0.9845261237452481,
+            1.9260308469384446
+          ],
+          "working_prediction_variance_log10": 0.0055275184903188675
+        },
+        {
+          "SL_cm": 2.9,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-011",
+          "observed_cm": 2.08,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.697255212212067,
+          "predicted_log10": 0.22974715105181287,
+          "residual_cm": 0.3827447877879331,
+          "residual_log10": 0.0883161839109487,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.2400074725101184,
+            2.3231112063782517
+          ],
+          "working_prediction_variance_log10": 0.0048377244055439386
+        },
+        {
+          "SL_cm": 1.68,
+          "catalog_original": "156301",
+          "flags": [
+            "outside_training_SL_range"
+          ],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-012",
+          "observed_cm": 0.91,
+          "outside_training_SL_range": true,
+          "predicted_cm": 0.9285511270525586,
+          "predicted_log10": -0.032194178531096684,
+          "residual_cm": -0.01855112705255857,
+          "residual_log10": -0.0087644291478097,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            0.6356664701978081,
+            1.3563830026810653
+          ],
+          "working_prediction_variance_log10": 0.007050818799482019
+        },
+        {
+          "SL_cm": 2.27,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-013",
+          "observed_cm": 1.39,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.2948654572680949,
+          "predicted_log10": 0.11222464548168709,
+          "residual_cm": 0.09513454273190503,
+          "residual_log10": 0.030790154772407957,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            0.9197141745315787,
+            1.8230408955913542
+          ],
+          "working_prediction_variance_log10": 0.005746142436487416
+        },
+        {
+          "SL_cm": 2.61,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-014",
+          "observed_cm": 1.83,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.510751980718933,
+          "predicted_log10": 0.17919317231631654,
+          "residual_cm": 0.31924801928106716,
+          "residual_log10": 0.08325791741411293,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.090686934193642,
+            2.0926000630360204
+          ],
+          "working_prediction_variance_log10": 0.005211636375058441
+        },
+        {
+          "SL_cm": 3.04,
+          "catalog_original": "156307",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-015",
+          "observed_cm": 2.01,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.7880064115675334,
+          "predicted_log10": 0.2523690717884266,
+          "residual_cm": 0.22199358843246642,
+          "residual_log10": 0.05082698563206223,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.313125600097938,
+            2.434623868096216
+          ],
+          "working_prediction_variance_log10": 0.004678648435103867
+        },
+        {
+          "SL_cm": 2.91,
+          "catalog_original": "156307",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-016",
+          "observed_cm": 1.83,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.70372247783554,
+          "predicted_log10": 0.23139885324730958,
+          "residual_cm": 0.1262775221644601,
+          "residual_log10": 0.03105223648311989,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.2452088002121984,
+            2.3310711271775646
+          ],
+          "working_prediction_variance_log10": 0.004825937276202283
+        },
+        {
+          "SL_cm": 6.04,
+          "catalog_original": "156313",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-017",
+          "observed_cm": 4.81,
+          "outside_training_SL_range": false,
+          "predicted_cm": 3.8175711046049132,
+          "predicted_log10": 0.581787134805071,
+          "residual_cm": 0.9924288953950864,
+          "residual_log10": 0.10035794156876066,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            2.9889679055329834,
+            4.87588010287304
+          ],
+          "working_prediction_variance_log10": 0.00293962226987991
+        },
+        {
+          "SL_cm": 3.24,
+          "catalog_original": "156313",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "1302fb28a32447513bf243a988cc7fca9510c05fc3d60eadab21b03f877efbbf",
+          "observation_id": "daane2021-s1a-fish-018",
+          "observed_cm": 2.06,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.9184086811545729,
+          "predicted_log10": 0.2829411310221823,
+          "residual_cm": 0.1415913188454272,
+          "residual_log10": 0.03092608934697111,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.4186520095130273,
+            2.5942174989006226
+          ],
+          "working_prediction_variance_log10": 0.004471764885256132
+        }
+      ],
+      "heldout_before": [
+        {
+          "SL_cm": 23.0,
+          "catalog_original": "722,6223,27301,27302",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-001",
+          "observed_cm": 17.4,
+          "outside_training_SL_range": false,
+          "predicted_cm": 15.280395897400037,
+          "predicted_log10": 1.1841346064536034,
+          "residual_cm": 2.1196041025999612,
+          "residual_log10": 0.05641464182899636,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            12.574579870424758,
+            18.56845327536122
+          ],
+          "working_prediction_variance_log10": 0.0018649476637247983
+        },
+        {
+          "SL_cm": 19.5,
+          "catalog_original": "722,6223,27301,27302",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-002",
+          "observed_cm": 12.8,
+          "outside_training_SL_range": false,
+          "predicted_cm": 12.959305156109647,
+          "predicted_log10": 1.1125817164298528,
+          "residual_cm": -0.1593051561096459,
+          "residual_log10": -0.005371746781984488,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            10.783278530362129,
+            15.574446088570996
+          ],
+          "working_prediction_variance_log10": 0.0016589977468140086
+        },
+        {
+          "SL_cm": 23.0,
+          "catalog_original": "722,6223,27301,27302",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-003",
+          "observed_cm": 15.8,
+          "outside_training_SL_range": false,
+          "predicted_cm": 15.280395897400037,
+          "predicted_log10": 1.1841346064536034,
+          "residual_cm": 0.5196041025999634,
+          "residual_log10": 0.01452248050081928,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            12.574579870424758,
+            18.56845327536122
+          ],
+          "working_prediction_variance_log10": 0.0018649476637247983
+        },
+        {
+          "SL_cm": 18.2,
+          "catalog_original": "722,6223,27301,27302",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-004",
+          "observed_cm": 13.0,
+          "outside_training_SL_range": false,
+          "predicted_cm": 12.09698505292389,
+          "predicted_log10": 1.0826771440326963,
+          "residual_cm": 0.9030149470761106,
+          "residual_log10": 0.031266208274140395,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            10.107966484749795,
+            14.477397366863775
+          ],
+          "working_prediction_variance_log10": 0.0015843155386102796
+        },
+        {
+          "SL_cm": 12.7,
+          "catalog_original": "156319",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-005",
+          "observed_cm": 9.0,
+          "outside_training_SL_range": false,
+          "predicted_cm": 8.447250250375795,
+          "predicted_log10": 0.926715360377439,
+          "residual_cm": 0.5527497496242049,
+          "residual_log10": 0.027527149061885914,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            7.177088832028303,
+            9.942197799481345
+          ],
+          "working_prediction_variance_log10": 0.0013036645740439976
+        },
+        {
+          "SL_cm": 11.2,
+          "catalog_original": "156319",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-006",
+          "observed_cm": 8.2,
+          "outside_training_SL_range": false,
+          "predicted_cm": 7.451376536013063,
+          "predicted_log10": 0.87223650989885,
+          "residual_cm": 0.7486234639869362,
+          "residual_log10": 0.041577342484866664,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            6.352987789289181,
+            8.739669289944969
+          ],
+          "working_prediction_variance_log10": 0.0012486762356014505
+        },
+        {
+          "SL_cm": 4.91,
+          "catalog_original": "156301",
+          "flags": [
+            "outside_working_prediction_band"
+          ],
+          "inside_working_band": false,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-007",
+          "observed_cm": 4.04,
+          "outside_training_SL_range": false,
+          "predicted_cm": 3.2719074254632368,
+          "predicted_log10": 0.5148010073528168,
+          "residual_cm": 0.7680925745367633,
+          "residual_log10": 0.09158035775778817,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            2.7568131803926317,
+            3.8832439850990483
+          ],
+          "working_prediction_variance_log10": 0.0014407074301745623
+        },
+        {
+          "SL_cm": 2.65,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-008",
+          "observed_cm": 1.71,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.7680301196208843,
+          "predicted_log10": 0.24748965924816643,
+          "residual_cm": -0.058030119620884335,
+          "residual_log10": -0.014493548856012617,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.4299546104567606,
+            2.1860347741304484
+          ],
+          "working_prediction_variance_log10": 0.002211355449649325
+        },
+        {
+          "SL_cm": 3.05,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-009",
+          "observed_cm": 2.3,
+          "outside_training_SL_range": false,
+          "predicted_cm": 2.0343427037699513,
+          "predicted_log10": 0.3084241156561722,
+          "residual_cm": 0.2656572962300485,
+          "residual_log10": 0.053303720361420615,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.663508198800314,
+            2.4878448085598066
+          ],
+          "working_prediction_variance_log10": 0.0019884672122210158
+        },
+        {
+          "SL_cm": 2.4,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-010",
+          "observed_cm": 1.83,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.6015454369195246,
+          "predicted_log10": 0.20453926440071615,
+          "residual_cm": 0.22845456308047551,
+          "residual_log10": 0.05791182532971331,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.2847459786605537,
+            1.9964629811037866
+          ],
+          "working_prediction_variance_log10": 0.0023852138513426584
+        },
+        {
+          "SL_cm": 2.9,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-011",
+          "observed_cm": 2.08,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.9344840157270926,
+          "predicted_log10": 0.2865651455795173,
+          "residual_cm": 0.14551598427290746,
+          "residual_log10": 0.03149818938324428,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.575778816855694,
+            2.3748437071713235
+          ],
+          "working_prediction_variance_log10": 0.002065216691905598
+        },
+        {
+          "SL_cm": 1.68,
+          "catalog_original": "156301",
+          "flags": [
+            "outside_training_SL_range"
+          ],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-012",
+          "observed_cm": 0.91,
+          "outside_training_SL_range": true,
+          "predicted_cm": 1.1218647815066705,
+          "predicted_log10": 0.049940514509798306,
+          "residual_cm": -0.21186478150667043,
+          "residual_log10": -0.09089912218870469,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            0.8716923329205929,
+            1.4438357898229446
+          ],
+          "working_prediction_variance_log10": 0.0031256828963503636
+        },
+        {
+          "SL_cm": 2.27,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-013",
+          "observed_cm": 1.39,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.5149601917473585,
+          "predicted_log10": 0.1804012211342991,
+          "residual_cm": -0.12496019174735862,
+          "residual_log10": -0.03738642088020405,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.2095360377236948,
+            1.8975080617676348
+          ],
+          "working_prediction_variance_log10": 0.0024890021928639225
+        },
+        {
+          "SL_cm": 2.61,
+          "catalog_original": "156301",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-014",
+          "observed_cm": 1.83,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.7413947155311356,
+          "predicted_log10": 0.2408972222073603,
+          "residual_cm": 0.08860528446886451,
+          "residual_log10": 0.021553867523069176,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.4066757927267823,
+            2.1557601054621665
+          ],
+          "working_prediction_variance_log10": 0.0022371409528365842
+        },
+        {
+          "SL_cm": 3.04,
+          "catalog_original": "156307",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-015",
+          "observed_cm": 2.01,
+          "outside_training_SL_range": false,
+          "predicted_cm": 2.0276857623335616,
+          "predicted_log10": 0.30700065171714397,
+          "residual_cm": -0.017685762333561783,
+          "residual_log10": -0.0038045942966551394,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.6576548565851925,
+            2.4803170180070184
+          ],
+          "working_prediction_variance_log10": 0.0019933559456161215
+        },
+        {
+          "SL_cm": 2.91,
+          "catalog_original": "156307",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-016",
+          "observed_cm": 1.83,
+          "outside_training_SL_range": false,
+          "predicted_cm": 1.9411415705060795,
+          "predicted_log10": 0.28805721032267484,
+          "residual_cm": -0.11114157050607942,
+          "residual_log10": -0.025606120592245374,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.581622481637146,
+            2.3823830531584886
+          ],
+          "working_prediction_variance_log10": 0.002059863773228517
+        },
+        {
+          "SL_cm": 6.04,
+          "catalog_original": "156313",
+          "flags": [
+            "outside_working_prediction_band"
+          ],
+          "inside_working_band": false,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-017",
+          "observed_cm": 4.81,
+          "outside_training_SL_range": false,
+          "predicted_cm": 4.023281054499566,
+          "predicted_log10": 0.6045803721573381,
+          "residual_cm": 0.786718945500434,
+          "residual_log10": 0.07756470421649364,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            3.418627321447362,
+            4.734880091182929
+          ],
+          "working_prediction_variance_log10": 0.0013022492053781222
+        },
+        {
+          "SL_cm": 3.24,
+          "catalog_original": "156313",
+          "flags": [],
+          "inside_working_band": true,
+          "model_version": "a8eac1a94a80dcaf3bff47358d35107061987d457340e7282960209f5358d804",
+          "observation_id": "daane2021-s1a-fish-018",
+          "observed_cm": 2.06,
+          "outside_training_SL_range": false,
+          "predicted_cm": 2.1608166288939565,
+          "predicted_log10": 0.334617913371683,
+          "residual_cm": -0.10081662889395648,
+          "residual_log10": -0.020750693002529574,
+          "species": "Hirundichthys rondeleti",
+          "status": "predicted",
+          "uncertainty_failure": null,
+          "unit": "cm",
+          "working_band_cm": [
+            1.774833264457686,
+            2.6307420517787796
+          ],
+          "working_prediction_variance_log10": 0.0019012235647409368
+        }
+      ],
+      "id": "c-observed-allometry",
+      "kind": "reused",
+      "pin": {
+        "path": "artifacts/observed-allometry/run/update.json",
+        "sha256": "75264dce2491c236840ee4008972b0244e2a21b364c5db3c78354b2daedc41dc"
+      },
+      "reason": "held-out error worsened after the update; this is allometry evidence only, not fin mechanics and not sequence-function",
+      "status": "fail",
+      "what": "separate observed-data case: observed-subset update, held-out error"
+    }
+  ],
+  "schema": "frontier.validation-cycle.check-history/1"
+}

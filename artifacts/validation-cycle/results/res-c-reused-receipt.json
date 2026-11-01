@@ -1,0 +1,33 @@
+{
+  "candidate_assembly_sha256": "ebc2c69f2ed4218e6545586c97aae55ffdc43ddb0ce4dfb43a6b654c1b6b77d4",
+  "cases": {
+    "negative": 1,
+    "negative_rejected": true,
+    "positive": 3
+  },
+  "check_id": "c-reused-receipt",
+  "execution": {
+    "changed_pins": [],
+    "controls_passed": true,
+    "kind": "reused",
+    "max_rel_residual": 1.850371707708594e-16,
+    "not_rerun": true,
+    "passed": true,
+    "receipt_verdict": "ok"
+  },
+  "licenses": "the producer's recorded controls held (analytic residuals, FEM vs analytic over the sweep)",
+  "plan_id": "vp-mech-end-loaded-cantilever",
+  "plan_version": 1,
+  "reused_pin": {
+    "path": "engineering/fin_mechanics/artifacts/result.json",
+    "sha256": "dc93441487af7bfcee48439cef35e0c3a4ae77bd3c41962e3b150c913d46148e"
+  },
+  "schema": "frontier.validation-result/1",
+  "scope": "the pinned receipt only; not rerun here",
+  "status": "pass",
+  "validator": {
+    "dependence_identity": "shares fin_mechanics.beam with the producer; no shared run, data or output",
+    "identity": "validation-cycle replay",
+    "role": "independent checker (same repository code, recomputed)"
+  }
+}

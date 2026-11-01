@@ -291,7 +291,16 @@ def _write_artifacts(out: Path, protocol: dict, assembly_sha: str, results: dict
         }
         dump(out / f"results/res-{cid}.json", doc)
         res_list.append({"plan_id": meta["id"], "plan_version": 1, "check_id": cid, "status": r["status"], "cases": r["cases"], "scope": r["scope"], "licenses": r.get("licenses"), "candidate_sequence_sha256": None, "ref": _file_pin(rel(f"results/res-{cid}.json"), out.parent.parent)})
-    return [plan], res_list, meta
+    # The two biological dimensions the cycle cannot execute are plans with NO result: the compiler reports them as missing, never as a pass or a failure.
+    plans = [plan]
+    for pid, cid, iface, endpoint_text, what in (
+        ("vp-bio-bridge-growth-to-EI", "c-growth-to-EI", "I3", "calibrated EI of the candidate's rays in the stated tissue and stage", protocol["bio_bridge"]["required_readout"]),
+        ("vp-seq-functional-readout", "c-functional-readout", "I1", "matched functional readout of the exact tested sequence in the stated context", protocol["sequence_reference"]["why"]),
+    ):
+        pm = {"id": pid, "version": 1, "candidate_id": CANDIDATE, "endpoint": endpoint_text, "decision": "whether any functional claim may be made", "required_checks": [{"id": cid, "interface": iface, "endpoint": True, "executable": False, "kind": "not_run", "what": what}], "candidate_assembly_sha256": assembly_sha}
+        dump(out / f"plans/plan-{pid}.json", {"schema": G.PLAN_SCHEMA, **pm})
+        plans.append({**{k: pm[k] for k in ("id", "version", "candidate_id", "endpoint", "decision", "required_checks")}, "ref": _file_pin(rel(f"plans/plan-{pid}.json"), out.parent.parent)})
+    return plans, res_list, meta
 
 
 def _results(protocol: dict, mech, neg, virt, reused) -> dict:
@@ -491,11 +500,12 @@ def run(root: Path = ROOT, out: Path | None = None) -> dict:
     slices = G.validation_slices(graph, design, None, root)
     bridge = slices["interfaces"]["I3"]
     hist = [{"id": c["id"], "kind": c["kind"], "status": results[c["id"]]["status"], "endpoint": c["endpoint"], "what": c["what"], "pin": {"result": next(r["ref"] for r in res_list if r["check_id"] == c["id"])}} for c in protocol["required_checks"]]
+    vstat = {c["id"]: c["status"] for p in report["validation"]["plans"] for c in p["checks"]}
     hist += [
         {
             "id": "c-bio-bridge-expression-to-EI",
             "kind": "not_run",
-            "status": "blocked",
+            "status": vstat["c-growth-to-EI"],
             "endpoint": True,
             "what": "growth->EI (flexural rigidity) in the candidate's rays",
             "reason": "no calibrated EI exists; EI is an assumed range; interface I3 state " + report["interface_state"]["I3"],
@@ -505,7 +515,7 @@ def run(root: Path = ROOT, out: Path | None = None) -> dict:
         {
             "id": "c-sequence-reference",
             "kind": "not_run",
-            "status": "blocked",
+            "status": vstat["c-functional-readout"],
             "endpoint": True,
             "what": "functional readout for the tested element",
             "reason": protocol["sequence_reference"]["why"],
@@ -533,7 +543,7 @@ def run(root: Path = ROOT, out: Path | None = None) -> dict:
     dump(out / "mechanical-evidence.json", {"mechanical": {k: v for k, v in mech.items() if k != "saved_section"}, "saved_section": mech["saved_section"], "negative_controls": neg, "virtual": virt, "reused": reused})
     summary = _summary(protocol, report, inverse, hist, changed, optional, nxt, assembly_sha, plan_meta, res_list, protocol_path)
     dump(out / "summary.json", summary)
-    files = sorted(p for p in out.rglob("*.json") if p.name not in ("manifest.json",))
+    files = sorted(p for p in out.rglob("*.json") if p.name not in ("manifest.json", "replay-receipt.json") and "bundle" not in p.relative_to(out).parts)
     dump(
         out / "manifest.json",
         {
@@ -828,14 +838,44 @@ def prepare_bundle(source_commit: str, created_at: str, out: Path) -> dict:
     return bundle
 
 
+def receipt(root: Path = ROOT) -> dict:
+    """Execute the replay twice (bytes must be identical) and the focused test file, and record exactly what ran, its exit status and the versions. Nothing is claimed
+    that was not executed here."""
+    import subprocess
+
+    import scipy
+
+    out = root / CYCLE
+    snap = lambda: {str(p.relative_to(out)): _sha(p.read_bytes()) for p in sorted(out.rglob("*.json")) if p.name != "replay-receipt.json" and "bundle" not in p.relative_to(out).parts}  # noqa: E731
+    run(root)
+    first = snap()
+    run(root)
+    identical = first == snap()
+    proc = subprocess.run([sys.executable, "-m", "pytest", "-q", "tests/test_validation_cycle.py"], cwd=root, capture_output=True, text=True)
+    tail = [ln for ln in proc.stdout.strip().splitlines() if "passed" in ln or "failed" in ln][-1:]
+    doc = {
+        "schema": "frontier.validation-cycle.replay-receipt/1",
+        "commands": [{"cmd": "python -m engineering.biodesign_compiler.validation_cycle run (twice)", "exit": 0, "replay_bytes_identical": identical}, {"cmd": "python -m pytest -q tests/test_validation_cycle.py", "exit": proc.returncode, "summary": tail[0] if tail else None}],
+        "environment": {"python": platform.python_version(), "numpy": np.__version__, "scipy": scipy.__version__},
+        "output_sha256": first,
+        "manifest_sha256": first["manifest.json"],
+        "note": "the bundle test skips until the artifacts are committed; the bundle is prepared from an immutable commit afterwards",
+    }
+    dump(out / "replay-receipt.json", doc)
+    return doc
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("phase", choices=["freeze", "run", "bundle"])
+    ap.add_argument("phase", choices=["freeze", "run", "receipt", "bundle"])
     ap.add_argument("--source-commit")
     ap.add_argument("--created-at")
     a = ap.parse_args(argv)
     if a.phase == "freeze":
         print({"protocol_sha256": freeze()})
+    elif a.phase == "receipt":
+        d = receipt()
+        print(json.dumps({"replay_identical": d["commands"][0]["replay_bytes_identical"], "tests": d["commands"][1]["summary"]}))
     elif a.phase == "run":
         s = run()
         print(json.dumps({"verdict": s["verdict"]["working_assembly_claim"], "mechanical": s["verdict"]["mechanical_slice"], "next": s["next_action"]["design"]}))
