@@ -1,0 +1,38 @@
+{
+ "code_matches_repo": true,
+ "code_sha256": {
+  "simulations/claude_tissue/pzone_smooth_gpu.py": "8d387f6cf7c1e83aa1f955e1217ca56c1a56324ac7026540a8b0a0f829ed7409"
+ },
+ "collected_utc": "2026-11-01T21:29:05Z",
+ "collector_sha256": {
+  "simulations/claude_tissue/collect_gpu2.py": "488a961f0ad5739b075800928604ac2403036eed9fdc2f9ae8b8516d8f6ac428"
+ },
+ "command": "python3 /work/pzones.py (args in META)",
+ "compute": "Nebius aijob-e00pdmxrn7ry8c1b5x (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "input_sha256": {},
+ "job": "aijob-e00pdmxrn7ry8c1b5x",
+ "job_state": "COMPLETED",
+ "name": "claude-tissue-pzone-smooth-w2",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-pzone-smooth-w2/job-log.txt": "df4b6be3d0a34403303bf19e30838308db9bf8a38233f36c4cdb21c1a51a2a6c",
+  "artifacts/simulations/claude-tissue-pzone-smooth-w2/pzone_smooth_w2.json": "d7f7202471ec37f12eb0713e386872c03625f723f79cb899a383a2374b85056c",
+  "artifacts/simulations/claude-tissue-pzone-smooth-w2/pzone_smooth_w2.png": "aee62a0841ff7409395b1e4f7ba37f91999efdb15c48ed00b2c6e80862c1b157"
+ },
+ "seed": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12
+ ],
+ "wall_s": 630.0
+}

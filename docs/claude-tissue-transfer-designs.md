@@ -700,7 +700,12 @@ exactly 192). γ = 1, v = 0.1, coarse grid, 12 seeds; distal A:
   | Distal A | −0.60 | −0.69 | −0.47 | **0.85** |
 
   The smooth-edge switch (edge width 1) is about **2.75 ≈ 0.25 λ**, against about 0.35 λ for a sharp edge.
-  An edge-width-2 run is running (`claude-tissue-pzone-smooth-w2`).
+- **Edge width 2** (`claude-tissue-pzone-smooth-w2`, job `aijob-e00pdmxrn7ry8c1b5x`, COMPLETED, 630.0 s): distal A is
+  0.88–0.89 at **every** nominal L_p from 1.5 to 3.5, so the switch lies below 1.5.
+- **Reading.** With a soft edge, growth extends a few units into the tissue whatever the nominal L_p. What must exceed
+  the threshold is the **actual spatial extent of the growth profile, tails included**. The nominal L_p of a sharp
+  step is the special case. Biologically, the testable quantity is the measured width of the proliferation profile
+  (for example an EdU-positive fraction against distance from the margin) compared with ray spacing.
 - For biology, the comparison to make is between the sharpness of the distal proliferation boundary and the ray
   spacing, not just the zone width.
 
