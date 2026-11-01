@@ -1,0 +1,851 @@
+{
+ "schema": "frontier.eco.collective/1",
+ "abm_assumptions": {
+  "r_rep": [
+   0.15,
+   "m",
+   "ASSUMPTION zone of repulsion (~1 SL)"
+  ],
+  "r_ori": [
+   0.6,
+   "m",
+   "ASSUMPTION zone of orientation"
+  ],
+  "r_att": [
+   2.0,
+   "m",
+   "ASSUMPTION zone of attraction"
+  ],
+  "v_cruise": [
+   0.5,
+   "m/s",
+   "ASSUMPTION cruise speed (~3 SL/s)"
+  ],
+  "r_det": [
+   3.0,
+   "m",
+   "ASSUMPTION predator detection range (set equal to r_burst so detection races the strike; 6 m is a sensitivity case)"
+  ],
+  "q_det": [
+   2.0,
+   "1/s",
+   "ASSUMPTION detection rate within r_det"
+  ],
+  "r_alarm": [
+   0.8,
+   "m",
+   "ASSUMPTION alarm neighbour radius"
+  ],
+  "tau_alarm": [
+   0.1,
+   "s",
+   "ASSUMPTION delay per alarm hop"
+  ],
+  "tau_launch": [
+   0.3,
+   "s",
+   "ASSUMPTION alert-to-exit latency"
+  ],
+  "t_refract": [
+   1.0,
+   "s",
+   "ASSUMPTION time before a landed fish can re-launch"
+  ],
+  "glide_cv": [
+   0.2,
+   "1",
+   "ASSUMPTION per-launch lognormal CV of airborne distance/time"
+  ],
+  "U_flee": [
+   1.7,
+   "m/s",
+   "ASSUMPTION non-glider flee speed (~10 SL/s for a 17 cm fish)"
+  ],
+  "U_app": [
+   2.0,
+   "m/s",
+   "ASSUMPTION predator approach speed"
+  ],
+  "r0": [
+   12.0,
+   "m",
+   "ASSUMPTION predator start distance from school centroid"
+  ],
+  "r_burst": [
+   3.0,
+   "m",
+   "ASSUMPTION distance at which the predator bursts"
+  ],
+  "r_strike": [
+   0.3,
+   "m",
+   "ASSUMPTION strike reach"
+  ],
+  "P1": [
+   0.5,
+   "1",
+   "ASSUMPTION single-target strike success"
+  ],
+  "strike_cooldown": [
+   0.3,
+   "s",
+   "ASSUMPTION"
+  ],
+  "kappa": [
+   0.2,
+   "1",
+   "ASSUMPTION confusion strength in water (Landeau & Terborgh form)"
+  ],
+  "r_conf": [
+   1.0,
+   "m",
+   "ASSUMPTION confusion radius"
+  ],
+  "kappa_air": [
+   0.2,
+   "1",
+   "ASSUMPTION confusion from simultaneous airborne fish"
+  ],
+  "r_view": [
+   8.0,
+   "m",
+   "ASSUMPTION predator view radius for retargeting / aerial confusion"
+  ],
+  "T_max": [
+   12.0,
+   "s",
+   "episode cap"
+  ],
+  "dt": [
+   0.02,
+   "s",
+   "time step"
+  ]
+ },
+ "shared_assumptions": {
+  "a_LW": [
+   0.00632,
+   "g cm^-3",
+   "FishBase Hyporhamphus LW used for the whole walk (body shape is not an evolving trait here)",
+   [
+    0.00632,
+    0.01354
+   ]
+  ],
+  "w_body_frac": [
+   0.1,
+   "1",
+   "body width / SL for span; assumption",
+   [
+    0.06,
+    0.14
+   ]
+  ],
+  "V_exit": [
+   10.0,
+   "m/s",
+   "water-exit speed, same for all phenotypes; Fish 1990 citing Shoulejkin gives ~10 m/s before taxiing (secondary)",
+   [
+    4.0,
+    10.0
+   ]
+  ],
+  "dV_taxi": [
+   8.0,
+   "m/s",
+   "max taxi speed gain at full asymmetry and full aerodynamic support; 10 -> 18 m/s midpoint of Fish 1990/Shoulejkin 16-20",
+   [
+    4.0,
+    10.0
+   ]
+  ],
+  "h0": [
+   0.05,
+   "m",
+   "height at water exit; assumption",
+   [
+    0.02,
+    0.3
+   ]
+  ],
+  "gam0_deg": [
+   15.0,
+   "deg",
+   "exit angle above horizontal; assumption",
+   [
+    5.0,
+    30.0
+   ]
+  ],
+  "polar": [
+   "P1_nominal",
+   "-",
+   "project polar (design assumption)",
+   [
+    "P1_nominal",
+    "P2_high_drag"
+   ]
+  ],
+  "e_swim": [
+   0.3,
+   "1",
+   "escape probability of a prey that does not leave the water, per attack; assumption",
+   [
+    0.1,
+    0.6
+   ]
+  ],
+  "U_burst": [
+   10.0,
+   "m/s",
+   "predator burst speed; inside FishBase Thunnus albacares burst rows 5.21-20.46 m/s",
+   [
+    5.21,
+    20.46
+   ]
+  ],
+  "t_burst": [
+   2.0,
+   "s",
+   "predator burst endurance; assumption",
+   [
+    1.0,
+    6.0
+   ]
+  ],
+  "U_sus": [
+   0.56,
+   "m/s",
+   "predator sustained speed; FishBase Coryphaena hippurus sustained row",
+   [
+    0.46,
+    0.65
+   ]
+  ],
+  "d_gap": [
+   3.0,
+   "m",
+   "H_chase: distance scale over which a lead beyond the predator's chase breaks pursuit; assumption",
+   [
+    1.0,
+    10.0
+   ]
+  ],
+  "d_vis": [
+   20.0,
+   "m",
+   "H_vis: distance scale over which an airborne excursion breaks visual tracking (inf = off); assumption",
+   [
+    5.0,
+    80.0
+   ]
+  ],
+  "beta_air": [
+   0.0,
+   "1/s",
+   "aerial predator hazard while airborne; assumption",
+   [
+    0.0,
+    0.2
+   ]
+  ],
+  "p_max": [
+   0.79,
+   "1",
+   "Davenport 1992 limit on pectoral length / SL",
+   [
+    0.79
+   ]
+  ],
+  "n_trim": [
+   1.0,
+   "1",
+   "CL rule: commanded lift at exit <= n_trim x weight (1.0 = level at exit); 1.5 lets fast fish climb (argon review)",
+   [
+    1.0,
+    1.5
+   ]
+  ],
+  "kappa_fin": [
+   0.0,
+   "1",
+   "aquatic cost of fins: survival/fecundity factor exp(-kappa_fin * fin wetted area / body wetted area); 0 = escape-only fitness; added after argon review",
+   [
+    0.0,
+    0.1,
+    0.3,
+    1.0
+   ]
+  ],
+  "k_wet": [
+   0.4,
+   "1",
+   "body wetted area = k_wet SL^2 (ASSUMPTION for a slender fusiform fish)",
+   [
+    0.4
+   ]
+  ]
+ },
+ "sources": {
+  "daane2021": {
+   "cite": "Daane JM et al. (2021) Modulation of bioelectric cues in the evolution of flying fishes. Curr Biol 31:5052-5061. doi:10.1016/j.cub.2021.08.054",
+   "read_level": "full Data S1A sheet parsed (project file data/fish-controls/daane2021_s1a_observations.csv)",
+   "used_for": "pectoral length / SL per group: halfbeak 0.137 (Hyporhamphus unifasciatus median), flying halfbeak 0.337 (Oxyporhamphus), Exocoetus volitans 0.674"
+  },
+  "fish1990": {
+   "cite": "Fish FE (1990) Wing design and scaling of flying fish with regard to flight performance. J Zool 221:391-403",
+   "read_level": "full text, tables read from page images (project file data/fish-controls/fish1990_tables.json)",
+   "used_for": "Exocoetus wing-area fit 0.046 M^0.741 m^2, pectoral share 91.8%, pooled hypocaudal share 63.1%; taxi speed 10 -> 16-20 m/s is Fish citing Shoulejkin (secondary)"
+  },
+  "davenport1992": {
+   "cite": "Davenport J (1992) J Mar Biol Assoc UK 72:25-39",
+   "read_level": "abstract, as returned by a fetch tool (project source record)",
+   "used_for": "hard limit p <= 0.79: pectoral length cannot exceed 78-79% SL without impairing swimming"
+  },
+  "lovejoy2004": {
+   "cite": "Lovejoy NR, Iranpour M, Collette BB (2004) Integr Comp Biol 44:366-377",
+   "read_level": "abstract (project source record)",
+   "used_for": "phylogenetic frame: flyingfishes nested within a paraphyletic grade of halfbeaks; justifies a halfbeak-like ancestor"
+  },
+  "fishbase": {
+   "cite": "FishBase species summary, length-weight and swimming-speed pages, fetched 2026-11-01 (engineering/ecology_sims/fishbase_parsed.json)",
+   "read_level": "parsed directly from fetched HTML; primary references behind each FishBase row NOT re-read",
+   "used_for": "LW coefficients (Hyporhamphus unifasciatus a=0.00632 SL b=3; Exocoetus volitans a=0.01354 SL b=3), predator sizes (Coryphaena hippurus common 100 cm TL; Thunnus albacares common 150 cm FL), predator speeds (T. albacares burst 5.21-20.46 m/s at 62-66 cm SL, sustained 0.46-0.65 m/s; C. hippurus sustained 0.56 m/s at 67 cm SL; FishBase ref 308), Hyporhamphus caudal 'emarginate or slightly forked'"
+  },
+  "oxenford1999": {
+   "cite": "Oxenford HA, Hunte W (1999) Feeding habits of the dolphinfish (Coryphaena hippurus) in the eastern Caribbean. Sci Mar 63:303-315. doi:10.3989/scimar.1999.63n3-4317",
+   "read_level": "abstract (Crossref)",
+   "used_for": "dolphinfish eat flyingfish and halfbeaks: names the predator class, no rate is taken from it"
+  },
+  "houle1992": {
+   "cite": "Houle D (1992) Comparing evolvability and variability of quantitative traits. Genetics 130:195-204. doi:10.1093/genetics/130.1.195",
+   "read_level": "abstract (Crossref)",
+   "used_for": "mean-standardised additive variance (CV_A) as the evolvability scale for the G matrix; the CV_A value used is an assumption, not taken from the paper"
+  },
+  "lande1979": {
+   "cite": "Lande R (1979) Quantitative genetic analysis of multivariate evolution, applied to brain:body size allometry. Evolution 33:402. doi:10.2307/2407630",
+   "read_level": "bibliographic record only (Crossref); the equation dz = G grad ln W is standard and not re-read here",
+   "used_for": "model form of the adaptive walk"
+  },
+  "weinreich2005": {
+   "cite": "Weinreich DM, Watson RA, Chao L (2005) Sign epistasis and genetic constraint on evolutionary trajectories. Evolution 59:1165. doi:10.1554/04-272",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "notion of accessible (monotone) mutational paths on a landscape; method form only"
+  },
+  "landeau1986": {
+   "cite": "Landeau L, Terborgh J (1986) Oddity and the 'confusion effect' in predation. Anim Behav 34:1372-1380. doi:10.1016/s0003-3472(86)80208-1",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "model form of a confusion effect; strength parameter is an assumption swept"
+  },
+  "treherne1981": {
+   "cite": "Treherne JE, Foster WA (1981) Group transmission of predator avoidance behaviour in a marine insect: the Trafalgar effect. Anim Behav 29:911-917. doi:10.1016/s0003-3472(81)80028-0",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "model form of alarm transmission through a group; speed/delay values are assumptions swept"
+  },
+  "couzin2002": {
+   "cite": "Couzin ID, Krause J, James R, Ruxton GD, Franks NR (2002) Collective memory and spatial sorting in animal groups. J Theor Biol 218:1-11. doi:10.1006/jtbi.2002.3065",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "zonal repulsion/orientation/attraction school model form; zone radii are assumptions"
+  },
+  "hamilton1971": {
+   "cite": "Hamilton WD (1971) Geometry for the selfish herd. J Theor Biol 31:295-311. doi:10.1016/0022-5193(71)90189-5",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "dilution / selfish-herd framing; no number taken"
+  },
+  "project_glide": {
+   "cite": "engineering/simulation/glide.py (glide-pointmass/1) with polar P1_nominal CL_max 1.2, CD0 0.06, e 0.8 (project DESIGN ASSUMPTIONS) and rho 1.225",
+   "read_level": "project code, reused unchanged",
+   "used_for": "airborne phase of every phenotype"
+  }
+ },
+ "glide_input": {
+  "phenotype": {
+   "p": 0.674,
+   "A": 8.706330357620244,
+   "M": 0.0333134775,
+   "c": 0.631
+  },
+  "airborne_distance_m": 37.67499731822978,
+  "airborne_time_s": 2.884228910399648,
+  "from": "common.launch_and_glide (project glide model), Exocoetus-like target"
+ },
+ "part": "sens:5-10",
+ "sensitivity": [
+  {
+   "setting": "q_det=1",
+   "abm_overrides": {
+    "q_det": 1.0
+   },
+   "escape_overrides": {},
+   "glide_scale": 1.0,
+   "B": 300,
+   "results": {
+    "glide_sync|1": {
+     "P_capture_episode": 0.8033333333333333,
+     "se": 0.02294841235531621,
+     "per_capita": 0.8033333333333333,
+     "per_capita_se": 0.02294841235531621,
+     "mean_launches": 0.19666666666666666
+    },
+    "glide_sync|8": {
+     "P_capture_episode": 0.29333333333333333,
+     "se": 0.026286174369104437,
+     "per_capita": 0.03666666666666667,
+     "per_capita_se": 0.0032857717961380546,
+     "mean_launches": 5.733333333333333
+    },
+    "glide_sync|32": {
+     "P_capture_episode": 0.29333333333333333,
+     "se": 0.026286174369104437,
+     "per_capita": 0.009166666666666667,
+     "per_capita_se": 0.0008214429490345137,
+     "mean_launches": 25.333333333333332
+    },
+    "glide_indep|1": {
+     "P_capture_episode": 0.77,
+     "se": 0.024296776192189225,
+     "per_capita": 0.77,
+     "per_capita_se": 0.024296776192189225,
+     "mean_launches": 0.22333333333333333
+    },
+    "glide_indep|8": {
+     "P_capture_episode": 0.86,
+     "se": 0.020033305601755626,
+     "per_capita": 0.1075,
+     "per_capita_se": 0.0025041632002194532,
+     "mean_launches": 3.4
+    },
+    "glide_indep|32": {
+     "P_capture_episode": 0.7,
+     "se": 0.026457513110645908,
+     "per_capita": 0.021875,
+     "per_capita_se": 0.0008267972847076846,
+     "mean_launches": 16.6
+    },
+    "swim_sync|1": {
+     "P_capture_episode": 0.9866666666666667,
+     "se": 0.0066220730781117,
+     "per_capita": 0.9866666666666667,
+     "per_capita_se": 0.0066220730781117,
+     "mean_launches": 0.0
+    },
+    "swim_sync|8": {
+     "P_capture_episode": 0.9733333333333334,
+     "se": 0.009301533127313926,
+     "per_capita": 0.12166666666666667,
+     "per_capita_se": 0.0011626916409142407,
+     "mean_launches": 0.0
+    },
+    "swim_sync|32": {
+     "P_capture_episode": 0.9433333333333334,
+     "se": 0.013348602368232605,
+     "per_capita": 0.029479166666666667,
+     "per_capita_se": 0.0004171438240072689,
+     "mean_launches": 0.0
+    },
+    "swim|1": {
+     "P_capture_episode": 0.9766666666666667,
+     "se": 0.008715673408461501,
+     "per_capita": 0.9766666666666667,
+     "per_capita_se": 0.008715673408461501,
+     "mean_launches": 0.0
+    },
+    "swim|8": {
+     "P_capture_episode": 0.8966666666666666,
+     "se": 0.01757418139919615,
+     "per_capita": 0.11208333333333333,
+     "per_capita_se": 0.0021967726748995187,
+     "mean_launches": 0.0
+    },
+    "swim|32": {
+     "P_capture_episode": 0.7533333333333333,
+     "se": 0.024887896805624365,
+     "per_capita": 0.023541666666666666,
+     "per_capita_se": 0.0007777467751757614,
+     "mean_launches": 0.0
+    }
+   }
+  },
+  {
+   "setting": "q_det=4",
+   "abm_overrides": {
+    "q_det": 4.0
+   },
+   "escape_overrides": {},
+   "glide_scale": 1.0,
+   "B": 300,
+   "results": {
+    "glide_sync|1": {
+     "P_capture_episode": 0.5633333333333334,
+     "se": 0.028634995424531903,
+     "per_capita": 0.5633333333333334,
+     "per_capita_se": 0.028634995424531903,
+     "mean_launches": 0.43666666666666665
+    },
+    "glide_sync|8": {
+     "P_capture_episode": 0.17333333333333334,
+     "se": 0.02185473929447866,
+     "per_capita": 0.021666666666666667,
+     "per_capita_se": 0.0027318424118098327,
+     "mean_launches": 6.623333333333333
+    },
+    "glide_sync|32": {
+     "P_capture_episode": 0.18333333333333332,
+     "se": 0.022339965847647886,
+     "per_capita": 0.005729166666666666,
+     "per_capita_se": 0.0006981239327389964,
+     "mean_launches": 26.283333333333335
+    },
+    "glide_indep|1": {
+     "P_capture_episode": 0.53,
+     "se": 0.02881550508551487,
+     "per_capita": 0.53,
+     "per_capita_se": 0.02881550508551487,
+     "mean_launches": 0.4666666666666667
+    },
+    "glide_indep|8": {
+     "P_capture_episode": 0.6566666666666666,
+     "se": 0.027413838084414933,
+     "per_capita": 0.08208333333333333,
+     "per_capita_se": 0.0034267297605518666,
+     "mean_launches": 5.33
+    },
+    "glide_indep|32": {
+     "P_capture_episode": 0.72,
+     "se": 0.02592296279363144,
+     "per_capita": 0.0225,
+     "per_capita_se": 0.0008100925873009825,
+     "mean_launches": 24.29
+    },
+    "swim_sync|1": {
+     "P_capture_episode": 0.9866666666666667,
+     "se": 0.0066220730781117,
+     "per_capita": 0.9866666666666667,
+     "per_capita_se": 0.0066220730781117,
+     "mean_launches": 0.0
+    },
+    "swim_sync|8": {
+     "P_capture_episode": 0.98,
+     "se": 0.008082903768654764,
+     "per_capita": 0.1225,
+     "per_capita_se": 0.0010103629710818455,
+     "mean_launches": 0.0
+    },
+    "swim_sync|32": {
+     "P_capture_episode": 0.9733333333333334,
+     "se": 0.009301533127313926,
+     "per_capita": 0.030416666666666668,
+     "per_capita_se": 0.0002906729102285602,
+     "mean_launches": 0.0
+    },
+    "swim|1": {
+     "P_capture_episode": 0.99,
+     "se": 0.005744562646538031,
+     "per_capita": 0.99,
+     "per_capita_se": 0.005744562646538031,
+     "mean_launches": 0.0
+    },
+    "swim|8": {
+     "P_capture_episode": 0.98,
+     "se": 0.008082903768654764,
+     "per_capita": 0.1225,
+     "per_capita_se": 0.0010103629710818455,
+     "mean_launches": 0.0
+    },
+    "swim|32": {
+     "P_capture_episode": 0.9233333333333333,
+     "se": 0.015361085995559135,
+     "per_capita": 0.028854166666666667,
+     "per_capita_se": 0.000480033937361223,
+     "mean_launches": 0.0
+    }
+   }
+  },
+  {
+   "setting": "P1=0.8",
+   "abm_overrides": {
+    "P1": 0.8
+   },
+   "escape_overrides": {},
+   "glide_scale": 1.0,
+   "B": 300,
+   "results": {
+    "glide_sync|1": {
+     "P_capture_episode": 0.83,
+     "se": 0.02168716978615083,
+     "per_capita": 0.83,
+     "per_capita_se": 0.02168716978615083,
+     "mean_launches": 0.17
+    },
+    "glide_sync|8": {
+     "P_capture_episode": 0.37666666666666665,
+     "se": 0.027975518397871192,
+     "per_capita": 0.04708333333333333,
+     "per_capita_se": 0.003496939799733899,
+     "mean_launches": 5.066666666666666
+    },
+    "glide_sync|32": {
+     "P_capture_episode": 0.25666666666666665,
+     "se": 0.02521830610812239,
+     "per_capita": 0.008020833333333333,
+     "per_capita_se": 0.0007880720658788247,
+     "mean_launches": 24.303333333333335
+    },
+    "glide_indep|1": {
+     "P_capture_episode": 0.8333333333333334,
+     "se": 0.021516574145596757,
+     "per_capita": 0.8333333333333334,
+     "per_capita_se": 0.021516574145596757,
+     "mean_launches": 0.16666666666666666
+    },
+    "glide_indep|8": {
+     "P_capture_episode": 0.9566666666666667,
+     "se": 0.011755219486899646,
+     "per_capita": 0.11958333333333333,
+     "per_capita_se": 0.0014694024358624558,
+     "mean_launches": 3.183333333333333
+    },
+    "glide_indep|32": {
+     "P_capture_episode": 0.9233333333333333,
+     "se": 0.015361085995559135,
+     "per_capita": 0.028854166666666667,
+     "per_capita_se": 0.000480033937361223,
+     "mean_launches": 15.766666666666667
+    },
+    "swim_sync|1": {
+     "P_capture_episode": 1.0,
+     "se": 5.773502691896258e-08,
+     "per_capita": 1.0,
+     "per_capita_se": 5.773502691896258e-08,
+     "mean_launches": 0.0
+    },
+    "swim_sync|8": {
+     "P_capture_episode": 1.0,
+     "se": 5.773502691896258e-08,
+     "per_capita": 0.125,
+     "per_capita_se": 7.216878364870322e-09,
+     "mean_launches": 0.0
+    },
+    "swim_sync|32": {
+     "P_capture_episode": 1.0,
+     "se": 5.773502691896258e-08,
+     "per_capita": 0.03125,
+     "per_capita_se": 1.8042195912175805e-09,
+     "mean_launches": 0.0
+    },
+    "swim|1": {
+     "P_capture_episode": 1.0,
+     "se": 5.773502691896258e-08,
+     "per_capita": 1.0,
+     "per_capita_se": 5.773502691896258e-08,
+     "mean_launches": 0.0
+    },
+    "swim|8": {
+     "P_capture_episode": 0.9966666666666667,
+     "se": 0.0033277731404159692,
+     "per_capita": 0.12458333333333334,
+     "per_capita_se": 0.00041597164255199615,
+     "mean_launches": 0.0
+    },
+    "swim|32": {
+     "P_capture_episode": 0.9766666666666667,
+     "se": 0.008715673408461501,
+     "per_capita": 0.030520833333333334,
+     "per_capita_se": 0.0002723647940144219,
+     "mean_launches": 0.0
+    }
+   }
+  },
+  {
+   "setting": "U_burst=20.46",
+   "abm_overrides": {},
+   "escape_overrides": {
+    "U_burst": 20.46
+   },
+   "glide_scale": 1.0,
+   "B": 300,
+   "results": {
+    "glide_sync|1": {
+     "P_capture_episode": 0.7433333333333333,
+     "se": 0.02521830610812239,
+     "per_capita": 0.7433333333333333,
+     "per_capita_se": 0.02521830610812239,
+     "mean_launches": 0.25666666666666665
+    },
+    "glide_sync|8": {
+     "P_capture_episode": 0.43666666666666665,
+     "se": 0.028634995424531903,
+     "per_capita": 0.05458333333333333,
+     "per_capita_se": 0.003579374428066488,
+     "mean_launches": 4.81
+    },
+    "glide_sync|32": {
+     "P_capture_episode": 0.35,
+     "se": 0.02753785273643051,
+     "per_capita": 0.0109375,
+     "per_capita_se": 0.0008605578980134534,
+     "mean_launches": 22.89
+    },
+    "glide_indep|1": {
+     "P_capture_episode": 0.7766666666666666,
+     "se": 0.02404548159603349,
+     "per_capita": 0.7766666666666666,
+     "per_capita_se": 0.02404548159603349,
+     "mean_launches": 0.22333333333333333
+    },
+    "glide_indep|8": {
+     "P_capture_episode": 0.8233333333333334,
+     "se": 0.022019351758211497,
+     "per_capita": 0.10291666666666667,
+     "per_capita_se": 0.002752418969776437,
+     "mean_launches": 4.116666666666666
+    },
+    "glide_indep|32": {
+     "P_capture_episode": 0.82,
+     "se": 0.02218107301281884,
+     "per_capita": 0.025625,
+     "per_capita_se": 0.0006931585316505887,
+     "mean_launches": 19.3
+    },
+    "swim_sync|1": {
+     "P_capture_episode": 0.9933333333333333,
+     "se": 0.004698305447081342,
+     "per_capita": 0.9933333333333333,
+     "per_capita_se": 0.004698305447081342,
+     "mean_launches": 0.0
+    },
+    "swim_sync|8": {
+     "P_capture_episode": 0.99,
+     "se": 0.005744562646538031,
+     "per_capita": 0.12375,
+     "per_capita_se": 0.0007180703308172539,
+     "mean_launches": 0.0
+    },
+    "swim_sync|32": {
+     "P_capture_episode": 0.98,
+     "se": 0.008082903768654764,
+     "per_capita": 0.030625,
+     "per_capita_se": 0.00025259074277046137,
+     "mean_launches": 0.0
+    },
+    "swim|1": {
+     "P_capture_episode": 1.0,
+     "se": 5.773502691896258e-08,
+     "per_capita": 1.0,
+     "per_capita_se": 5.773502691896258e-08,
+     "mean_launches": 0.0
+    },
+    "swim|8": {
+     "P_capture_episode": 0.9633333333333334,
+     "se": 0.010850840554571826,
+     "per_capita": 0.12041666666666667,
+     "per_capita_se": 0.0013563550693214783,
+     "mean_launches": 0.0
+    },
+    "swim|32": {
+     "P_capture_episode": 0.9033333333333333,
+     "se": 0.017060893120645067,
+     "per_capita": 0.028229166666666666,
+     "per_capita_se": 0.0005331529100201584,
+     "mean_launches": 0.0
+    }
+   }
+  },
+  {
+   "setting": "U_burst=5.21",
+   "abm_overrides": {},
+   "escape_overrides": {
+    "U_burst": 5.21
+   },
+   "glide_scale": 1.0,
+   "B": 300,
+   "results": {
+    "glide_sync|1": {
+     "P_capture_episode": 0.35,
+     "se": 0.02753785273643051,
+     "per_capita": 0.35,
+     "per_capita_se": 0.02753785273643051,
+     "mean_launches": 0.6466666666666666
+    },
+    "glide_sync|8": {
+     "P_capture_episode": 0.016666666666666666,
+     "se": 0.007391185942027817,
+     "per_capita": 0.0020833333333333333,
+     "per_capita_se": 0.0009238982427534771,
+     "mean_launches": 7.89
+    },
+    "glide_sync|32": {
+     "P_capture_episode": 0.02666666666666667,
+     "se": 0.009301533127313934,
+     "per_capita": 0.0008333333333333334,
+     "per_capita_se": 0.00029067291022856045,
+     "mean_launches": 31.45
+    },
+    "glide_indep|1": {
+     "P_capture_episode": 0.36,
+     "se": 0.027712812921102038,
+     "per_capita": 0.36,
+     "per_capita_se": 0.027712812921102038,
+     "mean_launches": 0.64
+    },
+    "glide_indep|8": {
+     "P_capture_episode": 0.7466666666666667,
+     "se": 0.025110127807689838,
+     "per_capita": 0.09333333333333334,
+     "per_capita_se": 0.0031387659759612298,
+     "mean_launches": 5.433333333333334
+    },
+    "glide_indep|32": {
+     "P_capture_episode": 0.72,
+     "se": 0.02592296279363144,
+     "per_capita": 0.0225,
+     "per_capita_se": 0.0008100925873009825,
+     "mean_launches": 22.723333333333333
+    },
+    "swim_sync|1": {
+     "P_capture_episode": 0.97,
+     "se": 0.00984885780179611,
+     "per_capita": 0.97,
+     "per_capita_se": 0.00984885780179611,
+     "mean_launches": 0.0
+    },
+    "swim_sync|8": {
+     "P_capture_episode": 0.9533333333333334,
+     "se": 0.012177696674506891,
+     "per_capita": 0.11916666666666667,
+     "per_capita_se": 0.0015222120843133614,
+     "mean_launches": 0.0
+    },
+    "swim_sync|32": {
+     "P_capture_episode": 0.9066666666666666,
+     "se": 0.01679506100239217,
+     "per_capita": 0.028333333333333332,
+     "per_capita_se": 0.0005248456563247553,
+     "mean_launches": 0.0
+    },
+    "swim|1": {
+     "P_capture_episode": 0.9433333333333334,
+     "se": 0.013348602368232605,
+     "per_capita": 0.9433333333333334,
+     "per_capita_se": 0.013348602368232605,
+     "mean_launches": 0.0
+    },
+    "swim|8": {
+     "P_capture_episode": 0.9233333333333333,
+     "se": 0.015361085995559135,
+     "per_capita": 0.11541666666666667,
+     "per_capita_se": 0.001920135749444892,
+     "mean_launches": 0.0
+    },
+    "swim|32": {
+     "P_capture_episode": 0.8566666666666667,
+     "se": 0.020231072544388155,
+     "per_capita": 0.026770833333333334,
+     "per_capita_se": 0.0006322210170121299,
+     "mean_launches": 0.0
+    }
+   }
+  }
+ ],
+ "elapsed_s": 512.6118805408478
+}

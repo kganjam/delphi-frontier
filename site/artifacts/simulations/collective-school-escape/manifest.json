@@ -1,0 +1,282 @@
+{
+ "id": "collective-school-escape",
+ "title": "Schooling and synchronised emergence vs a predator: per-capita escape (agent-based model)",
+ "scales": [
+  "collective",
+  "ecological"
+ ],
+ "project": "flying-fish",
+ "evidence_kind": "simulated: model output under declared assumptions; not an observation of any fish, predator or lineage",
+ "model": {
+  "name": "claude-eco collective/1: 2-D agent-based school (zonal model geometry, detection, alarm cascade over the neighbour graph), predator approach/burst/strike with confusion, gliders flying the project point-mass glide distance",
+  "context": "Population/behavioural layer of the collective scale; the rigid-body/hydrodynamic collective launch is claude-organ's. Compares glide + alarm, glide independent, swim + alarm and swim-only over N = 1..64. All behavioural parameters are assumptions, swept. SIMULATION, not an observation of any school.",
+  "code": "engineering/ecology_sims/",
+  "reuses": "engineering/simulation/glide.py (project point-mass glide) unchanged"
+ },
+ "video": {
+  "file": "collective.mp4",
+  "sha256": "8aa32964719b00481371d95080762f7001572526095040e3fbcd2b22da3845b1",
+  "note": "1280x720 h264, rendered single-thread from results.json / saved states"
+ },
+ "poster": "poster.png",
+ "poster_sha256": "7263bef7339f984e45e4cded0aef8e69088dc3b4c0d3092a80433de014b54c98",
+ "receipt": {
+  "file": "site/artifacts/simulations/collective-school-escape/receipt.json",
+  "sha256": "ebd67b2a9288c6a17f74be49f25d9c726d5a0a425c1fe47703f06cc12ebfe2a2",
+  "command": "python3 -c 'from engineering.ecology_sims.collective import merge; merge(...)'",
+  "exit_code": 0,
+  "seed": 20261101,
+  "started_utc": "2026-11-01T15:54:27Z",
+  "finished_utc": "2026-11-01T16:31:23Z",
+  "inputs_sha256": {
+   "engineering/ecology_sims/common.py": "73722069f59f46b729a9f3e6d1f60a044c3fc202d62b6896470cf744e1731722",
+   "engineering/ecology_sims/fishbase_parsed.json": "e830a18ba282aa941b604246bd3787e1c899cbc5dbdd0ac68ec6fb8f941a9d42",
+   "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "engineering/simulation/controlled.py": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+   "data/fish-controls/daane2021_s1a_observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703",
+   "data/fish-controls/fish1990_tables.json": "5300c509abbbd8887fdbcde38c404cbfe24aa02597a2abc50f38c94ca6649b21",
+   "__script__": "0ff2c5a186a7346017924b22e97e45fb6a0462245be3a85beb0299c696003767"
+  }
+ },
+ "results": {
+  "file": "site/artifacts/simulations/collective-school-escape/results.json",
+  "sha256": "185f7ed31c4b4ffc5884e8897f15e406448d45b97d0569791d17d1260d8717df"
+ },
+ "sensitivity": {
+  "file": "site/artifacts/simulations/collective-school-escape/sensitivity.json"
+ },
+ "sources": [
+  {
+   "id": "couzin2002",
+   "cite": "Couzin ID, Krause J, James R, Ruxton GD, Franks NR (2002) Collective memory and spatial sorting in animal groups. J Theor Biol 218:1-11. doi:10.1006/jtbi.2002.3065",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "zonal repulsion/orientation/attraction school model form; zone radii are assumptions"
+  },
+  {
+   "id": "treherne1981",
+   "cite": "Treherne JE, Foster WA (1981) Group transmission of predator avoidance behaviour in a marine insect: the Trafalgar effect. Anim Behav 29:911-917. doi:10.1016/s0003-3472(81)80028-0",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "model form of alarm transmission through a group; speed/delay values are assumptions swept"
+  },
+  {
+   "id": "landeau1986",
+   "cite": "Landeau L, Terborgh J (1986) Oddity and the 'confusion effect' in predation. Anim Behav 34:1372-1380. doi:10.1016/s0003-3472(86)80208-1",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "model form of a confusion effect; strength parameter is an assumption swept"
+  },
+  {
+   "id": "hamilton1971",
+   "cite": "Hamilton WD (1971) Geometry for the selfish herd. J Theor Biol 31:295-311. doi:10.1016/0022-5193(71)90189-5",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "dilution / selfish-herd framing; no number taken"
+  },
+  {
+   "id": "fishbase",
+   "cite": "FishBase species summary, length-weight and swimming-speed pages, fetched 2026-11-01 (engineering/ecology_sims/fishbase_parsed.json)",
+   "read_level": "parsed directly from fetched HTML; primary references behind each FishBase row NOT re-read",
+   "used_for": "LW coefficients (Hyporhamphus unifasciatus a=0.00632 SL b=3; Exocoetus volitans a=0.01354 SL b=3), predator sizes (Coryphaena hippurus common 100 cm TL; Thunnus albacares common 150 cm FL), predator speeds (T. albacares burst 5.21-20.46 m/s at 62-66 cm SL, sustained 0.46-0.65 m/s; C. hippurus sustained 0.56 m/s at 67 cm SL; FishBase ref 308), Hyporhamphus caudal 'emarginate or slightly forked'"
+  },
+  {
+   "id": "project_glide",
+   "cite": "engineering/simulation/glide.py (glide-pointmass/1) with polar P1_nominal CL_max 1.2, CD0 0.06, e 0.8 (project DESIGN ASSUMPTIONS) and rho 1.225",
+   "read_level": "project code, reused unchanged",
+   "used_for": "airborne phase of every phenotype"
+  }
+ ],
+ "review": {
+  "model": "gemini-4-argon (Google), design critique 2026-11-01T14:39Z, full code + summary sent; gemini-3.8-flash wording check of findings 2026-11-01 ~15:19Z (three overclaim/jargon fixes applied)",
+  "changed_in_response": [
+   "added an aquatic fin cost (kappa_fin, swept 0-1; default 0 = escape-only fitness, stated)",
+   "added a zero-lift (ballistic) control for every phenotype",
+   "added swim_sync control (alarm cascade without gliding) to separate gliding from social alarm",
+   "predator now pursues the glider's ground track instead of its landing point (no foreknowledge); d_gap term removed from the ABM tracking rule",
+   "faster in-water flee (5 and 10 m/s) as sensitivity cases",
+   "correlated-G (p-c pleiotropy +-0.5) and CV_A 0.02/0.10 Lande variants",
+   "CL rule n_trim 1.5 sweep",
+   "weakest-step selection coefficient reported with the Ne needed for selection to beat drift"
+  ],
+  "not_changed": [
+   "ground effect is still omitted (stated as a limitation: it would lengthen glides of low fliers)",
+   "body-shape (length-weight a) is not an evolving trait; both FishBase values are run",
+   "fitness has no fecundity/foraging term beyond the fin-cost factor"
+  ]
+ },
+ "couplings": [],
+ "native": true,
+ "author": "claude-eco (Claude Opus 5.5), 2026-11-01",
+ "time": {
+  "units": "seconds of one attack episode (dt 0.02 s, cap 12 s)",
+  "note": "video: one recorded episode per condition, top view; airborne fish are flown to landing after the episode ends (display only)"
+ },
+ "numerical_checks": [
+  {
+   "name": "seed replicate (seed + 99)",
+   "result": "{\"glide_sync|1\": {\"P_capture_episode\": 0.6683333333333333, \"se\": 0.019220817225467153, \"per_capita\": 0.6683333333333333, \"per_capita_se\": 0.019220817225467153, \"mean_launches\": 0.33166666666666667}, \"glide_sync|16\": {\"P_capture_episode\": 0.145, \"se\": 0.01437445651146505, \"per_capita\": 0.0090625, \"per_capita_se\": 0.0008984035319665656, \"mean_launches\": 13.73}, \"glide_indep|1\": {\"P_capture_episode\": 0.695, \"se\": 0.018796054550534447, \"per_capita\": 0.695, \"per_capita_se\": 0.018796054550534447, \"mean_launches\": 0.30333333333333334}, \"glide_indep|16\": {\"P_capture_episode\": 0.8166666666666667, \"se\": 0.015796741342347702, \"per_capita\": 0.051041666666666666, \"per_capita_se\": 0.0009872963338967314, \"mean_launches\": 9.846666666666666}, \"swim_sync|1\": {\"P_capture_episode\": 0.9816666666666667, \"se\": 0.005476802933315233, \"per_capita\": 0.9816666666666667, \"per_capita_se\": 0.005476802933315233, \"mean_launches\": 0.0}, \"swim_sync|16\": {\"P_capture_episode\": 0.9416666666666667, \"se\": 0.009568224805361021, \"per_capita\": 0.058854166666666666, \"per_capita_se\": 0.0005980140503350638, \"mean_launches\": 0.0}, \"swim|1\": {\"P_capture_episode\": 0.99, \"se\": 0.004062019202317982, \"per_capita\": 0.99, \"per_capita_se\": 0.004062019202317982, \"mean_launches\": 0.0}, \"swim|16\": {\"P_capture_episode\": 0.87, \"se\": 0.013729530217745981, \"per_capita\": 0.054375, \"per_capita_se\": 0.0008580956386091238, \"mean_launches\": 0.0}}"
+  },
+  {
+   "name": "binomial standard errors",
+   "result": "every P has se = sqrt(P(1-P)/B) recorded in results.json"
+  },
+  {
+   "name": "school connectivity",
+   "result": "every generated school is connected on its attraction-radius graph (the generator regenerates fragmented ones). An earlier run whose generator fragmented 35% of N=32 and 83% of N=64 schools was found by inspecting the video and DISCARDED; no number from it is used."
+  }
+ ],
+ "findings": [
+  "Solitary (N=1) capture per attack: glide 0.69, swim 0.99.",
+  "N=16: P(capture per episode) glide+alarm 0.133 +- 0.027 (95%), glide independent 0.773, swim+alarm 0.953, swim 0.882.",
+  "Per-capita capture per encounter at N=16: glide+alarm 0.0083 vs solitary glider 0.692 (83x lower); glide independent 0.0483; swim 0.0551 (dilution alone).",
+  "In this model, synchronised emergence (alarm cascade) lowers whole-school capture for gliders but not for slow swimmers: the alarm only helps if it triggers an escape that takes the target out of reach.",
+  "Sensitivity (15 one-at-a-time settings, N = 1, 8, 32, B = 300): glide + alarm has lower whole-school capture than glide-independent at N = 32 in 15 of 15; per-capita capture of a glider in a school of 32 is below a solitary glider's in 15 of 15. With no confusion effect (kappa = 0) glide + alarm still drops from 0.68 (N = 1) to 0.50 (N = 32) while glide-independent rises to 0.92. If swimmers could flee at 10 m/s (= the launch exit speed), the alarm helps them too: swim + alarm 0.59 -> 0.03.",
+  "Per unit time, if encounters scale with school size (alpha = 1, no dilution), risk relative to a solitary fish at N = 32 is: glide_sync 0.26, glide_indep 1.16, swim_sync 0.98, swim 0.83 (alpha = 0 and 0.5 in results.json).",
+  "Episodes per estimate (B): main:1,2,4,8,16,32 B=600; main:64 B=300; sensitivity B=300. The N=64 shard at B=600 was stopped by the 1800 s process cap (exit 143, no result) and rerun at B=300."
+ ],
+ "parameter_unknowns": [
+  "r_rep = 0.15 m: ASSUMPTION zone of repulsion (~1 SL)",
+  "r_ori = 0.6 m: ASSUMPTION zone of orientation",
+  "r_att = 2.0 m: ASSUMPTION zone of attraction",
+  "v_cruise = 0.5 m/s: ASSUMPTION cruise speed (~3 SL/s)",
+  "r_det = 3.0 m: ASSUMPTION predator detection range (set equal to r_burst so detection races the strike; 6 m is a sensitivity case)",
+  "q_det = 2.0 1/s: ASSUMPTION detection rate within r_det",
+  "r_alarm = 0.8 m: ASSUMPTION alarm neighbour radius",
+  "tau_alarm = 0.1 s: ASSUMPTION delay per alarm hop",
+  "tau_launch = 0.3 s: ASSUMPTION alert-to-exit latency",
+  "t_refract = 1.0 s: ASSUMPTION time before a landed fish can re-launch",
+  "glide_cv = 0.2 1: ASSUMPTION per-launch lognormal CV of airborne distance/time",
+  "U_flee = 1.7 m/s: ASSUMPTION non-glider flee speed (~10 SL/s for a 17 cm fish)",
+  "U_app = 2.0 m/s: ASSUMPTION predator approach speed",
+  "r0 = 12.0 m: ASSUMPTION predator start distance from school centroid",
+  "r_burst = 3.0 m: ASSUMPTION distance at which the predator bursts",
+  "r_strike = 0.3 m: ASSUMPTION strike reach",
+  "P1 = 0.5 1: ASSUMPTION single-target strike success",
+  "strike_cooldown = 0.3 s: ASSUMPTION",
+  "kappa = 0.2 1: ASSUMPTION confusion strength in water (Landeau & Terborgh form)",
+  "r_conf = 1.0 m: ASSUMPTION confusion radius",
+  "kappa_air = 0.2 1: ASSUMPTION confusion from simultaneous airborne fish",
+  "r_view = 8.0 m: ASSUMPTION predator view radius for retargeting / aerial confusion",
+  "T_max = 12.0 s: episode cap",
+  "dt = 0.02 s: time step"
+ ],
+ "does_not_establish": [
+  "that real flying-fish schools emerge synchronously or transmit alarms",
+  "rigid-body or hydrodynamic interactions between launching fish (claude-organ's layer)",
+  "encounter-rate scaling with school size (alpha is swept, not estimated)",
+  "confusion strengths for any real predator (Landeau & Terborgh form only)",
+  "any 3-D effect: the ABM is 2-D top view; airborne fish are represented by their ground track"
+ ],
+ "open_questions": [
+  "Field video of school emergence timing",
+  "Does claude-organ's collective-launch physics change per-fish airborne distance when launches are simultaneous?"
+ ],
+ "risk_per_time_relative_to_solitary": {
+  "alpha=0.0|glide_sync": {
+   "1": 1.0,
+   "2": 0.4120481927710843,
+   "4": 0.1325301204819277,
+   "8": 0.041867469879518074,
+   "16": 0.012048192771084338,
+   "32": 0.008132530120481927,
+   "64": 0.00338855421686747
+  },
+  "alpha=0.0|glide_indep": {
+   "1": 1.0,
+   "2": 0.5376213592233009,
+   "4": 0.29004854368932037,
+   "8": 0.1507888349514563,
+   "16": 0.0703883495145631,
+   "32": 0.03610436893203883,
+   "64": 0.01873483009708738
+  },
+  "alpha=0.0|swim_sync": {
+   "1": 1.0,
+   "2": 0.49491525423728816,
+   "4": 0.251271186440678,
+   "8": 0.12245762711864408,
+   "16": 0.06059322033898305,
+   "32": 0.030773305084745767,
+   "64": 0.015360169491525424
+  },
+  "alpha=0.0|swim": {
+   "1": 1.0,
+   "2": 0.4881956155143339,
+   "4": 0.24536256323777403,
+   "8": 0.11677908937605397,
+   "16": 0.05575463743676223,
+   "32": 0.025927487352445194,
+   "64": 0.013859612141652615
+  },
+  "alpha=0.5|glide_sync": {
+   "1": 1.0,
+   "2": 0.582724142568191,
+   "4": 0.2650602409638554,
+   "8": 0.11841908745172303,
+   "16": 0.04819277108433735,
+   "32": 0.04600453757117297,
+   "64": 0.02710843373493976
+  },
+  "alpha=0.5|glide_indep": {
+   "1": 1.0,
+   "2": 0.7603114176350498,
+   "4": 0.5800970873786407,
+   "8": 0.4264952308855755,
+   "16": 0.2815533980582524,
+   "32": 0.20423715281844457,
+   "64": 0.14987864077669905
+  },
+  "alpha=0.5|swim_sync": {
+   "1": 1.0,
+   "2": 0.6999158647677014,
+   "4": 0.502542372881356,
+   "8": 0.34636247417442756,
+   "16": 0.2423728813559322,
+   "32": 0.17408010163956958,
+   "64": 0.1228813559322034
+  },
+  "alpha=0.5|swim": {
+   "1": 1.0,
+   "2": 0.690412860551452,
+   "4": 0.49072512647554806,
+   "8": 0.3303011439943907,
+   "16": 0.22301854974704893,
+   "32": 0.14666801700833956,
+   "64": 0.11087689713322092
+  },
+  "alpha=1.0|glide_sync": {
+   "1": 1.0,
+   "2": 0.8240963855421686,
+   "4": 0.5301204819277108,
+   "8": 0.3349397590361446,
+   "16": 0.1927710843373494,
+   "32": 0.26024096385542167,
+   "64": 0.21686746987951808
+  },
+  "alpha=1.0|glide_indep": {
+   "1": 1.0,
+   "2": 1.0752427184466018,
+   "4": 1.1601941747572815,
+   "8": 1.2063106796116505,
+   "16": 1.1262135922330097,
+   "32": 1.1553398058252426,
+   "64": 1.1990291262135924
+  },
+  "alpha=1.0|swim_sync": {
+   "1": 1.0,
+   "2": 0.9898305084745763,
+   "4": 1.005084745762712,
+   "8": 0.9796610169491526,
+   "16": 0.9694915254237289,
+   "32": 0.9847457627118645,
+   "64": 0.9830508474576272
+  },
+  "alpha=1.0|swim": {
+   "1": 1.0,
+   "2": 0.9763912310286678,
+   "4": 0.9814502529510961,
+   "8": 0.9342327150084317,
+   "16": 0.8920741989881957,
+   "32": 0.8296795952782462,
+   "64": 0.8870151770657674
+  }
+ },
+ "caption": "Agent-based school vs predator: per-capita capture with and without synchronised emergence. SIMULATION, not an observation."
+}

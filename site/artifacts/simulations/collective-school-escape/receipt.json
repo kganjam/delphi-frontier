@@ -1,0 +1,64 @@
+{
+ "schema": "frontier.eco.receipt/1",
+ "kind": "merge of shard receipts",
+ "script": "engineering/ecology_sims/collective.py",
+ "seed": 20261101,
+ "exit_code": 0,
+ "command": "python3 -c 'from engineering.ecology_sims.collective import merge; merge(...)'",
+ "started_utc": "2026-11-01T15:54:27Z",
+ "finished_utc": "2026-11-01T16:31:23Z",
+ "inputs_sha256": {
+  "engineering/ecology_sims/common.py": "73722069f59f46b729a9f3e6d1f60a044c3fc202d62b6896470cf744e1731722",
+  "engineering/ecology_sims/fishbase_parsed.json": "e830a18ba282aa941b604246bd3787e1c899cbc5dbdd0ac68ec6fb8f941a9d42",
+  "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+  "engineering/simulation/controlled.py": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+  "data/fish-controls/daane2021_s1a_observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703",
+  "data/fish-controls/fish1990_tables.json": "5300c509abbbd8887fdbcde38c404cbfe24aa02597a2abc50f38c94ca6649b21",
+  "__script__": "0ff2c5a186a7346017924b22e97e45fb6a0462245be3a85beb0299c696003767"
+ },
+ "shards": [
+  {
+   "part": "main:1,2,4,8,16,32",
+   "receipt": "receipt_main1_2_4_8_16_32.json",
+   "receipt_sha256": "020579731bf327b4dd821a6f571663cf4f7d526845e23fbb90bb6c6387fe56e8",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/collective.py --B 600 --part main:1,2,4,8,16,32",
+   "elapsed_s": 267.07321405410767
+  },
+  {
+   "part": "main:64",
+   "receipt": "receipt_main64.json",
+   "receipt_sha256": "cc3748715960bbf2dc6c8f5a398ef92bcdc24e7a376977bcef7aee40f4622f8c",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/collective.py --B 300 --part main:64",
+   "elapsed_s": 381.34041023254395
+  },
+  {
+   "part": "sens:0-5",
+   "receipt": "receipt_sens0_5.json",
+   "receipt_sha256": "56bdb4dd57c5616708d37bc7cfd9484f5eca7872ac133deee0f7a40f96059a3f",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/collective.py --B 600 --part sens:0-5",
+   "elapsed_s": 506.15640926361084
+  },
+  {
+   "part": "sens:5-10",
+   "receipt": "receipt_sens5_10.json",
+   "receipt_sha256": "cb8a821f62fa4b6006ac550b22e63937330de06206234319353853f7963a2d68",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/collective.py --B 600 --part sens:5-10",
+   "elapsed_s": 512.6118805408478
+  },
+  {
+   "part": "sens:10-15",
+   "receipt": "receipt_sens10_15.json",
+   "receipt_sha256": "dd817eb82240fbf204d38ff92eea0ca99f40ff58df1fe2acd51fd87371f6189d",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/collective.py --B 600 --part sens:10-15",
+   "elapsed_s": 507.2583975791931
+  }
+ ],
+ "outputs_sha256": {
+  "results.json": "185f7ed31c4b4ffc5884e8897f15e406448d45b97d0569791d17d1260d8717df"
+ }
+}

@@ -147,7 +147,9 @@ def collective():
                       "claude-eco collective/1: 2-D agent-based school (zonal model geometry, detection, alarm cascade over the neighbour graph), predator approach/burst/strike with confusion, gliders flying the project point-mass glide distance",
                       "Population/behavioural layer of the collective scale; the rigid-body/hydrodynamic collective launch is claude-organ's. Compares glide + alarm, glide independent, swim + alarm and swim-only over N = 1..64. All behavioural parameters are assumptions, swept. SIMULATION, not an observation of any school.",
                       ["couzin2002", "treherne1981", "landeau1986", "hamilton1971", "fishbase", "project_glide"])
-    m.update({"time": {"units": "seconds of one attack episode (dt 0.02 s, cap 12 s)", "note": "video: one recorded episode per condition, top view"},
+    shardB = {json.loads(p.read_text()).get("part"): json.loads(p.read_text()).get("B") for p in sorted(d.glob("receipt_*.json"))}
+    findings.append("Episodes per estimate (B): " + "; ".join(f"{k} B={v}" for k, v in shardB.items() if k and k.startswith("main")) + f"; sensitivity B={S[0]['B'] if S else 'n/a'}. The N=64 shard at B=600 was stopped by the 1800 s process cap (exit 143, no result) and rerun at B=300.")
+    m.update({"time": {"units": "seconds of one attack episode (dt 0.02 s, cap 12 s)", "note": "video: one recorded episode per condition, top view; airborne fish are flown to landing after the episode ends (display only)"},
               "numerical_checks": [{"name": "seed replicate (seed + 99)", "result": json.dumps(R.get("seed_replicate"))},
                                    {"name": "binomial standard errors", "result": "every P has se = sqrt(P(1-P)/B) recorded in results.json"},
                                    {"name": "school connectivity", "result": "every generated school is connected on its attraction-radius graph (the generator regenerates fragmented ones). An earlier run whose generator fragmented 35% of N=32 and 83% of N=64 schools was found by inspecting the video and DISCARDED; no number from it is used."}],
