@@ -277,7 +277,7 @@ Three studies, each a **simulation or a sequence analysis**. None is an observat
 
 *sequence analysis · molecular scale*
 
-**The design question it answers.** Kvon et al. swapped the mouse ZRS for orthologs from other species: human and coelacanth gave normal limbs, python and king cobra truncated them. The python ZRS is about as similar to mouse as the coelacanth's is, so whatever separates them is not overall sequence similarity. What can you see in the alignment?
+**The design question it answers.** Kvon et al. swapped the mouse ZRS for orthologs from other species: human and coelacanth gave normal limbs, python and king cobra truncated them. The python ZRS is about as similar to mouse as the coelacanth's is, so whatever separates them is not overall sequence similarity. What can you see in the alignment, and what can't you?
 
 Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS1 motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the ones that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page. The causal evidence is Kvon et al.'s mouse genetics, not this alignment.
 

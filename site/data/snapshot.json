@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 8a97d7b11bb4",
- "input_fingerprint": "8a97d7b11bb46b504e1bb106b19dbcc2085e64a0f95f9359ca11285bc1352e48",
+ "label": "snapshot of inputs ec79ab5b0e1e",
+ "input_fingerprint": "ec79ab5b0e1ea2a481e79f607bf40456b7eecdc29a4cfa6d9c52bd95e4db85af",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -4095,8 +4095,8 @@
   },
   {
    "path": "results/limbless-mouse/figures/shh-loop-threshold.png",
-   "sha256": "1c0c5d3ca43648c276bd0933c500f0e0f2e80c25a3e340ac02d7fe5a66d45255",
-   "bytes": 163182
+   "sha256": "6ddff6f8bc33b915d741e8985e96b69b1df201dbf92f44d2ac5757a8ae81f327",
+   "bytes": 163663
   },
   {
    "path": "results/limbless-mouse/figures/zrs-conservation.png",
@@ -4105,8 +4105,8 @@
   },
   {
    "path": "results/limbless-mouse/index.json",
-   "sha256": "7438017902ef31cad4ae0b8e0d49840123cc9ab466d9e1e8ad1a6aa55dfcd3b6",
-   "bytes": 7287
+   "sha256": "29d35b8232f52d02d198836a9df2c42ad5ee075aee83a096eceb53d47f9b6739",
+   "bytes": 7307
   },
   {
    "path": "results/limbless-mouse/routes.json",
@@ -4115,7 +4115,7 @@
   },
   {
    "path": "results/limbless-mouse/shh-loop.json",
-   "sha256": "916f1d207187e039e3ad8b0120a34f5166d6e5ae32c289f1a7329068a9c3cbcd",
+   "sha256": "160bb74377ff2d2ac22dc56d411433a91abc7117bc155bfbff3c72b42b848bf4",
    "bytes": 337690
   },
   {
@@ -75658,7 +75658,7 @@
    "text": "The useful thing here is not the list — a specialist could write the list. It is that every row carries its evidence level, every junction between scales carries a refusal or a label, and the three models can be re-run from the repository. The question “can you make a limbless mouse?” has a dozen answers whose differences only show up when you are forced to say which phenotype, at which scale, with what evidence, and at what cost. That is what this workspace is for."
   },
   "content_sha256": "58d3944d82942b4dc8c711a8dc7e5aaaf10224e34fb7ae2f739cd9e85850d50d",
-  "index_sha256": "7438017902ef31cad4ae0b8e0d49840123cc9ab466d9e1e8ad1a6aa55dfcd3b6",
+  "index_sha256": "29d35b8232f52d02d198836a9df2c42ad5ee075aee83a096eceb53d47f9b6739",
   "generated_at": null,
   "routes": {
    "title": "Routes to a limbless or limb-reduced mouse",
@@ -77741,7 +77741,7 @@
     "title": "The ZRS across species: what changes when a limb enhancer is swapped",
     "scale": "molecular",
     "kind": "sequence analysis",
-    "question": "Kvon et al. swapped the mouse ZRS for orthologs from other species: human and coelacanth gave normal limbs, python and king cobra truncated them. The python ZRS is about as similar to mouse as the coelacanth's is, so whatever separates them is not overall sequence similarity. What can you see in the alignment?",
+    "question": "Kvon et al. swapped the mouse ZRS for orthologs from other species: human and coelacanth gave normal limbs, python and king cobra truncated them. The python ZRS is about as similar to mouse as the coelacanth's is, so whatever separates them is not overall sequence similarity. What can you see in the alignment, and what can't you?",
     "summary": "Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS1 motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the ones that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page. The causal evidence is Kvon et al.'s mouse genetics, not this alignment.",
     "code": "results/limbless-mouse/code/final_analysis.py (with fetch_orthologs.py, locate_zrs.py, core_trim.py, make_figure.py and zrs_lib.py beside it)",
     "data": {
@@ -88604,11 +88604,11 @@
       ],
       "source_verification": "Every PMID and DOI above was resolved through the PubMed E-utilities MCP tools (search_articles / lookup_article_by_citation / get_article_metadata). Read level is abstract for all 11: the regulatory edges are taken from statements made in the abstracts, not from figures or supplementary data.",
       "attribution": "Bibliographic metadata retrieved from PubMed.",
-      "runtime_seconds": 306.67
+      "runtime_seconds": 439.78
      }
     },
     "present": true,
-    "sha256": "916f1d207187e039e3ad8b0120a34f5166d6e5ae32c289f1a7329068a9c3cbcd",
+    "sha256": "160bb74377ff2d2ac22dc56d411433a91abc7117bc155bfbff3c72b42b848bf4",
     "figures": [
      {
       "file": "shh-loop-control.png",
@@ -88625,8 +88625,8 @@
       "caption": "Simulation. Outgrowth duration against the fraction of wild-type ZPA Shh output. The threshold is a property of this model, not a measurement in an embryo.",
       "state": "present",
       "href": "artifacts/limbless-mouse/shh-loop-threshold.png",
-      "sha256": "1c0c5d3ca43648c276bd0933c500f0e0f2e80c25a3e340ac02d7fe5a66d45255",
-      "bytes": 163182
+      "sha256": "6ddff6f8bc33b915d741e8985e96b69b1df201dbf92f44d2ac5757a8ae81f327",
+      "bytes": 163663
      },
      {
       "file": "shh-loop-phasemap.png",

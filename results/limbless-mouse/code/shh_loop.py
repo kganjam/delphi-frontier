@@ -687,7 +687,7 @@ def fig_control(path):
 
 
 def fig_threshold(path, sweeps, L_wt):
-    fig, axes = plt.subplots(1, 2, figsize=(10.0, 4.8), dpi=140,
+    fig, axes = plt.subplots(1, 2, figsize=(10.6, 4.8), dpi=140,
                              gridspec_kw=dict(width_ratios=[1.25, 1.0]))
     fig.patch.set_facecolor(BG)
     for ax in axes:
@@ -712,8 +712,10 @@ def fig_threshold(path, sweeps, L_wt):
     ax.set_ylabel("outgrowth  $L$ / wild-type $L$\n(nondimensional)", fontsize=11.5)
     ax.set_xlim(0, 1.6)
     ax.set_ylim(0, 1.75)
-    ax.set_title("Three routes to one phenotype: each knob has a sharp\n"
-                 "engage threshold (triangles)", fontsize=12, color=INK, pad=10)
+    # Titles are deliberately short and balanced across two lines: at this figure width the
+    # longest line must stay under roughly 40 characters or it crowds the panel edge.
+    ax.set_title("Three routes to one phenotype:\neach knob has a sharp engage threshold",
+                 fontsize=11.5, color=INK, pad=10)
     leg = ax.legend(loc="upper left", fontsize=9.5, framealpha=0.95, facecolor=BG,
                     edgecolor=INK)
     for t in leg.get_texts():
@@ -741,8 +743,8 @@ def fig_threshold(path, sweeps, L_wt):
     ax.set_ylabel("outgrowth  $L$ / wild-type $L$", fontsize=11.5)
     ax.set_xlim(0, 2.0)
     ax.set_ylim(0, 5.0)
-    ax.set_title("BMP is needed at both ends: it initiates\nGrem1, and it switches the loop off",
-                 fontsize=12, color=INK, pad=10)
+    ax.set_title("BMP is needed at both ends:\nit initiates Grem1 and switches it off",
+                 fontsize=11.5, color=INK, pad=10)
     leg = ax.legend(loc="upper center", fontsize=8.8, framealpha=0.96, facecolor=BG,
                     edgecolor=INK, borderpad=0.5, labelspacing=0.7)
     for t in leg.get_texts():
