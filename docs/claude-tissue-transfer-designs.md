@@ -27,8 +27,9 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 - In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
   pattern is spots) and growth along the fin axis.
 - With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
-  a proliferating zone wider than **L_p* ≈ 0.4 λ**: 0.37, 0.39 and 0.39 at three rate scales, and a prediction made
-  from two of them was confirmed on the third (12 seeds each). This is partly a scaling consistency check, and grid
+  a proliferating zone wider than **L_p* ≈ 0.4 λ at slow outgrowth**: 0.37, 0.39 and 0.39 at three rate scales, and a
+  prediction made from two of them was confirmed on the third (12 seeds each). The switch rises with outgrowth speed,
+  reaching 0.48 λ at v = 0.4 (L_p* ≈ 3.9 + 3.3·v at γ = 1). This is partly a scaling consistency check, and grid
   sensitivity is under test. Above the switch, newly grown tissue is almost perfectly
   ray-like (distal-half A 0.94–1.00). One unexplained exception remains, a narrow failure window at γ = 2 near L_p ≈ 10.
 - With row insertion from a very short fold, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern
