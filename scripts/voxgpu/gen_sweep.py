@@ -24,6 +24,7 @@ import argparse, json, math, os, random, hashlib
 T_TRANS = 1.0      # transient window, s (centre of mass re-zeroed after this)
 T_END = 6.0        # stop time, s  -> 5 s measured window = 20 actuation cycles
 PERIOD = 0.25
+PHASE_FMT = "%.6f"   # s1 format; the post-hoc ensemble needs more digits to carry eps
 
 MATS = """
         <Material ID="1"><Name>passive</Name><Display><Red>0</Red><Green>0.6</Green><Blue>1</Blue><Alpha>1</Alpha></Display>
@@ -69,7 +70,7 @@ def vxd(mat, phase, nx, ny, nz):
         for y in range(ny):
             for x in range(nx):
                 s.append(str(mat[x][y][z]))
-                p.append("%.6f" % (phase[x][y][z] if mat[x][y][z] else 0.0))
+                p.append(PHASE_FMT % (phase[x][y][z] if mat[x][y][z] else 0.0))
         layers.append("<Layer><![CDATA[%s]]></Layer>" % "".join(s))
         players.append("<Layer><![CDATA[%s]]></Layer>" % ",".join(p))
     return ("<VXD>\n<Structure replace=\"VXA.VXC.Structure\" Compression=\"ASCII_READABLE\">"
@@ -170,6 +171,8 @@ def main():
     ap.add_argument("--popbatch", type=int, default=500, help="candidates per batch (x3 sims each)")
     ap.add_argument("--nrep", type=int, default=3)
     ap.add_argument("--skip-endpoints", action="store_true")
+    ap.add_argument("--ensemble", type=int, default=0, help="POST-HOC: N phase-perturbed members per pattern (8x4x3, DtFrac 0.9)")
+    ap.add_argument("--eps", type=float, default=1e-7, help="POST-HOC: phase perturbation sd, in cycles")
     a = ap.parse_args()
     manifest = []
     if not a.skip_endpoints:
@@ -184,6 +187,23 @@ def main():
             for r in range(a.nrep):
                 bodies[f"fine_{pname}_r{r}"] = (mat, ph, (16, 8, 6), dict(kind="endpoint", pattern=pname, rep=r, dtfrac=0.9, lattice=0.005, dims="16x8x6"))
         write_batch(os.path.join(a.out, "endpoints_mesh"), base_vxa(0.005, 0.9), bodies, manifest, "endpoints_mesh")
+    if a.ensemble:
+        # POST-HOC diagnostic (added after E3 failed, on gemini-4-argon's advice): does an O(eps) unmirrored
+        # perturbation of the phase field move d by as much as mirroring does? Member 0 is unperturbed.
+        global PHASE_FMT
+        PHASE_FMT = "%.12e"
+        er = random.Random(a.seed + 7)
+        for tag, dtf in (("ens_dt090", 0.9),):
+            bodies = {}
+            for pname, (mat, ph) in ref_patterns(8, 4, 3).items():
+                if pname in ("checker", "passive_cte0"):
+                    continue
+                for m in range(a.ensemble):
+                    eps = 0.0 if m == 0 else a.eps
+                    php = [[[v + er.gauss(0, eps) for v in Y] for Y in X] for X in ph]
+                    bodies[f"ens_{pname}_m{m:03d}"] = (mat, php, (8, 4, 3), dict(kind="ensemble", pattern=pname, member=m, eps=eps, dtfrac=dtf, lattice=0.01, dims="8x4x3"))
+            write_batch(os.path.join(a.out, tag), base_vxa(0.01, dtf), bodies, manifest, tag)
+        PHASE_FMT = "%.6f"
     rng = random.Random(a.seed)
     nx, ny, nz = 6, 6, 5
     bi = 0
