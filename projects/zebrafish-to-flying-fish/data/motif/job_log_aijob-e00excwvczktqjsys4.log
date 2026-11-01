@@ -1,0 +1,229 @@
+token from NEBIUS_IAM_TOKEN env is used
+Provisioning resources for the workload
+Workload initialization started
+Downloading container image
+Starting workload container
+NVIDIA L40S
+ZF2FF_JOB=motif-scan ZF2FF_START=2026-11-01T15:48:26Z
+ZF2FF_APT_RC=0
+ZF2FF_PY=3.11.2 ZF2FF_NUMPY=1.24.2
+ZF2FF_FASTA_SHA256=c9dd35a2ef6fc0e6725ba89f47164c284668a372f3fa2cb94c57f1a037ca850d
+ZF2FF_FASTA_SEQS=95
+ZF2FF_JASPAR_CURL_RC=0
+ZF2FF_JASPAR_URL=https://jaspar.elixir.no/download/data/2024/CORE/JASPAR2024_CORE_vertebrates_non-redundant_pfms_jaspar.txt
+ZF2FF_JASPAR_SHA256=2a6c7c24afb0614ed418c9f02b68845adebf38f80f6cebabbcd5de804eaacb59
+ZF2FF_JASPAR_BYTES=283814
+ZF2FF_N_SEQS=95 ZF2FF_N_MOTIFS=879
+ZF2FF_MOTIF_WIDTH_MIN=5 MAX=33
+ZF2FF_SET_SIZES real=19 shuf=38 gcrand=38
+ZF2FF_THRESHOLD_SOURCE=gc_matched_random_p95 n=38
+ZF2FF_RESULT_BEGIN
+{
+ "n_paired_windows": 19,
+ "mean_diff_real_minus_shuffle": 30.0526,
+ "sd": 41.8519,
+ "se": 9.6015,
+ "t_statistic": 3.13,
+ "ci95_approx": [
+  11.2337,
+  48.8715
+ ],
+ "windows_real_gt_shuffle": 14,
+ "windows_real_lt_shuffle": 5,
+ "windows_tied": 0,
+ "per_window": [
+  {
+   "label": "dan:fgf10a",
+   "real_motifs_passing": 60,
+   "shuffle_motifs_passing": [
+    79,
+    58
+   ],
+   "shuffle_mean": 68.5,
+   "diff_real_minus_shuffle_mean": -8.5
+  },
+  {
+   "label": "dan:fgf20a",
+   "real_motifs_passing": 81,
+   "shuffle_motifs_passing": [
+    58,
+    42
+   ],
+   "shuffle_mean": 50.0,
+   "diff_real_minus_shuffle_mean": 31.0
+  },
+  {
+   "label": "dan:hoxd13a",
+   "real_motifs_passing": 69,
+   "shuffle_motifs_passing": [
+    62,
+    71
+   ],
+   "shuffle_mean": 66.5,
+   "diff_real_minus_shuffle_mean": 2.5
+  },
+  {
+   "label": "dan:kcnk5b",
+   "real_motifs_passing": 53,
+   "shuffle_motifs_passing": [
+    78,
+    61
+   ],
+   "shuffle_mean": 69.5,
+   "diff_real_minus_shuffle_mean": -16.5
+  },
+  {
+   "label": "dan:lef1",
+   "real_motifs_passing": 114,
+   "shuffle_motifs_passing": [
+    79,
+    53
+   ],
+   "shuffle_mean": 66.0,
+   "diff_real_minus_shuffle_mean": 48.0
+  },
+  {
+   "label": "dan:msx1b",
+   "real_motifs_passing": 107,
+   "shuffle_motifs_passing": [
+    120,
+    52
+   ],
+   "shuffle_mean": 86.0,
+   "diff_real_minus_shuffle_mean": 21.0
+  },
+  {
+   "label": "dan:runx2b",
+   "real_motifs_passing": 113,
+   "shuffle_motifs_passing": [
+    50,
+    92
+   ],
+   "shuffle_mean": 71.0,
+   "diff_real_minus_shuffle_mean": 42.0
+  },
+  {
+   "label": "dan:shha",
+   "real_motifs_passing": 47,
+   "shuffle_motifs_passing": [
+    95,
+    78
+   ],
+   "shuffle_mean": 86.5,
+   "diff_real_minus_shuffle_mean": -39.5
+  },
+  {
+   "label": "dan:sp7",
+   "real_motifs_passing": 77,
+   "shuffle_motifs_passing": [
+    68,
+    61
+   ],
+   "shuffle_mean": 64.5,
+   "diff_real_minus_shuffle_mean": 12.5
+  },
+  {
+   "label": "dan:tbx5a",
+   "real_motifs_passing": 40,
+   "shuffle_motifs_passing": [
+    57,
+    68
+   ],
+   "shuffle_mean": 62.5,
+   "diff_real_minus_shuffle_mean": -22.5
+  },
+  {
+   "label": "hir:fgf10a",
+   "real_motifs_passing": 78,
+   "shuffle_motifs_passing": [
+    65,
+    93
+   ],
+   "shuffle_mean": 79.0,
+   "diff_real_minus_shuffle_mean": -1.0
+  },
+  {
+   "label": "hir:fgf20a",
+   "real_motifs_passing": 113,
+   "shuffle_motifs_passing": [
+    79,
+    62
+   ],
+   "shuffle_mean": 70.5,
+   "diff_real_minus_shuffle_mean": 42.5
+  },
+  {
+   "label": "hir:kcnk5b",
+   "real_motifs_passing": 188,
+   "shuffle_motifs_passing": [
+    96,
+    48
+   ],
+   "shuffle_mean": 72.0,
+   "diff_real_minus_shuffle_mean": 116.0
+  },
+  {
+   "label": "hir:lef1",
+   "real_motifs_passing": 177,
+   "shuffle_motifs_passing": [
+    118,
+    50
+   ],
+   "shuffle_mean": 84.0,
+   "diff_real_minus_shuffle_mean": 93.0
+  },
+  {
+   "label": "hir:msx1b",
+   "real_motifs_passing": 113,
+   "shuffle_motifs_passing": [
+    60,
+    71
+   ],
+   "shuffle_mean": 65.5,
+   "diff_real_minus_shuffle_mean": 47.5
+  },
+  {
+   "label": "hir:runx2b",
+   "real_motifs_passing": 150,
+   "shuffle_motifs_passing": [
+    71,
+    45
+   ],
+   "shuffle_mean": 58.0,
+   "diff_real_minus_shuffle_mean": 92.0
+  },
+  {
+   "label": "hir:shha",
+   "real_motifs_passing": 93,
+   "shuffle_motifs_passing": [
+    62,
+    69
+   ],
+   "shuffle_mean": 65.5,
+   "diff_real_minus_shuffle_mean": 27.5
+  },
+  {
+   "label": "hir:sp7",
+   "real_motifs_passing": 78,
+   "shuffle_motifs_passing": [
+    94,
+    38
+   ],
+   "shuffle_mean": 66.0,
+   "diff_real_minus_shuffle_mean": 12.0
+  },
+  {
+   "label": "hir:tbx5a",
+   "real_motifs_passing": 123,
+   "shuffle_motifs_passing": [
+    73,
+    30
+   ],
+   "shuffle_mean": 51.5,
+   "diff_real_minus_shuffle_mean": 71.5
+  }
+ ]
+}
+ZF2FF_RESULT_END
+ZF2FF_SCAN_RC=0
+ZF2FF_DONE=2026-11-01T15:49:02Z

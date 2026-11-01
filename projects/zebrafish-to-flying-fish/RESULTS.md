@@ -339,7 +339,47 @@ than the *clean-window* half. That does not show their model was wrong: my `hoxd
 **weakest in my whole table** (coverage 0.824, identity 0.447), which is itself a reason a stricter
 ortholog model would decline it.
 
-## R6 — Inputs reused from other harnesses (their receipts, not ours)
+## R6 — Motif scan of the Evo 2 windows (the handoff's named missing job)
+
+Run as **`claude-zf2ff-motif-scan-2`** (`aijob-e00excwvczktqjsys4`), state read from the CLI as
+`COMPLETED`. Full manifest, the pre-registration, the JASPAR digest and the quota history that forced
+a GPU preset for CPU work: [`data/motif/MANIFEST.md`](data/motif/MANIFEST.md).
+
+The handoff asked for it by name: beating a dinucleotide shuffle shows structure above k = 2 and
+nothing more specific, and a motif scan is the next step. 879 JASPAR 2024 CORE vertebrate motifs
+(digest recorded) against claude-evo's own 95 sequences, reused verbatim and hash-verified.
+
+**Aggregate:** real windows carry **+30.05** more passing motifs than their own shuffles (SE 9.60,
+t = 3.13, 95% CI [11.2, 48.9]), 14 of 19 windows positive.
+
+**Within each species separately** — the only form the handoff calls safe:
+
+| set | n | mean diff | 95% CI | t | positive |
+| --- | --- | --- | --- | --- | --- |
+| zebrafish | 10 | +7.0 | [−11.0, +25.0] | 0.76 | 6/10 |
+| flying fish | 9 | +55.7 | [+29.6, +81.8] | 4.18 | 8/9 |
+
+**The pooled effect is carried entirely by the flying-fish windows; the zebrafish arm is null.** That
+is the opposite asymmetry to the Evo 2 likelihood result, where zebrafish out-scored flying fish — and
+it is **not** offered as a biological finding, for two reasons visible in this run's own numbers:
+
+1. **n = 2 shuffles per window is underpowered.** The two shuffles of the *same* window differ by a
+   median of 21 and up to 68 motifs, comparable to the effect itself.
+2. **The thresholds were pooled across windows.** Real-vs-own-shuffle is composition-controlled by
+   construction, but a pooled threshold lets the effect *size* track GC, and the flying-fish windows
+   are GC-richer (0.349–0.577 vs 0.256–0.408).
+
+So the reportable result here is the **aggregate above-composition motif signal**, and the species
+asymmetry is **unresolved**. A follow-up job (`claude-zf2ff-motif-robust-1`) was submitted to test
+both weaknesses directly: 20 dinucleotide shuffles per window generated in-container with a declared
+seed and a doublet-count assertion that aborts the run on failure, and each window's threshold taken
+from **its own** shuffles.
+
+**Scope.** A motif match is a sequence-pattern match: not a bound factor, not an enhancer, not
+expression, not function. Two of the nine flying-fish windows sit at loci this project's own
+cross-check (§R5) flags as paralog mismatches.
+
+## R7 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
   Europe PMC retrievals, GRCz11 coordinates for 8 candidate genes, and OpenFold2 predicted structures
@@ -364,8 +404,10 @@ ortholog model would decline it.
 - No **synteny** analysis was built, which is what an orthology claim would still need beyond the
   gene tree.
 - No **GPU** job was submitted by this project; the work it needed was CPU-bound. Two Nebius CPU jobs
-  carry the `claude-zf2ff-` prefix: `claude-zf2ff-kcnh-tree-1` (COMPLETED, §R4) and
-  `claude-zf2ff-motif-scan-1`.
+  carry the `claude-zf2ff-` prefix. Terminal: `claude-zf2ff-kcnh-tree-1` COMPLETED (§R4),
+  `claude-zf2ff-motif-scan-1` **ERROR at provisioning** (shared CPU quota taken by another tenant
+  between accept and provision; preserved, not hidden), `claude-zf2ff-motif-scan-2` COMPLETED (§R6).
+  In flight when this was written: `claude-zf2ff-motif-robust-1`, `claude-zf2ff-kcnh2a-hunt-tree-1`.
 - The `lat4a` ↔ `slc43a2a`/`slc43a2b` identifier question is **unresolved**, and it blocks G4 and
   perturbation row P2.
 - The round-1 mapping was produced by a predecessor process; it was reviewed and its controls were
