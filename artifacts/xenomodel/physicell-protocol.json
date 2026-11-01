@@ -1,0 +1,54 @@
+{
+ "schema": "frontier.preregistered-protocol/1",
+ "id": "xenomodel-physicell-contractile-r1",
+ "title": "Cell-scale contractile construct in PhysiCell 1.14.2: when can prescribed contraction translate a cell sheet?",
+ "frozen_before_outputs": true,
+ "frozen_note": "written after one 90-min smoke run of arm A1 (pair, anisotropic, dt 0.1) used to check the build; that smoke run is NOT part of the results and its numbers are not reused",
+ "scope_statement": "Overdamped cell-centre mechanics with a prescribed contraction law. The contraction is THIS PROJECT'S MODELLING CHOICE: the cited CDO sources (Kriegman 2020, Blackiston 2021, abstract level) report CILIARY locomotion. No parameter here is measured from Xenopus or any tissue. Time units are nominal: only k*T and the drag ratio matter in an overdamped model. Nothing here is an observation.",
+ "engine": {"name": "PhysiCell", "version": "1.14.2", "commit": "dbd3499250141b27600e91e501c54c46f68f2763", "licence": "BSD-3-Clause, licenses/PhysiCell.txt (plus BioFVM, MaBoSS, pugixml licence files)"},
+ "custom_code": "engineering/xenomodel/physicell_contractile/{custom_modules/custom.cpp,main.cpp,PhysiCell_settings.xml,build.sh,run_arm.py}",
+ "model": {
+  "mechanics": "PhysiCell overdamped update: velocity = summed force (unit mobility), Adams-Bashforth-2 position update (core/PhysiCell_cell.cpp Cell::update_position).",
+  "springs_mode": "neighbour springs within 1.1 r0 at setup, force k(|d| - L_ij(t)) d/|d|, L_ij(t) = r0 (1 - eps (1 - cos(w t - dir q xbar_ij))/2). PhysiCell repulsion/adhesion zeroed.",
+  "native_mode": "no custom springs; PhysiCell repulsion+adhesion potentials; prescribed radius R_i(t) = R0 (1 - eps (1 - cos(w t - dir q x_i0))/2).",
+  "substrate_drag": "x-velocity divided by xi_p if >= 0 and by xi_m if < 0 (direction-dependent drag); xi_p = xi_m = 1 is stock PhysiCell.",
+  "defaults": {"r0_um": 16, "k_per_min": 0.5, "eps": 0.1, "period_min": 30, "cycles": 10, "max_time_min": 300, "dt_diffusion_min": 0.005, "dt_mechanics_min": 0.1, "strip": "NX=10, NY=3 centred hex strip, 29 cells, mirror-symmetric about x=0", "travelling_wavelength_um": 80}
+ },
+ "theory_links": {
+  "lean": "engineering/formalize/lean/ActuationMotion.lean",
+  "B_linear_drag": "drag_weighted_centroid_fixed / linear_drag_no_net_displacement: with xi_p = xi_m the centroid cannot move at all, for any actuation, phase gradient or body shape",
+  "C_crawler": "crawler_path: pair displacement = kappa * TV(L), kappa = (xi_m - xi_p)/(2 (xi_p + xi_m)); crawler_mirror; crawler_zero_iff_isotropic"
+ },
+ "arms": [
+  {"id": "P0-pair", "params": "pair, eps=0, xi=(1,3)", "prediction": "|dX| <= 1e-9 um", "endpoint": "passive-control"},
+  {"id": "P0-strip", "params": "strip, eps=0, xi=(1,3), travelling +x", "prediction": "|dX| <= 1e-9 um", "endpoint": "passive-control"},
+  {"id": "I1-pair", "params": "pair, eps=0.1, xi=(1,1)", "prediction": "|dX| <= 1e-9 um (theorem B)"},
+  {"id": "I2-strip-trav", "params": "strip, eps=0.1, xi=(1,1), travelling +x lambda=80um", "prediction": "|dX| <= 1e-9 um: a phase gradient alone does not translate the body under linear drag (theorem B)"},
+  {"id": "I3-strip-stand", "params": "strip, eps=0.1, xi=(1,1), standing", "prediction": "|dX| <= 1e-9 um"},
+  {"id": "N1-native-trav", "params": "native potentials, strip, eps=0.1, xi=(1,1), travelling +x", "prediction": "|dX| <= 1e-6 um IF PhysiCell's own potentials are pairwise antisymmetric. A larger drift is reported as a finding about the engine, not tuned away."},
+  {"id": "N2-native-aniso", "params": "native potentials, strip, eps=0.1, xi=(1,3), travelling +x", "prediction": "dX > 0 (sign only)"},
+  {"id": "A1-pair", "params": "pair, eps=0.1, xi=(1,3), dt in {0.1,0.05,0.025}", "prediction": "dX > 0 and |dX / (kappa*TV(L)) - 1| <= 0.01 at every dt, with |ratio-1| non-increasing as dt halves (kappa=0.25)"},
+  {"id": "A1-eps", "params": "pair, xi=(1,3), eps in {0.05, 0.2}", "prediction": "|dX/(kappa*TV(L)) - 1| <= 0.01 (law holds across amplitude)"},
+  {"id": "A2-pair-mirror", "params": "pair, eps=0.1, xi=(3,1)", "prediction": "dX(A2) = -dX(A1) with |dX(A2)+dX(A1)| <= 1e-9 * |dX(A1)| + 1e-12 um", "endpoint": "mirror-symmetry"},
+  {"id": "A3-strip-stand", "params": "strip, eps=0.1, xi=(1,3), standing, dt in {0.1,0.05}", "prediction": "dX > 0"},
+  {"id": "A4-strip-trav+", "params": "strip, eps=0.1, xi=(1,3), travelling +x, dt in {0.1,0.05}", "prediction": "no sign predicted"},
+  {"id": "A5-strip-trav-", "params": "strip, eps=0.1, xi=(1,3), travelling -x, dt in {0.1,0.05}", "prediction": "no sign predicted"},
+  {"id": "A6-strip-mirror", "params": "strip, eps=0.1, xi=(3,1), travelling -x (mirror image of A4)", "prediction": "|dX(A6) + dX(A4)| <= 1e-6 * |dX(A4)|", "endpoint": "mirror-symmetry"}
+ ],
+ "preregistered_endpoints_mapping": {
+  "passive-control": "P0-pair and P0-strip. If either fails, no other arm may be read until diagnosed.",
+  "pattern-dependence": "A3 (standing) vs A4 (travelling +x) and A4 vs A5, equal total actuation (same eps, same springs, same cycle-mean rest-length reduction eps/2 per spring). PASS only if |dX(A4)-dX(A3)| and |dX(A4)-dX(A5)| each exceed max(|dX(dt=0.1)-dX(dt=0.05)|) over the two arms compared. If not, no pattern-to-motion statement is made.",
+  "mirror-symmetry": "A2 vs A1 (pair) and A6 vs A4 (strip)."
+ },
+ "falsifiers": [
+  "Any isotropic-drag arm (I1, I2, I3) with |dX| > 1e-9 um falsifies the claim that the module implements theorem B's hypotheses (or exposes a non-antisymmetric force in the code).",
+  "A1 ratio outside [0.99, 1.01] at dt=0.025 falsifies the pathwise crawler law as implemented here.",
+  "A failed mirror endpoint marks an anisotropy artifact in body construction or solver."
+ ],
+ "what_this_cannot_establish": [
+  "that any tissue contracts in this way, at this amplitude or period",
+  "that a real substrate has direction-dependent drag, or what its ratio would be",
+  "anything about ciliary propulsion, which is what the sources report",
+  "Xenopus-scale or microcarrier-scale displacement in physical units"
+ ]
+}
