@@ -1,0 +1,194 @@
+{
+ "a3m_n_seqs": 29,
+ "a3m_sha256": "9963d914896febf0d8d532326cab2fa9464ae1ef47cc7fe06827bf2ef103e7d7",
+ "artifacts": [
+  {
+   "artifact_id": "aff054df-17c7-5557-8abc-cdaeb3c8773c",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "bbc15b0d90ed430779e8d2876bbef898355f9debc5aedc2c29f8b625331e788c",
+   "size_bytes": 11085
+  }
+ ],
+ "chain": "kcnj13",
+ "database": "pdb70_220313",
+ "evidence_kind": "computed",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:40:00Z",
+ "operation_id": "op-095fa13730d59ef3",
+ "polls": [
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:39:58Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-kcnj13/op-095fa13730d59ef3/artifacts/aff054df-17c7-5557-8abc-cdaeb3c8773c.json",
+     "path": "artifacts/aff054df-17c7-5557-8abc-cdaeb3c8773c.json",
+     "sha256": "bbc15b0d90ed430779e8d2876bbef898355f9debc5aedc2c29f8b625331e788c",
+     "size_bytes": 11085
+    },
+    {
+     "key": "frontier/claude-mol/msa-kcnj13/op-095fa13730d59ef3/result.json",
+     "path": "result.json",
+     "sha256": "da4aea7af9fe03c3c6e16d317e42d055605ff0de4b3f8551b0c350c7e1efd7ab",
+     "size_bytes": 11833
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-kcnj13/op-095fa13730d59ef3/manifest.json",
+   "prefix": "frontier/claude-mol/msa-kcnj13/op-095fa13730d59ef3/"
+  },
+  "execution": "async",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-095fa13730d59ef3",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "aligned_sequences",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "sequence"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "aff054df-17c7-5557-8abc-cdaeb3c8773c",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "bbc15b0d90ed430779e8d2876bbef898355f9debc5aedc2c29f8b625331e788c",
+    "size_bytes": 11085
+   },
+   "attempt_id": "op-095fa13730d59ef3-hb6t2",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-095fa13730d59ef3",
+   "sha256": "bbc15b0d90ed430779e8d2876bbef898355f9debc5aedc2c29f8b625331e788c",
+   "size_bytes": 11085,
+   "timings": {
+    "completed_at": "2026-11-01T14:39:48Z",
+    "duration_s": 6.850742,
+    "first_byte_at": "2026-11-01T14:39:48Z",
+    "posted_at": "2026-11-01T14:39:42Z"
+   }
+  },
+  "result": {
+   "alignments": {
+    "pdb70_220313": {
+     "a3m": {
+      "alignment": ">query\nMPTTMTNTTADQKASCPLMVKPQRRRLVSKDGRSQTRGNTRGGSRETCFSALRDLWGTWLALRWRWVVLAFCGSFLLHWLLFAVLWYLLARVNGDLDVLDHDSPPPGHVLCVKHVNGFTAAFSFALETQLTIGYGTMYPNADCPTAIALLALQMLLGLMLEAFITGAFVAKFSRPQKRCDGILFSPQAVVCEQKGQRCLMFRVCNLQPQPLVDVSVSAVLYEERDDHELHQTALEFSIDNLGSRSCPLFLSPLTFFHPLNPSTPFINNPSSQTHFELVVFLTATQESTGSGYHKRTSYLPDEIQYGYCFSKVTSVHQNKTPNMRYFDTVPCPLTLANTHTTDTPDKEHVVVQLNGEGSDRVE\n>3SYA_A\n------------------MAKRKIQRYVRKDGKCNVH---HGNVRET-YRYLTDIFTTLVDLKWRFNLLIFVMVYTVTWLFFGMIWWLIAYIRGDMDHIEDPSWTP----CVTNLNGFVSAFLFSIETETTIGYGYRVITDKCPEGIILLLIQSVLGSIVNAFMVGCMFVKISQPKKRAETLVFSTHAVISMRDGKLCLMFRVGDLRNSHIVEASIRAKLIKSKQTSEGEFIPLNQTDINVGyyTGDDRLFLvSPLIISHEINQQSPFWEISKAQlpkEELEIVVILEGMVEATGMTCQARSSYITSEILWGYRFTPVLTL-----------------------------------------------\n>4KFM_A\n------------------MAKRKIQRYVRKDGKCNVH---HGNVRET-YRYLTDIFTTLVDLKWRFNLLIFVMVYTVTWLFFGMIWWLIAYIRGDMDHIEDPSWTP----CVTNLNGFVSAFLFSIETETTIGYGYRVITDKCPEGIILLLIQSVLGSIVNAFMVGCMFVKISQPKKRAETLVFSTHAVISMRDGKLCLMFRVGDLRNSHIVEASIRAKLIKSKQTSEGEFIPLNQTDINVGyyTGDDRLFLvSPLIISHEINQQSPFWEISKAQlpkEELEIVVILEGMVEATGMTCQARSSYITSEILWGYRFTPVLTL-----------------------------------------------\n>5KUK_A\n-----------------------------------------------------DMFTTCVDIRWRYMLLLFSLAFLVSWLLFGLIFWLIALIHGDLENPGGDDT---FKPCVLQVNGFVAAFLFSIETQTTIGYGFRCVTEECPLAVFMVVVQSIVGCIIDSFMIGAIMAKMARPKKRAQTLLFSHNAVVAMRDGKLCLMWRVGNLRKSHIVEAHVRAQLIKPRITEEgeyipLDQIDIDVGFDKGLDR---IFLvSPITILHEINEDSPLfgISRQDLETdDFEIVVILEGMVEATAMTTQARSSYLASEILWGHRFEPV--------------------------------------------------\n>3SPC_A\n-----------------------------------------------------DMFTTCVDIRWRYMLLLFSLAFLVSWLLFGLIFWLIALIHGDLENPGGDDT---FKPCVLQVNGFVAAFLFSIETQTTIGYGFRCVTEECPLAVFMVVVQSIVGCIIDSFMIGAIMAKMARPKKRAQTLLFSHNAVVAMRDGKLCLMWRVGNLRKSHIVEAHVRAQLIKPRITEEgeyipLDQIDIDVGFDKGLDR---IFLvSPITILHEINEDSPLfgISRQDLETdDFEIVVILEGMVEATAMTTQARSSYLASEILWGHRFEPV--------------------------------------------------\n>3SPG_A\n-----------------------------------------------------DMFTTCVDIRWRYMLLLFSLAFLVSWLLFGLIFWLIALIHGDLENPGGDDT---FKPCVLQVNGFVAAFLFSIETQTTIGYGFRCVTEECPLAVFMVVVQSIVGCIIDSFMIGAIMAKMAAPKKRAQTLLFSHNAVVAMRDGKLCLMWRVGNLRKSHIVEAHVRAQLIKPRITEEgeyipLDQIDIDVGFDKGLDR---IFLvSPITILHEINEDSPLfgISRQDLETdDFEIVVILEGMVEATAMTTQARSSYLASEILWGHRFEPV--------------------------------------------------\n>6JB1_E\n---------------------------------------------------LQDVFTTLVDLKWPHTLLIFTMSFLCSWLLFAMVWWLIAFAHGDL------APGEGtNVPCVTSIHSFSSAFLFSIEVQVTIGFGGRMVTEECPLAILILIVQNIVGLMINAIMLGCIFMKTAQAHRRAETLIFSKHAVITLRHGRLCFMLRVGDLRKSMIISATIHMQVVRKTTSPEgevvpLHQVDIPME-NGVGGNGI-FLVAPLIIYHVIDSNSPLYDLAPSDLHhhqdLEIIVILEGVVETTGITTQARTSYLADEILWG--------------------------------------------------------\n>5WUA_C\n---------------------------------------------------LQDVFTTLVDLKWPHTLLIFTMSFLCSWLLFAMVWWLIAFAHGDL------APGEGtNVPCVTSIHSFSSAFLFSIEVQVTIGFGGRMVTEECPLAILILIVQNIVGLMINAIMLGCIFMKTAQAHRRAETLIFSKHAVITLRHGRLCFMLRVGDLRKSMIISATIHMQVVRKTTSPEgevvpLHQVDIPME-NGVGGNGI-FLVAPLIIYHVIDSNSPLYDLAPSDLHhhqdLEIIVILEGVVETTGITTQARTSYLADEILWG--------------------------------------------------------\n>7MJP_A\n---------------------------------------------------LQDIFTTLVDLKWRHTLVIFTMSFLCSWLLFAIMWWLVAFAHGDIYAYMEkgitEKSGLESAVCVTNVRSFTSAFLFSIEVQVTIGFGGRMMTEECPLAITVLILQNIVGLIINAVMLGCIFMKTAQAHRRAETLIFSRHAVIAVRNGKLCFMFRVGDLRKSMIISASVRIQVVKKTTTPEgevvpIHQQ--DIPVDNPIESNNIFLVAPLIICHVIDKRSPLYDISATdlvNQDLEVIVILEGVVETTGITTQARTSYIAEEIQWGHRFVSIVT------------------------------------------------\n>2QKS_B\n-----------------------RQRFVDKNGRCNVQhGNL--GSETSRY--LSDLFTTLVDLKWRWFFVSLAVLFLLLNTAFATLYML-------------GSAP----IANQFPAGFGGAFFFSVETLATVGYGDMHPQTVYAHWIA--TLEIFVGMSSIALATGCAFIKMSQPKKRAETLMFSEHAVISMRDGKLTLMFRVGNLRNSHMVSAQIRCKLLKSRQTPEgeflpLDQLELDVGFSTGADQ---LFLvSPLTICHVIDAKSPFydLSQRSMQTeQFEVVVILEGIVETTGMTCQARTSYTEDEVLWGHRFFPVISLEE---------------------------------------------\n>2QKS_A\n-----------------------RQRFVDKNGRCNVQhGNL--GSETSRY--LSDLFTTLVDLKWRWFFVSLAVLFLLLNTAFATLYML-------------GSAP----IANQFPAGFGGAFFFSVETLATVGYGDMHPQTVYAHWIA--TLEIFVGMSSIALATGCAFIKMSQPKKRAETLMFSEHAVISMRDGKLTLMFRVGNLRNSHMVSAQIRCKLLKSRQTPEgeflpLDQLELDVGFSTGADQ---LFLvSPLTICHVIDAKSPFydLSQRSMQTeQFEVVVILEGIVETTGMTCQARTSYTEDEVLWGHRFFPVISLEE---------------------------------------------\n>2WLL_A\n-------------------------------------------------SVWRDLYYWALKVSWPVFFASLAALFVVNNTLFALLYQL-----GDAPIANQ-SPP-----------GFVGAFFFSVETLATVGYGDMHPQTVYAHAIA--TLEIFVGMSGIALSTGLVFARFARPRAK---IMFARHAIVRPFNGRMTLMVRAANARQNVIAEARAKMRLMRRRESSEGY-SLMKLHDLKLVRNEHPIFLLGWNMMHVIDESSPlFGETPESlaEGRAMLLVMIEGSDETTAQVMQARHAWEHDDIRW---------------------------------------------------------\n>7SWJ_B\n-------------------------------------------------SVWRDLYYWALKVSWPVFFASLAALFVVNNTLFALLYQL-----GDAPIANQ-SPP-----------GFVGAFFFSVETLATVGYGDMHPQTVYAHAIA--TLECFVGMSGIALSTGLVFARFARPRAK---IMFARHAIVRPFNGRMTLMVRAANARQNVIAEARAKMRLMRREHSSEGY-SLMKIHDLKLVRNEHPIFLLGWNMMHVIDESSPlFGETPESlaEGRAMLLVMIEGSDETTAQVMQARHAWEHDDIRW---------------------------------------------------------\n>1U4E_A\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------EKRAETLMFSEHAVISMRDGKLTLMFRVGNLRNSHMVSAQIRCKLLKSRQTPEgeflpLDQLELDVGFSTGADQ---LFLvSPLTICHVIDAKSPFydLSQRSMQTeQFEVVVILEGIVETTGMTCQARTSYTEDEVLWGHRFFPVISLEE---------------------------------------------\n>3AGW_A\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------EKRAETLVFSTHAVISMRDGKLCLMFRVGDLRNSHIVEASIRAKLIKSKQTSEGEFIPLNQTDINVGyyTGDDRLFLvSPLIISHEINQQSPFWEISKAQlpkEELEIVVILEGMVEATGMTCQARSSYITSEILWGYRFTPVLTL-----------------------------------------------\n>3AUW_D\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------KRAETLVFSTHAVISMRDGKLCLMFRVGDLRNSHIVEASIRAKLIKSKQTSEGEFIPLNQTDINVGyyTGDDRLFLvSPLIISHEINQQSPFWEISKAQlpkEELEIVVILEGMVEATGMTCQARSSYITSEILWGYRFTPVLTL-----------------------------------------------\n>1N9P_A\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ERAETLMFSEHAVISMRDGKLTLMFRVGNLRNSHMVSAQIRCKLLKSRQTPEgeflpLDQLELDVGFSTGADQ---LFLvSPLTICHVIDAKSPFydLSQRSMQTeQFEVVVILEGIVETTGMTCQARTSYTEDEVLWGHRFFPVISLEE---------------------------------------------\n>3VSQ_A\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------EKRAETLVFSTHAVISMRDGKLCLMFRVGDLRNSHIVRASIRAKLIKSKQTSEGEFIPLNQTDINVGyyTGDDRLFLvSPLIISHEINQQSPFWEISKAQlpkEELEIVVILEGMVEATGMTCQARSSYITSEILWGYRFTPVLTL-----------------------------------------------\n>2GIX_C\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------EKRNETLVFSHNAVIAMRDGKLCLMWRVGNLQKSHLVEAHVRAQLLKSRITSEgeyipLDQIDINVGFDSGIDR---IFLvSPITIVHEIDEDSPLYDlskQDIDNADFEIVVILEGMVEATAMTKQCRSSYLANEILWGHRYEPV--------------------------------------------------\n>1U4F_A\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------EKRNETLVFSHNAVIAMRDGKLCLMWRVGNLRKSHLVEAHVRAQLLKSRITSEgeyipLDQIDINVGFDSGIDR---IFLvSPITIVHEIDEDSPLYDlskQDIDNADFEIVVILEGMVEATAMTTQCRSSYLANEILWGHRYEPV--------------------------------------------------\n>2XKY_J\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------RNETLVFSHNAVIAMRDGKLCLMWRVGNLRKSHLVEAHVRAQLLKSRITSEgeyipLDQIDINVGFDSGIDR---IFLvSPITIVHEIDEDSPLYDlskQDIDNADFEIVVILEGMVEATAMTTQCRSSYLANEILWGHRYEPV--------------------------------------------------\n>1F6G_B\n---------------------------------------------------------------------------------------------------------------------YPAALWWSVETATTVGYGDLYP-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n>5IF9_A\n----------------------------------------------------------------------------------------LAKLDGDFDVVIIDCPPSLGVLT---LNGLTAAHDVIVPLQ-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n>5IF9_B\n----------------------------------------------------------------------------------------LAKLDGDFDVVIIDCPPSLGVLT---LNGLTAAHDVIVPLQ-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n>7PHH_B\n-----------------------------------------------------------------------------------------------------------------HFKNIPIGFWWAVVTMTTLGYGDMYPQ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n>3IGA_C\n------------------------------------------------------------------------------------------------------------------------ALWWSVETATTVGYGDLYP-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n>2K1E_B\n------------------------------------------------------------------------------------------------------------------------AIWWSVETATTVGYGDRYPVTEEGRKVAEQVMKA--GIEVFALVTAALATDFVRREE-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n>4LBE_C\n------------------------------------------------------------------------------------------------------------------------ALWWSVETATTVGYGDLYP-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n>3EFF_M\n------------------------------------------------------------------------------------------------------------------------ALWWSVETATTVGYGDLYP-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n",
+      "format": "a3m"
+     }
+    }
+   },
+   "metrics": {
+    "search_type": "colabfold"
+   }
+  },
+  "upstream_success": true
+ },
+ "sequence": "MPTTMTNTTADQKASCPLMVKPQRRRLVSKDGRSQTRGNTRGGSRETCFSALRDLWGTWLALRWRWVVLAFCGSFLLHWLLFAVLWYLLARVNGDLDVLDHDSPPPGHVLCVKHVNGFTAAFSFALETQLTIGYGTMYPNADCPTAIALLALQMLLGLMLEAFITGAFVAKFSRPQKRCDGILFSPQAVVCEQKGQRCLMFRVCNLQPQPLVDVSVSAVLYEERDDHELHQTALEFSIDNLGSRSCPLFLSPLTFFHPLNPSTPFINNPSSQTHFELVVFLTATQESTGSGYHKRTSYLPDEIQYGYCFSKVTSVHQNKTPNMRYFDTVPCPLTLANTHTTDTPDKEHVVVQLNGEGSDRVE",
+ "sequence_sha256": "8029209004a52efea91ae2c899c017ed4795a843615b4b272c7087c67ba396b2",
+ "source": "Q0KIZ7 1-362 full length (Kir7.1)",
+ "submit_isError": false,
+ "submit_payload": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-kcnj13/op-095fa13730d59ef3/artifacts/aff054df-17c7-5557-8abc-cdaeb3c8773c.json",
+     "path": "artifacts/aff054df-17c7-5557-8abc-cdaeb3c8773c.json",
+     "sha256": "bbc15b0d90ed430779e8d2876bbef898355f9debc5aedc2c29f8b625331e788c",
+     "size_bytes": 11085
+    },
+    {
+     "key": "frontier/claude-mol/msa-kcnj13/op-095fa13730d59ef3/result.json",
+     "path": "result.json",
+     "sha256": "da4aea7af9fe03c3c6e16d317e42d055605ff0de4b3f8551b0c350c7e1efd7ab",
+     "size_bytes": 11833
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-kcnj13/op-095fa13730d59ef3/manifest.json",
+   "prefix": "frontier/claude-mol/msa-kcnj13/op-095fa13730d59ef3/"
+  },
+  "delivery": {
+   "export_state": "succeeded",
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-msa-kcnj13-8029209004a52efea91a",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-095fa13730d59ef3",
+   "status": "SUCCEEDED"
+  },
+  "result_available": true
+ },
+ "submitted_utc": "2026-11-01T14:39:26Z",
+ "tool": "msa_search_native"
+}

@@ -1,0 +1,59 @@
+{
+ "id": "sbml-hedgehog-pathway-perturbations",
+ "title": "Hedgehog pathway ODE (BIOMD0000000395) perturbed at EC50: fails the Ptc-loss sign check",
+ "scales": [
+  "subcellular"
+ ],
+ "project_scale": "subcellular",
+ "evidence_kind": "SIMULATED: published-model ODE dynamics, not fit to fish data",
+ "model": {
+  "name": "libRoadRunner 2.11.0 CVODE, rtol 1e-10, deterministic",
+  "context": "Sivakumar 2011 Drosophila Hedgehog signal-transduction model; Ptc/Smo/Sufu perturbations at EC10/EC50/EC90 Hh doses interpolated from a 37-dose response."
+ },
+ "time": {
+  "units": "model time units (unconverted)",
+  "note": ""
+ },
+ "video": null,
+ "numerical_checks": [
+  {
+   "name": "target at EC50 baseline",
+   "result": "0.698"
+  },
+  {
+   "name": "Ptc loss at EC50 (biology: constitutive activation)",
+   "result": "0.475 = no-Hh basal: sign wrong"
+  },
+  {
+   "name": "Sufu-Ci repressor complex loss at EC50",
+   "result": "0.237 (below basal): sign wrong"
+  },
+  {
+   "name": "Smo loss at EC50",
+   "result": "0.475 (basal, as expected)"
+  }
+ ],
+ "parameter_unknowns": [
+  "All kinetic parameters are the published model's; none measured in fish."
+ ],
+ "open_questions": [
+  "Re-specified with Ptc catalytically inhibiting Smo, does Ptc=0 give maximal output?"
+ ],
+ "limitations": [
+  "Model is unusable for Ptc/Sufu predictions until re-specified.",
+  "Default Hh in the SBML saturates the target; s2 perturbations at that dose were uninformative."
+ ],
+ "does_not_establish": [
+  "anything about zebrafish shha/ptch signalling (Drosophila model, orthology by name only)",
+  "Ptc- or Sufu-null phenotypes: the model gives the WRONG SIGN for both",
+  "fin size"
+ ],
+ "couplings": [],
+ "source_files": {
+  "results/mol-sims/claude-20261101/s2b_hedgehog_perturbations_at_ec.json": "020f57266c3570f9f0522e2ea5cbb64a2a3743ba6d4076182d23bd8ad95139b9",
+  "results/mol-sims/claude-20261101/s2b_receipt.json": "01ce0733f90c7c0fccf4c48b0e25a061977ca2f8b3ef7dd4d5b31622a10ba851",
+  "results/mol-sims/claude-20261101/s2_hedgehog_dose_response_perturbations.json": "e0d959e24add8b085d89e3b767bc5bc9d25cb5c7b5063f495a2b1d39d0ef9d5e",
+  "results/mol-sims/claude-20261101/s2_receipt.json": "d60d0dbb2bcebe514adbf96e4cbf38d87cc6192b762c2dcdebd9164eb8a34b80"
+ },
+ "producer": "claude-mol harness, branch claude/mol-sims-20261101"
+}

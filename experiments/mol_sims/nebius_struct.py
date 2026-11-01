@@ -49,9 +49,11 @@ CHAINS = {
     "fgfr2b_d2d3": (fasta("F1RBT3")[149:360], "F1RBT3 150-360"),
     "fgfr2c_d2d3": (fasta("Q8JG38")[149:362], "Q8JG38 150-362 (IIIc isoform; +2 aa insertion vs IIIb in the alternative exon)"),
     "shhN": (uni("shha", "Q92008")[23:197], "Q92008 24-197"),
+    "kcnj13": (fasta("Q0KIZ7"), "Q0KIZ7 1-362 full length (Kir7.1)"),
     "kcnk5b_core": (uni("kcnk5b", "Q6PFU3")[0:265], "Q6PFU3 1-265"),
 }
-TARGETS = {"fgf_complex": ["fgf10a_core", "fgfr2b_d2d3"], "fgf_vs_fgfr2c_negctrl": ["fgf10a_core", "fgfr2c_d2d3"], "shhN": ["shhN"], "kcnk5b_dimer": ["kcnk5b_core", "kcnk5b_core"]}
+TARGETS = {"fgf_complex": ["fgf10a_core", "fgfr2b_d2d3"], "fgf_vs_fgfr2c_negctrl": ["fgf10a_core", "fgfr2c_d2d3"], "shhN": ["shhN"], "kcnk5b_dimer": ["kcnk5b_core", "kcnk5b_core"],
+           "kcnj13": ["kcnj13"], "kcnj13_tetramer": ["kcnj13"] * 4}
 
 
 def find(o, k):

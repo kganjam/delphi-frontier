@@ -13,9 +13,11 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 SD = ROOT / "results/mol-sims/claude-20261101/structures"
 OF2 = ROOT / "results/bioservices/claude-20261101/openfold2"
+KCNJ13_OF2 = "/data/worktrees/delphi-frontier/codex-demo/artifacts/bio-services/kcnj13_openfold2/rank1.pdb"  # recorded gap, sha 3200f588...
 OF2_MAP = {("shhN", "A"): ("shha_Q92008_rank1.pdb", 23), ("fgf_complex", "A"): ("fgf10a_Q8AY90_rank1.pdb", 57),
            ("kcnk5b_dimer_openfold3", "A"): ("kcnk5b_Q6PFU3_rank1.pdb", 0), ("kcnk5b_dimer_openfold3", "B"): ("kcnk5b_Q6PFU3_rank1.pdb", 0),
-           ("fgf_vs_fgfr2c_negctrl", "A"): ("fgf10a_Q8AY90_rank1.pdb", 57)}
+           ("fgf_vs_fgfr2c_negctrl", "A"): ("fgf10a_Q8AY90_rank1.pdb", 57), ("kcnj13", "A"): (KCNJ13_OF2, 0),
+           **{("kcnj13_tetramer_openfold3", c): (KCNJ13_OF2, 0) for c in "ABCD"}}
 
 
 def parse_cif(txt):
@@ -30,7 +32,7 @@ def parse_cif(txt):
 
 
 def of2_plddt(fn):
-    return np.array([float(l[60:66]) for l in (OF2 / fn).read_text().splitlines() if l.startswith("ATOM") and l[12:16].strip() == "CA"])
+    return np.array([float(l[60:66]) for l in (Path(fn) if fn.startswith("/") else OF2 / fn).read_text().splitlines() if l.startswith("ATOM") and l[12:16].strip() == "CA"])
 
 
 def analyze(target):
@@ -116,7 +118,7 @@ def alt_exon_check(fc):
 
 def main():
     res = {}
-    for t in ["shhN", "fgf_complex", "fgf_vs_fgfr2c_negctrl", "kcnk5b_dimer_openfold3"]:
+    for t in ["shhN", "fgf_complex", "fgf_vs_fgfr2c_negctrl", "kcnk5b_dimer_openfold3", "kcnj13", "kcnj13_tetramer_openfold3"]:
         if (SD / t / "receipt.json").exists() and json.loads((SD / t / "receipt.json").read_text()).get("final_status") == "SUCCEEDED":
             res[t] = analyze(t)
             m0 = res[t]["models"][0]

@@ -1,0 +1,55 @@
+{
+ "id": "boltz2-shhN",
+ "title": "Predicted structure of zebrafish Shha signalling domain (Boltz-2 + MSA): a computed model, not an observation",
+ "scales": [
+  "macromolecular"
+ ],
+ "project_scale": "macromolecular",
+ "evidence_kind": "PREDICTED: a computed structure hypothesis, not an observed structure",
+ "model": {
+  "name": "Boltz-2 (Nebius Scientific AI MCP boltz2_predict_native), 3 diffusion samples, PDB70 MMseqs2 MSA",
+  "context": "Shha (UniProt Q92008) residues 24-197, the mature N-terminal signalling fragment."
+ },
+ "time": {
+  "units": "none: a single static prediction",
+  "note": ""
+ },
+ "video": null,
+ "numerical_checks": [
+  {
+   "name": "mean pLDDT (top model)",
+   "result": "85.1; 86% of residues >= 70"
+  },
+  {
+   "name": "same residues in the earlier OpenFold2 dummy-MSA prediction",
+   "result": "mean pLDDT 40.2"
+  },
+  {
+   "name": "pTM (3 samples)",
+   "result": "0.82, 0.74, 0.67"
+  }
+ ],
+ "parameter_unknowns": [
+  "pLDDT/pTM are model-internal confidence, not a calibrated probability of correctness."
+ ],
+ "open_questions": [
+  "Does a holo model with Zn2+/Ca2+ and the cholesterol-modified C terminus change the surface used by Ptch/Hhip?"
+ ],
+ "limitations": [
+  "MSA is PDB70-only (structural database, 14-122 sequences), so homologous crystal structures may be templated.",
+  "No seed accepted by the runtime; diffusion sampling is nondeterministic."
+ ],
+ "does_not_establish": [
+  "that zebrafish ShhN adopts this fold in vivo",
+  "Zn2+/Ca2+ site geometry (no ions were modelled)",
+  "anything about Shh secretion, lipidation, gradient range or fin size"
+ ],
+ "couplings": [],
+ "source_files": {
+  "results/mol-sims/claude-20261101/structures/shhN/receipt.json": "ff0838afaf5e37ab59eaa4d200ebb1db089b4b80fca6ecc25385817f201d0ee1",
+  "results/mol-sims/claude-20261101/structures/shhN/model_0.cif": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c",
+  "results/mol-sims/claude-20261101/structures/summary.json": "6771b62e1278994825fa964ab9a9afcbec0fe9bdea8db08789caca82a15280ab",
+  "results/mol-sims/claude-20261101/structures/msa/shhN.a3m": "52e18cde100b93d9dd389ac1926ef129f32842212895a2a9b7ddfaf5cd51209f"
+ },
+ "producer": "claude-mol harness, branch claude/mol-sims-20261101"
+}

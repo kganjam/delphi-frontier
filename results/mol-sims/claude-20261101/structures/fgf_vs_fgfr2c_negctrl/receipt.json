@@ -1,0 +1,210 @@
+{
+ "artifacts": [
+  {
+   "artifact_id": "305110c2-c787-57fa-982d-c828c13fe054",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "c2d33a51b847d4d104abcf1e89d49a7805f1cbeced19287fe93cdafe24c6e275",
+   "size_bytes": 763400
+  },
+  {
+   "artifact_id": "6281d9e7-dc72-5efb-82c4-3ee7813b0424",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "038921719d86d0197e0599fb0d3417f458abf62a80d7439d68b6e12c801a9107",
+   "size_bytes": 763400
+  }
+ ],
+ "chains": {
+  "A": {
+   "a3m_sha256": "c1d41017dac219dcdb71b72e620e8d1e1c6e835dd6c7b0752cb97e8bd77d94c8",
+   "name": "fgf10a_core",
+   "sequence_sha256": "cda679adbcbc73d64209ba0b8d521e3023fc45ae9737f53e6b9d6f0150d605bd",
+   "source": "Q8AY90 58-201"
+  },
+  "B": {
+   "a3m_sha256": "677ee1c7ffa09fdd584a25234b04f2a1ef29d65287abe67b605c5a6a5247ccb8",
+   "name": "fgfr2c_d2d3",
+   "sequence_sha256": "3ad56c5a7b0d46441cd37991252e21c7c61282156e162c74e81adf9237fa6d27",
+   "source": "Q8JG38 150-362 (IIIc isoform; +2 aa insertion vs IIIb in the alternative exon)"
+  }
+ },
+ "epistemic_status": "computed structure hypothesis (Boltz-2 + PDB70 MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:39:19Z",
+ "idempotency_key": "frontier-claude-mol-boltz2-fgf_vs_fgfr2c_negctrl-9b6fa7ee1f6e7351a060",
+ "operation_id": "op-596bbdf3909c15f9",
+ "params": {
+  "diffusion_samples": 3,
+  "recycling_steps": 3,
+  "sampling_steps": 200
+ },
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T14:38:07Z"
+  },
+  {
+   "status": "FINALIZING",
+   "t": "2026-11-01T14:38:55Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:39:12Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/boltz2-fgf_vs_fgfr2c_negctrl/op-596bbdf3909c15f9/artifacts/6281d9e7-dc72-5efb-82c4-3ee7813b0424.json",
+     "path": "artifacts/6281d9e7-dc72-5efb-82c4-3ee7813b0424.json",
+     "sha256": "038921719d86d0197e0599fb0d3417f458abf62a80d7439d68b6e12c801a9107",
+     "size_bytes": 763400
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-fgf_vs_fgfr2c_negctrl/op-596bbdf3909c15f9/artifacts/305110c2-c787-57fa-982d-c828c13fe054.json",
+     "path": "artifacts/305110c2-c787-57fa-982d-c828c13fe054.json",
+     "sha256": "c2d33a51b847d4d104abcf1e89d49a7805f1cbeced19287fe93cdafe24c6e275",
+     "size_bytes": 763400
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-fgf_vs_fgfr2c_negctrl/op-596bbdf3909c15f9/result.json",
+     "path": "result.json",
+     "sha256": "8c00911a9b95b63c3b1fd563288a1d3383215a09702e11c06d862627ff85bee1",
+     "size_bytes": 1051
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/boltz2-fgf_vs_fgfr2c_negctrl/op-596bbdf3909c15f9/manifest.json",
+   "prefix": "frontier/claude-mol/boltz2-fgf_vs_fgfr2c_negctrl/op-596bbdf3909c15f9/"
+  },
+  "execution": "async",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-596bbdf3909c15f9",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "structures",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "structure"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "6281d9e7-dc72-5efb-82c4-3ee7813b0424",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "038921719d86d0197e0599fb0d3417f458abf62a80d7439d68b6e12c801a9107",
+    "size_bytes": 763400
+   },
+   "attempt_id": "op-596bbdf3909c15f9-vc9qq",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-596bbdf3909c15f9",
+   "sha256": "038921719d86d0197e0599fb0d3417f458abf62a80d7439d68b6e12c801a9107",
+   "size_bytes": 763400,
+   "timings": {
+    "completed_at": "2026-11-01T14:38:48Z",
+    "duration_s": 46.735317,
+    "first_byte_at": "2026-11-01T14:38:47Z",
+    "posted_at": "2026-11-01T14:38:01Z"
+   }
+  },
+  "result": {
+   "artifact": {
+    "artifact_id": "305110c2-c787-57fa-982d-c828c13fe054",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "c2d33a51b847d4d104abcf1e89d49a7805f1cbeced19287fe93cdafe24c6e275",
+    "size_bytes": 763400
+   },
+   "content_type": "application/json",
+   "schema": "fs2-serve.nebius.ai/operation-artifact-result/v1"
+  },
+  "upstream_success": true
+ },
+ "seed_note": "runtime accepts no seed; nondeterministic",
+ "submit_isError": false,
+ "submit_payload": {
+  "delivery": {
+   "export_state": null,
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-boltz2-fgf_vs_fgfr2c_negctrl-9b6fa7ee1f6e7351a060",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-596bbdf3909c15f9",
+   "status": "RUNNING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T14:37:33Z",
+ "target": "fgf_vs_fgfr2c_negctrl",
+ "tool": "boltz2_predict_native"
+}

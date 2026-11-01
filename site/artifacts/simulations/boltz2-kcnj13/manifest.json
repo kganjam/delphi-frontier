@@ -1,0 +1,54 @@
+{
+ "id": "boltz2-kcnj13",
+ "title": "Predicted zebrafish Kcnj13 (Kir7.1) with an MSA: revisits the low-confidence OpenFold2 model",
+ "scales": [
+  "macromolecular"
+ ],
+ "project_scale": "macromolecular",
+ "evidence_kind": "PREDICTED: a computed structure hypothesis, not an observed structure",
+ "model": {
+  "name": "Boltz-2 monomer (3 samples) and OpenFold3 tetramer, PDB70 MSA",
+  "context": "Full-length Kcnj13 (Q0KIZ7, 362 aa), the same sequence as the studio's openfold2-kcnj13 card."
+ },
+ "time": {
+  "units": "none: a single static prediction",
+  "note": ""
+ },
+ "video": null,
+ "numerical_checks": [
+  {
+   "name": "mean pLDDT / fraction >= 70 (Boltz-2, top)",
+   "result": "67.7 / 54%"
+  },
+  {
+   "name": "recorded OpenFold2 dummy-MSA gap, same sequence (sha256 8029209...)",
+   "result": "mean 52.9; 18% of residues >= 70"
+  },
+  {
+   "name": "pTM (3 samples)",
+   "result": "0.45, 0.49, 0.46"
+  }
+ ],
+ "parameter_unknowns": [
+  "Model-internal confidence only."
+ ],
+ "open_questions": [
+  "Would a membrane-aware model resolve the cytoplasmic domain packing?"
+ ],
+ "limitations": [
+  "MSA is PDB70-only (structural database, 14-122 sequences), so homologous crystal structures may be templated.",
+  "Monomer prediction of an obligate tetramer."
+ ],
+ "does_not_establish": [
+  "channel function, rectification or pigment-pattern/fin effects",
+  "membrane placement",
+  "a correct tetramer unless ipTM is high"
+ ],
+ "couplings": [],
+ "source_files": {
+  "results/mol-sims/claude-20261101/structures/kcnj13/receipt.json": "94028420770fa58ebab9ee073bba63d91e784920635bd441d7b0a6e666cfcb46",
+  "results/mol-sims/claude-20261101/structures/kcnj13/model_0.cif": "35ac98a6c36f51cae8ef5a46a22eedbc1ca77095d3044536a86da6e974d5e31b",
+  "results/mol-sims/claude-20261101/structures/summary.json": "6771b62e1278994825fa964ab9a9afcbec0fe9bdea8db08789caca82a15280ab"
+ },
+ "producer": "claude-mol harness, branch claude/mol-sims-20261101"
+}

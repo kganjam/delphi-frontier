@@ -1,0 +1,53 @@
+{
+ "id": "bioelectric-kcnk5b-pump-leak",
+ "title": "Single-cell Kcnk5b dose model: passive K+ leak hyperpolarises; only Na-channel recruitment reproduces the reported depolarisation",
+ "scales": [
+  "cellular"
+ ],
+ "project_scale": "cellular",
+ "evidence_kind": "SIMULATED with ASSUMED generic parameters; a sign test, not a calibrated model",
+ "model": {
+  "name": "SciPy LSODA pump-leak ODE (GHK leaks, Kir, persistent Na, Na/K-ATPase)",
+  "context": "Kcnk5b 0-32x step from the 1x state, read at 10 min, 1 h, 6 h, 24 h; passive (c=0) vs Na-recruitment (g_NaP ~ fold^c) arms. Targets from Yi et al. 2024 PLoS Biol (PMID 38527087)."
+ },
+ "time": {
+  "units": "seconds",
+  "note": ""
+ },
+ "video": null,
+ "numerical_checks": [
+  {
+   "name": "passive arm, Kcnk5b x8, Vm at 10 min / 1 h",
+   "result": "-80.9 / -79.3 mV (baseline -32.2)"
+  },
+  {
+   "name": "Na-recruitment arm (c=1), Kcnk5b x8, Vm at 1 h; K_i at 6 h",
+   "result": "-19.3 mV; 30.6 mM"
+  },
+  {
+   "name": "Kcnj13 0-2x at baseline",
+   "result": "no Vm change (Kir rectified off at about -32 mV)"
+  }
+ ],
+ "parameter_unknowns": [
+  "Every conductance, pump capacity and concentration is assumed.",
+  "Fixed cell volume; no osmotic regulation."
+ ],
+ "open_questions": [
+  "Do hsp70:kcnk5b fin-bud cells show rising Na_i (recruitment) or falling Na_i (passive)?"
+ ],
+ "limitations": [
+  "Ion steady state takes days; only the step-response window is physiologically relevant."
+ ],
+ "does_not_establish": [
+  "any zebrafish membrane potential value (parameters are generic)",
+  "the Kcnk5b -> Na-channel link itself (it is assumed in the c=1 arm)",
+  "fin size or shha induction"
+ ],
+ "couplings": [],
+ "source_files": {
+  "results/mol-sims/claude-20261101/s5_bioelectric_kcnk5b_sweep.json": "124482ca1975f637d932c89bd72a48572190453bd866fa061ec04e7c4d736ac7",
+  "results/mol-sims/claude-20261101/s5_receipt.json": "7fcd7d979a57bc6dbf4255fc9f5d0bf6b5473b0f32da2cc87a9f018ccd595689"
+ },
+ "producer": "claude-mol harness, branch claude/mol-sims-20261101"
+}

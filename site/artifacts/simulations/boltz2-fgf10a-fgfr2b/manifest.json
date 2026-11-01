@@ -1,0 +1,60 @@
+{
+ "id": "boltz2-fgf10a-fgfr2b",
+ "title": "Predicted Fgf10a\u2013Fgfr2b complex (Boltz-2) with a non-cognate Fgfr2c control that scored higher: no specificity signal",
+ "scales": [
+  "macromolecular"
+ ],
+ "project_scale": "macromolecular",
+ "evidence_kind": "PREDICTED: a computed structure hypothesis, not an observed structure",
+ "model": {
+  "name": "Boltz-2 complex prediction, 3 samples each, PDB70 MSA per chain",
+  "context": "Fgf10a core (Q8AY90 58-201) with Fgfr2 IIIb D2-D3 (F1RBT3 150-360); control: Fgfr2 IIIc D2-D3 (Q8JG38 150-362). IIIb chosen by alignment to human P21802-3 vs -1."
+ },
+ "time": {
+  "units": "none: a single static prediction",
+  "note": ""
+ },
+ "video": null,
+ "numerical_checks": [
+  {
+   "name": "cognate IIIb: confidence / pTM / interface pLDDT (top)",
+   "result": "0.77 / 0.62 / 71.7"
+  },
+  {
+   "name": "non-cognate IIIc control: confidence / pTM / interface pLDDT (top)",
+   "result": "0.84 / 0.79 / 73.4"
+  },
+  {
+   "name": "receptor interface residues inside the IIIb/IIIc alternative exon",
+   "result": "18 of 38 (segment = 21% of construct)"
+  },
+  {
+   "name": "chain pLDDT A/B (cognate)",
+   "result": "86.7 / 85.1"
+  }
+ ],
+ "parameter_unknowns": [
+  "Confidence scores are not affinities; no ddG was computed (stab_ddg needs an undocumented upload manifest, blocked)."
+ ],
+ "open_questions": [
+  "Would a deep (UniRef) MSA or AlphaFold3 discriminate IIIb from IIIc? Would MD separate them?"
+ ],
+ "limitations": [
+  "MSA is PDB70-only (structural database, 14-122 sequences), so homologous crystal structures may be templated.",
+  "The negative control failed to discriminate, so the predictor is not informative about isoform choice here."
+ ],
+ "does_not_establish": [
+  "FGF10-FGFR2b isoform specificity (the non-cognate control scores higher)",
+  "binding affinity or ddG",
+  "that this complex forms in the zebrafish or flying-fish pectoral fin bud"
+ ],
+ "couplings": [],
+ "source_files": {
+  "results/mol-sims/claude-20261101/structures/fgf_complex/receipt.json": "f66acc5ddcfc5b342de84043cf3bedf982e4d8545921f13aa81acb4b95b30460",
+  "results/mol-sims/claude-20261101/structures/fgf_complex/model_0.cif": "c8116b29e5d47f2f8a69a02ce3aef95d5fd4426e8dbb0b725cdcb1922b6869b7",
+  "results/mol-sims/claude-20261101/structures/fgf_vs_fgfr2c_negctrl/receipt.json": "6e82822dc0f5bcd19a24fbf2f34e9e199e29bc1bd7cd205e178ce620ed7c164c",
+  "results/mol-sims/claude-20261101/structures/fgf_vs_fgfr2c_negctrl/model_0.cif": "1f05f9616072a31029c3b845a8af715553b9605eafb7cb7bb5f48ce6c4919846",
+  "results/mol-sims/claude-20261101/structures/summary.json": "6771b62e1278994825fa964ab9a9afcbec0fe9bdea8db08789caca82a15280ab"
+ },
+ "producer": "claude-mol harness, branch claude/mol-sims-20261101"
+}

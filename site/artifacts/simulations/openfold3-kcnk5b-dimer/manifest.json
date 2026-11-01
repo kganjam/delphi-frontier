@@ -1,0 +1,55 @@
+{
+ "id": "openfold3-kcnk5b-dimer",
+ "title": "Predicted Kcnk5b (another longfin) K2P channel dimer (OpenFold3 + MSA): low interface confidence",
+ "scales": [
+  "macromolecular"
+ ],
+ "project_scale": "macromolecular",
+ "evidence_kind": "PREDICTED: a computed structure hypothesis, not an observed structure",
+ "model": {
+  "name": "OpenFold3 preview2 (Nebius MCP infer_openfold3_native), seed 42, 1 sample, PDB70 MSA",
+  "context": "Kcnk5b (Q6PFU3) residues 1-265 x2 (transmembrane core). Boltz-2 refused the homodimer (same-sequence MSA check); its failure receipt is kept."
+ },
+ "time": {
+  "units": "none: a single static prediction",
+  "note": ""
+ },
+ "video": null,
+ "numerical_checks": [
+  {
+   "name": "chain mean pLDDT",
+   "result": "69.8 (OpenFold2 monomer, same residues: 55.2)"
+  },
+  {
+   "name": "ipTM / pTM",
+   "result": "0.48 / 0.56"
+  },
+  {
+   "name": "pore domains mean pLDDT (75-137, 173-246)",
+   "result": "173-246: 72.7 (OF2 57.4), 75-137: 64.1 (OF2 44.1)"
+  }
+ ],
+ "parameter_unknowns": [
+  "Model-internal confidence only."
+ ],
+ "open_questions": [
+  "Does a membrane-aware model or AlphaFold3 raise the interface confidence enough to place alf variants?"
+ ],
+ "limitations": [
+  "MSA is PDB70-only (structural database, 14-122 sequences), so homologous crystal structures may be templated.",
+  "Single sample; no MD run because the interface is not confident."
+ ],
+ "does_not_establish": [
+  "the dimer interface (ipTM below 0.6)",
+  "conductance, gating or the effect of any fin-overgrowth allele",
+  "membrane placement (no lipid bilayer modelled)"
+ ],
+ "couplings": [],
+ "source_files": {
+  "results/mol-sims/claude-20261101/structures/kcnk5b_dimer_openfold3/receipt.json": "e9872ef037c4a6adbd86a4a641cf30f64c0a3843cc4243252cfceec25b8b9469",
+  "results/mol-sims/claude-20261101/structures/kcnk5b_dimer_openfold3/model_0.cif": "74df1dd3822a64ba241dca32730269b967b166bd6ad3c1b0c08aeafb3ae491cf",
+  "results/mol-sims/claude-20261101/structures/kcnk5b_dimer_boltz2_failed/receipt.json": "b6130d77e0f02dc61693df0448556d01315a5af28ae93fd25e6bcd2e1d5b706d",
+  "results/mol-sims/claude-20261101/structures/summary.json": "6771b62e1278994825fa964ab9a9afcbec0fe9bdea8db08789caca82a15280ab"
+ },
+ "producer": "claude-mol harness, branch claude/mol-sims-20261101"
+}

@@ -1,0 +1,204 @@
+{
+ "artifacts": [
+  {
+   "artifact_id": "8be62bb1-42bd-59e0-a387-0dbb6038c051",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "d36cd133cd5a6145acdb59fed49220449dcaabefdcb409f41a3631e401b00bf1",
+   "size_bytes": 770920
+  },
+  {
+   "artifact_id": "fca4c5ca-c2e3-52f8-bd20-abd32dd25a65",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "bd5463d39c713148be853666b67bdee01a64eb308278aaf905cf9800433f2bb2",
+   "size_bytes": 770920
+  }
+ ],
+ "chains": {
+  "A": {
+   "a3m_sha256": "9963d914896febf0d8d532326cab2fa9464ae1ef47cc7fe06827bf2ef103e7d7",
+   "name": "kcnj13",
+   "sequence_sha256": "8029209004a52efea91ae2c899c017ed4795a843615b4b272c7087c67ba396b2",
+   "source": "Q0KIZ7 1-362 full length (Kir7.1)"
+  }
+ },
+ "epistemic_status": "computed structure hypothesis (Boltz-2 + PDB70 MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:41:49Z",
+ "idempotency_key": "frontier-claude-mol-boltz2-kcnj13-dd1669c94ee9077e6e4c",
+ "operation_id": "op-54729d0fbf3db340",
+ "params": {
+  "diffusion_samples": 3,
+  "recycling_steps": 3,
+  "sampling_steps": 200
+ },
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T14:40:39Z"
+  },
+  {
+   "status": "FINALIZING",
+   "t": "2026-11-01T14:41:26Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:41:44Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/boltz2-kcnj13/op-54729d0fbf3db340/artifacts/fca4c5ca-c2e3-52f8-bd20-abd32dd25a65.json",
+     "path": "artifacts/fca4c5ca-c2e3-52f8-bd20-abd32dd25a65.json",
+     "sha256": "bd5463d39c713148be853666b67bdee01a64eb308278aaf905cf9800433f2bb2",
+     "size_bytes": 770920
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-kcnj13/op-54729d0fbf3db340/artifacts/8be62bb1-42bd-59e0-a387-0dbb6038c051.json",
+     "path": "artifacts/8be62bb1-42bd-59e0-a387-0dbb6038c051.json",
+     "sha256": "d36cd133cd5a6145acdb59fed49220449dcaabefdcb409f41a3631e401b00bf1",
+     "size_bytes": 770920
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-kcnj13/op-54729d0fbf3db340/result.json",
+     "path": "result.json",
+     "sha256": "b5826be6d44799c212da9a7767ba73df4237b039934d8d2d6d4345cf2ca74fe4",
+     "size_bytes": 1051
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/boltz2-kcnj13/op-54729d0fbf3db340/manifest.json",
+   "prefix": "frontier/claude-mol/boltz2-kcnj13/op-54729d0fbf3db340/"
+  },
+  "execution": "async",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-54729d0fbf3db340",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "structures",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "structure"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "fca4c5ca-c2e3-52f8-bd20-abd32dd25a65",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "bd5463d39c713148be853666b67bdee01a64eb308278aaf905cf9800433f2bb2",
+    "size_bytes": 770920
+   },
+   "attempt_id": "op-54729d0fbf3db340-l5mzr",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-54729d0fbf3db340",
+   "sha256": "bd5463d39c713148be853666b67bdee01a64eb308278aaf905cf9800433f2bb2",
+   "size_bytes": 770920,
+   "timings": {
+    "completed_at": "2026-11-01T14:41:15Z",
+    "duration_s": 43.895737,
+    "first_byte_at": "2026-11-01T14:41:14Z",
+    "posted_at": "2026-11-01T14:40:31Z"
+   }
+  },
+  "result": {
+   "artifact": {
+    "artifact_id": "8be62bb1-42bd-59e0-a387-0dbb6038c051",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "d36cd133cd5a6145acdb59fed49220449dcaabefdcb409f41a3631e401b00bf1",
+    "size_bytes": 770920
+   },
+   "content_type": "application/json",
+   "schema": "fs2-serve.nebius.ai/operation-artifact-result/v1"
+  },
+  "upstream_success": true
+ },
+ "seed_note": "runtime accepts no seed; nondeterministic",
+ "submit_isError": false,
+ "submit_payload": {
+  "delivery": {
+   "export_state": null,
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-boltz2-kcnj13-dd1669c94ee9077e6e4c",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-54729d0fbf3db340",
+   "status": "RUNNING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T14:40:03Z",
+ "target": "kcnj13",
+ "tool": "boltz2_predict_native"
+}
