@@ -1,0 +1,20 @@
+**Critique (Ranked by Severity)**
+
+**1. Numerical Artifacts & Unexplained Anomalies (Severe)**
+* **The $\gamma = 2, L_p = 10$ failure invalidates numerical trust:** A sharp drop to $A = 0.01$ at a single parameter value—absent at $\gamma = 1$—strongly suggests a numerical instability or stroboscopic aliasing between the explicit time step, reaction rate $\gamma = 2$, and discrete cell-splitting events. Until explained, the numerical scheme cannot be trusted.
+* **Discontinuous growth & cell splitting:** Applying proliferation as a step function on discrete cell centers introduces a moving internal boundary and periodic mass/flux shocks upon cell splitting. Testing $L_p$ increments of $0.25$ on an $O(1)$-sized grid merely shifts the phase of cell-splitting relative to the reaction-diffusion relaxation time, not true physical width.
+* **Under-resolved $L_p^*$:** At $\gamma = 2$, $L_p^* \approx 2.9$ spans barely 2–3 grid cells (given $L_p = 2$ is "about one cell wide" and fails to reach target length 192). Claiming 2-digit precision ($0.37\lambda$) when the zone is 2 cells wide is numerically indefensible.
+* **Metric resampling:** Computing anisotropy $A$ on an irregularly spaced finite-volume grid (pre-splitting) requires interpolation onto a uniform grid, which aliases high-frequency modes (especially at $\gamma = 2, \lambda \approx 7.9$).
+
+**2. Inadequate Evidence for a Universal Rule (Moderate-High)**
+* **Trivial scaling:** Varying $\gamma$ by a factor of 4 only changes $\lambda \propto \gamma^{-1/2}$ by a factor of 2 (3 data points: $7.9, 11, 15.8$). In reaction-diffusion systems, $\gamma$ simply rescales time and space. If $v$ is small (quasi-static limit), $L_p^* \propto \lambda$ is guaranteed by dimensional analysis unless broken by grid effects or the fixed Peclet number ($v/\sqrt{\gamma D}$).
+* **Sub-threshold isn't "bands":** At $\gamma = 1$ ($L_p = 4$) and $\gamma = 0.5$ ($L_p = 6$), sub-threshold $A$ is $\approx -0.04$ and $-0.10$ (isotropic/spots, matching static controls), *not* edge-parallel bands ($A \to -1$). Only $\gamma = 2$ shows true bands ($-0.99$) just below $L_p^*$. 
+* **Wavelength estimate:** $\lambda$ appears to be the linear Turing wavelength, ignoring nonlinear wavenumber selection, boundary pinning, and dilution shift. 
+* **Statistics:** CIs are omitted in all fine-sweep tables (`g1f`, `g2f`, `g05f`), hiding seed variance near the bifurcation.
+
+**3. Physical Reduction & Literature Context (Moderate)**
+* **Known physics:** This reduces to the standard wave-pinning / KPP-Turing front-locking problem in apical growth (e.g., Crampin et al.; Myerscough et al.). When $L_p < \lambda/2$, the proliferation gradient acts as a localized Dirichlet-like boundary perturbation, shedding phase-locked parallel bands (1D periodic shedding). When $L_p \gtrsim \lambda/2$, the active zone accommodates a full half-wavelength (one peak + one trough) along the growth axis, unlocking the transverse instability required to propagate perpendicular (proximo-distal) stripes.
+
+**4. Overclaims & Single Best Next Test (Moderate)**
+* **Overclaim:** Elevating a 3-point curve at one speed ($v=0.1$) to a predictive biological rule ("0.38 ray spacings") while ignoring the $\gamma=2$ breakdown and the failure to produce bands at $\gamma=0.5, 1$.
+* **Single most valuable test:** Replace the step-function cell-splitting scheme with a **Lagrangian (moving-mesh/ALE) or smooth tanh-profiled Eulerian domain** at **halved grid spacing ($\Delta x / 2$) and time step ($\Delta t / 4$)** for $\gamma = 2$. This will simultaneously test whether $L_p^* \approx 0.38\lambda$ survives grid refinement and whether the $L_p = 10$ anomaly is a splitting/discretization artifact.

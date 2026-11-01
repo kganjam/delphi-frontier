@@ -509,9 +509,28 @@ grown tissue switches from edge-parallel bands to ray-like proximo-distal stripe
 
   **L_p* ≈ 0.38 λ** (0.37, 0.39, 0.39).
 
-That is a dimensionless rule: a fold whose proliferating zone is narrower than about 0.4 ray spacings gives bands;
-a wider zone gives rays. Caveats: one model family (Schnakenberg), one diffusion ratio (d = 10), one speed (v = 0.1),
-and the unexplained γ = 2 failure window near 1.27 λ.
+That is a dimensionless rule: newly grown tissue is ray-like only when the proliferating zone is wider than about 0.4
+pattern wavelengths. Below it, the tissue is unoriented or, for the narrowest zones, banded parallel to the edge.
+
+**Review of this rule** (`gemini-4-argon`; saved as `artifacts/simulations/claude-tissue-pzone/review-gemini-4-argon-rule.txt`).
+Accepted, and how each point is handled:
+1. **Partly expected from scaling.** Changing γ rescales length (λ ∝ γ^−1/2) and time. Because v was held fixed in
+   absolute units, the dimensionless speed changed too, so a constant L_p*/λ also says the switch is insensitive to
+   speed over that range. A direct speed test is running (γ = 1, v = 0.25; `claude-tissue-pzone-g1v25`).
+2. **Below the switch is not always "bands".** At γ = 1 and 0.5 the tissue just below the switch is *unoriented*
+   (distal A ≈ −0.1 to 0). Edge-parallel bands appear only for the narrowest zones, for example L_p ≤ 2.75 at γ = 2.
+3. **Resolution.** At γ = 2 the switch zone is only 2–3 cells wide, so "0.37" is not resolved to two digits. A
+   grid-refinement run at γ = 2 with half the cell size (same physics) is queued. Until it returns, read the rule as
+   **L_p* ≈ 0.4 λ, with grid sensitivity untested**.
+4. **Statistics.** 95% CIs near the switch are wide (±0.26 at γ = 0.5, L_p = 6.25 to 6.5). They are listed in each
+   `claude-tissue-pzone-*` manifest card.
+5. **The unexplained γ = 2 window** lowers confidence in the scheme until it is resolved; the refinement run also
+   covers it.
+6. **Possible physical reading** (reviewer's, not tested here): a zone narrower than about half a stripe period acts
+   like a moving boundary that sheds bands parallel to it, while a wider zone can carry the transverse mode.
+   This links the rule to front-locking in apical-growth models.
+
+Other caveats: one model family (Schnakenberg), one diffusion ratio (d = 10), mostly one speed (v = 0.1).
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and

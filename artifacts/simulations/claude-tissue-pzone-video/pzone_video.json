@@ -1,0 +1,112 @@
+{
+ "job": "aijob-e00z8p53dz9dq33zsf",
+ "job_state": "COMPLETED",
+ "meta": {
+  "model": "Schnakenberg 2-D, continuous growth in a distal proliferation zone (finite volume)",
+  "a": 0.1,
+  "b": 0.9,
+  "d": 10.0,
+  "gamma": 1.0,
+  "X": 96,
+  "Y0": 48,
+  "Y1": 192,
+  "dt": 0.006,
+  "relax": 300.0,
+  "lps": [
+   2,
+   12,
+   0
+  ],
+  "speeds": [
+   0.1
+  ],
+  "seeds": [
+   1
+  ],
+  "scale_t": 1.0,
+  "device": "cuda",
+  "torch": "2.10.0a0+b4e4ee81d3.nv25.12",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "script_sha256": "fd246a474d8fada2538485052cf0aaf19063c30cebf9e431780c10c0f1f8f654"
+ },
+ "done": {
+  "wall_s": 378.4
+ },
+ "n_rows": 4,
+ "rows": [
+  {
+   "gamma": 1.0,
+   "lp": 2,
+   "lp_label": 2,
+   "speed": 0.1,
+   "seed": 1,
+   "length": 186.5003486232335,
+   "cells": 151,
+   "splits": 103,
+   "orientation_A": -0.8162237742050966,
+   "A_distal_half": -0.6190579683540937,
+   "A_proximal_quarter": -0.9990860062293706,
+   "A_new_tissue": -0.7442541446513506,
+   "new_tissue_from_y": 48.667064534160446,
+   "stripes_across_width": 1,
+   "amplitude": 0.29222208239768266,
+   "wall_s": 116.4
+  },
+  {
+   "gamma": 1.0,
+   "lp": 12,
+   "lp_label": 12,
+   "speed": 0.1,
+   "seed": 1,
+   "length": 191.82943226362642,
+   "cells": 150,
+   "splits": 102,
+   "orientation_A": 0.800299141742977,
+   "A_distal_half": 0.9998242101277222,
+   "A_proximal_quarter": 0.23891530448849627,
+   "A_new_tissue": 0.9444795651825546,
+   "new_tissue_from_y": 45.35112391011851,
+   "stripes_across_width": 8,
+   "amplitude": 0.3056478237915471,
+   "wall_s": 115.2
+  },
+  {
+   "gamma": 1.0,
+   "lp": 0,
+   "lp_label": "uniform",
+   "speed": 0.1,
+   "seed": 1,
+   "length": 192.0000000000988,
+   "cells": 96,
+   "splits": 48,
+   "orientation_A": 0.9652300281933898,
+   "A_distal_half": 0.9765924730094715,
+   "A_proximal_quarter": 0.8892788847619191,
+   "A_new_tissue": 0.9647380778268713,
+   "new_tissue_from_y": 2.0000000000010285,
+   "stripes_across_width": 9,
+   "amplitude": 0.302244842241098,
+   "wall_s": 115.8
+  },
+  {
+   "gamma": 1.0,
+   "lp": -1,
+   "lp_label": "static",
+   "speed": 0.0,
+   "seed": 1,
+   "length": 192.0,
+   "cells": 192,
+   "splits": 0,
+   "orientation_A": 0.211266453391155,
+   "A_distal_half": 0.1320495535410792,
+   "A_proximal_quarter": 0.38969890050142475,
+   "A_new_tissue": null,
+   "new_tissue_from_y": null,
+   "stripes_across_width": 9,
+   "amplitude": 0.29485591760660584,
+   "wall_s": 30.9
+  }
+ ],
+ "n_frames": 244,
+ "reading": "side-by-side render of one seed: apical zone (Lp=2), zone ~1 wavelength (Lp=12), uniform growth, static; distal edge at top"
+}
