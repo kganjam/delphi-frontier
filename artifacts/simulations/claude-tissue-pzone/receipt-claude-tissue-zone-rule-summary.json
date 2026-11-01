@@ -1,0 +1,43 @@
+{
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+  "simulations/claude_tissue/zone_rule_summary.py": "b36bbf6bc216c36d4b05275785eac9e17790602fc761dde683b78eaab3be7aa1"
+ },
+ "command": "python3 simulations/claude_tissue/zone_rule_summary.py",
+ "environment": {
+  "OMP_NUM_THREADS": "1",
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {
+  "artifacts/simulations/claude-tissue-pzone-g05f/pzone_g05f.json": "d1387500493743718b3f699381ac0b8742e50fd62d85982020eae243db590998",
+  "artifacts/simulations/claude-tissue-pzone-g05r/pzone_g05r.json": "008c219f14fa91920142c4613d16a97e6c99c1629a5b99a878ec5451d6e8c176",
+  "artifacts/simulations/claude-tissue-pzone-g1f/pzone_g1f.json": "a5ed9d3e9782ddf71f93ca40544468df01d9739b43c9d8e18c9a9b5b72fbe999",
+  "artifacts/simulations/claude-tissue-pzone-g1r/pzone_g1r.json": "0cdfba4a260e9c1e7018c326e8738f01161c913a99f4f8b384948db6801392d2",
+  "artifacts/simulations/claude-tissue-pzone-g1v25/pzone_g1v25.json": "1985442d9ac7edb83a85a340c7e9293a317ff159f7a008b8b70a35e2f804f668",
+  "artifacts/simulations/claude-tissue-pzone-g1v40/pzone_g1v40.json": "272efa903aaa9520965ad290f0acf165b1919ca28b1258141594382576f7c37e",
+  "artifacts/simulations/claude-tissue-pzone-g2f/pzone_g2f.json": "db8733ef1794fd3406b99af2008bd159a84dd330cb087dc19c884e8a7fcaf0c1",
+  "artifacts/simulations/claude-tissue-pzone-g2r/pzone_g2r.json": "c891a87d0954ef9febb17458196e3cce046345efecb6db9026e5105189bcc2e2",
+  "artifacts/simulations/claude-tissue-pzone-g2v25/pzone_g2v25.json": "5c21b3b1e02d42092b3d25a9f721473ccab4ff3bea231dfa10acf005aac8b25e",
+  "artifacts/simulations/claude-tissue-pzone-g2v40/pzone_g2v40.json": "7da050a04c64957d1f499685a8a6831cd6bc33e6a749de2ce412d17dc15e3f7f",
+  "artifacts/simulations/claude-tissue-pzone-refine-g05/pzone_refine_g05.json": "d9e3674a086d2ec40802daf25ed17ae16125c85be0696a8f0cc7b52ef09da08f",
+  "artifacts/simulations/claude-tissue-pzone-refine-g05b/pzone_refine_g05b.json": "62706ee8c667f01ec7a8ef8dcb1e9a08bdc21c838cd04f142a25489228d3e9a2",
+  "artifacts/simulations/claude-tissue-pzone-refine-g1/pzone_refine_g1.json": "4b9a0651dbfea674a83c0623539a22ee241e0bfea9742e4668d671cde9bb5506",
+  "artifacts/simulations/claude-tissue-pzone-refine-g1v40/pzone_refine_g1v40.json": "ae040dc3bc86b4733fa3d85ca36a3e8f75e32318992abb23f9a82874cfb7790a",
+  "artifacts/simulations/claude-tissue-pzone-refine-g2b/pzone_refine_g2b.json": "466d9f7eeda2da0e156f3a8feb4494a1e5c9cab6b09bc63035601de842c3d8e0",
+  "artifacts/simulations/claude-tissue-pzone-refine/pzone_refine.json": "3ca1cc757fac02b929557acb96d916475ce556cb1a018d127aaa3cd49be99c52",
+  "artifacts/simulations/claude-tissue-pzone-smooth-b/pzone_smooth_b.json": "2ec439abccb99e76eac2834d448f597446061f923d6648e1408ad612d4b1bf46",
+  "artifacts/simulations/claude-tissue-pzone-smooth/pzone_smooth.json": "c89f199ceefaad32a80664f2dc52184c31bb3aed41d500ec4ef37d48fc1698b7"
+ },
+ "name": "claude-tissue-zone-rule-summary",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-pzone/zone-rule.json": "d3b5862c301b4f1093a6f9f99739b96e1d5b3c4f534894077b52f33a4bcd5e50",
+  "artifacts/simulations/claude-tissue-pzone/zone-rule.png": "052df5676e5193373fc545f255018746bf7f0269de26a107d2be3793943ca635"
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": "none (derived)",
+ "wall_s": 0.366
+}

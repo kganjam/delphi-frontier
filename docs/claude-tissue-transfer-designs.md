@@ -680,6 +680,30 @@ The refined switch is about **6.2 ≈ 0.39 λ**; at γ = 0.5 refinement barely m
 The zone width needed for ray-like tissue grows steadily with dimensionless outgrowth speed. It is roughly linear over
 the slow range and flattens by v/√γ = 0.4. With a smooth zone edge (width 1, γ = 1, coarse grid) it drops to about 0.25 λ.
 
+**Formal summary** (`zone_rule_summary.py`, derived numbers only; `artifacts/simulations/claude-tissue-pzone/zone-rule.json` and
+`zone-rule.png`). L_p* is defined as the first upward crossing of distal A = 0.5, by linear interpolation.
+
+| Group | v/√γ | L_p* / λ |
+|---|---|---|
+| Refined, sharp edge | 0.07 | 0.33 |
+| Refined, sharp edge | 0.10 | 0.36 |
+| Refined, sharp edge | 0.14 | 0.40 |
+| Refined, sharp edge | 0.40 | 0.49 |
+| Coarse, sharp edge | 0.07 | 0.37 |
+| Coarse, sharp edge | 0.10 | 0.39 |
+| Coarse, sharp edge | 0.14 | 0.40 |
+| Coarse, sharp edge | 0.18 | 0.38 |
+| Coarse, sharp edge | 0.25 | 0.45 |
+| Coarse, sharp edge | 0.28 | 0.50 |
+| Coarse, sharp edge | 0.40 | 0.49 |
+| Coarse, smooth edge (width 1) | 0.10 | 0.26 |
+
+**Reading.**
+- Coarse points from different γ and speeds fall on **one rising curve** in v/√γ. The γ = 2, v = 0.4 point
+  (v/√γ = 0.28) lands next to the γ = 1, v = 0.25 point (0.25). So the switch is consistent with a single function of
+  dimensionless outgrowth speed.
+- The refined grid lowers the curve by up to about 0.04 λ at the slowest speeds.
+
 **Smooth zone edge** (`claude-tissue-pzone-smooth`, job `aijob-e00k9ebxtrnpnnmpe3`, COMPLETED, 613.7 s). The step-shaped
 zone is replaced by a logistic edge of width 1, and growth is normalised so total elongation is exactly v (final length
 exactly 192). γ = 1, v = 0.1, coarse grid, 12 seeds; distal A:
