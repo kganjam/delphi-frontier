@@ -28,7 +28,9 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
   pattern is spots) and growth along the fin axis.
 - With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
   a proliferating zone wider than about **one third of a pattern wavelength** at slow outgrowth (refined grid: 0.32 λ at
-  γ = 2 and 0.35 λ at γ = 1), rising to about half a wavelength at 4× faster outgrowth (refined, γ = 1). Refinement also removed the γ = 2 failure window as a discretisation artifact.
+  γ = 2 and 0.35 λ at γ = 1), rising to about half a wavelength at 4× faster outgrowth (refined, γ = 1). These values
+  are for a sharp-edged zone. A smooth (logistic) edge gives rays from still narrower zones, so the sharpness of the
+  proliferation boundary also matters. Refinement also removed the γ = 2 failure window as a discretisation artifact.
   Coarse-grid values, biased upward: 0.37, 0.39 and 0.39 at three rate scales, and a
   prediction made from two of them was confirmed on the third (12 seeds each). The switch rises with outgrowth speed,
   reaching 0.48 λ at v = 0.4 (L_p* ≈ 3.9 + 3.3·v at γ = 1). This is partly a scaling consistency check, and grid
