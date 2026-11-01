@@ -1,0 +1,114 @@
+{
+ "endpoint": "https://frontier.morphoswarm.ai/mcp",
+ "retrieved_utc": "2026-11-01T16:56:51.527357+00:00",
+ "credential": "none (anonymous public read)",
+ "client": "mcp python SDK 'streamablehttp_client'; one session; tools/list then frontier_get per ref",
+ "tools_listed": [
+  "frontier_search",
+  "frontier_get",
+  "frontier_neighborhood",
+  "frontier_events",
+  "frontier_artifacts",
+  "frontier_discover",
+  "frontier_graph",
+  "frontier_catalogue",
+  "frontier_project_inspect",
+  "frontier_design_context",
+  "frontier_artifact_inspect",
+  "frontier_simulate",
+  "frontier_engineer",
+  "frontier_formalize",
+  "frontier_belief",
+  "frontier_plan_experiments",
+  "frontier_proofs",
+  "frontier_capabilities",
+  "frontier_propose",
+  "frontier_lease",
+  "frontier_transition"
+ ],
+ "reads": [
+  {
+   "call": "frontier_get {\"target\": {\"namespace\": \"node-a\", \"kind\": \"Claim\", \"id\": \"viz-rd-claim-cell-240\", \"version\": \"4a649305d04a8a9599fbbd19b874091924f34644bff06337bd54613a7b362407\"}}",
+   "resolved": true,
+   "id": "viz-rd-claim-cell-240",
+   "kind": "Claim",
+   "is_head": true,
+   "local_review": {
+    "status": "imported_unreviewed",
+    "policy_version": "frontier-independent-review-0.1"
+   },
+   "payload_keys": [
+    "assumptions",
+    "context",
+    "limitations",
+    "origin",
+    "prior_review",
+    "source",
+    "source_record_version",
+    "statement",
+    "title"
+   ],
+   "response_sha256": "fea209c2e8df55bf941fcb5db4852c45918e91dee951274ff7de78b8281035f4"
+  },
+  {
+   "call": "frontier_get {\"target\": {\"namespace\": \"delphi-frontier\", \"kind\": \"Problem\", \"id\": \"F003\", \"version\": \"72c7b472326c90cc5a2290ff2669e45c3c29e18d8e3fd05339485a6f298a52cc\"}}",
+   "resolved": true,
+   "id": "F003",
+   "kind": "Problem",
+   "is_head": true,
+   "local_review": {
+    "status": "proposed",
+    "policy_version": "frontier-independent-review-0.1"
+   },
+   "payload_keys": [
+    "acceptance_criteria",
+    "completeness",
+    "cost_stop_bounds",
+    "data_access",
+    "dependencies",
+    "downstream_uses",
+    "falsifiers",
+    "known_state",
+    "next_action",
+    "novelty_status",
+    "original",
+    "problem_kind",
+    "question",
+    "required_capabilities",
+    "source",
+    "title"
+   ],
+   "response_sha256": "fc5ed3ae9b8b95914762295679bdde2cba9b4e0172163fd8e5e67dd7452d7960"
+  },
+  {
+   "call": "frontier_get {\"target\": {\"namespace\": \"delphi-frontier\", \"kind\": \"Problem\", \"id\": \"F005\", \"version\": \"79cdf9c1e90c73ce07ca72b62f4f62b7976f583fe9e9072a84bd83c40e20f448\"}}",
+   "resolved": true,
+   "id": "F005",
+   "kind": "Problem",
+   "is_head": true,
+   "local_review": {
+    "status": "proposed",
+    "policy_version": "frontier-independent-review-0.1"
+   },
+   "payload_keys": [
+    "acceptance_criteria",
+    "completeness",
+    "cost_stop_bounds",
+    "data_access",
+    "dependencies",
+    "downstream_uses",
+    "falsifiers",
+    "known_state",
+    "next_action",
+    "novelty_status",
+    "original",
+    "problem_kind",
+    "question",
+    "required_capabilities",
+    "source",
+    "title"
+   ],
+   "response_sha256": "18ec9e02f674d9a253e690b7639e53f7804d20c6d2af183e0b0628338a6bbcff"
+  }
+ ]
+}

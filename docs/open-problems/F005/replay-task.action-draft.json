@@ -1,0 +1,106 @@
+{
+ "tool": "frontier_propose",
+ "arguments": {
+  "draft": {
+   "namespace": "delphi-frontier",
+   "kind": "Action",
+   "id": "f005-offer-replay-rd-cells-240-1306",
+   "issuer": "<proposing principal>",
+   "source_uri": "https://github.com/kganjam/delphi-frontier/blob/claude/fseries-20261101/docs/open-problems/F005/replay-task.md",
+   "visibility": "public",
+   "predecessor": null,
+   "payload": {
+    "target": {
+     "namespace": "delphi-frontier",
+     "kind": "Problem",
+     "id": "F003",
+     "version": "72c7b472326c90cc5a2290ff2669e45c3c29e18d8e3fd05339485a6f298a52cc"
+    },
+    "title": "Independent replay of reaction-diffusion sweep cells 240 and 1306 with your own solver (offered to a second participant)",
+    "acceptance_criteria": [
+     "The submission pins the consumed input: cells.json sha256 f74184cb56ba36e4face9978c96c2c00ae728a471183294c3f9d866eb066d6b6 (public raw URL at commit 42cbd818) and the Claim ref given in inputs.",
+     "The solver is the participant's own code, with a code sha256, and the submission states which project code it did NOT reuse.",
+     "For each cell: final dominant cosine mode and std(u) at T = 800 tau, plus one refinement of the participant's choice (halved dt or doubled grid) with the same two numbers.",
+     "Receipt: command, exit code, wall time, host class; measured cost (CPU seconds, participant minutes).",
+     "docs/open-problems/F005/check_replay.py (sha256 1ecd51ff9689217e1bc5ee53862c842534d5595adf0ba7f55ba5cc1384462d3e) is run on the submission and its output attached; a mismatch is reported as a valid negative result, not retried away.",
+     "A reviewer who is neither the participant nor the project author reads the submission before any status change."
+    ],
+    "required_capabilities": [
+     "write and run a 1-D reaction-diffusion solver (any method)",
+     "MCP client for frontier_search / frontier_get (public, no credential)"
+    ],
+    "cost_stop_bounds": "At most 30 CPU-minutes and 2 participant-hours; no GPU; stop after one replay and one refinement per cell. The project offers no payment; cost is recorded, not reimbursed.",
+    "cache_key": {
+     "target": "72c7b472326c90cc5a2290ff2669e45c3c29e18d8e3fd05339485a6f298a52cc",
+     "input": "cells.json:f74184cb56ba36e4face9978c96c2c00ae728a471183294c3f9d866eb066d6b6",
+     "code": "participant-supplied",
+     "model": "schnakenberg+brusselator 1-D Neumann",
+     "environment": "participant-supplied",
+     "parameters": "cells 240 and 1306 exactly as in cells.json",
+     "scope": "declared-model replay only",
+     "acceptance_policy": "check_replay.py:1ecd51ff9689217e1bc5ee53862c842534d5595adf0ba7f55ba5cc1384462d3e"
+    },
+    "inputs": [
+     {
+      "namespace": "node-a",
+      "kind": "Claim",
+      "id": "viz-rd-claim-cell-240",
+      "version": "4a649305d04a8a9599fbbd19b874091924f34644bff06337bd54613a7b362407"
+     }
+    ],
+    "proposal": {
+     "intent": "replication",
+     "method": "Read the two cells (kinetics, rational parameters, Dv, L, grid N, K-mode cosine initial condition with seed, eps, T) from cells.json; integrate the declared PDE with your own solver; report final mode and std(u) at T and after one refinement.",
+     "assumptions": [
+      "The cell definition in cells.json is complete enough to reproduce the initial condition (numpy default_rng seed, K cosine modes; see rd_frames.py ic_modal for the definition, not the implementation to reuse)."
+     ],
+     "alternatives": [
+      {
+       "label": "project-self-replay",
+       "description": "The project reruns its own solver.",
+       "tradeoff": "Already done (rerun reproduced the frozen rows to 4e-15); it is not independent and cannot satisfy F005."
+      },
+      {
+       "label": "source-review-shard",
+       "description": "Review one F004 Fisher/Hamilton correction instead.",
+       "tradeoff": "Needs population-genetics reading; slower to check mechanically."
+      }
+     ],
+     "expected_information": "Whether cell 240's linear-vs-nonlinear mode mismatch (mode 7 vs fastest linear 6) and cell 1306's finite-amplitude pattern from a linearly stable state survive an independent solver.",
+     "decision_context": "F003 counts cell 240 as an R3 mismatch and cell 1306 as an R1 event. An independent disagreement would move each to unresolved; agreement is the first independent support for either.",
+     "expected_outputs": [
+      "submission JSON in the format of check_replay.py",
+      "check_replay.py output",
+      "solver source or its sha256"
+     ],
+     "controls": [
+      "Mechanical acceptance check with a fixed tolerance (mode exact, std(u) within 2%).",
+      "The participant's own refinement (dt/2 or 2N) must agree with their base run."
+     ],
+     "analysis_plan": "Run check_replay.py; a reviewer compares; F003 records agreement or disagreement per cell with the participant's attribution.",
+     "outcomes": [
+      {
+       "label": "agree",
+       "criterion": "mode equal and std(u) within 2% on both cells, own refinement consistent",
+       "decision_consequence": "F003 records independent support for cells 240 and 1306; F005 records one consumed contribution with measured cost."
+      },
+      {
+       "label": "disagree",
+       "criterion": "mode differs or std(u) off by more than 2% on either cell",
+       "decision_consequence": "The cell becomes unresolved in F003 and the disagreement is investigated; still counts as a reuse for F005."
+      }
+     ],
+     "selection_basis": "manual",
+     "selection_rationale": "Smallest replayable unit with a published mismatch; inputs are public and pinned; checkable mechanically in seconds.",
+     "limitations": [
+      "Two cells of one declared-model sweep; says nothing about tissue.",
+      "Offered, not taken: no second participant exists yet.",
+      "Inputs are on GitHub; the MCP carries only the Claim ref and digest, not the bytes."
+     ]
+    }
+   }
+  },
+  "idempotency_key": "f005-offer:replay:f35c82cf46d3e2e5"
+ },
+ "status": "DRAFT - not proposed. Proposing is an outward-facing write that needs a provisioned credential and the lead's approval."
+}
