@@ -1,0 +1,30 @@
+{
+ "name": "claude-neuro-j4-m3-sobol-a1",
+ "platform": "gpu-h100-sxm",
+ "preset": "1gpu-16vcpu-200gb",
+ "timeout": "1h",
+ "disk": "80Gi",
+ "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+ "pip": "scipy",
+ "question": "Which of 14 design, neural, fin-muscle and environment parameters decide whether the r3-daane glider stays upright in roll?",
+ "gpu_justification": "32,768 Saltelli points x 128 saturation Monte Carlo trajectories x 2500 steps (float64, per-trajectory plants/delays/lags); 16 vCPUs compute 32,768 exact linear radii",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.sobol_m3 --out /work/out --N 2048 --trials 128 --procs 16 --geometry /work/repo/geometry.json --seed 20261101",
+ "files": {
+  "engineering/__init__.py": "engineering/__init__.py",
+  "engineering/neuro/__init__.py": "engineering/neuro/__init__.py",
+  "engineering/neuro/common.py": "engineering/neuro/common.py",
+  "engineering/neuro/glide_stab.py": "engineering/neuro/glide_stab.py",
+  "engineering/neuro/sobol_m1.py": "engineering/neuro/sobol_m1.py",
+  "engineering/neuro/fast_start.py": "engineering/neuro/fast_start.py",
+  "engineering/neuro/caudal_cpg.py": "engineering/neuro/caudal_cpg.py",
+  "engineering/neuro/sobol_m3.py": "engineering/neuro/sobol_m3.py",
+  "engineering/behavior/__init__.py": "engineering/behavior/__init__.py",
+  "engineering/behavior/model.py": "engineering/behavior/model.py",
+  "engineering/simulation/__init__.py": "engineering/simulation/__init__.py",
+  "engineering/simulation/controlled.py": "engineering/simulation/controlled.py",
+  "engineering/simulation/evaluate.py": "engineering/simulation/evaluate.py",
+  "engineering/simulation/glide.py": "engineering/simulation/glide.py",
+  "engineering/simulation/schema.py": "engineering/simulation/schema.py",
+  "geometry.json": "artifacts/neuro/jobs/inputs/r3daane_geometry.json"
+ }
+}
