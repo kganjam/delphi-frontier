@@ -132,11 +132,27 @@ Curated in `artifacts/cfd3d/gpu-v1/` with `receipt.json`. The transport hash was
 - **Checkpoint/restart.** `cyl2d.jl` uses `CFD3D_CKPT` and `CFD3D_SEGMENT_S`. A checkpoint is refused unless the
   run id, script, contract and versions all match. The worker re-proves bit-identical restart on its own
   platform before any case runs.
-- **The packet.** `cpu_entry.py` and `cpu_packet.json`, built with `build_packet.py --cpu`. They run R1,
+- **The packet.** `cpu_entry.py` (now `cyl2d_entry.py`) and `cpu_packet.json`, built with `build_packet.py --cpu`.
+  They run R1,
   R3_domain and M1_mutant on 12 threads of a shared 16-vCPU worker. Each case is its own capped process tree,
   run in 2 h segments with a checkpoint every 30 min.
 - **R2 is not in it.** R2 is the fidelity and grid-pair case, projected at 107–179 h on 2 threads, so it needs
   a GPU. Until R2 exists, `control_passes` is false by construction.
+- **The R2 CUDA packet.** `cyl2d_entry.py r2_packet.json`, built with `build_packet.py --r2`. It runs the same
+  contract case on one GPU, and each of these stages has to pass before R2 starts:
+  - the env is built from the 103 pins already proven on the H100, and `CUDA.functional()` must be true;
+  - the restart check runs on CPU and again on the device;
+  - a same-state CPU/CUDA control: one CPU checkpoint at t = 100 of a coarse developed wake (T_same), continued
+    on both devices. The aligned series must agree within tolerances frozen before any CUDA run, and a 10-step
+    shift must not;
+  - a force-free timing calibration on the device.
+
+  The two `cyl2d.jl` changes do not change the numerics:
+  - The surface is sampled from a host copy of p.
+  - Series are printed as shortest Float32 decimals. `series_dtype` says so, and `cyl2d_eval.py` rounds them
+    back to Float32, so CPU and CUDA runs evaluate identically for identical values.
+
+  On T_restart, the new script's series rounded to Float32 equal the frozen script's (ebc21ef0) exactly.
 - **C1 is untouched.** The 3-D sphere gate C1 stays FAILED. A cylinder pass would not change it, and would not
   validate fins or flight.
 

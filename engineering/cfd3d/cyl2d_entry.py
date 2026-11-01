@@ -1,6 +1,9 @@
-"""CPU worker entry for the cfd3d 2-D cylinder packet (stdlib only, Python >= 3.11).
+"""Worker entry for the cfd3d 2-D cylinder packets, CPU or CUDA (stdlib only, Python >= 3.11).
 
-    python3 engineering/cfd3d/cpu_entry.py [STAGE ...]     (default: every stage, in order)
+    python3 engineering/cfd3d/cyl2d_entry.py [PACKET.json] [STAGE ...]
+PACKET.json is a file in engineering/cfd3d (default cpu_packet.json; the R2 GPU packet is r2_packet.json);
+its "stages" list is the default order. Before the rename (d49cc33) this file was cpu_entry.py; the frozen CPU
+packet 95ac40c9 carries that version.
 
 Stages; a failed gate stops every later stage. OUT/status.json is the machine-readable completion contract:
   completion  "complete" (every planned case finished and was evaluated) | "partial" (gates passed, some case
@@ -19,6 +22,15 @@ Stages:
                  it runs in segments (CFD3D_SEGMENT_S) and resumes from its checkpoint until it finishes,
                  its budget ends, or the outer budget minus the emit margin ends
   eval           cyl2d_eval.py over every finished run (frozen contract + band; it fails closed)
+CUDA packets add (device "cuda"):
+  telemetry      nvidia-smi (not a gate)
+  env            built from exact pins, digest-checked, and CUDA.functional() must be true (gate)
+  restart_check  also a CUDA arm: straight vs split + resumed on the device, within the same-state tolerance
+  platform       same-state CPU/CUDA control: T_same is run on the CPU to t = 100 (developed shedding), then
+                 continued from that one checkpoint on the CPU and on the device; the aligned series must agree
+                 within the frozen tolerance and a 10-step-shifted comparison must not (gate)
+  calibration    force-free R2 TIMING on the device; projected R2 wall time (telemetry)
+  output         OUT bytes against max_out_bytes (failure means partial, not a gate)
 PREFLIGHT=1: files, JSON/TOML and Python syntax only; no download and no Julia.
 Environment: COPS_OUT (default out), CFD3D_WORK (default /work/cfd3d), CFD3D_OUTER_BUDGET_S overrides the
 packet's outer budget (the VM's hard lifetime minus export time, set by the dispatcher), CFD3D_RESUME_FROM.
@@ -52,14 +64,22 @@ JOB = Path(__file__).resolve().parents[2]
 HERE = JOB / "engineering/cfd3d"
 OUT = Path(os.environ.get("COPS_OUT", "out")).resolve()
 WORK = Path(os.environ.get("CFD3D_WORK", "/work/cfd3d")).resolve()
-PK = json.loads((HERE / "cpu_packet.json").read_text())
+ARGS = sys.argv[1:]
+PK_FILE = ARGS.pop(0) if ARGS and ARGS[0].endswith(".json") else "cpu_packet.json"
+PK = json.loads((HERE / PK_FILE).read_text())
+GPU = PK.get("device", "cpu") == "cuda"
+PROJECT = HERE / "env"                     # a pins-built env replaces it (st_env)
 JULIA_PIN = json.loads((HERE / "packet.json").read_text())["julia"]
 OUTER = float(os.environ.get("CFD3D_OUTER_BUDGET_S", PK["outer_budget_s"]))
 EXPORT = OUT / "checkpoints"               # coherent snapshots only (see export_ckpt); never the live file
 RESUME = Path(os.environ["CFD3D_RESUME_FROM"]).resolve() if os.environ.get("CFD3D_RESUME_FROM") else None
+DRY_RUN = os.environ.get("CFD3D_PLATFORM_DRY_RUN") == "1"   # local check of the platform stage: both arms on CPU
+EXPORT_MAX = int(os.environ.get("CFD3D_EXPORT_BYTES_MAX", PK["export_bytes_max"]))
 T0 = time.time()
 LOCK = threading.Lock()
-status: dict = {"schema": "cfd3d-cpu-status-0.1", "packet_sha256": os.environ.get("CFD3D_PACKET_SHA256"),
+status: dict = {"schema": "cfd3d-cyl2d-status-0.2", "packet_sha256": os.environ.get("CFD3D_PACKET_SHA256"),
+                "platform_dry_run": DRY_RUN,
+                "packet_file": PK_FILE, "device": PK.get("device", "cpu"),
                 "science": PK["science"], "reference_gate": PK["reference_gate"], "outer_budget_s": OUTER,
                 "completion": "running", "rc": None, "stages": {}, "cases": {}}
 
@@ -69,7 +89,7 @@ def left() -> float:
 
 
 def log(msg: str) -> None:
-    print(f"CFD3D-CPU {time.time() - T0:8.1f}s {msg}", flush=True)
+    print(f"CFD3D-CYL {time.time() - T0:8.1f}s {msg}", flush=True)
 
 
 def save() -> None:
@@ -109,10 +129,10 @@ def julia_bin() -> Path:
         WORK / JULIA_PIN["dir"] / "bin/julia"
 
 
-def julia_env(threads: int, **extra) -> dict:
+def julia_env(threads: int, gpu: bool = False, **extra) -> dict:
     return dict(os.environ, JULIA_DEPOT_PATH=os.environ.get("CFD3D_DEPOT", str(WORK / "depot")),
                 JULIA_NUM_THREADS=str(threads), JULIA_PKG_PRECOMPILE_AUTO="0", JULIA_NUM_PRECOMPILE_TASKS="2",
-                CFD3D_GPU="0", OPENBLAS_NUM_THREADS="1", **{k: str(v) for k, v in extra.items()})
+                CFD3D_GPU="1" if gpu else "0", OPENBLAS_NUM_THREADS="1", **{k: str(v) for k, v in extra.items()})
 
 
 def capper() -> list[str]:
@@ -127,7 +147,7 @@ def capper() -> list[str]:
 CAP = None
 
 
-def run_capped(argv, threads, mem_gb, timeout, log_to, **extra) -> tuple[int, float]:
+def run_capped(argv, threads, mem_gb, timeout, log_to, gpu=False, **extra) -> tuple[int, float]:
     """One Julia process tree: systemd caps when available, and always a watchdog on wall time and RSS."""
     global CAP
     if CAP is None:
@@ -141,14 +161,17 @@ def run_capped(argv, threads, mem_gb, timeout, log_to, **extra) -> tuple[int, fl
                  "-p", f"RuntimeMaxSec={int(timeout) + 120}"] if CAP else []
     t = time.time()
     with open(log_to, "a") as fh:
-        p = subprocess.Popen(pre + [str(julia_bin()), "--startup-file=no", *argv], env=julia_env(threads, **extra),
+        # every argv element as str: the frozen CPU packet passed TIMING's int step count here and its scaling
+        # stage died with a TypeError on VM03 (infra-to-cfd-argv-failure.md)
+        cmd = [str(a) for a in pre + [julia_bin(), "--startup-file=no", *argv]]
+        p = subprocess.Popen(cmd, env=julia_env(threads, gpu, **extra),
                              stdout=fh, stderr=subprocess.STDOUT, start_new_session=True)
         peak = 0.0
         while p.poll() is None:
             rss = tree_rss_gb(p.pid)
             peak = max(peak, rss)
             if rss > mem_gb or time.time() - t > timeout + 60:
-                fh.write(f"\nCFD3D-CPU watchdog: killing (rss {rss:.2f} GB, cap {mem_gb} GB, "
+                fh.write(f"\nCFD3D-CYL watchdog: killing (rss {rss:.2f} GB, cap {mem_gb} GB, "
                          f"wall {time.time() - t:.0f} s, budget {timeout:.0f} s)\n")
                 os.killpg(p.pid, 9)
                 p.wait()
@@ -175,19 +198,23 @@ def tree_rss_gb(pid: int) -> float:
 
 
 def preflight() -> int:
-    need = ["engineering/cfd3d/" + f for f in ("cyl2d.jl", "cyl2d_contract.json", "cyl2d_band.json",
-                                               "cyl2d_eval.py", "cpu_packet.json", "packet.json",
-                                               "env/Project.toml", "env/Manifest.toml")]
+    need = ["engineering/cfd3d/" + f for f in PK["files"]]
     missing = [p for p in need if not (JOB / p).exists()]
     for p in HERE.rglob("*.py"):
         compile(p.read_text(), str(p), "exec")
     for p in HERE.rglob("*.json"):
         json.loads(p.read_text())
-    for p in ("env/Project.toml", "env/Manifest.toml"):
-        tomllib.loads((HERE / p).read_text())
-    man_ok = sha(HERE / "env/Manifest.toml") == PK["env"]["manifest_sha256"]
+    for p in HERE.rglob("*.toml"):
+        tomllib.loads(p.read_text())
+    ev = PK["env"]
+    if ev.get("pins"):
+        rows = (JOB / ev["pins"]).read_text().splitlines() if (JOB / ev["pins"]).exists() else []
+        man_ok = len(rows) == ev["pin_count"] and all(len(r.split()) == 3 for r in rows)
+    else:
+        man_ok = sha(HERE / "env/Manifest.toml") == ev["manifest_sha256"]
     ok = not missing and man_ok and sys.version_info >= (3, 11)
-    print(json.dumps({"preflight": ok, "missing": missing, "manifest_pinned": man_ok,
+    print(json.dumps({"preflight": ok, "packet": PK_FILE, "device": PK.get("device", "cpu"), "missing": missing,
+                      "env_pinned": man_ok,
                       "python": sys.version.split()[0], "cases": [c["run_id"] for c in PK["cases"]],
                       "outer_budget_s": OUTER, "threads_total": sum(c["threads"] for c in PK["cases"])}))
     return 0 if ok else 8
@@ -204,7 +231,10 @@ def st_julia() -> bool:
     if got != JULIA_PIN["sha256"]:
         return stage("julia", False, sha256=got, want=JULIA_PIN["sha256"])
     with tarfile.open(tgz) as tf:
-        tf.extractall(WORK, filter="data")
+        try:
+            tf.extractall(WORK, filter="fully_trusted")   # official tarball, sha256 checked; keeps its links
+        except TypeError:                                 # Python < 3.11.4 has no filter, and trusts fully
+            tf.extractall(WORK)
     return stage("julia", julia_bin().exists(), sha256=got)
 
 
@@ -216,7 +246,46 @@ println("CFD3D-ENV WaterLily ", pkgversion(WaterLily), " threads ", Threads.nthr
 '''
 
 
+# Pins every package at the recorded version (gpu_entry's proven recipe), then refuses unless the resolved
+# Manifest's canonical (name, uuid, version, git-tree-sha1) list hashes to the digest of the local Manifest.
+ENV_PINS_JL = r'''
+using Pkg, SHA
+pins = [split(l) for l in eachline(ARGS[1]) if !isempty(l)]
+Pkg.add([PackageSpec(name=String(n), uuid=Base.UUID(String(u)), version=VersionNumber(String(v))) for (n, u, v) in pins];
+        preserve=Pkg.PRESERVE_ALL)
+m = Pkg.TOML.parsefile(joinpath(dirname(Base.active_project()), "Manifest.toml"))
+rows = sort([string(n, " ", e["uuid"], " ", e["version"], " ", e["git-tree-sha1"])
+             for (n, es) in m["deps"] for e in es if haskey(e, "version") && haskey(e, "git-tree-sha1")])
+d = bytes2hex(sha256(join(rows .* "\n")))
+println("CANON ", d)
+d == ARGS[2] || (println("ENV MISMATCH"); exit(3))
+Pkg.precompile()
+using WaterLily, StaticArrays, JSON, Serialization
+if ARGS[3] == "cuda"
+    using CUDA
+    println("CUDA functional ", CUDA.functional(), " ", CUDA.functional() ? CUDA.name(CUDA.device()) : "")
+    CUDA.functional() || exit(4)
+end
+println("CFD3D-ENV WaterLily ", pkgversion(WaterLily))
+'''
+
+
 def st_env() -> bool:
+    global PROJECT
+    ev = PK["env"]
+    if ev.get("pins"):
+        env_dir = WORK / "env"
+        env_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy(JOB / ev["project"], env_dir / "Project.toml")
+        (WORK / "env.jl").write_text(ENV_PINS_JL)
+        (WORK / "logs").mkdir(parents=True, exist_ok=True)
+        rc, _ = run_capped([f"--project={env_dir}", str(WORK / "env.jl"), str(JOB / ev["pins"]),
+                            ev["canonical_sha256"], PK.get("device", "cpu")], 2, 8, ev["timeout_s"],
+                           WORK / "logs/env.log")
+        if (env_dir / "Manifest.toml").exists():
+            shutil.copy(env_dir / "Manifest.toml", OUT / "resolved-Manifest.toml")
+        PROJECT = env_dir
+        return stage("env", rc == 0, rc=rc, log_tail=tail(WORK / "logs/env.log"))
     env = HERE / "env"
     before = sha(env / "Manifest.toml")
     (WORK / "logs").mkdir(parents=True, exist_ok=True)
@@ -230,9 +299,10 @@ def tail(p: Path, n: int = 12) -> str:
     return "\n".join(p.read_text(errors="replace").splitlines()[-n:]) if p.exists() else ""
 
 
-def cyl(out: Path, run_id: str, threads: int, mem_gb: float, timeout: float, log_to: Path, *mode, **extra):
-    return run_capped([f"--project={HERE / 'env'}", str(HERE / "cyl2d.jl"), str(out), run_id, *mode],
-                      threads, mem_gb, timeout, log_to, **extra)
+def cyl(out: Path, run_id: str, threads: int, mem_gb: float, timeout: float, log_to: Path, *mode,
+        gpu: bool = False, **extra):
+    return run_capped([f"--project={PROJECT}", str(HERE / "cyl2d.jl"), str(out), run_id, *mode],
+                      threads, mem_gb, timeout, log_to, gpu, **extra)
 
 
 COMPARE_JL = r'''
@@ -283,8 +353,130 @@ def st_restart_check() -> bool:
           and info["segments"] == [1, 2]
           and info["steps"][1] - rc_spec["split_after_steps"] >= rc_spec["min_steps_after_split"]
           and info["cp_after_split"] >= rc_spec["min_cp_samples_after_split"])
+    if GPU and ok:
+        info["cuda"] = cuda_restart_arm(d, rc_spec)
+        ok = info["cuda"]["ok"]
     (OUT / "restart_check.json").write_text(json.dumps(info, indent=1))
     return stage("restart_check", ok, **info)
+
+
+def series_gap(a: dict, b: dict, shift: int = 0, n: int | None = None) -> dict:
+    """Largest differences between two force series, b shifted by `shift` steps, over the first n samples."""
+    n = n or min(len(a["Cd"]), len(b["Cd"]) - shift)
+    scale = sum(abs(x) for x in a["Cd"][:n]) / n
+    rel = {k: max(abs(x - y) for x, y in zip(a[k][:n], b[k][shift:shift + n])) / scale for k in ("Cd", "Cd_p", "Cl")}
+    rel["t"] = max(abs(x - y) / abs(x) for x, y in zip(a["t"][:n], b["t"][shift:shift + n]))
+    rel["n"] = n
+    return rel
+
+
+def within(gap: dict, tol: dict) -> bool:
+    """Every compared quantity at or under its frozen tolerance (forces relative to mean |Cd|)."""
+    return all(gap[k] <= tol[k] for k in ("Cd", "Cd_p", "Cl", "t"))
+
+
+def cuda_restart_arm(d: Path, rc_spec: dict) -> dict:
+    """The same split + resume on the device. Bit identity is recorded; the gate is the same-state tolerance."""
+    tol = PK["same_state"]["tolerance"]
+    lg, mem, to = d / "cuda_log.txt", rc_spec["mem_gb"], rc_spec["timeout_s"]
+    r_a, _ = cyl(d / "ga.json", "T_restart", 2, mem, to, lg, gpu=True, CFD3D_CKPT=d / "ga.ckpt")
+    r_b1, _ = cyl(d / "gb.json", "T_restart", 2, mem, to, lg, gpu=True, CFD3D_CKPT=d / "gb.ckpt",
+                  CFD3D_SEGMENT_STEPS=rc_spec["split_after_steps"])
+    r_b2, _ = cyl(d / "gb.json", "T_restart", 2, mem, to, lg, gpu=True, CFD3D_CKPT=d / "gb.ckpt")
+    arm = {"rc": [r_a, r_b1, r_b2], "log_tail": tail(lg, 8)}
+    if r_a == 0 and r_b1 == 75 and r_b2 == 0:
+        a, b = json.loads((d / "ga.json").read_text()), json.loads((d / "gb.json").read_text())
+        arm["bit_identical"] = all(a[k] == b[k] for k in ("t", "Cd", "Cd_p", "Cl"))
+        arm["gap"] = series_gap(a, b) if len(a["t"]) == len(b["t"]) else None
+        arm["gpu"] = [a["gpu"], b["gpu"]]
+        arm["ok"] = arm["gap"] is not None and within(arm["gap"], tol) and a["gpu"] is True
+    else:
+        arm["ok"] = False
+    return arm
+
+
+SERIES_JL = r'''
+using Serialization, JSON
+base, x, y = (open(deserialize, f) for f in ARGS[1:3])
+n0 = length(base["rec"]["t"])
+part(s) = Dict(k => s["rec"][k][n0+1:end] for k in ("t", "Cd", "Cd_p", "Cl"))
+du = maximum(abs.(x["arrays"][1] .- y["arrays"][1]))
+JSON.print(stdout, Dict("n0" => n0, "t0" => base["rec"]["t"][end], "cpu" => part(x), "cuda" => part(y),
+                        "max_abs_du" => du, "steps" => [x["rec"]["steps"], y["rec"]["steps"]]))
+'''
+
+
+def st_platform() -> bool:
+    """Same-state CPU/CUDA control on T_same (see the module docstring); tolerances frozen in the packet."""
+    ss = PK["same_state"]
+    d = WORK / "platform"
+    shutil.rmtree(d, ignore_errors=True)
+    d.mkdir(parents=True)
+    lg = d / "log.txt"
+    r0, _ = cyl(d / "base.json", "T_same", ss["cpu_threads"], 4, ss["timeout_s"], lg, CFD3D_CKPT=d / "base.ckpt",
+                CFD3D_SEGMENT_T=ss["t_state"])
+    info = {"rc_base": r0}
+    if r0 != 75:
+        return stage("platform", False, **info, log_tail=tail(lg))
+    shutil.copy(d / "base.ckpt", d / "cpu.ckpt")
+    shutil.copy(d / "base.ckpt", d / "cuda.ckpt")
+    n = ss["steps"] + ss["shift"]
+    r1, _ = cyl(d / "cpu.json", "T_same", ss["cpu_threads"], 4, ss["timeout_s"], lg, CFD3D_CKPT=d / "cpu.ckpt",
+                CFD3D_SEGMENT_STEPS=n)
+    r2, _ = cyl(d / "cuda.json", "T_same", 2, 6, ss["timeout_s"], lg, gpu=not DRY_RUN, CFD3D_CKPT=d / "cuda.ckpt",
+                CFD3D_SEGMENT_STEPS=n)
+    info.update(rc_cpu=r1, rc_cuda=r2)
+    if r1 != 75 or r2 != 75:
+        return stage("platform", False, **info, log_tail=tail(lg))
+    p = subprocess.run([str(julia_bin()), "--startup-file=no", f"--project={PROJECT}", "-e", SERIES_JL,
+                        str(d / "base.ckpt"), str(d / "cpu.ckpt"), str(d / "cuda.ckpt")], env=julia_env(1),
+                       capture_output=True, text=True, timeout=900)
+    if p.returncode != 0:
+        return stage("platform", False, **info, stderr=p.stderr[-1500:])
+    r = json.loads(p.stdout)
+    tol = ss["tolerance"]
+    aligned = series_gap(r["cpu"], r["cuda"], 0, ss["steps"])
+    shifted = series_gap(r["cpu"], r["cuda"], ss["shift"], ss["steps"])
+    info.update(t_state=r["t0"], steps=r["steps"], aligned=aligned, shifted=shifted, max_abs_du=r["max_abs_du"],
+                tolerance=tol, aligned_within=within(aligned, tol), shifted_within=within(shifted, tol))
+    (OUT / "platform.json").write_text(json.dumps(dict(info, series=r), indent=1))
+    ok = info["aligned_within"] and not info["shifted_within"] and r["max_abs_du"] <= tol["u_abs"]
+    if DRY_RUN:                                   # both arms ran on the CPU: evidence about the check, never a pass
+        info["dry_run_would_pass"], ok = ok, False
+    return stage("platform", ok, **info)
+
+
+def st_calibration() -> bool:
+    """Force-free R2 timing on the device, and the projected R2 wall time (telemetry; never a gate)."""
+    cb = PK["calibration"]
+    d = WORK / "calibration"
+    d.mkdir(parents=True, exist_ok=True)
+    rc, peak = cyl(d / "r2_timing.json", cb["run_id"], 2, 8, cb["timeout_s"], d / "log.txt", "TIMING",
+                   cb["steps"], gpu=True)
+    info = {"rc": rc, "peak_host_rss_gb": round(peak, 2)}
+    if rc == 0:
+        r = json.loads((d / "r2_timing.json").read_text())
+        step_s = r["wall_s"] / r["steps"]
+        lo, hi = cb["steps_projected"]
+        info.update(ms_per_step=round(1e3 * step_s, 3), ns_per_cell_step=r["ns_per_cell_step"],
+                    dt_grid_last=r["dt_grid_last"], gpu=r["gpu"],
+                    projected_wall_s=[round(lo * step_s * cb["run_overhead"]), round(hi * step_s * cb["run_overhead"])],
+                    left_s=round(left()))
+        info["fits"] = info["projected_wall_s"][1] <= left()
+    (OUT / "calibration.json").write_text(json.dumps(info, indent=1))
+    return stage("calibration", True, **info)
+
+
+def st_telemetry() -> bool:
+    smi = shutil.which("nvidia-smi")
+    if smi:
+        (OUT / "nvidia-smi.txt").write_text(subprocess.run([smi], capture_output=True, text=True).stdout)
+    return stage("telemetry", bool(smi))
+
+
+def st_output() -> bool:
+    size = sum(f.stat().st_size for f in OUT.rglob("*") if f.is_file())
+    return stage("output", size <= PK["max_out_bytes"], bytes=size, cap=PK["max_out_bytes"])
 
 
 def st_scaling() -> bool:
@@ -330,7 +522,8 @@ def case_worker(c: dict) -> None:
             if ck.exists():
                 export_ckpt(rid, ck, rec, "stopped at budget", reserve=False)
             break
-        rc, peak = cyl(out, rid, c["threads"], c["mem_gb"], budget + PK["ckpt_margin_s"], lg, CFD3D_CKPT=ck,
+        rc, peak = cyl(out, rid, c["threads"], c["mem_gb"], budget + PK["ckpt_margin_s"], lg,
+                       gpu=c.get("gpu", False), CFD3D_CKPT=ck,
                        CFD3D_SEGMENT_S=int(budget), CFD3D_CKPT_EVERY_S=PK["ckpt_every_s"])
         rec["segments"].append({"rc": rc, "peak_rss_gb": round(peak, 2), "t_s": round(time.time() - T0, 1)})
         if rc == 75 and time.time() - t_export >= PK["export_every_s"]:
@@ -365,7 +558,7 @@ def export_ckpt(rid: str, ck: Path, rec: dict, why: str, reserve: bool = True) -
         if rec.get("exported_version") == (st.st_ino, st.st_mtime_ns):
             rec["exports"].append({"why": why, "skipped": "unchanged since the last export"})
             return
-        cap = PK["export_bytes_max"] - (PK["export_reserve_bytes"] if reserve else 0)
+        cap = EXPORT_MAX - (PK["export_reserve_bytes"] if reserve else 0)
         with LOCK:
             if EXPORTED["bytes"] + size > cap:
                 rec["exports"].append({"why": why, "skipped": f"would pass the export cap ({cap} B)"})
@@ -428,9 +621,10 @@ def st_eval() -> bool:
     return stage("eval", p.returncode == 0, verdict=v, stderr=p.stderr[-2000:])
 
 
-STAGES = {"julia": st_julia, "env": st_env, "restart_check": st_restart_check, "scaling": st_scaling,
-          "cases": st_cases, "eval": st_eval}
-GATE_RC = {"julia": 2, "env": 3, "restart_check": 4, "eval": 7}
+STAGES = {"telemetry": st_telemetry, "julia": st_julia, "env": st_env, "restart_check": st_restart_check,
+          "platform": st_platform, "scaling": st_scaling, "calibration": st_calibration, "cases": st_cases,
+          "eval": st_eval, "output": st_output}
+GATE_RC = {"julia": 2, "env": 3, "restart_check": 4, "platform": 5, "eval": 7}
 
 
 def facts() -> dict:
@@ -447,18 +641,21 @@ def main(argv: list[str]) -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     WORK.mkdir(parents=True, exist_ok=True)
     status["host"] = facts()
-    status["cpu_packet_sha256"] = sha(HERE / "cpu_packet.json")
+    status["packet_file_sha256"] = sha(HERE / PK_FILE)
     save()
+    incomplete = False
     try:
-        for name in argv or list(STAGES):
-            if not STAGES[name]() and name in GATE_RC:
+        for name in argv or PK.get("stages", ["julia", "env", "restart_check", "scaling", "cases", "eval"]):
+            ok = STAGES[name]()
+            if not ok and name in GATE_RC:
                 return finish(GATE_RC[name])
+            incomplete |= not ok and name == "output"
     except Exception as e:                                  # noqa: BLE001 - recorded, never swallowed
         status["exception"] = repr(e)
         return finish(1)
     done = all(v["state"] == "finished" for v in status["cases"].values()) and status["cases"]
-    return finish(0 if done else 10)
+    return finish(0 if done and not incomplete else 10)
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(sys.argv[1:]))
+    raise SystemExit(main(ARGS))

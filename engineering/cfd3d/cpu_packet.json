@@ -155,5 +155,17 @@
   "coherence": "a checkpoint is coherent state only if checkpoints/manifest.json lists it with matching sha256 and bytes; *.partial files are in-progress copies and must be skipped",
   "bound": "checkpoint bytes <= export_bytes_max (2.8 GB) in total, under infra's 3 GB upload cap; mid-run snapshots leave export_reserve_bytes (0.9 GB) free so a stop-at-budget snapshot (R3 ~0.8 GB) always fits; run outputs add ~10-20 MB",
   "snapshot_policy": "per case: at the first segment end after every export_every_s (6 h), and when the case stops at its budget; none after a case finishes"
- }
+ },
+ "files": [
+  "cyl2d_entry.py",
+  "cpu_packet.json",
+  "packet.json",
+  "cyl2d.jl",
+  "cyl2d_contract.json",
+  "cyl2d_band.json",
+  "cyl2d_eval.py",
+  "env/Project.toml",
+  "env/Manifest.toml"
+ ],
+ "frozen_archive": "95ac40c9 (built from d49cc33, entry then named cpu_entry.py); this file at HEAD is the next revision, not that archive"
 }

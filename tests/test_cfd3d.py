@@ -285,7 +285,7 @@ def test_cpu_packet_runs_only_frozen_contract_cases_with_pinned_env():
     assert sha(ROOT / "engineering/cfd3d/env/Manifest.toml") == pk["env"]["manifest_sha256"]
     assert "FAILED" in pk["reference_gate"]["C1_sphere_3d"] and "never 'passed'" in pk["science"]
     env = dict(os.environ, PREFLIGHT="1")
-    r = subprocess.run([sys.executable, "-I", str(ROOT / "engineering/cfd3d/cpu_entry.py")], env=env,
+    r = subprocess.run([sys.executable, "-I", str(ROOT / "engineering/cfd3d/cyl2d_entry.py")], env=env,
                        capture_output=True, text=True, timeout=60)
     assert r.returncode == 0 and json.loads(r.stdout)["preflight"] is True
 
@@ -297,3 +297,59 @@ def test_cpu_packet_controls_record_a_passing_check_and_a_failing_mutant():
     assert real["rc_first_segment"] == 75 and real["cp_after_split"] >= 5
     assert mut["series_identical"] is False and mut["final_state_identical"] is False
     assert r["export_resume_test"]["run2_series_identical_to_straight_run"] is True
+
+
+def test_r2_packet_is_one_gpu_contract_case_behind_its_controls():
+    pk = json.loads((ROOT / "engineering/cfd3d/r2_packet.json").read_text())
+    contract = json.loads((ROOT / "engineering/cfd3d/cyl2d_contract.json").read_text())
+    assert pk["device"] == "cuda" and [c["run_id"] for c in pk["cases"]] == ["R2"] and pk["cases"][0]["gpu"]
+    assert contract["runs"]["R2"] == {"n_D": 64, "H": 60, "Re": 100}
+    st = pk["stages"]
+    assert st.index("env") < st.index("restart_check") < st.index("platform") < st.index("cases") < st.index("eval")
+    tol = pk["same_state"]["tolerance"]
+    assert tol["Cd"] <= 0.005 and tol["Cl"] <= 0.005 and pk["same_state"]["shift"] > 0
+    assert pk["export_bytes_max"] == 0 and pk["max_out_bytes"] <= 12_000_000
+    assert "FAILED" in pk["reference_gate"]["C1_sphere_3d"] and "never 'passed'" in pk["science"]
+    env = dict(os.environ, PREFLIGHT="1")
+    r = subprocess.run([sys.executable, "-I", str(ROOT / "engineering/cfd3d/cyl2d_entry.py"), "r2_packet.json"],
+                       env=env, capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0 and json.loads(r.stdout)["preflight"] is True
+
+
+def test_cyl2d_eval_reads_float32_printed_series_as_their_float32_values(tmp_path):
+    np = pytest.importorskip("numpy")
+    e = _load("cyl2d_eval")
+    exact = _cyl_run()
+    for k in ("t", "Cd", "Cd_p", "Cl"):                      # Float32-exact values, as cyl2d.jl produces them
+        exact[k] = [float(np.float32(v)) for v in exact[k]]
+    printed = dict(exact, series_dtype={k: "Float32" for k in ("t", "Cd", "Cd_p", "Cl")})
+    for k in ("t", "Cd", "Cd_p", "Cl"):                      # what JSON carries: the shortest Float32 decimal
+        printed[k] = [float(str(np.float32(v))) for v in exact[k]]
+    assert printed["Cl"] != exact["Cl"]                      # the decimals alone are NOT the Float32 values
+    a, b = e.evaluate(json.loads(json.dumps(exact))), e.evaluate(json.loads(json.dumps(printed)))
+    assert a["valid"] and b["valid"] and all(a[k] == b[k] for k in ("Cd", "Cd_p", "Cl_rms", "St"))
+
+
+def test_cyl2d_entry_hands_popen_only_strings(tmp_path, monkeypatch):
+    """VM03 regression: st_scaling passed TIMING's int step count into Popen and died before any case."""
+    monkeypatch.setenv("COPS_OUT", str(tmp_path / "out"))
+    monkeypatch.setenv("CFD3D_WORK", str(tmp_path / "work"))
+    m = _load("cyl2d_entry")
+    m.OUT.mkdir(parents=True)                                 # main() makes it before any stage
+    seen = []
+
+    class FakePopen:
+        def __init__(self, argv, **kw):
+            seen.append(argv)
+            self.pid, self.returncode = 0, 1
+
+        def poll(self):
+            return 1
+
+    monkeypatch.setattr(m.subprocess, "Popen", FakePopen)
+    monkeypatch.setattr(m, "CAP", ["systemd-run", "--scope"])
+    monkeypatch.setattr(m, "left", lambda: 1e6)
+    m.st_scaling()                                            # the stage that failed on VM03, ints included
+    m.cyl(tmp_path / "x.json", "R2", 2, 8, 60, tmp_path / "log.txt", "TIMING", 300, gpu=True)
+    assert seen and all(isinstance(a, str) for argv in seen for a in argv)
+    assert any("TIMING" in argv and "40" in argv for argv in seen)

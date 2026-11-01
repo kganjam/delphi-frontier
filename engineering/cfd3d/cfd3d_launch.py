@@ -1,7 +1,10 @@
 """Injected launcher: verify the cfd3d packet sha256, unpack it, run its gpu_entry (stdlib only).
 
-    python3 engineering/cfd3d/cfd3d_launch.py PACKET.tar.xz SHA256 [ENTRY]
-ENTRY defaults to engineering/cfd3d/gpu_entry.py (the diagnostic packet passes engineering/cfd3d/diag_candidate.py).
+    python3 engineering/cfd3d/cfd3d_launch.py PACKET.tar.xz SHA256 [ENTRY [ARG ...]]
+ENTRY defaults to engineering/cfd3d/gpu_entry.py (the diagnostic packet passes engineering/cfd3d/diag_candidate.py,
+the cylinder packets engineering/cfd3d/cyl2d_entry.py with r2_packet.json for R2); ARGs go to ENTRY.
+On a Python without tarfile's extraction filters (< 3.11.4) members are checked by hand instead: regular files and
+directories only, relative paths with no "..".
 PREFLIGHT=1 unpacks into a temporary directory and runs only the packaging check (no download, Julia or CUDA).
 """
 import hashlib
@@ -22,8 +25,16 @@ pre = os.environ.get("PREFLIGHT") == "1"
 dst = Path(tempfile.mkdtemp(prefix="cfd3d_pre_")) if pre else Path("/work/cfd3d_job")
 dst.mkdir(parents=True, exist_ok=True)
 with tarfile.open(tgz) as tf:
-    tf.extractall(dst, filter="data")
-rc = subprocess.run([sys.executable, entry], cwd=dst,
+    try:
+        tf.extractall(dst, filter="data")
+    except TypeError:
+        bad = [m.name for m in tf.getmembers() if not (m.isfile() or m.isdir()) or m.name.startswith("/")
+               or ".." in Path(m.name).parts]
+        if bad:
+            print(f"CFD3D refused: unsafe archive members {bad[:5]}", flush=True)
+            sys.exit(9)
+        tf.extractall(dst)
+rc = subprocess.run([sys.executable, entry, *sys.argv[4:]], cwd=dst,
                     env=dict(os.environ, CFD3D_PACKET_SHA256=got)).returncode
 print(f"CFD3D launcher rc={rc} preflight={pre} dir={dst}", flush=True)
 sys.exit(rc)

@@ -5,7 +5,8 @@
 The tarball holds this branch's committed engineering/cfd3d files at HEAD and fish3d's geometry builder at the
 pinned revision under fish3d_src/, so the container rebuilds the exact STLs instead of carrying 1.9 MB of mesh.
 Writes cfd3d-packet.tar.xz (deterministic) and packet-manifest.json (per-file git blob + sha256, archive sha256).
---diag and --cpu build the candidate-diagnostic and 2-D cylinder CPU packets (<name>-manifest.json beside them).
+--diag, --cpu and --r2 build the candidate-diagnostic and the 2-D cylinder CPU and R2 CUDA packets
+(<name>-manifest.json beside them); a cylinder packet's file list is its own *_packet.json "files".
 """
 from __future__ import annotations
 
@@ -23,9 +24,7 @@ OWN = ["engineering/cfd3d/gpu_entry.py", "engineering/cfd3d/packet.json", "engin
        "engineering/cfd3d/env_gpu/Project.toml", "engineering/cfd3d/env_gpu/pins.tsv"]   # pins, not the 34 KB Manifest
 LAUNCHER = "engineering/cfd3d/cfd3d_launch.py"
 DIAG = ["engineering/cfd3d/diag_candidate.py", "engineering/cfd3d/packet.json"]   # CPU-only candidate diagnostic
-CPU = ["engineering/cfd3d/" + f for f in ("cpu_entry.py", "cpu_packet.json", "packet.json", "cyl2d.jl",
-                                          "cyl2d_contract.json", "cyl2d_band.json", "cyl2d_eval.py",
-                                          "env/Project.toml", "env/Manifest.toml")]   # 2-D cylinder CPU worker
+CYL2D = "engineering/cfd3d/{}_packet.json"            # 2-D cylinder packets: the file list lives in the packet
 FISH3D = ["engineering/__init__.py", "engineering/fish3d/__init__.py", "engineering/fish3d/build.py",
           "engineering/geometry/__init__.py", "engineering/geometry/mesh.py", "engineering/geometry/forms.py",
           "engineering/geometry/sources.py", "artifacts/print/sources/daane2021-S1A-summary.json"]
@@ -42,14 +41,19 @@ def main() -> int:
     ap.add_argument("--out", default="artifacts/cfd3d/packet")
     ap.add_argument("--diag", action="store_true", help="build the CPU-only candidate diagnostic packet")
     ap.add_argument("--cpu", action="store_true", help="build the 2-D cylinder CPU worker packet (no fish3d)")
+    ap.add_argument("--r2", action="store_true", help="build the 2-D cylinder R2 CUDA packet (no fish3d)")
     a = ap.parse_args()
     head = git("rev-parse", "HEAD").decode().strip()
     fish = git("rev-parse", a.fish3d_rev).decode().strip()
-    own = CPU if a.cpu else DIAG if a.diag else OWN
-    name = "cfd3d-cpu-packet" if a.cpu else "cfd3d-diag-packet" if a.diag else "cfd3d-packet"
+    cyl = "cpu" if a.cpu else "r2" if a.r2 else None
+    if cyl:
+        own = ["engineering/cfd3d/" + f for f in json.loads(git("show", f"HEAD:{CYL2D.format(cyl)}"))["files"]]
+    else:
+        own = DIAG if a.diag else OWN
+    name = f"cfd3d-{cyl}-packet" if cyl else "cfd3d-diag-packet" if a.diag else "cfd3d-packet"
     if git("status", "--porcelain", "--", *own, LAUNCHER):
         raise SystemExit("refusing: packet files differ from HEAD; commit first so the packet is reproducible")
-    entries = [(p, head, p) for p in own] + ([] if a.cpu else [(f"fish3d_src/{p}", fish, p) for p in FISH3D])
+    entries = [(p, head, p) for p in own] + ([] if cyl else [(f"fish3d_src/{p}", fish, p) for p in FISH3D])
     buf, rows = io.BytesIO(), []
     with lzma.LZMAFile(buf, mode="wb", preset=9 | lzma.PRESET_EXTREME) as xz, \
             tarfile.open(fileobj=xz, mode="w", format=tarfile.PAX_FORMAT) as tf:
@@ -64,7 +68,7 @@ def main() -> int:
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     (out / f"{name}.tar.xz").write_bytes(blob)
-    man = {"schema": "cfd3d-packet-manifest-0.1", "head": head, "fish3d_rev": None if a.cpu else fish,
+    man = {"schema": "cfd3d-packet-manifest-0.1", "head": head, "fish3d_rev": None if cyl else fish,
            "archive": f"{name}.tar.xz", "archive_bytes": len(blob),
            "archive_sha256": hashlib.sha256(blob).hexdigest(), "base64_bytes": (len(blob) + 2) // 3 * 4,
            "raw_bytes": sum(r["bytes"] for r in rows), "files": rows,
@@ -72,7 +76,7 @@ def main() -> int:
            "launcher_sha256": hashlib.sha256(git("show", f"HEAD:{LAUNCHER}")).hexdigest()}
     man["inject_total_raw"] = len(blob) + man["launcher_bytes"]
     man["fits_inject_limit"] = man["inject_total_raw"] <= INJECT_LIMIT
-    (out / f"{name}-manifest.json" if a.diag or a.cpu else out / "packet-manifest.json").write_text(json.dumps(man, indent=1))
+    (out / f"{name}-manifest.json" if a.diag or cyl else out / "packet-manifest.json").write_text(json.dumps(man, indent=1))
     print(json.dumps({k: man[k] for k in ("archive_bytes", "inject_total_raw", "raw_bytes",
                                           "archive_sha256", "fits_inject_limit")}))
     return 0 if man["fits_inject_limit"] else 1

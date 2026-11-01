@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import math
+import struct
 import sys
 from pathlib import Path
 
@@ -74,7 +75,23 @@ def validate(run: dict) -> list[str]:
     return bad
 
 
+def as_float32(v: float) -> float:
+    """The Float32 value a shortest-Float32 decimal stands for (exact for a Float32-exact input)."""
+    return struct.unpack("f", struct.pack("f", v))[0]
+
+
+def normalize(run: dict) -> dict:
+    """Series written as shortest Float32 decimals (cyl2d.jl series_dtype) are rounded back to Float32, so a
+    Float32-printed run and a Float64-printed one of the same values evaluate identically."""
+    dt = run.get("series_dtype") or {}
+    for k, kind in dt.items():
+        if kind == "Float32" and isinstance(run.get(k), list):
+            run[k] = [as_float32(v) if isinstance(v, (int, float)) and math.isfinite(v) else v for v in run[k]]
+    return run
+
+
 def evaluate(run: dict) -> dict:
+    run = normalize(run)
     problems = validate(run)
     if problems:
         return {"valid": False, "problems": problems, "periodic": False}

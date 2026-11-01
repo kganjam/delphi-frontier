@@ -8,8 +8,14 @@
 #                          at the end of a segment and at completion (atomic: write path.tmp, then rename)
 #   CFD3D_SEGMENT_S=s      stop this process after s wall seconds: checkpoint, write no OUT, exit 75
 #   CFD3D_SEGMENT_STEPS=n  the same after n steps (used by the bit-exact restart check)
+#   CFD3D_SEGMENT_T=t      the same once the flow time reaches t (used by the CPU/CUDA same-state control)
 #   A checkpoint is refused unless its run id, this script's sha256, the contract's sha256, Julia and
-#   WaterLily versions all match. T_restart is a tiny NON-contract run for that check only.
+#   WaterLily versions all match. T_restart and T_same are tiny NON-contract runs for the restart check and
+#   the CPU/CUDA same-state control only.
+# Surface pressure is sampled from a host copy of p (same values on CPU; avoids device indexing of strided
+# views on CUDA). Series are written as Float32 when that is lossless (they are Float32 quantities), which
+# halves the output; the write checks the round trip and keeps Float64 otherwise. "series_dtype" says which,
+# because the shortest Float32 decimal read as Float64 is not the Float32 value: a reader rounds it back.
 using WaterLily, StaticArrays, JSON, SHA, Serialization
 const GPU = get(ENV, "CFD3D_GPU", "0") == "1"
 GPU && @eval using CUDA
@@ -20,7 +26,9 @@ const IDENTITY = Dict("script_sha256" => bytes2hex(open(sha256, @__FILE__)),
                       "contract_sha256" => bytes2hex(open(sha256, CONTRACT_PATH)),
                       "julia" => string(VERSION), "waterlily" => string(pkgversion(WaterLily)))
 const TEST_RUNS = Dict("T_restart" => Dict("n_D" => 4, "H" => 60, "Re" => 100, "t_end" => 30.0, "t0" => 8.0,
-                                           "role" => "restart check only; not a contract run"))
+                                           "role" => "restart check only; not a contract run"),
+                       "T_same" => Dict("n_D" => 8, "H" => 60, "Re" => 100, "t_end" => 130.0, "t0" => 100.0,
+                                        "role" => "CPU/CUDA same-state control only; not a contract run"))
 getrun(id) = haskey(CONTRACT["runs"], id) ? CONTRACT["runs"][id] : TEST_RUNS[id]
 
 function build(run)
@@ -91,13 +99,14 @@ function load_ckpt!(path, sim, id)
     st["rec"]
 end
 
+"Float32 copy when the round trip is exact (the series are Float32 quantities), else the Float64 original."
+f32(x) = (y = Float32.(x); Float64.(y) == x ? y : x)
+
 function run_case(run, id)
     sim, D, R, U, c = build(run)
     t_end = get(run, "t_end", CONTRACT["time"]["t_end"])
     t0 = get(run, "t0", CONTRACT["time"]["transient_discarded_before"])
     nrm, pts = stations(R, c)
-    mem = memtype()
-    dpts = [mem(p) for p in pts]
     ny = size(sim.flow.p, 2)
     ck = get(ENV, "CFD3D_CKPT", "")
     rec = !isempty(ck) && isfile(ck) ? load_ckpt!(ck, sim, id) :
@@ -108,11 +117,12 @@ function run_case(run, id)
     ts, cd, cdp, cl, cp_sum, cp_t = rec["t"], rec["Cd"], rec["Cd_p"], rec["Cl"], rec["cp_sum"], rec["cp_t"]
     seg_s = parse(Float64, get(ENV, "CFD3D_SEGMENT_S", "Inf"))
     seg_steps = parse(Int, get(ENV, "CFD3D_SEGMENT_STEPS", string(typemax(Int))))
+    seg_t = parse(Float64, get(ENV, "CFD3D_SEGMENT_T", "Inf"))
     every = parse(Float64, get(ENV, "CFD3D_CKPT_EVERY_S", "1800"))
     t_seg = t_mark = t_ck = Base.time(); n_seg = 0
     tick!() = (now = Base.time(); rec["wall_s"] += now - t_mark; t_mark = now)
     while sim_time(sim) < t_end
-        if n_seg >= seg_steps || Base.time() - t_seg >= seg_s
+        if n_seg >= seg_steps || Base.time() - t_seg >= seg_s || sim_time(sim) >= seg_t
             tick!(); isempty(ck) || save_ckpt(ck, sim, id, rec)
             return nothing                                       # segment over, not finished: resumable
         end
@@ -122,9 +132,9 @@ function run_case(run, id)
         push!(cdp, -2fp[1] / (U^2 * D))
         isfinite(cd[end]) || break
         if ts[end] >= t0 && rec["steps"] % 10 == 0
-            p = sim.flow.p
+            p = Array(sim.flow.p)                                        # host copy (see header)
             pref = sum(Array(@view p[2, 2:ny-1])) / (ny - 2)
-            s = [Array(WaterLily.interp.(dp, Ref(p))) for dp in dpts]    # samples at R + 1.5, 2.5, 3.5 h
+            s = [WaterLily.interp.(pt, Ref(p)) for pt in pts]            # samples at R + 1.5, 2.5, 3.5 h
             # quadratic through (1.5, s1), (2.5, s2), (3.5, s3), evaluated at 0 (the wall)
             pw = @. (35 * s[1] - 42 * s[2] + 15 * s[3]) / 8
             cp_sum .+= (pw .- pref) ./ (0.5U^2); push!(cp_t, ts[end])
@@ -139,7 +149,8 @@ function run_case(run, id)
          "steps" => rec["steps"], "segments" => rec["segments"], "t_end_reached" => ts[end],
          "finite" => all(isfinite, cd), "wall_s" => rec["wall_s"],
          "ns_per_cell_step" => 1e9rec["wall_s"] / (rec["steps"] * prod(size(sim.flow.p))),
-         "t" => ts, "Cd" => cd, "Cd_p" => cdp, "Cl" => cl,
+         "t" => f32(ts), "Cd" => f32(cd), "Cd_p" => f32(cdp), "Cl" => f32(cl),
+         "series_dtype" => Dict(k => string(eltype(f32(v))) for (k, v) in ("t" => ts, "Cd" => cd, "Cd_p" => cdp, "Cl" => cl)),
          "surface" => Dict("angles" => length(nrm), "samples" => length(cp_t),
                            "Cp_wall_mean" => cp_sum ./ max(length(cp_t), 1), "t_first" => isempty(cp_t) ? nothing : cp_t[1]))
 end
