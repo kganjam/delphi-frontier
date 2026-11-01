@@ -4,7 +4,8 @@
     python -m engineering.neuro.nebius_job status
     python -m engineering.neuro.nebius_job collect <name> <dest_dir>
 
-Transport: the container prints its output tar.gz as base64 lines "NEURO-CHUNK <i> <n> <sha256(chunk)> <data>" and a final
+Transport (measured with probe jobs claude-neuro-p1-logprobe-a1/a2: the provider splits log lines at 16384 characters and keeps only the
+last 100 lines, so at most 95 chunks of 16000 characters, ~1.1 MB of archive): the container prints its output tar.gz as base64 lines "NEURO-CHUNK <i> <n> <sha256(chunk)> <data>" and a final
 "NEURO-DONE <sha256(tar)> <bytes> <rc>". The collector rebuilds the archive from the job logs, checks every chunk hash and the
 archive hash, and refuses an incomplete or corrupt stream. The token is read from ~/.nebius/token at each call, never printed.
 """
@@ -31,8 +32,10 @@ import base64, hashlib, io, sys, tarfile
 buf = io.BytesIO()
 with tarfile.open(fileobj=buf, mode="w:gz") as t:
     t.add("/work/out", arcname="out")
-b = buf.getvalue(); e = base64.b64encode(b).decode(); W = 3000
+b = buf.getvalue(); e = base64.b64encode(b).decode(); W = 16000   # provider splits lines at 16384 chars and keeps the last 100 lines
 ch = [e[i:i + W] for i in range(0, len(e), W)]
+if len(ch) > 95:
+    print(f"NEURO-TOO-BIG {len(b)} bytes needs {len(ch)} chunks > 95; output not transportable via logs", flush=True); print(f"NEURO-DONE {hashlib.sha256(b).hexdigest()} {len(b)} 98", flush=True); sys.exit(0)
 for i, c in enumerate(ch):
     print(f"NEURO-CHUNK {i} {len(ch)} {hashlib.sha256(c.encode()).hexdigest()[:16]} {c}", flush=True)
 print(f"NEURO-DONE {hashlib.sha256(b).hexdigest()} {len(b)} {sys.argv[1]}", flush=True)

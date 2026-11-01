@@ -1,0 +1,16 @@
+{
+ "name": "claude-neuro-p1-logprobe-a2",
+ "platform": "cpu-d3",
+ "preset": "2vcpu-8gb",
+ "timeout": "15m",
+ "disk": "20Gi",
+ "image": "python:3.13-slim",
+ "pip": "pip",
+ "question": "transport probe: maximum surviving log-line length and retained line count (no science)",
+ "command": "python3 -m engineering.neuro.log_probe > /proc/1/fd/1",
+ "files": {
+  "engineering/__init__.py": "engineering/__init__.py",
+  "engineering/neuro/__init__.py": "engineering/neuro/__init__.py",
+  "engineering/neuro/log_probe.py": "engineering/neuro/log_probe.py"
+ }
+}

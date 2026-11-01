@@ -148,10 +148,12 @@ def main(argv=None):
         for k in RANGES:   # where in each parameter's range do consistent sets lie (10 bins)
             edges = np.quantile(P[k], np.linspace(0, 1, 11)); idx = np.clip(np.searchsorted(edges, P[k], side="right") - 1, 0, 9)
             e["all_params_marginal_pass_rate"][k] = {"bin_edges": edges.tolist(), "C123_rate": [float(ok[idx == b].mean()) if (idx == b).any() else None for b in range(10)]}
-        e["per_set"] = {"p_mean": sm["p"].mean(1).astype(np.float32).tolist(), "ang_lv10": sm["ang"][:, 0].astype(np.float32).tolist(), "ang_lv240": sm["ang"][:, -1].astype(np.float32).tolist(),
-                        "rho": sm["rho"].astype(np.float32).tolist(), "lat_mean": np.nanmean(sm["lat"], 1).astype(np.float32).tolist()}
+        r4 = lambda a: [None if not np.isfinite(v) else float(f"{v:.4g}") for v in np.asarray(a, float)]
+        e["per_set"] = {"p_mean": r4(sm["p"].mean(1)), "ang_lv10": r4(sm["ang"][:, 0]), "ang_lv240": r4(sm["ang"][:, -1]), "rho": r4(sm["rho"]), "lat_mean": r4(np.nanmean(sm["lat"], 1)),
+                        "C123": np.flatnonzero(ok).tolist()}
         out["encoders"][enc] = e
-    out["params"] = {k: v.astype(np.float32).tolist() for k, v in P.items()}
+    out["params_regenerate"] = {"call": "params(sets, seed) with scipy.stats.qmc.Sobol scrambled", "sets": a.sets, "seed": a.seed,
+                                "sha256_float64": __import__("hashlib").sha256(np.stack([P[k] for k in RANGES]).astype("<f8").tobytes()).hexdigest()}
     out["sweep_elapsed_s"] = time.time() - ts; out["checks"] = checks; out["all_checks_pass"] = all(c["pass"] for c in checks); out["elapsed_s"] = time.time() - t0
     import scipy; out["env"] = {"python": sys.version.split()[0], "numpy": np.__version__, "torch": torch.__version__, "scipy": scipy.__version__}
     with gzip.open(os.path.join(a.out, "m5_mcell.json.gz"), "wt") as fh:

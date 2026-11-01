@@ -11,8 +11,8 @@ import numpy as np
 from engineering.neuro import common as C
 
 JOBS = {"j1": ("claude-neuro-j1-m1-sobol-a1", "j1-m1-sobol", "out/sobol_m1.json"),
-        "j2": ("claude-neuro-j2-m3-atlas-a1", "j2-m3-atlas", "out/m3_atlas.json.gz"),
-        "j3": ("claude-neuro-j3-m5-mcell-a1", "j3-m5-mcell", "out/m5_mcell.json.gz")}
+        "j2": ("claude-neuro-j2-m3-atlas-a2", "j2-m3-atlas", "out/m3_atlas.json.gz"),
+        "j3": ("claude-neuro-j3-m5-mcell-a2", "j3-m5-mcell", "out/m5_mcell.json.gz")}
 
 
 def load(p):

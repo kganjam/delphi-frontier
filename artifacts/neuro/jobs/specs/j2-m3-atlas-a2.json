@@ -1,0 +1,26 @@
+{
+ "name": "claude-neuro-j2-m3-atlas-a2",
+ "platform": "gpu-h100-sxm",
+ "preset": "1gpu-16vcpu-200gb",
+ "timeout": "1h",
+ "disk": "80Gi",
+ "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+ "pip": "scipy",
+ "question": "Over every r3-daane airframe variant (mass x dihedral x caudal-fin area; mass x static margin), which sensing-delay / sensor-set combinations keep the glider within attitude limits under gusts with fin saturation, and where is the exact linear delayed loop stable?",
+ "gpu_justification": "about 51M nonlinear-saturation trajectories x 2500 steps (float64, batched per-trajectory plants and delay buffers); the 16 vCPUs compute the exact linear atlas concurrently",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.m3_atlas --out /work/out --geometry /work/repo/geometry.json --reference /work/repo/reference.json --n-mc 2048 --procs 16 --seed 20261101",
+ "files": {
+  "engineering/__init__.py": "engineering/__init__.py",
+  "engineering/neuro/__init__.py": "engineering/neuro/__init__.py",
+  "engineering/neuro/common.py": "engineering/neuro/common.py",
+  "engineering/neuro/glide_stab.py": "engineering/neuro/glide_stab.py",
+  "engineering/neuro/m3_atlas.py": "engineering/neuro/m3_atlas.py",
+  "engineering/simulation/__init__.py": "engineering/simulation/__init__.py",
+  "engineering/simulation/controlled.py": "engineering/simulation/controlled.py",
+  "engineering/simulation/evaluate.py": "engineering/simulation/evaluate.py",
+  "engineering/simulation/glide.py": "engineering/simulation/glide.py",
+  "engineering/simulation/schema.py": "engineering/simulation/schema.py",
+  "geometry.json": "artifacts/neuro/jobs/inputs/r3daane_geometry.json",
+  "reference.json": "artifacts/neuro/jobs/inputs/m3_mc_reference.json"
+ }
+}

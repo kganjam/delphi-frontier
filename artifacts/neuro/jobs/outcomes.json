@@ -1,0 +1,30 @@
+{
+ "schema": "frontier.neuro.job-outcomes/1",
+ "recorded_utc": "2026-11-01T16:20:56Z",
+ "jobs": {
+  "claude-neuro-j2-m3-atlas-a1": {
+   "job_id": "aijob-e00z93qqta5s205s2s",
+   "provider_state": "COMPLETED",
+   "container_rc": 0,
+   "outcome": "OUTPUT LOST IN TRANSPORT. The container finished with rc 0 and printed NEURO-DONE b7c7c61fa321f0297bfc9619b0b76e7a13268a759954a81cb9f6a3c4a0c6fd18 (938546 bytes, 418 chunks of 3000 chars), but the provider log keeps only the last 100 lines, so chunks 0-318 were never retrievable. No J2 result is claimed from this run; it was rerun as claude-neuro-j2-m3-atlas-a2 with 16000-char chunks (79 chunks)."
+  },
+  "claude-neuro-j3-m5-mcell-a1": {
+   "job_id": "aijob-e00m0vmm7xyvnn5zc4",
+   "provider_state": "CANCELLED",
+   "container_rc": null,
+   "outcome": "Cancelled by claude-neuro in STARTING state, before any science, because its output (~700 chunks) would have been lost the same way. Rerun as claude-neuro-j3-m5-mcell-a2 with a compact output."
+  },
+  "claude-neuro-p1-logprobe-a1": {
+   "job_id": "aijob-e00rnsv8k1cxx1tj03",
+   "provider_state": "COMPLETED",
+   "container_rc": 0,
+   "outcome": "Transport probe with no science. The probe printed to the archived stdout file, so it said nothing about log limits (a design mistake). Repeated as a2."
+  },
+  "claude-neuro-p1-logprobe-a2": {
+   "job_id": "aijob-e00qcsqyk8rsyge9yr",
+   "provider_state": "COMPLETED",
+   "container_rc": 0,
+   "outcome": "Measured: `nebius ai job logs` returns exactly 100 lines; lines are split into 16384-character segments; none of the 150 numbered PROBE-SEQ lines survived (they were older than the last 100 lines). The transport was changed to at most 95 chunks of 16000 chars."
+  }
+ }
+}

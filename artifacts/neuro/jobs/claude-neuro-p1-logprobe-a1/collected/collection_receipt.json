@@ -1,0 +1,58 @@
+{
+ "name": "claude-neuro-p1-logprobe-a1",
+ "job_id": "aijob-e00rnsv8k1cxx1tj03",
+ "collected_utc": "2026-11-01T16:13:26Z",
+ "archive_sha256": "f665770b371887a1abadc3a9a4ead4acad744d2f2e4f89ca2f1416721416b5e5",
+ "archive_bytes": 11172,
+ "container_rc": 0,
+ "rc_line": "NEURO-RC 0 2026-11-01T16:12:55Z",
+ "chunks": 5,
+ "files": {
+  "out/stderr.log": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "out/stdout.log": {
+   "sha256": "8b06af0e677979ffdbfcd8fd18011594ea904de02868b2302995bc6b457c682a",
+   "bytes": 3479678
+  }
+ },
+ "submission": {
+  "name": "claude-neuro-p1-logprobe-a1",
+  "submitted_utc": "2026-11-01T16:09:46Z",
+  "spec": {
+   "name": "claude-neuro-p1-logprobe-a1",
+   "platform": "cpu-d3",
+   "preset": "2vcpu-8gb",
+   "timeout": "15m",
+   "disk": "20Gi",
+   "image": "python:3.13-slim",
+   "pip": "pip",
+   "question": "transport probe: maximum surviving log-line length and retained line count (no science)",
+   "command": "python3 -m engineering.neuro.log_probe"
+  },
+  "injected": {
+   "engineering/__init__.py": {
+    "source": "engineering/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+   },
+   "engineering/neuro/__init__.py": {
+    "source": "engineering/neuro/__init__.py",
+    "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+    "bytes": 487
+   },
+   "engineering/neuro/log_probe.py": {
+    "source": "engineering/neuro/log_probe.py",
+    "sha256": "b9c5a0573b86b3b08e8a84edcd8d6a6a37147f3ca6e1e6bd94407e9c64eaf567",
+    "bytes": 428
+   }
+  },
+  "runner_sha256": "be75831e5ff394892eb6d07e729ace78bf5bdf2e2950e886d216f27e9b4fba14",
+  "bundle_tar_xz_sha256": "0eb380f99a35bbccb55c721f0c3523e7cb341ad3f4c7546958d57b84d0731732",
+  "bundle_b64_bytes": 1080,
+  "cli_rc": 0,
+  "git_head": "daedec85",
+  "job_id": "aijob-e00rnsv8k1cxx1tj03"
+ }
+}
