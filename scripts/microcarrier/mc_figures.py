@@ -44,8 +44,8 @@ def fig_travelling(R, od):
     axes[0].set_ylabel("net x displacement per cycle (body lengths)")
     axes[1].legend(title="drive frequency", fontsize=8, title_fontsize=8, frameon=False)
     fig.suptitle("Travelling-wave actuation: displacement depends on wavelength and direction (equal L2 actuation)", fontsize=10, x=0.01, ha="left")
-    fig.text(0.01, 0.005, FOOT + " · shaded: k >= 2, under 4 voxels per wavelength at mesh 1 (coarse)", fontsize=6.5, color=INK2)
-    fig.tight_layout(rect=(0, 0.04, 1, 0.95)); p = os.path.join(od, "pattern-vs-displacement.png"); fig.savefig(p, dpi=150); plt.close(fig); return p
+    fig.text(0.01, 0.005, FOOT + "\nshaded: k >= 2 has under 4 voxels per wavelength at mesh 1 (coarse). Mesh 2 at 10 Hz gives about half these magnitudes: not converged.", fontsize=6.5, color=INK2)
+    fig.tight_layout(rect=(0, 0.06, 1, 0.95)); p = os.path.join(od, "pattern-vs-displacement.png"); fig.savefig(p, dpi=150); plt.close(fig); return p
 
 def family(rid):
     for pre, name in [("S-trav-x", "travelling, x"), ("S-trav-k", "travelling, oblique"), ("S-stand", "standing"), ("S-seg", "segmented"),
@@ -67,12 +67,12 @@ def fig_families(R, od):
     for i, k in enumerate(order):
         v = np.array(groups[k]); ax.scatter(v, i + rng.uniform(-0.18, 0.18, v.size), s=12, color=C[0], alpha=0.75, edgecolors=SURF, linewidths=0.5)
         ax.plot([np.median(v)] * 2, [i - 0.3, i + 0.3], color=INK, lw=2)
-        ax.text(1.6e-9, i, f"n={v.size}", va="center", fontsize=7, color=INK2)
+        ax.annotate(f"n={v.size}", (1.005, i), xycoords=("axes fraction", "data"), va="center", fontsize=7, color=INK2)
     ax.set_yticks(range(len(order))); ax.set_yticklabels(order); ax.invert_yaxis(); ax.set_xscale("log")
     ax.set_xlabel("|net displacement| per cycle, body lengths (log; passive floored at 1e-9)"); ax.grid(axis="y", visible=False)
     fig.suptitle("All sweep patterns at 10 Hz, mesh 1: displacement by family (dots = patterns, bar = median)", fontsize=10, x=0.01, ha="left")
-    fig.text(0.01, 0.005, FOOT, fontsize=6.5, color=INK2)
-    fig.tight_layout(rect=(0, 0.04, 1, 0.95)); p = os.path.join(od, "sweep-families.png"); fig.savefig(p, dpi=150); plt.close(fig); return p
+    fig.text(0.01, 0.005, FOOT + "\nMagnitude includes the y component; at mesh 1 that contains a lateral solver-anisotropy artifact (see mirror results), so random families are likely inflated.", fontsize=6.5, color=INK2)
+    fig.tight_layout(rect=(0, 0.06, 0.97, 0.95)); p = os.path.join(od, "sweep-families.png"); fig.savefig(p, dpi=150); plt.close(fig); return p
 
 def fig_refinement(R, V, od):
     e2 = V.get("E2", {})

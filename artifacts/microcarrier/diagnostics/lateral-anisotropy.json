@@ -1,0 +1,30 @@
+{
+ "schema": "frontier.microcarrier-diagnostic/1",
+ "id": "lateral-anisotropy-update-order",
+ "exploratory": true,
+ "written_after": "sweep results were read; before E2/E3 were read",
+ "question": "x-travelling waves are exactly symmetric under y -> -y on a y-symmetric body, yet at mesh 1 they drift laterally (dy up to 0.008 body lengths per cycle at 10 Hz, almost always +y for both wave directions). Is the bias caused by the order in which voxels are created and updated?",
+ "test": "same pattern (trav:k=2.5,theta=0,dir=fwd, mesh 1, dt 0.5, 10 Hz) built with voxels created in ascending-y (default) and descending-y order. Physics unchanged; only list order differs. Driver option --reverseY added after the freeze (default off; frozen runs used the frozen driver).",
+ "result": {
+  "default_order": {
+   "post_dx_m": 3.128138646862e-05,
+   "post_dy_m": 3.969124127461e-05
+  },
+  "reversed_order": {
+   "post_dx_m": 3.128138646862e-05,
+   "post_dy_m": 3.969124127461e-05
+  },
+  "nebius_frozen_run": {
+   "post_dx_m": 3.128138646862e-05,
+   "post_dy_m": 3.969124127461e-05
+  },
+  "identical": true
+ },
+ "conclusion": "Update/creation order is ruled out: the results are bitwise identical (and identical across hosts: local g++ 13.3 and Nebius Debian g++ 12.2, both -ffp-contract=off). The lateral bias is intrinsic to the engine's link formulation for this configuration.",
+ "candidate_mechanism_not_isolated": "Each link is computed in a frame rotated so its axis is +x (VX_Link.h:112-117; y-links by a -90 degree rotation about z), i.e. a proper rotation, so a mirror-reflected configuration is not evaluated by mirror-image arithmetic. Links switch between small-angle and full-rotation code paths at a 0.05 rad bend threshold with hysteresis (VX_Link.cpp:22, 92-97), a discontinuity that can amplify rounding differences, together with float32 link forces and the static/kinetic friction switch. Which of these dominates is NOT established.",
+ "resolution_dependence": "At mesh 2 the same patterns' lateral drift falls to about 1e-4 body lengths per cycle (sweep-m2 replicates), so the artifact is strongly resolution-dependent; it is largest where a wave has fewer than 4 voxels per wavelength.",
+ "files": {
+  "default": "41a0c16ea6849d43eb063e18e77c3ce705d4a941a3e618976d6d5df77e492387",
+  "reversed": "41a0c16ea6849d43eb063e18e77c3ce705d4a941a3e618976d6d5df77e492387"
+ }
+}

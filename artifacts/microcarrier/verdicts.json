@@ -1,0 +1,73 @@
+{
+ "schema": "frontier.microcarrier-verdicts/1",
+ "protocol": "artifacts/microcarrier/protocol.json",
+ "E1": {
+  "verdict": "FAIL",
+  "runs": [
+   {
+    "id": "E1-passive-m1-dt0.5",
+    "net_disp_L": 1.559507942123e-08,
+    "post_transient_disp_L": 1.3507429063012942e-08,
+    "settle_p2p_L": 7.709701999999999e-09,
+    "tolerance_L": 1e-06,
+    "pass": true,
+    "host": "77681d2ddeb7",
+    "wall_s": 62.244
+   },
+   {
+    "id": "E1-passive-m1-dt0.25",
+    "net_disp_L": 6.671061376350999e-08,
+    "post_transient_disp_L": 4.94534735884024e-08,
+    "settle_p2p_L": 3.878826e-08,
+    "tolerance_L": 1e-06,
+    "pass": true,
+    "host": "77681d2ddeb7",
+    "wall_s": 124.412
+   },
+   {
+    "id": "E1-passive-m2-dt0.5",
+    "net_disp_L": 3.5488597600229994e-08,
+    "post_transient_disp_L": 1.2375494248565333e-08,
+    "settle_p2p_L": 1.719694e-08,
+    "tolerance_L": 1e-06,
+    "pass": true,
+    "host": "77681d2ddeb7",
+    "wall_s": 851.838
+   },
+   {
+    "id": "E1-passive-m3-dt0.5",
+    "net_disp_L": 5.721942587798999e-06,
+    "post_transient_disp_L": 5.612600460058908e-06,
+    "settle_p2p_L": 2.1492769999999997e-07,
+    "tolerance_L": 1e-06,
+    "pass": false,
+    "host": "77681d2ddeb7",
+    "wall_s": 3370.814
+   }
+  ],
+  "supplement_uniform_drive": [
+   {
+    "id": "E1s-uniform-m1-dt0.5",
+    "post_transient_disp_L": 4.1828514695818424e-06,
+    "net_disp_L": 4.1387318894e-06,
+    "reference_L": 0.0001,
+    "within_reference": true
+   },
+   {
+    "id": "E1s-uniform-m2-dt0.5",
+    "post_transient_disp_L": 1.5774747266533757e-06,
+    "net_disp_L": 2.0143867577439997e-06,
+    "reference_L": 0.0001,
+    "within_reference": true
+   }
+  ]
+ },
+ "E2": {
+  "verdict": "NOT READ",
+  "reason": "E1 is FAIL; protocol gate"
+ },
+ "E3": {
+  "verdict": "NOT READ",
+  "reason": "E1 is FAIL; protocol gate"
+ }
+}

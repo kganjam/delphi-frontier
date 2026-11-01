@@ -1,0 +1,11 @@
+{
+ "schema": "frontier.microcarrier-run/1",
+ "engine": {"name":"Voxelyze","commit":"4287e365e11416dd108f2f361e9ec4c5a011a16c","licence":"LGPL-3.0-or-later (source headers)"},
+ "pattern_file": "diag/k25.txt",
+ "mesh": {"nx":8,"ny":4,"nz":4,"voxel_m":0.000125,"voxels":128,"body_len_x_m":0.001},
+ "params": {"E_Pa":20000,"rho":1050,"nu":0.35,"muS":1,"muK":0.8,"zetaInt":1,"zetaGlob":0.1,"zetaColl":0.8,"cte":0.01,"ampC":10,"freq_Hz":10,"gravity_g":0.047619,"settle_s":0.3,"cycles":6,"passive":0},
+ "numerics": {"recommended_dt_s":2.90093067e-06,"dt_scale":0.5,"dt_settle_s":1.45046533e-06,"dt_measure_s":1.45047358e-06,"steps_settle":206831,"steps_per_cycle":68943,"diverged":false,"diverged_at":-1},
+ "settle": {"max_voxel_speed_m_s":4.158987e-06,"max_speed_body_len_per_s":4.158987e-03,"com_m":[4.375000328180e-04,1.875000051549e-04,1.874982166402e-04],"last_0p05s_drift_m":[7.063592e-12,2.094433e-12,-1.517463e-12],"last_0p05s_peak_to_peak_m":[7.709702e-12,5.412695e-12,1.607840e-12]},
+ "strobe_com_xy_m": [[4.375000328180e-04,1.875000051549e-04],[4.436206206960e-04,1.910591234383e-04],[4.493006665959e-04,1.974311979004e-04],[4.545802067450e-04,2.053504909071e-04],[4.607244882060e-04,2.135118930405e-04],[4.675831561239e-04,2.224220214109e-04],[4.749020071646e-04,2.307503647129e-04]],
+ "result": {"net_dx_m":3.740197434664e-05,"net_dy_m":4.325035955793e-05,"net_disp_m":5.717955304930e-05,"net_disp_body_len":5.717955305e-02,"post_transient_dx_m":3.128138646862e-05,"post_transient_dy_m":3.969124127461e-05,"post_transient_cycles":5,"path_len_m":6.378683087e-05,"com_z_end_m":2.544590086e-04,"max_floor_penetration_voxel_frac":2.825113e-03}
+}

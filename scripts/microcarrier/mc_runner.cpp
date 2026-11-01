@@ -37,6 +37,7 @@ struct Cfg {
     int passive=0;              // 1 => actuation stays off during measurement window
     int samplesPerCycle=40;     // COM samples per cycle
     int dumpEvery=0;            // >0 => voxel positions every k COM samples
+    int reverseY=0;             // diagnostic: create voxels in descending-y order (physics unchanged; tests update-order anisotropy)
 };
 
 struct V3 { double x,y,z; };
@@ -61,7 +62,7 @@ int main(int argc, char** argv){
         else if(k=="cte")c.cte=v; else if(k=="amp")c.ampC=v; else if(k=="freq")c.freq=v;
         else if(k=="gravity")c.gravity=v; else if(k=="settle")c.settle=v; else if(k=="cycles")c.cycles=atoi(s.c_str());
         else if(k=="dtScale")c.dtScale=v; else if(k=="passive")c.passive=atoi(s.c_str());
-        else if(k=="samplesPerCycle")c.samplesPerCycle=atoi(s.c_str()); else if(k=="dumpEvery")c.dumpEvery=atoi(s.c_str());
+        else if(k=="samplesPerCycle")c.samplesPerCycle=atoi(s.c_str()); else if(k=="dumpEvery")c.dumpEvery=atoi(s.c_str()); else if(k=="reverseY")c.reverseY=atoi(s.c_str());
         else { fprintf(stderr,"unknown key %s\n",k.c_str()); return 2; }
     }
     FILE* fp=fopen(c.pattern.c_str(),"r"); if(!fp){ fprintf(stderr,"no pattern file\n"); return 2; }
@@ -70,6 +71,7 @@ int main(int argc, char** argv){
     struct PV{int ix,iy,iz; double a,phi;}; std::vector<PV> pv;
     while(fgets(line,sizeof line,fp)){ if(line[0]=='#') continue; PV p; if(sscanf(line,"%d %d %d %lf %lf",&p.ix,&p.iy,&p.iz,&p.a,&p.phi)==5) pv.push_back(p); }
     fclose(fp);
+    if(c.reverseY) std::stable_sort(pv.begin(),pv.end(),[](const PV&a,const PV&b){ if(a.ix!=b.ix) return a.ix<b.ix; if(a.iy!=b.iy) return a.iy>b.iy; return a.iz<b.iz; });
 
     CVoxelyze vx(voxel);
     CVX_Material* mat=vx.addMaterial(c.E,c.rho);
