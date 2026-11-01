@@ -1,0 +1,724 @@
+{
+ "schema": "frontier.neuro.manifest/1",
+ "id": "j2-m3-atlas",
+ "project": "flying-fish",
+ "project_scale": "neural",
+ "also_scales": [
+  "organ",
+  "organism"
+ ],
+ "evidence_kind": "simulated, not observed",
+ "title": "Glide stabiliser design-space atlas: failure probability and exact delayed stability over every r3-daane variant",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.m3_atlas --out /work/out --geometry /work/repo/geometry.json --reference /work/repo/reference.json --n-mc 2048 --procs 16 --seed 20261101",
+ "python_module": "engineering.neuro.m3_atlas",
+ "seed": 20261101,
+ "nebius_job": {
+  "name": "claude-neuro-j2-m3-atlas-a2",
+  "id": "aijob-e00wy5zzd9r83w5fa9",
+  "spec": {
+   "name": "claude-neuro-j2-m3-atlas-a2",
+   "platform": "gpu-h100-sxm",
+   "preset": "1gpu-16vcpu-200gb",
+   "timeout": "1h",
+   "disk": "80Gi",
+   "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+   "pip": "scipy",
+   "question": "Over every r3-daane airframe variant (mass x dihedral x caudal-fin area; mass x static margin), which sensing-delay / sensor-set combinations keep the glider within attitude limits under gusts with fin saturation, and where is the exact linear delayed loop stable?",
+   "gpu_justification": "about 51M nonlinear-saturation trajectories x 2500 steps (float64, batched per-trajectory plants and delay buffers); the 16 vCPUs compute the exact linear atlas concurrently",
+   "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.m3_atlas --out /work/out --geometry /work/repo/geometry.json --reference /work/repo/reference.json --n-mc 2048 --procs 16 --seed 20261101"
+  }
+ },
+ "injected_sources": {
+  "engineering/__init__.py": {
+   "source": "engineering/__init__.py",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "engineering/neuro/__init__.py": {
+   "source": "engineering/neuro/__init__.py",
+   "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+   "bytes": 487
+  },
+  "engineering/neuro/common.py": {
+   "source": "engineering/neuro/common.py",
+   "sha256": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+   "bytes": 2684
+  },
+  "engineering/neuro/glide_stab.py": {
+   "source": "engineering/neuro/glide_stab.py",
+   "sha256": "5bbfb7a83c1c80567f2d534ded283dbdac98d80d79630c93894af003c4aa99f1",
+   "bytes": 24336
+  },
+  "engineering/neuro/m3_atlas.py": {
+   "source": "engineering/neuro/m3_atlas.py",
+   "sha256": "02d665aa38e5169fc9589e1b5f3170aeff54bbc52d0e90f4498e21ed584f6e84",
+   "bytes": 14709
+  },
+  "engineering/simulation/__init__.py": {
+   "source": "engineering/simulation/__init__.py",
+   "sha256": "d7ff2108d1c58d5da04f5972a4f64e49f3a7d8758c6a197c36743420f3574ec7",
+   "bytes": 381
+  },
+  "engineering/simulation/controlled.py": {
+   "source": "engineering/simulation/controlled.py",
+   "sha256": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+   "bytes": 8447
+  },
+  "engineering/simulation/evaluate.py": {
+   "source": "engineering/simulation/evaluate.py",
+   "sha256": "0a793951b8812a9093a637c61d79f3f4fea5e93f07a92825e46601c8e84357fc",
+   "bytes": 5180
+  },
+  "engineering/simulation/glide.py": {
+   "source": "engineering/simulation/glide.py",
+   "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "bytes": 4371
+  },
+  "engineering/simulation/schema.py": {
+   "source": "engineering/simulation/schema.py",
+   "sha256": "94b4f003be514ac5055ed184b0e2695a68bf0de8689e387238e9583c8e62b944",
+   "bytes": 4760
+  },
+  "geometry.json": {
+   "source": "artifacts/neuro/jobs/inputs/r3daane_geometry.json",
+   "sha256": "8e72cd5c43cd82b7cc6162f6313748b5eb7beb10f41275723265aa5f5fb6bcef",
+   "bytes": 910
+  },
+  "reference.json": {
+   "source": "artifacts/neuro/jobs/inputs/m3_mc_reference.json",
+   "sha256": "7c738a7e6ac8b28510c40ca7ab7a473a024ede9da1c32536a6aecdd8d0872ae9",
+   "bytes": 5812
+  }
+ },
+ "bundle_sha256": "e07f2b3c59fcd253155f2d4b0974e26f50a49ceb35252f8fcf141f87c7102ead",
+ "git_head_at_submit": "daedec85",
+ "env": {
+  "python": "3.11.10",
+  "numpy": "2.1.2",
+  "torch": "2.5.1+cu124",
+  "cpu_count": 16,
+  "scipy": "1.17.1"
+ },
+ "elapsed_s": 308.166467666626,
+ "checks": [
+  {
+   "name": "control: GPU delay-buffer integration equals CPU closed-loop matrix power (400 steps, 30/10 ms)",
+   "pass": true,
+   "detail": 1.8973538018496328e-19
+  },
+  {
+   "name": "control: zero-gain linear radius equals open-loop radius",
+   "pass": true
+  },
+  {
+   "name": "control: GPU Monte Carlo agrees with the committed CPU M3 rows (two-proportion |z| < 3.5 on every comparable row)",
+   "pass": true,
+   "detail": {
+    "rows_compared": 66,
+    "max_abs_z": 2.465019276542894,
+    "rows": [
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.03,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.03,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.03,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.03,
+      "gust": 0.5,
+      "cpu": 0.05333333333333334,
+      "gpu": 0.060546875,
+      "z": 0.4927874535963907
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.03,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.03,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.06,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.06,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.06,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.06,
+      "gust": 0.5,
+      "cpu": 0.043333333333333335,
+      "gpu": 0.060546875,
+      "z": 1.1879283038383435
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.06,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.06,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.1,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.1,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.1,
+      "gust": 0.5,
+      "cpu": 0.07333333333333333,
+      "gpu": 0.060546875,
+      "z": -0.8565245834641734
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.1,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.15,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.15,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.15,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.15,
+      "gust": 0.5,
+      "cpu": 0.06,
+      "gpu": 0.060546875,
+      "z": 0.03711212257574762
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.15,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.15,
+      "gust": 0.5,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.03,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.03,
+      "gust": 1.0,
+      "cpu": 0.02666666666666667,
+      "gpu": 0.04638671875,
+      "z": 1.557599942266737
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.03,
+      "gust": 1.0,
+      "cpu": 0.01,
+      "gpu": 0.00634765625,
+      "z": -0.7181613540110935
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.03,
+      "gust": 1.0,
+      "cpu": 0.7033333333333334,
+      "gpu": 0.6435546875,
+      "z": -2.0289672121534945
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.03,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.03,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.06,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0009765625,
+      "z": 0.54149654683126
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.06,
+      "gust": 1.0,
+      "cpu": 0.05333333333333334,
+      "gpu": 0.04638671875,
+      "z": -0.5294846473845214
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.06,
+      "gust": 1.0,
+      "cpu": 0.02,
+      "gpu": 0.00634765625,
+      "z": -2.465019276542894
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.06,
+      "gust": 1.0,
+      "cpu": 0.65,
+      "gpu": 0.6435546875,
+      "z": -0.2177990228377864
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.06,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.06,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.1,
+      "gust": 1.0,
+      "cpu": 0.05,
+      "gpu": 0.04638671875,
+      "z": -0.2765986356328882
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.1,
+      "gust": 1.0,
+      "cpu": 0.0033333333333333335,
+      "gpu": 0.00634765625,
+      "z": 0.6333590513290196
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.1,
+      "gust": 1.0,
+      "cpu": 0.68,
+      "gpu": 0.6435546875,
+      "z": -1.2345792642183753
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.1,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.15,
+      "gust": 1.0,
+      "cpu": 0.09333333333333334,
+      "gpu": 0.0732421875,
+      "z": -1.2278335263773252
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.15,
+      "gust": 1.0,
+      "cpu": 0.06333333333333334,
+      "gpu": 0.04638671875,
+      "z": -1.2754504523397685
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.15,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.00634765625,
+      "z": 1.3837987411841304
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.15,
+      "gust": 1.0,
+      "cpu": 0.6433333333333333,
+      "gpu": 0.6435546875,
+      "z": 0.0074759672462957035
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.15,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.15,
+      "gust": 1.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.03,
+      "gust": 2.0,
+      "cpu": 0.3466666666666667,
+      "gpu": 0.35498046875,
+      "z": 0.2812425513555511
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.03,
+      "gust": 2.0,
+      "cpu": 0.7933333333333333,
+      "gpu": 0.814453125,
+      "z": 0.8739602833726424
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.03,
+      "gust": 2.0,
+      "cpu": 0.57,
+      "gpu": 0.60107421875,
+      "z": 1.024838172736374
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.03,
+      "gust": 2.0,
+      "cpu": 0.99,
+      "gpu": 0.98291015625,
+      "z": -0.908894605108584
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.03,
+      "gust": 2.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.03,
+      "gust": 2.0,
+      "cpu": 0.17666666666666667,
+      "gpu": 0.18017578125,
+      "z": 0.14783859700310625
+     },
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.06,
+      "gust": 2.0,
+      "cpu": 0.5233333333333333,
+      "gpu": 0.4951171875,
+      "z": -0.9128631207392984
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.06,
+      "gust": 2.0,
+      "cpu": 0.7733333333333333,
+      "gpu": 0.814453125,
+      "z": 1.6928159718041904
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.06,
+      "gust": 2.0,
+      "cpu": 0.5866666666666667,
+      "gpu": 0.60107421875,
+      "z": 0.47557934849467043
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.06,
+      "gust": 2.0,
+      "cpu": 0.99,
+      "gpu": 0.98291015625,
+      "z": -0.908894605108584
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.06,
+      "gust": 2.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.06,
+      "gust": 2.0,
+      "cpu": 0.17333333333333334,
+      "gpu": 0.18017578125,
+      "z": 0.2885388156839907
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.1,
+      "gust": 2.0,
+      "cpu": 0.7966666666666666,
+      "gpu": 0.814453125,
+      "z": 0.7366640695467106
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.1,
+      "gust": 2.0,
+      "cpu": 0.6166666666666667,
+      "gpu": 0.60107421875,
+      "z": -0.5155245703911737
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.1,
+      "gust": 2.0,
+      "cpu": 0.9933333333333333,
+      "gpu": 0.98291015625,
+      "z": -1.3538605427903294
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.1,
+      "gust": 2.0,
+      "cpu": 0.2,
+      "gpu": 0.18017578125,
+      "z": -0.8298595526887257
+     },
+     {
+      "row": "roll_vision",
+      "tau_vision": 0.15,
+      "gust": 2.0,
+      "cpu": 0.84,
+      "gpu": 0.86279296875,
+      "z": 1.0622076782418757
+     },
+     {
+      "row": "roll_otolith",
+      "tau_vision": 0.15,
+      "gust": 2.0,
+      "cpu": 0.8233333333333334,
+      "gpu": 0.814453125,
+      "z": -0.3703987113773041
+     },
+     {
+      "row": "roll_rate_only",
+      "tau_vision": 0.15,
+      "gust": 2.0,
+      "cpu": 0.62,
+      "gpu": 0.60107421875,
+      "z": -0.6258477572512616
+     },
+     {
+      "row": "roll_passive",
+      "tau_vision": 0.15,
+      "gust": 2.0,
+      "cpu": 0.9933333333333333,
+      "gpu": 0.98291015625,
+      "z": -1.3538605427903294
+     },
+     {
+      "row": "pitch_vision",
+      "tau_vision": 0.15,
+      "gust": 2.0,
+      "cpu": 0.0,
+      "gpu": 0.0,
+      "z": 0.0
+     },
+     {
+      "row": "pitch_passive",
+      "tau_vision": 0.15,
+      "gust": 2.0,
+      "cpu": 0.2,
+      "gpu": 0.18017578125,
+      "z": -0.8298595526887257
+     }
+    ]
+   }
+  }
+ ],
+ "all_checks_pass": true,
+ "ran": {
+  "utc": "2026-11-01T16:31:56Z"
+ },
+ "integration_note": "The Monte Carlo loop applies the actuator state updated in the same 2 ms step (the same order as glide_stab.mc, which the committed CPU rows used and which control 3 compares against statistically). The exact linear radius applies the previous step's actuator state. The MC therefore has one step (2 ms) less effective fin lag than the linear atlas. Control 1 checks the linear ordering only.",
+ "summary": {
+  "lat_25g_vision_g1.0": {
+   "min_fail": 0.0,
+   "argmin": [
+    0.15,
+    0
+   ],
+   "max_fail": 1.0,
+   "baseline_kv0.15_G7": 0.0009765625
+  },
+  "lat_25g_vision_g2.0": {
+   "min_fail": 0.0,
+   "argmin": [
+    0.15,
+    0
+   ],
+   "max_fail": 1.0,
+   "baseline_kv0.15_G7": 0.4951171875
+  },
+  "lat_25g_rate_only_g2.0": {
+   "min_fail": 0.0,
+   "argmin": [
+    0.15,
+    0
+   ],
+   "max_fail": 1.0,
+   "baseline_kv0.15_G7": 0.60107421875
+  },
+  "lin_lateral_stable_fraction_vis": {
+   "0.0": 0.7142857142857143,
+   "0.01": 0.7142857142857143,
+   "0.02": 0.7142857142857143,
+   "0.03": 0.7142857142857143,
+   "0.04": 0.7142857142857143,
+   "0.05": 0.7142857142857143,
+   "0.06": 0.7142857142857143,
+   "0.07": 0.7053571428571429,
+   "0.08": 0.6785714285714286,
+   "0.09": 0.6339285714285714,
+   "0.1": 0.5535714285714286
+  },
+  "lin_lateral_stable_fraction_oto": {
+   "0.0": 0.375,
+   "0.01": 0.38392857142857145,
+   "0.02": 0.41964285714285715,
+   "0.03": 0.42857142857142855,
+   "0.04": 0.4642857142857143,
+   "0.05": 0.4732142857142857,
+   "0.06": 0.4732142857142857,
+   "0.07": 0.4732142857142857,
+   "0.08": 0.4642857142857143,
+   "0.09": 0.4642857142857143,
+   "0.1": 0.4375
+  },
+  "mc_trajectories": 51044352,
+  "mc_elapsed_s": 288.87884879112244,
+  "linear_radii": 52272,
+  "linear_elapsed_s": 17.569010019302368,
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "n_mc": 2048
+ },
+ "outputs": {
+  "figure.png": "db0ca6117b038087e8528f1cdb2fa3bea50048bd35a26eacd1ea51581dde55a4",
+  "job_stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "job_stdout.log": "e0f1f869d2c5aca2ee3d39248792fecbb2c10541df5fdc50ddb2d606642c7af4",
+  "m3_atlas.json.gz": "e9e65d712931ce7fda2c214e9b8d0aa8668d3349d5ebbadfacb4436f577376f2"
+ }
+}

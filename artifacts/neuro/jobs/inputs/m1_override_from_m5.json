@@ -1,0 +1,16 @@
+{
+ "theta_thr_deg": {
+  "uniform": [
+   5.53,
+   18.56
+  ],
+  "basis": "M5 (J3, claude-neuro-j3-m5-mcell-a2) kappa-encoder sets meeting C1-C3: response angle 5-95% range; lower tail floored by 5 deg onset; simulated"
+ },
+ "lat_M_ms": {
+  "uniform": [
+   5.0,
+   10.0
+  ],
+  "basis": "M5 motor delay range after the M-cell spike (domenici_blake1997 recalled); M5 places the threshold at the angle at spike time"
+ }
+}
