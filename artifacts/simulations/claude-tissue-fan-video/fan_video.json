@@ -1,0 +1,112 @@
+{
+ "job": "aijob-e00fcf5qty6xxhkahv",
+ "job_state": "COMPLETED",
+ "meta": {
+  "model": "Schnakenberg on a fan (annular sector) growing at its distal arc",
+  "a": 0.1,
+  "b": 0.9,
+  "R0": 30.0,
+  "NR0": 8,
+  "NR_END": 160,
+  "NTH": 128,
+  "THETA": 1.2,
+  "ds": [
+   10
+  ],
+  "speeds": [
+   0.1
+  ],
+  "seeds": [
+   1
+  ],
+  "relax": 300.0,
+  "scale_t": 1.0,
+  "lambda_star": {
+   "10": 10.7,
+   "20": 11.2,
+   "30": 12.0
+  },
+  "device": "cuda",
+  "torch": "2.10.0a0+b4e4ee81d3.nv25.12",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "script_sha256": "88d7f4aecb9a3edfe31b7c5e23d6bebf5eb6801dad8a84a557d8c127b481fb77"
+ },
+ "done": {
+  "wall_s": 449.2
+ },
+ "n_rows": 1,
+ "summary": {
+  "d=10,v=0.1": {
+   "d": 10,
+   "speed": 0.1,
+   "radii": [
+    45.5,
+    77.5,
+    109.5,
+    141.5,
+    173.5
+   ],
+   "peaks_mean": [
+    4.0,
+    6.0,
+    10.0,
+    14.0,
+    16.0
+   ],
+   "peaks_by_seed": [
+    [
+     4,
+     6,
+     10,
+     14,
+     16
+    ]
+   ],
+   "expected": [
+    5.102803738317758,
+    8.69158878504673,
+    12.280373831775702,
+    15.869158878504672,
+    19.457943925233646
+   ],
+   "inner_to_outer_increase": 12.0,
+   "expected_increase": 14.35514018691589,
+   "radial_orientation_A": 0.6050815531390508
+  }
+ },
+ "rows": [
+  {
+   "d": 10,
+   "speed": 0.1,
+   "static": false,
+   "seed": 1,
+   "nr": 160,
+   "dt": 0.0014660633484162896,
+   "radii": [
+    45.5,
+    77.5,
+    109.5,
+    141.5,
+    173.5
+   ],
+   "peaks_along_arc": [
+    4,
+    6,
+    10,
+    14,
+    16
+   ],
+   "expected_r_theta_over_lambda": [
+    5.102803738317758,
+    8.69158878504673,
+    12.280373831775702,
+    15.869158878504672,
+    19.457943925233646
+   ],
+   "radial_orientation_A": 0.6050815531390508,
+   "amplitude": 0.2954071391062498,
+   "wall_s": 449.2
+  }
+ ],
+ "reading": "If stripes run radially and keep their spacing, the count along the arc rises with radius as r*THETA/lambda (stripes inserted or branched); a flat count means stripes fan out and widen instead."
+}

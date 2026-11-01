@@ -1,0 +1,29 @@
+{
+ "code_matches_repo": true,
+ "code_sha256": {
+  "simulations/claude_tissue/fan_video_gpu.py": "88d7f4aecb9a3edfe31b7c5e23d6bebf5eb6801dad8a84a557d8c127b481fb77"
+ },
+ "collected_utc": "2026-11-01T16:52:56Z",
+ "collector_sha256": {
+  "simulations/claude_tissue/collect_gpu2.py": "29e53f77b920fcffc91c14fd047119767500b8e5d54a4267ebe87e0c8bb88982"
+ },
+ "command": "python3 /work/fanv.py (args in META)",
+ "compute": "Nebius aijob-e00fcf5qty6xxhkahv (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "input_sha256": {},
+ "job": "aijob-e00fcf5qty6xxhkahv",
+ "job_state": "COMPLETED",
+ "name": "claude-tissue-fan-video",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-fan-video/fan_video.json": "c21edebbb99b929d48b40443f05516aec9a91daedc4a903608620faaf32cc30d",
+  "artifacts/simulations/claude-tissue-fan-video/fan_video.mp4": "e2ddee43a8aeaade425e9af7690113fea945c54ac9f533ffc9fc4e620ee819a0",
+  "artifacts/simulations/claude-tissue-fan-video/fan_video.png": "805a7b09e6efb963359bbb063c98d347fcb5f0b5267389fac2dc196f492e73fd",
+  "artifacts/simulations/claude-tissue-fan-video/job-log.txt": "4ad708f12077236f5b064fa56cbb210791b457709a052e7208de252e6ccf27be",
+  "artifacts/simulations/claude-tissue-fan-video/poster.png": "ec177be9230365a70caf125db5afc57d1258bde38212a80d5eb14cca9771fd4e"
+ },
+ "seed": [
+  1
+ ],
+ "wall_s": 449.2
+}
