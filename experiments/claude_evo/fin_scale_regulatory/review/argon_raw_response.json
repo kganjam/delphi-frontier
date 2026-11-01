@@ -1,0 +1,36 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "**ACTION: CANCEL OR PATCH IMMEDIATELY.** \nScoring the held-out/control sequences *without* prepending the 1 kb prompt is a fatal implementation bug if you haven't explicitly coded conditional scoring. \n\n### (a) What makes the headline comparison scientifically void\n\n1. **Data Leakage (Train vs. Test Contamination):** `GRCz11` (zebrafish) is in Evo 2’s training set (OpenGenome2). `GCA_018398805.1` (flying fish) almost certainly is not. Comparing held-out likelihoods between species is just measuring **in-distribution memorization vs. out-of-distribution generalization**, completely invalidating evolutionary or biological comparisons.\n2. **Genomic Feature Mismatch (Core Promoter vs. 5' UTR/Intron):** Zebrafish windows are `[-1kb, +1kb]` around the TSS (captures core promoter + 5' UTR). Flying fish windows are upstream of the ATG start codon. Because fish 5' UTRs frequently contain large introns, your flying fish windows are actually sampling **5' UTR exons, first introns, or intergenic space**, not equivalent core promoters. \n3. **Unconditional vs. Conditional Scoring Bug (Check your code):** The generated candidates are sampled as $P(\\text{candidate} \\mid \\text{prompt})$. If you score the real held-out windows and shuffled controls unconditionally as $P(\\text{sequence})$ without prepending the 1 kb prompt and masking the prompt loss, the log-probs are mathematically incomparable.\n4. **Top-k = 4 + Temp = 1.0 Degeneracy:** Since DNA has a vocabulary size of 4 (`A, C, G, T`), **setting `top_k = 4` does literally nothing** (unless preventing rare `N` token emissions). At `temp = 1.0`, unconstrained autoregressive sampling over 1000 bp is prone to severe repetition collapse (homopolymers, microsatellite expansion). A collapsed `AAAAAAA...` sequence will score near 0.0 log-prob, beating the real held-out sequence entirely by artifact.\n5. **Control Shuffling Anchor:** You state controls are generated *per candidate*. Shuffling a collapsed/degenerate candidate yields a degenerate control. Controls must be shuffles of the **real held-out** sequence to establish a valid baseline.\n\n### (b) What you must compute from outputs (not currently planned)\n\n1. **Sequence Complexity / Compression Ratio:** Compute gzip compression ratio or linguistic complexity (unique $k$-mers / possible $k$-mers for $k \\in \\{3,4,6\\}$) on all 38 candidates. You must prove your candidates are not just high-likelihood low-complexity repeats.\n2. **Positional Perplexity Curve ($t=1 \\dots 1000$):** Do not just report the mean log-prob. Plot log-prob by nucleotide position across the 1 kb window. If likelihood spikes near the TSS/ATG and flattens out, the model recognizes the boundary. If it drifts upward toward 0 in candidates, it's repeating.\n3. **Edit Distance / Local Alignment (Smith-Waterman) to Held-Out:** Quantify if the model is retrieving the exact `GRCz11` held-out sequence from memory. If zebrafish identity is \u003e80% and flying fish is ~25%, your headline result is pure training set leakage.\n4. **JASPAR Motif Scan (Lightweight CPU task):** Run FIMO or a basic PWM scan for developmental TFs relevant to your gene list (T-box, SOX, RUNX, HOX, FGF-responsive elements) on Prompt, Held-Out, Candidate, and Dinuc-Shuffle. Count motif retention relative to the dinucleotide shuffle.\n5. **$k$-mer / Dinucleotide JSD:** Compute Jensen-Shannon Divergence of 3-mer and 4-mer frequencies between `Held-Out` and `Candidate`. Does the model at least preserve species-specific GC and CpG island structure conditioned on the prompt?\n\n### (c) What you must NOT claim\n\n1. **DO NOT claim** Evo 2 has learned \"fin-to-wing\" or \"scale\" regulatory grammar. None of these genes are exclusive to fins/scales (e.g., *shha*, *tbx5a*, *runx2b*, *lef1* are pleiotropic master regulators).\n2. **DO NOT claim** flying fish regulatory regions are \"more complex,\" \"less conserved,\" or \"harder to predict\" than zebrafish. Differences in log-prob are entirely explained by training set memorization (`GRCz11`), GC content shifts (AT-rich repetitive regions in zebrafish score higher automatically), and annotation artifacts (TSS vs. CDS start).\n3. **DO NOT claim** candidate sequences beating the real held-out sequence in log-prob are \"optimized\" or \"super-enhancers.\" They are mode-seeking/degenerate autoregressions.\n4. **DO NOT claim** beating the dinucleotide shuffle proves the model learned *cis*-regulatory syntax. It only proves the model learned local higher-order Markov statistics ($k \u003e 2$) or basic repetitive element structure.\n5. **DO NOT claim** `top_k = 4` constrained the generation space. Acknowledge that for a 4-letter nucleotide alphabet, `top_k = 4` is simply unclipped multinomial sampling.",
+            "thoughtSignature": "ElkKVwFpFH0TFiTvKt58Qg64NywOTi3LLH4KcqzPJNrX748gr0GlkCUmiDROMzrJf7zlM5fHr35KmVjeQWh3PueIaDQ5zV/pZwQ0eBp47ww2htQuh7x/JM3VBg=="
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 720,
+    "candidatesTokenCount": 1160,
+    "totalTokenCount": 1880,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 720
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1160
+      }
+    ]
+  },
+  "modelVersion": "gemini-4-argon",
+  "responseId": "PVHnasTfGaqez7IPndm44Q4"
+}
