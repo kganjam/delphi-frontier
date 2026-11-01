@@ -12,6 +12,14 @@ ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "results/mol-sims/claude-20261101"
 OUT = ROOT / "site/artifacts/simulations"
 S = json.loads((R / "structures/summary.json").read_text())
+MI = json.loads((R / "structures/msa_identity.json").read_text())
+
+
+def tmpl(chain_name):
+    """Closest PDB70 hit for one chain: (name, % identity over aligned columns, % query coverage)."""
+    h = MI[chain_name]["top5"][0]
+    return (f"{h['name']} at {h['identity_pct']:.0f}% identity over {h['query_coverage_pct']:.0f}% of the query "
+            f"({MI[chain_name]['n_hits']} hits total; ranked by identity x coverage)")
 
 
 def sha(p):
@@ -52,10 +60,12 @@ write(base("boltz2-shhN", "Predicted structure of zebrafish Shha signalling doma
            ["that zebrafish ShhN adopts this fold in vivo", "Zn2+/Ca2+ site geometry (no ions were modelled)", "anything about Shh secretion, lipidation, gradient range or fin size"],
            [{"name": "mean pLDDT (top model)", "result": f"{c['mean_plddt']:.1f}; {c['frac_ge70'] * 100:.0f}% of residues >= 70"},
             {"name": "same residues in the earlier OpenFold2 dummy-MSA prediction", "result": f"mean pLDDT {c['openfold2_dummy_msa_mean_plddt_same_residues']:.1f}"},
-            {"name": "pTM (3 samples)", "result": ", ".join(f"{x:.2f}" for x in S["shhN"]["ptm_scores"])}],
+            {"name": "pTM (3 samples)", "result": ", ".join(f"{x:.2f}" for x in S["shhN"]["ptm_scores"])},
+            {"name": "closest structure in the supplied PDB70 MSA", "result": tmpl("shhN")}],
            ["pLDDT/pTM are model-internal confidence, not a calibrated probability of correctness."],
            ["Does a holo model with Zn2+/Ca2+ and the cholesterol-modified C terminus change the surface used by Ptch/Hhip?"],
-           [lim_msa, "No seed accepted by the runtime; diffusion sampling is nondeterministic."]))
+           [lim_msa, "No seed accepted by the runtime; diffusion sampling is nondeterministic.",
+            "The closest MSA hit is ~96% identical over most of the chain, so the high confidence is largely template recall, not a de-novo fold."]))
 
 # --- macromolecular: Fgf10a-Fgfr2b with negative control ---
 fc, nc = S["fgf_complex"], S["fgf_vs_fgfr2c_negctrl"]
@@ -68,7 +78,10 @@ write(base("boltz2-fgf10a-fgfr2b", "Predicted Fgf10a–Fgfr2b complex (Boltz-2) 
            [{"name": "cognate IIIb: confidence / pTM / interface pLDDT (top)", "result": f"{fc['confidence_scores'][0]:.2f} / {fc['ptm_scores'][0]:.2f} / {fc['models'][0]['interface']['mean_plddt_interface']:.1f}"},
             {"name": "non-cognate IIIc control: confidence / pTM / interface pLDDT (top)", "result": f"{nc['confidence_scores'][0]:.2f} / {nc['ptm_scores'][0]:.2f} / {nc['models'][0]['interface']['mean_plddt_interface']:.1f}"},
             {"name": "receptor interface residues inside the IIIb/IIIc alternative exon", "result": f"{ax['model_0_interface_B_in_segment']} of {ax['model_0_interface_B_total']} (segment = {ax['model_0_segment_fraction_of_construct'] * 100:.0f}% of construct)"},
-            {"name": "chain pLDDT A/B (cognate)", "result": f"{chain('fgf_complex')['A']['mean_plddt']:.1f} / {chain('fgf_complex')['B']['mean_plddt']:.1f}"}],
+            {"name": "chain pLDDT A/B (cognate)", "result": f"{chain('fgf_complex')['A']['mean_plddt']:.1f} / {chain('fgf_complex')['B']['mean_plddt']:.1f}"},
+            {"name": "closest PDB70 hit, receptor IIIb construct", "result": tmpl("fgfr2b_d2d3")},
+            {"name": "closest PDB70 hit, receptor IIIc control construct", "result": tmpl("fgfr2c_d2d3")},
+            {"name": "likely cause of the control inversion", "result": "the non-cognate IIIc construct has the CLOSER template of the two, so template proximity, not biology, tracks the scores"}],
            ["Confidence scores are not affinities; no ddG was computed (stab_ddg needs an undocumented upload manifest, blocked)."],
            ["Would a deep (UniRef) MSA or AlphaFold3 discriminate IIIb from IIIc? Would MD separate them?"],
            [lim_msa, "The negative control failed to discriminate, so the predictor is not informative about isoform choice here."]))
@@ -82,6 +95,7 @@ write(base("openfold3-kcnk5b-dimer", "Predicted Kcnk5b (another longfin) K2P cha
            ["the dimer interface (ipTM below 0.6)", "conductance, gating or the effect of any fin-overgrowth allele", "membrane placement (no lipid bilayer modelled)"],
            [{"name": "chain mean pLDDT", "result": f"{kc['mean_plddt']:.1f} (OpenFold2 monomer, same residues: {kc['openfold2_dummy_msa_mean_plddt_same_residues']:.1f})"},
             {"name": "ipTM / pTM", "result": f"{kd['iptm_scores'][0]:.2f} / {kd['ptm_scores'][0]:.2f}"},
+            {"name": "closest structure in the supplied PDB70 MSA", "result": tmpl("kcnk5b_core")},
             {"name": "pore domains mean pLDDT (75-137, 173-246)", "result": ", ".join(f"{k}: {v['of3_dimer_mean_plddt']:.1f} (OF2 {v['of2_monomer_mean_plddt']:.1f})" for k, v in kd["pore_domains"].items())}],
            ["Model-internal confidence only."], ["Does a membrane-aware model or AlphaFold3 raise the interface confidence enough to place alf variants?"],
            [lim_msa, "Single sample; no MD run because the interface is not confident."]))
@@ -91,7 +105,8 @@ if "kcnj13" in S:
     kj = chain("kcnj13")["A"]
     checks = [{"name": "mean pLDDT / fraction >= 70 (Boltz-2, top)", "result": f"{kj['mean_plddt']:.1f} / {kj['frac_ge70'] * 100:.0f}%"},
               {"name": "recorded OpenFold2 dummy-MSA gap, same sequence (sha256 8029209...)", "result": f"mean {kj['openfold2_dummy_msa_mean_plddt_same_residues']:.1f}; 18% of residues >= 70"},
-              {"name": "pTM (3 samples)", "result": ", ".join(f"{x:.2f}" for x in S["kcnj13"]["ptm_scores"])}]
+              {"name": "pTM (3 samples)", "result": ", ".join(f"{x:.2f}" for x in S["kcnj13"]["ptm_scores"])},
+              {"name": "closest structure in the supplied PDB70 MSA", "result": tmpl("kcnj13") + " -- the weakest template of the four targets, which is the honest reason this target stays the least resolved"}]
     srcs = [R / "structures/kcnj13/receipt.json", R / "structures/kcnj13/model_0.cif", R / "structures/summary.json"]
     if "kcnj13_tetramer_openfold3" in S:
         t = S["kcnj13_tetramer_openfold3"]; tc = chain("kcnj13_tetramer_openfold3")["A"]

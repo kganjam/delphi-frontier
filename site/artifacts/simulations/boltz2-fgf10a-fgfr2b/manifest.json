@@ -31,6 +31,18 @@
   {
    "name": "chain pLDDT A/B (cognate)",
    "result": "86.7 / 85.1"
+  },
+  {
+   "name": "closest PDB70 hit, receptor IIIb construct",
+   "result": "3OJM_B at 78% identity over 99% of the query (121 hits total; ranked by identity x coverage)"
+  },
+  {
+   "name": "closest PDB70 hit, receptor IIIc control construct",
+   "result": "1IIL_F at 81% identity over 99% of the query (121 hits total; ranked by identity x coverage)"
+  },
+  {
+   "name": "likely cause of the control inversion",
+   "result": "the non-cognate IIIc construct has the CLOSER template of the two, so template proximity, not biology, tracks the scores"
   }
  ],
  "parameter_unknowns": [

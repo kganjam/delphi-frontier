@@ -22,6 +22,23 @@ PDB70 MMseqs2 MSAs (`msa_search_native`; 14-122 sequences, structural database o
 
 - **Kcnj13 (Kir7.1, Q0KIZ7, 362 aa)** — the scale's one recorded structure gap (`openfold2-kcnj13`: 18 % of residues at pLDDT >= 70). Boltz-2 with the PDB70 MSA: mean pLDDT 67.7 and **53.9 % of residues >= 70** on the identical sequence (sha256 `8029209...`), pTM 0.45-0.49. The OpenFold3 **tetramer** attempt went the other way: chain pLDDT 45.8, ipTM 0.29, interface pLDDT 42.4. So the MSA improves the subunit but the assembly is still unresolved, and the open question on the studio's existing card ("does a tetrameric model change the confidence?") is answered **no, not with this MSA**.
 
+## How much of this is template recall? (`structures/msa_identity.json`)
+The argon review warned that a PDB70-only MSA invites template memorisation. Measured, per chain (closest hit ranked by identity x query coverage):
+
+| chain | PDB70 hits | closest hit | identity | query coverage |
+|---|---|---|---|---|
+| ShhN | 13 | 6N7G_C | 95 % | 100 % |
+| Fgf10a core | 43 | 1NUN_A | 64 % | 98 % |
+| Fgfr2 IIIb D2-D3 | 121 | 3OJM_B | 78 % | 99 % |
+| Fgfr2 IIIc D2-D3 (control) | 121 | 1IIL_F | 81 % | 99 % |
+| Kcnk5b core | 75 | 6WLV_A | 64 % | 99 % |
+| Kcnj13 | 28 | 3SYA_A | 37 % | 80 % |
+
+Two consequences, both of which weaken earlier readings here:
+- **ShhN's confidence is mostly recall.** Its closest hit is 95 % identical over the whole chain, so pLDDT 85 says "this matches a known Shh structure", not "this fold was derived de novo". The MD cross-check below is still informative, but the structure is not an independent finding.
+- **The negative-control inversion has a mundane explanation.** The non-cognate IIIc construct's closest template (81 % over 99 %) is *closer* than the cognate IIIb one's (78 % over 99 %). Score order tracks template proximity, not isoform biology. That is the cleanest available account of why the control beat the real pair, and it is a reason to distrust the complex scores rather than to reinterpret them.
+- Kcnj13 has the weakest template of the set (37 % over 80 %, 28 hits), which is the honest reason it stays the least resolved target even after adding an MSA.
+
 ## Molecular dynamics (`md_shhN/`, `md_fgf_complex/`)
 Run as Nebius AI jobs on one H100 each (OpenMM 8.6.1, CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl). Minimise, 100 ps NVT, 200 ps NPT, then 10 ns production NPT with CA frames every 10 ps. One replica each. Results come back through the job log, which the service splits at 16 KiB **and can return the pieces out of order**; `collect_md.py` reassembles them and only accepts an ordering that parses as JSON (and that gunzips, for the final frame), so a scrambled log cannot silently become a wrong number.
 

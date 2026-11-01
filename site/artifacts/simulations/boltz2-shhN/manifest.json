@@ -27,6 +27,10 @@
   {
    "name": "pTM (3 samples)",
    "result": "0.82, 0.74, 0.67"
+  },
+  {
+   "name": "closest structure in the supplied PDB70 MSA",
+   "result": "6N7G_C at 95% identity over 100% of the query (13 hits total; ranked by identity x coverage)"
   }
  ],
  "parameter_unknowns": [
@@ -37,7 +41,8 @@
  ],
  "limitations": [
   "MSA is PDB70-only (structural database, 14-122 sequences), so homologous crystal structures may be templated.",
-  "No seed accepted by the runtime; diffusion sampling is nondeterministic."
+  "No seed accepted by the runtime; diffusion sampling is nondeterministic.",
+  "The closest MSA hit is ~96% identical over most of the chain, so the high confidence is largely template recall, not a de-novo fold."
  ],
  "does_not_establish": [
   "that zebrafish ShhN adopts this fold in vivo",
