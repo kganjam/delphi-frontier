@@ -1,0 +1,19 @@
+{
+  "schema": "frontier.xenomorph.protocol-addendum/1",
+  "amends": "protocol.json sha256 b4e329baeb9a1274f4ef01c984a2d3066bbfca205f15769b71f23e7ec97a3e4f (+ addendum 1)",
+  "written": "2026-11-01 09:28 PST, after the frozen production results were read",
+  "trigger": "FROZEN ZERO-ADHESION CONTROL FAILED: final/initial rg_norm 0.815, 0.853, 0.781, 0.823 (seeds 1-4) against the >= 0.95 gate. Per the frozen rule no other frozen arm may be read as a result; this addendum is the diagnosis the falsifier requires. It does not re-score the frozen arms.",
+  "diagnostic_arms": {
+    "zero-n1": "zero arm with nearest-neighbour (order 1) copy and interaction/surface neighbourhoods instead of order 2 / distance 2.5; seeds 1, 2",
+    "zero-rep2": "zero arm with every cell-cell J raised by 2 (contact mildly repulsive, gamma_xM = -1); seeds 1, 2",
+    "zero-rep6": "same with +6 (gamma_xM = -3); seeds 1, 2",
+    "dah-n1, equal-n1": "main and equal arms in the order-1 neighbourhood; seeds 1, 2",
+    "also_read": "addendum-1 zero ConnectivityConstraint runs (job aijob-e00q043k9pv5c96g5j)"
+  },
+  "decision_rules": {
+    "neighbourhood_artifact": "if zero-n1 passes the frozen zero gate (rg ratio >= 0.95, both seeds) the failure is attributed to the extended neighbourhood; dah-n1 and equal-n1 are then scored with the frozen gates and reported as the POST-DIAGNOSIS readable result, labelled as such",
+    "neutrality_not_neutral": "if zero-n1 fails but zero-rep2 or zero-rep6 passes, J_cc = 2 J_cM is not contact-neutral in this lattice model; the effective adhesion offset needed is reported and no frozen arm is re-scored",
+    "unresolved": "if all diagnostic zero arms fail, compaction in this CPM setup is not attributable to adhesion and the CPM aggregation result stays unreadable; only the off-lattice and PhysiCell results carry the control-passing evidence"
+  },
+  "unchanged": "all other parameters, horizon 20000 MCS, metrics, gates"
+}

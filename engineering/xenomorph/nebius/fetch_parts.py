@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""fetch_parts.py <aijob-id> <outdir>: pull the job log, decode every XM_PART, verify its sha256, untar.
+"""fetch_parts.py <aijob-id> <outdir> [full-log]: pull the job log, decode every XM_PART, verify its sha256, untar.
 Adapted from the voxgpu harness's fetch_parts.py (same log-transport pattern)."""
 import base64
 import hashlib
@@ -13,8 +13,11 @@ import tarfile
 
 j, d = sys.argv[1], sys.argv[2]
 os.makedirs(d, exist_ok=True)
-log = subprocess.run([os.path.expanduser("~/.nebius/bin/nebius"), "--profile", "hackathon", "ai", "job", "logs", j],
-                     capture_output=True, text=True).stdout
+if len(sys.argv) > 3:  # a full log already dumped by dump_log.py (ai job logs caps at 1000 lines)
+    log = open(sys.argv[3]).read()
+else:
+    log = subprocess.run([os.path.expanduser("~/.nebius/bin/nebius"), "--profile", "hackathon", "ai", "job", "logs", j],
+                         capture_output=True, text=True).stdout
 open(os.path.join(d, "job.log.txt"), "w").write(log)
 L = [re.sub(r"^\[[^\]]*\] ", "", ln) for ln in log.splitlines()]
 got = []

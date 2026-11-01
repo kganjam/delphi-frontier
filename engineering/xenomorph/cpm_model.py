@@ -80,7 +80,7 @@ def sphere_voxels(r: float) -> int:
 
 
 def build_xml(proto: dict, arm: str, seed: int, scale: float, horizon: int | None,
-              connectivity: bool = False) -> tuple[str, dict]:
+              connectivity: bool = False, nbr_order: int | None = None, j_cc_offset: float = 0.0) -> tuple[str, dict]:
     ip = proto["initial_population"]
     size = int(round(proto["lattice"]["base_size"] * scale))
     r = ip["cell_radius_base"] * scale
@@ -90,7 +90,10 @@ def build_xml(proto: dict, arm: str, seed: int, scale: float, horizon: int | Non
     pts, types = place_cells_lattice(n, r, gap, jit, size / 2.0, seed, ip["fraction_type_A"])
     ball = float(np.max(np.linalg.norm(pts - size / 2.0, axis=1)) + r)
     vt = sphere_voxels(r)
-    J = proto["arms"][arm]["J"]
+    J = dict(proto["arms"][arm]["J"])
+    if j_cc_offset:  # addendum 2 diagnostic: shift every cell-cell J (positive = contact costs more than two medium faces)
+        for k in ("A-A", "B-B", "A-B"):
+            J[k] = J[k] + j_cc_offset
     T = proto["cells"]["temperature"]
     lam = proto["cells"]["volume_strength"]
     stop = horizon if horizon is not None else int(round(proto["time_horizon_mcs_base"] * scale**2))
@@ -98,6 +101,9 @@ def build_xml(proto: dict, arm: str, seed: int, scale: float, horizon: int | Non
 
     # addendum 1: optional ConnectivityConstraint; default off leaves the frozen XML byte-identical
     cc = "\n            <ConnectivityConstraint/>" if connectivity else ""
+    # addendum 2 diagnostic: nearest-neighbour arm (order 1 for copy attempts and for the surface/interaction neighbourhood)
+    mcs_order = 2 if nbr_order is None else nbr_order
+    surf_nbr = "<Distance>2.5</Distance>" if nbr_order is None else f"<Order>{nbr_order}</Order>"
 
     def pop(tname: str) -> str:
         arr = []
@@ -151,11 +157,11 @@ Not a Xenobot, not any organism; no frog parameter is used.</Details>
         </Interaction>
         <MonteCarloSampler stepper="edgelist">
             <MCSDuration value="1"/>
-            <Neighborhood><Order>2</Order></Neighborhood>
+            <Neighborhood><Order>{mcs_order}</Order></Neighborhood>
             <MetropolisKinetics temperature="{T}"/>
         </MonteCarloSampler>
         <ShapeSurface scaling="norm">
-            <Neighborhood><Distance>2.5</Distance></Neighborhood>
+            <Neighborhood>{surf_nbr}</Neighborhood>
         </ShapeSurface>
     </CPM>
     <CellPopulations>
@@ -187,11 +193,15 @@ def main(argv=None):
     ap.add_argument("--horizon-mcs", type=int, default=None)
     ap.add_argument("--no-run", action="store_true")
     ap.add_argument("--connectivity", action="store_true", help="addendum 1 supplementary arm")
+    ap.add_argument("--nbr-order", type=int, default=None, help="addendum 2 diagnostic")
+    ap.add_argument("--j-cc-offset", type=float, default=0.0, help="addendum 2 diagnostic")
     a = ap.parse_args(argv)
     proto = load_protocol()
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    xml, meta = build_xml(proto, a.arm, a.seed, a.scale, a.horizon_mcs, a.connectivity)
+    xml, meta = build_xml(proto, a.arm, a.seed, a.scale, a.horizon_mcs, a.connectivity, a.nbr_order, a.j_cc_offset)
+    meta["nbr_order"] = a.nbr_order
+    meta["j_cc_offset"] = a.j_cc_offset
     meta["connectivity_constraint"] = a.connectivity
     (out / "model.xml").write_text(xml)
     (out / "init_cells.json").write_text(json.dumps(meta) + "\n")
