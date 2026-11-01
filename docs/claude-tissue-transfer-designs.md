@@ -539,8 +539,17 @@ Accepted, and how each point is handled:
 | L_p* / λ | 0.39 | 0.43 | 0.48 |
 
 Roughly linear, **L_p* ≈ 3.9 + 3.3·v** (three points). The rule therefore needs a speed term:
-**L_p* ≈ 0.35 λ + c·v**, where c is a time scale of a few pattern units. A γ = 2 run at v = 0.25 tests whether this
-collapses across rate scales (`claude-tissue-pzone-g2v25`).
+**L_p* ≈ 0.35 λ + c·v**, where c is a time scale of a few pattern units. A γ = 2 run at v = 0.25 (`claude-tissue-pzone-g2v25`, job `aijob-e00jxmjjpzbr3wwx7b`, COMPLETED, 310.3 s) tested
+whether this collapses across rate scales:
+
+| L_p | 2.75 | 3.0 | 3.25 | 3.5 | 4.0 |
+|---|---|---|---|---|---|
+| Distal A | −1.00 | 0.55 | 0.57 | 0.65 | 0.87 |
+
+- The switch stays between 2.75 and 3.0, the same as at v = 0.1, so **no shift is detected** at this 0.25 resolution.
+- That is consistent with a speed term c·v whose time scale c shrinks as 1/γ (pattern time). At γ = 2 the expected
+  shift would be about 0.25, within one bin.
+- A γ = 2 run at v = 0.4 is queued, where the expected shift (about 0.5) would be resolvable (`claude-tissue-pzone-g2v40`).
 2. **Below the switch is not always "bands".** At γ = 1 and 0.5 the tissue just below the switch is *unoriented*
    (distal A ≈ −0.1 to 0). Edge-parallel bands appear only for the narrowest zones, for example L_p ≤ 2.75 at γ = 2.
 3. **Resolution.** At γ = 2 the switch zone is only 2–3 cells wide, so "0.37" is not resolved to two digits. A
