@@ -185,7 +185,14 @@ def q(a, ps=(5, 25, 50, 75, 95)):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(); ap.add_argument("--seed", type=int, default=20261101); ap.add_argument("--n", type=int, default=20000)
-    a = ap.parse_args(argv); t0 = time.time(); out = C.OUT / RID; out.mkdir(parents=True, exist_ok=True)
+    ap.add_argument("--override", default=None, help="JSON {prior: {uniform: [lo, hi], basis: str}} replacing PRIORS entries (e.g. from M5)")
+    ap.add_argument("--rid", default=RID)
+    a = ap.parse_args(argv)
+    if a.override:
+        for k, v in json.load(open(a.override)).items():
+            assert k in PRIORS, k
+            PRIORS[k] = (list(v["uniform"]), v["basis"])
+    t0 = time.time(); out = C.OUT / a.rid; out.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(a.seed); checks = []
     # controls ----------------------------------------------------------------------------------------------
     s = sample(np.random.default_rng(1), 200, {"p_resp": 0.0}); s["_seed"] = 1
@@ -235,7 +242,7 @@ def main(argv=None):
     C.dump(out / "results.json", res)
     plot(out, r, direct, sweep, summ)
     ok = all(c["pass"] for c in checks)
-    man = {"schema": "frontier.neuro.manifest/1", "id": RID, "project": "flying-fish", "project_scale": "neural", "also_scales": ["organism"],
+    man = {"schema": "frontier.neuro.manifest/1", "id": a.rid, "prior_overrides": json.load(open(a.override)) if a.override else None, "project": "flying-fish", "project_scale": "neural", "also_scales": ["organism"],
            "evidence_kind": "simulated, not observed",
            "title": "Mauthner-triggered C-start escape to surface emergence, taxi and glide release (Monte Carlo over sourced priors)",
            "feeds": "engineering/simulation/glide.py integrate() with the glide-fixed-launch organism polar: a launch-speed distribution in place of the assumed fixed V0 = 12 m/s",
