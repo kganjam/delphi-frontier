@@ -39,7 +39,8 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
   and speeds follow approximately one rising trend, with deviations up to about 0.02 λ.
 - **Edge sharpness.** A smooth zone edge (logistic, width 1) lowers the switch to 0.26 λ (coarse grid). With width 2,
   rays appear at every nominal width tested, because the soft edge itself spreads growth.
-- **Kinetics.** b = 1.1, d = 13 gives about 0.35 λ, but b = 1.8, d = 30 gives rays below 0.28 λ.
+- **Kinetics.** b = 1.1, d = 13 gives about 0.35 λ on the coarse grid. b = 1.8, d = 30 gave 0.28 λ on the coarse grid,
+  but grid refinement puts it above 0.28 λ. Whether the switch depends on kinetics is unresolved (refined bracket pending).
 - **Robust statement.** It is qualitative: a narrow, sharp-edged apical zone gives bands, and a zone wider than a
   kinetics-, speed- and edge-dependent fraction of λ (about 0.25–0.5 across all runs here) gives rays.
 - **Numerical checks.** Grid refinement lowered the coarse-grid switch by up to about 0.04 λ and removed a coarse-grid
@@ -770,8 +771,14 @@ stripe-regime cell, b = 1.8 and d = 30 (λ ≈ 10.5, σ_max ≈ 0.062, close to 
 - **b = 1.8 and d = 30, lower bracket** (`claude-tissue-pzone-kinb`, job `aijob-e00h3w2kz3rjs79621`, COMPLETED, 392.3 s):
   distal A is −0.63, −0.53 and −0.43 at L_p = 1.5, 2.0 and 2.5 (0.69 at 3.0).
   The switch is about **2.9 ≈ 0.28 λ** (A = 0.5 crossing).
-- **The three kinetics on the same coarse grid give 0.39, 0.36 and 0.28 λ.** A grid-refinement run for b = 1.8 and
-  d = 30 is running (`claude-tissue-pzone-refine-kin`).
+- **The three kinetics on the same coarse grid give 0.39, 0.36 and 0.28 λ.**
+- **Refinement of b = 1.8, d = 30** (`claude-tissue-pzone-refine-kin`, job `aijob-e00g9x8h1w3bcksh9x`, COMPLETED, 1491.5 s):
+  on the half-cell grid, physical L_p = 2.0, 2.5 and 3.0 are all banded or unoriented (distal A −0.81, −0.44 and
+  −0.74). On the coarse grid, 3.0 gave 0.69.
+  - So the refined switch for this cell is **above 3.0 (> 0.28 λ)**: the coarse grid biased it *low*, the opposite of
+    b = 0.9.
+  - **The apparent kinetics dependence may be a grid artifact.** The claim is withdrawn pending the refined upper
+    bracket (physical L_p = 3.5–4.5, `claude-tissue-pzone-refine-kinb`).
 - **Distance from onset** (`claude-tissue-pzone-kin3`, job `aijob-e00wrk8ny0sndmatrt`, COMPLETED, 620.6 s), at b = 0.9,
   d = 11, one step deeper than d = 10:
 
