@@ -2,8 +2,8 @@
   "schema": "frontier.measured-container-runtime/1",
   "totals": {
     "gpu": {
-      "jobs": 21,
-      "seconds": 17313.5
+      "jobs": 22,
+      "seconds": 17675.8
     },
     "cpu": {
       "jobs": 3,
@@ -228,6 +228,16 @@
       "container_seconds": 119.2,
       "receipt": "results/infra/perturb/manifest-infra11.json",
       "receipt_sha256": "6acd4c325047ba091a0d389d833db5e3dc3ab1175e7484cbb3e6470da33c1be4",
+      "truncated": false,
+      "timed_out": false
+    },
+    {
+      "job_id": "aijob-e00grxtt94bh26a9c0",
+      "kind": "gpu",
+      "provider_state": "COMPLETED",
+      "container_seconds": 362.3,
+      "receipt": "results/infra/rd-inverse/manifest-infra37.json",
+      "receipt_sha256": "d93289cfbcf9c6decaca74f09b1fe2739a859a4f989436bf373a08846a486c86",
       "truncated": false,
       "timed_out": false
     },
