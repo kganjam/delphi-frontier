@@ -164,11 +164,13 @@ if fp.exists():
     a = json.loads(fp.read_text())["analysis"]; iface = a["interface"]
     checks = [{"name": "CA RMSD from the equilibrated start", "result": f"first 1 ns mean {a['rmsd_ca_A']['first_ns_mean']:.2f} A, last 2 ns mean {a['rmsd_ca_A']['last_2ns_mean']:.2f} A, max {a['rmsd_ca_A']['max']:.2f} A; last-2-ns drift {a['rmsd_ca_A']['last_2ns_slope_A_per_ns']:+.2f} A/ns"},
               {"name": "inter-chain CA contacts retained (<8 A, from the start frame)", "result": f"{iface['retained_fraction_last_2ns_mean'] * 100:.0f}% over the last 2 ns, minimum {iface['retained_fraction_min'] * 100:.0f}% of {iface['n_initial_ca_pairs_lt8A']} initial pairs; the two chains never separate (closest CA {iface['min_interchain_ca_distance_last']:.1f} A at the end)"},
-              {"name": "per-residue flexibility vs start-model pLDDT", "result": f"Spearman rho {a['rmsf_vs_start_plddt_spearman']['rho']:.2f} (p={a['rmsf_vs_start_plddt_spearman']['p']:.3f}): NOT significant, so the correlation seen for the ShhN monomer did not reproduce here"},
+              {"name": "per-residue flexibility vs start-model pLDDT, pooled over both chains", "result": f"Spearman rho {a['rmsf_vs_start_plddt_spearman']['rho']:.2f} (p={a['rmsf_vs_start_plddt_spearman']['p']:.3f}): not significant pooled - but see the per-chain correction below, which is where this test belongs"},
               {"name": "radius of gyration, first vs last frame", "result": f"{a['rg_ca_A_first_last'][0]:.2f} -> {a['rg_ca_A_first_last'][1]:.2f} A"},
               {"name": "all saved values finite", "result": str(a["all_finite"])},
               {"name": "throughput", "result": f"{a['ns_per_day']:.0f} ns/day on one H100, {a['n_atoms']} atoms"}]
     srcs = [R / "md_fgf_complex/md_receipt.json", R / "md_fgf_complex/md_summary.json", R / "md_fgf_complex/final_frame_protein.pdb", R / "md_fgf_complex/job_log.txt"]
+    stp = R / "md_complex_stratified.json"
+    ST = json.loads(stp.read_text()) if stp.exists() else None
     ncp = R / "md_fgf_negctrl/md_receipt.json"
     if ncp.exists():
         na = json.loads(ncp.read_text())["analysis"]; ni = na["interface"]
@@ -179,13 +181,26 @@ if fp.exists():
                                                                                                         if ni["retained_fraction_last_2ns_mean"] > 0.6 * iface["retained_fraction_last_2ns_mean"] else
                                                                                                         "the non-cognate interface loosened markedly more than the cognate one over 10 ns; a longer, replicated test would be needed before treating that as a specificity signal")})
         srcs += [R / "md_fgf_negctrl/md_receipt.json", R / "md_fgf_negctrl/md_summary.json", R / "md_fgf_negctrl/final_frame_protein.pdb", R / "md_fgf_negctrl/job_log.txt"]
+    if ST:
+        cc = ST["contact_comparison"]
+        checks.insert(4, {"name": "the same comparison as an absolute count, not a fraction",
+                          "result": f"{cc['cognate_retained_count']} surviving inter-chain CA pairs for the cognate complex vs "
+                                    f"{cc['noncognate_retained_count']} for the non-cognate ({cc['ratio_cognate_over_noncognate']}x). " + cc["reading"]})
+        sf = ST["stratified_finding"]
+        checks.append({"name": "CORRECTION: flexibility vs confidence, split by chain instead of pooled",
+                       "result": "; ".join(f"{k}: rho {v['rho']} (R2 {v['r2']}, n={v['n']})" for k, v in sf["surviving_groups"].items() if "interface" in k)
+                                 + f". {sf['n_tests']} groups tested, Bonferroni alpha {sf['bonferroni_alpha']}. " + sf["finding"]})
+        srcs.append(stp)
     write(base("openmm-fgf10a-fgfr2b-md", "10 ns MD of the predicted Fgf10a-Fgfr2b complex, run alongside the non-cognate Fgfr2c control",
                "macromolecular", "SIMULATED classical MD of a PREDICTED complex; not an observation",
                f"OpenMM 8.6.1 CUDA mixed precision, amber14 + TIP3P-FB, PME 1.0 nm, HBonds, LangevinMiddle 301 K, 2 fs, 0.15 M NaCl, seed {a['seed']}",
                "Start: the Boltz-2 complex model (model_0.cif). Minimise, 100 ps NVT, 200 ps NPT, 10 ns production NPT, CA frames every 10 ps. One replica per complex. Nebius AI job on one H100; the job log is reassembled and checked before use.",
                srcs,
                ["binding affinity, ddG or on/off rates", "FGF10-FGFR2b isoform specificity: the non-cognate control behaves the same way",
-                "that the predicted docking pose is correct (a wrong pose can also persist for 10 ns)", "anything about fin size or flight"],
+                "that the predicted docking pose is correct (a wrong pose can also persist for 10 ns)",
+                "a causal link between predictor confidence and simulated flexibility: both may follow from the same sparse MSA coverage",
+                "that the flexibility is local - whole-complex superposition leaves rigid-body rocking in the RMSF",
+                "anything about fin size or flight"],
                checks,
                ["Force-field and water-model error are not quantified.", "No ddG was computed: the hosted stab_ddg tool needs an upload manifest whose format is undocumented."],
                ["Do the two complexes separate over hundreds of ns, or under free-energy perturbation?"],

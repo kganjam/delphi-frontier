@@ -1,0 +1,203 @@
+{
+ "alignment_limitation": "RMSF was computed after superposing the WHOLE complex, so per-chain rigid-body motion leaks into every value here. Per-chain realignment needs the frames, which the job log does not return, so domain rocking and local flexibility are NOT separated.",
+ "contact_comparison": {
+  "cognate_retained_count": 69.5,
+  "noncognate_retained_count": 42.4,
+  "ratio_cognate_over_noncognate": 1.64,
+  "reading": "Reported as a fraction the two look similar (73 % vs 62 %); as an absolute count they do not (69.5 vs 42.4 surviving pairs, 1.64x). Both are stated. The count gap is inherited from the predicted starting poses (95 vs 68 initial pairs), not produced by the MD, and the predictor scored the NON-cognate complex higher, so the gap cannot be read as isoform specificity without a template-free prediction to compare against."
+ },
+ "per_case": {
+  "cognate_fgf10a_fgfr2b": {
+   "chain_lengths": {
+    "A": 144,
+    "B": 211
+   },
+   "contacts": {
+    "n_initial_ca_pairs_lt8A": 95,
+    "retained_COUNT_last_2ns": 69.5,
+    "retained_fraction_last_2ns": 0.732
+   },
+   "n_interface_residues_used": 75,
+   "rmsf_vs_plddt_by_group": [
+    {
+     "group": "all residues, both chains (as reported before)",
+     "mean_plddt": 85.7,
+     "mean_rmsf_A": 1.03,
+     "n": 355,
+     "p": 0.053313811414728914,
+     "rho": -0.103,
+     "variance_explained_r2": 0.011
+    },
+    {
+     "group": "chain A only",
+     "mean_plddt": 86.7,
+     "mean_rmsf_A": 0.88,
+     "n": 144,
+     "p": 0.34163670265352836,
+     "rho": -0.08,
+     "variance_explained_r2": 0.006
+    },
+    {
+     "group": "chain A, interface residues",
+     "mean_plddt": 66.8,
+     "mean_rmsf_A": 0.86,
+     "n": 37,
+     "p": 1.6078784665229473e-06,
+     "rho": -0.697,
+     "variance_explained_r2": 0.486
+    },
+    {
+     "group": "chain A, non-interface residues",
+     "mean_plddt": 93.6,
+     "mean_rmsf_A": 0.89,
+     "n": 107,
+     "p": 0.046883637209433,
+     "rho": -0.193,
+     "variance_explained_r2": 0.037
+    },
+    {
+     "group": "chain B only",
+     "mean_plddt": 85.1,
+     "mean_rmsf_A": 1.13,
+     "n": 211,
+     "p": 0.17777317719699268,
+     "rho": 0.093,
+     "variance_explained_r2": 0.009
+    },
+    {
+     "group": "chain B, interface residues",
+     "mean_plddt": 76.5,
+     "mean_rmsf_A": 0.88,
+     "n": 38,
+     "p": 0.10230227302045275,
+     "rho": 0.269,
+     "variance_explained_r2": 0.072
+    },
+    {
+     "group": "chain B, non-interface residues",
+     "mean_plddt": 86.9,
+     "mean_rmsf_A": 1.19,
+     "n": 173,
+     "p": 0.3582985325740897,
+     "rho": -0.07,
+     "variance_explained_r2": 0.005
+    }
+   ]
+  },
+  "noncognate_fgf10a_fgfr2c": {
+   "chain_lengths": {
+    "A": 144,
+    "B": 213
+   },
+   "contacts": {
+    "n_initial_ca_pairs_lt8A": 68,
+    "retained_COUNT_last_2ns": 42.4,
+    "retained_fraction_last_2ns": 0.623
+   },
+   "n_interface_residues_used": 87,
+   "rmsf_vs_plddt_by_group": [
+    {
+     "group": "all residues, both chains (as reported before)",
+     "mean_plddt": 85.8,
+     "mean_rmsf_A": 0.93,
+     "n": 357,
+     "p": 0.00012075005396030165,
+     "rho": -0.202,
+     "variance_explained_r2": 0.041
+    },
+    {
+     "group": "chain A only",
+     "mean_plddt": 88.2,
+     "mean_rmsf_A": 0.79,
+     "n": 144,
+     "p": 0.10431297995576036,
+     "rho": -0.136,
+     "variance_explained_r2": 0.018
+    },
+    {
+     "group": "chain A, interface residues",
+     "mean_plddt": 69.4,
+     "mean_rmsf_A": 0.87,
+     "n": 36,
+     "p": 1.7058010631166932e-06,
+     "rho": -0.703,
+     "variance_explained_r2": 0.495
+    },
+    {
+     "group": "chain A, non-interface residues",
+     "mean_plddt": 94.4,
+     "mean_rmsf_A": 0.77,
+     "n": 108,
+     "p": 0.3844996485234501,
+     "rho": -0.085,
+     "variance_explained_r2": 0.007
+    },
+    {
+     "group": "chain B only",
+     "mean_plddt": 84.2,
+     "mean_rmsf_A": 1.02,
+     "n": 213,
+     "p": 0.9566289610632802,
+     "rho": 0.004,
+     "variance_explained_r2": 0.0
+    },
+    {
+     "group": "chain B, interface residues",
+     "mean_plddt": 76.2,
+     "mean_rmsf_A": 0.84,
+     "n": 51,
+     "p": 0.00949132597888877,
+     "rho": -0.36,
+     "variance_explained_r2": 0.13
+    },
+    {
+     "group": "chain B, non-interface residues",
+     "mean_plddt": 86.7,
+     "mean_rmsf_A": 1.08,
+     "n": 162,
+     "p": 0.215409852362775,
+     "rho": -0.098,
+     "variance_explained_r2": 0.01
+    }
+   ]
+  }
+ },
+ "scope": "SIMULATED MD of PREDICTED complexes; a re-reading of saved summaries, no new simulation; nothing observed",
+ "source_files": {
+  "md_fgf_complex/md_summary.json": "9537d0b70e193f8c978e1f1cf754365a2818bac0eaa1749624c47c1f27d444df",
+  "md_fgf_negctrl/md_summary.json": "c00bbd37905c44f98c760f47c093c3c721c5ca59ceb2f7ebd6f8c08ad4988d82",
+  "structures/fgf_complex/model_0.cif": "c8116b29e5d47f2f8a69a02ce3aef95d5fd4426e8dbb0b725cdcb1922b6869b7",
+  "structures/fgf_vs_fgfr2c_negctrl/model_0.cif": "1f05f9616072a31029c3b845a8af715553b9605eafb7cb7bb5f48ce6c4919846"
+ },
+ "stratified_finding": {
+  "bonferroni_alpha": 0.00357,
+  "finding": "The pooled test was the wrong test. Splitting by chain, the anticorrelation between per-residue flexibility and start-model pLDDT is concentrated in the LIGAND chain's INTERFACE residues and is strong there in BOTH complexes independently (cognate rho -0.70, non-cognate rho -0.70, R2 ~0.49, p ~2e-6, surviving Bonferroni). The receptor chain shows nothing. So the earlier 'the correlation does not reproduce on the complex' was a dilution artefact: the receptor chain is built from a close template, scores uniformly high pLDDT and contributes little rank spread, which flattens the pooled statistic. The earlier null is withdrawn and replaced by this narrower, reproduced result.",
+  "n_tests": 14,
+  "surviving_groups": {
+   "cognate_fgf10a_fgfr2b | chain A, interface residues": {
+    "n": 37,
+    "p": 1.6078784665229473e-06,
+    "r2": 0.486,
+    "rho": -0.697
+   },
+   "noncognate_fgf10a_fgfr2c | all residues, both chains (as reported before)": {
+    "n": 357,
+    "p": 0.00012075005396030165,
+    "r2": 0.041,
+    "rho": -0.202
+   },
+   "noncognate_fgf10a_fgfr2c | chain A, interface residues": {
+    "n": 36,
+    "p": 1.7058010631166932e-06,
+    "r2": 0.495,
+    "rho": -0.703
+   }
+  },
+  "what_it_still_does_not_show": [
+   "that the predicted poses are correct - the same pattern appears in the complex the predictor itself mis-ranked",
+   "a causal link: low confidence and high flexibility may both follow from the same sparse MSA coverage",
+   "that the motion is local - whole-complex superposition leaves rigid-body rocking in the RMSF",
+   "anything about binding affinity or isoform specificity"
+  ]
+ }
+}
