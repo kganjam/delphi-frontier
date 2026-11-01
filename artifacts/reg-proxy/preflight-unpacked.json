@@ -115,7 +115,7 @@
   {
    "control": "HTTP 200 refused without consuming the body",
    "passed": true,
-   "detail": "HTTP 200 from a server that streams forever: refused on status, 0 body bytes read or charged (server wrote 0 KiB into socket buffers)"
+   "detail": "HTTP 200 from a server that streams forever: refused on status, 0 body bytes read or charged (server wrote 64 KiB into socket buffers)"
   },
   {
    "control": "oversized 206 body bounded and charged",
@@ -136,6 +136,11 @@
    "control": "caps refuse a request before it is sent",
    "passed": true,
    "detail": "a 100-byte request against a 50-byte window, library or total cap is refused before it is sent"
+  },
+  {
+   "control": "cap boundary: sentinel byte and retries reserved",
+   "passed": true,
+   "detail": "100 B request vs 100 B cap refused unsent; oversized body vs cap 101 charges exactly 101 on all ledgers; retry reservation refuses a second attempt that could exceed the cap"
   },
   {
    "control": "index download is charged to the library",

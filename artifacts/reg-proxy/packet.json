@@ -1,9 +1,10 @@
 {
+ "amendment2_sha256": "69e4d1bcb7dbcd16969bda58de962d5db32a3aba1873ee0cb3c04be68d13d5cc",
  "amendment_sha256": "048e4745f78462a43bf6790a8d7d8a528f4b9c81cb10c0cfbd41d037e5657637",
  "archive": {
-  "bytes": 563190,
+  "bytes": 563958,
   "path": "artifacts/reg-proxy/packet.tar.gz",
-  "sha256": "a06c88ad31cb36a33cea5c3e36c063d38d0a27cec00ab5602ddce5b29ef820fb"
+  "sha256": "4b0e6af502b0c841b4003fb92ea25f4dad649522ea6f3c2d0701defab748f271"
  },
  "contract": {
   "COPS_OUT": "exact fresh output directory (must not exist)",
@@ -46,14 +47,14 @@
    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   {
-   "bytes": 19638,
+   "bytes": 19815,
    "path": "engineering/reg_proxy/window_count.py",
-   "sha256": "8e0a109014ee2752ca5231ad66f3da531c131be0ad7b0e9f4303920ae7324177"
+   "sha256": "6b1dfa554e4dffe64d8712eb16ad30e9f0a7fb91731537e9aeffa5af1113345e"
   },
   {
-   "bytes": 30348,
+   "bytes": 32833,
    "path": "engineering/reg_proxy/controls_synth.py",
-   "sha256": "bd0f91987941cb8cc2442527352214e34e293640430c8925608ea777c7799e7d"
+   "sha256": "6896945e38b81ab9ad2cbe065b1b3db84105d9a6563c8b833851fdce38df1e68"
   },
   {
    "bytes": 4920,
@@ -69,6 +70,11 @@
    "bytes": 2651,
    "path": "engineering/reg_proxy/transport_amendment.json",
    "sha256": "048e4745f78462a43bf6790a8d7d8a528f4b9c81cb10c0cfbd41d037e5657637"
+  },
+  {
+   "bytes": 862,
+   "path": "engineering/reg_proxy/transport_amendment_2.json",
+   "sha256": "69e4d1bcb7dbcd16969bda58de962d5db32a3aba1873ee0cb3c04be68d13d5cc"
   },
   {
    "bytes": 492634,
@@ -105,5 +111,5 @@
  "protocol_sha256": "7a2ec7be0132fe77140ad3647e229400affe74698f53d4b059954e35dc723dc5",
  "python": ">=3.10",
  "schema": "frontier.reg-proxy.packet/1",
- "source_commit": "cfd17599454bde08f1904493023c7985050b2a63"
+ "source_commit": "d80063f9de2b5383f7918f93df4671903950c1c3"
 }
