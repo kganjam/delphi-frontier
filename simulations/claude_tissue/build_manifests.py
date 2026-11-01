@@ -166,10 +166,12 @@ def cards():
             parameter_unknowns=["Generic kinetics; speeds in pattern units."],
             open_questions=["Measure outgrowth speed / (ray spacing x patterning rate) in a fin at ray-patterning onset."],
             limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless; 4 seeds per point."])
-    if (A/"claude-tissue-pzone/pzone.json").exists():
-        pz = J("claude-tissue-pzone/pzone.json"); sm = pz["summary"]
-        C["claude-tissue-pzone"] = dict(
-            title="Reviewer-requested control: continuous growth in a distal proliferation zone of variable width, from a long starting fold (simulated, H100)",
+    for _nm in ("pzone", "pzone_y8"):
+      _dir = "claude-tissue-" + _nm.replace("_", "-")
+      if (A/f"{_dir}/{_nm}.json").exists():
+        pz = J(f"{_dir}/{_nm}.json"); sm = pz["summary"]
+        C[_dir] = dict(
+            title=("Reviewer-requested control: continuous growth in a distal proliferation zone of variable width, from a long starting fold (simulated, H100)" if _nm == "pzone" else "Proliferation-zone growth from a SHORT (8-row) starting fold: separates start length from the row-insertion scheme (simulated, H100)"),
             scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; 12 seeds per condition",
             model=dict(name="2-D Schnakenberg, finite-volume growth confined to a distal zone of width Lp (apical to uniform); cells split, no rows inserted at steady state",
                        context=f"start length {pz['meta']['Y0']} (>4 wavelengths) -> {pz['meta']['Y1']}, d={pz['meta']['d']}, Lp in {pz['meta']['lps']} (0 = uniform)"),

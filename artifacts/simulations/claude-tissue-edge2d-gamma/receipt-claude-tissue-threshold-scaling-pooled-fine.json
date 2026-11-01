@@ -1,0 +1,28 @@
+{
+ "code_sha256": {
+  "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+  "simulations/claude_tissue/threshold_scaling.py": "565b04057bc694bb3b780a53735574f8509ad664596d49b0bb22239f1351ccb6"
+ },
+ "command": "python3 simulations/claude_tissue/threshold_scaling.py",
+ "environment": {
+  "OMP_NUM_THREADS": null,
+  "numpy": "2.4.4",
+  "python": "3.13.12"
+ },
+ "evidence_kind": "simulated; not observed",
+ "exit_code": 0,
+ "gpu": "none used (CPU numpy); no Nebius job started",
+ "input_sha256": {
+  "artifacts/simulations/claude-tissue-edge2d-cases/edge2d_cases.json": "b25987bcb835c8d7201ee084da4769d8c42b2dd8b076f8d8008d53eaa7d74f3c",
+  "artifacts/simulations/claude-tissue-edge2d-gamma-fine/edge2d_gamma_fine.json": "b59f3a954acecc753f29c065f6cd29a54962732e27afdfa15183c7a279346538",
+  "artifacts/simulations/claude-tissue-edge2d-gamma/edge2d_gamma.json": "d0a9642ed0830947a6e02501e0af0e7549a785fdd0825e30d77a5d0e84a9b179",
+  "artifacts/simulations/claude-tissue-edge2d/edge2d.json": "0eb6b2c07443232210ce3d325356a1c7a5930666878dc8a29d16c827dec17615"
+ },
+ "name": "claude-tissue-threshold-scaling-pooled-fine",
+ "output_sha256": {
+  "artifacts/simulations/claude-tissue-edge2d-gamma/threshold-scaling-pooled.json": "5f21c75e85b6b73410c662b47892168e35adf398d998def4403a889e179cae22"
+ },
+ "resource_cap": "systemd-run --user --scope TasksMax=256 MemoryMax=4G MemorySwapMax=0 RuntimeMaxSec=600; OMP_NUM_THREADS=1",
+ "seed": "none (derived)",
+ "wall_s": 0.011
+}

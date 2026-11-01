@@ -26,8 +26,11 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 `-edge2d-cases`, `-edge2d-gamma`, `-fan`, `-fan-video`, `-growing-rd`, `-rd-wavelength`).
 - In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
   pattern is spots) and growth along the fin axis.
-- Under edge (distal) growth, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern units. A
-  reversal of orientation behind a moving front is a known phenomenon. Its scaling with patterning rate is only weakly supported here.
+- With growth confined to a narrow apical zone from a long fold, the pattern forms bands parallel to the edge.
+  Ray-like orientation needs the proliferating zone to be wider than about one pattern wavelength (12-seed control).
+- With row insertion from a very short fold, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern
+  units. That threshold tracks λ·σ (pooled slope 0.50). A reversal of orientation behind a moving front is a known
+  phenomenon.
 - On a fan-shaped fold, slow distal growth gives radial stripes that multiply as the fan widens.
 - 1-D runs: uniform growth gives frequency doubling, edge growth gives one-at-a-time insertion.
 
@@ -323,6 +326,42 @@ arc at five radii (45 to 174) and compared with r·Θ/λ* (5.1 to 19.5).
 **Prediction.** If rays were laid down by such a mechanism under slow outgrowth, ray number would rise with distal fin
 width at fixed spacing. Insertion or branching events would sit distally. That is testable against how rays are added
 or branch in widening pectoral fins (not checked here).
+
+**Reviewer-requested control: continuous growth in a distal proliferation zone, from a long start**
+(`claude-tissue-pzone`, job `aijob-e00st593zksc50npka`, COMPLETED, 883.0 s). The fold starts at length 48 (more than 4
+wavelengths) and grows to 192 by finite-volume growth confined to the distal L_p of tissue. New tissue inherits the
+local field, so no rows are inserted at steady state. There are 12 seeds per condition; values are mean A with 95% CI.
+
+| Proliferation zone | v = 0.1 | v = 0.25 | v = 0.4 |
+|---|---|---|---|
+| L_p = 2 (apical) | −0.78 ± 0.05 | −1.00 | −1.00 |
+| L_p = 12 (≈ 1 λ) | 0.66 ± 0.06 | 0.51 ± 0.08 | 0.39 ± 0.10 |
+| L_p = 48 | 0.86 ± 0.02 | 0.88 ± 0.02 | 0.83 ± 0.04 |
+| Whole length (uniform) | 0.94 ± 0.03 | 0.95 ± 0.01 | 0.94 ± 0.01 |
+| Static | 0.02 ± 0.11 | | |
+
+**Reading.** This changes the edge-growth conclusion.
+- From a long start, a **narrow apical zone gives bands parallel to the distal edge at every speed tested**.
+- Ray-like proximo-distal stripes need a proliferation zone **wider than about one wavelength**. Orientation improves
+  steadily with zone width, and for wide zones the speed hardly matters.
+- The ray-like stripes under slow row-insertion growth (edge2d) therefore depended on the short 8-row start and/or the
+  row-insertion scheme. A run of the same finite-volume model from an 8-row start is queued to separate the two
+  (`claude-tissue-pzone-y8`).
+
+**Limitation.** With L_p = 2 the zone is about one cell wide, so the effective elongation was slightly below v:
+final length 187, not 192.
+
+**Testable prediction, revised.** If rays were patterned by such a mechanism, ray-like orientation would need
+proliferation spread over a distal zone at least about one ray-spacing long. That can be checked with a proliferation
+marker (EdU or PCNA) in the fin fold at the time rays are laid down.
+
+**Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
+- Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and
+  0.3 reproduce the earlier run exactly, a determinism check.
+- **Pooled**, the A = 0 crossing scales with γ at log-slope 0.50, matching the √γ prediction. The A = 0.5 crossing
+  still does not scale (0.13).
+- So "orientation lost" tracks λ·σ, while "partly oriented" is noise-dominated: SD 0.3–0.5 near the threshold with
+  4 seeds. This applies to the row-insertion scheme only (see the proliferation-zone control above).
 
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;

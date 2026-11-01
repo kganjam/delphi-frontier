@@ -1,0 +1,143 @@
+{
+  "base_commit": "11042cb244af852286a869171391680882f45b89",
+  "code_sha256": {
+    "simulations/claude_tissue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "simulations/claude_tissue/build_manifests.py": "337b42fecaf270ae91baff1550ea3be346f739c52da1c9b9272a865719b9077b",
+    "simulations/claude_tissue/collect_gpu2.py": "2e8fda8150bda88fa305d6d76b7e870a526b00b873517265f16c66e3caa88b4e",
+    "simulations/claude_tissue/collect_rd_v2.py": "0e12867daab7054d0bd22d3d9dfaeea63d38f77a4b20076e2bd1a6471cf9325e",
+    "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
+    "simulations/claude_tissue/dev_programme.py": "ff9f4336262a7f650edfc4185c7b247da697a5a87321d117d3bc11928e33a070",
+    "simulations/claude_tissue/dev_programme_species.py": "21f558444192465bd3a394c86695596cc51e99d2af9b3b3f788afa75899ae8b4",
+    "simulations/claude_tissue/dev_programme_video.py": "db8f8d9e26404ed37dcd39175fbed5789c66109d1d2f2b212c823e17f80fbe7d",
+    "simulations/claude_tissue/edge2d_cases_gpu.py": "f2457f94c42a99034aa2b9068eb35dbc7275584332719965935375396e8f48e6",
+    "simulations/claude_tissue/edge2d_gamma_gpu.py": "b972677347c58cf08605b952eebcd506666d2acda164a07b6643d15f7b8981b9",
+    "simulations/claude_tissue/edge2d_gpu.py": "219d919d25dc4361fc5fb8f42cd0b01e90d5f1ca0a32ab99b456c8f83c8f708e",
+    "simulations/claude_tissue/edge_growth_rd.py": "ff17c026f5f25dc1b7257faf572e8d46c2d1f9ab774421875ed835dddd72fc09",
+    "simulations/claude_tissue/fan_gpu.py": "8c6ef6ff181955d998282780d75406dbfa98fd169ecf11dd416663990a146916",
+    "simulations/claude_tissue/fan_video_gpu.py": "88d7f4aecb9a3edfe31b7c5e23d6bebf5eb6801dad8a84a557d8c127b481fb77",
+    "simulations/claude_tissue/fin_growth.py": "15653ce43228ad2dd207899110b8a6b98b0a8e15c6c674d66566be8a4d03f69b",
+    "simulations/claude_tissue/growing_rd.py": "3381bbce05e514d73d23051dd2614d4a6179e2f6ef09d7901ddafa0d6fc81d3d",
+    "simulations/claude_tissue/growing_rd_v2.py": "daf29f9ab143409d5385c1369f695e05ab6c1c1358bbf6ed26a27c33280b22cb",
+    "simulations/claude_tissue/identifiability.py": "bbb3d4eead39125f928f6798ec3e055ad29699a688aaa20f7133cab9410b0404",
+    "simulations/claude_tissue/identifiability_v2.py": "7359c0ae9acc946361fce480b36f3d0a6343af9081b7137178332a4f6c82cfa7",
+    "simulations/claude_tissue/phase_map_gpu.py": "3e58dd2d888ccf392b4ec3e0f7ec2810112c1750a87088f379b111a3aab9f09b",
+    "simulations/claude_tissue/pzone_gpu.py": "9288e82d5a45187662fabc723e784b459b1ce937f0182edb6ce1ea1a3a18b78a",
+    "simulations/claude_tissue/rd_convergence.py": "b23b305e794d2095505cb170eed0f155b559a4b9fa387f1dba3f31e84f482bf6",
+    "simulations/claude_tissue/rd_wavelength.py": "cb0d94c7ef51ce28ff426a5d93310b01d9954569bfca2dccdd3c675ac12559d8",
+    "simulations/claude_tissue/rd_wavelength_v2_gpu.py": "793c452a83d0288827d6054924a961a5c141cc164cc6aaa3080c9b55469dad54",
+    "simulations/claude_tissue/threshold_scaling.py": "565b04057bc694bb3b780a53735574f8509ad664596d49b0bb22239f1351ccb6",
+    "simulations/claude_tissue/transfer_regimes.py": "59d228120ae335b3f903ecf9e311dc4f40654c2845a8c492146c03f9c17d2b1a",
+    "simulations/claude_tissue/uniform2d_gpu.py": "216a97a8916435f43782385b52668e811dfc53bee8557b514537c602eb5e3af4",
+    "simulations/claude_tissue/uniform2d_y0_gpu.py": "c479a1460a92c3b01ad1428d19d247657bb697b76f61f2b44842a1eea8629288"
+  },
+  "does_not_establish": [
+    "Does not establish that fin rays are Turing patterns.",
+    "Dimensionless; generic kinetics."
+  ],
+  "evidence_kind": "simulated; dimensionless; 12 seeds per condition",
+  "experiment_design": "docs/claude-tissue-transfer-designs.md",
+  "files": {
+    "job-log.txt": {
+      "bytes": 117822,
+      "sha256": "2964849642c6a3cf8bbd336c6ea1841256899a9859aa61c71e8fbe5f49718ab5"
+    },
+    "pzone.json": {
+      "bytes": 51675,
+      "sha256": "d0da77c4a9a55b31251872455febccc6cc78d5ab31d9a9263bc94ff447638754"
+    },
+    "pzone.png": {
+      "bytes": 685492,
+      "sha256": "0d32d3854bce20381f1e7bcacb6ae3fae056864a324e361ad87c586b456394d3"
+    },
+    "receipt-claude-tissue-pzone.json": {
+      "bytes": 1193,
+      "sha256": "7350ce6909f73c09bb39ab7b29d517f28f5b30a8a35080641e549b9a57fde960"
+    }
+  },
+  "id": "claude-tissue-pzone",
+  "input_sha256": {},
+  "measurement_rows": 0,
+  "runs": [
+    {
+      "code_changed_since_run": null,
+      "command": "python3 /work/pzone.py (args in META)",
+      "compute": "Nebius aijob-e00st593zksc50npka (NVIDIA H100 80GB HBM3), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
+      "exit_code": 0,
+      "job_state": "COMPLETED",
+      "receipt": "receipt-claude-tissue-pzone.json",
+      "run": "claude-tissue-pzone",
+      "seed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "superseded": null,
+      "wall_s": 883.0
+    }
+  ],
+  "scales": [
+    "tissue",
+    "developmental"
+  ],
+  "schema": "frontier.claude-tissue-simulation.manifest/1",
+  "status": "computed_not_observed",
+  "studio_card": {
+    "couplings": [],
+    "equations": [
+      {
+        "label": "Growth with dilution in the zone",
+        "source": "this harness (finite volume)",
+        "tex": "\\partial_t(hc)=h\\,f(c)+\\text{fluxes},\\quad \\dot h_i=\\tfrac{v}{L_p}h_i\\ (i\\in\\text{zone})"
+      }
+    ],
+    "evidence_kind": "simulated; dimensionless; 12 seeds per condition",
+    "id": "claude-tissue-pzone",
+    "limitations": [
+      "Does not establish that fin rays are Turing patterns.",
+      "Dimensionless; generic kinetics."
+    ],
+    "manifest": "artifacts/simulations/claude-tissue-pzone/manifest.json",
+    "model": {
+      "context": "start length 48 (>4 wavelengths) -> 192, d=10.0, Lp in [2, 12, 48, 0] (0 = uniform)",
+      "name": "2-D Schnakenberg, finite-volume growth confined to a distal zone of width Lp (apical to uniform); cells split, no rows inserted at steady state"
+    },
+    "native": true,
+    "numerical_results": [
+      "Lp=2, v=0.1: A = -0.78 +/- 0.05 (95% CI), 0% seeds A>0.8",
+      "Lp=2, v=0.25: A = -1.00 +/- 0.00 (95% CI), 0% seeds A>0.8",
+      "Lp=2, v=0.4: A = -1.00 +/- 0.00 (95% CI), 0% seeds A>0.8",
+      "Lp=12, v=0.1: A = 0.66 +/- 0.06 (95% CI), 8% seeds A>0.8",
+      "Lp=12, v=0.25: A = 0.51 +/- 0.08 (95% CI), 0% seeds A>0.8",
+      "Lp=12, v=0.4: A = 0.39 +/- 0.10 (95% CI), 0% seeds A>0.8",
+      "Lp=48, v=0.1: A = 0.86 +/- 0.02 (95% CI), 100% seeds A>0.8",
+      "Lp=48, v=0.25: A = 0.88 +/- 0.02 (95% CI), 100% seeds A>0.8",
+      "Lp=48, v=0.4: A = 0.83 +/- 0.04 (95% CI), 58% seeds A>0.8",
+      "Lp=uniform, v=0.1: A = 0.94 +/- 0.03 (95% CI), 100% seeds A>0.8",
+      "Lp=uniform, v=0.25: A = 0.95 +/- 0.01 (95% CI), 100% seeds A>0.8",
+      "Lp=uniform, v=0.4: A = 0.94 +/- 0.01 (95% CI), 100% seeds A>0.8",
+      "Lp=static, v=0.0: A = 0.02 +/- 0.11 (95% CI), 0% seeds A>0.8"
+    ],
+    "open_questions": [
+      "Map Lp and v onto measured distal proliferation in fin folds."
+    ],
+    "parameter_unknowns": [
+      "Real proliferation-zone width and outgrowth speed of fin folds are not measured here."
+    ],
+    "scales": [
+      "tissue",
+      "developmental"
+    ],
+    "sources": [],
+    "title": "Reviewer-requested control: continuous growth in a distal proliferation zone of variable width, from a long starting fold (simulated, H100)"
+  },
+  "title": "Reviewer-requested control: continuous growth in a distal proliferation zone of variable width, from a long starting fold (simulated, H100)"
+}

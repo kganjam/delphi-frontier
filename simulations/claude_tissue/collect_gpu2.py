@@ -90,8 +90,8 @@ if kind in ("edge2d", "uniform2d", "edge2d_cases", "uniform2d_y0", "edge2d_gamma
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-threads", "1", "-framerate", "10", "-i", f"{tmp}/f%03d.png", "-vf", "pad=ceil(iw/2)*2:ceil(ih/2)*2",
                         "-pix_fmt", "yuv420p", "-c:v", "libx264", str(OUT/f"{kind}.mp4")], check=True)
         subprocess.run(["cp", f"{tmp}/f{fr[-1]['k']:03d}.png", str(OUT/"poster.png")], check=True); outs += [OUT/f"{kind}.mp4", OUT/"poster.png"]
-elif kind == "pzone":
-    OUT = ROOT/"artifacts/simulations/claude-tissue-pzone"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/pzone_gpu.py"
+elif kind in ("pzone", "pzone_y8"):
+    OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = "simulations/claude_tissue/pzone_gpu.py"
     summ = {}
     for r in rows:
         k = f"lp={r['lp_label']},v={r['speed']}"
@@ -102,7 +102,7 @@ elif kind == "pzone":
                                        frac_seeds_A_gt_0_8=float(np.mean(a > 0.8)))
     res = dict(job=job, job_state=state, meta=meta, done=done, n_rows=len(rows), summary=summ, rows=rows,
                reading="lp = width of the distal proliferation zone (small = apical/edge, 'uniform' = whole length); A +1 = proximo-distal stripes")
-    (OUT/"pzone.json").write_text(json.dumps(res, indent=1))
+    (OUT/f"{kind}.json").write_text(json.dumps(res, indent=1))
     fig = plt.figure(figsize=(16, 8)); ax = fig.add_subplot(2, 1, 1)
     lps = [l for l in meta["lps"]]; cols = ["tab:red", "tab:orange", "tab:green", "tab:blue"]
     for l, c in zip(lps, cols):
@@ -118,8 +118,8 @@ elif kind == "pzone":
     for i, s_ in enumerate(sn[:13]):
         a2 = fig.add_subplot(2, len(sn[:13]), len(sn[:13]) + 1 + i); a2.imshow(img(s_), cmap="magma", origin="lower", aspect="auto"); a2.axis("off")
         a2.set_title(f"{'static' if s_['lp'] < 0 else ('unif' if s_['lp'] == 0 else 'Lp=' + str(s_['lp']))}\nv={s_['speed']}", fontsize=6)
-    fig.tight_layout(); fig.savefig(OUT/"pzone.png", dpi=100); plt.close(fig)
-    outs = [OUT/"pzone.json", OUT/"pzone.png"]
+    fig.tight_layout(); fig.savefig(OUT/f"{kind}.png", dpi=100); plt.close(fig)
+    outs = [OUT/f"{kind}.json", OUT/f"{kind}.png"]
 elif kind in ("fan", "fan_video"):
     OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = f"simulations/claude_tissue/{kind}_gpu.py"
     summ = {}
@@ -191,7 +191,7 @@ else:
     fig.tight_layout(); fig.savefig(OUT/"phase-map.png", dpi=100); plt.close(fig)
     outs = [OUT/"phase-map.json", OUT/"phase-map.png"]
 ok = state == "COMPLETED" and done is not None
-rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan', 'edge2d_gamma': 'edge2dg', 'fan_video': 'fanv', 'edge2d_gamma_fine': 'edge2dg', 'pzone': 'pzone'}[kind] }.py (args in META)", job=job, job_state=state,
+rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc', 'uniform2d_y0': 'uniform2dy0', 'fan': 'fan', 'edge2d_gamma': 'edge2dg', 'fan_video': 'fanv', 'edge2d_gamma_fine': 'edge2dg', 'pzone': 'pzone', 'pzone_y8': 'pzone'}[kind] }.py (args in META)", job=job, job_state=state,
            exit_code=0 if ok else 1, seed=meta.get("seeds"), wall_s=(done or {}).get("wall_s"),
            compute=f"Nebius {job} ({meta.get('gpu')}), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
            code_sha256={script: meta["script_sha256"]}, code_matches_repo=bool(meta["script_sha256"] == sha(ROOT/script)),
