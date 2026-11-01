@@ -386,6 +386,29 @@ Static control: 0.02.
 - **The robust result across schemes and starts:** ray-like orientation needs a proliferating zone wider than about
   half a pattern wavelength. A narrower apical zone gives bands parallel to the edge.
 
+**Does the zone-width switch scale with the wavelength?** (`claude-tissue-pzone-g0p5`, job `aijob-e00b14p611r3epqsx2`,
+860.4 s; `claude-tissue-pzone-g2p0`, job `aijob-e00ae8ktbgy1rmmn9d`, 855.2 s; both COMPLETED; 12 seeds; v = 0.1, long
+start.)
+
+| γ (λ) | L_p = 3 | 4 | 5 | 6 | 8 | 10 | 12 | Static |
+|---|---|---|---|---|---|---|---|---|
+| 0.5 (λ ≈ 15.8) | −0.62 | −0.50 | −0.47 | −0.48 | **0.53** | 0.49 | 0.54 | −0.03 |
+| 2 (λ ≈ 7.9) | **0.56** | 0.68 | 0.50 | 0.39 | 0.61 | **−0.49 ± 0.07** | 0.61 | −0.04 |
+
+**Switch position against the λ/2 prediction:**
+
+| γ | Predicted λ/2 | Observed switch |
+|---|---|---|
+| 0.5 | 7.9 | between L_p = 6 and 8 |
+| 1 | 5.5 | between 4 and 6 |
+| 2 | 3.9 | below 3 |
+
+All three brackets contain λ/2, so **L_p* ≈ λ/2** is consistent with the data. This is a coarse bracket, not a fit.
+
+**Unexplained anomaly.** At γ = 2, L_p = 10 (≈ 1.3 λ) is negative in all 12 seeds while 8 and 12 are positive. This is
+reported as found. Follow-up jobs are running: γ = 2 at L_p = 1, 2, 9, 10, 11 (`claude-tissue-pzone-g2b`), and γ = 1 at
+L_p = 9–14 (`claude-tissue-pzone-g1b`).
+
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and
   0.3 reproduce the earlier run exactly, a determinism check.
