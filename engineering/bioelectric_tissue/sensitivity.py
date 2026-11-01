@@ -213,6 +213,8 @@ def make_manifest(out: Path, work: Path, run_records: list[dict], source_commit:
         "betse_version": subprocess.run([str(Path(betse_python).parent / "betse"), "--version"], capture_output=True, text=True, timeout=30).stdout.strip().splitlines()[-1],
         "environment": {"python": sys.version.split()[0], "platform": platform.platform(),
                         "packages": environment_packages(betse_python),
+                        "ffmpeg": subprocess.run(["ffmpeg", "-version"], capture_output=True, text=True,
+                                                  timeout=30, check=True).stdout.splitlines()[0],
                         "source_archive_sha256": os.environ.get("FRONTIER_SOURCE_ARCHIVE_SHA256", "not supplied by local runner")},
         "conditions": protocol_obj["conditions"],
         "n_cells": int(base["n_cells"]),
@@ -262,8 +264,10 @@ def main() -> None:
         ffmpeg_path = shutil.which("ffmpeg")
         if not ffmpeg_path:
             raise SystemExit("preflight requires ffmpeg to render saved states")
+        ffmpeg_version = subprocess.run([ffmpeg_path, "-version"], capture_output=True, text=True,
+                                        timeout=30, check=True).stdout.splitlines()[0]
         print(json.dumps({"preflight": "ok", "betse": version, "python": pyver, "packages": packages,
-                          "ffmpeg": ffmpeg_path, "conditions": len(protocol()["conditions"])}))
+                          "ffmpeg": ffmpeg_version, "conditions": len(protocol()["conditions"])}))
         return
     work = args.work.resolve()
     out = args.out.resolve()
