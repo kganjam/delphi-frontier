@@ -1,6 +1,7 @@
 """Read-only table audit of live Frontier (c3fd6026). One page load per route; the viewport is resized through 1440, 1024, 768 and 390 wide.
 Per table: columns, scroll container, overflow/clipping, badge (pill) text wrapped across lines, words broken mid-word. No writes."""
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -42,6 +43,8 @@ JS = r"""() => {
       narrow_th: ths.filter(h => h.getBoundingClientRect().width < 70).map(h => h.textContent.trim().slice(0, 14)).slice(0, 5)};
   });
 }"""
+if os.environ.get("TABLE_ROUTES"):
+    ROUTES = os.environ["TABLE_ROUTES"].split(",")
 res = []
 with sync_playwright() as pw:
     br = pw.chromium.launch()
