@@ -1,0 +1,55 @@
+{
+ "limits": [
+  "gene predictions, not the genome sequence; the assembly-level read is the survey's job",
+  "only models with an SLC43A2 SwissProt best hit were read; other loci are not assumed absent"
+ ],
+ "method": "global BLOSUM62 alignment to the zebrafish references, read at the reference positions; the call is the paralog with the higher identity (margin >= 3 points)",
+ "models": [
+  {
+   "identity_pct": {
+    "a": 74.34,
+    "b": 79.32
+   },
+   "length": 592,
+   "model": "GHS07715",
+   "paralog_call": "slc43a2b-type",
+   "protein_sha256": "1a9a0d653ea8069ee00b60a28b39114a601b1877f6001430d463587809752651",
+   "residues": {
+    "106": "G",
+    "200": "M",
+    "326": "D",
+    "74": "A"
+   },
+   "scaffold_gene_id": "HsScaf0485G0025",
+   "swissprot_best_subject": "Q0VCM6",
+   "swissprot_identity_pct": 70.5,
+   "window_194_205": "SLTLPNMFGNLR",
+   "window_319_333": "NLCLSTMDLEMDCKP"
+  },
+  {
+   "identity_pct": {
+    "a": 81.96,
+    "b": 73.94
+   },
+   "length": 598,
+   "model": "GHS15055",
+   "paralog_call": "slc43a2a-type",
+   "protein_sha256": "f4e436cfa631f8af89b462bbcecc2fff7f4b14cde8076dcde638e96ad8e6c235",
+   "residues": {
+    "106": "L",
+    "200": "T",
+    "326": "L",
+    "74": "S"
+   },
+   "scaffold_gene_id": "HsScaf1224G0016",
+   "swissprot_best_subject": "Q0VCM6",
+   "swissprot_identity_pct": 72.59,
+   "window_194_205": "YASSAVTFPGIK",
+   "window_319_333": "QSFMKSILSPIFLLS"
+  }
+ ],
+ "read_level": "annotation (predicted protein), not the assembly: residues come from a gene prediction",
+ "schema": "flyingfish-annotation-lat4a-0.1 (connector-local)",
+ "source": "figshare 10.6084/m9.figshare.14600634.v1 (CC BY 4.0) predicted proteins, stored selection",
+ "species": "Hirundichthys speculiger (Exocoetidae, mirrorwing flyingfish)"
+}

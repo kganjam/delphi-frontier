@@ -1,0 +1,287 @@
+{
+ "genome": "validation_slice_zebrafish_chr10_24365000_24400000.fa",
+ "genome_sha256": "1590d405c69785967fc222a2f58fbbc7f927519463d69136660b1110f98249f9",
+ "loci": [
+  {
+   "call": "slc43a2b-type",
+   "codon_326": "GAC",
+   "contig": "chromosome:GRCz11:10:24365000:24400000:1",
+   "n_queries_aligned": 5,
+   "residues": {
+    "106": "G",
+    "200": "M",
+    "326": "D",
+    "74": "P"
+   },
+   "strand": "-",
+   "why_not_scored": null,
+   "windows": [
+    "SLTLPNMFGDLR",
+    "KLCLSTMDLELQCEP"
+   ]
+  }
+ ],
+ "miniprot": "0.18-r281",
+ "n_alignments": 5,
+ "queries": [
+  "zf_slc43a2a_ENSDARP00000120945",
+  "zf_slc43a2b_ENSDARP00000156564",
+  "ol_lat4a_ENSORLP00000033707",
+  "hs_slc43a2a_type_GHS15055",
+  "hs_slc43a2b_type_GHS07715"
+ ],
+ "reads": [
+  {
+   "contig": "chromosome:GRCz11:10:24365000:24400000:1",
+   "coverage_of_reference": {
+    "a": 0.995,
+    "b": 0.962
+   },
+   "end": 25955,
+   "identity_pct": {
+    "a": 79.05,
+    "b": 100.0
+   },
+   "internal_stops": 0,
+   "miniprot_score": "2353",
+   "n_cds": 13,
+   "paralog_call": "slc43a2b-type",
+   "positions_missing": [],
+   "protein_length": 575,
+   "query": "zf_slc43a2a_ENSDARP00000120945",
+   "reference_numbering_of": "slc43a2b",
+   "residues": {
+    "106": {
+     "aa": "G",
+     "codon": "GGC",
+     "codon_first_base_genomic": 20272,
+     "reference_aa": "G"
+    },
+    "200": {
+     "aa": "M",
+     "codon": "ATG",
+     "codon_first_base_genomic": 15872,
+     "reference_aa": "M"
+    },
+    "326": {
+     "aa": "D",
+     "codon": "GAC",
+     "codon_first_base_genomic": 14618,
+     "reference_aa": "D"
+    },
+    "74": {
+     "aa": "P",
+     "codon": "CCA",
+     "codon_first_base_genomic": 20368,
+     "reference_aa": "P"
+    }
+   },
+   "scored": true,
+   "start": 9563,
+   "strand": "-",
+   "window_194_205": "SLTLPNMFGDLR",
+   "window_319_333": "KLCLSTMDLELQCEP"
+  },
+  {
+   "contig": "chromosome:GRCz11:10:24365000:24400000:1",
+   "coverage_of_reference": {
+    "a": 0.995,
+    "b": 1.0
+   },
+   "end": 25955,
+   "identity_pct": {
+    "a": 79.4,
+    "b": 100.0
+   },
+   "internal_stops": 0,
+   "miniprot_score": "3114",
+   "n_cds": 14,
+   "paralog_call": "slc43a2b-type",
+   "positions_missing": [],
+   "protein_length": 598,
+   "query": "zf_slc43a2b_ENSDARP00000156564",
+   "reference_numbering_of": "slc43a2b",
+   "residues": {
+    "106": {
+     "aa": "G",
+     "codon": "GGC",
+     "codon_first_base_genomic": 20272,
+     "reference_aa": "G"
+    },
+    "200": {
+     "aa": "M",
+     "codon": "ATG",
+     "codon_first_base_genomic": 15872,
+     "reference_aa": "M"
+    },
+    "326": {
+     "aa": "D",
+     "codon": "GAC",
+     "codon_first_base_genomic": 14618,
+     "reference_aa": "D"
+    },
+    "74": {
+     "aa": "P",
+     "codon": "CCA",
+     "codon_first_base_genomic": 20368,
+     "reference_aa": "P"
+    }
+   },
+   "scored": true,
+   "start": 9563,
+   "strand": "-",
+   "window_194_205": "SLTLPNMFGDLR",
+   "window_319_333": "KLCLSTMDLELQCEP"
+  },
+  {
+   "contig": "chromosome:GRCz11:10:24365000:24400000:1",
+   "coverage_of_reference": {
+    "a": 0.995,
+    "b": 0.968
+   },
+   "end": 25955,
+   "identity_pct": {
+    "a": 78.87,
+    "b": 99.48
+   },
+   "internal_stops": 0,
+   "miniprot_score": "2256",
+   "n_cds": 13,
+   "paralog_call": "slc43a2b-type",
+   "positions_missing": [],
+   "protein_length": 579,
+   "query": "ol_lat4a_ENSORLP00000033707",
+   "reference_numbering_of": "slc43a2b",
+   "residues": {
+    "106": {
+     "aa": "G",
+     "codon": "GGC",
+     "codon_first_base_genomic": 20272,
+     "reference_aa": "G"
+    },
+    "200": {
+     "aa": "M",
+     "codon": "ATG",
+     "codon_first_base_genomic": 15872,
+     "reference_aa": "M"
+    },
+    "326": {
+     "aa": "D",
+     "codon": "GAC",
+     "codon_first_base_genomic": 14618,
+     "reference_aa": "D"
+    },
+    "74": {
+     "aa": "P",
+     "codon": "CCA",
+     "codon_first_base_genomic": 20368,
+     "reference_aa": "P"
+    }
+   },
+   "scored": true,
+   "start": 9563,
+   "strand": "-",
+   "window_194_205": "SLTLPNMFGDLR",
+   "window_319_333": "KLCLSTMDLELQCEP"
+  },
+  {
+   "contig": "chromosome:GRCz11:10:24365000:24400000:1",
+   "coverage_of_reference": {
+    "a": 0.995,
+    "b": 0.978
+   },
+   "end": 25955,
+   "identity_pct": {
+    "a": 78.7,
+    "b": 96.92
+   },
+   "internal_stops": 0,
+   "miniprot_score": "2260",
+   "n_cds": 13,
+   "paralog_call": "slc43a2b-type",
+   "positions_missing": [
+    "74"
+   ],
+   "protein_length": 598,
+   "query": "hs_slc43a2a_type_GHS15055",
+   "reference_numbering_of": "slc43a2b",
+   "residues": {
+    "106": {
+     "aa": "G",
+     "codon": "GGC",
+     "codon_first_base_genomic": 20272,
+     "reference_aa": "G"
+    },
+    "200": {
+     "aa": "M",
+     "codon": "ATG",
+     "codon_first_base_genomic": 15872,
+     "reference_aa": "M"
+    },
+    "326": {
+     "aa": "D",
+     "codon": "GAC",
+     "codon_first_base_genomic": 14618,
+     "reference_aa": "D"
+    },
+    "74": null
+   },
+   "scored": true,
+   "start": 9563,
+   "strand": "-",
+   "window_194_205": "SLTLPNMFGDLR",
+   "window_319_333": "KLCLSTMDLELQCEP"
+  },
+  {
+   "contig": "chromosome:GRCz11:10:24365000:24400000:1",
+   "coverage_of_reference": {
+    "a": 0.995,
+    "b": 0.99
+   },
+   "end": 25955,
+   "identity_pct": {
+    "a": 79.4,
+    "b": 100.0
+   },
+   "internal_stops": 0,
+   "miniprot_score": "2439",
+   "n_cds": 13,
+   "paralog_call": "slc43a2b-type",
+   "positions_missing": [],
+   "protein_length": 592,
+   "query": "hs_slc43a2b_type_GHS07715",
+   "reference_numbering_of": "slc43a2b",
+   "residues": {
+    "106": {
+     "aa": "G",
+     "codon": "GGC",
+     "codon_first_base_genomic": 20272,
+     "reference_aa": "G"
+    },
+    "200": {
+     "aa": "M",
+     "codon": "ATG",
+     "codon_first_base_genomic": 15872,
+     "reference_aa": "M"
+    },
+    "326": {
+     "aa": "D",
+     "codon": "GAC",
+     "codon_first_base_genomic": 14618,
+     "reference_aa": "D"
+    },
+    "74": {
+     "aa": "P",
+     "codon": "CCA",
+     "codon_first_base_genomic": 20368,
+     "reference_aa": "P"
+    }
+   },
+   "scored": true,
+   "start": 9563,
+   "strand": "-",
+   "window_194_205": "SLTLPNMFGDLR",
+   "window_319_333": "KLCLSTMDLELQCEP"
+  }
+ ]
+}

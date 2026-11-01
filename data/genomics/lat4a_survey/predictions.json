@@ -1,0 +1,311 @@
+{
+ "expected_counts": {
+  "basis": "zebrafish and medaka each carry both paralogs",
+  "slc43a2a_type_loci_scored_per_scored_genome": 1,
+  "slc43a2b_type_loci_scored_per_scored_genome": 1
+ },
+ "how_to_read": "Each row is what the pipeline should read if the paper's convergent-substitution account holds on independent public genomes. 'stated_by_paper' rows restate Figure 2D; 'extrapolated' rows are mine and are a hypothesis, not a source claim. A deviation is an observation to report, not an error to fix. Flying halfbeaks (Oxyporhamphus, Euleptorhamphus, expected L in the paper) have no public genome in the listing, so that half of the claim is untestable here.",
+ "predictions": [
+  {
+   "accession": "GCA_036245035.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Adrianichthys oophorus"
+  },
+  {
+   "accession": "GCA_037176975.1",
+   "basis": "extrapolated from the Hemiramphidae rows in the paper; this genus is not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Hemiramphidae",
+   "kind": "extrapolated",
+   "species": "Arrhamphus sclerolepis"
+  },
+  {
+   "accession": "GCF_033807715.1",
+   "basis": "extrapolated: no paper row for the sauries",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Scomberesocidae",
+   "kind": "extrapolated",
+   "species": "Cololabis saira"
+  },
+  {
+   "accession": "GCA_056149455.1",
+   "basis": "paper: Hemiramphus far and H. brasiliensis rows read F (a congener, not this species)",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Hemiramphidae",
+   "kind": "stated_by_paper_for_congener",
+   "species": "Hemiramphus limbatus"
+  },
+  {
+   "accession": "GCA_018398805.1",
+   "basis": "paper: all flying fishes (Exocoetidae) except Parexocoetus brachypterus carry L at 326 (Figure 2D, Fodiator, Exocoetus, Cheilopogon rows read at 400 dpi); the mirrorwing annotation model GHS15055 already reads L (host-sized check), so this prediction tests the ASSEMBLY, not the annotation",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "L",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Exocoetidae",
+   "kind": "stated_by_paper_and_prechecked_on_annotation",
+   "species": "Hirundichthys speculiger"
+  },
+  {
+   "accession": "GCA_056151255.1",
+   "basis": "paper: Hyporhamphus unifasciatus row reads F (a congener, not this species)",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Hemiramphidae",
+   "kind": "stated_by_paper_for_congener",
+   "species": "Hyporhamphus gernaerti"
+  },
+  {
+   "accession": "GCA_050306515.1",
+   "basis": "paper: Hyporhamphus unifasciatus row reads F (a congener, not this species)",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Hemiramphidae",
+   "kind": "stated_by_paper_for_congener",
+   "species": "Hyporhamphus intermedius"
+  },
+  {
+   "accession": "GCA_988284135.1",
+   "basis": "paper: Hyporhamphus unifasciatus row reads F (a congener, not this species)",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Hemiramphidae",
+   "kind": "stated_by_paper_for_congener",
+   "species": "Hyporhamphus melanochir"
+  },
+  {
+   "accession": "GCA_988288145.1",
+   "basis": "paper: Hyporhamphus unifasciatus row reads F (a congener, not this species)",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Hemiramphidae",
+   "kind": "stated_by_paper_for_congener",
+   "species": "Hyporhamphus quoyi"
+  },
+  {
+   "accession": "GCA_050306535.1",
+   "basis": "paper: Hyporhamphus unifasciatus row reads F (a congener, not this species)",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Hemiramphidae",
+   "kind": "stated_by_paper_for_congener",
+   "species": "Hyporhamphus sajori"
+  },
+  {
+   "accession": "GCA_014656515.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias celebensis"
+  },
+  {
+   "accession": "GCA_023969325.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias curvinotus"
+  },
+  {
+   "accession": "GCA_030512385.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias dopingdopingensis"
+  },
+  {
+   "accession": "GCA_003999625.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias javanicus"
+  },
+  {
+   "accession": "GCF_053564925.1",
+   "basis": "paper: O. latipes row reads F (PSFMKSIFSPIFLLS; Ensembl medaka protein ENSORLP00000033707 also reads F at 319-333)",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "stated_by_paper",
+   "species": "Oryzias latipes"
+  },
+  {
+   "accession": "GCA_050043775.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias luzonensis"
+  },
+  {
+   "accession": "GCA_050043955.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias mekongensis"
+  },
+  {
+   "accession": "GCF_002922805.2",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias melastigma"
+  },
+  {
+   "accession": "GCA_037389245.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias sinensis"
+  },
+  {
+   "accession": "GCA_016861445.1",
+   "basis": "extrapolated from the O. latipes row; other Oryzias and Adrianichthys are not in the figure",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Adrianichthyidae",
+   "kind": "extrapolated",
+   "species": "Oryzias woworae"
+  },
+  {
+   "accession": "GCA_056901915.1",
+   "basis": "paper: Tylosurus crocodilus row reads F (the same species)",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Belonidae",
+   "kind": "stated_by_paper",
+   "species": "Tylosurus crocodilus"
+  },
+  {
+   "accession": "GCA_014839995.1",
+   "basis": "extrapolated from the Tylosurus row; no paper row for this genus",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Belonidae",
+   "kind": "extrapolated",
+   "species": "Xenentodon cancila"
+  },
+  {
+   "accession": "GCA_028564865.1",
+   "basis": "extrapolated: no paper row; F is the state in every non-gliding row",
+   "expected_aa_at_200_slc43a2a_type": "T",
+   "expected_aa_at_326_slc43a2a_type": "F",
+   "expected_slc43a2b_type_326_200": [
+    "D",
+    "M"
+   ],
+   "family": "Zenarchopteridae",
+   "kind": "extrapolated",
+   "species": "Zenarchopterus dispar"
+  }
+ ],
+ "registered_before_any_survey_run": true,
+ "schema": "lat4a-survey-predictions-0.1"
+}
