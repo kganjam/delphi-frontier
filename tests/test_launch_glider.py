@@ -526,3 +526,13 @@ def test_r2_seats_swap_their_plug_mass():
     seat = rec["launch"]["seats"][1]["seat_mm"]
     xi, zeta = fm._catch(label, rec, rc["dry"]["cg_m"])
     assert xi == pytest.approx(rc["dry"]["cg_m"][0] - seat[0] * 1e-3) and zeta == pytest.approx(seat[1] * 1e-3 - rc["dry"]["cg_m"][2])
+
+
+def test_spec_grid_never_exceeds_spec_speeds_and_uses_the_records_hand_np():
+    assert max(fm.GRID_SPEC["V0_m_s"]["values"]) == 8.0   # no speed is raised to make a design pass
+    if subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", f"{R2_COMMIT}^{{commit}}"]).returncode != 0:
+        pytest.skip("claude-05's r2 commit is not in this clone")
+    rec = fm.load(fm.git_source(ROOT, R2_COMMIT, "artifacts/glider/r2-light"))
+    b = fm.hand_np(rec)
+    v = fm.np_values(rec, fm.GRID_SPEC)
+    assert v[:3] == [b["x_np_min_m"], 0.5 * (b["x_np_min_m"] + b["x_np_max_m"]), b["x_np_max_m"]] and v[3:] == [0.066, 0.072]

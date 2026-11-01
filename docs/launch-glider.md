@@ -1,6 +1,7 @@
 # Launchable fish glider: dynamics, trim and launch (SPEC-010, claude-07)
 
-Status: **protocol draft, not frozen.** Nothing here is calibrated, measured on a print, or flight-tested.
+Status: **protocol draft, not frozen.** Nothing here is calibrated, measured on a print, or flight-tested. **No physical
+flight has occurred.** Every "flight", "range" or "trajectory" below is a simulation on scenario coefficients.
 The protocol is frozen, and its hash sent to infra and to the independent reviewer, once two inputs exist:
 claude-05's first `flight_model.json`, and cfd04's VLM table for it. Until then, every result is labelled
 *placeholder geometry* and *nominal scenario coefficients*.
@@ -21,13 +22,14 @@ Independent review is a separate assignment (`launchable-fish-review`).
 | `dynamics.py` | Batched pitch-plane rigid body: slingshot stroke, then free flight to first ground contact. Also scenario aero, trim, and Jacobian modes. |
 | `candidate.py` | Placeholder candidate built from the v3a meshes at declared print thicknesses (shell body, membrane fins, R1/R2 spars, R3 hardware, ballast). |
 | `sweep.py` | Feasibility map. Every row includes a same-mass, same-CD0, no-lift control that starts from the same release state. |
-| `flight_model.py` | Reads claude-05's `frontier.glider.flight-model/1` records from git at a pinned commit. It checks every STL sha256 and recomputes mass, CG and inertia from the bytes, refusing a record that differs by more than 0.5% or 0.5 mm. It then checks the as-built fin and catch sections against R1–R3, solves the bay ballast for each NP scenario, and flies the result. |
+| `flight_model.py` | Reads claude-05's `frontier.glider.flight-model/1` records from git at a pinned commit. It checks every STL sha256 and recomputes mass, CG and inertia from the bytes, refusing a record that differs by more than 0.5% or 0.5 mm. It then checks the as-built fin and catch sections against R1–R3, solves the bay ballast for each NP scenario, and simulates the result (no physical flight). |
 
 Reproduce:
 - `python -m engineering.launch_glider.print_requirements artifacts/fish3d/fish3d-v3a-fan/panels.json data/materials/formlabs-studio-2026-10-31.json artifacts/launch-glider/print-requirements.json`
 - `python -m engineering.launch_glider.sweep artifacts/launch-glider/feasibility-map.json`
 - `python -m engineering.launch_glider.flight_model 19f4546 artifacts/launch-glider/r1-dynamics.json`
 - `python -m engineering.launch_glider.flight_model 1fac368 artifacts/launch-glider/r2-light-dynamics.json artifacts/glider/r2-light`
+- `python -m engineering.launch_glider.flight_model --grid spec 361480f artifacts/launch-glider/r3-daane-dynamics.json artifacts/glider/r3-daane`
 
 Both run single-threaded.
 
@@ -136,7 +138,7 @@ Nominal value with its bracket. None is measured for this glider.
 4. **The hand NP may be too far forward.** Park & Choi's stable stuffed fish had x_CG/SL 0.39–0.44. The NP is
    therefore a sweep axis (60, 66 and 72 mm), not a value.
 
-## claude-05's r1 (`work/fish-glider` @ `19f4546`): results on the actual bytes
+## claude-05's r1 (`work/fish-glider` @ `19f4546`): simulated on the actual bytes (no physical flight)
 Artifact: `artifacts/launch-glider/r1-dynamics.json`. Same nominal coefficients and scenario axes as above.
 1. **Mass properties agree.** Both revisions recompute to claude-05's records within 4×10⁻⁷ in mass and 10⁻⁸ m in
    CG:
@@ -170,10 +172,10 @@ Artifact: `artifacts/launch-glider/r1-dynamics.json`. Same nominal coefficients 
 4. **At SPEC speeds:**
    - 4 m/s never glides: gain ≤ 0.37 m, and 26–38 of 54 draws per case tumble.
    - 6 m/s: gain ≤ 1.0 m.
-   - 8 m/s: range 3.0–8.6 m and gain −1.9 to +2.5 m. 195 of the 432 flown 8 m/s draws reach 5–8 m with gain > 1 m and no
+   - 8 m/s: range 3.0–8.6 m and gain −1.9 to +2.5 m. 195 of the 432 simulated 8 m/s draws reach 5–8 m with gain > 1 m and no
      tumble.
 5. **Most of those good draws depend on the post-stall model.** 180 of the 195 reach full separation
-   (separation_max ≥ 0.9) at some point in flight: they pitch up after release and fly much of the way stalled.
+   (separation_max ≥ 0.9) at some point in the simulated flight: they pitch up after release and spend much of the trajectory stalled.
    Only 6 stay attached throughout. The placeholder map has the same pattern: 108 of its 116 good 8 m/s draws
    separate.
    - Their gain therefore rests on the declared flat-plate post-stall coefficients (k_post, dx_cp_post), which are
@@ -187,7 +189,7 @@ Artifact: `artifacts/launch-glider/r1-dynamics.json`. Same nominal coefficients 
    The catch is the lever claude-05 controls that matters most for the release transition.
 7. **Launch pitch.** 0–15° is useful. At 30°, the median gain is about zero.
 
-## claude-05's r2-light (`work/fish-glider` @ `1fac368`): the adjustable catch
+## claude-05's r2-light (`work/fish-glider` @ `1fac368`): the adjustable catch, simulated (no physical flight)
 Artifact: `artifacts/launch-glider/r2-light-dynamics.json`.
 - **Mass properties agree.** Every part and spare (pelvic keys, catch plugs) matches within 1.1×10⁻⁶. The dry
   assembly is 19.13 g, CG x 64.3 mm.
@@ -204,6 +206,53 @@ Artifact: `artifacts/launch-glider/r2-light-dynamics.json`.
 - **Mass target.** "10.5 g" (claude-05's label) is my mass budget: the mass whose trim speed at C_L 0.5 equals an
   8 m/s release. It is not a flight limit. Above it, the model releases below trim and the glide gain falls with
   mass, as these maps show.
+
+## claude-05's r3-daane (`work/fish-glider` @ `361480f`): root's fit/balance print, simulated (no physical flight)
+Artifact: `artifacts/launch-glider/r3-daane-dynamics.json`, run with `--grid spec`. No r1 or r2 result is
+transferred: every number here comes from r3's own bytes.
+
+**Assumptions:**
+- **Launch scenarios:** release speeds of only 4, 6 and 8 m/s (SPEC-010 rule 3 scenarios, not measured), with
+  nothing above 8 m/s. Height 1.35 m, stroke 0.2 m, linear band profile, launch pitch 0/15/30°.
+- **Coefficients:** the nominal scenario set.
+- **NP scenarios:** r3's own hand bracket (55.6, 57.0 and 58.3 mm) plus 66 and 72 mm.
+- **Balance:** SM 0.15, with ballast from claude-05's bay fill model at their assumed shot density.
+- **Mass:** material density 1220 kg/m³, solid, with no supports or trapped resin; glue ≤ 0.5 g and tape ≤ 0.2 g
+  (claude-05's ranges).
+
+**Results:**
+- **Mass properties agree** within 6×10⁻⁷: 20.335 g dry, CG x 63.61 mm, z 4.06 mm.
+- **Planform:** S_paired 67.8 cm², span 226 mm, pectoral MAC 30.9 mm.
+- **Ballast:**
+  - under the hand NP, 4.5–6.4 g (25.0–26.8 g total);
+  - at NP 66 mm, 0.7 g;
+  - at NP 72 mm, none.
+
+  The bay holds 12.5 g.
+- **Structure, at k_z = 1 (stress in the layer plane):** passes up to 27.5 g.
+  - Pectoral σ_max is 9.8 MPa (the longer fin carries more moment) and in-plane root 8.2 MPa, against an allowable
+    of 14.3 MPa. Worst tip is 6.6% of span.
+  - Pelvic and catch pass.
+- **Orientation case k_z = 0.5: FAILS** on the pectoral, at 9.8 and 8.2 MPa against 7.17 MPa. A taller spar fixes
+  the bending stress, needing about 2.4 mm. It cannot fix the in-plane root, which stays at 8.2–8.9 MPa because
+  it is set by launch acceleration in the fin plane. So the pectoral **must be printed with its span axis
+  perpendicular to the build direction**; tilt about the span axis only. That keeps both spanwise stresses in the
+  layer plane.
+- **Simulated launch:** band peak force ≤ 9.0 N over the scenarios. The structural checks use the conservative stack
+  of 10 m/s, 0.1 m stroke and peak/mean 2, which gives 27.5 N.
+- **Simulated trajectories:**
+  - 4 m/s never reaches 5 m: gain ≤ 0.36 m.
+  - 6 m/s: range ≤ 5.0 m, gain ≤ 0.82 m.
+  - 8 m/s: range 2.7–9.2 m, gain −2.2 to +2.65 m. 99 of 240 draws reach 5–8 m with gain > 1 m and no tumble.
+    **89 of the 99 reach full separation and none stays attached**, so this is a post-stall scenario result, not a
+    trimmed glide.
+- **Catch** (median gain at 8 m/s):
+  - x34 dz 0: 1.58 m;
+  - x20 dz 0 (the nominal plug): 1.33 m;
+  - x20 dz −1.5: 1.30 m;
+  - x34 dz +1.5: −0.22 m, and x34 dz +3: −1.12 m. Both release nose-down; avoid them.
+- **Chirality: blocking for printing.** The r3 right fins are the left STLs placed by a det −1 transform, so printing
+  them gives two left fins. r4-daane-printfix is meant to correct only that.
 
 ## Corrections to the frozen `print-requirements.json` (ac293117…; the artifact is kept unchanged)
 These answer the independent review (`launchable-fish-review`, c2ec8f0). Each was re-checked here.

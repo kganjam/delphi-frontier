@@ -1,5 +1,5 @@
 """Read claude-05's `frontier.glider.flight-model/1` records, recompute their mass properties from the STL bytes,
-check the as-built fin and catch sections against requirements R1-R3, and fly the result (sweep.simulate).
+check the as-built fin and catch sections against requirements R1-R3, and simulate the result (sweep.simulate).
 
     python -m engineering.launch_glider.flight_model <commit> artifacts/launch-glider/r1-dynamics.json
 
@@ -257,6 +257,26 @@ GRID_R1 = {
 }
 
 
+GRID_SPEC = {   # SPEC-010 speeds only: nothing beyond 8 m/s, so no speed is raised to make a design pass
+    "x_np_m": {"values": [0.066, 0.072], "hand_bracket": True,
+               "status": "this record's own hand Helmbold+Munk bracket (min, mid, max) plus the aft scenarios 66 and "
+                         "72 mm (Park & Choi x_CG/SL 0.39-0.44); the VLM (cfd04) replaces all of them"},
+    "CL_trim": GRID_R1["CL_trim"],
+    "V0_m_s": {"values": [4.0, 6.0, 8.0], "status": "SPEC-010 rule 3 chosen scenarios; actual speed must be measured"},
+    "phi_deg": GRID_R1["phi_deg"],
+    "catch": {"values": [], "status": "the record's launch.seats[] (body-fixed seat, its own plug)"},
+}
+GRIDS = {"r1": GRID_R1, "spec": GRID_SPEC}
+
+
+def np_values(rec: dict, G_: dict) -> list[float]:
+    v = list(G_["x_np_m"]["values"])
+    if G_["x_np_m"].get("hand_bracket"):
+        b = hand_np(rec)
+        v = [b["x_np_min_m"], 0.5 * (b["x_np_min_m"] + b["x_np_max_m"]), b["x_np_max_m"]] + v
+    return v
+
+
 def catches(rec: dict, G_: dict) -> list[tuple[str, object]]:
     """(label, plug) per catch option. A record with launch.seats[] (r2 on) has body-fixed seats, one per slot and
     offset, each with its own plug (None = bare slot top); otherwise the grid's labels with the nominal assembly."""
@@ -292,7 +312,7 @@ def run(repo: Path, commit: str, card: Path, grid: dict | None = None, revisions
         np_b = hand_np(rec)
         dry = candidate(rec, rc, None)
         non_mesh = sum(nm.get("mass_kg_range", [0, 0])[1] for nm in rec["non_mesh"])
-        by_np = {x_np: candidate(rec, rc, x_np - sw.SM_TARGET * dry["mac_m"]) for x_np in G_["x_np_m"]["values"]}
+        by_np = {x_np: candidate(rec, rc, x_np - sw.SM_TARGET * dry["mac_m"]) for x_np in np_values(rec, G_)}
         m_dry = dry["dry"]["mass_kg"] + non_mesh
         m_ballasted = max(c["assembled"]["mass_kg"] for c in by_np.values()) + non_mesh
         checks[rec["revision"]] = {
@@ -335,9 +355,13 @@ def run(repo: Path, commit: str, card: Path, grid: dict | None = None, revisions
 
 
 def main(argv):
-    commit, out = argv[1], Path(argv[2])
-    r = run(Path("."), commit, Path("data/materials/formlabs-studio-2026-10-31.json"),
-            revisions=tuple(argv[3:]) or REVISIONS)
+    args = list(argv[1:])
+    grid = GRIDS[args.pop(args.index("--grid") + 1)] if "--grid" in args else None
+    if "--grid" in args:
+        args.remove("--grid")
+    commit, out = args[0], Path(args[1])
+    r = run(Path("."), commit, Path("data/materials/formlabs-studio-2026-10-31.json"), grid=grid,
+            revisions=tuple(args[2:]) or REVISIONS)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(r, indent=1, sort_keys=True, default=float) + "\n")
     print(out, hashlib.sha256(out.read_bytes()).hexdigest())
