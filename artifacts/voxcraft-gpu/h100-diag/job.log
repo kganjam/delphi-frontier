@@ -1,0 +1,55 @@
+Provisioning resources for the workload
+Workload initialization started
+Downloading container image
+Starting workload container
+name, driver_version, compute_cap
+NVIDIA H100 80GB HBM3, 580.173.02, 9.0
+== plain (no CDP), PTX-only compute_75
+driver_api_version=13000 runtime_version=10020
+cudaMalloc(&d, 256 * sizeof(int))        -> 0 cudaSuccess : no error
+cudaGetLastError()                       -> 0 cudaSuccess : no error
+cudaDeviceSynchronize()                  -> 0 cudaSuccess : no error
+rc=0
+== CDP1 (device cudaDeviceSynchronize), PTX-only compute_75, rdc
+driver_api_version=13000 runtime_version=10020
+cudaMalloc(&d, 256 * sizeof(int))        -> 225 unrecognized error code : unrecognized error code
+cudaGetLastError()                       -> 225 unrecognized error code : unrecognized error code
+cudaDeviceSynchronize()                  -> 225 unrecognized error code : unrecognized error code
+cudaGetLastError()                       -> 225 unrecognized error code : unrecognized error code
+cudaDeviceSynchronize()                  -> 225 unrecognized error code : unrecognized error code
+cudaMemcpy(h, d, sizeof(h), cudaMemcpyDeviceToHost) -> 225 unrecognized error code : unrecognized error code
+x[0]=-823641896 x[1]=32765 x[40]=914394256
+rc=0
+== CDP1, SASS sm_75 only (expected: no kernel image for sm_90)
+driver_api_version=13000 runtime_version=10020
+cudaMalloc(&d, 256 * sizeof(int))        -> 0 cudaSuccess : no error
+cudaGetLastError()                       -> 98 cudaErrorInvalidDeviceFunction : invalid device function
+cudaDeviceSynchronize()                  -> 0 cudaSuccess : no error
+cudaGetLastError()                       -> 98 cudaErrorInvalidDeviceFunction : invalid device function
+cudaDeviceSynchronize()                  -> 0 cudaSuccess : no error
+cudaMemcpy(h, d, sizeof(h), cudaMemcpyDeviceToHost) -> 0 cudaSuccess : no error
+x[0]=0 x[1]=0 x[40]=0
+rc=0
+== driver JIT link of CDP1 PTX + libcudadevrt.a
+cuInit 0
+ctx 0
+compute_capability 9.0
+cuLinkCreate 0
+cuLinkAddFile ptx 225
+cuLinkAddFile cudadevrt 0
+cuLinkComplete 0
+ERROR_LOG<<ptxas application ptx input, line 144; fatal   : Unsupported Function 'cudaDeviceSynchronize' on arch 'sm_90' or higher>>
+INFO_LOG<<>>
+rc=0
+== cuobjdump -all of cdp_ptx
+PTX file    1: cdp_ptx.1.sm_75.ptx
+ELF file    1: cdp_ptx.1.sm_35.cubin
+ELF file    2: cdp_ptx.2.sm_37.cubin
+ELF file    3: cdp_ptx.3.sm_50.cubin
+ELF file    4: cdp_ptx.4.sm_52.cubin
+ELF file    5: cdp_ptx.5.sm_60.cubin
+ELF file    6: cdp_ptx.6.sm_61.cubin
+ELF file    7: cdp_ptx.7.sm_70.cubin
+PTX file    2: cdp_ptx.2.sm_75.ptx
+ELF file    8: cdp_ptx.8.sm_75.cubin
+DIAG_DONE

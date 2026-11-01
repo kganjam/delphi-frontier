@@ -30,7 +30,14 @@ export PATH=$W/cmake-3.18.6-Linux-x86_64/bin:$PATH; cmake --version | head -1 >>
 step src_dl wget -q -O vx.tar.gz https://codeload.github.com/voxcraft/voxcraft-sim/tar.gz/$PIN
 GOT=$(sha256sum vx.tar.gz | cut -d' ' -f1); log "src bytes=$(stat -c %s vx.tar.gz) sha256=$GOT"
 if [ "$GOT" != "$SRC_SHA" ]; then log "SOURCE_MISMATCH"; STATUS=SOURCE_MISMATCH; else
-tar xzf vx.tar.gz; cd voxcraft-sim-$PIN; mkdir -p build; cd build
+tar xzf vx.tar.gz; cd voxcraft-sim-$PIN
+if [ -n "${FORK_SCRIPT:-}" ]; then
+  log "FORK: applying $FORK_SCRIPT (sha256 $(sha256sum $FORK_SCRIPT | cut -d' ' -f1)) -- THIS IS NOT THE PUBLISHED ENGINE"
+  cp src/VX3/VX3_VoxelyzeKernel.cu /tmp/orig_kernel.cu
+  python3 $FORK_SCRIPT src/VX3/VX3_VoxelyzeKernel.cu >> $R 2>&1 || { log "FORK_APPLY_FAIL"; }
+  diff -u /tmp/orig_kernel.cu src/VX3/VX3_VoxelyzeKernel.cu > $O/fork.diff; log "FORK diff sha256=$(sha256sum $O/fork.diff | cut -d' ' -f1) lines=$(wc -l < $O/fork.diff)"
+fi
+mkdir -p build; cd build
 step configure cmake .. -DCUDA_ARCH=$GENCODE; CRC=$?
 step build make -j16 VERBOSE=1; BRC=$?
 grep -n -m5 -E "error|Error" $O/build.log >> $R
