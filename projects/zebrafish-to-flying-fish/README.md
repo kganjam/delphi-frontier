@@ -22,8 +22,9 @@ Nothing here demonstrates that a flying fish can be built.
 | [`LOCI.md`](LOCI.md) | Generated: the per-locus hit table plus the control, reproducibility and paralog-ambiguity checks. |
 | [`SPAN-AUDIT.md`](SPAN-AUDIT.md) | Generated: assembly-gap fraction, largest intron and frameshift counts per best hit, so long spans can be discounted. |
 | [`SOURCES.md`](SOURCES.md) | Generated: 45 Europe PMC queries, 227 saved records, 154 distinct PMIDs, each with the request URL and response sha256. Read-level is `abstract` for every row. |
-| [`REVIEW.md`](REVIEW.md) | What an LLM critique found, which findings were verified and acted on, and which were rejected and why. |
-| [`claims/zf2ff-claims.json`](claims/zf2ff-claims.json) | 11 Claim and 3 Problem drafts, validated against `frontier/models.py`. Validated is not true (SPEC-001). |
+| [`FULLTEXT-FINDING.md`](FULLTEXT-FINDING.md) | The one full text read, what it corrected in this project's own framing, the F326L test, and its negative controls. |
+| [`REVIEW.md`](REVIEW.md) | What an LLM critique found, which findings were verified and acted on, which were rejected and why, and the self-corrections that came from this project's own follow-up jobs. |
+| [`claims/zf2ff-claims.json`](claims/zf2ff-claims.json) | 12 Claim and 3 Problem drafts, validated against `frontier/models.py`. Validated is not true (SPEC-001). |
 | `data/*/MANIFEST.md` | One manifest per Nebius job (`data/tree/`, `data/tree2/`, `data/census/`, `data/motif/`): job id, CLI-read state, preset, image, software versions, every input and output digest, the in-container re-hash of each input, and the quota refusals — including a job that failed at provisioning, kept rather than hidden. |
 | [`CROSSCHECK-EVO.md`](CROSSCHECK-EVO.md) | Generated: the Evo 2 harness's 9 flying-fish windows checked against this project's independent placements. |
 | `scripts/` | Everything that produced the above. |
@@ -60,7 +61,18 @@ manifests can be checked against the files here.
 Round 1 (`scripts/map_proteins.py`, `data/mapping_summary.json`) was produced by a predecessor
 process; it is reviewed here, not re-run.
 
-## The five things worth taking away
+## The six things worth taking away
+
+0. **This project reproduced a published comparative-genomics result independently, and the controls
+   for it pass.** After reading the key paper's full text (the only full text read here), the
+   convergent substitution it reports is `lat4a` **F326L**, present in flying fishes and flying
+   halfbeaks but not in the sailfin flying fish. Testing that against loci predicted from the public
+   *Hirundichthys speculiger* assembly: zebrafish `slc43a2a` position 326 is **F** as required, the
+   flying-fish `slc43locus02` carries **L** in conserved context, and the `slc43a2b` locus carries
+   `S`. Negative controls from the paper's own lineage distribution hold — a non-flying halfbeak and
+   a needlefish both carry **F** — while the Pacific saury carries **I**, a state outside the paper's
+   sampling that means the site is not strictly invariant among non-gliders. See
+   [`FULLTEXT-FINDING.md`](FULLTEXT-FINDING.md).
 
 1. **Fin size has a real genetic handle; the rest of the phenotype does not.** `kcnh2a` and `lat4a`
    are named by a flying-fish phylogenomic study whose abstract reports that their interaction in
