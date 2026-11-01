@@ -1,0 +1,50 @@
+== W1 diploid 1 locus, complete dominance, p=1/2
+   wbar = 7/8  (0.875000)
+   Var(w) total = 3/64  (0.046875)
+   V_A(w)       = 1/32  (0.031250)
+   Var(w) - V_A = 1/64  (0.015625)  [non-additive part]
+   average effects b = ['1/4']
+   partial change Delta_NS wbar = 1/28  (0.035714)  == V_A/wbar: True
+   Price total-variance term Var(w)/wbar = 3/56  (0.053571)
+   total change in wbar after one generation = 13/392  (0.033163)
+== W2 diploid 1 locus, overdominance at equilibrium p*=2/3
+   wbar = 13/15  (0.866667)
+   Var(w) total = 4/225  (0.017778)
+   V_A(w)       = 0  (0.000000)
+   Var(w) - V_A = 4/225  (0.017778)  [non-additive part]
+   average effects b = ['0']
+   partial change Delta_NS wbar = 0  (0.000000)  == V_A/wbar: True
+   Price total-variance term Var(w)/wbar = 4/195  (0.020513)
+   total change in wbar after one generation = 0  (0.000000)
+== W3 haploid 2 loci, AxB epistasis, linkage equilibrium
+   wbar = 5/4  (1.250000)
+   Var(w) total = 3/16  (0.187500)
+   V_A(w)       = 1/8  (0.125000)
+   Var(w) - V_A = 1/16  (0.062500)  [non-additive part]
+   average effects b = ['1/2', '1/2']
+   partial change Delta_NS wbar = 1/10  (0.100000)  == V_A/wbar: True
+   Price total-variance term Var(w)/wbar = 3/20  (0.150000)
+== C1 diploid 1 locus, additive (no dominance), p=1/3
+   wbar = 7/6  (1.166667)
+   Var(w) total = 1/36  (0.027778)
+   V_A(w)       = 1/36  (0.027778)
+   Var(w) - V_A = 0  (0.000000)  [non-additive part]
+   average effects b = ['1/4']
+   partial change Delta_NS wbar = 1/42  (0.023810)  == V_A/wbar: True
+   Price total-variance term Var(w)/wbar = 1/42  (0.023810)
+   total change in wbar after one generation = 1/42  (0.023810)
+== C2 haploid 1 locus (saturated regression)
+   wbar = 7/6  (1.166667)
+   Var(w) total = 1/18  (0.055556)
+   V_A(w)       = 1/18  (0.055556)
+   Var(w) - V_A = 0  (0.000000)  [non-additive part]
+   average effects b = ['1/2']
+   partial change Delta_NS wbar = 1/21  (0.047619)  == V_A/wbar: True
+   Price total-variance term Var(w)/wbar = 1/21  (0.047619)
+
+Summary checks:
+  W1 Var(w) != V_A: True ; total change != V_A/wbar: True
+  W2 V_A == 0 and Var(w) > 0: True
+  W3 Var(w) != V_A: True
+  C1 Var(w) == V_A and total == partial: True True
+  C2 Var(w) == V_A: True
