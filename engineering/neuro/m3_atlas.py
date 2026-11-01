@@ -122,11 +122,16 @@ def main(argv=None):
     ap = argparse.ArgumentParser(); ap.add_argument("--out", required=True); ap.add_argument("--geometry"); ap.add_argument("--reference")
     ap.add_argument("--n-mc", type=int, default=2048); ap.add_argument("--T", type=float, default=G.T_MC); ap.add_argument("--seed", type=int, default=20261101)
     ap.add_argument("--procs", type=int, default=os.cpu_count() or 1); ap.add_argument("--device", default=None); ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--grid", default=None, help="JSON overriding DIH/KV/MASS/SM/TC/TV/GUST lists (refined atlas)")
     a = ap.parse_args(argv); t0 = time.time(); os.makedirs(a.out, exist_ok=True)
     import torch
     device = a.device or ("cuda" if torch.cuda.is_available() else "cpu")
     g = json.load(open(a.geometry))["geometry"] if a.geometry else G.geometry()
-    global DIH, KV, SM, TC, TV, LIN_TC, LIN_TV
+    global DIH, KV, SM, TC, TV, LIN_TC, LIN_TV, MASS, GUST
+    if a.grid:
+        gg = json.loads(a.grid)
+        DIH, KV, MASS, SM, TC, TV, GUST = (gg.get(k, v) for k, v in (("DIH", DIH), ("KV", KV), ("MASS", MASS), ("SM", SM), ("TC", TC), ("TV", TV), ("GUST", GUST)))
+        LIN_TC, LIN_TV = gg.get("LIN_TC", LIN_TC), gg.get("LIN_TV", LIN_TV)
     if a.quick:
         DIH, KV, SM, TC, TV = [7], [0.15], [0.08], [0.01], [0.06]; LIN_TC, LIN_TV = [0.01], [0.06]
     lat, lon = airframes(g); checks = []

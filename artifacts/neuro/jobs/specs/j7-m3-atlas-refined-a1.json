@@ -1,0 +1,26 @@
+{
+ "name": "claude-neuro-j7-m3-atlas-refined-a1",
+ "platform": "gpu-h100-sxm",
+ "preset": "1gpu-16vcpu-200gb",
+ "timeout": "1h",
+ "disk": "80Gi",
+ "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+ "pip": "scipy",
+ "question": "Refined, print-actionable band around the J2 design recommendation: dihedral 0-7 deg x caudal vertical fraction 0.10-0.25 x ballasted mass 25-35 g, gusts to 3 m/s, plausible vestibular/visual delays",
+ "gpu_justification": "144 lateral + 9 longitudinal airframes x up to 15 sensor/delay cases x 3 gusts x 4096 trajectories x 2500 steps (~27M trajectories)",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.m3_atlas --out /work/out --geometry /work/repo/geometry.json --reference /work/repo/reference.json --n-mc 4096 --procs 16 --seed 20261102 --grid '{\"DIH\":[0,1,2,3,4,5,6,7],\"KV\":[0.1,0.125,0.15,0.175,0.2,0.25],\"MASS\":[0.025,0.03,0.035],\"SM\":[0.04,0.08,0.12],\"TC\":[0.01,0.02,0.03],\"TV\":[0.03,0.06,0.09],\"GUST\":[1.0,2.0,3.0],\"LIN_TC\":[0.01,0.02,0.03,0.05],\"LIN_TV\":[0.03,0.06,0.09,0.12]}'",
+ "files": {
+  "engineering/__init__.py": "engineering/__init__.py",
+  "engineering/neuro/__init__.py": "engineering/neuro/__init__.py",
+  "engineering/neuro/common.py": "engineering/neuro/common.py",
+  "engineering/neuro/glide_stab.py": "engineering/neuro/glide_stab.py",
+  "engineering/neuro/m3_atlas.py": "engineering/neuro/m3_atlas.py",
+  "engineering/simulation/__init__.py": "engineering/simulation/__init__.py",
+  "engineering/simulation/controlled.py": "engineering/simulation/controlled.py",
+  "engineering/simulation/evaluate.py": "engineering/simulation/evaluate.py",
+  "engineering/simulation/glide.py": "engineering/simulation/glide.py",
+  "engineering/simulation/schema.py": "engineering/simulation/schema.py",
+  "geometry.json": "artifacts/neuro/jobs/inputs/r3daane_geometry.json",
+  "reference.json": "artifacts/neuro/jobs/inputs/m3_mc_reference.json"
+ }
+}

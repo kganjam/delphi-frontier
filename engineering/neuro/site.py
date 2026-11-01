@@ -10,7 +10,7 @@ from __future__ import annotations
 from hashlib import sha256
 import json
 
-RIDS = ("m1-fast-start", "m2-caudal-cpg", "m3-glide-stabilizer", "j1-m1-sobol", "j2-m3-atlas", "j3-m5-mcell", "j4-m3-sobol")
+RIDS = ("m1-fast-start", "m2-caudal-cpg", "m3-glide-stabilizer", "j1-m1-sobol", "j2-m3-atlas", "j3-m5-mcell", "j4-m3-sobol", "m1-fast-start-m5prior", "j6-m5-design", "j7-m3-atlas-refined")
 
 
 def _f(x, nd=2):
@@ -42,10 +42,12 @@ def findings(rid, m):
                 {"name": "pitch: critical common vestibular delay (otolith + canal)", "result": json.dumps(s["pitch_crit_common_delay_s_otolith_nominal_gain"])},
                 {"name": "passively pitch-stable static margins", "result": f"{_f(s['passive_pitch_stable_sm_range'][0] * 100, 0)} to {_f(s['passive_pitch_stable_sm_range'][1] * 100, 0)} % MAC (swept -10 to 30)"},
                 {"name": "roll, 25 g, dihedral 7, k_v 0.15", "result": f"critical vision delay {s['roll_crit_vision_delay_s_tc0.01'].get('25g_G7_kv0.15')} s; otolith-only loop stable: {s['roll_otolith_stable_tc0.01'].get('25g_G7_kv0.15')}; open loop unstable: {s['roll_openloop_unstable'].get('25g_G7_kv0.15')}"}]
-    if rid in ("j1-m1-sobol", "j4-m3-sobol"):
+    if rid in ("j1-m1-sobol", "j4-m3-sobol", "m1-fast-start-m5prior", "j6-m5-design", "j7-m3-atlas-refined"):
         return [{"name": k, "result": f"mean {_f(v['mean'], 3)}; largest total indices: " + ", ".join(f"{n} {st:.2f} [{lo:.2f}-{hi:.2f}]" for n, st, (lo, hi), _ in v["top_ST"][:4])}
                 for k, v in s.items() if isinstance(v, dict) and "top_ST" in v]
-    if rid in ("j2-m3-atlas", "j3-m5-mcell"):
+    if rid == "m1-fast-start-m5prior":
+        return findings("m1-fast-start", m)
+    if rid in ("j2-m3-atlas", "j3-m5-mcell", "j6-m5-design", "j7-m3-atlas-refined"):
         return [{"name": k, "result": json.dumps(v)[:400]} for k, v in s.items() if isinstance(v, dict)]
     return []
 

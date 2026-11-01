@@ -10,7 +10,8 @@ import numpy as np
 
 from engineering.neuro import common as C
 
-JOBS = {"j5": ("claude-neuro-j5-m1-m5prior-a1", "m1-fast-start-m5prior", "out/m1-fast-start-m5prior/manifest.json"),
+JOBS = {"j7": ("claude-neuro-j7-m3-atlas-refined-a1", "j7-m3-atlas-refined", "out/m3_atlas.json.gz"),
+        "j5": ("claude-neuro-j5-m1-m5prior-a1", "m1-fast-start-m5prior", "out/m1-fast-start-m5prior/manifest.json"),
         "j6": ("claude-neuro-j6-m5-design-a1", "j6-m5-design", "out/m5_design.json.gz"),
         "j4": ("claude-neuro-j4-m3-sobol-a1", "j4-m3-sobol", "out/sobol_m3.json.gz"),
         "j1": ("claude-neuro-j1-m1-sobol-a1", "j1-m1-sobol", "out/sobol_m1.json"),
@@ -71,8 +72,8 @@ def j1():
     write(dst, rid, m, cr, name)
 
 
-def j2():
-    name, rid, cr, col, dst, R = receipt_and_dirs("j2")
+def j2(key="j2"):
+    name, rid, cr, col, dst, R = receipt_and_dirs(key)
     import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
     gr = R["grids"]; lat = R["airframes"]["lateral"]; lon = R["airframes"]["longitudinal"]; mc = R["mc"]
     def F(kind, pred):
@@ -114,7 +115,9 @@ def j2():
     ax[1, 2].set_xlabel("canal (vestibular) delay (ms)"); ax[1, 2].set_ylabel("fraction of 112 lateral airframes stable (exact linear)"); ax[1, 2].legend(fontsize=8); ax[1, 2].set_title("linear atlas, gain 1", fontsize=9)
     fig.suptitle(f"J2 M3 design-space atlas: {R['mc_trajectories']:,} saturation Monte Carlo trajectories ({R.get('gpu')}) + {len(lin):,} exact linear radii; SIMULATED", fontsize=11)
     fig.tight_layout(); fig.savefig(dst / "figure.png", dpi=100); plt.close(fig)
-    m = base_manifest(rid, name, cr, R, "Glide stabiliser design-space atlas: failure probability and exact delayed stability over every r3-daane variant", ["organ", "organism"],
+    title = ("Glide stabiliser design-space atlas: failure probability and exact delayed stability over every r3-daane variant" if key == "j2" else
+             "Refined print-tolerance atlas around the recommended r3-daane change (dihedral 0-7 deg, caudal fraction 0.10-0.25, 25-35 g, gusts to 3 m/s)")
+    m = base_manifest(rid, name, cr, R, title, ["organ", "organism"],
                       "engineering.neuro.m3_atlas", cr["submission"]["spec"]["command"])
     m["integration_note"] = ("The Monte Carlo loop applies the actuator state updated in the same 2 ms step (the same order as glide_stab.mc, which the committed "
                              "CPU rows used and which control 3 compares against statistically). The exact linear radius applies the previous step's actuator state. "
@@ -222,4 +225,4 @@ def j6():
 
 
 if __name__ == "__main__":
-    {"j1": j1, "j2": j2, "j3": j3, "j4": j4, "j5": j5, "j6": j6}[sys.argv[1]]()
+    {"j1": j1, "j2": j2, "j3": j3, "j4": j4, "j5": j5, "j6": j6, "j7": lambda: j2("j7")}[sys.argv[1]]()
