@@ -241,6 +241,48 @@ def hand_np(rec: dict) -> dict:
     return pr.neutral_point(pect, pelv, b["enclosed_volume_m3"], b["max_width_m"] / 2)
 
 
+def printfix_check(old: dict, read_old, new: dict, read_new, mat: dict, tol_m: float = 1e-6) -> dict:
+    """A print-fix revision may change only how the right-side parts are printed. Checks:
+    the body STL bytes are identical; every right part's print-frame mesh is its left partner's mesh mirrored (it is
+    printable as a right part) with a proper (det +1) placement; every part's fish-frame geometry is unchanged (sorted
+    vertex sets within tol_m); and the recomputed dry mass and CG are unchanged."""
+    def by_id(rec):
+        return {p["id"]: p for p in rec["parts"] + rec.get("spare_parts", [])}
+    po, pn = by_id(old), by_id(new)
+    rows, ok = [], True
+    body_same = po["body"]["stl_sha256"] == pn["body"]["stl_sha256"]
+    ok &= body_same
+    if set(po) != set(pn):
+        return {"pass": False, "reason": f"part sets differ: {sorted(set(po) ^ set(pn))}"}
+    for pid, p in pn.items():
+        fo = np.sort(_fish_triangles(read_old, po[pid]).reshape(-1, 3), axis=0)
+        fn = np.sort(_fish_triangles(read_new, p).reshape(-1, 3), axis=0)
+        same_fish = fo.shape == fn.shape and float(np.max(np.abs(fo - fn))) <= tol_m
+        det = float(np.linalg.det(np.asarray(p["print_to_fish_transform_mm"], float)[:3, :3]))
+        row = {"id": pid, "fish_geometry_unchanged": bool(same_fish), "placement_det": det}
+        side = "_R" if "_R" in pid else ("_L" if "_L" in pid else None)
+        if side == "_R":
+            lp = pn[pid.replace("_R", "_L")]
+            tri_l = mp.parse_stl(read_new(lp["stl"]))
+            tri_r = mp.parse_stl(read_new(p["stl"]))
+            # a printable right part is not a proper rotation of the left one: its signed volume in the print frame
+            # is positive, and its print-frame mesh is not the left mesh's bytes
+            row["print_bytes_differ_from_left"] = p["stl_sha256"] != lp["stl_sha256"]
+            row["print_volume_positive"] = mp.solid(tri_r * 1e-3, 1.0)["volume_m3"] > 0
+            row["left_print_volume_positive"] = mp.solid(tri_l * 1e-3, 1.0)["volume_m3"] > 0
+            row["pass"] = bool(same_fish and det > 0 and row["print_bytes_differ_from_left"] and row["print_volume_positive"])
+        else:
+            row["pass"] = bool(same_fish and det > 0)
+        ok &= row["pass"]
+        rows.append(row)
+    ro, rn = recompute(old, read_old, mat), recompute(new, read_new, mat)
+    dm = rn["dry"]["mass_kg"] / ro["dry"]["mass_kg"] - 1
+    dcg = float(np.linalg.norm(np.subtract(rn["dry"]["cg_m"], ro["dry"]["cg_m"])))
+    ok &= abs(dm) < 1e-6 and dcg < tol_m and rn["status"] == "AGREES"
+    return {"pass": bool(ok), "body_bytes_identical": body_same, "parts": rows, "dry_mass_rel_change": dm,
+            "dry_cg_change_m": dcg, "new_record_recompute": rn["status"]}
+
+
 # ---------------------------------------------------------------- the r1 sweep
 GRID_R1 = {
     "x_np_m": {"values": [0.0567, 0.060, 0.066, 0.072],

@@ -536,3 +536,49 @@ def test_spec_grid_never_exceeds_spec_speeds_and_uses_the_records_hand_np():
     b = fm.hand_np(rec)
     v = fm.np_values(rec, fm.GRID_SPEC)
     assert v[:3] == [b["x_np_min_m"], 0.5 * (b["x_np_min_m"] + b["x_np_max_m"]), b["x_np_max_m"]] and v[3:] == [0.066, 0.072]
+
+
+def _chiral_mesh():
+    """A closed, outward, chiral polyhedron (mm): a box with one corner pulled out, so its mirror is not a rotation."""
+    t = _box(10.0, 20.0, 5.0).copy()
+    t[np.all(np.isclose(t, [10.0, 20.0, 5.0]), axis=-1)] = [13.0, 24.0, 7.0]
+    return t
+
+
+def _printfix_records(fixed: bool):
+    L = _chiral_mesh()
+    R_print = L * [1, -1, 1]   # mirrored copy, winding reversed so it stays outward
+    R_print = R_print[:, [0, 2, 1]]
+    files = {"stl/body.stl": _stl_bytes(_box(5.0, 5.0, 5.0)), "stl/fin_L.stl": _stl_bytes(L)}
+    eye = np.eye(4).tolist()
+    mirror = [[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
+    if fixed:
+        files["stl/fin_R.stl"] = _stl_bytes(R_print)
+        r = {"stl": "stl/fin_R.stl", "T": eye}
+    else:
+        r = {"stl": "stl/fin_L.stl", "T": mirror}   # r3's form: the left bytes placed by a det -1 transform
+    sha = {k: hashlib.sha256(v).hexdigest() for k, v in files.items()}
+    parts = [{"id": "body", "stl": "stl/body.stl", "T": eye}, {"id": "fin_L", "stl": "stl/fin_L.stl", "T": eye},
+             {"id": "fin_R", **r}]
+    rec = {"schema": fm.SCHEMA, "material": {"density_kg_m3": 1220.0}, "parts": [], "assembled_dry": None}
+    for p in parts:
+        rec["parts"].append({"id": p["id"], "stl": p["stl"], "stl_sha256": sha[p["stl"]],
+                             "print_to_fish_transform_mm": p["T"]})
+    m = MAT | {"solid_density_kg_m3": 1220.0}
+    for p in rec["parts"]:   # declare the record's own numbers from its bytes
+        s = mprops.solid(fm._fish_triangles(files.__getitem__, p), 1220.0)
+        p.update(mass_kg=s["mass_kg"], cg_m=s["cg_m"])
+    d = mprops.combine([mprops.solid(fm._fish_triangles(files.__getitem__, p), 1220.0) for p in rec["parts"]])
+    rec["assembled_dry"] = d
+    return rec, files.__getitem__, m
+
+
+def test_printfix_accepts_true_mirror_and_refuses_transform_mirror():
+    old, ro, m = _printfix_records(fixed=False)
+    new, rn, _ = _printfix_records(fixed=True)
+    good = fm.printfix_check(old, ro, new, rn, m)
+    assert good["pass"] and good["body_bytes_identical"]
+    same = fm.printfix_check(old, ro, old, ro, m)   # negative control: r3's form is not printable as a right part
+    assert not same["pass"]
+    row = next(r for r in same["parts"] if r["id"] == "fin_R")
+    assert row["placement_det"] < 0 and not row["print_bytes_differ_from_left"]
