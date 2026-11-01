@@ -481,13 +481,60 @@ probing a GPU at configure time, so even a configure is not meaningful here. Its
 asks for CUDA 10.1 while its Dockerfile pins `cuda:10.2-devel-ubuntu18.04`, which is a
 further reason the version question has to be settled by a run.
 
-**No claim is made here about whether it works on a modern GPU.** A two-arm probe with
-definite acceptance is specified in
-[`docs/handoff/xenobot-packet-to-infra.md`](handoff/xenobot-packet-to-infra.md): one
-arm builds at the pin under a current CUDA toolkit with the architecture forced rather
-than autodetected, and one builds in the pinned 10.2 image with an explicit PTX
-`gencode` so the driver has something to JIT forward. Infra owns the dispatch; this
-branch does not launch cloud jobs.
+That probe has now run, on an H100, and **it does not compile.**
+
+Job `aijob-e00wfnzb38fccw6k57`, dispatched by infra from the frozen packet, returned
+**`COMPILE_FAIL`** in 39.0 s with a 28 s build, well inside its 900 s bound, with no
+timeout and no truncation. **No simulation case executed**, so nothing here says anything
+about the engine's physics. Toolchain as measured on the node: CUDA 13.1, CMake 3.31.6,
+g++ 13.3.0, NVIDIA H100 80GB HBM3 at compute capability 9.0 — which confirms sm_90 was
+the right target. All twelve returned files were independently rehashed here against the
+transport manifest: **12/12 match**, with a negative control confirming the comparison can
+fail, and the node's fetched source hash equals the frozen pin exactly.
+
+**Two independent failures, in two different translation units, and the first one is not
+the one we predicted.**
+
+The **first error in the build**, at log line 317, is Boost.Asio:
+`/usr/include/boost/asio/traits/static_query.hpp:70:112: error: 'indirect_ref' not
+supported by dump_decl<declaration error>' is not a template`. Fourteen such errors run to
+line 382 and kill `VX3_SimulationManager.cu`, which includes a Boost header at its line 3.
+**That failure is ours, not upstream's.** Our own adapter installed Boost
+**1.83.0**, while the voxcraft-sim README at this commit says *"Versions of boost known to
+work: 1.65.1 and 1.67.0"*. We installed something sixteen minor versions beyond anything
+upstream claims to support. We had listed Boost as a possible stop, but as a
+*configure-time* `find_package` failure "before nvcc is ever invoked" — configure
+succeeded, and it failed inside nvcc instead. Right dependency, wrong stage, wrong
+mechanism.
+
+The **second** failure, at log lines 385–415, is the one the packet predicted: sixteen
+errors, eight sites times two diagnostics, *calling a `__host__` function
+("cudaDeviceSynchronize") from a `__device__` function ... is not allowed* and *identifier
+"cudaDeviceSynchronize" is undefined in device code*. The eight sites are exactly the eight
+the packet named — 232, 269, 303, 312, 428, 437, 446, 473 — with no others.
+
+**That second result is uncontaminated by the first.** The two error sets are disjoint and
+sit on opposite sides of their own `make` failures, and `VX3_VoxelyzeKernel.cu` has no
+Boost include at all; the only occurrence of the string in that file is a comment reading
+*"no std::, no boost::"*. So the CUDA API incompatibility stands on its own evidence, and a
+different Boost or a smaller image would not touch it: it is in upstream's source, which
+still uses the legacy dynamic-parallelism interface that CUDA 12.0 removed.
+
+**What the packet got wrong is worth stating plainly**, because the temptation is to read
+the second failure as a confirmed prediction. `probe.json` declared
+`first_site_expected: VX3_VoxelyzeKernel.cu:232`. That is not the first error in the build,
+and it is not even first among the device-sync sites — the compiler reports it **fourth of
+eight**, after 269, 303 and 312. The mechanism was predicted correctly and the position was
+predicted wrongly, and the sequence is recorded as the compiler produced it rather than
+reordered to flatter the prediction.
+
+**No new job and no source patch is authorised by this result.** Removing the device-side
+synchronisation would change the integration order, which is a semantic change to the
+model rather than an adapter action. A port or a toolkit change would need primary-source
+compatibility evidence, not flag shuffling. Full detail, including our own instrumentation
+defect — a receipt field left null by a regex that did not expect nvidia-smi's `[MiB]`
+suffix, with the raw line retained — is in
+[`artifacts/voxcraft-gpu-probe/result.json`](../artifacts/voxcraft-gpu-probe/result.json).
 
 ### Differentiation, stated against the actual prior art
 

@@ -1,0 +1,88 @@
+{
+  "schema": "frontier.voxcraft-gpu-probe-result/1",
+  "probe": "voxcraft-h100-compat-r1",
+  "verdict": "COMPILE_FAIL",
+  "headline": "voxcraft-sim at its pinned commit does NOT compile on CUDA 13.1 targeting sm_90. Two independent failures occurred in two different translation units. The FIRST error in the build is a Boost.Asio failure, not the device-synchronisation failure this packet predicted.",
+
+  "job": {"id": "aijob-e00wfnzb38fccw6k57", "dispatcher": "infra",
+    "started": "2026-10-31 23:53:59 PDT", "finished": "2026-10-31 23:54:38 PDT",
+    "elapsed_s": 39.03, "build_s": 28, "seconds_left_in_the_900s_bound": 862,
+    "timed_out": false, "truncated": false, "transport": "OK, 8445 B, tar_exit 0, scientific_output_mutated false",
+    "simulation_cases_executed": 0,
+    "why_no_cases": "the build failed, so neither the actuated nor the passive case ran. The history validator and the actuation discriminator were never exercised on this engine. logs/97-history-sha256.txt is legitimately empty and hashes to the canonical empty-input sha256."},
+
+  "toolchain_as_measured_on_the_node": {
+    "cuda": "release 13.1, V13.1.80", "cmake": "3.31.6", "gxx": "Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+    "gpu": "NVIDIA H100 80GB HBM3, driver 580.173.02, compute capability 9.0, 81559 MiB",
+    "gpu_note": "compute capability 9.0 confirms sm_90 was the correct target for the forced architecture"},
+
+  "independent_audit_performed_here": {
+    "12_native_files_rehashed": "12/12 match probe-transport.json on both size and sha256; 0 mismatched",
+    "hash_check_negative_control": "appending one byte to 51-first-error.txt changes its digest, so the comparison can fail",
+    "empty_file_control": "97-history-sha256.txt is 0 bytes and its recorded digest equals sha256 of empty input",
+    "source_identity": "the node fetched tarball sha256 0a0f4fd1... which equals the frozen packet pin exactly, and its 14 load-bearing files matched on the node (logs/11-verify.txt). All 403 tracked files were previously verified HERE against a git clone at dd8668f9 from that same tarball hash, 0 missing and 0 mismatched, so the 403 are covered transitively by the whole-archive digest.",
+    "cmake_guard": "logs/20-cmake-inspect.txt shows lines 47, 48, 54 and 60 present in the FETCHED bytes, so -DCUDA_ARCH did bypass the GPU-probing branch as the packet claimed"},
+
+  "ACTUAL_ERROR_SEQUENCE_do_not_reorder": {
+    "total_error_lines": 34, "boost": 14, "device_sync": 16, "make": 4,
+    "first_error_in_the_build": {
+      "build_log_line": 317,
+      "verbatim": "/usr/include/boost/asio/traits/static_query.hpp:70:112: error: ‘‘indirect_ref’ not supported by dump_decl<declaration error>’ is not a template [-fpermissive]",
+      "kind": "Boost.Asio header failing under this compiler"},
+    "boost_error_span": "build log lines 317-382",
+    "device_sync_error_span": "build log lines 385-415",
+    "overlap": "none; the two sets are disjoint",
+    "make_failures_in_order": [
+      {"line": 383, "target": "CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_SimulationManager.cu.o", "cause": "Boost"},
+      {"line": 418, "target": "CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_VoxelyzeKernel.cu.o", "cause": "device synchronisation"}],
+    "interleaving_note": "make -j2 compiled the two translation units concurrently, so their relative position in the log is partly a scheduling artefact. What is NOT an artefact is that each unit failed for its own reason and neither failure caused the other."},
+
+  "failure_1_boost_IS_OUR_DEPENDENCY_CHOICE_not_upstream": {
+    "where": "src/VX3/VX3_SimulationManager.cu, which includes <boost/algorithm/string/case_conv.hpp> at line 3",
+    "installed_by": "this packet's own adapter step, apt-get install libboost-{filesystem,thread,chrono,program_options}-dev",
+    "version_installed": "1.83.0-2.1ubuntu3.2",
+    "what_upstream_says": "the voxcraft-sim README at this commit states 'Versions of boost known to work: 1.65.1 and 1.67.0'",
+    "our_error": "we installed a Boost roughly sixteen minor versions newer than anything upstream claims to support, and it fails inside nvcc 13.1. That is a choice recorded in our own packet, not a property of voxcraft-sim.",
+    "and_we_predicted_it_for_the_WRONG_REASON": "probe.json listed Boost as a possible stop, but as a CONFIGURE-time find_package failure 'before nvcc is ever invoked'. Configure succeeded. The failure is at COMPILE time, inside nvcc, on Boost.Asio headers. Right dependency, wrong stage, wrong mechanism.",
+    "fixable_in_principle": "a Boost version within upstream's stated range might clear this one. That is a statement about this failure only and authorises nothing."},
+
+  "failure_2_device_synchronisation_IS_UPSTREAM_and_is_uncontaminated": {
+    "where": "src/VX3/VX3_VoxelyzeKernel.cu",
+    "errors": "16, being 8 sites x 2 diagnostics each",
+    "verbatim_pair": ["calling a __host__ function(\"cudaDeviceSynchronize\") from a __device__ function(\"VX3_VoxelyzeKernel::doTimeStep\") is not allowed",
+                      "identifier \"cudaDeviceSynchronize\" is undefined in device code"],
+    "sites_in_the_order_the_compiler_reported_them": [269, 303, 312, 232, 428, 437, 446, 473],
+    "enclosing_functions": {"232": "updateTemperature", "269": "doTimeStep", "303": "doTimeStep", "312": "doTimeStep",
+                            "428": "updateAttach", "437": "updateAttach", "446": "updateAttach", "473": "updateDetach"},
+    "NOT_CONTAMINATED_BY_BOOST": "VX3_VoxelyzeKernel.cu has no Boost include at all. The only occurrence of the string 'boost' in that file is a comment at line 121 reading 'no std::, no boost::'. Its 16 errors are device-synchronisation errors and nothing else, and they fall entirely between the two make failures. So this incompatibility is established independently of the Boost problem.",
+    "mechanism": "device-side cudaDeviceSynchronize was deprecated in CUDA 11.6 and removed in CUDA 12.0 with CDP2. CUDA 13.1 rejects it. This is in upstream's own source."},
+
+  "OUR_PREDICTION_SCORED_HONESTLY": {
+    "what_we_got_right": [
+      "the mechanism: device-side cudaDeviceSynchronize is rejected by a modern toolkit, confirmed verbatim under CUDA 13.1",
+      "the exact set of 8 sites, 232/269/303/312/428/437/446/473, all present and no others",
+      "the enclosing functions named for each site",
+      "that -DCUDA_ARCH bypasses the autodetection branch, confirmed on the node"],
+    "what_we_got_WRONG": [
+      "probe.json declared first_site_expected = VX3_VoxelyzeKernel.cu:232. It is not the first error in the build, which is Boost.Asio 68 log lines earlier, and it is not even first among the device-sync sites: it is reported FOURTH of eight, after 269, 303 and 312.",
+      "Boost was predicted as a configure-time find_package failure; it is a compile-time nvcc failure on Asio headers, after configure succeeded."],
+    "the_rule_this_obeys": "the predicted failure is NOT promoted to first. The sequence is reported as the compiler produced it. A prediction that names the right mechanism and the wrong position is a partly correct prediction and is recorded as one."},
+
+  "what_this_result_does_and_does_not_license": {
+    "licensed": "voxcraft-sim at dd8668f9, unmodified, does not compile under CUDA 13.1 for sm_90 with Boost 1.83. The device-synchronisation incompatibility is in upstream's own source and is independent of the dependency problem.",
+    "not_licensed": [
+      "any statement about the engine's correctness, physics or numerical behaviour: no simulation ran",
+      "any biological or convergence claim, in either direction",
+      "that a different image or a smaller image would fix it: the CUDA API incompatibility is in upstream source, not in the environment",
+      "that our predicted first site was confirmed: it was not"],
+    "authorised_next_steps": "none. No new job and no source patch is authorised by this result. Removing the device-side synchronisation would change the integration order, which is a semantic change, and a port or toolkit change would need primary-source compatibility evidence rather than flag shuffling."},
+
+  "defects_in_our_own_instrumentation_found_by_this_run": [
+    {"what": "receipt environment.gpu_csv is null",
+     "cause": "our preflight regex matched 'memory.total\\n' but nvidia-smi emits the header 'name, driver_version, compute_cap, memory.total [MiB]'. The ' [MiB]' suffix defeated the match.",
+     "impact": "cosmetic. The raw line 'NVIDIA H100 80GB HBM3, 580.173.02, 9.0, 81559 MiB' is retained verbatim in logs/00-preflight.txt, so nothing was lost.",
+     "ours": true, "fixed_in_the_adapter": false,
+     "why_not_fixed_here": "the admitted archive hash da3a6f7f is the artifact this result is attributed to. Editing adapter/ now would break that attribution for a cosmetic parser bug. It is recorded instead."}],
+
+  "cpu_arms_unchanged": "the existing CPU preregistration stands untouched, including the arm E miss at 0.0175 against a 0.01 bound, the arm G spatial non-convergence at 8.2x, and the withdrawal of the 2.74% travelling-wave figure in favour of 15.5739% at a common denominator."
+}
