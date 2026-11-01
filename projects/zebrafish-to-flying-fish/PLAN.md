@@ -238,6 +238,7 @@ Constraints, measured or read, that bound what is runnable at all:
 | G1c | **Paralog controls** (`kcnh2b`, `tbx5b`, `fgf10b`, `kcnk5a` mapped alongside their `a` paralogs) | **Done.** `C-here`, round 3. Added after review: with the teleost whole-genome duplication, an `a`-paralog query could best-hit the `b` region. | UniProt; the assembly | Shows whether the `a` and `b` queries resolve to different scaffolds. Still not an orthology test. |
 | G2 | **Reciprocal best-hit test within each gene family** (miniprot `--trans` prediction from the collision scaffold, aligned back against every zebrafish family member) | **Done.** `C-here`, `RESULTS.md` §R3. Run instead of the medaka-proxy version because the collisions are between zebrafish paralogs, which medaka cannot arbitrate. | the assembly; 15 zebrafish family proteins | **Resolved** the `shha`/`shhb` collision (5/5 predictions rank `shha` first) and **did not resolve** the `kcnh2a`/`kcnh2b` one: score and percent-identity rankings disagree on the same sequence. Also showed `kcnh2a`'s second-best scaffold is a `kcnh6a`-like locus. Not an orthology proof; a gene tree is still owed. |
 | G2b | **Gene tree for the `kcnh2` region with outgroups and a positive control** | **Done.** `C-here`, Nebius CPU job `claude-zf2ff-kcnh-tree-1`, `RESULTS.md` §R4 and `data/tree/MANIFEST.md`. | 20 proteins: the family, 2 human outgroups, 4 predictions from the collision scaffold, 4 from a control scaffold | **Settled the paralog assignment**: the region is `kcnh2b`-like (99/100), control passes (94.4/97). Still not orthology without synteny. |
+| G10 | **Beloniformes + non-Beloniform outgroup trees** | **Done.** `C-here`, jobs `…beloniform-tree-1` and `…outgroup-tree-1`, `RESULTS.md` §R7e/§R7f. | medaka and Takifugu KCNH proteins; the census loci | **`kcnh2a` is absent from the Beloniform lineage**: Takifugu `kcnh2a` pairs with zebrafish `kcnh2a` at 100/100 while medaka and the flying fish carry the `b` copy. Two Beloniformes only; no synteny. |
 | G3b | **Synteny around zebrafish `kcnh2a`'s neighbourhood** | **Running** (`scripts/synteny_kcnh2a.py`): the 36 protein-coding genes flanking `kcnh2a` on GRCz11 chr2, mapped onto the assembly. | Ensembl GRCz11; the assembly | Distinguishes "the whole neighbourhood is missing" from "the neighbourhood is present with a gap where `kcnh2a` should be". Scaffold fragmentation limits it; a negative is uninformative. |
 | G9b | **Family-wide KCNH census** | **Done.** `C-here`, job `claude-zf2ff-kcnh-census-tree-1`, `RESULTS.md` §R7b. | all 10 zebrafish KCNH proteins; the assembly | **9 of 10 paralogs have a flying-fish locus; `kcnh2a` has none.** The gap is gene-specific in this assembly, not general incompleteness. Not a statement about the species. |
 | G8b | **Motif-scan robustness: two re-designs** | **Done.** `C-here`, jobs `…motif-robust-1` and `…motif-heldout-1`, `RESULTS.md` §R6b/§R6c. | the same windows and motif set, held constant by digest | Pass 1's species asymmetry **withdrawn**; the aggregate signal survives in both species; **no per-window claim survives**. |
@@ -378,15 +379,18 @@ abstract sentences this plan leans on, since **no full text was read**.
 
 ## 7. Next actions, in order of information gained per unit cost
 
-1. **Settled this session, and it went against the plan.** The Exocoetid `kcnh2a` is not findable in
-   this assembly: the one `kcnh2`-like region is `kcnh2b`-like with a passing control (§R4), a
+1. **Settled this session, and it went against the plan.** `kcnh2a` is **absent from the Beloniform
+   lineage that contains flying fishes** — shown with a non-Beloniform outgroup (*Takifugu*) that
+   retains the `a` copy at 100/100 while medaka and the flying fish carry the `b` copy (§R7f). The
+   evidence within the assembly: the one `kcnh2`-like region is `kcnh2b`-like with a passing control (§R4), a
    low-stringency hunt found no new region (G9), a second tree assigned all five untested regions to
    other paralogs (§R7), and a family census found 9 of 10 KCNH paralogs do have a flying-fish locus
    while `kcnh2a` has none (§R7b). So the `longfin` gene has **no located target** in the only public
-   Exocoetidae assembly and perturbation row **P1 cannot be designed against this genome**. Whether
-   that is an assembly gap or a lineage fact is not decidable from public data: G3b synteny is
-   running, and settling it properly needs **new sequencing of an Exocoetid**, which is beyond this
-   project.
+   Exocoetidae assembly and perturbation row **P1 cannot be designed against this genome**. It is a **lineage fact, not an assembly gap**: row **P1 has no
+   target gene to edit**, and the next step is a literature one — read PMID 34534441's own gene
+   identifiers in full text to see what its flying-fish `kcnh2a` signal refers to. This project has
+   not read that paper's methods and does not claim it is wrong. Strengthening the result itself
+   needs a **third Beloniform genome**, which was not run.
 2. **Read the result of PMID 38232499** (wildtype vs longfin locomotor performance). One abstract-
    to-full-text step that can invalidate the whole programme, which makes it the cheapest possible
    kill test.

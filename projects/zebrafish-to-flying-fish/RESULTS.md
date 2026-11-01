@@ -594,6 +594,47 @@ is exactly **one** `kcnh2`-like gene in the flying-fish assembly, and it is not 
 `kcnh2a` that the `longfin` literature characterises. So perturbation row P1 cannot be transferred
 gene-for-gene from zebrafish, whatever the right historical description turns out to be.
 
+## R7f — The outgroup control: "loss in Beloniformes" is earned
+
+**`claude-zf2ff-outgroup-tree-1`** (`aijob-e00hnvzmx6a1jjedq1`), CLI-read `COMPLETED`. Manifest:
+[`data/tree6/MANIFEST.md`](data/tree6/MANIFEST.md). The Beloniformes tree plus the single `kcnh2`
+gene of *Takifugu rubripes*, a **non-Beloniform acanthomorph** (Ensembl `ENSTRUG00000010880`).
+
+Both hypotheses were written down before the job ran (`outgroup_tree_input_ledger.json`). The result
+is the first one, unambiguously:
+
+**Takifugu `kcnh2a` + zebrafish `kcnh2a` form a 2-tip clade at 100/100**, and zebrafish `kcnh2a` is
+Takifugu's closest relative among all 20 references. The `kcnh2` family resolves into two paralog
+sub-clades inside one 99.7/100 clade:
+
+```
+( (TAKIFUGU_kcnh2a , ZF_kcnh2a)100/100 , (ZF_kcnh2b , (OL_kcnh2b , HSPEC_locus01)99.5/100 ) )99.7/100
+```
+
+- The `a`/`b` duplication **predates** the cyprinid–acanthomorph split, consistent with the teleost
+  whole-genome duplication.
+- Zebrafish keeps both. **Takifugu keeps `a`. Medaka and the flying fish carry `b`.**
+- So the per-species annotation names were **right** after all, and §R7e's caution about them is
+  resolved in their favour **by sequence rather than by assumption**.
+- A non-Beloniform acanthomorph retains `a` while both available Beloniformes lack it. That is what
+  "loss in Beloniformes" means, and it now rests on an **outgroup** rather than on a missing symbol.
+
+**So the word is earned, and §R7d's walk-back is itself resolved.** The chain, with each step's
+evidence kept in the repo: the trees said `kcnh2b`-like → synteny objected → medaka answered the
+objection but on annotation grounds → the naming convention undercut that → the outgroup settled it
+on sequence. Three of those five steps contradicted the step before.
+
+**Limitations.** Two Beloniformes only (medaka plus one draft-assembly prediction); a third would
+strengthen it and was not run. "Takifugu's single `kcnh2`" means the only gene with that symbol in
+Ensembl — an unnamed Takifugu `kcnh2b` was not excluded, which is why the manifest avoids the phrase
+"retains `a`, lacks `b`". No synteny supports the Takifugu–zebrafish-`a` pairing. The flying-fish
+sequence is a miniprot prediction, not a transcript.
+
+**Consequence.** `kcnh2a` is absent from the Beloniform lineage containing flying fishes, so
+perturbation row **P1 has no target gene to edit** — not a placement problem but an absent gene. Any
+design resting on the published flying-fish `kcnh2a` signal needs that paper's own gene identifiers
+read in full text first; this project has not read its methods and does not claim it is wrong.
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/

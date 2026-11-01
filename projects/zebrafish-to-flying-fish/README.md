@@ -88,9 +88,11 @@ process; it is reviewed here, not re-run.
    other paralogs, both carried-forward controls reproducing. A family census then placed 14
    KCNH-like loci and found **9 of 10 zebrafish paralogs have a flying-fish locus while `kcnh2a` has
    none** — so the gap is gene-specific in this assembly, not general incompleteness. `kcnh2a` is the
-   `longfin` gene and this plan's primary candidate, so the headline edit **has no located target**.
-   That is a statement about a draft, scaffold-level, unannotated assembly, not about the species —
-   and it went against the project's own working hypothesis.
+   `longfin` gene and this plan's primary candidate. Two further trees then settled *why*: medaka and
+   the flying fish both carry the `kcnh2b` copy, while **Takifugu, a non-Beloniform, pairs with
+   zebrafish `kcnh2a` at 100/100**. So `kcnh2a` is **absent from the Beloniform lineage** — a lineage
+   fact, not an assembly gap — and the headline edit has **no target gene to edit**. The chain took
+   five steps and three of them contradicted the step before; every reversal is kept in the repo.
 5. **A robustness pass overturned one of this project's own results.** The first motif scan reported a
    null zebrafish arm and a strong flying-fish one. Its manifest named two design weaknesses *before*
    the follow-up ran; the follow-up removed them and the asymmetry vanished. A third pass with a
