@@ -1,0 +1,45 @@
+{
+ "schema": "frontier.sample-pairing.protocol/1",
+ "frozen_before_new_retrieval": true,
+ "title": "GSE261907 RNA/ATAC library pairing audit from GEO sample metadata",
+ "design_note": "Criteria were written after reading the earlier metadata audit's committed GEO bytes for this same series (work/regulatory-metadata 1b77f81: titles, BioSample links, assembly lines), so the new retrieval is confirmatory for the rules' fit to the data, not blind. No outcome of the new retrieval was seen when this file was frozen.",
+ "question": "For the libraries GEO lists under GSE261907, which RNA-Seq library is paired with which ATAC-seq library at the level of the same submitter-declared BioSample, and which relationships stay unresolved?",
+ "unit_of_pairing": "library (GSM) to library (GSM) through a shared BioSample accession. A shared cell-barcode string never implies the same cell across libraries, and no barcode file is retrieved, so cell-level pairing is always reported as 'unresolved: not examined'.",
+ "required_metadata_per_sample": ["organism_ch1 == Danio rerio", "tissue characteristic", "time post-amputation characteristic", "library_strategy in {RNA-Seq, ATAC-seq}", "exactly one BioSample relation", "an Assembly line", "a title with a replicate token rep<N>"],
+ "assembly_aliases": [["danrer11", "grcz11"]],
+ "assembly_rule": "Assemblies are equal only when identical after lowercasing or listed together in assembly_aliases. A pair whose two libraries disagree, or whose assembly is absent on either, is 'assembly_mismatch' and is never matched.",
+ "statuses": {
+  "matched": "one RNA-Seq and one ATAC-seq library share one BioSample, and their parsed (time, replicate), tissue, organism and assembly are equal, and no other library of either strategy shares that BioSample",
+  "unresolved_missing_identity": "a required field above is absent or unparseable for either library, or a library has no counterpart of the other strategy",
+  "unresolved_conflict": "the two libraries share a BioSample but disagree on time, replicate, tissue or organism, or a BioSample appears under different (time, replicate) values",
+  "unresolved_ambiguous": "more than one library of the same strategy shares a BioSample (many-to-one or many-to-many)",
+  "assembly_mismatch": "see assembly_rule"
+ },
+ "independence_statement": "Distinct BioSample accessions are counted as submitter-declared samples. GEO metadata does not say whether replicates are separate animals; the output reports distinct BioSamples and leaves animal identity unknown. Matched pairs are not independent replicates of one another beyond that.",
+ "retrieval": {
+  "kind": "finite rule",
+  "allowed_hosts": ["www.ncbi.nlm.nih.gov"],
+  "url_templates": ["https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc={ACC}&targ=self&form=text&view=full"],
+  "discovery": "Fetch the series (ACC=GSE261907). The sample set is exactly the GSM accessions on its !Series_sample_id lines, each fetched once with the same template. No other URL, supplementary file, FTP path, matrix, barcode or raw read is ever requested.",
+  "max_requests": 21,
+  "max_gsm": 20,
+  "max_bytes_per_response": 262144,
+  "max_total_bytes_compressed": 2097152,
+  "max_total_bytes_expanded": 4194304,
+  "gsm_pattern": "^GSM[0-9]{6,9}$",
+  "series_accession": "GSE261907",
+  "min_delay_s": 0.4,
+  "retries": 0,
+  "redirects": "refused",
+  "bound_refusals": "A response over max_bytes_per_response, a series listing more than max_gsm samples, or exceeding any total stops retrieval; everything fetched so far is kept and completion_status records the stop. No retry, no budget expansion."
+ },
+ "budget": {"cpu_workers": 1, "numeric_threads": 1, "memory_bytes": 4294967296, "tasks_max": 128, "hard_runtime_s": 600, "max_output_bytes": 20971520, "network": "metadata only, host allowlist above", "dollars": "unknown"},
+ "budget_note": "The earlier proposal text said both 60 min and 600 s. This protocol freezes ONE budget: 600 s hard runtime. The prior 60 min figure is withdrawn.",
+ "output": {
+  "files": ["results.json", "receipt.json", "raw/<ACC>.soft.txt"],
+  "results_schema": "frontier.sample-pairing.results/1",
+  "retained": "every admitted sample, every pair with status and reasons, every missing or conflicting identity, exact URL, retrieval UTC timestamp, bytes and sha256 per response, explicit completion_status in {complete, stopped_on_bound, stopped_on_error, series_unavailable}",
+  "completion_rule": "complete only if the series and every listed GSM were retrieved within bounds and parsed"
+ },
+ "non_claims": ["No causal genomic-design claim.", "No resolved-pairing rate beyond the counts the checker computes from the retrieved bytes.", "Not evidence of fish phenotype, flying-fish transfer, or cell-level RNA/ATAC correspondence.", "Not a repeat of the provider-stopped metabolism or sequence task; no model inference."]
+}
