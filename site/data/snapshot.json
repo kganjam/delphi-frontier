@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 3f74638f2d05",
- "input_fingerprint": "3f74638f2d0521b557f87232000da740567f84c0fa9a93ee2811084b5c9ea00c",
+ "label": "snapshot of inputs 8a97d7b11bb4",
+ "input_fingerprint": "8a97d7b11bb46b504e1bb106b19dbcc2085e64a0f95f9359ca11285bc1352e48",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -4105,8 +4105,8 @@
   },
   {
    "path": "results/limbless-mouse/index.json",
-   "sha256": "6ce97f98d4ba934c5867feb67bc9264400088a0832eacf8aa42b914d4665748b",
-   "bytes": 6850
+   "sha256": "7438017902ef31cad4ae0b8e0d49840123cc9ab466d9e1e8ad1a6aa55dfcd3b6",
+   "bytes": 7287
   },
   {
    "path": "results/limbless-mouse/routes.json",
@@ -4205,8 +4205,8 @@
   },
   {
    "path": "site/content/limbless-mouse.json",
-   "sha256": "0ce53397d9450d0d40f2788e0a632827462fa8af87decc75983777a70a98008a",
-   "bytes": 7758
+   "sha256": "58d3944d82942b4dc8c711a8dc7e5aaaf10224e34fb7ae2f739cd9e85850d50d",
+   "bytes": 7991
   },
   {
    "path": "site/content/mission.json",
@@ -75567,7 +75567,7 @@
    "headline": "Yes, several ways — and they do not give you the same animal.",
    "paragraphs": [
     "The honest answer to “could you make a limbless mouse?” is that the mouse literature already contains more than one way, and the first question back is which phenotype is wanted. Complete absence of all four limbs (amelia) is the Fgf10-null phenotype, and in humans the WNT3 Q83X tetra-amelia phenotype: the apical ectodermal ridge never forms, so there is no limb at all. Truncation is a different outcome reached by a different lesion: the limb bud starts, the SHH–GREM1–FGF loop fails to sustain it, and a stunted proximal element is left behind.",
-    "The sharpest precedent for getting there by editing regulation rather than by deleting a gene is Kvon et al. 2016. Replacing the mouse ZRS — the limb enhancer of Shh, about a megabase away inside an intron of Lmbr1 — with the king cobra ortholog abolished limb-bud Shh expression and truncated both limb pairs, while the human and coelacanth orthologs in the same assay gave normal limbs. A 17-base-pair stretch spanning an ETS site was enough to change the outcome. That is the resolution at which this is a design problem rather than a knockout.",
+    "The sharpest precedent for getting there by editing regulation rather than by deleting a gene is Kvon et al. 2016. Replacing the mouse ZRS — the limb enhancer of Shh, about a megabase away inside an intron of Lmbr1 — with the king cobra ortholog abolished limb-bud Shh expression and truncated both limb pairs, while the human and coelacanth orthologs in the same assay gave normal limbs. And the 17 base pairs are not an association: Kvon et al. put that stretch, carrying an ETS site, back into the python ZRS, knocked that engineered allele into mice, and got normal limbs. Four ortholog knock-ins and one resurrected allele is the whole causal dataset, which is small — but it is a causal one. That is the resolution at which this is a design problem rather than a knockout.",
     "If the goal is a viable adult animal rather than an embryonic phenotype, the realistic route is one limb pair, not four: a conditional Tbx5 allele for the forelimb, Tbx4 or Pitx1 for the hindlimb, switched after the body plan is laid down. Tetra-amelia alleles are generally severe and often lethal for reasons that have nothing to do with limbs.",
     "And if the point is the mechanism rather than the mouse, the first thing a reviewer will ask for in 2026 is a limb-bud explant or organoid, not an animal. That route is on this page too."
    ],
@@ -75657,8 +75657,8 @@
    "title": "Why this is on a design platform and not in a review article",
    "text": "The useful thing here is not the list — a specialist could write the list. It is that every row carries its evidence level, every junction between scales carries a refusal or a label, and the three models can be re-run from the repository. The question “can you make a limbless mouse?” has a dozen answers whose differences only show up when you are forced to say which phenotype, at which scale, with what evidence, and at what cost. That is what this workspace is for."
   },
-  "content_sha256": "0ce53397d9450d0d40f2788e0a632827462fa8af87decc75983777a70a98008a",
-  "index_sha256": "6ce97f98d4ba934c5867feb67bc9264400088a0832eacf8aa42b914d4665748b",
+  "content_sha256": "58d3944d82942b4dc8c711a8dc7e5aaaf10224e34fb7ae2f739cd9e85850d50d",
+  "index_sha256": "7438017902ef31cad4ae0b8e0d49840123cc9ab466d9e1e8ad1a6aa55dfcd3b6",
   "generated_at": null,
   "routes": {
    "title": "Routes to a limbless or limb-reduced mouse",
@@ -77741,8 +77741,8 @@
     "title": "The ZRS across species: what changes when a limb enhancer is swapped",
     "scale": "molecular",
     "kind": "sequence analysis",
-    "question": "Kvon et al. replaced the mouse ZRS with orthologs and got normal limbs from some species and truncated limbs from others. What, in the sequence itself, separates the two groups?",
-    "summary": "Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS-motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the one that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page.",
+    "question": "Kvon et al. swapped the mouse ZRS for orthologs from other species: human and coelacanth gave normal limbs, python and king cobra truncated them. The python ZRS is about as similar to mouse as the coelacanth's is, so whatever separates them is not overall sequence similarity. What can you see in the alignment?",
+    "summary": "Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS1 motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the ones that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page. The causal evidence is Kvon et al.'s mouse genetics, not this alignment.",
     "code": "results/limbless-mouse/code/final_analysis.py (with fetch_orthologs.py, locate_zrs.py, core_trim.py, make_figure.py and zrs_lib.py beside it)",
     "data": {
      "generated_at": "2026-11-01T20:19:44.680027+00:00",
@@ -80514,14 +80514,14 @@
       }
      ]
     },
-    "summary_table_title": "Every ortholog retrieved, with its divergence from mouse and its ETS1 motif content",
+    "summary_table_title": "Every species searched, with its percent identity to mouse over the trimmed core and its ETS1 motif content",
     "present": true,
     "sha256": "a5e7e788863a54d9e79aca8d2d548b4d14d4286efbdda4d7b294795f4f719e7b",
     "figures": [
      {
       "file": "zrs-conservation.png",
       "alt": "Per-column conservation of eleven aligned ZRS orthologs above a panel of per-species difference tracks, with ETS1 motif positions boxed, the limbed and finned species separated from the snakes, and a full-height band marking the 17 base-pair block that every snake has lost",
-      "caption": "Sequence analysis. Per-column conservation across the aligned orthologs, with ETS1 motif positions marked and the species split by what the published knock-in produced. The band marks a 17 bp block that is deleted in all five snakes in the alignment and present in all six limbed or finned species; a twelfth species, corn snake, had no detectable ZRS at all and is not in the figure. The block's position came out of the alignment before any comparison to the paper; the ETS1 call inside it is a position-weight-matrix match, not measured binding.",
+      "caption": "Sequence analysis. Per-column conservation across the aligned orthologs, with ETS1 motif positions marked and the species split by what the published knock-in produced. The band marks a 17 bp block, counted against lizard, that is absent from four of the five snakes; in the fifth, tiger rattlesnake, the alignment places unrelated sequence there rather than a gap, so the deletion is not assessable there. An ETS1 motif inside the block scores in all six limbed or finned species and in none of the five snakes. A twelfth species, corn snake, had no detectable ZRS at all and is not in the figure. The block's position came out of the alignment before any comparison to the paper; the ETS1 call is a position-weight-matrix match, not measured binding.",
       "state": "present",
       "href": "artifacts/limbless-mouse/zrs-conservation.png",
       "sha256": "aa833ce8e6245b71a93a6c330ec51697eca417c415f57ccfb4ddeb43c48cfd1a",

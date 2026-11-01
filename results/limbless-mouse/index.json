@@ -12,18 +12,18 @@
       "title": "The ZRS across species: what changes when a limb enhancer is swapped",
       "scale": "molecular",
       "kind": "sequence analysis",
-      "question": "Kvon et al. replaced the mouse ZRS with orthologs and got normal limbs from some species and truncated limbs from others. What, in the sequence itself, separates the two groups?",
-      "summary": "Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS-motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the one that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page.",
+      "question": "Kvon et al. swapped the mouse ZRS for orthologs from other species: human and coelacanth gave normal limbs, python and king cobra truncated them. The python ZRS is about as similar to mouse as the coelacanth's is, so whatever separates them is not overall sequence similarity. What can you see in the alignment?",
+      "summary": "Real ZRS orthologs fetched from NCBI, aligned here, with per-column conservation and ETS1 motif positions. The contrast of interest is between the orthologs that gave normal limbs in the published knock-in and the ones that truncated them. This is a correlational reading of a handful of sequences; it is not a predictor of enhancer activity and is not used as one anywhere on this page. The causal evidence is Kvon et al.'s mouse genetics, not this alignment.",
       "code": "results/limbless-mouse/code/final_analysis.py (with fetch_orthologs.py, locate_zrs.py, core_trim.py, make_figure.py and zrs_lib.py beside it)",
       "data": "results/limbless-mouse/zrs-analysis.json",
       "figures": [
         {
           "file": "zrs-conservation.png",
           "alt": "Per-column conservation of eleven aligned ZRS orthologs above a panel of per-species difference tracks, with ETS1 motif positions boxed, the limbed and finned species separated from the snakes, and a full-height band marking the 17 base-pair block that every snake has lost",
-          "caption": "Sequence analysis. Per-column conservation across the aligned orthologs, with ETS1 motif positions marked and the species split by what the published knock-in produced. The band marks a 17 bp block that is deleted in all five snakes in the alignment and present in all six limbed or finned species; a twelfth species, corn snake, had no detectable ZRS at all and is not in the figure. The block's position came out of the alignment before any comparison to the paper; the ETS1 call inside it is a position-weight-matrix match, not measured binding."
+          "caption": "Sequence analysis. Per-column conservation across the aligned orthologs, with ETS1 motif positions marked and the species split by what the published knock-in produced. The band marks a 17 bp block, counted against lizard, that is absent from four of the five snakes; in the fifth, tiger rattlesnake, the alignment places unrelated sequence there rather than a gap, so the deletion is not assessable there. An ETS1 motif inside the block scores in all six limbed or finned species and in none of the five snakes. A twelfth species, corn snake, had no detectable ZRS at all and is not in the figure. The block's position came out of the alignment before any comparison to the paper; the ETS1 call is a position-weight-matrix match, not measured binding."
         }
       ],
-      "summary_table_title": "Every ortholog retrieved, with its divergence from mouse and its ETS1 motif content"
+      "summary_table_title": "Every species searched, with its percent identity to mouse over the trimmed core and its ETS1 motif content"
     },
     {
       "id": "shh-grem1-fgf-loop",
