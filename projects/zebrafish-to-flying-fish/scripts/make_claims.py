@@ -369,14 +369,25 @@ PROBLEMS = [
         id="zf2ff-problem-lat4a-identifier",
         title="Which zebrafish UniProt entry is the 'lat4a' of the flying-fish convergence papers?",
         known_state=(
-            "Two independent papers name lat4a as a fin-size locus with a convergent signature in flying "
+            "UPDATED after four Nebius jobs. A SLC43 family census of the assembly found TWO full-length "
+            "LAT4-like loci: slc43locus01 (JAGFBZ010000485.1, 593 aa predicted) and slc43locus02 "
+            "(JAGFBZ010001224.1, 570 aa). A gene tree places locus01 with medaka slc43a2b at 100/99, a "
+            "confident a2b/LAT4 ortholog. The first tree could not test the a side at all, because the "
+            "only zebrafish slc43a2a sequence in UniProt is a 153 aa FRAGMENT; Ensembl has the "
+            "full-length protein (ENSDARG00000036848, chr15, 577 aa) and UniProt does not. Re-running "
+            "with it moved locus02 to pair with slc43a2a, but at only 36.2/65 support, so that "
+            "assignment is unresolved. Only zebrafish has an annotated slc43a2a at all: Ensembl lists "
+            "slc43a2b and no slc43a2a for Takifugu, stickleback and medaka. Original state: "
+            "two independent papers name lat4a as a fin-size locus with a convergent signature in flying "
             "fishes (PMID 34534441) and a convergent amino-acid change shared with syngnathids, reported "
             "as confirmed in vitro (PMID 40689752). UniProt's zebrafish entries are slc43a2a (Q7ZUS0, "
             "153 aa, a fragment) and slc43a2b (Q5PR35, 592 aa, annotated 'L-type amino acid transporter "
             "4'). This project mapped both to GCA_018398805.1 and they best-hit different scaffolds "
             "(JAGFBZ010001224.1 and JAGFBZ010000485.1), so two distinct LAT4-like regions are detectable."),
         question=("Which gene — and therefore which Exocoetid scaffold region — do the two papers mean by "
-                  "lat4a, and which codon carries the reported convergent change?"),
+                  "lat4a, and which codon carries the reported convergent change? The sequence half of "
+                  "this is now partly answered and partly blocked on tree support; the paper half is "
+                  "untouched and needs full text."),
         problem_kind="project_gap",
         novelty_status="Not a field open problem; it is a gap in this project's reading. Resolvable by one full-text read.",
         data_access=("Both papers are indexed in Europe PMC; PMID 34534441 is Current Biology (access not "
@@ -384,17 +395,22 @@ PROBLEMS = [
                      "both alignments are already on disk in this repository."),
         completeness="actionable",
         acceptance_criteria=["A full-text read of PMID 34534441 and PMID 40689752 names the gene identifier or accession used, and the residue position of the convergent change.",
-                             "The named identifier is matched to one of the two mapped scaffold regions, with the amino-acid position located in that alignment."],
+                             "The named identifier is matched to one of the two mapped SLC43A2-family loci (slc43locus01 or slc43locus02), with the amino-acid position located in that alignment.",
+                             "The paralog assignment of slc43locus02 reaches usable support, which the current tree does not give it (36.2/65)."],
         falsifiers=["The papers use a gene identifier that corresponds to neither slc43a2a nor slc43a2b, in which case the candidate locus in this project is wrong.",
                     "The convergent change is reported only in Exocoetid species other than H. speculiger and is absent from the H. speculiger assembly."],
         next_action=("Read the two full texts for the gene identifier and residue position, then extract the "
-                     "corresponding codon from the aligned region of GCA_018398805.1 recorded in "
-                     "data/round2/mapping_summary_round2.json."),
+                     "corresponding codon from whichever of the two SLC43A2-family loci the identifier "
+                     "names (data/census_slc43/slc43_tree_input_ledger.json gives both loci with their "
+                     "coordinates and digests). Use ENSEMBL, not UniProt, for any zebrafish SLC43 "
+                     "reference: UniProt's slc43a2a entry is a 153 aa fragment that silently biased the "
+                     "first tree this project ran."),
         required_capabilities=["full-text literature access", "sequence extraction from a local FASTA"],
         cost_stop_bounds=("Two full-text reads and one short sequence-extraction script; under an hour. Stop "
                           "if neither paper states a usable identifier, and record that as the finding."),
         downstream_uses=["Unblocks analysis G4 in PLAN.md section 3.",
-                         "Unblocks perturbation row P2 (single-codon knock-in), which cannot be designed against an unknown paralog."],
+                         "Unblocks perturbation row P2 (single-codon knock-in), which cannot be designed against an unknown paralog.",
+                         "The Ensembl-not-UniProt lesson applies to any future SLC43 work in this repo."],
         source=computed_source("data/round2/mapping_summary_round2.json"),
         approach="literature_gap",
         scales=["molecular", "evolutionary"],

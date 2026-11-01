@@ -677,6 +677,40 @@ Three `slc43a3`-side assignments carry 33.3/55 support and are to be read as **u
 here is evidence of transport activity, and none of it identifies the published `lat4a` amino-acid
 change — that still needs the paper's full text.
 
+## R7i — The fragment was the problem: full-length `slc43a2a` changes the answer, but not enough to claim it
+
+**`claude-zf2ff-slc43-full-tree-1`** (`aijob-e00g2dmdpfbabd4kx9`), CLI-read `COMPLETED`. Manifest:
+[`data/tree9/MANIFEST.md`](data/tree9/MANIFEST.md). Same tree as §R7h with one substitution: UniProt's
+153 aa `slc43a2a` fragment replaced by Ensembl's full-length **577 aa** protein
+(`ENSDARG00000036848`, chr15).
+
+| locus | closest reference | support |
+| --- | --- | --- |
+| `slc43locus01` | medaka `slc43a2b` | **100/99** → a confident `slc43a2b`/LAT4 ortholog |
+| `slc43locus02` | full-length zebrafish `slc43a2a` | **36.2/65** → **unresolved** |
+
+**The fragment was indeed the problem.** With it, both loci fell on the `b` side and `slc43a2a` could
+not attract anything; with the full-length sequence, `slc43locus02` moves to the `a` side. §R7h
+predicted this might happen and said so before the job ran.
+
+**But 36.2/65 is not a claim.** This project does **not** say `slc43locus02` is the `slc43a2a`
+ortholog. The claimable statement is narrower: the assembly carries **two** `slc43a2`-family loci,
+one confidently `a2b`, the other's assignment unresolved on a short internal branch.
+
+**Practical finding worth carrying forward:** take SLC43 references from **Ensembl, not UniProt** —
+UniProt's zebrafish `slc43a2a` entry is a fragment that silently biases any tree it enters. The
+`lat4a` Problem record is updated with this rather than closed.
+
+The named next test — adding `slc43a2b` from more percomorphs so the `b` clade gains structure and an
+`a`-side locus would stand out — is running as `claude-zf2ff-slc43-broad-tree-1` (`data/tree10/`).
+
+**Annotation pattern, recorded with the same caution as before:** only zebrafish has an annotated
+`slc43a2a`; Ensembl lists `slc43a2b` and no `slc43a2a` for Takifugu, stickleback and medaka. That is
+the same pattern found for `kcnh2a` and it is an annotation fact, not a genome-content proof.
+
+**What none of this touches:** which gene the *papers* mean by "lat4a", and what their reported
+convergent amino-acid change is. That needs full text and cannot be settled by sequence work here.
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/

@@ -1,0 +1,21 @@
+{
+ "scope": "SLC43 tree with more b-side taxa added to break a short internal branch. A gene tree places sequences; it does not prove orthology.",
+ "why": "With a full-length zebrafish slc43a2a in the tree, flying-fish slc43locus02 pairs with it rather than with slc43a2b -- but at only 36.2/65 support, which is not a claim. Adding slc43a2b from two more percomorphs gives the b-side clade more structure, so an a-side locus should stand out if it is one.",
+ "question": "With Takifugu and stickleback slc43a2b added, does slc43locus02 still sit with zebrafish slc43a2a, and at what support?",
+ "note_on_annotation": "Only zebrafish has an annotated slc43a2a; Ensembl lists slc43a2b and NO slc43a2a for Takifugu, stickleback and medaka. That is the same pattern seen for kcnh2a, and it is an annotation fact, not a genome-content proof.",
+ "added": {
+  "TAK_slc43a2b": {
+   "ensembl_gene": "ENSTRUG00000003499",
+   "len": 598,
+   "sha256": "0e0bbe9b39fbe13d831c6c1984503a83177dbb56d03cdd34f589ebb776737791"
+  },
+  "GAC_slc43a2b": {
+   "ensembl_gene": "ENSGACG00000020606",
+   "len": 598,
+   "sha256": "b28ab0b5784b1e1fd2660881c5e6d1e39b1a3101b5c4a458e6738866e15c835f"
+  }
+ },
+ "n_sequences": 18,
+ "fasta_bytes": 9926,
+ "fasta_sha256": "9d899dce7e613cd22a3fcc0bc22eb313147c2090c5a96bb4a93cf8bbcfae777f"
+}
