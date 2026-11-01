@@ -13,6 +13,7 @@ Code: `engineering/organ_sims/`. Logs: `artifacts/organ-sims/logs/`.
 | R2 `r2-glide-sweep` | Wing area, AR and placement vs launch-glide range, under printed-mass constraints | 0 | 8/8 |
 | R3 `r3-underwater-drag` | Underwater drag of the same bodies, fins spread vs folded | 0 | 13/13 |
 | R4 `r4-aeroelastic-stiffness` | Fin bending over the sourced fin-ray stiffness range | 0 | 6/6 |
+| R4b `r4b-torsion` | Fin torsion added to R4 (Nebius) | 0 (attempt a2; a1 failed: scipy) | 4/4 |
 | R5b `r5b-staggered-release` | Staggered collective release (Nebius) | 0 | 2/2 |
 | R6 `r6-trim-map` | R2 designs in 6-DOF with real trim (Nebius) | 0 (attempt a2; a1 failed at import) | 3/3 |
 | R5c `r5c-integrated-launch` | R6 designs with the R5b release rule (Nebius) | 0 | 2/2 |
@@ -216,9 +217,54 @@ upper bound.
   bluegill-ray EI at the same ray count to stay in the small-deflection regime at 16–20 m/s. This is a hypothesis
   for measurement, not an established property of flying-fish fins.
 - **Constraints:** none violated for the print. The sourced-biology band is outside the model's linear domain.
-- **Limitation (argon #1):** the model is torsion-rigid. Constraint torsion is 29% of root bending (committed
-  review), and twist or washout could change CL by far more than bending does. The <1% CL loss is a bending-only
-  lower bound.
+- **Limitation (argon #1), now quantified in R4b below:** the model is torsion-rigid. With the printed fin's
+  estimated torsional stiffness, twist changes CL by −1.5% to −8% (spar on the leading ray), not < 1%.
+
+## R4b. Fin torsion (Nebius job, `r4b-torsion`; argon review #1)
+
+**Model.** R4's two-way static loop plus a uniform-GJ torsion rod about an elastic axis at chord fraction f_ea.
+
+**Grid.**
+- EI: printed root 7.35e-3 N·m², plus two R4 grid points, 3.16e-3 and 1.78e-3.
+- GJ/EI: 0.03, 0.1, 0.3, 1, ∞.
+- f_ea: 0.05 (spar on the leading ray), 0.25, 0.40.
+- Speed: 8–20 m/s. Meshes: 24×6 and 48×12.
+
+**Run record.**
+- Attempt a1 (`aijob-e00vzgaqzha3k23eb5`) failed at import: scipy was missing from the job image. Log and receipt
+  are kept.
+- Attempt a2 (`aijob-e00ejvmc0pmnce04en`, code `00972ac`): exit 0 in 1517 s; tarball SHA-256 matched.
+- Checks 4/4:
+  - The torsion-rigid arms reproduce R4's CL at all four speeds (≈ 1e-7).
+  - The rigid limit equals R4's lattice-control CL.
+  - Twist decreases monotonically with GJ.
+  - Lattice sensitivity of the torsion effect (48×12 vs 24×6) is recorded, at most 3.7% absolute in relative CL.
+
+**Printed-fin torsion estimate.** Open thin section, G = E/2.7 with ν = 0.35 ASSUMED: J ≈ 4.2e-12 m⁴,
+GJ ≈ 3.2e-3 N·m², **GJ/EI ≈ 0.44**.
+
+**CL change vs rigid at the printed EI** (24×6):
+
+| GJ/EI | f_ea 0.05, 8 m/s | f_ea 0.05, 20 m/s | f_ea 0.25, 20 m/s | f_ea 0.40, 20 m/s |
+|---|---|---|---|---|
+| ∞ (R4, bending only) | −0.06% | −0.4% | — | — |
+| 1.0 | −0.7% | −4.1% | −0.1% | +3.1% |
+| 0.3 | −2.1% | −11.6% | +0.5% | +12.4% |
+| 0.1 | −5.9% | −27.5% | +2.3% | +54% |
+| 0.03 | −17% | −54% | +9.5% | twist > 0.2 rad by 16 m/s: model exit (toward divergence) |
+
+- **Argon was right.** R4's "< 1% CL loss" was a bending-only lower bound. With realistic torsional softness,
+  twist dominates, and its **sign is set by the elastic-axis position.**
+  - Axis ahead of the aerodynamic centre (spar on the leading ray): load washes the fin out. This alleviates load
+    but costs lift.
+  - Axis behind it: wash-in, growing toward torsional divergence.
+- **Design change:** put the printed pectoral spar near the quarter chord (≈ 0.25 c), which nulls the twist to
+  within ±1% up to 20 m/s. Never put it aft of about 0.3 c. If the spar stays on the leading ray, expect about −1.5%
+  CL at 8 m/s and −8% at 20 m/s.
+- **Biology (hypothesis, not established):** a stiff leading ray puts the elastic axis forward, which would give
+  passive washout and load alleviation at high speed.
+- **Not established:** uniform GJ, an assumed elastic axis and Poisson ratio, v3a fin geometry, quasi-static loads,
+  no flutter.
 
 ## R5. Collective launch in PyBullet
 

@@ -1,0 +1,6098 @@
+{
+ "schema": "frontier.organ-sim.manifest/1",
+ "id": "r4b-torsion",
+ "title": "Fin torsion added to the two-way static aeroelastic loop (VLM + bending + twist)",
+ "evidence_kind": "simulated, not observed",
+ "scales": [
+  "organ",
+  "tissue"
+ ],
+ "does_not_establish": "No measured fin torsional stiffness: GJ is swept as a ratio of EI (biology unsourced) and estimated for the print with an ASSUMED Poisson ratio; uniform rod about an assumed elastic axis; no membrane, ray network or unsteady loads.",
+ "scope": "simulated, not observed",
+ "command": "/tmp/repo/engineering/organ_sims/r4b_torsion.py 38",
+ "seed": null,
+ "git_head_at_run": "00972ac",
+ "python": "3.12.7",
+ "ran_utc": "2026-11-01T16:32:40Z",
+ "inputs": {
+  "artifacts/aeroelastic/protocol.json": {
+   "sha256": "2343dd6e80cc9da394e9379e4daaa36082599344522d9774d240aab75386b24a",
+   "bytes": 9658
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/panels.json": {
+   "sha256": "1f64a9759de289118e22e6a9edc5d76c63e6daef5c4a5b84e294e80021a1d33d",
+   "bytes": 143735
+  },
+  "artifacts/glider/r4-daane-printfix/manifest.json": {
+   "sha256": "39ba3c544d58c4a81b61eab91ca714eaea7dc968a4d28caccf18ea0177107869",
+   "bytes": 110152
+  },
+  "artifacts/organ-sims/r4-aeroelastic-stiffness/manifest.json": {
+   "sha256": "f237a31e63cbfc2c267c67dcf5b392ba808608fcbc56a4c54dec2775b244c136",
+   "bytes": 39927
+  }
+ },
+ "code_sha256": {
+  "engineering/organ_sims/common.py": "f25fecb5dcfe529c24cd42140fc0cf6f3425dc4bbb8994a619140ebb76c8714e",
+  "engineering/organ_sims/index.py": "9d25969238579345755b2651004dd3ae01320fec60ab397d22d5d609e5c6f93b",
+  "engineering/organ_sims/r1_v3b_convergence.py": "539630b87142f4223eddfe268915bf41aab0a3fdfba94bf067553fa22f2846ed",
+  "engineering/organ_sims/r1b_v3b_fix.py": "51173960a338172bac69c597c052f9eb74290cfeab2e27eb711f50ea31fd44c3",
+  "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
+  "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
+  "engineering/organ_sims/r4_aeroelastic_stiffness.py": "c2eecffe07310b33f3b09421b5a92d42fd7cf099b5e58a978c47f7b85c61f1e1",
+  "engineering/organ_sims/r4b_torsion.py": "21e97961ca43610ac377cf53196ff831450ef987c6acb7459f054a93e89d9bdb",
+  "engineering/organ_sims/r5_school_launch.py": "28af5ff0e13435f5e3fe1a5dcc1ac8ceda897cdd38ec875b5c79b4d17b40eb39",
+  "engineering/organ_sims/r5b_stagger.py": "64920881ab02ecc69b8ee577f793c46056dc30fb21723841154dcd7410aeaeab",
+  "engineering/organ_sims/r5c_integrated.py": "20426e3852084ad73339b9f8f51084fdb04e0b7f1b60ad2e467793f76a2941fc",
+  "engineering/organ_sims/r6_trim_map.py": "8f569762016b61da0ded64c74a77e21b62f47a4f9fc7ca350a21e94c9f70c78d"
+ },
+ "git_dirty_paths_at_run": [
+  " M artifacts/organ-sims/logs/r4b-torsion.log",
+  "?? artifacts/organ-sims/r4b-torsion/"
+ ],
+ "results": {
+  "rows": [
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.20913065591525268,
+    "theta_tip_pectoral_deg": -1.0343665783723053,
+    "theta_tip_pelvic_deg": -0.5653506437557113,
+    "tip_over_span": 0.0024940682465856116,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.1689649731558156
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.17379471675803224,
+    "theta_tip_pectoral_deg": -1.8543458175737813,
+    "theta_tip_pelvic_deg": -1.1301643355178967,
+    "tip_over_span": 0.0049791237671070925,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.3093815094528337
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.14180897926122701,
+    "theta_tip_pectoral_deg": -2.5559917334357865,
+    "theta_tip_pelvic_deg": -1.7129155522553294,
+    "tip_over_span": 0.007508642170940046,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.43648514869573163
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.1160157659856866,
+    "theta_tip_pectoral_deg": -3.08391754352658,
+    "theta_tip_pelvic_deg": -2.230106511537119,
+    "tip_over_span": 0.009692707654523023,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.5389811835747575
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2551128685623628,
+    "theta_tip_pectoral_deg": 0.09497328062549691,
+    "theta_tip_pelvic_deg": 0.013871369730843474,
+    "tip_over_span": 0.0029668449879481727,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.013757302324596932
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2596332619362738,
+    "theta_tip_pectoral_deg": 0.21935381506940949,
+    "theta_tip_pelvic_deg": 0.030693489237786538,
+    "tip_over_span": 0.00684514944027959,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.031720266295030664
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2663309994186636,
+    "theta_tip_pectoral_deg": 0.40418682630001485,
+    "theta_tip_pelvic_deg": 0.053174122884609355,
+    "tip_over_span": 0.012618957315169793,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.058335475771668754
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 21,
+    "CL": 0.27558028713603644,
+    "theta_tip_pectoral_deg": 0.6599115453120514,
+    "theta_tip_pelvic_deg": 0.080011233641339,
+    "tip_over_span": 0.0206950873244997,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.09508993649413511
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 25,
+    "CL": 0.3081640347827178,
+    "theta_tip_pectoral_deg": 1.4623751193553325,
+    "theta_tip_pelvic_deg": 0.4874860951130681,
+    "tip_over_span": 0.0037886667786062034,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.22456990247210373
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 43,
+    "CL": 0.43919934422037576,
+    "theta_tip_pectoral_deg": 5.052935131783244,
+    "theta_tip_pelvic_deg": 0.7832887512578258,
+    "tip_over_span": 0.013478326160389863,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.7452727782115549
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 6,
+    "CL": 0.6352078154776633,
+    "theta_tip_pectoral_deg": 11.687924996118292,
+    "theta_tip_pelvic_deg": 1.1721706552450037,
+    "tip_over_span": 0.032244505807642605,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 3,
+    "CL": 0.5605243821185144,
+    "theta_tip_pectoral_deg": 12.805132101193859,
+    "theta_tip_pelvic_deg": 2.689123747422995,
+    "tip_over_span": 0.03457106239189098,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.23690111356667104,
+    "theta_tip_pectoral_deg": -0.3613480138599863,
+    "theta_tip_pelvic_deg": -0.1802833336103559,
+    "tip_over_span": 0.0026912742469312576,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.058611840475096266
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22091822248826148,
+    "theta_tip_pectoral_deg": -0.7467889031523598,
+    "theta_tip_pelvic_deg": -0.39285829293204916,
+    "tip_over_span": 0.005774320425435898,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.12212400816749869
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.20212064768093732,
+    "theta_tip_pectoral_deg": -1.1912349477656878,
+    "theta_tip_pelvic_deg": -0.6652364937065449,
+    "tip_over_span": 0.009779460365743085,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.19682105239870773
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.18254153201213627,
+    "theta_tip_pectoral_deg": -1.642854975999671,
+    "theta_tip_pelvic_deg": -0.9740743584285743,
+    "tip_over_span": 0.014308239244303193,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.27462375202463285
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25256688861586524,
+    "theta_tip_pectoral_deg": 0.028061691159909603,
+    "theta_tip_pelvic_deg": 0.004200129771440821,
+    "tip_over_span": 0.0029254996139233065,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.0036401891547335197
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2537258815274412,
+    "theta_tip_pectoral_deg": 0.06359877837205394,
+    "theta_tip_pelvic_deg": 0.009412889137370593,
+    "tip_over_span": 0.006628557215352024,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.008245754427584462
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2553739023830685,
+    "theta_tip_pectoral_deg": 0.11418549249179269,
+    "theta_tip_pelvic_deg": 0.01663898230684021,
+    "tip_over_span": 0.011901212628808515,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.014794601710613975
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25753470250281035,
+    "theta_tip_pectoral_deg": 0.18058928081875564,
+    "theta_tip_pelvic_deg": 0.025802470197000646,
+    "tip_over_span": 0.01883629817924039,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.023381113140438226
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2659287471587401,
+    "theta_tip_pectoral_deg": 0.36508877782878113,
+    "theta_tip_pelvic_deg": 0.1470533497621201,
+    "tip_over_span": 0.003128113657376104,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.05673700762101341
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.2866071660789934,
+    "theta_tip_pectoral_deg": 0.9023778662443072,
+    "theta_tip_pelvic_deg": 0.3322777614072523,
+    "tip_over_span": 0.007763853461649885,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.13890808713739244
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 27,
+    "CL": 0.3226129705804628,
+    "theta_tip_pectoral_deg": 1.857995121819999,
+    "theta_tip_pelvic_deg": 0.5804081168611215,
+    "tip_over_span": 0.016109421187433054,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.28198652223981013
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 35,
+    "CL": 0.38753228669343204,
+    "theta_tip_pectoral_deg": 3.630232663075215,
+    "theta_tip_pelvic_deg": 0.813800823386129,
+    "tip_over_span": 0.03194970744546223,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.5399603202207519
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2464136837532905,
+    "theta_tip_pectoral_deg": -0.12639135318406963,
+    "theta_tip_pelvic_deg": -0.06102764568047218,
+    "tip_over_span": 0.002832280207132499,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.020811169952655084
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24018679097556955,
+    "theta_tip_pectoral_deg": -0.2757275689907342,
+    "theta_tip_pelvic_deg": -0.13600792668436862,
+    "tip_over_span": 0.0061674553117293165,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.045555341800979976
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.23201604096378672,
+    "theta_tip_pectoral_deg": -0.47010587242014246,
+    "theta_tip_pelvic_deg": -0.2383230087074716,
+    "tip_over_span": 0.010500273448935544,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.0780239339917379
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.2223507855547045,
+    "theta_tip_pectoral_deg": -0.6976822926715547,
+    "theta_tip_pelvic_deg": -0.36501432419473534,
+    "tip_over_span": 0.01608646892596476,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.11643133054606014
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2518521590777555,
+    "theta_tip_pectoral_deg": 0.009313512824498113,
+    "theta_tip_pelvic_deg": 0.0014036249956780797,
+    "tip_over_span": 0.002913914822876063,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.0008000255341016338
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2521035380582911,
+    "theta_tip_pectoral_deg": 0.020995708706200315,
+    "theta_tip_pelvic_deg": 0.003155905118583071,
+    "tip_over_span": 0.0065692921513543995,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.001798950872713423
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25245479375665336,
+    "theta_tip_pectoral_deg": 0.03742061989745566,
+    "theta_tip_pelvic_deg": 0.0056046682546694905,
+    "tip_over_span": 0.011711129659324146,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.0031947645767105293
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25290488778539566,
+    "theta_tip_pectoral_deg": 0.05864549217025922,
+    "theta_tip_pelvic_deg": 0.008744994029809851,
+    "tip_over_span": 0.01836386270167789,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.004983340362262334
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2561094572607121,
+    "theta_tip_pectoral_deg": 0.11608168639806783,
+    "theta_tip_pelvic_deg": 0.048736668745483235,
+    "tip_over_span": 0.0029781352734585967,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.017717506590493315
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2619477096293216,
+    "theta_tip_pectoral_deg": 0.2688002124824347,
+    "theta_tip_pelvic_deg": 0.11011851695281169,
+    "tip_over_span": 0.006904807151829595,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.04091732591824382
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2706622136652839,
+    "theta_tip_pectoral_deg": 0.49814398345929045,
+    "theta_tip_pelvic_deg": 0.19669978943499727,
+    "tip_over_span": 0.012821318437941662,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.07554668175359147
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.28291364310104433,
+    "theta_tip_pectoral_deg": 0.8230618456744934,
+    "theta_tip_pelvic_deg": 0.3085271633873134,
+    "tip_over_span": 0.0212476929413977,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.1242309334844065
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24994750757286108,
+    "theta_tip_pectoral_deg": -0.0385844650134091,
+    "theta_tip_pelvic_deg": -0.018400942270281252,
+    "tip_over_span": 0.0028849914685717577,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.006768602353433684
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24784905726734055,
+    "theta_tip_pectoral_deg": -0.08596265644861413,
+    "theta_tip_pelvic_deg": -0.04129307204795189,
+    "tip_over_span": 0.006423867615086416,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.015107334638824632
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24496741783290665,
+    "theta_tip_pectoral_deg": -0.15074213193502953,
+    "theta_tip_pelvic_deg": -0.07312371051944717,
+    "tip_over_span": 0.011255886194155976,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.02655827047304471
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24135629377129336,
+    "theta_tip_pectoral_deg": -0.23146277391253606,
+    "theta_tip_pelvic_deg": -0.11364508905405767,
+    "tip_over_span": 0.01726592277919516,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.04090800120258964
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2516033150412711,
+    "theta_tip_pectoral_deg": 0.002789831836228518,
+    "theta_tip_pelvic_deg": 0.0004214602710953968,
+    "tip_over_span": 0.002909883263081699,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.00018882093431671354
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2515423612075437,
+    "theta_tip_pectoral_deg": 0.006277504518568553,
+    "theta_tip_pelvic_deg": 0.0009486530010637398,
+    "tip_over_span": 0.006548813354688547,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.0004310312396471616
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2514541048120481,
+    "theta_tip_pectoral_deg": 0.011159928197005184,
+    "theta_tip_pelvic_deg": 0.0016873197839723571,
+    "tip_over_span": 0.011646109771554598,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.0007817331370365554
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25133558972029735,
+    "theta_tip_pectoral_deg": 0.017434454288591993,
+    "theta_tip_pelvic_deg": 0.0026378569731608146,
+    "tip_over_span": 0.018204229115135816,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.0012526736005236128
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25286101902999225,
+    "theta_tip_pectoral_deg": 0.03426983274523144,
+    "theta_tip_pelvic_deg": 0.014584262456509694,
+    "tip_over_span": 0.0029288173951759183,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.0048089928173529195
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.254393442574101,
+    "theta_tip_pectoral_deg": 0.07773099288292923,
+    "theta_tip_pelvic_deg": 0.03286595194284588,
+    "tip_over_span": 0.006645574087921926,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.010898481800385884
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25657662295717887,
+    "theta_tip_pectoral_deg": 0.13976847587366642,
+    "theta_tip_pelvic_deg": 0.058554764395708433,
+    "tip_over_span": 0.011956092931447875,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.019573924635094553
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25945063162796306,
+    "theta_tip_pectoral_deg": 0.22163412568745963,
+    "theta_tip_pelvic_deg": 0.09174114595661224,
+    "tip_over_span": 0.01897426089506635,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.030994555762896336
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2514968747134413,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.0029081591025680044,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.0006117892471555475
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2513029000354985,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.006540078167068118,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.0013825924623784847
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2510285098605669,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.011618475676270907,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.0024729453370622156
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25067093479626523,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.018136691124753707,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.00389385278686194
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.1721030761561145,
+    "theta_tip_pectoral_deg": -1.8925193267559537,
+    "theta_tip_pelvic_deg": -1.1593045896949226,
+    "tip_over_span": 0.005106690197642428,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.31610368701123515
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.12623209678629294,
+    "theta_tip_pectoral_deg": -2.8796704084038067,
+    "theta_tip_pelvic_deg": -2.0204206278290253,
+    "tip_over_span": 0.008816857664778946,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.4983839453386357
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 29,
+    "CL": 0.09448975555232168,
+    "theta_tip_pectoral_deg": -3.487457216442362,
+    "theta_tip_pelvic_deg": -2.690664577681956,
+    "tip_over_span": 0.011545484284604928,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.624520387726945
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 3,
+    "CL": 0.34869115265251754,
+    "theta_tip_pectoral_deg": -15.02779947351635,
+    "theta_tip_pelvic_deg": 2.456860821007772,
+    "tip_over_span": 0.034149811066013946,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2599087215518901,
+    "theta_tip_pectoral_deg": 0.22694448853263205,
+    "theta_tip_pelvic_deg": 0.0316738205776928,
+    "tip_over_span": 0.007081825249321204,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.03281487090750068
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2712972656633313,
+    "theta_tip_pectoral_deg": 0.5414698797383877,
+    "theta_tip_pelvic_deg": 0.06814639105806214,
+    "tip_over_span": 0.016936544106323847,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.07807021753625376
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.2892031589182497,
+    "theta_tip_pectoral_deg": 1.0360664747260737,
+    "theta_tip_pelvic_deg": 0.11215043881623979,
+    "tip_over_span": 0.03294842674493121,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.14922394860718824
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 23,
+    "CL": 0.31503433866150377,
+    "theta_tip_pectoral_deg": 1.7422342850043613,
+    "theta_tip_pelvic_deg": 0.15468733081404848,
+    "tip_over_span": 0.05798732116244317,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.25187087038630573
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 44,
+    "CL": 0.4510616523257209,
+    "theta_tip_pectoral_deg": 5.386438931048005,
+    "theta_tip_pelvic_deg": 0.7604040277547912,
+    "tip_over_span": 0.01440997665383133,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.7924107334162889
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 4,
+    "CL": 0.6275303156877294,
+    "theta_tip_pectoral_deg": 13.285461005716133,
+    "theta_tip_pelvic_deg": 2.0449875933123307,
+    "tip_over_span": 0.03639302909336538,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 2,
+    "CL": 0.4658002649067636,
+    "theta_tip_pectoral_deg": 13.37751759747122,
+    "theta_tip_pelvic_deg": 3.772480607351978,
+    "tip_over_span": 0.03548129114036867,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 2,
+    "CL": 0.5915071172282116,
+    "theta_tip_pectoral_deg": 25.6181988502876,
+    "theta_tip_pelvic_deg": 6.209399789643695,
+    "tip_over_span": 0.06961193205136099,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22004227334263543,
+    "theta_tip_pectoral_deg": -0.7677191263930004,
+    "theta_tip_pelvic_deg": -0.4050178970636754,
+    "tip_over_span": 0.005953204398658953,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.12560482472615098
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.19087639807542034,
+    "theta_tip_pectoral_deg": -1.4520976474279923,
+    "theta_tip_pelvic_deg": -0.839500960980452,
+    "tip_over_span": 0.012337257530655186,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.2415030078074316
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.16184934671616044,
+    "theta_tip_pectoral_deg": -2.105876794136427,
+    "theta_tip_pelvic_deg": -1.3277699980059794,
+    "tip_over_span": 0.019462234831647957,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.35684953785301676
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.13636026880727717,
+    "theta_tip_pectoral_deg": -2.6521030750838133,
+    "theta_tip_pelvic_deg": -1.8011003689653313,
+    "tip_over_span": 0.026265958993550602,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.45813701095836645
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25379522908169516,
+    "theta_tip_pectoral_deg": 0.0657262002163563,
+    "theta_tip_pelvic_deg": 0.009721297068917242,
+    "tip_over_span": 0.006850228327209202,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.008521319314859
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25654907429603524,
+    "theta_tip_pectoral_deg": 0.15029057390987535,
+    "theta_tip_pelvic_deg": 0.021664814629707513,
+    "tip_over_span": 0.015669109366714173,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.019464444873075193
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2605311428079192,
+    "theta_tip_pectoral_deg": 0.2727689357053457,
+    "theta_tip_pelvic_deg": 0.03797618311728454,
+    "tip_over_span": 0.028518451266373944,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.0352882374894643
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2658350497578431,
+    "theta_tip_pectoral_deg": 0.4360193792723262,
+    "theta_tip_pelvic_deg": 0.05821588222025567,
+    "tip_over_span": 0.045950624650771495,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.05636470149088546
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.28795177762853486,
+    "theta_tip_pectoral_deg": 0.9376321015322963,
+    "theta_tip_pelvic_deg": 0.34321299503583075,
+    "tip_over_span": 0.008069402194142152,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.14425124429549108
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 31,
+    "CL": 0.3547738647706613,
+    "theta_tip_pectoral_deg": 2.729087376699324,
+    "theta_tip_pelvic_deg": 0.7281662853894143,
+    "tip_over_span": 0.02383588877052214,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.40978618650773724
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 56,
+    "CL": 0.5450161017008014,
+    "theta_tip_pectoral_deg": 8.081152436231609,
+    "theta_tip_pelvic_deg": 0.5065848659118162,
+    "tip_over_span": 0.07376647482322553,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 1.165763191501458
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 5,
+    "CL": 0.6185294473937782,
+    "theta_tip_pectoral_deg": 9.622036447977143,
+    "theta_tip_pelvic_deg": 1.9101541663698218,
+    "tip_over_span": 0.10848940601450992,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2398274082931116,
+    "theta_tip_pectoral_deg": -0.28431492933534264,
+    "theta_tip_pelvic_deg": -0.14041487734526242,
+    "tip_over_span": 0.006358845494731061,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.04698344766057272
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22662394438237007,
+    "theta_tip_pectoral_deg": -0.5973854710733658,
+    "theta_tip_pelvic_deg": -0.3082521739285609,
+    "tip_over_span": 0.013583689103912803,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.09945083883590522
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.21057008369877347,
+    "theta_tip_pectoral_deg": -0.9715319855622047,
+    "theta_tip_pelvic_deg": -0.5275772063831096,
+    "tip_over_span": 0.023251203837711922,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.16324502141674213
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.19323226379611774,
+    "theta_tip_pectoral_deg": -1.3672320902297532,
+    "theta_tip_pelvic_deg": -0.7827313904696941,
+    "tip_over_span": 0.03447567821324601,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.23214134912105744
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25211846340473126,
+    "theta_tip_pectoral_deg": 0.02169120755188599,
+    "theta_tip_pelvic_deg": 0.003259943092139741,
+    "tip_over_span": 0.006786946894513069,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.0018582550057613112
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25270100997304135,
+    "theta_tip_pectoral_deg": 0.04900601868659047,
+    "theta_tip_pelvic_deg": 0.007322009488430395,
+    "tip_over_span": 0.01534098862111672,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.004173160857954938
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25351078740147487,
+    "theta_tip_pectoral_deg": 0.08755006507925925,
+    "theta_tip_pelvic_deg": 0.012982209310208959,
+    "tip_over_span": 0.027448564473827312,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.007391029896719914
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2545369677307053,
+    "theta_tip_pectoral_deg": 0.13745482256514172,
+    "theta_tip_pelvic_deg": 0.020208455759890488,
+    "tip_over_span": 0.043241889390462945,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.011468834452702081
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.26230436539969276,
+    "theta_tip_pectoral_deg": 0.2781548113799701,
+    "theta_tip_pelvic_deg": 0.11377971159319097,
+    "tip_over_span": 0.0071456609130624025,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.042334584507856654
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 21,
+    "CL": 0.27720120469464593,
+    "theta_tip_pectoral_deg": 0.6712248772570639,
+    "theta_tip_pelvic_deg": 0.2577966209566579,
+    "tip_over_span": 0.017303203761315084,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.10153105419543573
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 24,
+    "CL": 0.30173189249542404,
+    "theta_tip_pectoral_deg": 1.3269671185368672,
+    "theta_tip_pelvic_deg": 0.4589822631045763,
+    "tip_over_span": 0.03442972257974427,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.19901012911249083
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 29,
+    "CL": 0.3419031182345415,
+    "theta_tip_pectoral_deg": 2.4190291845278047,
+    "theta_tip_pelvic_deg": 0.7032019118314579,
+    "tip_over_span": 0.06349679333239634,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.3586409533341772
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2477254304215982,
+    "theta_tip_pectoral_deg": -0.08874847514281078,
+    "theta_tip_pelvic_deg": -0.04264932571981493,
+    "tip_over_span": 0.006631825811383823,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.015598603564723867
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24298106373646955,
+    "theta_tip_pectoral_deg": -0.19520659206939645,
+    "theta_tip_pelvic_deg": -0.09532691166531118,
+    "tip_over_span": 0.014568022988364994,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.034451572524744845
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.23662833677038464,
+    "theta_tip_pectoral_deg": -0.33638383783390197,
+    "theta_tip_pelvic_deg": -0.1677379428923627,
+    "tip_over_span": 0.02505866838988931,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.05969577734632192
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22892709029468739,
+    "theta_tip_pectoral_deg": -0.5054529175184479,
+    "theta_tip_pelvic_deg": -0.2582895596285865,
+    "tip_over_span": 0.0378904775384785,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.09029867347208398
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2515386847745258,
+    "theta_tip_pectoral_deg": 0.006484741620455916,
+    "theta_tip_pelvic_deg": 0.000979990287549869,
+    "tip_over_span": 0.00676508942014273,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.0004456461005007961
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2513900424562038,
+    "theta_tip_pectoral_deg": 0.014589519069662731,
+    "theta_tip_pelvic_deg": 0.002206686050679313,
+    "tip_over_span": 0.015229504038026233,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.001036309398239621
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25116596430550386,
+    "theta_tip_pectoral_deg": 0.0259210466880106,
+    "theta_tip_pelvic_deg": 0.0039261270162929025,
+    "tip_over_span": 0.02709281547318819,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.0019267343601319098
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2508500710003939,
+    "theta_tip_pectoral_deg": 0.04043486613788008,
+    "theta_tip_pelvic_deg": 0.006137844471402005,
+    "tip_over_span": 0.042363718383732964,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.0031820084947981053
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25448519751604726,
+    "theta_tip_pectoral_deg": 0.08033552720353587,
+    "theta_tip_pelvic_deg": 0.033954014195633556,
+    "tip_over_span": 0.006868401930609388,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.011263088252817965
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2581377169841616,
+    "theta_tip_pectoral_deg": 0.18420949652305132,
+    "theta_tip_pelvic_deg": 0.0766692143228986,
+    "tip_over_span": 0.015764382827423356,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.025777329612949762
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.26346900455523,
+    "theta_tip_pectoral_deg": 0.3364297543580915,
+    "theta_tip_pelvic_deg": 0.13696079294062222,
+    "tip_over_span": 0.028838070457762398,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.046962595025305864
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2707294315107243,
+    "theta_tip_pectoral_deg": 0.5446525244920404,
+    "theta_tip_pelvic_deg": 0.21529311230010464,
+    "tip_over_span": 0.04680974495120561,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.07581380018601447
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.251291321072359,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.006755767601480237,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.0014286100756807363
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25083375931134017,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.015182240266820099,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.0032468450979952213
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2501782381316883,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.02694320072548483,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.005851721133654064
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2493105913213548,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.041998046396122674,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.009299531346208645
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.13990659353908558,
+    "theta_tip_pectoral_deg": -2.596235520963568,
+    "theta_tip_pelvic_deg": -1.7496575477034184,
+    "tip_over_span": 0.007666169318660435,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.4440447804814035
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 29,
+    "CL": 0.09447529840505148,
+    "theta_tip_pectoral_deg": -3.4877133494106287,
+    "theta_tip_pelvic_deg": -2.690981523981964,
+    "tip_over_span": 0.011546713904529755,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.6245778399044788
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 3,
+    "CL": 0.4965682056169982,
+    "theta_tip_pectoral_deg": -25.426955468911316,
+    "theta_tip_pelvic_deg": 5.964356762614768,
+    "tip_over_span": 0.057234391637413964,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 1,
+    "CL": 0.25165083311407427,
+    "theta_tip_pectoral_deg": -16.744801829873097,
+    "theta_tip_pelvic_deg": -7.938406692699165,
+    "tip_over_span": 0.03757770604831345,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2668586436568063,
+    "theta_tip_pectoral_deg": 0.4187663359198136,
+    "theta_tip_pelvic_deg": 0.054830279930076095,
+    "tip_over_span": 0.013075938007846063,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.060432193091793485
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.2892153942687715,
+    "theta_tip_pectoral_deg": 1.0364035395886944,
+    "theta_tip_pelvic_deg": 0.11217586882757136,
+    "tip_over_span": 0.032959678092029925,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.14927255994202304
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 24,
+    "CL": 0.3255736226545577,
+    "theta_tip_pectoral_deg": 2.026615799382669,
+    "theta_tip_pelvic_deg": 0.16658149412417772,
+    "tip_over_span": 0.06905316521740416,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.29375144306491485
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 4,
+    "CL": 0.34798068271053767,
+    "theta_tip_pectoral_deg": 2.6240659308273466,
+    "theta_tip_pelvic_deg": 0.2525229861634791,
+    "tip_over_span": 0.10255428876407167,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 6,
+    "CL": 0.6597992508796185,
+    "theta_tip_pectoral_deg": 12.508403781185473,
+    "theta_tip_pelvic_deg": 1.122140612376303,
+    "tip_over_span": 0.034670931241467445,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 2,
+    "CL": 0.46586234235287005,
+    "theta_tip_pectoral_deg": 13.382813322675373,
+    "theta_tip_pelvic_deg": 3.773649205863824,
+    "tip_over_span": 0.03549575461607214,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 2,
+    "CL": 0.6407579467498241,
+    "theta_tip_pectoral_deg": 31.205991802923204,
+    "theta_tip_pelvic_deg": 7.1987186833510215,
+    "tip_over_span": 0.08559794230809521,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 1,
+    "CL": 0.25165083311407427,
+    "theta_tip_pectoral_deg": 14.660429093694054,
+    "theta_tip_pelvic_deg": 6.271250902162481,
+    "tip_over_span": 0.03757770604831345,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.20083206911221232,
+    "theta_tip_pectoral_deg": -1.2213267368063827,
+    "theta_tip_pelvic_deg": -0.6847798627700608,
+    "tip_over_span": 0.010066556943074319,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.20194156511671935
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.16183378569903836,
+    "theta_tip_pectoral_deg": -2.1062188974994718,
+    "theta_tip_pelvic_deg": -1.3280463983928488,
+    "tip_over_span": 0.01946624369060769,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.3569113786432866
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.12884205400983376,
+    "theta_tip_pectoral_deg": -2.80713087158961,
+    "theta_tip_pelvic_deg": -1.94842894732261,
+    "tip_over_span": 0.028351439160527923,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.48801259775417294
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.10368122924105362,
+    "theta_tip_pectoral_deg": -3.2998812201481975,
+    "theta_tip_pelvic_deg": -2.4655152449429076,
+    "tip_over_span": 0.03547761541055571,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.5879956729663625
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2555005368147169,
+    "theta_tip_pectoral_deg": 0.11807492150846402,
+    "theta_tip_pelvic_deg": 0.01718552304153638,
+    "tip_over_span": 0.012306858437519502,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.01529780290348981
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2605337550667874,
+    "theta_tip_pectoral_deg": 0.2728493278553681,
+    "theta_tip_pelvic_deg": 0.03798654444842538,
+    "tip_over_span": 0.028526934437891994,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.03529860986118871
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.26791271799932165,
+    "theta_tip_pectoral_deg": 0.4999434533200897,
+    "theta_tip_pelvic_deg": 0.06575844816821587,
+    "tip_over_span": 0.052920594850661494,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.06462084581965977
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2776966526421363,
+    "theta_tip_pectoral_deg": 0.8002650587149188,
+    "theta_tip_pelvic_deg": 0.09917632642617336,
+    "tip_over_span": 0.08733720586063447,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.10349986520042598
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 27,
+    "CL": 0.32578002346969276,
+    "theta_tip_pectoral_deg": 1.9431028531777157,
+    "theta_tip_pelvic_deg": 0.5979400383195775,
+    "tip_over_span": 0.016859233129149106,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.29457161296881607
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 56,
+    "CL": 0.545215310165567,
+    "theta_tip_pectoral_deg": 8.086840870963924,
+    "theta_tip_pelvic_deg": 0.5056036478541278,
+    "tip_over_span": 0.07382176416876633,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 1.1665547811443853
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 4,
+    "CL": 0.5941712378960864,
+    "theta_tip_pectoral_deg": 8.875595868320016,
+    "theta_tip_pelvic_deg": 2.2024280934277662,
+    "tip_over_span": 0.10965460662570421,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 3,
+    "CL": 0.6623623363198199,
+    "theta_tip_pectoral_deg": 10.39625826813372,
+    "theta_tip_pelvic_deg": 3.1080900161024227,
+    "tip_over_span": 0.16901559037381275,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.23141852389149165,
+    "theta_tip_pectoral_deg": -0.4842494499735964,
+    "theta_tip_pelvic_deg": -0.24597831017505187,
+    "tip_over_span": 0.010837808943199875,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.08039833580237488
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.21056052583160478,
+    "theta_tip_pectoral_deg": -0.9717525568947617,
+    "theta_tip_pelvic_deg": -0.5277126816488066,
+    "tip_over_span": 0.0232571716359952,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.1632830086480762
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.18738372165986356,
+    "theta_tip_pectoral_deg": -1.4986655736456052,
+    "theta_tip_pelvic_deg": -0.8729943428425762,
+    "tip_over_span": 0.03843679447453852,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.2553820597390798
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.1647057740498654,
+    "theta_tip_pectoral_deg": -1.997835092713781,
+    "theta_tip_pelvic_deg": -1.2425171047398111,
+    "tip_over_span": 0.054574233044195036,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.3454987745351741
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25248149287445276,
+    "theta_tip_pectoral_deg": 0.03867400231660534,
+    "theta_tip_pelvic_deg": 0.005790846426863183,
+    "tip_over_span": 0.0121036865103548,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.0033008469767705773
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25351130687574613,
+    "theta_tip_pectoral_deg": 0.08757501730384011,
+    "theta_tip_pelvic_deg": 0.012985849127865753,
+    "tip_over_span": 0.027456423055060547,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.0073930862635134265
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25492465188702157,
+    "theta_tip_pectoral_deg": 0.15665187912608802,
+    "theta_tip_pelvic_deg": 0.022963834596738633,
+    "tip_over_span": 0.0493674742308187,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.013009388053502047
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.256661688540418,
+    "theta_tip_pectoral_deg": 0.24546606346953045,
+    "theta_tip_pelvic_deg": 0.035604157914212196,
+    "tip_over_span": 0.07824041071775466,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.01991196513072291
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.27135329003329306,
+    "theta_tip_pectoral_deg": 0.5163976163345424,
+    "theta_tip_pelvic_deg": 0.20331193134686323,
+    "tip_over_span": 0.01329328767669674,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.07829283889616767
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 24,
+    "CL": 0.30174935037616857,
+    "theta_tip_pectoral_deg": 1.3274370373516422,
+    "theta_tip_pelvic_deg": 0.4591104247775937,
+    "tip_over_span": 0.034442083515004225,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.19907949313854068
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 31,
+    "CL": 0.360832899129744,
+    "theta_tip_pectoral_deg": 2.940851958695267,
+    "theta_tip_pelvic_deg": 0.7866980656018158,
+    "tip_over_span": 0.0776044997515885,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.43386334601719323
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 4,
+    "CL": 0.38500913901294676,
+    "theta_tip_pectoral_deg": 3.519930456627876,
+    "theta_tip_pelvic_deg": 1.149652681475192,
+    "tip_over_span": 0.11142644378075545,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24475071283771038,
+    "theta_tip_pectoral_deg": -0.1556005458385129,
+    "theta_tip_pelvic_deg": -0.0755356926070077,
+    "tip_over_span": 0.011617969375671451,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.027419417191310802
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.23662434471642374,
+    "theta_tip_pectoral_deg": -0.33647206380774874,
+    "theta_tip_pelvic_deg": -0.16778410556945278,
+    "tip_over_span": 0.025065211759495505,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.05971164818382624
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22610425492511538,
+    "theta_tip_pectoral_deg": -0.5668619740410532,
+    "theta_tip_pelvic_deg": -0.292215703082875,
+    "tip_over_span": 0.042863164956299125,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.10151595295894156
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.21389270134742214,
+    "theta_tip_pectoral_deg": -0.8291206904704712,
+    "theta_tip_pelvic_deg": -0.44332646011397736,
+    "tip_over_span": 0.0649840057157137,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.150041727696284
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25144724663401763,
+    "theta_tip_pectoral_deg": 0.011531520836033054,
+    "theta_tip_pelvic_deg": 0.0017435717588432137,
+    "tip_over_span": 0.012034240238163768,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.0008089993220513625
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2511658137176122,
+    "theta_tip_pectoral_deg": 0.025928345632947932,
+    "theta_tip_pelvic_deg": 0.003927236439853317,
+    "tip_over_span": 0.027100471177811204,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.0019273405864834725
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.250720493532475,
+    "theta_tip_pectoral_deg": 0.0459779146099634,
+    "theta_tip_pelvic_deg": 0.006985874783704145,
+    "tip_over_span": 0.04822588397452643,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.0036969283050536372
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2500580967912413,
+    "theta_tip_pectoral_deg": 0.07141195881849513,
+    "theta_tip_pelvic_deg": 0.010906728807918289,
+    "tip_over_span": 0.07541680767188044,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.006329123970361228
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25674464703452377,
+    "theta_tip_pectoral_deg": 0.14454862759247167,
+    "theta_tip_pelvic_deg": 0.06051461108129207,
+    "tip_over_span": 0.012365550190760058,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": 0.02024159828054506
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.26347252894456225,
+    "theta_tip_pectoral_deg": 0.3365305926477659,
+    "theta_tip_pelvic_deg": 0.13699985891449806,
+    "tip_over_span": 0.02884674768490305,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": 0.04697659189302472
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 21,
+    "CL": 0.27364550353583456,
+    "theta_tip_pectoral_deg": 0.6285224855019106,
+    "theta_tip_pelvic_deg": 0.2455827322780577,
+    "tip_over_span": 0.05408207792152374,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": 0.0874015597490394
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.28822510897456666,
+    "theta_tip_pectoral_deg": 1.0493562354313368,
+    "theta_tip_pelvic_deg": 0.38781933497885973,
+    "tip_over_span": 0.09091611514824705,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": 0.14533742439699893
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2510074893867613,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.012004732923123972,
+    "CL_rigid": 0.25165083198648835,
+    "dCL_rel": -0.002556489063233358
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2501778098213824,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.026950771862497103,
+    "CL_rigid": 0.25165083057700555,
+    "dCL_rel": -0.0058534309314446364
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24897056619463317,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.047752176010975575,
+    "CL_rigid": 0.25165082860373034,
+    "dCL_rel": -0.010650719586215662
+   },
+   {
+    "mesh": [
+     24,
+     6
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24734481043717385,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.07426197755599125,
+    "CL_rigid": 0.251650826066661,
+    "dCL_rel": -0.0171110728972792
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.20729239903532615,
+    "theta_tip_pectoral_deg": -1.0201637690321896,
+    "theta_tip_pelvic_deg": -0.563784455750501,
+    "tip_over_span": 0.002480392401063857,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.16646362671806914
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.1726346729877945,
+    "theta_tip_pectoral_deg": -1.837250626898639,
+    "theta_tip_pelvic_deg": -1.1264980728769696,
+    "tip_over_span": 0.004949547456603218,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.3058246192731663
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.14106190601499194,
+    "theta_tip_pectoral_deg": -2.54031293317841,
+    "theta_tip_pelvic_deg": -1.7076638614522799,
+    "tip_over_span": 0.007466536686223679,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.43278078859400204
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.11551076548239714,
+    "theta_tip_pectoral_deg": -3.0703682266200563,
+    "theta_tip_pelvic_deg": -2.224050059381121,
+    "tip_over_span": 0.00964444679790016,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.5355236022954983
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2524857455799252,
+    "theta_tip_pectoral_deg": 0.1064649562787441,
+    "theta_tip_pelvic_deg": 0.013519683344155629,
+    "tip_over_span": 0.0029329013697063666,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.015261792788696882
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25746699731889605,
+    "theta_tip_pectoral_deg": 0.2462059177645014,
+    "theta_tip_pelvic_deg": 0.029853828028564042,
+    "tip_over_span": 0.006787059365324821,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.03529173945882591
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2648715612166447,
+    "theta_tip_pectoral_deg": 0.4535898494931724,
+    "theta_tip_pelvic_deg": 0.051557235301258275,
+    "tip_over_span": 0.012566152673154063,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.06506598642735839
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 21,
+    "CL": 0.2750776349174756,
+    "theta_tip_pectoral_deg": 0.7381663571803165,
+    "theta_tip_pelvic_deg": 0.07725268522857276,
+    "tip_over_span": 0.020721093316962348,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.1061052917618639
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 25,
+    "CL": 0.30470608719238956,
+    "theta_tip_pectoral_deg": 1.4623740960252622,
+    "theta_tip_pelvic_deg": 0.4867112406261139,
+    "tip_over_span": 0.0037409527672703897,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.2252432217352507
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 42,
+    "CL": 0.43536824504158195,
+    "theta_tip_pectoral_deg": 5.037505211409978,
+    "theta_tip_pelvic_deg": 0.7882975313196997,
+    "tip_over_span": 0.013369193559824242,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.750644363774368
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 6,
+    "CL": 0.6313169469043128,
+    "theta_tip_pectoral_deg": 11.666286342147458,
+    "theta_tip_pelvic_deg": 1.1771885822124506,
+    "tip_over_span": 0.03209629520886101,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 3,
+    "CL": 0.5569176200583215,
+    "theta_tip_pectoral_deg": 12.788683521287998,
+    "theta_tip_pelvic_deg": 2.6794806834874385,
+    "tip_over_span": 0.03436793416473193,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.23434870911979097,
+    "theta_tip_pectoral_deg": -0.3550707762420816,
+    "theta_tip_pelvic_deg": -0.1799793932829015,
+    "tip_over_span": 0.0026583492627468928,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.05766842396510752
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.21878162443759702,
+    "theta_tip_pectoral_deg": -0.7351899596670326,
+    "theta_tip_pelvic_deg": -0.3918964932810494,
+    "tip_over_span": 0.005744784351399511,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.1202646906815662
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.20041952845368816,
+    "theta_tip_pectoral_deg": -1.1755977707149579,
+    "theta_tip_pelvic_deg": -0.6631920223414148,
+    "tip_over_span": 0.009723224060531057,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.19409988074469253
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.1812191475351881,
+    "theta_tip_pectoral_deg": -1.6255194233742891,
+    "theta_tip_pelvic_deg": -0.9707463092797706,
+    "tip_over_span": 0.01422171347276761,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.27130586927802935
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2497056813152371,
+    "theta_tip_pectoral_deg": 0.0314199830815252,
+    "theta_tip_pelvic_deg": 0.004098189466592633,
+    "tip_over_span": 0.0028874450796421095,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.0040829714934504935
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2509943003717494,
+    "theta_tip_pectoral_deg": 0.07124744699885886,
+    "theta_tip_pelvic_deg": 0.009179830286863639,
+    "tip_over_span": 0.006548019151375589,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.009264599082844605
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2528328795633028,
+    "theta_tip_pectoral_deg": 0.1279669155203163,
+    "theta_tip_pelvic_deg": 0.01621486399974235,
+    "tip_over_span": 0.011771485392702598,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.016657654889213003
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2552512928060912,
+    "theta_tip_pectoral_deg": 0.20235584968881948,
+    "theta_tip_pelvic_deg": 0.025119013582465936,
+    "tip_over_span": 0.018662462460775162,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.02638226399822008
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2628139411901797,
+    "theta_tip_pectoral_deg": 0.36541620087816934,
+    "theta_tip_pelvic_deg": 0.1467696994571291,
+    "tip_over_span": 0.003085838609002671,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.056792146779393704
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.283328587574049,
+    "theta_tip_pectoral_deg": 0.9029194793146661,
+    "theta_tip_pelvic_deg": 0.331683634340264,
+    "tip_over_span": 0.007663246132407162,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.13928289575939945
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 27,
+    "CL": 0.3191342006323012,
+    "theta_tip_pectoral_deg": 1.8576938730392512,
+    "theta_tip_pelvic_deg": 0.5797036891331244,
+    "tip_over_span": 0.01592065489996687,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.2832596320944287
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 35,
+    "CL": 0.3836567732936388,
+    "theta_tip_pectoral_deg": 3.625144636990132,
+    "theta_tip_pelvic_deg": 0.8147064039521675,
+    "tip_over_span": 0.031621923771542805,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.5427091602255731
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24359749950784312,
+    "theta_tip_pectoral_deg": -0.12407046348689958,
+    "theta_tip_pelvic_deg": -0.060957267202992375,
+    "tip_over_span": 0.002794911022690627,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.020478429381717178
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.23753638557465498,
+    "theta_tip_pectoral_deg": -0.2708101752569367,
+    "theta_tip_pelvic_deg": -0.135798751114282,
+    "tip_over_span": 0.006089469358316832,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.04485056194696091
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22957419309187171,
+    "theta_tip_pectoral_deg": -0.46204956227127225,
+    "theta_tip_pelvic_deg": -0.23784194912394493,
+    "tip_over_span": 0.010451605489595407,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.07686705473198241
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22014401532679656,
+    "theta_tip_pectoral_deg": -0.686331730596162,
+    "theta_tip_pelvic_deg": -0.36408593422696445,
+    "tip_over_span": 0.01600339295029448,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.11478641156804237
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24892674777090074,
+    "theta_tip_pectoral_deg": 0.010424369245447436,
+    "theta_tip_pelvic_deg": 0.0013699755224963772,
+    "tip_over_span": 0.0028747324903369816,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.0009508284694164093
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24922312587769363,
+    "theta_tip_pectoral_deg": 0.02350479149129946,
+    "theta_tip_pelvic_deg": 0.0030799327465759834,
+    "tip_over_span": 0.0064828428675658585,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.002142589885817614
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24963928111690523,
+    "theta_tip_pectoral_deg": 0.0419006613062937,
+    "theta_tip_pelvic_deg": 0.005468851684947931,
+    "tip_over_span": 0.01156188405516014,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.0038159852741681544
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25017579187053546,
+    "theta_tip_pectoral_deg": 0.06567196094355503,
+    "theta_tip_pelvic_deg": 0.008531000957861485,
+    "tip_over_span": 0.018140055080327948,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.005973340368915503
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2530998030638572,
+    "theta_tip_pectoral_deg": 0.11619200590931344,
+    "theta_tip_pelvic_deg": 0.048640144564510955,
+    "tip_over_span": 0.002937554776326121,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.017730958327448976
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.258884889098858,
+    "theta_tip_pectoral_deg": 0.2690482990228292,
+    "theta_tip_pelvic_deg": 0.10990222151840577,
+    "tip_over_span": 0.006811677469505628,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.040993175613856625
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.26754179601486705,
+    "theta_tip_pectoral_deg": 0.4985608638741055,
+    "theta_tip_pelvic_deg": 0.1963230767229311,
+    "tip_over_span": 0.012652917638327424,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.07580317635555622
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.2797447235945143,
+    "theta_tip_pectoral_deg": 0.823618594526942,
+    "theta_tip_pelvic_deg": 0.30797944107739267,
+    "tip_over_span": 0.020983162256894117,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.12487196279400026
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2470332690217563,
+    "theta_tip_pectoral_deg": -0.037863790947171065,
+    "theta_tip_pelvic_deg": -0.01838369176752554,
+    "tip_over_span": 0.0028459727879385235,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.006662974143670786
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24498974350799263,
+    "theta_tip_pectoral_deg": -0.08436946735486475,
+    "theta_tip_pelvic_deg": -0.041248279061219625,
+    "tip_over_span": 0.006338039384835173,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.014880119210733511
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24218000573931478,
+    "theta_tip_pectoral_deg": -0.1479729043600261,
+    "theta_tip_pelvic_deg": -0.07302939687150437,
+    "tip_over_span": 0.01110774234937185,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.026178252127440182
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.23865391938217848,
+    "theta_tip_pectoral_deg": -0.22724571939337324,
+    "theta_tip_pelvic_deg": -0.11346874399739675,
+    "tip_over_span": 0.01704233802434487,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.04035686795282056
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24865571398322456,
+    "theta_tip_pectoral_deg": 0.0031221866118652185,
+    "theta_tip_pelvic_deg": 0.00041139985722708745,
+    "tip_over_span": 0.0028703111082523953,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.00013901622082701515
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24861122462371946,
+    "theta_tip_pectoral_deg": 0.007025941624380296,
+    "theta_tip_pelvic_deg": 0.0009260384093795706,
+    "tip_over_span": 0.006460349139387456,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.0003179053240570662
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24854653279956376,
+    "theta_tip_pectoral_deg": 0.012491661311104053,
+    "theta_tip_pelvic_deg": 0.0016471458222668725,
+    "tip_over_span": 0.011490318516615366,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.0005780276548914554
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2484591625892425,
+    "theta_tip_pectoral_deg": 0.01951654456222693,
+    "theta_tip_pelvic_deg": 0.002575082934054969,
+    "tip_over_span": 0.01796391131095798,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.0009293390604796503
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24988818908197183,
+    "theta_tip_pectoral_deg": 0.03430261377688867,
+    "theta_tip_pelvic_deg": 0.014555132410356808,
+    "tip_over_span": 0.0028888269570602376,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.0048168472297909215
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25140761610966256,
+    "theta_tip_pectoral_deg": 0.07780548496231621,
+    "theta_tip_pelvic_deg": 0.03279994417212663,
+    "tip_over_span": 0.006555107390169216,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.010926568864236819
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2535772111839352,
+    "theta_tip_pectoral_deg": 0.1399018133960471,
+    "theta_tip_pelvic_deg": 0.05843646469517018,
+    "tip_over_span": 0.011794507437786638,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.019650661341534814
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2564419979513986,
+    "theta_tip_pectoral_deg": 0.22184169649442156,
+    "theta_tip_pelvic_deg": 0.09155518776557128,
+    "tip_over_span": 0.01872157135589994,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.03117016782961568
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24853980846619536,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.002868420659820466,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.0006050799296628551
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24835024217434476,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.006450759012491033,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.0013673329275751822
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24808213203336044,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.011459925207474207,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.0024454137112955854
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.00735,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2477328141793343,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.017889461073081234,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.0038500338676140666
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.17096905236326868,
+    "theta_tip_pectoral_deg": -1.8754334531072734,
+    "theta_tip_pelvic_deg": -1.1555417176999427,
+    "tip_over_span": 0.005076370622205733,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.3125221932231025
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.12563842946985013,
+    "theta_tip_pectoral_deg": -2.865231093941041,
+    "theta_tip_pelvic_deg": -2.0146274368591905,
+    "tip_over_span": 0.008770435759581805,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.494799607160487
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 28,
+    "CL": 0.09414850352747133,
+    "theta_tip_pectoral_deg": -3.475893757532922,
+    "theta_tip_pelvic_deg": -2.6842808391418216,
+    "tip_over_span": 0.011497294516824762,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.621422668709499
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 3,
+    "CL": 0.3362108037425679,
+    "theta_tip_pectoral_deg": -14.489599578129205,
+    "theta_tip_pelvic_deg": 2.211629874617079,
+    "tip_over_span": 0.03290873711589316,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25777118434425644,
+    "theta_tip_pectoral_deg": 0.25473590201258745,
+    "theta_tip_pelvic_deg": 0.03080339532465269,
+    "tip_over_span": 0.007023001025055383,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.03651488976343731
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 21,
+    "CL": 0.27035843960927697,
+    "theta_tip_pectoral_deg": 0.6067912658286693,
+    "theta_tip_pelvic_deg": 0.06592252776430123,
+    "tip_over_span": 0.01691678378528608,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.08712907726104047
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.29000186341342993,
+    "theta_tip_pectoral_deg": 1.1514210650784524,
+    "theta_tip_pelvic_deg": 0.10767333372431802,
+    "tip_over_span": 0.033210885360033346,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.16611658610477953
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 24,
+    "CL": 0.31865830924317723,
+    "theta_tip_pectoral_deg": 1.9423693977175933,
+    "theta_tip_pelvic_deg": 0.14652010342338617,
+    "tip_over_span": 0.05915920526923004,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.2813460542639503
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 44,
+    "CL": 0.4472235307033899,
+    "theta_tip_pectoral_deg": 5.369813875130429,
+    "theta_tip_pelvic_deg": 0.7665945602627676,
+    "tip_over_span": 0.014298280004636288,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.7983152376239144
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 4,
+    "CL": 0.6237226402262885,
+    "theta_tip_pectoral_deg": 13.265782337478877,
+    "theta_tip_pelvic_deg": 2.0408629214649556,
+    "tip_over_span": 0.03621470933373195,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 2,
+    "CL": 0.4624583057758867,
+    "theta_tip_pectoral_deg": 13.366732649216056,
+    "theta_tip_pelvic_deg": 3.75735579481027,
+    "tip_over_span": 0.03522299315708652,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 2,
+    "CL": 0.5882976689856861,
+    "theta_tip_pectoral_deg": 25.61070136940484,
+    "theta_tip_pelvic_deg": 6.176635870785418,
+    "tip_over_span": 0.06929149477731482,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.21792737473784854,
+    "theta_tip_pectoral_deg": -0.7558775688355911,
+    "theta_tip_pelvic_deg": -0.4040118306431662,
+    "tip_over_span": 0.00592253025168274,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.12369968979478974
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.18940254208001783,
+    "theta_tip_pectoral_deg": -1.4351941237736583,
+    "theta_tip_pelvic_deg": -0.8367251937324405,
+    "tip_over_span": 0.012263679164759116,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.23839991420308582
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.16084273459118478,
+    "theta_tip_pectoral_deg": -2.088985438496897,
+    "theta_tip_pelvic_deg": -1.3231301271174958,
+    "tip_over_span": 0.01934517259976283,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.3532407745468865
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.13564251026757845,
+    "theta_tip_pectoral_deg": -2.637663597067465,
+    "theta_tip_pelvic_deg": -1.7951443731043046,
+    "tip_over_span": 0.026118876938451156,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.4545725302609841
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2510715296139525,
+    "theta_tip_pectoral_deg": 0.07363254555781475,
+    "theta_tip_pelvic_deg": 0.00948031098297721,
+    "tip_over_span": 0.006767352721905529,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.009575137355115837
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25414733429660297,
+    "theta_tip_pectoral_deg": 0.16843152010200574,
+    "theta_tip_pelvic_deg": 0.021100917991274858,
+    "tip_over_span": 0.01551250843531612,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.021943155987717233
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2586109705162604,
+    "theta_tip_pectoral_deg": 0.3052306684173459,
+    "theta_tip_pelvic_deg": 0.03691650887180436,
+    "tip_over_span": 0.02832167086845217,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.039891739032528406
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.26454183917333973,
+    "theta_tip_pectoral_deg": 0.4853920532627785,
+    "theta_tip_pelvic_deg": 0.05644983732833584,
+    "tip_over_span": 0.04581555427044046,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.0637401629901011
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.2846644577972981,
+    "theta_tip_pectoral_deg": 0.9381705579992201,
+    "theta_tip_pelvic_deg": 0.34260377658210966,
+    "tip_over_span": 0.00796519617235558,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.1446545114960578
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 31,
+    "CL": 0.35111499890945214,
+    "theta_tip_pectoral_deg": 2.726990107691396,
+    "theta_tip_pelvic_deg": 0.7279633350538868,
+    "tip_over_span": 0.023577409239953797,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.4118565165880852
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 55,
+    "CL": 0.5397917564032957,
+    "theta_tip_pectoral_deg": 8.034748533968797,
+    "theta_tip_pelvic_deg": 0.5210851826868268,
+    "tip_over_span": 0.0730568901951005,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 1.170538191636198
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 5,
+    "CL": 0.6141771546075909,
+    "theta_tip_pectoral_deg": 9.603152839122707,
+    "theta_tip_pelvic_deg": 1.9028071751819922,
+    "tip_over_span": 0.10774960806665757,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.23718638311906234,
+    "theta_tip_pectoral_deg": -0.2792530390082096,
+    "theta_tip_pelvic_deg": -0.14019587031687888,
+    "tip_over_span": 0.006278638009817841,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.04625795013723699
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22431470429944597,
+    "theta_tip_pectoral_deg": -0.5874319095085087,
+    "theta_tip_pelvic_deg": -0.30753769021947297,
+    "tip_over_span": 0.013516592768656409,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.09801581243934587
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.2086340492698296,
+    "theta_tip_pectoral_deg": -0.9568852148593425,
+    "theta_tip_pelvic_deg": -0.5259400776940113,
+    "tip_over_span": 0.023118680211880297,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.16106875171036128
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.19165913451753172,
+    "theta_tip_pectoral_deg": -1.349512547823932,
+    "theta_tip_pelvic_deg": -0.7798108927648838,
+    "tip_over_span": 0.03426084355738218,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.2293259938491905
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2492407615940381,
+    "theta_tip_pectoral_deg": 0.024283660273427363,
+    "theta_tip_pelvic_deg": 0.003181445631646228,
+    "tip_over_span": 0.006697750910873163,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.002213498709697115
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2499323326684824,
+    "theta_tip_pectoral_deg": 0.05487681887075153,
+    "theta_tip_pelvic_deg": 0.007143658179683334,
+    "tip_over_span": 0.015150105143695497,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.004994357062650279
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.250903310098346,
+    "theta_tip_pectoral_deg": 0.09802044408166233,
+    "theta_tip_pelvic_deg": 0.012659658767040376,
+    "tip_over_span": 0.027135688002275206,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.008898729030451635
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2521472227434171,
+    "theta_tip_pectoral_deg": 0.1537131619592914,
+    "theta_tip_pelvic_deg": 0.019690799497385,
+    "tip_over_span": 0.042810742499592394,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.013900593784087922
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2592386966186789,
+    "theta_tip_pectoral_deg": 0.2784108221371409,
+    "theta_tip_pelvic_deg": 0.11355637914254772,
+    "tip_over_span": 0.00704936303839571,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.04241585315940011
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 21,
+    "CL": 0.27405140738484074,
+    "theta_tip_pectoral_deg": 0.6717292618722719,
+    "theta_tip_pelvic_deg": 0.25731918150000427,
+    "tip_over_span": 0.017081962609062595,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.10197874371127424
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 24,
+    "CL": 0.29850937841861946,
+    "theta_tip_pectoral_deg": 1.3277182094197248,
+    "theta_tip_pelvic_deg": 0.4583467798547698,
+    "tip_over_span": 0.03403809359618213,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.2003258640636032
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 29,
+    "CL": 0.33838566089038263,
+    "theta_tip_pectoral_deg": 2.4223414486568644,
+    "theta_tip_pelvic_deg": 0.7029958219582332,
+    "tip_over_span": 0.06282695509320917,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.3606710348497666
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2448692825702784,
+    "theta_tip_pectoral_deg": -0.08710434829227388,
+    "theta_tip_pelvic_deg": -0.04260268930327772,
+    "tip_over_span": 0.006543279766623304,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.015364506023229585
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2402410693751014,
+    "theta_tip_pectoral_deg": -0.19163811227405542,
+    "theta_tip_pelvic_deg": -0.09519029386458354,
+    "tip_over_span": 0.014378056054004183,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.03397485039709547
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.23403037301825608,
+    "theta_tip_pectoral_deg": -0.3302971163609436,
+    "theta_tip_pelvic_deg": -0.16741867030728802,
+    "tip_over_span": 0.024739795433510528,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.058948461859301804
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22648774817221393,
+    "theta_tip_pectoral_deg": -0.49635084378253014,
+    "theta_tip_pelvic_deg": -0.25764513388158367,
+    "tip_over_span": 0.03769927409764859,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.08927784387970683
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24860853624858875,
+    "theta_tip_pectoral_deg": 0.007257919901784881,
+    "theta_tip_pelvic_deg": 0.000956630227195397,
+    "tip_over_span": 0.006673740688526061,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.0003287209953918291
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2484993756303773,
+    "theta_tip_pectoral_deg": 0.016331337236069388,
+    "theta_tip_pelvic_deg": 0.002154168623672211,
+    "tip_over_span": 0.015027226590751838,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.0007676574867798713
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2483331485736588,
+    "theta_tip_pectoral_deg": 0.029017786551508808,
+    "theta_tip_pelvic_deg": 0.003832580594716546,
+    "tip_over_span": 0.026741940814024766,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.0014360596761759936
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24809557095295093,
+    "theta_tip_pectoral_deg": 0.04525985030970462,
+    "theta_tip_pelvic_deg": 0.005990557424099978,
+    "tip_over_span": 0.04183456584237673,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.002391364982954558
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2514986836936357,
+    "theta_tip_pectoral_deg": 0.0804125136431362,
+    "theta_tip_pelvic_deg": 0.03388580084709785,
+    "tip_over_span": 0.006774923796528447,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.011292752009915752
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25513209654558927,
+    "theta_tip_pectoral_deg": 0.18438377447503923,
+    "theta_tip_pelvic_deg": 0.07651392867619565,
+    "tip_over_span": 0.015552872089001704,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.025902949795556962
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.26046300652369636,
+    "theta_tip_pectoral_deg": 0.3367304060113759,
+    "theta_tip_pelvic_deg": 0.13668502674408015,
+    "tip_over_span": 0.028465400932251618,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.04733889775390332
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2677663742632078,
+    "theta_tip_pectoral_deg": 0.545084754171243,
+    "theta_tip_pelvic_deg": 0.21488398398596867,
+    "tip_over_span": 0.0462512022570343,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.07670623101466045
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2483389271925264,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.006663505728619195,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.0014128367460898295
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24789186874903943,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.014975178817882472,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.003210482635101708
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24725162091078834,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.026576519317628722,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.005784953614855315
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0031622776601683794,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2464045472948444,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.041428271438001374,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.009191082514651727
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.1391796183923168,
+    "theta_tip_pectoral_deg": -2.580697101021782,
+    "theta_tip_pelvic_deg": -1.7443308276812544,
+    "tip_over_span": 0.007623456354818768,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.4403495984928778
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 28,
+    "CL": 0.09413414767403387,
+    "theta_tip_pectoral_deg": -3.4761513349491513,
+    "theta_tip_pelvic_deg": -2.6845974740063174,
+    "tip_over_span": 0.011498525746643565,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.6214803974770557
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 3,
+    "CL": 0.47867659559472836,
+    "theta_tip_pectoral_deg": -24.465637584836337,
+    "theta_tip_pelvic_deg": 5.565132015252539,
+    "tip_over_span": 0.055115942299374,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 1,
+    "CL": 0.24869028706909926,
+    "theta_tip_pectoral_deg": -16.42980401630449,
+    "theta_tip_pelvic_deg": -7.9319048665359,
+    "tip_over_span": 0.03706401830551321,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.26545499209065826,
+    "theta_tip_pectoral_deg": 0.4699018617423327,
+    "theta_tip_pelvic_deg": 0.053149910284786016,
+    "tip_over_span": 0.013025522063953462,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.06741198619213895
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.29001523631633663,
+    "theta_tip_pectoral_deg": 1.1517901885925825,
+    "theta_tip_pelvic_deg": 0.10769721376083782,
+    "tip_over_span": 0.03322240784839381,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.16617035038325878
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 25,
+    "CL": 0.3308917288942917,
+    "theta_tip_pectoral_deg": 2.2824371120264284,
+    "theta_tip_pelvic_deg": 0.15630684980222784,
+    "tip_over_span": 0.0709015022230389,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.33053742733520197
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 4,
+    "CL": 0.35499613670659824,
+    "theta_tip_pectoral_deg": 2.938683396045888,
+    "theta_tip_pelvic_deg": 0.23902906474316457,
+    "tip_over_span": 0.10511029388712248,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 6,
+    "CL": 0.6559055722682712,
+    "theta_tip_pectoral_deg": 12.486593928870946,
+    "theta_tip_pelvic_deg": 1.1284270025324985,
+    "tip_over_span": 0.03452154072708804,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 2,
+    "CL": 0.4625204732620687,
+    "theta_tip_pectoral_deg": 13.372025661154254,
+    "theta_tip_pelvic_deg": 3.7585168859160882,
+    "tip_over_span": 0.03523741279558665,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 2,
+    "CL": 0.6375825582904446,
+    "theta_tip_pectoral_deg": 31.204377053088965,
+    "theta_tip_pelvic_deg": 7.158260097759275,
+    "tip_over_span": 0.08526565097951215,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.03,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: twist > 0.2 rad",
+    "valid": false,
+    "iterations": 1,
+    "CL": 0.24869028706909926,
+    "theta_tip_pectoral_deg": 14.67439099343059,
+    "theta_tip_pelvic_deg": 6.258786846453067,
+    "tip_over_span": 0.03706401830551321,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.19915831443004636,
+    "theta_tip_pectoral_deg": -1.2055021212397063,
+    "theta_tip_pelvic_deg": -0.6826534772757664,
+    "tip_over_span": 0.010008361357793046,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.19917131601784832
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.16082738086615425,
+    "theta_tip_pectoral_deg": -2.0893285332360176,
+    "theta_tip_pelvic_deg": -1.3234056034890627,
+    "tip_over_span": 0.019349160029905194,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.35330251790174627
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.12819316642886988,
+    "theta_tip_pectoral_deg": -2.793613595143012,
+    "theta_tip_pelvic_deg": -1.942173958652584,
+    "tip_over_span": 0.028198030445567023,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.4845268377297164
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.10322537741663765,
+    "theta_tip_pectoral_deg": -3.289583231729712,
+    "theta_tip_pelvic_deg": -2.4586238450658864,
+    "tip_over_span": 0.035316525602780396,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.5849239570533882
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25297440623371165,
+    "theta_tip_pectoral_deg": 0.13232731225339295,
+    "theta_tip_pelvic_deg": 0.016746486606679243,
+    "tip_over_span": 0.012173905250688526,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.017226729424185017
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.25861389932254153,
+    "theta_tip_pectoral_deg": 0.30532009783658237,
+    "theta_tip_pelvic_deg": 0.03692653422584206,
+    "tip_over_span": 0.02833015304225849,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.03990350789014929
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2668511748492766,
+    "theta_tip_pectoral_deg": 0.5550426285227874,
+    "theta_tip_pelvic_deg": 0.0637048771732888,
+    "tip_over_span": 0.05284168960283247,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.0730261431791801
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2776029557564058,
+    "theta_tip_pectoral_deg": 0.8762691843406186,
+    "theta_tip_pelvic_deg": 0.09570316669371542,
+    "tip_over_span": 0.08772755910817197,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.11625977322007186
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 27,
+    "CL": 0.32228458676810356,
+    "theta_tip_pectoral_deg": 1.9426630478462104,
+    "theta_tip_pelvic_deg": 0.5972587529123792,
+    "tip_over_span": 0.016663366624395982,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.2959275249333704
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 55,
+    "CL": 0.5399894338641253,
+    "theta_tip_pectoral_deg": 8.040370696837762,
+    "theta_tip_pelvic_deg": 0.5201277975139385,
+    "tip_over_span": 0.07311167923532744,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 1.1713330488806197
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 4,
+    "CL": 0.5900356928522212,
+    "theta_tip_pectoral_deg": 8.865588507844482,
+    "theta_tip_pelvic_deg": 2.19458147227944,
+    "tip_over_span": 0.10888976595184237,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.1,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 3,
+    "CL": 0.6585680654851649,
+    "theta_tip_pectoral_deg": 10.392142710389546,
+    "theta_tip_pelvic_deg": 3.0971601943947578,
+    "tip_over_span": 0.16801823895967738,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22899155870679042,
+    "theta_tip_pectoral_deg": -0.47597585085487726,
+    "theta_tip_pelvic_deg": -0.2454734546026924,
+    "tip_over_span": 0.010787198998549038,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.07920987819670866
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.20862470380619072,
+    "theta_tip_pectoral_deg": -0.9571034762565108,
+    "theta_tip_pelvic_deg": -0.5260749144675891,
+    "tip_over_span": 0.02312460515580587,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.16110633694122112
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.1859214906403373,
+    "theta_tip_pectoral_deg": -1.4804472734482785,
+    "theta_tip_pelvic_deg": -0.8696019381286346,
+    "tip_over_span": 0.03819319574764247,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.2523974453228234
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.16360807013490772,
+    "theta_tip_pectoral_deg": -1.9802220047531263,
+    "theta_tip_pelvic_deg": -1.2372705871143064,
+    "tip_over_span": 0.05422430509263227,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.3421211716995508
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24967100655886493,
+    "theta_tip_pectoral_deg": 0.0433045378967828,
+    "theta_tip_pelvic_deg": 0.00565044252899467,
+    "tip_over_span": 0.011949828864654455,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.003943542016993984
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.25090393625544566,
+    "theta_tip_pectoral_deg": 0.09804834878817212,
+    "theta_tip_pelvic_deg": 0.01266320363339821,
+    "tip_over_span": 0.027143476079174975,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.008901239024557528
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.252620292564175,
+    "theta_tip_pectoral_deg": 0.17505318189077526,
+    "theta_tip_pelvic_deg": 0.022367962143276486,
+    "tip_over_span": 0.04890317411468661,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.01580282856928794
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2547527191312495,
+    "theta_tip_pectoral_deg": 0.27284879900985837,
+    "theta_tip_pelvic_deg": 0.03461763405476548,
+    "tip_over_span": 0.0777131636062873,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.024377466406293014
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 20,
+    "CL": 0.2682292814483815,
+    "theta_tip_pectoral_deg": 0.5168253725068819,
+    "theta_tip_pelvic_deg": 0.20292367369898115,
+    "tip_over_span": 0.013119141030843582,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.07856758620657645
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 24,
+    "CL": 0.29852677622072304,
+    "theta_tip_pectoral_deg": 1.328188464705999,
+    "theta_tip_pelvic_deg": 0.4584749682487875,
+    "tip_over_span": 0.03405034366353277,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.20039581246130167
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 31,
+    "CL": 0.3570544192392561,
+    "theta_tip_pectoral_deg": 2.9459628267731266,
+    "theta_tip_pelvic_deg": 0.7867575717367083,
+    "tip_over_span": 0.07675917442365594,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.4357393277274515
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 0.3,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "model-domain exit: linear beam",
+    "valid": false,
+    "iterations": 4,
+    "CL": 0.3808183559534324,
+    "theta_tip_pectoral_deg": 3.5238317674062754,
+    "theta_tip_pelvic_deg": 1.1478748745387204,
+    "tip_over_span": 0.11014796972728055,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": null
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24196855477541201,
+    "theta_tip_pectoral_deg": -0.1527437273216945,
+    "theta_tip_pelvic_deg": -0.07543709286210218,
+    "tip_over_span": 0.011465221004093282,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.027028523311190877
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.23402646637283586,
+    "theta_tip_pectoral_deg": -0.33038377147991754,
+    "theta_tip_pelvic_deg": -0.16746469461153235,
+    "tip_over_span": 0.024746259753801948,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.058964178036212456
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.22372090719817614,
+    "theta_tip_pectoral_deg": -0.5566631564370833,
+    "theta_tip_pelvic_deg": -0.2914220535821623,
+    "tip_over_span": 0.042638092827648556,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.10040350268273535
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 17,
+    "CL": 0.21174741376126652,
+    "theta_tip_pectoral_deg": -0.8143292987228222,
+    "theta_tip_pelvic_deg": -0.4416980954259372,
+    "tip_over_span": 0.0645879050410784,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.1485496996202864
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2485414923567707,
+    "theta_tip_pectoral_deg": 0.012907675834943445,
+    "theta_tip_pelvic_deg": 0.0017020611098290256,
+    "tip_over_span": 0.011873379612337275,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.0005983088948844362
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.248333036208564,
+    "theta_tip_pectoral_deg": 0.02902595743772507,
+    "theta_tip_pelvic_deg": 0.00383366339775357,
+    "tip_over_span": 0.026749503370443538,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.0014365192482598266
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24799706777964278,
+    "theta_tip_pectoral_deg": 0.05145851632119326,
+    "theta_tip_pelvic_deg": 0.0068175075316404005,
+    "tip_over_span": 0.04763247649472762,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.0027874626760064913
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.25,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.2474845604764099,
+    "theta_tip_pectoral_deg": 0.07984558982379666,
+    "theta_tip_pelvic_deg": 0.010635555738413861,
+    "tip_over_span": 0.0745582426179653,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.00484827836170576
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.2537444279055161,
+    "theta_tip_pectoral_deg": 0.14468642947123012,
+    "theta_tip_pelvic_deg": 0.06039230965163504,
+    "tip_over_span": 0.012198547734857847,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": 0.020323037222499174
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 19,
+    "CL": 0.26046654062916047,
+    "theta_tip_pectoral_deg": 0.33683131931411314,
+    "theta_tip_pelvic_deg": 0.13672401755901145,
+    "tip_over_span": 0.02847397760275015,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": 0.0473531005016139
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 21,
+    "CL": 0.2707097807090288,
+    "theta_tip_pectoral_deg": 0.6290008899990597,
+    "theta_tip_pelvic_deg": 0.24513637325346507,
+    "tip_over_span": 0.05346198601953669,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": 0.08854185138648707
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": 1.0,
+    "f_ea": 0.4,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 22,
+    "CL": 0.2854471822814403,
+    "theta_tip_pectoral_deg": 1.0503428549313947,
+    "theta_tip_pelvic_deg": 0.3873988175102489,
+    "tip_over_span": 0.09009307659753414,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": 0.14780192484472998
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 8.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24806159472047495,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.011840921643094488,
+    "CL_rigid": 0.24869028596693607,
+    "dCL_rel": -0.0025280088605660334
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 12.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24725120266047254,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.026583987952251167,
+    "CL_rigid": 0.24869028458923165,
+    "dCL_rel": -0.0057866431378132965
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 16.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24607268207982122,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.0471051948322192,
+    "CL_rigid": 0.24869028266044427,
+    "dCL_rel": -0.010525544273867204
+   },
+   {
+    "mesh": [
+     48,
+     12
+    ],
+    "EI_pectoral_Nm2": 0.0017782794100389228,
+    "GJ_over_EI": null,
+    "f_ea": 0.05,
+    "U_m_s": 20.0,
+    "status": "converged",
+    "valid": true,
+    "iterations": 18,
+    "CL": 0.24448655928071386,
+    "theta_tip_pectoral_deg": 0.0,
+    "theta_tip_pelvic_deg": 0.0,
+    "tip_over_span": 0.07326282395218807,
+    "CL_rigid": 0.24869028018057593,
+    "dCL_rel": -0.01690343867403954
+   }
+  ],
+  "rigid_CL_by_speed": {
+   "8.0": 0.25165083198648835,
+   "12.0": 0.25165083057700555,
+   "16.0": 0.25165082860373034,
+   "20.0": 0.251650826066661
+  },
+  "rigid_CL_by_mesh_speed": {
+   "24x6@8": 0.25165083198648835,
+   "24x6@12": 0.25165083057700555,
+   "24x6@16": 0.25165082860373034,
+   "24x6@20": 0.251650826066661,
+   "48x12@8": 0.24869028596693607,
+   "48x12@12": 0.24869028458923165,
+   "48x12@16": 0.24869028266044427,
+   "48x12@20": 0.24869028018057593
+  },
+  "printed_fin_torsion_estimate": {
+   "G_Pa_assumed_nu0.35": 770370370.3703703,
+   "J_m4": 4.173349870054936e-12,
+   "GJ_Nm2": 0.0032150250850793574,
+   "EI_root_Nm2": 0.007352326970068471,
+   "GJ_over_EI": 0.4372799384695233
+  },
+  "wall_s": 1516.1787905693054,
+  "workers": 38
+ },
+ "checks": [
+  {
+   "name": "control: rigid-torsion arms reproduce R4 bending-only CL where EI matches within 2% (|dCL| <= 2e-3, EI grids differ slightly)",
+   "pass": true,
+   "detail": {
+    "pairs": [
+     [
+      8.0,
+      0.0031622776601683794,
+      0.251291321072359,
+      0.25129136221667703
+     ],
+     [
+      12.0,
+      0.0031622776601683794,
+      0.25083375931134017,
+      0.25083380280751316
+     ],
+     [
+      16.0,
+      0.0031622776601683794,
+      0.2501782381316883,
+      0.2501782713966597
+     ],
+     [
+      20.0,
+      0.0031622776601683794,
+      0.2493105913213548,
+      0.24931060857068416
+     ],
+     [
+      8.0,
+      0.0017782794100389228,
+      0.2510074893867613,
+      0.2510075236778368
+     ],
+     [
+      12.0,
+      0.0017782794100389228,
+      0.2501778098213824,
+      0.2501778430957973
+     ],
+     [
+      16.0,
+      0.0017782794100389228,
+      0.24897056619463317,
+      0.24897058576915204
+     ],
+     [
+      20.0,
+      0.0017782794100389228,
+      0.24734481043717385,
+      0.24734484018241945
+     ]
+    ],
+    "note": null
+   }
+  },
+  {
+   "name": "control: rigid (EI 1e3, GJ inf) CL equals R4's consistent-lattice rigid CL at 24x6 (1e-6)",
+   "pass": true,
+   "detail": {
+    "8.0": 0.25165083198648835,
+    "12.0": 0.25165083057700555,
+    "16.0": 0.25165082860373034,
+    "20.0": 0.251650826066661
+   }
+  },
+  {
+   "name": "valid arms: tip twist magnitude non-increasing with GJ",
+   "pass": true,
+   "detail": 36
+  },
+  {
+   "name": "recorded: lattice sensitivity of dCL_rel (48x12 minus 24x6), max abs",
+   "pass": true,
+   "detail": {
+    "n": 139,
+    "max_abs": 0.03678598427028712
+   }
+  }
+ ],
+ "design_implications": {
+  "see": "docs/organ-sims.md"
+ },
+ "figures": [
+  "artifacts/organ-sims/r4b-torsion/torsion.png"
+ ]
+}

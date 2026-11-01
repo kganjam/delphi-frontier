@@ -1,10 +1,10 @@
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/tmp/repo/engineering/organ_sims/r4b_torsion.py", line 20, in <module>
-    from engineering.aeroelastic import model as AM, run as AR
-  File "/tmp/repo/engineering/aeroelastic/model.py", line 11, in <module>
-    from engineering.fin_mechanics import beam
-  File "/tmp/repo/engineering/fin_mechanics/beam.py", line 20, in <module>
-    import scipy.sparse as sp
-ModuleNotFoundError: No module named 'scipy'
+{
+ "printed": {
+  "G_Pa_assumed_nu0.35": 770370370.3703703,
+  "J_m4": 4.173349870054936e-12,
+  "GJ_Nm2": 0.0032150250850793574,
+  "EI_root_Nm2": 0.007352326970068471,
+  "GJ_over_EI": 0.4372799384695233
+ },
+ "n": 312
+}
