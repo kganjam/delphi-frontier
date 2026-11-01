@@ -1,6 +1,6 @@
 # Motivation, prior art and how we differ
 
-Companion to https://frontier.morphoswarm.ai/#/about/inspirations
+Companion to https://studio.morphoswarm.ai/#/about/inspirations
 
 ## Why design a whole organism
 

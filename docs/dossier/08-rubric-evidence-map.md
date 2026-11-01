@@ -153,7 +153,7 @@ claiming availability and fitness for reuse, not demonstrated uptake.
 
 ## If you read only one thing
 
-Open https://frontier.morphoswarm.ai/#/studio/flying-fish and look at how many scale
+Open https://studio.morphoswarm.ai/#/studio/flying-fish and look at how many scale
 panels say *"no model exists"*. Then open `/#/engineering` and see which model connections
 were refused. The project's claim is that **publishing those two lists honestly is more
 useful than a polished pipeline whose joints are unsupported** — and that a mechanically

@@ -1,6 +1,6 @@
 # How the system was built
 
-Companion to the live System page: https://frontier.morphoswarm.ai/#/work
+Companion to the live System page: https://studio.morphoswarm.ai/#/work
 
 ## 1. What was built
 
@@ -15,7 +15,7 @@ A public node with five surfaces, all served from one deployment:
 | **System** | The build itself: specs, owner board, receipts, resources, and what remains unknown |
 
 Plus two machine surfaces: a REST API and an **MCP endpoint** at
-`https://frontier.morphoswarm.ai/mcp` exposing 21 tools (18 read, 3 opt-in write).
+`https://studio.morphoswarm.ai/mcp` exposing 21 tools (18 read, 3 opt-in write).
 
 ## 2. Architecture
 

@@ -1,6 +1,6 @@
 # Lean for biology — the formal core
 
-Live page: https://frontier.morphoswarm.ai/#/proofs
+Live page: https://studio.morphoswarm.ai/#/proofs
 
 Toolchain: **Lean 4.35.0**, pinned Mathlib revision, recorded runs. The site does not run
 Lean; it shows receipts of runs, and a family whose files changed since its receipt is

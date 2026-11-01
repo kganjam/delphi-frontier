@@ -1,6 +1,6 @@
 # What the system does
 
-Companion to https://frontier.morphoswarm.ai/#/about
+Companion to https://studio.morphoswarm.ai/#/about
 
 ## The problem
 
@@ -58,7 +58,7 @@ Specs, owner board, receipts, resources and unknowns, split into *author report*
 
 ## The agent interface (MCP)
 
-`https://frontier.morphoswarm.ai/mcp`, Streamable HTTP, **21 tools**:
+`https://studio.morphoswarm.ai/mcp`, Streamable HTTP, **21 tools**:
 
 - **Read (18):** `frontier_search`, `frontier_get`, `frontier_neighborhood`,
   `frontier_events`, `frontier_artifacts`, `frontier_capabilities`, `frontier_discover`,

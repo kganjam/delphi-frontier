@@ -3,8 +3,8 @@
 **One file.** Everything from the ten dossier pages, consolidated: what the system is, how
 it was built, what it measured, what it used, and what it does **not** establish.
 
-**Live site:** https://frontier.morphoswarm.ai · **Repository:** https://github.com/kganjam/delphi-frontier
-**Agent endpoint:** `https://frontier.morphoswarm.ai/mcp`
+**Live site:** https://studio.morphoswarm.ai · **Repository:** https://github.com/kganjam/delphi-frontier
+**Agent endpoint:** `https://studio.morphoswarm.ai/mcp`
 
 Every figure was read from the site's own published data snapshot, from a receipt file
 named beside it, or from a live command run at the time stated. Where a figure is unknown,
@@ -825,7 +825,7 @@ constructs move by **cilia** while contraction is this project's own modelling c
 
 # 12. If you read only one thing
 
-Open https://frontier.morphoswarm.ai/#/studio/flying-fish and count how many scale panels
+Open https://studio.morphoswarm.ai/#/studio/flying-fish and count how many scale panels
 say *"no model exists"*. Then open `/#/engineering` and see which model connections were
 refused. The claim is that **publishing those two lists honestly is more useful than a
 polished pipeline whose joints are unsupported** — and that a mechanically checked base of

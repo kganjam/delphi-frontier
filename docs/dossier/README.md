@@ -1,11 +1,11 @@
-# MorphoSwarm Frontier — judge and teammate dossier
+# MorphoSwarm Studio — judge and teammate dossier
 
 A crawlable, plain-text summary of what this system is, how it was built, what it
 measured, and what it does **not** establish. Written to be combined with write-ups
 from other team members.
 
-**Live site:** https://frontier.morphoswarm.ai · **Repository:** https://github.com/kganjam/delphi-frontier
-· **Agent endpoint (MCP):** `https://frontier.morphoswarm.ai/mcp`
+**Live site:** https://studio.morphoswarm.ai · **Repository:** https://github.com/kganjam/delphi-frontier
+· **Agent endpoint (MCP):** `https://studio.morphoswarm.ai/mcp`
 
 Every number in these files was read from the site's own published data snapshot
 (`site/data/snapshot.json`, fetched over HTTPS from the live site on 2026-11-01,

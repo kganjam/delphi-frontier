@@ -1,6 +1,6 @@
 # Simulations across scales, and the layer that refuses to connect them
 
-Live page: https://frontier.morphoswarm.ai/#/simulations
+Live page: https://studio.morphoswarm.ai/#/simulations
 
 ## 31 recorded runs across 9 of 11 scales
 
