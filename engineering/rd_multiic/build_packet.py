@@ -29,7 +29,7 @@ def main():
               "protocol_sha256": sha((ROOT / "engineering/rd_multiic/protocol.json").read_bytes()), "image": proto["bounds"]["image"],
               "manifest": {"path": a.manifest_path, "sha256": a.manifest_sha256, "note": "infra-generated; never opened by this harness; the job opens it only after barrier.json"},
               "preflight": {"cmd": "tar -xzf rd-multiic-source.tgz && PREFLIGHT=1 bash rd-multiic/engineering/rd_multiic/job.sh", "no_gpu_needed": True},
-              "argv": "tar -xzf rd-multiic-source.tgz && OUT=out MANIFEST=<manifest path> MANIFEST_SHA256=<sha256> bash rd-multiic/engineering/rd_multiic/job.sh",
+              "argv": f"tar -xzf rd-multiic-source.tgz && OUT=out MANIFEST={a.manifest_path or '<manifest path>'} MANIFEST_SHA256={a.manifest_sha256 or '<sha256>'} bash rd-multiic/engineering/rd_multiic/job.sh",
               "env": {"OUT": "out", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "network": "none needed", "credentials": "none"},
               "pins": proto["sources"]["pins"],
               "limits": {"gpus": 1, "hard_cap_s": 1800, "soft_deadline_s": 1500, "max_output_mib_compressed": 48, "host_ram": "< 8 GiB"},
