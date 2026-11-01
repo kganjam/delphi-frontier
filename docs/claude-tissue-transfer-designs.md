@@ -202,8 +202,26 @@ at once. The orientation index A runs from +1 (stripes along the growth axis, ra
 **Testable prediction.** If rays were laid down by such a mechanism, accelerating early fin-fold outgrowth past a
 threshold would disorder ray orientation. Ray number across the fold would stay about width/λ, here 9.
 
-**Control pending.** The uniform-growth control (`claude-tissue-uniform2d`) tests whether the orientation comes from the
-edge specifically.
+**Uniform-growth control** (`claude-tissue-uniform2d`, job `aijob-e00ywezw2nkjrnkfxf`, COMPLETED, 696.2 s). The same fold,
+speeds and seeds, but every row stretches instead of new rows being added at the edge.
+
+| d | Uniform speed 0.4 | Uniform speed 0.1 | Uniform speed 0.04 |
+|---|---|---|---|
+| 10 | **0.99 ± 0.02** | **1.00** | **1.00** |
+| 20 | −0.09 | −0.23 | −0.23 |
+| 30 | −0.11 | −0.17 | −0.12 |
+
+**Corrected reading** (the control changes the interpretation of the edge2d run):
+- Proximo-distal stripes come from *growth along the proximo-distal axis* starting from a fold shorter than one
+  wavelength (8 rows against λ ≈ 11), together with near-onset kinetics. Edge-specific insertion is not needed.
+- Fast *edge* growth is the condition that breaks the orientation (A = −0.53); uniform growth at the same speed
+  keeps it (0.99).
+- In this model, then, the edge mode adds a speed constraint that the uniform mode does not have.
+- Neither mode turns spots into stripes.
+
+**Prediction, revised.** If rays were laid down by such a mechanism, they would align with the axis of fold elongation.
+Under marginal (edge) outgrowth, but not uniform outgrowth, speeding up outgrowth beyond a threshold would disorder them.
+The follow-up job `claude-tissue-edge2d-cases` narrows that threshold and tests other stripe-regime kinetics.
 
 ## 3. fin-growth: morphogen production → pectoral/SL ratio (molecular → organ)
 

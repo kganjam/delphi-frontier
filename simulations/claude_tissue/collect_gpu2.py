@@ -22,28 +22,31 @@ assert meta, "no META line"
 def img(s, key="u8"):
     shp = s.get("shape") or [s["n"], s["n"]]; return np.frombuffer(base64.b64decode(s[key]), dtype=np.uint8).reshape(shp)
 
-if kind in ("edge2d", "uniform2d"):
-    OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind}"; OUT.mkdir(parents=True, exist_ok=True); script = f"simulations/claude_tissue/{kind}_gpu.py"
+if kind in ("edge2d", "uniform2d", "edge2d_cases"):
+    OUT = ROOT/f"artifacts/simulations/claude-tissue-{kind.replace('_', '-')}"; OUT.mkdir(parents=True, exist_ok=True); script = f"simulations/claude_tissue/{kind}_gpu.py"
     summ = {}
-    for d in meta["ds"]:
-        for v in meta["speeds"]:
-            rs = [r for r in rows if r["d"] == d and r["speed"] == v]
-            if rs: summ[f"d={d},v={v}"] = dict(d=d, speed=v, n=len(rs), orientation_A_mean=float(np.mean([r["orientation_A"] for r in rs])),
+    keys = sorted({(r.get("b", meta.get("b")), r["d"], r["speed"]) for r in rows}, key=lambda k: (k[0], k[1], -k[2] if k[2] else 1))
+    for bb, d, v in keys:
+            rs = [r for r in rows if r.get("b", meta.get("b")) == bb and r["d"] == d and r["speed"] == v]
+            kk = f"d={d},v={v}" if kind != "edge2d_cases" else f"b={bb},d={d},v={v}"
+            if rs: summ[kk] = dict(b=bb, d=d, speed=v, n=len(rs), orientation_A_mean=float(np.mean([r["orientation_A"] for r in rs])),
                                               orientation_A_sd=float(np.std([r["orientation_A"] for r in rs])), stripes_across_width=[r["stripes_across_width"] for r in rs],
                                               top2_power_fraction_mean=float(np.mean([r["top2_power_fraction"] for r in rs])))
     res = dict(job=job, job_state=state, meta=meta, done=done, n_rows=len(rows), summary=summ, rows=rows,
                reading="orientation_A > 0: stripes running proximo-distally (along growth, ray-like); ~0: isotropic; < 0: stripes parallel to the growing edge.")
     (OUT/f"{kind}.json").write_text(json.dumps(res, indent=1))
     fig = plt.figure(figsize=(16, 8)); ax = fig.add_subplot(2, 1, 1)
-    for d, c in zip(meta["ds"], ["tab:red", "tab:green", "tab:blue"]):
-        xs = [s for s in meta["speeds"] if f"d={d},v={s}" in summ]
-        ax.errorbar(range(len(xs)), [summ[f"d={d},v={s}"]["orientation_A_mean"] for s in xs], [summ[f"d={d},v={s}"]["orientation_A_sd"] for s in xs], marker="o", color=c, label=f"d={d}")
-    ax.set_xticks(range(len(meta["speeds"]))); ax.set_xticklabels([("static (all at once)" if s == 0 else f"edge speed {s}") for s in meta["speeds"]])
+    allv = sorted({v["speed"] for v in summ.values()}, key=lambda x: -x if x else 1); pos = {sp: i for i, sp in enumerate(allv)}
+    for (bb, d), c in zip(sorted({(v["b"], v["d"]) for v in summ.values()}), ["tab:red", "tab:green", "tab:blue", "tab:purple", "tab:orange"]):
+        vs = [v for v in summ.values() if v["b"] == bb and v["d"] == d]
+        ax.errorbar([pos[v["speed"]] for v in vs], [v["orientation_A_mean"] for v in vs], [v["orientation_A_sd"] for v in vs], marker="o", color=c, label=f"b={bb}, d={d}")
+    ax.set_xticks(range(len(allv))); ax.set_xticklabels([("static (all at once)" if sp == 0 else f"{'uniform' if kind == 'uniform2d' else 'edge'} speed {sp}") for sp in allv])
     ax.axhline(0, color="k", lw=0.5); ax.set_ylabel("orientation index A (+1 = proximo-distal stripes)"); ax.legend()
     ax.set_title(f"SIMULATED 2-D {'distal-edge growth vs static patterning' if kind == 'edge2d' else 'UNIFORM proximo-distal growth (control)'} ({len(meta['seeds'])} seeds each); dimensionless")
-    for i, s in enumerate(sorted(snaps, key=lambda s: (s["d"], -s["speed"] if s["speed"] else 1))[:12]):
-        a2 = fig.add_subplot(2, 12, 13 + i); a2.imshow(img(s), cmap="magma", origin="lower", aspect="auto"); a2.axis("off")
-        a2.set_title(f"d={s['d']}\n{'static' if s['speed']==0 else 'v='+str(s['speed'])}", fontsize=7)
+    sn_sorted = sorted(snaps, key=lambda s: (s.get("b", 0), s["d"], -s["speed"] if s["speed"] else 1))[:13]
+    for i, s in enumerate(sn_sorted):
+        a2 = fig.add_subplot(2, len(sn_sorted), len(sn_sorted) + 1 + i); a2.imshow(img(s), cmap="magma", origin="lower", aspect="auto"); a2.axis("off")
+        a2.set_title(f"{'b='+str(s['b'])+' ' if 'b' in s else ''}d={s['d']}\n{'static' if s['speed']==0 else 'v='+str(s['speed'])}", fontsize=6)
     fig.text(0.5, 0.02, "panels: final field, seed 1, distal (growing) edge at top", ha="center", fontsize=8)
     fig.tight_layout(rect=(0, 0.03, 1, 1)); fig.savefig(OUT/f"{kind}.png", dpi=100); plt.close(fig)
     outs = [OUT/f"{kind}.json", OUT/f"{kind}.png"]
@@ -93,12 +96,12 @@ else:
     fig.tight_layout(); fig.savefig(OUT/"phase-map.png", dpi=100); plt.close(fig)
     outs = [OUT/"phase-map.json", OUT/"phase-map.png"]
 ok = state == "COMPLETED" and done is not None
-rec = dict(name=f"claude-tissue-{kind}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap'}[kind] }.py (args in META)", job=job, job_state=state,
+rec = dict(name=f"claude-tissue-{kind.replace('_', '-')}", command=f"python3 /work/{ {'edge2d': 'edge2d', 'uniform2d': 'uniform2d', 'phasemap': 'phasemap', 'edge2d_cases': 'edge2dc'}[kind] }.py (args in META)", job=job, job_state=state,
            exit_code=0 if ok else 1, seed=meta.get("seeds"), wall_s=(done or {}).get("wall_s"),
            compute=f"Nebius {job} ({meta.get('gpu')}), image nvcr.io/nvidia/pytorch@sha256:11e99763...",
            code_sha256={script: meta["script_sha256"]}, code_matches_repo=bool(meta["script_sha256"] == sha(ROOT/script)),
            collector_sha256={"simulations/claude_tissue/collect_gpu2.py": sha(ROOT/"simulations/claude_tissue/collect_gpu2.py")},
            input_sha256={}, output_sha256={str(p.relative_to(ROOT)): sha(p) for p in outs + [logp]},
            evidence_kind="simulated; not observed", collected_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
-(OUT/f"receipt-claude-tissue-{kind}.json").write_text(json.dumps(rec, indent=1, sort_keys=True))
+(OUT/f"receipt-claude-tissue-{kind.replace('_', '-')}.json").write_text(json.dumps(rec, indent=1, sort_keys=True))
 print(json.dumps(dict(kind=kind, rows=len(rows), snaps=len(snaps), frames=len(frames), done=done, code_matches_repo=rec["code_matches_repo"])))

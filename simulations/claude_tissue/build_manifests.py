@@ -116,8 +116,19 @@ def cards():
             equations=[{"label": "Orientation index", "tex": "A=\\frac{P_{|k_x|>|k_y|}-P_{|k_y|>|k_x|}}{P_{|k_x|>|k_y|}+P_{|k_y|>|k_x|}}", "source": "this harness; +1 = stripes along the growth axis"}],
             numerical_results=[f"d={v['d']}, {'static' if v['speed']==0 else 'edge speed '+str(v['speed'])}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}, stripes across width {v['stripes_across_width']}" for v in sm.values()],
             parameter_unknowns=["Real fin-fold growth geometry and speed are not measured here."],
-            open_questions=["Is orientation caused by edge growth specifically, or by any growth along the proximo-distal axis? A uniform-growth control is needed."],
-            limitations=["Does not establish that fin rays form by a Turing mechanism or that fin folds grow only at the edge.", "Dimensionless; generic kinetics."])
+            open_questions=["Answered by the uniform-growth control (claude-tissue-uniform2d): uniform proximo-distal growth also gives A ~ 1.0 at d=10, even at speed 0.4, so orientation comes from growth along the axis from a fold shorter than one wavelength, not from edge insertion; fast EDGE growth is what breaks it."],
+            limitations=["Does not establish that fin rays form by a Turing mechanism or that fin folds grow only at the edge.", "Orientation is not specific to edge growth (see uniform2d control).", "Dimensionless; generic kinetics."])
+    if (A/"claude-tissue-edge2d-cases/edge2d_cases.json").exists():
+        ec = J("claude-tissue-edge2d-cases/edge2d_cases.json"); sm = ec["summary"]
+        C["claude-tissue-edge2d-cases"] = dict(
+            title="Distal-edge growth: speed threshold for ray-like stripes, and other stripe-regime kinetics (simulated, H100)",
+            scales=["tissue", "developmental"], evidence_kind="simulated; dimensionless; extension of claude-tissue-edge2d",
+            model=dict(name="2-D Schnakenberg, distal-edge growth (same scheme as edge2d)", context=f"cases {ec['meta'].get('cases')}"),
+            equations=[{"label": "Orientation index", "tex": "A=\\frac{P_{|k_x|>|k_y|}-P_{|k_y|>|k_x|}}{P_{|k_x|>|k_y|}+P_{|k_y|>|k_x|}}", "source": "this harness"}],
+            numerical_results=[f"b={v['b']}, d={v['d']}, {'static' if v['speed']==0 else 'edge speed '+str(v['speed'])}: A = {v['orientation_A_mean']:.2f} +/- {v['orientation_A_sd']:.2f}, stripes {v['stripes_across_width']}" for v in sm.values()],
+            parameter_unknowns=["Generic kinetics; growth speed is in pattern units, not measured fin-fold speed."],
+            open_questions=["Map the speed threshold onto measured fin-fold outgrowth rates and ray-patterning timing."],
+            limitations=["Does not establish that fin rays are Turing patterns.", "Dimensionless."])
     if (A/"claude-tissue-uniform2d/uniform2d.json").exists():
         u2 = J("claude-tissue-uniform2d/uniform2d.json"); sm = u2["summary"]
         C["claude-tissue-uniform2d"] = dict(

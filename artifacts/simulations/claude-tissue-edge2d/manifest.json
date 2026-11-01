@@ -1,14 +1,15 @@
 {
-  "base_commit": "b4e9fe3930ebf64e2701a1e09795d049e533fb28",
+  "base_commit": "b08747d7c690f7a870b9e725e66afe2256f3fcf6",
   "code_sha256": {
     "simulations/claude_tissue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "simulations/claude_tissue/build_manifests.py": "8b36f0be112baf0359edfd3abf0697f8e85c6c1da025e63092cd845c5e05339b",
-    "simulations/claude_tissue/collect_gpu2.py": "0a5aa5752c2921ffffa48ab7bc9d200342fd33fa769f9af24f3b59349ac3b57e",
+    "simulations/claude_tissue/build_manifests.py": "f3d6e65b339a9abd74f678d78f42e6b222b6579a54f4605f15674c5bde90050d",
+    "simulations/claude_tissue/collect_gpu2.py": "0a0f27caf0f449dfe9f93591e9c2f1fa6903aaf7831852a451abfdba76607f04",
     "simulations/claude_tissue/collect_rd_v2.py": "0e12867daab7054d0bd22d3d9dfaeea63d38f77a4b20076e2bd1a6471cf9325e",
     "simulations/claude_tissue/common.py": "aed20f8257c5f25aff1ab13f8c9e34c547918a421e5678fa82383a7ee9b2f353",
     "simulations/claude_tissue/dev_programme.py": "ff9f4336262a7f650edfc4185c7b247da697a5a87321d117d3bc11928e33a070",
     "simulations/claude_tissue/dev_programme_species.py": "21f558444192465bd3a394c86695596cc51e99d2af9b3b3f788afa75899ae8b4",
     "simulations/claude_tissue/dev_programme_video.py": "db8f8d9e26404ed37dcd39175fbed5789c66109d1d2f2b212c823e17f80fbe7d",
+    "simulations/claude_tissue/edge2d_cases_gpu.py": "f2457f94c42a99034aa2b9068eb35dbc7275584332719965935375396e8f48e6",
     "simulations/claude_tissue/edge2d_gpu.py": "219d919d25dc4361fc5fb8f42cd0b01e90d5f1ca0a32ab99b456c8f83c8f708e",
     "simulations/claude_tissue/edge_growth_rd.py": "ff17c026f5f25dc1b7257faf572e8d46c2d1f9ab774421875ed835dddd72fc09",
     "simulations/claude_tissue/fin_growth.py": "15653ce43228ad2dd207899110b8a6b98b0a8e15c6c674d66566be8a4d03f69b",
@@ -25,6 +26,7 @@
   },
   "does_not_establish": [
     "Does not establish that fin rays form by a Turing mechanism or that fin folds grow only at the edge.",
+    "Orientation is not specific to edge growth (see uniform2d control).",
     "Dimensionless; generic kinetics."
   ],
   "evidence_kind": "simulated; dimensionless; video renders model state, not tissue",
@@ -96,6 +98,7 @@
     "id": "claude-tissue-edge2d",
     "limitations": [
       "Does not establish that fin rays form by a Turing mechanism or that fin folds grow only at the edge.",
+      "Orientation is not specific to edge growth (see uniform2d control).",
       "Dimensionless; generic kinetics."
     ],
     "manifest": "artifacts/simulations/claude-tissue-edge2d/manifest.json",
@@ -119,7 +122,7 @@
       "d=30, static: A = -0.02 +/- 0.06, stripes across width [7, 8, 5, 8]"
     ],
     "open_questions": [
-      "Is orientation caused by edge growth specifically, or by any growth along the proximo-distal axis? A uniform-growth control is needed."
+      "Answered by the uniform-growth control (claude-tissue-uniform2d): uniform proximo-distal growth also gives A ~ 1.0 at d=10, even at speed 0.4, so orientation comes from growth along the axis from a fold shorter than one wavelength, not from edge insertion; fast EDGE growth is what breaks it."
     ],
     "parameter_unknowns": [
       "Real fin-fold growth geometry and speed are not measured here."
