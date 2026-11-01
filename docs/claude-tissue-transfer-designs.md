@@ -27,11 +27,12 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 - In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
   pattern is spots) and growth along the fin axis.
 - With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
-  a proliferating zone wider than **L_p* ≈ 0.4 λ at slow outgrowth**: 0.37, 0.39 and 0.39 at three rate scales, and a
+  a proliferating zone wider than **L_p* ≈ 0.4 λ or less at slow outgrowth** (grid refinement at γ = 2 moved the switch
+  lower, and removed the γ = 2 failure window as a discretisation artifact). Coarse-grid values: 0.37, 0.39 and 0.39 at three rate scales, and a
   prediction made from two of them was confirmed on the third (12 seeds each). The switch rises with outgrowth speed,
   reaching 0.48 λ at v = 0.4 (L_p* ≈ 3.9 + 3.3·v at γ = 1). This is partly a scaling consistency check, and grid
   sensitivity is under test. Above the switch, newly grown tissue is almost perfectly
-  ray-like (distal-half A 0.94–1.00). One unexplained exception remains, a narrow failure window at γ = 2 near L_p ≈ 10.
+  ray-like (distal-half A 0.94–1.00). The earlier γ = 2 failure window near L_p ≈ 10 was a coarse-grid artifact.
 - With row insertion from a very short fold, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern
   units. That threshold tracks λ·σ (pooled slope 0.50). A reversal of orientation behind a moving front is a known
   phenomenon.
@@ -572,6 +573,26 @@ Other caveats: one model family (Schnakenberg), one diffusion ratio (d = 10), mo
   still does not scale (0.13).
 - So "orientation lost" tracks λ·σ, while "partly oriented" is noise-dominated: SD 0.3–0.5 near the threshold with
   4 seeds. This applies to the row-insertion scheme only (see the proliferation-zone control above).
+
+**Grid refinement** (`claude-tissue-pzone-refine`, job `aijob-e00ffdpmy003ye6fvv`, COMPLETED, 1526.5 s). Run at γ = 2,
+v = 0.1, with the same physics at **half the cell size**: grid lengths doubled, diffusivities × 4, time step ÷ 4.
+12 seeds; distal-half A:
+
+| Physical L_p | Coarse grid | Refined grid |
+|---|---|---|
+| 2.75 | −0.99 | **0.91 ± 0.03** |
+| 3.0 | 0.88 | 0.92 ± 0.02 |
+| 10 | 0.01 | **0.93 ± 0.03** |
+
+**This corrects two earlier statements.**
+1. **The γ = 2 failure window near L_p ≈ 10 was a discretisation artifact.** It disappears on the refined grid, so the
+   reviewer's suspicion was right.
+2. **The γ = 2 switch is grid-sensitive.** On the refined grid it lies **below 2.75** (< 0.35 λ). The coarse-grid
+   value of 0.37 λ was an overestimate caused by resolving the zone with only 2–3 cells.
+
+So the rule **L_p* ≈ 0.4 λ is an upper estimate** until refined runs bracket the switch. Two follow-ups are queued:
+a refined γ = 1 run at physical L_p = 3.5–4.5 (`claude-tissue-pzone-refine-g1`), and a refined γ = 2 run with a lower
+bracket (`claude-tissue-pzone-refine-g2b`).
 
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
