@@ -15,6 +15,51 @@ system, and it is explicit about what has been run and what has not.
 
 ---
 
+## 0. Corrections to this page, and where the work continued
+
+This page was written first and then checked against the sources again while building the
+**design space** that supersedes it: **[13-limbless-mouse-design-space.md](13-limbless-mouse-design-space.md)**,
+live at <https://studio.morphoswarm.ai/#/studio/limbless-mouse> with 39 sourced routes across
+eight scales and three computed studies. That re-check found seven problems here. They are
+listed rather than edited away, because a reader who has already read this page needs to know
+what changed.
+
+1. **§4b item 2 points the wrong way.** Scoring the ~1,000-variant ZRS panel (Kvon et al. 2020)
+   is called "the single most informative thing we could run", directly after the snake
+   loss-of-function series. That panel assayed an enhancer *"repeatedly linked to polydactyly"*
+   and its knock-in confirmations were of variants that **cause polydactyly** — the *gain*
+   direction. The snake series is *loss*. The benchmark is still worth running; it tests whether
+   a model has grip on this element at all. It is not evidence that a model can rank
+   limb-*reduction* alleles, and nothing we read establishes that the two directions transfer.
+2. **§4b item 1 says "five of them were additionally taken to knock-in mice".** The full text
+   describes **four ortholog knock-ins** — human, coelacanth, python, king cobra — plus one
+   synthetic allele, the "resurrected python". Four orthologs, five alleles.
+3. **The §3 "ordered series" mixes two assays.** Boa was never knocked in: its retained ZPA
+   activity is a transgenic *reporter* result, while python and cobra are knock-in *skeletal
+   phenotypes*. Used as a labelled set for a rank correlation, four rungs would be one
+   measurement and one rung another.
+4. **The §2 "six amelia" count fails on two of six.** Naiche & Papaioannou state that in *Tbx4*
+   mutants a hindlimb field is induced normally and *"initial patterning of the hindlimb bud
+   appears normal"* before the bud fails — which is not failure of a bud to form. And the two
+   founding *Fgf10* papers **disagree**: Min et al. 1998 say limb-bud initiation was abolished,
+   Sekine et al. 1999 that bud formation was initiated but outgrowth did not occur. This page
+   cites both as amelia without flagging the disagreement, which the repository's own rules say
+   to preserve rather than reconcile — and it is the disagreement that decides whether the
+   lesion is in induction or in maintenance.
+5. **§2d calls the ZRS route "a viable limbless mouse".** The viability half checks out and was
+   re-read in the full text: Figure S3E shows two-week-old ZRS−/− mice of comparable body size
+   with truncated limbs. But this page's own §1 correction says ZRS mutants are truncations, not
+   amelia. The route delivers a viable **limb-reduced** mouse with a retained stylopod and
+   girdle. **Nobody in this literature has published a viable limbless mouse.**
+6. **The *Shh*/*Gli3* epistasis is missing, and it inverts the mechanism.** SHH acts by relieving
+   GLI3 repression, so removing *Gli3* from a *Shh*-null background progressively restores distal
+   limb development (te Welscher et al. 2002, PMID 12215652). A proposed Lean law mapping SHH
+   activity monotonically to element count has the sign of the mechanism wrong.
+7. Smaller: two rows here contradict each other on *Pitx1* lethality; Thewissen et al. 2006 is
+   missing from the cetacean row; and only one negative search states its scope.
+
+---
+
 ## 1. Short answer
 
 **Yes — limbless and near-limbless mice already exist, by at least four mechanistically
