@@ -1,0 +1,22 @@
+{
+"flyingfish_bioelectric":"EXT_ID:34534441",
+"pecfin_bud_scale_K":"EXT_ID:38527087",
+"caudal_symmetry_organizers":"EXT_ID:35403297",
+"regeneration_enhancers":"EXT_ID:32883834",
+"longfin_kcnh2a_gof":"longfin AND zebrafish AND (kcnh2a OR \"ether a go go\" OR eag) AND (fin OR appendage) AND (mutation OR allele OR gain-of-function)",
+"kcnk5b_perathoner":"kcnk5b AND zebrafish AND (another longfin OR alf OR \"fin size\")",
+"shortfin_mutant":"zebrafish AND (shortfin OR sof) AND (connexin OR cx43 OR \"fin ray\" OR segment)",
+"cx43_sof_segment":"connexin43 AND zebrafish AND fin AND (segment OR length OR short fin)",
+"pitx1_pel_enhancer_stickleback":"Pitx1 AND stickleback AND (Pel OR enhancer OR deletion) AND pelvic",
+"tbx5_limb_enhancer":"Tbx5 AND (enhancer OR \"cis-regulatory\" OR CRM) AND (forelimb OR \"pectoral fin\") AND (mouse OR zebrafish)",
+"flyingfish_genome_assembly":"(Hirundichthys OR Cheilopogon OR Exocoetus OR \"flying fish\") AND (\"genome assembly\" OR \"chromosome-level\" OR \"draft genome\")",
+"flyingfish_gliding_aerodynamics":"\"flying fish\" AND (gliding OR aerodynamic OR \"wind tunnel\" OR flight OR \"lift\")",
+"hoxd_cnes_fin":"(hoxd OR \"HoxD cluster\") AND (CNE OR enhancer OR \"CsB\" OR \"island\") AND (fin OR limb) AND (zebrafish OR teleost)",
+"zebrafish_enhancer_transgenesis":"zebrafish AND (Tol2 OR \"enhancer detection\" OR \"reporter transgenesis\") AND (enhancer OR cis-regulatory) AND (fin OR limb)",
+"bac_transgenesis_fish":"(BAC OR \"bacterial artificial chromosome\") AND (zebrafish OR medaka) AND (transgenesis OR recombineering)",
+"crispr_knockin_zebrafish":"zebrafish AND CRISPR AND (knock-in OR \"knockin\" OR \"homology-directed\") AND efficiency",
+"eda_edar_keel":"(eda OR edar OR \"ectodysplasin\") AND (zebrafish OR medaka OR stickleback) AND (scale OR plate OR armour OR keel)",
+"medaka_beloniformes_reference":"(Oryzias latipes OR medaka) AND (reference genome OR annotation OR synteny) AND Beloniformes",
+"fin_ray_biomechanics":"(\"fin ray\" OR lepidotrichia) AND (stiffness OR biomechanics OR \"bending\" OR modulus)",
+"hypocercal_caudal_exocoetidae":"(Exocoetidae OR \"flying fish\" OR Hemiramphidae) AND (caudal OR hypural OR tail) AND (asymmetry OR hypocercal OR lobe)"
+}

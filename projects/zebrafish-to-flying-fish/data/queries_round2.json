@@ -1,0 +1,12 @@
+{
+ "kcnh2a": {"uniprot": "Q108P2", "why": "longfin t2 is a cis-regulatory kcnh2a allele (PMID 34061172); kcnh2a is one of the two convergent loci in flying fishes (PMID 34534441)", "name_mapping_confidence": "high"},
+ "slc43a2b_LAT4": {"uniprot": "Q5PR35", "why": "full-length zebrafish L-type amino acid transporter 4; the flying-fish paper names 'lat4a' (PMID 34534441) and the syngnathid screen names lat4a (PMID 40689752)", "name_mapping_confidence": "medium: gene-symbol correspondence between the papers' lat4a and UniProt slc43a2a/slc43a2b is unresolved here"},
+ "slc43a2a_fragment": {"uniprot": "Q7ZUS0", "why": "the UniProt entry carrying the slc43a2a symbol; 153 aa, a fragment, kept only to test whether a distinct locus is detectable", "name_mapping_confidence": "low: fragment entry, not a full-length protein"},
+ "rcan2": {"uniprot": "E7F2L5", "why": "retinoic acid -> rcan2 -> Kcnk5b chain scaling the pectoral fin bud (PMID 38527087)", "name_mapping_confidence": "high"},
+ "cacna1g": {"uniprot": "A0AC58GY43", "why": "cacna1g mutants regenerate extraordinarily long fins (PMID 41321290)", "name_mapping_confidence": "high"},
+ "gja1_cx43_sof": {"uniprot": "O57474", "why": "short fin (sof) is cx43; sets fin-ray segment length (UniProt entry names shf/sof)", "name_mapping_confidence": "high"},
+ "hhip": {"uniprot": "A1A5I0", "why": "anterior-posterior constraint on Hedgehog signalling in fin elaboration (PMID 39417578)", "name_mapping_confidence": "high"},
+ "shhb_twhh": {"uniprot": "Q90419", "why": "second hedgehog paralog; caudal fin shape is re-patterned by Shh signalling (PMID 40853969)", "name_mapping_confidence": "high"},
+ "and2": {"uniprot": "A9JRX1", "why": "and1/and2 double mutants lack actinotrichia and lose ray patterning (PMID 41885168, 42741580); and1 was mapped in round 1", "name_mapping_confidence": "high"},
+ "msxb": {"uniprot": "Q03356", "why": "round-1 query; re-included because the Ensembl coordinate lookup for msxb failed (HTTP 400) in the bioservices harvest", "name_mapping_confidence": "high"}
+}

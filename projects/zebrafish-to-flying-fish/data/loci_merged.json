@@ -1,0 +1,865 @@
+{
+ "genome": "GCA_018398805.1 Hirundichthys speculiger_1.0 (scaffold level, no annotation)",
+ "genome_fasta_sha256": "6f312a972a382295873cf1170771b0ef952f5f7772ce3b7bd19e3b49603c1052",
+ "tool_versions": {
+  "round1": "0.18-r281 (see data/miniprot.version.txt)",
+  "round2": "0.18-r281",
+  "round3": "0.18-r281"
+ },
+ "scope": "Protein-to-genome alignment only. Not an annotation, not an ortholog assignment, not expression, not function. aa_identity = PAF column 10 (number of residue matches) / column 11 (alignment block length), both as miniprot reports them for the aligned block; it is not computed over the whole query. The number of ALTERNATIVE hits per query is not comparable to an unchunked run: -N5 and --outs=0.6 were applied per chunk, so secondary-hit counts can exceed 5 and are chunking artefacts. Best hits are unaffected because no scaffold was split.",
+ "distinct_query_proteins": 27,
+ "controls": 4,
+ "all_non_control_queries_have_a_hit": true,
+ "checks": {
+  "controls": [
+   {
+    "query": "actb1_POSITIVE_CONTROL",
+    "round": "round1",
+    "expectation": "coverage >= 0.95 and aa_identity >= 0.95",
+    "observed": {
+     "scaffold": "JAGFBZ010000555.1",
+     "strand": "-",
+     "t_start": 105626,
+     "t_end": 107418,
+     "query_aa_covered": 375,
+     "query_len": 375,
+     "coverage": 1.0,
+     "aa_identity": 0.989,
+     "miniprot_score_AS": 1817,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "pass": true
+   },
+   {
+    "query": "fgf10a_SHUFFLED_NEGATIVE_CONTROL",
+    "round": "round1",
+    "expectation": "no hit",
+    "observed": "no hit",
+    "pass": true
+   },
+   {
+    "query": "kcnh2a_SHUFFLED_NEGATIVE_CONTROL",
+    "round": "round2",
+    "expectation": "no hit",
+    "observed": "no hit",
+    "pass": true
+   },
+   {
+    "query": "eda_SHUFFLED_NEGATIVE_CONTROL",
+    "round": "round3",
+    "expectation": "no hit",
+    "observed": "no hit",
+    "pass": true
+   }
+  ],
+  "reproducibility": [
+   {
+    "query": "msxb",
+    "rounds": [
+     "round1",
+     "round2"
+    ],
+    "a": {
+     "scaffold": "JAGFBZ010000863.1",
+     "strand": "+",
+     "t_start": 508027,
+     "t_end": 509355,
+     "query_aa_covered": 257,
+     "query_len": 257,
+     "coverage": 1.0,
+     "aa_identity": 0.604,
+     "miniprot_score_AS": 734,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "b": {
+     "scaffold": "JAGFBZ010000863.1",
+     "strand": "+",
+     "t_start": 508027,
+     "t_end": 509355,
+     "query_aa_covered": 257,
+     "query_len": 257,
+     "coverage": 1.0,
+     "aa_identity": 0.604,
+     "miniprot_score_AS": 734,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "same_locus_within_100bp": true
+   }
+  ],
+  "paralog_ambiguity": [
+   {
+    "queries": [
+     "shha",
+     "shhb_twhh"
+    ],
+    "scaffold": "JAGFBZ010001012.1",
+    "overlap_bp": 6364,
+    "intervals": [
+     [
+      2187728,
+      2194143
+     ],
+     [
+      2187764,
+      2194128
+     ]
+    ],
+    "consequence": "These two query proteins cannot be assigned to distinct loci from best-hit protein-to-genome alignment alone."
+   },
+   {
+    "queries": [
+     "kcnh2a",
+     "kcnh2b"
+    ],
+    "scaffold": "JAGFBZ010001591.1",
+    "overlap_bp": 239071,
+    "intervals": [
+     [
+      1301510,
+      1579457
+     ],
+     [
+      1301510,
+      1540581
+     ]
+    ],
+    "consequence": "These two query proteins cannot be assigned to distinct loci from best-hit protein-to-genome alignment alone."
+   }
+  ]
+ },
+ "loci": {
+  "tbx5a": [
+   {
+    "round": "round1",
+    "uniprot": "Q9IAK8",
+    "query_len": 492,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010001382.1",
+     "strand": "+",
+     "t_start": 1635753,
+     "t_end": 1651051,
+     "query_aa_covered": 492,
+     "query_len": 492,
+     "coverage": 1.0,
+     "aa_identity": 0.782,
+     "miniprot_score_AS": 1870,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 13
+   }
+  ],
+  "shha": [
+   {
+    "round": "round1",
+    "uniprot": "Q92008",
+    "query_len": 418,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010001012.1",
+     "strand": "+",
+     "t_start": 2187728,
+     "t_end": 2194143,
+     "query_aa_covered": 418,
+     "query_len": 418,
+     "coverage": 1.0,
+     "aa_identity": 0.743,
+     "miniprot_score_AS": 1526,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 4
+   }
+  ],
+  "hoxd13a": [
+   {
+    "round": "round1",
+    "uniprot": "Q90472",
+    "query_len": 256,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010000479.1",
+     "strand": "+",
+     "t_start": 5214025,
+     "t_end": 5216883,
+     "query_aa_covered": 211,
+     "query_len": 256,
+     "coverage": 0.824,
+     "aa_identity": 0.447,
+     "miniprot_score_AS": 401,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 7
+   }
+  ],
+  "hoxa13a": [
+   {
+    "round": "round1",
+    "uniprot": "Q6W990",
+    "query_len": 310,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010001649.1",
+     "strand": "+",
+     "t_start": 576986,
+     "t_end": 578444,
+     "query_aa_covered": 310,
+     "query_len": 310,
+     "coverage": 1.0,
+     "aa_identity": 0.723,
+     "miniprot_score_AS": 1124,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 7
+   }
+  ],
+  "msxb": [
+   {
+    "round": "round1",
+    "uniprot": "Q03356",
+    "query_len": 257,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010000863.1",
+     "strand": "+",
+     "t_start": 508027,
+     "t_end": 509355,
+     "query_aa_covered": 257,
+     "query_len": 257,
+     "coverage": 1.0,
+     "aa_identity": 0.604,
+     "miniprot_score_AS": 734,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 10
+   },
+   {
+    "round": "round2",
+    "uniprot": "Q03356",
+    "query_len": 257,
+    "why": "round-1 query; re-included because the Ensembl coordinate lookup for msxb failed (HTTP 400) in the bioservices harvest",
+    "best": {
+     "scaffold": "JAGFBZ010000863.1",
+     "strand": "+",
+     "t_start": 508027,
+     "t_end": 509355,
+     "query_aa_covered": 257,
+     "query_len": 257,
+     "coverage": 1.0,
+     "aa_identity": 0.604,
+     "miniprot_score_AS": 734,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 10
+   }
+  ],
+  "kcnk5b": [
+   {
+    "round": "round1",
+    "uniprot": "Q6PFU3",
+    "query_len": 448,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010001926.1",
+     "strand": "-",
+     "t_start": 604214,
+     "t_end": 606769,
+     "query_aa_covered": 448,
+     "query_len": 448,
+     "coverage": 1.0,
+     "aa_identity": 0.563,
+     "miniprot_score_AS": 1086,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 8
+   }
+  ],
+  "and1": [
+   {
+    "round": "round1",
+    "uniprot": "E7F5V5",
+    "query_len": 570,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010000980.1",
+     "strand": "-",
+     "t_start": 814249,
+     "t_end": 819560,
+     "query_aa_covered": 560,
+     "query_len": 570,
+     "coverage": 0.982,
+     "aa_identity": 0.552,
+     "miniprot_score_AS": 1448,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 2
+   }
+  ],
+  "tbx4": [
+   {
+    "round": "round1",
+    "uniprot": "F1R688",
+    "query_len": 543,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010001446.1",
+     "strand": "-",
+     "t_start": 295196,
+     "t_end": 317271,
+     "query_aa_covered": 543,
+     "query_len": 543,
+     "coverage": 1.0,
+     "aa_identity": 0.728,
+     "miniprot_score_AS": 1814,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 8
+   }
+  ],
+  "actb1_POSITIVE_CONTROL": [
+   {
+    "round": "round1",
+    "uniprot": "Q7ZVI7",
+    "query_len": 375,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010000555.1",
+     "strand": "-",
+     "t_start": 105626,
+     "t_end": 107418,
+     "query_aa_covered": 375,
+     "query_len": 375,
+     "coverage": 1.0,
+     "aa_identity": 0.989,
+     "miniprot_score_AS": 1817,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 12
+   }
+  ],
+  "fgf10a": [
+   {
+    "round": "round1",
+    "uniprot": "Q8AY90",
+    "query_len": 201,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010000446.1",
+     "strand": "-",
+     "t_start": 2711368,
+     "t_end": 2727894,
+     "query_aa_covered": 201,
+     "query_len": 201,
+     "coverage": 1.0,
+     "aa_identity": 0.573,
+     "miniprot_score_AS": 584,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 2
+   }
+  ],
+  "pitx1": [
+   {
+    "round": "round1",
+    "uniprot": "A9Y0D5",
+    "query_len": 285,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010001412.1",
+     "strand": "+",
+     "t_start": 734755,
+     "t_end": 740041,
+     "query_aa_covered": 282,
+     "query_len": 285,
+     "coverage": 0.989,
+     "aa_identity": 0.901,
+     "miniprot_score_AS": 1294,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 2
+   }
+  ],
+  "edar": [
+   {
+    "round": "round1",
+    "uniprot": "A0A0R4IGE7",
+    "query_len": 460,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010000884.1",
+     "strand": "-",
+     "t_start": 50977,
+     "t_end": 73674,
+     "query_aa_covered": 436,
+     "query_len": 460,
+     "coverage": 0.948,
+     "aa_identity": 0.637,
+     "miniprot_score_AS": 1268,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 1
+   }
+  ],
+  "fgf24": [
+   {
+    "round": "round1",
+    "uniprot": "Q0IIQ7",
+    "query_len": 208,
+    "why": null,
+    "best": {
+     "scaffold": "JAGFBZ010002071.1",
+     "strand": "-",
+     "t_start": 503196,
+     "t_end": 516000,
+     "query_aa_covered": 208,
+     "query_len": 208,
+     "coverage": 1.0,
+     "aa_identity": 0.829,
+     "miniprot_score_AS": 760,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 3
+   }
+  ],
+  "fgf10a_SHUFFLED_NEGATIVE_CONTROL": [
+   {
+    "round": "round1",
+    "uniprot": null,
+    "query_len": null,
+    "why": null,
+    "best": null,
+    "n_hits": 0
+   }
+  ],
+  "kcnh2a": [
+   {
+    "round": "round2",
+    "uniprot": "Q108P2",
+    "query_len": 1253,
+    "why": "longfin t2 is a cis-regulatory kcnh2a allele (PMID 34061172); kcnh2a is one of the two convergent loci in flying fishes (PMID 34534441)",
+    "best": {
+     "scaffold": "JAGFBZ010001591.1",
+     "strand": "-",
+     "t_start": 1301510,
+     "t_end": 1579457,
+     "query_aa_covered": 1253,
+     "query_len": 1253,
+     "coverage": 1.0,
+     "aa_identity": 0.61,
+     "miniprot_score_AS": 3088,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 7
+   }
+  ],
+  "cacna1g": [
+   {
+    "round": "round2",
+    "uniprot": "A0AC58GY43",
+    "query_len": 2493,
+    "why": "cacna1g mutants regenerate extraordinarily long fins (PMID 41321290)",
+    "best": {
+     "scaffold": "JAGFBZ010002163.1",
+     "strand": "+",
+     "t_start": 81287,
+     "t_end": 379776,
+     "query_aa_covered": 1596,
+     "query_len": 2493,
+     "coverage": 0.64,
+     "aa_identity": 0.733,
+     "miniprot_score_AS": 5064,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 7
+   }
+  ],
+  "gja1_cx43_sof": [
+   {
+    "round": "round2",
+    "uniprot": "O57474",
+    "query_len": 381,
+    "why": "short fin (sof) is cx43; sets fin-ray segment length (UniProt entry names shf/sof)",
+    "best": {
+     "scaffold": "JAGFBZ010000226.1",
+     "strand": "+",
+     "t_start": 84055,
+     "t_end": 85219,
+     "query_aa_covered": 381,
+     "query_len": 381,
+     "coverage": 1.0,
+     "aa_identity": 0.892,
+     "miniprot_score_AS": 1789,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 10
+   }
+  ],
+  "shhb_twhh": [
+   {
+    "round": "round2",
+    "uniprot": "Q90419",
+    "query_len": 416,
+    "why": "second hedgehog paralog; caudal fin shape is re-patterned by Shh signalling (PMID 40853969)",
+    "best": {
+     "scaffold": "JAGFBZ010001012.1",
+     "strand": "+",
+     "t_start": 2187764,
+     "t_end": 2194128,
+     "query_aa_covered": 401,
+     "query_len": 416,
+     "coverage": 0.964,
+     "aa_identity": 0.728,
+     "miniprot_score_AS": 1455,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 4
+   }
+  ],
+  "and2": [
+   {
+    "round": "round2",
+    "uniprot": "A9JRX1",
+    "query_len": 508,
+    "why": "and1/and2 double mutants lack actinotrichia and lose ray patterning (PMID 41885168, 42741580); and1 was mapped in round 1",
+    "best": {
+     "scaffold": "JAGFBZ010000267.1",
+     "strand": "+",
+     "t_start": 345469,
+     "t_end": 347985,
+     "query_aa_covered": 475,
+     "query_len": 508,
+     "coverage": 0.935,
+     "aa_identity": 0.597,
+     "miniprot_score_AS": 1499,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 3
+   }
+  ],
+  "slc43a2b_LAT4": [
+   {
+    "round": "round2",
+    "uniprot": "Q5PR35",
+    "query_len": 592,
+    "why": "full-length zebrafish L-type amino acid transporter 4; the flying-fish paper names 'lat4a' (PMID 34534441) and the syngnathid screen names lat4a (PMID 40689752)",
+    "best": {
+     "scaffold": "JAGFBZ010000485.1",
+     "strand": "-",
+     "t_start": 561206,
+     "t_end": 573455,
+     "query_aa_covered": 592,
+     "query_len": 592,
+     "coverage": 1.0,
+     "aa_identity": 0.786,
+     "miniprot_score_AS": 2034,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 3
+   }
+  ],
+  "slc43a2a_fragment": [
+   {
+    "round": "round2",
+    "uniprot": "Q7ZUS0",
+    "query_len": 153,
+    "why": "the UniProt entry carrying the slc43a2a symbol; 153 aa, a fragment, kept only to test whether a distinct locus is detectable",
+    "best": {
+     "scaffold": "JAGFBZ010001224.1",
+     "strand": "+",
+     "t_start": 1267873,
+     "t_end": 1271840,
+     "query_aa_covered": 139,
+     "query_len": 153,
+     "coverage": 0.908,
+     "aa_identity": 0.748,
+     "miniprot_score_AS": 474,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 3
+   }
+  ],
+  "rcan2": [
+   {
+    "round": "round2",
+    "uniprot": "E7F2L5",
+    "query_len": 238,
+    "why": "retinoic acid -> rcan2 -> Kcnk5b chain scaling the pectoral fin bud (PMID 38527087)",
+    "best": {
+     "scaffold": "JAGFBZ010000363.1",
+     "strand": "-",
+     "t_start": 605297,
+     "t_end": 649997,
+     "query_aa_covered": 204,
+     "query_len": 238,
+     "coverage": 0.857,
+     "aa_identity": 0.665,
+     "miniprot_score_AS": 595,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 2
+   }
+  ],
+  "hhip": [
+   {
+    "round": "round2",
+    "uniprot": "A1A5I0",
+    "query_len": 693,
+    "why": "anterior-posterior constraint on Hedgehog signalling in fin elaboration (PMID 39417578)",
+    "best": {
+     "scaffold": "JAGFBZ010000865.1",
+     "strand": "-",
+     "t_start": 2512,
+     "t_end": 37451,
+     "query_aa_covered": 693,
+     "query_len": 693,
+     "coverage": 1.0,
+     "aa_identity": 0.768,
+     "miniprot_score_AS": 2509,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 2
+   }
+  ],
+  "kcnh2a_SHUFFLED_NEGATIVE_CONTROL": [
+   {
+    "round": "round2",
+    "uniprot": null,
+    "query_len": null,
+    "why": null,
+    "best": null,
+    "n_hits": 0
+   }
+  ],
+  "eda": [
+   {
+    "round": "round3",
+    "uniprot": "B0YIF1",
+    "query_len": 359,
+    "why": "eda-/- zebrafish lose scales, fin rays, pharyngeal teeth and gill rakers (PMID 41344457); used by perturbation row P10 but not mapped in rounds 1-2",
+    "best": {
+     "scaffold": "JAGFBZ010002033.1",
+     "strand": "+",
+     "t_start": 3037482,
+     "t_end": 3047982,
+     "query_aa_covered": 334,
+     "query_len": 359,
+     "coverage": 0.93,
+     "aa_identity": 0.645,
+     "miniprot_score_AS": 907,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 10
+   }
+  ],
+  "kcnh2b": [
+   {
+    "round": "round3",
+    "uniprot": "A0AC58ISY3",
+    "query_len": 1127,
+    "why": "paralog control for kcnh2a: the teleost whole-genome duplication means a best hit to a kcnh2a query could be the b paralog's region",
+    "best": {
+     "scaffold": "JAGFBZ010001591.1",
+     "strand": "-",
+     "t_start": 1301510,
+     "t_end": 1540581,
+     "query_aa_covered": 1127,
+     "query_len": 1127,
+     "coverage": 1.0,
+     "aa_identity": 0.762,
+     "miniprot_score_AS": 3702,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 5
+   }
+  ],
+  "tbx5b": [
+   {
+    "round": "round3",
+    "uniprot": "E3W6T6",
+    "query_len": 422,
+    "why": "paralog control for tbx5a",
+    "best": {
+     "scaffold": "JAGFBZ010000035.1",
+     "strand": "-",
+     "t_start": 4085363,
+     "t_end": 4093111,
+     "query_aa_covered": 304,
+     "query_len": 422,
+     "coverage": 0.72,
+     "aa_identity": 0.668,
+     "miniprot_score_AS": 859,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 10
+   }
+  ],
+  "fgf10b": [
+   {
+    "round": "round3",
+    "uniprot": "Q1XG75",
+    "query_len": 187,
+    "why": "paralog control for fgf10a",
+    "best": {
+     "scaffold": "JAGFBZ010002193.1",
+     "strand": "-",
+     "t_start": 497969,
+     "t_end": 503585,
+     "query_aa_covered": 143,
+     "query_len": 187,
+     "coverage": 0.765,
+     "aa_identity": 0.753,
+     "miniprot_score_AS": 506,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 3
+   }
+  ],
+  "fgf20a": [
+   {
+    "round": "round3",
+    "uniprot": "Q38PL0",
+    "query_len": 208,
+    "why": "epidermal Fgf20a expression scales with amputation extent and drives the Erk size-memory gradient (PMID 42719339); used by the plan but not mapped in rounds 1-2",
+    "best": {
+     "scaffold": "JAGFBZ010000863.1",
+     "strand": "-",
+     "t_start": 375649,
+     "t_end": 377241,
+     "query_aa_covered": 208,
+     "query_len": 208,
+     "coverage": 1.0,
+     "aa_identity": 0.752,
+     "miniprot_score_AS": 755,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 3
+   }
+  ],
+  "kcnk5a": [
+   {
+    "round": "round3",
+    "uniprot": "Q32PR9",
+    "query_len": 513,
+    "why": "paralog control for kcnk5b",
+    "best": {
+     "scaffold": "JAGFBZ010000776.1",
+     "strand": "-",
+     "t_start": 49243,
+     "t_end": 65363,
+     "query_aa_covered": 513,
+     "query_len": 513,
+     "coverage": 1.0,
+     "aa_identity": 0.691,
+     "miniprot_score_AS": 1707,
+     "frameshifts_or_stops": {
+      "fs": false,
+      "st": null
+     }
+    },
+    "n_hits": 2
+   }
+  ],
+  "eda_SHUFFLED_NEGATIVE_CONTROL": [
+   {
+    "round": "round3",
+    "uniprot": null,
+    "query_len": null,
+    "why": null,
+    "best": null,
+    "n_hits": 0
+   }
+  ]
+ }
+}

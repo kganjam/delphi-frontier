@@ -1,0 +1,910 @@
+{
+ "genome": "GCA_018398805.1 Hirundichthys speculiger_1.0 (scaffold level, no annotation)",
+ "genome_fasta_sha256": "6f312a972a382295873cf1170771b0ef952f5f7772ce3b7bd19e3b49603c1052",
+ "tool": "miniprot",
+ "tool_version": "0.18-r281",
+ "params": "-t4 -N5 --outs=0.6, assembly split into 5 whole-scaffold chunks",
+ "scope": "Protein-to-genome alignment of Danio rerio query proteins. Not an annotation, not an ortholog assignment, not evidence of expression or function in Hirundichthys.",
+ "queries": [
+  {
+   "gene": "kcnh2a",
+   "uniprot": "Q108P2",
+   "header": ">tr|Q108P2|Q108P2_DANRE Voltage-gated inwardly rectifying potassium channel KCNH2 OS=Danio rerio OX=7955 GN=kcnh2a PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/Q108P2.fasta",
+   "len": 1253,
+   "sha256": "2561941b8d69e8d512675fc996370415cf7311c8f180e8f87955827b850805f7",
+   "why": "longfin t2 is a cis-regulatory kcnh2a allele (PMID 34061172); kcnh2a is one of the two convergent loci in flying fishes (PMID 34534441)",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:40:53+00:00"
+  },
+  {
+   "gene": "slc43a2b_LAT4",
+   "uniprot": "Q5PR35",
+   "header": ">tr|Q5PR35|Q5PR35_DANRE Large neutral amino acids transporter small subunit 4 OS=Danio rerio OX=7955 GN=slc43a2b PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/Q5PR35.fasta",
+   "len": 592,
+   "sha256": "6f50827f7ac2c76d0230458d662ffb7928c00ae4795bd4032afc7ae0f21263bc",
+   "why": "full-length zebrafish L-type amino acid transporter 4; the flying-fish paper names 'lat4a' (PMID 34534441) and the syngnathid screen names lat4a (PMID 40689752)",
+   "name_mapping_confidence": "medium: gene-symbol correspondence between the papers' lat4a and UniProt slc43a2a/slc43a2b is unresolved here",
+   "retrieved_utc": "2026-11-01T14:40:54+00:00"
+  },
+  {
+   "gene": "slc43a2a_fragment",
+   "uniprot": "Q7ZUS0",
+   "header": ">tr|Q7ZUS0|Q7ZUS0_DANRE Si:dkey-118k5.2 OS=Danio rerio OX=7955 GN=slc43a2a PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/Q7ZUS0.fasta",
+   "len": 153,
+   "sha256": "7d52ddff5e3e0c115dcb8d939c69f741e75d236d08da768bf052ab696728752a",
+   "why": "the UniProt entry carrying the slc43a2a symbol; 153 aa, a fragment, kept only to test whether a distinct locus is detectable",
+   "name_mapping_confidence": "low: fragment entry, not a full-length protein",
+   "retrieved_utc": "2026-11-01T14:40:54+00:00"
+  },
+  {
+   "gene": "rcan2",
+   "uniprot": "E7F2L5",
+   "header": ">tr|E7F2L5|E7F2L5_DANRE Calcipressin-2 isoform 1 OS=Danio rerio OX=7955 GN=rcan2 PE=3 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/E7F2L5.fasta",
+   "len": 238,
+   "sha256": "aa2e9f30104eb3e9db318426f1d0f6dacaf217c26c9153888c492238bbd8029a",
+   "why": "retinoic acid -> rcan2 -> Kcnk5b chain scaling the pectoral fin bud (PMID 38527087)",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:40:55+00:00"
+  },
+  {
+   "gene": "cacna1g",
+   "uniprot": "A0AC58GY43",
+   "header": ">tr|A0AC58GY43|A0AC58GY43_DANRE Voltage-dependent T-type calcium channel subunit alpha OS=Danio rerio OX=7955 GN=cacna1g PE=3 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/A0AC58GY43.fasta",
+   "len": 2493,
+   "sha256": "7951128c9c2cf71517f7f112ff39511719f18764bd76725706d6e9ab9d2cc6bd",
+   "why": "cacna1g mutants regenerate extraordinarily long fins (PMID 41321290)",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:40:56+00:00"
+  },
+  {
+   "gene": "gja1_cx43_sof",
+   "uniprot": "O57474",
+   "header": ">sp|O57474|CXA1_DANRE Gap junction alpha-1 protein OS=Danio rerio OX=7955 GN=gja1 PE=1 SV=3",
+   "url": "https://rest.uniprot.org/uniprotkb/O57474.fasta",
+   "len": 381,
+   "sha256": "1d3935f3b69d7c2c8b011479934cf76860b0325b89f19e99df60d5404e167431",
+   "why": "short fin (sof) is cx43; sets fin-ray segment length (UniProt entry names shf/sof)",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:40:56+00:00"
+  },
+  {
+   "gene": "hhip",
+   "uniprot": "A1A5I0",
+   "header": ">tr|A1A5I0|A1A5I0_DANRE Hedgehog-interacting protein OS=Danio rerio OX=7955 GN=hhip PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/A1A5I0.fasta",
+   "len": 693,
+   "sha256": "f375b192dd8702f9dae0a80b8a78f2cc3ee7881351b3efbdf79f51c6b2e4d51e",
+   "why": "anterior-posterior constraint on Hedgehog signalling in fin elaboration (PMID 39417578)",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:40:57+00:00"
+  },
+  {
+   "gene": "shhb_twhh",
+   "uniprot": "Q90419",
+   "header": ">sp|Q90419|TWHH_DANRE Tiggy-winkle hedgehog protein OS=Danio rerio OX=7955 GN=shhb PE=1 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/Q90419.fasta",
+   "len": 416,
+   "sha256": "021c420243f3c4abc58605e0c8ae868ccd9dbd8e590c82dc1df1061c21e38dbc",
+   "why": "second hedgehog paralog; caudal fin shape is re-patterned by Shh signalling (PMID 40853969)",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:40:58+00:00"
+  },
+  {
+   "gene": "and2",
+   "uniprot": "A9JRX1",
+   "header": ">tr|A9JRX1|A9JRX1_DANRE Zgc:175106 protein OS=Danio rerio OX=7955 GN=and2 PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/A9JRX1.fasta",
+   "len": 508,
+   "sha256": "1cdd8cc00867d445e67b32588adce73f144f7886b19e002476e75f3a3097d9c6",
+   "why": "and1/and2 double mutants lack actinotrichia and lose ray patterning (PMID 41885168, 42741580); and1 was mapped in round 1",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:40:58+00:00"
+  },
+  {
+   "gene": "msxb",
+   "uniprot": "Q03356",
+   "header": ">sp|Q03356|MSXB_DANRE Homeobox protein MSH-B OS=Danio rerio OX=7955 GN=msxb PE=2 SV=3",
+   "url": "https://rest.uniprot.org/uniprotkb/Q03356.fasta",
+   "len": 257,
+   "sha256": "0e98f60a00296d332f4dc9042bd545aa7d7d195a2a04f24767fc6b9c22546b4a",
+   "why": "round-1 query; re-included because the Ensembl coordinate lookup for msxb failed (HTTP 400) in the bioservices harvest",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:40:59+00:00"
+  }
+ ],
+ "hits": {
+  "kcnh2a": [
+   {
+    "scaffold": "JAGFBZ010001591.1",
+    "strand": "-",
+    "t_start": 1301510,
+    "t_end": 1579457,
+    "query_aa_covered": 1253,
+    "query_len": 1253,
+    "coverage": 1.0,
+    "aa_identity": 0.61,
+    "miniprot_score_AS": 3088,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001790.1",
+    "strand": "+",
+    "t_start": 2294534,
+    "t_end": 2313530,
+    "query_aa_covered": 1126,
+    "query_len": 1253,
+    "coverage": 0.899,
+    "aa_identity": 0.571,
+    "miniprot_score_AS": 2569,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000779.1",
+    "strand": "-",
+    "t_start": 222718,
+    "t_end": 318314,
+    "query_aa_covered": 1114,
+    "query_len": 1253,
+    "coverage": 0.889,
+    "aa_identity": 0.561,
+    "miniprot_score_AS": 2537,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000289.1",
+    "strand": "+",
+    "t_start": 1149677,
+    "t_end": 1194380,
+    "query_aa_covered": 870,
+    "query_len": 1253,
+    "coverage": 0.694,
+    "aa_identity": 0.64,
+    "miniprot_score_AS": 2400,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002515.1",
+    "strand": "-",
+    "t_start": 949537,
+    "t_end": 955766,
+    "query_aa_covered": 780,
+    "query_len": 1253,
+    "coverage": 0.623,
+    "aa_identity": 0.57,
+    "miniprot_score_AS": 1875,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002447.1",
+    "strand": "+",
+    "t_start": 34884,
+    "t_end": 47383,
+    "query_aa_covered": 866,
+    "query_len": 1253,
+    "coverage": 0.691,
+    "aa_identity": 0.39,
+    "miniprot_score_AS": 1086,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000590.1",
+    "strand": "+",
+    "t_start": 78547,
+    "t_end": 87838,
+    "query_aa_covered": 492,
+    "query_len": 1253,
+    "coverage": 0.393,
+    "aa_identity": 0.446,
+    "miniprot_score_AS": 993,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "cacna1g": [
+   {
+    "scaffold": "JAGFBZ010002163.1",
+    "strand": "+",
+    "t_start": 81287,
+    "t_end": 379776,
+    "query_aa_covered": 1596,
+    "query_len": 2493,
+    "coverage": 0.64,
+    "aa_identity": 0.733,
+    "miniprot_score_AS": 5064,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000787.1",
+    "strand": "+",
+    "t_start": 540383,
+    "t_end": 728455,
+    "query_aa_covered": 2400,
+    "query_len": 2493,
+    "coverage": 0.963,
+    "aa_identity": 0.515,
+    "miniprot_score_AS": 4255,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001864.1",
+    "strand": "+",
+    "t_start": 8034,
+    "t_end": 114957,
+    "query_aa_covered": 1453,
+    "query_len": 2493,
+    "coverage": 0.583,
+    "aa_identity": 0.697,
+    "miniprot_score_AS": 4189,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000359.1",
+    "strand": "+",
+    "t_start": 514429,
+    "t_end": 695141,
+    "query_aa_covered": 2160,
+    "query_len": 2493,
+    "coverage": 0.866,
+    "aa_identity": 0.515,
+    "miniprot_score_AS": 3964,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000697.1",
+    "strand": "-",
+    "t_start": 280935,
+    "t_end": 482400,
+    "query_aa_covered": 2035,
+    "query_len": 2493,
+    "coverage": 0.816,
+    "aa_identity": 0.525,
+    "miniprot_score_AS": 3865,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000850.1",
+    "strand": "+",
+    "t_start": 504803,
+    "t_end": 557199,
+    "query_aa_covered": 1882,
+    "query_len": 2493,
+    "coverage": 0.755,
+    "aa_identity": 0.557,
+    "miniprot_score_AS": 3843,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000147.1",
+    "strand": "+",
+    "t_start": 244687,
+    "t_end": 258121,
+    "query_aa_covered": 1779,
+    "query_len": 2493,
+    "coverage": 0.714,
+    "aa_identity": 0.242,
+    "miniprot_score_AS": 100,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "gja1_cx43_sof": [
+   {
+    "scaffold": "JAGFBZ010000226.1",
+    "strand": "+",
+    "t_start": 84055,
+    "t_end": 85219,
+    "query_aa_covered": 381,
+    "query_len": 381,
+    "coverage": 1.0,
+    "aa_identity": 0.892,
+    "miniprot_score_AS": 1789,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000606.1",
+    "strand": "-",
+    "t_start": 1647923,
+    "t_end": 1648997,
+    "query_aa_covered": 381,
+    "query_len": 381,
+    "coverage": 1.0,
+    "aa_identity": 0.43,
+    "miniprot_score_AS": 778,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002202.1",
+    "strand": "-",
+    "t_start": 157965,
+    "t_end": 159115,
+    "query_aa_covered": 381,
+    "query_len": 381,
+    "coverage": 1.0,
+    "aa_identity": 0.421,
+    "miniprot_score_AS": 759,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002033.1",
+    "strand": "+",
+    "t_start": 3090657,
+    "t_end": 3091743,
+    "query_aa_covered": 381,
+    "query_len": 381,
+    "coverage": 1.0,
+    "aa_identity": 0.446,
+    "miniprot_score_AS": 739,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002028.1",
+    "strand": "-",
+    "t_start": 231585,
+    "t_end": 236808,
+    "query_aa_covered": 381,
+    "query_len": 381,
+    "coverage": 1.0,
+    "aa_identity": 0.472,
+    "miniprot_score_AS": 699,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002055.1",
+    "strand": "-",
+    "t_start": 36517,
+    "t_end": 37237,
+    "query_aa_covered": 238,
+    "query_len": 381,
+    "coverage": 0.625,
+    "aa_identity": 0.527,
+    "miniprot_score_AS": 671,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002202.1",
+    "strand": "+",
+    "t_start": 201802,
+    "t_end": 203098,
+    "query_aa_covered": 381,
+    "query_len": 381,
+    "coverage": 1.0,
+    "aa_identity": 0.379,
+    "miniprot_score_AS": 665,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000900.1",
+    "strand": "-",
+    "t_start": 2191118,
+    "t_end": 2192144,
+    "query_aa_covered": 343,
+    "query_len": 381,
+    "coverage": 0.9,
+    "aa_identity": 0.391,
+    "miniprot_score_AS": 597,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000942.1",
+    "strand": "-",
+    "t_start": 532442,
+    "t_end": 541695,
+    "query_aa_covered": 381,
+    "query_len": 381,
+    "coverage": 1.0,
+    "aa_identity": 0.402,
+    "miniprot_score_AS": 560,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000821.1",
+    "strand": "+",
+    "t_start": 651694,
+    "t_end": 653644,
+    "query_aa_covered": 243,
+    "query_len": 381,
+    "coverage": 0.638,
+    "aa_identity": 0.396,
+    "miniprot_score_AS": 456,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "shhb_twhh": [
+   {
+    "scaffold": "JAGFBZ010001012.1",
+    "strand": "+",
+    "t_start": 2187764,
+    "t_end": 2194128,
+    "query_aa_covered": 401,
+    "query_len": 416,
+    "coverage": 0.964,
+    "aa_identity": 0.728,
+    "miniprot_score_AS": 1455,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002858.1",
+    "strand": "-",
+    "t_start": 72322,
+    "t_end": 96317,
+    "query_aa_covered": 400,
+    "query_len": 416,
+    "coverage": 0.962,
+    "aa_identity": 0.615,
+    "miniprot_score_AS": 1209,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000289.1",
+    "strand": "+",
+    "t_start": 3265629,
+    "t_end": 3270399,
+    "query_aa_covered": 412,
+    "query_len": 416,
+    "coverage": 0.99,
+    "aa_identity": 0.559,
+    "miniprot_score_AS": 1103,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000479.1",
+    "strand": "-",
+    "t_start": 4773546,
+    "t_end": 4777220,
+    "query_aa_covered": 383,
+    "query_len": 416,
+    "coverage": 0.921,
+    "aa_identity": 0.535,
+    "miniprot_score_AS": 941,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "and2": [
+   {
+    "scaffold": "JAGFBZ010000267.1",
+    "strand": "+",
+    "t_start": 345469,
+    "t_end": 347985,
+    "query_aa_covered": 475,
+    "query_len": 508,
+    "coverage": 0.935,
+    "aa_identity": 0.597,
+    "miniprot_score_AS": 1499,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000980.1",
+    "strand": "-",
+    "t_start": 814375,
+    "t_end": 819309,
+    "query_aa_covered": 463,
+    "query_len": 508,
+    "coverage": 0.911,
+    "aa_identity": 0.436,
+    "miniprot_score_AS": 871,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002631.1",
+    "strand": "-",
+    "t_start": 90866,
+    "t_end": 91288,
+    "query_aa_covered": 152,
+    "query_len": 508,
+    "coverage": 0.299,
+    "aa_identity": 0.286,
+    "miniprot_score_AS": 105,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "msxb": [
+   {
+    "scaffold": "JAGFBZ010000863.1",
+    "strand": "+",
+    "t_start": 508027,
+    "t_end": 509355,
+    "query_aa_covered": 257,
+    "query_len": 257,
+    "coverage": 1.0,
+    "aa_identity": 0.604,
+    "miniprot_score_AS": 734,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000855.1",
+    "strand": "+",
+    "t_start": 665628,
+    "t_end": 666664,
+    "query_aa_covered": 222,
+    "query_len": 257,
+    "coverage": 0.864,
+    "aa_identity": 0.617,
+    "miniprot_score_AS": 549,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002207.1",
+    "strand": "-",
+    "t_start": 4757690,
+    "t_end": 4758695,
+    "query_aa_covered": 242,
+    "query_len": 257,
+    "coverage": 0.942,
+    "aa_identity": 0.51,
+    "miniprot_score_AS": 498,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000309.1",
+    "strand": "-",
+    "t_start": 187434,
+    "t_end": 188595,
+    "query_aa_covered": 257,
+    "query_len": 257,
+    "coverage": 1.0,
+    "aa_identity": 0.439,
+    "miniprot_score_AS": 415,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001630.1",
+    "strand": "+",
+    "t_start": 993819,
+    "t_end": 994137,
+    "query_aa_covered": 112,
+    "query_len": 257,
+    "coverage": 0.436,
+    "aa_identity": 0.446,
+    "miniprot_score_AS": 183,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000019.1",
+    "strand": "-",
+    "t_start": 1583371,
+    "t_end": 1583554,
+    "query_aa_covered": 61,
+    "query_len": 257,
+    "coverage": 0.237,
+    "aa_identity": 0.574,
+    "miniprot_score_AS": 172,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000239.1",
+    "strand": "-",
+    "t_start": 89962,
+    "t_end": 90199,
+    "query_aa_covered": 88,
+    "query_len": 257,
+    "coverage": 0.342,
+    "aa_identity": 0.409,
+    "miniprot_score_AS": 163,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002028.1",
+    "strand": "-",
+    "t_start": 1638128,
+    "t_end": 1638350,
+    "query_aa_covered": 71,
+    "query_len": 257,
+    "coverage": 0.276,
+    "aa_identity": 0.405,
+    "miniprot_score_AS": 154,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001012.1",
+    "strand": "-",
+    "t_start": 2267831,
+    "t_end": 2270036,
+    "query_aa_covered": 196,
+    "query_len": 257,
+    "coverage": 0.763,
+    "aa_identity": 0.28,
+    "miniprot_score_AS": 145,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000075.1",
+    "strand": "+",
+    "t_start": 198796,
+    "t_end": 199027,
+    "query_aa_covered": 74,
+    "query_len": 257,
+    "coverage": 0.288,
+    "aa_identity": 0.377,
+    "miniprot_score_AS": 141,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "slc43a2b_LAT4": [
+   {
+    "scaffold": "JAGFBZ010000485.1",
+    "strand": "-",
+    "t_start": 561206,
+    "t_end": 573455,
+    "query_aa_covered": 592,
+    "query_len": 592,
+    "coverage": 1.0,
+    "aa_identity": 0.786,
+    "miniprot_score_AS": 2034,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001224.1",
+    "strand": "+",
+    "t_start": 1267873,
+    "t_end": 1287961,
+    "query_aa_covered": 592,
+    "query_len": 592,
+    "coverage": 1.0,
+    "aa_identity": 0.734,
+    "miniprot_score_AS": 1915,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000671.1",
+    "strand": "+",
+    "t_start": 707666,
+    "t_end": 722937,
+    "query_aa_covered": 571,
+    "query_len": 592,
+    "coverage": 0.965,
+    "aa_identity": 0.545,
+    "miniprot_score_AS": 1143,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "slc43a2a_fragment": [
+   {
+    "scaffold": "JAGFBZ010001224.1",
+    "strand": "+",
+    "t_start": 1267873,
+    "t_end": 1271840,
+    "query_aa_covered": 139,
+    "query_len": 153,
+    "coverage": 0.908,
+    "aa_identity": 0.748,
+    "miniprot_score_AS": 474,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000485.1",
+    "strand": "-",
+    "t_start": 570567,
+    "t_end": 573455,
+    "query_aa_covered": 129,
+    "query_len": 153,
+    "coverage": 0.843,
+    "aa_identity": 0.76,
+    "miniprot_score_AS": 426,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000671.1",
+    "strand": "+",
+    "t_start": 707666,
+    "t_end": 708749,
+    "query_aa_covered": 129,
+    "query_len": 153,
+    "coverage": 0.843,
+    "aa_identity": 0.628,
+    "miniprot_score_AS": 365,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "rcan2": [
+   {
+    "scaffold": "JAGFBZ010000363.1",
+    "strand": "-",
+    "t_start": 605297,
+    "t_end": 649997,
+    "query_aa_covered": 204,
+    "query_len": 238,
+    "coverage": 0.857,
+    "aa_identity": 0.665,
+    "miniprot_score_AS": 595,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000712.1",
+    "strand": "+",
+    "t_start": 318773,
+    "t_end": 341223,
+    "query_aa_covered": 185,
+    "query_len": 238,
+    "coverage": 0.777,
+    "aa_identity": 0.558,
+    "miniprot_score_AS": 469,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "hhip": [
+   {
+    "scaffold": "JAGFBZ010000865.1",
+    "strand": "-",
+    "t_start": 2512,
+    "t_end": 37451,
+    "query_aa_covered": 693,
+    "query_len": 693,
+    "coverage": 1.0,
+    "aa_identity": 0.768,
+    "miniprot_score_AS": 2509,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002170.1",
+    "strand": "+",
+    "t_start": 2075,
+    "t_end": 13790,
+    "query_aa_covered": 227,
+    "query_len": 693,
+    "coverage": 0.328,
+    "aa_identity": 0.694,
+    "miniprot_score_AS": 740,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ]
+ },
+ "no_hit": [
+  "kcnh2a_SHUFFLED_NEGATIVE_CONTROL"
+ ]
+}

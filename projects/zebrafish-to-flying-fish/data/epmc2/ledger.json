@@ -1,0 +1,162 @@
+[
+ {
+  "name": "flyingfish_bioelectric",
+  "query": "EXT_ID:34534441",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A34534441&format=json&resultType=core&pageSize=8",
+  "sha256": "73ab77053906f8f2e0c19fbdefefa236f96ff38ef8f1cdb2629ad078823d2c9b",
+  "bytes": 9198,
+  "utc": "2026-11-01T14:37:43+00:00"
+ },
+ {
+  "name": "pecfin_bud_scale_K",
+  "query": "EXT_ID:38527087",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A38527087&format=json&resultType=core&pageSize=8",
+  "sha256": "e4a013b6880240f98bb98be720e534ae8361edcc9f9335c43765d1cb678ae79d",
+  "bytes": 9469,
+  "utc": "2026-11-01T14:37:44+00:00"
+ },
+ {
+  "name": "caudal_symmetry_organizers",
+  "query": "EXT_ID:35403297",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A35403297&format=json&resultType=core&pageSize=8",
+  "sha256": "3dcfada010b6a7980473e35a426c86986ee811a5643a3246a8bc4a23805fbefd",
+  "bytes": 8628,
+  "utc": "2026-11-01T14:37:44+00:00"
+ },
+ {
+  "name": "regeneration_enhancers",
+  "query": "EXT_ID:32883834",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A32883834&format=json&resultType=core&pageSize=8",
+  "sha256": "d57d72c3d0080bcb99f5158142b7326e4dc7bbb1be211733968499a3218e096f",
+  "bytes": 11781,
+  "utc": "2026-11-01T14:37:45+00:00"
+ },
+ {
+  "name": "longfin_kcnh2a_gof",
+  "query": "longfin AND zebrafish AND (kcnh2a OR \"ether a go go\" OR eag) AND (fin OR appendage) AND (mutation OR allele OR gain-of-function)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=longfin+AND+zebrafish+AND+%28kcnh2a+OR+%22ether+a+go+go%22+OR+eag%29+AND+%28fin+OR+appendage%29+AND+%28mutation+OR+allele+OR+gain-of-function%29&format=json&resultType=core&pageSize=8",
+  "sha256": "4b5a02e95eb9f12ffc1ea9efc30fe4dc6c0e67eca96d2e448f7555b8a6cfe7f0",
+  "bytes": 64219,
+  "utc": "2026-11-01T14:37:46+00:00"
+ },
+ {
+  "name": "kcnk5b_perathoner",
+  "query": "kcnk5b AND zebrafish AND (another longfin OR alf OR \"fin size\")",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=kcnk5b+AND+zebrafish+AND+%28another+longfin+OR+alf+OR+%22fin+size%22%29&format=json&resultType=core&pageSize=8",
+  "sha256": "bfc7f2110fcb08a2e6fdc3bfd041a2716ff95078ce92cb71c325c2476d73b114",
+  "bytes": 69074,
+  "utc": "2026-11-01T14:37:47+00:00"
+ },
+ {
+  "name": "shortfin_mutant",
+  "query": "zebrafish AND (shortfin OR sof) AND (connexin OR cx43 OR \"fin ray\" OR segment)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=zebrafish+AND+%28shortfin+OR+sof%29+AND+%28connexin+OR+cx43+OR+%22fin+ray%22+OR+segment%29&format=json&resultType=core&pageSize=8",
+  "sha256": "831aea4a033d9f5d22a3da5441af01080d6a793fc4e606f20c53067fece58747",
+  "bytes": 53527,
+  "utc": "2026-11-01T14:37:48+00:00"
+ },
+ {
+  "name": "cx43_sof_segment",
+  "query": "connexin43 AND zebrafish AND fin AND (segment OR length OR short fin)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=connexin43+AND+zebrafish+AND+fin+AND+%28segment+OR+length+OR+short+fin%29&format=json&resultType=core&pageSize=8",
+  "sha256": "241a329d8de204beb53b57c971221912b023db7dc38897319161994a7cf6b0a8",
+  "bytes": 59008,
+  "utc": "2026-11-01T14:37:49+00:00"
+ },
+ {
+  "name": "pitx1_pel_enhancer_stickleback",
+  "query": "Pitx1 AND stickleback AND (Pel OR enhancer OR deletion) AND pelvic",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=Pitx1+AND+stickleback+AND+%28Pel+OR+enhancer+OR+deletion%29+AND+pelvic&format=json&resultType=core&pageSize=8",
+  "sha256": "d94eefb9c20773984ce6df7b7d11ec17c3e13bba064aac0d7849480fb12ab64b",
+  "bytes": 62253,
+  "utc": "2026-11-01T14:37:50+00:00"
+ },
+ {
+  "name": "tbx5_limb_enhancer",
+  "query": "Tbx5 AND (enhancer OR \"cis-regulatory\" OR CRM) AND (forelimb OR \"pectoral fin\") AND (mouse OR zebrafish)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=Tbx5+AND+%28enhancer+OR+%22cis-regulatory%22+OR+CRM%29+AND+%28forelimb+OR+%22pectoral+fin%22%29+AND+%28mouse+OR+zebrafish%29&format=json&resultType=core&pageSize=8",
+  "sha256": "b918f8456af0750833db96bd286f0de56684ff5e673495cf21c1b350955dddba",
+  "bytes": 61202,
+  "utc": "2026-11-01T14:37:51+00:00"
+ },
+ {
+  "name": "flyingfish_genome_assembly",
+  "query": "(Hirundichthys OR Cheilopogon OR Exocoetus OR \"flying fish\") AND (\"genome assembly\" OR \"chromosome-level\" OR \"draft genome\")",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%28Hirundichthys+OR+Cheilopogon+OR+Exocoetus+OR+%22flying+fish%22%29+AND+%28%22genome+assembly%22+OR+%22chromosome-level%22+OR+%22draft+genome%22%29&format=json&resultType=core&pageSize=8",
+  "sha256": "7a7d7144a6bc689770166a613f78a7a56c6b2ef46fd25cd1272985abde013f9c",
+  "bytes": 66078,
+  "utc": "2026-11-01T14:37:52+00:00"
+ },
+ {
+  "name": "flyingfish_gliding_aerodynamics",
+  "query": "\"flying fish\" AND (gliding OR aerodynamic OR \"wind tunnel\" OR flight OR \"lift\")",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%22flying+fish%22+AND+%28gliding+OR+aerodynamic+OR+%22wind+tunnel%22+OR+flight+OR+%22lift%22%29&format=json&resultType=core&pageSize=8",
+  "sha256": "00b22c8ac83434375d8da33cc82898cc6fd2bf055a117606186d5517979abf2a",
+  "bytes": 51520,
+  "utc": "2026-11-01T14:37:53+00:00"
+ },
+ {
+  "name": "hoxd_cnes_fin",
+  "query": "(hoxd OR \"HoxD cluster\") AND (CNE OR enhancer OR \"CsB\" OR \"island\") AND (fin OR limb) AND (zebrafish OR teleost)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%28hoxd+OR+%22HoxD+cluster%22%29+AND+%28CNE+OR+enhancer+OR+%22CsB%22+OR+%22island%22%29+AND+%28fin+OR+limb%29+AND+%28zebrafish+OR+teleost%29&format=json&resultType=core&pageSize=8",
+  "sha256": "74acc23f04732763205b9c2ab84d77e230b03a240f7e3d2ad60d6dcaf220023a",
+  "bytes": 74283,
+  "utc": "2026-11-01T14:37:54+00:00"
+ },
+ {
+  "name": "zebrafish_enhancer_transgenesis",
+  "query": "zebrafish AND (Tol2 OR \"enhancer detection\" OR \"reporter transgenesis\") AND (enhancer OR cis-regulatory) AND (fin OR limb)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=zebrafish+AND+%28Tol2+OR+%22enhancer+detection%22+OR+%22reporter+transgenesis%22%29+AND+%28enhancer+OR+cis-regulatory%29+AND+%28fin+OR+limb%29&format=json&resultType=core&pageSize=8",
+  "sha256": "540289a3d8246ff4e66a3c69c68955aa8992c47f4022c2b827c28b7c7ca6e26e",
+  "bytes": 69553,
+  "utc": "2026-11-01T14:37:56+00:00"
+ },
+ {
+  "name": "bac_transgenesis_fish",
+  "query": "(BAC OR \"bacterial artificial chromosome\") AND (zebrafish OR medaka) AND (transgenesis OR recombineering)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%28BAC+OR+%22bacterial+artificial+chromosome%22%29+AND+%28zebrafish+OR+medaka%29+AND+%28transgenesis+OR+recombineering%29&format=json&resultType=core&pageSize=8",
+  "sha256": "389a6e6ecf71b951b3866c5e3428287248e3ec2a7bbdc84f90cb057a02c5d312",
+  "bytes": 60107,
+  "utc": "2026-11-01T14:37:57+00:00"
+ },
+ {
+  "name": "crispr_knockin_zebrafish",
+  "query": "zebrafish AND CRISPR AND (knock-in OR \"knockin\" OR \"homology-directed\") AND efficiency",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=zebrafish+AND+CRISPR+AND+%28knock-in+OR+%22knockin%22+OR+%22homology-directed%22%29+AND+efficiency&format=json&resultType=core&pageSize=8",
+  "sha256": "5771f7fc5d6150ac98b9a0d33816fe2be13fdb639d5a4925fe9953744372e205",
+  "bytes": 53733,
+  "utc": "2026-11-01T14:37:58+00:00"
+ },
+ {
+  "name": "eda_edar_keel",
+  "query": "(eda OR edar OR \"ectodysplasin\") AND (zebrafish OR medaka OR stickleback) AND (scale OR plate OR armour OR keel)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%28eda+OR+edar+OR+%22ectodysplasin%22%29+AND+%28zebrafish+OR+medaka+OR+stickleback%29+AND+%28scale+OR+plate+OR+armour+OR+keel%29&format=json&resultType=core&pageSize=8",
+  "sha256": "f30ebe5fdef334233f66b7c2c3fab38959b7dada901bce42366830891ffdffe4",
+  "bytes": 56507,
+  "utc": "2026-11-01T14:38:00+00:00"
+ },
+ {
+  "name": "medaka_beloniformes_reference",
+  "query": "(Oryzias latipes OR medaka) AND (reference genome OR annotation OR synteny) AND Beloniformes",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%28Oryzias+latipes+OR+medaka%29+AND+%28reference+genome+OR+annotation+OR+synteny%29+AND+Beloniformes&format=json&resultType=core&pageSize=8",
+  "sha256": "b74f6d30ae20b77d1fc2c1d29b247d294379e31fc6d713f701b4d7dd71dd0ca5",
+  "bytes": 55954,
+  "utc": "2026-11-01T14:38:01+00:00"
+ },
+ {
+  "name": "fin_ray_biomechanics",
+  "query": "(\"fin ray\" OR lepidotrichia) AND (stiffness OR biomechanics OR \"bending\" OR modulus)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%28%22fin+ray%22+OR+lepidotrichia%29+AND+%28stiffness+OR+biomechanics+OR+%22bending%22+OR+modulus%29&format=json&resultType=core&pageSize=8",
+  "sha256": "6c51cfeac8fb47fdc4bc5afd3e052eae63e4539b986f696f858209953345dfc5",
+  "bytes": 46090,
+  "utc": "2026-11-01T14:38:02+00:00"
+ },
+ {
+  "name": "hypocercal_caudal_exocoetidae",
+  "query": "(Exocoetidae OR \"flying fish\" OR Hemiramphidae) AND (caudal OR hypural OR tail) AND (asymmetry OR hypocercal OR lobe)",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%28Exocoetidae+OR+%22flying+fish%22+OR+Hemiramphidae%29+AND+%28caudal+OR+hypural+OR+tail%29+AND+%28asymmetry+OR+hypocercal+OR+lobe%29&format=json&resultType=core&pageSize=8",
+  "sha256": "512cef13e419cd07f5b66dbcca01147a7ef8c68da3d63ad6d3a8748cc534eace",
+  "bytes": 55387,
+  "utc": "2026-11-01T14:38:03+00:00"
+ }
+]

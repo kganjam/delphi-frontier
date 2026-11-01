@@ -1,0 +1,588 @@
+{
+ "genome": "GCA_018398805.1 Hirundichthys speculiger_1.0 (scaffold level, no annotation)",
+ "genome_fasta_sha256": "6f312a972a382295873cf1170771b0ef952f5f7772ce3b7bd19e3b49603c1052",
+ "tool": "miniprot",
+ "tool_version": "0.18-r281",
+ "params": "-t4 -N5 --outs=0.6, assembly split into 5 whole-scaffold chunks",
+ "scope": "Protein-to-genome alignment of Danio rerio query proteins. Not an annotation, not an ortholog assignment, not evidence of expression or function in Hirundichthys.",
+ "queries": [
+  {
+   "gene": "eda",
+   "uniprot": "B0YIF1",
+   "header": ">tr|B0YIF1|B0YIF1_DANRE Ectodysplasin-A OS=Danio rerio OX=7955 GN=eda PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/B0YIF1.fasta",
+   "len": 359,
+   "sha256": "7c8192732d2aa56df9981ed41958b0d4623a9f5e27f85e45359034f4ba03c088",
+   "why": "eda-/- zebrafish lose scales, fin rays, pharyngeal teeth and gill rakers (PMID 41344457); used by perturbation row P10 but not mapped in rounds 1-2",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:53:28+00:00"
+  },
+  {
+   "gene": "fgf20a",
+   "uniprot": "Q38PL0",
+   "header": ">tr|Q38PL0|Q38PL0_DANRE Fibroblast growth factor OS=Danio rerio OX=7955 GN=fgf20a PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/Q38PL0.fasta",
+   "len": 208,
+   "sha256": "98a7eab8449377cd3ba2f6873abda87fe651a4d191633f510366602853466798",
+   "why": "epidermal Fgf20a expression scales with amputation extent and drives the Erk size-memory gradient (PMID 42719339); used by the plan but not mapped in rounds 1-2",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:53:29+00:00"
+  },
+  {
+   "gene": "kcnh2b",
+   "uniprot": "A0AC58ISY3",
+   "header": ">tr|A0AC58ISY3|A0AC58ISY3_DANRE Voltage-gated inwardly rectifying potassium channel KCNH2 OS=Danio rerio OX=7955 GN=kcnh2b PE=3 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/A0AC58ISY3.fasta",
+   "len": 1127,
+   "sha256": "a346a14993ab88e7eadb988ee79b7d8dcf9598722c10755ddcbc9670c377aa51",
+   "why": "paralog control for kcnh2a: the teleost whole-genome duplication means a best hit to a kcnh2a query could be the b paralog's region",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:53:30+00:00"
+  },
+  {
+   "gene": "tbx5b",
+   "uniprot": "E3W6T6",
+   "header": ">tr|E3W6T6|E3W6T6_DANRE T-box transcription factor 5b OS=Danio rerio OX=7955 GN=tbx5b PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/E3W6T6.fasta",
+   "len": 422,
+   "sha256": "a2f849960646cab9a0e0560bff3adc9b9fcec0d313ea3ed58ec98932f66e81b9",
+   "why": "paralog control for tbx5a",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:53:30+00:00"
+  },
+  {
+   "gene": "fgf10b",
+   "uniprot": "Q1XG75",
+   "header": ">tr|Q1XG75|Q1XG75_DANRE Fibroblast growth factor OS=Danio rerio OX=7955 GN=fgf10b PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/Q1XG75.fasta",
+   "len": 187,
+   "sha256": "5183b6e5235803823f2739f8693f5d4142abe5f99674d8cfd6dbf3702814424a",
+   "why": "paralog control for fgf10a",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:53:31+00:00"
+  },
+  {
+   "gene": "kcnk5a",
+   "uniprot": "Q32PR9",
+   "header": ">tr|Q32PR9|Q32PR9_DANRE Zgc:123271 OS=Danio rerio OX=7955 GN=kcnk5a PE=2 SV=1",
+   "url": "https://rest.uniprot.org/uniprotkb/Q32PR9.fasta",
+   "len": 513,
+   "sha256": "bff5f5ce86403f50bf6e69fcc1d0a8a04e4b893198ebce5c43c1821fdf02edaf",
+   "why": "paralog control for kcnk5b",
+   "name_mapping_confidence": "high",
+   "retrieved_utc": "2026-11-01T14:53:32+00:00"
+  }
+ ],
+ "hits": {
+  "eda": [
+   {
+    "scaffold": "JAGFBZ010002033.1",
+    "strand": "+",
+    "t_start": 3037482,
+    "t_end": 3047982,
+    "query_aa_covered": 334,
+    "query_len": 359,
+    "coverage": 0.93,
+    "aa_identity": 0.645,
+    "miniprot_score_AS": 907,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002438.1",
+    "strand": "-",
+    "t_start": 33952,
+    "t_end": 34147,
+    "query_aa_covered": 64,
+    "query_len": 359,
+    "coverage": 0.178,
+    "aa_identity": 0.662,
+    "miniprot_score_AS": 248,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000503.1",
+    "strand": "+",
+    "t_start": 67332,
+    "t_end": 68068,
+    "query_aa_covered": 70,
+    "query_len": 359,
+    "coverage": 0.195,
+    "aa_identity": 0.566,
+    "miniprot_score_AS": 175,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000204.1",
+    "strand": "+",
+    "t_start": 123247,
+    "t_end": 123740,
+    "query_aa_covered": 62,
+    "query_len": 359,
+    "coverage": 0.173,
+    "aa_identity": 0.667,
+    "miniprot_score_AS": 173,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000781.1",
+    "strand": "+",
+    "t_start": 369206,
+    "t_end": 377675,
+    "query_aa_covered": 70,
+    "query_len": 359,
+    "coverage": 0.195,
+    "aa_identity": 0.579,
+    "miniprot_score_AS": 170,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000855.1",
+    "strand": "-",
+    "t_start": 2186977,
+    "t_end": 2242640,
+    "query_aa_covered": 100,
+    "query_len": 359,
+    "coverage": 0.279,
+    "aa_identity": 0.45,
+    "miniprot_score_AS": 164,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000190.1",
+    "strand": "+",
+    "t_start": 46557,
+    "t_end": 47020,
+    "query_aa_covered": 58,
+    "query_len": 359,
+    "coverage": 0.162,
+    "aa_identity": 0.657,
+    "miniprot_score_AS": 154,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000344.1",
+    "strand": "-",
+    "t_start": 3405026,
+    "t_end": 3413768,
+    "query_aa_covered": 79,
+    "query_len": 359,
+    "coverage": 0.22,
+    "aa_identity": 0.537,
+    "miniprot_score_AS": 152,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000204.1",
+    "strand": "+",
+    "t_start": 107287,
+    "t_end": 109749,
+    "query_aa_covered": 54,
+    "query_len": 359,
+    "coverage": 0.15,
+    "aa_identity": 0.667,
+    "miniprot_score_AS": 141,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000204.1",
+    "strand": "+",
+    "t_start": 113244,
+    "t_end": 115707,
+    "query_aa_covered": 54,
+    "query_len": 359,
+    "coverage": 0.15,
+    "aa_identity": 0.667,
+    "miniprot_score_AS": 141,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "kcnh2b": [
+   {
+    "scaffold": "JAGFBZ010001591.1",
+    "strand": "-",
+    "t_start": 1301510,
+    "t_end": 1540581,
+    "query_aa_covered": 1127,
+    "query_len": 1127,
+    "coverage": 1.0,
+    "aa_identity": 0.762,
+    "miniprot_score_AS": 3702,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000779.1",
+    "strand": "-",
+    "t_start": 222706,
+    "t_end": 316639,
+    "query_aa_covered": 1067,
+    "query_len": 1127,
+    "coverage": 0.947,
+    "aa_identity": 0.578,
+    "miniprot_score_AS": 2491,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000289.1",
+    "strand": "+",
+    "t_start": 1150156,
+    "t_end": 1194368,
+    "query_aa_covered": 828,
+    "query_len": 1127,
+    "coverage": 0.735,
+    "aa_identity": 0.662,
+    "miniprot_score_AS": 2388,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002515.1",
+    "strand": "-",
+    "t_start": 949543,
+    "t_end": 955694,
+    "query_aa_covered": 735,
+    "query_len": 1127,
+    "coverage": 0.652,
+    "aa_identity": 0.599,
+    "miniprot_score_AS": 1916,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000590.1",
+    "strand": "+",
+    "t_start": 78547,
+    "t_end": 91776,
+    "query_aa_covered": 720,
+    "query_len": 1127,
+    "coverage": 0.639,
+    "aa_identity": 0.367,
+    "miniprot_score_AS": 1020,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "tbx5b": [
+   {
+    "scaffold": "JAGFBZ010000035.1",
+    "strand": "-",
+    "t_start": 4085363,
+    "t_end": 4093111,
+    "query_aa_covered": 304,
+    "query_len": 422,
+    "coverage": 0.72,
+    "aa_identity": 0.668,
+    "miniprot_score_AS": 859,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001382.1",
+    "strand": "+",
+    "t_start": 1635753,
+    "t_end": 1650745,
+    "query_aa_covered": 376,
+    "query_len": 422,
+    "coverage": 0.891,
+    "aa_identity": 0.587,
+    "miniprot_score_AS": 855,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001446.1",
+    "strand": "-",
+    "t_start": 296144,
+    "t_end": 316821,
+    "query_aa_covered": 218,
+    "query_len": 422,
+    "coverage": 0.517,
+    "aa_identity": 0.761,
+    "miniprot_score_AS": 758,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000826.1",
+    "strand": "-",
+    "t_start": 30017,
+    "t_end": 33797,
+    "query_aa_covered": 226,
+    "query_len": 422,
+    "coverage": 0.536,
+    "aa_identity": 0.531,
+    "miniprot_score_AS": 508,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002392.1",
+    "strand": "-",
+    "t_start": 6062,
+    "t_end": 6969,
+    "query_aa_covered": 191,
+    "query_len": 422,
+    "coverage": 0.453,
+    "aa_identity": 0.592,
+    "miniprot_score_AS": 503,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000606.1",
+    "strand": "-",
+    "t_start": 2680004,
+    "t_end": 2680971,
+    "query_aa_covered": 183,
+    "query_len": 422,
+    "coverage": 0.434,
+    "aa_identity": 0.607,
+    "miniprot_score_AS": 483,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000685.1",
+    "strand": "-",
+    "t_start": 400188,
+    "t_end": 401177,
+    "query_aa_covered": 183,
+    "query_len": 422,
+    "coverage": 0.434,
+    "aa_identity": 0.607,
+    "miniprot_score_AS": 483,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002140.1",
+    "strand": "-",
+    "t_start": 311786,
+    "t_end": 312461,
+    "query_aa_covered": 223,
+    "query_len": 422,
+    "coverage": 0.528,
+    "aa_identity": 0.421,
+    "miniprot_score_AS": 460,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002528.1",
+    "strand": "+",
+    "t_start": 105793,
+    "t_end": 106477,
+    "query_aa_covered": 223,
+    "query_len": 422,
+    "coverage": 0.528,
+    "aa_identity": 0.412,
+    "miniprot_score_AS": 458,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002515.1",
+    "strand": "-",
+    "t_start": 560224,
+    "t_end": 562372,
+    "query_aa_covered": 285,
+    "query_len": 422,
+    "coverage": 0.675,
+    "aa_identity": 0.435,
+    "miniprot_score_AS": 439,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "fgf10b": [
+   {
+    "scaffold": "JAGFBZ010002193.1",
+    "strand": "-",
+    "t_start": 497969,
+    "t_end": 503585,
+    "query_aa_covered": 143,
+    "query_len": 187,
+    "coverage": 0.765,
+    "aa_identity": 0.753,
+    "miniprot_score_AS": 506,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010000446.1",
+    "strand": "-",
+    "t_start": 2711371,
+    "t_end": 2727618,
+    "query_aa_covered": 150,
+    "query_len": 187,
+    "coverage": 0.802,
+    "aa_identity": 0.689,
+    "miniprot_score_AS": 489,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001350.1",
+    "strand": "-",
+    "t_start": 4858326,
+    "t_end": 4882828,
+    "query_aa_covered": 172,
+    "query_len": 187,
+    "coverage": 0.92,
+    "aa_identity": 0.516,
+    "miniprot_score_AS": 390,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "fgf20a": [
+   {
+    "scaffold": "JAGFBZ010000863.1",
+    "strand": "-",
+    "t_start": 375649,
+    "t_end": 377241,
+    "query_aa_covered": 208,
+    "query_len": 208,
+    "coverage": 1.0,
+    "aa_identity": 0.752,
+    "miniprot_score_AS": 755,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002092.1",
+    "strand": "+",
+    "t_start": 899474,
+    "t_end": 900420,
+    "query_aa_covered": 208,
+    "query_len": 208,
+    "coverage": 1.0,
+    "aa_identity": 0.684,
+    "miniprot_score_AS": 681,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010002033.1",
+    "strand": "-",
+    "t_start": 1861607,
+    "t_end": 1865314,
+    "query_aa_covered": 208,
+    "query_len": 208,
+    "coverage": 1.0,
+    "aa_identity": 0.629,
+    "miniprot_score_AS": 611,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ],
+  "kcnk5a": [
+   {
+    "scaffold": "JAGFBZ010000776.1",
+    "strand": "-",
+    "t_start": 49243,
+    "t_end": 65363,
+    "query_aa_covered": 513,
+    "query_len": 513,
+    "coverage": 1.0,
+    "aa_identity": 0.691,
+    "miniprot_score_AS": 1707,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   },
+   {
+    "scaffold": "JAGFBZ010001926.1",
+    "strand": "-",
+    "t_start": 604373,
+    "t_end": 606769,
+    "query_aa_covered": 409,
+    "query_len": 513,
+    "coverage": 0.797,
+    "aa_identity": 0.561,
+    "miniprot_score_AS": 997,
+    "frameshifts_or_stops": {
+     "fs": false,
+     "st": null
+    }
+   }
+  ]
+ },
+ "no_hit": [
+  "eda_SHUFFLED_NEGATIVE_CONTROL"
+ ]
+}

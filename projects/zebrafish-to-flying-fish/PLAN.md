@@ -1,0 +1,314 @@
+# Zebrafish to flying fish: what would it take?
+
+Project: `projects/zebrafish-to-flying-fish` · branch `claude/zf2ff-20261101` · 2026-11-01 (PDT)
+Owner: claude-zf2ff. Single operator, **not independently reviewed**.
+
+**This document is a plan, not a result.** The only results this project has produced are in
+[`RESULTS.md`](RESULTS.md): two protein-to-genome alignment runs against the one available
+Exocoetidae assembly, and a source index built from 45 Europe PMC queries. Everything else below
+is decomposition, hypothesis and proposed experiment.
+
+**Nothing here is an observation in a flying fish.** No Exocoetid was handled, imaged, sequenced or
+perturbed by this project. No zebrafish was either. Every biological statement is either (a) read
+from a published abstract, (b) computed here from public sequence, or (c) labelled a hypothesis.
+
+## 0. The read-level and evidence ladder used throughout
+
+Every row in every table below carries one evidence level. The ladder is about **what was read or
+run**, never about how plausible the idea feels.
+
+| Level | Meaning | What it is NOT |
+| --- | --- | --- |
+| `S-abs` | A published abstract was read (Europe PMC `resultType=core` body saved verbatim, sha256 in [`SOURCES.md`](SOURCES.md)). Every `S-abs` row should be read as *"the abstract of this paper states X"*, never as *"X"*. | Not a full-text read. Whether the paper's data support its own abstract was not checked, and whether the paper is the **primary** source of the finding was not checked either (see the provenance caution below). |
+| `S-meta` | Only metadata was retrieved (title/journal, no abstract in the response). | Not a content read at all. |
+| `C-here` | Computed in this project, with a receipt in [`RESULTS.md`](RESULTS.md) (command, exit code, input sha256, tool version, seed). | A sequence alignment is not an annotation, an ortholog call, an expression measurement or a function. |
+| `C-other` | Computed by another harness in this repo, with its own receipt (OpenFold2 structures, BioModels simulations). | A predicted structure or a published-model simulation is not a measurement of a fish. |
+| `H` | Hypothesis. No read and no run supports it; it is written down so it can be attacked. | Not evidence of any kind. |
+| `U` | Declared unknown. The thing that would have to be measured, and nobody here measured it. | Not a gap to be filled with a plausible number. |
+
+**Full text was read for zero sources.** That is the single biggest limitation of this document and
+it bounds every `S-abs` row: an abstract states a conclusion, and this project did not verify that
+the paper's figures support it.
+
+**Provenance caution (added after review).** Europe PMC relevance ranking surfaces recent papers.
+Several phenotypes cited below are cited from a 2024–2026 paper that *reports* them, which is not
+the same as the paper that *first established* them. The clearest case: the actinodin/actinotrichia
+loss-of-function phenotype is cited here from PMIDs 41885168 and 42741580, and a targeted query for
+the primary actinodin literature (`data/epmc3/actinodin_primary_2010.json`, 28 hits) did **not**
+return the original knockdown report in its top results. So the reads below establish *that these
+statements are in the recent literature*; they do not establish priority or the original evidence.
+`U` for primary provenance throughout.
+
+## 1. Trait decomposition by scale
+
+The target phenotype is not "a flying fish". It is a *set* of separable traits that, in extant
+Exocoetidae, co-occur. Decomposing it matters because the traits have very different read-levels:
+fin *allometry* has a named genetic handle, while launch *behaviour* has essentially none.
+
+Scale names are the `Scale` literal in `frontier/models.py` so these rows can be attached to
+records without re-coining a vocabulary.
+
+| # | Trait | Scale(s) | Zebrafish state | Exocoetid state | Read-level of the Exocoetid side | Measurable readout |
+| --- | --- | --- | --- | --- | --- | --- |
+| T1 | Pectoral fin length / standard length (wing allometry) | `organ`, `developmental`, `evolutionary` | Small pectoral fins; fin proportion set during bud growth and adult outgrowth | Greatly enlarged pectoral fins enabling gliding | `S-abs`: 35-species phylogenomic study describes "convergent evolution of increased paired fin size and aerial gliding" (PMID 34534441). No measurement of any individual fish here. | fin length / SL, ray count, fin area; ratio distribution across stages |
+| T2 | Pelvic fin enlargement ("four-winged" forms) | `organ`, `developmental` | Pelvic fins appear ~3 wpf at metamorphosis; small | Enlarged in four-winged genera (e.g. *Cheilopogon*); not in two-winged | `S-abs`: 80 species have "one or two pairs of expanded fins" (PMID 42325591). Which genus has which is not resolved from what was read. | pelvic length / SL; onset stage |
+| T3 | Caudal fin asymmetry (hypocercal, enlarged lower lobe) | `organ`, `tissue` | Symmetric caudal fin patterned by a central and two peripheral organizers | Lower lobe longer; used for taxiing/thrust at the surface | `S-meta`/`H`: the query returned no Exocoetid-specific caudal morphology paper with an abstract. The zebrafish organizer side is `S-abs` (PMID 35403297). | upper/lower lobe length ratio |
+| T4 | Fin ray geometry: segment length, branching, joint number | `tissue`, `organ` | `sof`/cx43 and bioelectric manipulations change segment length; hox13 loss shortens and thickens rays and deletes joints and bifurcations | Rays must support a membrane under aerodynamic load. **No ray-level description is given here**: nothing read by this project describes Exocoetid ray segmentation, branching or joint counts, and an earlier draft of this table contained a guess, which has been removed. | `U` for Exocoetidae (no ray-level morphometry read). Zebrafish side `S-abs` (PMIDs 41739864, 38527087, and the Dev 2024 bioelectric paper). | segment length, joints/ray, bifurcation index, ray count |
+| T5 | Ray/membrane material properties (modulus, actinotrichia collagen architecture) | `macromolecular`, `tissue` | `and1`/`and2` encode actinotrichia collagen; double mutants lose actinotrichia and all fin-fold-derived skeleton | Must carry aerodynamic load without collapse | `U` for Exocoetidae. Zebrafish side `S-abs` (PMIDs 41885168, 42741580). | bending stiffness EI, fibre orientation, collagen cross-section |
+| T6 | Burst muscle power for launch | `cellular`, `organ`, `organism` | Normal teleost axial muscle | High-power burst swimming to exit water | `U`. The targeted muscle query returned no Exocoetid muscle physiology paper. | fibre type fractions, power density, tail-beat frequency |
+| T7 | Scales, keel, body armour and skin | `tissue`, `organ` | `eda-/-` zebrafish lose scales, fin rays, pharyngeal teeth and gill rakers | Streamlined body; scale cover | `U` for Exocoetidae specifics. Zebrafish/teleost side `S-abs` (PMID 41344457). | scale count/size, skin thickness |
+| T8 | Glide and launch behaviour, sensing and control | `neural`, `organism`, `collective` | No aerial behaviour | Launch, glide, taxi, wind use | `S-abs` for ecology only (foraging in wind, PMID 40758188). Mechanism `U`. | launch angle/speed, glide duration, control surface use |
+| T9 | Karyotype / genome background | `evolutionary` | `U` — not read here | 2n = 48 in three species examined; karyotypic divergence between genera | `S-abs` (PMID 42325591) | karyotype, synteny |
+| T10 | Ecology: epipelagic life history | `ecological` | Freshwater, benthopelagic | Epipelagic, interoceanic | `S-abs` (PMID 42325591) | out of scope for this project |
+| T11 | **Pectoral girdle and fin musculature** (the wing's root, not its blade) | `organ`, `tissue`, `developmental` | Cleithrum + scapulocoracoid sized for labriform swimming; the cleithrum forms from four adjoining embryonic populations; a gli3/Hedgehog ossification trade-off can reconfigure the girdle toward stem-tetrapod character | Must transmit aerodynamic load from a large wing into the body wall | `U` for Exocoetidae. Zebrafish side `S-abs` (PMIDs 39060278, 40442084). | girdle element dimensions, glenoid articulation, abductor/adductor muscle mass |
+| T12 | **Whole-animal locomotor cost of enlarged fins** | `organism` | Measured in zebrafish: wildtype vs **longfin** strains were compared for tail-flip jump kinematics, voluntary jumping and exhaustion | Exocoetids presumably pay a drag cost in water for the wing | `S-abs` for the zebrafish comparison (PMID 38232499); the Exocoetid side is `H` | jump distance, exhaustion, swimming cost |
+
+**What this decomposition buys:** T1/T2/T4 are the only traits with a *named genetic handle* that is
+both (i) published in zebrafish and (ii) flagged by a comparative study in flying fishes. T3, T5, T6,
+T8 are, at this read-level, **unknowns with no candidate gene** — and writing them as unknowns is the
+honest output, not a weakness to be patched with guesses.
+
+## 2. Candidate genes and regulatory regions, as hypotheses with evidence levels
+
+### 2.1 The one locus pair with both a flying-fish signature and a zebrafish mutant
+
+| Locus | What the source says | Evidence | Status for this project |
+| --- | --- | --- | --- |
+| `kcnh2a` (Kv11.1, *ether-a-go-go*-related K+ channel) | The classic mutant `longfin^t2` is a **cis-regulatory** allele that overexpresses `kcnh2a`; disrupting `kcnh2a` in cis rescues it; overgrowth comes from a **prolonged outgrowth period**, acting tissue-autonomously in the intra-ray mesenchymal lineage, and Kcnh2a appears to inhibit calcineurin output. | `S-abs` PMID 34061172 | Primary candidate for T1/T4. The engineering-relevant part of the abstract is that the allele is *regulatory*: as the abstract describes it, the phenotype followed from changing *where/when* the channel is expressed rather than the protein. That is an abstract's description, not a verified fact. |
+| `kcnh2a` + `lat4a` in Exocoetidae | Phylogenomics across 35 species of flying fishes and relatives found signatures "in both coding and regulatory regions"; intersecting these with zebrafish fin-size mutants pointed to an L-type amino acid transporter `lat4a` and the K+ channel `kcnh2a`; their **interaction in zebrafish phenocopies flying-fish fin proportions**. | `S-abs` PMID 34534441 | This is the single strongest published bridge from zebrafish genetics to flying-fish morphology that this project found. It is still an abstract-level read. |
+| `lat4a` convergence | A convergent amino-acid change in `lat4a` is shared by syngnathids and **some flying fishes**, with in vitro analysis reported as confirming a role in fin size evolution in both lineages. | `S-abs` PMID 40689752 | Independent second source naming the same gene. Note: "some flying fishes" — not all, so this is not a universal Exocoetid feature. |
+
+**Unresolved identifier problem (declared, not patched).** The two papers name `lat4a`. UniProt's
+zebrafish entries are `slc43a2a` (accession Q7ZUS0, 153 aa — a fragment) and `slc43a2b`
+(Q5PR35, 592 aa — full-length "L-type amino acid transporter 4"). Which of these the papers' `lat4a`
+denotes was **not resolved** at this read-level. Round 2 of the mapping run therefore carried both,
+labelled. This is recorded as a Problem, not silently decided. `U`.
+
+### 2.2 Bioelectric / size-scaling module (T1, T4)
+
+| Locus | Source statement | Evidence |
+| --- | --- | --- |
+| `kcnk5b` (K+-leak channel) | Retinoic acid lowers intracellular K+ in the pectoral fin bud and up-regulates `rcan2`; `rcan2` overexpression increases bud growth and decreases K+; CRISPR targeting of `rcan2` does the reverse; Rcan2-mediated growth **depends on Kcnk5b**; Kcnk5b-induced `shha` transcription and bud growth require IP3R-mediated Ca2+ release and CaMKK. | `S-abs` PMID 38527087 |
+| `kcnk5b^W169L`, `cx43^T154A`, cell-type-specific | Hyperactive `kcnk5b` or dominant-negative Cx43 under cell-type-specific promoters: manipulation in **keratinocytes** mainly changed fin **size**, in **osteoblasts** mainly changed fin-ray **segment length**; combinations gave large fins with short segments and vice versa; optogenetic manipulation showed membrane potential itself suffices. | `S-abs` (Development 2024, no PMID in the retrieved record) |
+| `cacna1g` (T-type Ca2+ channel) | `cacna1g` homozygous mutants regenerate **extraordinarily long fins** through prolonged outgrowth; L-/N-type channels act during regenerative outgrowth to restore original scale. | `S-abs` PMID 41321290 |
+| `gja1`/`cx43` (`short fin`, `sof`) | The UniProt entry for zebrafish Gja1 carries the `shf`/`sof` symbols ("Short fin protein"). | `S-abs` (UniProt O57474 annotation only — a database annotation, weaker than a read paper) |
+| `fgf20a` + Erk gradient | Osteoblast Erk activity scales with the amount of amputated tissue and predicts regenerated skeletal size; gradients are millimetre-long, FGF-receptor dependent; epidermal `fgf20a` expression scales with amputation extent. | `S-abs` PMID 42719339 |
+
+**Why this module matters for the design — and the limits of that reading.** Three abstracts place
+membrane potential in a specific cell lineage upstream of fin size. They are **not** three
+measurements of one thing, and an earlier draft of this section wrongly merged them:
+
+- PMID 34061172 and PMID 41321290 are about outgrowth **duration**, and both are *adult regeneration*.
+- PMID 38527087 is about the *embryonic* pectoral fin **bud**, and its abstract describes coordinated
+  K+ decrease and bud **proportion**, not a duration.
+
+So "duration sets final size" is supported (abstract-level) for regenerating adult fins, and
+**not** for the embryonic bud. Since a wing has to be built developmentally, the regeneration
+evidence is the weaker half of this module for this project's purpose, despite being the larger half.
+`H`, stated so it can be attacked: if the Exocoetid wing is built by the same mechanism, the edit to
+make extends outgrowth in the pectoral ray mesenchyme and nowhere else. Nothing read or run here
+tests that in an Exocoetid. `U`.
+
+### 2.3 Patterning module: where a fin forms, how many elements, what shape (T2, T3, T4)
+
+| Locus | Source statement | Evidence |
+| --- | --- | --- |
+| `hoxba`;`hoxbb` clusters | Double cluster deletion mutants **completely lack pectoral fins**, with loss of early `tbx5a` induction in the lateral plate mesoderm and loss of retinoic-acid competence; `hoxb4a`, `hoxb5a`, `hoxb5b` named as pivotal. | `S-abs` PMID 41268905 |
+| `hoxaa`;`hoxab`;`hoxda` clusters | Triple cluster deletion shortens the endoskeletal disc and fin fold; the defect is in **post-bud growth**; adults show posterior pectoral defects. | `S-abs` PMID 39384796 |
+| `hoxa13a`/`hoxa13b`/`hoxd13a` | Triple mutant rays are shorter and thicker, lose joints, bifurcations and actinotrichia, and resemble acanthomorph **spiny** rays; `alx4a` domain expands, `grem1b` falls; `hoxa13a/b` matter more than `hoxd13a`. | `S-abs` PMID 41739864 |
+| `hhip` | `hhip` mutants gain radial bones in a localized region; notable early `hhip` expression is a zebrafish characteristic absent in basal species; Hox13 region-specific expression indicates the median region is expanded in `hhip-/-`. | `S-abs` PMID 39417578 |
+| `shha` (and `shhb`/`twhh`) | `shha` transcription is downstream of Kcnk5b in bud scaling (PMID 38527087); caudal fin shape imprinted in late embryogenesis is re-patterned by Shh signalling (PMID 40853969, title-level). | `S-abs` / `S-meta` |
+| `tbx5a` | Required downstream of HoxB for pectoral fin field specification (via PMID 41268905). A `tbx5a` *enhancer* specific to pectoral fin was **not** identified at this read-level — the enhancer query returned unrelated papers. | `S-abs` for the gene, `U` for the enhancer |
+| `pitx1` + pelvic enhancer | `pitx1` transcripts appear briefly in posterior lateral plate mesoderm early; the **pelvic-fin-specific `pitx1` enhancer is in a poised state at the larval stage and activated at the juvenile stage** — a named, stage-gated regulatory element. | `S-abs` PMID 37691823 |
+| `and1`/`and2` (actinodins) | Double mutants lack actinotrichia; reduced fin fold, disorganized migration, all fin-fold-derived skeleton disrupted in adults; collagen reorientation turns the fin bud into a **limb-bud-like** configuration. | `S-abs` PMIDs 41885168, 42741580 |
+| `eda`/`edar` | `eda-/-` zebrafish lack scales, fin rays, pharyngeal teeth and gill rakers; intermuscular bones shortened; Eda/Edar/NF-κB disrupted. | `S-abs` PMID 41344457 |
+
+### 2.4 Girdle and musculature module (T11) — added after review
+
+An earlier draft decomposed the "wing" into dermal fin rays only. That is a design error: a long
+stiff blade attached to a girdle sized for labriform swimming folds at the body wall. Two reads give
+the only handles this project has on the root of the wing.
+
+| Locus / finding | Source statement | Evidence |
+| --- | --- | --- |
+| `gli3` + Hedgehog compound knockouts | Zebrafish pectoral girdle mesodermal cells expressing `gli3` differentiate into **both** intramembranous and endochondral bone; Gli/Hedgehog compound knockouts showed a combination of actinopterygian and **stem-tetrapod** girdle characteristics; the abstract frames this as a tunable trade-off between the two ossification pathways. | `S-abs` PMID 40442084 |
+| Cleithrum embryonic origin | Cleithrum development combines **four adjoining embryonic populations** (photoconversion + genetic lineage tracing). | `S-abs` PMID 39060278 |
+| Pectoral girdle plasticity in another teleost | Domesticated paddy-field carp show girdle morphological shifts with Wnt-associated expression modules. | `S-abs` PMID 42685484 — a different species, correlative transcriptomics, weak. |
+
+`H`: the girdle is the *more* likely binding constraint than the blade, because it has to carry a
+load that no fish fin carries. Nothing read here measures a load anywhere. `U`.
+
+### 2.5 Regulatory regions: what is actually named in the literature read here
+
+This is deliberately short, because it is where the plan is weakest.
+
+| Element | What is known | Evidence | Coordinates |
+| --- | --- | --- | --- |
+| The `longfin^t2` lesion upstream of `kcnh2a` | A cis-regulatory allele causing ectopic `kcnh2a` expression in intra-ray mesenchyme. | `S-abs` PMID 34061172 | **`U` — no coordinates read.** The abstract names chromosome 2 and the gene; it does not give the lesion's boundaries, and this project did not read the paper or its supplements. |
+| Pelvic-fin-specific `pitx1` enhancer (zebrafish) | Exists, is poised at larval stage, activates at juvenile stage. | `S-abs` PMID 37691823 | `U` |
+| Stickleback *Pel* enhancer of `Pitx1` | Named in the query; the retrieved records were about repeated pelvic-spine loss in brook stickleback (PMID 39906589), not the *Pel* element itself. | `S-meta` | `U` |
+| Regeneration-responsive enhancers | "Changes in regeneration-responsive enhancers shape regenerative capacities in vertebrates" (PMID 32883834) and "Modulation of tissue repair by regeneration enhancer elements" (PMID 27049946). | `S-meta` (titles) | `U`; the repo's existing `artifacts/genetic-blueprints/blueprints.json` already carries a `LEN-P2:EGFP` design with **null coordinates** and says so. |
+| Exocoetid regulatory divergence | PMID 34534441 reports signatures "in both coding and regulatory regions" genome-wide. | `S-abs` | `U` — which regions, in which species, at what coordinates: not read. |
+
+**Honest summary of §2.** This project can name genes with real evidence. It cannot name a single
+enhancer **sequence or coordinate interval** from a source it read. Any construct design below that
+needs an element therefore has a `null` where the sequence goes — exactly as SPEC-012 requires.
+
+## 3. Comparative genomics that can actually be run
+
+Constraints, measured or read, that bound what is runnable at all:
+
+- **One** Exocoetidae assembly exists in NCBI Datasets: *Hirundichthys speculiger* `GCA_018398805.1`
+  ("Draft Genome of the Mirrorwing Flyingfish", PMID 34306036, `S-meta`). **Scaffold level, no
+  annotation.** `C-here`: 1,008 MB of FASTA, sha256 in `data/round2/mapping_summary_round2.json`.
+- **Ensembl has no Exocoetidae.** Medaka (*Oryzias latipes*) is the nearest Beloniformes proxy in
+  Ensembl and must be labelled as a proxy everywhere it is used. (`S-abs`, bioservices harvest.)
+- No Exocoetid RNA-seq, ATAC-seq or Hi-C was found by the queries run. All regulatory inference in
+  Exocoetidae is therefore sequence-only. `U`.
+
+| # | Analysis | Runnable today? | Inputs that exist | What it would and would not show |
+| --- | --- | --- | --- | --- |
+| G1 | **Protein-to-genome mapping of candidate loci onto `GCA_018398805.1`** | **Done.** `C-here`, three rounds, 27 distinct candidate proteins + 4 controls. See `RESULTS.md`. | zebrafish UniProt proteins; the assembly | Shows the locus is detectable and how diverged the best-aligning region is. Does **not** establish orthology, copy number or expression. Secondary-hit counts are per-chunk artefacts and must not be read as copy number. |
+| G1b | **Span audit of every best hit** (assembly-gap fraction, largest intron, frameshifts) | **Done.** `C-here`, `SPAN-AUDIT.md`. Added after review, because two hits span ~0.3 Mb. | G1 alignments + the assembly | Separates "large-intron gene" from "possible chaining artefact". Does not decide which; it reports the numbers that let a reader discount a row. |
+| G1c | **Paralog controls** (`kcnh2b`, `tbx5b`, `fgf10b`, `kcnk5a` mapped alongside their `a` paralogs) | **Done.** `C-here`, round 3. Added after review: with the teleost whole-genome duplication, an `a`-paralog query could best-hit the `b` region. | UniProt; the assembly | Shows whether the `a` and `b` queries resolve to different scaffolds. Still not an orthology test. |
+| G2 | Reciprocal-best-hit orthology with medaka as the annotated proxy | Yes — needs the medaka proteome (Ensembl) plus a reverse mapping. Not run. | Ensembl medaka | Would upgrade G1 from "detectable" to "best reciprocal candidate". Still not an expression or function claim. |
+| G3 | Scaffold co-occurrence / micro-synteny of the candidate loci | Yes, partially: scaffold identity per hit is already in the round-1/round-2 summaries. Weak because the assembly is scaffold-level. | G1 output | Would show whether neighbouring zebrafish genes land on the same Exocoetid scaffold. Fragmentation will cause false negatives; a negative is uninformative. |
+| G4 | Coding-change screen at `lat4a`/`kcnh2a` (does the Exocoetid allele carry the convergent residue?) | Yes in principle: extract the aligned region from the assembly and inspect the codon. Not run; blocked on the identifier problem in §2.1 and on not having read which residue PMID 40689752 means. | G1 alignments | Would be a direct, cheap test of a published claim in a *different* Exocoetid species than the paper used. Species mismatch must be stated. |
+| G5 | Conserved-non-coding-element scan around candidate loci (zebrafish/medaka/*H. speculiger*) | Yes technically (whole-genome alignment of the three), heavy; not run. | assemblies | Would produce candidate elements. Conservation is not activity: a conserved element is a hypothesis, not a driver (SPEC-012). |
+| G6 | Phylogenomic convergence scan across Exocoetidae | **No.** Needs the 35-species variation data behind PMID 34534441; only one assembly is public here. | — | `U` |
+| G7 | Evo 2 scoring of candidate regulatory sequences | **Not available to this project.** The Evo 2 harness was to hand over candidates via `messages/evo-to-zf2ff.md`; that file **does not exist** as of this writing. | — | Blocked, reported as blocked. |
+
+## 4. Perturbation table
+
+One row per proposed edit. Columns are exactly the ones the brief asks for. **No row has been
+executed.** "In-silico model" names the specific artifact that would be run, including other
+harnesses' outputs; where no model exists the cell says so.
+
+| # | Edit | Scale | Readout | In-silico model | Wet-lab test | Evidence for the premise | Expected failure mode |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| P1 | Re-create a `longfin`-like cis state at `kcnh2a`: targeted insertion of a mesenchyme-active regulatory cassette at the endogenous locus | `developmental`, `organ` | pectoral + caudal fin length / SL across stages; outgrowth **duration** (not rate) | SPEC-012 expression ODE (`dm/dt = k_tx(...) - γ_m m`) with **unknown `k_tx`** — it cannot predict the fin length and must not be used as if it could; fin-ray mechanics surrogate in `artifacts/claim-reuse` (clamped-free ray EI) for the resulting geometry | Tol2 reporter first, then knock-in F0 mosaic → F1 germline; fin morphometry at 30/60/90 dpf | `S-abs` PMID 34061172 (cis allele, prolonged outgrowth), PMID 34534441 (locus has an Exocoetid signature) | Ectopic expression in heart (Kv11.1 is cardiac) → arrhythmia/lethality. This is the predictable blocker and the reason for a cell-type-restricted driver. |
+| P2 | `lat4a`/`slc43a2` convergent-residue knock-in (single codon) | `molecular`, `organ` | fin proportion; amino-acid transport in vitro | None usable. OpenFold2 from the bioservices run gave pLDDT 41–56 for four fin-relevant proteins (`C-other`) — too low to predict a transporter residue effect. A membrane transporter would need a different pipeline. | Prime editing / HDR single-codon edit; fin morphometry; transport assay in vitro | `S-abs` PMID 40689752 (in vitro role reported), PMID 34534441 | **Blocked first by the identifier problem (§2.1).** Editing the wrong paralog produces an uninterpretable negative. |
+| P3 | `kcnh2a` × `lat4a` double perturbation (the published phenocopy) | `organ`, `developmental` | fin proportion vs the flying-fish ratio | None. The interaction is an epistasis result; no quantitative model of it was read. | Cross the two F1 lines; morphometry | `S-abs` PMID 34534441 states the interaction "closely phenocopies" flying-fish fin proportions | If the phenocopy is proportional but not mechanically sufficient, T1 is achieved and T5 (material) still fails. |
+| P4 | Keratinocyte-restricted `kcnk5b^W169L` | `cellular`, `organ` | fin **size** with segment length held near wild type | Bioelectric tissue model in `artifacts/`/`bioelectric` (BETSE-family, `C-other`, published-model simulation only) | Existing published constructs; cell-type promoter; morphometry | `S-abs` Development 2024 cell-type-specific paper | Promoter leak into osteoblasts collapses the size/segment separation that is the whole point. |
+| P5 | Osteoblast-restricted `cx43^T154A` (dominant negative) | `cellular`, `tissue` | ray **segment length**, joint count | same as P4 | same as P4 | `S-abs` Development 2024 | Joint loss → ray mechanical failure under aerodynamic load (couples to T5). |
+| P6 | `cacna1g` loss of function | `subcellular`, `organ` | regenerative outgrowth length; Ca2+ transients (GCaMP) | None quantitative | Existing mutant line; fin amputation + regrowth | `S-abs` PMID 41321290 | Regeneration-specific; may not transfer to **developmental** fin size, which is what a wing needs. |
+| P7 | `hoxa13a`/`hoxa13b` partial loss (ray character shift) | `tissue`, `developmental` | joints/ray, bifurcations, ray thickness, actinotrichia presence | Ray-mechanics surrogate (`artifacts/claim-reuse` EI claim, `C-other`) to ask whether spiny-like rays are *stiffer* in the way a wing needs | Existing mutant alleles; micro-CT | `S-abs` PMID 41739864 | Loses actinotrichia → the fin fold shrinks. Opposes T1. Recorded as a **conflict**, see §4.1. |
+| P8 | `and1`/`and2` dosage increase (opposite direction to the published knockout) | `macromolecular`, `tissue` | collagen fibre orientation, fin fold size, ray architecture | None. No model couples collagen orientation to ray modulus here. | Overexpression / extra copy; high-sensitivity 3D collagen imaging as in PMID 42741580 | `S-abs` PMIDs 41885168, 42741580 establish loss-of-function only. **Gain-of-function direction is `H`.** | Over-deposition may stiffen without lengthening, or be dominant-lethal. Untested. |
+| P9 | `pitx1` pelvic-enhancer timing change (de-repress earlier) | `developmental`, `organ` | pelvic bud onset stage; adult pelvic size (T2) | None | Enhancer reporter first (poised→active transition is the measurable), then enhancer edit | `S-abs` PMID 37691823 | The enhancer's coordinates are `U`; cannot design the edit yet. |
+| P10 | `eda` dosage / `edar` modulation for scale and keel traits | `tissue` | scale count/size, intermuscular bone, **and** fin rays | None | Existing `eda-/-` plus dosage series | `S-abs` PMID 41344457 | `eda-/-` **also removes fin rays** — pleiotropy that directly destroys T4. Recorded as a conflict. |
+| P11 | Caudal asymmetry (T3) | `organ` | upper/lower lobe ratio | None | — | **No candidate gene at this read-level.** The zebrafish organizer paper (PMID 35403297) describes symmetric patterning; no Exocoetid-specific handle was found. | `U`. This row exists to mark the hole. |
+| P12 | Launch muscle power (T6), glide control (T8) | `cellular`, `neural`, `organism` | power density; launch kinematics | CFD/aeroelastic harnesses in this repo could consume a geometry, but nothing maps a genotype to muscle power here | — | `U`, no candidate. | `U`. Marked as a hole, not a plan. |
+| P13 | **`gli3`/Hedgehog dosage to reconfigure the pectoral girdle (T11)** | `organ`, `developmental` | girdle element dimensions; intramembranous vs endochondral bone fraction; glenoid geometry | None. No model in this repo couples girdle geometry to a load. The repo's clamped-free ray surrogate is about the blade, not the root. | Existing Gli/Hh compound mutant lines; micro-CT of the girdle; load-to-failure on the fin–body joint | `S-abs` PMID 40442084 (compound knockouts shift girdle character), PMID 39060278 (cleithrum lineage) | Hedgehog dosage is pleiotropic across the whole embryo; a girdle-restricted perturbation does not exist in anything read here. Likely lethal or grossly abnormal. |
+| P14 | **`hhip` loss of function (radial number, T4)** | `tissue`, `developmental` | number and position of pectoral radials; Hox13 expression domains | None | Existing `hhip-/-` line; micro-CT | `S-abs` PMID 39417578 | Added after review: §2.3 cited `hhip` but the table had no row for it. More radials is not obviously *better* for a wing; the trait direction is a guess. `H` |
+| P15 | **Measure the locomotor cost before editing anything (T12)** | `organism` | tail-flip jump kinematics, voluntary jumping, exhaustion; swimming cost | None needed — this is a measurement, not a model | Wildtype vs **longfin** zebrafish, the comparison already published as PMID 38232499; repeat with any new line | `S-abs` PMID 38232499 | Added after review as the **first** row that should be run, because it is cheap and it can kill the programme: if existing long-finned zebrafish already pay an unacceptable locomotor cost, every row above inherits it. |
+
+### 4.1 Conflicts the table exposes (these are the useful output)
+
+1. **P7 vs T1.** The edit that makes rays stiffer and spiny-like (`hox13` loss) also **shrinks the
+   fin fold and deletes actinotrichia**. Bigger wing and stiffer wing pull in opposite directions
+   through the same genes. `S-abs` on both sides.
+2. **P10 vs T4.** `eda` loss removes scales *and* fin rays. A keel/scale edit is not separable from
+   the ray programme at this read-level.
+3. **P1 cardiac risk.** `kcnh2a` is Kv11.1; human mutations cause arrhythmia (`S-abs` PMID 42496271,
+   general KCNH statement). An edit that is not cell-type-restricted is predictably dangerous.
+4. **Regeneration ≠ development.** P6 and much of §2.2's strongest evidence come from *regenerating*
+   adult fins. A wing must be built during *development*. PMID 38527087 is the one read that puts the
+   K+ mechanism in the embryonic **bud**, which is why it carries extra weight here.
+5. **Size without material is not a wing.** Every row that achieves T1 leaves T5 untouched. Nothing
+   read here connects a genotype to a ray bending stiffness.
+6. **The blade was designed and the root was forgotten** (found by review, not by this project).
+   T1–T5 are all about dermal fin rays. A long stiff blade on a girdle and musculature sized for
+   labriform swimming transmits its load into the body wall at a joint that nothing read here has
+   measured. T11 and row P13 exist because of this; they are the weakest-sourced part of the plan and
+   plausibly the binding constraint.
+7. **Enlarging fins has a measured cost in the only organism in play.** A published comparison of
+   wildtype and **longfin** zebrafish tested exactly the trait this plan proposes to amplify, across
+   jump kinematics, voluntary jumping and exhaustion (`S-abs` PMID 38232499). This project read the
+   abstract's hypothesis and design but **did not read the result**, so the direction and size of the
+   effect are `U` here. Whatever it is, it bounds the whole programme, which is why P15 is first.
+8. **Secondary hits are not copy number.** In the computed results, `-N5 --outs=0.6` was applied per
+   assembly chunk, so a query can show more than five alternative hits. Those counts say nothing
+   about duplication in the genome (see `RESULTS.md` §R2).
+
+## 5. Engineering methods and feasibility
+
+Layers kept separate per SPEC-012. Feasibility ratings are about *the method in zebrafish*, which is
+the only organism any of this is established in.
+
+| Layer | Option | Feasibility in zebrafish | Feasibility in an Exocoetid | Notes |
+| --- | --- | --- | --- | --- |
+| Regulation | Cell-type-specific promoter driving an effector | Established — the Development 2024 paper did exactly this for `kcnk5b`/`cx43` (`S-abs`) | `U` | Promoter leak is the dominant risk and must be measured, not assumed. |
+| Regulation | Enhancer swap (Exocoetid element → zebrafish locus) | Method exists (Tol2 enhancer reporters, `S-meta`) | **Blocked**: no Exocoetid element coordinates. `U` | This is the experiment the project most wants and least can do. |
+| Cargo | Reporter (EGFP) under a candidate element | Established | `U` | Reporter specificity does **not** establish an effector phenotype (SPEC-012). Reporter-first is mandatory. |
+| Cargo | Effector (ion channel variant, TF) | Established for the named channels | `U` | — |
+| Carrier | Plasmid / Tol2 | Established, small capacity | `U` | Mosaic in F0; germline needed for morphometry. |
+| Carrier | BAC (recombineering) | Established in fish; the targeted query returned mostly unrelated records (`S-meta`), and a medaka transposon transgenesis paper (PMID 41068540) | `U` | A BAC is a **bacterial construct**, not an autonomous fish chromosome (SPEC-012). Large regulatory landscapes (Hox clusters) are the case for it. |
+| Delivery | Injection at 1-cell | Established | `U` — no Exocoetid husbandry, spawning or embryo access was found at all. | **This is the hard stop for anything "in a flying fish".** |
+| Integration | Targeted knock-in / HDR / prime editing | Published and improving (`S-meta` PMID 42411453, prime editors in zebrafish) | `U` | Efficiency is the cost driver; not quantified here. |
+| Integration | Autonomous fish chromosome | **Not established.** | **Not established.** | Mammalian demonstrations do not transfer (SPEC-012). Research option only. |
+| Validation | Morphometry + micro-CT + reporter distribution + viability | Established | `U` | Cell counts are not animal replicates (SPEC-012). |
+
+**Feasibility verdict, stated plainly.** Making a *zebrafish with flying-fish-like fin proportions*
+is a bounded, already-partly-published programme: PMID 34534441 reports that a `kcnh2a`×`lat4a`
+interaction phenocopies flying-fish fin proportions in zebrafish. Making a *flying fish* is not a
+genetics problem that this project can scope: it needs T3, T5, T6 and T8, for which this project
+found **no candidate genes at all**, and it needs an organism (Exocoetidae) with no annotated genome,
+no established husbandry, no transgenesis protocol and no embryo access in anything read here.
+
+## 6. Known / inferred / unknown
+
+**What a source states** — abstract-level, single operator, priority unverified. Read every item as
+"the abstract of the cited paper states this", not as established biology; that distinction is the
+whole point of §0 and an earlier draft of this section wrongly titled it "Known":
+`longfin^t2` is a cis-regulatory `kcnh2a` allele acting through outgrowth duration in intra-ray
+mesenchyme; a 35-species flying-fish phylogenomic study names `kcnh2a` and `lat4a` and reports a
+zebrafish phenocopy of flying-fish fin proportion; RA→`rcan2`→Kcnk5b→Ca2+→`shha` scales the pectoral
+fin bud; cell-type-specific bioelectric manipulation separates fin size from ray segment length;
+`cacna1g` loss prolongs regenerative outgrowth; `hox13` loss shifts rays toward spiny character;
+`hhip` constrains radial number; `hoxB` clusters position the pectoral fin via `tbx5a`; `and1/and2`
+build actinotrichia and set fin-fold shape; `eda` loss removes scales and fin rays; a `pitx1` pelvic
+enhancer is poised then activated; three Exocoetid species share 2n = 48; exactly one Exocoetidae
+assembly is public and it is unannotated.
+
+**Inferred / computed here** (`C-here`, receipts in `RESULTS.md`):
+all 27 distinct candidate zebrafish query proteins have a detectable best-aligning region in
+`GCA_018398805.1`; controls behaved (conserved actb1 at 0.989 identity, and all three shuffled
+negative controls returned no hit); best-hit amino-acid identity spans 0.447 (hoxd13a) to 0.989 (the
+actb1 control); `msxb` mapped identically in two independent runs. Three results limit the rest:
+`shha`/`shhb` best-hit the same region; **`kcnh2a` and `kcnh2b` best-hit the same region with the `b`
+query scoring higher, so the plan's primary candidate locus cannot be assigned to the `a` paralog**;
+and the `kcnh2a`, `kcnh2b` and `cacna1g` spans are each dominated by one ~0.1 Mb gap with 2–4
+frameshifts, so those three are "something channel-like is there", not located genes. These are
+alignments, not orthology calls.
+
+**Unknown** (declared, not filled):
+the coordinates and sequence of **every** regulatory element this plan would use; which UniProt
+paralog the papers' `lat4a` is; **whether the detected `kcnh2`-like region is the `a` or the `b`
+paralog**; whether any Exocoetid locus is expressed, where or when; T3 caudal asymmetry, T5 ray
+material properties, T6 launch muscle and T8 behaviour have no candidate gene; T11 girdle and T12
+locomotor cost are sourced in zebrafish only; the *result* of the one published wildtype-vs-longfin
+performance comparison, whose abstract was read but whose findings were not;
+whether the zebrafish phenocopy is mechanically sufficient for gliding; Exocoetid husbandry,
+spawning, embryo access and transgenesis — all absent; and whether any paper's figures support the
+abstract sentences this plan leans on, since **no full text was read**.
+
+## 7. Next actions, in order of information gained per unit cost
+
+1. **G2, reciprocal best hits against medaka** — promoted to first by the review. Until the
+   `kcnh2a`/`kcnh2b` collision is resolved, the plan's primary candidate locus is unassigned and every
+   edit designed at it is designed at an unknown paralog. Pure computation; medaka labelled a proxy.
+2. **Read the result of PMID 38232499** (wildtype vs longfin locomotor performance). One abstract-
+   to-full-text step that can invalidate the whole programme, which makes it the cheapest possible
+   kill test.
+3. **Resolve the `lat4a` identifier** (§2.1). One full-text read; unblocks G4 and row P2.
+4. **G4**: inspect the `lat4a`/`kcnh2*` aligned regions in `GCA_018398805.1` for the convergent
+   residue. Pure computation on data already on disk, blocked only by steps 1 and 3.
+5. **Read full texts** for PMIDs 34534441, 34061172, 38527087 — the three loads this plan rests on.
+6. **G5** conserved-element scan, only after 1–5, and only reported as hypotheses.
+
+## Receipts, sources, claims
+
+- Computed results and receipts: [`RESULTS.md`](RESULTS.md)
+- Source index (45 queries, verbatim bodies + sha256): [`SOURCES.md`](SOURCES.md), `data/source_index.json`
+- Claim drafts in the repo's record format: [`claims/zf2ff-claims.json`](claims/zf2ff-claims.json)
+- Review record (what an LLM critique changed): [`REVIEW.md`](REVIEW.md)
