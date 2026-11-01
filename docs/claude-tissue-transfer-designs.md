@@ -477,7 +477,18 @@ exponent is not determined.
 |---|---|---|---|---|
 | Distal A | −0.04 | 0.79 | 0.91 | 0.97 |
 
-The γ = 1 switch is therefore at about **4.25 ≈ 0.39 λ**. Finer runs at γ = 2 and γ = 0.5 are queued (`claude-tissue-pzone-g2f`, `-g05f`).
+The γ = 1 switch is therefore at about **4.25 ≈ 0.39 λ**.
+
+**Finer γ = 2** (`claude-tissue-pzone-g2f`, job `aijob-e00rp3a4jf55jhdwq2`, COMPLETED, 392.5 s):
+
+| L_p | 2.25 | 2.5 | 2.75 | 3 (earlier run) |
+|---|---|---|---|---|
+| Distal A | −0.82 | −0.77 | −0.99 | 0.88 |
+
+The γ = 2 switch is sharp, between 2.75 and 3: about **2.9 ≈ 0.37 λ**.
+
+So two rate scales give **L_p* ≈ 0.37–0.39 λ**. That predicts about 6.0 at γ = 0.5, where it is currently bracketed
+between 6 and 7. A finer γ = 0.5 run is testing this (`claude-tissue-pzone-g05f`).
 
 **Rate-scale refinement** (`claude-tissue-edge2d-gamma-fine`, job `aijob-e00qha72mgcdbtqp1b`, COMPLETED, 489.9 s).
 - Finer speeds near the threshold, re-running the same script with the same seeds. The γ = 1 points at speeds 0.2 and
