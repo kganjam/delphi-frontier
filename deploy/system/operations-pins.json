@@ -1,0 +1,78 @@
+{
+ "schema": "frontier.system-operations-pins/1",
+ "note": "Re-pin only after reading what changed. A changed file is shown as unavailable until then.",
+ "pins": [
+  {
+   "id": "queue",
+   "path": "results/infra/queue.json",
+   "sha256": "7a4699044afc321c4c89b20360ba92819b2feb95d660513e891779005b0157c8",
+   "bytes": 58053
+  },
+  {
+   "id": "usage",
+   "path": "results/resources/hackathon-usage.json",
+   "sha256": "407c620a558326091b5b53a15a2c91b4ffdc7a420a73a0973c5f8276d58a456d",
+   "bytes": 64141
+  },
+  {
+   "id": "inventory",
+   "path": "results/resources/resource-inventory.json",
+   "sha256": "f5e02e3037d89eb9261c61bf36b1ed044311ea074fede786583270aa6688b9d5",
+   "bytes": 46956
+  },
+  {
+   "id": "shared",
+   "path": "results/resources/shared-job-counts.json",
+   "sha256": "d95f437f5fb92f715c1e246feb4833a5b5e23908ded75d263b63c8ed9848bee0",
+   "bytes": 2477
+  },
+  {
+   "id": "ledger",
+   "path": "results/resources/team-job-ownership.json",
+   "sha256": "93ad1b561e3b0604e98f7b0b13b902c1f3437922fd1d7dcb8c39d3ffd14a226f",
+   "bytes": 6303
+  },
+  {
+   "id": "runtime",
+   "path": "results/resources/terminal-runtime-receipts.json",
+   "sha256": "862e5fab170dcbbc67ff3ccb44ac93df4f78759c6effd57e1d7b15a4e5563443",
+   "bytes": 9047
+  },
+  {
+   "id": "progress",
+   "path": "results/resources/current-job-progress.json",
+   "sha256": "2981d4b19d16d338c2c575402f557cc83db8026db52480c8c74b5b3baf3f4d8e",
+   "bytes": 5009
+  },
+  {
+   "id": "recovery_base",
+   "path": "results/resources/backup-recovery-20261101.json",
+   "sha256": "bac3def0d10368d2c807e6af2c04ef6f72958f4e49d45aa80756bef9bd84332d",
+   "bytes": 3978
+  },
+  {
+   "id": "recovery_service",
+   "path": "results/resources/backup-recovery-service-20261101.json",
+   "sha256": "41b15bf237e055146bb6909dc8bf175e668b3c588079978d526f0cca28c1e805",
+   "bytes": 14010
+  },
+  {
+   "id": "recovery_stable",
+   "path": "results/resources/backup-recovery-stable-addons-20261101.json",
+   "sha256": "1af043d9ba3b3535011bb7626a99a620a0d7bf9d3e5b5286f1faee85fe8cd24b",
+   "bytes": 13439
+  },
+  {
+   "id": "recovery_films",
+   "path": "results/resources/backup-recovery-four-film-20261101.json",
+   "sha256": "edb84ada1ac11e7fc6642a2a97fa7819dbdfb7d3ba938d1526673deb0c1d1188",
+   "bytes": 10983
+  },
+  {
+   "id": "recovery_studies",
+   "path": "results/resources/backup-recovery-studies-20261101.json",
+   "sha256": "2991eeb007f592e1ab6e3e6c7bdd90f533946cd8dee9e67f0d4363b68cd07967",
+   "bytes": 13020
+  }
+ ]
+}
