@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs ec79ab5b0e1e",
- "input_fingerprint": "ec79ab5b0e1ea2a481e79f607bf40456b7eecdc29a4cfa6d9c52bd95e4db85af",
+ "label": "snapshot of inputs 148a1f10c2ef",
+ "input_fingerprint": "148a1f10c2ef11aa524f1261d3de3a5b42abd2578222f9356f17e5f8cff1da1b",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3394,6 +3394,11 @@
    "bytes": 1634
   },
   {
+   "path": "deploy/receipts/limbless-mouse-release-checks.json",
+   "sha256": "1e098b23133a6f2485c33e4972362404a4ef4ff7916dd9de2e8f6f04a7028c73",
+   "bytes": 2846
+  },
+  {
    "path": "deploy/receipts/mcp-expanded-check.json",
    "sha256": "33d59c52d960e2ec0d2a4049a410cd702c85994e88132bbbc44454496aa180ff",
    "bytes": 6796
@@ -4105,8 +4110,8 @@
   },
   {
    "path": "results/limbless-mouse/index.json",
-   "sha256": "29d35b8232f52d02d198836a9df2c42ad5ee075aee83a096eceb53d47f9b6739",
-   "bytes": 7307
+   "sha256": "7b6b027040c3945d9bdd96ef0a1e155940418232b6ca28bf0b77b5de821ae25d",
+   "bytes": 7836
   },
   {
    "path": "results/limbless-mouse/routes.json",
@@ -39444,6 +39449,14 @@
     "ok": null,
     "path": "deploy/receipts/interval-sweep-live.json",
     "sha256": "6cb931e5e2c855ddd4bcfa7f1733dcd138ec66506cc050663a10fbe949fde77e",
+    "date": "no time recorded"
+   },
+   {
+    "title": "limbless mouse release checks (release e8ef248a87b6)",
+    "outcome": "Limbless design space: page, data block and generated twin: 26 passed,104 deselected in 68.59s. Covers the new page at 1440 and 390, the figure digests, the declared-and-absent path, and the markdown twin's --check in both directions. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twin is current: docs/dossier/13-limbless-mouse-design-space.md is current (exit 0); Full suite compared against the previous main: 8 failed,1588 passed,32 skipped,24 errors at 04eecc59 against 9 failed,1580 passed,32 skipped,24 errors at f8c19cd3. ZERO failures and ZERO collection errors unique to this branch; the 8 and the 24 are all pre-existing on main and were reproduced there first. NOT run at the release sha: 507e38b6 and e8ef248a landed after it and change captions, one figure and the regenerated files only, and the three checks above WERE run at the release sha. (exit 0); Credential scan over every file this release adds or changes: 0 hits over 68 files. gitleaks is NOT installed on this host, so this is a pattern grep and not a full secret scan; its scope is the added and changed files only. Positive controls: a planted AKIA key and a planted ghp_ token were both flagged, and a clean file was not, so the zero is a measured zero. (exit 0)",
+    "ok": true,
+    "path": "deploy/receipts/limbless-mouse-release-checks.json",
+    "sha256": "1e098b23133a6f2485c33e4972362404a4ef4ff7916dd9de2e8f6f04a7028c73",
     "date": "no time recorded"
    },
    {
@@ -75658,7 +75671,7 @@
    "text": "The useful thing here is not the list — a specialist could write the list. It is that every row carries its evidence level, every junction between scales carries a refusal or a label, and the three models can be re-run from the repository. The question “can you make a limbless mouse?” has a dozen answers whose differences only show up when you are forced to say which phenotype, at which scale, with what evidence, and at what cost. That is what this workspace is for."
   },
   "content_sha256": "58d3944d82942b4dc8c711a8dc7e5aaaf10224e34fb7ae2f739cd9e85850d50d",
-  "index_sha256": "29d35b8232f52d02d198836a9df2c42ad5ee075aee83a096eceb53d47f9b6739",
+  "index_sha256": "7b6b027040c3945d9bdd96ef0a1e155940418232b6ca28bf0b77b5de821ae25d",
   "generated_at": null,
   "routes": {
    "title": "Routes to a limbless or limb-reduced mouse",
@@ -80549,7 +80562,7 @@
     "scale": "tissue",
     "kind": "simulation (ODE)",
     "question": "The limb bud is held open by a feedback loop. If a ZRS allele lowers ZPA Shh output, is the result proportionally smaller, or is there a threshold below which the loop never engages at all?",
-    "summary": "An ODE model of the SHH–GREM1–BMP–FGF feedback loop, built from the published topology with every rate constant marked sourced or assumed. The wild-type control must initiate, sustain and self-terminate before any sweep is read. Three knobs are then swept — ZPA Shh output, AER-inducing FGF10 input, and GREM1 production — because three different routes on this page act on three different parts of the same loop.",
+    "summary": "An ODE model of the SHH–GREM1–BMP–FGF feedback loop, built from the published topology with every rate constant marked sourced or assumed. The wild-type control must initiate, sustain and self-terminate before any sweep is read. Three knobs are then swept — ZPA Shh output, AER-inducing FGF10 input, and GREM1 production — because three different routes on this page act on three different parts of the same loop. The result that bears hardest on the question: in this model the ZRS knob is near-digital rather than a graded dial. Limbs stay normal down to about half of wild-type ZPA Shh output, the truncated band is narrow (s between 0.32 and 0.48, 17 of 201 settings swept), and below 0.31 the loop never engages at all. If that holds in an embryo, a designed ZRS allelic series would not give a smooth phenotypic series — but it is a property of this model's excitable topology, and nothing here establishes that it holds in an embryo.",
     "code": "results/limbless-mouse/code/shh_loop.py",
     "data": {
      "control_arm": {
