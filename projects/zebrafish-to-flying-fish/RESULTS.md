@@ -888,6 +888,35 @@ are the **`a`-side locus of each species** — so that comparison was between **
 between a glider's `a` paralog and a non-glider's `b`. Without this tree the F/L/F/F/I pattern would
 have been unvalidated; with it, it is read across one orthologous group.
 
+## R7o — Where the compute stops: the two decisive species have no public genome
+
+Two tests would settle the F326L line, and **neither is runnable**. Both were checked against NCBI
+Datasets rather than assumed:
+
+| test | species needed | assemblies in NCBI |
+| --- | --- | --- |
+| the published **exception** — a flying fish that should **lack** L | *Parexocoetus brachypterus* | **0** |
+| the published **positive** case in the sister family — should **have** L | *Oxyporhamphus*, *Euleptorhamphus* (the two flying-halfbeak genera) | **0** each |
+| (for completeness) any further Exocoetidae | — | **1 total**, the *H. speculiger* draft already used |
+
+So the two most informative species in the paper's own lineage distribution cannot be examined, and
+the F326L work here is bounded at **one glider and three non-gliders**. The paper had tissue samples
+for 35 species; this project has public assemblies for four Beloniformes.
+
+**And the second source's full text is not retrievable.** PMID 40689752 (the syngnathid/`lat4a`
+convergence paper) is listed in PMC as `PMC13574186`, but the article page returns a stub of 167
+characters of text — no body. So that source remains **abstract-level**, and the only full text this
+project has read is PMID 34534441.
+
+**This is where the sequence route for this goal ends.** What is left is not compute:
+
+1. **Function.** Whether F326L changes transport or fin proportion needs the in vivo work the paper
+   reports, or new work. No alignment answers it.
+2. **The two missing genomes.** Sequencing a sailfin flying fish or a flying halfbeak would settle
+   the convergence pattern directly.
+3. **Wet lab in an Exocoetid.** Still blocked at husbandry, before genetics (see `PLAN.md` §5 and
+   `zf2ff-problem-no-exocoetid-husbandry`).
+
 ## R8 — Inputs reused from other harnesses (their receipts, not ours)
 
 - `results/bioservices/claude-20261101/` (branch `claude/bioservices-20261101`): UniProt/Ensembl/
