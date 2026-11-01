@@ -27,7 +27,7 @@ Nothing here demonstrates that a flying fish can be built.
 | `data/*/MANIFEST.md` | One manifest per Nebius job (`data/tree/`, `data/tree2/`, `data/census/`, `data/motif/`): job id, CLI-read state, preset, image, software versions, every input and output digest, the in-container re-hash of each input, and the quota refusals — including a job that failed at provisioning, kept rather than hidden. |
 | [`CROSSCHECK-EVO.md`](CROSSCHECK-EVO.md) | Generated: the Evo 2 harness's 9 flying-fish windows checked against this project's independent placements. |
 | `scripts/` | Everything that produced the above. |
-| `data/` | Verbatim API responses, ledgers with hashes, PAF alignments, and the machine-readable summaries. |
+| `data/` | Verbatim API responses, ledgers with hashes, PAF alignments, newick trees, job logs, and the machine-readable summaries. Subdirectories: `epmc*` literature, `round2`/`round3` mappings, `reciprocal`, `tree` (kcnh2 collision), `tree2` (kcnh2a hunt), `census` (family census + sensitivity), `tree5` (Beloniformes outgroups), `tree6` (Takifugu control), `motif` (three scan passes), `synteny`, `kcnh2a_hunt`. |
 
 ## Reproducing the computed results
 
@@ -37,14 +37,25 @@ The assembly (1,008 MB) is not committed. Fetch it, build miniprot 0.18, then:
 # assembly: NCBI Datasets, accession GCA_018398805.1, GENOME_FASTA
 # expected FASTA sha256: 6f312a972a382295873cf1170771b0ef952f5f7772ce3b7bd19e3b49603c1052
 python3 scripts/fetch_abstracts.py       data/epmc  data/epmc_jobs.json
-python3 scripts/build_source_index.py    data/epmc,data/epmc2 data/source_index.json SOURCES.md
+python3 scripts/build_source_index.py    data/epmc,data/epmc2,data/epmc3,data/epmc4 data/source_index.json SOURCES.md
 python3 scripts/map_proteins_round2.py   <GENOME.fna> <miniprot> data/queries_round2.json data/round2
 python3 scripts/map_proteins_round2.py   <GENOME.fna> <miniprot> data/queries_round3.json data/round3
 python3 scripts/merge_and_check_hits.py  data/mapping_summary.json,data/round2/mapping_summary_round2.json,data/round3/mapping_summary_round3.json data/loci_merged.json LOCI.md
 python3 scripts/audit_long_spans.py      <GENOME.fna> data/miniprot.paf,data/round2/miniprot_round2.paf,data/round3/miniprot_round3.paf data/span_audit.json SPAN-AUDIT.md
 python3 scripts/reciprocal_check.py      <GENOME.fna> <miniprot> data/families.json data/reciprocal
+python3 scripts/crosscheck_evo_windows.py <GENOME.fna> data/loci_merged.json <evo input_set.json> data/crosscheck_evo_windows.json CROSSCHECK-EVO.md
+bash    scripts/hunt_kcnh2a.sh           # low-stringency kcnh2a-only search
+python3 scripts/synteny_kcnh2a.py        <GENOME.fna> <miniprot> data/synteny
+python3 scripts/build_tree_input.py      data/reciprocal/reciprocal_check.json data/tree/kcnh_tree_input.faa data/tree/kcnh_tree_input_ledger.json 4
+python3 scripts/analyze_tree.py          data/tree/zf2ff_kcnh.treefile data/tree/tree_analysis.json
+python3 scripts/build_motif_input.py     <evo input_set.json> <evo scores.json> data/motif/windows_all.fa data/motif/windows_ledger.json <evo controls.json>
 python3 scripts/make_claims.py           claims/zf2ff-claims.json
 ```
+
+The six Nebius jobs ran the scripts prefixed `job_` (`job_run_tree*.sh`, `job_motif_*.py`,
+`job_run_motif.sh`, `job_run_robust.sh`, `job_run_heldout.sh`) exactly as committed; each manifest
+names which script it used, and the jobs re-hash their inputs in-container so the digests in the
+manifests can be checked against the files here.
 
 Round 1 (`scripts/map_proteins.py`, `data/mapping_summary.json`) was produced by a predecessor
 process; it is reviewed here, not re-run.
