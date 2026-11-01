@@ -33,7 +33,9 @@ from . import genotype as G
 
 ROOT = Path(__file__).resolve().parents[2]
 CYCLE = "artifacts/validation-cycle"
-PROTOCOL_SCHEMA = "frontier.validation-cycle.protocol/1"
+PROTOCOL_SCHEMA = "frontier.validation-cycle.protocol/2"
+PLAN_VERSION = 2  # version 1 is retained under superseded/v1-8877fdc
+V1 = {"commit": "8877fdcf09613f894f157bfa4272ba4f2dbad1a9", "protocol_sha256": "eef454f1614e67f76b0645999a352d5e15879c2870a4406322adb7ca33d5521d"}
 SUMMARY_SCHEMA = "frontier.validation-cycle.summary/1"
 CANDIDATE = "fish3d-v3a"
 ASSEMBLY = f"artifacts/biodesign-compiler/assemblies/{CANDIDATE}.json"
@@ -42,7 +44,11 @@ CONTROLS = "artifacts/assurance-experiments/controls.json"
 ALLOM = "artifacts/observed-allometry/run/update.json"
 ALLOM_RECEIPT = "artifacts/observed-allometry/run/receipt.json"
 LEDGER = "artifacts/sequence-evidence/ledger.json"
-VALIDATOR = {"role": "independent checker (same repository code, recomputed)", "identity": "validation-cycle replay", "dependence_identity": "shares fin_mechanics.beam with the producer; no shared run, data or output"}
+VALIDATOR = {
+    "role": "same-code numerical cross-check (procedural and dependent; NOT an independent validation)",
+    "identity": "validation-cycle replay (this module)",
+    "dependence_identity": "shares fin_mechanics.beam, the closed forms and the recorded inputs with the producer; independent of the producer's run and outputs only in that it recomputes them",
+}
 # The mechanical-slice context. It states what the slice is and is not; the biological fields are explicit about being unestablished.
 CONTEXT = {
     "species": "not established: a design candidate, not an organism",
@@ -95,13 +101,15 @@ def build_protocol(root: Path = ROOT) -> dict:
     reused = {k: _file_pin(v, root) for k, v in {"fin_mechanics_receipt": FINMECH, "analytic_controls": CONTROLS, "observed_allometry_update": ALLOM, "observed_allometry_receipt": ALLOM_RECEIPT}.items()}
     checks = [  # (id, kind, endpoint, executable): the endpoint is the one an acceptance must have EXECUTED
         ("c-fem-vs-analytic", "executed", True, True, "end-loaded FEM tip deflection and slope equal P L^3/(3EI) and P L^2/(2EI) at the declared point"),
-        ("c-negative-controls", "executed", False, True, "a law mutant, a unit mutant, a context mix-up and a domain exit are each refused for their intended reason"),
+        ("c-negative-controls", "executed", False, True, "numerical wrong-law mutants are rejected against independent quadrature, and wrong-unit, wrong-load-case, non-finite and domain-exit variants are each refused by the same mechanical_slice path as the positive case"),
         ("c-virtual-V1", "executed", False, True, "V1-saved-deflection-section@1 on the saved FEM section"),
         ("c-virtual-V2", "executed", False, True, "V2-saved-tip-and-slope@1 on the saved FEM summary"),
-        ("c-reused-receipt", "reused", False, True, "the pinned fin_mechanics receipt and the pinned analytic controls hold"),
+        ("c-reused-receipt", "reused", False, False, "the pinned fin_mechanics receipt and analytic controls still match their pins; positive controls only, so not an acceptance check (not_applicable with its reason, never a pass)"),
     ]
     return {
         "schema": PROTOCOL_SCHEMA,
+        "version": 2,
+        "supersedes": {**V1, "reason": "version 1 (retained under superseded/v1-8877fdc) tested only a local unit set, hardcoded some case counts, labelled a dependent cross-check independent and let a pin fall back to itself; acceptance is re-frozen here"},
         "candidate": {"id": CANDIDATE, "assembly": _file_pin(ASSEMBLY, root), "sequence": "unresolved: no sequence is claimed", "context": CONTEXT, "scope": "the mechanical slice of an assembly of pinned files; not a genome, not a construct and not a flyable or viable animal"},
         "slice": {
             "name": "end-loaded cantilever (tip point load)",
@@ -115,6 +123,8 @@ def build_protocol(root: Path = ROOT) -> dict:
             "EI_positive_multiple_of_crit": 2.0,
             "EI_domain_exit_multiple_of_crit": 0.5,
             "n_elements": 64,
+            "load_case": "end_load_at_tip",
+            "refused_load_cases": ["uniform_pressure", "uniform_line_load", "distributed"],
             "units": {"P": "N", "L": "m", "EI": "N m^2", "delta": "m", "slope": "rad"},
         },
         "tolerances": {"fem_vs_analytic_rel": 1e-6, "mutant_must_exceed_rel": 1e-3, "V1_max_abs_over_L": 1e-4, "V2_tip_rel": 1e-7},
@@ -134,6 +144,8 @@ def build_protocol(root: Path = ROOT) -> dict:
             "that EI of any real fin ray is known (assumed range only)",
             "any biological success probability (none is computed)",
             "that the observed-allometry update validates fin mechanics or sequence-function (it is separate observed-data evidence, and it worsened held-out error)",
+            "that the validator is independent: it is a same-code numerical cross-check, procedural and dependent",
+            "that the input gate validates the producer receipt (it refuses offered inputs with a wrong unit or load case; a value mislabelled with an accepted unit passes it)",
         ],
     }
 
@@ -148,18 +160,59 @@ def _tip_slope_analytic(P, L, EI):
     return beam.tip_deflection_point_load(P, L, EI), beam.max_slope_point_load(P, L, EI)
 
 
-def check_mechanical(protocol: dict) -> dict:
-    """Executed: FEM versus the closed form at the declared point, with the validity gate strict."""
+class ContextRefused(ValueError):
+    """The slice's input gate refused an offered operating context. It validates what is OFFERED to this computation (load case, units, finite positive
+    values). It does not validate any producer's receipt, and it cannot catch a value mislabelled with an accepted unit."""
+
+    def __init__(self, reasons):
+        super().__init__("; ".join(reasons))
+        self.reasons = list(reasons)
+
+
+GATE_LIMITS = [
+    "the gate compares the offered unit and load case with the slice's declared ones; a metadata mismatch refuses the offered input, it does not validate the producer's receipt",
+    "no unit conversion is done and a value mislabelled with an accepted unit passes the gate; only the numerical cross-checks can catch that",
+]
+
+
+def declared_context(protocol: dict, EI_multiple: float | None = None) -> dict:
     s = protocol["slice"]
-    op, tol = s["operating_point"], protocol["tolerances"]
-    EI = s["EI_positive_multiple_of_crit"] * s["EI_crit_end_loaded_Nm2"]
-    sol, chk = beam.solve_checked(op["L_m"], EI, n_el=s["n_elements"], tip_force=op["P_N"], strict=True)
-    tip_a, slope_a = _tip_slope_analytic(op["P_N"], op["L_m"], EI)
+    op, u = s["operating_point"], s["units"]
+    m = s["EI_positive_multiple_of_crit"] if EI_multiple is None else EI_multiple
+    return {"load_case": s["load_case"], "P": {"value": op["P_N"], "unit": u["P"]}, "L": {"value": op["L_m"], "unit": u["L"]}, "EI": {"value": m * s["EI_crit_end_loaded_Nm2"], "unit": u["EI"]}}
+
+
+def validate_context(protocol: dict, ctx: dict) -> list[str]:
+    """The ONE operating-context/unit path: the positive computation calls it, and every wrong-unit or wrong-load variant goes through it."""
+    s = protocol["slice"]
+    why = []
+    if ctx.get("load_case") != s["load_case"]:
+        why.append(f"load case {ctx.get('load_case')!r} is not the slice's {s['load_case']!r} (refused: {', '.join(s['refused_load_cases'])})")
+    for q in ("P", "L", "EI"):
+        e = ctx.get(q)
+        v = e.get("value") if isinstance(e, dict) else None
+        if not (isinstance(v, (int, float)) and not isinstance(v, bool) and np.isfinite(v) and v > 0):
+            why.append(f"{q}: needs a finite positive value")
+        elif e.get("unit") != s["units"][q]:
+            why.append(f"{q}: unit {e.get('unit')!r} is not the slice's {s['units'][q]!r} (no conversion is done)")
+    return why
+
+
+def mechanical_slice(protocol: dict, ctx: dict) -> dict:
+    """Validate the offered context through the shared gate, then solve the end-loaded cantilever with the strict small-deflection gate and compare with the closed form."""
+    why = validate_context(protocol, ctx)
+    if why:
+        raise ContextRefused(why)
+    s, tol = protocol["slice"], protocol["tolerances"]
+    P, L, EI = ctx["P"]["value"], ctx["L"]["value"], ctx["EI"]["value"]
+    sol, chk = beam.solve_checked(L, EI, n_el=s["n_elements"], tip_force=P, strict=True)  # raises SmallDeformationViolation outside the declared domain
+    tip_a, slope_a = _tip_slope_analytic(P, L, EI)
     tip_rel = abs(sol.tip - tip_a) / tip_a
-    xs = np.linspace(0.0, op["L_m"], 33)
-    w_saved, slope_saved = sol.evaluate(xs)
-    w_ref = beam.w_point_load(xs, op["P_N"], op["L_m"], EI)
-    cases = [{"case": "FEM tip vs P L^3/(3EI)", "rel_error": tip_rel, "ok": tip_rel <= tol["fem_vs_analytic_rel"]}, {"case": "FEM max slope vs P L^2/(2EI)", "rel_error": abs(sol.max_abs_slope - slope_a) / slope_a, "ok": abs(sol.max_abs_slope - slope_a) / slope_a <= tol["fem_vs_analytic_rel"]}]
+    slope_rel = abs(sol.max_abs_slope - slope_a) / slope_a
+    xs = np.linspace(0.0, L, 33)
+    w_saved, _ = sol.evaluate(xs)
+    w_ref = beam.w_point_load(xs, P, L, EI)
+    cases = [{"case": "FEM tip vs P L^3/(3EI)", "rel_error": tip_rel, "ok": tip_rel <= tol["fem_vs_analytic_rel"]}, {"case": "FEM max slope vs P L^2/(2EI)", "rel_error": slope_rel, "ok": slope_rel <= tol["fem_vs_analytic_rel"]}]
     return {
         "EI_Nm2": EI,
         "tip_m": sol.tip,
@@ -173,39 +226,57 @@ def check_mechanical(protocol: dict) -> dict:
     }
 
 
+def check_mechanical(protocol: dict) -> dict:
+    """Executed: the declared context through the shared gate and the strict solve."""
+    return mechanical_slice(protocol, declared_context(protocol))
+
+
+def _through_the_slice(protocol: dict, ctx: dict) -> dict:
+    try:
+        mechanical_slice(protocol, ctx)
+        return {"kind": "accepted", "text": ""}
+    except ContextRefused as e:
+        return {"kind": "ContextRefused", "text": "; ".join(e.reasons)}
+    except beam.SmallDeformationViolation as e:
+        return {"kind": "SmallDeformationViolation", "text": str(e)}
+
+
 def check_negative_controls(protocol: dict) -> dict:
-    """Executed: each control must be refused for ITS intended reason (a law mutant, a unit mutant, a context mix-up, a domain exit)."""
+    """Executed. Numerical wrong-law controls (against independent quadrature) are kept apart from the gate controls, whose wrong-unit and wrong-load variants are
+    fed through the SAME `mechanical_slice` path as the positive case and must be refused for their intended reason. Positive controls show the same paths accept."""
     s, tol = protocol["slice"], protocol["tolerances"]
-    op, EI = s["operating_point"], s["EI_positive_multiple_of_crit"] * s["EI_crit_end_loaded_Nm2"]
-    out = []
-    # 1 law: the uniformly loaded tip formula used for an end load, and L^3 -> L^2, against independent quadrature (control_residuals)
+    base = declared_context(protocol)
+    law = []
     for name, fn in (("uniform-load law applied to an end load", lambda P, L, EI_: beam.tip_deflection_uniform(P, L, EI_)), ("L^3 -> L^2 mutation", lambda P, L, EI_: P * L**2 / (3.0 * EI_))):
         worst = max(r["tip_load_rel_residual"] for r in beam.control_residuals(tip_fn=fn).values())
-        out.append({"id": "law:" + name, "intended_failure": "closed form disagrees with independent quadrature", "observed_rel_residual": worst, "rejected": worst > tol["mutant_must_exceed_rel"]})
-    # 2 unit: EI in N mm^2 mislabelled as N m^2 would shrink delta by 1e6; the unit gate must refuse it before any number is used
-    accepted = {"N m^2", "N*m^2"}
-    asserted = "N mm^2"
-    wrong = beam.tip_deflection_point_load(op["P_N"], op["L_m"], EI * 1e6) / beam.tip_deflection_point_load(op["P_N"], op["L_m"], EI)
-    out.append({"id": "unit:EI in N mm^2", "intended_failure": "unit mismatch with the declared N m^2", "observed_unit": asserted, "unit_accepted": asserted in accepted, "ratio_if_misread": wrong, "rejected": asserted not in accepted})
-    # 3 context: the uniformly loaded claim cannot be answered by the end-loaded slice
-    uni = beam.tip_deflection_uniform(op["P_N"] / op["L_m"], op["L_m"], EI)
-    end = beam.tip_deflection_point_load(op["P_N"], op["L_m"], EI)
-    out.append({"id": "context:uniformly loaded claim", "intended_failure": "wrong load case for the slice", "uniform_over_end_tip_ratio": uni / end, "rejected": abs(uni / end - 1.0) > 0.1 and True})
-    # 4 domain exit: below the critical EI the linear model is outside its declared domain (strict gate raises)
-    low = s["EI_domain_exit_multiple_of_crit"] * s["EI_crit_end_loaded_Nm2"]
-    try:
-        beam.solve_checked(op["L_m"], low, n_el=s["n_elements"], tip_force=op["P_N"], strict=True)
-        out.append({"id": "domain:EI below critical", "intended_failure": "small-deformation limit exceeded", "rejected": False})
-    except beam.SmallDeformationViolation as e:
-        out.append({"id": "domain:EI below critical", "intended_failure": "small-deformation limit exceeded", "refusal": str(e), "rejected": True})
-    # 5 context: the receipt's critical EI belongs to the uniformly loaded case; used for the end load it is outside the declared domain
-    wrong_crit = s["EI_crit_uniform_load_receipt_Nm2"]
-    try:
-        beam.solve_checked(op["L_m"], wrong_crit * s["EI_positive_multiple_of_crit"], n_el=s["n_elements"], tip_force=op["P_N"], strict=True)
-        out.append({"id": "context:uniform-load critical EI used for the end load", "intended_failure": "wrong load case for the stiffness threshold", "rejected": False})
-    except beam.SmallDeformationViolation as e:
-        out.append({"id": "context:uniform-load critical EI used for the end load", "intended_failure": "wrong load case for the stiffness threshold", "refusal": str(e), "rejected": True})
-    return {"controls": out, "all_rejected": all(c["rejected"] for c in out)}
+        law.append({"id": "law:" + name, "via": "beam.control_residuals", "intended_failure": "closed form disagrees with independent quadrature", "observed_rel_residual": worst, "rejected": worst > tol["mutant_must_exceed_rel"]})
+
+    def variant(**changes):
+        c = copy.deepcopy(base)
+        for k, v in changes.items():
+            if isinstance(v, dict):
+                c[k] = {**c[k], **v}
+            else:
+                c[k] = v
+        return c
+
+    gate = []
+    for cid, why, want_kind, want_text, ctx in (
+        ("unit:EI in N mm^2", "wrong unit for EI", "ContextRefused", "EI: unit", variant(EI={"unit": "N mm^2", "value": base["EI"]["value"] * 1e6})),
+        ("unit:P in kgf", "wrong unit for the load", "ContextRefused", "P: unit", variant(P={"unit": "kgf", "value": base["P"]["value"] / 9.80665})),
+        ("context:uniformly loaded claim", "wrong load case for the slice", "ContextRefused", "load case", variant(load_case="uniform_pressure")),
+        ("context:non-finite EI", "value not finite", "ContextRefused", "finite positive", variant(EI={"value": float("nan")})),
+        ("domain:EI below the end-loaded critical", "small-deformation limit exceeded", "SmallDeformationViolation", "LINEAR_MODEL_INVALID", declared_context(protocol, s["EI_domain_exit_multiple_of_crit"])),
+        ("context:uniform-load critical EI used for the end load", "wrong load case for the stiffness threshold", "SmallDeformationViolation", "LINEAR_MODEL_INVALID", variant(EI={"value": s["EI_crit_uniform_load_receipt_Nm2"] * s["EI_positive_multiple_of_crit"]})),
+    ):
+        got = _through_the_slice(protocol, ctx)
+        gate.append({"id": cid, "via": "validation_cycle.mechanical_slice", "intended_failure": why, "expected": want_kind, "observed": got["kind"], "refusal": got["text"], "rejected": got["kind"] == want_kind and want_text in got["text"]})
+    positives = [
+        {"id": "declared context accepted by the same path", "via": "validation_cycle.mechanical_slice", "ok": _through_the_slice(protocol, base)["kind"] == "accepted"},
+        {"id": "correct closed form passes the quadrature test", "via": "beam.control_residuals", "ok": max(r["tip_load_rel_residual"] for r in beam.control_residuals().values()) < 1e-12},
+    ]
+    controls = law + gate
+    return {"controls": controls, "law_controls": law, "gate_controls": gate, "positive_controls": positives, "all_rejected": all(c["rejected"] for c in controls), "all_positive_ok": all(p["ok"] for p in positives), "gate_limits": GATE_LIMITS}
 
 
 def _contract_number(contracts: dict, iid: str, pattern: str) -> float | None:
@@ -217,43 +288,84 @@ def _contract_number(contracts: dict, iid: str, pattern: str) -> float | None:
 
 
 def check_virtual(protocol: dict, mech: dict, contracts: dict) -> dict:
-    """Executed: V1 and V2 evaluated on the saved FEM section with the acceptance their typed contracts state."""
+    """Executed: V1 and V2 evaluated on the saved FEM section with the acceptance their typed contracts state. Each also gets a negative case executed here: a
+    saved section or tip from the WRONG load law, which its own acceptance must reject. Case counts are what was evaluated."""
     tol = protocol["tolerances"]
-    L = protocol["slice"]["operating_point"]["L_m"]
+    op = protocol["slice"]["operating_point"]
+    L = op["L_m"]
     v1_tol = _contract_number(contracts, "V1-saved-deflection-section", r"<=\s*([0-9.e+-]+)")
     v2_tol = _contract_number(contracts, "V2-saved-tip-and-slope", r"<=\s*([0-9.e+-]+)")
     sec = mech["saved_section"]
-    v1 = float(np.max(np.abs(np.array(sec["w_saved_m"]) - np.array(sec["w_analytic_m"]))) / L)
+    xs = np.array(sec["x_m"])
+    ref = np.array(sec["w_analytic_m"])
+    v1 = float(np.max(np.abs(np.array(sec["w_saved_m"]) - ref)) / L)
     v2 = abs(mech["tip_m"] - mech["tip_analytic_m"]) / mech["tip_analytic_m"]
+    EI = mech["EI_Nm2"]
+    wrong_w = beam.w_uniform(xs, 8.0 * EI * mech["tip_analytic_m"] / L**4, L, EI)  # a uniformly loaded shape with the SAME tip: right size, wrong law
+    v1_neg = float(np.max(np.abs(wrong_w - ref)) / L)
+    v2_neg = abs(beam.tip_deflection_uniform(op["P_N"] / L, L, EI) - mech["tip_analytic_m"]) / mech["tip_analytic_m"]
     bound = (v1_tol == tol["V1_max_abs_over_L"]) and (v2_tol == tol["V2_tip_rel"])
     return {
-        "V1": {"value": v1, "tolerance": v1_tol, "ok": v1 <= (v1_tol or 0)},
-        "V2": {"value": v2, "tolerance": v2_tol, "ok": v2 <= (v2_tol or 0)},
+        "V1": {"value": v1, "tolerance": v1_tol, "ok": v1 <= (v1_tol or 0), "positive_cases": 1, "negative": {"case": "uniformly loaded shape with the same tip", "value": v1_neg, "rejected": v1_neg > (v1_tol or float("inf"))}},
+        "V2": {"value": v2, "tolerance": v2_tol, "ok": v2 <= (v2_tol or 0), "positive_cases": 1, "negative": {"case": "uniform-load tip formula for an end load", "value": v2_neg, "rejected": v2_neg > (v2_tol or float("inf"))}},
         "protocol_tolerances_match_the_contracts": bound,
         "contract_refs": {k: v for k, v in {i: contracts["contracts"].get(i) for i in ("V1-saved-deflection-section", "V2-saved-tip-and-slope")}.items()},
     }
 
 
 def check_reused(protocol: dict, root: Path = ROOT) -> dict:
-    """Reused: the pinned fin_mechanics receipt and analytic controls. Their bytes must still match the frozen pins; nothing here reruns them."""
+    """Reused: the pinned fin_mechanics receipt and analytic controls. Their bytes must still match the frozen pins; nothing here reruns them. Counts are read from
+    the pinned records: the receipt holds analytic POSITIVE controls only, and controls.json's mutant is the glide speed law, so no cantilever negative case is recorded."""
     pins = {k: v for k, v in protocol["reused"].items() if k in ("fin_mechanics_receipt", "analytic_controls")}
-    moved = [v["path"] for v in pins.values() if _sha(_read(v["path"], root)) != v["sha256"]]
+    moved = [v["path"] for v in pins.values() if not (root / v["path"]).is_file() or _sha(_read(v["path"], root)) != v["sha256"]]
     r = json.loads(_read(FINMECH, root))
     c = json.loads(_read(CONTROLS, root))
-    ok = not moved and r.get("verdict") == "ok" and c.get("passed") is True and r["controls"]["max_rel_residual"] < 1e-12
-    return {"changed_pins": moved, "receipt_verdict": r.get("verdict"), "controls_passed": c.get("passed"), "max_rel_residual": r["controls"]["max_rel_residual"], "passed": ok, "not_rerun": True}
+    analytic = r["controls"]["analytic_residuals_vs_independent_quadrature"]
+    holding = sum(1 for case in analytic.values() if case["tip_load_rel_residual"] < 1e-12)
+    ok = not moved and r.get("verdict") == "ok" and c.get("passed") is True and holding == len(analytic) > 0
+    return {
+        "changed_pins": moved,
+        "receipt_verdict": r.get("verdict"),
+        "controls_passed": c.get("passed"),
+        "analytic_cases_in_receipt": len(analytic),
+        "positive_cases_holding": holding,
+        "negative_cases_in_receipt": None,
+        "negative_case_note": "unavailable: the pinned receipt records positive analytic controls only, and controls.json's mutant is the glide speed law, not the cantilever",
+        "max_rel_residual": r["controls"]["max_rel_residual"],
+        "passed": ok,
+        "not_rerun": True,
+    }
+
+
+PIN_KEYS = ("fin_mechanics_receipt", "analytic_controls", "observed_allometry_update")
 
 
 def verify_pins(protocol: dict, root: Path) -> dict:
-    """Which pinned inputs of the mechanical slice still match their bytes (used on a changed copy to show what goes stale and what is retained)."""
-    pins = {
-        "fin_mechanics_receipt": protocol["reused"]["fin_mechanics_receipt"],
-        "analytic_controls": protocol["reused"]["analytic_controls"],
-        "observed_allometry_update": protocol["reused"]["observed_allometry_update"],
-        "assembly": protocol["candidate"]["assembly"],
-        "beam_code": {"path": "engineering/fin_mechanics/beam.py", "sha256": json.loads(_read(FINMECH, root))["code_files_sha256"]["beam.py"] if "code_files_sha256" in json.loads(_read(FINMECH, root)) else _sha(_read("engineering/fin_mechanics/beam.py", root))},
-    }
-    return {k: ("verified" if (root / v["path"]).is_file() and _sha(_read(v["path"], root)) == v["sha256"] else "changed") for k, v in pins.items()}
+    """Which pinned inputs of the mechanical slice still match their bytes. The expected hash of beam.py comes ONLY from the producer's receipt: if the receipt
+    carries none, the result is `missing_pin`, never a self-verification against the current file."""
+    pins = {k: protocol["reused"][k] for k in PIN_KEYS} | {"assembly": protocol["candidate"]["assembly"]}
+    out = {}
+    for k, v in pins.items():
+        f = root / v["path"]
+        out[k] = "missing_file" if not f.is_file() else ("verified" if _sha(f.read_bytes()) == v["sha256"] else "changed")
+    code = root / "engineering/fin_mechanics/beam.py"
+    try:
+        want = json.loads(_read(FINMECH, root))["code_files_sha256"]["beam.py"]
+    except (OSError, ValueError, KeyError, TypeError):
+        want = None
+    out["beam_code"] = "missing_pin" if not isinstance(want, str) or len(want) != 64 else ("missing_file" if not code.is_file() else ("verified" if _sha(code.read_bytes()) == want else "changed"))
+    return out
+
+
+PINNED_FILES = ("engineering/fin_mechanics/beam.py", "artifacts/fish-regulatory-map/map.json", "artifacts/cfd3d/vlm/fish3d-v3a-fan/vlm.json")
+
+
+def stage_pinned(tmp: Path, protocol: dict) -> Path:
+    """A copy of exactly the files the slice's pins and checked layers read, so a test or the changed-input case can alter one byte of the copy."""
+    for rel in [protocol["reused"][k]["path"] for k in PIN_KEYS] + [protocol["candidate"]["assembly"]["path"], *PINNED_FILES]:
+        (tmp / rel).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(ROOT / rel, tmp / rel)
+    return tmp
 
 
 # ------------------------------------------------------------------------------------------------------------------ plan/result artifacts, then the compiler
@@ -263,7 +375,7 @@ def _write_artifacts(out: Path, protocol: dict, assembly_sha: str, results: dict
     checks = [{"id": c["id"], "interface": None, "layer": "shape_mechanics", "endpoint": c["endpoint"], "executable": c["executable"], "kind": c["kind"], "what": c["what"]} for c in protocol["required_checks"]]
     meta = {
         "id": "vp-mech-end-loaded-cantilever",
-        "version": 1,
+        "version": PLAN_VERSION,
         "candidate_id": CANDIDATE,
         "endpoint": "end-loaded cantilever tip deflection and slope at the declared point, small-deflection domain",
         "decision": "whether the mechanical slice of the assembly may be used as a numerical stand-in; never whether the fin or animal works",
@@ -278,7 +390,7 @@ def _write_artifacts(out: Path, protocol: dict, assembly_sha: str, results: dict
         doc = {
             "schema": G.RESULT_SCHEMA,
             "plan_id": meta["id"],
-            "plan_version": 1,
+            "plan_version": PLAN_VERSION,
             "check_id": cid,
             "status": r["status"],
             "cases": r["cases"],
@@ -288,62 +400,90 @@ def _write_artifacts(out: Path, protocol: dict, assembly_sha: str, results: dict
             "candidate_assembly_sha256": assembly_sha,
             "execution": r["execution"],
             "reused_pin": r.get("reused_pin"),
+            **({"reason": r["reason"]} if "reason" in r else {}),
         }
         dump(out / f"results/res-{cid}.json", doc)
-        res_list.append({"plan_id": meta["id"], "plan_version": 1, "check_id": cid, "status": r["status"], "cases": r["cases"], "scope": r["scope"], "licenses": r.get("licenses"), "candidate_sequence_sha256": None, "ref": _file_pin(rel(f"results/res-{cid}.json"), out.parent.parent)})
+        res_list.append(
+            {
+                "plan_id": meta["id"],
+                "plan_version": PLAN_VERSION,
+                "check_id": cid,
+                **({"reason": r["reason"]} if "reason" in r else {}),
+                "status": r["status"],
+                "cases": r["cases"],
+                "scope": r["scope"],
+                "licenses": r.get("licenses"),
+                "candidate_sequence_sha256": None,
+                "ref": _file_pin(rel(f"results/res-{cid}.json"), out.parent.parent),
+            }
+        )
     # The two biological dimensions the cycle cannot execute are plans with NO result: the compiler reports them as missing, never as a pass or a failure.
     plans = [plan]
     for pid, cid, iface, endpoint_text, what in (
         ("vp-bio-bridge-growth-to-EI", "c-growth-to-EI", "I3", "calibrated EI of the candidate's rays in the stated tissue and stage", protocol["bio_bridge"]["required_readout"]),
         ("vp-seq-functional-readout", "c-functional-readout", "I1", "matched functional readout of the exact tested sequence in the stated context", protocol["sequence_reference"]["why"]),
     ):
-        pm = {"id": pid, "version": 1, "candidate_id": CANDIDATE, "endpoint": endpoint_text, "decision": "whether any functional claim may be made", "required_checks": [{"id": cid, "interface": iface, "endpoint": True, "executable": False, "kind": "not_run", "what": what}], "candidate_assembly_sha256": assembly_sha}
+        pm = {
+            "id": pid,
+            "version": PLAN_VERSION,
+            "candidate_id": CANDIDATE,
+            "endpoint": endpoint_text,
+            "decision": "whether any functional claim may be made",
+            "required_checks": [{"id": cid, "interface": iface, "endpoint": True, "executable": False, "kind": "not_run", "what": what}],
+            "candidate_assembly_sha256": assembly_sha,
+        }
         dump(out / f"plans/plan-{pid}.json", {"schema": G.PLAN_SCHEMA, **pm})
         plans.append({**{k: pm[k] for k in ("id", "version", "candidate_id", "endpoint", "decision", "required_checks")}, "ref": _file_pin(rel(f"plans/plan-{pid}.json"), out.parent.parent)})
     return plans, res_list, meta
 
 
 def _results(protocol: dict, mech, neg, virt, reused) -> dict:
+    """Case counts are what was executed or read from the pinned records; nothing here is a constant."""
     n = len(neg["controls"])
-    pos = len(mech["cases"])
-    return {
+    pos_cases = sum(1 for c in mech["cases"] if c["ok"])
+    pos_controls = sum(1 for p in neg["positive_controls"] if p["ok"])
+    r = {
         "c-fem-vs-analytic": {
             "status": "pass" if mech["passed"] else "fail",
-            "cases": {"positive": pos, "negative": n, "negative_rejected": neg["all_rejected"]},
+            "cases": {"positive": pos_cases, "negative": n, "negative_rejected": neg["all_rejected"]},
             "scope": "the declared point only (EI = 2 x the end-loaded critical value, assumed)",
             "licenses": "the end-loaded FEM equals the closed form at this point, inside the small-deflection domain",
-            "execution": {"kind": "executed", "tip_rel_error": mech["cases"][0]["rel_error"], "tip_over_L": mech["tip_over_L"]},
+            "execution": {"kind": "executed", "tip_rel_error": mech["cases"][0]["rel_error"], "tip_over_L": mech["tip_over_L"], "input_gate": "validation_cycle.mechanical_slice (units, load case, finite positive values)"},
         },
         "c-negative-controls": {
-            "status": "pass" if neg["all_rejected"] else "fail",
-            "cases": {"positive": 1, "negative": n, "negative_rejected": neg["all_rejected"]},
-            "scope": "law, unit, context and domain controls for this slice",
+            "status": "pass" if neg["all_rejected"] and neg["all_positive_ok"] else "fail",
+            "cases": {"positive": pos_controls, "negative": n, "negative_rejected": neg["all_rejected"]},
+            "scope": "law, unit, load-case and domain controls for this slice; the gate refuses offered inputs, it does not validate the producer receipt",
             "licenses": "the slice refuses the wrong law, the wrong unit, the wrong load case and a domain exit",
-            "execution": {"kind": "executed", "controls": neg["controls"]},
+            "execution": {"kind": "executed", "controls": neg["controls"], "positive_controls": neg["positive_controls"], "gate_limits": neg["gate_limits"]},
         },
         "c-virtual-V1": {
             "status": "pass" if virt["V1"]["ok"] and virt["protocol_tolerances_match_the_contracts"] else "fail",
-            "cases": {"positive": 1, "negative": 1, "negative_rejected": neg["controls"][0]["rejected"]},
+            "cases": {"positive": virt["V1"]["positive_cases"], "negative": 1, "negative_rejected": virt["V1"]["negative"]["rejected"]},
             "scope": "one saved simulated case; not a biological replicate",
             "licenses": "V1-saved-deflection-section@1 on this saved section",
             "execution": {"kind": "executed", **virt["V1"]},
         },
         "c-virtual-V2": {
             "status": "pass" if virt["V2"]["ok"] and virt["protocol_tolerances_match_the_contracts"] else "fail",
-            "cases": {"positive": 1, "negative": 1, "negative_rejected": neg["controls"][0]["rejected"]},
+            "cases": {"positive": virt["V2"]["positive_cases"], "negative": 1, "negative_rejected": virt["V2"]["negative"]["rejected"]},
             "scope": "one saved simulated case; not a biological replicate",
             "licenses": "V2-saved-tip-and-slope@1 on this saved summary",
             "execution": {"kind": "executed", **virt["V2"]},
         },
-        "c-reused-receipt": {
-            "status": "pass" if reused["passed"] else "fail",
-            "cases": {"positive": 3, "negative": 1, "negative_rejected": True},
-            "scope": "the pinned receipt only; not rerun here",
-            "licenses": "the producer's recorded controls held (analytic residuals, FEM vs analytic over the sweep)",
-            "execution": {"kind": "reused", **reused},
-            "reused_pin": protocol["reused"]["fin_mechanics_receipt"],
-        },
     }
+    # The reused receipt holds positive analytic controls only. It cannot earn a pass (a pass needs a rejected negative case) and is not an acceptance check: not_applicable, with the reason.
+    reason = f"the pinned receipt records {reused['analytic_cases_in_receipt']} analytic positive controls and no cantilever negative case; kept as pinned context for the executed checks, not as an acceptance check"
+    r["c-reused-receipt"] = {
+        "status": "not_applicable" if reused["passed"] else "fail",
+        "reason": reason if reused["passed"] else "the pinned receipt or controls no longer hold: " + str(reused["changed_pins"]),
+        "cases": {"positive": reused["positive_cases_holding"], "negative": None, "negative_rejected": None},
+        "scope": "the pinned receipt only; not rerun here",
+        "licenses": None,
+        "execution": {"kind": "reused", **reused},
+        "reused_pin": protocol["reused"]["fin_mechanics_receipt"],
+    }
+    return r
 
 
 def _design(plans, results, protocol) -> dict:
@@ -370,17 +510,7 @@ def changed_input_case(protocol: dict, graph: dict, design: dict) -> dict:
     propagation says what the change invalidates downstream and what it retains for the original pinned model only."""
     tmp = Path(tempfile.mkdtemp(prefix="vcycle-"))
     try:
-        for v in [
-            protocol["reused"]["fin_mechanics_receipt"],
-            protocol["reused"]["analytic_controls"],
-            protocol["reused"]["observed_allometry_update"],
-            protocol["candidate"]["assembly"],
-            {"path": "engineering/fin_mechanics/beam.py"},
-            {"path": "artifacts/fish-regulatory-map/map.json"},
-            {"path": "artifacts/cfd3d/vlm/fish3d-v3a-fan/vlm.json"},
-        ]:
-            (tmp / v["path"]).parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy(ROOT / v["path"], tmp / v["path"])
+        stage_pinned(tmp, protocol)
         before = verify_pins(protocol, tmp)
         p = tmp / FINMECH  # the assumed-EI receipt: one appended byte is a changed input
         p.write_bytes(p.read_bytes() + b" ")
@@ -480,6 +610,9 @@ def run(root: Path = ROOT, out: Path | None = None) -> dict:
     stale_pins = [v["path"] for v in [protocol["candidate"]["assembly"], *protocol["reused"].values()] if _sha(_read(v["path"], root)) != v["sha256"]]
     if stale_pins:
         raise ValueError(f"frozen protocol pins changed: {stale_pins}")
+    unverified = {k: v for k, v in verify_pins(protocol, root).items() if v != "verified"}
+    if unverified:
+        raise ValueError(f"pins not verified, refusing to run: {unverified}")
     contracts = G.instrument_contracts(root)
     graph = G.baseline_graph(root)
     mech, neg = check_mechanical(protocol), check_negative_controls(protocol)
@@ -543,7 +676,7 @@ def run(root: Path = ROOT, out: Path | None = None) -> dict:
     dump(out / "mechanical-evidence.json", {"mechanical": {k: v for k, v in mech.items() if k != "saved_section"}, "saved_section": mech["saved_section"], "negative_controls": neg, "virtual": virt, "reused": reused})
     summary = _summary(protocol, report, inverse, hist, changed, optional, nxt, assembly_sha, plan_meta, res_list, protocol_path)
     dump(out / "summary.json", summary)
-    files = sorted(p for p in out.rglob("*.json") if p.name not in ("manifest.json", "replay-receipt.json") and "bundle" not in p.relative_to(out).parts)
+    files = sorted(p for p in out.rglob("*.json") if p.name not in ("manifest.json", "replay-receipt.json") and not ({"bundle", "superseded"} & set(p.relative_to(out).parts)))
     dump(
         out / "manifest.json",
         {
@@ -634,13 +767,18 @@ def prepare_bundle(source_commit: str, created_at: str, out: Path) -> dict:
         "The sequence reference is unresolved and no functional readout has been measured.",
         "No aggregate or biological success probability exists.",
     ]
+    neg_exec = c.jblob(f"{CYCLE}/results/res-c-negative-controls.json")["execution"]  # counts come from the immutable result, not from prose
+    n_ctrl = len(neg_exec["controls"])
+    n_rej = sum(1 for x in neg_exec["controls"] if x["rejected"])
+    st = {h["id"]: h["status"] for h in hist["checks"]}
+    mech_ok, virt_ok = st["c-fem-vs-analytic"] == "pass", st["c-virtual-V1"] == "pass" and st["c-virtual-V2"] == "pass"
     claim = c.add(
         c.draft(
             "Claim",
             "validation-cycle-candidate-rejected",
             {
-                "title": "fish3d-v3a is rejected as a working assembly; its end-loaded mechanical slice passes at the declared point",
-                "statement": "Under the frozen protocol the mechanical slice passes (FEM equals the closed form, four negative controls are refused for their intended reasons, V1 and V2 hold) while the growth-to-EI bridge and the sequence reference are missing, so the working-assembly claim is rejected.",
+                "title": f"fish3d-v3a is rejected as a working assembly; its end-loaded mechanical slice {'passes' if mech_ok else 'does not pass'} at the declared point",
+                "statement": f"Under the frozen protocol (version {protocol['version']}) the mechanical slice {'passes' if mech_ok else 'does not pass'} (FEM versus the closed form; {n_rej} of {n_ctrl} negative controls are refused for their intended reasons; V1 and V2 {'both hold' if virt_ok else 'do not both hold'}) while the growth-to-EI bridge and the sequence reference are missing, so the working-assembly claim is rejected.",
                 "context": "A statement about the pinned assembly files and the end-loaded cantilever slice, not about an organism.",
                 "assumptions": ["EI is an assumed range, not measured."],
                 "limitations": limits,
@@ -846,7 +984,7 @@ def receipt(root: Path = ROOT) -> dict:
     import scipy
 
     out = root / CYCLE
-    snap = lambda: {str(p.relative_to(out)): _sha(p.read_bytes()) for p in sorted(out.rglob("*.json")) if p.name != "replay-receipt.json" and "bundle" not in p.relative_to(out).parts}  # noqa: E731
+    snap = lambda: {str(p.relative_to(out)): _sha(p.read_bytes()) for p in sorted(out.rglob("*.json")) if p.name != "replay-receipt.json" and not ({"bundle", "superseded"} & set(p.relative_to(out).parts))}  # noqa: E731
     run(root)
     first = snap()
     run(root)

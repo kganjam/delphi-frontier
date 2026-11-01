@@ -1,0 +1,18 @@
+{
+  "bundle_sha256": "ffbea807859b0c3c4be7ef8ac2c932c348c64d51363e9ed3debc397fd07a5dc3",
+  "commit": "8877fdcf09613f894f157bfa4272ba4f2dbad1a9",
+  "cycle_commit": "624c329c6c5ab7abde1524748d1a511351413f01",
+  "paths_note": "files inside this directory still carry their ORIGINAL repository paths (artifacts/validation-cycle/plans/..., results/...) in their refs; those paths now hold version 2, so the v1 refs resolve only at commit 8877fdc",
+  "protocol_sha256": "eef454f1614e67f76b0645999a352d5e15879c2870a4406322adb7ca33d5521d",
+  "schema": "frontier.validation-cycle.superseded/1",
+  "status": "SUPERSEDED, retained unchanged as history; not deleted and not rewritten",
+  "superseded_by": "artifacts/validation-cycle/protocol.json (version 2)",
+  "version": 1,
+  "why": [
+    "the unit negative control checked a local hardcoded set, not the real slice's input gate",
+    "the bundle Claim carried a prose constant for the number of negative controls",
+    "the validator was labelled independent although it shares code and inputs with the producer",
+    "verify_pins fell back to hashing the current beam.py as its own expected value when the receipt lacked a pin",
+    "c-reused-receipt carried hardcoded case counts (3 positive, 1 negative, rejected true) not derived from the pinned records"
+  ]
+}

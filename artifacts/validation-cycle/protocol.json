@@ -41,7 +41,9 @@
     "a working or validated fin, ray, genome or organism",
     "that EI of any real fin ray is known (assumed range only)",
     "any biological success probability (none is computed)",
-    "that the observed-allometry update validates fin mechanics or sequence-function (it is separate observed-data evidence, and it worsened held-out error)"
+    "that the observed-allometry update validates fin mechanics or sequence-function (it is separate observed-data evidence, and it worsened held-out error)",
+    "that the validator is independent: it is a same-code numerical cross-check, procedural and dependent",
+    "that the input gate validates the producer receipt (it refuses offered inputs with a wrong unit or load case; a value mislabelled with an accepted unit passes it)"
   ],
   "required_checks": [
     {
@@ -56,7 +58,7 @@
       "executable": true,
       "id": "c-negative-controls",
       "kind": "executed",
-      "what": "a law mutant, a unit mutant, a context mix-up and a domain exit are each refused for their intended reason"
+      "what": "numerical wrong-law mutants are rejected against independent quadrature, and wrong-unit, wrong-load-case, non-finite and domain-exit variants are each refused by the same mechanical_slice path as the positive case"
     },
     {
       "endpoint": false,
@@ -74,10 +76,10 @@
     },
     {
       "endpoint": false,
-      "executable": true,
+      "executable": false,
       "id": "c-reused-receipt",
       "kind": "reused",
-      "what": "the pinned fin_mechanics receipt and the pinned analytic controls hold"
+      "what": "the pinned fin_mechanics receipt and analytic controls still match their pins; positive controls only, so not an acceptance check (not_applicable with its reason, never a pass)"
     }
   ],
   "reused": {
@@ -98,7 +100,7 @@
       "sha256": "75264dce2491c236840ee4008972b0244e2a21b364c5db3c78354b2daedc41dc"
     }
   },
-  "schema": "frontier.validation-cycle.protocol/1",
+  "schema": "frontier.validation-cycle.protocol/2",
   "sequence_reference": {
     "ledger_entry": "LEN-P2-positive",
     "state": "unresolved",
@@ -112,6 +114,7 @@
     "EI_positive_multiple_of_crit": 2.0,
     "EI_status": "ASSUMED_RANGE_NOT_MEASURED",
     "law": "delta = P L^3 / (3 EI)",
+    "load_case": "end_load_at_tip",
     "n_elements": 64,
     "name": "end-loaded cantilever (tip point load)",
     "not_this_law": "uniformly loaded beam: delta = q L^4 / (8 EI)",
@@ -121,6 +124,11 @@
       "P_N": 0.02296875,
       "P_exact": "147/6400"
     },
+    "refused_load_cases": [
+      "uniform_pressure",
+      "uniform_line_load",
+      "distributed"
+    ],
     "units": {
       "EI": "N m^2",
       "L": "m",
@@ -129,10 +137,16 @@
       "slope": "rad"
     }
   },
+  "supersedes": {
+    "commit": "8877fdcf09613f894f157bfa4272ba4f2dbad1a9",
+    "protocol_sha256": "eef454f1614e67f76b0645999a352d5e15879c2870a4406322adb7ca33d5521d",
+    "reason": "version 1 (retained under superseded/v1-8877fdc) tested only a local unit set, hardcoded some case counts, labelled a dependent cross-check independent and let a pin fall back to itself; acceptance is re-frozen here"
+  },
   "tolerances": {
     "V1_max_abs_over_L": 0.0001,
     "V2_tip_rel": 1e-07,
     "fem_vs_analytic_rel": 1e-06,
     "mutant_must_exceed_rel": 0.001
-  }
+  },
+  "version": 2
 }
