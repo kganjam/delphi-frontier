@@ -1,0 +1,49 @@
+[2026-11-01T16:20:51Z] VOXGPU_ARMB start host=f10fcea089d9 gencode=arch=compute_75,code=compute_75
+[2026-11-01T16:20:51Z] nvidia-smi rc=0
+name, driver_version, compute_cap, memory.total [MiB]
+NVIDIA H100 80GB HBM3, 580.173.02, 9.0, 81559 MiB
+NAME="Ubuntu"
+VERSION="18.04.6 LTS (Bionic Beaver)"
+lrwxrwxrwx 1 root root   9 Dec 15  2022 cuda -> cuda-10.2
+drwxr-xr-x 1 root root 179 Dec 15  2022 cuda-10.2
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2019 NVIDIA Corporation
+Built on Wed_Oct_23_19:24:38_PDT_2019
+Cuda compilation tools, release 10.2, V10.2.89
+[2026-11-01T16:21:02Z] STEP apt rc=0 wall_s=10.71
+ii  libboost-dev:amd64                     1.65.1.0ubuntu1                     amd64        Boost C++ Libraries development files (default version)
+ii  libboost1.65-dev:amd64                 1.65.1+dfsg-0ubuntu5                amd64        Boost C++ Libraries development files
+gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
+[2026-11-01T16:21:03Z] STEP cmake_dl rc=0 wall_s=1.6
+87136646867ed65e935d6bacd44d52a740c448ad0806f6897d8c3d47ce438c8b  cmake.tgz
+cmake version 3.18.6
+[2026-11-01T16:21:04Z] STEP src_dl rc=0 wall_s=0.46
+[2026-11-01T16:21:04Z] src bytes=1247489 sha256=0a0f4fd105a8df21df8b62a7d00e5178096d28415f2fb9f1679f6c78fd2c6546
+[2026-11-01T16:21:04Z] FORK: applying /job/make_fork.py (sha256 3c4c17a157a53baccbd1abada49d5ec99007e042285eb7398b9e305edd94ef51) -- THIS IS NOT THE PUBLISHED ENGINE
+forked src/VX3/VX3_VoxelyzeKernel.cu bytes 41762 -> 42892 launch sites 11 syncs removed 8 occupancy removed 8
+[2026-11-01T16:21:04Z] FORK diff sha256=4eb4f398b5595fa026334548594005b470cdb4ff1f5c841aa31de5af7f9ab8fd lines=306
+[2026-11-01T16:21:05Z] STEP configure rc=0 wall_s=1.07
+[2026-11-01T16:21:28Z] STEP build rc=0 wall_s=22.77
+141:[ 82%] Building CXX object CMakeFiles/voxelyze.3.0.dir/src/old/tinyxmlerror.cpp.o
+142:/usr/bin/c++  -I/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src -I/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3 -I/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/Utils -I/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VXA -I/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/old -O3 -DNDEBUG -std=gnu++1z -o CMakeFiles/voxelyze.3.0.dir/src/old/tinyxmlerror.cpp.o -c /work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/old/tinyxmlerror.cpp
+153:/usr/bin/ar qc libvoxelyze.3.0.a CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_Collision.cu.o CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_External.cu.o CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_Link.cu.o CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_Material.cu.o CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_MaterialLink.cu.o CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_MaterialVoxel.cu.o CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_SimulationManager.cu.o CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_Voxel.cu.o CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_VoxelyzeKernel.cu.o CMakeFiles/voxelyze.3.0.dir/src/VXA/VX_Object.cpp.o CMakeFiles/voxelyze.3.0.dir/src/VXA/VX_Sim.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/GL_Utils.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/MarchCube.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/Mesh.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/TI_Collision.cu.o CMakeFiles/voxelyze.3.0.dir/src/old/TI_Object.cu.o CMakeFiles/voxelyze.3.0.dir/src/old/VX3_MemoryCleaner.cu.o CMakeFiles/voxelyze.3.0.dir/src/old/VXS_Bond.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VXS_SimGLView.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VXS_Voxel.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_Bond.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_Collision.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_Environment.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_External.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_FEA.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_FRegion.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_LinearSolver.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_Link.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_Material.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_MaterialLink.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_MaterialVoxel.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_MeshRender.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_MeshUtil.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VX_Voxel.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/VXt_Voxel.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/Voxelyze.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/XML_Rip.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/tinyxml.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/tinyxmlerror.cpp.o CMakeFiles/voxelyze.3.0.dir/src/old/tinyxmlparser.cpp.o
+-rwxr-xr-x 1 root root  653968 Nov  1 16:21 voxcraft-sim
+-rwxr-xr-x 1 root root  900880 Nov  1 16:21 vx3_node_daemon
+-rwxr-xr-x 1 root root 4314904 Nov  1 16:21 vx3_node_worker
+-rwxr-xr-x 1 root root 3833672 Nov  1 16:21 vx3_test
+3fe0f3aa48677402c3ffd978310540c120b9a04c788e25bed5b509d423de8622  voxcraft-sim
+d1a4623affff0ae2b4db5c99f8094f5e09887616c9f640d33cd166edc65151e8  vx3_node_worker
+[2026-11-01T16:21:28Z] ptx_entries=0 elf_entries=1
+[2026-11-01T16:21:45Z] DEMO rc=134 wall_s=17.04 history_bytes=515 output_bytes=0
+c23c2f61d988e19ea293f6651019d4e6a67f3a082459c64ee496ef337ace0d2f  a.history
+sha256sum: output.xml: No such file or directory
+workspace:
+total 4
+drwxr-xr-x 2 root root 4096 Nov  1 16:21 locally
+
+workspace/locally:
+total 4
+-rw-r--r-- 1 root root 138 Nov  1 16:21 20261101162128.5472424230717999895.vxt
+[2026-11-01T16:21:45Z] WORKER_DIRECT rc=0
+[2026-11-01T16:21:45Z] STATUS=RUN_FAIL
+NVIDIA H100 80GB HBM3, 580.173.02

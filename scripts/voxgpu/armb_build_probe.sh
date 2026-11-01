@@ -33,9 +33,9 @@ if [ "$GOT" != "$SRC_SHA" ]; then log "SOURCE_MISMATCH"; STATUS=SOURCE_MISMATCH;
 tar xzf vx.tar.gz; cd voxcraft-sim-$PIN
 if [ -n "${FORK_SCRIPT:-}" ]; then
   log "FORK: applying $FORK_SCRIPT (sha256 $(sha256sum $FORK_SCRIPT | cut -d' ' -f1)) -- THIS IS NOT THE PUBLISHED ENGINE"
-  cp src/VX3/VX3_VoxelyzeKernel.cu /tmp/orig_kernel.cu
+  cp -r src /tmp/orig_src
   python3 $FORK_SCRIPT src/VX3/VX3_VoxelyzeKernel.cu >> $R 2>&1 || { log "FORK_APPLY_FAIL"; }
-  diff -u /tmp/orig_kernel.cu src/VX3/VX3_VoxelyzeKernel.cu > $O/fork.diff; log "FORK diff sha256=$(sha256sum $O/fork.diff | cut -d' ' -f1) lines=$(wc -l < $O/fork.diff)"
+  (cd /; diff -ru /tmp/orig_src /work/voxcraft-sim-$PIN/src) > $O/fork.diff; log "FORK diff sha256=$(sha256sum $O/fork.diff | cut -d' ' -f1) lines=$(wc -l < $O/fork.diff)"
 fi
 mkdir -p build; cd build
 step configure cmake .. -DCUDA_ARCH=$GENCODE; CRC=$?

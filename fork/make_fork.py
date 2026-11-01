@@ -57,4 +57,13 @@ nsync = s.count("VcudaDeviceSynchronize();")
 s = s.replace("VcudaDeviceSynchronize();", "/* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */")
 assert "<<<" not in s.replace('printf("<<<', ""), "leftover launch"
 open(p, "w").write(s)
+# 6) host side: the per-simulation parent thread now executes the former child work (deep call chains), so
+#    raise the per-thread device stack (upstream comment at this spot already suggests cudaLimitStackSize).
+import os
+pm = os.path.join(os.path.dirname(p), "VX3_SimulationManager.cu"); sm = open(pm).read()
+old = "    // if \"Lane User Stack Overflow\" ocurs, maybe Stack Size too small, can try this:\n    // VcudaDeviceSetLimit(cudaLimitStackSize, 2048);"
+assert sm.count(old) == 1, "stack comment anchor"
+STACK = int(os.environ.get("VX3_FORK_STACK", "32768"))
+sm = sm.replace(old, old + "\n    VcudaDeviceSetLimit(cudaLimitStackSize, %d); /* FORK: parent thread runs former child work */" % STACK)
+open(pm, "w").write(sm)
 print("forked", p, "bytes", n0, "->", len(s), "launch sites", nl + 1 + npw, "syncs removed", nsync, "occupancy removed", nocc)

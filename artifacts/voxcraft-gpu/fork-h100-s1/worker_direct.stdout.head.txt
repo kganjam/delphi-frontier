@@ -1,0 +1,26 @@
+1 GPU found.
+=== set device to 0 for 1 simulations ===
+
+Total GPU memory 85017493504 bytes.
+Set GPU heap size to be 42508746752 bytes.
+set GPU printfFIFO size to be 432537600 bytes.
+[0;32m0) Simulation 0 runs: robot.vxd.
+[0m
+{{{setting}}}<rescale>0.001</rescale>
+{{{setting}}}<matcolor><id>1</id><r>1.00</r><g>0.00</g><b>0.00</b><a>1.00</a></matcolor>
+
+{{{setting}}}<voxel_size>0.010000</voxel_size>
+WARNING: No links.
+WARNING: No links.
+real_stepsize: 70 ; recommendedTimeStep 0.000159; d_v3->DtFrac 0.900000 . 
+[1;31m
+/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu(149): CUDA Function Error: an illegal memory access was encountered 
+[0m[1;31m
+/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu(431): CUDA Function Error: an illegal memory access was encountered 
+[0m[1;31m
+/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu(449): CUDA Function Error: an illegal memory access was encountered 
+[0m[1;31m
+/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu(453): CUDA Function Error: an illegal memory access was encountered 
+[0m[1;31m
+/work/voxcraft-sim-dd8668f99ff74fb2fc2ee60deb91287a3b519d8f/src/VX3/VX3_SimulationManager.cu(134): CUDA Function Error: an illegal memory access was encountered 
+[0m

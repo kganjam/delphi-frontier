@@ -1,0 +1,306 @@
+--- /tmp/orig_kernel.cu	2026-11-01 16:21:04.339480030 +0000
++++ src/VX3/VX3_VoxelyzeKernel.cu	2026-11-01 16:21:04.357480063 +0000
+@@ -11,17 +11,17 @@
+ }
+ 
+ /* Sub GPU Threads */
+-__global__ void gpu_update_links(VX3_Link **links, int num);
+-__global__ void gpu_update_voxels(VX3_Voxel *voxels, int num, double dt, double currentTime, VX3_VoxelyzeKernel *k);
+-__global__ void gpu_update_temperature(VX3_Voxel *voxels, int num, double TempAmplitude, double TempPeriod, double currentTime, VX3_VoxelyzeKernel* k);
+-__global__ void gpu_update_attach(VX3_Voxel **surface_voxels, int num, double watchDistance, VX3_VoxelyzeKernel *k);
+-__global__ void gpu_update_cilia_force(VX3_Voxel **surface_voxels, int num, VX3_VoxelyzeKernel *k);
+-__global__ void gpu_clear_lookupgrid(VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid, int num);
+-__global__ void gpu_insert_lookupgrid(VX3_Voxel **d_surface_voxels, int num, VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid,
++__device__ void gpu_update_links(int vx3_i, VX3_Link **links, int num);
++__device__ void gpu_update_voxels(int vx3_i, VX3_Voxel *voxels, int num, double dt, double currentTime, VX3_VoxelyzeKernel *k);
++__device__ void gpu_update_temperature(int vx3_i, VX3_Voxel *voxels, int num, double TempAmplitude, double TempPeriod, double currentTime, VX3_VoxelyzeKernel* k);
++__device__ void gpu_update_attach(int vx3_i, int vx3_j, VX3_Voxel **surface_voxels, int num, double watchDistance, VX3_VoxelyzeKernel *k);
++__device__ void gpu_update_cilia_force(int vx3_i, VX3_Voxel **surface_voxels, int num, VX3_VoxelyzeKernel *k);
++__device__ void gpu_clear_lookupgrid(int vx3_i, VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid, int num);
++__device__ void gpu_insert_lookupgrid(int vx3_i, VX3_Voxel **d_surface_voxels, int num, VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid,
+                                       VX3_Vec3D<> *gridLowerBound, VX3_Vec3D<> *gridDelta, int lookupGrid_n);
+-__global__ void gpu_collision_attachment_lookupgrid(VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid, int num, double watchDistance,
++__device__ void gpu_collision_attachment_lookupgrid(int vx3_i, VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid, int num, double watchDistance,
+                                                     VX3_VoxelyzeKernel *k);
+-__global__ void gpu_update_detach(VX3_Link **links, int num, VX3_VoxelyzeKernel *k);
++__device__ void gpu_update_detach(int vx3_i, VX3_Link **links, int num, VX3_VoxelyzeKernel *k);
+ /* Host methods */
+ 
+ VX3_VoxelyzeKernel::VX3_VoxelyzeKernel(CVX_Sim *In) {
+@@ -223,13 +223,12 @@
+         if (TempPeriod > 0) {
+             int blockSize = 512;
+             int minGridSize;
+-            cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, gpu_update_temperature, 0,
+-                                               num_d_voxels); // Dynamically calculate blockSize
++        minGridSize = 0; blockSize = 256; /* FORK: occupancy query removed (no child launch); values only sized the unused grid */
+             int gridSize_voxels = (num_d_voxels + blockSize - 1) / blockSize;
+             int blockSize_voxels = num_d_voxels < blockSize ? num_d_voxels : blockSize;
+-            gpu_update_temperature<<<gridSize_voxels, blockSize_voxels>>>(d_voxels, num_d_voxels, TempAmplitude, TempPeriod, currentTime, this);
++            for (int vx3_i = 0; vx3_i < (int)(num_d_voxels); vx3_i++) gpu_update_temperature(vx3_i, d_voxels, num_d_voxels, TempAmplitude, TempPeriod, currentTime, this); /* FORK: was a child-grid launch of gpu_update_temperature (grid gridSize_voxels x blockSize_voxels) */
+             CUDA_CHECK_AFTER_CALL();
+-            VcudaDeviceSynchronize();
++            /* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */
+         }
+     }
+ }
+@@ -257,16 +256,15 @@
+     int blockSize;
+     int minGridSize;
+     if (d_v_links.size()) {
+-        cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, gpu_update_links, 0,
+-                                           d_v_links.size()); // Dynamically calculate blockSize
++        minGridSize = 0; blockSize = 256; /* FORK: occupancy query removed (no child launch); values only sized the unused grid */
+         int gridSize_links = (d_v_links.size() + blockSize - 1) / blockSize;
+         int blockSize_links = d_v_links.size() < blockSize ? d_v_links.size() : blockSize;
+         // if (CurStepCount % 1000 == 0 || currentTime>1.0) {
+         //     printf("&d_v_links[0] %p; d_v_links.size() %d. \n", &d_v_links[0], d_v_links.size());
+         // }
+-        gpu_update_links<<<gridSize_links, blockSize_links>>>(&d_v_links[0], d_v_links.size());
++        for (int vx3_i = 0; vx3_i < (int)(d_v_links.size()); vx3_i++) gpu_update_links(vx3_i, &d_v_links[0], d_v_links.size()); /* FORK: was a child-grid launch of gpu_update_links (grid gridSize_links x blockSize_links) */
+         CUDA_CHECK_AFTER_CALL();
+-        VcudaDeviceSynchronize();
++        /* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */
+ 
+         // checking every link for diverge is too wasteful! using random
+         // sampling.
+@@ -294,22 +292,20 @@
+     }
+ 
+     if (EnableCilia) {
+-        cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, gpu_update_cilia_force, 0,
+-                                           num_d_surface_voxels); // Dynamically calculate blockSize
++        minGridSize = 0; blockSize = 256; /* FORK: occupancy query removed (no child launch); values only sized the unused grid */
+         int gridSize_voxels = (num_d_surface_voxels + blockSize - 1) / blockSize;
+         int blockSize_voxels = num_d_surface_voxels < blockSize ? num_d_surface_voxels : blockSize;
+-        gpu_update_cilia_force<<<gridSize_voxels, blockSize_voxels>>>(d_surface_voxels, num_d_surface_voxels, this);
++        for (int vx3_i = 0; vx3_i < (int)(num_d_surface_voxels); vx3_i++) gpu_update_cilia_force(vx3_i, d_surface_voxels, num_d_surface_voxels, this); /* FORK: was a child-grid launch of gpu_update_cilia_force (grid gridSize_voxels x blockSize_voxels) */
+         CUDA_CHECK_AFTER_CALL();
+-        VcudaDeviceSynchronize();
++        /* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */
+     }
+ 
+-    cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, gpu_update_voxels, 0,
+-                                       num_d_voxels); // Dynamically calculate blockSize
++        minGridSize = 0; blockSize = 256; /* FORK: occupancy query removed (no child launch); values only sized the unused grid */
+     int gridSize_voxels = (num_d_voxels + blockSize - 1) / blockSize;
+     int blockSize_voxels = num_d_voxels < blockSize ? num_d_voxels : blockSize;
+-    gpu_update_voxels<<<gridSize_voxels, blockSize_voxels>>>(d_voxels, num_d_voxels, dt, currentTime, this);
++    for (int vx3_i = 0; vx3_i < (int)(num_d_voxels); vx3_i++) gpu_update_voxels(vx3_i, d_voxels, num_d_voxels, dt, currentTime, this); /* FORK: was a child-grid launch of gpu_update_voxels (grid gridSize_voxels x blockSize_voxels) */
+     CUDA_CHECK_AFTER_CALL();
+-    VcudaDeviceSynchronize();
++    /* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */
+ 
+     int CycleStep =
+         int(TempPeriod / dt); // Sample at the same time point in the cycle, to avoid the impact of actuation as much as possible.
+@@ -419,31 +415,28 @@
+             // printf("gridLowerBound (%f,%f,%f), gridDelta (%f,%f,%f), gridUpperBound (%f,%f,%f).\n\n", gridLowerBound.x, gridLowerBound.y,
+             //        gridLowerBound.z, gridDelta.x, gridDelta.y, gridDelta.z, gridUpperBound.x, gridUpperBound.y, gridUpperBound.z);
+             // clear all lookupGrids
+-            cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, gpu_clear_lookupgrid, 0,
+-                                               num_lookupGrids); // Dynamically calculate blockSize
++        minGridSize = 0; blockSize = 256; /* FORK: occupancy query removed (no child launch); values only sized the unused grid */
+             int gridSize_voxels = (num_lookupGrids + blockSize - 1) / blockSize;
+             int blockSize_voxels = num_lookupGrids < blockSize ? num_lookupGrids : blockSize;
+-            gpu_clear_lookupgrid<<<gridSize_voxels, blockSize_voxels>>>(d_collisionLookupGrid, num_lookupGrids);
++            for (int vx3_i = 0; vx3_i < (int)(num_lookupGrids); vx3_i++) gpu_clear_lookupgrid(vx3_i, d_collisionLookupGrid, num_lookupGrids); /* FORK: was a child-grid launch of gpu_clear_lookupgrid (grid gridSize_voxels x blockSize_voxels) */
+             CUDA_CHECK_AFTER_CALL();
+-            VcudaDeviceSynchronize();
++            /* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */
+             // build lookupGrids: put surface voxels into grids
+-            cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, gpu_insert_lookupgrid, 0,
+-                                               num_d_surface_voxels); // Dynamically calculate blockSize
++        minGridSize = 0; blockSize = 256; /* FORK: occupancy query removed (no child launch); values only sized the unused grid */
+             gridSize_voxels = (num_d_surface_voxels + blockSize - 1) / blockSize;
+             blockSize_voxels = num_d_surface_voxels < blockSize ? num_d_surface_voxels : blockSize;
+-            gpu_insert_lookupgrid<<<gridSize_voxels, blockSize_voxels>>>(d_surface_voxels, num_d_surface_voxels, d_collisionLookupGrid,
+-                                                                         &gridLowerBound, &gridDelta, lookupGrid_n);
++            for (int vx3_i = 0; vx3_i < (int)(num_d_surface_voxels); vx3_i++) gpu_insert_lookupgrid(vx3_i, d_surface_voxels, num_d_surface_voxels, d_collisionLookupGrid,
++                                                                         &gridLowerBound, &gridDelta, lookupGrid_n); /* FORK: was a child-grid launch of gpu_insert_lookupgrid (grid gridSize_voxels x blockSize_voxels) */
+             CUDA_CHECK_AFTER_CALL();
+-            VcudaDeviceSynchronize();
++            /* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */
+             // detect collision: voxels in each grid with voxels within this grid and its neighbors
+-            cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, gpu_collision_attachment_lookupgrid, 0,
+-                                               num_lookupGrids); // Dynamically calculate blockSize
++        minGridSize = 0; blockSize = 256; /* FORK: occupancy query removed (no child launch); values only sized the unused grid */
+             gridSize_voxels = (num_lookupGrids + blockSize - 1) / blockSize;
+             blockSize_voxels = num_lookupGrids < blockSize ? num_lookupGrids : blockSize;
+-            gpu_collision_attachment_lookupgrid<<<gridSize_voxels, blockSize_voxels>>>(d_collisionLookupGrid, num_lookupGrids,
+-                                                                                       watchDistance, this);
++            for (int vx3_i = 0; vx3_i < (int)(num_lookupGrids); vx3_i++) gpu_collision_attachment_lookupgrid(vx3_i, d_collisionLookupGrid, num_lookupGrids,
++                                                                                       watchDistance, this); /* FORK: was a child-grid launch of gpu_collision_attachment_lookupgrid (grid gridSize_voxels x blockSize_voxels) */
+             CUDA_CHECK_AFTER_CALL();
+-            VcudaDeviceSynchronize();
++            /* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */
+         }
+     } else {
+         // Pairwise detection O(n ^ 2)
+@@ -451,7 +444,8 @@
+         dim3 dimBlock(blockSize, blockSize);
+         dim3 dimGrid((num_d_surface_voxels + dimBlock.x - 1) / dimBlock.x, (num_d_surface_voxels + dimBlock.y - 1) / dimBlock.y);
+         // printf("num_d_surface_voxels %d\n", num_d_surface_voxels);
+-        gpu_update_attach<<<dimGrid, dimBlock>>>(d_surface_voxels, num_d_surface_voxels, watchDistance,
++        for (int vx3_i = 0; vx3_i < num_d_surface_voxels; vx3_i++) for (int vx3_j = 0; vx3_j < vx3_i; vx3_j++) /* FORK: was a 2D child-grid launch (dimGrid, dimBlock) */
++        gpu_update_attach(vx3_i, vx3_j, d_surface_voxels, num_d_surface_voxels, watchDistance,
+                                                  this); // invoke two dimensional gpu threads 'CUDA C++ Programming
+                                                         // Guide', Nov 2019, P52.
+         CUDA_CHECK_AFTER_CALL();
+@@ -461,16 +455,15 @@
+ __device__ void VX3_VoxelyzeKernel::updateDetach() {
+     if (d_v_links.size()) {
+         int minGridSize, blockSize;
+-        cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize, gpu_update_detach, 0,
+-                                           d_v_links.size()); // Dynamically calculate blockSize
++        minGridSize = 0; blockSize = 256; /* FORK: occupancy query removed (no child launch); values only sized the unused grid */
+         int gridSize_links = (d_v_links.size() + blockSize - 1) / blockSize;
+         int blockSize_links = d_v_links.size() < blockSize ? d_v_links.size() : blockSize;
+         // if (CurStepCount % 1000 == 0 || currentTime>1.0) {
+         //     printf("&d_v_links[0] %p; d_v_links.size() %d. \n", &d_v_links[0], d_v_links.size());
+         // }
+-        gpu_update_detach<<<gridSize_links, blockSize_links>>>(&d_v_links[0], d_v_links.size(), this);
++        for (int vx3_i = 0; vx3_i < (int)(d_v_links.size()); vx3_i++) gpu_update_detach(vx3_i, &d_v_links[0], d_v_links.size(), this); /* FORK: was a child-grid launch of gpu_update_detach (grid gridSize_links x blockSize_links) */
+         CUDA_CHECK_AFTER_CALL();
+-        VcudaDeviceSynchronize();
++        /* FORK: device-side cudaDeviceSynchronize removed (work above is synchronous) */
+     }
+ }
+ 
+@@ -563,8 +556,8 @@
+ }
+ 
+ /* Sub GPU Threads */
+-__global__ void gpu_update_links(VX3_Link **links, int num) {
+-    int gindex = threadIdx.x + blockIdx.x * blockDim.x;
++__device__ void gpu_update_links(int vx3_i, VX3_Link **links, int num) {
++    int gindex = vx3_i;
+     if (gindex < num) {
+         VX3_Link *t = links[gindex];
+         if (t->removed)
+@@ -579,8 +572,8 @@
+         }
+     }
+ }
+-__global__ void gpu_update_voxels(VX3_Voxel *voxels, int num, double dt, double currentTime, VX3_VoxelyzeKernel *k) {
+-    int gindex = threadIdx.x + blockIdx.x * blockDim.x;
++__device__ void gpu_update_voxels(int vx3_i, VX3_Voxel *voxels, int num, double dt, double currentTime, VX3_VoxelyzeKernel *k) {
++    int gindex = vx3_i;
+     if (gindex < num) {
+         VX3_Voxel *t = &voxels[gindex];
+         if (t->removed)
+@@ -622,8 +615,8 @@
+     }
+ }
+ 
+-__global__ void gpu_update_temperature(VX3_Voxel *voxels, int num, double TempAmplitude, double TempPeriod, double currentTime, VX3_VoxelyzeKernel* k) {
+-    int gindex = threadIdx.x + blockIdx.x * blockDim.x;
++__device__ void gpu_update_temperature(int vx3_i, VX3_Voxel *voxels, int num, double TempAmplitude, double TempPeriod, double currentTime, VX3_VoxelyzeKernel* k) {
++    int gindex = vx3_i;
+     if (gindex < num) {
+         // vfloat tmp = pEnv->GetTempAmplitude() *
+         // sin(2*3.1415926f*(CurTime/pEnv->GetTempPeriod() + pV->phaseOffset)) -
+@@ -830,9 +823,9 @@
+     }
+ }
+ 
+-__global__ void gpu_update_attach(VX3_Voxel **surface_voxels, int num, double watchDistance, VX3_VoxelyzeKernel *k) {
+-    int first = threadIdx.x + blockIdx.x * blockDim.x;
+-    int second = threadIdx.y + blockIdx.y * blockDim.y;
++__device__ void gpu_update_attach(int vx3_i, int vx3_j, VX3_Voxel **surface_voxels, int num, double watchDistance, VX3_VoxelyzeKernel *k) {
++    int first = vx3_i;
++    int second = vx3_j;
+     if (first < num && second < first) {
+         VX3_Voxel *voxel1 = surface_voxels[first];
+         VX3_Voxel *voxel2 = surface_voxels[second];
+@@ -843,8 +836,8 @@
+ }
+ 
+ // TODO: only need to update after attachment changes.
+-__global__ void gpu_update_cilia_force(VX3_Voxel **surface_voxels, int num, VX3_VoxelyzeKernel *k) {
+-    int index = threadIdx.x + blockIdx.x * blockDim.x;
++__device__ void gpu_update_cilia_force(int vx3_i, VX3_Voxel **surface_voxels, int num, VX3_VoxelyzeKernel *k) {
++    int index = vx3_i;
+     if (index < num) {
+         if (surface_voxels[index]->removed)
+             return;
+@@ -858,16 +851,16 @@
+     }
+ }
+ 
+-__global__ void gpu_clear_lookupgrid(VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid, int num) {
+-    int index = threadIdx.x + blockIdx.x * blockDim.x;
++__device__ void gpu_clear_lookupgrid(int vx3_i, VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid, int num) {
++    int index = vx3_i;
+     if (index < num) {
+         d_collisionLookupGrid[index].clear();
+     }
+ }
+ 
+-__global__ void gpu_insert_lookupgrid(VX3_Voxel **d_surface_voxels, int num, VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid,
++__device__ void gpu_insert_lookupgrid(int vx3_i, VX3_Voxel **d_surface_voxels, int num, VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid,
+                                       VX3_Vec3D<> *gridLowerBound, VX3_Vec3D<> *gridDelta, int lookupGrid_n) {
+-    int index = threadIdx.x + blockIdx.x * blockDim.x;
++    int index = vx3_i;
+     if (index < num) {
+         VX3_Voxel *v = d_surface_voxels[index];
+         int ix = int((v->pos.x - gridLowerBound->x) / gridDelta->x);
+@@ -880,10 +873,10 @@
+     }
+ }
+ 
+-__global__ void gpu_pairwise_detection(VX3_Voxel **voxel1, VX3_Voxel **voxel2, int num_v1, int num_v2, double watchDistance,
++__device__ void gpu_pairwise_detection(int vx3_i, int vx3_j, VX3_Voxel **voxel1, VX3_Voxel **voxel2, int num_v1, int num_v2, double watchDistance,
+                                        VX3_VoxelyzeKernel *k) {
+-    int index_x = threadIdx.x + blockIdx.x * blockDim.x;
+-    int index_y = threadIdx.y + blockIdx.y * blockDim.y;
++    int index_x = vx3_i;
++    int index_y = vx3_j;
+     if (index_x < num_v1 && index_y < num_v2) {
+         if (voxel1[index_x]->removed || voxel2[index_y]->removed)
+             return;
+@@ -900,9 +893,9 @@
+     return v;
+ }
+ 
+-__global__ void gpu_collision_attachment_lookupgrid(VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid, int num, double watchDistance,
++__device__ void gpu_collision_attachment_lookupgrid(int vx3_i, VX3_dVector<VX3_Voxel *> *d_collisionLookupGrid, int num, double watchDistance,
+                                                     VX3_VoxelyzeKernel *k) {
+-    int index = threadIdx.x + blockIdx.x * blockDim.x;
++    int index = vx3_i;
+     if (index < num) {
+         int num_voxel_in_grid = d_collisionLookupGrid[index].size();
+         if (num_voxel_in_grid == 0)
+@@ -917,8 +910,7 @@
+         int blockSize = 16;
+         dim3 dimBlock(blockSize, blockSize);
+         dim3 dimGrid((num_voxel_in_grid + dimBlock.x - 1) / dimBlock.x, (num_voxel_in_grid + dimBlock.y - 1) / dimBlock.y);
+-        gpu_pairwise_detection<<<dimGrid, dimBlock>>>(&d_collisionLookupGrid[index][0], &d_collisionLookupGrid[index][0], num_voxel_in_grid,
+-                                                      num_voxel_in_grid, watchDistance, k);
++        for (int vx3_i = 0; vx3_i < num_voxel_in_grid; vx3_i++) for (int vx3_j = 0; vx3_j < num_voxel_in_grid; vx3_j++) /* FORK */ gpu_pairwise_detection(vx3_i, vx3_j, &d_collisionLookupGrid[index][0], &d_collisionLookupGrid[index][0], num_voxel_in_grid, num_voxel_in_grid, watchDistance, k);
+         // invoke two dimensional gpu threads 'CUDA C++ Programming
+         // Guide', Nov 2019, P52.
+         CUDA_CHECK_AFTER_CALL();
+@@ -930,10 +922,8 @@
+                     if (index_2 > index && index_2 < num) {
+                         int num_voxel_in_grid_2 = d_collisionLookupGrid[index_2].size();
+                         if (num_voxel_in_grid_2 > 0) {
+-                            gpu_pairwise_detection<<<dimGrid, dimBlock>>>(
+-                                &d_collisionLookupGrid[index][0],
+-                                &d_collisionLookupGrid[index_3d_to_1d(ix + dix, iy + diy, iz + diz, dim_len)][0], num_voxel_in_grid,
+-                                num_voxel_in_grid_2, watchDistance, k);
++                            for (int vx3_i = 0; vx3_i < num_voxel_in_grid; vx3_i++) for (int vx3_j = 0; vx3_j < num_voxel_in_grid_2; vx3_j++) /* FORK */ gpu_pairwise_detection(vx3_i, vx3_j, &d_collisionLookupGrid[index][0],
++                                &d_collisionLookupGrid[index_3d_to_1d(ix + dix, iy + diy, iz + diz, dim_len)][0], num_voxel_in_grid, num_voxel_in_grid_2, watchDistance, k);
+                         }
+                     }
+                 }
+@@ -943,8 +933,8 @@
+     }
+ }
+ 
+-__global__ void gpu_update_detach(VX3_Link **links, int num, VX3_VoxelyzeKernel* k) {
+-    int gindex = threadIdx.x + blockIdx.x * blockDim.x;
++__device__ void gpu_update_detach(int vx3_i, VX3_Link **links, int num, VX3_VoxelyzeKernel* k) {
++    int gindex = vx3_i;
+     if (gindex < num) {
+         VX3_Link *t = links[gindex];
+         if (t->removed)
