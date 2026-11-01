@@ -87,5 +87,52 @@ def main(argv=None):
     return 0 if res["all_checks_pass"] else 3
 
 
+
+
+
+def fair_main(argv=None):
+    """J8: protocol-fair comparison. Fresh parameter sets (new seed); for EACH protocol the C1-C3 selection uses trials [0, T/2) and
+    the classification features use the held-out trials [T/2, T), so no protocol is favoured by how the sets were chosen."""
+    ap = argparse.ArgumentParser(); ap.add_argument("--out", required=True); ap.add_argument("--sets", type=int, default=8192)
+    ap.add_argument("--trials", type=int, default=32); ap.add_argument("--dt", type=float, default=0.0005); ap.add_argument("--seed", type=int, default=20261102)
+    ap.add_argument("--device", default=None)
+    a = ap.parse_args(argv); t0 = time.time(); os.makedirs(a.out, exist_ok=True)
+    import torch
+    from scipy.stats import spearmanr
+    dev = a.device or ("cuda" if torch.cuda.is_available() else "cpu")
+    P = M.params(a.sets, a.seed); h = a.trials // 2
+    res = {"sets": a.sets, "trials": a.trials, "seed": a.seed, "protocols": {k: {"theta0_deg": v[0], "lv_s": v[1]} for k, v in PROTOCOLS.items()}, "device": dev,
+           "gpu": torch.cuda.get_device_name(0) if dev == "cuda" else None, "by_protocol": {}}
+    rng = np.random.default_rng(a.seed)
+    for pk, (th0, lvs) in PROTOCOLS.items():
+        feats, sel = {}, {}
+        for ei, e in enumerate(M.ENC):
+            old = M.THETA0; M.THETA0 = math.radians(th0)
+            try:
+                out = {lv: M.run(P, e, lv, a.trials, a.dt, dev, a.seed + 100 * ei + j) for j, lv in enumerate(lvs)}
+            finally:
+                M.THETA0 = old
+            def stats(sl):
+                ang = np.stack([np.degrees(np.nanmean(np.where(out[lv][0][:, sl], out[lv][2][:, sl], np.nan), 1)) for lv in lvs], 1)
+                lat = np.stack([np.nanmean(np.where(out[lv][0][:, sl], out[lv][1][:, sl], np.nan), 1) + P["motor_s"] for lv in lvs], 1)
+                p = np.stack([out[lv][0][:, sl].mean(1) for lv in lvs], 1)
+                return ang, lat, p
+            with np.errstate(invalid="ignore", divide="ignore"):
+                angA, latA, pA = stats(slice(0, h)); angB, latB, pB = stats(slice(h, a.trials))
+            pm = pA.mean(1); rho = np.array([spearmanr(lvs, latA[i]).statistic if np.isfinite(latA[i]).all() else np.nan for i in range(len(pm))])
+            ok = (pm >= 0.70) & (pm <= 0.91) & np.isfinite(angA[:, -1]) & np.isfinite(angA[:, 0]) & (np.abs(angA[:, -1] - angA[:, 0]) <= 10) & (np.nan_to_num(rho, nan=-1) >= 0.9)
+            sel[e] = int(ok.sum()); feats[e] = np.concatenate([angB[ok], np.log(np.clip(latB[ok], 1e-3, None))], 1)
+        usable = all(len(f) >= 20 for f in feats.values())
+        res["by_protocol"][pk] = {"n_selected": sel, "accuracy": ({str(n): classify(feats, n, rng) for n in (1, 2, 4, 8, 16, 32)} if usable else None),
+                                  "note": None if usable else "fewer than 20 selected sets for some encoder"}
+    res["elapsed_s"] = time.time() - t0; res["checks"] = [{"name": "control: every protocol yields >= 20 selected sets per encoder", "pass": all(v["accuracy"] is not None for v in res["by_protocol"].values())}]
+    res["all_checks_pass"] = res["checks"][0]["pass"]
+    import scipy; res["env"] = {"python": sys.version.split()[0], "numpy": np.__version__, "torch": torch.__version__, "scipy": scipy.__version__}
+    with gzip.open(os.path.join(a.out, "m5_design_fair.json.gz"), "wt") as fh:
+        json.dump(res, fh, default=lambda o: o.tolist() if hasattr(o, "tolist") else (o.item() if isinstance(o, np.generic) else str(o)))
+    print(json.dumps({k: v for k, v in res.items() if k in ("by_protocol", "elapsed_s", "checks")}, default=str))
+    return 0 if res["all_checks_pass"] else 3
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(fair_main(sys.argv[2:]) if len(sys.argv) > 1 and sys.argv[1] == "fair" else main())

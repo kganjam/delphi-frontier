@@ -1,0 +1,18 @@
+{
+ "name": "claude-neuro-j8-m5-design-fair-a1",
+ "platform": "gpu-h100-sxm",
+ "preset": "1gpu-16vcpu-200gb",
+ "timeout": "1h",
+ "disk": "80Gi",
+ "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+ "pip": "scipy==1.17.1",
+ "question": "Protocol-fair version of J6: with consistent sets selected under each protocol on half the trials and features from the held-out half, which looming protocol best discriminates the encoders?",
+ "gpu_justification": "8192 fresh sets x 3 encoders x 3 protocols x 7-8 l/v x 32 trials, up to 57k steps at 0.5 ms",
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; python -m engineering.neuro.m5_design fair --out /work/out --sets 8192 --trials 32 --seed 20261102",
+ "files": {
+  "engineering/__init__.py": "engineering/__init__.py",
+  "engineering/neuro/__init__.py": "engineering/neuro/__init__.py",
+  "engineering/neuro/m5_mcell.py": "engineering/neuro/m5_mcell.py",
+  "engineering/neuro/m5_design.py": "engineering/neuro/m5_design.py"
+ }
+}
