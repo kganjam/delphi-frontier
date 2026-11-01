@@ -2,7 +2,8 @@
 
     python3 engineering/cfd3d/cyl2d_entry.py [PACKET.json] [STAGE ...]
 PACKET.json is a file in engineering/cfd3d (default cpu_packet.json; the R2 GPU packet is r2_packet.json);
-its "stages" list is the default order. Before the rename (d49cc33) this file was cpu_entry.py; the frozen CPU
+its "stages" list is the default order; the CUDA control-arm packet (R1, R3_domain, M1_mutant on one device,
+one arm at a time) is arms_packet.json. Before the rename (d49cc33) this file was cpu_entry.py; the frozen CPU
 packet 95ac40c9 carries that version.
 
 Stages; a failed gate stops every later stage. OUT/status.json is the machine-readable completion contract:
@@ -29,8 +30,10 @@ CUDA packets add (device "cuda"):
   platform       same-state CPU/CUDA control: T_same is run on the CPU to t = 100 (developed shedding), then
                  continued from that one checkpoint on the CPU and on the device; the aligned series must agree
                  within the frozen tolerance and a 10-step-shifted comparison must not (gate)
-  calibration    force-free R2 TIMING on the device with device-memory polling; R2 starts only if the frozen
-                 rule passes (see st_calibration), otherwise rc 11
+  calibration    force-free TIMING of each planned case on the device with device-memory polling; the cases
+                 start only if the frozen rule passes (see st_calibration), otherwise rc 11
+  cases          with "cases_sequential", one case at a time in packet order, and a case whose calibrated
+                 projection no longer fits the time left is not started (recorded, never run as filler)
   output         OUT bytes against max_out_bytes (failure means partial, not a gate)
 PREFLIGHT=1: files, JSON/TOML and Python syntax only; no download and no Julia.
 Environment: COPS_OUT (default out), CFD3D_WORK (default /work/cfd3d), CFD3D_OUTER_BUDGET_S overrides the
@@ -460,39 +463,68 @@ def gpu_memory_poll(stop: threading.Event, rows: list) -> None:
             continue
 
 
-def st_calibration() -> bool:
-    """Force-free R2 timing on the device, the projected R2 wall time, and the frozen go/no-go rule:
-    R2 starts only if steps_projected[1] x measured s/step x run_overhead fits in the time left for cases, the
-    device memory peak is under gpu_mem_frac_max of the card and host RSS under host_rss_max_gb. A no-go stops
-    the packet (rc 11) with the controls and this measurement kept."""
-    cb = PK["calibration"]
-    d = WORK / "calibration"
-    d.mkdir(parents=True, exist_ok=True)
+CALIB: dict[str, dict] = {}       # run id -> calibrated projection, read by the sequential cases stage
+
+
+def calib_arms(cb: dict) -> list[dict]:
+    """The timed cases: "arms" (one per planned case) or the single-case form ("run_id", "steps_projected")."""
+    return cb.get("arms") or [{"run_id": cb["run_id"], "steps_projected": cb["steps_projected"]}]
+
+
+def time_arm(cb: dict, arm: dict, d: Path) -> tuple[dict, float]:
     stop, mem_rows = threading.Event(), []
     poll = threading.Thread(target=gpu_memory_poll, args=(stop, mem_rows), daemon=True)
     poll.start()
-    rc, peak = cyl(d / "r2_timing.json", cb["run_id"], 2, cb["host_rss_max_gb"], cb["timeout_s"], d / "log.txt",
-                   "TIMING", cb["steps"], gpu=True)
+    rid, t_start = arm["run_id"], time.time()
+    out = d / f"{rid.lower()}_timing.json" if "arms" in cb else d / "r2_timing.json"
+    rc, peak = cyl(out, rid, 2, cb["host_rss_max_gb"], cb["timeout_s"], d / f"log-{rid}.txt", "TIMING", cb["steps"],
+                   gpu=True)
+    proc_s = time.time() - t_start
     stop.set()
     poll.join(timeout=10)
-    info = {"rc": rc, "peak_host_rss_gb": round(peak, 2), "rule": cb["rule"],
+    info = {"rc": rc, "peak_host_rss_gb": round(peak, 2),
             "gpu_mem_peak_mib": max((r[0] for r in mem_rows), default=None),
             "gpu_mem_total_mib": mem_rows[0][1] if mem_rows else None}
     if rc == 0:
-        r = json.loads((d / "r2_timing.json").read_text())
+        r = json.loads(out.read_text())
         step_s = r["wall_s"] / r["steps"]
-        lo, hi = cb["steps_projected"]
+        lo, hi = arm["steps_projected"]
+        # process start-up (Julia load, kernel compile, grid set-up) is paid again by the case's own process
+        start_s = max(0.0, proc_s - r["wall_s"]) if "arms" in cb else 0.0
         info.update(ms_per_step=round(1e3 * step_s, 3), ns_per_cell_step=r["ns_per_cell_step"],
-                    dt_grid_last=r["dt_grid_last"], gpu=r["gpu"],
-                    projected_wall_s=[round(lo * step_s * cb["run_overhead"]), round(hi * step_s * cb["run_overhead"])],
-                    left_s=round(left()))
+                    dt_grid_last=r["dt_grid_last"], gpu=r["gpu"], startup_s=round(start_s, 1),
+                    projected_wall_s=[round(n * step_s * cb["run_overhead"] + start_s) for n in (lo, hi)])
+    mem_ok = info["gpu_mem_peak_mib"] is not None and \
+        info["gpu_mem_peak_mib"] <= cb["gpu_mem_frac_max"] * info["gpu_mem_total_mib"]
+    info["fits_memory"] = mem_ok and peak <= cb["host_rss_max_gb"]
+    info["arm_ok"] = rc == 0 and info.get("gpu") is True and info["fits_memory"]
+    return info, peak
+
+
+def st_calibration() -> bool:
+    """Force-free TIMING of every planned case on the device and the frozen go/no-go rule: the cases start only
+    if the sum over cases of steps_projected[1] x measured s/step x run_overhead (+ each case's measured process
+    start-up, in the arms form) fits in the time left for cases, every device-memory peak is under
+    gpu_mem_frac_max of the card and every host RSS under host_rss_max_gb. A no-go stops the packet (rc 11)
+    with the controls and these measurements kept. The single-case form (R2 packet) is the one-arm case."""
+    cb = PK["calibration"]
+    d = WORK / "calibration"
+    d.mkdir(parents=True, exist_ok=True)
+    arms = {}
+    for arm in calib_arms(cb):
+        arms[arm["run_id"]], _ = time_arm(cb, arm, d)
+        if not arms[arm["run_id"]]["arm_ok"]:
+            break                                   # one failed arm decides the no-go; do not spend more device time
+    rows = list(arms.values())
+    info = {"rule": cb["rule"]} | ({"arms": arms} if "arms" in cb else rows[0])
+    timed = len(rows) == len(calib_arms(cb)) and all(r["arm_ok"] for r in rows)
+    if timed:
+        lo, hi = (sum(r["projected_wall_s"][i] for r in rows) for i in (0, 1))
         case_left = left() - PK["ckpt_margin_s"]
-        info["fits_time"] = info["projected_wall_s"][1] <= case_left
-        info["fits_time_lower_only"] = info["projected_wall_s"][0] <= case_left < info["projected_wall_s"][1]
-        mem_ok = info["gpu_mem_peak_mib"] is not None and \
-            info["gpu_mem_peak_mib"] <= cb["gpu_mem_frac_max"] * info["gpu_mem_total_mib"]
-        info["fits_memory"] = mem_ok and peak <= cb["host_rss_max_gb"]
-    info["go"] = rc == 0 and info.get("gpu") is True and info.get("fits_time") is True and info.get("fits_memory") is True
+        info.update(projected_wall_s=[lo, hi], left_s=round(left()), fits_time=hi <= case_left,
+                    fits_time_lower_only=lo <= case_left < hi)
+        CALIB.update(arms if "arms" in cb else {cb["run_id"]: info})
+    info["go"] = timed and info.get("fits_time") is True and all(r["fits_memory"] for r in rows)
     (OUT / "calibration.json").write_text(json.dumps(info, indent=1))
     return stage("calibration", info["go"], **info)
 
@@ -545,6 +577,12 @@ def case_worker(c: dict) -> None:
     t_export = time.time()
     save()
     t_case = time.time()
+    proj = CALIB.get(rid, {}).get("projected_wall_s")
+    if PK.get("cases_sequential") and proj and not out.exists() and proj[1] > left() - PK["ckpt_margin_s"]:
+        rec.update(state="not started: calibrated projection exceeds time left", projected_wall_s=proj,
+                   left_s=round(left()))
+        save()
+        return
     while not out.exists():
         # the process also compiles, loads and writes a checkpoint: that margin must fit inside what is left
         budget = min(PK["segment_s"], c["budget_s"] - (time.time() - t_case), left() - PK["ckpt_margin_s"])
@@ -632,11 +670,15 @@ def newest_snapshot(rid: str) -> Path | None:
 
 
 def st_cases() -> bool:
-    ts = [threading.Thread(target=case_worker, args=(c,), name=c["run_id"]) for c in PK["cases"]]
-    for t in ts:
-        t.start()
-    for t in ts:
-        t.join()
+    if PK.get("cases_sequential"):                  # one device: one arm at a time, in packet order
+        for c in PK["cases"]:
+            case_worker(c)
+    else:
+        ts = [threading.Thread(target=case_worker, args=(c,), name=c["run_id"]) for c in PK["cases"]]
+        for t in ts:
+            t.start()
+        for t in ts:
+            t.join()
     states = {k: v["state"] for k, v in status["cases"].items()}
     return stage("cases", True, states=states, all_finished=all(s == "finished" for s in states.values()))
 

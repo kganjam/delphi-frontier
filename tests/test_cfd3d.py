@@ -392,3 +392,101 @@ def test_r2_packet_controls_record_the_dry_run_and_its_mutant():
     p = r["platform_dry_run"]["result"]
     assert p["aligned_within"] and not p["shifted_within"] and p["ok"] is False and p["dry_run_would_pass"]
     assert r["cyl2d_jl_sha256"] == sha(ROOT / "engineering/cfd3d/cyl2d.jl") and r["same_files_as_the_local_run"]
+
+
+def test_arms_packet_is_the_frozen_control_arms_on_cuda_with_r2s_solver_and_controls():
+    pk = json.loads((ROOT / "engineering/cfd3d/arms_packet.json").read_text())
+    r2 = json.loads((ROOT / "engineering/cfd3d/r2_packet.json").read_text())
+    contract = json.loads((ROOT / "engineering/cfd3d/cyl2d_contract.json").read_text())
+    arms = ["R1", "M1_mutant", "R3_domain"]
+    assert pk["device"] == "cuda" and pk["cases_sequential"] is True
+    assert [c["run_id"] for c in pk["cases"]] == arms and all(c["gpu"] for c in pk["cases"])
+    assert [a["run_id"] for a in pk["calibration"]["arms"]] == arms and all(r in contract["runs"] for r in arms)
+    for k in ("stages", "env", "restart_check", "same_state", "emit_margin_s", "ckpt_margin_s", "max_out_bytes"):
+        assert pk[k] == r2[k], k                           # the same controls and gates as the R2 packet
+    cal = pk["calibration"]
+    assert (cal["run_overhead"], cal["gpu_mem_frac_max"], cal["host_rss_max_gb"]) == (1.3, 0.8, 10)
+    assert "FAILED" in pk["reference_gate"]["C1_sphere_3d"] and "never 'passed'" in pk["science"]
+    # the solver, contract, band and env are byte-identical to the frozen R2 archive's
+    rows = {r["path"]: r["sha256"] for r in json.loads((PACKET / "cfd3d-r2-packet-manifest.json").read_text())["files"]}
+    for f in ("cyl2d.jl", "cyl2d_contract.json", "cyl2d_band.json", "env_gpu/Project.toml", "env_gpu/pins.tsv"):
+        assert rows["engineering/cfd3d/" + f] == sha(ROOT / "engineering/cfd3d" / f), f
+    env = dict(os.environ, PREFLIGHT="1")
+    r = subprocess.run([sys.executable, "-I", str(ROOT / "engineering/cfd3d/cyl2d_entry.py"), "arms_packet.json"],
+                       check=False, env=env, capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0 and json.loads(r.stdout)["preflight"] is True
+
+
+def _arms_entry(tmp_path, monkeypatch, step_s: dict, mem_mib: int = 3000, left_s: float = 6000.0):
+    monkeypatch.setenv("COPS_OUT", str(tmp_path / "out"))
+    monkeypatch.setenv("CFD3D_WORK", str(tmp_path / "work"))
+    monkeypatch.setattr(sys, "argv", ["cyl2d_entry.py", "arms_packet.json"])
+    m = _load("cyl2d_entry")
+    m.OUT.mkdir(parents=True)
+    calls = []
+
+    class FakePopen:
+        def __init__(self, argv, **kw):
+            rid = next(r for r in step_s if r in argv)
+            calls.append(rid)
+            Path(argv[argv.index(rid) - 1]).write_text(json.dumps(
+                {"wall_s": 300 * step_s[rid], "steps": 300, "ns_per_cell_step": 1.0, "dt_grid_last": 0.2,
+                 "gpu": True}))
+            self.pid, self.returncode = 0, 0 if step_s[rid] > 0 else 1
+
+        def poll(self):
+            return self.returncode
+
+    monkeypatch.setattr(m.subprocess, "Popen", FakePopen)
+    monkeypatch.setattr(m, "CAP", [])
+    monkeypatch.setattr(m, "gpu_memory_poll", lambda stop, rows: rows.append([mem_mib, 81559]))
+    monkeypatch.setattr(m, "left", lambda: left_s)
+    return m, calls
+
+
+# hi steps 112k, 205k, 115k x 1.3; 6000 s left minus the 600 s checkpoint margin = 5400 s for the arms
+@pytest.mark.parametrize("case,steps,go", [
+    ("fits", {"R1": 0.004, "M1_mutant": 0.004, "R3_domain": 0.013}, True),          # 582 + 1066 + 1944 s
+    ("sum_too_slow", {"R1": 0.008, "M1_mutant": 0.008, "R3_domain": 0.02}, False),  # each alone fits, the sum not
+    ("arm_fails", {"R1": 0.004, "M1_mutant": 0.0, "R3_domain": 0.013}, False),
+])
+def test_arms_calibration_rule_sums_the_arms_and_stops_at_a_failed_arm(tmp_path, monkeypatch, case, steps, go):
+    m, calls = _arms_entry(tmp_path, monkeypatch, steps)
+    assert m.st_calibration() is go
+    r = json.loads((m.OUT / "calibration.json").read_text())
+    assert r["go"] is go and set(r["arms"]) <= set(steps)
+    if case == "arm_fails":
+        assert calls == ["R1", "M1_mutant"] and "projected_wall_s" not in r      # R3 never timed after a failure
+    else:
+        hi = {"R1": 112_000, "M1_mutant": 205_000, "R3_domain": 115_000}
+        assert r["projected_wall_s"][1] == sum(r["arms"][k]["projected_wall_s"][1] for k in hi)
+        assert all(abs(r["arms"][k]["projected_wall_s"][1] - hi[k] * steps[k] * 1.3) <= 1 + r["arms"][k]["startup_s"]
+                   for k in hi)
+        assert m.CALIB.keys() == set(hi) if go else True
+    if case == "sum_too_slow":
+        assert all(a["projected_wall_s"][1] <= 5400 for a in r["arms"].values()) and r["fits_time"] is False
+
+
+def test_arms_calibration_refuses_a_device_memory_peak_over_the_cap(tmp_path, monkeypatch):
+    m, _ = _arms_entry(tmp_path, monkeypatch, {"R1": 0.004, "M1_mutant": 0.004, "R3_domain": 0.013}, mem_mib=70000)
+    assert m.st_calibration() is False
+    assert json.loads((m.OUT / "calibration.json").read_text())["arms"]["R1"]["fits_memory"] is False
+
+
+def test_sequential_cases_do_not_start_an_arm_that_no_longer_fits(tmp_path, monkeypatch):
+    m, calls = _arms_entry(tmp_path, monkeypatch, {"R1": 0.004, "M1_mutant": 0.004, "R3_domain": 0.013},
+                           left_s=1500.0)
+    m.CALIB.update({"R1": {"projected_wall_s": [400, 800]}, "M1_mutant": {"projected_wall_s": [900, 1100]},
+                    "R3_domain": {"projected_wall_s": [1300, 2000]}})
+    m.case_worker({"run_id": "M1_mutant", "gpu": True, "threads": 2, "mem_gb": 11, "budget_s": 7200})
+    rec = m.status["cases"]["M1_mutant"]
+    assert rec["state"].startswith("not started: calibrated projection") and calls == []
+    assert rec["projected_wall_s"] == [900, 1100] and rec["left_s"] == 1500
+
+
+def test_cyl2d_eval_reports_each_runs_backend_and_never_relabels(tmp_path):
+    runs = {"R1": dict(_cyl_run(cd=1.31), gpu=True), "M1_mutant": dict(_cyl_run(cd=2.0, periodic=False), gpu=True),
+            "R2": dict(_cyl_run(), gpu=True), "R3_domain": _cyl_run(cd=1.315, cdp=0.979, st=0.1650)}
+    v = _cyl_eval(tmp_path, **runs)["verdict"]
+    assert v["backends"] == {"R1": "cuda", "M1_mutant": "cuda", "R2": "cuda", "R3_domain": "cpu"}
+    assert v["mixed_backends"] is True and v["control_passes"]          # reported; no criterion changed

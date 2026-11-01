@@ -5,8 +5,9 @@
 The tarball holds this branch's committed engineering/cfd3d files at HEAD and fish3d's geometry builder at the
 pinned revision under fish3d_src/, so the container rebuilds the exact STLs instead of carrying 1.9 MB of mesh.
 Writes cfd3d-packet.tar.xz (deterministic) and packet-manifest.json (per-file git blob + sha256, archive sha256).
---diag, --cpu and --r2 build the candidate-diagnostic and the 2-D cylinder CPU and R2 CUDA packets
-(<name>-manifest.json beside them); a cylinder packet's file list is its own *_packet.json "files".
+--diag, --cpu, --r2 and --arms build the candidate-diagnostic and the 2-D cylinder CPU, R2 CUDA and CUDA
+control-arm packets (<name>-manifest.json beside them); a cylinder packet's file list is its own *_packet.json
+"files".
 """
 from __future__ import annotations
 
@@ -42,10 +43,11 @@ def main() -> int:
     ap.add_argument("--diag", action="store_true", help="build the CPU-only candidate diagnostic packet")
     ap.add_argument("--cpu", action="store_true", help="build the 2-D cylinder CPU worker packet (no fish3d)")
     ap.add_argument("--r2", action="store_true", help="build the 2-D cylinder R2 CUDA packet (no fish3d)")
+    ap.add_argument("--arms", action="store_true", help="build the 2-D cylinder CUDA R1/R3/M1 arms packet (no fish3d)")
     a = ap.parse_args()
     head = git("rev-parse", "HEAD").decode().strip()
     fish = git("rev-parse", a.fish3d_rev).decode().strip()
-    cyl = "cpu" if a.cpu else "r2" if a.r2 else None
+    cyl = "cpu" if a.cpu else "r2" if a.r2 else "arms" if a.arms else None
     if cyl:
         own = ["engineering/cfd3d/" + f for f in json.loads(git("show", f"HEAD:{CYL2D.format(cyl)}"))["files"]]
     else:

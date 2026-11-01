@@ -135,7 +135,9 @@ def main(out: Path, runs: dict[str, Path]) -> dict:
     refs = BAND["references"]
     res = {"schema": "cfd3d-cyl2d-eval-0.1", "band": "cyl2d_band.json", "contract": "cyl2d_contract.json", "runs": {}}
     for rid, path in runs.items():
-        e = evaluate(json.loads(path.read_text()))
+        run = json.loads(path.read_text())
+        e = evaluate(run)
+        e["backend"] = "cuda" if run.get("gpu") is True else "cpu"     # declared, never relabelled
         ref = refs["H120"] if rid == "R3_domain" else refs["H60"]
         e["band"] = in_band(e, ref)
         res["runs"][rid] = e
@@ -149,6 +151,9 @@ def main(out: Path, runs: dict[str, Path]) -> dict:
     if "M1_mutant" in R:
         # an invalid mutant run discriminates nothing, so it cannot satisfy this rule either
         v["mutant"] = R["M1_mutant"]["valid"] and not R["M1_mutant"]["band"]["all"]
+    # reported, not a criterion: a mixed-backend set leans on the same-state CPU/CUDA control (platform.json)
+    v["backends"] = {k: e["backend"] for k, e in R.items()}
+    v["mixed_backends"] = len(set(v["backends"].values())) > 1
     v["invalid_runs"] = sorted(k for k, e in R.items() if not e["valid"])
     v["periodic_R1_R2_R3"] = all(R.get(k, {}).get("periodic") for k in ("R1", "R2", "R3_domain"))
     if "R2" in R and R["R2"].get("surface_closure") is not None:

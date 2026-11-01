@@ -153,6 +153,15 @@ Curated in `artifacts/cfd3d/gpu-v1/` with `receipt.json`. The transport hash was
     back to Float32, so CPU and CUDA runs evaluate identically for identical values.
 
   On T_restart, the new script's series rounded to Float32 equal the frozen script's (ebc21ef0) exactly.
+- **The CUDA control-arm packet.** `cyl2d_entry.py arms_packet.json`, built with `build_packet.py --arms`. It
+  runs R1, M1_mutant and R3_domain on one H100, one at a time, with R2's solver, contract, band, env and controls
+  (byte-identical to archive 751a23c3). Only the backend differs from VM03's CPU runs; both sets are kept, and
+  `eval.json` reports each run's backend (`backends`, `mixed_backends`), never as a criterion.
+  - Calibration times every arm. The arms start only if their summed upper projection (steps x s/step x 1.3, plus
+    each arm's measured start-up) fits the time left; otherwise rc 11.
+  - After GO, an arm whose own projection no longer fits when it would start is not started, and is recorded so.
+  - The step bounds are assumptions frozen in the packet (`calibration.steps_basis`). M1's upper bound uses
+    WaterLily's dt = 1/(max flux + 5 nu), which reproduces its measured start-up dt (0.120 vs 0.122).
 - **C1 is untouched.** The 3-D sphere gate C1 stays FAILED. A cylinder pass would not change it, and would not
   validate fins or flight.
 
