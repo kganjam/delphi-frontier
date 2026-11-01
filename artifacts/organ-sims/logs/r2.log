@@ -1,0 +1,133 @@
+{
+ "baseline": {
+  "V0=4,CLmax=0.6": {
+   "range_m": 2.4192581939418196,
+   "m_total_kg": 0.025023104274457746,
+   "m_ballast_kg": 0.0046885132913298405,
+   "cg_final_m": 0.05449969300152177,
+   "CL_flown": 0.6,
+   "L_over_D": 7.799739514005434,
+   "feasible": true,
+   "constraints": {
+    "ballast_fits_bay": 1.0,
+    "cg_in_44_60mm_window": 1.0,
+    "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+    "pectoral_print_length_le_115mm": true,
+    "pectoral_over_SL_in_0.584_0.77": true,
+    "mass_le_hand_limit_V8_at_CL0.5": 0.0
+   }
+  },
+  "V0=4,CLmax=0.8": {
+   "range_m": 2.5537237188138535,
+   "m_total_kg": 0.025023104274457746,
+   "m_ballast_kg": 0.0046885132913298405,
+   "cg_final_m": 0.05449969300152177,
+   "CL_flown": 0.8,
+   "L_over_D": 8.725888437326073,
+   "feasible": true,
+   "constraints": {
+    "ballast_fits_bay": 1.0,
+    "cg_in_44_60mm_window": 1.0,
+    "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+    "pectoral_print_length_le_115mm": true,
+    "pectoral_over_SL_in_0.584_0.77": true,
+    "mass_le_hand_limit_V8_at_CL0.5": 0.0
+   }
+  },
+  "V0=4,CLmax=1.0": {
+   "range_m": 2.70318033893829,
+   "m_total_kg": 0.025023104274457746,
+   "m_ballast_kg": 0.0046885132913298405,
+   "cg_final_m": 0.05449969300152177,
+   "CL_flown": 1.0,
+   "L_over_D": 9.03728946697687,
+   "feasible": true,
+   "constraints": {
+    "ballast_fits_bay": 1.0,
+    "cg_in_44_60mm_window": 1.0,
+    "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+    "pectoral_print_length_le_115mm": true,
+    "pectoral_over_SL_in_0.584_0.77": true,
+    "mass_le_hand_limit_V8_at_CL0.5": 0.0
+   }
+  },
+  "V0=6,CLmax=0.6": {
+   "range_m": 4.130118184221793,
+   "m_total_kg": 0.025023104274457746,
+   "m_ballast_kg": 0.0046885132913298405,
+   "cg_final_m": 0.05449969300152177,
+   "CL_flown": 0.6,
+   "L_over_D": 9.05102279522333,
+   "feasible": true,
+   "constraints": {
+    "ballast_fits_bay": 1.0,
+    "cg_in_44_60mm_window": 1.0,
+    "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+    "pectoral_print_length_le_115mm": true,
+    "pectoral_over_SL_in_0.584_0.77": true,
+    "mass_le_hand_limit_V8_at_CL0.5": 0.0
+   }
+  },
+  "V0=6,CLmax=0.8": {
+   "range_m": 4.675808542014233,
+   "m_total_kg": 0.025023104274457746,
+   "m_ballast_kg": 0.0046885132913298405,
+   "cg_final_m": 0.05449969300152177,
+   "CL_flown": 0.8,
+   "L_over_D": 9.870887126773187,
+   "feasible": true,
+   "constraints": {
+    "ballast_fits_bay": 1.0,
+    "cg_in_44_60mm_window": 1.0,
+    "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+    "pectoral_print_length_le_115mm": true,
+    "pectoral_over_SL_in_0.584_0.77": true,
+    "mass_le_hand_limit_V8_at_CL0.5": 0.0
+   }
+  },
+  "V0=6,CLmax=1.0": {
+   "range_m": 5.208946094101919,
+   "m_total_kg": 0.025023104274457746,
+   "m_ballast_kg": 0.0046885132913298405,
+   "cg_final_m": 0.05449969300152177,
+   "CL_flown": 0.9475907153917555,
+   "L_over_D": 10.012705820883731,
+   "feasible": true,
+   "constraints": {
+    "ballast_fits_bay": 1.0,
+    "cg_in_44_60mm_window": 1.0,
+    "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+    "pectoral_print_length_le_115mm": true,
+    "pectoral_over_SL_in_0.584_0.77": true,
+    "mass_le_hand_limit_V8_at_CL0.5": 0.0
+   }
+  },
+  "V0=8,CLmax=0.6": {
+   "range_m": 7.224373094110044,
+   "m_total_kg": 0.025023104274457746,
+   "m_ballast_kg": 0.0046885132913298405,
+   "cg_final_m": 0.05449969300152177,
+   "CL_flown": 0.6,
+   "L_over_D": 10.00813137002366,
+   "feasible": true,
+   "constraints": {
+    "ballast_fits_bay": 1.0,
+    "cg_in_44_60mm_window": 1.0,
+    "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+    "pectoral_print_length_le_115mm": true,
+    "pectoral_over_SL_in_0.584_0.77": true,
+    "mass_le_hand_limit_V8_at_CL0.5": 0.0
+   }
+  },
+  "V0=8,CLmax=0.8": {
+   "range_m": 10.605361650644413,
+   "m_total_kg": 0.025023104274457746,
+   "m_ballast_kg": 0.0046885132913298405,
+   "cg_final_m": 0.05449969300152177,
+   "CL_flown": 0.8,
+   "L_over_D": 10.708527824091277,
+   "feasible": true,
+   "constraints": {
+    "ballast_fits_bay": 1.0,
+    "cg_in_44_60mm_window": 
+violations {'ballast_fits_bay': 0, 'cg_in_44_60mm_window': 5040, 'fin_clears_catch_slot_x_root_ge_37mm': 1260, 'pectoral_print_length_le_115mm': 3528, 'pectoral_over_SL_in_0.584_0.77': 5040, 'mass_le_hand_limit_V8_at_CL0.5': 8820} feasible 936 / 8820

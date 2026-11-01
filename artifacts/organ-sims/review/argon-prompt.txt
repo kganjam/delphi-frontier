@@ -1,0 +1,39 @@
+You are a skeptical aerospace/biomechanics reviewer. Critique the methods, assumptions and conclusions below for a
+hackathon "flying fish" printed glider (25 g, 0.159 m standard length, pectoral span 0.226 m tip-to-tip, Alpha Grey resin
+E=2.08 GPa) and for the biology. Be concrete: list the top errors or overclaims, each with a fix I can implement in
+< 1 hour, ranked. Do not praise.
+
+R1 VLM convergence: thin-surface vortex-lattice (horseshoes, bound at panel 1/4 chord, collocation 3/4 chord, straight
+trailing legs along +x). Found that the committed lattice placed collocation points using the polygon chord at
+mid-span while the bound vortex used the panel-edge chords; on curved outlines collocation points fell outside their own
+panels (up to 2 chords upstream at 24 chordwise panels), so CL drifted with chordwise refinement for all variants
+(e.g. 0.250 -> 0.217 at fixed span count). Fix: collocation at the bilinear 3/4-chord point of the panel's own corners;
+then CL is independent of chordwise count to 1e-4 and changes ~1% for 24->48 spanwise. The "v3b" variant has a
+non-planar (cambered/twisted) mid-surface; its normals are taken from the source surface (bilinear quads) on a planar
+lattice. Corrected v3b CL(4 deg)=0.16, CL(0)=-0.066 vs flat 0.23: the pose surface slopes upward toward the trailing
+edge (mean normal x-component -0.095), i.e. ~5 deg negative effective incidence.
+
+R2 glide sweep: point-mass glide, fixed CL=min(CLmax, CL at max L/D), CD0 = laminar Blasius on each surface at its own
+chord Re x form factor 1.5, Oswald 0.8, release 1.35 m at 4/6/8 m/s. Mass from printed meshes; ballast in nose bay to
+put CG at NP-8% MAC; NP shifts 0.85x the wing shift. Constraints: ballast fits bay, CG 44-60 mm, fin root clears catch
+slot, pectoral print length <=115 mm, pectoral length/SL in 0.584-0.77 (sourced biology), hand-launch mass limit.
+Result: best feasible = pectoral area x1.8 at AR 0.7x, root moved 4 mm aft, pinned at the 115 mm print limit;
+range 2.6-17.9 m depending on V0 and CLmax; every config fails the hand-launch mass limit.
+
+R3 underwater drag: component build-up, each surface at its own Re, three friction laws (Blasius, Prandtl-Schlichting,
+ITTC-57) as a band, Hoerner body form factor, fin form factor 1+2t/c+60(t/c)^4, folded pectoral = one face wetted.
+Cross-check against a WaterLily LBM run at Re_L=1000 (CFD/build-up = 0.66; the CFD's sphere gate failed, fins sub-grid).
+Result at 10 m/s: 2.7-7.3 N, fins 57-64% of drag, folding saves 17-27%; R2's bigger fins cost +21% (spread) / +13% (folded).
+
+R4 aeroelastic: two-way static coupling VLM + constant-EI Hermite cantilever per fin (torsion rigid), linear-beam domain
+tip/span<=0.1. Fin EI = n_rays(15) x single-ray EI from Alben, Madden & Lauder 2007 (bluegill: 1e-6..1e-5 N m^2).
+Critical fin EI for linear domain: 3.2e-4 (8 m/s) to 1.8e-3 N m^2 (20 m/s). Sourced band x15 = 1.5e-5..1.5e-4 is below
+critical everywhere; isometric scaling (L/4cm)^4 gives 3.7e-4..3.7e-3. Printed r4 composite section 2.9e-3 (tip)..7.4e-3
+(root); CL loss from bending <1%.
+
+R5 PyBullet school launch: 8 rigid 6-DOF gliders with print-mesh mass/inertia, quasi-steady per-surface aero at each
+fin's quarter chord (Helmbold CL slope per surface AR, linear to CLmax 0.8 then flat-plate), pectoral downwash on pelvics,
+Munk moment k2-k1=0.9, median fins as vertical surfaces. Static margin at assembled pelvic key ~0.10 MAC; that key trims
+at CL 0.24 only; the highest printed key (decalage +4) trims at CL 0.55, L/D 9.6. School: side-by-side release at
+spacing 0.25-1.0 m, assumed dispersion (V 5-10%, angles 3-6 deg, pitch rate 2-4 rad/s), contacts counted between fish;
+no wake interaction.

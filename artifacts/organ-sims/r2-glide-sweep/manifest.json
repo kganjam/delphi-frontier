@@ -1,0 +1,600 @@
+{
+ "schema": "frontier.organ-sim.manifest/1",
+ "id": "r2-glide-sweep",
+ "title": "Wing area / AR / placement sweep for launch glide range with printed-mass and constraint checks",
+ "evidence_kind": "simulated, not observed",
+ "scope": "simulated, not observed",
+ "command": "/data/worktrees/delphi-frontier/claude-organ/engineering/organ_sims/r2_glide_sweep.py",
+ "seed": null,
+ "git_head_at_run": "e839ad1",
+ "python": "3.13.12",
+ "ran_utc": "2026-11-01T14:40:54Z",
+ "inputs": {
+  "artifacts/glider/r3-daane/flight_model.json": {
+   "sha256": "75c50d5364eeb48d29faee81d68252077d23b435a2d08cfe2051d18612430a9b",
+   "bytes": 56018
+  },
+  "artifacts/glider/r3-daane/manifest.json": {
+   "sha256": "de0a5e7940aedde6bde904d7158864a6b600fb4a0ced6b29851e7d209a8567d9",
+   "bytes": 109858
+  },
+  "artifacts/cfd3d/vlm/fish3d-v3c-daane-length/vlm.json": {
+   "sha256": "9d21fbc57f39348a2fac5b420a598997626271970284d04bfa8514bc64a543d9",
+   "bytes": 121630
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json": {
+   "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+   "bytes": 17253
+  },
+  "engineering/simulation/glide.py": {
+   "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "bytes": 4371
+  }
+ },
+ "code_sha256": {
+  "engineering/organ_sims/common.py": "e0f0cafc7af268d9d1a44387b6038566c75ab1e242956ab24562257ec4f601ec",
+  "engineering/organ_sims/r1_v3b_convergence.py": "d2026f7ec52b61c66ac02e4f253ee8d287c5c2a73c7596198267e462a938f9f4",
+  "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
+  "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
+  "engineering/organ_sims/r4_aeroelastic_stiffness.py": "c2eecffe07310b33f3b09421b5a92d42fd7cf099b5e58a978c47f7b85c61f1e1",
+  "engineering/organ_sims/r5_school_launch.py": "110af708f15ee3ece3a79fa68b5041c0f0ad8f22686373a06cc5fd32784e47c8"
+ },
+ "git_dirty_paths_at_run": [
+  "?? artifacts/organ-sims/",
+  "?? engineering/organ_sims/"
+ ],
+ "results": {
+  "summary": {
+   "baseline": {
+    "V0=4,CLmax=0.6": {
+     "range_m": 2.4192581939418196,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 0.6,
+     "L_over_D": 7.799739514005434,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    },
+    "V0=4,CLmax=0.8": {
+     "range_m": 2.5537237188138535,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 0.8,
+     "L_over_D": 8.725888437326073,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    },
+    "V0=4,CLmax=1.0": {
+     "range_m": 2.70318033893829,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 1.0,
+     "L_over_D": 9.03728946697687,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    },
+    "V0=6,CLmax=0.6": {
+     "range_m": 4.130118184221793,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 0.6,
+     "L_over_D": 9.05102279522333,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    },
+    "V0=6,CLmax=0.8": {
+     "range_m": 4.675808542014233,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 0.8,
+     "L_over_D": 9.870887126773187,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    },
+    "V0=6,CLmax=1.0": {
+     "range_m": 5.208946094101919,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 0.9475907153917555,
+     "L_over_D": 10.012705820883731,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    },
+    "V0=8,CLmax=0.6": {
+     "range_m": 7.224373094110044,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 0.6,
+     "L_over_D": 10.00813137002366,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    },
+    "V0=8,CLmax=0.8": {
+     "range_m": 10.605361650644413,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 0.8,
+     "L_over_D": 10.708527824091277,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    },
+    "V0=8,CLmax=1.0": {
+     "range_m": 13.0531967056397,
+     "m_total_kg": 0.025023104274457746,
+     "m_ballast_kg": 0.0046885132913298405,
+     "cg_final_m": 0.05449969300152177,
+     "CL_flown": 0.8818325241836023,
+     "L_over_D": 10.759352611316213,
+     "feasible": true,
+     "constraints": {
+      "ballast_fits_bay": 1.0,
+      "cg_in_44_60mm_window": 1.0,
+      "fin_clears_catch_slot_x_root_ge_37mm": 1.0,
+      "pectoral_print_length_le_115mm": true,
+      "pectoral_over_SL_in_0.584_0.77": true,
+      "mass_le_hand_limit_V8_at_CL0.5": 0.0
+     }
+    }
+   },
+   "best_feasible": {
+    "V0=4,CLmax=0.6": {
+     "range_m": 2.5954191225340035,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 5.285187866959609,
+     "dx_m": 0.004,
+     "m_total_kg": 0.02910783845737108,
+     "m_ballast_kg": 0.003974623929039644,
+     "cg_final_m": 0.05789969300152177,
+     "L_fin_m": 0.11301869662764182
+    },
+    "V0=4,CLmax=0.8": {
+     "range_m": 2.824175406873353,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 5.285187866959609,
+     "dx_m": 0.004,
+     "m_total_kg": 0.02910783845737108,
+     "m_ballast_kg": 0.003974623929039644,
+     "cg_final_m": 0.05789969300152177,
+     "L_fin_m": 0.11301869662764182
+    },
+    "V0=4,CLmax=1.0": {
+     "range_m": 2.866671160890101,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 5.285187866959609,
+     "dx_m": 0.004,
+     "m_total_kg": 0.02910783845737108,
+     "m_ballast_kg": 0.003974623929039644,
+     "cg_final_m": 0.05789969300152177,
+     "L_fin_m": 0.11301869662764182
+    },
+    "V0=6,CLmax=0.6": {
+     "range_m": 4.871683322180773,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 5.285187866959609,
+     "dx_m": 0.004,
+     "m_total_kg": 0.02910783845737108,
+     "m_ballast_kg": 0.003974623929039644,
+     "cg_final_m": 0.05789969300152177,
+     "L_fin_m": 0.11301869662764182
+    },
+    "V0=6,CLmax=0.8": {
+     "range_m": 5.819870896079158,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 5.285187866959609,
+     "dx_m": 0.004,
+     "m_total_kg": 0.02910783845737108,
+     "m_ballast_kg": 0.003974623929039644,
+     "cg_final_m": 0.05789969300152177,
+     "L_fin_m": 0.11301869662764182
+    },
+    "V0=6,CLmax=1.0": {
+     "range_m": 5.917420505018549,
+     "S_pec_m2": 0.006981473370815872,
+     "AR": 7.55026838137087,
+     "dx_m": 0.004,
+     "m_total_kg": 0.0249763529609849,
+     "m_ballast_kg": 0.0034421060915561137,
+     "cg_final_m": 0.057899693001521764,
+     "L_fin_m": 0.11254895034976307
+    },
+    "V0=8,CLmax=0.6": {
+     "range_m": 12.007374964962858,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 5.285187866959609,
+     "dx_m": 0.004,
+     "m_total_kg": 0.02910783845737108,
+     "m_ballast_kg": 0.003974623929039644,
+     "cg_final_m": 0.05789969300152177,
+     "L_fin_m": 0.11301869662764182
+    },
+    "V0=8,CLmax=0.8": {
+     "range_m": 16.120569469338204,
+     "S_pec_m2": 0.00814505226595185,
+     "AR": 6.417728124165239,
+     "dx_m": 0.004,
+     "m_total_kg": 0.026353514793113625,
+     "m_ballast_kg": 0.003619612037383957,
+     "cg_final_m": 0.057899693001521764,
+     "L_fin_m": 0.11096693989622668
+    },
+    "V0=8,CLmax=1.0": {
+     "range_m": 17.88390718577244,
+     "S_pec_m2": 0.005817894475679894,
+     "AR": 9.060322057645044,
+     "dx_m": 0.004,
+     "m_total_kg": 0.023599191128856174,
+     "m_ballast_kg": 0.003264600145728268,
+     "cg_final_m": 0.057899693001521764,
+     "L_fin_m": 0.11403344533984884
+    }
+   },
+   "best_unconstrained": {
+    "V0=4,CLmax=0.6": {
+     "range_m": 2.7095769808020327,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": 0.024,
+     "m_total_kg": 0.025133214528331435,
+     "m_ballast_kg": 0.0,
+     "cg_final_m": 0.07327568899482528,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "cg_in_44_60mm_window",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    },
+    "V0=4,CLmax=0.8": {
+     "range_m": 3.024438825607698,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": 0.024,
+     "m_total_kg": 0.025133214528331435,
+     "m_ballast_kg": 0.0,
+     "cg_final_m": 0.07327568899482528,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "cg_in_44_60mm_window",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    },
+    "V0=4,CLmax=1.0": {
+     "range_m": 3.442597146192048,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": 0.024,
+     "m_total_kg": 0.025133214528331435,
+     "m_ballast_kg": 0.0,
+     "cg_final_m": 0.07327568899482528,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "cg_in_44_60mm_window",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    },
+    "V0=6,CLmax=0.6": {
+     "range_m": 5.497613114733147,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": 0.024,
+     "m_total_kg": 0.025133214528331435,
+     "m_ballast_kg": 0.0,
+     "cg_final_m": 0.07327568899482528,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "cg_in_44_60mm_window",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    },
+    "V0=6,CLmax=0.8": {
+     "range_m": 8.317427172169966,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": 0.024,
+     "m_total_kg": 0.025133214528331435,
+     "m_ballast_kg": 0.0,
+     "cg_final_m": 0.07327568899482528,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "cg_in_44_60mm_window",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    },
+    "V0=6,CLmax=1.0": {
+     "range_m": 17.94505331370193,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": 0.024,
+     "m_total_kg": 0.025133214528331435,
+     "m_ballast_kg": 0.0,
+     "cg_final_m": 0.07327568899482528,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "cg_in_44_60mm_window",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    },
+    "V0=8,CLmax=0.6": {
+     "range_m": 17.642355352948826,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": 0.024,
+     "m_total_kg": 0.025133214528331435,
+     "m_ballast_kg": 0.0,
+     "cg_final_m": 0.07327568899482528,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "cg_in_44_60mm_window",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    },
+    "V0=8,CLmax=0.8": {
+     "range_m": 32.43488610354893,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": 0.018,
+     "m_total_kg": 0.025545288645944526,
+     "m_ballast_kg": 0.00041207411761308953,
+     "cg_final_m": 0.06979969300152176,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "cg_in_44_60mm_window",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    },
+    "V0=8,CLmax=1.0": {
+     "range_m": 32.879854505169426,
+     "S_pec_m2": 0.01047221005622381,
+     "AR": 10.570375733919217,
+     "dx_m": -0.004,
+     "m_total_kg": 0.032198116197177815,
+     "m_ballast_kg": 0.007064901668846382,
+     "cg_final_m": 0.05109969300152177,
+     "L_fin_m": 0.1643129320495612,
+     "violates": [
+      "fin_clears_catch_slot_x_root_ge_37mm",
+      "pectoral_print_length_le_115mm",
+      "pectoral_over_SL_in_0.584_0.77",
+      "mass_le_hand_limit_V8_at_CL0.5"
+     ]
+    }
+   },
+   "lowRe_penalty_cd0+0.02": {
+    "V0=4,CLmax=0.8": {
+     "baseline_range_m": 2.5443030793222325,
+     "best_feasible_range_m": 2.805099890736734,
+     "best_feasible": {
+      "S_pec_m2": 0.01047221005622381,
+      "AR": 5.285187866959609,
+      "dx_m": 0.004,
+      "L_fin_m": 0.11301869662764182
+     }
+    },
+    "V0=6,CLmax=0.8": {
+     "baseline_range_m": 4.629301084990577,
+     "best_feasible_range_m": 6.008422513562476,
+     "best_feasible": {
+      "S_pec_m2": 0.01047221005622381,
+      "AR": 5.285187866959609,
+      "dx_m": 0.004,
+      "L_fin_m": 0.11301869662764182
+     }
+    },
+    "V0=8,CLmax=0.8": {
+     "baseline_range_m": 10.013602359056321,
+     "best_feasible_range_m": 15.07802208486856,
+     "best_feasible": {
+      "S_pec_m2": 0.01047221005622381,
+      "AR": 5.285187866959609,
+      "dx_m": 0.004,
+      "L_fin_m": 0.11301869662764182
+     }
+    }
+   }
+  },
+  "n_configs": 8820,
+  "n_feasible_hard": 936,
+  "n_meets_hand_mass_limit": 0.0,
+  "n_feasible_and_hand_limit": 0.0,
+  "violations_by_constraint": {
+   "ballast_fits_bay": 0,
+   "cg_in_44_60mm_window": 5040,
+   "fin_clears_catch_slot_x_root_ge_37mm": 1260,
+   "pectoral_print_length_le_115mm": 3528,
+   "pectoral_over_SL_in_0.584_0.77": 5040,
+   "mass_le_hand_limit_V8_at_CL0.5": 8820
+  },
+  "aero_basis": {
+   "CL_alpha_per_deg_v3c_vlm": 0.062773627136542,
+   "AR0_whole_wing": 7.55026838137087,
+   "S_pec0_m2": 0.005817894475679894,
+   "S_pel_m2": 0.0009615605236370659,
+   "SL_m": 0.15881524292060323
+  },
+  "assumptions": {
+   "cd0_add_scenarios": [
+    0.0,
+    0.02
+   ],
+   "form_factors_body_fin": [
+    1.5,
+    1.5
+   ],
+   "CLmax": [
+    0.6,
+    0.8,
+    1.0
+   ],
+   "oswald_e": 0.8,
+   "form_factor": 1.3,
+   "static_margin_frac_MAC": 0.08,
+   "np_shift_factor": 0.85,
+   "h0_m": 1.35,
+   "rho": 1.204
+  },
+  "rows_file": "artifacts/organ-sims/r2-glide-sweep/rows.json.gz"
+ },
+ "checks": [
+  {
+   "name": "control: ballast model reproduces repo's 26.07 g total at CG 52 mm within 3%",
+   "pass": true,
+   "detail": {
+    "mine_g": 26.71364694016616,
+    "repo_g": 26.0718,
+    "dry_g": 20.334590983127907,
+    "repo_dry_g": 20.3346
+   }
+  },
+  {
+   "name": "control: dry mass equals flight_model assembled_dry within 0.5% (plug included)",
+   "pass": true,
+   "detail": {
+    "sum_g": 20.334590983127907,
+    "assembled_g": 20.334590983127903
+   }
+  },
+  {
+   "name": "control: ballistic range equals V0 sqrt(2h/g) within 0.3%",
+   "pass": true,
+   "detail": {
+    "num": [
+     2.0988471524089265,
+     3.1482707286013842,
+     4.197694304796621
+    ],
+    "exact": [
+     2.0988506473936277,
+     3.1482759710904418,
+     4.197701294787255
+    ]
+   }
+  },
+  {
+   "name": "control: baseline range dt 0.004 vs 0.002 differs < 0.5%",
+   "pass": true,
+   "detail": [
+    4.6758022918364945,
+    4.675808542014233
+   ]
+  },
+  {
+   "name": "every sweep range is finite, >= 0 and below the energy bound (h+V0^2/2g)*L/D",
+   "pass": true,
+   "detail": {
+    "n": 8820,
+    "worst_ratio": 0.6181109198864309
+   }
+  },
+  {
+   "name": "baseline r3 geometry reproduces repo hand verdict: fails hand mass limit (V_trim<=8 m/s at CL 0.5)",
+   "pass": true,
+   "detail": 0.025023104274457746
+  },
+  {
+   "name": "bound: baseline range at V0=8, CLmax 0.8 is within 0.5-25 m (plausible-order guard)",
+   "pass": true,
+   "detail": 10.605361650644413
+  },
+  {
+   "name": "recorded (not gated): number of fully feasible configs",
+   "pass": true,
+   "detail": {
+    "feasible": 936,
+    "total": 8820,
+    "violations_by_constraint": {
+     "ballast_fits_bay": 0,
+     "cg_in_44_60mm_window": 5040,
+     "fin_clears_catch_slot_x_root_ge_37mm": 1260,
+     "pectoral_print_length_le_115mm": 3528,
+     "pectoral_over_SL_in_0.584_0.77": 5040,
+     "mass_le_hand_limit_V8_at_CL0.5": 8820
+    }
+   }
+  }
+ ],
+ "design_implications": {
+  "see": "docs/organ-sims.md"
+ },
+ "figures": [
+  "artifacts/organ-sims/r2-glide-sweep/range_maps.png"
+ ]
+}

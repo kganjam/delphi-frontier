@@ -1,0 +1,1654 @@
+{
+ "schema": "frontier.organ-sim.manifest/1",
+ "id": "r3-underwater-drag",
+ "title": "Underwater rigid-body drag build-up: fish3d variants and printed glider, fins spread vs folded",
+ "evidence_kind": "simulated, not observed",
+ "scope": "simulated, not observed",
+ "command": "/data/worktrees/delphi-frontier/claude-organ/engineering/organ_sims/r3_underwater_drag.py",
+ "seed": null,
+ "git_head_at_run": "e839ad1",
+ "python": "3.13.12",
+ "ran_utc": "2026-11-01T14:41:02Z",
+ "inputs": {
+  "artifacts/glider/r4-daane-printfix/flight_model.json": {
+   "sha256": "b9bdac0a7af5351b22d587fc5ffebb2042a062212354dab16208ef2789604d24",
+   "bytes": 56011
+  },
+  "artifacts/cfd3d/summary-gpu-v1.json": {
+   "sha256": "965e2051af1b5ad597b468b051ac4863a3af61e1e5b52aef9095a3c15592b7ba",
+   "bytes": 8636
+  },
+  "artifacts/cfd3d/gpu-v1/gpu_fish_L192_Re1000/case.json": {
+   "sha256": "b085edff7edeb16ed88bfc985e0e848a2cd457019ce655b17b399fb8f9037e5e",
+   "bytes": 6510
+  },
+  "artifacts/glider/r4-daane-printfix/manifest.json": {
+   "sha256": "39ba3c544d58c4a81b61eab91ca714eaea7dc968a4d28caccf18ea0177107869",
+   "bytes": 110152
+  },
+  "artifacts/glider/r4-daane-printfix/stl/body.stl": {
+   "sha256": "11499468c57f10a65aa5a1bcf8a9814a145be09073e0c70bcec67d92389d0204",
+   "bytes": 3674984
+  },
+  "artifacts/fish3d/fish3d-N1-cypselurus-baseline/components/body.stl": {
+   "sha256": "713fe7deb85eca823cf136f22f203f471041d0a56d54f4b7ee33d5f05b6ccd50",
+   "bytes": 1536084
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/body.stl": {
+   "sha256": "713fe7deb85eca823cf136f22f203f471041d0a56d54f4b7ee33d5f05b6ccd50",
+   "bytes": 1536084
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/components/body.stl": {
+   "sha256": "713fe7deb85eca823cf136f22f203f471041d0a56d54f4b7ee33d5f05b6ccd50",
+   "bytes": 1536084
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/components/body.stl": {
+   "sha256": "713fe7deb85eca823cf136f22f203f471041d0a56d54f4b7ee33d5f05b6ccd50",
+   "bytes": 1536084
+  },
+  "artifacts/fish3d/fish3d-N1-cypselurus-baseline/components/pectoral_L.stl": {
+   "sha256": "e7ac4f03d4288aebb822bc5d8722fbd3aa2de67ac734d975469f9bb8047c35b9",
+   "bytes": 40884
+  },
+  "artifacts/fish3d/fish3d-N1-cypselurus-baseline/components/pectoral_R.stl": {
+   "sha256": "01045126a35d89ef1d582297ec310a742a4ba93fc2029e26a97d836cb20c4dc6",
+   "bytes": 40884
+  },
+  "artifacts/fish3d/fish3d-N1-cypselurus-baseline/components/pelvic_L.stl": {
+   "sha256": "e23e0c17e7d499c85f7fe5fc999e0fefd7bb668fa129c8a4b26f05387ac1bf91",
+   "bytes": 42884
+  },
+  "artifacts/fish3d/fish3d-N1-cypselurus-baseline/components/pelvic_R.stl": {
+   "sha256": "4a626d364c1302d5be619b4e2e93d0c7d9d9e7b2d70d0df5ebb0c145525f2024",
+   "bytes": 42884
+  },
+  "artifacts/fish3d/fish3d-N1-cypselurus-baseline/components/dorsal.stl": {
+   "sha256": "1daf21e20a873ff64f43782649ad2c680a782eeba4d87fe3d6bc4e66f7aa49d4",
+   "bytes": 5884
+  },
+  "artifacts/fish3d/fish3d-N1-cypselurus-baseline/components/anal.stl": {
+   "sha256": "c47ea5dd6327e777fb57e789ea4c1ae5d1f6278750f9441f3413a3bed2917572",
+   "bytes": 6084
+  },
+  "artifacts/fish3d/fish3d-N1-cypselurus-baseline/components/caudal.stl": {
+   "sha256": "7b55e7b9d88dd81fb659fb34a7092a5cea0b019b5911c2ca3f61ea1baf69cebb",
+   "bytes": 8084
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/pectoral_L.stl": {
+   "sha256": "220d22253ce104aea9b9be7b23892941e328e7317a19486162f36a2214c309c5",
+   "bytes": 1566184
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/pectoral_R.stl": {
+   "sha256": "5a3bad777b761be463a3e4a2c228e693977e0832c77b475cd24d37063363972e",
+   "bytes": 1566184
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/pelvic_L.stl": {
+   "sha256": "f747026c09869ce0200de1af1f4788f06e770f51aa80f2b964da842b6f8e8fd4",
+   "bytes": 464984
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/pelvic_R.stl": {
+   "sha256": "e35bf98da1c91987ef042b245a721e0814dc82cd5dcfaf659985a1b6a8131467",
+   "bytes": 464984
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/dorsal.stl": {
+   "sha256": "86d186f8f81ece38cec404c5bf663facde71780352ea38d67c058198f82a7d00",
+   "bytes": 220284
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/anal.stl": {
+   "sha256": "259db9c30f9b1f65da0fb149f0a85b0c43e4002742211b60afc516cdd2450f6f",
+   "bytes": 161284
+  },
+  "artifacts/fish3d/fish3d-v3a-fan/components/caudal.stl": {
+   "sha256": "4f9dde1324fa084d0a76abb3668b663abb70e6ee39d157131848048e2d3bd238",
+   "bytes": 681884
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/components/pectoral_L.stl": {
+   "sha256": "8d61e0af11694cc2dc90628be9e1bfce690578204a7180c6fa1a9cdaa5dcc640",
+   "bytes": 1580784
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/components/pectoral_R.stl": {
+   "sha256": "fae2cae62913a2ea88514b94444a4b5620eee1b994fc878f24c64e62c79f1515",
+   "bytes": 1580784
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/components/pelvic_L.stl": {
+   "sha256": "24f07d34d7613ac435bcf9d0f48994b5bede86f39aceb26c1fe6286b8dfd7700",
+   "bytes": 457284
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/components/pelvic_R.stl": {
+   "sha256": "f442f296556377772437dfe791fabe05b6b1dca23db0b5a9fd16896bc5fd0bca",
+   "bytes": 457284
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/components/dorsal.stl": {
+   "sha256": "86d186f8f81ece38cec404c5bf663facde71780352ea38d67c058198f82a7d00",
+   "bytes": 220284
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/components/anal.stl": {
+   "sha256": "259db9c30f9b1f65da0fb149f0a85b0c43e4002742211b60afc516cdd2450f6f",
+   "bytes": 161284
+  },
+  "artifacts/fish3d/fish3d-v3b-glide-pose/components/caudal.stl": {
+   "sha256": "4f9dde1324fa084d0a76abb3668b663abb70e6ee39d157131848048e2d3bd238",
+   "bytes": 681884
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/components/pectoral_L.stl": {
+   "sha256": "f95642959267422e1288f6ec4592fc28ff8a9a82010fadb42395d492ee73715f",
+   "bytes": 1811484
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/components/pectoral_R.stl": {
+   "sha256": "679ca6fb35f77aa554ae04fe142d7d4cd3c6ac8226813283f02edaef2250aaa3",
+   "bytes": 1811484
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/components/pelvic_L.stl": {
+   "sha256": "d8a11057afc964dd4d065a1eb4157cae56094dd524597f7a9aca2c09c5df6120",
+   "bytes": 469384
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/components/pelvic_R.stl": {
+   "sha256": "e4fdfd073ee1c443a0e71c37b3f15c419011d88827d5e8853ce1c7a3071800f0",
+   "bytes": 469384
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/components/dorsal.stl": {
+   "sha256": "86d186f8f81ece38cec404c5bf663facde71780352ea38d67c058198f82a7d00",
+   "bytes": 220284
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/components/anal.stl": {
+   "sha256": "259db9c30f9b1f65da0fb149f0a85b0c43e4002742211b60afc516cdd2450f6f",
+   "bytes": 161284
+  },
+  "artifacts/fish3d/fish3d-v3c-daane-length/components/caudal.stl": {
+   "sha256": "4f9dde1324fa084d0a76abb3668b663abb70e6ee39d157131848048e2d3bd238",
+   "bytes": 681884
+  }
+ },
+ "code_sha256": {
+  "engineering/organ_sims/common.py": "e0f0cafc7af268d9d1a44387b6038566c75ab1e242956ab24562257ec4f601ec",
+  "engineering/organ_sims/r1_v3b_convergence.py": "d2026f7ec52b61c66ac02e4f253ee8d287c5c2a73c7596198267e462a938f9f4",
+  "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
+  "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
+  "engineering/organ_sims/r4_aeroelastic_stiffness.py": "c2eecffe07310b33f3b09421b5a92d42fd7cf099b5e58a978c47f7b85c61f1e1",
+  "engineering/organ_sims/r5_school_launch.py": "110af708f15ee3ece3a79fa68b5041c0f0ad8f22686373a06cc5fd32784e47c8"
+ },
+ "git_dirty_paths_at_run": [
+  "?? artifacts/organ-sims/",
+  "?? engineering/organ_sims/"
+ ],
+ "results": {
+  "geometry": {
+   "N1": {
+    "body": {
+     "S_wet_m2": 0.009626644781241547,
+     "length_m": 0.1588452497999242,
+     "width_m": 0.027116473764181137,
+     "depth_m": 0.023062560707330704
+    },
+    "fins": {
+     "pectoral_L": {
+      "S_one_side_m2": 0.002351056899482064,
+      "streamwise_extent_m": 0.043839287012815475,
+      "mean_chord_m": 0.022810160507877205
+     },
+     "pectoral_R": {
+      "S_one_side_m2": 0.002351056899482064,
+      "streamwise_extent_m": 0.043839287012815475,
+      "mean_chord_m": 0.022810160507877205
+     },
+     "pelvic_L": {
+      "S_one_side_m2": 0.0005753567668709599,
+      "streamwise_extent_m": 0.04094754159450531,
+      "mean_chord_m": 0.00730338349022414
+     },
+     "pelvic_R": {
+      "S_one_side_m2": 0.0005753567668709599,
+      "streamwise_extent_m": 0.04094754159450531,
+      "mean_chord_m": 0.00730338349022414
+     },
+     "dorsal": {
+      "S_one_side_m2": 0.0002759071089273701,
+      "streamwise_extent_m": 0.031700633466243744,
+      "mean_chord_m": 0.019433835456628582
+     },
+     "anal": {
+      "S_one_side_m2": 0.000240561892812103,
+      "streamwise_extent_m": 0.028522320091724396,
+      "mean_chord_m": 0.018402984585886944
+     },
+     "caudal": {
+      "S_one_side_m2": 0.0007457104383843595,
+      "streamwise_extent_m": 0.0766485333442688,
+      "mean_chord_m": 0.011955481473489304
+     }
+    }
+   },
+   "v3a": {
+    "body": {
+     "S_wet_m2": 0.009626644781241547,
+     "length_m": 0.1588452497999242,
+     "width_m": 0.027116473764181137,
+     "depth_m": 0.023062560707330704
+    },
+    "fins": {
+     "pectoral_L": {
+      "S_one_side_m2": 0.0023460163925472406,
+      "streamwise_extent_m": 0.038720231503248215,
+      "mean_chord_m": 0.026366354362898328
+     },
+     "pectoral_R": {
+      "S_one_side_m2": 0.0023460163925472406,
+      "streamwise_extent_m": 0.038720231503248215,
+      "mean_chord_m": 0.026366354362898328
+     },
+     "pelvic_L": {
+      "S_one_side_m2": 0.0005505260828111469,
+      "streamwise_extent_m": 0.03151721507310867,
+      "mean_chord_m": 0.008993085713876494
+     },
+     "pelvic_R": {
+      "S_one_side_m2": 0.0005505260828111469,
+      "streamwise_extent_m": 0.03151721507310867,
+      "mean_chord_m": 0.008993085713876494
+     },
+     "dorsal": {
+      "S_one_side_m2": 0.00015817286974831993,
+      "streamwise_extent_m": 0.02411508560180664,
+      "mean_chord_m": 0.014551319005323315
+     },
+     "anal": {
+      "S_one_side_m2": 0.00010169313401240419,
+      "streamwise_extent_m": 0.018580161035060883,
+      "mean_chord_m": 0.011510615873460937
+     },
+     "caudal": {
+      "S_one_side_m2": 0.0007694185343461678,
+      "streamwise_extent_m": 0.03752829134464264,
+      "mean_chord_m": 0.01465848576514781
+     }
+    }
+   },
+   "v3b": {
+    "body": {
+     "S_wet_m2": 0.009626644781241547,
+     "length_m": 0.1588452497999242,
+     "width_m": 0.027116473764181137,
+     "depth_m": 0.023062560707330704
+    },
+    "fins": {
+     "pectoral_L": {
+      "S_one_side_m2": 0.002344661962948042,
+      "streamwise_extent_m": 0.04777498170733452,
+      "mean_chord_m": 0.028328567567581037
+     },
+     "pectoral_R": {
+      "S_one_side_m2": 0.002344661962948042,
+      "streamwise_extent_m": 0.04777498170733452,
+      "mean_chord_m": 0.028328567567581037
+     },
+     "pelvic_L": {
+      "S_one_side_m2": 0.0005600496106814263,
+      "streamwise_extent_m": 0.03925544023513794,
+      "mean_chord_m": 0.009961308436301
+     },
+     "pelvic_R": {
+      "S_one_side_m2": 0.0005600496106814263,
+      "streamwise_extent_m": 0.03925544023513794,
+      "mean_chord_m": 0.009961308436301
+     },
+     "dorsal": {
+      "S_one_side_m2": 0.00015817286974831993,
+      "streamwise_extent_m": 0.02411508560180664,
+      "mean_chord_m": 0.014551319005323315
+     },
+     "anal": {
+      "S_one_side_m2": 0.00010169313401240419,
+      "streamwise_extent_m": 0.018580161035060883,
+      "mean_chord_m": 0.011510615873460937
+     },
+     "caudal": {
+      "S_one_side_m2": 0.0007694185343461678,
+      "streamwise_extent_m": 0.03752829134464264,
+      "mean_chord_m": 0.01465848576514781
+     }
+    }
+   },
+   "v3c": {
+    "body": {
+     "S_wet_m2": 0.009626644781241547,
+     "length_m": 0.1588452497999242,
+     "width_m": 0.027116473764181137,
+     "depth_m": 0.023062560707330704
+    },
+    "fins": {
+     "pectoral_L": {
+      "S_one_side_m2": 0.0031197598532869937,
+      "streamwise_extent_m": 0.04518884792923927,
+      "mean_chord_m": 0.03031442700298472
+     },
+     "pectoral_R": {
+      "S_one_side_m2": 0.0031197598532869937,
+      "streamwise_extent_m": 0.04518884792923927,
+      "mean_chord_m": 0.03031442700298472
+     },
+     "pelvic_L": {
+      "S_one_side_m2": 0.0005501138374762065,
+      "streamwise_extent_m": 0.03145696222782135,
+      "mean_chord_m": 0.008983030435384681
+     },
+     "pelvic_R": {
+      "S_one_side_m2": 0.0005501138374762065,
+      "streamwise_extent_m": 0.03145696222782135,
+      "mean_chord_m": 0.008983030435384681
+     },
+     "dorsal": {
+      "S_one_side_m2": 0.00015817286974831993,
+      "streamwise_extent_m": 0.02411508560180664,
+      "mean_chord_m": 0.014551319005323315
+     },
+     "anal": {
+      "S_one_side_m2": 0.00010169313401240419,
+      "streamwise_extent_m": 0.018580161035060883,
+      "mean_chord_m": 0.011510615873460937
+     },
+     "caudal": {
+      "S_one_side_m2": 0.0007694185343461678,
+      "streamwise_extent_m": 0.03752829134464264,
+      "mean_chord_m": 0.01465848576514781
+     }
+    }
+   },
+   "glider_r4": {
+    "body": {
+     "S_wet_m2": 0.009626644764644579,
+     "length_m": 0.19110760620050132,
+     "width_m": 0.02711647987365723,
+     "depth_m": 0.023062560081481935
+    },
+    "fins": {
+     "pectoral_L": {
+      "S_one_side_m2": 0.002908947237839947,
+      "mean_chord_m": 0.03088065288131843
+     },
+     "pectoral_R": {
+      "S_one_side_m2": 0.002908947237839947,
+      "mean_chord_m": 0.03088065288131843
+     },
+     "pelvic_L": {
+      "S_one_side_m2": 0.00048078026181853293,
+      "mean_chord_m": 0.007896901542233537
+     },
+     "pelvic_R": {
+      "S_one_side_m2": 0.00048078026181853293,
+      "mean_chord_m": 0.007896901542233537
+     }
+    }
+   },
+   "glider_r2best_1.8xpec": {
+    "body": {
+     "S_wet_m2": 0.009626644764644579,
+     "length_m": 0.19110760620050132,
+     "width_m": 0.02711647987365723,
+     "depth_m": 0.023062560081481935
+    },
+    "fins": {
+     "pectoral_L": {
+      "S_one_side_m2": 0.005236105028111905,
+      "mean_chord_m": 0.04143074341932165
+     },
+     "pectoral_R": {
+      "S_one_side_m2": 0.005236105028111905,
+      "mean_chord_m": 0.04143074341932165
+     },
+     "pelvic_L": {
+      "S_one_side_m2": 0.00048078026181853293,
+      "mean_chord_m": 0.007896901542233537
+     },
+     "pelvic_R": {
+      "S_one_side_m2": 0.00048078026181853293,
+      "mean_chord_m": 0.007896901542233537
+     }
+    }
+   }
+  },
+  "rows": [
+   {
+    "body_id": "N1",
+    "U_m_s": 1.0,
+    "pectorals": "spread",
+    "Re_body": 158212.40019912767,
+    "D_N_laminar": 0.09765707564668778,
+    "P_W_laminar": 0.09765707564668778,
+    "CdS_m2_laminar": 0.00019566635072467998,
+    "fin_share_laminar": 0.8158603401254962,
+    "D_N_transitional": 0.09765707564668778,
+    "P_W_transitional": 0.09765707564668778,
+    "CdS_m2_transitional": 0.00019566635072467998,
+    "fin_share_transitional": 0.8158603401254962,
+    "D_N_turbulent": 0.15740835899295522,
+    "P_W_turbulent": 0.15740835899295522,
+    "CdS_m2_turbulent": 0.0003153844099237732,
+    "fin_share_turbulent": 0.749266175483378
+   },
+   {
+    "body_id": "N1",
+    "U_m_s": 1.0,
+    "pectorals": "folded",
+    "Re_body": 158212.40019912767,
+    "D_N_laminar": 0.07480364996276868,
+    "P_W_laminar": 0.07480364996276868,
+    "CdS_m2_laminar": 0.0001498770786671382,
+    "fin_share_laminar": 0.7596034324144604,
+    "D_N_transitional": 0.07480364996276868,
+    "P_W_transitional": 0.07480364996276868,
+    "CdS_m2_transitional": 0.0001498770786671382,
+    "fin_share_transitional": 0.7596034324144604,
+    "D_N_turbulent": 0.12237225847612021,
+    "P_W_turbulent": 0.12237225847612021,
+    "CdS_m2_turbulent": 0.00024518585148491326,
+    "fin_share_turbulent": 0.677479190523473
+   },
+   {
+    "body_id": "N1",
+    "U_m_s": 2.0,
+    "pectorals": "spread",
+    "Re_body": 316424.80039825535,
+    "D_N_laminar": 0.27621592168248227,
+    "P_W_laminar": 0.5524318433649645,
+    "CdS_m2_laminar": 0.00013835700344744654,
+    "fin_share_laminar": 0.8158603401254962,
+    "D_N_transitional": 0.27621592168248227,
+    "P_W_transitional": 0.5524318433649645,
+    "CdS_m2_transitional": 0.00013835700344744654,
+    "fin_share_transitional": 0.8158603401254962,
+    "D_N_turbulent": 0.49602457725554355,
+    "P_W_turbulent": 0.9920491545110871,
+    "CdS_m2_turbulent": 0.0002484595157561328,
+    "fin_share_turbulent": 0.7341185270265999
+   },
+   {
+    "body_id": "N1",
+    "U_m_s": 2.0,
+    "pectorals": "folded",
+    "Re_body": 316424.80039825535,
+    "D_N_laminar": 0.21157667258471427,
+    "P_W_laminar": 0.42315334516942854,
+    "CdS_m2_laminar": 0.00010597909866996307,
+    "fin_share_laminar": 0.7596034324144604,
+    "D_N_transitional": 0.21157667258471427,
+    "P_W_transitional": 0.42315334516942854,
+    "CdS_m2_transitional": 0.00010597909866996307,
+    "fin_share_transitional": 0.7596034324144604,
+    "D_N_turbulent": 0.3858326209979249,
+    "P_W_turbulent": 0.7716652419958498,
+    "CdS_m2_turbulent": 0.00019326418603382334,
+    "fin_share_turbulent": 0.6581840465158042
+   },
+   {
+    "body_id": "N1",
+    "U_m_s": 5.0,
+    "pectorals": "spread",
+    "Re_body": 791062.0009956384,
+    "D_N_laminar": 1.0918392981491656,
+    "P_W_laminar": 5.459196490745828,
+    "CdS_m2_laminar": 8.750465222593993e-05,
+    "fin_share_laminar": 0.8158603401254962,
+    "D_N_transitional": 1.2305872157140956,
+    "P_W_transitional": 6.152936078570478,
+    "CdS_m2_transitional": 9.862450135957488e-05,
+    "fin_share_transitional": 0.7238726112016751,
+    "D_N_turbulent": 2.3559208772634253,
+    "P_W_turbulent": 11.779604386317127,
+    "CdS_m2_turbulent": 0.0001888135345432519,
+    "fin_share_turbulent": 0.717912898415408
+   },
+   {
+    "body_id": "N1",
+    "U_m_s": 5.0,
+    "pectorals": "folded",
+    "Re_body": 791062.0009956384,
+    "D_N_laminar": 0.8363302314092519,
+    "P_W_laminar": 4.181651157046259,
+    "CdS_m2_laminar": 6.702706723376092e-05,
+    "fin_share_laminar": 0.7596034324144604,
+    "D_N_transitional": 0.975078148974182,
+    "P_W_transitional": 4.87539074487091,
+    "CdS_m2_transitional": 7.814691636739587e-05,
+    "fin_share_transitional": 0.6515163067481156,
+    "D_N_turbulent": 1.8349352694567207,
+    "P_W_turbulent": 9.174676347283604,
+    "CdS_m2_turbulent": 0.00014705952870821244,
+    "fin_share_turbulent": 0.6378210703712544
+   },
+   {
+    "body_id": "N1",
+    "U_m_s": 10.0,
+    "pectorals": "spread",
+    "Re_body": 1582124.0019912769,
+    "D_N_laminar": 3.088187886748942,
+    "P_W_laminar": 30.88187886748942,
+    "CdS_m2_laminar": 6.187513297433264e-05,
+    "fin_share_laminar": 0.8158603401254962,
+    "D_N_transitional": 4.154148834304949,
+    "P_W_transitional": 41.54148834304949,
+    "CdS_m2_transitional": 8.323279571839209e-05,
+    "fin_share_transitional": 0.6065093284208206,
+    "D_N_turbulent": 7.840478922009915,
+    "P_W_turbulent": 78.40478922009915,
+    "CdS_m2_turbulent": 0.00015709234466058735,
+    "fin_share_turbulent": 0.7078200520534519
+   },
+   {
+    "body_id": "N1",
+    "U_m_s": 10.0,
+    "pectorals": "folded",
+    "Re_body": 1582124.0019912769,
+    "D_N_laminar": 2.3654991117631865,
+    "P_W_laminar": 23.654991117631866,
+    "CdS_m2_laminar": 4.7395293764039e-05,
+    "fin_share_laminar": 0.7596034324144605,
+    "D_N_transitional": 3.431460059319193,
+    "P_W_transitional": 34.31460059319193,
+    "CdS_m2_transitional": 6.875295650809844e-05,
+    "fin_share_transitional": 0.5236375226891523,
+    "D_N_turbulent": 6.113584538529263,
+    "P_W_turbulent": 61.13584538529263,
+    "CdS_m2_turbulent": 0.00012249217668862478,
+    "fin_share_turbulent": 0.6252884524829084
+   },
+   {
+    "body_id": "v3a",
+    "U_m_s": 1.0,
+    "pectorals": "spread",
+    "Re_body": 158212.40019912767,
+    "D_N_laminar": 0.08801914624751025,
+    "P_W_laminar": 0.08801914624751025,
+    "CdS_m2_laminar": 0.00017635573281408586,
+    "fin_share_laminar": 0.7956973969805072,
+    "D_N_transitional": 0.08801914624751025,
+    "P_W_transitional": 0.08801914624751025,
+    "CdS_m2_transitional": 0.00017635573281408586,
+    "fin_share_transitional": 0.7956973969805072,
+    "D_N_turbulent": 0.14478900524063096,
+    "P_W_turbulent": 0.14478900524063096,
+    "CdS_m2_turbulent": 0.00029010019082474647,
+    "fin_share_turbulent": 0.7274130049060272
+   },
+   {
+    "body_id": "v3a",
+    "U_m_s": 1.0,
+    "pectorals": "folded",
+    "Re_body": 158212.40019912767,
+    "D_N_laminar": 0.06708110515517691,
+    "P_W_laminar": 0.06708110515517691,
+    "CdS_m2_laminar": 0.0001344041377583188,
+    "fin_share_laminar": 0.7319283775614424,
+    "D_N_transitional": 0.06708110515517691,
+    "P_W_transitional": 0.06708110515517691,
+    "CdS_m2_transitional": 0.0001344041377583188,
+    "fin_share_transitional": 0.7319283775614424,
+    "D_N_turbulent": 0.11204950141233365,
+    "P_W_turbulent": 0.11204950141233365,
+    "CdS_m2_turbulent": 0.00022450310841982298,
+    "fin_share_turbulent": 0.6477663946406035
+   },
+   {
+    "body_id": "v3a",
+    "U_m_s": 2.0,
+    "pectorals": "spread",
+    "Re_body": 316424.80039825535,
+    "D_N_laminar": 0.24895574074345989,
+    "P_W_laminar": 0.49791148148691977,
+    "CdS_m2_laminar": 0.00012470233457396307,
+    "fin_share_laminar": 0.7956973969805072,
+    "D_N_transitional": 0.24895574074345989,
+    "P_W_transitional": 0.49791148148691977,
+    "CdS_m2_transitional": 0.00012470233457396307,
+    "fin_share_transitional": 0.7956973969805072,
+    "D_N_turbulent": 0.4595988683148757,
+    "P_W_turbulent": 0.9191977366297513,
+    "CdS_m2_turbulent": 0.00023021381903169487,
+    "fin_share_turbulent": 0.7130459748187257
+   },
+   {
+    "body_id": "v3a",
+    "U_m_s": 2.0,
+    "pectorals": "folded",
+    "Re_body": 316424.80039825535,
+    "D_N_laminar": 0.18973401737885393,
+    "P_W_laminar": 0.37946803475770785,
+    "CdS_m2_laminar": 9.503807722843814e-05,
+    "fin_share_laminar": 0.7319283775614425,
+    "D_N_transitional": 0.18973401737885393,
+    "P_W_transitional": 0.37946803475770785,
+    "CdS_m2_transitional": 9.503807722843814e-05,
+    "fin_share_transitional": 0.7319283775614425,
+    "D_N_turbulent": 0.3560205142679637,
+    "P_W_turbulent": 0.7120410285359274,
+    "CdS_m2_turbulent": 0.000178331253390084,
+    "fin_share_turbulent": 0.6295613877675377
+   },
+   {
+    "body_id": "v3a",
+    "U_m_s": 5.0,
+    "pectorals": "spread",
+    "Re_body": 791062.0009956384,
+    "D_N_laminar": 0.9840839716546426,
+    "P_W_laminar": 4.920419858273213,
+    "CdS_m2_laminar": 7.886868135881727e-05,
+    "fin_share_laminar": 0.7956973969805072,
+    "D_N_transitional": 1.1228318892195723,
+    "P_W_transitional": 5.614159446097862,
+    "CdS_m2_transitional": 8.998853049245219e-05,
+    "fin_share_transitional": 0.6973733665509694,
+    "D_N_turbulent": 2.1983567700609936,
+    "P_W_turbulent": 10.991783850304968,
+    "CdS_m2_turbulent": 0.00017618567582135792,
+    "fin_share_turbulent": 0.6976947050266866
+   },
+   {
+    "body_id": "v3a",
+    "U_m_s": 5.0,
+    "pectorals": "folded",
+    "Re_body": 791062.0009956384,
+    "D_N_laminar": 0.7499895556639359,
+    "P_W_laminar": 3.7499477783196795,
+    "CdS_m2_laminar": 6.0107357696969415e-05,
+    "fin_share_laminar": 0.7319283775614424,
+    "D_N_transitional": 0.8887374732288659,
+    "P_W_transitional": 4.44368736614433,
+    "CdS_m2_transitional": 7.122720683060436e-05,
+    "fin_share_transitional": 0.617661182520848,
+    "D_N_turbulent": 1.705676198929981,
+    "P_W_turbulent": 8.528380994649904,
+    "CdS_m2_turbulent": 0.00013670015619555046,
+    "fin_share_turbulent": 0.6103745293234578
+   },
+   {
+    "body_id": "v3a",
+    "U_m_s": 10.0,
+    "pectorals": "spread",
+    "Re_body": 1582124.0019912769,
+    "D_N_laminar": 2.783409798455952,
+    "P_W_laminar": 27.83409798455952,
+    "CdS_m2_laminar": 5.576857941206074e-05,
+    "fin_share_laminar": 0.7956973969805072,
+    "D_N_transitional": 3.8493707460119584,
+    "P_W_transitional": 38.49370746011958,
+    "CdS_m2_transitional": 7.712624215612018e-05,
+    "fin_share_transitional": 0.5753542793081117,
+    "D_N_turbulent": 7.34578680533162,
+    "P_W_turbulent": 73.4578680533162,
+    "CdS_m2_turbulent": 0.00014718066129696696,
+    "fin_share_turbulent": 0.6881435870632451
+   },
+   {
+    "body_id": "v3a",
+    "U_m_s": 10.0,
+    "pectorals": "folded",
+    "Re_body": 1582124.0019912769,
+    "D_N_laminar": 2.121290802516219,
+    "P_W_laminar": 21.21290802516219,
+    "CdS_m2_laminar": 4.2502320226732495e-05,
+    "fin_share_laminar": 0.7319283775614425,
+    "D_N_transitional": 3.187251750072226,
+    "P_W_transitional": 31.87251750072226,
+    "CdS_m2_transitional": 6.385998297079195e-05,
+    "fin_share_transitional": 0.48713846823882756,
+    "D_N_turbulent": 5.7067871936015,
+    "P_W_turbulent": 57.067871936015,
+    "CdS_m2_turbulent": 0.00011434155867764978,
+    "fin_share_turbulent": 0.598577860783496
+   },
+   {
+    "body_id": "v3b",
+    "U_m_s": 1.0,
+    "pectorals": "spread",
+    "Re_body": 158212.40019912767,
+    "D_N_laminar": 0.0856814700479326,
+    "P_W_laminar": 0.0856814700479326,
+    "CdS_m2_laminar": 0.00017167194960515447,
+    "fin_share_laminar": 0.7901233407426386,
+    "D_N_transitional": 0.0856814700479326,
+    "P_W_transitional": 0.0856814700479326,
+    "CdS_m2_transitional": 0.00017167194960515447,
+    "fin_share_transitional": 0.7901233407426386,
+    "D_N_turbulent": 0.1420279038985371,
+    "P_W_turbulent": 0.1420279038985371,
+    "CdS_m2_turbulent": 0.00028456803025152694,
+    "fin_share_turbulent": 0.722113762311213
+   },
+   {
+    "body_id": "v3b",
+    "U_m_s": 1.0,
+    "pectorals": "folded",
+    "Re_body": 158212.40019912767,
+    "D_N_laminar": 0.06561006401428494,
+    "P_W_laminar": 0.06561006401428494,
+    "CdS_m2_laminar": 0.0001314567501788919,
+    "fin_share_laminar": 0.7259179523128567,
+    "D_N_transitional": 0.06561006401428494,
+    "P_W_transitional": 0.06561006401428494,
+    "CdS_m2_transitional": 0.0001314567501788919,
+    "fin_share_transitional": 0.7259179523128567,
+    "D_N_turbulent": 0.11031907174744236,
+    "P_W_turbulent": 0.11031907174744236,
+    "CdS_m2_turbulent": 0.00022103600830984243,
+    "fin_share_turbulent": 0.6422413709975393
+   },
+   {
+    "body_id": "v3b",
+    "U_m_s": 2.0,
+    "pectorals": "spread",
+    "Re_body": 316424.80039825535,
+    "D_N_laminar": 0.24234379397170075,
+    "P_W_laminar": 0.4846875879434015,
+    "CdS_m2_laminar": 0.00012139039970531995,
+    "fin_share_laminar": 0.7901233407426386,
+    "D_N_transitional": 0.24234379397170075,
+    "P_W_transitional": 0.4846875879434015,
+    "CdS_m2_transitional": 0.00012139039970531995,
+    "fin_share_transitional": 0.7901233407426386,
+    "D_N_turbulent": 0.4519841523404582,
+    "P_W_turbulent": 0.9039683046809164,
+    "CdS_m2_turbulent": 0.00022639959544202472,
+    "fin_share_turbulent": 0.7082115721341259
+   },
+   {
+    "body_id": "v3b",
+    "U_m_s": 2.0,
+    "pectorals": "folded",
+    "Re_body": 316424.80039825535,
+    "D_N_laminar": 0.18557328471433746,
+    "P_W_laminar": 0.3711465694286749,
+    "CdS_m2_laminar": 9.295395948424035e-05,
+    "fin_share_laminar": 0.7259179523128567,
+    "D_N_transitional": 0.18557328471433746,
+    "P_W_transitional": 0.3711465694286749,
+    "CdS_m2_transitional": 9.295395948424035e-05,
+    "fin_share_transitional": 0.7259179523128567,
+    "D_N_turbulent": 0.35138350018814757,
+    "P_W_turbulent": 0.7027670003762951,
+    "CdS_m2_turbulent": 0.00017600856551199537,
+    "fin_share_turbulent": 0.6246729138929541
+   },
+   {
+    "body_id": "v3b",
+    "U_m_s": 5.0,
+    "pectorals": "spread",
+    "Re_body": 791062.0009956384,
+    "D_N_laminar": 0.957947957196447,
+    "P_W_laminar": 4.789739785982235,
+    "CdS_m2_laminar": 7.67740298294087e-05,
+    "fin_share_laminar": 0.7901233407426386,
+    "D_N_transitional": 1.096695874761377,
+    "P_W_transitional": 5.483479373806885,
+    "CdS_m2_transitional": 8.789387896304365e-05,
+    "fin_share_transitional": 0.6901612904875121,
+    "D_N_turbulent": 2.1672678076241643,
+    "P_W_turbulent": 10.83633903812082,
+    "CdS_m2_turbulent": 0.00017369407394303058,
+    "fin_share_turbulent": 0.6933582045135438
+   },
+   {
+    "body_id": "v3b",
+    "U_m_s": 5.0,
+    "pectorals": "folded",
+    "Re_body": 791062.0009956384,
+    "D_N_laminar": 0.7335428157202692,
+    "P_W_laminar": 3.667714078601346,
+    "CdS_m2_laminar": 5.878924590024198e-05,
+    "fin_share_laminar": 0.7259179523128567,
+    "D_N_transitional": 0.8722907332851991,
+    "P_W_transitional": 4.361453666425995,
+    "CdS_m2_transitional": 6.990909503387691e-05,
+    "fin_share_transitional": 0.610452316415202,
+    "D_N_turbulent": 1.687364215330912,
+    "P_W_turbulent": 8.43682107665456,
+    "CdS_m2_turbulent": 0.0001352325558269615,
+    "fin_share_turbulent": 0.6061461504328879
+   },
+   {
+    "body_id": "v3b",
+    "U_m_s": 10.0,
+    "pectorals": "spread",
+    "Re_body": 1582124.0019912769,
+    "D_N_laminar": 2.7094859862296334,
+    "P_W_laminar": 27.094859862296335,
+    "CdS_m2_laminar": 5.428743711139317e-05,
+    "fin_share_laminar": 0.7901233407426386,
+    "D_N_transitional": 3.7754469337856413,
+    "P_W_transitional": 37.75446933785641,
+    "CdS_m2_transitional": 7.564509985545264e-05,
+    "fin_share_transitional": 0.5670396529685859,
+    "D_N_turbulent": 7.252156808766419,
+    "P_W_turbulent": 72.52156808766419,
+    "CdS_m2_turbulent": 0.0001453046846076221,
+    "fin_share_turbulent": 0.6841173207204091
+   },
+   {
+    "body_id": "v3b",
+    "U_m_s": 10.0,
+    "pectorals": "folded",
+    "Re_body": 1582124.0019912769,
+    "D_N_laminar": 2.0747723971459058,
+    "P_W_laminar": 20.74772397145906,
+    "CdS_m2_laminar": 4.157027443690454e-05,
+    "fin_share_laminar": 0.7259179523128567,
+    "D_N_transitional": 3.1407333447019123,
+    "P_W_transitional": 31.407333447019123,
+    "CdS_m2_transitional": 6.292793718096398e-05,
+    "fin_share_transitional": 0.4795423121775205,
+    "D_N_turbulent": 5.652876232221737,
+    "P_W_turbulent": 56.52876232221737,
+    "CdS_m2_turbulent": 0.00011326139515571503,
+    "fin_share_turbulent": 0.5947495347145599
+   },
+   {
+    "body_id": "v3c",
+    "U_m_s": 1.0,
+    "pectorals": "spread",
+    "Re_body": 158212.40019912767,
+    "D_N_laminar": 0.09737449341433184,
+    "P_W_laminar": 0.09737449341433184,
+    "CdS_m2_laminar": 0.00019510016712949676,
+    "fin_share_laminar": 0.8153259640858573,
+    "D_N_transitional": 0.09737449341433184,
+    "P_W_transitional": 0.09737449341433184,
+    "CdS_m2_transitional": 0.00019510016712949676,
+    "fin_share_transitional": 0.8153259640858573,
+    "D_N_turbulent": 0.16100189566944695,
+    "P_W_turbulent": 0.16100189566944695,
+    "CdS_m2_turbulent": 0.0003225844433369003,
+    "fin_share_turbulent": 0.7548625145245493
+   },
+   {
+    "body_id": "v3c",
+    "U_m_s": 1.0,
+    "pectorals": "folded",
+    "Re_body": 158212.40019912767,
+    "D_N_laminar": 0.0716896841214577,
+    "P_W_laminar": 0.0716896841214577,
+    "CdS_m2_laminar": 0.00014363791649260206,
+    "fin_share_laminar": 0.749161390313096,
+    "D_N_transitional": 0.0716896841214577,
+    "P_W_transitional": 0.0716896841214577,
+    "CdS_m2_transitional": 0.00014363791649260206,
+    "fin_share_transitional": 0.749161390313096,
+    "D_N_turbulent": 0.12001702770126439,
+    "P_W_turbulent": 0.12001702770126439,
+    "CdS_m2_turbulent": 0.00024046689581499578,
+    "fin_share_turbulent": 0.6711499974867876
+   },
+   {
+    "body_id": "v3c",
+    "U_m_s": 2.0,
+    "pectorals": "spread",
+    "Re_body": 316424.80039825535,
+    "D_N_laminar": 0.27541665843151547,
+    "P_W_laminar": 0.5508333168630309,
+    "CdS_m2_laminar": 0.00013795665118789593,
+    "fin_share_laminar": 0.8153259640858573,
+    "D_N_transitional": 0.27541665843151547,
+    "P_W_transitional": 0.5508333168630309,
+    "CdS_m2_transitional": 0.00013795665118789593,
+    "fin_share_transitional": 0.8153259640858573,
+    "D_N_turbulent": 0.5122438582757526,
+    "P_W_turbulent": 1.0244877165515052,
+    "CdS_m2_turbulent": 0.0002565837799417715,
+    "fin_share_turbulent": 0.7425371859495952
+   },
+   {
+    "body_id": "v3c",
+    "U_m_s": 2.0,
+    "pectorals": "folded",
+    "Re_body": 316424.80039825535,
+    "D_N_laminar": 0.20276904713361718,
+    "P_W_laminar": 0.40553809426723436,
+    "CdS_m2_laminar": 0.00010156734478742596,
+    "fin_share_laminar": 0.749161390313096,
+    "D_N_transitional": 0.20276904713361718,
+    "P_W_transitional": 0.40553809426723436,
+    "CdS_m2_transitional": 0.00010156734478742596,
+    "fin_share_transitional": 0.749161390313096,
+    "D_N_turbulent": 0.38187545414915885,
+    "P_W_turbulent": 0.7637509082983177,
+    "CdS_m2_turbulent": 0.0001912820347371062,
+    "fin_share_turbulent": 0.6546419944021884
+   },
+   {
+    "body_id": "v3c",
+    "U_m_s": 5.0,
+    "pectorals": "spread",
+    "Re_body": 791062.0009956384,
+    "D_N_laminar": 1.0886799327452579,
+    "P_W_laminar": 5.443399663726289,
+    "CdS_m2_laminar": 8.725144722462496e-05,
+    "fin_share_laminar": 0.8153259640858573,
+    "D_N_transitional": 1.227427850310188,
+    "P_W_transitional": 6.13713925155094,
+    "CdS_m2_transitional": 9.837129635825991e-05,
+    "fin_share_transitional": 0.723161866925325,
+    "D_N_turbulent": 2.4554219814824423,
+    "P_W_turbulent": 12.27710990741221,
+    "CdS_m2_turbulent": 0.00019678797687697395,
+    "fin_share_turbulent": 0.7293439185436317
+   },
+   {
+    "body_id": "v3c",
+    "U_m_s": 5.0,
+    "pectorals": "folded",
+    "Re_body": 791062.0009956384,
+    "D_N_laminar": 0.8015150349053333,
+    "P_W_laminar": 4.007575174526666,
+    "CdS_m2_laminar": 6.423682908477926e-05,
+    "fin_share_laminar": 0.7491613903130959,
+    "D_N_transitional": 0.9402629524702635,
+    "P_W_transitional": 4.701314762351317,
+    "CdS_m2_transitional": 7.535667821841422e-05,
+    "fin_share_transitional": 0.6386129713278472,
+    "D_N_turbulent": 1.8318486192034062,
+    "P_W_turbulent": 9.15924309601703,
+    "CdS_m2_turbulent": 0.00014681215140880836,
+    "fin_share_turbulent": 0.6372108017752773
+   },
+   {
+    "body_id": "v3c",
+    "U_m_s": 10.0,
+    "pectorals": "spread",
+    "Re_body": 1582124.0019912769,
+    "D_N_laminar": 3.0792518519435452,
+    "P_W_laminar": 30.792518519435454,
+    "CdS_m2_laminar": 6.169609000087248e-05,
+    "fin_share_laminar": 0.8153259640858573,
+    "D_N_transitional": 4.145212799499552,
+    "P_W_transitional": 41.45212799499552,
+    "CdS_m2_transitional": 8.305375274493192e-05,
+    "fin_share_transitional": 0.6056610616352758,
+    "D_N_turbulent": 8.214382201394894,
+    "P_W_turbulent": 82.14382201394895,
+    "CdS_m2_turbulent": 0.000164583895038968,
+    "fin_share_turbulent": 0.7211195355726381
+   },
+   {
+    "body_id": "v3c",
+    "U_m_s": 10.0,
+    "pectorals": "folded",
+    "Re_body": 1582124.0019912769,
+    "D_N_laminar": 2.2670268656181345,
+    "P_W_laminar": 22.670268656181346,
+    "CdS_m2_laminar": 4.542229744776867e-05,
+    "fin_share_laminar": 0.749161390313096,
+    "D_N_transitional": 3.332987813174141,
+    "P_W_transitional": 33.32987813174141,
+    "CdS_m2_transitional": 6.677996019182811e-05,
+    "fin_share_transitional": 0.5095635188975369,
+    "D_N_turbulent": 6.132961236066365,
+    "P_W_turbulent": 61.329612360663646,
+    "CdS_m2_turbulent": 0.00012288040945835233,
+    "fin_share_turbulent": 0.6264723295759511
+   },
+   {
+    "body_id": "glider_r4",
+    "U_m_s": 1.0,
+    "pectorals": "spread",
+    "Re_body": 190346.22131524034,
+    "D_N_laminar": 0.08249143907379564,
+    "P_W_laminar": 0.08249143907379564,
+    "CdS_m2_laminar": 0.0001652803828366973,
+    "fin_share_laminar": 0.8073431165322716,
+    "D_N_transitional": 0.08249143907379564,
+    "P_W_transitional": 0.08249143907379564,
+    "CdS_m2_transitional": 0.0001652803828366973,
+    "fin_share_transitional": 0.8073431165322716,
+    "D_N_turbulent": 0.13901214143573026,
+    "P_W_turbulent": 0.13901214143573026,
+    "CdS_m2_turbulent": 0.00027852562900366714,
+    "fin_share_turbulent": 0.7380918562736803
+   },
+   {
+    "body_id": "glider_r4",
+    "U_m_s": 1.0,
+    "pectorals": "folded",
+    "Re_body": 190346.22131524034,
+    "D_N_laminar": 0.05708029260286328,
+    "P_W_laminar": 0.05708029260286328,
+    "CdS_m2_laminar": 0.00011436644480637803,
+    "fin_share_laminar": 0.7215756465143234,
+    "D_N_transitional": 0.05708029260286328,
+    "P_W_transitional": 0.05708029260286328,
+    "CdS_m2_transitional": 0.00011436644480637803,
+    "fin_share_transitional": 0.7215756465143234,
+    "D_N_turbulent": 0.09835099979685467,
+    "P_W_turbulent": 0.09835099979685467,
+    "CdS_m2_turbulent": 0.00019705670165669139,
+    "fin_share_turbulent": 0.6298114712198677,
+    "CD_V_transitional": 0.08571090752204097
+   },
+   {
+    "body_id": "glider_r4",
+    "U_m_s": 2.0,
+    "pectorals": "spread",
+    "Re_body": 380692.4426304807,
+    "D_N_laminar": 0.23332102383567133,
+    "P_W_laminar": 0.46664204767134265,
+    "CdS_m2_laminar": 0.00011687087950093734,
+    "fin_share_laminar": 0.8073431165322716,
+    "D_N_transitional": 0.23332102383567133,
+    "P_W_transitional": 0.46664204767134265,
+    "CdS_m2_transitional": 0.00011687087950093734,
+    "fin_share_transitional": 0.8073431165322716,
+    "D_N_turbulent": 0.4433085657834455,
+    "P_W_turbulent": 0.886617131566891,
+    "CdS_m2_turbulent": 0.00022205398005582322,
+    "fin_share_turbulent": 0.7244012599971709
+   },
+   {
+    "body_id": "glider_r4",
+    "U_m_s": 2.0,
+    "pectorals": "folded",
+    "Re_body": 380692.4426304807,
+    "D_N_laminar": 0.1614474478863878,
+    "P_W_laminar": 0.3228948957727756,
+    "CdS_m2_laminar": 8.086928866278691e-05,
+    "fin_share_laminar": 0.7215756465143234,
+    "D_N_transitional": 0.1614474478863878,
+    "P_W_transitional": 0.3228948957727756,
+    "CdS_m2_transitional": 8.086928866278691e-05,
+    "fin_share_transitional": 0.7215756465143234,
+    "D_N_turbulent": 0.3138793972310193,
+    "P_W_turbulent": 0.6277587944620386,
+    "CdS_m2_turbulent": 0.00015722269947456388,
+    "fin_share_turbulent": 0.6107572423033033,
+    "CD_V_transitional": 0.06060676393048823
+   },
+   {
+    "body_id": "glider_r4",
+    "U_m_s": 5.0,
+    "pectorals": "spread",
+    "Re_body": 951731.1065762017,
+    "D_N_laminar": 0.9222823266539465,
+    "P_W_laminar": 4.611411633269732,
+    "CdS_m2_laminar": 7.391563427400894e-05,
+    "fin_share_laminar": 0.8073431165322716,
+    "D_N_transitional": 1.1004351099418215,
+    "P_W_transitional": 5.502175549709108,
+    "CdS_m2_transitional": 8.819355719830266e-05,
+    "fin_share_transitional": 0.676639886528882,
+    "D_N_turbulent": 2.131176009388596,
+    "P_W_turbulent": 10.65588004694298,
+    "CdS_m2_turbulent": 0.00017080152349337576,
+    "fin_share_turbulent": 0.7097932030192412
+   },
+   {
+    "body_id": "glider_r4",
+    "U_m_s": 5.0,
+    "pectorals": "folded",
+    "Re_body": 951731.1065762017,
+    "D_N_laminar": 0.6381770721779034,
+    "P_W_laminar": 3.190885360889517,
+    "CdS_m2_laminar": 5.114622898640781e-05,
+    "fin_share_laminar": 0.7215756465143234,
+    "D_N_transitional": 0.8163298554657784,
+    "P_W_transitional": 4.081649277328892,
+    "CdS_m2_transitional": 6.542415191070154e-05,
+    "fin_share_transitional": 0.564101668417655,
+    "D_N_turbulent": 1.5116482654056722,
+    "P_W_turbulent": 7.558241327028361,
+    "CdS_m2_turbulent": 0.00012114993110844898,
+    "fin_share_turbulent": 0.5908560359966267,
+    "CD_V_transitional": 0.04903154455504569
+   },
+   {
+    "body_id": "glider_r4",
+    "U_m_s": 10.0,
+    "pectorals": "spread",
+    "Re_body": 1903462.2131524035,
+    "D_N_laminar": 2.608608349382049,
+    "P_W_laminar": 26.08608349382049,
+    "CdS_m2_laminar": 5.2266246230856516e-05,
+    "fin_share_laminar": 0.8073431165322716,
+    "D_N_transitional": 3.715242242800644,
+    "P_W_transitional": 37.15242242800644,
+    "CdS_m2_transitional": 7.443883475857832e-05,
+    "fin_share_transitional": 0.566865323165205,
+    "D_N_turbulent": 7.143912955780799,
+    "P_W_turbulent": 71.43912955780799,
+    "CdS_m2_turbulent": 0.0001431359037423522,
+    "fin_share_turbulent": 0.7007063311863762
+   },
+   {
+    "body_id": "glider_r4",
+    "U_m_s": 10.0,
+    "pectorals": "folded",
+    "Re_body": 1903462.2131524035,
+    "D_N_laminar": 1.8050373413390894,
+    "P_W_laminar": 18.050373413390894,
+    "CdS_m2_laminar": 3.6165845348408925e-05,
+    "fin_share_laminar": 0.7215756465143235,
+    "D_N_transitional": 2.911671234757685,
+    "P_W_transitional": 29.11671234757685,
+    "CdS_m2_transitional": 5.833843387613073e-05,
+    "fin_share_transitional": 0.44732762786236857,
+    "D_N_turbulent": 5.075093273075858,
+    "P_W_turbulent": 50.75093273075858,
+    "CdS_m2_turbulent": 0.00010168489827841831,
+    "fin_share_turbulent": 0.5787017492734746,
+    "CD_V_transitional": 0.04372121665059302
+   },
+   {
+    "body_id": "glider_r2best_1.8xpec",
+    "U_m_s": 1.0,
+    "pectorals": "spread",
+    "Re_body": 190346.22131524034,
+    "D_N_laminar": 0.10739193590043984,
+    "P_W_laminar": 0.10739193590043984,
+    "CdS_m2_laminar": 0.00021517117992474422,
+    "fin_share_laminar": 0.8520136225176255,
+    "D_N_transitional": 0.10739193590043984,
+    "P_W_transitional": 0.10739193590043984,
+    "CdS_m2_transitional": 0.00021517117992474422,
+    "fin_share_transitional": 0.8520136225176255,
+    "D_N_turbulent": 0.18440978496314936,
+    "P_W_turbulent": 0.18440978496314936,
+    "CdS_m2_turbulent": 0.00036948464228240706,
+    "fin_share_turbulent": 0.802567895591179
+   },
+   {
+    "body_id": "glider_r2best_1.8xpec",
+    "U_m_s": 1.0,
+    "pectorals": "folded",
+    "Re_body": 190346.22131524034,
+    "D_N_laminar": 0.06926161131299487,
+    "P_W_laminar": 0.06926161131299487,
+    "CdS_m2_laminar": 0.00013877301405128202,
+    "fin_share_laminar": 0.7705432596289642,
+    "D_N_transitional": 0.06926161131299487,
+    "P_W_transitional": 0.06926161131299487,
+    "CdS_m2_transitional": 0.00013877301405128202,
+    "fin_share_transitional": 0.7705432596289642,
+    "D_N_turbulent": 0.1204673473572598,
+    "P_W_turbulent": 0.1204673473572598,
+    "CdS_m2_turbulent": 0.00024136915920108153,
+    "fin_share_turbulent": 0.6977736065617899
+   },
+   {
+    "body_id": "glider_r2best_1.8xpec",
+    "U_m_s": 2.0,
+    "pectorals": "spread",
+    "Re_body": 380692.4426304807,
+    "D_N_laminar": 0.30375026447980824,
+    "P_W_laminar": 0.6075005289596165,
+    "CdS_m2_laminar": 0.00015214900044069736,
+    "fin_share_laminar": 0.8520136225176255,
+    "D_N_transitional": 0.30375026447980824,
+    "P_W_transitional": 0.6075005289596165,
+    "CdS_m2_transitional": 0.00015214900044069736,
+    "fin_share_transitional": 0.8520136225176255,
+    "D_N_turbulent": 0.591912314174834,
+    "P_W_turbulent": 1.183824628349668,
+    "CdS_m2_turbulent": 0.0002964898387972521,
+    "fin_share_turbulent": 0.7935922614945096
+   },
+   {
+    "body_id": "glider_r2best_1.8xpec",
+    "U_m_s": 2.0,
+    "pectorals": "folded",
+    "Re_body": 380692.4426304807,
+    "D_N_laminar": 0.19590142014130224,
+    "P_W_laminar": 0.3918028402826045,
+    "CdS_m2_laminar": 9.812733928135756e-05,
+    "fin_share_laminar": 0.7705432596289642,
+    "D_N_transitional": 0.19590142014130224,
+    "P_W_transitional": 0.3918028402826045,
+    "CdS_m2_transitional": 9.812733928135756e-05,
+    "fin_share_transitional": 0.7705432596289642,
+    "D_N_turbulent": 0.38621492251086337,
+    "P_W_turbulent": 0.7724298450217267,
+    "CdS_m2_turbulent": 0.00019345568148209944,
+    "fin_share_turbulent": 0.6836598612811436
+   },
+   {
+    "body_id": "glider_r2best_1.8xpec",
+    "U_m_s": 5.0,
+    "pectorals": "spread",
+    "Re_body": 951731.1065762017,
+    "D_N_laminar": 1.2006783445434177,
+    "P_W_laminar": 6.0033917227170885,
+    "CdS_m2_laminar": 9.622747702211323e-05,
+    "fin_share_laminar": 0.8520136225176255,
+    "D_N_transitional": 1.3788311278312926,
+    "P_W_transitional": 6.8941556391564625,
+    "CdS_m2_transitional": 0.00011050539994640694,
+    "fin_share_transitional": 0.7419286417053328,
+    "D_N_turbulent": 2.8630563865427647,
+    "P_W_turbulent": 14.315281932713823,
+    "CdS_m2_turbulent": 0.00022945753448549508,
+    "fin_share_turbulent": 0.7839784901219716
+   },
+   {
+    "body_id": "glider_r2best_1.8xpec",
+    "U_m_s": 5.0,
+    "pectorals": "folded",
+    "Re_body": 951731.1065762017,
+    "D_N_laminar": 0.7743683556351248,
+    "P_W_laminar": 3.8718417781756242,
+    "CdS_m2_laminar": 6.206117857224002e-05,
+    "fin_share_laminar": 0.7705432596289642,
+    "D_N_transitional": 0.9525211389229996,
+    "P_W_transitional": 4.762605694614998,
+    "CdS_m2_transitional": 7.633910149653373e-05,
+    "fin_share_transitional": 0.6264263253824176,
+    "D_N_turbulent": 1.8676127071171797,
+    "P_W_turbulent": 9.3380635355859,
+    "CdS_m2_turbulent": 0.00014967843775733758,
+    "fin_share_turbulent": 0.6688383190315836
+   },
+   {
+    "body_id": "glider_r2best_1.8xpec",
+    "U_m_s": 10.0,
+    "pectorals": "spread",
+    "Re_body": 1903462.2131524035,
+    "D_N_laminar": 3.3960311978019546,
+    "P_W_laminar": 33.96031197801955,
+    "CdS_m2_laminar": 6.804310153880895e-05,
+    "fin_share_laminar": 0.8520136225176255,
+    "D_N_transitional": 4.502665091220551,
+    "P_W_transitional": 45.026650912205504,
+    "CdS_m2_transitional": 9.021569006653076e-05,
+    "fin_share_transitional": 0.6426116054387191,
+    "D_N_turbulent": 9.630021771614713,
+    "P_W_turbulent": 96.30021771614713,
+    "CdS_m2_turbulent": 0.0001929477413667544,
+    "fin_share_turbulent": 0.7779726807551853
+   },
+   {
+    "body_id": "glider_r2best_1.8xpec",
+    "U_m_s": 10.0,
+    "pectorals": "folded",
+    "Re_body": 1903462.2131524035,
+    "D_N_laminar": 2.1902444616234913,
+    "P_W_laminar": 21.902444616234913,
+    "CdS_m2_laminar": 4.3883880216860174e-05,
+    "fin_share_laminar": 0.7705432596289642,
+    "D_N_transitional": 3.2968783550420864,
+    "P_W_transitional": 32.968783550420866,
+    "CdS_m2_transitional": 6.605646874458197e-05,
+    "fin_share_transitional": 0.51190184322773,
+    "D_N_turbulent": 6.283681644468263,
+    "P_W_turbulent": 62.83681644468263,
+    "CdS_m2_turbulent": 0.00012590025334538696,
+    "fin_share_turbulent": 0.6597332520651995
+   }
+  ],
+  "summary": {
+   "N1@5": {
+    "D_spread_N_band": [
+     1.0918392981491656,
+     1.2305872157140956,
+     2.3559208772634253
+    ],
+    "D_folded_N_band": [
+     0.8363302314092519,
+     0.975078148974182,
+     1.8349352694567207
+    ],
+    "fold_saving_transitional": 0.2076318228217937,
+    "fin_share_spread_transitional": 0.7238726112016751,
+    "P_W_spread_transitional": 6.152936078570478
+   },
+   "N1@10": {
+    "D_spread_N_band": [
+     3.088187886748942,
+     4.154148834304949,
+     7.840478922009915
+    ],
+    "D_folded_N_band": [
+     2.3654991117631865,
+     3.431460059319193,
+     6.113584538529263
+    ],
+    "fold_saving_transitional": 0.17396795440206525,
+    "fin_share_spread_transitional": 0.6065093284208206,
+    "P_W_spread_transitional": 41.54148834304949
+   },
+   "v3a@5": {
+    "D_spread_N_band": [
+     0.9840839716546426,
+     1.1228318892195723,
+     2.1983567700609936
+    ],
+    "D_folded_N_band": [
+     0.7499895556639359,
+     0.8887374732288659,
+     1.705676198929981
+    ],
+    "fold_saving_transitional": 0.20848572100442786,
+    "fin_share_spread_transitional": 0.6973733665509694,
+    "P_W_spread_transitional": 5.614159446097862
+   },
+   "v3a@10": {
+    "D_spread_N_band": [
+     2.783409798455952,
+     3.8493707460119584,
+     7.34578680533162
+    ],
+    "D_folded_N_band": [
+     2.121290802516219,
+     3.187251750072226,
+     5.7067871936015
+    ],
+    "fold_saving_transitional": 0.1720070732666381,
+    "fin_share_spread_transitional": 0.5753542793081117,
+    "P_W_spread_transitional": 38.49370746011958
+   },
+   "v3b@5": {
+    "D_spread_N_band": [
+     0.957947957196447,
+     1.096695874761377,
+     2.1672678076241643
+    ],
+    "D_folded_N_band": [
+     0.7335428157202692,
+     0.8722907332851991,
+     1.687364215330912
+    ],
+    "fold_saving_transitional": 0.20461929933401524,
+    "fin_share_spread_transitional": 0.6901612904875121,
+    "P_W_spread_transitional": 5.483479373806885
+   },
+   "v3b@10": {
+    "D_spread_N_band": [
+     2.7094859862296334,
+     3.7754469337856413,
+     7.252156808766419
+    ],
+    "D_folded_N_band": [
+     2.0747723971459058,
+     3.1407333447019123,
+     5.652876232221737
+    ],
+    "fold_saving_transitional": 0.16811614630411498,
+    "fin_share_spread_transitional": 0.5670396529685859,
+    "P_W_spread_transitional": 37.75446933785641
+   },
+   "v3c@5": {
+    "D_spread_N_band": [
+     1.0886799327452579,
+     1.227427850310188,
+     2.4554219814824423
+    ],
+    "D_folded_N_band": [
+     0.8015150349053333,
+     0.9402629524702635,
+     1.8318486192034062
+    ],
+    "fold_saving_transitional": 0.23395664174261166,
+    "fin_share_spread_transitional": 0.723161866925325,
+    "P_W_spread_transitional": 6.13713925155094
+   },
+   "v3c@10": {
+    "D_spread_N_band": [
+     3.0792518519435452,
+     4.145212799499552,
+     8.214382201394894
+    ],
+    "D_folded_N_band": [
+     2.2670268656181345,
+     3.332987813174141,
+     6.132961236066365
+    ],
+    "fold_saving_transitional": 0.1959428925876785,
+    "fin_share_spread_transitional": 0.6056610616352758,
+    "P_W_spread_transitional": 41.45212799499552
+   },
+   "glider_r4@5": {
+    "D_spread_N_band": [
+     0.9222823266539465,
+     1.1004351099418215,
+     2.131176009388596
+    ],
+    "D_folded_N_band": [
+     0.6381770721779034,
+     0.8163298554657784,
+     1.5116482654056722
+    ],
+    "fold_saving_transitional": 0.2581753816370539,
+    "fin_share_spread_transitional": 0.676639886528882,
+    "P_W_spread_transitional": 5.502175549709108
+   },
+   "glider_r4@10": {
+    "D_spread_N_band": [
+     2.608608349382049,
+     3.715242242800644,
+     7.143912955780799
+    ],
+    "D_folded_N_band": [
+     1.8050373413390894,
+     2.911671234757685,
+     5.075093273075858
+    ],
+    "fold_saving_transitional": 0.21629034004447767,
+    "fin_share_spread_transitional": 0.566865323165205,
+    "P_W_spread_transitional": 37.15242242800644
+   },
+   "glider_r2best_1.8xpec@5": {
+    "D_spread_N_band": [
+     1.2006783445434177,
+     1.3788311278312926,
+     2.8630563865427647
+    ],
+    "D_folded_N_band": [
+     0.7743683556351248,
+     0.9525211389229996,
+     1.8676127071171797
+    ],
+    "fold_saving_transitional": 0.30918216183501646,
+    "fin_share_spread_transitional": 0.7419286417053328,
+    "P_W_spread_transitional": 6.8941556391564625
+   },
+   "glider_r2best_1.8xpec@10": {
+    "D_spread_N_band": [
+     3.3960311978019546,
+     4.502665091220551,
+     9.630021771614713
+    ],
+    "D_folded_N_band": [
+     2.1902444616234913,
+     3.2968783550420864,
+     6.283681644468263
+    ],
+    "fold_saving_transitional": 0.26779400904800765,
+    "fin_share_spread_transitional": 0.6426116054387191,
+    "P_W_spread_transitional": 45.026650912205504
+   }
+  },
+  "cross_check_re1000": {
+   "buildup_laminar_Cd_Lref2": 0.05572893207991227,
+   "cfd_L192": 0.036691229950733505,
+   "cfd_L128": 0.04029441101725351,
+   "cfd_pressure_part_L192": 0.017742751348525918,
+   "ratio_cfd_over_buildup": 0.6583874583873286
+  },
+  "r2_best_fin_penalty_at_10ms_transitional": {
+   "spread": 0.21194387793844838,
+   "folded": 0.132297601352118
+  },
+  "printed_fin_underwater_strength": {
+   "alpha_mis_1deg": {
+    "root_stress_Pa_at": {
+     "1": 2298018.2197314887,
+     "2": 9192072.878925955,
+     "5": 57450455.49328722,
+     "10": 229801821.97314888
+    },
+    "U_max_for_half_UTS_m_s": 3.0587395324741524
+   },
+   "alpha_mis_2deg": {
+    "root_stress_Pa_at": {
+     "1": 4596036.439462977,
+     "2": 18384145.75785191,
+     "5": 114900910.98657444,
+     "10": 459603643.94629776
+    },
+    "U_max_for_half_UTS_m_s": 2.162855465295843
+   },
+   "alpha_mis_5deg": {
+    "root_stress_Pa_at": {
+     "1": 11490091.098657444,
+     "2": 45960364.39462978,
+     "5": 287252277.4664361,
+     "10": 1149009109.8657444
+    },
+    "U_max_for_half_UTS_m_s": 1.367909904015626
+   }
+  },
+  "assumptions": {
+   "rho_water": 998.2,
+   "nu_water": 1.004e-06,
+   "speeds": [
+    1.0,
+    2.0,
+    5.0,
+    10.0
+   ],
+   "fin_t_fish_m": 0.0006,
+   "fin_t_glider_m": 0.0012000000000000001,
+   "excluded": [
+    "wave drag near surface",
+    "undulatory swimming",
+    "base separation",
+    "interference"
+   ]
+  }
+ },
+ "checks": [
+  {
+   "name": "control: Blasius Cf(1e5) = 0.00420",
+   "pass": true,
+   "detail": 0.004199504732703608
+  },
+  {
+   "name": "control: ITTC-57 Cf(1e7) = 0.00301 +- 1%",
+   "pass": true,
+   "detail": 0.003
+  },
+  {
+   "name": "control: glider shell STL area >= flight_model outer wetted area (inner faces present)",
+   "pass": 1.0,
+   "detail": {
+    "stl_m2": 23760.481779329537,
+    "wetted_m2": 0.009626644764644579
+   }
+  },
+  {
+   "name": "control: N1 pectoral L/R area within 1%",
+   "pass": 1.0,
+   "detail": [
+    0.002351056899482064,
+    0.002351056899482064
+   ]
+  },
+  {
+   "name": "control: v3a pectoral L/R area within 1%",
+   "pass": 1.0,
+   "detail": [
+    0.0023460163925472406,
+    0.0023460163925472406
+   ]
+  },
+  {
+   "name": "control: v3b pectoral L/R area within 1%",
+   "pass": 1.0,
+   "detail": [
+    0.002344661962948042,
+    0.002344661962948042
+   ]
+  },
+  {
+   "name": "control: v3c pectoral L/R area within 1%",
+   "pass": 1.0,
+   "detail": [
+    0.0031197598532869937,
+    0.0031197598532869937
+   ]
+  },
+  {
+   "name": "control: every body length in 0.05-0.5 m (STL unit guard)",
+   "pass": true,
+   "detail": {
+    "N1": 0.1588452497999242,
+    "v3a": 0.1588452497999242,
+    "v3b": 0.1588452497999242,
+    "v3c": 0.1588452497999242,
+    "glider_r4": 0.19110760620050132,
+    "glider_r2best_1.8xpec": 0.19110760620050132
+   }
+  },
+  {
+   "name": "consistency only (no validation value at target Re): CFD/build-up at Re_L 1000 within 0.33-3",
+   "pass": 1.0,
+   "detail": {
+    "buildup_laminar_Cd_Lref2": 0.05572893207991227,
+    "cfd_L192": 0.036691229950733505,
+    "cfd_L128": 0.04029441101725351,
+    "cfd_pressure_part_L192": 0.017742751348525918,
+    "ratio_cfd_over_buildup": 0.6583874583873286
+   }
+  },
+  {
+   "name": "every drag finite and laminar <= turbulent",
+   "pass": true,
+   "detail": 48
+  },
+  {
+   "name": "folding pectorals never increases drag",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "name": "bound: glider CD_V (folded, transitional) in 0.005-0.2 at all speeds",
+   "pass": true,
+   "detail": [
+    0.08571090752204097,
+    0.06060676393048823,
+    0.04903154455504569,
+    0.04372121665059302
+   ]
+  },
+  {
+   "name": "recorded: printed spread pectoral root stress under water vs UTS (failing speeds are a finding)",
+   "pass": true,
+   "detail": {
+    "alpha_mis_1deg": {
+     "root_stress_Pa_at": {
+      "1": 2298018.2197314887,
+      "2": 9192072.878925955,
+      "5": 57450455.49328722,
+      "10": 229801821.97314888
+     },
+     "U_max_for_half_UTS_m_s": 3.0587395324741524
+    },
+    "alpha_mis_2deg": {
+     "root_stress_Pa_at": {
+      "1": 4596036.439462977,
+      "2": 18384145.75785191,
+      "5": 114900910.98657444,
+      "10": 459603643.94629776
+     },
+     "U_max_for_half_UTS_m_s": 2.162855465295843
+    },
+    "alpha_mis_5deg": {
+     "root_stress_Pa_at": {
+      "1": 11490091.098657444,
+      "2": 45960364.39462978,
+      "5": 287252277.4664361,
+      "10": 1149009109.8657444
+     },
+     "U_max_for_half_UTS_m_s": 1.367909904015626
+    }
+   }
+  }
+ ],
+ "design_implications": {
+  "see": "docs/organ-sims.md"
+ },
+ "figures": [
+  "artifacts/organ-sims/r3-underwater-drag/drag.png"
+ ]
+}
