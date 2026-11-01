@@ -1,0 +1,79 @@
+{
+  "schema": "frontier.probe-admission/1",
+  "probe": "voxcraft-h100-compat-r1",
+  "status_of_this_record": "an ADMISSION record, not a result. No scientific claim follows from anything in it. The run's outcome is whatever the returned receipt says, and it has not returned.",
+
+  "job": {
+    "id": "aijob-e00wfnzb38fccw6k57",
+    "provider": "Nebius",
+    "created": "2026-10-31 23:38:06 PDT",
+    "created_reported_by": "infra; not measured by this branch",
+    "last_reported_state": "PROVISIONING",
+    "last_reported_state_time": "approximately 2026-10-31 23:40 PDT",
+    "WHAT_PROVISIONING_IS_NOT": "PROVISIONING is a scheduler state. It is not evidence that a kernel ran, that nvcc was invoked, that the GPU was touched, or that any part of the probe executed. Nothing may be reported as running, building or computing on the strength of it.",
+    "dispatcher": "infra. This branch did not launch it and will not poll it.",
+    "controller": "frontier-voxcraft-probe-20261101.service"
+  },
+
+  "admitted_inputs": {
+    "owner_source_commit": "64dc72fc5a64170a9faba267977685a49673ded0",
+    "owner_archive_sha256": "da3a6f7ff178b539185f56176e9639d8bb6d42c47f6efa55e8ff59d24738159f",
+    "owner_archive_bytes": 17508,
+    "owner_archive_uncompressed_kib": 47.2,
+    "transport_normalised_variant": {
+      "by": "infra",
+      "change": "directory headers and leading ./ removed from the tar",
+      "unchanged": "all 10 regular member bytes and modes identical; the original owner tar is retained",
+      "manifest": "infra's portable manifest names both hashes",
+      "our_reading": "this is a packaging normalisation, not a content change. The ten files the probe actually executes are byte-identical to the admitted ones, which is the property that matters for attributing the result."
+    }
+  },
+
+  "independent_fixture_confirmation": {
+    "by": "infra",
+    "what": "all 20 runner fixtures run in an isolated extracted directory",
+    "result": "passed",
+    "why_this_matters": "the fixtures had only ever been run by their author until now. An independent pass in a different directory layout is the first evidence that they are not tied to this host.",
+    "not_claimed": "this confirms the runner's failure handling, not the engine's compatibility. The compatibility question is still open."
+  },
+
+  "bounds_as_admitted": {
+    "runtime_native_s": 900,
+    "runtime_wrapper_s": 960,
+    "return_compressed_max_mib": 16,
+    "raw_evidence_max_mib": 64,
+    "provider_preset": "1 x H100, 16 vCPU, 200 GB",
+    "build_threads": 2,
+    "memory_note": "12 GiB is the expected footprint, NOT a claimed hard memory cap. An earlier packet phrasing implied a cap; infra's statement is the accurate one.",
+    "credentials_injected": "none",
+    "collection": "the controller collects native logs and out/ automatically; the source and build tree are excluded",
+    "retention": "native failures and original histories are retained; no source repair, no second arm"
+  },
+
+  "defects_in_our_own_docs_found_at_admission": [
+    {
+      "what": "PACKET.md stated the return archive path as out/probe-return.tar.gz",
+      "actual": "the corrected runner writes it to $WORK/probe-return.tar.gz, beside out/ rather than inside it, which is precisely what stops tar from embedding itself",
+      "found_by": "infra, at admission",
+      "impact": "documentation only. infra's adapter collects native logs and out/ directly, so the admitted packet is unaffected.",
+      "fixed": "PACKET.md corrected. adapter/ was NOT touched, and the admitted archive sha256 da3a6f7f... is unchanged, verified after the edit.",
+      "why_it_mattered_anyway": "a stale path in a handoff reads as provenance and only fails when someone tries to use it"
+    },
+    {
+      "what": "selftest.sh assumed it sat beside run_probe.sh, and it is deliberately not inside the archive",
+      "consequence": "infra's first invocation used the wrong layout and is preserved as an operator error",
+      "whose_fault": "ours. Shipping a script that is not in the archive while hard-coding a colocated path is a usability defect we introduced.",
+      "fixed": "selftest.sh now resolves run_probe.sh beside itself, in ./adapter/, in ../adapter/, or from a PROBE_SH override, and otherwise exits 2 with an explicit message naming the files the fixtures also need.",
+      "controls_run": "colocated layout passes 20/20; parent-with-adapter layout passes 20/20; PROBE_SH override passes 20/20; a truly isolated directory and a PROBE_SH pointing at a nonexistent file both produce the explicit error.",
+      "note": "selftest.sh is not in the archive, so this change does not affect the admitted hash"
+    }
+  ],
+
+  "what_this_branch_will_do_next": "nothing until infra hands over the returned archive and manifest. No duplicate launch, no independent polling.",
+  "what_we_will_NOT_infer_from_the_return": [
+    "that a successful build means the engine is correct",
+    "that a compile failure at the predicted site proves our reasoning rather than merely agreeing with it",
+    "any biological fidelity, in either outcome",
+    "any convergence, in either outcome"
+  ]
+}

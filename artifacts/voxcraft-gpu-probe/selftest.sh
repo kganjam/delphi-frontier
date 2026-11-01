@@ -12,7 +12,23 @@
 # F7 immutable science output   an oversized native history stays byte-identical, the run
 #                               reports a transport failure and CANNOT exit 0
 set -uo pipefail
-HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# This script is NOT inside the injected archive, so it does not necessarily sit beside
+# run_probe.sh. Resolve it rather than assume: infra hit exactly that as an operator error
+# on first invocation, and a wrong-layout run should say so instead of failing obscurely.
+HERE=""
+for c in "${PROBE_SH:-}" "$SELF/run_probe.sh" "$SELF/adapter/run_probe.sh" "$SELF/../adapter/run_probe.sh"; do
+  [ -n "$c" ] && [ -f "$c" ] && { HERE="$(cd "$(dirname "$c")" && pwd)"; break; }
+done
+if [ -z "$HERE" ]; then
+  echo "selftest: cannot find run_probe.sh." >&2
+  echo "  Looked beside this script, in ./adapter/ and in ../adapter/." >&2
+  echo "  Copy selftest.sh next to run_probe.sh (e.g. into the extracted archive), or set" >&2
+  echo "  PROBE_SH=/path/to/run_probe.sh. The fixtures also need validate_history.py," >&2
+  echo "  verify_pin.py, source-pin.json and cases/ in that same directory." >&2
+  exit 2
+fi
+echo "selftest: using $HERE/run_probe.sh"
 T="${1:-$(mktemp -d)}"; mkdir -p "$T"; PASS=0; FAIL=0
 ok(){ printf '  PASS  %s\n' "$1"; PASS=$((PASS+1)); }
 no(){ printf '  FAIL  %s\n' "$1"; FAIL=$((FAIL+1)); }

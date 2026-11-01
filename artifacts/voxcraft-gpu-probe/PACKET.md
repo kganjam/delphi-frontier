@@ -10,8 +10,14 @@ mkdir -p /work/inj && tar xzf voxcraft-h100-probe.tar.gz -C /work/inj
 bash /work/inj/run_probe.sh /work/run            # add --no-dep-install to forbid the Boost install
 ```
 
-Return archive: `/work/run/out/probe-return.tar.gz` (logs + receipt + both histories + validation).
+Return archive: `/work/run/probe-return.tar.gz` — **beside** `out/`, not inside it, which is
+what stops tar from embedding itself. Contents: `logs/` + `out/` (receipt, both histories,
+validation).
 Receipt: `/work/run/out/receipt.json`.
+
+*Corrected 2026-11-01 after admission: this line previously said `out/probe-return.tar.gz`,
+which was the pre-review location. The runner has written it to `$WORK/` since the tar fix,
+and `adapter/` was not touched, so the admitted archive hash `da3a6f7f…` is unchanged.*
 
 One GPU, one arm, no sweep, no fleet. **No cloud job was launched from this branch.**
 
