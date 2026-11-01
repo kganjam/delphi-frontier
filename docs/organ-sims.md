@@ -17,6 +17,7 @@ Code: `engineering/organ_sims/`. Logs: `artifacts/organ-sims/logs/`.
 | R5b `r5b-staggered-release` | Staggered collective release (Nebius) | 0 | 2/2 |
 | R6 `r6-trim-map` | R2 designs in 6-DOF with real trim (Nebius) | 0 (attempt a2; a1 failed at import) | 3/3 |
 | R5c `r5c-integrated-launch` | R6 designs with the R5b release rule (Nebius) | 0 | 2/2 |
+| R7 `r7-aeroelastic-flight` | 6-DOF flights with R4b's fin-flexibility correction (Nebius) | 0 | 3/3 |
 | R5 `r5-school-launch` | Collective launch in PyBullet (6-DOF, contacts, wake coupling) | 0 (run 2; run 1 exited 3, see R5) | 8/8 |
 
 ## Project scales and what each run does NOT establish
@@ -409,6 +410,35 @@ dispersions; 576 launches.
 - **The printed-key option raises the mean but lowers the P10.** Its thinner static margin (0.07) makes it more
   sensitive to launch dispersion. Prefer the new key.
 - **Not established:** straight wakes, assumed dispersion, rigid fins (see R7), no real launcher.
+
+## R7. Flight with flexible fins (Nebius job, `r7-aeroelastic-flight`)
+
+**Setup.**
+- R4b's printed-fin result (EI 7.35e-3, spar on the leading ray, GJ/EI 0.44 interpolated) becomes a pectoral-lift
+  multiplier: −1.6% at 8, −3.6% at 12, −6.2% at 16, −9.3% at 20 m/s, scaling as U² below 8 m/s.
+- It is applied at each surface's local airspeed every time step in the 6-DOF model (quasi-static, no fin dynamics).
+- R6's three designs, V0 6/8/10 m/s, 32 dispersed seeds; rigid vs elastic.
+
+**Run record.**
+- Job `aijob-e00wt40g36kbvcayy2`, code `3fb6667`; exit 0 in 46 s; tarball SHA-256 matched.
+- Checks 3/3. The rigid baseline reproduces R5/R6 (6.38316 m), and the multiplier matches R4b at its table points.
+
+**Mean-range change from fin flexibility:**
+
+| Design | 6 m/s | 8 m/s | 10 m/s |
+|---|---|---|---|
+| Baseline dec+4 | −0.2% | −0.8% | −3.5% |
+| R6 best, printed key | −0.3% | −1.6% | −4.3% |
+| R6 best, new key | −0.3% | −1.7% | −1.2% |
+
+Trim CL drops by 0.005–0.02.
+
+- **Fin flexibility with the spar on the leading ray costs a few percent of range at slingshot speeds.** It does not
+  change the design ranking: the new-key design stays best at every V0.
+- **Design change:** none needed for the 6–8 m/s launch. A quarter-chord spar (R4b) would recover the 1–4% at
+  10 m/s.
+- **Not established:** R4b's v3a-fin factor is reused for the scaled R6 fins (their stiffness would scale with
+  size), quasi-static loads, no flutter, assumed Poisson ratio.
 
 ## LLM review
 

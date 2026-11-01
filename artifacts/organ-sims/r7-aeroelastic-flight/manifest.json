@@ -1,0 +1,508 @@
+{
+ "schema": "frontier.organ-sim.manifest/1",
+ "id": "r7-aeroelastic-flight",
+ "title": "6-DOF flights of R6 designs with an R4b quasi-static aeroelastic correction to pectoral lift",
+ "evidence_kind": "simulated, not observed",
+ "scales": [
+  "organism",
+  "organ"
+ ],
+ "does_not_establish": "No measured fin flexibility or flight: a quasi-static lift multiplier from R4b (v3a fin geometry, assumed elastic axis and Poisson ratio) applied in the 6-DOF model; no fin dynamics or flutter.",
+ "scope": "simulated, not observed",
+ "command": "/tmp/repo/engineering/organ_sims/r7_aeroelastic_flight.py 32 38",
+ "seed": [
+  4000,
+  4001,
+  4002,
+  4003,
+  4004,
+  4005,
+  4006,
+  4007,
+  4008,
+  4009,
+  4010,
+  4011,
+  4012,
+  4013,
+  4014,
+  4015,
+  4016,
+  4017,
+  4018,
+  4019,
+  4020,
+  4021,
+  4022,
+  4023,
+  4024,
+  4025,
+  4026,
+  4027,
+  4028,
+  4029,
+  4030,
+  4031
+ ],
+ "git_head_at_run": "3fb6667",
+ "python": "3.12.7",
+ "ran_utc": "2026-11-01T16:40:53Z",
+ "inputs": {
+  "artifacts/organ-sims/r4b-torsion/manifest.json": {
+   "sha256": "2584f2ff9ef68176ecad3ccde6a31c4d2f94026463e7f5546692ede080de835f",
+   "bytes": 149381
+  },
+  "artifacts/organ-sims/r6-trim-map/manifest.json": {
+   "sha256": "93dcc64942e97cc70f0b57bba1ac403f0e932753c5221c2d7948f4942921553a",
+   "bytes": 677776
+  },
+  "artifacts/glider/r4-daane-printfix/flight_model.json": {
+   "sha256": "b9bdac0a7af5351b22d587fc5ffebb2042a062212354dab16208ef2789604d24",
+   "bytes": 56011
+  }
+ },
+ "code_sha256": {
+  "engineering/organ_sims/common.py": "fa0982e8a102b44c7fd7033c370981537797892a934762c16ff075b6de076622",
+  "engineering/organ_sims/index.py": "9d25969238579345755b2651004dd3ae01320fec60ab397d22d5d609e5c6f93b",
+  "engineering/organ_sims/r1_v3b_convergence.py": "539630b87142f4223eddfe268915bf41aab0a3fdfba94bf067553fa22f2846ed",
+  "engineering/organ_sims/r1b_v3b_fix.py": "51173960a338172bac69c597c052f9eb74290cfeab2e27eb711f50ea31fd44c3",
+  "engineering/organ_sims/r2_glide_sweep.py": "474ab6b97640cc217c6bdb7fedbc80f3e45e5c57cddd668591230b94d2164f5d",
+  "engineering/organ_sims/r3_underwater_drag.py": "73d4d18d211c02ba325d0c801db0d6867df6cf8b402cd1dbf23ae514d4632f47",
+  "engineering/organ_sims/r4_aeroelastic_stiffness.py": "c2eecffe07310b33f3b09421b5a92d42fd7cf099b5e58a978c47f7b85c61f1e1",
+  "engineering/organ_sims/r4b_torsion.py": "21e97961ca43610ac377cf53196ff831450ef987c6acb7459f054a93e89d9bdb",
+  "engineering/organ_sims/r5_school_launch.py": "ff40b9e7ce6212a49ceef3fdacfd7f5a0a35379440a53bb633499d6f6ac23443",
+  "engineering/organ_sims/r5b_stagger.py": "64920881ab02ecc69b8ee577f793c46056dc30fb21723841154dcd7410aeaeab",
+  "engineering/organ_sims/r5c_integrated.py": "20426e3852084ad73339b9f8f51084fdb04e0b7f1b60ad2e467793f76a2941fc",
+  "engineering/organ_sims/r6_trim_map.py": "8f569762016b61da0ded64c74a77e21b62f47a4f9fc7ca350a21e94c9f70c78d",
+  "engineering/organ_sims/r7_aeroelastic_flight.py": "72fc44bad7564242f18130e173b0037422f1762fbfd4dceb340b2afc89ed405f"
+ },
+ "git_dirty_paths_at_run": [
+  "?? artifacts/organ-sims/logs/r7-aeroelastic-flight.log"
+ ],
+ "results": {
+  "factor_table_dCL_rel_by_U": {
+   "8.0": -0.01641645724055935,
+   "12.0": -0.03602644025302337,
+   "16.0": -0.0619174204140797,
+   "20.0": -0.09279581423606957
+  },
+  "GJ_over_EI_printed": 0.4372799384695233,
+  "summary": {
+   "baseline_dec4/V6/rigid": {
+    "nominal": 4.175360343751471,
+    "trim_nominal": {
+     "alpha_deg": 4.606369707201628,
+     "CL": 0.550628924854352,
+     "dCm_dalpha_per_deg": -0.011168167412154853,
+     "L_over_D": 8.716218378156507
+    },
+    "pitch_dev_nominal_deg": 30.698006063273517,
+    "mean_range_m": 3.971371417978342,
+    "p10_range_m": 3.193574513158734,
+    "n": 32
+   },
+   "baseline_dec4/V6/elastic": {
+    "nominal": 4.168051011150565,
+    "trim_nominal": {
+     "alpha_deg": 4.606529427101802,
+     "CL": 0.5459365896419203,
+     "dCm_dalpha_per_deg": -0.011142278414732261,
+     "L_over_D": 8.641755359823417
+    },
+    "pitch_dev_nominal_deg": 30.833942169184848,
+    "mean_range_m": 3.9642113984196206,
+    "p10_range_m": 3.1937623579902485,
+    "n": 32
+   },
+   "baseline_dec4/V8/rigid": {
+    "nominal": 6.38315643437261,
+    "trim_nominal": {
+     "alpha_deg": 4.5615737505056995,
+     "CL": 0.5465228505275556,
+     "dCm_dalpha_per_deg": -0.011143061470637485,
+     "L_over_D": 9.64039196879916
+    },
+    "pitch_dev_nominal_deg": 17.251844237279876,
+    "mean_range_m": 6.144682369334305,
+    "p10_range_m": 4.855496103021449,
+    "n": 32
+   },
+   "baseline_dec4/V8/elastic": {
+    "nominal": 6.331149090448702,
+    "trim_nominal": {
+     "alpha_deg": 4.561672406869453,
+     "CL": 0.5382204078548697,
+     "dCm_dalpha_per_deg": -0.011097039316521746,
+     "L_over_D": 9.493704736751063
+    },
+    "pitch_dev_nominal_deg": 17.4757556621809,
+    "mean_range_m": 6.097455270173862,
+    "p10_range_m": 4.839145333867632,
+    "n": 32
+   },
+   "baseline_dec4/V10/rigid": {
+    "nominal": 11.095504818855318,
+    "trim_nominal": {
+     "alpha_deg": 4.53088743646696,
+     "CL": 0.5437094219836576,
+     "dCm_dalpha_per_deg": -0.011125928338481843,
+     "L_over_D": 10.402738246929763
+    },
+    "pitch_dev_nominal_deg": 8.142154288000969,
+    "mean_range_m": 10.810674842841284,
+    "p10_range_m": 7.53762291896438,
+    "n": 32
+   },
+   "baseline_dec4/V10/elastic": {
+    "nominal": 10.72213476060679,
+    "trim_nominal": {
+     "alpha_deg": 4.530840136859738,
+     "CL": 0.5304913455576196,
+     "dCm_dalpha_per_deg": -0.011052424190518426,
+     "L_over_D": 10.149613254410259
+    },
+    "pitch_dev_nominal_deg": 8.662081239898383,
+    "mean_range_m": 10.43761341963141,
+    "p10_range_m": 7.420905215535941,
+    "n": 32
+   },
+   "r6_best_printed_key/V6/rigid": {
+    "nominal": 4.763913199582738,
+    "trim_nominal": {
+     "alpha_deg": 5.598215451970028,
+     "CL": 0.6206543945647887,
+     "dCm_dalpha_per_deg": -0.006105326011049213,
+     "L_over_D": 9.630407575050356
+    },
+    "pitch_dev_nominal_deg": 25.29328037347353,
+    "mean_range_m": 4.307032413086359,
+    "p10_range_m": 2.970092618458334,
+    "n": 32
+   },
+   "r6_best_printed_key/V6/elastic": {
+    "nominal": 4.743350879882972,
+    "trim_nominal": {
+     "alpha_deg": 5.580627112188097,
+     "CL": 0.6139671969299233,
+     "dCm_dalpha_per_deg": -0.006090830710710537,
+     "L_over_D": 9.542406770202566
+    },
+    "pitch_dev_nominal_deg": 25.502476774413285,
+    "mean_range_m": 4.294041962979597,
+    "p10_range_m": 2.969759569251247,
+    "n": 32
+   },
+   "r6_best_printed_key/V8/rigid": {
+    "nominal": 8.191205907990776,
+    "trim_nominal": {
+     "alpha_deg": 5.516086431156202,
+     "CL": 0.613581046670885,
+     "dCm_dalpha_per_deg": -0.006087684532120646,
+     "L_over_D": 10.49935645818001
+    },
+    "pitch_dev_nominal_deg": 10.965096395782469,
+    "mean_range_m": 7.381912570885773,
+    "p10_range_m": 4.07576670659127,
+    "n": 32
+   },
+   "r6_best_printed_key/V8/elastic": {
+    "nominal": 8.01943642214409,
+    "trim_nominal": {
+     "alpha_deg": 5.483992883787497,
+     "CL": 0.6017375008675733,
+     "dCm_dalpha_per_deg": -0.005938680511671989,
+     "L_over_D": 10.330398266736402
+    },
+    "pitch_dev_nominal_deg": 11.471854818120821,
+    "mean_range_m": 7.263790817469678,
+    "p10_range_m": 4.066171555326686,
+    "n": 32
+   },
+   "r6_best_printed_key/V10/rigid": {
+    "nominal": 23.101119542400212,
+    "trim_nominal": {
+     "alpha_deg": 5.4589093479247515,
+     "CL": 0.6086550941839608,
+     "dCm_dalpha_per_deg": -0.005949122464498014,
+     "L_over_D": 11.19993844845715
+    },
+    "pitch_dev_nominal_deg": 6.805077120700762,
+    "mean_range_m": 19.835778206561944,
+    "p10_range_m": 6.207512810834354,
+    "n": 32
+   },
+   "r6_best_printed_key/V10/elastic": {
+    "nominal": 21.7715199026788,
+    "trim_nominal": {
+     "alpha_deg": 5.406526156103689,
+     "CL": 0.5897894969573656,
+     "dCm_dalpha_per_deg": -0.0059132605228651505,
+     "L_over_D": 10.914088387346354
+    },
+    "pitch_dev_nominal_deg": 6.408609629676306,
+    "mean_range_m": 18.989330644242283,
+    "p10_range_m": 6.08687154717305,
+    "n": 32
+   },
+   "r6_best_new_key/V6/rigid": {
+    "nominal": 4.68442774164314,
+    "trim_nominal": {
+     "alpha_deg": 5.9338533467784655,
+     "CL": 0.6118025387035934,
+     "dCm_dalpha_per_deg": -0.010142949902520374,
+     "L_over_D": 9.70201608511166
+    },
+    "pitch_dev_nominal_deg": 22.89224472834662,
+    "mean_range_m": 4.428279664409015,
+    "p10_range_m": 3.5874897584469534,
+    "n": 32
+   },
+   "r6_best_new_key/V6/elastic": {
+    "nominal": 4.670112117679314,
+    "trim_nominal": {
+     "alpha_deg": 5.9571663628709155,
+     "CL": 0.6083291281157525,
+     "dCm_dalpha_per_deg": -0.010083153859919832,
+     "L_over_D": 9.624957537579064
+    },
+    "pitch_dev_nominal_deg": 22.99887087667489,
+    "mean_range_m": 4.415834787443049,
+    "p10_range_m": 3.585893010296862,
+    "n": 32
+   },
+   "r6_best_new_key/V8/rigid": {
+    "nominal": 9.058537689761241,
+    "trim_nominal": {
+     "alpha_deg": 5.879612081374912,
+     "CL": 0.6072094364304227,
+     "dCm_dalpha_per_deg": -0.010124999176440767,
+     "L_over_D": 10.526475578490148
+    },
+    "pitch_dev_nominal_deg": 8.84010236680284,
+    "mean_range_m": 8.687050564537987,
+    "p10_range_m": 6.306268162672992,
+    "n": 32
+   },
+   "r6_best_new_key/V8/elastic": {
+    "nominal": 8.91758384752596,
+    "trim_nominal": {
+     "alpha_deg": 5.92074753630112,
+     "CL": 0.6010526706242133,
+     "dCm_dalpha_per_deg": -0.010018698237324538,
+     "L_over_D": 10.373853559962331
+    },
+    "pitch_dev_nominal_deg": 9.128800819785065,
+    "mean_range_m": 8.540232099571325,
+    "p10_range_m": 6.266931579418347,
+    "n": 32
+   },
+   "r6_best_new_key/V10/rigid": {
+    "nominal": 24.581159435117193,
+    "trim_nominal": {
+     "alpha_deg": 5.842485486680812,
+     "CL": 0.6040650240306383,
+     "dCm_dalpha_per_deg": -0.010112749002035158,
+     "L_over_D": 11.183477115873549
+    },
+    "pitch_dev_nominal_deg": 9.727030061768927,
+    "mean_range_m": 23.216490407491854,
+    "p10_range_m": 14.487497589390445,
+    "n": 32
+   },
+   "r6_best_new_key/V10/elastic": {
+    "nominal": 24.20299556886917,
+    "trim_nominal": {
+     "alpha_deg": 5.908054689037741,
+     "CL": 0.594244364950261,
+     "dCm_dalpha_per_deg": -0.009942960985641708,
+     "L_over_D": 10.919278886104124
+    },
+    "pitch_dev_nominal_deg": 9.293657266767372,
+    "mean_range_m": 22.94894152208103,
+    "p10_range_m": 14.178887012007598,
+    "n": 32
+   }
+  },
+  "comparison": {
+   "baseline_dec4/V6": {
+    "mean_range_change": -0.0018029085686390722,
+    "p10_change": 5.8819617560379456e-05,
+    "trim_CL_rigid": 0.550628924854352,
+    "trim_CL_elastic": 0.5459365896419203,
+    "trim_alpha_rigid": 4.606369707201628,
+    "trim_alpha_elastic": 4.606529427101802
+   },
+   "baseline_dec4/V8": {
+    "mean_range_change": -0.007685848726068367,
+    "p10_change": -0.0033674765269902096,
+    "trim_CL_rigid": 0.5465228505275556,
+    "trim_CL_elastic": 0.5382204078548697,
+    "trim_alpha_rigid": 4.5615737505056995,
+    "trim_alpha_elastic": 4.561672406869453
+   },
+   "baseline_dec4/V10": {
+    "mean_range_change": -0.03450861566305563,
+    "p10_change": -0.015484683259331167,
+    "trim_CL_rigid": 0.5437094219836576,
+    "trim_CL_elastic": 0.5304913455576196,
+    "trim_alpha_rigid": 4.53088743646696,
+    "trim_alpha_elastic": 4.530840136859738
+   },
+   "r6_best_printed_key/V6": {
+    "mean_range_change": -0.0030161022395123194,
+    "p10_change": -0.0001121342832938188,
+    "trim_CL_rigid": 0.6206543945647887,
+    "trim_CL_elastic": 0.6139671969299233,
+    "trim_alpha_rigid": 5.598215451970028,
+    "trim_alpha_elastic": 5.580627112188097
+   },
+   "r6_best_printed_key/V8": {
+    "mean_range_change": -0.016001510757790216,
+    "p10_change": -0.002354195407962556,
+    "trim_CL_rigid": 0.613581046670885,
+    "trim_CL_elastic": 0.6017375008675733,
+    "trim_alpha_rigid": 5.516086431156202,
+    "trim_alpha_elastic": 5.483992883787497
+   },
+   "r6_best_printed_key/V10": {
+    "mean_range_change": -0.04267276804091524,
+    "p10_change": -0.019434718435174414,
+    "trim_CL_rigid": 0.6086550941839608,
+    "trim_CL_elastic": 0.5897894969573656,
+    "trim_alpha_rigid": 5.4589093479247515,
+    "trim_alpha_elastic": 5.406526156103689
+   },
+   "r6_best_new_key/V6": {
+    "mean_range_change": -0.0028103186585047846,
+    "p10_change": -0.00044508786299157777,
+    "trim_CL_rigid": 0.6118025387035934,
+    "trim_CL_elastic": 0.6083291281157525,
+    "trim_alpha_rigid": 5.9338533467784655,
+    "trim_alpha_elastic": 5.9571663628709155
+   },
+   "r6_best_new_key/V8": {
+    "mean_range_change": -0.01690084153141691,
+    "p10_change": -0.006237695930452092,
+    "trim_CL_rigid": 0.6072094364304227,
+    "trim_CL_elastic": 0.6010526706242133,
+    "trim_alpha_rigid": 5.879612081374912,
+    "trim_alpha_elastic": 5.92074753630112
+   },
+   "r6_best_new_key/V10": {
+    "mean_range_change": -0.0115240882973634,
+    "p10_change": -0.021301855305146056,
+    "trim_CL_rigid": 0.6040650240306383,
+    "trim_CL_elastic": 0.594244364950261,
+    "trim_alpha_rigid": 5.842485486680812,
+    "trim_alpha_elastic": 5.908054689037741
+   }
+  },
+  "designs": {
+   "baseline_dec4": {
+    "pec": [
+     1.0,
+     1.0,
+     0.0
+    ],
+    "key": 4.0,
+    "cg_shift": 0.0
+   },
+   "r6_best_printed_key": {
+    "pec": [
+     1.2,
+     0.85,
+     0.0
+    ],
+    "key": 3.0,
+    "cg_shift": 0.004,
+    "r6_V8": {
+     "nominal_range_m": 8.191205907990776,
+     "mean_range_m": 7.797784923045668,
+     "p10_range_m": 5.101720182869932,
+     "sd_range_m": 2.1877730997868623,
+     "r2_point_mass_range_m": 12.873231048891578
+    }
+   },
+   "r6_best_new_key": {
+    "pec": [
+     1.4,
+     0.85,
+     0.0
+    ],
+    "key": 6.0,
+    "cg_shift": 0.004,
+    "r6_V8": {
+     "nominal_range_m": 9.058537689761241,
+     "mean_range_m": 8.641743563241771,
+     "p10_range_m": 6.561897658354027,
+     "sd_range_m": 2.0021979770086022,
+     "r2_point_mass_range_m": 14.926891573564632
+    }
+   }
+  },
+  "seeds": [
+   4000,
+   4001,
+   4002,
+   4003,
+   4004,
+   4005,
+   4006,
+   4007,
+   4008,
+   4009,
+   4010,
+   4011,
+   4012,
+   4013,
+   4014,
+   4015,
+   4016,
+   4017,
+   4018,
+   4019,
+   4020,
+   4021,
+   4022,
+   4023,
+   4024,
+   4025,
+   4026,
+   4027,
+   4028,
+   4029,
+   4030,
+   4031
+  ],
+  "wall_s": 44.83016633987427
+ },
+ "checks": [
+  {
+   "name": "control: rigid baseline dec+4 nominal range at 8 m/s equals R5/R6 (6.38316 m, 1e-6)",
+   "pass": true,
+   "detail": 6.38315643437261
+  },
+  {
+   "name": "control: correction factor is 1 at zero speed and matches R4b at 8/20 m/s",
+   "pass": true,
+   "detail": {
+    "table": {
+     "8.0": -0.01641645724055935,
+     "12.0": -0.03602644025302337,
+     "16.0": -0.0619174204140797,
+     "20.0": -0.09279581423606957
+    },
+    "GJ_over_EI_printed": 0.4372799384695233
+   }
+  },
+  {
+   "name": "every range finite and positive",
+   "pass": true,
+   "detail": 594
+  }
+ ],
+ "design_implications": {
+  "see": "docs/organ-sims.md"
+ },
+ "figures": []
+}

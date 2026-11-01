@@ -191,9 +191,27 @@
   },
   {
    "id": "r7-aeroelastic-flight",
+   "title": "6-DOF flights of R6 designs with an R4b quasi-static aeroelastic correction to pectoral lift",
    "scales": [
     "organism",
     "organ"
+   ],
+   "evidence_kind": "simulated, not observed",
+   "does_not_establish": "No measured fin flexibility or flight: a quasi-static lift multiplier from R4b (v3a fin geometry, assumed elastic axis and Poisson ratio) applied in the 6-DOF model; no fin dynamics or flutter.",
+   "checks_passed": 3,
+   "checks_total": 3,
+   "all_checks_pass": true,
+   "ran_utc": "2026-11-01T16:40:53Z",
+   "manifest": "artifacts/organ-sims/r7-aeroelastic-flight/manifest.json",
+   "manifest_sha256": "e74ee30b22b50682198f82b49a9c70cae24b824814333f9f2c08443cf9f8a94b",
+   "figures": [],
+   "doc": "docs/organ-sims.md",
+   "manifest_has_scale_fields": true
+  },
+  {
+   "id": "r6b-trim-map-fine",
+   "scales": [
+    "organism"
    ],
    "status": "no manifest (run not completed)"
   },

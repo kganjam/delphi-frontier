@@ -1,0 +1,4 @@
+{"job_name": "claude-organ-r6b-trim-fine-a1", "job_id": "aijob-e00vk32zhy5a2qy1d8", "submitted_utc": "2026-11-01T16:40:39Z", "platform": "gpu-l40s-a", "preset": "1gpu-40vcpu-160gb",
+ "why_gpu_platform": "non-GPU vCPU quota full; CPU-only PyBullet workload, GPU idle", "image": "python:3.12.7-bookworm", "timeout": "2h", "disk": "50Gi",
+ "env": {"R6_FINE": "1"}, "command": "bash /work/run_job.sh 7ac74dfd75bcafc7bffdf8074c12398ed7c769fb r6b-trim-map-fine engineering.organ_sims.r6_trim_map 32 38", "code_commit": "7ac74dfd75bcafc7bffdf8074c12398ed7c769fb", "run_job_sh_sha256": "4456ec960eb988cc05c15d3e3dc0bfe1fae479c2379f1012b46180ae85d1834c",
+ "dry_run": "clean sparse clone + job venv, R6_FINE=1 with 1 seed: rc 0"}
