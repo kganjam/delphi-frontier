@@ -40,16 +40,22 @@ MAT_CILIA = """
             <Cilia>1</Cilia></Mechanical></Material>"""
 
 
+LITE = False   # set by --lite: E=1e5, self-collision off, T_END=4 s (population throughput config, disclosed)
+
+
 def base_vxa(lattice=0.01, dtfrac=0.9, record=0, cilia=False):
+    T_END_ = 4.0 if LITE else T_END
+    mats = (MATS + (MAT_CILIA if cilia else "")).replace("<Elastic_Mod>1e6</Elastic_Mod>", "<Elastic_Mod>1e5</Elastic_Mod>") if LITE else (MATS + (MAT_CILIA if cilia else ""))
+    coll = "<AttachDetach><EnableCollision>0</EnableCollision></AttachDetach>" if LITE else ""
     return f"""<VXA Version="1.1">
 <GPU><HeapSize>0.5</HeapSize></GPU>
 <Simulator>
     <Integration><DtFrac>{dtfrac}</DtFrac></Integration>
     <Damping><BondDampingZ>1</BondDampingZ><ColDampingZ>0.8</ColDampingZ><SlowDampingZ>0.01</SlowDampingZ></Damping>
     <RecordHistory><RecordStepSize>{record}</RecordStepSize><RecordVoxel>1</RecordVoxel><RecordLink>0</RecordLink></RecordHistory>
-    <StopCondition><StopConditionFormula><mtSUB><mtVAR>t</mtVAR><mtCONST>{T_END}</mtCONST></mtSUB></StopConditionFormula></StopCondition>
+    <StopCondition><StopConditionFormula><mtSUB><mtVAR>t</mtVAR><mtCONST>{T_END_}</mtCONST></mtSUB></StopConditionFormula></StopCondition>
     <FitnessFunction><mtVAR>x</mtVAR></FitnessFunction>
-    <SecondaryExperiment>1</SecondaryExperiment>{"<EnableCilia>1</EnableCilia>" if cilia else ""}
+    <SecondaryExperiment>1</SecondaryExperiment>{"<EnableCilia>1</EnableCilia>" if cilia else ""}{coll}
     <ReinitializeInitialPositionAfterThisManySeconds>{T_TRANS}</ReinitializeInitialPositionAfterThisManySeconds>
 </Simulator>
 <Environment>
@@ -58,7 +64,7 @@ def base_vxa(lattice=0.01, dtfrac=0.9, record=0, cilia=False):
 </Environment>
 <VXC Version="0.94">
     <Lattice><Lattice_Dim>{lattice}</Lattice_Dim></Lattice>
-    <Palette>{MATS}{MAT_CILIA if cilia else ""}
+    <Palette>{mats}
     </Palette>
     <Structure Compression="ASCII_READABLE"><X_Voxels>1</X_Voxels><Y_Voxels>1</Y_Voxels><Z_Voxels>1</Z_Voxels>
         <Data><Layer><![CDATA[1]]></Layer></Data></Structure>
@@ -190,10 +196,20 @@ def main():
     ap.add_argument("--nrep", type=int, default=3)
     ap.add_argument("--skip-endpoints", action="store_true")
     ap.add_argument("--ensemble", type=int, default=0, help="POST-HOC: N phase-perturbed members per pattern (8x4x3, DtFrac 0.9)")
+    ap.add_argument("--lite", action="store_true", help="E=1e5, self-collision off, T_END=4 s; adds endpoints_lite bridge batch")
+    ap.add_argument("--pop-start", type=int, default=0, help="first candidate index (same seed stream; for splitting across jobs)")
     ap.add_argument("--cilia", action="store_true", help="Addendum A cilia arm (preregistered before running)")
     ap.add_argument("--eps", type=float, default=1e-7, help="POST-HOC: phase perturbation sd, in cycles")
     a = ap.parse_args()
     manifest = []
+    global LITE
+    LITE = a.lite
+    if LITE:
+        bodies = {}
+        for pname, (mat, ph) in ref_patterns(8, 4, 3).items():
+            for r in range(a.nrep):
+                bodies[f"lite_{pname}_r{r}"] = (mat, ph, (8, 4, 3), dict(kind="endpoint_lite", pattern=pname, rep=r, dtfrac=0.9, lattice=0.01, dims="8x4x3"))
+        write_batch(os.path.join(a.out, "endpoints_lite"), base_vxa(0.01, 0.9), bodies, manifest, "endpoints_lite")
     if not a.skip_endpoints:
         for tag, dtf in (("dt090", 0.9), ("dt045", 0.45), ("dt0225", 0.225)):
             bodies = {}
@@ -260,7 +276,9 @@ def main():
     for i in range(a.npop):
         mat, ph = random_body(rng, nx, ny, nz)
         pas = grid(nx, ny, nz, lambda x, y, z: 1 if mat[x][y][z] else 0)
-        meta = dict(kind="pop", cand=i, seed=a.seed, dtfrac=0.9, lattice=0.01, dims="6x6x5")
+        if i < a.pop_start:
+            continue   # candidate i is still drawn from the seeded stream so indices are identical across jobs
+        meta = dict(kind="pop", cand=i, seed=a.seed, dtfrac=0.9, lattice=0.01, dims="6x6x5", lite=LITE)
         bodies[f"c{i:05d}_act"] = (mat, ph, (nx, ny, nz), dict(meta, arm="act"))
         bodies[f"c{i:05d}_pas"] = (pas, ph, (nx, ny, nz), dict(meta, arm="pas"))
         bodies[f"c{i:05d}_mir"] = (mirror_x(mat, nx), mirror_x(ph, nx), (nx, ny, nz), dict(meta, arm="mir"))
@@ -270,7 +288,7 @@ def main():
             write_batch(os.path.join(a.out, f"pop_{bi:02d}"), base_vxa(0.01, 0.9), bodies, manifest, f"pop_{bi:02d}")
             bodies = {}; bi += 1
     with open(os.path.join(a.out, "manifest.json"), "w") as f:
-        json.dump(dict(seed=a.seed, T_TRANS=T_TRANS, T_END=T_END, PERIOD=PERIOD, n=len(manifest), bodies=manifest), f)
+        json.dump(dict(seed=a.seed, lite=LITE, T_TRANS=T_TRANS, T_END=(4.0 if LITE else T_END), PERIOD=PERIOD, n=len(manifest), bodies=manifest), f)
     print("generated", len(manifest), "bodies in", a.out)
 
 
