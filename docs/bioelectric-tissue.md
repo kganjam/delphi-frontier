@@ -47,3 +47,9 @@ systemd-run --user --scope -p TasksMax=128 -p MemoryMax=4G -p MemorySwapMax=0 -p
   python3 -m engineering.bioelectric_tissue.run --betse-python <venv>/bin/python --work <scratch dir>
 ```
 Observed wall time of the five BETSE runs on this host: about 1 to 2 minutes each, two at a time. Outputs: `artifacts/bioelectric-tissue/{summary.json,bioelectric_tissue.mp4,poster.png,trajectories/*.npz,configs/*.yaml,model_interface.json}`.
+
+## Frozen follow-up: generic K-permeability sensitivity
+
+`engineering/bioelectric_tissue/sensitivity_protocol.json` fixes a prospective eight-run packet: one newly generated baseline world/init, paired Dm_K multipliers 2, 5 and 10 with gap junctions open or fully blocked, and one half-time-step control at 10× with junctions open. All perturbations use the same copied world and initialization, 1–3 s ramp, 4 s simulation, and 0.1 s samples. The multipliers are dimensionless sensitivity settings, not estimates of channel abundance or conductance.
+
+The result reports targeted and untargeted voltage differences from this packet's baseline, open-fraction response, concentrations, explicit step-sensitivity results, and every saved per-cell trajectory. It carries a new initialization and does not reuse the earlier packet's unretained world. It remains a generic BETSE patch, not a Kcnj13/Kir2.1 parameterization, fin model, biological replicate, or measurement. The result is only called complete after its per-state checks and output hashes are recorded.

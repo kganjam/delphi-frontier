@@ -28,21 +28,31 @@ K_MULT = 5.0
 EV_START, EV_END, EV_RATE = 1.0, 3.0, 0.5
 
 
-def make_config(src: Path, dst: Path, scenario: str) -> None:
+def make_config(src: Path, dst: Path, scenario: str, *, k_multiplier: float = K_MULT,
+                k_change: bool | None = None, gap_block: bool | None = None,
+                half_step: bool | None = None) -> None:
+    if not np.isfinite(k_multiplier) or k_multiplier <= 0 or k_multiplier > 50:
+        raise ValueError("K-permeability multiplier must be finite and in (0, 50]")
+    if k_change is None:
+        k_change = scenario in ("k_up", "k_up_gj_block")
+    if gap_block is None:
+        gap_block = scenario in ("gj_block", "k_up_gj_block")
+    if half_step is None:
+        half_step = scenario == "baseline_dt"
     from ruamel.yaml import YAML
     y = YAML(); y.preserve_quotes = True; y.width = 4096
     d = y.load(src.read_text())
     d["general options"]["simulate extracellular spaces"] = False          # infinite ideal bath; faster; no environmental ion depletion
     d["world options"]["world size"] = 80e-6
     d["init time settings"]["time step"] = 1e-2; d["init time settings"]["total time"] = 3.0; d["init time settings"]["sampling rate"] = 1.0
-    d["sim time settings"]["time step"] = STEP / (2 if scenario == "baseline_dt" else 1)
+    d["sim time settings"]["time step"] = STEP / (2 if half_step else 1)
     d["sim time settings"]["total time"] = TOTAL; d["sim time settings"]["sampling rate"] = SAMPLE
     d["general network"]["implement network"] = False                       # no gene-regulatory network / gating ligand: ion + pump + gap-junction physics only
     for k in ("change K mem", "block gap junctions"):
         d[k]["event happens"] = False
-    if scenario in ("k_up", "k_up_gj_block"):
-        e = d["change K mem"]; e.update({"event happens": True, "change start": EV_START, "change finish": EV_END, "change rate": EV_RATE, "multiplier": K_MULT})
-    if scenario in ("gj_block", "k_up_gj_block"):
+    if k_change:
+        e = d["change K mem"]; e.update({"event happens": True, "change start": EV_START, "change finish": EV_END, "change rate": EV_RATE, "multiplier": float(k_multiplier)})
+    if gap_block:
         e = d["block gap junctions"]; e.update({"event happens": True, "change start": EV_START, "change finish": EV_END, "change rate": EV_RATE, "random fraction": 100})
     ws = d["results options"]["while solving"]
     ws["animations"]["show"] = False; ws["animations"]["save"] = False      # we render our own animation from the saved trajectory
@@ -85,9 +95,20 @@ def extract(workdir: Path, out: Path, scenario: str, log: str) -> None:
 
 
 def main() -> None:
-    scenario, work = sys.argv[1], Path(sys.argv[2]).resolve()
-    tmpl = Path(sys.argv[4]).resolve() if len(sys.argv) > 4 and sys.argv[3] == "--template-dir" else None
-    only = "--extract-only" in sys.argv
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("scenario")
+    ap.add_argument("work", type=Path)
+    ap.add_argument("--template-dir", type=Path)
+    ap.add_argument("--extract-only", action="store_true")
+    ap.add_argument("--k-multiplier", type=float, default=K_MULT)
+    ap.add_argument("--k-change", action="store_true")
+    ap.add_argument("--gap-block", action="store_true")
+    ap.add_argument("--half-step", action="store_true")
+    args = ap.parse_args()
+    scenario, work = args.scenario, args.work.resolve()
+    tmpl = args.template_dir.resolve() if args.template_dir else None
+    only = args.extract_only
     work.mkdir(parents=True, exist_ok=True)
     cfgdir = work / "cfg"
     if only:
@@ -98,7 +119,10 @@ def main() -> None:
     else:
         shutil.copytree(tmpl / "cfg", cfgdir, ignore=shutil.ignore_patterns("SIMS", "RESULTS", "run.yaml"))
     cfg = cfgdir / "run.yaml"
-    make_config(cfgdir / "default.yaml", cfg, scenario)
+    make_config(cfgdir / "default.yaml", cfg, scenario, k_multiplier=args.k_multiplier,
+                k_change=True if args.k_change else None,
+                gap_block=True if args.gap_block else None,
+                half_step=True if args.half_step else None)
     if tmpl is None:
         betse(cfg, "seed", cfgdir); betse(cfg, "init", cfgdir)
     log = betse(cfg, "sim", cfgdir) if "--extract-only" not in sys.argv else ""
