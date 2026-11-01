@@ -1,0 +1,35 @@
+{
+ "schema": "frontier.preregistered-protocol/1",
+ "id": "xenomodel-voxel-parity-r1",
+ "title": "Forward test of the mirror / momentum theory on Voxelyze: split parity, mirrored patterns, frictionless heterogeneity",
+ "frozen_before_outputs": true,
+ "frozen_note": "one 2-cycle smoke run (nx=5 longitudinal, dtScale 0.5) was used to check the build; it is not part of the results",
+ "theory": "docs/xenomodel/actuation-motion-equations.md sections 2 and 5; Lean engineering/formalize/lean/ActuationMotion.lean (com_fixed_uniform_damping_ratio, heterogeneous_mass_breaks_com)",
+ "why": "post-hoc, stored runs suggest the 'longitudinal' drift is a body/pattern asymmetry from x < nx/2 integer division at odd nx. This is the forward test, with predictions written before running.",
+ "engine": {"name": "Voxelyze", "commit": "4287e365e11416dd108f2f361e9ec4c5a011a16c", "licence": "LGPL-3.0-or-later (source headers)"},
+ "driver": "engineering/xenomodel/voxel_parity/parity_actuation.cpp (copy of scripts/voxel_actuation/soft_actuation.cpp + longitudinal_mirror pattern + rhoFront + mass-weighted COM + per-cycle COM)",
+ "defaults": "all scripts/voxel_actuation defaults (5x3x3 cross-section ny=nz=3, voxel 0.01 m, E 1e5 Pa, rho 1e3, nu 0.35, muS 1.0, muK 0.8, zetaInt 1, zetaGlob 0.1, zetaColl 0.8, cte 0.01, amp 10 C, 4 Hz, settle 0.25 s); measure 5.0 s = 20 cycles",
+ "metric": "dbar = (COM_x at end of cycle 20 - COM_x at end of cycle 5)/15, mass-weighted COM, metres per cycle",
+ "arms": [
+  {"id": "V-A", "pattern": "longitudinal", "nx": [4, 5, 6, 7, 8, 9, 10], "dtScale": [0.5, 0.25]},
+  {"id": "V-B", "pattern": "longitudinal_mirror", "nx": [5, 7], "dtScale": [0.5, 0.25]},
+  {"id": "V-C1", "pattern": "longitudinal and travelling", "nx": [5], "muS": 0, "muK": 0, "rhoFront": 1, "dtScale": [0.5]},
+  {"id": "V-C2", "pattern": "longitudinal", "nx": [5], "muS": 0, "muK": 0, "rhoFront": 4, "dtScale": [0.5]},
+  {"id": "V-C3", "pattern": "longitudinal", "nx": [5], "muS": 0, "muK": 0, "rhoFront": 4, "cte": 0, "dtScale": [0.5], "role": "no-actuation control for V-C2"}
+ ],
+ "predictions": {
+  "P-V1": "for every even nx in {4,6,8,10} and each dtScale: |dbar(nx)| < 0.1*|dbar(nx=5)| at the same dtScale",
+  "P-V1b": "for odd nx in {5,7,9}: dbar has the same sign at both dtScales and |dbar| > 3*max over even nx of |dbar| at the same dtScale",
+  "P-V2": "for nx in {5,7} at each dtScale: |dbar_mirror + dbar| <= |dbar(dt 0.5) - dbar(dt 0.25)| of the original pattern (the dt-refinement change)",
+  "P-V3a": "V-C1: |net_dx| <= 1e-9 m for both patterns (uniform damping ratio, no friction)",
+  "P-V3b": "V-C2: |net_dx| > 1e-6 m (non-uniform C/m = 2 zeta sqrt(E s/m) propels without friction)",
+  "P-V3c": "V-C3: |net_dx| <= 1e-9 m"
+ },
+ "falsifiers": [
+  "P-V1 fails: symmetric-split bodies drift at the order of asymmetric ones -> a symmetry-breaking element (solver ordering, contact, multistability) is missing from the account",
+  "P-V2 fails: mirror endpoint fails -> anisotropy artifact in body construction or solver, or non-unique dynamics",
+  "P-V3a fails: contradicts the momentum theorem for the source force law",
+  "P-V3b fails: the damping-ratio hypothesis is not what makes the theorem hold (or the effect is below resolution)"
+ ],
+ "cannot_establish": ["anything about tissue, cilia or a built construct", "spatial convergence (voxel count is the variable under test here, at fixed voxel size; body length changes with nx)"]
+}
