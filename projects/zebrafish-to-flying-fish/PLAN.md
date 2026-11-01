@@ -61,7 +61,7 @@ records without re-coining a vocabulary.
 | T9 | Karyotype / genome background | `evolutionary` | `U` — not read here | 2n = 48 in three species examined; karyotypic divergence between genera | `S-abs` (PMID 42325591) | karyotype, synteny |
 | T10 | Ecology: epipelagic life history | `ecological` | Freshwater, benthopelagic | Epipelagic, interoceanic | `S-abs` (PMID 42325591) | out of scope for this project |
 | T11 | **Pectoral girdle and fin musculature** (the wing's root, not its blade) | `organ`, `tissue`, `developmental` | Cleithrum + scapulocoracoid sized for labriform swimming; the cleithrum forms from four adjoining embryonic populations; a gli3/Hedgehog ossification trade-off can reconfigure the girdle toward stem-tetrapod character | Must transmit aerodynamic load from a large wing into the body wall | `U` for Exocoetidae. Zebrafish side `S-abs` (PMIDs 39060278, 40442084). | girdle element dimensions, glenoid articulation, abductor/adductor muscle mass |
-| T12 | **Whole-animal locomotor cost of enlarged fins** | `organism` | Measured in zebrafish: wildtype vs **longfin** strains were compared for tail-flip jump kinematics, voluntary jumping and exhaustion | Exocoetids presumably pay a drag cost in water for the wing | `S-abs` for the zebrafish comparison (PMID 38232499); the Exocoetid side is `H` | jump distance, exhaustion, swimming cost |
+| T12 | **Whole-animal locomotor cost of enlarged fins** | `organism` | A published comparison of wildtype vs **longfin** strains tested tail-flip jump kinematics, voluntary jumping and exhaustion. Its **result was not read**, so the direction and size of any cost are `U` here. | Exocoetids presumably pay a drag cost in water for the wing | `S-abs` for the zebrafish comparison (PMID 38232499); the Exocoetid side is `H` | jump distance, exhaustion, swimming cost |
 
 **What this decomposition buys:** T1/T2/T4 are the only traits with a *named genetic handle* that is
 both (i) published in zebrafish and (ii) flagged by a comparative study in flying fishes. T3, T5, T6,
@@ -153,6 +153,24 @@ This is deliberately short, because it is where the plan is weakest.
 **Honest summary of §2.** This project can name genes with real evidence. It cannot name a single
 enhancer **sequence or coordinate interval** from a source it read. Any construct design below that
 needs an element therefore has a `null` where the sequence goes — exactly as SPEC-012 requires.
+
+### 2.6 Inputs reused from this repository (other harnesses' artifacts, not re-verified here)
+
+This project did not re-run or re-verify any of these; it uses them as the repo's existing sourced
+layers so the plan's stages, cell compartments and construct layers are not re-coined here.
+
+| Artifact | What it supplies to this plan | Boundary it carries |
+| --- | --- | --- |
+| `data/fish-lifecycle/stages.json` + `docs/fish-lifecycle.md` | The stage vocabulary every perturbation readout below should be reported against: **embryo** (to ~72 hpf at 28.5 °C, protruding-mouth stage), **larva**, **juvenile** (entry at complete squamation and loss of the larval fin fold, SSL 11.0 mm), **adult** (viable gametes; 17.5 mm SL males, 18.3 mm females). Also the one fitted quantity in the pectoral fin bud this repo has: a BMP gradient length scale of **about 28 µm at 60 hpf**, fitted 48–78 hpf (Mateus 2020), and the size index **SL = 3.56·HAA + 4.40** (Parichy 2009). | Zebrafish only, single-operator, unreviewed. Stage boundaries are laboratory conventions. The gradient is a fit to zebrafish data, not a transferable law, and this project did not use it quantitatively anywhere. |
+| `artifacts/fish-regulatory-map/map.json` + `docs/research/fish-regulatory-map-2026-10-31.md` | Measured cell compartments with marker lists for the fin: basal and superficial epithelium, **mesenchymal fibroblast states** (`prrx1b`/`msx1b`), **osteoblast/joint states** (`sp7`/`bglap`; `lmx1ba`/`pthlha`/`evx1`), haematopoietic, and the **embryonic pectoral fin field** (`tbx5a`–`fgf24`, `hand2`-labelled lateral plate mesoderm). These are the populations rows P1, P4 and P5 need to name as targets and comparisons. | Markers are **identification aids, not validated drivers**. The underlying multiome (GSE261907, GRCz11/Ensembl104) measures **adult caudal regeneration**, two biological replicates per time point — not embryonic paired-fin development, which is what a wing needs. |
+| `artifacts/genetic-blueprints/blueprints.json` (SPEC-012) | The construct-layer vocabulary and four existing designs spanning reporter-first characterization, BAC-carried locus and landing-site options. | Its element coordinates and sequences are **null** and it says so. This plan inherits those nulls; §2.5 does not improve on them. |
+| The same regulatory-map review's Evo 2 assessment | Why `G7` below is not treated as available even if a model call were possible: the published accessibility evidence is in mouse and human cells, and that review states calibration in fish is unknown. | A predictor score is not a measurement. |
+
+**Consequence for the readouts in §4.** Every row's readout should be reported at a named stage from
+that stage list, with the target and comparison populations named from the regulatory map's
+compartments. Neither is done in the table below, because no row has been executed — but a row that
+reports "fin length" without a stage and a comparison population would not be usable evidence under
+SPEC-012, and that is a known gap in this plan, not an oversight to be discovered later.
 
 ## 3. Comparative genomics that can actually be run
 

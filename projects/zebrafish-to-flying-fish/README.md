@@ -54,10 +54,17 @@ process; it is reviewed here, not re-run.
    zebrafish phenocopies flying-fish fin proportions. For caudal asymmetry, ray material properties,
    launch muscle and glide behaviour this project found **no candidate gene at all**, and says so
    rather than inventing one.
-2. **The conflicts are the useful output.** The edit that stiffens rays shrinks the fin; the edit that
-   adds a keel removes fin rays; `kcnh2a` is a cardiac channel; most of the strongest evidence is
-   from adult *regeneration* while a wing must be built in *development*; and an enlarged fin has a
-   measured locomotor cost in the only organism in play.
+2. **The conflicts are the useful output.** Each of these is what a paper's **abstract** states, read
+   at abstract level and not verified against its figures: the `hox13` edit that shifts rays toward
+   spiny character also shrinks the fin fold and deletes actinotrichia; `eda` loss removes scales
+   *and* fin rays; KCNH-family channels are described as having prominent cardiovascular roles with
+   mutations linked to arrhythmias, which is a general family statement, not a measured `kcnh2a`
+   cardiac phenotype in a long-finned fish; and most of the strongest size-control evidence is from
+   adult *regeneration* while a wing must be built in *development*. One more conflict is weaker
+   still: a published comparison of wildtype and longfin zebrafish **tested** jump kinematics,
+   voluntary jumping and exhaustion, and this project read its design but **not its result**, so
+   whether enlarged fins cost performance is unknown here — which is exactly why measuring it is the
+   first thing the plan would do.
 3. **The plan designed the blade and forgot the root.** The pectoral girdle and fin musculature were
    missing until review caught it. They are plausibly the binding constraint and the
    worst-sourced part of the document.

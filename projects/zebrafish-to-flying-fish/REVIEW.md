@@ -52,4 +52,14 @@ The deepest limitations are untouched by this round: **no full text was read for
 and traits T3, T5, T6 and T8 still have **no candidate gene**. Nothing in this
 review made the project an observation of a flying fish, and nothing in it was run on a fish.
 
-A second critique pass was not run. The changes above are unreviewed.
+## Second, quick pass
+
+A short check with Google `gemini-3.8-flash` (1 call, HTTP 200, truncated at `MAX_TOKENS`) was run on
+the README and the honesty-critical plan sections, asking only for sentences that still overclaim or
+blur "an abstract says X" into "X". It returned one finding before truncating: the README's
+"conflicts" takeaway stated five abstract-level statements as facts and said an enlarged fin "has a
+measured locomotor cost", when this project read only that the comparison was performed. Accepted:
+the takeaway now labels all five as abstract-level, downgrades the KCNH cardiac point to the general
+family statement it is, and says plainly that the longfin performance **result** was not read. Trait
+row T12 was corrected the same way. Because the response truncated, this pass is **not** a complete
+check, and the changes made after it are themselves unreviewed.
