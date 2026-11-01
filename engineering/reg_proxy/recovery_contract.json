@@ -1,0 +1,111 @@
+{
+ "audit": "audit_return gains a recovery profile: 165 expected identities for the five libraries, 1000/150 MiB/900 s bounds, empty_206 status, allow-listed headers only, index waits at least 15 s and 45 s apart in the log unless the run stopped on a bound, receipt pins incl. contract and parent results sha",
+ "bounds": {
+  "charged_bytes_max": 157286400,
+  "exit_codes": {
+   "complete": 0,
+   "partial_data": 3,
+   "preflight_failed": 1,
+   "stopped_on_bound": 2,
+   "stopped_on_error": 4
+  },
+  "index_max_bytes": 1048576,
+  "memory_bytes": 4294967296,
+  "network": "ftp.ncbi.nlm.nih.gov over https, byte ranges only, no redirects",
+  "output_max_bytes": 52428800,
+  "per_library_bytes_max": 67108864,
+  "per_window_bytes_max": 8388608,
+  "requests_max": 1000,
+  "runtime_hard_s": 900,
+  "tasks_max": 128,
+  "workers": 1
+ },
+ "cause_of_original_failure": "UNKNOWN. The schedule below is an experimental transport repair, not a proven cure.",
+ "completion": "recovery run status is computed over its own 165 expected identities exactly as in amendment 1 (complete only if all 165 present and usable)",
+ "frozen_before": "implementing the recovery code, the merger, or any endpoint read; authorises exactly ONE missing-only recovery run",
+ "not_claimed": "recovery success does not validate the counts as measurements of regulatory function, and a failed recovery is reported as such",
+ "one_recovery_only": "no second recovery under this contract; remaining unusable identities are persisted in the union receipt as unresolved",
+ "parent": {
+  "immutable": "the parent partial_data result and its 165 usable rows are never edited, re-read or replaced",
+  "packet_sha256": "4b0e6af502b0c841b4003fb92ea25f4dad649522ea6f3c2d0701defab748f271",
+  "receipt_sha256": "cf1e05acf581802e9c774160bc994da2870845d14851e8435c34e5d2b4dd7955",
+  "requests_sha256": "c5861f6c84266661f4c4a240e98e4e94a5d35e30ef84ee2195a4d1c626f7e7cd",
+  "results_sha256": "f2eb5178787e371cb53f58f4b725feaa8a2f26ae4df5e4c0f2b99b776a31ac8a",
+  "run": "regulatory-context-v1 final-d13aa1b88dd6468f9ada0d9a7654a099",
+  "source_commit": "d80063f9de2b5383f7918f93df4671903950c1c3"
+ },
+ "schema": "frontier.reg-proxy.recovery-contract/1",
+ "scope": {
+  "expected_from": "controls.json windows x these 5 libraries; must equal the parent's 165 unusable identities exactly (checked by the merger)",
+  "identities": 165,
+  "libraries": [
+   "0dpa1",
+   "0dpa2",
+   "1dpa1",
+   "1dpa2",
+   "2dpa1"
+  ],
+  "not_read": "the 5 usable parent libraries 2dpa2, 4dpa1, 4dpa2, 6dpa1, 6dpa2 are not contacted",
+  "unchanged": "protocol.json (sha256 7a2ec7be\u2026) windows, count rule, summary rule and transport_amendment 1 and 2; no threshold or window change; file sizes and URLs from controls.json unchanged"
+ },
+ "transport": {
+  "after_index_failure": "if the index fails on attempt 3 the library's 33 identities are recorded library_unavailable, no window request is made for it, and no further retry occurs in this run or in any automatic follow-up",
+  "clock": "all timing logic takes an injected clock and sleep; tests never sleep for real and generate no load",
+  "empty_206": "HTTP 206 with a matching Content-Range and zero body bytes is classified empty_206 (not short_read); any other short body stays short_read",
+  "headers_logged": [
+   "Content-Length",
+   "Content-Range",
+   "Content-Type",
+   "Date",
+   "ETag",
+   "Last-Modified",
+   "Accept-Ranges"
+  ],
+  "headers_never_logged": "every other header, including Authorization, Cookie, Set-Cookie and any X- header; values are recorded verbatim for the allow-listed names only",
+  "index_schedule": {
+   "attempts": 3,
+   "counted_in_runtime": true,
+   "rule": "the wait is taken only after a failed attempt and only if the runtime bound would not be passed by waiting; otherwise the run ends stopped_on_bound; each attempt is logged and charged as before (reservation expected+1)",
+   "wait_before_attempt_s": [
+    0,
+    15,
+    45
+   ]
+  },
+  "per_attempt_record": [
+   "url",
+   "range",
+   "attempt",
+   "t",
+   "http_status",
+   "headers",
+   "elapsed_s",
+   "bytes_charged",
+   "ok",
+   "failure",
+   "wait_before_s"
+  ],
+  "window_attempts": "unchanged from amendment 1: at most 2 attempts, no wait"
+ },
+ "union": {
+  "inputs": "parent science/ directory and the recovery science/ directory",
+  "lineage": "every union row is the source row unchanged plus run ('v1' or 'recovery-v1'), source_results_sha256 and source_row_index; the sources are never modified",
+  "outputs": [
+   "union.json",
+   "union_receipt.json"
+  ],
+  "receipt": "union_receipt.json pins parent results sha, recovery results sha, contract sha and the union sha256",
+  "refuse": [
+   "parent results sha256 differing from the pin above",
+   "parent or recovery receipt hash mismatch",
+   "recovery run pins (protocol, amendments 1-3, this contract, parent results sha) differing from the pinned values",
+   "any identity present in both runs",
+   "recovery identities differing from the parent's unusable identities",
+   "missing or extra identity in the union",
+   "any row whose content differs from the source row it claims",
+   "promotion: a union status of complete while any identity is missing or unusable"
+  ],
+  "status": "complete only if 330 identities present and all usable; otherwise partial_data, with unresolved identities listed; counts from the two runs are never merged, averaged, rescaled or imputed",
+  "summary": "recomputed over the union with the frozen summary rule; a library's windows and its comparison windows always come from the same run"
+ }
+}
