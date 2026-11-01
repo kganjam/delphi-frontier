@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>voxcraft-sim on Nebius GPUs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* lab-notebook layout: one reading column, verdict tables first, charts as figures with captions */
+  --bg: #f7f8f7; --surface: #ffffff; --ink: #14181b; --ink-2: #4d555b; --rule: #d9dedf;
+  --s1: #2a78d6; --s2: #eb6834; --pass: #1f7a3a; --fail: #b3261e;
+  --display: "IBM Plex Sans", system-ui, sans-serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121516; --surface: #1a1e20; --ink: #eef1f1; --ink-2: #aab3b7; --rule: #30373a;
+  --s1: #3987e5; --s2: #d95926; --pass: #5cc27b; --fail: #ff8a80; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121516; --surface: #1a1e20; --ink: #eef1f1; --ink-2: #aab3b7; --rule: #30373a;
+  --s1: #3987e5; --s2: #d95926; --pass: #5cc27b; --fail: #ff8a80; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--body); }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; display: flex; flex-direction: column; gap: 28px; }
+h1 { font: 600 28px/1.2 var(--display); margin: 0; text-wrap: balance; }
+h2 { font: 600 19px/1.3 var(--display); margin: 0 0 8px; text-wrap: balance; }
+p { margin: 0 0 10px; max-width: 65ch; }
+.meta { color: var(--ink-2); font-size: 14px; }
+code, .mono { font-family: var(--mono); font-size: 13px; }
+section { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 18px 18px 14px; }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { color: var(--ink-2); font-weight: 600; }
+.pill { display: inline-block; font: 600 12px/1 var(--mono); padding: 4px 7px; border-radius: 4px; border: 1px solid currentColor; white-space: nowrap; }
+.pass { color: var(--pass); } .fail { color: var(--fail); }
+figure { margin: 0; } figcaption { color: var(--ink-2); font-size: 14px; margin-top: 6px; max-width: 65ch; }
+svg { width: 100%; height: auto; display: block; }
+svg .grid { stroke: var(--rule); stroke-width: 1; }
+svg .bound { stroke: var(--ink-2); stroke-width: 1.5; stroke-dasharray: 4 4; }
+svg .bound2 { stroke: var(--fail); stroke-width: 1.5; stroke-dasharray: 2 4; }
+svg .tick { fill: var(--ink-2); font: 11px var(--mono); }
+svg .lab { fill: var(--ink); font: 12px var(--body); }
+svg .val { fill: var(--ink-2); font: 11px var(--mono); }
+svg .s1 { fill: var(--s1); } svg .s2 { fill: var(--s2); }
+svg .dot { fill: var(--s1); fill-opacity: .55; stroke: var(--surface); stroke-width: 1.5; }
+svg .dot:hover, svg .hov:hover rect { fill-opacity: 1; stroke: var(--ink); }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; flex-wrap: wrap; }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+ul { margin: 0; padding-left: 20px; } li { margin: 0 0 6px; max-width: 65ch; }
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>voxcraft-sim on Nebius GPUs</h1>
+<p class="meta">claude-voxgpu harness · 2026-11-01 (PST) · branch <code>claude/voxgpu-20261101</code> of kganjam/delphi-frontier · every number is from a completed job with a receipt in <code>artifacts/voxcraft-gpu/</code>. These are simulations, not observations.</p>
+</header>
+
+<section>
+<h2>Can the published CDO engine run?</h2>
+<div class="tbl"><table>
+<tr><th>Build</th><th>GPU</th><th>Result</th></tr>
+<tr><td>voxcraft-sim dd8668f, unmodified, pinned CUDA 10.2 image, PTX-only <code>compute_75</code></td><td>L40S (sm_89)</td><td><span class="pill pass">RUNS</span> stock demo exits 0 with a report</td></tr>
+<tr><td>same</td><td>H100 (sm_90)</td><td><span class="pill fail">CANNOT RUN</span> driver JIT refuses device-side <code>cudaDeviceSynchronize</code> on sm_90+ (error 225), whatever the toolchain</td></tr>
+<tr><td>Disclosed fork: child kernels replaced by serial loops (one file plus 2 host lines, diff committed)</td><td>H100</td><td><span class="pill pass">RUNS</span> bitwise identical to the unmodified engine on L40S for {{VALID_N}} of {{VALID_N}} compared bodies (collision off)</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2>The project's three preregistered endpoints</h2>
+<p>Model: a solid 8×4×3 block of 10 mm soft voxels (E 1 MPa) on a frictional floor. Every voxel contracts, and the patterns differ only in phase. Displacement is measured after a 1 s transient. Thresholds were committed before any data existed.</p>
+<div class="tbl"><table>
+<tr><th>Endpoint</th><th>Contraction (thermal proxy)</th><th>Cilia thrust (voxcraft cilia model)</th></tr>
+<tr><td>Passive control: zero motion with actuation off</td><td><span class="pill pass">PASS</span> max 2.5 nm over 12 runs</td><td><span class="pill pass">PASS</span> 2.5 nm</td></tr>
+<tr><td>Pattern dependence beats refinement change</td><td><span class="pill pass">PASS</span> wave 45.0 mm vs sync 0.03 mm; refinement change 6.4 mm</td><td><span class="pill pass">PASS</span> 763 mm vs 0; dt change 0.004 mm</td></tr>
+<tr><td>Mirror symmetry within 1% of |d|</td><td><span class="pill fail">FAIL</span> 3 of 4 pairs miss: 1.4%, 1.5%, 15%</td><td><span class="pill fail">FAIL</span> 23 of 24 pass; one pair fails at the stick/slip threshold</td></tr>
+</table></div>
+</section>
+
+<section>
+<figure>
+<h2>Mirror error depends on the actuation mode</h2>
+<div class="legend"><span><span class="sw" style="background:var(--s1)"></span>Contraction patterns (base timestep)</span><span><span class="sw" style="background:var(--s2)"></span>Cilia thrust patterns</span></div>
+{{CHART1}}
+<figcaption>Bars show mirror error as a fraction of displacement; perfectly matched pairs sit at the 1e-7 floor. Under contraction the asymmetry is systematic. Across a post-hoc ensemble of 24 seeded 1e-7-cycle phase perturbations, the mirror error is 18 to 500 standard errors of the ensemble means, and it changes sign with timestep. Under constant thrust the solver is mirror-symmetric except at the friction threshold (0.01 N), where +y sticks after 11.7 mm and −y slides 71.1 mm.</figcaption>
+</figure>
+</section>
+
+<section>
+<figure>
+<h2>Cilia thrust shows a friction threshold</h2>
+{{CHART3}}
+<figcaption>Uniform +x thrust on every surface voxel of the same block (84 surface voxels; body weight 0.94 N). The block slides under prescribed thrust on a Coulomb floor. There is no fluid, so this is not ciliary swimming, and the force values are arbitrary.</figcaption>
+</figure>
+</section>
+
+<section>
+<figure>
+<h2>Population: {{POP_N}} random bodies, each with three controls</h2>
+<p>Each seeded random body (6×6×5 box, active and passive tissue, smooth random phase field) was run four times: actuated, as a passive control, as an x-mirror, and as an exact duplicate. That is {{POP_BODIES}} simulations ({{POP_ENGINES}}). The {{POP_OVERLAP}} bodies run on both engines agree bitwise ({{POP_DISAGREE}} disagreements), and {{POP_DUP}} of {{POP_N}} duplicates are bitwise identical. Configuration: E 0.1 MPa, self-collision off, 4 s, chosen for throughput and disclosed.</p>
+{{CHART2}}
+<figcaption>Each dot is one body: actuated displacement against its own passive control. {{POP_PAS}} bodies ({{POP_PASFRAC}}%) keep moving with actuation off, because they are still settling or toppling, so their motion cannot be credited to the pattern. Among the {{POP_CLEAN}} bodies whose passive control holds, the median displacement is {{POP_ACTP50}} mm. The x-mirror error has a median of {{POP_RELP50}}% of |d| (90th percentile {{POP_RELP90}}%, n = {{POP_RELN}} with |d| > 1 mm), and only {{POP_REL1}}% meet the 1% bound. On this engine and configuration, ranking random bodies by displacement partly ranks solver asymmetry.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<ul>
+<li>It is not tissue. No material value is measured, and contraction is a thermal proxy, which is the project's own modelling choice; the sources report ciliary locomotion.</li>
+<li>There is no fluid, so motion comes only from ground contact. None of the construct's four missing couplings is closed.</li>
+<li>There is no convergence claim. The fine mesh changes the wave by 14% and the short-axis wave by 4.3×.</li>
+<li>It is not a reproduction of Kriegman 2020 or Blackiston 2021. The voxcraft-sim LICENSE file says CC0, while the cdorgs website says CC BY-NC; both are recorded.</li>
+<li>Throughput: the unmodified engine manages about 17k simulation-steps/s on L40S, and 1000 bodies at E 1 MPa did not finish in an hour.</li>
+</ul>
+</section>
+</main>
+</body>
+</html>
