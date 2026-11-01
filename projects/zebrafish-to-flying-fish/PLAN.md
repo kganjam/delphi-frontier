@@ -150,9 +150,34 @@ This is deliberately short, because it is where the plan is weakest.
 | Regeneration-responsive enhancers | "Changes in regeneration-responsive enhancers shape regenerative capacities in vertebrates" (PMID 32883834) and "Modulation of tissue repair by regeneration enhancer elements" (PMID 27049946). | `S-meta` (titles) | `U`; the repo's existing `artifacts/genetic-blueprints/blueprints.json` already carries a `LEN-P2:EGFP` design with **null coordinates** and says so. |
 | Exocoetid regulatory divergence | PMID 34534441 reports signatures "in both coding and regulatory regions" genome-wide. | `S-abs` | `U` — which regions, in which species, at what coordinates: not read. |
 
-**Honest summary of §2.** This project can name genes with real evidence. It cannot name a single
-enhancer **sequence or coordinate interval** from a source it read. Any construct design below that
-needs an element therefore has a `null` where the sequence goes — exactly as SPEC-012 requires.
+#### Candidate regulatory windows that now have coordinates (added after the Evo 2 handoff)
+
+An earlier version of this section said this project could not name a single coordinate interval.
+That is no longer true, and the upgrade came from another harness, not from here. The Evo 2 harness
+handed over **19 two-kilobase candidate windows with coordinates, strands and per-window sha256**
+(`messages/evo-to-zf2ff.md`; 10 zebrafish on GRCz11, 9 flying fish on `GCA_018398805.1`), for
+`tbx5a`, `fgf10a`, `fgf20a`, `shha`, `kcnk5b`, `hoxd13a`, `msx1b`, `runx2b`, `sp7` and `lef1`.
+
+What they are and are not, stated at the same level of care their author used:
+
+| | |
+| --- | --- |
+| What they are | Windows **anchored** on a gene: TSS-anchored for zebrafish, upstream of a *predicted* start codon for flying fish, where no TSS or UTR annotation exists. |
+| Evidence that they carry structure | `C-other`: all 19 beat their own dinucleotide scramble on Evo 2 likelihood, aggregate +0.1444, CI [0.0980, 0.1908], n = 19. Flying fish alone +0.0993, CI [0.0453, 0.1533]. |
+| Evidence added here | `C-here`: a motif scan (`RESULTS.md` §R6) finds +30.05 more passing JASPAR motifs than their own shuffles in aggregate — but the zebrafish arm alone is **null**, and the design weaknesses are under test. |
+| Independently placed? | `C-here`: 2 of 9 flying-fish windows (`shha`, `tbx5a`) are confirmed **flush to the base** by this project's independent protein mapping. 2 (`kcnk5b`, `fgf10a`) are at loci this project assigns to a **different paralog**, and 1 (`fgf20a`) disagrees on scaffold (`CROSSCHECK-EVO.md`). |
+| What they are **not** | Not enhancers. Not validated elements. Not functional. Their author states plainly that the per-window ranking is exploratory and that the cross-species comparison is void; this plan does not use either. |
+
+So a construct design can now cite a **coordinate interval and a digest** for ten genes, which is a
+real advance over a `null`. It still cannot cite a **validated element**, because nobody has shown
+any of these windows drives anything. The `null` in §5's cargo row moves from "no coordinates" to
+"coordinates with no functional evidence" — a different and better-defined gap.
+
+**Honest summary of §2.** This project can name genes with real evidence, and can now name candidate
+regulatory *intervals* with digests, two of them independently placed by two methods. It still cannot
+name a single enhancer that is **known to do anything**. Any construct design below that needs a
+functional element therefore still has a `null` where the validated sequence goes — exactly as
+SPEC-012 requires.
 
 ### 2.6 Inputs reused from this repository (other harnesses' artifacts, not re-verified here)
 
@@ -196,7 +221,9 @@ Constraints, measured or read, that bound what is runnable at all:
 | G4 | Coding-change screen at `lat4a`/`kcnh2a` (does the Exocoetid allele carry the convergent residue?) | Yes in principle: extract the aligned region from the assembly and inspect the codon. Not run; blocked on the identifier problem in §2.1 and on not having read which residue PMID 40689752 means. | G1 alignments | Would be a direct, cheap test of a published claim in a *different* Exocoetid species than the paper used. Species mismatch must be stated. |
 | G5 | Conserved-non-coding-element scan around candidate loci (zebrafish/medaka/*H. speculiger*) | Yes technically (whole-genome alignment of the three), heavy; not run. | assemblies | Would produce candidate elements. Conservation is not activity: a conserved element is a hypothesis, not a driver (SPEC-012). |
 | G6 | Phylogenomic convergence scan across Exocoetidae | **No.** Needs the 35-species variation data behind PMID 34534441; only one assembly is public here. | — | `U` |
-| G7 | Evo 2 scoring of candidate regulatory sequences | **Not available to this project.** The Evo 2 harness was to hand over candidates via `messages/evo-to-zf2ff.md`; that file **does not exist** as of this writing. | — | Blocked, reported as blocked. |
+| G7 | Evo 2 scoring of candidate regulatory sequences | **Delivered by the Evo 2 harness**, not run here: 19 windows with coordinates and per-window likelihood deltas arrived during this session. Its two action items for this project are both **done** (`RESULTS.md` §R5). | their `fin-scale-regulatory-2kb/v1` input set | Gives candidate intervals with digests. Beating a dinucleotide shuffle shows structure above k = 2 and nothing about *cis*-regulatory syntax, which is their own stated boundary. |
+| G8 | **Motif scan of those windows against their shuffles** | **Done.** `C-here`, Nebius job `claude-zf2ff-motif-scan-2`, `RESULTS.md` §R6. This was the job the handoff said neither harness had run. A robustness re-run is in flight. | their 19 windows + 76 control sequences; JASPAR 2024 CORE vertebrates (879 motifs) | Aggregate above-composition motif signal. The zebrafish arm alone is null and the species asymmetry is **unresolved**, pending the robustness run. A motif match is not a bound factor. |
+| G9 | **Low-stringency whole-assembly hunt for `kcnh2a`** | **Done.** `C-here`, `scripts/hunt_kcnh2a.sh`, exit 0. Found **no new region**: the same 7 `kcnh2a`-aligning regions. 5 are untested and are now in a second gene tree. | the assembly; the `kcnh2a` query alone | Can locate a candidate; cannot prove the gene is absent from a fragmented assembly. |
 
 ## 4. Perturbation table
 
