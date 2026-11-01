@@ -2,9 +2,9 @@
 
 Harness `claude-tissue`, 2026-11-01. Branch `claude-tissue/sims-20261101`.
 
-**Scope.** Everything below is **simulated**, not observed. The only observed data used are the 49 flying-fish rows
-of `artifacts/observed-allometry/source-observations.csv` (pectoral fin length vs standard length, SL). They are used
-once for anchoring (fin-growth) and once for fitting (identifiability and transfer regimes). Turing-type results are
+**Scope.** Everything below is **simulated**, not observed. The only observed data used are the specimen rows of
+`artifacts/observed-allometry/source-observations.csv` (pectoral fin length vs standard length, SL): 49 flying fish
+for anchoring and fitting, plus flying halfbeaks, halfbeaks and needlefish for the developmental-programme comparison. Turing-type results are
 dimensionless. Mapping them to fin rays or scales is an **assumption**: the repo holds no measured ray spacing,
 morphogen diffusivity or turnover rate. No simulation here validates a biological mechanism.
 
@@ -12,6 +12,27 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
 - a figure
 - a `manifest.json` (file hashes, code hashes, run list with exit codes)
 - one receipt per run (command, exit code, seed, wall time, input and output hashes)
+
+## Summary for the studio panel
+
+**Developmental scale (organ proportions)** (`claude-tissue-dev-programme`, also `-identifiability`, `-fin-growth`).
+- A growth-zone programme, dL/dSL = c within the observed sizes, links adult fin/SL to one coefficient c.
+- c is 0.73 for flying fish (three species agree, 0.71–0.77), 0.25–0.40 for flying halfbeaks, 0.15 for halfbeaks and 0.08 for needlefish.
+- The flying-fish difference is carried by c, not by an early offset. This holds only within the observed sizes, ≥ 1.7 cm SL.
+- The data cannot tell which molecular parameters set c. A graded morphogen-dose series could: its predicted slope
+  ranges from 0.08 to 0.99 across data-compatible regimes.
+
+**Developmental and tissue scale (ray-like patterning)** (`-phase-map`, `-edge2d`, `-uniform2d`, `-uniform2d-y0`,
+`-edge2d-cases`, `-edge2d-gamma`, `-fan`, `-fan-video`, `-growing-rd`, `-rd-wavelength`).
+- In one generic Turing model (Schnakenberg), proximo-distal ray-like stripes appeared only with two things: kinetics near onset (deeper in, the
+  pattern is spots) and growth along the fin axis.
+- Under edge (distal) growth, orientation is lost above an outgrowth speed of about 0.2–0.4 pattern units. A
+  reversal of orientation behind a moving front is a known phenomenon. Its scaling with patterning rate is only weakly supported here.
+- On a fan-shaped fold, slow distal growth gives radial stripes that multiply as the fan widens.
+- 1-D runs: uniform growth gives frequency doubling, edge growth gives one-at-a-time insertion.
+
+**Not established anywhere here:** that fin rays are a Turing pattern; the identity of any morphogen; any physical
+length or time scale. Every Turing result is dimensionless and the kinetics are generic.
 
 ## 0. Priority deliverable: developmental programme → adult fin proportions (studio "developmental" scale)
 
@@ -179,7 +200,8 @@ ray spacing under the edge model.
 of the kinetic parameter b and the diffusion ratio d, with 3 seeds per cell.
 - 18 of 64 cells are Turing-unstable.
 - **Stripes appear only in the band next to onset** (the smallest unstable d for each b); spots fill the rest.
-- So a static Turing mechanism gives ray-like stripes only if the kinetics are tuned close to onset.
+- So in this model, stripes of any orientation appear only near onset. Static patterning gives *unoriented* stripes
+  (labyrinths), not rays.
 
 **Distal-edge growth in 2D** (`claude-tissue-edge2d`, job `aijob-e00e9hk4jpkgxy6n3n`, COMPLETED, 1094.6 s). A 96-wide fold
 grows from 8 to 192 rows at its distal edge. There are 4 seeds per condition, compared with a static fold patterned all
@@ -195,9 +217,10 @@ at once. The orientation index A runs from +1 (stripes along the growth axis, ra
 **Reading.**
 - In the stripe regime, *slow* distal growth turns an isotropic labyrinth into perfectly ray-like proximo-distal stripes.
 - *Fast* growth instead lays down oblique or edge-parallel bands.
-- Directional growth does **not** turn spots into stripes.
-- So, in this model, a ray-like pattern needs both near-onset kinetics and outgrowth slower than a threshold
-  between v = 0.1 and 0.4 (in units of λ per pattern time).
+- In the two spot-regime cells tested (d = 20 and 30), directional growth did not turn spots into stripes.
+- First reading, later revised by the controls below: under *edge* growth, ray-like stripes needed near-onset kinetics
+  and outgrowth slower than a threshold between v = 0.1 and 0.4. The uniform-growth control shows that threshold is
+  specific to the edge mode.
 
 **Testable prediction.** If rays were laid down by such a mechanism, accelerating early fin-fold outgrowth past a
 threshold would disorder ray orientation. Ray number across the fold would stay about width/λ, here 9.
@@ -212,12 +235,13 @@ speeds and seeds, but every row stretches instead of new rows being added at the
 | 30 | −0.11 | −0.17 | −0.12 |
 
 **Corrected reading** (the control changes the interpretation of the edge2d run):
-- Proximo-distal stripes come from *growth along the proximo-distal axis* starting from a fold shorter than one
-  wavelength (8 rows against λ ≈ 11), together with near-onset kinetics. Edge-specific insertion is not needed.
+- Proximo-distal stripes come from *growth along the proximo-distal axis* together with near-onset kinetics; edge-specific
+  insertion is not needed. A start shorter than one wavelength (8 rows against λ ≈ 11) gives the cleanest result, but
+  the starting-length test below shows it is not necessary.
 - Fast *edge* growth is the condition that breaks the orientation (A = −0.53); uniform growth at the same speed
   keeps it (0.99).
 - In this model, then, the edge mode adds a speed constraint that the uniform mode does not have.
-- Neither mode turns spots into stripes.
+- Neither mode turned spots into stripes in the two spot-regime cells tested.
 
 **Prediction, revised.** If rays were laid down by such a mechanism, they would align with the axis of fold elongation.
 Under marginal (edge) outgrowth, but not uniform outgrowth, speeding up outgrowth beyond a threshold would disorder them.
@@ -437,6 +461,9 @@ interval. The tenfold spread does not depend on those two rows: l = 0.01 (0.08) 
 6. Wet-lab rungs move to medaka or zebrafish, with local inducible perturbation and fin length and SL reported separately.
 7. The sequential addition of fin rays is noted, and the uniform-growth doubling regime is recast as a rejected-mechanism contrast.
 8. The 0.81 vs 0.729 slope difference is explained: it comes from the misspecified fixed-L0 fit.
+10. A second `gemini-3.8-flash` pass on the summary and section 2b flagged four more overgeneralisations, all reworded:
+    static patterning gives labyrinths, not rays; the speed threshold is specific to edge growth; a short start is not
+    necessary; and "no spots to stripes" is limited to the two cells tested.
 9. A `gemini-3.8-flash` overclaim check flagged four sentences ("data favour", "probably shares", "needs"). All four were softened.
 
 **Not changed: the call for reduced major axis (RMA) regression.** The question here is predicting fin length from SL.
