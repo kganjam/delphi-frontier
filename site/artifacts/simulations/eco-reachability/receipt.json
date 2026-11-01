@@ -1,0 +1,77 @@
+{
+ "schema": "frontier.eco.receipt/1",
+ "kind": "merge of shard receipts",
+ "script": "engineering/ecology_sims/reachability.py",
+ "seed": 20261101,
+ "exit_code": 0,
+ "command": "python3 -c 'from engineering.ecology_sims.reachability import merge; merge(...)'",
+ "started_utc": "2026-11-01T15:01:53Z",
+ "finished_utc": "2026-11-01T15:12:31Z",
+ "inputs_sha256": {
+  "engineering/ecology_sims/common.py": "73722069f59f46b729a9f3e6d1f60a044c3fc202d62b6896470cf744e1731722",
+  "engineering/ecology_sims/fishbase_parsed.json": "e830a18ba282aa941b604246bd3787e1c899cbc5dbdd0ac68ec6fb8f941a9d42",
+  "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+  "engineering/simulation/controlled.py": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+  "data/fish-controls/daane2021_s1a_observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703",
+  "data/fish-controls/fish1990_tables.json": "5300c509abbbd8887fdbcde38c404cbfe24aa02597a2abc50f38c94ca6649b21",
+  "__script__": "77737b4cd4f0013545358c90a2fabf6e0fceb044ce8c0eb89df7cc1c6aad9246"
+ },
+ "shards": [
+  {
+   "tag": "A",
+   "receipt": "receipt_A.json",
+   "receipt_sha256": "f8e3033ece563175afefdf0e7f74d54013506e7ef73473a0d8f680719422a8d2",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/reachability.py --gens 20000 --settings default --extras --tag A",
+   "settings": [
+    "default"
+   ],
+   "elapsed_s": 619.8083980083466
+  },
+  {
+   "tag": "B",
+   "receipt": "receipt_B.json",
+   "receipt_sha256": "aa7e02f70ade531bcd2011c1073604edfd5fd7b588f2e08f48fdc382424f6e23",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/reachability.py --gens 20000 --settings V_exit=4,dV_taxi=4,dV_taxi=10,gam0=5 --tag B",
+   "settings": [
+    "V_exit=4",
+    "dV_taxi=4",
+    "dV_taxi=10",
+    "gam0=5"
+   ],
+   "elapsed_s": 291.02282786369324
+  },
+  {
+   "tag": "C",
+   "receipt": "receipt_C.json",
+   "receipt_sha256": "53f7aa3d26b35ca08529a848816984d4ed962c1e890f88b3a214459f45a09e7c",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/reachability.py --gens 20000 --settings gam0=30,h0=0.3,polar=P2_high_drag,a_LW=exocoetid --tag C",
+   "settings": [
+    "gam0=30",
+    "h0=0.3",
+    "polar=P2_high_drag",
+    "a_LW=exocoetid"
+   ],
+   "elapsed_s": 308.39653158187866
+  },
+  {
+   "tag": "D",
+   "receipt": "receipt_D.json",
+   "receipt_sha256": "1c77496fd5e87818ad5567f20e51eecb5e41cae41c4737bed11647f4bd75dada",
+   "exit_code": 0,
+   "command": "python3 engineering/ecology_sims/reachability.py --gens 20000 --settings w_body=0.06,w_body=0.14,n_trim=1.5,CL_schedule --tag D",
+   "settings": [
+    "w_body=0.06",
+    "w_body=0.14",
+    "n_trim=1.5",
+    "CL_schedule"
+   ],
+   "elapsed_s": 360.93300008773804
+  }
+ ],
+ "outputs_sha256": {
+  "results.json": "127c1e673fd88c26e225cd55fdf08e4f3106d4d37c71a4429daa6e731c5cdfa3"
+ }
+}

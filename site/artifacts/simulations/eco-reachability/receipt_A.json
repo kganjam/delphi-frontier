@@ -1,0 +1,37 @@
+{
+ "schema": "frontier.eco.receipt/1",
+ "script": "engineering/ecology_sims/reachability.py",
+ "script_sha256": "77737b4cd4f0013545358c90a2fabf6e0fceb044ce8c0eb89df7cc1c6aad9246",
+ "command": "python3 engineering/ecology_sims/reachability.py --gens 20000 --settings default --extras --tag A",
+ "exit_code": 0,
+ "seed": 20261101,
+ "started_utc": "2026-11-01T15:01:53Z",
+ "finished_utc": "2026-11-01T15:12:13Z",
+ "git_head_at_run": "7fbccb3a8a44b4fe5be9609f76dcab3929630463",
+ "python": "3.13.12",
+ "numpy": "2.4.4",
+ "host": "sandbox-02",
+ "inputs_sha256": {
+  "engineering/ecology_sims/common.py": "73722069f59f46b729a9f3e6d1f60a044c3fc202d62b6896470cf744e1731722",
+  "engineering/ecology_sims/fishbase_parsed.json": "e830a18ba282aa941b604246bd3787e1c899cbc5dbdd0ac68ec6fb8f941a9d42",
+  "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+  "engineering/simulation/controlled.py": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+  "data/fish-controls/daane2021_s1a_observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703",
+  "data/fish-controls/fish1990_tables.json": "5300c509abbbd8887fdbcde38c404cbfe24aa02597a2abc50f38c94ca6649b21",
+  "__script__": "77737b4cd4f0013545358c90a2fabf6e0fceb044ce8c0eb89df7cc1c6aad9246"
+ },
+ "inputs_hashed_at": "start",
+ "outputs_sha256": {
+  "site/artifacts/simulations/eco-reachability/results_A.json": "c70ac4fd9249a1899a5ba40cec7d15bb93f40c41ee98daa0c09f021ae282c477",
+  "site/artifacts/simulations/eco-reachability/landscape_default.npz": "259fd9669a946f1ba27da844ecdca0ee0417b209e976d387057ac172bd5865f4"
+ },
+ "elapsed_s": 619.8083980083466,
+ "dt": 0.004,
+ "gens": 20000,
+ "cv_A": 0.05,
+ "shard": "A",
+ "settings": [
+  "default"
+ ],
+ "extras": true
+}

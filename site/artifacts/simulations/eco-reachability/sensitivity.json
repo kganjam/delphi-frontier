@@ -1,0 +1,3834 @@
+{
+ "schema": "frontier.eco.sensitivity/1",
+ "model": "eco-reachability",
+ "rows": [
+  {
+   "setting": "default",
+   "overrides": {},
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3119264282228476,
+    "A": 1.856348629239646,
+    "M": 0.01809487441955711,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.8570730592537212,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "default",
+   "overrides": {},
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "default",
+   "overrides": {},
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31235663971660965,
+    "A": 1.8667683670442055,
+    "M": 0.01704916081407284,
+    "c": 0.6348914084758367
+   },
+   "lande_end_dist_to_target_norm": 0.8690020269156982,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "U_burst=5.21",
+   "overrides": {
+    "U_burst": 5.21
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3119264282228476,
+    "A": 1.856348629239646,
+    "M": 0.01809487441955711,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.8570730592537212,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "U_burst=5.21",
+   "overrides": {
+    "U_burst": 5.21
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.7230121740407249,
+   "W_target": 0.9999064128983387,
+   "maximin_worst_step_dW": -2.923277293243043e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 2.923277293243043e-05,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -2.923277293243043e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3125873013161114,
+    "A": 1.8841619423943536,
+    "M": 0.016995416931854804,
+    "c": 0.6285104666801247
+   },
+   "lande_end_dist_to_target_norm": 0.8671234513514446,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "U_burst=5.21",
+   "overrides": {
+    "U_burst": 5.21
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.795992716657535,
+   "W_target": 0.9999857729838147,
+   "maximin_worst_step_dW": -4.969944440658125e-06,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.969944440658125e-06,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -4.969944440658125e-06
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3131618645841445,
+    "A": 1.906864159809102,
+    "M": 0.016988493481128086,
+    "c": 0.6058024113096587
+   },
+   "lande_end_dist_to_target_norm": 0.8694931192784068,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.05
+   }
+  },
+  {
+   "setting": "U_burst=20.46",
+   "overrides": {
+    "U_burst": 20.46
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3119264282228476,
+    "A": 1.856348629239646,
+    "M": 0.01809487441955711,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.8570730592537212,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "U_burst=20.46",
+   "overrides": {
+    "U_burst": 20.46
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.30000000000000004,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 1.0
+   }
+  },
+  {
+   "setting": "U_burst=20.46",
+   "overrides": {
+    "U_burst": 20.46
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3119264282228476,
+    "A": 1.856348629239646,
+    "M": 0.01809487441955711,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.8570730592537212,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "t_burst=6",
+   "overrides": {
+    "t_burst": 6.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3119264282228476,
+    "A": 1.856348629239646,
+    "M": 0.01809487441955711,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.8570730592537212,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "t_burst=6",
+   "overrides": {
+    "t_burst": 6.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9631504184294865,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.006886372793494022,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "t_burst=6",
+   "overrides": {
+    "t_burst": 6.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9943981640192128,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3128456133588197,
+    "A": 1.8535449512363456,
+    "M": 0.017901941326432396,
+    "c": 0.6349999999999794
+   },
+   "lande_end_dist_to_target_norm": 0.859046356006718,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "e_swim=0.1",
+   "overrides": {
+    "e_swim": 0.1
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.33713131841681077,
+   "W_target": 0.8631829136767537,
+   "maximin_worst_step_dW": -0.001885973110025252,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.001885973110025252,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.001885973110025252
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3119301243562226,
+    "A": 1.8563547482522822,
+    "M": 0.01809482747627734,
+    "c": 0.6349999999999982
+   },
+   "lande_end_dist_to_target_norm": 0.8570695016495498,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "e_swim=0.1",
+   "overrides": {
+    "e_swim": 0.1
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.09999999999999998,
+   "W_target": 0.9970677059941151,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0025650029576151923,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "e_swim=0.1",
+   "overrides": {
+    "e_swim": 0.1
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.33713131841681077,
+   "W_target": 0.9995542356420797,
+   "maximin_worst_step_dW": -0.00015571951726733868,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00015571951726733868,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00015571951726733868
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3123386591769505,
+    "A": 1.865260277348035,
+    "M": 0.0170762759125364,
+    "c": 0.6349747919080062
+   },
+   "lande_end_dist_to_target_norm": 0.8688483333253186,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "e_swim=0.6",
+   "overrides": {
+    "e_swim": 0.6
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.7053916970741381,
+   "W_target": 0.9391924060785573,
+   "maximin_worst_step_dW": -0.0008382102711221862,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0008382102711221862,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0008382102711221862
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3119213098259895,
+    "A": 1.8563401606380783,
+    "M": 0.018094940150513484,
+    "c": 0.6349999999999957
+   },
+   "lande_end_dist_to_target_norm": 0.8570779762892644,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "e_swim=0.6",
+   "overrides": {
+    "e_swim": 0.6
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.6,
+   "W_target": 0.9986967582196067,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0011400013144955423,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "e_swim=0.6",
+   "overrides": {
+    "e_swim": 0.6
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.7053916970741381,
+   "W_target": 0.9998018825075909,
+   "maximin_worst_step_dW": -6.920867434101474e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 6.920867434101474e-05,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -6.920867434101474e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3124435924330334,
+    "A": 1.8722043238003472,
+    "M": 0.017011222249090206,
+    "c": 0.6340163050489991
+   },
+   "lande_end_dist_to_target_norm": 0.8686670008356825,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "d_vis=5",
+   "overrides": {
+    "d_vis": 5.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.794013857719573,
+   "W_target": 0.9996261569150643,
+   "maximin_worst_step_dW": -7.674029296655949e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 7.674029296655949e-05,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -7.674029296655949e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3121565160844527,
+    "A": 1.8763112613517734,
+    "M": 0.016985592856369844,
+    "c": 0.6338100748709766
+   },
+   "lande_end_dist_to_target_norm": 0.8687145095397791,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "d_vis=5",
+   "overrides": {
+    "d_vis": 5.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "d_vis=5",
+   "overrides": {
+    "d_vis": 5.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.794013857719573,
+   "W_target": 0.999998781980181,
+   "maximin_worst_step_dW": -5.443016664052891e-07,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 5.443016664052891e-07,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -5.443016664052891e-07
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3134871466583662,
+    "A": 1.9125223060813485,
+    "M": 0.016975788067992333,
+    "c": 0.5972566591664148
+   },
+   "lande_end_dist_to_target_norm": 0.873274184318492,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.19
+   }
+  },
+  {
+   "setting": "d_vis=80",
+   "overrides": {
+    "d_vis": 80.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.35152343224905924,
+   "W_target": 0.5629083630870562,
+   "maximin_worst_step_dW": -0.0004598979331712494,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0004598979331712494,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0004598979331712494
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3118588538105422,
+    "A": 1.8562360344729816,
+    "M": 0.01809585750950298,
+    "c": 0.6349999999999989
+   },
+   "lande_end_dist_to_target_norm": 0.85713667666208,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "d_vis=80",
+   "overrides": {
+    "d_vis": 80.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "d_vis=80",
+   "overrides": {
+    "d_vis": 80.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.35152343224905924,
+   "W_target": 0.9985759097922864,
+   "maximin_worst_step_dW": -0.000458311143185397,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.000458311143185397,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.000458311143185397
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3123323442770079,
+    "A": 1.861315904926388,
+    "M": 0.017417776171393458,
+    "c": 0.6349999999488735
+   },
+   "lande_end_dist_to_target_norm": 0.8647115170621608,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "d_gap=10",
+   "overrides": {
+    "d_gap": 10.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3119264282228476,
+    "A": 1.856348629239646,
+    "M": 0.01809487441955711,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.8570730592537212,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "d_gap=10",
+   "overrides": {
+    "d_gap": 10.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.874400606876544,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0006875172111753258,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "d_gap=10",
+   "overrides": {
+    "d_gap": 10.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9809065077654231,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3121362382058935,
+    "A": 1.8565791725093004,
+    "M": 0.018091474614040072,
+    "c": 0.6349999999999938
+   },
+   "lande_end_dist_to_target_norm": 0.8568964624439029,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "beta_air=0.05",
+   "overrides": {
+    "beta_air": 0.05
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4691760736198408,
+   "W_target": 0.7735821967853248,
+   "maximin_worst_step_dW": -0.0012721057165941407,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0012721057165941407,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0012721057165941407
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3125157530601224,
+    "A": 1.852531644000034,
+    "M": 0.018064980092920357,
+    "c": 0.6349999999999968
+   },
+   "lande_end_dist_to_target_norm": 0.8574509909498211,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "beta_air=0.05",
+   "overrides": {
+    "beta_air": 0.05
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.29055019881366934,
+   "W_target": 0.863730289941012,
+   "maximin_worst_step_dW": -7.776658029445827e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 7.776658029445827e-05,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.67,
+     "A": 8.78759730570909,
+     "M": 0.0333134775,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.0333134775,
+     "c": 0.631
+    },
+    "dW": -7.776658029445827e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.1,
+    "A": 2.148176546600656,
+    "M": 0.01820011918934219,
+    "c": 0.49600017344736547
+   },
+   "lande_end_dist_to_target_norm": 1.1741637355600452,
+   "straight_line": {
+    "max_drop": 0.002518658127464768,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   }
+  },
+  {
+   "setting": "beta_air=0.05",
+   "overrides": {
+    "beta_air": 0.05
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4691760736198408,
+   "W_target": 0.8654045346588717,
+   "maximin_worst_step_dW": -0.0010230574813623328,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0010230574813623328,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.73,
+     "A": 14.0,
+     "M": 0.01,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.76,
+     "A": 14.0,
+     "M": 0.01,
+     "c": 0.631
+    },
+    "dW": -0.0010230574813623328
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.5479734892612602,
+    "A": 1.8764354634415175,
+    "M": 0.016920929433857295,
+    "c": 0.6349999999999895
+   },
+   "lande_end_dist_to_target_norm": 0.7174424884516345,
+   "straight_line": {
+    "max_drop": 0.00016832023915225314,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "beta_air=0.2",
+   "overrides": {
+    "beta_air": 0.2
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.42622176497799813,
+   "W_target": 0.5018983423228128,
+   "maximin_worst_step_dW": -0.0005614860214039341,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0005614860214039341,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.5800000000000001,
+     "A": 5.515847600521833,
+     "M": 0.04029292081174065,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.5800000000000001,
+     "A": 6.442160707141526,
+     "M": 0.04029292081174065,
+     "c": 0.45
+    },
+    "dW": -0.0005614860214039341
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.2484262995970714,
+    "A": 2.1703773529525114,
+    "M": 0.0272640659412524,
+    "c": 0.6349999999999938
+   },
+   "lande_end_dist_to_target_norm": 0.8186884699073008,
+   "straight_line": {
+    "max_drop": 0.001285063329372449,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.01
+   }
+  },
+  {
+   "setting": "beta_air=0.2",
+   "overrides": {
+    "beta_air": 0.2
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.2639495607642883,
+   "W_target": 0.5603862169228506,
+   "maximin_worst_step_dW": -0.0025160484795598848,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0025160484795598848,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.79,
+     "A": 14.0,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.79,
+     "A": 14.0,
+     "M": 0.022174048860973305,
+     "c": 0.631
+    },
+    "dW": -0.0025160484795598848
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.1,
+    "A": 2.597489419097526,
+    "M": 0.020669234813195613,
+    "c": 0.4960000000000118
+   },
+   "lande_end_dist_to_target_norm": 1.124564337240173,
+   "straight_line": {
+    "max_drop": 0.003464217791114277,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "beta_air=0.2",
+   "overrides": {
+    "beta_air": 0.2
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.42622176497799813,
+   "W_target": 0.5614724630283433,
+   "maximin_worst_step_dW": -0.005272431058481297,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.005272431058481297,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.73,
+     "A": 4.722728310464992,
+     "M": 0.06,
+     "c": 0.625
+    },
+    "to": {
+     "p": 0.7000000000000001,
+     "A": 4.722728310464992,
+     "M": 0.06,
+     "c": 0.625
+    },
+    "dW": -0.005272431058481297
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.21923614882490636,
+    "A": 1.85635467745593,
+    "M": 0.03076800765035228,
+    "c": 0.6349999999999973
+   },
+   "lande_end_dist_to_target_norm": 0.8829138622494322,
+   "straight_line": {
+    "max_drop": 0.0018961689900172107,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "kappa_fin=0.1",
+   "overrides": {
+    "kappa_fin": 0.1
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4799105504743867,
+   "W_target": 0.848156957149477,
+   "maximin_worst_step_dW": -0.0011260305244983893,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0011260305244983893,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 3.4622176795034005,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 3.4622176795034005,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0011260305244983893
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3096017750738758,
+    "A": 2.00545680869721,
+    "M": 0.01479377436280278,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.8910180179505383,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "kappa_fin=0.1",
+   "overrides": {
+    "kappa_fin": 0.1
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.2971978190987058,
+   "W_target": 0.9469954938964303,
+   "maximin_worst_step_dW": -5.147504251934443e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 5.147504251934443e-05,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.64,
+     "A": 7.524035757027065,
+     "M": 0.04029292081174065,
+     "c": 0.6
+    },
+    "to": {
+     "p": 0.67,
+     "A": 7.524035757027065,
+     "M": 0.04029292081174065,
+     "c": 0.6
+    },
+    "dW": -5.147504251934443e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.1,
+    "A": 2.50157817553079,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1500765123083978,
+   "straight_line": {
+    "max_drop": 0.0020308290015176866,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "kappa_fin=0.1",
+   "overrides": {
+    "kappa_fin": 0.1
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4799105504743867,
+   "W_target": 0.9488311389142765,
+   "maximin_worst_step_dW": -0.00011495771075453742,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00011495771075453742,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00011495771075453742
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.2529907653938493,
+    "A": 2.1828404619127455,
+    "M": 0.011612697720968472,
+    "c": 0.6349999999999913
+   },
+   "lande_end_dist_to_target_norm": 0.996640833097907,
+   "straight_line": {
+    "max_drop": 2.5983362075709948e-05,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   }
+  },
+  {
+   "setting": "kappa_fin=0.3",
+   "overrides": {
+    "kappa_fin": 0.3
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4709871133060222,
+   "W_target": 0.7641089449215421,
+   "maximin_worst_step_dW": -0.0009626468359040796,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0009626468359040796,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 1.3640760771409357,
+     "M": 0.01734208,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 1.1679366751416516,
+     "M": 0.01734208,
+     "c": 0.45
+    },
+    "dW": -0.0009626468359040796
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.2789709674744897,
+    "A": 2.1616468538251166,
+    "M": 0.010000000000000004,
+    "c": 0.6349999999999979
+   },
+   "lande_end_dist_to_target_norm": 1.028482394670604,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "kappa_fin=0.3",
+   "overrides": {
+    "kappa_fin": 0.3
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.29167173499265575,
+   "W_target": 0.8531530886907872,
+   "maximin_worst_step_dW": -0.00028322981200401554,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00028322981200401554,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.19,
+     "A": 8.78759730570909,
+     "M": 0.01734208,
+     "c": 0.575
+    },
+    "to": {
+     "p": 0.19,
+     "A": 10.263357179713612,
+     "M": 0.01734208,
+     "c": 0.575
+    },
+    "dW": -0.00028322981200401554
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.1,
+    "A": 3.503674719331865,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1037755833343144,
+   "straight_line": {
+    "max_drop": 0.002087658534517811,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   }
+  },
+  {
+   "setting": "kappa_fin=0.3",
+   "overrides": {
+    "kappa_fin": 0.3
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4709871133060222,
+   "W_target": 0.8548068306851357,
+   "maximin_worst_step_dW": -0.0003764692151305704,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0003764692151305704,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.43000000000000005,
+     "A": 2.9643881840455863,
+     "M": 0.04029292081174065,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.4600000000000001,
+     "A": 2.9643881840455863,
+     "M": 0.04029292081174065,
+     "c": 0.55
+    },
+    "dW": -0.0003764692151305704
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.2520905577222715,
+    "A": 2.5445412069543725,
+    "M": 0.010000000000000004,
+    "c": 0.6349999999999965
+   },
+   "lande_end_dist_to_target_norm": 1.0210164966991273,
+   "straight_line": {
+    "max_drop": 0.00017309121032860197,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "kappa_fin=1.0",
+   "overrides": {
+    "kappa_fin": 1.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4410416138019358,
+   "W_target": 0.5303126366164983,
+   "maximin_worst_step_dW": -0.0013145498539358091,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0013145498539358091,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.28,
+     "A": 7.524035757027065,
+     "M": 0.04916884428888316,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.28,
+     "A": 6.442160707141526,
+     "M": 0.04916884428888316,
+     "c": 0.55
+    },
+    "dW": -0.0013145498539358091
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.25120755995551136,
+    "A": 2.5489360938244268,
+    "M": 0.010000000000000004,
+    "c": 0.6349999999999986
+   },
+   "lande_end_dist_to_target_norm": 1.0214852670550205,
+   "straight_line": {
+    "max_drop": 0.0004329787854778222,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   }
+  },
+  {
+   "setting": "kappa_fin=1.0",
+   "overrides": {
+    "kappa_fin": 1.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.2731271601012753,
+   "W_target": 0.592111722952774,
+   "maximin_worst_step_dW": -0.001356505473737002,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.001356505473737002,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.04916884428888316,
+     "c": 0.575
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.04916884428888316,
+     "c": 0.575
+    },
+    "dW": -0.001356505473737002
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.1,
+    "A": 6.994758644339144,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.0517779409362074,
+   "straight_line": {
+    "max_drop": 0.0021605929930920698,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "kappa_fin=1.0",
+   "overrides": {
+    "kappa_fin": 1.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4410416138019358,
+   "W_target": 0.5932594654090496,
+   "maximin_worst_step_dW": -0.0017536608767710349,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0017536608767710349,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.31000000000000005,
+     "A": 11.986951260265911,
+     "M": 0.06,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.31000000000000005,
+     "A": 10.263357179713612,
+     "M": 0.06,
+     "c": 0.55
+    },
+    "dW": -0.0017536608767710349
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.2194913543638531,
+    "A": 2.1672889736524903,
+    "M": 0.010000000000000004,
+    "c": 0.6349999999999989
+   },
+   "lande_end_dist_to_target_norm": 1.0783634207837396,
+   "straight_line": {
+    "max_drop": 0.000694623269937189,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   }
+  },
+  {
+   "setting": "lande:cv=0.02",
+   "overrides": {
+    "cv_A": 0.02,
+    "r_pc": 0.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.311926371411918,
+    "A": 1.8563500135017104,
+    "M": 0.018094627276965067,
+    "c": 0.6349999999999848
+   },
+   "lande_end_dist_to_target_norm": 0.8570759462278275,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:cv=0.02",
+   "overrides": {
+    "cv_A": 0.02,
+    "r_pc": 0.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:cv=0.02",
+   "overrides": {
+    "cv_A": 0.02,
+    "r_pc": 0.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31275902474271494,
+    "A": 1.8868608429420144,
+    "M": 0.01698491351262572,
+    "c": 0.6250291369344493
+   },
+   "lande_end_dist_to_target_norm": 0.8670318102023095,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:cv=0.10",
+   "overrides": {
+    "cv_A": 0.1,
+    "r_pc": 0.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31192642822284794,
+    "A": 1.8563486292396376,
+    "M": 0.01809487441955814,
+    "c": 0.6349999999999995
+   },
+   "lande_end_dist_to_target_norm": 0.8570730592537097,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:cv=0.10",
+   "overrides": {
+    "cv_A": 0.1,
+    "r_pc": 0.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:cv=0.10",
+   "overrides": {
+    "cv_A": 0.1,
+    "r_pc": 0.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3123843224793718,
+    "A": 1.8621112544721055,
+    "M": 0.01734888360940217,
+    "c": 0.6349999999697427
+   },
+   "lande_end_dist_to_target_norm": 0.8654846786070763,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:r_pc=0.5 (p-c pleiotropy)",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": 0.5
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.34151108668173646,
+    "A": 2.1693939310329697,
+    "M": 0.018141698879083987,
+    "c": 0.6351093188410344
+   },
+   "lande_end_dist_to_target_norm": 0.7904272525934601,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:r_pc=0.5 (p-c pleiotropy)",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": 0.5
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:r_pc=0.5 (p-c pleiotropy)",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": 0.5
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3403325733634348,
+    "A": 2.085100167559613,
+    "M": 0.01744954117938423,
+    "c": 0.6345922638848247
+   },
+   "lande_end_dist_to_target_norm": 0.8109252973691241,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:r_pc=-0.5",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": -0.5
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.40370136266654544,
+    "A": 2.174728156326441,
+    "M": 0.017178353154195955,
+    "c": 0.45349888812853145
+   },
+   "lande_end_dist_to_target_norm": 1.0346395822956451,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:r_pc=-0.5",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": -0.5
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": null
+  },
+  {
+   "setting": "lande:r_pc=-0.5",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": -0.5
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.40370136266654544,
+    "A": 2.174728156326441,
+    "M": 0.017178353154195955,
+    "c": 0.45349888842434255
+   },
+   "lande_end_dist_to_target_norm": 1.034639581483663,
+   "straight_line": null
+  },
+  {
+   "setting": "V_exit=4",
+   "overrides": {
+    "V_exit": 4.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.33386810793481125,
+   "W_target": 0.3565043030567353,
+   "maximin_worst_step_dW": -4.292851564291489e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.292851564291489e-05,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 3.4622176795034005,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 4.043651005215845,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "dW": -4.292851564291489e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.7292988831796242,
+    "A": 1.59418368727817,
+    "M": 0.014960078437779308,
+    "c": 0.634999999999999
+   },
+   "lande_end_dist_to_target_norm": 0.7874929310971291,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "V_exit=4",
+   "overrides": {
+    "V_exit": 4.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.30000000000000004,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 1.0
+   }
+  },
+  {
+   "setting": "V_exit=4",
+   "overrides": {
+    "V_exit": 4.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.33386810793481125,
+   "W_target": 0.3565043030567353,
+   "maximin_worst_step_dW": -4.292851564291489e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.292851564291489e-05,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 3.4622176795034005,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 4.043651005215845,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "dW": -4.292851564291489e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.7292988831796242,
+    "A": 1.59418368727817,
+    "M": 0.014960078437779308,
+    "c": 0.634999999999999
+   },
+   "lande_end_dist_to_target_norm": 0.7874929310971291,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "dV_taxi=4",
+   "overrides": {
+    "dV_taxi": 4.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8111909069192961,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.34229641468943195,
+    "A": 2.1695639146964614,
+    "M": 0.01808537012056372,
+    "c": 0.6349999999999978
+   },
+   "lande_end_dist_to_target_norm": 0.790452156956051,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "dV_taxi=4",
+   "overrides": {
+    "dV_taxi": 4.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9039334330468187,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.58
+   }
+  },
+  {
+   "setting": "dV_taxi=4",
+   "overrides": {
+    "dV_taxi": 4.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9740882265974188,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.34257515695152185,
+    "A": 2.168236858188916,
+    "M": 0.01808236009977286,
+    "c": 0.6349999999999972
+   },
+   "lande_end_dist_to_target_norm": 0.7904011133342818,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "dV_taxi=10",
+   "overrides": {
+    "dV_taxi": 10.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9211329152763285,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31164883365983254,
+    "A": 1.8571190406651525,
+    "M": 0.018110391976852807,
+    "c": 0.6349999999999972
+   },
+   "lande_end_dist_to_target_norm": 0.8570220504956891,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "dV_taxi=10",
+   "overrides": {
+    "dV_taxi": 10.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9996791158525739,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.165
+   }
+  },
+  {
+   "setting": "dV_taxi=10",
+   "overrides": {
+    "dV_taxi": 10.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9999638468610835,
+   "maximin_worst_step_dW": -1.4870920095333418e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 1.4870920095333418e-05,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -1.4870920095333418e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31233095739078826,
+    "A": 1.8679102716944835,
+    "M": 0.017083202005467125,
+    "c": 0.6236840223945732
+   },
+   "lande_end_dist_to_target_norm": 0.8687439965775465,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "gam0=5",
+   "overrides": {
+    "gam0_deg": 5.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.3844976013608833,
+   "W_target": 0.8533860665374304,
+   "maximin_worst_step_dW": -0.000744904972197924,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.000744904972197924,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.000744904972197924
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3109932544281809,
+    "A": 1.8624859379261824,
+    "M": 0.018137281875955414,
+    "c": 0.634999999999998
+   },
+   "lande_end_dist_to_target_norm": 0.8565300967424154,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "gam0=5",
+   "overrides": {
+    "gam0_deg": 5.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9832046077944544,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31243714999396494,
+    "A": 1.8549224958830444,
+    "M": 0.018080634099592482,
+    "c": 0.6349999999999957
+   },
+   "lande_end_dist_to_target_norm": 0.8569939730134705,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.035
+   }
+  },
+  {
+   "setting": "gam0=5",
+   "overrides": {
+    "gam0_deg": 5.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.3844976013608833,
+   "W_target": 0.9964822306924263,
+   "maximin_worst_step_dW": -0.0006910082838685883,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0006910082838685883,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.0006910082838685883
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31230304302111667,
+    "A": 1.8565704581888256,
+    "M": 0.018088505264440093,
+    "c": 0.6349999999999826
+   },
+   "lande_end_dist_to_target_norm": 0.856786183636366,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "gam0=30",
+   "overrides": {
+    "gam0_deg": 30.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.5721574333579003,
+   "W_target": 0.8707881594731687,
+   "maximin_worst_step_dW": -0.0013429075480690944,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0013429075480690944,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 3.4622176795034005,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 4.043651005215845,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "dW": -0.0013429075480690944
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31262687549967133,
+    "A": 1.8515940110082583,
+    "M": 0.0180603068529734,
+    "c": 0.634999999999998
+   },
+   "lande_end_dist_to_target_norm": 0.8575413461685503,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "gam0=30",
+   "overrides": {
+    "gam0_deg": 30.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9911562620730973,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.46
+   }
+  },
+  {
+   "setting": "gam0=30",
+   "overrides": {
+    "gam0_deg": 30.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.5721574333579003,
+   "W_target": 0.9983675490647542,
+   "maximin_worst_step_dW": -0.0006267549976911591,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0006267549976911591,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.0006267549976911591
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31304564690143344,
+    "A": 1.8551967965050598,
+    "M": 0.01717594830041934,
+    "c": 0.634999957011389
+   },
+   "lande_end_dist_to_target_norm": 0.8682239502429582,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "h0=0.3",
+   "overrides": {
+    "h0": 0.3
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.504101336021292,
+   "W_target": 0.897037800144209,
+   "maximin_worst_step_dW": -0.0014312186108069724,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014312186108069724,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014312186108069724
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31190156340593844,
+    "A": 1.8565081772286656,
+    "M": 0.018096000186656927,
+    "c": 0.6349999999999976
+   },
+   "lande_end_dist_to_target_norm": 0.8570590736090771,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "h0=0.3",
+   "overrides": {
+    "h0": 0.3
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9981523358002365,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0009361745096519991,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "h0=0.3",
+   "overrides": {
+    "h0": 0.3
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.504101336021292,
+   "W_target": 0.9997282291848537,
+   "maximin_worst_step_dW": -9.42290268961532e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 9.42290268961532e-05,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -9.42290268961532e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31235196846439994,
+    "A": 1.8691609059696777,
+    "M": 0.0170084639470386,
+    "c": 0.6347043543912513
+   },
+   "lande_end_dist_to_target_norm": 0.8692421108336695,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "polar=P2_high_drag",
+   "overrides": {
+    "polar": "P2_high_drag"
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48520205998004684,
+   "W_target": 0.7812450069432146,
+   "maximin_worst_step_dW": 9.446466825879796e-06,
+   "strictly_improving_path_exists": true,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.43000000000000005,
+     "A": 2.5381411913330445,
+     "M": 0.03301927248894628,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.43000000000000005,
+     "A": 2.5381411913330445,
+     "M": 0.0333134775,
+     "c": 0.55
+    },
+    "dW": 9.446466825879796e-06
+   },
+   "weakest_step_selection_coefficient": 1.946913998318199e-05,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": 25681.66854991615,
+   "lande_end": {
+    "p": 0.3074976757952311,
+    "A": 1.8756060083374895,
+    "M": 0.012271690099073985,
+    "c": 0.6349999999999979
+   },
+   "lande_end_dist_to_target_norm": 0.9650974776145431,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "polar=P2_high_drag",
+   "overrides": {
+    "polar": "P2_high_drag"
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.7612499201733797,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.635
+   }
+  },
+  {
+   "setting": "polar=P2_high_drag",
+   "overrides": {
+    "polar": "P2_high_drag"
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48520205998004684,
+   "W_target": 0.925388897064601,
+   "maximin_worst_step_dW": -0.0003289051443171598,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0003289051443171598,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.55,
+     "A": 4.722728310464992,
+     "M": 0.04916884428888316,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.5800000000000001,
+     "A": 4.722728310464992,
+     "M": 0.04916884428888316,
+     "c": 0.55
+    },
+    "dW": -0.0003289051443171598
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3390985100849146,
+    "A": 2.009030251316026,
+    "M": 0.014975540451186696,
+    "c": 0.6349999999999983
+   },
+   "lande_end_dist_to_target_norm": 0.8623855481308563,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "a_LW=exocoetid",
+   "overrides": {
+    "a_LW": 0.01354
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.47506362494655974,
+   "W_target": 0.8903003578381435,
+   "maximin_worst_step_dW": -0.0008300108875861634,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0008300108875861634,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 3.4622176795034005,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 4.043651005215845,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "dW": -0.0008300108875861634
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.4024840616200493,
+    "A": 1.854312331286544,
+    "M": 0.01718295187389871,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.6682077328640281,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "a_LW=exocoetid",
+   "overrides": {
+    "a_LW": 0.01354
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9972252770453679,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.070587151337295,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.225
+   }
+  },
+  {
+   "setting": "a_LW=exocoetid",
+   "overrides": {
+    "a_LW": 0.01354
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.47506362494655974,
+   "W_target": 0.9995651626925408,
+   "maximin_worst_step_dW": -0.00015873593439463818,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00015873593439463818,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 5.238827334509766,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 5.238827334509766,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00015873593439463818
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.4028295190975195,
+    "A": 1.855865244983356,
+    "M": 0.016871344771297817,
+    "c": 0.6349079808443404
+   },
+   "lande_end_dist_to_target_norm": 0.6734233284037955,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4805914731493306,
+   "W_target": 0.8932984643944881,
+   "maximin_worst_step_dW": -0.0011948428401856726,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0011948428401856726,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0011948428401856726
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3415310823154076,
+    "A": 2.1694334015979484,
+    "M": 0.015230215933203938,
+    "c": 0.6349999999999977
+   },
+   "lande_end_dist_to_target_norm": 0.8303152344489667,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9976792045287411,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1454020716904088,
+   "straight_line": {
+    "max_drop": 0.0011249568487765593,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4805914731493306,
+   "W_target": 0.9996462393705576,
+   "maximin_worst_step_dW": -0.00012409217158415586,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012409217158415586,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.465823994150071,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.465823994150071,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012409217158415586
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.34105732005294886,
+    "A": 2.014806000803616,
+    "M": 0.01725933570674933,
+    "c": 0.6349144851197112
+   },
+   "lande_end_dist_to_target_norm": 0.8146532953062261,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48865499884760144,
+   "W_target": 0.8938523375104576,
+   "maximin_worst_step_dW": -0.0017763206668263143,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0017763206668263143,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0017763206668263143
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.31187219182776055,
+    "A": 1.9942927936392854,
+    "M": 0.017270305385259473,
+    "c": 0.6349999999999976
+   },
+   "lande_end_dist_to_target_norm": 0.856524468992041,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977557807140623,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1555442019000934,
+   "straight_line": {
+    "max_drop": 0.0029521990827492406,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.205
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48865499884760144,
+   "W_target": 0.9996596876695483,
+   "maximin_worst_step_dW": -0.00010627214238312366,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00010627214238312366,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00010627214238312366
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.3124895684109727,
+    "A": 1.993701371466923,
+    "M": 0.017223905855419278,
+    "c": 0.6347837941248752
+   },
+   "lande_end_dist_to_target_norm": 0.8566796702174626,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9120366711372967,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.34257133429245545,
+    "A": 2.1650812658467866,
+    "M": 0.018077337290614805,
+    "c": 0.6349999999999976
+   },
+   "lande_end_dist_to_target_norm": 0.7908392552855749,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.99923126705452,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9999033995587273,
+   "maximin_worst_step_dW": -4.291883498008797e-05,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.291883498008797e-05,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -4.291883498008797e-05
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.33123718424466586,
+    "A": 1.930929950389137,
+    "M": 0.01699354444425886,
+    "c": 0.6326607458132192
+   },
+   "lande_end_dist_to_target_norm": 0.8447602580988841,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9445164280971795,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.34394321588801435,
+    "A": 2.167168606907763,
+    "M": 0.016143958549418306,
+    "c": 0.6349999999999972
+   },
+   "lande_end_dist_to_target_norm": 0.8186559411636531,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9999585618331877,
+   "maximin_worst_step_dW": 0.0,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.017342080000000003,
+    "c": 0.5
+   },
+   "lande_end_dist_to_target_norm": 1.1505067297142175,
+   "straight_line": {
+    "max_drop": 0.0019950023003680872,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.999996715517846,
+   "maximin_worst_step_dW": -2.1961916309987117e-06,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 2.1961916309987117e-06,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -2.1961916309987117e-06
+   },
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "lande_end": {
+    "p": 0.36105554753412555,
+    "A": 1.9682118666719552,
+    "M": 0.016965383594851578,
+    "c": 0.6119187910561817
+   },
+   "lande_end_dist_to_target_norm": 0.8190312102478332,
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.08
+   }
+  }
+ ]
+}

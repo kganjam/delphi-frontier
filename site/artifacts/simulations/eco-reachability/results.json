@@ -1,0 +1,6991 @@
+{
+ "schema": "frontier.eco.reachability/1",
+ "assumptions": {
+  "a_LW": [
+   0.00632,
+   "g cm^-3",
+   "FishBase Hyporhamphus LW used for the whole walk (body shape is not an evolving trait here)",
+   [
+    0.00632,
+    0.01354
+   ]
+  ],
+  "w_body_frac": [
+   0.1,
+   "1",
+   "body width / SL for span; assumption",
+   [
+    0.06,
+    0.14
+   ]
+  ],
+  "V_exit": [
+   10.0,
+   "m/s",
+   "water-exit speed, same for all phenotypes; Fish 1990 citing Shoulejkin gives ~10 m/s before taxiing (secondary)",
+   [
+    4.0,
+    10.0
+   ]
+  ],
+  "dV_taxi": [
+   8.0,
+   "m/s",
+   "max taxi speed gain at full asymmetry and full aerodynamic support; 10 -> 18 m/s midpoint of Fish 1990/Shoulejkin 16-20",
+   [
+    4.0,
+    10.0
+   ]
+  ],
+  "h0": [
+   0.05,
+   "m",
+   "height at water exit; assumption",
+   [
+    0.02,
+    0.3
+   ]
+  ],
+  "gam0_deg": [
+   15.0,
+   "deg",
+   "exit angle above horizontal; assumption",
+   [
+    5.0,
+    30.0
+   ]
+  ],
+  "polar": [
+   "P1_nominal",
+   "-",
+   "project polar (design assumption)",
+   [
+    "P1_nominal",
+    "P2_high_drag"
+   ]
+  ],
+  "e_swim": [
+   0.3,
+   "1",
+   "escape probability of a prey that does not leave the water, per attack; assumption",
+   [
+    0.1,
+    0.6
+   ]
+  ],
+  "U_burst": [
+   10.0,
+   "m/s",
+   "predator burst speed; inside FishBase Thunnus albacares burst rows 5.21-20.46 m/s",
+   [
+    5.21,
+    20.46
+   ]
+  ],
+  "t_burst": [
+   2.0,
+   "s",
+   "predator burst endurance; assumption",
+   [
+    1.0,
+    6.0
+   ]
+  ],
+  "U_sus": [
+   0.56,
+   "m/s",
+   "predator sustained speed; FishBase Coryphaena hippurus sustained row",
+   [
+    0.46,
+    0.65
+   ]
+  ],
+  "d_gap": [
+   3.0,
+   "m",
+   "H_chase: distance scale over which a lead beyond the predator's chase breaks pursuit; assumption",
+   [
+    1.0,
+    10.0
+   ]
+  ],
+  "d_vis": [
+   20.0,
+   "m",
+   "H_vis: distance scale over which an airborne excursion breaks visual tracking (inf = off); assumption",
+   [
+    5.0,
+    80.0
+   ]
+  ],
+  "beta_air": [
+   0.0,
+   "1/s",
+   "aerial predator hazard while airborne; assumption",
+   [
+    0.0,
+    0.2
+   ]
+  ],
+  "p_max": [
+   0.79,
+   "1",
+   "Davenport 1992 limit on pectoral length / SL",
+   [
+    0.79
+   ]
+  ],
+  "n_trim": [
+   1.0,
+   "1",
+   "CL rule: commanded lift at exit <= n_trim x weight (1.0 = level at exit); 1.5 lets fast fish climb (argon review)",
+   [
+    1.0,
+    1.5
+   ]
+  ],
+  "kappa_fin": [
+   0.0,
+   "1",
+   "aquatic cost of fins: survival/fecundity factor exp(-kappa_fin * fin wetted area / body wetted area); 0 = escape-only fitness; added after argon review",
+   [
+    0.0,
+    0.1,
+    0.3,
+    1.0
+   ]
+  ],
+  "k_wet": [
+   0.4,
+   "1",
+   "body wetted area = k_wet SL^2 (ASSUMPTION for a slender fusiform fish)",
+   [
+    0.4
+   ]
+  ]
+ },
+ "anchors": {
+  "ancestor": {
+   "label": "halfbeak-like ancestor (Hyporhamphus unifasciatus anchors)",
+   "p": 0.137,
+   "A": 2.0,
+   "M": null,
+   "c": 0.5,
+   "SL_cm": 14.0,
+   "provenance": {
+    "p": "daane2021 S1A median, n=12",
+    "SL_cm": "daane2021 S1A median SL, n=12",
+    "M": "FishBase LW a=0.00632 b=3 (SL) at SL 14.0 cm",
+    "A": "ASSUMPTION (rounded paddle-like fin; no measurement found) - swept 1.2-3.0",
+    "c": "ASSUMPTION from FishBase text 'caudal fin emarginate or slightly forked' -> near-symmetric 0.50 - swept 0.45-0.56"
+   }
+  },
+  "flying_halfbeak": {
+   "label": "flying halfbeak marker (Oxyporhamphus micropterus)",
+   "p": 0.337,
+   "SL_cm": 12.55,
+   "provenance": {
+    "p": "daane2021 S1A median, n=10"
+   }
+  },
+  "target": {
+   "label": "Exocoetus-like exocoetid target (two-winged)",
+   "p": 0.674,
+   "A": null,
+   "M": null,
+   "c": 0.631,
+   "SL_cm": 13.5,
+   "provenance": {
+    "p": "daane2021 S1A Exocoetus volitans median, n=19",
+    "SL_cm": "daane2021 S1A median SL, n=19",
+    "M": "FishBase LW a=0.01354 b=3 (SL) at SL 13.5 cm",
+    "c": "fish1990 pooled hypocaudal share 63.1%",
+    "A": "DERIVED: Fish 1990 Exocoetus wing area 0.046 M^0.741 x pectoral share 0.918, with L_fin = p SL(M; model a_LW); Fish 1990 reports individual AR 8.9-19.9 for Exocoetus under its own definition, which may differ"
+   }
+  }
+ },
+ "sources": {
+  "daane2021": {
+   "cite": "Daane JM et al. (2021) Modulation of bioelectric cues in the evolution of flying fishes. Curr Biol 31:5052-5061. doi:10.1016/j.cub.2021.08.054",
+   "read_level": "full Data S1A sheet parsed (project file data/fish-controls/daane2021_s1a_observations.csv)",
+   "used_for": "pectoral length / SL per group: halfbeak 0.137 (Hyporhamphus unifasciatus median), flying halfbeak 0.337 (Oxyporhamphus), Exocoetus volitans 0.674"
+  },
+  "fish1990": {
+   "cite": "Fish FE (1990) Wing design and scaling of flying fish with regard to flight performance. J Zool 221:391-403",
+   "read_level": "full text, tables read from page images (project file data/fish-controls/fish1990_tables.json)",
+   "used_for": "Exocoetus wing-area fit 0.046 M^0.741 m^2, pectoral share 91.8%, pooled hypocaudal share 63.1%; taxi speed 10 -> 16-20 m/s is Fish citing Shoulejkin (secondary)"
+  },
+  "davenport1992": {
+   "cite": "Davenport J (1992) J Mar Biol Assoc UK 72:25-39",
+   "read_level": "abstract, as returned by a fetch tool (project source record)",
+   "used_for": "hard limit p <= 0.79: pectoral length cannot exceed 78-79% SL without impairing swimming"
+  },
+  "lovejoy2004": {
+   "cite": "Lovejoy NR, Iranpour M, Collette BB (2004) Integr Comp Biol 44:366-377",
+   "read_level": "abstract (project source record)",
+   "used_for": "phylogenetic frame: flyingfishes nested within a paraphyletic grade of halfbeaks; justifies a halfbeak-like ancestor"
+  },
+  "fishbase": {
+   "cite": "FishBase species summary, length-weight and swimming-speed pages, fetched 2026-11-01 (engineering/ecology_sims/fishbase_parsed.json)",
+   "read_level": "parsed directly from fetched HTML; primary references behind each FishBase row NOT re-read",
+   "used_for": "LW coefficients (Hyporhamphus unifasciatus a=0.00632 SL b=3; Exocoetus volitans a=0.01354 SL b=3), predator sizes (Coryphaena hippurus common 100 cm TL; Thunnus albacares common 150 cm FL), predator speeds (T. albacares burst 5.21-20.46 m/s at 62-66 cm SL, sustained 0.46-0.65 m/s; C. hippurus sustained 0.56 m/s at 67 cm SL; FishBase ref 308), Hyporhamphus caudal 'emarginate or slightly forked'"
+  },
+  "oxenford1999": {
+   "cite": "Oxenford HA, Hunte W (1999) Feeding habits of the dolphinfish (Coryphaena hippurus) in the eastern Caribbean. Sci Mar 63:303-315. doi:10.3989/scimar.1999.63n3-4317",
+   "read_level": "abstract (Crossref)",
+   "used_for": "dolphinfish eat flyingfish and halfbeaks: names the predator class, no rate is taken from it"
+  },
+  "houle1992": {
+   "cite": "Houle D (1992) Comparing evolvability and variability of quantitative traits. Genetics 130:195-204. doi:10.1093/genetics/130.1.195",
+   "read_level": "abstract (Crossref)",
+   "used_for": "mean-standardised additive variance (CV_A) as the evolvability scale for the G matrix; the CV_A value used is an assumption, not taken from the paper"
+  },
+  "lande1979": {
+   "cite": "Lande R (1979) Quantitative genetic analysis of multivariate evolution, applied to brain:body size allometry. Evolution 33:402. doi:10.2307/2407630",
+   "read_level": "bibliographic record only (Crossref); the equation dz = G grad ln W is standard and not re-read here",
+   "used_for": "model form of the adaptive walk"
+  },
+  "weinreich2005": {
+   "cite": "Weinreich DM, Watson RA, Chao L (2005) Sign epistasis and genetic constraint on evolutionary trajectories. Evolution 59:1165. doi:10.1554/04-272",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "notion of accessible (monotone) mutational paths on a landscape; method form only"
+  },
+  "landeau1986": {
+   "cite": "Landeau L, Terborgh J (1986) Oddity and the 'confusion effect' in predation. Anim Behav 34:1372-1380. doi:10.1016/s0003-3472(86)80208-1",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "model form of a confusion effect; strength parameter is an assumption swept"
+  },
+  "treherne1981": {
+   "cite": "Treherne JE, Foster WA (1981) Group transmission of predator avoidance behaviour in a marine insect: the Trafalgar effect. Anim Behav 29:911-917. doi:10.1016/s0003-3472(81)80028-0",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "model form of alarm transmission through a group; speed/delay values are assumptions swept"
+  },
+  "couzin2002": {
+   "cite": "Couzin ID, Krause J, James R, Ruxton GD, Franks NR (2002) Collective memory and spatial sorting in animal groups. J Theor Biol 218:1-11. doi:10.1006/jtbi.2002.3065",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "zonal repulsion/orientation/attraction school model form; zone radii are assumptions"
+  },
+  "hamilton1971": {
+   "cite": "Hamilton WD (1971) Geometry for the selfish herd. J Theor Biol 31:295-311. doi:10.1016/0022-5193(71)90189-5",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "dilution / selfish-herd framing; no number taken"
+  },
+  "project_glide": {
+   "cite": "engineering/simulation/glide.py (glide-pointmass/1) with polar P1_nominal CL_max 1.2, CD0 0.06, e 0.8 (project DESIGN ASSUMPTIONS) and rho 1.225",
+   "read_level": "project code, reused unchanged",
+   "used_for": "airborne phase of every phenotype"
+  }
+ },
+ "ballistic_control": {
+  "ancestor_d_lift": 6.116357194999741,
+  "ancestor_d_no_lift": 5.240336926967076,
+  "target_d_lift": 37.67499731822978,
+  "target_d_no_lift": 12.932509274000795,
+  "note": "same V0 (taxi gain still computed from phi); lift switched off in the airborne phase"
+ },
+ "dt_check": {
+  "dt": 0.004,
+  "dt_half": 0.002,
+  "cells": 74880,
+  "max_rel_range_change": 1.2437732505022507e-05,
+  "p99_rel_range_change": 1.0056759577966199e-05
+ },
+ "runs": [
+  {
+   "setting": "default",
+   "overrides": {},
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8570730592537212,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6453,
+    "slowest_state": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.724083157003856e-15,
+    "median_step_norm": 9.724083157003856e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "default",
+   "overrides": {},
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "W_grid_max": 0.9995363406754699,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "default",
+   "overrides": {},
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "W_grid_max": 0.99994464897275,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_len": 58,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31235663971660965,
+     "A": 1.8667683670442055,
+     "M": 0.01704916081407284,
+     "c": 0.6348914084758367
+    },
+    "end_dist_to_target_norm": 0.8690020269156982,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.31235664487391185,
+     "A": 1.8667687376555115,
+     "M": 0.017049156020047817,
+     "c": 0.6348913808675768
+    },
+    "slowest_step_norm": 7.231396891588605e-06,
+    "median_step_norm": 3.233216248811254e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "U_burst=5.21",
+   "overrides": {
+    "U_burst": 5.21
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8570730592537212,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6453,
+    "slowest_state": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.724083157003856e-15,
+    "median_step_norm": 9.724083157003856e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "U_burst=5.21",
+   "overrides": {
+    "U_burst": 5.21
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.7230121740407249,
+   "W_target": 0.9999064128983387,
+   "W_grid_max": 0.9999809738046007,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -2.923277293243043e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 2.923277293243043e-05,
+   "path_len": 50,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 15,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -2.923277293243043e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3125873013161114,
+     "A": 1.8841619423943536,
+     "M": 0.016995416931854804,
+     "c": 0.6285104666801247
+    },
+    "end_dist_to_target_norm": 0.8671234513514446,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3125873164492186,
+     "A": 1.8841625685296182,
+     "M": 0.016995416199344925,
+     "c": 0.6285099491363195
+    },
+    "slowest_step_norm": 4.1944712772278195e-05,
+    "median_step_norm": 0.00014905766383930673
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "U_burst=5.21",
+   "overrides": {
+    "U_burst": 5.21
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.795992716657535,
+   "W_target": 0.9999857729838147,
+   "W_grid_max": 0.9999977286783543,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -4.969944440658125e-06,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.969944440658125e-06,
+   "path_len": 56,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -4.969944440658125e-06
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3131618645841445,
+     "A": 1.906864159809102,
+     "M": 0.016988493481128086,
+     "c": 0.6058024113096587
+    },
+    "end_dist_to_target_norm": 0.8694931192784068,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.31316187401405643,
+     "A": 1.9068647904348612,
+     "M": 0.016988493949902997,
+     "c": 0.605802042329966
+    },
+    "slowest_step_norm": 3.0256607867544856e-05,
+    "median_step_norm": 0.00013442546661471312
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.05
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "U_burst=20.46",
+   "overrides": {
+    "U_burst": 20.46
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8570730592537212,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6453,
+    "slowest_state": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.724083157003856e-15,
+    "median_step_norm": 9.724083157003856e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "U_burst=20.46",
+   "overrides": {
+    "U_burst": 20.46
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.30000000000000004,
+   "W_grid_max": 0.5049156646330899,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 60,
+   "path_neutral_steps": 60,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 1.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "U_burst=20.46",
+   "overrides": {
+    "U_burst": 20.46
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9408974971749535,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8570730592537212,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6453,
+    "slowest_state": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.724083157003856e-15,
+    "median_step_norm": 9.724083157003856e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "t_burst=6",
+   "overrides": {
+    "t_burst": 6.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8570730592537212,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6453,
+    "slowest_state": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.724083157003856e-15,
+    "median_step_norm": 9.724083157003856e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "t_burst=6",
+   "overrides": {
+    "t_burst": 6.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9631504184294865,
+   "W_grid_max": 0.989802956939798,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.006886372793494022,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "t_burst=6",
+   "overrides": {
+    "t_burst": 6.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9943981640192128,
+   "W_grid_max": 0.9987826906988967,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3128456133588197,
+     "A": 1.8535449512363456,
+     "M": 0.017901941326432396,
+     "c": 0.6349999999999794
+    },
+    "end_dist_to_target_norm": 0.859046356006718,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 11387,
+    "slowest_state": {
+     "p": 0.31276212272056025,
+     "A": 1.8552005511862217,
+     "M": 0.017516388607200548,
+     "c": 0.6349999999999794
+    },
+    "slowest_step_norm": 5.0501328272207184e-05,
+    "median_step_norm": 5.126275784382579e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "e_swim=0.1",
+   "overrides": {
+    "e_swim": 0.1
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.33713131841681077,
+   "W_target": 0.8631829136767537,
+   "W_grid_max": 0.8925592091231875,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.001885973110025252,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.001885973110025252,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.001885973110025252
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3119301243562226,
+     "A": 1.8563547482522822,
+     "M": 0.01809482747627734,
+     "c": 0.6349999999999982
+    },
+    "end_dist_to_target_norm": 0.8570695016495498,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 4886,
+    "slowest_state": {
+     "p": 0.3119301243562226,
+     "A": 1.8563547482522822,
+     "M": 0.01809482747627734,
+     "c": 0.6349999999999982
+    },
+    "slowest_step_norm": 9.862295974000656e-15,
+    "median_step_norm": 9.862295974000656e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "e_swim=0.1",
+   "overrides": {
+    "e_swim": 0.1
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.09999999999999998,
+   "W_target": 0.9970677059941151,
+   "W_grid_max": 0.999403866582747,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 0.0,
+    "median_step_norm": 0.0
+   },
+   "straight_line": {
+    "max_drop": 0.0025650029576151923,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "e_swim=0.1",
+   "overrides": {
+    "e_swim": 0.1
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.33713131841681077,
+   "W_target": 0.9995542356420797,
+   "W_grid_max": 0.9999288343935359,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00015571951726733868,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00015571951726733868,
+   "path_len": 58,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00015571951726733868
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3123386591769505,
+     "A": 1.865260277348035,
+     "M": 0.0170762759125364,
+     "c": 0.6349747919080062
+    },
+    "end_dist_to_target_norm": 0.8688483333253186,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3123386615272421,
+     "A": 1.86526053401845,
+     "M": 0.0170762694720833,
+     "c": 0.6349747837015575
+    },
+    "slowest_step_norm": 8.056615273834752e-06,
+    "median_step_norm": 2.2518338405470137e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "e_swim=0.6",
+   "overrides": {
+    "e_swim": 0.6
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.7053916970741381,
+   "W_target": 0.9391924060785573,
+   "W_grid_max": 0.9522485373880833,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0008382102711221862,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0008382102711221862,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0008382102711221862
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3119213098259895,
+     "A": 1.8563401606380783,
+     "M": 0.018094940150513484,
+     "c": 0.6349999999999957
+    },
+    "end_dist_to_target_norm": 0.8570779762892644,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 11677,
+    "slowest_state": {
+     "p": 0.3119213098259895,
+     "A": 1.8563401606380783,
+     "M": 0.018094940150513484,
+     "c": 0.6349999999999957
+    },
+    "slowest_step_norm": 9.94749082557098e-15,
+    "median_step_norm": 2.0599400751790465e-12
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "e_swim=0.6",
+   "overrides": {
+    "e_swim": 0.6
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.6,
+   "W_target": 0.9986967582196067,
+   "W_grid_max": 0.9997350518145542,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 0.0,
+    "median_step_norm": 0.0
+   },
+   "straight_line": {
+    "max_drop": 0.0011400013144955423,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "e_swim=0.6",
+   "overrides": {
+    "e_swim": 0.6
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.7053916970741381,
+   "W_target": 0.9998018825075909,
+   "W_grid_max": 0.9999683708415715,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -6.920867434101474e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 6.920867434101474e-05,
+   "path_len": 58,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -6.920867434101474e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3124435924330334,
+     "A": 1.8722043238003472,
+     "M": 0.017011222249090206,
+     "c": 0.6340163050489991
+    },
+    "end_dist_to_target_norm": 0.8686670008356825,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3124436024939439,
+     "A": 1.8722049180996427,
+     "M": 0.017011219936665285,
+     "c": 0.6340161603909157
+    },
+    "slowest_step_norm": 1.34799111539202e-05,
+    "median_step_norm": 5.3273394361292926e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_vis=5",
+   "overrides": {
+    "d_vis": 5.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.794013857719573,
+   "W_target": 0.9996261569150643,
+   "W_grid_max": 0.9998578310393669,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -7.674029296655949e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 7.674029296655949e-05,
+   "path_len": 60,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 21,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -7.674029296655949e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3121565160844527,
+     "A": 1.8763112613517734,
+     "M": 0.016985592856369844,
+     "c": 0.6338100748709766
+    },
+    "end_dist_to_target_norm": 0.8687145095397791,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.312156540716164,
+     "A": 1.8763127114441427,
+     "M": 0.016985589678470785,
+     "c": 0.6338098216923218
+    },
+    "slowest_step_norm": 2.5761629062003805e-05,
+    "median_step_norm": 0.0002326911323464184
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_vis=5",
+   "overrides": {
+    "d_vis": 5.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "W_grid_max": 0.9995363406754699,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_vis=5",
+   "overrides": {
+    "d_vis": 5.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.794013857719573,
+   "W_target": 0.999998781980181,
+   "W_grid_max": 0.9999999058314797,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -5.443016664052891e-07,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 5.443016664052891e-07,
+   "path_len": 56,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 18,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -5.443016664052891e-07
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3134871466583662,
+     "A": 1.9125223060813485,
+     "M": 0.016975788067992333,
+     "c": 0.5972566591664148
+    },
+    "end_dist_to_target_norm": 0.873274184318492,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.31348715917361686,
+     "A": 1.9125226901181993,
+     "M": 0.016975788604509157,
+     "c": 0.5972557560518649
+    },
+    "slowest_step_norm": 7.236436479162822e-05,
+    "median_step_norm": 8.66234366294418e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.19
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_vis=80",
+   "overrides": {
+    "d_vis": 80.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.35152343224905924,
+   "W_target": 0.5629083630870562,
+   "W_grid_max": 0.5885380198486156,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0004598979331712494,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0004598979331712494,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0004598979331712494
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3118588538105422,
+     "A": 1.8562360344729816,
+     "M": 0.01809585750950298,
+     "c": 0.6349999999999989
+    },
+    "end_dist_to_target_norm": 0.85713667666208,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 3882,
+    "slowest_state": {
+     "p": 0.3118588538105422,
+     "A": 1.8562360344729816,
+     "M": 0.01809585750950298,
+     "c": 0.6349999999999989
+    },
+    "slowest_step_norm": 9.360115217046777e-15,
+    "median_step_norm": 9.360115217046777e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_vis=80",
+   "overrides": {
+    "d_vis": 80.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "W_grid_max": 0.9995363406754699,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_vis=80",
+   "overrides": {
+    "d_vis": 80.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.35152343224905924,
+   "W_target": 0.9985759097922864,
+   "W_grid_max": 0.9997274597374475,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.000458311143185397,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.000458311143185397,
+   "path_len": 58,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.000458311143185397
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3123323442770079,
+     "A": 1.861315904926388,
+     "M": 0.017417776171393458,
+     "c": 0.6349999999488735
+    },
+    "end_dist_to_target_norm": 0.8647115170621608,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.312332338620761,
+     "A": 1.861316053565,
+     "M": 0.01741775511589168,
+     "c": 0.6349999999488228
+    },
+    "slowest_step_norm": 2.423029165722865e-05,
+    "median_step_norm": 2.5116524850292765e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_gap=10",
+   "overrides": {
+    "d_gap": 10.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8570730592537212,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6453,
+    "slowest_state": {
+     "p": 0.3119264282228476,
+     "A": 1.856348629239646,
+     "M": 0.01809487441955711,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.724083157003856e-15,
+    "median_step_norm": 9.724083157003856e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_gap=10",
+   "overrides": {
+    "d_gap": 10.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.874400606876544,
+   "W_grid_max": 0.9221195723763385,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0006875172111753258,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "d_gap=10",
+   "overrides": {
+    "d_gap": 10.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9809065077654231,
+   "W_grid_max": 0.9907027391803216,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3121362382058935,
+     "A": 1.8565791725093004,
+     "M": 0.018091474614040072,
+     "c": 0.6349999999999938
+    },
+    "end_dist_to_target_norm": 0.8568964624439029,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 16170,
+    "slowest_state": {
+     "p": 0.3121362382058935,
+     "A": 1.8565791725093004,
+     "M": 0.018091474614040072,
+     "c": 0.6349999999999938
+    },
+    "slowest_step_norm": 9.959017535335456e-15,
+    "median_step_norm": 7.403473231369627e-09
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "beta_air=0.05",
+   "overrides": {
+    "beta_air": 0.05
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4691760736198408,
+   "W_target": 0.7735821967853248,
+   "W_grid_max": 0.7894846028233755,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0012721057165941407,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0012721057165941407,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0012721057165941407
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3125157530601224,
+     "A": 1.852531644000034,
+     "M": 0.018064980092920357,
+     "c": 0.6349999999999968
+    },
+    "end_dist_to_target_norm": 0.8574509909498211,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 10317,
+    "slowest_state": {
+     "p": 0.3125157530601224,
+     "A": 1.852531644000034,
+     "M": 0.018064980092920357,
+     "c": 0.6349999999999968
+    },
+    "slowest_step_norm": 9.713944200495353e-15,
+    "median_step_norm": 3.5097947415767386e-14
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "beta_air=0.05",
+   "overrides": {
+    "beta_air": 0.05
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.29055019881366934,
+   "W_target": 0.863730289941012,
+   "W_grid_max": 0.8752254951094175,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -7.776658029445827e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 7.776658029445827e-05,
+   "path_len": 86,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 29,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.67,
+     "A": 8.78759730570909,
+     "M": 0.0333134775,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.0333134775,
+     "c": 0.631
+    },
+    "dW": -7.776658029445827e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.1,
+     "A": 2.148176546600656,
+     "M": 0.01820011918934219,
+     "c": 0.49600017344736547
+    },
+    "end_dist_to_target_norm": 1.1741637355600452,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.1,
+     "A": 2.1481690313117925,
+     "M": 0.018200077654170876,
+     "c": 0.49600017352891973
+    },
+    "slowest_step_norm": 0.001667679429429801,
+    "median_step_norm": 0.0017194776245386826
+   },
+   "straight_line": {
+    "max_drop": 0.002518658127464768,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "beta_air=0.05",
+   "overrides": {
+    "beta_air": 0.05
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4691760736198408,
+   "W_target": 0.8654045346588717,
+   "W_grid_max": 0.8862569164249744,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0010230574813623328,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0010230574813623328,
+   "path_len": 142,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 65,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.73,
+     "A": 14.0,
+     "M": 0.01,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.76,
+     "A": 14.0,
+     "M": 0.01,
+     "c": 0.631
+    },
+    "dW": -0.0010230574813623328
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.5479734892612602,
+     "A": 1.8764354634415175,
+     "M": 0.016920929433857295,
+     "c": 0.6349999999999895
+    },
+    "end_dist_to_target_norm": 0.7174424884516345,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 12689,
+    "slowest_state": {
+     "p": 0.5473228032517056,
+     "A": 1.878324391007811,
+     "M": 0.016431927999481507,
+     "c": 0.6349999999999895
+    },
+    "slowest_step_norm": 7.666125274675942e-05,
+    "median_step_norm": 0.00017874515250908502
+   },
+   "straight_line": {
+    "max_drop": 0.00016832023915225314,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "beta_air=0.2",
+   "overrides": {
+    "beta_air": 0.2
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.42622176497799813,
+   "W_target": 0.5018983423228128,
+   "W_grid_max": 0.5453405423286847,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0005614860214039341,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0005614860214039341,
+   "path_len": 66,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 14,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.5800000000000001,
+     "A": 5.515847600521833,
+     "M": 0.04029292081174065,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.5800000000000001,
+     "A": 6.442160707141526,
+     "M": 0.04029292081174065,
+     "c": 0.45
+    },
+    "dW": -0.0005614860214039341
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.2484262995970714,
+     "A": 2.1703773529525114,
+     "M": 0.0272640659412524,
+     "c": 0.6349999999999938
+    },
+    "end_dist_to_target_norm": 0.8186884699073008,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 13532,
+    "slowest_state": {
+     "p": 0.2484262995970714,
+     "A": 2.1703773529525114,
+     "M": 0.0272640659412524,
+     "c": 0.6349999999999938
+    },
+    "slowest_step_norm": 5.773163898057664e-15,
+    "median_step_norm": 4.733551647851514e-07
+   },
+   "straight_line": {
+    "max_drop": 0.001285063329372449,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.01
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "beta_air=0.2",
+   "overrides": {
+    "beta_air": 0.2
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.2639495607642883,
+   "W_target": 0.5603862169228506,
+   "W_grid_max": 0.6181540992199462,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0025160484795598848,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0025160484795598848,
+   "path_len": 214,
+   "path_neutral_steps": 8,
+   "path_downhill_steps": 93,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.79,
+     "A": 14.0,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.79,
+     "A": 14.0,
+     "M": 0.022174048860973305,
+     "c": 0.631
+    },
+    "dW": -0.0025160484795598848
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.1,
+     "A": 2.597489419097526,
+     "M": 0.020669234813195613,
+     "c": 0.4960000000000118
+    },
+    "end_dist_to_target_norm": 1.124564337240173,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.1,
+     "A": 2.597459773837391,
+     "M": 0.02066906873573284,
+     "c": 0.4960000000000118
+    },
+    "slowest_step_norm": 0.0056776554697913015,
+    "median_step_norm": 0.0063140342350256435
+   },
+   "straight_line": {
+    "max_drop": 0.003464217791114277,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "beta_air=0.2",
+   "overrides": {
+    "beta_air": 0.2
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.42622176497799813,
+   "W_target": 0.5614724630283433,
+   "W_grid_max": 0.6984725589025499,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.005272431058481297,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.005272431058481297,
+   "path_len": 130,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 60,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.73,
+     "A": 4.722728310464992,
+     "M": 0.06,
+     "c": 0.625
+    },
+    "to": {
+     "p": 0.7000000000000001,
+     "A": 4.722728310464992,
+     "M": 0.06,
+     "c": 0.625
+    },
+    "dW": -0.005272431058481297
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.21923614882490636,
+     "A": 1.85635467745593,
+     "M": 0.03076800765035228,
+     "c": 0.6349999999999973
+    },
+    "end_dist_to_target_norm": 0.8829138622494322,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 11534,
+    "slowest_state": {
+     "p": 0.21840570169515233,
+     "A": 1.8700794905165266,
+     "M": 0.027348924396386413,
+     "c": 0.6349999999999973
+    },
+    "slowest_step_norm": 0.000164297186227666,
+    "median_step_norm": 0.0005986552091956388
+   },
+   "straight_line": {
+    "max_drop": 0.0018961689900172107,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=0.1",
+   "overrides": {
+    "kappa_fin": 0.1
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4799105504743867,
+   "W_target": 0.848156957149477,
+   "W_grid_max": 0.8749191111651002,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0011260305244983893,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0011260305244983893,
+   "path_len": 78,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 32,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 3.4622176795034005,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 3.4622176795034005,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0011260305244983893
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3096017750738758,
+     "A": 2.00545680869721,
+     "M": 0.01479377436280278,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8910180179505383,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6519,
+    "slowest_state": {
+     "p": 0.3096017750738758,
+     "A": 2.00545680869721,
+     "M": 0.01479377436280278,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.757819552369541e-15,
+    "median_step_norm": 9.757819552369541e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=0.1",
+   "overrides": {
+    "kappa_fin": 0.1
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.2971978190987058,
+   "W_target": 0.9469954938964303,
+   "W_grid_max": 0.9661685127327104,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -5.147504251934443e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 5.147504251934443e-05,
+   "path_len": 48,
+   "path_neutral_steps": 12,
+   "path_downhill_steps": 2,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.64,
+     "A": 7.524035757027065,
+     "M": 0.04029292081174065,
+     "c": 0.6
+    },
+    "to": {
+     "p": 0.67,
+     "A": 7.524035757027065,
+     "M": 0.04029292081174065,
+     "c": 0.6
+    },
+    "dW": -5.147504251934443e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.1,
+     "A": 2.50157817553079,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1500765123083978,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.1,
+     "A": 2.5015515203492797,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 0.003182556512672269,
+    "median_step_norm": 0.0035421802834735318
+   },
+   "straight_line": {
+    "max_drop": 0.0020308290015176866,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=0.1",
+   "overrides": {
+    "kappa_fin": 0.1
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4799105504743867,
+   "W_target": 0.9488311389142765,
+   "W_grid_max": 0.9737499126291966,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00011495771075453742,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00011495771075453742,
+   "path_len": 44,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 6,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00011495771075453742
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.2529907653938493,
+     "A": 2.1828404619127455,
+     "M": 0.011612697720968472,
+     "c": 0.6349999999999913
+    },
+    "end_dist_to_target_norm": 0.996640833097907,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 16975,
+    "slowest_state": {
+     "p": 0.2531169312959156,
+     "A": 2.1775864018448887,
+     "M": 0.012081300926834508,
+     "c": 0.6349999999999913
+    },
+    "slowest_step_norm": 0.00025435678962633314,
+    "median_step_norm": 0.00038666090503458475
+   },
+   "straight_line": {
+    "max_drop": 2.5983362075709948e-05,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=0.3",
+   "overrides": {
+    "kappa_fin": 0.3
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4709871133060222,
+   "W_target": 0.7641089449215421,
+   "W_grid_max": 0.8064388062688442,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0009626468359040796,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0009626468359040796,
+   "path_len": 86,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 33,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 1.3640760771409357,
+     "M": 0.01734208,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 1.1679366751416516,
+     "M": 0.01734208,
+     "c": 0.45
+    },
+    "dW": -0.0009626468359040796
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.2789709674744897,
+     "A": 2.1616468538251166,
+     "M": 0.010000000000000004,
+     "c": 0.6349999999999979
+    },
+    "end_dist_to_target_norm": 1.028482394670604,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 3257,
+    "slowest_state": {
+     "p": 0.27815725312727935,
+     "A": 2.0092322042268798,
+     "M": 0.012080635642559415,
+     "c": 0.6349999999999979
+    },
+    "slowest_step_norm": 0.0020279915123931,
+    "median_step_norm": 0.0021524870248343575
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=0.3",
+   "overrides": {
+    "kappa_fin": 0.3
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.29167173499265575,
+   "W_target": 0.8531530886907872,
+   "W_grid_max": 0.918175993774222,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00028322981200401554,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00028322981200401554,
+   "path_len": 72,
+   "path_neutral_steps": 30,
+   "path_downhill_steps": 7,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.19,
+     "A": 8.78759730570909,
+     "M": 0.01734208,
+     "c": 0.575
+    },
+    "to": {
+     "p": 0.19,
+     "A": 10.263357179713612,
+     "M": 0.01734208,
+     "c": 0.575
+    },
+    "dW": -0.00028322981200401554
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.1,
+     "A": 3.503674719331865,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1037755833343144,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.1,
+     "A": 3.5036044197620764,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 0.006811804565461832,
+    "median_step_norm": 0.008710883490610583
+   },
+   "straight_line": {
+    "max_drop": 0.002087658534517811,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=0.3",
+   "overrides": {
+    "kappa_fin": 0.3
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4709871133060222,
+   "W_target": 0.8548068306851357,
+   "W_grid_max": 0.9307690784819797,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0003764692151305704,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0003764692151305704,
+   "path_len": 64,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 15,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.43000000000000005,
+     "A": 2.9643881840455863,
+     "M": 0.04029292081174065,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.4600000000000001,
+     "A": 2.9643881840455863,
+     "M": 0.04029292081174065,
+     "c": 0.55
+    },
+    "dW": -0.0003764692151305704
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.2520905577222715,
+     "A": 2.5445412069543725,
+     "M": 0.010000000000000004,
+     "c": 0.6349999999999965
+    },
+    "end_dist_to_target_norm": 1.0210164966991273,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 2342,
+    "slowest_state": {
+     "p": 0.2516611004608319,
+     "A": 2.1729798259546436,
+     "M": 0.014740071113767128,
+     "c": 0.6349999998044138
+    },
+    "slowest_step_norm": 0.0004130969880512378,
+    "median_step_norm": 0.0013854754188716292
+   },
+   "straight_line": {
+    "max_drop": 0.00017309121032860197,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=1.0",
+   "overrides": {
+    "kappa_fin": 1.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4410416138019358,
+   "W_target": 0.5303126366164983,
+   "W_grid_max": 0.6803809526146836,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0013145498539358091,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0013145498539358091,
+   "path_len": 116,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 60,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.28,
+     "A": 7.524035757027065,
+     "M": 0.04916884428888316,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.28,
+     "A": 6.442160707141526,
+     "M": 0.04916884428888316,
+     "c": 0.55
+    },
+    "dW": -0.0013145498539358091
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.25120755995551136,
+     "A": 2.5489360938244268,
+     "M": 0.010000000000000004,
+     "c": 0.6349999999999986
+    },
+    "end_dist_to_target_norm": 1.0214852670550205,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 1379,
+    "slowest_state": {
+     "p": 0.25062936092756716,
+     "A": 2.1806835518506062,
+     "M": 0.014719108365220685,
+     "c": 0.6349998859204219
+    },
+    "slowest_step_norm": 0.0029865315243876767,
+    "median_step_norm": 0.005236895697012107
+   },
+   "straight_line": {
+    "max_drop": 0.0004329787854778222,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=1.0",
+   "overrides": {
+    "kappa_fin": 1.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.2731271601012753,
+   "W_target": 0.592111722952774,
+   "W_grid_max": 0.7826640170908568,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.001356505473737002,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.001356505473737002,
+   "path_len": 110,
+   "path_neutral_steps": 43,
+   "path_downhill_steps": 26,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.04916884428888316,
+     "c": 0.575
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.04916884428888316,
+     "c": 0.575
+    },
+    "dW": -0.001356505473737002
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.1,
+     "A": 6.994758644339144,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.0517779409362074,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.1,
+     "A": 6.994507224390379,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 0.0114014776789372,
+    "median_step_norm": 0.017726211100804228
+   },
+   "straight_line": {
+    "max_drop": 0.0021605929930920698,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "kappa_fin=1.0",
+   "overrides": {
+    "kappa_fin": 1.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4410416138019358,
+   "W_target": 0.5932594654090496,
+   "W_grid_max": 0.8024821294536159,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0017536608767710349,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0017536608767710349,
+   "path_len": 142,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 66,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.31000000000000005,
+     "A": 11.986951260265911,
+     "M": 0.06,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.31000000000000005,
+     "A": 10.263357179713612,
+     "M": 0.06,
+     "c": 0.55
+    },
+    "dW": -0.0017536608767710349
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.2194913543638531,
+     "A": 2.1672889736524903,
+     "M": 0.010000000000000004,
+     "c": 0.6349999999999989
+    },
+    "end_dist_to_target_norm": 1.0783634207837396,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 2021,
+    "slowest_state": {
+     "p": 0.21873826473488206,
+     "A": 1.9957784834643226,
+     "M": 0.01192403080224942,
+     "c": 0.6349999999999989
+    },
+    "slowest_step_norm": 0.004008807351272122,
+    "median_step_norm": 0.007575835907145529
+   },
+   "straight_line": {
+    "max_drop": 0.000694623269937189,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.005
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:cv=0.02",
+   "overrides": {
+    "cv_A": 0.02,
+    "r_pc": 0.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.02,
+    "end": {
+     "p": 0.311926371411918,
+     "A": 1.8563500135017104,
+     "M": 0.018094627276965067,
+     "c": 0.6349999999999848
+    },
+    "end_dist_to_target_norm": 0.8570759462278275,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3119263713591837,
+     "A": 1.8563500147869,
+     "M": 0.018094627047555937,
+     "c": 0.6349999999999848
+    },
+    "slowest_step_norm": 6.348709658319642e-07,
+    "median_step_norm": 0.00026934263831298997
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:cv=0.02",
+   "overrides": {
+    "cv_A": 0.02,
+    "r_pc": 0.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "W_grid_max": 0.9995363406754699,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.02,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 1.3877787807814454e-16,
+    "median_step_norm": 1.3877787807814454e-16
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:cv=0.02",
+   "overrides": {
+    "cv_A": 0.02,
+    "r_pc": 0.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "W_grid_max": 0.99994464897275,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_len": 58,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.02,
+    "end": {
+     "p": 0.31275902474271494,
+     "A": 1.8868608429420144,
+     "M": 0.01698491351262572,
+     "c": 0.6250291369344493
+    },
+    "end_dist_to_target_norm": 0.8670318102023095,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3127590522826006,
+     "A": 1.8868613274885917,
+     "M": 0.016984913036593274,
+     "c": 0.6250282716742646
+    },
+    "slowest_step_norm": 0.00017354486416411904,
+    "median_step_norm": 0.0002885564127738529
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:cv=0.10",
+   "overrides": {
+    "cv_A": 0.1,
+    "r_pc": 0.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.1,
+    "end": {
+     "p": 0.31192642822284794,
+     "A": 1.8563486292396376,
+     "M": 0.01809487441955814,
+     "c": 0.6349999999999995
+    },
+    "end_dist_to_target_norm": 0.8570730592537097,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 1672,
+    "slowest_state": {
+     "p": 0.31192642822284794,
+     "A": 1.8563486292396378,
+     "M": 0.01809487441955814,
+     "c": 0.6349999999999995
+    },
+    "slowest_step_norm": 4.682161023798628e-15,
+    "median_step_norm": 4.805411040154777e-15
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:cv=0.10",
+   "overrides": {
+    "cv_A": 0.1,
+    "r_pc": 0.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "W_grid_max": 0.9995363406754699,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.1,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 6.938893903907226e-16,
+    "median_step_norm": 6.938893903907226e-16
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:cv=0.10",
+   "overrides": {
+    "cv_A": 0.1,
+    "r_pc": 0.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "W_grid_max": 0.99994464897275,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_len": 58,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.1,
+    "end": {
+     "p": 0.3123843224793718,
+     "A": 1.8621112544721055,
+     "M": 0.01734888360940217,
+     "c": 0.6349999999697427
+    },
+    "end_dist_to_target_norm": 0.8654846786070763,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3123843164925817,
+     "A": 1.8621113953922621,
+     "M": 0.017348862995173218,
+     "c": 0.6349999999697126
+    },
+    "slowest_step_norm": 1.1906562904148916e-05,
+    "median_step_norm": 1.2307624762164877e-05
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:r_pc=0.5 (p-c pleiotropy)",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": 0.5
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34151108668173646,
+     "A": 2.1693939310329697,
+     "M": 0.018141698879083987,
+     "c": 0.6351093188410344
+    },
+    "end_dist_to_target_norm": 0.7904272525934601,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 7366,
+    "slowest_state": {
+     "p": 0.34151108668173646,
+     "A": 2.1693939310329697,
+     "M": 0.018141698879083987,
+     "c": 0.6351093188410344
+    },
+    "slowest_step_norm": 8.817398721790658e-15,
+    "median_step_norm": 8.817398721790658e-15
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:r_pc=0.5 (p-c pleiotropy)",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": 0.5
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "W_grid_max": 0.9995363406754699,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.878959614448863e-16,
+    "median_step_norm": 3.878959614448863e-16
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:r_pc=0.5 (p-c pleiotropy)",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": 0.5
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "W_grid_max": 0.99994464897275,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_len": 58,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3403325733634348,
+     "A": 2.085100167559613,
+     "M": 0.01744954117938423,
+     "c": 0.6345922638848247
+    },
+    "end_dist_to_target_norm": 0.8109252973691241,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.34033254716020384,
+     "A": 2.0850976238320396,
+     "M": 0.017449535153512382,
+     "c": 0.6345921803914869
+    },
+    "slowest_step_norm": 2.623375798955873e-05,
+    "median_step_norm": 4.943105568068655e-05
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:r_pc=-0.5",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": -0.5
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8935867106374751,
+   "W_grid_max": 0.9164349404291459,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.40370136266654544,
+     "A": 2.174728156326441,
+     "M": 0.017178353154195955,
+     "c": 0.45349888812853145
+    },
+    "end_dist_to_target_norm": 1.0346395822956451,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 11050,
+    "slowest_state": {
+     "p": 0.40370136266654544,
+     "A": 2.174728156326441,
+     "M": 0.017178353154195955,
+     "c": 0.45349888812853145
+    },
+    "slowest_step_norm": 8.537804235746869e-15,
+    "median_step_norm": 2.4833014212803676e-12
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:r_pc=-0.5",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": -0.5
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977193268843118,
+   "W_grid_max": 0.9995363406754699,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.878959614448863e-16,
+    "median_step_norm": 3.878959614448863e-16
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "lande:r_pc=-0.5",
+   "overrides": {
+    "cv_A": 0.05,
+    "r_pc": -0.5
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9996532943882842,
+   "W_grid_max": 0.99994464897275,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00012111518009683131,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012111518009683131,
+   "path_len": 58,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 20,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012111518009683131
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.40370136266654544,
+     "A": 2.174728156326441,
+     "M": 0.017178353154195955,
+     "c": 0.45349888842434255
+    },
+    "end_dist_to_target_norm": 1.034639581483663,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 11049,
+    "slowest_state": {
+     "p": 0.40370136266654544,
+     "A": 2.174728156326441,
+     "M": 0.017178353154195955,
+     "c": 0.45349888842434255
+    },
+    "slowest_step_norm": 8.663029972309325e-15,
+    "median_step_norm": 2.4829563660287647e-12
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "V_exit=4",
+   "overrides": {
+    "V_exit": 4.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.33386810793481125,
+   "W_target": 0.3565043030567353,
+   "W_grid_max": 0.64196331068698,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -4.292851564291489e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.292851564291489e-05,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 3.4622176795034005,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 4.043651005215845,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "dW": -4.292851564291489e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.7292988831796242,
+     "A": 1.59418368727817,
+     "M": 0.014960078437779308,
+     "c": 0.634999999999999
+    },
+    "end_dist_to_target_norm": 0.7874929310971291,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6819,
+    "slowest_state": {
+     "p": 0.7292988831796242,
+     "A": 1.59418368727817,
+     "M": 0.014960078437779308,
+     "c": 0.634999999999999
+    },
+    "slowest_step_norm": 9.555996312968072e-15,
+    "median_step_norm": 9.555996312968072e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "V_exit=4",
+   "overrides": {
+    "V_exit": 4.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.30000000000000004,
+   "W_grid_max": 0.30000000000000004,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 60,
+   "path_neutral_steps": 60,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 1.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "V_exit=4",
+   "overrides": {
+    "V_exit": 4.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.33386810793481125,
+   "W_target": 0.3565043030567353,
+   "W_grid_max": 0.64196331068698,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -4.292851564291489e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.292851564291489e-05,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 3.4622176795034005,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 4.043651005215845,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "dW": -4.292851564291489e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.7292988831796242,
+     "A": 1.59418368727817,
+     "M": 0.014960078437779308,
+     "c": 0.634999999999999
+    },
+    "end_dist_to_target_norm": 0.7874929310971291,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6819,
+    "slowest_state": {
+     "p": 0.7292988831796242,
+     "A": 1.59418368727817,
+     "M": 0.014960078437779308,
+     "c": 0.634999999999999
+    },
+    "slowest_step_norm": 9.555996312968072e-15,
+    "median_step_norm": 9.555996312968072e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "dV_taxi=4",
+   "overrides": {
+    "dV_taxi": 4.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.8111909069192961,
+   "W_grid_max": 0.8328157936154729,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34229641468943195,
+     "A": 2.1695639146964614,
+     "M": 0.01808537012056372,
+     "c": 0.6349999999999978
+    },
+    "end_dist_to_target_norm": 0.790452156956051,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 8126,
+    "slowest_state": {
+     "p": 0.34229641468943195,
+     "A": 2.1695639146964614,
+     "M": 0.01808537012056372,
+     "c": 0.6349999999999978
+    },
+    "slowest_step_norm": 9.830767781136936e-15,
+    "median_step_norm": 9.830767781136936e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "dV_taxi=4",
+   "overrides": {
+    "dV_taxi": 4.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9039334330468187,
+   "W_grid_max": 0.9566970230863583,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 60,
+   "path_neutral_steps": 50,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.58
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "dV_taxi=4",
+   "overrides": {
+    "dV_taxi": 4.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9740882265974188,
+   "W_grid_max": 0.9896577516722933,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34257515695152185,
+     "A": 2.168236858188916,
+     "M": 0.01808236009977286,
+     "c": 0.6349999999999972
+    },
+    "end_dist_to_target_norm": 0.7904011133342818,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 10224,
+    "slowest_state": {
+     "p": 0.34257515695152185,
+     "A": 2.168236858188916,
+     "M": 0.01808236009977286,
+     "c": 0.6349999999999972
+    },
+    "slowest_step_norm": 9.885328272829249e-15,
+    "median_step_norm": 2.2841716227679924e-14
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "dV_taxi=10",
+   "overrides": {
+    "dV_taxi": 10.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9211329152763285,
+   "W_grid_max": 0.941303406330695,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31164883365983254,
+     "A": 1.8571190406651525,
+     "M": 0.018110391976852807,
+     "c": 0.6349999999999972
+    },
+    "end_dist_to_target_norm": 0.8570220504956891,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 7114,
+    "slowest_state": {
+     "p": 0.31164883365983254,
+     "A": 1.8571190406651525,
+     "M": 0.018110391976852807,
+     "c": 0.6349999999999972
+    },
+    "slowest_step_norm": 9.88738850704202e-15,
+    "median_step_norm": 9.88738850704202e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "dV_taxi=10",
+   "overrides": {
+    "dV_taxi": 10.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9996791158525739,
+   "W_grid_max": 0.999954405697348,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 34,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.165
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "dV_taxi=10",
+   "overrides": {
+    "dV_taxi": 10.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9999638468610835,
+   "W_grid_max": 0.9999961768139194,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -1.4870920095333418e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 1.4870920095333418e-05,
+   "path_len": 56,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 17,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -1.4870920095333418e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31233095739078826,
+     "A": 1.8679102716944835,
+     "M": 0.017083202005467125,
+     "c": 0.6236840223945732
+    },
+    "end_dist_to_target_norm": 0.8687439965775465,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3123309773964372,
+     "A": 1.8679103695201273,
+     "M": 0.01708320086724943,
+     "c": 0.6236831914525871
+    },
+    "slowest_step_norm": 6.64994918938679e-05,
+    "median_step_norm": 9.427861466796162e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "gam0=5",
+   "overrides": {
+    "gam0_deg": 5.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.3844976013608833,
+   "W_target": 0.8533860665374304,
+   "W_grid_max": 0.868828813668212,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.000744904972197924,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.000744904972197924,
+   "path_len": 106,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 46,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.000744904972197924
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3109932544281809,
+     "A": 1.8624859379261824,
+     "M": 0.018137281875955414,
+     "c": 0.634999999999998
+    },
+    "end_dist_to_target_norm": 0.8565300967424154,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6332,
+    "slowest_state": {
+     "p": 0.3109932544281809,
+     "A": 1.8624859379261824,
+     "M": 0.018137281875955414,
+     "c": 0.634999999999998
+    },
+    "slowest_step_norm": 9.798695614785148e-15,
+    "median_step_norm": 9.798695614785148e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "gam0=5",
+   "overrides": {
+    "gam0_deg": 5.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9832046077944544,
+   "W_grid_max": 0.9920816191086212,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 28,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31243714999396494,
+     "A": 1.8549224958830444,
+     "M": 0.018080634099592482,
+     "c": 0.6349999999999957
+    },
+    "end_dist_to_target_norm": 0.8569939730134705,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 11586,
+    "slowest_state": {
+     "p": 0.31243714999396494,
+     "A": 1.8549224958830444,
+     "M": 0.018080634099592482,
+     "c": 0.6349999999999957
+    },
+    "slowest_step_norm": 9.941271754408238e-15,
+    "median_step_norm": 1.2850511867370757e-12
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.035
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "gam0=5",
+   "overrides": {
+    "gam0_deg": 5.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.3844976013608833,
+   "W_target": 0.9964822306924263,
+   "W_grid_max": 0.9985161951209298,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0006910082838685883,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0006910082838685883,
+   "path_len": 52,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 17,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.0006910082838685883
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31230304302111667,
+     "A": 1.8565704581888256,
+     "M": 0.018088505264440093,
+     "c": 0.6349999999999826
+    },
+    "end_dist_to_target_norm": 0.856786183636366,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.31230304285709204,
+     "A": 1.8565704621599022,
+     "M": 0.018088504609289745,
+     "c": 0.6349999999999826
+    },
+    "slowest_step_norm": 7.256607067956828e-07,
+    "median_step_norm": 8.41144181252975e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "gam0=30",
+   "overrides": {
+    "gam0_deg": 30.0
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.5721574333579003,
+   "W_target": 0.8707881594731687,
+   "W_grid_max": 0.903164051128065,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0013429075480690944,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0013429075480690944,
+   "path_len": 80,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 33,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 3.4622176795034005,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 4.043651005215845,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "dW": -0.0013429075480690944
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31262687549967133,
+     "A": 1.8515940110082583,
+     "M": 0.0180603068529734,
+     "c": 0.634999999999998
+    },
+    "end_dist_to_target_norm": 0.8575413461685503,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6485,
+    "slowest_state": {
+     "p": 0.31262687549967133,
+     "A": 1.8515940110082583,
+     "M": 0.0180603068529734,
+     "c": 0.634999999999998
+    },
+    "slowest_step_norm": 9.80429310826854e-15,
+    "median_step_norm": 9.80429310826854e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "gam0=30",
+   "overrides": {
+    "gam0_deg": 30.0
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9911562620730973,
+   "W_grid_max": 0.9986492556395806,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 60,
+   "path_neutral_steps": 51,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.46
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "gam0=30",
+   "overrides": {
+    "gam0_deg": 30.0
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.5721574333579003,
+   "W_target": 0.9983675490647542,
+   "W_grid_max": 0.9998131419831077,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0006267549976911591,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0006267549976911591,
+   "path_len": 62,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 8,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.0006267549976911591
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31304564690143344,
+     "A": 1.8551967965050598,
+     "M": 0.01717594830041934,
+     "c": 0.634999957011389
+    },
+    "end_dist_to_target_norm": 0.8682239502429582,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3130456451613935,
+     "A": 1.8551968506672538,
+     "M": 0.017175938989171833,
+     "c": 0.6349999569832782
+    },
+    "slowest_step_norm": 1.085802476827647e-05,
+    "median_step_norm": 1.1317541318302786e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "h0=0.3",
+   "overrides": {
+    "h0": 0.3
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.504101336021292,
+   "W_target": 0.897037800144209,
+   "W_grid_max": 0.9189388475602517,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014312186108069724,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014312186108069724,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014312186108069724
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31190156340593844,
+     "A": 1.8565081772286656,
+     "M": 0.018096000186656927,
+     "c": 0.6349999999999976
+    },
+    "end_dist_to_target_norm": 0.8570590736090771,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 6660,
+    "slowest_state": {
+     "p": 0.31190156340593844,
+     "A": 1.8565081772286656,
+     "M": 0.018096000186656927,
+     "c": 0.6349999999999976
+    },
+    "slowest_step_norm": 9.89749534856815e-15,
+    "median_step_norm": 9.89749534856815e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "h0=0.3",
+   "overrides": {
+    "h0": 0.3
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9981523358002365,
+   "W_grid_max": 0.9996183714205505,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0009361745096519991,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "h0=0.3",
+   "overrides": {
+    "h0": 0.3
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.504101336021292,
+   "W_target": 0.9997282291848537,
+   "W_grid_max": 0.9999558067822084,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -9.42290268961532e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 9.42290268961532e-05,
+   "path_len": 56,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 18,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -9.42290268961532e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31235196846439994,
+     "A": 1.8691609059696777,
+     "M": 0.0170084639470386,
+     "c": 0.6347043543912513
+    },
+    "end_dist_to_target_norm": 0.8692421108336695,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3123519761798769,
+     "A": 1.8691613913474914,
+     "M": 0.017008460310426757,
+     "c": 0.6347042936952465
+    },
+    "slowest_step_norm": 8.299799912285467e-06,
+    "median_step_norm": 4.164698055275577e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "polar=P2_high_drag",
+   "overrides": {
+    "polar": "P2_high_drag"
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48520205998004684,
+   "W_target": 0.7812450069432146,
+   "W_grid_max": 0.7856243062048398,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 9.446466825879796e-06,
+   "weakest_step_selection_coefficient": 1.946913998318199e-05,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": 25681.66854991615,
+   "strictly_improving_path_exists": true,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0,
+   "path_len": 50,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.43000000000000005,
+     "A": 2.5381411913330445,
+     "M": 0.03301927248894628,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.43000000000000005,
+     "A": 2.5381411913330445,
+     "M": 0.0333134775,
+     "c": 0.55
+    },
+    "dW": 9.446466825879796e-06
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3074976757952311,
+     "A": 1.8756060083374895,
+     "M": 0.012271690099073985,
+     "c": 0.6349999999999979
+    },
+    "end_dist_to_target_norm": 0.9650974776145431,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.30749767587874066,
+     "A": 1.8756060080046135,
+     "M": 0.012271690298175389,
+     "c": 0.6349999999999979
+    },
+    "slowest_step_norm": 3.2451740219718784e-07,
+    "median_step_norm": 0.0003531126107549331
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "polar=P2_high_drag",
+   "overrides": {
+    "polar": "P2_high_drag"
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.7612499201733797,
+   "W_grid_max": 0.8288272827743732,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 60,
+   "path_neutral_steps": 51,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.635
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "polar=P2_high_drag",
+   "overrides": {
+    "polar": "P2_high_drag"
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48520205998004684,
+   "W_target": 0.925388897064601,
+   "W_grid_max": 0.9474858148261709,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0003289051443171598,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0003289051443171598,
+   "path_len": 80,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 17,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.55,
+     "A": 4.722728310464992,
+     "M": 0.04916884428888316,
+     "c": 0.55
+    },
+    "to": {
+     "p": 0.5800000000000001,
+     "A": 4.722728310464992,
+     "M": 0.04916884428888316,
+     "c": 0.55
+    },
+    "dW": -0.0003289051443171598
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3390985100849146,
+     "A": 2.009030251316026,
+     "M": 0.014975540451186696,
+     "c": 0.6349999999999983
+    },
+    "end_dist_to_target_norm": 0.8623855481308563,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 11996,
+    "slowest_state": {
+     "p": 0.3390985100849146,
+     "A": 2.009030251316026,
+     "M": 0.014975540451186696,
+     "c": 0.6349999999999983
+    },
+    "slowest_step_norm": 9.932880616730016e-15,
+    "median_step_norm": 1.202915005704244e-09
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "a_LW=exocoetid",
+   "overrides": {
+    "a_LW": 0.01354
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.47506362494655974,
+   "W_target": 0.8903003578381435,
+   "W_grid_max": 0.9156621571051138,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0008300108875861634,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0008300108875861634,
+   "path_len": 73,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 28,
+   "path_bottleneck_step": {
+    "trait": "A",
+    "from": {
+     "p": 0.13,
+     "A": 3.4622176795034005,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.13,
+     "A": 4.043651005215845,
+     "M": 0.06,
+     "c": 0.45
+    },
+    "dW": -0.0008300108875861634
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.4024840616200493,
+     "A": 1.854312331286544,
+     "M": 0.01718295187389871,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.6682077328640281,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 12449,
+    "slowest_state": {
+     "p": 0.4024840616200493,
+     "A": 1.854312331286544,
+     "M": 0.01718295187389871,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.776001789164124e-15,
+    "median_step_norm": 2.4690468162770275e-10
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 5.238827334509766,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "a_LW=exocoetid",
+   "overrides": {
+    "a_LW": 0.01354
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9972252770453679,
+   "W_grid_max": 0.9995078997969281,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 57,
+   "path_neutral_steps": 38,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.070587151337295,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.225
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 5.238827334509766,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "a_LW=exocoetid",
+   "overrides": {
+    "a_LW": 0.01354
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.47506362494655974,
+   "W_target": 0.9995651626925408,
+   "W_grid_max": 0.9999407104719783,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00015873593439463818,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00015873593439463818,
+   "path_len": 43,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 11,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 5.238827334509766,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 5.238827334509766,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00015873593439463818
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.4028295190975195,
+     "A": 1.855865244983356,
+     "M": 0.016871344771297817,
+     "c": 0.6349079808443404
+    },
+    "end_dist_to_target_norm": 0.6734233284037955,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.40282951886762547,
+     "A": 1.8558652557637134,
+     "M": 0.01687134403838907,
+     "c": 0.6349079561935471
+    },
+    "slowest_step_norm": 2.1581068493725335e-06,
+    "median_step_norm": 2.8710335060740046e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 5.238827334509766,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4805914731493306,
+   "W_target": 0.8932984643944881,
+   "W_grid_max": 0.9159245043828255,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0011948428401856726,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0011948428401856726,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0011948428401856726
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3415310823154076,
+     "A": 2.1694334015979484,
+     "M": 0.015230215933203938,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8303152344489667,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 2274,
+    "slowest_state": {
+     "p": 0.3424640272134198,
+     "A": 2.1600325821080313,
+     "M": 0.017167400566199087,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.941586821235801e-05,
+    "median_step_norm": 0.0001375208858376151
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.465823994150071,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9976792045287411,
+   "W_grid_max": 0.9995176547008885,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 48,
+   "path_neutral_steps": 29,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1454020716904088,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0011249568487765593,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.465823994150071,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4805914731493306,
+   "W_target": 0.9996462393705576,
+   "W_grid_max": 0.9999420665427409,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00012409217158415586,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012409217158415586,
+   "path_len": 44,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 15,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.465823994150071,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.465823994150071,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012409217158415586
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34105732005294886,
+     "A": 2.014806000803616,
+     "M": 0.01725933570674933,
+     "c": 0.6349144851197112
+    },
+    "end_dist_to_target_norm": 0.8146532953062261,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.34105728807927055,
+     "A": 2.0148048353495747,
+     "M": 0.01725933031491573,
+     "c": 0.6349144621255185
+    },
+    "slowest_step_norm": 1.3308643527037423e-05,
+    "median_step_norm": 3.425014702213828e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.465823994150071,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48865499884760144,
+   "W_target": 0.8938523375104576,
+   "W_grid_max": 0.9166683866138519,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0017763206668263143,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0017763206668263143,
+   "path_len": 109,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 48,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0017763206668263143
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31187219182776055,
+     "A": 1.9942927936392854,
+     "M": 0.017270305385259473,
+     "c": 0.6349999999999976
+    },
+    "end_dist_to_target_norm": 0.856524468992041,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 5060,
+    "slowest_state": {
+     "p": 0.3118721918277605,
+     "A": 1.9942927936392854,
+     "M": 0.017270305385259473,
+     "c": 0.6349999999999976
+    },
+    "slowest_step_norm": 9.831110079183123e-15,
+    "median_step_norm": 9.904356744078517e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.946836721090417,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977557807140623,
+   "W_grid_max": 0.999544653905858,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 57,
+   "path_neutral_steps": 38,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1555442019000934,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0029521990827492406,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.205
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.946836721090417,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48865499884760144,
+   "W_target": 0.9996596876695483,
+   "W_grid_max": 0.9999457932504658,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00010627214238312366,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00010627214238312366,
+   "path_len": 53,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 19,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00010627214238312366
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3124895684109727,
+     "A": 1.993701371466923,
+     "M": 0.017223905855419278,
+     "c": 0.6347837941248752
+    },
+    "end_dist_to_target_norm": 0.8566796702174626,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3124895672889034,
+     "A": 1.9937013445297909,
+     "M": 0.017223903504648377,
+     "c": 0.6347837458234871
+    },
+    "slowest_step_norm": 4.738826893514833e-06,
+    "median_step_norm": 3.650433054575201e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.946836721090417,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9120366711372967,
+   "W_grid_max": 0.9377204695500738,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34257133429245545,
+     "A": 2.1650812658467866,
+     "M": 0.018077337290614805,
+     "c": 0.6349999999999976
+    },
+    "end_dist_to_target_norm": 0.7908392552855749,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 9587,
+    "slowest_state": {
+     "p": 0.34257133429245545,
+     "A": 2.1650812658467866,
+     "M": 0.018077337290614805,
+     "c": 0.6349999999999976
+    },
+    "slowest_step_norm": 9.873403140253298e-15,
+    "median_step_norm": 9.873403140253298e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.99923126705452,
+   "W_grid_max": 0.9999197863715145,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9999033995587273,
+   "W_grid_max": 0.9999928633326889,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -4.291883498008797e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.291883498008797e-05,
+   "path_len": 46,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 12,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -4.291883498008797e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.33123718424466586,
+     "A": 1.930929950389137,
+     "M": 0.01699354444425886,
+     "c": 0.6326607458132192
+    },
+    "end_dist_to_target_norm": 0.8447602580988841,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3312371965764043,
+     "A": 1.9309298079681856,
+     "M": 0.01699354425197495,
+     "c": 0.6326605294736524
+    },
+    "slowest_step_norm": 1.7375069182047588e-05,
+    "median_step_norm": 4.368425274985615e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9445164280971795,
+   "W_grid_max": 0.9737776206139614,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34394321588801435,
+     "A": 2.167168606907763,
+     "M": 0.016143958549418306,
+     "c": 0.6349999999999972
+    },
+    "end_dist_to_target_norm": 0.8186559411636531,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 3207,
+    "slowest_state": {
+     "p": 0.34398335097046334,
+     "A": 2.164891153295147,
+     "M": 0.016879300037502352,
+     "c": 0.6349999999999972
+    },
+    "slowest_step_norm": 5.276012172630462e-05,
+    "median_step_norm": 5.310953729491906e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9999585618331877,
+   "W_grid_max": 0.9999996348339971,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0019950023003680872,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.999996715517846,
+   "W_grid_max": 0.9999999863206837,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -2.1961916309987117e-06,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 2.1961916309987117e-06,
+   "path_len": 48,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 6,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -2.1961916309987117e-06
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.36105554753412555,
+     "A": 1.9682118666719552,
+     "M": 0.016965383594851578,
+     "c": 0.6119187910561817
+    },
+    "end_dist_to_target_norm": 0.8190312102478332,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3610554347935528,
+     "A": 1.9682111558986672,
+     "M": 0.016965383853494352,
+     "c": 0.6119182885062274
+    },
+    "slowest_step_norm": 4.0979238876934626e-05,
+    "median_step_norm": 4.221398612421294e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.08
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  }
+ ]
+}

@@ -1,0 +1,1183 @@
+{
+ "schema": "frontier.eco.reachability/1",
+ "shard": "D",
+ "assumptions": {
+  "a_LW": [
+   0.00632,
+   "g cm^-3",
+   "FishBase Hyporhamphus LW used for the whole walk (body shape is not an evolving trait here)",
+   [
+    0.00632,
+    0.01354
+   ]
+  ],
+  "w_body_frac": [
+   0.1,
+   "1",
+   "body width / SL for span; assumption",
+   [
+    0.06,
+    0.14
+   ]
+  ],
+  "V_exit": [
+   10.0,
+   "m/s",
+   "water-exit speed, same for all phenotypes; Fish 1990 citing Shoulejkin gives ~10 m/s before taxiing (secondary)",
+   [
+    4.0,
+    10.0
+   ]
+  ],
+  "dV_taxi": [
+   8.0,
+   "m/s",
+   "max taxi speed gain at full asymmetry and full aerodynamic support; 10 -> 18 m/s midpoint of Fish 1990/Shoulejkin 16-20",
+   [
+    4.0,
+    10.0
+   ]
+  ],
+  "h0": [
+   0.05,
+   "m",
+   "height at water exit; assumption",
+   [
+    0.02,
+    0.3
+   ]
+  ],
+  "gam0_deg": [
+   15.0,
+   "deg",
+   "exit angle above horizontal; assumption",
+   [
+    5.0,
+    30.0
+   ]
+  ],
+  "polar": [
+   "P1_nominal",
+   "-",
+   "project polar (design assumption)",
+   [
+    "P1_nominal",
+    "P2_high_drag"
+   ]
+  ],
+  "e_swim": [
+   0.3,
+   "1",
+   "escape probability of a prey that does not leave the water, per attack; assumption",
+   [
+    0.1,
+    0.6
+   ]
+  ],
+  "U_burst": [
+   10.0,
+   "m/s",
+   "predator burst speed; inside FishBase Thunnus albacares burst rows 5.21-20.46 m/s",
+   [
+    5.21,
+    20.46
+   ]
+  ],
+  "t_burst": [
+   2.0,
+   "s",
+   "predator burst endurance; assumption",
+   [
+    1.0,
+    6.0
+   ]
+  ],
+  "U_sus": [
+   0.56,
+   "m/s",
+   "predator sustained speed; FishBase Coryphaena hippurus sustained row",
+   [
+    0.46,
+    0.65
+   ]
+  ],
+  "d_gap": [
+   3.0,
+   "m",
+   "H_chase: distance scale over which a lead beyond the predator's chase breaks pursuit; assumption",
+   [
+    1.0,
+    10.0
+   ]
+  ],
+  "d_vis": [
+   20.0,
+   "m",
+   "H_vis: distance scale over which an airborne excursion breaks visual tracking (inf = off); assumption",
+   [
+    5.0,
+    80.0
+   ]
+  ],
+  "beta_air": [
+   0.0,
+   "1/s",
+   "aerial predator hazard while airborne; assumption",
+   [
+    0.0,
+    0.2
+   ]
+  ],
+  "p_max": [
+   0.79,
+   "1",
+   "Davenport 1992 limit on pectoral length / SL",
+   [
+    0.79
+   ]
+  ],
+  "n_trim": [
+   1.0,
+   "1",
+   "CL rule: commanded lift at exit <= n_trim x weight (1.0 = level at exit); 1.5 lets fast fish climb (argon review)",
+   [
+    1.0,
+    1.5
+   ]
+  ],
+  "kappa_fin": [
+   0.0,
+   "1",
+   "aquatic cost of fins: survival/fecundity factor exp(-kappa_fin * fin wetted area / body wetted area); 0 = escape-only fitness; added after argon review",
+   [
+    0.0,
+    0.1,
+    0.3,
+    1.0
+   ]
+  ],
+  "k_wet": [
+   0.4,
+   "1",
+   "body wetted area = k_wet SL^2 (ASSUMPTION for a slender fusiform fish)",
+   [
+    0.4
+   ]
+  ]
+ },
+ "anchors": {
+  "ancestor": {
+   "label": "halfbeak-like ancestor (Hyporhamphus unifasciatus anchors)",
+   "p": 0.137,
+   "A": 2.0,
+   "M": null,
+   "c": 0.5,
+   "SL_cm": 14.0,
+   "provenance": {
+    "p": "daane2021 S1A median, n=12",
+    "SL_cm": "daane2021 S1A median SL, n=12",
+    "M": "FishBase LW a=0.00632 b=3 (SL) at SL 14.0 cm",
+    "A": "ASSUMPTION (rounded paddle-like fin; no measurement found) - swept 1.2-3.0",
+    "c": "ASSUMPTION from FishBase text 'caudal fin emarginate or slightly forked' -> near-symmetric 0.50 - swept 0.45-0.56"
+   }
+  },
+  "flying_halfbeak": {
+   "label": "flying halfbeak marker (Oxyporhamphus micropterus)",
+   "p": 0.337,
+   "SL_cm": 12.55,
+   "provenance": {
+    "p": "daane2021 S1A median, n=10"
+   }
+  },
+  "target": {
+   "label": "Exocoetus-like exocoetid target (two-winged)",
+   "p": 0.674,
+   "A": null,
+   "M": null,
+   "c": 0.631,
+   "SL_cm": 13.5,
+   "provenance": {
+    "p": "daane2021 S1A Exocoetus volitans median, n=19",
+    "SL_cm": "daane2021 S1A median SL, n=19",
+    "M": "FishBase LW a=0.01354 b=3 (SL) at SL 13.5 cm",
+    "c": "fish1990 pooled hypocaudal share 63.1%",
+    "A": "DERIVED: Fish 1990 Exocoetus wing area 0.046 M^0.741 x pectoral share 0.918, with L_fin = p SL(M; model a_LW); Fish 1990 reports individual AR 8.9-19.9 for Exocoetus under its own definition, which may differ"
+   }
+  }
+ },
+ "sources": {
+  "daane2021": {
+   "cite": "Daane JM et al. (2021) Modulation of bioelectric cues in the evolution of flying fishes. Curr Biol 31:5052-5061. doi:10.1016/j.cub.2021.08.054",
+   "read_level": "full Data S1A sheet parsed (project file data/fish-controls/daane2021_s1a_observations.csv)",
+   "used_for": "pectoral length / SL per group: halfbeak 0.137 (Hyporhamphus unifasciatus median), flying halfbeak 0.337 (Oxyporhamphus), Exocoetus volitans 0.674"
+  },
+  "fish1990": {
+   "cite": "Fish FE (1990) Wing design and scaling of flying fish with regard to flight performance. J Zool 221:391-403",
+   "read_level": "full text, tables read from page images (project file data/fish-controls/fish1990_tables.json)",
+   "used_for": "Exocoetus wing-area fit 0.046 M^0.741 m^2, pectoral share 91.8%, pooled hypocaudal share 63.1%; taxi speed 10 -> 16-20 m/s is Fish citing Shoulejkin (secondary)"
+  },
+  "davenport1992": {
+   "cite": "Davenport J (1992) J Mar Biol Assoc UK 72:25-39",
+   "read_level": "abstract, as returned by a fetch tool (project source record)",
+   "used_for": "hard limit p <= 0.79: pectoral length cannot exceed 78-79% SL without impairing swimming"
+  },
+  "lovejoy2004": {
+   "cite": "Lovejoy NR, Iranpour M, Collette BB (2004) Integr Comp Biol 44:366-377",
+   "read_level": "abstract (project source record)",
+   "used_for": "phylogenetic frame: flyingfishes nested within a paraphyletic grade of halfbeaks; justifies a halfbeak-like ancestor"
+  },
+  "fishbase": {
+   "cite": "FishBase species summary, length-weight and swimming-speed pages, fetched 2026-11-01 (engineering/ecology_sims/fishbase_parsed.json)",
+   "read_level": "parsed directly from fetched HTML; primary references behind each FishBase row NOT re-read",
+   "used_for": "LW coefficients (Hyporhamphus unifasciatus a=0.00632 SL b=3; Exocoetus volitans a=0.01354 SL b=3), predator sizes (Coryphaena hippurus common 100 cm TL; Thunnus albacares common 150 cm FL), predator speeds (T. albacares burst 5.21-20.46 m/s at 62-66 cm SL, sustained 0.46-0.65 m/s; C. hippurus sustained 0.56 m/s at 67 cm SL; FishBase ref 308), Hyporhamphus caudal 'emarginate or slightly forked'"
+  },
+  "oxenford1999": {
+   "cite": "Oxenford HA, Hunte W (1999) Feeding habits of the dolphinfish (Coryphaena hippurus) in the eastern Caribbean. Sci Mar 63:303-315. doi:10.3989/scimar.1999.63n3-4317",
+   "read_level": "abstract (Crossref)",
+   "used_for": "dolphinfish eat flyingfish and halfbeaks: names the predator class, no rate is taken from it"
+  },
+  "houle1992": {
+   "cite": "Houle D (1992) Comparing evolvability and variability of quantitative traits. Genetics 130:195-204. doi:10.1093/genetics/130.1.195",
+   "read_level": "abstract (Crossref)",
+   "used_for": "mean-standardised additive variance (CV_A) as the evolvability scale for the G matrix; the CV_A value used is an assumption, not taken from the paper"
+  },
+  "lande1979": {
+   "cite": "Lande R (1979) Quantitative genetic analysis of multivariate evolution, applied to brain:body size allometry. Evolution 33:402. doi:10.2307/2407630",
+   "read_level": "bibliographic record only (Crossref); the equation dz = G grad ln W is standard and not re-read here",
+   "used_for": "model form of the adaptive walk"
+  },
+  "weinreich2005": {
+   "cite": "Weinreich DM, Watson RA, Chao L (2005) Sign epistasis and genetic constraint on evolutionary trajectories. Evolution 59:1165. doi:10.1554/04-272",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "notion of accessible (monotone) mutational paths on a landscape; method form only"
+  },
+  "landeau1986": {
+   "cite": "Landeau L, Terborgh J (1986) Oddity and the 'confusion effect' in predation. Anim Behav 34:1372-1380. doi:10.1016/s0003-3472(86)80208-1",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "model form of a confusion effect; strength parameter is an assumption swept"
+  },
+  "treherne1981": {
+   "cite": "Treherne JE, Foster WA (1981) Group transmission of predator avoidance behaviour in a marine insect: the Trafalgar effect. Anim Behav 29:911-917. doi:10.1016/s0003-3472(81)80028-0",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "model form of alarm transmission through a group; speed/delay values are assumptions swept"
+  },
+  "couzin2002": {
+   "cite": "Couzin ID, Krause J, James R, Ruxton GD, Franks NR (2002) Collective memory and spatial sorting in animal groups. J Theor Biol 218:1-11. doi:10.1006/jtbi.2002.3065",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "zonal repulsion/orientation/attraction school model form; zone radii are assumptions"
+  },
+  "hamilton1971": {
+   "cite": "Hamilton WD (1971) Geometry for the selfish herd. J Theor Biol 31:295-311. doi:10.1016/0022-5193(71)90189-5",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "dilution / selfish-herd framing; no number taken"
+  },
+  "project_glide": {
+   "cite": "engineering/simulation/glide.py (glide-pointmass/1) with polar P1_nominal CL_max 1.2, CD0 0.06, e 0.8 (project DESIGN ASSUMPTIONS) and rho 1.225",
+   "read_level": "project code, reused unchanged",
+   "used_for": "airborne phase of every phenotype"
+  }
+ },
+ "runs": [
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.4805914731493306,
+   "W_target": 0.8932984643944881,
+   "W_grid_max": 0.9159245043828255,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0011948428401856726,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0011948428401856726,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0011948428401856726
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3415310823154076,
+     "A": 2.1694334015979484,
+     "M": 0.015230215933203938,
+     "c": 0.6349999999999977
+    },
+    "end_dist_to_target_norm": 0.8303152344489667,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 2274,
+    "slowest_state": {
+     "p": 0.3424640272134198,
+     "A": 2.1600325821080313,
+     "M": 0.017167400566199087,
+     "c": 0.6349999999999977
+    },
+    "slowest_step_norm": 9.941586821235801e-05,
+    "median_step_norm": 0.0001375208858376151
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.465823994150071,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9976792045287411,
+   "W_grid_max": 0.9995176547008885,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 48,
+   "path_neutral_steps": 29,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1454020716904088,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0011249568487765593,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.465823994150071,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.06",
+   "overrides": {
+    "w_body_frac": 0.06
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.4805914731493306,
+   "W_target": 0.9996462393705576,
+   "W_grid_max": 0.9999420665427409,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00012409217158415586,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00012409217158415586,
+   "path_len": 44,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 15,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.465823994150071,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.465823994150071,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00012409217158415586
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34105732005294886,
+     "A": 2.014806000803616,
+     "M": 0.01725933570674933,
+     "c": 0.6349144851197112
+    },
+    "end_dist_to_target_norm": 0.8146532953062261,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.34105728807927055,
+     "A": 2.0148048353495747,
+     "M": 0.01725933031491573,
+     "c": 0.6349144621255185
+    },
+    "slowest_step_norm": 1.3308643527037423e-05,
+    "median_step_norm": 3.425014702213828e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.465823994150071,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48865499884760144,
+   "W_target": 0.8938523375104576,
+   "W_grid_max": 0.9166683866138519,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0017763206668263143,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0017763206668263143,
+   "path_len": 109,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 48,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0017763206668263143
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.31187219182776055,
+     "A": 1.9942927936392854,
+     "M": 0.017270305385259473,
+     "c": 0.6349999999999976
+    },
+    "end_dist_to_target_norm": 0.856524468992041,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 5060,
+    "slowest_state": {
+     "p": 0.3118721918277605,
+     "A": 1.9942927936392854,
+     "M": 0.017270305385259473,
+     "c": 0.6349999999999976
+    },
+    "slowest_step_norm": 9.831110079183123e-15,
+    "median_step_norm": 9.904356744078517e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.946836721090417,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9977557807140623,
+   "W_grid_max": 0.999544653905858,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 57,
+   "path_neutral_steps": 38,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1555442019000934,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0029521990827492406,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.205
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.946836721090417,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "w_body=0.14",
+   "overrides": {
+    "w_body_frac": 0.14
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48865499884760144,
+   "W_target": 0.9996596876695483,
+   "W_grid_max": 0.9999457932504658,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.00010627214238312366,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.00010627214238312366,
+   "path_len": 53,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 19,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.78759730570909,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -0.00010627214238312366
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.3124895684109727,
+     "A": 1.993701371466923,
+     "M": 0.017223905855419278,
+     "c": 0.6347837941248752
+    },
+    "end_dist_to_target_norm": 0.8566796702174626,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3124895672889034,
+     "A": 1.9937013445297909,
+     "M": 0.017223903504648377,
+     "c": 0.6347837458234871
+    },
+    "slowest_step_norm": 4.738826893514833e-06,
+    "median_step_norm": 3.650433054575201e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.946836721090417,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9120366711372967,
+   "W_grid_max": 0.9377204695500738,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34257133429245545,
+     "A": 2.1650812658467866,
+     "M": 0.018077337290614805,
+     "c": 0.6349999999999976
+    },
+    "end_dist_to_target_norm": 0.7908392552855749,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 9587,
+    "slowest_state": {
+     "p": 0.34257133429245545,
+     "A": 2.1650812658467866,
+     "M": 0.018077337290614805,
+     "c": 0.6349999999999976
+    },
+    "slowest_step_norm": 9.873403140253298e-15,
+    "median_step_norm": 9.873403140253298e-15
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.99923126705452,
+   "W_grid_max": 0.9999197863715145,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.001995002300367421,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "n_trim=1.5",
+   "overrides": {
+    "n_trim": 1.5
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9999033995587273,
+   "W_grid_max": 0.9999928633326889,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -4.291883498008797e-05,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 4.291883498008797e-05,
+   "path_len": 46,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 12,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -4.291883498008797e-05
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.33123718424466586,
+     "A": 1.930929950389137,
+     "M": 0.01699354444425886,
+     "c": 0.6326607458132192
+    },
+    "end_dist_to_target_norm": 0.8447602580988841,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3312371965764043,
+     "A": 1.9309298079681856,
+     "M": 0.01699354425197495,
+     "c": 0.6326605294736524
+    },
+    "slowest_step_norm": 1.7375069182047588e-05,
+    "median_step_norm": 4.368425274985615e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "vis",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.9445164280971795,
+   "W_grid_max": 0.9737776206139614,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -0.0014668679744640478,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 0.0014668679744640478,
+   "path_len": 76,
+   "path_neutral_steps": 4,
+   "path_downhill_steps": 31,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.018171205928321398,
+     "c": 0.45
+    },
+    "to": {
+     "p": 0.137,
+     "A": 2.173183910870176,
+     "M": 0.022174048860973305,
+     "c": 0.45
+    },
+    "dW": -0.0014668679744640478
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.34394321588801435,
+     "A": 2.167168606907763,
+     "M": 0.016143958549418306,
+     "c": 0.6349999999999972
+    },
+    "end_dist_to_target_norm": 0.8186559411636531,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 3207,
+    "slowest_state": {
+     "p": 0.34398335097046334,
+     "A": 2.164891153295147,
+     "M": 0.016879300037502352,
+     "c": 0.6349999999999972
+    },
+    "slowest_step_norm": 5.276012172630462e-05,
+    "median_step_norm": 5.310953729491906e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.0
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "chase",
+   "W_ancestor": 0.30000000000000004,
+   "W_target": 0.9999585618331877,
+   "W_grid_max": 0.9999996348339971,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": 0.0,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": true,
+   "valley_depth_if_any": 0.0,
+   "path_len": 54,
+   "path_neutral_steps": 35,
+   "path_downhill_steps": 0,
+   "path_bottleneck_step": {
+    "trait": "p",
+    "from": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "to": {
+     "p": 0.13,
+     "A": 2.0,
+     "M": 0.01734208,
+     "c": 0.5
+    },
+    "dW": 0.0
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "end_dist_to_target_norm": 1.1505067297142175,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 0,
+    "slowest_state": {
+     "p": 0.137,
+     "A": 2.0,
+     "M": 0.017342080000000003,
+     "c": 0.5
+    },
+    "slowest_step_norm": 3.469446951953613e-16,
+    "median_step_norm": 3.469446951953613e-16
+   },
+   "straight_line": {
+    "max_drop": 0.0019950023003680872,
+    "monotone_nondecreasing": false,
+    "frac_steps_flat": 0.2
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  },
+  {
+   "setting": "CL_schedule",
+   "overrides": {
+    "cl_schedule": true
+   },
+   "hypothesis": "both",
+   "W_ancestor": 0.48443546987974173,
+   "W_target": 0.999996715517846,
+   "W_grid_max": 0.9999999863206837,
+   "grid_cells": 74880,
+   "cells_not_completed_flight": 0,
+   "maximin_worst_step_dW": -2.1961916309987117e-06,
+   "weakest_step_selection_coefficient": null,
+   "Ne_needed_for_selection_to_dominate_drift_at_weakest_step": null,
+   "strictly_improving_path_exists": false,
+   "path_only_via_neutral_steps": false,
+   "valley_depth_if_any": 2.1961916309987117e-06,
+   "path_len": 48,
+   "path_neutral_steps": 0,
+   "path_downhill_steps": 6,
+   "path_bottleneck_step": {
+    "trait": "M",
+    "from": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.027058657792353384,
+     "c": 0.631
+    },
+    "to": {
+     "p": 0.674,
+     "A": 8.706330357620244,
+     "M": 0.03301927248894628,
+     "c": 0.631
+    },
+    "dW": -2.1961916309987117e-06
+   },
+   "lande": {
+    "generations": 20000,
+    "cv_A": 0.05,
+    "end": {
+     "p": 0.36105554753412555,
+     "A": 1.9682118666719552,
+     "M": 0.016965383594851578,
+     "c": 0.6119187910561817
+    },
+    "end_dist_to_target_norm": 0.8190312102478332,
+    "first_gen_within_0.05_of_target": null,
+    "slowest_gen": 19999,
+    "slowest_state": {
+     "p": 0.3610554347935528,
+     "A": 1.9682111558986672,
+     "M": 0.016965383853494352,
+     "c": 0.6119182885062274
+    },
+    "slowest_step_norm": 4.0979238876934626e-05,
+    "median_step_norm": 4.221398612421294e-05
+   },
+   "straight_line": {
+    "max_drop": 0.0,
+    "monotone_nondecreasing": true,
+    "frac_steps_flat": 0.08
+   },
+   "ancestor": {
+    "p": 0.137,
+    "A": 2.0,
+    "M": 0.01734208,
+    "c": 0.5
+   },
+   "target": {
+    "p": 0.674,
+    "A": 8.706330357620244,
+    "M": 0.0333134775,
+    "c": 0.631
+   }
+  }
+ ],
+ "elapsed_s": 360.93300008773804
+}

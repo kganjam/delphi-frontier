@@ -106,7 +106,7 @@ def render_reach(d, P):
             ax1.set_title(f"generation {gi}\np={z['p']:.2f}  A={z['A']:.1f}  M={z['M']*1000:.0f} g  c={z['c']:.2f}", fontsize=9)
             ax2.plot(st["x"], st["h"], color="#e63946", lw=1, ls="--", label="Exocoetus-like target")
             ax2.plot(s_["x"], s_["h"], color="#264653", lw=2, label="current phenotype")
-            ax2.set(xlim=(0, 45), ylim=(0, 3.5), xlabel="horizontal distance (m)", ylabel="height (m)", title=f"airborne path: {s_['d']:.1f} m in {s_['t_air']:.2f} s (project point-mass glide)")
+            ax2.set(xlim=(0, 1.1 * max(max(x["x"].max() for x in ser), st["x"].max())), ylim=(0, 1.1 * max(max(x["h"].max() for x in ser), st["h"].max())), xlabel="horizontal distance (m)", ylabel="height (m)", title=f"airborne path: {s_['d']:.1f} m in {s_['t_air']:.2f} s (project point-mass glide)")
             ax2.legend(fontsize=8, loc="upper right")
             ax3.plot(np.arange(len(Wt)), Wt, color="#bbb"); ax3.plot(np.arange(gi + 1), Wt[: gi + 1], color="#264653", lw=2)
             ax3.set(xscale="symlog", ylim=(0.3, 1.02), xlabel="generation", ylabel="W (escape per attack)", title="selection-driven walk, H_vis + H_chase, escape-only fitness (kappa_fin = 0)")
@@ -171,7 +171,7 @@ def render_escape(d, P):
                         transform=ax.transAxes, color=col, fontsize=10)
             px = pred_x(t)
             ax.plot(px, -0.6, ">", color="#333", ms=16); ax.text(px, -1.0, f"predator {Ub if t < tb else Us:.2f} m/s", ha="center", fontsize=8)
-            ax.set(xlim=(-2, 42), ylim=(-1.2, 3.6), xlabel="horizontal distance (m)", ylabel="height (m)",
+            ax.set(xlim=(-2, 1.1 * max(s_["x"].max() for s_ in ser.values())), ylim=(-1.2, 1.15 * max(s_["h"].max() for s_ in ser.values())), xlabel="horizontal distance (m)", ylabel="height (m)",
                    title=f"t = {t:.2f} s | predator bursts {Ub} m/s for {tb} s then {Us} m/s (FishBase rows) | {SIM}")
             w.grab_frame()
         for _ in range(FPS * 2):

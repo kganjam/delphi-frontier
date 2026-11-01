@@ -1,0 +1,194 @@
+{
+ "id": "eco-reachability",
+ "title": "Reachability of an exocoetid-like glider from a halfbeak-like ancestor (model escape-fitness landscape)",
+ "scales": [
+  "ecological"
+ ],
+ "project": "flying-fish",
+ "evidence_kind": "simulated: model output under declared assumptions; not an observation of any fish, predator or lineage",
+ "model": {
+  "name": "claude-eco reachability/1: 4-trait landscape (pectoral length/SL, fin aspect ratio, mass, hypocaudal share) -> project point-mass glide -> escape probability; maximin accessible path, Lande walk, straight line",
+  "context": "Asks whether, under a stated escape-fitness function, a monotonically improving path exists from a halfbeak-like ancestor (Daane 2021 S1A Hyporhamphus proportions) to an Exocoetus-like exocoetid (Daane 2021 S1A, Fish 1990, FishBase). Airborne phase uses the project's own glide model. SIMULATION; reachability in a model is not evidence that the transition happened or how.",
+  "code": "engineering/ecology_sims/",
+  "reuses": "engineering/simulation/glide.py (project point-mass glide) unchanged"
+ },
+ "video": {
+  "file": "reachability.mp4",
+  "sha256": "ccccf9b223aaa22edfb8d4d2b79664d53da99e6840bcf31ba44d72dd3441d818",
+  "note": "1280x720 h264, rendered single-thread from results.json / saved states"
+ },
+ "poster": "poster.png",
+ "poster_sha256": "004f610e8207322c61270199c6bf8795eac22cc9c4b4618535306e2e29be273b",
+ "receipt": {
+  "file": "site/artifacts/simulations/eco-reachability/receipt.json",
+  "sha256": "e123e8f846258503bff016a2d73cd5ddb1c54d4cea55d27cea478fb5abcd9d93",
+  "command": "python3 -c 'from engineering.ecology_sims.reachability import merge; merge(...)'",
+  "exit_code": 0,
+  "seed": 20261101,
+  "started_utc": "2026-11-01T15:01:53Z",
+  "finished_utc": "2026-11-01T15:12:31Z",
+  "inputs_sha256": {
+   "engineering/ecology_sims/common.py": "73722069f59f46b729a9f3e6d1f60a044c3fc202d62b6896470cf744e1731722",
+   "engineering/ecology_sims/fishbase_parsed.json": "e830a18ba282aa941b604246bd3787e1c899cbc5dbdd0ac68ec6fb8f941a9d42",
+   "engineering/simulation/glide.py": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+   "engineering/simulation/controlled.py": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+   "data/fish-controls/daane2021_s1a_observations.csv": "292525b19130c42bec1622f06f129470ad5b0ec9d7f851e89f21de6ad09bc703",
+   "data/fish-controls/fish1990_tables.json": "5300c509abbbd8887fdbcde38c404cbfe24aa02597a2abc50f38c94ca6649b21",
+   "__script__": "77737b4cd4f0013545358c90a2fabf6e0fceb044ce8c0eb89df7cc1c6aad9246"
+  }
+ },
+ "results": {
+  "file": "site/artifacts/simulations/eco-reachability/results.json",
+  "sha256": "127c1e673fd88c26e225cd55fdf08e4f3106d4d37c71a4429daa6e731c5cdfa3"
+ },
+ "sensitivity": {
+  "file": "site/artifacts/simulations/eco-reachability/sensitivity.json"
+ },
+ "sources": [
+  {
+   "id": "daane2021",
+   "cite": "Daane JM et al. (2021) Modulation of bioelectric cues in the evolution of flying fishes. Curr Biol 31:5052-5061. doi:10.1016/j.cub.2021.08.054",
+   "read_level": "full Data S1A sheet parsed (project file data/fish-controls/daane2021_s1a_observations.csv)",
+   "used_for": "pectoral length / SL per group: halfbeak 0.137 (Hyporhamphus unifasciatus median), flying halfbeak 0.337 (Oxyporhamphus), Exocoetus volitans 0.674"
+  },
+  {
+   "id": "fish1990",
+   "cite": "Fish FE (1990) Wing design and scaling of flying fish with regard to flight performance. J Zool 221:391-403",
+   "read_level": "full text, tables read from page images (project file data/fish-controls/fish1990_tables.json)",
+   "used_for": "Exocoetus wing-area fit 0.046 M^0.741 m^2, pectoral share 91.8%, pooled hypocaudal share 63.1%; taxi speed 10 -> 16-20 m/s is Fish citing Shoulejkin (secondary)"
+  },
+  {
+   "id": "davenport1992",
+   "cite": "Davenport J (1992) J Mar Biol Assoc UK 72:25-39",
+   "read_level": "abstract, as returned by a fetch tool (project source record)",
+   "used_for": "hard limit p <= 0.79: pectoral length cannot exceed 78-79% SL without impairing swimming"
+  },
+  {
+   "id": "lovejoy2004",
+   "cite": "Lovejoy NR, Iranpour M, Collette BB (2004) Integr Comp Biol 44:366-377",
+   "read_level": "abstract (project source record)",
+   "used_for": "phylogenetic frame: flyingfishes nested within a paraphyletic grade of halfbeaks; justifies a halfbeak-like ancestor"
+  },
+  {
+   "id": "fishbase",
+   "cite": "FishBase species summary, length-weight and swimming-speed pages, fetched 2026-11-01 (engineering/ecology_sims/fishbase_parsed.json)",
+   "read_level": "parsed directly from fetched HTML; primary references behind each FishBase row NOT re-read",
+   "used_for": "LW coefficients (Hyporhamphus unifasciatus a=0.00632 SL b=3; Exocoetus volitans a=0.01354 SL b=3), predator sizes (Coryphaena hippurus common 100 cm TL; Thunnus albacares common 150 cm FL), predator speeds (T. albacares burst 5.21-20.46 m/s at 62-66 cm SL, sustained 0.46-0.65 m/s; C. hippurus sustained 0.56 m/s at 67 cm SL; FishBase ref 308), Hyporhamphus caudal 'emarginate or slightly forked'"
+  },
+  {
+   "id": "houle1992",
+   "cite": "Houle D (1992) Comparing evolvability and variability of quantitative traits. Genetics 130:195-204. doi:10.1093/genetics/130.1.195",
+   "read_level": "abstract (Crossref)",
+   "used_for": "mean-standardised additive variance (CV_A) as the evolvability scale for the G matrix; the CV_A value used is an assumption, not taken from the paper"
+  },
+  {
+   "id": "lande1979",
+   "cite": "Lande R (1979) Quantitative genetic analysis of multivariate evolution, applied to brain:body size allometry. Evolution 33:402. doi:10.2307/2407630",
+   "read_level": "bibliographic record only (Crossref); the equation dz = G grad ln W is standard and not re-read here",
+   "used_for": "model form of the adaptive walk"
+  },
+  {
+   "id": "weinreich2005",
+   "cite": "Weinreich DM, Watson RA, Chao L (2005) Sign epistasis and genetic constraint on evolutionary trajectories. Evolution 59:1165. doi:10.1554/04-272",
+   "read_level": "bibliographic record only (Crossref)",
+   "used_for": "notion of accessible (monotone) mutational paths on a landscape; method form only"
+  },
+  {
+   "id": "project_glide",
+   "cite": "engineering/simulation/glide.py (glide-pointmass/1) with polar P1_nominal CL_max 1.2, CD0 0.06, e 0.8 (project DESIGN ASSUMPTIONS) and rho 1.225",
+   "read_level": "project code, reused unchanged",
+   "used_for": "airborne phase of every phenotype"
+  }
+ ],
+ "review": {
+  "model": "gemini-4-argon (Google), design critique 2026-11-01T14:39Z, full code + summary sent",
+  "changed_in_response": [
+   "added an aquatic fin cost (kappa_fin, swept 0-1; default 0 = escape-only fitness, stated)",
+   "added a zero-lift (ballistic) control for every phenotype",
+   "added swim_sync control (alarm cascade without gliding) to separate gliding from social alarm",
+   "predator now pursues the glider's ground track instead of its landing point (no foreknowledge); d_gap term removed from the ABM tracking rule",
+   "faster in-water flee (5 and 10 m/s) as sensitivity cases",
+   "correlated-G (p-c pleiotropy +-0.5) and CV_A 0.02/0.10 Lande variants",
+   "CL rule n_trim 1.5 sweep",
+   "weakest-step selection coefficient reported with the Ne needed for selection to beat drift"
+  ],
+  "not_changed": [
+   "ground effect is still omitted (stated as a limitation: it would lengthen glides of low fliers)",
+   "body-shape (length-weight a) is not an evolving trait; both FishBase values are run",
+   "fitness has no fecundity/foraging term beyond the fin-cost factor"
+  ]
+ },
+ "couplings": [],
+ "native": true,
+ "author": "claude-eco (Claude Opus 5.5), 2026-11-01",
+ "time": {
+  "units": "generations of a Lande walk (model time, not years)",
+  "note": "video: the H_vis + H_chase walk sampled on a log scale of generations; each frame re-flies the current phenotype"
+ },
+ "post_analysis": {
+  "file": "site/artifacts/simulations/eco-reachability/reach_post.json",
+  "sha256": "00c76914fc88a06da2e849f2b10cdc4f4864d54e351a6aea727f4357b439a1d4",
+  "receipt": "site/artifacts/simulations/eco-reachability/receipt_post.json"
+ },
+ "numerical_checks": [
+  {
+   "name": "glide timestep halving over the whole landscape",
+   "result": "{\"dt\": 0.004, \"dt_half\": 0.002, \"cells\": 74880, \"max_rel_range_change\": 1.2437732505022507e-05, \"p99_rel_range_change\": 1.0056759577966199e-05}"
+  },
+  {
+   "name": "flight completion",
+   "result": "0 of 74880 default cells did not complete a forward water-to-water flight (they are scored as staying in the water)"
+  },
+  {
+   "name": "zero-lift control",
+   "result": "{\"ancestor_d_lift\": 6.116357194999741, \"ancestor_d_no_lift\": 5.240336926967076, \"target_d_lift\": 37.67499731822978, \"target_d_no_lift\": 12.932509274000795, \"note\": \"same V0 (taxi gain still computed from phi); lift switched off in the airborne phase\"}"
+  }
+ ],
+ "findings": [
+  "ANSWER (default physics, H_vis + H_chase): changing all four traits together along the straight line ancestor -> target, W never decreases (max drop 0.0e+00 over 200 steps) -- a monotonically improving path EXISTS when traits co-vary. With one trait changing at a time there is no strictly improving path: the least-bad route dips by 1.2e-04.",
+  "Default physics, H_vis + H_chase: W rises from 0.484 (ancestor) to 0.9997 (target). The best single-trait path has worst step dW = -1.21e-04: no strictly improving path; every path crosses a dip of at least 1.21e-04. Bottleneck step: M 0.0271 -> 0.033 (dW -1.21e-04).",
+  "H_chase only (escape requires out-running the predator's chase): the ancestor's 0.137 pectoral ratio gives a leap shorter than the chase, W = e_swim exactly, and the landscape is flat around it: worst step 0.00e+00; the Lande walk does not move (ends at p = 0.137). Under this hypothesis the first steps are neutral and need drift or another benefit.",
+  "H_vis only: worst step -1.47e-03; bottleneck M 0.0182 -> 0.0222 (dW -1.47e-03).",
+  "Selection-driven (Lande) walk, default, H_vis + H_chase, 20000 generations at CV_A 0.05: ends at p = 0.312, A = 1.87, M = 17.0 g, c = 0.635; normalised distance to the Exocoetus-like target 0.87. The walk does not head to the target's aspect ratio or mass under this fitness.",
+  "Across all 90 sensitivity rows: strictly improving path in 1, neutral-only in 24, a required dip in 65; the Lande walk came within 0.05 (normalised) of the target in 0.",
+  "Where the dip is (reach_post, default landscape): vis: to the target cell worst step -1.5e-03 (M), mass free -7.9e-04 (A), mass frozen -1.3e-03 (p); both: to the target cell worst step -1.2e-04 (M), mass free -2.0e-05 (M), mass frozen -5.7e-05 (p). So the dip is not only the mass increase: escape peaks once the fins carry the full weight at exit (phi = 1, p near 0.3) and falls slightly as p and A rise further toward the exocoetid values.",
+  "H_chase plateau: 28912 grid cells connected to the ancestor have W exactly equal to e_swim (up to p = 0.79); a path to the target exists with no downhill step but begins with neutral steps only -- under H_chase the first steps need drift, not selection.",
+  "BOTTLENECK of the selection-driven walk: across all 30 H_vis+H_chase rows the walk ends at p = 0.22-0.73 with broad fins (A about 2), never within 0.05 of the target. The stall is where the fins first carry the full weight at water exit; it is robust to the CL control rule (scheduled-CL variant ends at p = 0.36) but not to exit speed (V_exit = 4 m/s: p = 0.73).",
+  "Straight-line (traits co-varying) check across the 78 sensitivity rows that ran it: monotone non-decreasing in 54; largest single drop among the rest 6.9e-03. Required single-trait dips, where present, range 5.4e-07 to 5.3e-03 in W per attack; whether drift or a correlated response would cross them depends on Ne and G, which this model does not estimate. The Ne needed for selection to dominate at the weakest positive step is given per row in sensitivity.json.",
+  "Zero-lift control: ancestor airborne 6.12 m with lift vs 5.24 m ballistic; target 37.7 m vs 12.9 m."
+ ],
+ "parameter_unknowns": [
+  "a_LW = 0.00632 g cm^-3: FishBase Hyporhamphus LW used for the whole walk (body shape is not an evolving trait here)",
+  "w_body_frac = 0.1 1: body width / SL for span; assumption",
+  "V_exit = 10.0 m/s: water-exit speed, same for all phenotypes; Fish 1990 citing Shoulejkin gives ~10 m/s before taxiing (secondary)",
+  "dV_taxi = 8.0 m/s: max taxi speed gain at full asymmetry and full aerodynamic support; 10 -> 18 m/s midpoint of Fish 1990/Shoulejkin 16-20",
+  "h0 = 0.05 m: height at water exit; assumption",
+  "gam0_deg = 15.0 deg: exit angle above horizontal; assumption",
+  "polar = P1_nominal -: project polar (design assumption)",
+  "e_swim = 0.3 1: escape probability of a prey that does not leave the water, per attack; assumption",
+  "U_burst = 10.0 m/s: predator burst speed; inside FishBase Thunnus albacares burst rows 5.21-20.46 m/s",
+  "t_burst = 2.0 s: predator burst endurance; assumption",
+  "U_sus = 0.56 m/s: predator sustained speed; FishBase Coryphaena hippurus sustained row",
+  "d_gap = 3.0 m: H_chase: distance scale over which a lead beyond the predator's chase breaks pursuit; assumption",
+  "d_vis = 20.0 m: H_vis: distance scale over which an airborne excursion breaks visual tracking (inf = off); assumption",
+  "beta_air = 0.0 1/s: aerial predator hazard while airborne; assumption",
+  "p_max = 0.79 1: Davenport 1992 limit on pectoral length / SL",
+  "n_trim = 1.0 1: CL rule: commanded lift at exit <= n_trim x weight (1.0 = level at exit); 1.5 lets fast fish climb (argon review)",
+  "kappa_fin = 0.0 1: aquatic cost of fins: survival/fecundity factor exp(-kappa_fin * fin wetted area / body wetted area); 0 = escape-only fitness; added after argon review",
+  "k_wet = 0.4 1: body wetted area = k_wet SL^2 (ASSUMPTION for a slender fusiform fish)"
+ ],
+ "does_not_establish": [
+  "that flying fish evolved from a halfbeak-like ancestor along this or any path (phylogeny is from Lovejoy 2004; the path is a model)",
+  "that the walk's stall near p 0.3 explains flying halfbeaks (Oxyporhamphus p = 0.337 in Daane S1A) -- a numerical coincidence in a model, not evidence",
+  "that predator escape was the selective agent",
+  "real fitness: no fecundity, foraging or development term; fin cost only as a swept factor",
+  "the evolution of aspect ratio or mass: the fitness used does not favour the target's A or M",
+  "anything about developmental feasibility (that is the developmental scale)",
+  "aerodynamics beyond a point-mass glide with a design-assumed polar and no ground effect"
+ ],
+ "open_questions": [
+  "Which ecological term (ground effect, re-launch/taxi bouts, aerial predators, swimming cost) would make the exocoetid A and M uphill?",
+  "Is the H_chase plateau real: do predators keep tracking a short leap?"
+ ],
+ "caption": "Reachability on a MODEL escape-fitness landscape. SIMULATION, not an observation; a reachable model path is not evidence the transition happened."
+}
