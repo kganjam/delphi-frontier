@@ -1,0 +1,187 @@
+{
+ "mesh": [
+  {
+   "variant": "keys",
+   "mode": "interactive",
+   "orbit_changed": true,
+   "reset_equals_initial_hash": true,
+   "errs": []
+  },
+  {
+   "variant": "drag",
+   "mode": "interactive",
+   "orbit_changed": true,
+   "reset_equals_initial_hash": false,
+   "errs": []
+  }
+ ],
+ "studio_region": {
+  "assurance": true,
+  "ctrls": [
+   "SELECT:annkind",
+   "SELECT:sw-model",
+   "INPUT:sw-sodium_scale",
+   "INPUT:sw-gap_mS_cm2",
+   "INPUT:sw-duration_ms",
+   "INPUT:sw-dt_ms",
+   "SELECT:dimension",
+   "INPUT:member_index",
+   "SELECT:evidence_basis",
+   "SELECT:kind",
+   "SELECT:anchor",
+   "SELECT:reply"
+  ],
+  "nodes": 74,
+  "h2": [
+   "Subsystems",
+   "Organism scale",
+   "Comments and proposed edits for this sub",
+   "Run a bounded preview",
+   "Related panels and their status",
+   "Regenerating candidate geometry",
+   "Project-wide: design review, contributio",
+   "Design review: challenges to this design",
+   "Contribute (optional)",
+   "Project record draft",
+   "Design assurance: where this design is s",
+   "Select a part or scale"
+  ]
+ },
+ "engineering_params": {
+  "section_error": "TimeoutError('Locator.select_option: Timeout 30000ms exceeded.\\nCall log:\\n  - waiting for locator(\"main select\").first\\n    - locator resolved to <select id=\"f-four_winged\" name=\"four_winged\">\u2026</select>\\n  - attempting select option action\\n    2 \u00d7 waiting fo"
+ },
+ "ecology": {
+  "t0": "t = 1.065 s",
+  "range": 1,
+  "t_after_scrub": "t = 1.065 s",
+  "after_case_click": "ACTUAL SAVED STATES from the run file\nquasi-steady VLM forces + assumed drag, not CFD\nengineering candidate, not a validated flying fish\nPassive glide\nFeedback glide\nEscape, with neighbours\nEscape, no",
+  "fish_buttons": 16,
+  "fish_detail": [
+   "fish-00",
+   "fish-01",
+   "fish-02"
+  ],
+  "banner": "Run ended at t = 0.852 s: effective fin alpha outside reused VLM domain (did not complete the planned duration) \u00b7 False receipt flag(s), verbatim from the files",
+  "errs": []
+ },
+ "autocomplete": {
+  "expanded": "true",
+  "role": "combobox",
+  "options": [],
+  "status": "No suggestions. Engine: lexical (index).",
+  "active_descendant": null,
+  "after_escape_expanded": "false",
+  "errs": []
+ },
+ "history": {
+  "nodes": 44,
+  "tables": 2,
+  "sel_text": "Select a node or an edge for its manifest.",
+  "detail_changed": false,
+  "errs": []
+ },
+ "graphs": {
+  "claim_graph_nodes": 21,
+  "claim_graph_zoom_controls": 0,
+  "ambiguous_choices": 2,
+  "pinned": {
+   "nodes": 1,
+   "edges": 0,
+   "zoom": 3,
+   "trunc_text": false,
+   "legend": true
+  },
+  "zoom_in": [
+   "translate(0 0) scale(1)",
+   "translate(0 0) scale(1.25)"
+  ],
+  "zoom_out": "translate(0 0) scale(1)",
+  "zoom_reset": "translate(0 0) scale(1)"
+ },
+ "demo": {
+  "videos": [
+   {
+    "src": "/artifacts/demo-video/frontier-60s.mp4",
+    "poster": "artifacts/demo-video/frontier-60s-poster.jpg",
+    "tracks": [
+     "artifacts/demo-video/frontier-60s.vtt"
+    ],
+    "controls": true
+   }
+  ],
+  "links": [
+   "artifacts/demo-video/frontier-60s.mp4",
+   "artifacts/demo-video/frontier-60s.vtt",
+   "artifacts/demo-video/frontier-60s.txt",
+   "artifacts/demo-video/manifest.json",
+   "artifacts/demo-video/frontier-120s.mp4",
+   "artifacts/demo-video/frontier-120s.vtt",
+   "artifacts/demo-video/frontier-120s.txt",
+   "artifacts/demo-video/manifest.json"
+  ],
+  "heads": [
+   [
+    "artifacts/demo-video/frontier-60s.txt",
+    200,
+    "786",
+    "text/plain; charset=utf-8"
+   ],
+   [
+    "/artifacts/demo-video/frontier-60s.mp4",
+    200,
+    "4341061",
+    "video/mp4"
+   ],
+   [
+    "artifacts/demo-video/frontier-120s.vtt",
+    200,
+    "2581",
+    "text/vtt; charset=utf-8"
+   ],
+   [
+    "artifacts/demo-video/frontier-60s-poster.jpg",
+    200,
+    "173059",
+    "image/jpeg"
+   ],
+   [
+    "artifacts/demo-video/frontier-60s.mp4",
+    200,
+    "4341061",
+    "video/mp4"
+   ],
+   [
+    "artifacts/demo-video/frontier-120s.txt",
+    200,
+    null,
+    "text/plain; charset=utf-8"
+   ],
+   [
+    "artifacts/demo-video/frontier-120s.mp4",
+    200,
+    "7331675",
+    "video/mp4"
+   ],
+   [
+    "artifacts/demo-video/frontier-60s.vtt",
+    200,
+    "1187",
+    "text/vtt; charset=utf-8"
+   ],
+   [
+    "artifacts/demo-video/manifest.json",
+    200,
+    null,
+    "application/json"
+   ]
+  ],
+  "errs": []
+ },
+ "phone": {
+  "overflow": false,
+  "about_menu_links": 6,
+  "about_menu_visible": true,
+  "mesh_mode": "pending",
+  "errs": []
+ }
+}
