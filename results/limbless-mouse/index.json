@@ -58,8 +58,8 @@
       "scale": "pattern",
       "kind": "simulation (reaction–diffusion)",
       "question": "If a truncated bud is a smaller field, how small does the field have to get before it patterns no complete skeletal element at all?",
-      "summary": "A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shaped domain, with its own linear-stability analysis as an internal control. Element counts come from a pre-declared objective criterion, not from looking at the pictures, and the spread across random seeds is reported because Turing patterns are seed-dependent.",
-      "code": "results/limbless-mouse/code/digit_turing.py",
+      "summary": "A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shaped domain with a proximodistal FGF gradient, with its own linear-stability analysis as an internal control. Element counts come from a pre-declared objective criterion, not from looking at the pictures, and the spread across random seeds is reported because Turing patterns are seed-dependent. The strongest result is a unification: in this model every route to zero skeletal elements is the same geometric condition — the Turing-permissive region has to be at least about one wavelength across. Shrinking the bud shrinks that region in space; de-tuning the network shrinks it in parameter space, and the FGF gradient maps parameter space onto the proximodistal axis, so it shrinks in space too. Eleven of its 20 parameters are sourced, and they are sourced from a catshark fin rather than a mouse.",
+      "code": "results/limbless-mouse/code/digit_turing.py (--figures redraws from digit-turing-results-cache.json without re-running the 179 simulations)",
       "data": "results/limbless-mouse/digit-turing.json",
       "figures": [
         {
@@ -70,12 +70,12 @@
         {
           "file": "digit-turing-series.png",
           "alt": "A strip of simulated patterns across the parameter sweep, from several elements down to none, each labelled with its element count",
-          "caption": "Simulation. The same model across the sweep, from several elements down to none."
+          "caption": "Simulation. One network, seven settings, three different knobs, all panels on one spatial scale. Mean element count over the seeds run at each setting falls 6.7 → 4.7 → 3.0 → 2.3 → 1.0 → 0 → 0, from more elements than wild type through reduced and single-element to none. The large number on each panel is the one seed drawn; the mean and its spread are printed beside it, because a Turing pattern is seed-dependent and the single panel is not the measurement."
         },
         {
           "file": "digit-turing-domain.png",
           "alt": "Simulated element count against domain size, with the critical domain size marked",
-          "caption": "Simulation. Element count against domain size, in units of the pattern's own wavelength."
+          "caption": "Simulation. Element count against the paddle's anteroposterior width, in units of the pattern's own measured wavelength. The field stops holding a complete element somewhere between about half a wavelength and about one and a quarter: 0.94 ± 0.10 under the counting rule used, 0.44 ± 0.05 under the rule declared first. The range is the honest answer, not either end of it."
         },
         {
           "file": "digit-turing.mp4",

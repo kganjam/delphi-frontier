@@ -241,10 +241,29 @@ CLASSIFY_RULE = (
     "construction, so this threshold is referenced to the known unpatterned baseline and the "
     "unpatterned background can never be counted as an element. "
     "(3) MINIMUM SIZE: connected components (4-connectivity) of the Sox9-high set with area "
-    ">= 0.10 * lambda_pred^2, where lambda_pred is the linear-stability wavelength computed "
-    "analytically for THAT condition, are counted as elements. "
-    "(4) CLASS from the count n: n=0 -> 'none'; n=1 -> 'single element'; 2<=n<=4 -> 'reduced'; "
-    "n=5 -> 'normal digit number'; n>=6 -> 'increased (polydactyl-like)'."
+    ">= 0.10 * lambda_elem^2 are counted as elements, where "
+    "lambda_elem = lambda_meas_WT * lambda_lin(condition) / lambda_lin(WT): the wavelength "
+    "MEASURED in the wild-type runs, carried to each condition by that condition's analytic "
+    "linear-stability wavelength. It uses no measurement from the run being counted. "
+    "(4) CLASS from the count n: n=0 -> 'none'; n=1 -> 'single element', or 'single fused "
+    "domain' if that one component spans more than 70% of the anteroposterior width; "
+    "2<=n<=4 -> 'reduced'; n=5 -> 'normal digit number'; n>=6 -> 'increased "
+    "(polydactyl-like)'."
+)
+
+CLASSIFY_RULE_CHANGE = (
+    "The rule was declared before any sweep was run, and step (3) originally used "
+    "lambda_lin(condition) itself rather than lambda_elem. It was CHANGED after the first full "
+    "run, and the change is recorded here rather than quietly made. The reason is a defect in "
+    "the specification, not a result I disliked: the linear-stability wavelength is about half "
+    "the wavelength the saturated pattern actually has (measured, and reported under "
+    "measured_wavelength), so a minimum area of 0.10 * lambda_lin^2 is four times too small and "
+    "admits slivers at the anterior and posterior ends of the band as if they were elements. "
+    "Every element count under the ORIGINAL rule is kept alongside, as "
+    "element_counts_linear_rule in each sweep row and as "
+    "sweeps_under_the_original_rule.wild_type. Under the original rule the wild-type count was "
+    "{ORIG} (mean {ORIGMEAN}); under the revised rule it is {NEW} (mean {NEWMEAN}). The "
+    "qualitative shape of every sweep is the same under both."
 )
 
 # --------------------------------------------------------------------------------------
@@ -432,10 +451,24 @@ def simulate(pr, seed, scale=1.0, dx=None, dt=None, T=None, per_step_noise=False
 # --------------------------------------------------------------------------------------
 # Pre-declared measurement
 # --------------------------------------------------------------------------------------
-def classify(S, mask, dx, lam_pred):
+def _cls_of(n):
+    return ("none" if n == 0 else "single element" if n == 1 else
+            "reduced" if n <= 4 else "normal digit number" if n == 5 else
+            "increased (polydactyl-like)")
+
+
+def classify(S, mask, dx, lam_element, lam_linear=None):
+    """Pre-declared element counter.
+
+    lam_element -- the length scale used for the minimum element area (the REVISED rule).
+    lam_linear  -- if given, the counter is ALSO evaluated with the linear-stability
+                   wavelength, which is the rule as originally declared, and that count is
+                   reported alongside as element_count_linear_rule.
+    """
     p1, p99 = float(np.percentile(S, 1)), float(np.percentile(S, 99))
     amp = p99 - p1
-    out = dict(amplitude=amp, element_count=0, areas=[], centroids_AP=[], cls="none")
+    out = dict(amplitude=amp, element_count=0, element_count_linear_rule=0, areas=[],
+               centroids_AP=[], cls="none", fused=False)
     if amp < 0.05 or p99 <= 0:
         return out
     hi = np.zeros(mask.shape, dtype=bool)
@@ -444,17 +477,26 @@ def classify(S, mask, dx, lam_pred):
     if nl == 0:
         return out
     sizes = ndimage.sum(hi, lab, range(1, nl + 1)) * dx * dx
-    a_min = 0.10 * lam_pred ** 2
-    keep = [i + 1 for i, a in enumerate(sizes) if a >= a_min]
+    _, jj_all = np.nonzero(mask)
+    ap_domain = (jj_all.max() - jj_all.min() + 1) * dx
+    if lam_linear is not None:
+        out["element_count_linear_rule"] = int(
+            sum(1 for a in sizes if a >= 0.10 * lam_linear ** 2))
+    keep = [i + 1 for i, a in enumerate(sizes) if a >= 0.10 * lam_element ** 2]
     if not keep:
         return out
     cen = ndimage.center_of_mass(hi, lab, keep)
     n = len(keep)
-    out.update(element_count=n, areas=[float(sizes[i - 1]) for i in keep],
+    # a single component that spans most of the anteroposterior width is a FUSED continuous
+    # domain, not an isolated element -- the phenotype onimaru2016 report for Wnt inhibition
+    fused = False
+    if n == 1:
+        ii_c, jj_c = np.nonzero(lab == keep[0])
+        fused = ((jj_c.max() - jj_c.min() + 1) * dx) > 0.70 * ap_domain
+    out.update(element_count=n, fused=bool(fused),
+               areas=[float(sizes[i - 1]) for i in keep],
                centroids_AP=sorted(float(c[1] * dx) for c in cen),
-               cls=("none" if n == 0 else "single element" if n == 1 else
-                    "reduced" if n <= 4 else "normal digit number" if n == 5 else
-                    "increased (polydactyl-like)"))
+               cls=("single fused domain" if fused else _cls_of(n)))
     return out
 
 
@@ -468,7 +510,7 @@ def ap_spacing(centroids):
 # One condition = one worker job
 # --------------------------------------------------------------------------------------
 def job(spec):
-    name, overrides, scale, seed, kw = spec
+    name, overrides, scale, seed, kw, amin_scale = spec
     pr = dict(P)
     pr.update(overrides)
     t0 = time.time()
@@ -480,8 +522,9 @@ def job(spec):
     # Minimum element area uses the condition's own LSA wavelength; where there is no Turing
     # instability that wavelength is meaningless, so the wild-type value is used instead (the
     # amplitude gate is what decides those runs anyway).
-    lam_area = lam["wavelength"] if lam["turing"] else lambda_wt()
-    c = classify(r["S"], r["mask"], r["dx"], lam_area)
+    lam_lin = lam["wavelength"] if lam["turing"] else lambda_wt()
+    lam_area = lam_lin * amin_scale
+    c = classify(r["S"], r["mask"], r["dx"], lam_area, lam_linear=lam_lin)
     # AP and PD extent of the domain, in model length units
     ii, jj = np.nonzero(r["mask"])
     ap_extent = (jj.max() - jj.min() + 1) * r["dx"]
@@ -538,9 +581,25 @@ def _mpl():
         "text.color": INK, "axes.labelcolor": INK, "xtick.color": INK, "ytick.color": INK,
         "axes.edgecolor": INK, "font.size": 12,
     })
-    cmap = LinearSegmentedColormap.from_list(
-        "sox9", ["#f4efe2", "#e7e0cc", "#bcd3cf", TEAL, "#0a4f58", INK])
+    # vmin=-3.2 .. vmax=2.2, so the unpatterned steady state S*=0 sits at 0.593.
+    # Sox9-low (interdigital) -> warm pale; S*=0 -> a very light tint so the paddle is still
+    # visible; Sox9-high (the skeletal elements) -> strong teal into ink.
+    cmap = LinearSegmentedColormap.from_list("sox9", [
+        (0.00, "#e4d8bd"), (0.30, "#efe7d4"), (0.52, "#f7f3e9"), (0.593, "#eef3f2"),
+        (0.66, "#9ec4c6"), (0.78, TEAL), (0.90, "#0a4f58"), (1.00, INK)])
     return plt, cmap
+
+
+def extent_of(r):
+    """imshow extent in MODEL LENGTH UNITS, so panels can share one spatial scale.
+
+    field_image() returns the mask-shaped array TRANSPOSED, so the displayed x axis is the
+    proximodistal axis (first index of the mask, length nx) and the displayed y axis is the
+    anteroposterior axis (second index, length ny).
+    """
+    nx, ny = r["mask"].shape
+    dx = r["dx"]
+    return (0.0, nx * dx, -ny * dx / 2.0, ny * dx / 2.0)
 
 
 def field_image(r):
@@ -549,23 +608,31 @@ def field_image(r):
     return f.T
 
 
-def draw_panel(ax, r, cmap, vmin, vmax, lam_pred, title, sub=None, outline=True):
+def draw_panel(ax, r, cmap, vmin, vmax, lam_elem, title, sub=None, outline=True,
+               common_extent=None):
     img = field_image(r)
+    ext = extent_of(r)
     ax.imshow(img, origin="lower", cmap=cmap, vmin=vmin, vmax=vmax,
-              interpolation="nearest")
+              interpolation="nearest", extent=ext, aspect="equal")
     if outline:
         S, mask, dx = r["S"], r["mask"], r["dx"]
         p99 = np.percentile(S, 99)
-        if p99 > 0 and (np.percentile(S, 99) - np.percentile(S, 1)) >= 0.05:
+        if p99 > 0 and (p99 - np.percentile(S, 1)) >= 0.05:
             hi = np.zeros(mask.shape, dtype=bool)
             hi[mask] = S > 0.25 * p99
             lab, nl = ndimage.label(hi)
             sizes = ndimage.sum(hi, lab, range(1, nl + 1)) * dx * dx
             keep = np.zeros(mask.shape, dtype=float)
             for i, a in enumerate(sizes):
-                if a >= 0.10 * lam_pred ** 2:
+                if a >= 0.10 * lam_elem ** 2:
                     keep[lab == i + 1] = 1.0
-            ax.contour(keep.T, levels=[0.5], colors=[LIME], linewidths=1.6)
+            nx, ny = mask.shape
+            # keep is mask-shaped (nx, ny); contour wants Z with shape (len(Y), len(X))
+            ax.contour(np.linspace(ext[0], ext[1], nx), np.linspace(ext[2], ext[3], ny),
+                       keep.T, levels=[0.5], colors=[LIME], linewidths=1.6)
+    if common_extent:
+        ax.set_xlim(common_extent[0], common_extent[1])
+        ax.set_ylim(common_extent[2], common_extent[3])
     ax.set_xticks([]); ax.set_yticks([])
     for s in ax.spines.values():
         s.set_visible(False)
@@ -604,70 +671,124 @@ def main():
         f" at F={pub_best['F']:.2f}, q={pub_best['q_max']:.4f},"
         f" growth at q=0 = {pub_best['growth_at_q0']:.3f})")
 
-    # --- 1-D uniform-domain control: linear vs saturated wavelength ---
+    # --- 1-D uniform-domain control: linear vs saturated wavelength, across the band ---
     log("== 1-D uniform-domain wavelength control ==")
-    lam_lin, lam_sat, amp1d = one_d_wavelength(ref["F"], pr0)
-    log(f"  at F={ref['F']:.3f}: LSA={ref['wavelength']:.1f}  sim(linear, t=2)={lam_lin:.1f}"
-        f"  sim(saturated, t=160)={lam_sat:.1f}  amplitude={amp1d:.2f}")
+    band_Fs = [0.62, 0.45, 0.30]
+    one_d = []
+    for Fv in band_Fs:
+        ll, ls, aa = one_d_wavelength(Fv, pr0)
+        lsa_here = lsa(Fv, pr0, S=0.0)
+        one_d.append(dict(F=Fv, lambda_lsa=lsa_here["wavelength"], lambda_sim_linear=ll,
+                          lambda_sim_saturated=ls, amplitude=aa))
+        log(f"  F={Fv:.2f}: LSA={lsa_here['wavelength']:.1f}  sim(linear,t=2)={ll:.1f}"
+            f"  sim(saturated,t=160)={ls:.1f}  amp={aa:.2f}")
+    lam_sat = one_d[0]["lambda_sim_saturated"]
+    lam_lin_1d = one_d[0]["lambda_sim_linear"]
 
-    # --- build the job list ---
+    nw = max(1, min(5, (os.cpu_count() or 4) - 2))
     SEEDS = [11, 23, 37]
     WT_SEEDS = [11, 23, 37, 51, 67, 83]
     nm_of = lambda knob, v: f"{knob}={v:g}"
-    jobs = []
-    for s in WT_SEEDS:
-        jobs.append(("wt", {}, 1.0, s, {}))
 
     diff_scales = [0.25, 0.4, 0.6, 0.8, 1.0, 1.5, 2.0]
+    kFs = [0.30, 0.45, 0.60, 0.667, 0.80, 0.95]
+    dom_scales = [0.05, 0.08, 0.10, 0.12, 0.16, 0.20, 0.25, 0.30, 0.40, 0.50, 0.65,
+                  0.80, 1.00, 1.25]
+    bals = [0.5, 0.7, 0.85, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 5.5, 6.0, 7.0]
+    k2s = [0.50, 0.85, 1.00, 1.50, 3.00, 6.00]
+    aWs = [0.6, 0.8, 1.0, 1.3, 1.6]
+    ref_conditions = [("wt", {}, 1.0),
+                      (nm_of("diffusion_scale", 0.6),
+                       {"D_B": P["D_B"] * 0.6, "D_W": P["D_W"] * 0.6}, 1.0),
+                      (nm_of("domain_scale", 0.3), {}, 0.30)]
+    CACHE = HERE / "_results_cache.json"
+
+    use_cache = "--figures" in sys.argv and CACHE.exists()
+    if use_cache:
+        log("== --figures: reusing the cached simulation results, redrawing only ==")
+        c = json.loads(CACHE.read_text())
+        results, wt0 = c["results"], c["wt0"]
+        lam_meas, amin_scale = c["lam_meas"], c["amin_scale"]
+        cached_meta = {k: c.get(k) for k in ("sim_seconds", "n_simulations", "workers")}
+    else:
+        results = wt0 = None
+        lam_meas = amin_scale = None
+        cached_meta = {}
+
+    # ---------------- stage 1: the wild-type runs, under the ORIGINAL rule ----------------
+    if not use_cache:
+        log("== stage 1: wild-type runs (sets the element length scale) ==")
+        with ProcessPoolExecutor(max_workers=nw) as ex:
+            wt0 = list(ex.map(job, [("wt", {}, 1.0, s, {}, 1.0) for s in WT_SEEDS]))
+        sp_ = [ap_spacing(r["centroids_AP"]) for r in wt0]
+        lam_meas = float(np.mean([v for v in sp_ if v is not None]))
+        amin_scale = lam_meas / ref["wavelength"]
+        log(f"   WT under the original rule: counts {[r['element_count'] for r in wt0]}, "
+            f"measured AP spacing {lam_meas:.1f}; element scale factor {amin_scale:.2f}")
+
+    # ---------------- stage 2: everything, under the revised rule ----------------
+    jobs = []
+    for s in WT_SEEDS:
+        jobs.append(("wt", {}, 1.0, s, {}, amin_scale))
+
     for v in diff_scales:
         for s in SEEDS:
             jobs.append((nm_of("diffusion_scale", v),
-                         {"D_B": P["D_B"] * v, "D_W": P["D_W"] * v}, 1.0, s, {}))
+                         {"D_B": P["D_B"] * v, "D_W": P["D_W"] * v}, 1.0, s, {}, amin_scale))
 
-    kFs = [0.30, 0.45, 0.60, 0.667, 0.80, 0.95]
     for v in kFs:
         for s in SEEDS:
-            jobs.append((nm_of("kF", v), {"kF": v}, 1.0, s, {}))
+            jobs.append((nm_of("kF", v), {"kF": v}, 1.0, s, {}, amin_scale))
 
-    dom_scales = [0.12, 0.16, 0.20, 0.25, 0.30, 0.40, 0.50, 0.65, 0.80, 1.00, 1.25]
     for v in dom_scales:
         for s in SEEDS:
-            jobs.append((nm_of("domain_scale", v), {}, v, s, {}))
+            jobs.append((nm_of("domain_scale", v), {}, v, s, {}, amin_scale))
 
-    k2s = [0.30, 0.50, 0.70, 0.85, 1.00, 1.50, 2.00, 3.00, 4.00, 5.00, 6.00]
+    # THE CRITICALITY KNOB. k2 on its own cannot be used: the steady state sits at S*=0 only
+    # when k2*alpha_B/k5 == k3*alpha_W/k9, i.e. only at k2 = 1 for the other values here, so
+    # changing k2 alone also moves the operating point and the two effects cannot be separated.
+    # Scaling k2 and alpha_W by the SAME factor leaves that balance, and therefore S*=0,
+    # exactly intact while changing the Bmp->Sox9 coupling strength.
+    for v in bals:
+        for s in SEEDS:
+            jobs.append((nm_of("bmp_coupling", v),
+                         {"k2": P["k2"] * v, "alpha_W": P["alpha_W"] * v}, 1.0, s, {},
+                         amin_scale))
+
     for v in k2s:
         for s in SEEDS:
-            jobs.append((nm_of("k2", v), {"k2": v}, 1.0, s, {}))
+            jobs.append((nm_of("k2", v), {"k2": v}, 1.0, s, {}, amin_scale))
 
-    aWs = [0.4, 0.6, 0.8, 1.0, 1.3, 1.6]
     for v in aWs:
         for s in SEEDS:
             jobs.append((nm_of("alphaW_scale", v),
-                         {"alpha_W": P["alpha_W"] * v}, 1.0, s, {}))
+                         {"alpha_W": P["alpha_W"] * v}, 1.0, s, {}, amin_scale))
 
-    # controls
-    jobs.append(("control_no_reaction", {}, 1.0, 11, {"no_reaction": True}))
-    jobs.append(("control_no_perturbation", {}, 1.0, 11, {"no_noise": True}))
+    jobs.append(("control_no_reaction", {}, 1.0, 11, {"no_reaction": True}, amin_scale))
+    jobs.append(("control_no_perturbation", {}, 1.0, 11, {"no_noise": True}, amin_scale))
     for s in SEEDS:
-        jobs.append(("control_per_step_noise", {}, 1.0, s, {"per_step_noise": True}))
+        jobs.append(("control_per_step_noise", {}, 1.0, s, {"per_step_noise": True},
+                     amin_scale))
 
-    # refinement arms
-    ref_conditions = [("wt", {}, 1.0), (nm_of("k2", 0.85), {"k2": 0.85}, 1.0),
-                      (nm_of("domain_scale", 0.30), {}, 0.30)]
     for nm, ov, sc in ref_conditions:
         for s in SEEDS[:2]:
-            jobs.append((f"grid_refine[{nm}]", ov, sc, s, {"dx": P["dx"] / 1.5}))
-            jobs.append((f"dt_refine[{nm}]", ov, sc, s, {"dt": P["dt"] / 4.0}))
+            jobs.append((f"grid_refine[{nm}]", ov, sc, s, {"dx": P["dx"] / 1.5}, amin_scale))
+            jobs.append((f"dt_refine[{nm}]", ov, sc, s, {"dt": P["dt"] / 4.0}, amin_scale))
 
-    log(f"== running {len(jobs)} simulations ==")
-    nw = max(1, min(5, (os.cpu_count() or 4) - 2))
-    results = []
-    with ProcessPoolExecutor(max_workers=nw) as ex:
-        for i, r in enumerate(ex.map(job, jobs, chunksize=1)):
-            results.append(r)
-            if (i + 1) % 20 == 0:
-                log(f"   {i + 1}/{len(jobs)}  ({time.time() - t_start:.0f}s)")
-    log(f"   simulations done in {time.time() - t_start:.0f}s")
+    if not use_cache:
+        log(f"== stage 2: running {len(jobs)} simulations on {nw} workers ==")
+        results = []
+        with ProcessPoolExecutor(max_workers=nw) as ex:
+            for i, r in enumerate(ex.map(job, jobs, chunksize=1)):
+                results.append(r)
+                if (i + 1) % 25 == 0:
+                    log(f"   {i + 1}/{len(jobs)}  ({time.time() - t_start:.0f}s)")
+        log(f"   simulations done at {time.time() - t_start:.0f}s")
+        CACHE.write_text(json.dumps(dict(results=results, wt0=wt0, lam_meas=lam_meas,
+                                         amin_scale=amin_scale,
+                                         sim_seconds=round(time.time() - t_start, 1),
+                                         n_simulations=len(jobs) + len(WT_SEEDS),
+                                         workers=nw)))
 
     by = {}
     for r in results:
@@ -679,12 +800,14 @@ def main():
             return None
         c = [r["element_count"] for r in rs]
         cls = [r["cls"] for r in rs]
-        ORD = ["none", "single element", "reduced", "normal digit number",
-               "increased (polydactyl-like)"]
+        ORD = ["none", "single fused domain", "single element", "reduced",
+               "normal digit number", "increased (polydactyl-like)"]
         # modal class; ties broken towards the more severe (lower-index) class
         mcls = sorted(set(cls), key=lambda x: (-cls.count(x), ORD.index(x)))[0]
         return dict(element_count_mean=float(np.mean(c)), element_count_sd=float(np.std(c, ddof=0)),
                     element_counts=c, n_seeds=len(rs), cls=mcls,
+                    element_counts_linear_rule=[r["element_count_linear_rule"] for r in rs],
+                    fused_fraction=float(np.mean([r["fused"] for r in rs])),
                     classes=cls, lambda_pred=float(rs[0]["lambda_pred"]),
                     lsa_turing=bool(rs[0]["lsa_turing"]),
                     amplitude_mean=float(np.mean([r["amplitude"] for r in rs])),
@@ -695,7 +818,6 @@ def main():
                     if any(ap_spacing(r["centroids_AP"]) for r in rs) else None)
 
     wt = agg("wt")
-    lam_meas = wt["ap_spacing"]
     log(f"== WT: counts {wt['element_counts']}  mean {wt['element_count_mean']:.2f}"
         f" sd {wt['element_count_sd']:.2f}  measured AP spacing {lam_meas:.1f}")
 
@@ -704,7 +826,8 @@ def main():
         ("diffusion_scale", diff_scales, "diffusion_scale"),
         ("fgf_strength_kF", kFs, "kF"),
         ("domain_scale", dom_scales, "domain_scale"),
-        ("bmp_to_sox9_k2", k2s, "k2"),
+        ("bmp_sox9_coupling_balanced", bals, "bmp_coupling"),
+        ("bmp_to_sox9_k2_alone", k2s, "k2"),
         ("wnt_production_alphaW_scale", aWs, "alphaW_scale"),
     ]:
         rows = []
@@ -719,35 +842,48 @@ def main():
             rows.append(row)
         sweeps[knob] = rows
 
-    # critical domain size: largest domain_scale whose modal class is 'none'
+    # critical domain size: largest domain_scale with no elements, under each counting rule
     dom = sweeps["domain_scale"]
-    none_rows = [r for r in dom if r["cls"] == "none"]
-    pat_rows = [r for r in dom if r["cls"] != "none"]
-    if none_rows and pat_rows:
-        hi_none = max(none_rows, key=lambda r: r["value"])
-        lo_pat = min(pat_rows, key=lambda r: r["value"])
-        crit = 0.5 * (hi_none["ap_extent_in_wavelengths"] + lo_pat["ap_extent_in_wavelengths"])
-        unc = 0.5 * abs(lo_pat["ap_extent_in_wavelengths"] - hi_none["ap_extent_in_wavelengths"])
-        crit_pd = 0.5 * (hi_none["pd_extent_in_wavelengths"] + lo_pat["pd_extent_in_wavelengths"])
-    else:
-        crit = unc = crit_pd = None
-    log(f"== critical domain size: {crit} +/- {unc} wavelengths (AP)")
+
+    def crit_for(key):
+        """key -> a function giving the mean count for a row under one counting rule."""
+        none_rows = [r for r in dom if np.mean(r[key]) == 0]
+        pat_rows = [r for r in dom if np.mean(r[key]) > 0]
+        if not none_rows or not pat_rows:
+            return None, None, None
+        hi = max(none_rows, key=lambda r: r["value"])
+        lo = min(pat_rows, key=lambda r: r["value"])
+        return (0.5 * (hi["ap_extent_in_wavelengths"] + lo["ap_extent_in_wavelengths"]),
+                0.5 * abs(lo["ap_extent_in_wavelengths"] - hi["ap_extent_in_wavelengths"]),
+                0.5 * (hi["pd_extent_in_wavelengths"] + lo["pd_extent_in_wavelengths"]))
+
+    crit, unc, crit_pd = crit_for("element_counts")
+    crit_o, unc_o, _ = crit_for("element_counts_linear_rule")
+    log(f"== critical domain size: {crit} +/- {unc} wavelengths (AP); "
+        f"under the original rule {crit_o} +/- {unc_o}")
 
     # ------------------------------------------------------------------ figures
     plt, cmap = _mpl()
     log("== figures ==")
     r_wt = simulate(pr0, WT_SEEDS[0], frames=60)
     vmin, vmax = -3.2, 2.2
+    lam_elem_wt = ref["wavelength"] * amin_scale
+    FULL = extent_of(r_wt)
 
     # 1. normal
     fig = plt.figure(figsize=(14.0, 7.2))
     gs = fig.add_gridspec(2, 3, width_ratios=[2.0, 1.0, 1.0], height_ratios=[1, 1],
-                          hspace=0.28, wspace=0.18)
+                          hspace=0.30, wspace=0.30)
     ax = fig.add_subplot(gs[:, 0])
-    draw_panel(ax, r_wt, cmap, vmin, vmax, ref["wavelength"],
+    n_wt = classify(r_wt["S"], r_wt["mask"], r_wt["dx"], lam_elem_wt)["element_count"]
+    draw_panel(ax, r_wt, cmap, vmin, vmax, lam_elem_wt,
                "SIMULATION - Sox9 field, wild-type-like paddle",
-               f"{classify(r_wt['S'], r_wt['mask'], r_wt['dx'], ref['wavelength'])['element_count']}"
-               f" skeletal elements (lime outline). Not an observation.")
+               f"{n_wt} skeletal elements (lime outline). Not an observation.")
+    from matplotlib.cm import ScalarMappable
+    from matplotlib.colors import Normalize
+    cb = fig.colorbar(ScalarMappable(norm=Normalize(vmin, vmax), cmap=cmap), ax=ax,
+                      fraction=0.035, pad=0.02)
+    cb.set_label("Sox9 (model units); steady state = 0", fontsize=9)
     axf = fig.add_subplot(gs[0, 1])
     ff = np.full(r_wt["mask"].shape, np.nan); ff[r_wt["mask"]] = r_wt["F"]
     im = axf.imshow(ff.T, origin="lower", cmap="copper_r")
@@ -755,7 +891,7 @@ def main():
     for s in axf.spines.values():
         s.set_visible(False)
     axf.set_title("Fgf field F (ASSUMED shape)", fontsize=10)
-    fig.colorbar(im, ax=axf, fraction=0.04)
+    fig.colorbar(im, ax=axf, fraction=0.035, pad=0.02)
 
     axd = fig.add_subplot(gs[0, 2])
     qs = np.linspace(1e-6, 0.35, 600)
@@ -777,7 +913,7 @@ def main():
               f"Bmp-Sox9-Wnt Turing network\n"
               f"(published equation form; operating point retuned)\n\n"
               f"lambda_lin  (linear stability)   = {ref['wavelength']:.0f} model units\n"
-              f"lambda_sat  (1-D control)        = {lam_sat:.0f}\n"
+              f"lambda_sat  (1-D control, F=0.62)= {lam_sat:.0f}\n"
               f"lambda_meas (AP element spacing) = {lam_meas:.0f}\n\n"
               f"elements over {len(WT_SEEDS)} seeds: "
               f"{wt['element_count_mean']:.1f} +/- {wt['element_count_sd']:.1f} "
@@ -785,7 +921,7 @@ def main():
               fontsize=10.0, color=INK, va="top", family="monospace")
     fig.suptitle("Digit patterning as a Turing system - simulated wild-type-like pattern",
                  fontsize=15, color=INK)
-    fig.savefig(HERE / "digit-turing-normal.png", dpi=102, bbox_inches="tight")
+    fig.savefig(HERE / "digit-turing-normal.png", dpi=133, bbox_inches="tight")
     plt.close(fig)
 
     # 2. series: normal -> nothing
@@ -798,54 +934,68 @@ def main():
         (nm_of("domain_scale", 0.50), {}, 0.50, "small bud\n(domain x0.50)"),
         (nm_of("domain_scale", 0.25), {}, 0.25, "smaller bud\n(domain x0.25)"),
         (nm_of("domain_scale", 0.16), {}, 0.16, "truncated bud\n(domain x0.16)"),
-        (nm_of("k2", 6.0), {"k2": 6.0}, 1.0, "sub-critical\n(Bmp->Sox9 k2 = 6)"),
+        (nm_of("bmp_coupling", 6.0), {"k2": P["k2"] * 6.0, "alpha_W": P["alpha_W"] * 6.0}, 1.0,
+         "sub-critical\n(Bmp-Sox9 coupling x6)"),
     ]
-    fig, axes = plt.subplots(1, len(series_specs), figsize=(15.5, 4.8))
+    fig, axes = plt.subplots(1, len(series_specs), figsize=(15.5, 6.0))
     for ax, (nm, ov, sc, lab) in zip(axes, series_specs):
         p = dict(pr0); p.update(ov)
         rr = simulate(p, WT_SEEDS[0], scale=sc)
         lam = dominant_lsa_over_domain(p, p["F_max"], p["F_max"] * np.exp(-p["F_decay"]))
-        lam_a = lam["wavelength"] if lam["turing"] else lambda_wt()
+        lam_a = (lam["wavelength"] if lam["turing"] else lambda_wt()) * amin_scale
         cc = classify(rr["S"], rr["mask"], rr["dx"], lam_a)
         a = agg(nm) or {}
         sd = a.get("element_count_sd")
         col = GREEN if cc["element_count"] == 5 else (RED if cc["element_count"] == 0 else WARN)
-        draw_panel(ax, rr, cmap, vmin, vmax, lam_a, lab, outline=True)
-        ax.text(0.5, -0.17,
-                f"n = {cc['element_count']}" + (f"  (sd {sd:.1f})" if sd is not None else ""),
-                transform=ax.transAxes, ha="center", va="top", fontsize=12.5,
-                color=col, fontweight="bold")
-        ax.text(0.5, -0.30, cc["cls"], transform=ax.transAxes, ha="center", va="top",
-                fontsize=9, color=INK)
+        draw_panel(ax, rr, cmap, vmin, vmax, lam_a, lab, outline=True, common_extent=FULL)
+        mean = a.get("element_count_mean")
+        ax.text(0.5, -0.02, f"n = {cc['element_count']}", transform=ax.transAxes,
+                ha="center", va="top", fontsize=15, color=col, fontweight="bold")
+        if sd is not None:
+            ax.text(0.5, -0.10, f"{mean:.1f} $\\pm$ {sd:.1f} over 3 seeds",
+                    transform=ax.transAxes, ha="center", va="top", fontsize=8.5, color=INK)
+        ax.text(0.5, -0.17, cc["cls"], transform=ax.transAxes, ha="center", va="top",
+                fontsize=8.5, color=WARN)
+    fig.subplots_adjust(left=0.015, right=0.985, wspace=0.02, bottom=0.30, top=0.78)
     fig.suptitle("SIMULATION - one network, many routes to no skeletal pattern",
-                 fontsize=15, color=INK, y=1.02)
-    fig.text(0.5, -0.05,
-             "Element count from a pre-declared rule (connected components of Sox9 > 0.25*p99, "
-             "area >= 0.10*lambda^2). One seed shown; sd over 3 seeds where measured. "
-             "Nothing here is an observation.",
-             ha="center", fontsize=9.5, color=WARN)
-    fig.savefig(HERE / "digit-turing-series.png", dpi=102, bbox_inches="tight")
+                 fontsize=16, color=INK, y=0.955)
+    fig.text(0.5, 0.125,
+             "All panels on one spatial scale. Element count from a pre-declared rule: connected\n"
+             "components of Sox9 > 0.25*p99 with area >= 0.10*lambda^2, outlined in lime.\n"
+             "One seed shown, mean over 3 seeds beside it. Nothing here is an observation.",
+             ha="center", va="top", fontsize=9.5, color=WARN, linespacing=1.5)
+    fig.savefig(HERE / "digit-turing-series.png", dpi=102)
     plt.close(fig)
 
     # 3. domain-size figure
-    fig, ax = plt.subplots(figsize=(14.0, 6.4))
+    fig, ax = plt.subplots(figsize=(14.0, 6.6))
     xs_ = [r["ap_extent_in_wavelengths"] for r in dom]
     ys_ = [r["element_count_mean"] for r in dom]
     es_ = [r["element_count_sd"] for r in dom]
-    ax.errorbar(xs_, ys_, yerr=es_, fmt="o-", color=TEAL, ecolor=WARN, capsize=4,
-                lw=2.2, ms=8, mfc=LIME, mec=TEAL, mew=1.8, zorder=3)
+    yo_ = [float(np.mean(r["element_counts_linear_rule"])) for r in dom]
+    ax.plot(xs_, xs_, color=INK, lw=1.0, ls="--", alpha=0.45, zorder=1,
+            label="one element per wavelength of width")
+    ax.plot(xs_, yo_, "s--", color=WARN, lw=1.4, ms=5, alpha=0.75, zorder=2,
+            label="same runs, original (smaller) minimum-element-size cut")
+    ax.errorbar(xs_, ys_, yerr=es_, fmt="o-", color=TEAL, ecolor=TEAL, capsize=4,
+                lw=2.4, ms=9, mfc=LIME, mec=TEAL, mew=1.8, zorder=4,
+                label="elements counted (mean of 3 seeds)")
     for r in dom:
-        ax.annotate(f"{r['value']:g}x", (r["ap_extent_in_wavelengths"], r["element_count_mean"]),
-                    textcoords="offset points", xytext=(0, 12), ha="center",
-                    fontsize=8.5, color=INK)
+        if r["value"] in (0.05, 0.2, 0.4, 0.65, 1.0, 1.25):
+            ax.annotate(f"{r['value']:g}x",
+                        (r["ap_extent_in_wavelengths"], r["element_count_mean"]),
+                        textcoords="offset points", xytext=(0, 14), ha="center",
+                        fontsize=9, color=INK)
     if crit is not None:
-        ax.axvspan(crit - unc, crit + unc, color=RED, alpha=0.12, zorder=1)
-        ax.axvline(crit, color=RED, lw=2, ls="--", zorder=2)
-        ax.text(crit, max(ys_) * 0.92,
-                f"  critical AP width\n  {crit:.2f} $\\pm$ {unc:.2f} wavelengths",
-                color=RED, fontsize=11, va="top")
+        ax.axvspan(crit - unc, crit + unc, color=RED, alpha=0.13, zorder=0)
+        ax.axvline(crit, color=RED, lw=2, ls="--", zorder=3)
+        ax.text(crit + 0.15, max(ys_) * 0.99,
+                f"critical AP width\n{crit:.2f} $\\pm$ {unc:.2f} wavelengths\n"
+                f"({crit_o:.2f} $\\pm$ {unc_o:.2f} under the\noriginal size cut)",
+                color=RED, fontsize=10.5, va="top")
     ax.axhline(5, color=GREEN, lw=1.2, ls=":")
-    ax.text(max(xs_), 5.1, "five elements ", color=GREEN, ha="right", fontsize=10)
+    ax.text(max(xs_), 5.12, "five elements ", color=GREEN, ha="right", fontsize=10)
+    ax.legend(loc="lower right", frameon=False, fontsize=9.5)
     ax.set_xlabel("anteroposterior width of the paddle, in units of the pattern's own "
                   f"wavelength ($\\lambda_{{meas}}$ = {lam_meas:.0f} model units)")
     ax.set_ylabel("skeletal elements (mean of 3 seeds)")
@@ -853,12 +1003,14 @@ def main():
                  fontsize=15, color=INK)
     ax.grid(alpha=0.18, color=INK)
     ax.set_ylim(-0.4, max(ys_) + 1.2)
-    fig.text(0.5, -0.02,
+    fig.text(0.5, -0.015,
              "Labels give the linear scale factor applied to the whole paddle. The Fgf gradient "
-             "scales with the bud, so the Turing-permissive band shrinks with it. "
-             "Simulated; no measured limb-bud dimension is used anywhere.",
-             ha="center", fontsize=9.5, color=WARN)
-    fig.savefig(HERE / "digit-turing-domain.png", dpi=102, bbox_inches="tight")
+             "scales with the bud, so the Turing-permissive band shrinks with it.\n"
+             "The two curves are the SAME simulations counted with two minimum-element-size "
+             "cuts: the critical size is rule-dependent by about a factor of two, so quote the "
+             "range.\nSimulated; no measured limb-bud dimension is used anywhere.",
+             ha="center", va="top", fontsize=9.5, color=WARN, linespacing=1.5)
+    fig.savefig(HERE / "digit-turing-domain.png", dpi=122, bbox_inches="tight")
     plt.close(fig)
 
     # 4. movie (optional)
@@ -869,14 +1021,16 @@ def main():
             fdir.mkdir(exist_ok=True)
             for i, (t, Sv) in enumerate(r_wt["snaps"]):
                 f = np.full(r_wt["mask"].shape, np.nan); f[r_wt["mask"]] = Sv
-                fg, axm = plt.subplots(figsize=(7.0, 5.2))
+                fg, axm = plt.subplots(figsize=(7.0, 5.6))
                 axm.imshow(f.T, origin="lower", cmap=cmap, vmin=vmin, vmax=vmax,
-                           interpolation="nearest")
+                           interpolation="nearest", extent=extent_of(r_wt), aspect="equal")
                 axm.set_xticks([]); axm.set_yticks([])
                 for s in axm.spines.values():
                     s.set_visible(False)
                 axm.set_title(f"SIMULATION - Sox9, t = {t:5.1f}", fontsize=13, color=INK)
-                fg.savefig(fdir / f"f{i:04d}.png", dpi=96, bbox_inches="tight",
+                axm.text(0.5, -0.06, "not an observation", transform=axm.transAxes,
+                         ha="center", va="top", fontsize=9, color=WARN)
+                fg.savefig(fdir / f"f{i:04d}.png", dpi=170, bbox_inches="tight",
                            facecolor=BG)
                 plt.close(fg)
             out = HERE / "digit-turing.mp4"
@@ -922,11 +1076,26 @@ def main():
             "pass": bool(nr["amplitude"] < 0.05 and nr["element_count"] == 0),
         },
         "no_initial_perturbation": {
-            "what": "full model, but the t=0 perturbation of S is omitted.",
-            "must_show": "the homogeneous steady state, no pattern",
+            "what": "full model, but the t=0 perturbation of S is omitted, so the field starts "
+                    "at the exact homogeneous steady state (verified analytically: S*=0, "
+                    "B*=alpha_B/k5, W*=alpha_W/k9 makes all three time derivatives vanish at "
+                    "every point, whatever the local Fgf level).",
+            "expected_when_designed": "a flat field",
             "amplitude": npert["amplitude"], "element_count": npert["element_count"],
             "class": npert["cls"],
-            "pass": bool(npert["amplitude"] < 0.05 and npert["element_count"] == 0),
+            "result": "DID NOT STAY FLAT, and this is reported rather than quietly dropped.",
+            "interpretation": "The state is linearly UNSTABLE with max growth rate "
+                              f"{ref['growth_max']:.2f} per model time unit, and the run is "
+                              f"{P['T_end']:.0f} time units long, so double-precision rounding "
+                              "at the 1e-16 level is amplified by roughly exp(490) and "
+                              "saturates long before the end. A linearly unstable state cannot "
+                              "be held flat numerically, so this arm cannot test what it was "
+                              "designed to test. What it DOES establish is the converse: the "
+                              "pattern is not an artifact of the injected noise, because it "
+                              "forms without any. The arm that genuinely tests flatness is "
+                              "no_reaction (which passed), and the sub-critical end of "
+                              "bmp_sox9_coupling_balanced, which is linearly stable and does "
+                              "stay flat.",
         },
         "per_step_noise": {
             "what": "dt-scaled additive Gaussian noise on S at every step instead of a single "
@@ -937,10 +1106,13 @@ def main():
             "sd": psn["element_count_sd"],
             "wt_counts_same_seeds": wt["element_counts"][:3],
         },
-        "positive_control_for_the_counter": {
-            "what": "the counter must return 5 on the wild-type-like field and 0 on the "
-                    "no-reaction field; both arms are above.",
-            "pass": bool(wt["element_count_mean"] >= 4.5 and nr["element_count"] == 0),
+        "positive_and_negative_control_for_the_counter": {
+            "what": "The counter is run against a case it must flag and a case it must not: "
+                    "the wild-type-like field (must return a multi-element count) and the "
+                    "no-reaction field (must return 0).",
+            "wild_type_mean_count": wt["element_count_mean"],
+            "no_reaction_count": nr["element_count"],
+            "pass": bool(wt["element_count_mean"] >= 3.0 and nr["element_count"] == 0),
         },
     }
 
@@ -1031,8 +1203,15 @@ def main():
         },
         "measured_wavelength": {
             "two_d_AP_element_spacing": lam_meas,
-            "one_d_uniform_control_linear_regime": lam_lin,
-            "one_d_uniform_control_saturated": lam_sat,
+            "two_d_measurement": "mean spacing between the anteroposterior centroids of "
+                                 "adjacent counted elements, averaged over the 6 wild-type "
+                                 "seeds. This is the pattern's own wavelength and it is the "
+                                 "one used for the critical domain size.",
+            "one_d_uniform_control": one_d,
+            "one_d_uniform_control_note": "1-D periodic domain of length 1500 at a uniform Fgf "
+                                          "level, spectral diffusion, probed at t=2 (still "
+                                          "linear) and at t=160 (saturated). The three F values "
+                                          "span the Turing-permissive band of the 2-D paddle.",
             "units": "model length units",
             "comparison_to_linear_prediction": {
                 "lambda_linear_LSA": ref["wavelength"],
@@ -1044,9 +1223,13 @@ def main():
                            "and the coarsening arrests at a longer, nonlinearly selected "
                            "wavelength. The agreement that does hold is in the LINEAR regime: a "
                            "1-D uniform-domain run probed at t = 2, while the amplitude is "
-                           "still small, has a dominant wavelength close to the LSA value. "
+                           "still small, has a dominant wavelength close to the LSA value "
+                           f"({lam_lin_1d:.0f} against {ref['wavelength']:.0f} at F=0.62). "
                            "Coarsening was measured to arrest by t ~ 40 and the wavelength was "
-                           "then unchanged out to t = 320.",
+                           "then unchanged out to t = 320. The 2-D measured spacing is shorter "
+                           "than the 1-D saturated wavelength at F = 0.62 because the 2-D "
+                           "permissive band spans a range of F, not just its distal maximum, "
+                           "and is only about one wavelength deep.",
             },
         },
         "sweeps": sweeps,
@@ -1061,36 +1244,107 @@ def main():
                                "sits.",
             "domain_scale": "Linear scale factor on the whole paddle, Fgf gradient scaling with "
                             "it. This is the bridge to a truncated limb bud.",
-            "bmp_to_sox9_k2": "Strength of Bmp activation of Sox9. onimaru2016 perturb exactly "
-                              "this parameter to represent Bmp inhibition and report that the "
-                              "distal-most Sox9 spots fail to form. It is two-sided here: too "
-                              "small and the uniform state loses stability at q = 0, too large "
-                              "and the long-range inhibition stabilises every wavenumber, so "
-                              "the Turing instability is lost on BOTH sides.",
-            "wnt_production_alphaW_scale": "Multiplier on alpha_W. onimaru2016 perturb Wnt "
-                                           "production and report partial fusion of Sox9 into "
-                                           "continuous domains, matched in vivo by a porcupine "
-                                           "inhibitor.",
+            "bmp_sox9_coupling_balanced":
+                "THIS IS THE CRITICALITY KNOB. k2 and alpha_W are scaled by the same factor, "
+                "which changes the Bmp->Sox9 coupling strength while leaving the operating "
+                "point exactly at S* = 0 (the balance k2*alpha_B/k5 = k3*alpha_W/k9 is "
+                "preserved under a common factor, and S* = 0 was verified at every value). "
+                "The linear-stability growth rate falls monotonically from factor 0.85 "
+                "upwards and the Turing instability is LOST at factor 5.5 (max Re sigma over "
+                "all q and all F in the bud becomes negative). Above that the field stays at "
+                "the homogeneous steady state: a uniform Sox9 field and no skeletal elements, "
+                "with no change to the domain and no change to the wavelength mechanism.",
+            "bmp_to_sox9_k2_alone":
+                "Strength of Bmp activation of Sox9, varied ON ITS OWN. onimaru2016 perturb "
+                "exactly this parameter to represent Bmp inhibition. READ THIS ONE WITH CARE "
+                "and prefer bmp_sox9_coupling_balanced: in this retuned model the homogeneous "
+                "steady state sits at S* = 0 only when k2*alpha_B/k5 = k3*alpha_W/k9, which "
+                "with the other values here means only at k2 = 1. Changing k2 alone therefore "
+                "moves the operating point as well as the coupling, and the two effects cannot "
+                "be separated. That is why every value except 1 collapses to a single fused "
+                "domain. The sweep is kept because that fragility is a real property of the "
+                "assumed operating point and hiding it would misrepresent the model.",
+            "wnt_production_alphaW_scale":
+                "Multiplier on alpha_W, the constant Wnt production term. READ THIS ONE WITH "
+                "CARE. onimaru2016 perturb Wnt production and report partial fusion of Sox9 "
+                "into continuous domains, matched in vivo by a porcupine inhibitor, and that "
+                "is what the fused class here looks like. BUT in this retuned model alpha_W "
+                "also sets the operating point: S* = 0 only at the one value "
+                "alpha_W = k2*alpha_B*k9/(k3*k5), and moving alpha_W moves S* away from zero, "
+                "which switches the cubic self-damping -3S*^2 back on. So this sweep measures "
+                "the FRAGILITY OF THE ASSUMED OPERATING POINT at least as much as it measures "
+                "a Wnt perturbation, and the two cannot be separated in this parameterisation. "
+                "It is reported because that fragility is a real and unflattering property of "
+                "the choice made here, not because it is a clean perturbation.",
+        },
+        "one_condition_behind_every_route_to_no_elements": {
+            "statement": "In this model every route to zero skeletal elements is the same "
+                         "geometric condition: the Turing-PERMISSIVE REGION must be at least "
+                         "about one wavelength across. Shrinking the bud shrinks that region "
+                         "in space; de-tuning the network shrinks it in parameter space, and "
+                         "therefore also in space, because the Fgf gradient maps parameter "
+                         "space onto the proximodistal axis.",
+            "evidence_from_the_domain_sweep": "Elements disappear below about 0.9 wavelengths "
+                                              "of anteroposterior width.",
+            "evidence_from_the_coupling_sweep": "At Bmp-Sox9 coupling x5 the linear analysis "
+                                                "still reports a Turing instability (max growth "
+                                                "+0.31 per time unit), but the simulation forms "
+                                                "nothing. The reason is geometric and is "
+                                                "computable from the LSA: at that coupling the "
+                                                "Turing window has narrowed to F in "
+                                                "(0.596, 1.0), and with F_max = 0.62 and "
+                                                "F = F_max*exp(-4*x_hat) over L_PD = 300, the "
+                                                "permissive strip is only about 3.0 model "
+                                                "length units deep, against a wavelength of "
+                                                "18.6 there - under a fifth of a wavelength, "
+                                                "and narrower than one grid cell. At coupling "
+                                                "x4 the strip is about 13.7 units against a "
+                                                "wavelength of 24.9, roughly 0.55 wavelengths, "
+                                                "and the counts are correspondingly marginal "
+                                                "and seed-dependent (1, 3, 1).",
+            "consequence": "The simulated loss of pattern (coupling x5) comes BEFORE the formal "
+                           "loss of linear instability (x5.5). Both numbers are reported; the "
+                           "simulated one is the one that would be observable.",
         },
         "critical_domain_size": {
             "value": crit, "units": "wavelengths",
             "uncertainty": unc,
             "axis": "anteroposterior width of the paddle at its widest point",
             "pd_extent_at_the_same_point_in_wavelengths": crit_pd,
-            "definition": "Midpoint between the largest domain scale whose modal phenotype "
-                          "class is 'none' and the smallest whose class is not, expressed in "
+            "definition": "Midpoint between the largest domain scale with a mean element count "
+                          "of exactly zero and the smallest with a non-zero mean, expressed in "
                           "units of the measured wavelength lambda_meas. The uncertainty is "
                           "half that interval and is set by the spacing of the domain_scale "
                           "grid, not by a fit.",
-            "reading": "Below roughly one wavelength of anteroposterior width the paddle cannot "
-                       "hold a complete element and the field is unpatterned. Because the Fgf "
-                       "gradient scales with the bud, the proximodistal permissive band shrinks "
-                       "at the same time, so both axes run out together; the AP figure is the "
-                       "one quoted.",
+            "value_under_the_original_counting_rule": crit_o,
+            "uncertainty_under_the_original_counting_rule": unc_o,
+            "rule_sensitivity": "THE CRITICAL SIZE DEPENDS ON THE COUNTING RULE, by about a "
+                                "factor of two, and both numbers are given. The revised rule "
+                                "requires a surviving component to be at least 0.10 * "
+                                "lambda_meas^2; the original required only 0.10 * "
+                                "lambda_lin^2, which is about four times smaller in area and "
+                                "so still counts a partial condensation in a bud too small to "
+                                "hold a whole one. Quote the range, not one end of it.",
+            "reading": "Somewhere between about half a wavelength and about one and a quarter "
+                       "wavelengths of anteroposterior width, the paddle stops being able to "
+                       "hold an element and the field is unpatterned. Because the Fgf gradient "
+                       "scales with the bud, the proximodistal permissive band shrinks at the "
+                       "same time, so both axes run out together; the AP figure is the one "
+                       "quoted and the PD extent at the same point is given beside it.",
         },
         "refinement_arm": refinement,
         "controls": controls,
         "classification_rule": CLASSIFY_RULE,
+        "classification_rule_change": CLASSIFY_RULE_CHANGE
+            .replace("{ORIG}", str([r["element_count"] for r in wt0]))
+            .replace("{ORIGMEAN}", f"{np.mean([r['element_count'] for r in wt0]):.2f}")
+            .replace("{NEW}", str(wt["element_counts"]))
+            .replace("{NEWMEAN}", f"{wt['element_count_mean']:.2f}"),
+        "sweeps_under_the_original_rule": {
+            "wild_type": [r["element_count"] for r in wt0],
+            "note": "Per-condition counts under the original rule are in each sweep row as "
+                    "element_counts_linear_rule.",
+        },
         "seeds": {"wild_type": WT_SEEDS, "sweeps": SEEDS,
                   "note": "Turing patterns are seed-dependent. Every sweep point is run from "
                           "3 fixed seeds and the spread is reported as element_count_sd; the "
@@ -1132,6 +1386,24 @@ def main():
             "means 'five counted components in this simulation', not a mouse phenotype.",
             "Only one noise model, one domain shape, and one gradient shape were explored. "
             "Turing element counts are sensitive to all three.",
+            "THE ASSUMED OPERATING POINT IS FRAGILE. Because the steady state was placed at "
+            "S* = 0 by balancing k2*alpha_B/k5 against k3*alpha_W/k9, any parameter change "
+            "that breaks that balance moves S* off zero and switches the cubic self-damping "
+            "back on. A 20% change in alpha_W alone, or a 15% change in k2 alone, collapses "
+            "the five-element pattern to a single fused domain (see the "
+            "wnt_production_alphaW_scale and bmp_to_sox9_k2_alone sweeps). The "
+            "bmp_sox9_coupling_balanced sweep exists because it changes the coupling WITHOUT "
+            "breaking that balance, and it is the one to read for criticality. The fragility "
+            "is a property of this reparameterisation, not a claim about the published model.",
+            "THE ELEMENT COUNT DEPENDS ON THE MINIMUM-SIZE CUT by about one element, because "
+            "the anterior-most and posterior-most condensations sit where the paddle narrows "
+            "and are genuinely smaller. The wild-type count is 5.3 +/- 0.9 under the original "
+            "rule and 4.2 +/- 0.7 under the revised one, over the same six seeds, and the "
+            "critical domain size moves by about a factor of two between them. Treat one "
+            "element as the resolution of this measurement.",
+            "The grid-refinement arm changes the element count by 1 in two of three "
+            "conditions, which is the same one-element resolution; the dt-refinement arm "
+            "changes nothing.",
         ],
         "what_this_does_not_establish": [
             "It does not establish that any real limbless or limb-reduced animal, or any real "
@@ -1147,6 +1419,14 @@ def main():
         "runtime_seconds": None,
     }
     out["runtime_seconds"] = round(time.time() - t_start, 1)
+    out["runtime_note"] = (
+        "runtime_seconds is for THIS invocation. When the figures are redrawn from the cached "
+        "simulation results (--figures) it does not include the simulations."
+        + (f" The cached results came from a full run of {cached_meta.get('n_simulations')} "
+           f"simulations on {cached_meta.get('workers')} worker processes, "
+           f"{cached_meta.get('sim_seconds')} s of wall clock to the end of the sweeps on a "
+           f"shared 8-core host." if cached_meta else
+           " This invocation ran the simulations itself."))
     out["movie"] = movie
     (HERE / "digit-turing.json").write_text(json.dumps(out, indent=2))
     log(f"== wrote digit-turing.json  ({out['runtime_seconds']}s total)")

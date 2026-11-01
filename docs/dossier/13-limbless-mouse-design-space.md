@@ -331,11 +331,11 @@ Full result file: `results/limbless-mouse/shh-loop.json`. Code: `results/limbles
 
 **The design question it answers.** If a truncated bud is a smaller field, how small does the field have to get before it patterns no complete skeletal element at all?
 
-A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shaped domain, with its own linear-stability analysis as an internal control. Element counts come from a pre-declared objective criterion, not from looking at the pictures, and the spread across random seeds is reported because Turing patterns are seed-dependent.
+A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shaped domain with a proximodistal FGF gradient, with its own linear-stability analysis as an internal control. Element counts come from a pre-declared objective criterion, not from looking at the pictures, and the spread across random seeds is reported because Turing patterns are seed-dependent. The strongest result is a unification: in this model every route to zero skeletal elements is the same geometric condition — the Turing-permissive region has to be at least about one wavelength across. Shrinking the bud shrinks that region in space; de-tuning the network shrinks it in parameter space, and the FGF gradient maps parameter space onto the proximodistal axis, so it shrinks in space too. Eleven of its 20 parameters are sourced, and they are sourced from a catshark fin rather than a mouse.
 
 - Figure `digit-turing-normal.png`: Simulation. The pattern the model makes in a full-size paddle.
-- Figure `digit-turing-series.png`: Simulation. The same model across the sweep, from several elements down to none.
-- Figure `digit-turing-domain.png`: Simulation. Element count against domain size, in units of the pattern's own wavelength.
+- Figure `digit-turing-series.png`: Simulation. One network, seven settings, three different knobs, all panels on one spatial scale. Mean element count over the seeds run at each setting falls 6.7 → 4.7 → 3.0 → 2.3 → 1.0 → 0 → 0, from more elements than wild type through reduced and single-element to none. The large number on each panel is the one seed drawn; the mean and its spread are printed beside it, because a Turing pattern is seed-dependent and the single panel is not the measurement.
+- Figure `digit-turing-domain.png`: Simulation. Element count against the paddle's anteroposterior width, in units of the pattern's own measured wavelength. The field stops holding a complete element somewhere between about half a wavelength and about one and a quarter: 0.94 ± 0.10 under the counting rule used, 0.44 ± 0.05 under the rule declared first. The range is the honest answer, not either end of it.
 - Figure `digit-turing.mp4`: Simulation. The pattern forming in the full-size paddle, from the seeded noise it starts in. No sound.
 
 20 parameters, of which 9 are assumed rather than sourced.
@@ -347,8 +347,11 @@ A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shap
 - The linear-stability wavelength and the simulated wavelength differ by a factor of about two (see measured_wavelength). The simulated value is the one used for the critical domain size.
 - The classification into phenotype classes is a threshold rule on a simulated scalar field. It is objective and pre-declared, but 'normal digit number' here means 'five counted components in this simulation', not a mouse phenotype.
 - Only one noise model, one domain shape, and one gradient shape were explored. Turing element counts are sensitive to all three.
+- THE ASSUMED OPERATING POINT IS FRAGILE. Because the steady state was placed at S* = 0 by balancing k2*alpha_B/k5 against k3*alpha_W/k9, any parameter change that breaks that balance moves S* off zero and switches the cubic self-damping back on. A 20% change in alpha_W alone, or a 15% change in k2 alone, collapses the five-element pattern to a single fused domain (see the wnt_production_alphaW_scale and bmp_to_sox9_k2_alone sweeps). The bmp_sox9_coupling_balanced sweep exists because it changes the coupling WITHOUT breaking that balance, and it is the one to read for criticality. The fragility is a property of this reparameterisation, not a claim about the published model.
+- THE ELEMENT COUNT DEPENDS ON THE MINIMUM-SIZE CUT by about one element, because the anterior-most and posterior-most condensations sit where the paddle narrows and are genuinely smaller. The wild-type count is 5.3 +/- 0.9 under the original rule and 4.2 +/- 0.7 under the revised one, over the same six seeds, and the critical domain size moves by about a factor of two between them. Treat one element as the resolution of this measurement.
+- The grid-refinement arm changes the element count by 1 in two of three conditions, which is the same one-element resolution; the dt-refinement arm changes nothing.
 
-Full result file: `results/limbless-mouse/digit-turing.json`. Code: `results/limbless-mouse/code/digit_turing.py`.
+Full result file: `results/limbless-mouse/digit-turing.json`. Code: `results/limbless-mouse/code/digit_turing.py (--figures redraws from digit-turing-results-cache.json without re-running the 179 simulations)`.
 
 ## The chain across scales, and where it is not calibrated
 
@@ -357,7 +360,7 @@ The three models on this page are not independent demonstrations. They are meant
 1. **A ZRS allele → ZPA Shh output** — *scenario*. The sequence analysis measures divergence and motif content. It does not predict enhancer activity. Mapping an allele onto a fraction of wild-type Shh output is a scenario parameter, not a calibrated transfer.
 2. **ZPA Shh output → Outgrowth duration** — *model*. This junction is inside the SHH–GREM1–FGF model, so it is at least explicit: the model says how a reduction in Shh production shortens the window in which FGF stays above threshold.
 3. **Outgrowth duration → Limb-bud domain size** — *scenario*. A shorter outgrowth window means a smaller paddle, but the model has no geometry. Converting one to the other needs a growth law we have not fitted.
-4. **Domain size → Skeletal element count** — *model*. This junction is inside the Turing model, which gives a critical domain size in units of its own pattern wavelength.
+4. **Domain size → Skeletal element count** — *model*. This junction is inside the Turing model, which gives a critical domain size of about 0.94 ± 0.10 of the pattern's own wavelength — and finds that every route to zero elements in it is the same geometric condition, the Turing-permissive region having to be at least about one wavelength across.
 
 > Two of the four junctions are within a single model and are explicit. Two cross between models and have no calibration behind them, so the end-to-end statement — “this allele gives that many digits” — is refused. The chain is a map of what would have to be measured, not a prediction.
 

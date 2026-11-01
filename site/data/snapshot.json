@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 9b11c9418569",
- "input_fingerprint": "9b11c9418569611f25d94a3b651bc78557b3e7bd4d3624f19780c7c265f50845",
+ "label": "snapshot of inputs 227342e7e329",
+ "input_fingerprint": "227342e7e329883bd0bec944d44bdc0900e907990f91fc31f48e0579fe85288b",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -4065,28 +4065,28 @@
   },
   {
    "path": "results/limbless-mouse/digit-turing.json",
-   "sha256": "e6be53adab03b70497409280a5c965d8c855697b4f73fdc5f5db8732ac7626fd",
-   "bytes": 52789
+   "sha256": "9560efbfeea04eee47ed6b478eddbbb46420638bc401018a1a3010ed9ed53472",
+   "bytes": 73588
   },
   {
    "path": "results/limbless-mouse/figures/digit-turing-domain.png",
-   "sha256": "f026d559e868aed075b61474ac0f725785d85ee272c8ce1af09c2c9cd370e118",
-   "bytes": 81539
+   "sha256": "773f0187e2ebe7c670b8027650264e7b848d263cbfa639166086eae1390671e7",
+   "bytes": 173667
   },
   {
    "path": "results/limbless-mouse/figures/digit-turing-normal.png",
-   "sha256": "ec7166c05e084ad89a1f2cb4d67c2ec3218a151d0826004fa2452621e78710e5",
-   "bytes": 102618
+   "sha256": "c171e408d560c9e3c84c99e707a707dc2de45fa2661e7b218e8e2c215174acff",
+   "bytes": 156815
   },
   {
    "path": "results/limbless-mouse/figures/digit-turing-series.png",
-   "sha256": "079d9e5fcd4e80d505263c7279f50d9863dae08d0f446b0dae0bcb1f2a2b1ada",
-   "bytes": 103811
+   "sha256": "247fa2d4e891bd3df6140c682207b056e43cbbf4043ffbe82d95f5abecdaa0e2",
+   "bytes": 109221
   },
   {
    "path": "results/limbless-mouse/figures/digit-turing.mp4",
-   "sha256": "2b8bea5304fc83275bb616988c1c072ea32b691b45ae9026a0dae70e1c981ba9",
-   "bytes": 53997
+   "sha256": "ff90d962cfc4a5b7217b14542c927ddc289b3dd8d1d0ae199e4753b28196ac25",
+   "bytes": 119681
   },
   {
    "path": "results/limbless-mouse/figures/shh-loop-control.png",
@@ -4110,8 +4110,8 @@
   },
   {
    "path": "results/limbless-mouse/index.json",
-   "sha256": "7b6b027040c3945d9bdd96ef0a1e155940418232b6ca28bf0b77b5de821ae25d",
-   "bytes": 7836
+   "sha256": "1e135d0054cefce817a97bfc187b5cb89ad184712b1cfb97e6a7c680123315e5",
+   "bytes": 9152
   },
   {
    "path": "results/limbless-mouse/routes.json",
@@ -4210,8 +4210,8 @@
   },
   {
    "path": "site/content/limbless-mouse.json",
-   "sha256": "58d3944d82942b4dc8c711a8dc7e5aaaf10224e34fb7ae2f739cd9e85850d50d",
-   "bytes": 7991
+   "sha256": "e996486ba18e03f27f77cf9994b713619b27e44da16f8df248cd87ce4dc5e4cb",
+   "bytes": 8172
   },
   {
    "path": "site/content/mission.json",
@@ -75654,7 +75654,7 @@
      "from": "Domain size",
      "to": "Skeletal element count",
      "status": "model",
-     "note": "This junction is inside the Turing model, which gives a critical domain size in units of its own pattern wavelength."
+     "note": "This junction is inside the Turing model, which gives a critical domain size of about 0.94 ± 0.10 of the pattern's own wavelength — and finds that every route to zero elements in it is the same geometric condition, the Turing-permissive region having to be at least about one wavelength across."
     }
    ],
    "verdict": "Two of the four junctions are within a single model and are explicit. Two cross between models and have no calibration behind them, so the end-to-end statement — “this allele gives that many digits” — is refused. The chain is a map of what would have to be measured, not a prediction."
@@ -75670,8 +75670,8 @@
    "title": "Why this is on a design platform and not in a review article",
    "text": "The useful thing here is not the list — a specialist could write the list. It is that every row carries its evidence level, every junction between scales carries a refusal or a label, and the three models can be re-run from the repository. The question “can you make a limbless mouse?” has a dozen answers whose differences only show up when you are forced to say which phenotype, at which scale, with what evidence, and at what cost. That is what this workspace is for."
   },
-  "content_sha256": "58d3944d82942b4dc8c711a8dc7e5aaaf10224e34fb7ae2f739cd9e85850d50d",
-  "index_sha256": "7b6b027040c3945d9bdd96ef0a1e155940418232b6ca28bf0b77b5de821ae25d",
+  "content_sha256": "e996486ba18e03f27f77cf9994b713619b27e44da16f8df248cd87ce4dc5e4cb",
+  "index_sha256": "1e135d0054cefce817a97bfc187b5cb89ad184712b1cfb97e6a7c680123315e5",
   "generated_at": null,
   "routes": {
    "title": "Routes to a limbless or limb-reduced mouse",
@@ -88702,11 +88702,11 @@
     "scale": "pattern",
     "kind": "simulation (reaction–diffusion)",
     "question": "If a truncated bud is a smaller field, how small does the field have to get before it patterns no complete skeletal element at all?",
-    "summary": "A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shaped domain, with its own linear-stability analysis as an internal control. Element counts come from a pre-declared objective criterion, not from looking at the pictures, and the spread across random seeds is reported because Turing patterns are seed-dependent.",
-    "code": "results/limbless-mouse/code/digit_turing.py",
+    "summary": "A two-dimensional BMP–SOX9–WNT reaction–diffusion model on a limb-bud-shaped domain with a proximodistal FGF gradient, with its own linear-stability analysis as an internal control. Element counts come from a pre-declared objective criterion, not from looking at the pictures, and the spread across random seeds is reported because Turing patterns are seed-dependent. The strongest result is a unification: in this model every route to zero skeletal elements is the same geometric condition — the Turing-permissive region has to be at least about one wavelength across. Shrinking the bud shrinks that region in space; de-tuning the network shrinks it in parameter space, and the FGF gradient maps parameter space onto the proximodistal axis, so it shrinks in space too. Eleven of its 20 parameters are sourced, and they are sourced from a catshark fin rather than a mouse.",
+    "code": "results/limbless-mouse/code/digit_turing.py (--figures redraws from digit-turing-results-cache.json without re-running the 179 simulations)",
     "data": {
      "what_this_is": "A SIMULATION of skeletal-element patterning by a Bmp-Sox9-Wnt Turing network in a limb-bud-shaped domain. No value in this file is an observation, a measurement, or a reproduction of published data. The element counts, wavelengths and critical domain size are properties of this model at these parameters and nothing else.",
-     "generated": "2026-11-01T12:33:11-0800",
+     "generated": "2026-11-01T13:26:38-0800",
      "model": {
       "name": "BSW (Bmp-Sox9-Wnt) Turing network with a proximodistal Fgf gradient",
       "variables": [
@@ -89015,14 +89015,37 @@
      },
      "measured_wavelength": {
       "two_d_AP_element_spacing": 81.05195896813565,
-      "one_d_uniform_control_linear_regime": 45.45454545454546,
-      "one_d_uniform_control_saturated": 125.0,
+      "two_d_measurement": "mean spacing between the anteroposterior centroids of adjacent counted elements, averaged over the 6 wild-type seeds. This is the pattern's own wavelength and it is the one used for the critical domain size.",
+      "one_d_uniform_control": [
+       {
+        "F": 0.62,
+        "lambda_lsa": 42.80073394006878,
+        "lambda_sim_linear": 45.45454545454546,
+        "lambda_sim_saturated": 125.0,
+        "amplitude": 7.1216188039087065
+       },
+       {
+        "F": 0.45,
+        "lambda_lsa": 38.21868810493766,
+        "lambda_sim_linear": 45.45454545454546,
+        "lambda_sim_saturated": 93.75,
+        "amplitude": 4.785402797938014
+       },
+       {
+        "F": 0.3,
+        "lambda_lsa": 34.14758910627251,
+        "lambda_sim_linear": 30.612244897959187,
+        "lambda_sim_saturated": 60.0,
+        "amplitude": 2.4364541199617795
+       }
+      ],
+      "one_d_uniform_control_note": "1-D periodic domain of length 1500 at a uniform Fgf level, spectral diffusion, probed at t=2 (still linear) and at t=160 (saturated). The three F values span the Turing-permissive band of the 2-D paddle.",
       "units": "model length units",
       "comparison_to_linear_prediction": {
        "lambda_linear_LSA": 42.80073394006878,
        "ratio_saturated_over_linear": 2.9205106663598284,
        "ratio_2D_measured_over_linear": 1.8937048855663945,
-       "verdict": "THEY DISAGREE, by a factor of about two, and the disagreement is reported rather than tuned away. The linear analysis predicts the FASTEST-GROWING mode at onset; the simulated pattern then coarsens and the coarsening arrests at a longer, nonlinearly selected wavelength. The agreement that does hold is in the LINEAR regime: a 1-D uniform-domain run probed at t = 2, while the amplitude is still small, has a dominant wavelength close to the LSA value. Coarsening was measured to arrest by t ~ 40 and the wavelength was then unchanged out to t = 320."
+       "verdict": "THEY DISAGREE, by a factor of about two, and the disagreement is reported rather than tuned away. The linear analysis predicts the FASTEST-GROWING mode at onset; the simulated pattern then coarsens and the coarsening arrests at a longer, nonlinearly selected wavelength. The agreement that does hold is in the LINEAR regime: a 1-D uniform-domain run probed at t = 2, while the amplitude is still small, has a dominant wavelength close to the LSA value (45 against 43 at F=0.62). Coarsening was measured to arrest by t ~ 40 and the wavelength was then unchanged out to t = 320. The 2-D measured spacing is shorter than the 1-D saturated wavelength at F = 0.62 because the 2-D permissive band spans a range of F, not just its distal maximum, and is only about one wavelength deep."
       }
      },
      "sweeps": {
@@ -89038,6 +89061,12 @@
         ],
         "n_seeds": 3,
         "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
+         7,
+         9,
+         11
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "increased (polydactyl-like)",
          "increased (polydactyl-like)",
@@ -89052,15 +89081,21 @@
        },
        {
         "value": 0.4,
-        "element_count_mean": 7.666666666666667,
+        "element_count_mean": 6.666666666666667,
         "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         7,
+         7,
+         6
+        ],
+        "n_seeds": 3,
+        "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
          8,
          7,
          8
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "increased (polydactyl-like)",
          "increased (polydactyl-like)",
@@ -89071,19 +89106,25 @@
         "amplitude_mean": 5.507027925306521,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 58.129774986917845
+        "ap_spacing": 64.58021428343652
        },
        {
         "value": 0.6,
-        "element_count_mean": 6.333333333333333,
-        "element_count_sd": 0.4714045207910317,
+        "element_count_mean": 6.0,
+        "element_count_sd": 0.0,
         "element_counts": [
          6,
-         7,
+         6,
          6
         ],
         "n_seeds": 3,
         "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
+         6,
+         7,
+         6
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "increased (polydactyl-like)",
          "increased (polydactyl-like)",
@@ -89094,21 +89135,27 @@
         "amplitude_mean": 5.368825527186869,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 69.3095167259641
+        "ap_spacing": 73.35852814339658
        },
        {
         "value": 0.8,
-        "element_count_mean": 6.0,
-        "element_count_sd": 0.0,
+        "element_count_mean": 5.666666666666667,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
-         6,
+         5,
          6,
          6
         ],
         "n_seeds": 3,
         "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
+         6,
+         6,
+         6
+        ],
+        "fused_fraction": 0.0,
         "classes": [
-         "increased (polydactyl-like)",
+         "normal digit number",
          "increased (polydactyl-like)",
          "increased (polydactyl-like)"
         ],
@@ -89117,30 +89164,36 @@
         "amplitude_mean": 5.303338098627915,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 75.59493270680386
+        "ap_spacing": 81.72319529388997
        },
        {
         "value": 1.0,
-        "element_count_mean": 6.0,
-        "element_count_sd": 0.816496580927726,
+        "element_count_mean": 4.666666666666667,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         5,
+         4,
+         5
+        ],
+        "n_seeds": 3,
+        "cls": "normal digit number",
+        "element_counts_linear_rule": [
          5,
          7,
          6
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "normal digit number",
-         "increased (polydactyl-like)",
-         "increased (polydactyl-like)"
+         "reduced",
+         "normal digit number"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
         "amplitude_mean": 5.294780919932467,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 77.5427979519642
+        "ap_spacing": 94.06385327225867
        },
        {
         "value": 1.5,
@@ -89153,6 +89206,12 @@
         ],
         "n_seeds": 3,
         "cls": "reduced",
+        "element_counts_linear_rule": [
+         3,
+         3,
+         4
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "reduced",
          "reduced",
@@ -89167,15 +89226,21 @@
        },
        {
         "value": 2.0,
-        "element_count_mean": 3.3333333333333335,
-        "element_count_sd": 0.4714045207910317,
+        "element_count_mean": 3.0,
+        "element_count_sd": 0.0,
         "element_counts": [
          3,
-         4,
+         3,
          3
         ],
         "n_seeds": 3,
         "cls": "reduced",
+        "element_counts_linear_rule": [
+         3,
+         4,
+         3
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "reduced",
          "reduced",
@@ -89186,21 +89251,27 @@
         "amplitude_mean": 5.0145480206664725,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 136.74730828142597
+        "ap_spacing": 154.47339665049682
        }
       ],
       "fgf_strength_kF": [
        {
         "value": 0.3,
-        "element_count_mean": 9.666666666666666,
+        "element_count_mean": 7.666666666666667,
         "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         8,
+         7,
+         8
+        ],
+        "n_seeds": 3,
+        "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
          9,
          10,
          10
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "increased (polydactyl-like)",
          "increased (polydactyl-like)",
@@ -89211,19 +89282,25 @@
         "amplitude_mean": 1.268334492369818,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 44.65434681993821
+        "ap_spacing": 50.01571721959868
        },
        {
         "value": 0.45,
-        "element_count_mean": 6.666666666666667,
-        "element_count_sd": 0.4714045207910317,
+        "element_count_mean": 6.0,
+        "element_count_sd": 0.0,
         "element_counts": [
-         7,
-         7,
+         6,
+         6,
          6
         ],
         "n_seeds": 3,
         "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
+         7,
+         7,
+         6
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "increased (polydactyl-like)",
          "increased (polydactyl-like)",
@@ -89234,22 +89311,28 @@
         "amplitude_mean": 3.063655447688388,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 66.09889300135201
+        "ap_spacing": 74.27693999989081
        },
        {
         "value": 0.6,
-        "element_count_mean": 6.0,
-        "element_count_sd": 0.816496580927726,
+        "element_count_mean": 5.333333333333333,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         5,
+         5,
+         6
+        ],
+        "n_seeds": 3,
+        "cls": "normal digit number",
+        "element_counts_linear_rule": [
          5,
          7,
          6
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "normal digit number",
-         "increased (polydactyl-like)",
+         "normal digit number",
          "increased (polydactyl-like)"
         ],
         "lambda_pred": 41.01272539433507,
@@ -89257,93 +89340,210 @@
         "amplitude_mean": 4.616572389097497,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 77.83177684535104
+        "ap_spacing": 88.35579682038225
        },
        {
         "value": 0.667,
-        "element_count_mean": 6.0,
-        "element_count_sd": 0.816496580927726,
+        "element_count_mean": 4.666666666666667,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         5,
+         4,
+         5
+        ],
+        "n_seeds": 3,
+        "cls": "normal digit number",
+        "element_counts_linear_rule": [
          5,
          7,
          6
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "normal digit number",
-         "increased (polydactyl-like)",
-         "increased (polydactyl-like)"
+         "reduced",
+         "normal digit number"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
         "amplitude_mean": 5.294780919932467,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 77.5427979519642
+        "ap_spacing": 94.06385327225867
        },
        {
         "value": 0.8,
-        "element_count_mean": 3.6666666666666665,
-        "element_count_sd": 1.699673171197595,
+        "element_count_mean": 3.3333333333333335,
+        "element_count_sd": 1.247219128924647,
         "element_counts": [
+         2,
+         3,
+         5
+        ],
+        "n_seeds": 3,
+        "cls": "reduced",
+        "element_counts_linear_rule": [
          2,
          3,
          6
         ],
-        "n_seeds": 3,
-        "cls": "reduced",
+        "fused_fraction": 0.0,
         "classes": [
          "reduced",
          "reduced",
-         "increased (polydactyl-like)"
+         "normal digit number"
         ],
         "lambda_pred": 44.75175065088149,
         "lsa_turing": true,
         "amplitude_mean": 6.455285790726935,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 146.08915162220606
+        "ap_spacing": 152.3283950661606
        },
        {
         "value": 0.95,
-        "element_count_mean": 4.0,
-        "element_count_sd": 0.816496580927726,
+        "element_count_mean": 3.6666666666666665,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         3,
+         4,
+         4
+        ],
+        "n_seeds": 3,
+        "cls": "reduced",
+        "element_counts_linear_rule": [
          3,
          4,
          5
         ],
-        "n_seeds": 3,
-        "cls": "reduced",
+        "fused_fraction": 0.0,
         "classes": [
          "reduced",
          "reduced",
-         "normal digit number"
+         "reduced"
         ],
         "lambda_pred": 44.624615898569736,
         "lsa_turing": true,
         "amplitude_mean": 7.773866045058543,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 112.16897914668705
+        "ap_spacing": 122.20442563612129
        }
       ],
       "domain_scale": [
        {
-        "value": 0.12,
-        "element_count_mean": 0.6666666666666666,
-        "element_count_sd": 0.4714045207910317,
+        "value": 0.05,
+        "element_count_mean": 0.0,
+        "element_count_sd": 0.0,
         "element_counts": [
+         0,
+         0,
+         0
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
+         0,
+         0,
+         0
+        ],
+        "fused_fraction": 0.0,
+        "classes": [
+         "none",
+         "none",
+         "none"
+        ],
+        "lambda_pred": 42.80073394006878,
+        "lsa_turing": true,
+        "amplitude_mean": 1.014011944698862,
+        "ap_extent": 20.0,
+        "pd_extent": 12.0,
+        "ap_spacing": null,
+        "ap_extent_in_wavelengths": 0.24675529443850577,
+        "pd_extent_in_wavelengths": 0.14805317666310347
+       },
+       {
+        "value": 0.08,
+        "element_count_mean": 0.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         0,
+         0,
+         0
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
+         0,
+         0,
+         0
+        ],
+        "fused_fraction": 0.0,
+        "classes": [
+         "none",
+         "none",
+         "none"
+        ],
+        "lambda_pred": 42.80073394006878,
+        "lsa_turing": true,
+        "amplitude_mean": 1.4412754508494878,
+        "ap_extent": 32.0,
+        "pd_extent": 20.0,
+        "ap_spacing": null,
+        "ap_extent_in_wavelengths": 0.3948084711016092,
+        "pd_extent_in_wavelengths": 0.24675529443850577
+       },
+       {
+        "value": 0.1,
+        "element_count_mean": 0.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         0,
+         0,
+         0
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 0.0,
+        "classes": [
+         "none",
+         "none",
+         "none"
+        ],
+        "lambda_pred": 42.80073394006878,
+        "lsa_turing": true,
+        "amplitude_mean": 2.4986516880073677,
+        "ap_extent": 40.0,
+        "pd_extent": 28.0,
+        "ap_spacing": null,
+        "ap_extent_in_wavelengths": 0.49351058887701155,
+        "pd_extent_in_wavelengths": 0.3454574122139081
+       },
+       {
+        "value": 0.12,
+        "element_count_mean": 0.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         0,
+         0,
+         0
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
          1,
          1,
          0
         ],
-        "n_seeds": 3,
-        "cls": "single element",
+        "fused_fraction": 0.0,
         "classes": [
-         "single element",
-         "single element",
+         "none",
+         "none",
          "none"
         ],
         "lambda_pred": 42.80073394006878,
@@ -89357,68 +89557,86 @@
        },
        {
         "value": 0.16,
-        "element_count_mean": 1.3333333333333333,
-        "element_count_sd": 0.4714045207910317,
+        "element_count_mean": 0.0,
+        "element_count_sd": 0.0,
         "element_counts": [
+         0,
+         0,
+         0
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
          1,
          1,
          2
         ],
-        "n_seeds": 3,
-        "cls": "single element",
+        "fused_fraction": 0.0,
         "classes": [
-         "single element",
-         "single element",
-         "reduced"
+         "none",
+         "none",
+         "none"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
         "amplitude_mean": 3.0778214478928376,
         "ap_extent": 68.0,
         "pd_extent": 48.0,
-        "ap_spacing": 48.54117647058824,
+        "ap_spacing": null,
         "ap_extent_in_wavelengths": 0.8389680010909196,
         "pd_extent_in_wavelengths": 0.5922127066524139
        },
        {
         "value": 0.2,
-        "element_count_mean": 1.6666666666666667,
+        "element_count_mean": 0.3333333333333333,
         "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         0,
+         0,
+         1
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
          2,
          2,
          1
         ],
-        "n_seeds": 3,
-        "cls": "reduced",
+        "fused_fraction": 0.3333333333333333,
         "classes": [
-         "reduced",
-         "reduced",
-         "single element"
+         "none",
+         "none",
+         "single fused domain"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
         "amplitude_mean": 3.2997974355999595,
         "ap_extent": 84.0,
         "pd_extent": 60.0,
-        "ap_spacing": 54.82954545454545,
+        "ap_spacing": null,
         "ap_extent_in_wavelengths": 1.0363722366417243,
         "pd_extent_in_wavelengths": 0.7402658833155172
        },
        {
         "value": 0.25,
-        "element_count_mean": 1.3333333333333333,
-        "element_count_sd": 0.4714045207910317,
+        "element_count_mean": 1.0,
+        "element_count_sd": 0.0,
         "element_counts": [
          1,
-         2,
+         1,
          1
         ],
         "n_seeds": 3,
         "cls": "single element",
+        "element_counts_linear_rule": [
+         1,
+         2,
+         1
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "single element",
-         "reduced",
+         "single element",
          "single element"
         ],
         "lambda_pred": 42.80073394006878,
@@ -89426,32 +89644,38 @@
         "amplitude_mean": 3.8563799419178717,
         "ap_extent": 108.0,
         "pd_extent": 72.0,
-        "ap_spacing": 64.63201094391245,
+        "ap_spacing": null,
         "ap_extent_in_wavelengths": 1.332478589967931,
         "pd_extent_in_wavelengths": 0.8883190599786207
        },
        {
         "value": 0.3,
-        "element_count_mean": 1.6666666666666667,
+        "element_count_mean": 1.3333333333333333,
         "element_count_sd": 0.4714045207910317,
         "element_counts": [
          1,
          2,
-         2
+         1
         ],
         "n_seeds": 3,
-        "cls": "reduced",
+        "cls": "single element",
+        "element_counts_linear_rule": [
+         1,
+         2,
+         2
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "single element",
          "reduced",
-         "reduced"
+         "single element"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
         "amplitude_mean": 4.1644274375911285,
         "ap_extent": 128.0,
         "pd_extent": 88.0,
-        "ap_spacing": 79.02809224318659,
+        "ap_spacing": 88.62222222222223,
         "ap_extent_in_wavelengths": 1.5792338844064369,
         "pd_extent_in_wavelengths": 1.0857232955294254
        },
@@ -89466,6 +89690,12 @@
         ],
         "n_seeds": 3,
         "cls": "reduced",
+        "element_counts_linear_rule": [
+         2,
+         2,
+         2
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "reduced",
          "reduced",
@@ -89482,15 +89712,21 @@
        },
        {
         "value": 0.5,
-        "element_count_mean": 2.6666666666666665,
+        "element_count_mean": 2.3333333333333335,
         "element_count_sd": 0.4714045207910317,
         "element_counts": [
          2,
-         3,
+         2,
          3
         ],
         "n_seeds": 3,
         "cls": "reduced",
+        "element_counts_linear_rule": [
+         2,
+         3,
+         3
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "reduced",
          "reduced",
@@ -89501,21 +89737,27 @@
         "amplitude_mean": 4.916371740630288,
         "ap_extent": 208.0,
         "pd_extent": 148.0,
-        "ap_spacing": 87.95494215680121,
+        "ap_spacing": 109.03607371173426,
         "ap_extent_in_wavelengths": 2.56625506216046,
         "pd_extent_in_wavelengths": 1.8259891788449427
        },
        {
         "value": 0.65,
-        "element_count_mean": 3.3333333333333335,
-        "element_count_sd": 0.4714045207910317,
+        "element_count_mean": 3.0,
+        "element_count_sd": 0.0,
         "element_counts": [
-         4,
+         3,
          3,
          3
         ],
         "n_seeds": 3,
         "cls": "reduced",
+        "element_counts_linear_rule": [
+         4,
+         3,
+         3
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "reduced",
          "reduced",
@@ -89526,23 +89768,29 @@
         "amplitude_mean": 5.055474197822002,
         "ap_extent": 276.0,
         "pd_extent": 192.0,
-        "ap_spacing": 93.72417357613112,
+        "ap_spacing": 106.19075793827103,
         "ap_extent_in_wavelengths": 3.4052230632513796,
         "pd_extent_in_wavelengths": 2.3688508266096555
        },
        {
         "value": 0.8,
-        "element_count_mean": 4.333333333333333,
+        "element_count_mean": 3.3333333333333335,
         "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         4,
+         3,
+         3
+        ],
+        "n_seeds": 3,
+        "cls": "reduced",
+        "element_counts_linear_rule": [
          5,
          4,
          4
         ],
-        "n_seeds": 3,
-        "cls": "reduced",
+        "fused_fraction": 0.0,
         "classes": [
-         "normal digit number",
+         "reduced",
          "reduced",
          "reduced"
         ],
@@ -89551,46 +89799,58 @@
         "amplitude_mean": 5.09270194798929,
         "ap_extent": 332.0,
         "pd_extent": 236.0,
-        "ap_spacing": 76.18650557968179,
+        "ap_spacing": 110.23153646340603,
         "ap_extent_in_wavelengths": 4.096137887679196,
         "pd_extent_in_wavelengths": 2.911712474374368
        },
        {
         "value": 1.0,
-        "element_count_mean": 6.0,
-        "element_count_sd": 0.816496580927726,
+        "element_count_mean": 4.666666666666667,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         5,
+         4,
+         5
+        ],
+        "n_seeds": 3,
+        "cls": "normal digit number",
+        "element_counts_linear_rule": [
          5,
          7,
          6
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "normal digit number",
-         "increased (polydactyl-like)",
-         "increased (polydactyl-like)"
+         "reduced",
+         "normal digit number"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
         "amplitude_mean": 5.294780919932467,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 77.5427979519642,
+        "ap_spacing": 94.06385327225867,
         "ap_extent_in_wavelengths": 5.181861183208621,
         "pd_extent_in_wavelengths": 3.6519783576898854
        },
        {
         "value": 1.25,
-        "element_count_mean": 7.333333333333333,
+        "element_count_mean": 6.333333333333333,
         "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         6,
+         7,
+         6
+        ],
+        "n_seeds": 3,
+        "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
          7,
          7,
          8
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "increased (polydactyl-like)",
          "increased (polydactyl-like)",
@@ -89601,218 +89861,243 @@
         "amplitude_mean": 5.516858434706022,
         "ap_extent": 524.0,
         "pd_extent": 368.0,
-        "ap_spacing": 75.45145969153722,
+        "ap_spacing": 90.05636336675366,
         "ap_extent_in_wavelengths": 6.464988714288851,
         "pd_extent_in_wavelengths": 4.540297417668506
        }
       ],
-      "bmp_to_sox9_k2": [
-       {
-        "value": 0.3,
-        "element_count_mean": 1.0,
-        "element_count_sd": 0.0,
-        "element_counts": [
-         1,
-         1,
-         1
-        ],
-        "n_seeds": 3,
-        "cls": "single element",
-        "classes": [
-         "single element",
-         "single element",
-         "single element"
-        ],
-        "lambda_pred": 54.35238919322853,
-        "lsa_turing": true,
-        "amplitude_mean": 5.53788935490578,
-        "ap_extent": 420.0,
-        "pd_extent": 296.0,
-        "ap_spacing": null
-       },
+      "bmp_sox9_coupling_balanced": [
        {
         "value": 0.5,
-        "element_count_mean": 1.0,
-        "element_count_sd": 0.0,
+        "element_count_mean": 3.3333333333333335,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
-         1,
-         1,
-         1
+         3,
+         3,
+         4
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "reduced",
+        "element_counts_linear_rule": [
+         4,
+         3,
+         4
+        ],
+        "fused_fraction": 0.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "reduced",
+         "reduced",
+         "reduced"
         ],
         "lambda_pred": 49.55158510682417,
         "lsa_turing": true,
-        "amplitude_mean": 5.126002430462809,
+        "amplitude_mean": 6.76082446455404,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": null
+        "ap_spacing": 138.0320851261138
        },
        {
         "value": 0.7,
-        "element_count_mean": 1.0,
-        "element_count_sd": 0.0,
+        "element_count_mean": 2.6666666666666665,
+        "element_count_sd": 0.9428090415820634,
         "element_counts": [
-         1,
-         1,
-         1
+         2,
+         2,
+         4
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "reduced",
+        "element_counts_linear_rule": [
+         2,
+         2,
+         6
+        ],
+        "fused_fraction": 0.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "reduced",
+         "reduced",
+         "reduced"
         ],
         "lambda_pred": 47.02951731747902,
         "lsa_turing": true,
-        "amplitude_mean": 4.726466253840052,
+        "amplitude_mean": 6.072206137961224,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": null
+        "ap_spacing": 178.24348673585015
        },
        {
         "value": 0.85,
-        "element_count_mean": 1.0,
-        "element_count_sd": 0.0,
+        "element_count_mean": 4.333333333333333,
+        "element_count_sd": 0.9428090415820634,
         "element_counts": [
-         1,
-         1,
-         1
+         5,
+         3,
+         5
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "normal digit number",
+        "element_counts_linear_rule": [
+         5,
+         6,
+         5
+        ],
+        "fused_fraction": 0.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "normal digit number",
+         "reduced",
+         "normal digit number"
         ],
         "lambda_pred": 45.79551565319161,
         "lsa_turing": true,
-        "amplitude_mean": 4.442976343589692,
+        "amplitude_mean": 5.6946250021598175,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": null
+        "ap_spacing": 103.54591853397862
        },
        {
         "value": 1.0,
-        "element_count_mean": 6.0,
-        "element_count_sd": 0.816496580927726,
+        "element_count_mean": 4.666666666666667,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         5,
+         4,
+         5
+        ],
+        "n_seeds": 3,
+        "cls": "normal digit number",
+        "element_counts_linear_rule": [
          5,
          7,
          6
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "normal digit number",
-         "increased (polydactyl-like)",
-         "increased (polydactyl-like)"
+         "reduced",
+         "normal digit number"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
         "amplitude_mean": 5.294780919932467,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 77.5427979519642
+        "ap_spacing": 94.06385327225867
        },
        {
         "value": 1.5,
-        "element_count_mean": 1.0,
+        "element_count_mean": 6.0,
         "element_count_sd": 0.0,
         "element_counts": [
-         1,
-         1,
-         1
+         6,
+         6,
+         6
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
+         6,
+         6,
+         6
+        ],
+        "fused_fraction": 0.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "increased (polydactyl-like)",
+         "increased (polydactyl-like)",
+         "increased (polydactyl-like)"
         ],
         "lambda_pred": 36.615116130682175,
         "lsa_turing": true,
-        "amplitude_mean": 3.34492330361037,
+        "amplitude_mean": 4.146034982761009,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": null
+        "ap_spacing": 75.53550747619568
        },
        {
         "value": 2.0,
-        "element_count_mean": 1.0,
-        "element_count_sd": 0.0,
+        "element_count_mean": 6.333333333333333,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
-         1,
-         1,
-         1
+         7,
+         6,
+         6
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
+         7,
+         7,
+         6
+        ],
+        "fused_fraction": 0.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "increased (polydactyl-like)",
+         "increased (polydactyl-like)",
+         "increased (polydactyl-like)"
         ],
         "lambda_pred": 32.99977701348315,
         "lsa_turing": true,
-        "amplitude_mean": 2.6050254773625796,
+        "amplitude_mean": 3.2786405904708573,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": null
+        "ap_spacing": 69.88290356468038
        },
        {
         "value": 3.0,
-        "element_count_mean": 1.0,
-        "element_count_sd": 0.0,
+        "element_count_mean": 7.666666666666667,
+        "element_count_sd": 0.4714045207910317,
+        "element_counts": [
+         8,
+         7,
+         8
+        ],
+        "n_seeds": 3,
+        "cls": "increased (polydactyl-like)",
+        "element_counts_linear_rule": [
+         10,
+         9,
+         10
+        ],
+        "fused_fraction": 0.0,
+        "classes": [
+         "increased (polydactyl-like)",
+         "increased (polydactyl-like)",
+         "increased (polydactyl-like)"
+        ],
+        "lambda_pred": 28.353619988845164,
+        "lsa_turing": true,
+        "amplitude_mean": 1.7959577198777705,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": 50.389925965018314
+       },
+       {
+        "value": 4.0,
+        "element_count_mean": 1.6666666666666667,
+        "element_count_sd": 0.9428090415820634,
         "element_counts": [
          1,
-         1,
+         3,
          1
         ],
         "n_seeds": 3,
         "cls": "single element",
+        "element_counts_linear_rule": [
+         14,
+         12,
+         12
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "single element",
-         "single element",
+         "reduced",
          "single element"
-        ],
-        "lambda_pred": 28.353619988845164,
-        "lsa_turing": true,
-        "amplitude_mean": 1.4989268802547215,
-        "ap_extent": 420.0,
-        "pd_extent": 296.0,
-        "ap_spacing": null
-       },
-       {
-        "value": 4.0,
-        "element_count_mean": 3.0,
-        "element_count_sd": 0.0,
-        "element_counts": [
-         3,
-         3,
-         3
-        ],
-        "n_seeds": 3,
-        "cls": "reduced",
-        "classes": [
-         "reduced",
-         "reduced",
-         "reduced"
         ],
         "lambda_pred": 24.89368323877861,
         "lsa_turing": true,
-        "amplitude_mean": 0.5946961429503843,
+        "amplitude_mean": 0.6781390087413058,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 176.0
+        "ap_spacing": 51.41176470588235
        },
        {
         "value": 5.0,
@@ -89825,6 +90110,12 @@
         ],
         "n_seeds": 3,
         "cls": "none",
+        "element_counts_linear_rule": [
+         0,
+         0,
+         0
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "none",
          "none",
@@ -89832,7 +90123,36 @@
         ],
         "lambda_pred": 18.589266135769464,
         "lsa_turing": true,
-        "amplitude_mean": 0.04188413617340617,
+        "amplitude_mean": 8.194526141613565e-05,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": null
+       },
+       {
+        "value": 5.5,
+        "element_count_mean": 0.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         0,
+         0,
+         0
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
+         0,
+         0,
+         0
+        ],
+        "fused_fraction": 0.0,
+        "classes": [
+         "none",
+         "none",
+         "none"
+        ],
+        "lambda_pred": 5.235987755982989,
+        "lsa_turing": false,
+        "amplitude_mean": 4.7811909419789785e-12,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
         "ap_spacing": null
@@ -89848,6 +90168,217 @@
         ],
         "n_seeds": 3,
         "cls": "none",
+        "element_counts_linear_rule": [
+         0,
+         0,
+         0
+        ],
+        "fused_fraction": 0.0,
+        "classes": [
+         "none",
+         "none",
+         "none"
+        ],
+        "lambda_pred": 5.235987755982989,
+        "lsa_turing": false,
+        "amplitude_mean": 5.108683405096828e-14,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": null
+       },
+       {
+        "value": 7.0,
+        "element_count_mean": 0.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         0,
+         0,
+         0
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
+         0,
+         0,
+         0
+        ],
+        "fused_fraction": 0.0,
+        "classes": [
+         "none",
+         "none",
+         "none"
+        ],
+        "lambda_pred": 5.235987755982989,
+        "lsa_turing": false,
+        "amplitude_mean": 3.7898476898169023e-14,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": null
+       }
+      ],
+      "bmp_to_sox9_k2_alone": [
+       {
+        "value": 0.5,
+        "element_count_mean": 1.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         1,
+         1,
+         1
+        ],
+        "n_seeds": 3,
+        "cls": "single fused domain",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 1.0,
+        "classes": [
+         "single fused domain",
+         "single fused domain",
+         "single fused domain"
+        ],
+        "lambda_pred": 49.55158510682417,
+        "lsa_turing": true,
+        "amplitude_mean": 5.126002430462809,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": null
+       },
+       {
+        "value": 0.85,
+        "element_count_mean": 1.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         1,
+         1,
+         1
+        ],
+        "n_seeds": 3,
+        "cls": "single fused domain",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 1.0,
+        "classes": [
+         "single fused domain",
+         "single fused domain",
+         "single fused domain"
+        ],
+        "lambda_pred": 45.79551565319161,
+        "lsa_turing": true,
+        "amplitude_mean": 4.442976343589692,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": null
+       },
+       {
+        "value": 1.0,
+        "element_count_mean": 4.666666666666667,
+        "element_count_sd": 0.4714045207910317,
+        "element_counts": [
+         5,
+         4,
+         5
+        ],
+        "n_seeds": 3,
+        "cls": "normal digit number",
+        "element_counts_linear_rule": [
+         5,
+         7,
+         6
+        ],
+        "fused_fraction": 0.0,
+        "classes": [
+         "normal digit number",
+         "reduced",
+         "normal digit number"
+        ],
+        "lambda_pred": 42.80073394006878,
+        "lsa_turing": true,
+        "amplitude_mean": 5.294780919932467,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": 94.06385327225867
+       },
+       {
+        "value": 1.5,
+        "element_count_mean": 1.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         1,
+         1,
+         1
+        ],
+        "n_seeds": 3,
+        "cls": "single fused domain",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 1.0,
+        "classes": [
+         "single fused domain",
+         "single fused domain",
+         "single fused domain"
+        ],
+        "lambda_pred": 36.615116130682175,
+        "lsa_turing": true,
+        "amplitude_mean": 3.34492330361037,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": null
+       },
+       {
+        "value": 3.0,
+        "element_count_mean": 1.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         1,
+         1,
+         1
+        ],
+        "n_seeds": 3,
+        "cls": "single fused domain",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 1.0,
+        "classes": [
+         "single fused domain",
+         "single fused domain",
+         "single fused domain"
+        ],
+        "lambda_pred": 28.353619988845164,
+        "lsa_turing": true,
+        "amplitude_mean": 1.4989268802547215,
+        "ap_extent": 420.0,
+        "pd_extent": 296.0,
+        "ap_spacing": null
+       },
+       {
+        "value": 6.0,
+        "element_count_mean": 0.0,
+        "element_count_sd": 0.0,
+        "element_counts": [
+         0,
+         0,
+         0
+        ],
+        "n_seeds": 3,
+        "cls": "none",
+        "element_counts_linear_rule": [
+         0,
+         0,
+         0
+        ],
+        "fused_fraction": 0.0,
         "classes": [
          "none",
          "none",
@@ -89863,29 +90394,6 @@
       ],
       "wnt_production_alphaW_scale": [
        {
-        "value": 0.4,
-        "element_count_mean": 1.0,
-        "element_count_sd": 0.0,
-        "element_counts": [
-         1,
-         1,
-         1
-        ],
-        "n_seeds": 3,
-        "cls": "single element",
-        "classes": [
-         "single element",
-         "single element",
-         "single element"
-        ],
-        "lambda_pred": 42.80073394006878,
-        "lsa_turing": true,
-        "amplitude_mean": 4.164951420352883,
-        "ap_extent": 420.0,
-        "pd_extent": 296.0,
-        "ap_spacing": null
-       },
-       {
         "value": 0.6,
         "element_count_mean": 1.0,
         "element_count_sd": 0.0,
@@ -89895,11 +90403,17 @@
          1
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "single fused domain",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 1.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "single fused domain",
+         "single fused domain",
+         "single fused domain"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
@@ -89918,11 +90432,17 @@
          1
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "single fused domain",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 1.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "single fused domain",
+         "single fused domain",
+         "single fused domain"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
@@ -89933,26 +90453,32 @@
        },
        {
         "value": 1.0,
-        "element_count_mean": 6.0,
-        "element_count_sd": 0.816496580927726,
+        "element_count_mean": 4.666666666666667,
+        "element_count_sd": 0.4714045207910317,
         "element_counts": [
+         5,
+         4,
+         5
+        ],
+        "n_seeds": 3,
+        "cls": "normal digit number",
+        "element_counts_linear_rule": [
          5,
          7,
          6
         ],
-        "n_seeds": 3,
-        "cls": "increased (polydactyl-like)",
+        "fused_fraction": 0.0,
         "classes": [
          "normal digit number",
-         "increased (polydactyl-like)",
-         "increased (polydactyl-like)"
+         "reduced",
+         "normal digit number"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
         "amplitude_mean": 5.294780919932467,
         "ap_extent": 420.0,
         "pd_extent": 296.0,
-        "ap_spacing": 77.5427979519642
+        "ap_spacing": 94.06385327225867
        },
        {
         "value": 1.3,
@@ -89964,11 +90490,17 @@
          1
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "single fused domain",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 1.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "single fused domain",
+         "single fused domain",
+         "single fused domain"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
@@ -89987,11 +90519,17 @@
          1
         ],
         "n_seeds": 3,
-        "cls": "single element",
+        "cls": "single fused domain",
+        "element_counts_linear_rule": [
+         1,
+         1,
+         1
+        ],
+        "fused_fraction": 1.0,
         "classes": [
-         "single element",
-         "single element",
-         "single element"
+         "single fused domain",
+         "single fused domain",
+         "single fused domain"
         ],
         "lambda_pred": 42.80073394006878,
         "lsa_turing": true,
@@ -90006,17 +90544,27 @@
       "diffusion_scale": "D_B and D_W scaled together by this factor. lambda scales as sqrt(factor). This is the WAVELENGTH KNOB. Direction check: shorter wavelength should give MORE, thinner elements, which is the direction sheth2012 reports for progressive loss of distal Hox dose (read at abstract level; no number taken from it).",
       "fgf_strength_kF": "Strength of the Fgf modulation of k4 and k7. Moves the system through the Turing window and changes where the permissive band sits.",
       "domain_scale": "Linear scale factor on the whole paddle, Fgf gradient scaling with it. This is the bridge to a truncated limb bud.",
-      "bmp_to_sox9_k2": "Strength of Bmp activation of Sox9. onimaru2016 perturb exactly this parameter to represent Bmp inhibition and report that the distal-most Sox9 spots fail to form. It is two-sided here: too small and the uniform state loses stability at q = 0, too large and the long-range inhibition stabilises every wavenumber, so the Turing instability is lost on BOTH sides.",
-      "wnt_production_alphaW_scale": "Multiplier on alpha_W. onimaru2016 perturb Wnt production and report partial fusion of Sox9 into continuous domains, matched in vivo by a porcupine inhibitor."
+      "bmp_sox9_coupling_balanced": "THIS IS THE CRITICALITY KNOB. k2 and alpha_W are scaled by the same factor, which changes the Bmp->Sox9 coupling strength while leaving the operating point exactly at S* = 0 (the balance k2*alpha_B/k5 = k3*alpha_W/k9 is preserved under a common factor, and S* = 0 was verified at every value). The linear-stability growth rate falls monotonically from factor 0.85 upwards and the Turing instability is LOST at factor 5.5 (max Re sigma over all q and all F in the bud becomes negative). Above that the field stays at the homogeneous steady state: a uniform Sox9 field and no skeletal elements, with no change to the domain and no change to the wavelength mechanism.",
+      "bmp_to_sox9_k2_alone": "Strength of Bmp activation of Sox9, varied ON ITS OWN. onimaru2016 perturb exactly this parameter to represent Bmp inhibition. READ THIS ONE WITH CARE and prefer bmp_sox9_coupling_balanced: in this retuned model the homogeneous steady state sits at S* = 0 only when k2*alpha_B/k5 = k3*alpha_W/k9, which with the other values here means only at k2 = 1. Changing k2 alone therefore moves the operating point as well as the coupling, and the two effects cannot be separated. That is why every value except 1 collapses to a single fused domain. The sweep is kept because that fragility is a real property of the assumed operating point and hiding it would misrepresent the model.",
+      "wnt_production_alphaW_scale": "Multiplier on alpha_W, the constant Wnt production term. READ THIS ONE WITH CARE. onimaru2016 perturb Wnt production and report partial fusion of Sox9 into continuous domains, matched in vivo by a porcupine inhibitor, and that is what the fused class here looks like. BUT in this retuned model alpha_W also sets the operating point: S* = 0 only at the one value alpha_W = k2*alpha_B*k9/(k3*k5), and moving alpha_W moves S* away from zero, which switches the cubic self-damping -3S*^2 back on. So this sweep measures the FRAGILITY OF THE ASSUMED OPERATING POINT at least as much as it measures a Wnt perturbation, and the two cannot be separated in this parameterisation. It is reported because that fragility is a real and unflattering property of the choice made here, not because it is a clean perturbation."
+     },
+     "one_condition_behind_every_route_to_no_elements": {
+      "statement": "In this model every route to zero skeletal elements is the same geometric condition: the Turing-PERMISSIVE REGION must be at least about one wavelength across. Shrinking the bud shrinks that region in space; de-tuning the network shrinks it in parameter space, and therefore also in space, because the Fgf gradient maps parameter space onto the proximodistal axis.",
+      "evidence_from_the_domain_sweep": "Elements disappear below about 0.9 wavelengths of anteroposterior width.",
+      "evidence_from_the_coupling_sweep": "At Bmp-Sox9 coupling x5 the linear analysis still reports a Turing instability (max growth +0.31 per time unit), but the simulation forms nothing. The reason is geometric and is computable from the LSA: at that coupling the Turing window has narrowed to F in (0.596, 1.0), and with F_max = 0.62 and F = F_max*exp(-4*x_hat) over L_PD = 300, the permissive strip is only about 3.0 model length units deep, against a wavelength of 18.6 there - under a fifth of a wavelength, and narrower than one grid cell. At coupling x4 the strip is about 13.7 units against a wavelength of 24.9, roughly 0.55 wavelengths, and the counts are correspondingly marginal and seed-dependent (1, 3, 1).",
+      "consequence": "The simulated loss of pattern (coupling x5) comes BEFORE the formal loss of linear instability (x5.5). Both numbers are reported; the simulated one is the one that would be observable."
      },
      "critical_domain_size": {
-      "value": null,
+      "value": 0.9376701188663219,
       "units": "wavelengths",
-      "uncertainty": null,
+      "uncertainty": 0.09870211777540233,
       "axis": "anteroposterior width of the paddle at its widest point",
-      "pd_extent_at_the_same_point_in_wavelengths": null,
-      "definition": "Midpoint between the largest domain scale whose modal phenotype class is 'none' and the smallest whose class is not, expressed in units of the measured wavelength lambda_meas. The uncertainty is half that interval and is set by the spacing of the domain_scale grid, not by a fit.",
-      "reading": "Below roughly one wavelength of anteroposterior width the paddle cannot hold a complete element and the field is unpatterned. Because the Fgf gradient scales with the bud, the proximodistal permissive band shrinks at the same time, so both axes run out together; the AP figure is the one quoted."
+      "pd_extent_at_the_same_point_in_wavelengths": 0.6662392949839655,
+      "definition": "Midpoint between the largest domain scale with a mean element count of exactly zero and the smallest with a non-zero mean, expressed in units of the measured wavelength lambda_meas. The uncertainty is half that interval and is set by the spacing of the domain_scale grid, not by a fit.",
+      "value_under_the_original_counting_rule": 0.4441595299893104,
+      "uncertainty_under_the_original_counting_rule": 0.049351058887701166,
+      "rule_sensitivity": "THE CRITICAL SIZE DEPENDS ON THE COUNTING RULE, by about a factor of two, and both numbers are given. The revised rule requires a surviving component to be at least 0.10 * lambda_meas^2; the original required only 0.10 * lambda_lin^2, which is about four times smaller in area and so still counts a partial condensation in a bud too small to hold a whole one. Quote the range, not one end of it.",
+      "reading": "Somewhere between about half a wavelength and about one and a quarter wavelengths of anteroposterior width, the paddle stops being able to hold an element and the field is unpatterned. Because the Fgf gradient scales with the bud, the proximodistal permissive band shrinks at the same time, so both axes run out together; the AP figure is the one quoted and the PD extent at the same point is given beside it."
      },
      "refinement_arm": {
       "grid": {
@@ -90024,25 +90572,25 @@
         "condition": "wt",
         "baseline_counts": [
          5,
-         7
+         4
         ],
         "refined_counts": [
          4,
          4
         ],
-        "max_abs_difference": 3
+        "max_abs_difference": 1
        },
-       "k2=0.85": {
-        "condition": "k2=0.85",
+       "diffusion_scale=0.6": {
+        "condition": "diffusion_scale=0.6",
         "baseline_counts": [
-         1,
-         1
+         6,
+         6
         ],
         "refined_counts": [
-         1,
-         1
+         5,
+         5
         ],
-        "max_abs_difference": 0
+        "max_abs_difference": 1
        },
        "domain_scale=0.3": {
         "condition": "domain_scale=0.3",
@@ -90062,23 +90610,23 @@
         "condition": "wt",
         "baseline_counts": [
          5,
-         7
+         4
         ],
         "refined_counts": [
          5,
-         7
+         4
         ],
         "max_abs_difference": 0
        },
-       "k2=0.85": {
-        "condition": "k2=0.85",
+       "diffusion_scale=0.6": {
+        "condition": "diffusion_scale=0.6",
         "baseline_counts": [
-         1,
-         1
+         6,
+         6
         ],
         "refined_counts": [
-         1,
-         1
+         6,
+         6
         ],
         "max_abs_difference": 0
        },
@@ -90108,35 +90656,50 @@
        "pass": true
       },
       "no_initial_perturbation": {
-       "what": "full model, but the t=0 perturbation of S is omitted.",
-       "must_show": "the homogeneous steady state, no pattern",
+       "what": "full model, but the t=0 perturbation of S is omitted, so the field starts at the exact homogeneous steady state (verified analytically: S*=0, B*=alpha_B/k5, W*=alpha_W/k9 makes all three time derivatives vanish at every point, whatever the local Fgf level).",
+       "expected_when_designed": "a flat field",
        "amplitude": 5.219961791154859,
        "element_count": 5,
        "class": "normal digit number",
-       "pass": false
+       "result": "DID NOT STAY FLAT, and this is reported rather than quietly dropped.",
+       "interpretation": "The state is linearly UNSTABLE with max growth rate 8.18 per model time unit, and the run is 60 time units long, so double-precision rounding at the 1e-16 level is amplified by roughly exp(490) and saturates long before the end. A linearly unstable state cannot be held flat numerically, so this arm cannot test what it was designed to test. What it DOES establish is the converse: the pattern is not an artifact of the injected noise, because it forms without any. The arm that genuinely tests flatness is no_reaction (which passed), and the sub-critical end of bmp_sox9_coupling_balanced, which is linearly stable and does stay flat."
       },
       "per_step_noise": {
        "what": "dt-scaled additive Gaussian noise on S at every step instead of a single t=0 perturbation (the published scheme is 1% multiplicative noise per step, which vanishes identically at S*=0).",
        "must_show": "the same element counts as the default noise model",
        "counts": [
-        5,
-        5,
+        4,
+        4,
         5
        ],
-       "mean": 5.0,
-       "sd": 0.0,
+       "mean": 4.333333333333333,
+       "sd": 0.4714045207910317,
        "wt_counts_same_seeds": [
         5,
-        7,
-        6
+        4,
+        5
        ]
       },
-      "positive_control_for_the_counter": {
-       "what": "the counter must return 5 on the wild-type-like field and 0 on the no-reaction field; both arms are above.",
+      "positive_and_negative_control_for_the_counter": {
+       "what": "The counter is run against a case it must flag and a case it must not: the wild-type-like field (must return a multi-element count) and the no-reaction field (must return 0).",
+       "wild_type_mean_count": 4.166666666666667,
+       "no_reaction_count": 0,
        "pass": true
       }
      },
-     "classification_rule": "Applied to the Sox9 field S at t = T_end, on the masked domain. (1) AMPLITUDE GATE: if p99(S) - p1(S) < 0.05 model concentration units, or p99(S) <= 0, the field is called unpatterned, element_count = 0, class = 'none'. (2) THRESHOLD: Sox9-high = {S > 0.25 * p99(S)}. The homogeneous steady state is S* = 0 by construction, so this threshold is referenced to the known unpatterned baseline and the unpatterned background can never be counted as an element. (3) MINIMUM SIZE: connected components (4-connectivity) of the Sox9-high set with area >= 0.10 * lambda_pred^2, where lambda_pred is the linear-stability wavelength computed analytically for THAT condition, are counted as elements. (4) CLASS from the count n: n=0 -> 'none'; n=1 -> 'single element'; 2<=n<=4 -> 'reduced'; n=5 -> 'normal digit number'; n>=6 -> 'increased (polydactyl-like)'.",
+     "classification_rule": "Applied to the Sox9 field S at t = T_end, on the masked domain. (1) AMPLITUDE GATE: if p99(S) - p1(S) < 0.05 model concentration units, or p99(S) <= 0, the field is called unpatterned, element_count = 0, class = 'none'. (2) THRESHOLD: Sox9-high = {S > 0.25 * p99(S)}. The homogeneous steady state is S* = 0 by construction, so this threshold is referenced to the known unpatterned baseline and the unpatterned background can never be counted as an element. (3) MINIMUM SIZE: connected components (4-connectivity) of the Sox9-high set with area >= 0.10 * lambda_elem^2 are counted as elements, where lambda_elem = lambda_meas_WT * lambda_lin(condition) / lambda_lin(WT): the wavelength MEASURED in the wild-type runs, carried to each condition by that condition's analytic linear-stability wavelength. It uses no measurement from the run being counted. (4) CLASS from the count n: n=0 -> 'none'; n=1 -> 'single element', or 'single fused domain' if that one component spans more than 70% of the anteroposterior width; 2<=n<=4 -> 'reduced'; n=5 -> 'normal digit number'; n>=6 -> 'increased (polydactyl-like)'.",
+     "classification_rule_change": "The rule was declared before any sweep was run, and step (3) originally used lambda_lin(condition) itself rather than lambda_elem. It was CHANGED after the first full run, and the change is recorded here rather than quietly made. The reason is a defect in the specification, not a result I disliked: the linear-stability wavelength is about half the wavelength the saturated pattern actually has (measured, and reported under measured_wavelength), so a minimum area of 0.10 * lambda_lin^2 is four times too small and admits slivers at the anterior and posterior ends of the band as if they were elements. Every element count under the ORIGINAL rule is kept alongside, as element_counts_linear_rule in each sweep row and as sweeps_under_the_original_rule.wild_type. Under the original rule the wild-type count was [5, 7, 6, 5, 5, 4] (mean 5.33); under the revised rule it is [5, 4, 5, 4, 4, 3] (mean 4.17). The qualitative shape of every sweep is the same under both.",
+     "sweeps_under_the_original_rule": {
+      "wild_type": [
+       5,
+       7,
+       6,
+       5,
+       5,
+       4
+      ],
+      "note": "Per-condition counts under the original rule are in each sweep row as element_counts_linear_rule."
+     },
      "seeds": {
       "wild_type": [
        11,
@@ -90165,7 +90728,10 @@
       "All lengths are model length units. The model as published carries no physical length scale that I can verify, so no result here is in micrometres and no statement is made about the real size of any limb bud.",
       "The linear-stability wavelength and the simulated wavelength differ by a factor of about two (see measured_wavelength). The simulated value is the one used for the critical domain size.",
       "The classification into phenotype classes is a threshold rule on a simulated scalar field. It is objective and pre-declared, but 'normal digit number' here means 'five counted components in this simulation', not a mouse phenotype.",
-      "Only one noise model, one domain shape, and one gradient shape were explored. Turing element counts are sensitive to all three."
+      "Only one noise model, one domain shape, and one gradient shape were explored. Turing element counts are sensitive to all three.",
+      "THE ASSUMED OPERATING POINT IS FRAGILE. Because the steady state was placed at S* = 0 by balancing k2*alpha_B/k5 against k3*alpha_W/k9, any parameter change that breaks that balance moves S* off zero and switches the cubic self-damping back on. A 20% change in alpha_W alone, or a 15% change in k2 alone, collapses the five-element pattern to a single fused domain (see the wnt_production_alphaW_scale and bmp_to_sox9_k2_alone sweeps). The bmp_sox9_coupling_balanced sweep exists because it changes the coupling WITHOUT breaking that balance, and it is the one to read for criticality. The fragility is a property of this reparameterisation, not a claim about the published model.",
+      "THE ELEMENT COUNT DEPENDS ON THE MINIMUM-SIZE CUT by about one element, because the anterior-most and posterior-most condensations sit where the paddle narrows and are genuinely smaller. The wild-type count is 5.3 +/- 0.9 under the original rule and 4.2 +/- 0.7 under the revised one, over the same six seeds, and the critical domain size moves by about a factor of two between them. Treat one element as the resolution of this measurement.",
+      "The grid-refinement arm changes the element count by 1 in two of three conditions, which is the same one-element resolution; the dt-refinement arm changes nothing."
      ],
      "what_this_does_not_establish": [
       "It does not establish that any real limbless or limb-reduced animal, or any real mutant, lacks limbs because of a change in a Turing wavelength or a sub-critical patterning system. No animal was measured here.",
@@ -90205,11 +90771,12 @@
        "caveat": "Onimaru et al. apply this parameter set to a GROWING catshark pectoral fin mesh, where Sox9 forms spots. It is the same network as the mouse model but not the mouse parameter set, which was not obtainable (see raspopovic2014)."
       }
      ],
-     "runtime_seconds": 587.0,
+     "runtime_seconds": 61.4,
+     "runtime_note": "runtime_seconds is for THIS invocation. When the figures are redrawn from the cached simulation results (--figures) it does not include the simulations. The cached results came from a full run of 179 simulations on 5 worker processes, 437.0 s of wall clock to the end of the sweeps on a shared 8-core host.",
      "movie": "digit-turing.mp4"
     },
     "present": true,
-    "sha256": "e6be53adab03b70497409280a5c965d8c855697b4f73fdc5f5db8732ac7626fd",
+    "sha256": "9560efbfeea04eee47ed6b478eddbbb46420638bc401018a1a3010ed9ed53472",
     "figures": [
      {
       "file": "digit-turing-normal.png",
@@ -90217,26 +90784,26 @@
       "caption": "Simulation. The pattern the model makes in a full-size paddle.",
       "state": "present",
       "href": "artifacts/limbless-mouse/digit-turing-normal.png",
-      "sha256": "ec7166c05e084ad89a1f2cb4d67c2ec3218a151d0826004fa2452621e78710e5",
-      "bytes": 102618
+      "sha256": "c171e408d560c9e3c84c99e707a707dc2de45fa2661e7b218e8e2c215174acff",
+      "bytes": 156815
      },
      {
       "file": "digit-turing-series.png",
       "alt": "A strip of simulated patterns across the parameter sweep, from several elements down to none, each labelled with its element count",
-      "caption": "Simulation. The same model across the sweep, from several elements down to none.",
+      "caption": "Simulation. One network, seven settings, three different knobs, all panels on one spatial scale. Mean element count over the seeds run at each setting falls 6.7 → 4.7 → 3.0 → 2.3 → 1.0 → 0 → 0, from more elements than wild type through reduced and single-element to none. The large number on each panel is the one seed drawn; the mean and its spread are printed beside it, because a Turing pattern is seed-dependent and the single panel is not the measurement.",
       "state": "present",
       "href": "artifacts/limbless-mouse/digit-turing-series.png",
-      "sha256": "079d9e5fcd4e80d505263c7279f50d9863dae08d0f446b0dae0bcb1f2a2b1ada",
-      "bytes": 103811
+      "sha256": "247fa2d4e891bd3df6140c682207b056e43cbbf4043ffbe82d95f5abecdaa0e2",
+      "bytes": 109221
      },
      {
       "file": "digit-turing-domain.png",
       "alt": "Simulated element count against domain size, with the critical domain size marked",
-      "caption": "Simulation. Element count against domain size, in units of the pattern's own wavelength.",
+      "caption": "Simulation. Element count against the paddle's anteroposterior width, in units of the pattern's own measured wavelength. The field stops holding a complete element somewhere between about half a wavelength and about one and a quarter: 0.94 ± 0.10 under the counting rule used, 0.44 ± 0.05 under the rule declared first. The range is the honest answer, not either end of it.",
       "state": "present",
       "href": "artifacts/limbless-mouse/digit-turing-domain.png",
-      "sha256": "f026d559e868aed075b61474ac0f725785d85ee272c8ce1af09c2c9cd370e118",
-      "bytes": 81539
+      "sha256": "773f0187e2ebe7c670b8027650264e7b848d263cbfa639166086eae1390671e7",
+      "bytes": 173667
      },
      {
       "file": "digit-turing.mp4",
@@ -90245,8 +90812,8 @@
       "caption": "Simulation. The pattern forming in the full-size paddle, from the seeded noise it starts in. No sound.",
       "state": "present",
       "href": "artifacts/limbless-mouse/digit-turing.mp4",
-      "sha256": "2b8bea5304fc83275bb616988c1c072ea32b691b45ae9026a0dae70e1c981ba9",
-      "bytes": 53997
+      "sha256": "ff90d962cfc4a5b7217b14542c927ddc289b3dd8d1d0ae199e4753b28196ac25",
+      "bytes": 119681
      }
     ],
     "omitted_series": [],

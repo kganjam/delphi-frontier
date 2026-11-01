@@ -234,11 +234,18 @@
       ${(model.edges || []).length ? html`<details><summary><b>${model.edges.length} regulatory edges</b> <span class="faint small">each one's source, or marked assumed</span></summary><ul class="small">${model.edges.map((e) => html`<li><code>${e.from || e.source_node || "?"} → ${e.to || e.target || "?"}</code> ${e.sign ? U.pill(e.sign, e.sign === "activates" || e.sign === "+" ? "ok" : "no") : ""} ${e.note || e.description || ""} ${e.source && e.source !== "assumed" ? html`<span class="faint">[${e.source}]</span>` : U.pill("assumed", "warn")}</li>`)}</ul></details>` : ""}
       ${paramTable(model.parameters || d.parameters)}
       ${sweepTable(d)}
+      ${Object.keys(d).filter((k) => /^one_condition/.test(k)).map((k) => { const u = d[k] || {};
+        return html`<div class="lmcrit"><h4>What the sweeps have in common</h4><p class="lmhead">${u.statement || ""}</p>
+          ${Object.entries(u).filter(([kk]) => kk !== "statement").map(([kk, vv]) => html`<p class="small"><b>${kk.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase())}.</b> ${String(vv)}</p>`)}</div>`; })}
+      ${d.classification_rule_change ? html`<details><summary><b>The counting rule was changed after the first run</b> <span class="faint small">recorded rather than quietly made</span></summary><p class="small">${typeof d.classification_rule_change === "string" ? d.classification_rule_change : JSON.stringify(d.classification_rule_change)}</p></details>` : ""}
+      ${d.controls && !Array.isArray(d.controls) ? html`<details><summary><b>Controls</b> <span class="faint small">${Object.values(d.controls).filter((c) => c && c.pass === false || (c && /DID NOT/.test(String(c.result || "")))).length ? "one of them did not behave as designed, and says so" : "each with what it had to show"}</span></summary>
+        <dl class="lmmeta small">${Object.entries(d.controls).map(([k, c]) => html`<dt>${k.replace(/_/g, " ")}</dt><dd>${c && typeof c === "object" ? Object.entries(c).map(([kk, vv]) => html`<b>${kk.replace(/_/g, " ")}:</b> ${typeof vv === "number" ? DF.fmt(vv, 4) : String(vv)}. `) : String(c)}</dd>`)}</dl></details>` : ""}
       ${d.critical_domain_size ? (() => { const c = d.critical_domain_size;
         return html`<div class="lmcrit"><h4>Critical domain size</h4>
           ${c.value === null || c.value === undefined
             ? html`<p class="small"><b>Not resolved to a number by this sweep.</b> ${c.definition ? "It is defined as: " + c.definition : ""}</p>`
-            : html`<p class="lmhead"><b>${DF.fmt(c.value, 3)} ${c.units || ""}</b>${c.uncertainty ? " ± " + DF.fmt(c.uncertainty, 2) : ""}${c.axis ? html` <span class="small faint">measured on the ${c.axis}</span>` : ""}</p>`}
+            : html`<p class="lmhead"><b>${DF.fmt(c.value, 3)} ${c.units || ""}</b>${c.uncertainty ? " ± " + DF.fmt(c.uncertainty, 2) : ""}${c.axis ? html` <span class="small faint">measured on the ${c.axis}</span>` : ""}</p>
+              ${c.value_under_the_original_counting_rule !== undefined ? html`<p class="small"><b>And ${DF.fmt(c.value_under_the_original_counting_rule, 3)} ${c.units || ""}${c.uncertainty_under_the_original_counting_rule ? " \u00b1 " + DF.fmt(c.uncertainty_under_the_original_counting_rule, 2) : ""} under the counting rule that was declared first.</b> ${c.rule_sensitivity || ""}</p>` : ""}`}
           ${c.reading ? html`<p class="small">${c.reading}</p>` : ""}</div>`; })() : ""}
       ${d.linear_stability ? (() => { const L = d.linear_stability; const m = d.measured_wavelength; const cmp = (m && m.comparison_to_linear_prediction) || {};
         return html`<div class="lmctrl"><h4>Internal control: does the pattern have the wavelength the maths predicts?</h4>
@@ -259,7 +266,7 @@
           <div class="tablewrap"><table><thead><tr>${cols.map((c) => html`<th scope="col">${c.replace(/_/g, " ")}</th>`)}</tr></thead>
           <tbody>${arms.map((a) => html`<tr>${cols.map((c) => html`<td class="small">${a[c] === undefined || a[c] === null ? html`<span class="faint">—</span>` : (typeof a[c] === "number" ? DF.fmt(a[c], 4) : (a[c] === true ? U.pill("yes", "ok") : a[c] === false ? U.pill("no", "no") : String(a[c])))}</td>`)}</tr>`)}</tbody></table></div>
           ${ab.finding ? html`<p class="note warn small"><b>What it found.</b> ${ab.finding}</p>` : ""}`; })}
-      ${listOf("Controls", d.controls)}
+      ${Array.isArray(d.controls) ? listOf("Controls", d.controls) : ""}
       ${listOf("Numerical checks", d.numerical_checks)}
       ${d.phenotype_classes ? html`<details><summary><b>How each run was classified</b> <span class="faint small">declared before the sweep was read</span></summary><dl class="lmmeta small">${Object.entries(d.phenotype_classes).map(([k, v]) => html`<dt>${k}</dt><dd>${v}</dd>`)}</dl></details>` : ""}
       ${(d.retrievals || []).length ? html`<details><summary><b>${d.retrievals.length} retrievals</b> <span class="faint small">every sequence fetched, with its accession and digest</span></summary>
