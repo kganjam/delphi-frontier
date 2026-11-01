@@ -28,7 +28,7 @@ Each simulation folder `artifacts/simulations/claude-tissue-*/` contains:
   pattern is spots) and growth along the fin axis.
 - With growth confined to a narrow apical zone, the pattern forms bands parallel to the edge. Ray-like orientation needs
   a proliferating zone wider than about **one third of a pattern wavelength** at slow outgrowth (refined grid: 0.32 λ at
-  γ = 2 and 0.35 λ at γ = 1). Refinement also removed the γ = 2 failure window as a discretisation artifact.
+  γ = 2 and 0.35 λ at γ = 1), rising to about half a wavelength at 4× faster outgrowth (refined, γ = 1). Refinement also removed the γ = 2 failure window as a discretisation artifact.
   Coarse-grid values, biased upward: 0.37, 0.39 and 0.39 at three rate scales, and a
   prediction made from two of them was confirmed on the third (12 seeds each). The switch rises with outgrowth speed,
   reaching 0.48 λ at v = 0.4 (L_p* ≈ 3.9 + 3.3·v at γ = 1). This is partly a scaling consistency check, and grid
@@ -631,7 +631,19 @@ The refined switch is about **2.55 ≈ 0.32 λ**.
 | 1 | ≈ 3.8 | 0.35 |
 
 So **L_p* ≈ 0.33 λ (one third of a pattern wavelength) at slow outgrowth**. The coarse-grid values (0.37–0.39 λ)
-were biased upward by under-resolving the zone. A refined γ = 0.5 run is running (`claude-tissue-pzone-refine-g05`).
+were biased upward by under-resolving the zone. **Refined speed term** (`claude-tissue-pzone-refine-g1v40`, job `aijob-e00f85t1emb5ty63tb`, COMPLETED, 649.9 s), at
+γ = 1 with physical v = 0.4; distal A:
+
+| Physical L_p | 4.5 | 5.0 | 5.5 |
+|---|---|---|---|
+| Distal A | −0.65 | −0.41 | 0.50 |
+
+- The refined switch is about **5.4 ≈ 0.5 λ**, against 3.8 ≈ 0.35 λ at v = 0.1.
+- The speed dependence survives refinement and is somewhat stronger: a slope of about 5 per unit speed, against about
+  3.3 on the coarse grid.
+- **Refined rule:** L_p* ≈ λ/3 at slow outgrowth, rising to about λ/2 at v = 0.4.
+
+A refined γ = 0.5 run is running (`claude-tissue-pzone-refine-g05`).
 
 **Review of section 2b** (`gemini-4-argon`; text saved in `artifacts/simulations/claude-tissue-edge2d/`). Accepted and acted on:
 1. **Prior work.** A reversal of stripe orientation behind a moving front above a critical speed is a known phenomenon;
