@@ -1,6 +1,6 @@
 {
   "schema": "frontier.release.checks/1",
-  "sha": "52183b1455ee1b26291918141ff85ac4198c9c24",
+  "sha": "b4c6bc686e71984f3f438613db822ebe589294fb",
   "checks": [
     {
       "name": "Home doorway, studio pages and the limbless design space",
@@ -8,25 +8,25 @@
       "exit": 0,
       "passed": 130,
       "total": 130,
-      "result": "130 passed in 176.45s - the whole browser suite plus the limbless unit tests. An earlier run of the same selection had 8 failures from a ReferenceError this change introduced in the project page; it was fixed before this run.",
-      "at": "2026-11-01T21:27:53.396543+00:00",
-      "tested_commit": "52183b1455ee1b26291918141ff85ac4198c9c24"
+      "result": "130 passed in 170.84s - the whole browser suite plus the limbless unit tests, on the final tree.",
+      "at": "2026-11-01T21:36:07.759998+00:00",
+      "tested_commit": "b4c6bc686e71984f3f438613db822ebe589294fb"
     },
     {
       "name": "Snapshot reproducibility",
       "command": "python3 scripts/build_site.py --check",
       "exit": 0,
       "result": "stale=[]",
-      "at": "2026-11-01T21:27:53.396543+00:00",
-      "tested_commit": "52183b1455ee1b26291918141ff85ac4198c9c24"
+      "at": "2026-11-01T21:36:07.759998+00:00",
+      "tested_commit": "b4c6bc686e71984f3f438613db822ebe589294fb"
     },
     {
       "name": "Generated markdown twin is current",
       "command": "python3 scripts/limbless_doc.py --check",
       "exit": 0,
       "result": "docs/dossier/13-limbless-mouse-design-space.md is current",
-      "at": "2026-11-01T21:27:53.396543+00:00",
-      "tested_commit": "52183b1455ee1b26291918141ff85ac4198c9c24"
+      "at": "2026-11-01T21:36:07.759998+00:00",
+      "tested_commit": "b4c6bc686e71984f3f438613db822ebe589294fb"
     },
     {
       "name": "Full suite compared against the previous main",
@@ -45,8 +45,8 @@
       "passed": 68,
       "total": 68,
       "result": "0 hits over 68 files. gitleaks is NOT installed on this host, so this is a pattern grep and not a full secret scan; its scope is the added and changed files only. Positive controls: a planted AKIA key and a planted ghp_ token were both flagged, and a clean file was not, so the zero is a measured zero.",
-      "at": "2026-11-01T21:27:53.396543+00:00",
-      "tested_commit": "52183b1455ee1b26291918141ff85ac4198c9c24"
+      "at": "2026-11-01T21:36:07.759998+00:00",
+      "tested_commit": "b4c6bc686e71984f3f438613db822ebe589294fb"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 227342e7e329",
- "input_fingerprint": "227342e7e329883bd0bec944d44bdc0900e907990f91fc31f48e0579fe85288b",
+ "label": "snapshot of inputs ce9bbaba3926",
+ "input_fingerprint": "ce9bbaba3926efaa2a962a1475bfc2e9a64d6596076f74ffb659edca4f92ae25",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "2fafd2b0029d3d2efa38e65cd3f5c95a6d44c827f751999d9559001cb5f190d3",
-   "bytes": 2850
+   "sha256": "0ae7e6f5d605d5605fbd5420638cb6863e5c86c338a2f4afd4081688e60a73e0",
+   "bytes": 2721
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -39452,11 +39452,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release 52183b1455ee)",
-    "outcome": "Home doorway, studio pages and the limbless design space: 130 passed in 176.45s - the whole browser suite plus the limbless unit tests. An earlier run of the same selection had 8 failures from a ReferenceError this change introduced in the project page; it was fixed before this run. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twin is current: docs/dossier/13-limbless-mouse-design-space.md is current (exit 0); Full suite compared against the previous main: 8 failed,1588 passed,32 skipped,24 errors at 04eecc59 against 9 failed,1580 passed,32 skipped,24 errors at f8c19cd3. ZERO failures and ZERO collection errors unique to this branch; the 8 and the 24 are all pre-existing on main and were reproduced there first. NOT run at the release sha: the commits after 04eecc59 change captions, one figure, one authored summary and the home page's entry section. The other four checks WERE run at the release sha. (exit 0); Credential scan over every file this release adds or changes: 0 hits over 68 files. gitleaks is NOT installed on this host, so this is a pattern grep and not a full secret scan; its scope is the added and changed files only. Positive controls: a planted AKIA key and a planted ghp_ token were both flagged, and a clean file was not, so the zero is a measured zero. (exit 0)",
+    "title": "limbless mouse release checks (release b4c6bc686e71)",
+    "outcome": "Home doorway, studio pages and the limbless design space: 130 passed in 170.84s - the whole browser suite plus the limbless unit tests, on the final tree. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twin is current: docs/dossier/13-limbless-mouse-design-space.md is current (exit 0); Full suite compared against the previous main: 8 failed,1588 passed,32 skipped,24 errors at 04eecc59 against 9 failed,1580 passed,32 skipped,24 errors at f8c19cd3. ZERO failures and ZERO collection errors unique to this branch; the 8 and the 24 are all pre-existing on main and were reproduced there first. NOT run at the release sha: the commits after 04eecc59 change captions, one figure, one authored summary and the home page's entry section. The other four checks WERE run at the release sha. (exit 0); Credential scan over every file this release adds or changes: 0 hits over 68 files. gitleaks is NOT installed on this host, so this is a pattern grep and not a full secret scan; its scope is the added and changed files only. Positive controls: a planted AKIA key and a planted ghp_ token were both flagged, and a clean file was not, so the zero is a measured zero. (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "2fafd2b0029d3d2efa38e65cd3f5c95a6d44c827f751999d9559001cb5f190d3",
+    "sha256": "0ae7e6f5d605d5605fbd5420638cb6863e5c86c338a2f4afd4081688e60a73e0",
     "date": "no time recorded"
    },
    {
