@@ -1,0 +1,108 @@
+{
+ "name": "claude-neuro-j7-m3-atlas-refined-a1",
+ "job_id": "aijob-e00am51zzcsv5n7p68",
+ "collected_utc": "2026-11-01T16:47:06Z",
+ "archive_sha256": "0e7fa81d7368aaf461ba24a555c8bb8014e333b519721be7cad6e7587796946c",
+ "archive_bytes": 220520,
+ "container_rc": 0,
+ "rc_line": "NEURO-RC 0 2026-11-01T16:46:28Z",
+ "chunks": 19,
+ "files": {
+  "out/m3_atlas.json.gz": {
+   "sha256": "b6d547cbac35178190a1b4c998f8e995a9a8e1f6572d448046190f34a594db4f",
+   "bytes": 221853
+  },
+  "out/stderr.log": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "out/stdout.log": {
+   "sha256": "137cb97308bc37b2c7860c4fdb3b1bb6da5f219f446486000e96208374f79e57",
+   "bytes": 576
+  }
+ },
+ "submission": {
+  "name": "claude-neuro-j7-m3-atlas-refined-a1",
+  "submitted_utc": "2026-11-01T16:38:54Z",
+  "spec": {
+   "name": "claude-neuro-j7-m3-atlas-refined-a1",
+   "platform": "gpu-h100-sxm",
+   "preset": "1gpu-16vcpu-200gb",
+   "timeout": "1h",
+   "disk": "80Gi",
+   "image": "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
+   "pip": "scipy",
+   "question": "Refined, print-actionable band around the J2 design recommendation: dihedral 0-7 deg x caudal vertical fraction 0.10-0.25 x ballasted mass 25-35 g, gusts to 3 m/s, plausible vestibular/visual delays",
+   "gpu_justification": "144 lateral + 9 longitudinal airframes x up to 15 sensor/delay cases x 3 gusts x 4096 trajectories x 2500 steps (~27M trajectories)",
+   "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.m3_atlas --out /work/out --geometry /work/repo/geometry.json --reference /work/repo/reference.json --n-mc 4096 --procs 16 --seed 20261102 --grid '{\"DIH\":[0,1,2,3,4,5,6,7],\"KV\":[0.1,0.125,0.15,0.175,0.2,0.25],\"MASS\":[0.025,0.03,0.035],\"SM\":[0.04,0.08,0.12],\"TC\":[0.01,0.02,0.03],\"TV\":[0.03,0.06,0.09],\"GUST\":[1.0,2.0,3.0],\"LIN_TC\":[0.01,0.02,0.03,0.05],\"LIN_TV\":[0.03,0.06,0.09,0.12]}'"
+  },
+  "injected": {
+   "engineering/__init__.py": {
+    "source": "engineering/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+   },
+   "engineering/neuro/__init__.py": {
+    "source": "engineering/neuro/__init__.py",
+    "sha256": "045fa8ab73c3c3a8ae809d1cddce441b89da3ce9770e87660533c011d2bc61dd",
+    "bytes": 487
+   },
+   "engineering/neuro/common.py": {
+    "source": "engineering/neuro/common.py",
+    "sha256": "1cd4d23229370d36f547c2898926d4d9e4a8f935a4f085e0dfba6b93958ec17c",
+    "bytes": 2684
+   },
+   "engineering/neuro/glide_stab.py": {
+    "source": "engineering/neuro/glide_stab.py",
+    "sha256": "5bbfb7a83c1c80567f2d534ded283dbdac98d80d79630c93894af003c4aa99f1",
+    "bytes": 24336
+   },
+   "engineering/neuro/m3_atlas.py": {
+    "source": "engineering/neuro/m3_atlas.py",
+    "sha256": "0dfc9b0911a92d886472eef6e0532007fc81204bca7b5b704696424b9f10ee90",
+    "bytes": 15124
+   },
+   "engineering/simulation/__init__.py": {
+    "source": "engineering/simulation/__init__.py",
+    "sha256": "d7ff2108d1c58d5da04f5972a4f64e49f3a7d8758c6a197c36743420f3574ec7",
+    "bytes": 381
+   },
+   "engineering/simulation/controlled.py": {
+    "source": "engineering/simulation/controlled.py",
+    "sha256": "93d0a0878425a6d16a6ffb09b2b3fa430cca2d5e0f0aced693c1b7b539840123",
+    "bytes": 8447
+   },
+   "engineering/simulation/evaluate.py": {
+    "source": "engineering/simulation/evaluate.py",
+    "sha256": "0a793951b8812a9093a637c61d79f3f4fea5e93f07a92825e46601c8e84357fc",
+    "bytes": 5180
+   },
+   "engineering/simulation/glide.py": {
+    "source": "engineering/simulation/glide.py",
+    "sha256": "1f6a04baaf5a7cda589f80907ba00ac93f5b20fd458211a2340f3ec44de79fa7",
+    "bytes": 4371
+   },
+   "engineering/simulation/schema.py": {
+    "source": "engineering/simulation/schema.py",
+    "sha256": "94b4f003be514ac5055ed184b0e2695a68bf0de8689e387238e9583c8e62b944",
+    "bytes": 4760
+   },
+   "geometry.json": {
+    "source": "artifacts/neuro/jobs/inputs/r3daane_geometry.json",
+    "sha256": "8e72cd5c43cd82b7cc6162f6313748b5eb7beb10f41275723265aa5f5fb6bcef",
+    "bytes": 910
+   },
+   "reference.json": {
+    "source": "artifacts/neuro/jobs/inputs/m3_mc_reference.json",
+    "sha256": "7c738a7e6ac8b28510c40ca7ab7a473a024ede9da1c32536a6aecdd8d0872ae9",
+    "bytes": 5812
+   }
+  },
+  "runner_sha256": "9af259e63cab81b23aa2bc2cb0b8259c1e20fb39d43b61c04ebba553b2554604",
+  "bundle_tar_xz_sha256": "429e82c5981e4da3178358673965bfb2a24f8b2b2720cc32c09c4b3b8a620fc0",
+  "bundle_b64_bytes": 30796,
+  "cli_rc": 0,
+  "git_head": "5359e180",
+  "job_id": "aijob-e00am51zzcsv5n7p68"
+ }
+}

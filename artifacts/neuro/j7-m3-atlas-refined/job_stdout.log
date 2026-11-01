@@ -1,0 +1,4 @@
+Python 3.11.10
+name, memory.total [MiB]
+NVIDIA H100 80GB HBM3, 81559 MiB
+{"checks": [["control: GPU delay-buffer integration equals CPU closed-loop matrix power (400 steps, 30/10 ms)", true, 1.8973538018496328e-19], ["control: zero-gain linear radius equals open-loop radius", true, null], ["control: GPU Monte Carlo agrees with the committed CPU M3 rows (two-proportion |z| < 3.5 on every comparable row)", true, {"rows_compared": 40, "max_abs_z": 2.512332344610134}]], "mc_trajectories": 29749248, "mc_elapsed_s": 168.17823839187622, "linear_elapsed_s": 0.9480619430541992}

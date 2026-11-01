@@ -447,7 +447,7 @@
    "Which caudal-fin area and dihedral does the printed r3-daane actually have, measured as a vertical-surface fraction?"
   ],
   "perturbation_sweep": "Lateral 8 dihedrals x 6 k_v x 3 masses; longitudinal 3 masses x 3 static margins; canal delay 10/20/30 ms x vision 30/60/90 ms; gusts 1/2/3 m/s.",
-  "experiment_design": "Fly instrumented prints with two or three caudal-fin areas and dihedrals chosen from the atlas's boundary cells, under measured gusts, and compare the observed upset rates with these predictions. In animals, measure the fin EMG latency after an imposed roll to place a fish on the delay axis.",
+  "experiment_design": "Result for the print: dihedral 0-2 deg gives ~0% roll upset even at 3 m/s gusts for k_v >= 0.125; 3-4 deg is ~0% at 2 m/s but 16-29% at 3 m/s; 7 deg is 41-49% at 2 m/s. Between k_v 0.10 (always fails) and 0.125 (fine) the response is a cliff, so print at k_v >= 0.15 for margin. Mass 25-35 g barely matters. Test by flying 0, 2 and 4 deg prints under measured gusts (print_band_tables.json).",
   "does_not_establish": [
    "SIMULATED, not observed: a linear quasi-steady plant with assumed fin authority and lag; no unsteady aerodynamics or ground effect.",
    "The Monte Carlo applies the same-step actuator state, one step (2 ms) less lag than the linear atlas (see integration_note).",

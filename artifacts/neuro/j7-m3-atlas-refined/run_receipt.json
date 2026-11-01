@@ -1,0 +1,12 @@
+{
+ "command": "python -V; nvidia-smi --query-gpu=name,memory.total --format=csv; OMP_NUM_THREADS=1 python -m engineering.neuro.m3_atlas --out /work/out --geometry /work/repo/geometry.json --reference /work/repo/reference.json --n-mc 4096 --procs 16 --seed 20261102 --grid '{\"DIH\":[0,1,2,3,4,5,6,7],\"KV\":[0.1,0.125,0.15,0.175,0.2,0.25],\"MASS\":[0.025,0.03,0.035],\"SM\":[0.04,0.08,0.12],\"TC\":[0.01,0.02,0.03],\"TV\":[0.03,0.06,0.09],\"GUST\":[1.0,2.0,3.0],\"LIN_TC\":[0.01,0.02,0.03,0.05],\"LIN_TV\":[0.03,0.06,0.09,0.12]}'",
+ "python_module": "engineering.neuro.m3_atlas",
+ "exit_code": 0,
+ "where": "Nebius AI job claude-neuro-j7-m3-atlas-refined-a1 (aijob-e00am51zzcsv5n7p68)",
+ "platform": "gpu-h100-sxm 1gpu-16vcpu-200gb",
+ "archive_sha256": "0e7fa81d7368aaf461ba24a555c8bb8014e333b519721be7cad6e7587796946c",
+ "collected_utc": "2026-11-01T16:47:06Z",
+ "submitted_utc": "2026-11-01T16:38:54Z",
+ "manifest_sha256": "4694b9d9fa34a339880eed715711ccdebb1b44f2e5d1549add8927132440bc49",
+ "collection_receipt": "artifacts/neuro/jobs/claude-neuro-j7-m3-atlas-refined-a1/collected/collection_receipt.json"
+}
