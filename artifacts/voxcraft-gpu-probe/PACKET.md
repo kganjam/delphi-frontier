@@ -1,8 +1,8 @@
 # voxcraft-sim modern-toolkit H100 compatibility probe — frozen packet
 
 **Archive** `artifacts/voxcraft-gpu-probe/voxcraft-h100-probe.tar.gz`
-**sha256** `624065f577bc8bae9d27f596610a18b797bc9946605ccdec66db4ab9fcbd7285`
-**bytes** 15415 compressed, 42.3 KiB uncompressed (injection budget ~48 KiB)
+**sha256** `da3a6f7ff178b539185f56176e9639d8bb6d42c47f6efa55e8ff59d24738159f`
+**bytes** 17508 compressed, 47.2 KiB uncompressed (injection budget ~48 KiB)
 **deterministic** rebuilding the archive from the same inputs reproduces the same sha256.
 
 ```
@@ -14,6 +14,58 @@ Return archive: `/work/run/out/probe-return.tar.gz` (logs + receipt + both histo
 Receipt: `/work/run/out/receipt.json`.
 
 One GPU, one arm, no sweep, no fleet. **No cloud job was launched from this branch.**
+
+## Revised after infra source review — five defects, all found by review, none by me
+
+The reviewed packet was `624065f5`. Nothing scientific changed: the two VXA cases parse
+to byte-identical element trees (53 elements each, compared programmatically), and
+`validate_history.py`, `verify_pin.py` and `source-pin.json` are hash-identical to the
+reviewed versions. Only failure handling, resource bounding and environment capture moved.
+
+1. **The first-failure excerpt would always have been blank.** `fin()` set `FIRST_FAIL`,
+   ran Python that read it from `os.environ`, and exported it *after* Python had already
+   run. The path is now passed to Python as an argument; nothing goes through the
+   environment.
+2. **The return archive embedded itself, and the error was hidden.** Measured here on GNU
+   tar 1.35: writing into `out/` with `--exclude` after the operands **exits 2 and embeds a
+   copy of itself**, and the old code discarded stderr and never read `$?`. The archive is
+   now written outside the archived tree, exclusions precede the operands, and the tar exit
+   is reported.
+3. **The environment dump matched a prefix, and it really did leak.** Planting
+   `NVIDIA_SELFTEST_TOKEN` and `CUDA_API_KEY` and running the old runner put both in the
+   preflight log. It is now an explicit allow-list of exact non-secret names, with a
+   positive control so the negative cannot pass vacuously.
+4. **The outer bound was not enforced.** 600 s build plus two 120 s runs left about 60 s
+   for everything else and nothing bounded the total. There is now a hard 900 s deadline
+   from process start, every stage cap is `min(own cap, time left − 25 s pack reserve)`, a
+   guard runs at each stage boundary, and TERM/INT are trapped. `DEADLINE_EXCEEDED` is its
+   own status, distinct from `BUILD_TIMEOUT` and from `COMPILE_FAIL`, and partial logs are
+   still packed. Two build threads, unchanged.
+5. **The truncation fallback destroyed the science output while claiming it had not.** My
+   first rewrite truncated `out/*.history` with `head`/`mv` to fit the transport cap, and
+   its own message said "full history stayed on the node". It had not: `head`/`mv` replaced
+   the only copy. It also still exited 0 on `PASS`. **The fallback is gone.** `out/` is
+   never modified. Each history is sha256'd *before* packing and the hashes go in the
+   receipt. A tar failure or an oversized archive is an explicit transport failure
+   (`TAR_EXIT_n`, `RETURN_TOO_LARGE_nB`) with the originals intact, exiting **3**. Exit 0
+   now requires `STATUS=PASS` **and** transport OK.
+
+## Fixtures: 20, and they were run against the broken versions too
+
+`artifacts/voxcraft-gpu-probe/selftest.sh` (sha256 `5f04095986494acda9c9ecbf5e542d9b303849d438c3d958767d52a35d098377`), host-side, no GPU needed. It is
+**not injected** — that is what keeps the packet inside the budget — and it is committed.
+
+| run against | result |
+|---|---|
+| the fixed runner | **20 passed, 0 failed** |
+| the reviewed runner `624065f5` | 6 passed, **9 failed**, on exactly the four defects |
+| a mutant with the truncation re-inserted | 17 passed, **3 failed** |
+
+The mutant's three failures are `NATIVE HISTORY WAS MUTATED (300000 -> 1024 bytes)`,
+`expected RETURN_TOO_LARGE*, got OK`, and `no originals-intact message`. Note what still
+passed on it: its receipt carried `scientific_output_mutated: False` while the bytes were
+already gone. **A field asserting its own innocence is not evidence**, which is why F7 is
+anchored on a before/after sha256 rather than on that field.
 
 ## What it does, in order
 
@@ -29,7 +81,8 @@ One GPU, one arm, no sweep, no fleet. **No cloud job was launched from this bran
 | 7 | runs the actuated and passive cases under 120 s each | `RUN_TIMEOUT`, `RUNTIME_FAIL` |
 | 8 | validates history structure and the actuation contrast | `HISTORY_STRUCTURAL_FAIL`, `ACTUATION_DISCRIMINATOR_FAIL`, `INCONCLUSIVE` |
 
-A **timeout is its own status**, distinct from a compile failure. There is no retry anywhere.
+A **timeout is its own status**, distinct from a compile failure and from a deadline. There
+is no retry anywhere, and **`out/` is never modified** — not to fit a cap, not for any reason.
 
 ## `-DCUDA_ARCH` does survive autodetection — verified, not assumed
 
