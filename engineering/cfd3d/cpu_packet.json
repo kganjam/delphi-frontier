@@ -1,0 +1,159 @@
+{
+ "schema": "cfd3d-cpu-packet-0.1",
+ "purpose": "2-D cylinder solver-fidelity control (cyl2d_contract.json, frozen 9d53cd1 + formula fix ddc7095; band cyl2d_band.json frozen 5a02b46) on a 16-vCPU CPU worker: R1, R3_domain and M1_mutant. R2 (n_D 64) is NOT in this packet: projected 107-179 h at 2 threads, beyond the worker's lifetime; it is proposed for one H100 separately.",
+ "science": "model diagnostics; never 'passed'. The cylinder verdict is OUT/eval.json verdict.control_passes, which needs R2 and therefore cannot be true from this packet alone (eval lists R2 as missing). The 3-D C1 sphere reference gate FAILED and stays failed. Nothing here validates fin sections, the fish, swimming or flight.",
+ "reference_gate": {
+  "C1_sphere_3d": "FAILED (|Cd| 0.875 at D16 CPU, 0.918/0.881 at D32 GPU, vs band [0.95, 1.35]); blocks physical-validation wording",
+  "cyl2d": "not yet run; frozen contract + band, evaluator fails closed (a92d80e)"
+ },
+ "env": {
+  "dir": "engineering/cfd3d/env",
+  "manifest_sha256": "8b4cdb37528cbe930233ab6ec73c82a1655113bde1006cbe3254e71d4cb7ec6c",
+  "packages": 89,
+  "timeout_s": 2400
+ },
+ "outer_budget_s": 79200,
+ "emit_margin_s": 1800,
+ "segment_s": 7200,
+ "min_segment_s": 600,
+ "ckpt_every_s": 1800,
+ "ckpt_margin_s": 900,
+ "restart_check": {
+  "run_id": "T_restart",
+  "threads": 2,
+  "mem_gb": 3,
+  "timeout_s": 1200,
+  "split_after_steps": 120,
+  "min_steps_after_split": 50,
+  "min_cp_samples_after_split": 5
+ },
+ "scaling": {
+  "run_id": "R1",
+  "threads": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "steps": 40,
+  "mem_gb": 4,
+  "timeout_s": 900
+ },
+ "cases": [
+  {
+   "run_id": "R3_domain",
+   "threads": 6,
+   "mem_gb": 5,
+   "budget_s": 75600
+  },
+  {
+   "run_id": "M1_mutant",
+   "threads": 3,
+   "mem_gb": 3,
+   "budget_s": 75600
+  },
+  {
+   "run_id": "R1",
+   "threads": 3,
+   "mem_gb": 3,
+   "budget_s": 75600
+  }
+ ],
+ "vcpu_plan": "12 Julia threads in total on a shared e2-standard-16 (genomics and glider work share it); 4 vCPUs left for co-tenants, the runner and the OS",
+ "measured_local": {
+  "rss_peak_gb": {
+   "3.69M cells (R1, M1)": 1.05,
+   "14.76M cells (R2, R3)": 2.2
+  },
+  "checkpoint_extra_gb": {
+   "3.69M": 0.2,
+   "14.76M": 0.8
+  },
+  "ns_per_cell_step_2_threads": {
+   "R1": 114.8,
+   "R2": 128.5,
+   "R3_domain": 101.3,
+   "M1_mutant": 116.9
+  },
+  "dt_grid_startup": {
+   "R1": 0.285,
+   "R2": 0.188,
+   "R3_domain": 0.277,
+   "M1_mutant": 0.122
+  },
+  "note": "this host, 2 threads; M1 and the RSS figures were measured at load 13-26 on 8 cores, so their ns figures are upper bounds. M1's dt is viscous-limited (nu x4), so it needs ~157k steps, 2.3x R1's",
+  "thread_scaling": "not measurable here: R1 at 1/2/4 threads gave 152/217/119 ns per cell-step at host load 14-19 on 8 cores; the worker's scaling stage measures it"
+ },
+ "expected": {
+  "rule": "wall = cells x steps x ns_per_cell_step(2 threads) x (2/threads)^0.7. The 0.7 scaling exponent is an ASSUMPTION; the worker's scaling stage measures it. Steps = t_end 600 x n_D / dt, with dt between the start-up value and ~0.6x it (developed wake)",
+  "R1": {
+   "cells": 3694084,
+   "steps": "67k-112k",
+   "wall_h_2thr": "7.9-13.2",
+   "wall_h_at_plan": "5.9-9.9 (3 threads)",
+   "rss_gb": 1.3,
+   "output_json_mb": "~5-9 (gzip ~2-4)"
+  },
+  "M1_mutant": {
+   "cells": 3694084,
+   "steps": "~157k (viscous dt 0.122, does not shrink with the wake)",
+   "wall_h_2thr": "~18.8",
+   "wall_h_at_plan": "~14.2 (3 threads)",
+   "rss_gb": 1.3,
+   "output_json_mb": "~12 (gzip ~4)"
+  },
+  "R3_domain": {
+   "cells": 14760964,
+   "steps": "69k-115k",
+   "wall_h_2thr": "28.8-47.9",
+   "wall_h_at_plan": "13.3-22.2 (6 threads)",
+   "rss_gb": 3.0,
+   "output_json_mb": "~5-9 (gzip ~2-4)",
+   "risk": "its upper estimate exceeds the 21 h case budget: it may end 'stopped at budget' with a checkpoint, and the packet then reports partial"
+  },
+  "R2": {
+   "cells": 14760964,
+   "steps": "204k-340k",
+   "wall_h_2thr": "107-179",
+   "where": "not in this packet: proposed for one H100 (projected 1.1-1.9 h from the 3-D per-step timing, unmeasured in 2-D)"
+  },
+  "checkpoints_gb": {
+   "R1": 0.2,
+   "M1_mutant": 0.2,
+   "R3_domain": 0.8
+  },
+  "disk_gb_needed": 10
+ },
+ "outputs": [
+  "status.json (completion contract, per-case state/segments/peak RSS, checkpoint sha256)",
+  "restart_check.json",
+  "scaling.json",
+  "runs/<id>.json.gz (t, Cd, Cd_p, Cl every step; surface Cp_wall_mean, 720 angles)",
+  "eval.json (cyl2d_eval.py verdict over finished runs)"
+ ],
+ "gates": {
+  "numerical": [
+   "julia tarball sha256",
+   "env Manifest sha256 unchanged after instantiate",
+   "restart_check: split+resume bit-identical series and final state; foreign checkpoint refused",
+   "per run (cyl2d_eval validate): equal-length, finite, strictly increasing t, reaches t_end 600"
+  ],
+  "physical_control (frozen band 5a02b46, applied by eval.json, never relaxed)": [
+   "periodic state: >= 20 whole periods after t = 100 and period CV <= 0.02 in R1, R2, R3",
+   "R2_fidelity: R2 Cd, Cd_p, St within 2.0 / 2.1 / 1.3 % of Qu 2013 D4",
+   "grid_pair: |Cd(R2)-Cd(R1)|/Cd(R2) <= 0.03",
+   "mutant: M1 (Re 25) must not satisfy the fidelity rule",
+   "pressure_coupling_allowed additionally needs |Cd_p_surface/Cd_p - 1| <= 0.10 on R2"
+  ],
+  "consequence": "without R2 control_passes is false by construction; R1 and R3 are reported against their Qu rows as diagnostics only"
+ },
+ "export_every_s": 21600,
+ "export_bytes_max": 2800000000,
+ "export_reserve_bytes": 900000000,
+ "export": {
+  "what": "COPS_OUT only: status.json, restart_check.json, scaling.json, runs/*.json.gz, eval.json, logs tails inside status, checkpoints/<id>-<n>.ckpt listed in checkpoints/manifest.json. Never the Julia toolchain, depot, sources or the live WORK checkpoint",
+  "coherence": "a checkpoint is coherent state only if checkpoints/manifest.json lists it with matching sha256 and bytes; *.partial files are in-progress copies and must be skipped",
+  "bound": "checkpoint bytes <= export_bytes_max (2.8 GB) in total, under infra's 3 GB upload cap; mid-run snapshots leave export_reserve_bytes (0.9 GB) free so a stop-at-budget snapshot (R3 ~0.8 GB) always fits; run outputs add ~10-20 MB",
+  "snapshot_policy": "per case: at the first segment end after every export_every_s (6 h), and when the case stops at its budget; none after a case finishes"
+ }
+}

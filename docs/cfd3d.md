@@ -120,6 +120,26 @@ Curated in `artifacts/cfd3d/gpu-v1/` with `receipt.json`. The transport hash was
 - **Status.** `status.json` reports complete/partial/failed. `science` is always "model diagnostics only; C1
   FAILED". Dispatch and receipts: `messages/cfd3d-to-infra.md`.
 
+## 2-D cylinder control and its CPU packet (no cylinder result yet)
+- **Frozen before any run.** The contract `cyl2d_contract.json` was frozen at 9d53cd1, with its surface
+  formula corrected at ddc7095. The band `cyl2d_band.json` was frozen at 5a02b46, from Qu et al. 2013 rows
+  D4 (H 60) and D2 (H 120). Neither is widened after a result.
+- **Evaluator.** `cyl2d_eval.py` fails closed:
+  - It refuses mismatched, non-finite or unsorted series, and any run that stops before t_end 600.
+  - It interpolates at clipped window ends.
+  - It adds `pressure_coupling_allowed`, which needs the R2 surface closure (≤ 10 %) as well as the frozen
+    control rule.
+- **Checkpoint/restart.** `cyl2d.jl` uses `CFD3D_CKPT` and `CFD3D_SEGMENT_S`. A checkpoint is refused unless the
+  run id, script, contract and versions all match. The worker re-proves bit-identical restart on its own
+  platform before any case runs.
+- **The packet.** `cpu_entry.py` and `cpu_packet.json`, built with `build_packet.py --cpu`. They run R1,
+  R3_domain and M1_mutant on 12 threads of a shared 16-vCPU worker. Each case is its own capped process tree,
+  run in 2 h segments with a checkpoint every 30 min.
+- **R2 is not in it.** R2 is the fidelity and grid-pair case, projected at 107–179 h on 2 threads, so it needs
+  a GPU. Until R2 exists, `control_passes` is false by construction.
+- **C1 is untouched.** The 3-D sphere gate C1 stays FAILED. A cylinder pass would not change it, and would not
+  validate fins or flight.
+
 ## Reproduce (from the repo root)
 ```
 JL=/data/artifacts/delphi-evolve-rethink/cfd3d/jl.sh     # capped runner: TasksMax 128, MemoryMax 4G, swap 0, 600 s

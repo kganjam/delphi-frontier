@@ -3,11 +3,25 @@
 #   RUN_ID in R1, R2, R3_domain, M1_mutant (parameters read from the contract, not from this file).
 #   TIMING: step the run's exact domain nsteps times and record wall time and dt only. It never calls a
 #   force or pressure routine, so a timing run cannot reveal the control's result before its band is frozen.
-using WaterLily, StaticArrays, JSON
+# Checkpoint/restart (environment; none of it changes the numerics):
+#   CFD3D_CKPT=path        resume from path if it exists; write it every CFD3D_CKPT_EVERY_S (default 1800 s),
+#                          at the end of a segment and at completion (atomic: write path.tmp, then rename)
+#   CFD3D_SEGMENT_S=s      stop this process after s wall seconds: checkpoint, write no OUT, exit 75
+#   CFD3D_SEGMENT_STEPS=n  the same after n steps (used by the bit-exact restart check)
+#   A checkpoint is refused unless its run id, this script's sha256, the contract's sha256, Julia and
+#   WaterLily versions all match. T_restart is a tiny NON-contract run for that check only.
+using WaterLily, StaticArrays, JSON, SHA, Serialization
 const GPU = get(ENV, "CFD3D_GPU", "0") == "1"
 GPU && @eval using CUDA
 memtype() = GPU ? CUDA.CuArray : Array
-const CONTRACT = JSON.parsefile(joinpath(@__DIR__, "cyl2d_contract.json"))
+const CONTRACT_PATH = joinpath(@__DIR__, "cyl2d_contract.json")
+const CONTRACT = JSON.parsefile(CONTRACT_PATH)
+const IDENTITY = Dict("script_sha256" => bytes2hex(open(sha256, @__FILE__)),
+                      "contract_sha256" => bytes2hex(open(sha256, CONTRACT_PATH)),
+                      "julia" => string(VERSION), "waterlily" => string(pkgversion(WaterLily)))
+const TEST_RUNS = Dict("T_restart" => Dict("n_D" => 4, "H" => 60, "Re" => 100, "t_end" => 30.0, "t0" => 8.0,
+                                           "role" => "restart check only; not a contract run"))
+getrun(id) = haskey(CONTRACT["runs"], id) ? CONTRACT["runs"][id] : TEST_RUNS[id]
 
 function build(run)
     nD, H, Re = run["n_D"], run["H"], run["Re"]
@@ -43,22 +57,71 @@ function stations(R, c, n=720)
     nrm, pts
 end
 
-function run_case(run)
+"Every array a WaterLily step reads before it writes it. V, mu0 and mu1 (and the Poisson L, D, iD) are
+rebuilt by measure! at the start of every step, so they are not stored."
+function state_arrays(sim)
+    f = sim.flow
+    a = Any[f.u, f.u⁰, f.f, f.p, f.σ]
+    for l in sim.pois.levels
+        append!(a, (l.x, l.ϵ, l.r, l.z))
+    end
+    a
+end
+
+function save_ckpt(path, sim, id, rec)
+    st = merge(IDENTITY, Dict("run_id" => id, "arrays" => [Array(x) for x in state_arrays(sim)],
+                              "dt" => copy(sim.flow.Δt), "rec" => rec))
+    tmp = path * ".tmp"
+    open(io -> serialize(io, st), tmp, "w")
+    mv(tmp, path; force=true)
+end
+
+function load_ckpt!(path, sim, id)
+    st = open(deserialize, path)
+    for (k, v) in merge(IDENTITY, Dict("run_id" => id))
+        st[k] == v || error("checkpoint refused: $k is $(st[k]), this process has $v")
+    end
+    dst = state_arrays(sim)
+    length(dst) == length(st["arrays"]) || error("checkpoint refused: array count differs")
+    for (d, s) in zip(dst, st["arrays"])
+        size(d) == size(s) || error("checkpoint refused: array size differs")
+        copyto!(d, s)
+    end
+    empty!(sim.flow.Δt); append!(sim.flow.Δt, st["dt"])
+    st["rec"]
+end
+
+function run_case(run, id)
     sim, D, R, U, c = build(run)
-    t_end, t0 = CONTRACT["time"]["t_end"], CONTRACT["time"]["transient_discarded_before"]
+    t_end = get(run, "t_end", CONTRACT["time"]["t_end"])
+    t0 = get(run, "t0", CONTRACT["time"]["transient_discarded_before"])
     nrm, pts = stations(R, c)
     mem = memtype()
     dpts = [mem(p) for p in pts]
     ny = size(sim.flow.p, 2)
-    ts, cd, cdp, cl = Float64[], Float64[], Float64[], Float64[]
-    cp_sum = zeros(Float64, length(nrm)); cp_t = Float64[]; nsteps = 0
-    wall = @elapsed while sim_time(sim) < t_end
-        sim_step!(sim); nsteps += 1
+    ck = get(ENV, "CFD3D_CKPT", "")
+    rec = !isempty(ck) && isfile(ck) ? load_ckpt!(ck, sim, id) :
+        Dict{String,Any}("t" => Float64[], "Cd" => Float64[], "Cd_p" => Float64[], "Cl" => Float64[],
+                         "cp_sum" => zeros(Float64, length(nrm)), "cp_t" => Float64[], "steps" => 0,
+                         "wall_s" => 0.0, "segments" => 0)
+    rec["segments"] += 1
+    ts, cd, cdp, cl, cp_sum, cp_t = rec["t"], rec["Cd"], rec["Cd_p"], rec["Cl"], rec["cp_sum"], rec["cp_t"]
+    seg_s = parse(Float64, get(ENV, "CFD3D_SEGMENT_S", "Inf"))
+    seg_steps = parse(Int, get(ENV, "CFD3D_SEGMENT_STEPS", string(typemax(Int))))
+    every = parse(Float64, get(ENV, "CFD3D_CKPT_EVERY_S", "1800"))
+    t_seg = t_mark = t_ck = Base.time(); n_seg = 0
+    tick!() = (now = Base.time(); rec["wall_s"] += now - t_mark; t_mark = now)
+    while sim_time(sim) < t_end
+        if n_seg >= seg_steps || Base.time() - t_seg >= seg_s
+            tick!(); isempty(ck) || save_ckpt(ck, sim, id, rec)
+            return nothing                                       # segment over, not finished: resumable
+        end
+        sim_step!(sim); n_seg += 1; rec["steps"] += 1
         ft = WaterLily.total_force(sim); fp = WaterLily.pressure_force(sim)
         push!(ts, sim_time(sim)); push!(cd, -2ft[1] / (U^2 * D)); push!(cl, -2ft[2] / (U^2 * D))
         push!(cdp, -2fp[1] / (U^2 * D))
         isfinite(cd[end]) || break
-        if ts[end] >= t0 && nsteps % 10 == 0
+        if ts[end] >= t0 && rec["steps"] % 10 == 0
             p = sim.flow.p
             pref = sum(Array(@view p[2, 2:ny-1])) / (ny - 2)
             s = [Array(WaterLily.interp.(dp, Ref(p))) for dp in dpts]    # samples at R + 1.5, 2.5, 3.5 h
@@ -66,21 +129,29 @@ function run_case(run)
             pw = @. (35 * s[1] - 42 * s[2] + 15 * s[3]) / 8
             cp_sum .+= (pw .- pref) ./ (0.5U^2); push!(cp_t, ts[end])
         end
+        if !isempty(ck) && Base.time() - t_ck >= every
+            tick!(); save_ckpt(ck, sim, id, rec); t_ck = Base.time()
+        end
     end
-    Dict("mode" => "RUN", "n_D" => run["n_D"], "H" => run["H"], "Re" => run["Re"], "grid" => collect(size(sim.flow.p)),
-         "steps" => nsteps, "t_end_reached" => ts[end], "finite" => all(isfinite, cd), "wall_s" => wall,
-         "ns_per_cell_step" => 1e9wall / (nsteps * prod(size(sim.flow.p))),
+    tick!(); isempty(ck) || save_ckpt(ck, sim, id, rec)         # final state, so a re-invocation is idempotent
+    Dict("mode" => "RUN", "contract_run" => haskey(CONTRACT["runs"], id), "n_D" => run["n_D"], "H" => run["H"],
+         "Re" => run["Re"], "t_end_contract" => t_end, "grid" => collect(size(sim.flow.p)),
+         "steps" => rec["steps"], "segments" => rec["segments"], "t_end_reached" => ts[end],
+         "finite" => all(isfinite, cd), "wall_s" => rec["wall_s"],
+         "ns_per_cell_step" => 1e9rec["wall_s"] / (rec["steps"] * prod(size(sim.flow.p))),
          "t" => ts, "Cd" => cd, "Cd_p" => cdp, "Cl" => cl,
          "surface" => Dict("angles" => length(nrm), "samples" => length(cp_t),
                            "Cp_wall_mean" => cp_sum ./ max(length(cp_t), 1), "t_first" => isempty(cp_t) ? nothing : cp_t[1]))
 end
 
 function main(out, id, mode="RUN", nsteps="200")
-    run = CONTRACT["runs"][id]
-    r = mode == "TIMING" ? timing(run, parse(Int, nsteps)) : run_case(run)
-    r["run_id"] = id; r["gpu"] = GPU; r["julia"] = string(VERSION); r["threads"] = Threads.nthreads()
-    r["waterlily"] = string(pkgversion(WaterLily))
-    open(out, "w") do io; JSON.print(io, r); end
+    run = getrun(id)
+    r = mode == "TIMING" ? timing(run, parse(Int, nsteps)) : run_case(run, id)
+    r === nothing && exit(75)                                    # EX_TEMPFAIL: resume with the same CFD3D_CKPT
+    r["run_id"] = id; r["gpu"] = GPU; r["threads"] = Threads.nthreads()
+    merge!(r, IDENTITY)
+    open(out * ".tmp", "w") do io; JSON.print(io, r); end
+    mv(out * ".tmp", out; force=true)
 end
 
 main(ARGS...)

@@ -273,3 +273,27 @@ def test_vlm_provenance_names_the_producer_and_only_the_hand_added_keys():
         assert set(keys) <= set(rec)
         assert sha(VLM / v / "vlm.json") == p["verification_2026_10_31"]["committed_file_sha256"][v]
         assert p["verification_2026_10_31"]["producer_rerun_equals_committed_minus_hand_added"][v]
+
+
+def test_cpu_packet_runs_only_frozen_contract_cases_with_pinned_env():
+    pk = json.loads((ROOT / "engineering/cfd3d/cpu_packet.json").read_text())
+    contract = json.loads((ROOT / "engineering/cfd3d/cyl2d_contract.json").read_text())
+    ids = [c["run_id"] for c in pk["cases"]]
+    assert set(ids) <= set(contract["runs"]) and "R2" not in ids and "T_restart" not in contract["runs"]
+    assert sum(c["threads"] for c in pk["cases"]) <= 16
+    assert all(c["budget_s"] <= pk["outer_budget_s"] - pk["emit_margin_s"] for c in pk["cases"])
+    assert sha(ROOT / "engineering/cfd3d/env/Manifest.toml") == pk["env"]["manifest_sha256"]
+    assert "FAILED" in pk["reference_gate"]["C1_sphere_3d"] and "never 'passed'" in pk["science"]
+    env = dict(os.environ, PREFLIGHT="1")
+    r = subprocess.run([sys.executable, "-I", str(ROOT / "engineering/cfd3d/cpu_entry.py")], env=env,
+                       capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0 and json.loads(r.stdout)["preflight"] is True
+
+
+def test_cpu_packet_controls_record_a_passing_check_and_a_failing_mutant():
+    r = json.loads((ART / "cyl2d/cpu-packet-controls.json").read_text())
+    real, mut = r["restart_check_real"]["result"], r["restart_check_mutant"]["result"]
+    assert real["series_identical"] and real["final_state_identical"] and real["foreign_checkpoint_refused"]
+    assert real["rc_first_segment"] == 75 and real["cp_after_split"] >= 5
+    assert mut["series_identical"] is False and mut["final_state_identical"] is False
+    assert r["export_resume_test"]["run2_series_identical_to_straight_run"] is True

@@ -7,7 +7,6 @@ disabled. No mesh, no Julia, no GPU. Writes $COPS_OUT/diag/*; rc 0 if every vari
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import platform
