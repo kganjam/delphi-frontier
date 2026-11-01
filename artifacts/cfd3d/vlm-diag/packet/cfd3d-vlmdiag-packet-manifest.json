@@ -1,0 +1,80 @@
+{
+ "schema": "cfd3d-packet-manifest-0.1",
+ "head": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+ "fish3d_rev": null,
+ "archive": "cfd3d-vlmdiag-packet.tar.xz",
+ "archive_bytes": 30804,
+ "archive_sha256": "36de63a5d975e05f357b4aebd0308e99adcb31227a64068eea63184d46bdd20d",
+ "base64_bytes": 41072,
+ "raw_bytes": 212498,
+ "files": [
+  {
+   "path": "engineering/cfd3d/vlm.py",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "f82d99f9bd24cd5ca3ccbf23f6e20859e2fe349e",
+   "sha256": "044a6dc281a50db17f522d66d2c1efa0fbb0bf0d38f71b5885763a88f7f0a06a",
+   "bytes": 22243
+  },
+  {
+   "path": "engineering/cfd3d/vlm_diag.py",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "05135bdcd9e9e0d58ee5a88983e46f219e400974",
+   "sha256": "cc6dc5fd2a0380a47d4e60fcc61c4fd6b2bc9f4b29a612f28f7d47bac1246562",
+   "bytes": 22797
+  },
+  {
+   "path": "engineering/cfd3d/vlm_diag_contract.json",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "6e4c7f4a0c0ab49109ba9159f09abeb8fafbce3e",
+   "sha256": "176945a7ab9c79286c7c31492edc3ad5e3aeedfcb18d72b151013ee78a715fcc",
+   "bytes": 11331
+  },
+  {
+   "path": "engineering/cfd3d/vlm_diag_addendum_repair.json",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "dfcd80478b73af9b3ec353a055ee3bc60378649f",
+   "sha256": "6a68b13da4a17e379507372c80df955681eee87896e50abacb90aee805ae921d",
+   "bytes": 4403
+  },
+  {
+   "path": "engineering/cfd3d/gates_vlm.json",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "849b14d3324e54d177e6177f1d3f39cf2cc16fe2",
+   "sha256": "f9ede945cfd28f284c2ec08e8dd87b1a38d5684af1912fe3f4ced80cedbc4d58",
+   "bytes": 2617
+  },
+  {
+   "path": "engineering/cfd3d/vlm_diag_run.sh",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "10c979ba625bf0cc013f933ca9a96da88465ed52",
+   "sha256": "65c95362417a9da6751f977b997858f012188e062d4952cb8ac0b243fe011e1d",
+   "bytes": 1760
+  },
+  {
+   "path": "engineering/cfd3d/vlm_diag_requirements.txt",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "148bc113e675503a4ea2cce48481d2ce082dad32",
+   "sha256": "738071c1d9633f276433ad6738de256d2bf0d22f66dc4bd3179012bebb63bdd1",
+   "bytes": 13
+  },
+  {
+   "path": "engineering/cfd3d/vlmdiag_packet.json",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "4c4c059a5409950af28424b92b868558cc621dd9",
+   "sha256": "a05dfa49134e71f1d65e27fd2ab4f05369af74187915dce056e271ac97f0028f",
+   "bytes": 3599
+  },
+  {
+   "path": "artifacts/fish3d/fish3d-v3a-fan/panels.json",
+   "rev": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+   "blob": "d9baff4beb4452c78123e242f89a470aaccb81a5",
+   "sha256": "1f64a9759de289118e22e6a9edc5d76c63e6daef5c4a5b84e294e80021a1d33d",
+   "bytes": 143735
+  }
+ ],
+ "launcher": "engineering/cfd3d/cfd3d_launch.py",
+ "launcher_bytes": 1866,
+ "launcher_sha256": "6837209eb7c1b4634b7a4d7846dc99036aa963cca91d7abdd98c966fae7ac449",
+ "inject_total_raw": 32670,
+ "fits_inject_limit": true
+}

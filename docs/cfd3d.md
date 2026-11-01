@@ -172,6 +172,18 @@ Curated in `artifacts/cfd3d/gpu-v1/` with `receipt.json`. The transport hash was
     R1 / 0.97 = 1.2244, and the fidelity band starts at 1.2995.
   - The shortfall is in the viscous share, Cd - Cd_p: 0.20 to 0.22 here, against 0.338 in the reference. That is an
     inference from the reported means, not a separate check.
+- **VLM refinement diagnostic (rigid CL non-monotone in the fidelity ladder).** The contract was frozen at f4904ed
+  (`vlm_diag_contract.json`), before any solve. It runs analytic planforms and the v3a fins on the unchanged
+  `vlm.py`, and the results are in `artifacts/cfd3d/vlm-diag/`.
+  - Frozen result: D_scheme indicated. Chord refinement diverges on smooth elliptic planforms, with CL about
+    linear in nc. It converges on a rectangle.
+  - A post-hoc, labelled REPAIR addendum (c22e0c0) moves only the collocation point to the panel's own 3/4 point.
+    The source puts the bound vortex on the strip-edge chords and the collocation point on the mid-strip chord.
+  - With the repair, the chord dependence falls from 1-3 % to about 3e-5, and every span family becomes regular,
+    the fins included. The addendum's own verdict is still unknown: its notch negative was cured too, and the
+    classifier's 1e-12 roundoff threshold counts 1e-6 plateaus as irregular.
+  - `vlm.py` and every existing VLM output are unchanged. The extended CPU packet (`build_packet.py --vlmdiag`)
+    was handed to infra and not submitted here.
 - **C1 is untouched.** The 3-D sphere gate C1 stays FAILED. A cylinder pass would not change it, and would not
   validate fins or flight.
 

@@ -1,0 +1,24 @@
+{
+ "schema": "cfd3d-vlm-diag-preflight-0.1",
+ "archive_sha256": "36de63a5d975e05f357b4aebd0308e99adcb31227a64068eea63184d46bdd20d",
+ "archive_bytes": 30804,
+ "source_commit": "283e3a7f6ed4338f3425e22c13a7cb6b49d51709",
+ "run_from": "fresh extraction of the archive; no repository files on the path",
+ "command": "systemd-run --user --scope -p CPUQuota=400% -p TasksMax=128 -p MemoryMax=2G -p MemorySwapMax=0 -p RuntimeMaxSec=120 env PYTHON=<python 3.12.3 + numpy 2.5.4> VLM_DIAG_DEADLINE=0 sh engineering/cfd3d/vlm_diag_run.sh OUT",
+ "what": "plumbing only: deadline 0, so no solve runs and no outcome is produced",
+ "exit_code": 0,
+ "exit_codes": {
+  "core_f3": 0,
+  "repair_f3": 0,
+  "core_rest": 0,
+  "repair_rest": 0,
+  "merge": 0
+ },
+ "solves_listed": 372,
+ "solve_states": [
+  "not_run_deadline"
+ ],
+ "merged_written": true,
+ "output_bytes": 52464,
+ "negative_control": "the same runner on an extraction with one byte appended to panels.json: REFUSED, exit 2"
+}
