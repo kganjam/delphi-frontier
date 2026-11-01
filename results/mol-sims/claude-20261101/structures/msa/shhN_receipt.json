@@ -1,0 +1,194 @@
+{
+ "a3m_n_seqs": 14,
+ "a3m_sha256": "52e18cde100b93d9dd389ac1926ef129f32842212895a2a9b7ddfaf5cd51209f",
+ "artifacts": [
+  {
+   "artifact_id": "f943759a-bfc5-5e98-9eb1-4882d1bcaf17",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "1c678e70fe91ffd1e993bd17569638ac26727d845c3470f73b5f69123b945443",
+   "size_bytes": 2698
+  }
+ ],
+ "chain": "shhN",
+ "database": "pdb70_220313",
+ "evidence_kind": "computed",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:21:35Z",
+ "operation_id": "op-80efffcb61fc1d9f",
+ "polls": [
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:21:33Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-shhN/op-80efffcb61fc1d9f/artifacts/f943759a-bfc5-5e98-9eb1-4882d1bcaf17.json",
+     "path": "artifacts/f943759a-bfc5-5e98-9eb1-4882d1bcaf17.json",
+     "sha256": "1c678e70fe91ffd1e993bd17569638ac26727d845c3470f73b5f69123b945443",
+     "size_bytes": 2698
+    },
+    {
+     "key": "frontier/claude-mol/msa-shhN/op-80efffcb61fc1d9f/result.json",
+     "path": "result.json",
+     "sha256": "df60b69165db3ff5a626e8c5003759e5aa233394f1683098a9bc3ba2dee41db9",
+     "size_bytes": 3444
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-shhN/op-80efffcb61fc1d9f/manifest.json",
+   "prefix": "frontier/claude-mol/msa-shhN/op-80efffcb61fc1d9f/"
+  },
+  "execution": "async",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-80efffcb61fc1d9f",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "aligned_sequences",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "sequence"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "f943759a-bfc5-5e98-9eb1-4882d1bcaf17",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "1c678e70fe91ffd1e993bd17569638ac26727d845c3470f73b5f69123b945443",
+    "size_bytes": 2698
+   },
+   "attempt_id": "op-80efffcb61fc1d9f-cgcft",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-80efffcb61fc1d9f",
+   "sha256": "1c678e70fe91ffd1e993bd17569638ac26727d845c3470f73b5f69123b945443",
+   "size_bytes": 2698,
+   "timings": {
+    "completed_at": "2026-11-01T14:20:17Z",
+    "duration_s": 7.363974,
+    "first_byte_at": "2026-11-01T14:20:17Z",
+    "posted_at": "2026-11-01T14:20:10Z"
+   }
+  },
+  "result": {
+   "alignments": {
+    "pdb70_220313": {
+     "a3m": {
+      "alignment": ">query\nCGPGRGYGRRRHPKKLTPLAYKQFIPNVAEKTLGASGRYEGKITRNSERFKELTPNYNPDIIFKDEENTGADRLMTQRCKDKLNSLAISVMNHWPGVKLRVTEGWDEDGHHFEESLHYEGRAVDITTSDRDKSKYGTLSRLAVEAGFDWVYYESKAHIHCSVKAENSVAAKSGG\n>6N7G_C\nCGPGRGFGKRRHPKKLTPLAYKQFIPNVAEKTLGASGRYEGKISRNSERFKELTPNYNPDIIFKDEENTGADRLMTQRCKDKLNALAISVMNQWPGVKLRVTEGWDEDGHHSEESLHYEGRAVDITTSDRDRSKYGMLARLAVEAGFDWVYYESKAHIHCSVKAENSVAAKSGG\n>7E2I_G\nCGPGRGFGKRRHPKKLTPLAYKQFIPNVAEKTLGASGRYEGKISRNSERFKELTPNYNPDIIFKDEENTGADRLMTQRCKDKLNALAISVMNQWPGVKLRVTEGWDEDGHHSEESLHYEGRAVDITTSDRDRSKYGMLARLAVEAGFDWVYYESKAHIHCSVKAENSVAAKSGG\n>6RMG_B\n-GPGRGFGKRRHPKKLTPLAYKQFIPNVAEKTLGASGRYEGKISRNSERFKELTPNYNPDIIFKDEENTGADRLMTQRCKDKLNALAISVMNQWPGVKLRVTEGWDEDGHHSEESLHYEGRAVDITTSDRDRSKYGMLARLAVEAGFDWVYYESKAHIHCSVKAENSVAAKSGG\n>6PJV_A\n-----GFGKRRHPKKLTPLAYKQFIPNVAEKTLGASGRYEGKISRNSERFKELTPNYNPDIIFKDEENTGADRLMTQRCKDKLNALAISVMNQWPGVKLRVTEGWDEDGHHSEESLHYEGRAVDITTSDRDRSKYGMLARLAVEAGFDWVYYESKAHIHCSVKAENSVAAKSGG\n>2WFX_A\n---------------LTPLAYKQFIPNVAEKTLGASGRYEGKITRNSERFKELTPNYNPDIIFKDEENTGADRLMTQRCKDKLNALAISVMNQWPGVKLRVTEGWDEDGHHSEESLHYEGRAVDITTSDRDRSKYGMLARLAVEAGFDWVYYESKAHIHCSVKAENS-------\n>2WFQ_A\n--------------QLVPLLYKQFVPGVPERTLGASGPAEGRVARGSERFRDLVPNYNPDIIFKDEENSGADRLMTERCKERVNALAIAVMNMWPGVRLRVTEGWDEDGHHAQDSLHYEGRALDITTSDRDRNKYGLLARLAVEAGFDWVYYESRNHVHVSVKADNSLAVK---\n>2WFR_A\n--------------QLVPLLYKQFVPGVPERTLGASGPAEGRVARGSERFRDLVPNYNPDIIFKDEENSGADRLMTERCKERVNALAIAVMNMWPGVRLRVTEGWDEDGHHAQDSLHYEGRALDITTSDRDRNKYGLLARLAVEAGFDWVYYESRNHVHVSVKADNSLAVK---\n>6TD6_B\nCGPGRGLGRHR-ARNLYPLVLKQTIPNLSEYTNSASGPLEGVIRRDSPKFKDLVPNYNRDILFRDEEGTGADRLMSKRCKEKLNVLAYSVMNEWPGIRLLVTESWDEDYHHGQESLHYEGRAVTIATSDRDQSKYGMLARLAVEAGFDWVSYVSRRHIYCSVKSDSSI------\n>3JR2_C\n-----------------------------------------------------------------------------------------------------------------------------------------LSRMAFEAGADWITVSAAAHI----------------\n>4EWH_A\n---------------------------------------------------------------------------------------------------------------------------------------GTLSRYAVQVAEGMGYLESKRFIHRDLAARN--------\n>4HZR_A\n---------------------------------------------------------------------------------------------------------------------------------------GTLSRYAVQVAEGMGYLESKRFIHRDLAARN--------\n>7KP6_A\n---------------------------------------------------------------------------------------------------------------------------------------GTLSRYAVQVAEGMGYLESKRFIHRDLAARN--------\n>4HZS_D\n---------------------------------------------------------------------------------------------------------------------------------------GTLSRYAVQVAEGMGYLESKRFIHRDLAARN--------\n",
+      "format": "a3m"
+     }
+    }
+   },
+   "metrics": {
+    "search_type": "colabfold"
+   }
+  },
+  "upstream_success": true
+ },
+ "sequence": "CGPGRGYGRRRHPKKLTPLAYKQFIPNVAEKTLGASGRYEGKITRNSERFKELTPNYNPDIIFKDEENTGADRLMTQRCKDKLNSLAISVMNHWPGVKLRVTEGWDEDGHHFEESLHYEGRAVDITTSDRDKSKYGTLSRLAVEAGFDWVYYESKAHIHCSVKAENSVAAKSGG",
+ "sequence_sha256": "b50ed89f15b017d59cbd3f9713069ef18d43272df5e016085b34e6fabb4218ba",
+ "source": "Q92008 24-197",
+ "submit_isError": false,
+ "submit_payload": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-shhN/op-80efffcb61fc1d9f/artifacts/f943759a-bfc5-5e98-9eb1-4882d1bcaf17.json",
+     "path": "artifacts/f943759a-bfc5-5e98-9eb1-4882d1bcaf17.json",
+     "sha256": "1c678e70fe91ffd1e993bd17569638ac26727d845c3470f73b5f69123b945443",
+     "size_bytes": 2698
+    },
+    {
+     "key": "frontier/claude-mol/msa-shhN/op-80efffcb61fc1d9f/result.json",
+     "path": "result.json",
+     "sha256": "df60b69165db3ff5a626e8c5003759e5aa233394f1683098a9bc3ba2dee41db9",
+     "size_bytes": 3444
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-shhN/op-80efffcb61fc1d9f/manifest.json",
+   "prefix": "frontier/claude-mol/msa-shhN/op-80efffcb61fc1d9f/"
+  },
+  "delivery": {
+   "export_state": "succeeded",
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-msa-shhN-b50ed89f15b017d59cbd",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-80efffcb61fc1d9f",
+   "status": "SUCCEEDED"
+  },
+  "result_available": true
+ },
+ "submitted_utc": "2026-11-01T14:21:30Z",
+ "tool": "msa_search_native"
+}

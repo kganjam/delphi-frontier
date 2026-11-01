@@ -1,0 +1,191 @@
+{
+ "bundle_sha256": "ff0b013dcf347eb45f9ad4db91245a455e2b50bb277d44423faab262f73569e9",
+ "manifest": {
+  "artifacts": [
+   {
+    "artifact_id": "b43c03df-679a-5447-bc99-422974d4335d",
+    "compression": "none",
+    "media_type": "application/gzip",
+    "name": "openmm-inputs",
+    "role": "openmm-inputs",
+    "sha256": "ff0b013dcf347eb45f9ad4db91245a455e2b50bb277d44423faab262f73569e9",
+    "size_bytes": 23594
+   }
+  ],
+  "schema": "fs2-serve.nebius.ai/scientific-artifact-manifest/v1"
+ },
+ "operation_id": null,
+ "polls": [],
+ "sim": "s6",
+ "start_cif_sha256": "fdd038f9fb877e7d12ac99fa9c0dc01d2bd72a9d15459e7f2f3d5884f3ae475c",
+ "start_pdb_sha256": "c7e9dff5ccc4dc5c8c60a98b65f30c922839a85271cbd5a0d654f44e6c3b51cd",
+ "submit_arguments": {
+  "idempotency_key": "frontier-claude-mol-openmm-shhN-126c774e39052a400363",
+  "request": {
+   "client_context": {
+    "display_name": "claude-mol ShhN apo 10 ns"
+   },
+   "input_manifest": {
+    "artifact_id": "e8973c0d-1827-5d9d-a995-f58c8860dd9b",
+    "compression": "none",
+    "media_type": "application/vnd.fs2.scientific-manifest+json",
+    "sha256": "4c236d3b8fcdbc412b9c0798ec30bb78578519cc3b68961a09a162b17c45093a",
+    "size_bytes": 343
+   },
+   "parameters": {
+    "backend": "cuda",
+    "jobs": [
+     {
+      "id": "shhn-apo",
+      "steps": [
+       {
+        "id": "min",
+        "kind": "minimize",
+        "tolerance_kj_mol_nm": 10.0
+       },
+       {
+        "id": "nvt",
+        "kind": "equilibrate",
+        "report_interval": 5000,
+        "steps": 50000,
+        "temperature_k": 301.0
+       },
+       {
+        "id": "npt",
+        "kind": "equilibrate",
+        "pressure_bar": 1.0,
+        "report_interval": 5000,
+        "steps": 100000,
+        "temperature_k": 301.0
+       },
+       {
+        "checkpoint_interval_steps": 500000,
+        "id": "prod",
+        "kind": "production",
+        "pressure_bar": 1.0,
+        "report_interval": 5000,
+        "steps": 5000000,
+        "temperature_k": 301.0
+       }
+      ],
+      "system": {
+       "add_hydrogens": true,
+       "constraints": "HBonds",
+       "coordinates": "shhN_model0.pdb",
+       "forcefields": [
+        "amber14-all.xml",
+        "amber14/tip3pfb.xml"
+       ],
+       "format": "pdb",
+       "nonbonded_cutoff_nm": 1.0,
+       "nonbonded_method": "PME",
+       "ph": 7.0,
+       "solvent": {
+        "ionic_strength_molar": 0.15,
+        "model": "tip3p",
+        "neutralize": true,
+        "padding_nm": 1.0
+       }
+      }
+     }
+    ],
+    "max_wall_seconds": 7200,
+    "output_prefix": "frontier/claude-mol/openmm-shhN",
+    "precision": "mixed",
+    "random_seed": 20261101,
+    "schema": "fs2-serve.nebius.ai/openmm-workflow-request/v1"
+   }
+  }
+ },
+ "submit_isError": false,
+ "submit_payload": {
+  "error": {
+   "admission": "not-submitted",
+   "code": "INVALID_REQUEST",
+   "message": "invalid scientific artifact manifest",
+   "model_id": "openmm",
+   "next_action": "Correct the reported input or artifact issue, then submit again.",
+   "request_id": "98e5e55b-d470-4c19-b0c1-75913d2a0ef2",
+   "retryable": false
+  }
+ },
+ "submitted_utc": "2026-11-01T14:27:52Z",
+ "uploads": [
+  {
+   "begin": {
+    "artifact": {
+     "artifact_id": "b43c03df-679a-5447-bc99-422974d4335d",
+     "compression": "none",
+     "media_type": "application/gzip",
+     "sha256": "ff0b013dcf347eb45f9ad4db91245a455e2b50bb277d44423faab262f73569e9",
+     "size_bytes": 23594
+    },
+    "content_path": "/v1/scientific-artifacts/uploads/b43c03df-679a-5447-bc99-422974d4335d/content",
+    "direct_upload_expires_in": 60,
+    "direct_upload_url": "https://storage.eu-north1.nebius.cloud/[team-bucket-name-omitted]/scientific-ai2/35b6cb950a2403512d2a548cbe1c3b514f4b1d111d6ce92c8827748c02f3c743/uploads/ff0b013dcf347eb45f9ad4db91245a455e2b50bb277d44423faab262f73569e9?[QUERY-STRIPPED]",
+    "handle": {
+     "expires_at": "2026-11-01T14:28:54+00:00",
+     "headers": {
+      "If-None-Match": "*"
+     },
+     "method": "PUT",
+     "url": "https://storage.eu-north1.nebius.cloud/[team-bucket-name-omitted]/scientific-ai2/35b6cb950a2403512d2a548cbe1c3b514f4b1d111d6ce92c8827748c02f3c743/uploads/ff0b013dcf347eb45f9ad4db91245a455e2b50bb277d44423faab262f73569e9?[QUERY-STRIPPED]",
+     "write_once": true
+    },
+    "max_content_bytes": 16777216,
+    "multipart_path": "/v1/scientific-artifacts/uploads/b43c03df-679a-5447-bc99-422974d4335d/multipart",
+    "upload_id": "b43c03df-679a-5447-bc99-422974d4335d",
+    "upload_url": "https://89.169.99.188/v1/scientific-artifacts/uploads/b43c03df-679a-5447-bc99-422974d4335d/content"
+   },
+   "finalize": {
+    "artifact": {
+     "artifact_id": "b43c03df-679a-5447-bc99-422974d4335d",
+     "compression": "none",
+     "media_type": "application/gzip",
+     "sha256": "ff0b013dcf347eb45f9ad4db91245a455e2b50bb277d44423faab262f73569e9",
+     "size_bytes": 23594
+    },
+    "state": "finalized"
+   },
+   "put_status": 200
+  },
+  {
+   "begin": {
+    "artifact": {
+     "artifact_id": "e8973c0d-1827-5d9d-a995-f58c8860dd9b",
+     "compression": "none",
+     "media_type": "application/vnd.fs2.scientific-manifest+json",
+     "sha256": "4c236d3b8fcdbc412b9c0798ec30bb78578519cc3b68961a09a162b17c45093a",
+     "size_bytes": 343
+    },
+    "content_path": "/v1/scientific-artifacts/uploads/e8973c0d-1827-5d9d-a995-f58c8860dd9b/content",
+    "direct_upload_expires_in": 60,
+    "direct_upload_url": "https://storage.eu-north1.nebius.cloud/[team-bucket-name-omitted]/scientific-ai2/35b6cb950a2403512d2a548cbe1c3b514f4b1d111d6ce92c8827748c02f3c743/uploads/4c236d3b8fcdbc412b9c0798ec30bb78578519cc3b68961a09a162b17c45093a?[QUERY-STRIPPED]",
+    "handle": {
+     "expires_at": "2026-11-01T14:28:56+00:00",
+     "headers": {
+      "If-None-Match": "*"
+     },
+     "method": "PUT",
+     "url": "https://storage.eu-north1.nebius.cloud/[team-bucket-name-omitted]/scientific-ai2/35b6cb950a2403512d2a548cbe1c3b514f4b1d111d6ce92c8827748c02f3c743/uploads/4c236d3b8fcdbc412b9c0798ec30bb78578519cc3b68961a09a162b17c45093a?[QUERY-STRIPPED]",
+     "write_once": true
+    },
+    "max_content_bytes": 16777216,
+    "multipart_path": "/v1/scientific-artifacts/uploads/e8973c0d-1827-5d9d-a995-f58c8860dd9b/multipart",
+    "upload_id": "e8973c0d-1827-5d9d-a995-f58c8860dd9b",
+    "upload_url": "https://89.169.99.188/v1/scientific-artifacts/uploads/e8973c0d-1827-5d9d-a995-f58c8860dd9b/content"
+   },
+   "finalize": {
+    "artifact": {
+     "artifact_id": "e8973c0d-1827-5d9d-a995-f58c8860dd9b",
+     "compression": "none",
+     "media_type": "application/vnd.fs2.scientific-manifest+json",
+     "sha256": "4c236d3b8fcdbc412b9c0798ec30bb78578519cc3b68961a09a162b17c45093a",
+     "size_bytes": 343
+    },
+    "state": "finalized"
+   },
+   "put_status": 200
+  }
+ ]
+}

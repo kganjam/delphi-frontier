@@ -1,0 +1,194 @@
+{
+ "a3m_n_seqs": 44,
+ "a3m_sha256": "c1d41017dac219dcdb71b72e620e8d1e1c6e835dd6c7b0752cb97e8bd77d94c8",
+ "artifacts": [
+  {
+   "artifact_id": "afe5458f-ab4b-5f71-ad8a-2427c51326ca",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "82f769d0e9988bf9dd524b74af4823dd64651236212c83709717e5fb6db660e5",
+   "size_bytes": 6979
+  }
+ ],
+ "chain": "fgf10a_core",
+ "database": "pdb70_220313",
+ "evidence_kind": "computed",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:21:38Z",
+ "operation_id": "op-d3ea3b0a1db74198",
+ "polls": [
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:21:37Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-fgf10a_core/op-d3ea3b0a1db74198/artifacts/afe5458f-ab4b-5f71-ad8a-2427c51326ca.json",
+     "path": "artifacts/afe5458f-ab4b-5f71-ad8a-2427c51326ca.json",
+     "sha256": "82f769d0e9988bf9dd524b74af4823dd64651236212c83709717e5fb6db660e5",
+     "size_bytes": 6979
+    },
+    {
+     "key": "frontier/claude-mol/msa-fgf10a_core/op-d3ea3b0a1db74198/result.json",
+     "path": "result.json",
+     "sha256": "92ed503b0ac69c4ecf9a6cab917334638fbedf870359234947a80609046c9b8d",
+     "size_bytes": 7725
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-fgf10a_core/op-d3ea3b0a1db74198/manifest.json",
+   "prefix": "frontier/claude-mol/msa-fgf10a_core/op-d3ea3b0a1db74198/"
+  },
+  "execution": "async",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-d3ea3b0a1db74198",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "aligned_sequences",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "sequence"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "afe5458f-ab4b-5f71-ad8a-2427c51326ca",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "82f769d0e9988bf9dd524b74af4823dd64651236212c83709717e5fb6db660e5",
+    "size_bytes": 6979
+   },
+   "attempt_id": "op-d3ea3b0a1db74198-xtn8m",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-d3ea3b0a1db74198",
+   "sha256": "82f769d0e9988bf9dd524b74af4823dd64651236212c83709717e5fb6db660e5",
+   "size_bytes": 6979,
+   "timings": {
+    "completed_at": "2026-11-01T14:20:54Z",
+    "duration_s": 6.752819,
+    "first_byte_at": "2026-11-01T14:20:53Z",
+    "posted_at": "2026-11-01T14:20:47Z"
+   }
+  },
+  "result": {
+   "alignments": {
+    "pdb70_220313": {
+     "a3m": {
+      "alignment": ">query\nGRHVRSYNHLTGDVRRRKLFSYQKFFLRIDKNGKVNGTKSKDDPYSTLEIKSVDVGIVAIKGIQSNYYLAINKKGVVYGARDFGIDCKLIERIEENRYNTYASAEWMNKKKHMFVGLSANGRPMRAKKTRRKNTATHFLPIPIV\n>1NUN_A\nGRHVRSYNHLQGDVRWRKLFSFTKYFLKIEKNGKVSGTKKENCPYSILEITSVEIGVVAVKAINSNYYLAMNKKGKLYGSKEFNNDCKLKERIEENGYNTYASFNWQHNGRQMYVALNGKGAPRRGQKTRRKNTSAHFLPM---\n>1QQK_A\n-----------GDIRVRRLFCRTQWYLRIDKRGKVKGTQEMRNSYNIMEIRTVAVGIVAIKGVESEYYLAMNKEGKLYAKKECNEDCNFKELILENHYNTYASAKWTHSGGEMFVALNQKGLPVKGKKTKKEQKTAHFLPMAI-\n>5ZXE_A\n------------------------FHLQILPDGRVDGTREDNSPYSLLEIRAVEVGVVAIKGVKSGRYLAMNKKGRLYGSKHFTDECKFKERLLENGYNTYSSAKY---RRGWYVALNKNGRPKKGNRTRRTQKATHFLPLPV-\n>1QQL_A\n-----------GDIRVRRLFCRTQWYLRIDKRGKVKGTQEMRNSYNIMEIRTVAVGIVAIKGVESEYYLAMNKEGKLYAKQTPNEECLFLERLEENHYNTYISKK--HAEKNWFVGLKKNGSCKRGPRTHYGQKAILFLPLPV-\n>1G82_B\n---VTDLDHLKGILRRRQLYCRTGFHLEIFPNGTIQGTRKDHSRFGILEFISIAVGLVSIRGVDSGLYLGMNEKGELYGSEKLTQECVFREQFEENWYNTYSSNLYkhVDTGRRYYVALNKDGTPREGTRTKRHQKFTHFLPRPV-\n>1IHK_A\n---VTDLDHLKGILRRRQLYCRTGFHLEIFPNGTIQGTRKDHSRFGILEFISIAVGLVSIRGVDSGLYLGMNEKGELYGSEKLTQECVFREQFEENWYNTYSSNLYkhVDTGRRYYVALNKDGTPREGTRTKRHQKFTHFLPRPV-\n>5W59_A\n---VTDLDHLKGILRRRQLYCRTGFHLEIFPNGTIQGTRKDHSRFGILEFISIAVGLVSIRGVDSGLYLGMNEKGELYGSEKLTQECVFREQFEENWYNTYSSNLYkhVDTGRRYYVALNKDGTPREGTRTKRHQKFTHFLPRPV-\n>3F1R_A\n--------HLHGILRRRQLYCRTGFHLQILPDGSVQGTRQDHSLFGILEFISVAVGLVSIRGVDSGLYLGMNDKGELYGSEKLTSECIFREQFEENWYNTYSSNIYKhgDTGRRYFVALNKDGTPRDGARSKRHQKFTHFLPRPV-\n>2J3P_A\n-------------------------FLRILPDGTVDGTRDRSDQHIQLQLSAESAGEVYIKGTETGQYLAMDTEGLLYGSQTPNEECLFLERLEENHYNTYTSKK--HAEKNWFVGLKKNGSCKRGPRTHYGQKAILFLPLPV-\n>4QBV_A\n-------------------------FLRILPDGTVDGTRDRSDQHIQLQLSAESVGEVYIKSTETGQYLAMDTDGLLYGSQTPNEECLFLERLEENHYNTYISKK--HAEKNWFVGLKKNGSTKRGPRTHYGQKAILFLPLPV-\n>1RG8_A\n-------------------------FLRILPDGTVDGTRDRSDQHIQLQLSAESVGEVYIKSTETGQYLAMDTDGLLYGSQTPNEECLFLERLEENHYNTYISKK--HAEKNWFVGLKKNGSCKRGPRTHYGQKAILFLPLPV-\n>3HAL_B\n-------------------------FLRILPDGTVDGTRDRSDQHIQLQLSAESVGEVYIKSTETGQYLAMDTDGLLYGSQTPSEECLFLERLEENHYNTYTSKK--HAEKNWFVGLKKNGSCKRGPRTHYGQKAILFLPLPV-\n>3JUT_B\n-------------------------FLRILPDGTVDGTRDRSDQHIQLQLSAESVGEVYIKSTETGQYLAMDTDGLLYGSQTPNEECLFLERLEENHYNTYISKK--HAEKNWFVGLKKNGSCKRGPRTHYGQKAILFLPLPV-\n>1NZK_B\n-------------------------FLRILPDGTVDGTRDRSDQHIQFQLSAESVGEVYIKSTETGQYLAMDTDGLVYGSQTPNEECLFLERLEENHYNTYISKK--HAEKNWFLGIKKNGSVKRGPRTHYGQKAILFLPLPV-\n>4DCK_C\n-----------------KLYSRQGYHLQLQADGTIDGTKDEDSTYTLFNLIPVGLRVVAIQGVQTKLYLAMNSEGYLYTSELFTPECKFKESVFENYYVTYSSMIYRQQQsgRGWYLGLNKEGEIMKGNHVKKNKPAAHFLPKPL-\n>3HBW_A\n-----------------KLYSRQGYHLQLQADGTIDGTKDEDSTYTLFNLIPVGLRVVAIQGVQTKLYLAMNSEGYLYTSELFTPECKFKESVFENYYVTYSSMIYRQQQsgRGWYLGLNKEGEIMKGNHVKKNKPAAHFLPKPL-\n>1Q1U_A\n-----------------RLFSQQGYFLQMHPDGTIDGTKDENSDYTLFNLIPVGLRVVAIQGVKASLYVAMNGEGYLYSSDVFTPECKFKESVFENYYVIYSSTLYRQQEsgRAWFLGLNKEGQIMKGNRVKKTKPSSHFVPKPI-\n>4JQ0_A\n-----------------RLFSQQGYFLQMHPDGTIDGTKDENSDYTLFNLIPVGLRVVAIQGVKASLYVAMNGEGYLYSSDVFTPECKFKESVFENYYVIYSSTLYRQQEsgRAWFLGLNKEGQIMKGNRVKKTKPSSHFVPKPI-\n>2M49_C\n------------------------FFLRIHPDGRVDGVREKSDPHIKLQLQAEERGVVSIKGVSANRYLAMKEDGRLLASKSVTDECFFFERLESNNYNTYRSRKYTS----WYVALKRTGQYKLGSKTGPGQKAILFLPM---\n>1EV2_D\n------------------------FFLRIHPDGRVDGVREKSDPHIKLQLQAEERGVVSIKGVSANRYLAMKEDGRLLASKSVTDECFFFERLESNNYNTYRSRKYTS----WYVALKRTGQYKLGSKTGPGQKAILFLPM---\n>1BFG_A\n------------------------FFLRIHPDGRVDGVREKSDPHIKLQLQAEERGVVSIKGVSANRYLAMKEDGRLLASKSVTDECFFFERLESNNYNTYRSRKYTS----WYVALKRTGQYKLGSKTGPGQKAILFLPM---\n>4OEE_A\n------------------------FFLRIHPDGRVDGVREKSDPHIKLQLQAEERGVVSIKGVSANRYLAMKEDGRLLASKSVTDECFFFERLESNNYNTYRSRKYTS----WYVALKRTGQYKLGSKTGPGQKAILFLPM---\n>1BLA_A\n------------------------FFLRIHPDGRVDGVREKSDPHIKLQLQAEERGVVSIKGVSANRYLAMKEDGRLLASKSVTDECFFFERLESNNYNTYRSRKYTS----WYVALKRTGQYKLGSKTGPGQKAILFLPM---\n>6L4O_B\n------------------------FFLRIHPDGRVDGVREKSDPHIKLQLQAEERGVVSIKGVSANRYLAMKEDGRLLASKSVTDECFFFERLESNNYNTYRSRKYTS----WYVALKRTGQYKLGSKTGPGQKAILFLPM---\n>1IJT_A\n------------------------FHLQALPDGRIGGAHA-DTRDSLLELSPVERGVVSIFGVASRFFVAMSSKGKLYGSPFFTDECTFKEILLPNNYNAYESYKY----PGMFIALGKNGKTKKGNRVSPTMKVTHFLP----\n>2FDB_N\n--HVREQSLVTDQLSRRLIRTYQLYsrtsgkHVQVLANKRINAMAEDGDPFAKLIVETDTFGsRVRVRGAETGLYICMNKKGkLIAKSNGKGKDCVFTEIVLENNYTALQNAKY----EGWYMAFTRKGRPRKGSKTRQHQREVHFM-----\n>2FDB_M\n--HVREQSLVTDQLSRRLIRTYQLYsrtsgkHVQVLANKRINAMAEDGDPFAKLIVETDTFGsRVRVRGAETGLYICMNKKGkLIAKSNGKGKDCVFTEIVLENNYTALQNAKY----EGWYMAFTRKGRPRKGSKTRQHQREVHFM-----\n>4CJM_D\n------------------------------------------DKYAQLLVETDTFGsQVRIKGKETEFYLCMNRKGKLVGKPDgTSKECVFIEKVLENNYTALMSAKY----SGWYVGFTKKGRPRKGPKTRENQQDVHFM-----\n>4CJM_B\n------------------------------------------DKYAQLLVETDTFGsQVRIKGKETEFYLCMNRKGKLVGKPDgTSKECVFIEKVLENNYTALMSAKY----SGWYVGFTKKGRPRKGPKTRENQQDVHFM-----\n>5W21_B\n------------------------YHLQIHKNGHVDGAPHQ-TIYSALMIRSEDAGFVVITGVMSRRYLCMDFRGNIFGSHYFdPENCRFQHQTLENGYDVYHSPQY-----HFLVSLGA-------------------------\n>2P39_A\n------------------------YHLQIHKNGHVDGAPHQ-TIYSALMIRSEDAGFVVITGVMSRRYLCMDFRGNIFGSHYFdPENCRFQHQTLENGYDVYHSPQY-----HFLVSL---GRAKRA------------------\n>1PWA_A\n-------------------------FLRIRADGVVDCARGQ-SAHSLLEIKAVALRTVAIKGVHSVRYLCMGADGKMQGLLQYSeEDCAFEEEIRPDGYNVYRS-----------------------------------------\n>2P23_A\n-------------------------FLRIRADGVVDCARGQ-SAHSLLEIKAVALRTVAIKGVHSVRYLCMGADGKMQGLLQYSeEDCAFEEEIRPDGYNVYRS-----------------------------------------\n>6KTR_D\n-------------------------FLRIRADGVVDCARGQ-SAHSLLEIKAVALRTVAIKGVHSVRYLCMGADGKMQGLLQYSeEDCAFEEEIRPDGYNVYRS-----------------------------------------\n>3OGF_A\n-------------------------YLRINPDGTVDGTRDRSDPHIQFQISPEGNGEVLLKSTETGQYLRINPDGTVDGTRD--------------------------------------------------------------\n>4QKR_A\n-------------------------YLRINPDGTVDGTRDRSDPGIQYQISPEGNGEVLLRSTETGQYLRINPDGTVDGTRD--------------------------------------------------------------\n>3OL0_A\n-------------------------YLRINPDGTVDGTRDRSDPHIQFQI----------------------------------------------------------------------------------------------\n>3OL0_C\n-------------------------YLRINPDGTVDGTRDRSDPHIQFQI----------------------------------------------------------------------------------------------\n>2CN3_B\n---------------------------------------------------AVDTAITGDPRVYGRVYIATNGRGIVYG-----------------------------------------------------------------\n>4GXW_A\n-------------------------------------------------------------------------------ARDFGIGARLIPSIdrEQDPDEAVAIVDWM-------------------------------------\n>4GXW_B\n-------------------------------------------------------------------------------ARDFGIGARLIPSIdrEQDPDEAVAIVDWM-------------------------------------\n>1CL2_B\n----------------------------------------------TMEVHDVPAIVAAVRSVVPDAIIMIDNtwaAGVLFKALDFGID----------------------------------------------------------\n>4ITX_A\n----------------------------------------------TMEVHDVPAIVAAVRSVVPDAIIMIDNtwaAGVLFKALDFGID----------------------------------------------------------\n",
+      "format": "a3m"
+     }
+    }
+   },
+   "metrics": {
+    "search_type": "colabfold"
+   }
+  },
+  "upstream_success": true
+ },
+ "sequence": "GRHVRSYNHLTGDVRRRKLFSYQKFFLRIDKNGKVNGTKSKDDPYSTLEIKSVDVGIVAIKGIQSNYYLAINKKGVVYGARDFGIDCKLIERIEENRYNTYASAEWMNKKKHMFVGLSANGRPMRAKKTRRKNTATHFLPIPIV",
+ "sequence_sha256": "cda679adbcbc73d64209ba0b8d521e3023fc45ae9737f53e6b9d6f0150d605bd",
+ "source": "Q8AY90 58-201",
+ "submit_isError": false,
+ "submit_payload": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-fgf10a_core/op-d3ea3b0a1db74198/artifacts/afe5458f-ab4b-5f71-ad8a-2427c51326ca.json",
+     "path": "artifacts/afe5458f-ab4b-5f71-ad8a-2427c51326ca.json",
+     "sha256": "82f769d0e9988bf9dd524b74af4823dd64651236212c83709717e5fb6db660e5",
+     "size_bytes": 6979
+    },
+    {
+     "key": "frontier/claude-mol/msa-fgf10a_core/op-d3ea3b0a1db74198/result.json",
+     "path": "result.json",
+     "sha256": "92ed503b0ac69c4ecf9a6cab917334638fbedf870359234947a80609046c9b8d",
+     "size_bytes": 7725
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-fgf10a_core/op-d3ea3b0a1db74198/manifest.json",
+   "prefix": "frontier/claude-mol/msa-fgf10a_core/op-d3ea3b0a1db74198/"
+  },
+  "delivery": {
+   "export_state": "succeeded",
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-msa-fgf10a_core-cda679adbcbc73d64209",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-d3ea3b0a1db74198",
+   "status": "SUCCEEDED"
+  },
+  "result_available": true
+ },
+ "submitted_utc": "2026-11-01T14:21:35Z",
+ "tool": "msa_search_native"
+}

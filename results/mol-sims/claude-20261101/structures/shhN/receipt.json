@@ -1,0 +1,200 @@
+{
+ "artifacts": [
+  {
+   "artifact_id": "aaf9d3ee-dd5f-5a01-ac6b-ce0ce19f9d05",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "26e7eaf05dce79e147e66ce8a14f7e924388a8b4bf89f3e9b049de5b834dd8c0",
+   "size_bytes": 371975
+  },
+  {
+   "artifact_id": "65321888-3123-5f2b-b528-e42b1e33e315",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "dfda08404353196f343f2527d1ad41a7e9c20c980f989c03d9198b1f97423706",
+   "size_bytes": 371975
+  }
+ ],
+ "chains": {
+  "A": {
+   "a3m_sha256": "52e18cde100b93d9dd389ac1926ef129f32842212895a2a9b7ddfaf5cd51209f",
+   "name": "shhN",
+   "sequence_sha256": "b50ed89f15b017d59cbd3f9713069ef18d43272df5e016085b34e6fabb4218ba",
+   "source": "Q92008 24-197"
+  }
+ },
+ "epistemic_status": "computed structure hypothesis (Boltz-2 + PDB70 MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:24:42Z",
+ "idempotency_key": "frontier-claude-mol-boltz2-shhN-f67a2f1be686d9ea7929",
+ "operation_id": "op-2561b7332b56327b",
+ "params": {
+  "diffusion_samples": 3,
+  "recycling_steps": 3,
+  "sampling_steps": 200
+ },
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T14:23:33Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:24:37Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/boltz2-shhN/op-2561b7332b56327b/artifacts/65321888-3123-5f2b-b528-e42b1e33e315.json",
+     "path": "artifacts/65321888-3123-5f2b-b528-e42b1e33e315.json",
+     "sha256": "dfda08404353196f343f2527d1ad41a7e9c20c980f989c03d9198b1f97423706",
+     "size_bytes": 371975
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-shhN/op-2561b7332b56327b/artifacts/aaf9d3ee-dd5f-5a01-ac6b-ce0ce19f9d05.json",
+     "path": "artifacts/aaf9d3ee-dd5f-5a01-ac6b-ce0ce19f9d05.json",
+     "sha256": "26e7eaf05dce79e147e66ce8a14f7e924388a8b4bf89f3e9b049de5b834dd8c0",
+     "size_bytes": 371975
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-shhN/op-2561b7332b56327b/result.json",
+     "path": "result.json",
+     "sha256": "e45f7feededd4e78a0d1573a193a8151f0d8fd40039f5e42d384b5043c1f6790",
+     "size_bytes": 1050
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/boltz2-shhN/op-2561b7332b56327b/manifest.json",
+   "prefix": "frontier/claude-mol/boltz2-shhN/op-2561b7332b56327b/"
+  },
+  "execution": "async",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-2561b7332b56327b",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "structures",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "structure"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "65321888-3123-5f2b-b528-e42b1e33e315",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "dfda08404353196f343f2527d1ad41a7e9c20c980f989c03d9198b1f97423706",
+    "size_bytes": 371975
+   },
+   "attempt_id": "op-2561b7332b56327b-gmdc9",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-2561b7332b56327b",
+   "sha256": "dfda08404353196f343f2527d1ad41a7e9c20c980f989c03d9198b1f97423706",
+   "size_bytes": 371975,
+   "timings": {
+    "completed_at": "2026-11-01T14:24:06Z",
+    "duration_s": 43.13247,
+    "first_byte_at": "2026-11-01T14:24:06Z",
+    "posted_at": "2026-11-01T14:23:23Z"
+   }
+  },
+  "result": {
+   "artifact": {
+    "artifact_id": "aaf9d3ee-dd5f-5a01-ac6b-ce0ce19f9d05",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "26e7eaf05dce79e147e66ce8a14f7e924388a8b4bf89f3e9b049de5b834dd8c0",
+    "size_bytes": 371975
+   },
+   "content_type": "application/json",
+   "schema": "fs2-serve.nebius.ai/operation-artifact-result/v1"
+  },
+  "upstream_success": true
+ },
+ "seed_note": "runtime accepts no seed; nondeterministic",
+ "submit_isError": false,
+ "submit_payload": {
+  "delivery": {
+   "export_state": null,
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-boltz2-shhN-f67a2f1be686d9ea7929",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-2561b7332b56327b",
+   "status": "RUNNING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T14:22:55Z",
+ "target": "shhN",
+ "tool": "boltz2_predict_native"
+}

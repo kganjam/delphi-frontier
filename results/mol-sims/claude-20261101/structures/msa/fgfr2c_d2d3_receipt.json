@@ -1,0 +1,194 @@
+{
+ "a3m_n_seqs": 122,
+ "a3m_sha256": "677ee1c7ffa09fdd584a25234b04f2a1ef29d65287abe67b605c5a6a5247ccb8",
+ "artifacts": [
+  {
+   "artifact_id": "5c6946c4-4a87-5505-af76-608083de031c",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "166279098c80100c5746bb130c7eaab9e0f69e53c38574b9dd320de6e0557ff8",
+   "size_bytes": 27777
+  }
+ ],
+ "chain": "fgfr2c_d2d3",
+ "database": "pdb70_220313",
+ "evidence_kind": "computed",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:37:31Z",
+ "operation_id": "op-b197567aa06aca26",
+ "polls": [
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:37:29Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-fgfr2c_d2d3/op-b197567aa06aca26/artifacts/5c6946c4-4a87-5505-af76-608083de031c.json",
+     "path": "artifacts/5c6946c4-4a87-5505-af76-608083de031c.json",
+     "sha256": "166279098c80100c5746bb130c7eaab9e0f69e53c38574b9dd320de6e0557ff8",
+     "size_bytes": 27777
+    },
+    {
+     "key": "frontier/claude-mol/msa-fgfr2c_d2d3/op-b197567aa06aca26/result.json",
+     "path": "result.json",
+     "sha256": "cebf04a5b14a8ca085ebc20d0888eab3a001fccb6e00731d5e24b22735b5fed1",
+     "size_bytes": 28524
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-fgfr2c_d2d3/op-b197567aa06aca26/manifest.json",
+   "prefix": "frontier/claude-mol/msa-fgfr2c_d2d3/op-b197567aa06aca26/"
+  },
+  "execution": "async",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-b197567aa06aca26",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "aligned_sequences",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "sequence"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "5c6946c4-4a87-5505-af76-608083de031c",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "166279098c80100c5746bb130c7eaab9e0f69e53c38574b9dd320de6e0557ff8",
+    "size_bytes": 27777
+   },
+   "attempt_id": "op-b197567aa06aca26-qppkn",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-b197567aa06aca26",
+   "sha256": "166279098c80100c5746bb130c7eaab9e0f69e53c38574b9dd320de6e0557ff8",
+   "size_bytes": 27777,
+   "timings": {
+    "completed_at": "2026-11-01T14:37:15Z",
+    "duration_s": 6.94496,
+    "first_byte_at": "2026-11-01T14:37:14Z",
+    "posted_at": "2026-11-01T14:37:08Z"
+   }
+  },
+  "result": {
+   "alignments": {
+    "pdb70_220313": {
+     "a3m": {
+      "alignment": ">query\nQMRLPYWTFPEKMEKKLHAVPAANTVKFRCAAAGNPKPKMRWLKNAKPFRQEDRMGGYKVRLQHWTLIMESVVPSDKGNYTCLVENQYGSIDHTYTLDVVERSPHRPILQAGLPANVTVQVGQDAKFVCKVYSDAQPHIQWLQHYTKNGSCCGPDGLPYVRVLKTAGVNTTDKEIEVLYLPNVTFEDAGEYTCLAGNSIGISYHTAWLTVHPA\n>1IIL_F\n--RAPYWTNTEKMEKRLHAVPAANTVKFRCPAGGNPMPTMRWLKNGKEFKQEHRIGGYKVRNQHWSLIMESVVPSDKGNYTCVVENEYGSINHTYHLDVVERSRHRPILQAGLPANASTVVGGDVEFVCKVYSDAQPHIQWIKHVEKNGSKYGPDGLPYLKVLKAAGVNTTDKEIEVLYIRNVTFEDAGEYTCLAGNSIGISFHSAWLTVLPA\n>1IIL_G\n--RAPYWTNTEKMEKRLHAVPAANTVKFRCPAGGNPMPTMRWLKNGKEFKQEHRIGGYKVRNQHWSLIMESVVPSDKGNYTCVVENEYGSINHTYHLDVVERSRHRPILQAGLPANASTVVGGDVEFVCKVYSDAQPHIQWIKHVEKNGSKYGPDGLPYLKVLKAAGVNTTDKEIEVLYIRNVTFEDAGEYTCLAGNSIGISFHSAWLTVLPA\n>5W21_C\n----PYWTSPEKMEKKLHAVPAAKTVKFKCPSSGTPQPTLRWLKNGKEFKPDHRIGGYKVRYATWSIIMDSVVPSDKGNYTCIVENEYGSINHTYQLDVVERSPHRPILQAGLPANKTVALGSNVEFMCKVYSDPQPHIQWLKHIEVNGSKIGPDNLPYVQILKTAGVNTTDKEMEVLHLRNVSFEDAGEYTCLAGNSIGLSHHSAWLTV---\n>5W59_B\n----PYWTSPEKMEKKLHAVPAAKTVKFKCPSSGTPQPTLRWLKNGKEFKPDHRIGGYKVRYATWSIIMDSVVPSDKGNYTCIVENEYGSINHTYQLDVVERSRHRPILQAGLPANKTVALGSNVEFMCKVYSDPQPHIQWLKHIEVNGSKIGPDNLPYVQILKTAGVNTTDKEMEVLHLRNVSFEDAGEYTCLAGNSIGLSHHSAWLTV---\n>1RY7_B\n----PYWTRPERMDKKLLAVPAANTVRFRCPAAGNPTPSISWLKNGREFRGEHRIGGIKLRHQQWSLVMESVVPSDRGNYTCVVENKFGSIRQTYTLDVLERSPHRPILQAGLPANQTAVLGSDVEFHCKVYSDAQPHIQWLKHVEVNGSKVGPDGTPYVTVLKTAGANTTDKELEVLSLHNVTFEDAGEYTCLAGNSIGFSHHSAWLVVLPA\n>3OJM_B\n--RAPYWTNTEKMEKRLHAVPAANTVKFRCPAGGNPMPTMRWLKNGKEFKQEHRIGGYKVRNQHWSLIMESVVPSDKGNYTCVVENEYGSINHTYHLDVVERSRHRPILQAGLPANASTVVGGDVEFVCKVYSDAQPHIQWIKHVEKNGSKYGPDGLPYLKVLKHSGINSSNA--EVLALFNVTEADAGEYICKVSNYIGQANQSAWLTVLP-\n>3GRW_A\n----PYWTRPERMDKKLLAVPAANTVRFRCPAAGNPTPSISWLKNGREFRGEHRIGGIKLRHQQWSLVMESVVPSDRGNYTCVVENKFGSIRQTYTLDVLERSPHRPILQAGLPANQTAVLGSDVEFHCKVYSDAQPHIQWLKHVEVNGSKVGPDGTPYVTVLKSWISESVEADVR-LRLANVSERDGGEYLCRATNFIGVAEKAFWLSVH--\n>3CAF_A\n--RAPYWTNTEKMEKRLHAVPAANTVKFRCPAGGNPMPTMRWLKNGKEFKQEHRIGGYKVRNQHWSLIMESVVPSDKGNYTCVVENEYGSINHTYHLDVV-----------------------------------------------------------------------------------------------------------------\n>3EUU_A\n--RAPYWTNTEKMEKRLHAVPAANTVKFRCPAGGNPMPTMRWLKNGKEFKQEHRIGGYKVRNQHWSLIMESVVPSDKGNYTCVVENEYGSINHTYHLDVV-----------------------------------------------------------------------------------------------------------------\n>6J6Y_A\n----PYWTHPQRMEKKLHAVPAGNTVKFRCPAAGNPTPTIRWLKDGQAFHGENRIGGIRLRHQHWSLVMESVVPSDRGTYTCLVENAVGSIRYNYLLDVLER---------------------------------------------------------------------------------------------------------------\n>5OPE_A\n------------------AVTVDDSAEFKCEARGDPVPTVRWRKDDGELPKSR----YEIRDDH-TLKIRKVTAGDMGSYTCVAENMVGKAEASATL-TVQEPPHFVV----KPRDQVVALGRTVTFQCEATGNPQPAIFWRREGSQN-----------------------------------------------------------------\n>5O5G_A\n------------------AVTVDDSAEFKCEARGDPVPTVRWRKDDGELPKSR----YEIRDDH-TLKIRKVTAGDMGSYTCVAENMVGKAEASATL-TVQEPPHFVV----KPRDQVVALGRTVTFQCEATGNPQPAIFWRREGSQN-----------------------------------------------------------------\n>5K6W_B\n------------------------TMDIPCRAMGVPLPTLQWYKDAVPLSklQNPR---YKV-LPSGGLHIQKLSPEDSGIFQCFASNEGGEVqTHTY-LDVTNIAP----AFTQRPVDTTVTDGMTAVLRCEVSGAPKPAITWKRgnHILASGSV----RIPRFMLLESGG----------LRIAPVFIQDAGNYTCYAANTEASVNASAMLTV---\n>6S9F_B\n----------------------AVVAKVHCKAQGTPTPQVQWVRDGENTTLPD-----HVEVdANGTLIFRNVNSEHRGNYTCLATNSQGQINATVAINVVVTP------KFSVPPVGPIETSEQGTVVmhCQAIGDPKPTIQWDKD------------------LKYLSENNTDRErfrfLEngTLEIRNVQVEDEGSYGCTIGNSAGLKREDVQLVV---\n>6IAA_A\n-------------------------VEFRCQVQGDPQPTVRWKKDDADLPR----GRYDIK-DDYTLRIKKTMSTDEGTYMCIAENRVGKMEASATLTV--RAPPQFVVR---PRDQIVAQGRTVTFPCETKGNPQPAVFWQKEGSQN-----------------------------------------------------------------\n>3PXJ_B\n---------------------------FYCAARGDPPPSIVWRKNGK--KVSGTQSRYTVLEQPGGISILRIEPvragRDDAPYECVAENGVGdavSADATLTIYEGDKTPaGFPVITQG-PGTRVIEVGHTVLMTCKAIGNPTPNIYWIKNQTKvdmsNPRYSLKDGF--------------------LQIENSREEDQGKYECVAENSMGTEHSKA-------\n>2YD1_A\n---------------------------FYCAARGDPPPSIVWRKNGK--KVSGTQSRYTVLEQPGGISILRIEPvragRDDAPYECVAENGVGdavSADATLTIYEGDKTPaGFPVITQG-PGTRVIEVGHTVLMTCKAIGNPTPNIYWIKNQTKvdmsNPRYSLKDGF--------------------LQIENSREEDQGKYECVAENSMGTEHSKA-------\n>4U7M_A\n--------------------------RLECAATGHPNPQIAWQKDGGtdfPAARERRM---HVMPDDDVFFITDVKIDDAGVYSCTAQNSAGSISANATLTVLE----TPSLVVPLEDRV-VSVGETVALQCKATGNPPPRITWFKG---------------DRPLSLTERHHLTPDNQLLVVQNVVAEDAGRYTCEMSNTLGTERAHSQLSV---\n>4PBW_D\n--------FPNiDMGPQLKVVERTRTATMLCAASGNPDPEITWFKDFLPVDPSTSNGRIK-QLRSGGLQIESSEETDQGKYECVASNsagvRYSSPANLY-VRVRRVAPRFSI----LPVSHEIMPGGNVNITCVAVGSPMPYVKWMQGAE---DLTPEDDMPVGR--------------NVLELTDV--KDSANYTCVAMSSLGVIEAVAQITV---\n>4PBV_E\n--------FPNiDMGPQLKVVERTRTATMLCAASGNPDPEITWFKDFLPVDPSTSNGRIK-QLRSGGLQIESSEETDQGKYECVASNsagvRYSSPANLY-VRVRRVAPRFSI----LPVSHEIMPGGNVNITCVAVGSPMPYVKWMQGAE---DLTPEDDMPVGR--------------NVLELTDV--KDSANYTCVAMSSLGVIEAVAQITV---\n>4PBX_A\n--------FPNiDMGPQLKVVERTRTATMLCAASGNPDPEITWFKDFLPVDPSASNGRIK-QLRSGALQIESSEETDQGKYECVATNsagvRYSSPANLY-VRVRRVAPRFSI----LPMSHEIMPGGNVNITCVAVGSPMPYVKWMQGAE---DLTPEDDMPVGR--------------NVLELTDV--KDSANYTCVAMSSLGVIEAVAQITV---\n>2XY1_A\n---------------------------FSCRASGSPEPAISWFRNGKLIEENEK---YILKGSNTELTVRNIINSDGGPYVCRATNKAGEDEKQAFLQVFVQ-PH--IIQ--LKNETTYENGQ-VTLVCDAEGEPIPEITWKR---------AVDGFTF-----TEGDKSLDGRIEVkgqhgsssLHIKDVKLSDSGRYDCEAASRIG-------------\n>5LF5_A\n-----------EMNSSVEAIEGSH-VSLLCGADSNPPPLLTWMRDGMVLREAVAKSLY--------LDLEEVTPGEDGVYACLAENAYGQDNRTVELSVM-YAPWKPTVN----GTVVAVEGETVSILCSTQSNPDPILTIFKE---------------KQILATV---IYESQLQ-LELPAVTPEDDGEYWCVAENQYG-------------\n>5LFU_A\n-----------EMNSSVEAIEGSH-VSLLCGADSNPPPLLTWMRDGMVLREAVAKSLY--------LDLEEVTPGEDGVYACLAENAYGQDNRTVELSVM-YAPWKPTVN----GTVVAVEGETVSILCSTQSNPDPILTIFKE---------------KQILATV---IYESQLQ-LELPAVTPEDDGEYWCVAENQYG-------------\n>2IEP_A\n---------------------------FMCAVESYPQPEISWTRNKILIKLFDTR--YSIRENGQLLTILSVEDSDDGIYCCTANNGVGGAVESCGALQVKMKPKitRP------PINVKIIEGLKAVLPCTTMGNPKPSVSWIK---------GDSALrenSRIAVLESGS----------LRIHNVQKEDAGQYRCVAKNSLGTAY----------\n>5I99_A\n-----------------------------------------------------------------------VTKADAGTYTCTAENQFGKANGTTHLVVTE--PTRIILA---PSNMDVAVGESVILPCQVQHDPLLDIMFAWYFNGALTDFKKDGSHFEKV---GGSSSGD-----LMIRNIQLKHSGKYVCM-------------------\n>5E4I_A\n-------------------------LQWECKATGKPRPTYRWLKNGAPLLPQSR-----VDTVNGILAIQSVNQSDAGMYQCLAENKYGAI--------------------------------------------------------------------------------------------------------------------------\n>4XHQ_A\n----------------------AHTISLLCPAQGFPAPSFRWYKFIEgTTRKQAVVLNDRVKQVSGTLIIKDAVVEDSGKYLCVVNNSVGGESVETVLTVTA-----PLSAKIDPPTQTVDFGRPAVFTCQYTGNPIKTVSWMK----------------------------------------------------------------------\n>2V5M_A\n----------------------AHTISLLCPAQGFPAPSFRWYKFIEgTTRKQAVVLNDRVKQVSGTLIIKDAVVEDSGKYLCVVNNSVGGESVETVLTVTA-----PLSAKIDPPTQTVDFGRPAVFTCQYTGNPIKTVSWMK----------------------------------------------------------------------\n>3P3Y_A\n---------------------------LECIASGVPTPDIAWYKKGGDLPSD------KAKFENFnkALRITNVSEEDSGEYFCLASNKMGSIRHTISVR-VKAAPY----WLDEPKNLILAPGEDGRLVCRANGNPKPTVQWM-----------------------------------------------------------------------\n>3JXA_B\n------------------------SVFWECKANGRPKPTYRWLKNGDPLLTRDR-----IQIEQGTLNITIVNLSDAGMYQCVAENKHGVIFSSAELSVI-----------------------------------------------------------------------------------------------------------------\n>3KLD_A\n------------------------SVFWECKANGRPKPTYRWLKNGDPLLTRDR-----IQIEQGTLNITIVNLSDAGMYQCVAENKHGVIFSSAELSVI-----------------------------------------------------------------------------------------------------------------\n>7CEG_A\n---------------------------FICQATGDPRPKIVWNKKGKKVSNQrfeviefDDGSGSVLRIQPLR------TPRDEAIYECVASNNVGEISVSTRLTVLREDQiprGFPTIDMG-PQLKVVERTRTATMLCAASGNPDPEITWFK-----------DFLPVDTSNNNGRIKQLRSEsIGALQIEQSEESDQGKYECVATNSAGTRY----------\n>4Y61_A\n------------MGPQLKVVERTRTATMLCAASGNPDPEITWFKDFLPvdtsnnngrikqLRSES-IGGTPIR---GALQIEQSEESDQGKYECVATNsagtRYSAPANLYVRELreVRRVPPRFSIP---PTNHEIMPGGSVNITCVAVGSPMPYVKWM-----------------------------------------------------------------------\n>4YFD_A\n------------MGPQLKVVERTRTATMLCAASGNPDPEITWFKDFLPvdtsnnngrikqLRSES-IGGTPIR---GALQIEQSEESDQGKYECVATNsagtRYSAPANLYVRELreVRRVPPRFSIP---PTNHEIMPGGSVNITCVAVGSPMPYVKWM-----------------------------------------------------------------------\n>4YH7_A\n------------MGPQLKVVERTRTATMLCAASGNPDPEITWFKDFLPvdtsnnngrikqLRSES-IGGTPIR---GALQIEQSEESDQGKYECVATNsagtRYSAPANLYVRELreVRRVPPRFSIP---PTNHEIMPGGSVNITCVAVGSPMPYVKWM-----------------------------------------------------------------------\n>5WY8_A\n------------MGPQLKVVERTRTATMLCAASGNPDPEITWFKDFLPvdtsnnngrikqLRSES-IGGTPIR---GALQIEQSEESDQGKYECVATNsagtRYSAPANLYVRELreVRRVPPRFSIP---PTNHEIMPGGSVNITCVAVGSPMPYVKWM-----------------------------------------------------------------------\n>3B43_A\n---------------------------FKCHVTGTAPIKITWAKDNREIRPG---GNYKMTLveNTATLTVLKVTKGDAGQYTCYASNVAGKDSCSAQLGVQE--PPRFIKK--LEPSRIVKQDEHTRYECKIGGSPEIKVLWYKDETE---------IQESSKFRMSFV----ESVAVLEMYNLSVEDSGDYTCEAHNAAG-------------\n>1IE5_A\n----------------------SQSVTLACDADGFPEPTMTWTKDGEPIEQEDNEEKYSFNYDGSELIIKKVDKSDEAEYICIAENKAGEQDATIHLKV------------------------------------------------------------------------------------------------------------------\n>2YD3_A\n---------------------------FVCQATGDPKPRVTWNKKGKKVNSQrfetiefDESAGAVLRIQPLR------TPRDENVYECVAQNSVGEITVHAKLTVLREDQ----LPSGFP-NIdmgpqlkVVERTRTATMLCAASGNPDPEITWFK-----------DFLP----VDPSASNGRIKQLRsgALQIESSEETDQGKYECVATNSAGVRY----------\n>5Z5K_A\n-------------------------IEFECAVSGKPVPTVNWMKNGDVVIPSDYfqiVGGSNLRIL-------GVVKSDEGFYQCVAENEAG----------------------------------------------------------------------------------------------------------------------------\n>3LAF_A\n-------------------------IEFECAVSGKPVPTVNWMKNGDVVIPSDYfqiVGGSNLRIL-------GVVKSDEGFYQCVAENEAG----------------------------------------------------------------------------------------------------------------------------\n>2YD6_A\n---------------------------FICQATGDPRPKIVWNKKGKKVSNQrfeviefDDGSGSVLRIQPLR------TPRDEAIYECVASNNVGEISVSTRLTVLREDQiprGFPTIDMG-PQLKVVERTRTATMLCAASGNPDPEITWFK-----------DFLPVDTSNNNGRIKQLRSEsIGALQIEQSEESDQGKYECVATNSAGTRY----------\n>1CS6_A\n-------------------------LRWSCVASGKPRPAVRWLRDGQPLASQNRIEVSGGELRFSKLVLE-----DSGMYQCVAENKHGTV--------------------------------------------------------------------------------------------------------------------------\n>6C6M_A\n------------------------TVKFRCEVSGIPKPEVAWFLEGTPVrRQEGSIEVYEDAGSHYLCLLKART-RDSGTYSCTASNAQGQLSCSWTLQV------------------------------------------------------------------------------------------------------------------\n>7O52_U\n--------------KPLSEIHSGNSVSLQCdFSSSHPKEvQFFWEKNGRLLGKESQ------------LNFDSISPEDAGSYSCWVNNSIGqTASKAWTLEVL-YAPRR--LRVSMSPGDQVMEGKSATLTCE--SDANPPVSHYTWFDWNNQ-----SLPY--------------HSQKLRLEPVKVQHSGAYWCQGTNSVG-------------\n>5E5U_D\n------------------------------------------------------------------LYFAKVEPSDVGNYTCFVTNKeaHRSVQGPPTPLVLRTdgvmGEYEPKIEVRFPE--TIQAAKDSsiKLECFALGNPVPDISWKR----------LDGSP------MPGKIKYSKSQAILEIPKFQQEDEGFYECIAGN----------------\n>6I9S_B\n-------------------------VEFRCQVQGDPQPTVRWKKDDADLPR----GRYDIK-DDYTLRIKKTMSTDEGTYMCIAENRVGKMEASATLTV------------------------------------------------------------------------------------------------------------------\n>6I9S_A\n-------------------------VEFRCQVQGDPQPTVRWKKDDADLPR----GRYDIK-DDYTLRIKKTMSTDEGTYMCIAENRVGKMEASATLTV------------------------------------------------------------------------------------------------------------------\n>2R15_A\n--------------------------------------KVNWSHNGSAIRYSDRVKTGVTGEQIWLQINEP-TPNDKGKY--VMELFDGKTGHQKTVDLSGQAydeayaefqrlkqaaiaeKNRARVLGGLPDVVTIQEGKALNLTCNVWGDPPPEVSWLK----------------------------------------------------------------------\n>2Y25_B\n--------------------------------------KVNWSHNGSAIRYSDRVKTGVTGEQIWLQINEP-TPNDKGKY--VMELFDGKTGHQKTVDLSGQAydeayaefqrlkqaaiaeKNRARVLGGLPDVVTIQEGKALNLTCNVWGDPPPEVSWLK----------------------------------------------------------------------\n>5UV6_B\n------------------------SVTLLCLAIGRPEPTVTWrhlsVKEGQGFVSEDEY-----------LEISDIKRDQSGEYECSALNDVAAPDVRKVKITVNYPPY--ISKA---KNTGVSVGQKGILSCEASAVPMAEFQWFKEETRLAT--GLDGMR----IENKG------RMSTLTFFNVSEKDYGNYTCVATNKLG-------------\n>6U6T_B\n-------------------------VTLTCLATGKPEPSISWRhisPSAKPFEN----GQY--------LDIYGITRDQAGEYECSAENDVSFPDVRKVKVVVNFAPTIQEIKSG-----TVTPGRSGLIRCEGAGVPPPAFEWYKGEKKLFN--GQQGI----IIQNFSTRS------ILTVTNVTQEHFGNYTCVAANKLG-------------\n>2YR3_A\n-------------------------------------------------------------------------------------------------------------------------GQDFVLQCSVRGTPVPRITWLL----NGQ-----PIQYARSTCEAGVAE-------LHIQDALPEDHGTYTCLAENALGQVSCSAWVTVH--\n>3S97_C\n------------------------------------------------------------------LYIANVEASDKGNYSCFVSSP--SITKSVFSKFIPLIPIPERTTKPYPADIVVQfkdvyalMGQNVTLECFALGNPVPDIRWRKVL---------EPMPSTAEISTSGA--------VLKIFNIQLEDEGIYECEAENIRGKDKHQA-------\n>5XEQ_B\n------------------------------------------------------------------LKLKNLRPQDYASYTCQvsVRNVCGIPDKAITFRLTNTTA-PPALKLSVNETLVVNPGENVTVQCLLTgGDPLPQLQWSH---------GPGPLP-LGALAQGG---------TLSIPSVQARDSGYYNCTATNNVG-------------\n>5V5W_A\n----------DNISERVYTIREGDTLMLQCLVTGHPRPQVRWTKTA--GSASDKF--QETSVFNETLRIERIARTQGGRYYCKAENGVG----------------------------------------------------------------------------------------------------------------------------\n>5OYJ_C\n----PFVAFGSGMESLVEAT-VGERVRIPAKYLGYPPPEIKWYKNGIPLESN-----HTIKAGHVLTIME-VSERDTGNYTVILTNPISKEKQSHVVSLVVYVPPQ-IGEKSLISPVdSYQYGTTQTLTCTVYAIPPPhHIHW------------------------------------------------------------------------\n>5OYJ_D\n----PFVAFGSGMESLVEAT-VGERVRIPAKYLGYPPPEIKWYKNGIPLESN-----HTIKAGHVLTIME-VSERDTGNYTVILTNPISKEKQSHVVSLVVYVPPQ-IGEKSLISPVdSYQYGTTQTLTCTVYAIPPPhHIHW------------------------------------------------------------------------\n>4X83_B\n-----------------------------CQAQAFPVPYTRWYKFIEgTTRKQAVVLNDRVKQVSGTLIIKDAVVEDSGKYLCVVNNSVGGESVETVLTVTA-----PLSAKIDPPTQTVDFGRPAVFTCQYTGNPIKTVSWMK----------------------------------------------------------------------\n>5OJ2_B\n-----------------------DNVTMQCSlTGGDPQPEVLWSHSPGPLPPNSLVQGGNLTI--WRIRVE-----DSGYYNCTAINNVGN-PAKKTVNLLVRSMKNATFQITpdvIKESETIQLGQDLKLSCHV--DAVPQEKVVYSWYKNG----------------------------------------------------------------\n>2V5T_A\n---------------------------FSCRASGSPEPAISWFRNGKLIEENEK---YILKGSNTELTVRNIINSDGGPYVCRATNKAG----------------------------------------------------------------------------------------------------------------------------\n>2WIM_A\n---------------------------FSCRASGSPEPAISWFRNGKLIEENEK---YILKGSNTELTVRNIINSDGGPYVCRATNKAG----------------------------------------------------------------------------------------------------------------------------\n>2WIM_B\n---------------------------FSCRASGSPEPAISWFRNGKLIEENEK---YILKGSNTELTVRNIINSDGGPYVCRATNKAG----------------------------------------------------------------------------------------------------------------------------\n>5LFR_B\n-----------EMNSSVEAIEGSH-VSLLCGADSNPPPLLTWMRDGMVLREAVAKSLY--------LDLEEVTPGEDGVYACLAENAYGQDNRTVELSV------------------------------------------------------------------------------------------------------------------\n>5LFR_A\n-----------EMNSSVEAIEGSH-VSLLCGADSNPPPLLTWMRDGMVLREAVAKSLY--------LDLEEVTPGEDGVYACLAENAYGQDNRTVELSV------------------------------------------------------------------------------------------------------------------\n>5LFV_B\n-----------EMNSSVEAIEGSH-VSLLCGADSNPPPLLTWMRDGMVLREAVAKSLY--------LDLEEVTPGEDGVYACLAENAYGQDNRTVELSV------------------------------------------------------------------------------------------------------------------\n>6NS1_A\n----------------------------------------------------------------WKLKISKLRESDRGCYMCQIntspmKKQVGCIDVQVPPDIINEES---------SADLAVQEGEDATLTCKATGNPQPRVTW------------------------------------------------------------------------\n>2VRA_A\n---------------------------------GIPEPTLIWIKDGVPLDDLKAMsfgASSRVRiVDGGNLLISNVEPIDEGNYKCIAQNLVGTRESSYAKLIVQ----------------------------------------------------------------------------------------------------------------\n>2VR9_A\n---------------------------------GIPEPTLIWIKDGVPLDDLKAMsfgASSRVRiVDGGNLLISNVEPIDEGNYKCIAQNLVGTRESSYAKLIVQ----------------------------------------------------------------------------------------------------------------\n>3ZYJ_C\n-----------------------------------------------------------------------------------------------------------------PADLNVTEGMAAELKCRA-STSLTSVSWI---TPNGTVM-THGAYKVRiaVLSDGTLNFT----------NVTVQDTGMYTCMVSNSVGNTTASATLNV---\n>2DM3_A\n-----------------------------CKVSGLPTPDLSWQLDGKPVRPD---SAHKMLVREngvHSLIIEPVTSRDAGIYTCIATNRAGQ--NSFSLELV-----------------------------------------------------------------------------------------------------------------\n>1E07_A\n-----------------------------------------------------------------TLTLFNVTRNDTASYKCETQNPVSARRSDSVILNVLYGPDAPTIS---PLNTSYRSGENLNLSCHAASNPPAQYSWF----VNG--------------------TFQQSTQELFIPNITVNNSGSYTCQAHNS---------------\n>5Y32_B\n-----------------------------------------------------------------TLLIKEVKEDDIGNYTC--ELKYGGFVVRRTTELTVTAPltdKPPKLLYPMESKLTVqetQLGGSANLTCRAFfgysGDVSPLIYWMK----------------------------------------------------------------------\n>6DL4_A\n------------------------TARFRCRVTGYPQPKVNWYLNGQLIRKSKR---FRVRYDgiHYLDIVD-CKSYDTGEVKVTAENPEGVIEHKVKLEIQQLEHH------------------------------------------------------------------------------------------------------------\n>5WY8_B\n-----------------------------------------------------------------TLLIREVREDDIGNYTC--ELKYGGFVVRRTTELTVTAPltdKPPKLLYPMESKLTIqetQLGDSANLTCRAFfgysGDVSPLIYWMK----------------------------------------------------------------------\n>3PUC_A\n-------------------VSSDSVAKFAVKATGEPRPTAIWTKDGKAITQG---GKYKLSEDKGGFFLEihKTDTSDSGLYTCTVKNSAGSVSSSCKLTI------------------------------------------------------------------------------------------------------------------\n>5EO9_B\n----------------------------------------------------------------WNLHIKAVSEEDRGGYMCQLntdpmKSQIGFLDVVIPPDFISED---------TSSDVIVPEGSSVRLTCRARGYPEPIVTWRRE----------DGNEIV-LKDNVGTKTLAPSFrgEVLKLSKISRNEMGSYLCIASNGV--------------\n>5ZO2_C\n-----------------------DTLVLTCAVTGNPRPnQIRWNRGQESLPERAEAVGE-------TLTLPGLVSADQGTYTCEAANKHGHARALYVLVV------------------------------------------------------------------------------------------------------------------\n>5ZO1_A\n-----------------------DTLVLTCAVTGNPRPnQIRWNRGQESLPERAEAVGE-------TLTLPGLVSADQGTYTCEAANKHGHARALYVLVV------------------------------------------------------------------------------------------------------------------\n>6EFY_A\n----------------------------------------------------------------WNLHIKAVSEEDRGGYMCQLntdpmKSQIGFLDVVIPPDFISED---------TSSDVIVPEGSSVRLTCRARGYPEPIVTWRRE----------DGNEIV-LKDNVGTKTLAPSFrgEVLKLSKISRNEMGSYLCIASNGV--------------\n>2LQR_A\n-------------------------VTFTCRVAGNPKPKIYWFKDGKQISpksdhytiQRDLDGTCSLHTTASTL-------DDDGNYTIMAANPQGRVSCTGRLMV------------------------------------------------------------------------------------------------------------------\n>1NCT_A\n------------------------SARFSCDTDGEPVPTVTWLRKGQVLSTSARHQVTTTKYKS-TFEISSVQASDEGNYSVVVENSEGKQEAEFTLTI------------------------------------------------------------------------------------------------------------------\n>6U7N_A\n-------------EAKGTGVPVGQKGTLQCEASAVPSAEFQWYKDDKRLIEGKK--GVKVENRPFlsKLIFFNVSEHDYGNYTCVASNKLG----------------------------------------------------------------------------------------------------------------------------\n>3ZYO_A\n-------------------------------------------------------GSYRVRisvLHDGTLNFTNVTVQDTGQYTCMVTNSAGNTTASATLNVGTKHHH------------------------------------------------------------------------------------------------------------\n>1TLK_A\n--------------------------RFDCKVEGYPDPEVMWFKDDNPVKESRHFQIDYDEEGNCSLTISEVCGDDDAKYTCKAVNSLG----------------------------------------------------------------------------------------------------------------------------\n>1FHG_A\n--------------------------RFDCKVEGYPDPEVMWFKDDNPVKESRHFQIDYDEEGNCSLTISEVCGDDDAKYTCKAVNSLG----------------------------------------------------------------------------------------------------------------------------\n>6EG0_A\n----------------------------------------------------------------WTLRISSPQPRDSGTYECQVSTE-PKISQGFRLNVV-----------------------------------------------------------------------------------------------------------------\n>1QZ1_A\n------------------------SVTLVCDADGFPEPTMSWTKDGEPIENEEEDDEKHIFSDDSSeLTIRNVDKNDEAEYVCIAENKAGEQDASIHLKV------------------------------------------------------------------------------------------------------------------\n>5FM5_P\n--------------------------KFRCYVMGKPEPEIEWHWEGRPLLPDRRRLMYRDRDGGFVLKVLYCQAKDRGLYVCAARNSAGQTLSAVQLHVKE----------------------------------------------------------------------------------------------------------------\n>1U2H_A\n---------------------------------GEPKPVVSWLRNRQPVRPDQRRFAEEAEGGLCRLRILAAERGDAGFYTCKAVNEYGA---------------------------------------------------------------------------------------------------------------------------\n>2XY2_A\n---------------------------------------------------------------------------DAGIYRCQATDAKGQTqEATVVLEIYQKLTFREVV-----SPQEFKQGEDAEVVCRVSSSPAPAVSWLYH---------------------------------------------------------------------\n>5JDD_A\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------SERKVHKLMLQNISPSDAGEYTAVVG-----------------\n>2E9W_B\n-----------------------------------------------------------------TLTISSARVNDSGVFMCYANNTFGSANVTTTLEVVDK---------------------------------------------------------------------------------------------------------------\n>2E9W_A\n-----------------------------------------------------------------TLTISSARVNDSGVFMCYANNTFGSANVTTTLEVVDK---------------------------------------------------------------------------------------------------------------\n>2EC8_A\n-----------------------------------------------------------------TLTISSARVNDSGVFMCYANNTFGSANVTTTLEVVDK---------------------------------------------------------------------------------------------------------------\n>2KDG_A\n--------------------------------SGLPAPDVSWYLNGRTVQSDDLHKMIVSEKGLHSLIFEVVRASDAGAYACVAKNRAGEATFTVQLDVLAK---------------------------------------------------------------------------------------------------------------\n>5FTT_A\n---------------------------------GVPAAEVEWLKNEEPIDSE-QDENIDTRADH-NLIIRQARLSDSGNYTCMAAN-------------------------------------------------------------------------------------------------------------------------------\n>6NRQ_D\n------------------------------------------------------------------------------------------------------------------SNVSVAVGRDATFTCHVRHLGGYRVGWLKADTK------------------------------------------------------------------\n>6NRQ_B\n------------------------------------------------------------------------------------------------------------------SNVSVAVGRDATFTCHVRHLGGYRVGWLKADTK------------------------------------------------------------------\n>1WWC_A\n---------------------------------GNPPPTLHWLHNGQPLRESKIIHveyYQEGEISEGCLLFNKPTHYNNGNYTLIAKNPLGTANQT-----------------------------------------------------------------------------------------------------------------------\n>3K0W_A\n------------------------TLVLQCVAVGSPIPHYQWFKNELPLTHE-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n>4EXP_X\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------KKVRALSLNAVDFQDAGIYSCVASNDVG-------------\n>3EJJ_X\n----------------------------------------------------------------------------------------------------------------------------------------------------------------------------KKVRALSLNAVDFQDAGIYSCVASNDVG-------------\n>2ID5_A\n------------------------TVQFVCRADGDPPPAILWLSPRKHLVSAKSNGRLTV-FPDGTLEVRYAQVQDNGTYLCIAANAGG----------------------------------------------------------------------------------------------------------------------------\n>4OQT_A\n------------------------TVQFVCRADGDPPPAILWLSPRKHLVSAKSNGRLTV-FPDGTLEVRYAQVQDNGTYLCIAANAGG----------------------------------------------------------------------------------------------------------------------------\n>5VI4_F\n------------------------------------------------------------------------------------------------------------------------------------------------------------------------NRISKEKDVLWFRPTLLQDTGQYTCMLRNT---------------\n>3ZYI_A\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LNFSHVLLSDTGVYTCMVTNVAGNSNASAYLNVSTA\n>3BFO_C\n------------------------TLVLQCVAVGSPIPHYQWFKNELPLTHE-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n>3SO5_A\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ILRLRNVEFTSEGKYQCVISNHFGSSY----------\n>3SO5_B\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ILRLRNVEFTSEGKYQCVISNHFGSSY----------\n>2O26_Y\n-----------------------------------------------------------------TLTISSARVDDSGVFMCYANNTFGSANVTTTLKVVEK---------------------------------------------------------------------------------------------------------------\n>2DL9_A\n-----------------------------------------------------------------TLNFSHVLLSDTGVYTCMVTNVAGNSNASAYLNV------------------------------------------------------------------------------------------------------------------\n>6HCI_D\n------------------------SVCFEIRVSGIPPPTLKWEKDGQPLSLGPNIEIIHEGLDYYALHIRDTLPEDTGYYRVTATNTAGS---------------------------------------------------------------------------------------------------------------------------\n>6HCI_B\n------------------------SVCFEIRVSGIPPPTLKWEKDGQPLSLGPNIEIIHEGLDYYALHIRDTLPEDTGYYRVTATNTAGS---------------------------------------------------------------------------------------------------------------------------\n>4WRL_C\n------------------------------------------------------------------------------------------------------------------------------------------------------------------------NNRYQKVLTLNLDQVDFQHAGNYSCVASN----------------\n>4WRL_A\n------------------------------------------------------------------------------------------------------------------------------------------------------------------------NNRYQKVLTLNLDQVDFQHAGNYSCVASN----------------\n>6ON9_B\n----------------------------------------------------------------WVLTIKNVQESDRGNYSCQINTE------------------------------------------------------------------------------------------------------------------------------\n>6ONB_B\n----------------------------------------------------------------WVLTIKNVQESDRGNYSCQINTE------------------------------------------------------------------------------------------------------------------------------\n>6ON6_A\n----------------------------------------------------------------WVLTIKNVQESDRGNYSCQINTE------------------------------------------------------------------------------------------------------------------------------\n>1GL4_B\n------------------------------------------------------------------LTIRNVQPSDAGTYVCTGSNMFAMDQGTATLHV------------------------------------------------------------------------------------------------------------------\n",
+      "format": "a3m"
+     }
+    }
+   },
+   "metrics": {
+    "search_type": "colabfold"
+   }
+  },
+  "upstream_success": true
+ },
+ "sequence": "QMRLPYWTFPEKMEKKLHAVPAANTVKFRCAAAGNPKPKMRWLKNAKPFRQEDRMGGYKVRLQHWTLIMESVVPSDKGNYTCLVENQYGSIDHTYTLDVVERSPHRPILQAGLPANVTVQVGQDAKFVCKVYSDAQPHIQWLQHYTKNGSCCGPDGLPYVRVLKTAGVNTTDKEIEVLYLPNVTFEDAGEYTCLAGNSIGISYHTAWLTVHPA",
+ "sequence_sha256": "3ad56c5a7b0d46441cd37991252e21c7c61282156e162c74e81adf9237fa6d27",
+ "source": "Q8JG38 150-362 (IIIc isoform; +2 aa insertion vs IIIb in the alternative exon)",
+ "submit_isError": false,
+ "submit_payload": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-fgfr2c_d2d3/op-b197567aa06aca26/artifacts/5c6946c4-4a87-5505-af76-608083de031c.json",
+     "path": "artifacts/5c6946c4-4a87-5505-af76-608083de031c.json",
+     "sha256": "166279098c80100c5746bb130c7eaab9e0f69e53c38574b9dd320de6e0557ff8",
+     "size_bytes": 27777
+    },
+    {
+     "key": "frontier/claude-mol/msa-fgfr2c_d2d3/op-b197567aa06aca26/result.json",
+     "path": "result.json",
+     "sha256": "cebf04a5b14a8ca085ebc20d0888eab3a001fccb6e00731d5e24b22735b5fed1",
+     "size_bytes": 28524
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-fgfr2c_d2d3/op-b197567aa06aca26/manifest.json",
+   "prefix": "frontier/claude-mol/msa-fgfr2c_d2d3/op-b197567aa06aca26/"
+  },
+  "delivery": {
+   "export_state": "succeeded",
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-msa-fgfr2c_d2d3-3ad56c5a7b0d46441cd3",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-b197567aa06aca26",
+   "status": "FINALIZING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T14:36:53Z",
+ "tool": "msa_search_native"
+}

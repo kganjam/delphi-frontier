@@ -1,0 +1,199 @@
+{
+ "artifacts": [
+  {
+   "artifact_id": "b30c4ade-d4ae-51d0-a6ac-d67ca405204b",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "9a9a82c9635261e164f6e52253daa04acd11c86f6ce5ad47c2d69acad5daa407",
+   "size_bytes": 441030
+  },
+  {
+   "artifact_id": "de875807-4901-5804-8d05-8c17c317bc6a",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "d4cce5599e67867ad4d2b6d2fc8b5890bcb63edae149f20b4123dbf7db52b7a1",
+   "size_bytes": 441064
+  }
+ ],
+ "chains": {
+  "A": {
+   "name": "kcnk5b_core",
+   "sequence_sha256": "5d3ed17412e49fc68113dfcad16a246081ccd84c2d08e5a41c747e4a2fdd428c",
+   "source": "Q6PFU3 1-265"
+  },
+  "B": {
+   "name": "kcnk5b_core",
+   "sequence_sha256": "5d3ed17412e49fc68113dfcad16a246081ccd84c2d08e5a41c747e4a2fdd428c",
+   "source": "Q6PFU3 1-265"
+  }
+ },
+ "epistemic_status": "computed structure hypothesis (OpenFold3 preview2 + PDB70 MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:36:31Z",
+ "operation_id": "op-30e13af895aba28c",
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T14:33:40Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:36:26Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/of3-kcnk5b_dimer/op-30e13af895aba28c/artifacts/de875807-4901-5804-8d05-8c17c317bc6a.json",
+     "path": "artifacts/de875807-4901-5804-8d05-8c17c317bc6a.json",
+     "sha256": "d4cce5599e67867ad4d2b6d2fc8b5890bcb63edae149f20b4123dbf7db52b7a1",
+     "size_bytes": 441064
+    },
+    {
+     "key": "frontier/claude-mol/of3-kcnk5b_dimer/op-30e13af895aba28c/artifacts/b30c4ade-d4ae-51d0-a6ac-d67ca405204b.json",
+     "path": "artifacts/b30c4ade-d4ae-51d0-a6ac-d67ca405204b.json",
+     "sha256": "9a9a82c9635261e164f6e52253daa04acd11c86f6ce5ad47c2d69acad5daa407",
+     "size_bytes": 441030
+    },
+    {
+     "key": "frontier/claude-mol/of3-kcnk5b_dimer/op-30e13af895aba28c/result.json",
+     "path": "result.json",
+     "sha256": "1ba25273ff7e83ab4b336326271f0251a4a89fddae9fe585753cf745ed5a34e3",
+     "size_bytes": 1053
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/of3-kcnk5b_dimer/op-30e13af895aba28c/manifest.json",
+   "prefix": "frontier/claude-mol/of3-kcnk5b_dimer/op-30e13af895aba28c/"
+  },
+  "execution": "async",
+  "model_id": "openfold3",
+  "operation": {
+   "id": "op-30e13af895aba28c",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "structures",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "structure"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "de875807-4901-5804-8d05-8c17c317bc6a",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "d4cce5599e67867ad4d2b6d2fc8b5890bcb63edae149f20b4123dbf7db52b7a1",
+    "size_bytes": 441064
+   },
+   "attempt_id": "op-30e13af895aba28c-8npp4",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-30e13af895aba28c",
+   "sha256": "d4cce5599e67867ad4d2b6d2fc8b5890bcb63edae149f20b4123dbf7db52b7a1",
+   "size_bytes": 441064,
+   "timings": {
+    "completed_at": "2026-11-01T14:36:07Z",
+    "duration_s": 65.15701,
+    "first_byte_at": "2026-11-01T14:36:07Z",
+    "posted_at": "2026-11-01T14:35:02Z"
+   }
+  },
+  "result": {
+   "artifact": {
+    "artifact_id": "b30c4ade-d4ae-51d0-a6ac-d67ca405204b",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "9a9a82c9635261e164f6e52253daa04acd11c86f6ce5ad47c2d69acad5daa407",
+    "size_bytes": 441030
+   },
+   "content_type": "application/json",
+   "schema": "fs2-serve.nebius.ai/operation-artifact-result/v1"
+  },
+  "upstream_success": true
+ },
+ "seed": 42,
+ "seed_note": "runtime-fixed seed 42, one sample",
+ "submit_isError": false,
+ "submit_payload": {
+  "delivery": {
+   "export_state": null,
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-of3-kcnk5b_dimer-5235e959dfe93447499b",
+  "model_id": "openfold3",
+  "operation": {
+   "id": "op-30e13af895aba28c",
+   "status": "RUNNING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T14:33:05Z",
+ "target": "kcnk5b_dimer",
+ "tool": "infer_openfold3_native"
+}

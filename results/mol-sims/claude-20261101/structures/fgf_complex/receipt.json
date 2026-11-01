@@ -1,0 +1,206 @@
+{
+ "artifacts": [
+  {
+   "artifact_id": "4eb13d75-02ec-5df9-9d0b-69e0561377ff",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "b510bf4617947864e60159807180467fac7d181f4acd4b03daaaeeaa3e8fd716",
+   "size_bytes": 760002
+  },
+  {
+   "artifact_id": "130774fe-c4ce-53a0-82d4-9004ca7670a5",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "74d9b63738df461bb0f8c3e2c9ce21c85ec7eb25e429432a9737ec6bf36846ef",
+   "size_bytes": 760002
+  }
+ ],
+ "chains": {
+  "A": {
+   "a3m_sha256": "c1d41017dac219dcdb71b72e620e8d1e1c6e835dd6c7b0752cb97e8bd77d94c8",
+   "name": "fgf10a_core",
+   "sequence_sha256": "cda679adbcbc73d64209ba0b8d521e3023fc45ae9737f53e6b9d6f0150d605bd",
+   "source": "Q8AY90 58-201"
+  },
+  "B": {
+   "a3m_sha256": "17b6f52107aa764c6998bdc5268f20b026c102a0eb92830adba2f57ba4e91181",
+   "name": "fgfr2b_d2d3",
+   "sequence_sha256": "9d921918a98c410e318992bfa797f16b51b742a04adcd85728e84c516e5dd5f8",
+   "source": "F1RBT3 150-360"
+  }
+ },
+ "epistemic_status": "computed structure hypothesis (Boltz-2 + PDB70 MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:27:25Z",
+ "idempotency_key": "frontier-claude-mol-boltz2-fgf_complex-56a244be5f203f0aea0a",
+ "operation_id": "op-d04d316a4a2083fd",
+ "params": {
+  "diffusion_samples": 3,
+  "recycling_steps": 3,
+  "sampling_steps": 200
+ },
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T14:25:28Z"
+  },
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:27:19Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/boltz2-fgf_complex/op-d04d316a4a2083fd/artifacts/130774fe-c4ce-53a0-82d4-9004ca7670a5.json",
+     "path": "artifacts/130774fe-c4ce-53a0-82d4-9004ca7670a5.json",
+     "sha256": "74d9b63738df461bb0f8c3e2c9ce21c85ec7eb25e429432a9737ec6bf36846ef",
+     "size_bytes": 760002
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-fgf_complex/op-d04d316a4a2083fd/artifacts/4eb13d75-02ec-5df9-9d0b-69e0561377ff.json",
+     "path": "artifacts/4eb13d75-02ec-5df9-9d0b-69e0561377ff.json",
+     "sha256": "b510bf4617947864e60159807180467fac7d181f4acd4b03daaaeeaa3e8fd716",
+     "size_bytes": 760002
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-fgf_complex/op-d04d316a4a2083fd/result.json",
+     "path": "result.json",
+     "sha256": "ce4f7e93213d28e5eed06fba7786131dae70c9ae7d49e5fa046d50fd44736dca",
+     "size_bytes": 1051
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/boltz2-fgf_complex/op-d04d316a4a2083fd/manifest.json",
+   "prefix": "frontier/claude-mol/boltz2-fgf_complex/op-d04d316a4a2083fd/"
+  },
+  "execution": "async",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-d04d316a4a2083fd",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "structures",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "structure"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "130774fe-c4ce-53a0-82d4-9004ca7670a5",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "74d9b63738df461bb0f8c3e2c9ce21c85ec7eb25e429432a9737ec6bf36846ef",
+    "size_bytes": 760002
+   },
+   "attempt_id": "op-d04d316a4a2083fd-2ghbv",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-d04d316a4a2083fd",
+   "sha256": "74d9b63738df461bb0f8c3e2c9ce21c85ec7eb25e429432a9737ec6bf36846ef",
+   "size_bytes": 760002,
+   "timings": {
+    "completed_at": "2026-11-01T14:26:57Z",
+    "duration_s": 44.830621,
+    "first_byte_at": "2026-11-01T14:26:56Z",
+    "posted_at": "2026-11-01T14:26:12Z"
+   }
+  },
+  "result": {
+   "artifact": {
+    "artifact_id": "4eb13d75-02ec-5df9-9d0b-69e0561377ff",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "b510bf4617947864e60159807180467fac7d181f4acd4b03daaaeeaa3e8fd716",
+    "size_bytes": 760002
+   },
+   "content_type": "application/json",
+   "schema": "fs2-serve.nebius.ai/operation-artifact-result/v1"
+  },
+  "upstream_success": true
+ },
+ "seed_note": "runtime accepts no seed; nondeterministic",
+ "submit_isError": false,
+ "submit_payload": {
+  "delivery": {
+   "export_state": null,
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-boltz2-fgf_complex-56a244be5f203f0aea0a",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-d04d316a4a2083fd",
+   "status": "RUNNING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T14:24:54Z",
+ "target": "fgf_complex",
+ "tool": "boltz2_predict_native"
+}

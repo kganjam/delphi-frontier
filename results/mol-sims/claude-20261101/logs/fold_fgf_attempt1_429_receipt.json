@@ -1,0 +1,46 @@
+{
+ "chains": {
+  "A": {
+   "a3m_sha256": "c1d41017dac219dcdb71b72e620e8d1e1c6e835dd6c7b0752cb97e8bd77d94c8",
+   "name": "fgf10a_core",
+   "sequence_sha256": "cda679adbcbc73d64209ba0b8d521e3023fc45ae9737f53e6b9d6f0150d605bd",
+   "source": "Q8AY90 58-201"
+  },
+  "B": {
+   "a3m_sha256": "17b6f52107aa764c6998bdc5268f20b026c102a0eb92830adba2f57ba4e91181",
+   "name": "fgfr2b_d2d3",
+   "sequence_sha256": "9d921918a98c410e318992bfa797f16b51b742a04adcd85728e84c516e5dd5f8",
+   "source": "F1RBT3 150-360"
+  }
+ },
+ "epistemic_status": "computed structure hypothesis (Boltz-2 + PDB70 MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "NOT_ACCEPTED",
+ "finished_utc": "2026-11-01T14:23:04Z",
+ "idempotency_key": "frontier-claude-mol-boltz2-fgf_complex-56a244be5f203f0aea0a",
+ "operation_id": null,
+ "params": {
+  "diffusion_samples": 3,
+  "recycling_steps": 3,
+  "sampling_steps": 200
+ },
+ "polls": [],
+ "seed_note": "runtime accepts no seed; nondeterministic",
+ "submit_isError": false,
+ "submit_payload": {
+  "error": {
+   "admission": "not-submitted",
+   "code": "ADMISSION_LIMIT_REACHED",
+   "message": "key concurrency limit reached (1/1 operations in flight)",
+   "model_id": "boltz2",
+   "next_action": "Wait for capacity or concurrency headroom, then retry with the same idempotency key.",
+   "request_id": "abf980cc-dddc-45ff-a53a-9ec6a682113f",
+   "retry_after_seconds": 56,
+   "retryable": true,
+   "status_code": 429
+  }
+ },
+ "submitted_utc": "2026-11-01T14:22:55Z",
+ "target": "fgf_complex",
+ "tool": "boltz2_predict_native"
+}

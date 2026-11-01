@@ -1,0 +1,100 @@
+{
+ "chains": {
+  "A": {
+   "a3m_sha256": "d65d377353a647de904d8ca4b3e7c611f88888ab8d39ad80b32754c2df160b01",
+   "name": "kcnk5b_core",
+   "sequence_sha256": "5d3ed17412e49fc68113dfcad16a246081ccd84c2d08e5a41c747e4a2fdd428c",
+   "source": "Q6PFU3 1-265"
+  },
+  "B": {
+   "a3m_sha256": "d65d377353a647de904d8ca4b3e7c611f88888ab8d39ad80b32754c2df160b01",
+   "name": "kcnk5b_core",
+   "sequence_sha256": "5d3ed17412e49fc68113dfcad16a246081ccd84c2d08e5a41c747e4a2fdd428c",
+   "source": "Q6PFU3 1-265"
+  }
+ },
+ "epistemic_status": "computed structure hypothesis (Boltz-2 + PDB70 MSA); not observed, not function",
+ "evidence_kind": "predicted",
+ "final_status": "FAILED",
+ "finished_utc": "2026-11-01T14:29:07Z",
+ "idempotency_key": "frontier-claude-mol-boltz2-kcnk5b_dimer-3fde5a57e27be3462a07",
+ "operation_id": "op-ba745aaf17248c52",
+ "params": {
+  "diffusion_samples": 3,
+  "recycling_steps": 3,
+  "sampling_steps": 200
+ },
+ "polls": [
+  {
+   "status": "RUNNING",
+   "t": "2026-11-01T14:28:03Z"
+  },
+  {
+   "status": "FAILED",
+   "t": "2026-11-01T14:29:07Z"
+  }
+ ],
+ "seed_note": "runtime accepts no seed; nondeterministic",
+ "submit_isError": false,
+ "submit_payload": {
+  "delivery": {
+   "export_state": null,
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-boltz2-kcnk5b_dimer-3fde5a57e27be3462a07",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-ba745aaf17248c52",
+   "status": "RUNNING"
+  },
+  "result_available": false
+ },
+ "submitted_utc": "2026-11-01T14:27:27Z",
+ "target": "kcnk5b_dimer",
+ "terminal_detail": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/boltz2-kcnk5b_dimer/op-ba745aaf17248c52/artifacts/768c91e7-8ba8-547d-b339-890555fb2541.json",
+     "path": "artifacts/768c91e7-8ba8-547d-b339-890555fb2541.json",
+     "sha256": "6e722a877ecdd404dbfabfe52cc853c23d645cff91532b0b7ebfa9408b5623b8",
+     "size_bytes": 189
+    },
+    {
+     "key": "frontier/claude-mol/boltz2-kcnk5b_dimer/op-ba745aaf17248c52/result.json",
+     "path": "result.json",
+     "sha256": "4c5a7e0e379cfcd770f7ca7644a1ae04f94af6441b3d8d0c24751e86a33911c4",
+     "size_bytes": 1572
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/boltz2-kcnk5b_dimer/op-ba745aaf17248c52/manifest.json",
+   "prefix": "frontier/claude-mol/boltz2-kcnk5b_dimer/op-ba745aaf17248c52/"
+  },
+  "delivery": {
+   "export_state": "succeeded"
+  },
+  "error": {
+   "admission": "accepted",
+   "code": "NATIVE_UPSTREAM_FAILED",
+   "message": "Boltz output set is incomplete: Traceback functions: process_input -> parse_yaml -> parse_boltz_schema\nValueError: All proteins with the same sequence must share the same MSA!",
+   "model_id": "boltz2",
+   "next_action": "Resolve the reported endpoint failure before retrying. Reusing the same idempotency key returns this failed operation. To run inference again, explicitly submit a new invocation with a new idempotency key. Resume and delivery retry do not rerun endpoint inference.",
+   "operation_id": "op-ba745aaf17248c52",
+   "phase": "execution",
+   "retryable": false,
+   "status_code": 500
+  },
+  "execution": "async",
+  "model_id": "boltz2",
+  "operation": {
+   "id": "op-ba745aaf17248c52",
+   "status": "FAILED"
+  },
+  "result_available": true
+ },
+ "tool": "boltz2_predict_native"
+}

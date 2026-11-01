@@ -1,0 +1,194 @@
+{
+ "a3m_n_seqs": 76,
+ "a3m_sha256": "d65d377353a647de904d8ca4b3e7c611f88888ab8d39ad80b32754c2df160b01",
+ "artifacts": [
+  {
+   "artifact_id": "84c323e4-1dc4-57f9-a237-6c409b26062c",
+   "media_type": "application/json",
+   "name": null,
+   "path": null,
+   "sha256": "8e10078c1b4d8a0e08f20d0ed2a35f00f0126a111e5f3efd234d64aa254d0b0e",
+   "size_bytes": 21167
+  }
+ ],
+ "chain": "kcnk5b_core",
+ "database": "pdb70_220313",
+ "evidence_kind": "computed",
+ "final_status": "SUCCEEDED",
+ "finished_utc": "2026-11-01T14:22:50Z",
+ "operation_id": "op-71484e57aa8b6dcb",
+ "polls": [
+  {
+   "status": "SUCCEEDED",
+   "t": "2026-11-01T14:22:48Z"
+  }
+ ],
+ "result_summary": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-kcnk5b_core/op-71484e57aa8b6dcb/artifacts/84c323e4-1dc4-57f9-a237-6c409b26062c.json",
+     "path": "artifacts/84c323e4-1dc4-57f9-a237-6c409b26062c.json",
+     "sha256": "8e10078c1b4d8a0e08f20d0ed2a35f00f0126a111e5f3efd234d64aa254d0b0e",
+     "size_bytes": 21167
+    },
+    {
+     "key": "frontier/claude-mol/msa-kcnk5b_core/op-71484e57aa8b6dcb/result.json",
+     "path": "result.json",
+     "sha256": "261ae1f11fbffb7219cef70e856f8129a6f00b94a0408b16f0cdf201f987252c",
+     "size_bytes": 21915
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-kcnk5b_core/op-71484e57aa8b6dcb/manifest.json",
+   "prefix": "frontier/claude-mol/msa-kcnk5b_core/op-71484e57aa8b6dcb/"
+  },
+  "execution": "async",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-71484e57aa8b6dcb",
+   "status": "SUCCEEDED"
+  },
+  "progress": {
+   "available": true,
+   "current_step_id": null,
+   "schema": "scientific-ai/progress/v1",
+   "source": "verified-delivery",
+   "stale": false,
+   "stale_after_seconds": null,
+   "steps": [
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": 1.0,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": 1.0,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "delivered_calls",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "call"
+    },
+    {
+     "command": null,
+     "completed_ns": null,
+     "completed_units": null,
+     "durable_at": null,
+     "durable_completed_ns": null,
+     "durable_completed_units": null,
+     "durable_step": null,
+     "initial_step": null,
+     "ns_per_day": null,
+     "ns_per_day_source": null,
+     "observed_at": null,
+     "observed_step": null,
+     "rate": null,
+     "rate_source": null,
+     "rate_unit": null,
+     "rate_updated_at": null,
+     "rate_window_seconds": null,
+     "state": "completed",
+     "step_id": "aligned_sequences",
+     "target_ns": null,
+     "target_step": null,
+     "target_units": null,
+     "timestep_ps": null,
+     "unit": "sequence"
+    }
+   ],
+   "updated_at": null
+  },
+  "response": {
+   "artifact": {
+    "artifact_id": "84c323e4-1dc4-57f9-a237-6c409b26062c",
+    "compression": "none",
+    "media_type": "application/json",
+    "sha256": "8e10078c1b4d8a0e08f20d0ed2a35f00f0126a111e5f3efd234d64aa254d0b0e",
+    "size_bytes": 21167
+   },
+   "attempt_id": "op-71484e57aa8b6dcb-92qsg",
+   "capture_complete": true,
+   "content_type": "application/json",
+   "http_status": 200,
+   "operation_id": "op-71484e57aa8b6dcb",
+   "sha256": "8e10078c1b4d8a0e08f20d0ed2a35f00f0126a111e5f3efd234d64aa254d0b0e",
+   "size_bytes": 21167,
+   "timings": {
+    "completed_at": "2026-11-01T14:22:39Z",
+    "duration_s": 6.929871,
+    "first_byte_at": "2026-11-01T14:22:38Z",
+    "posted_at": "2026-11-01T14:22:32Z"
+   }
+  },
+  "result": {
+   "alignments": {
+    "pdb70_220313": {
+     "a3m": {
+      "alignment": ">query\nMADKGPILTSVIIFYLSIGAAIFQILEEPNLNSAVDDYKNKTNNLLKKYPCLSKEVLGEIIEVVAEATGQGVTVTKEAQFNNWNWENAVIFAATVITTIGYGNVAPKTTGGRLFCILYGLCGIPLCLTWISELGTFFGSRTKRLSQLLLHSGLNVRKVQFICTIVFLLWGFLVHLIIPAFVFMFFENWTYLEGLYFSFTTLTTVGFGDYVAGVDPSVNYPTLYRFFVQLWIYLGLAWLSLFFSWNVHMVVEAHKVLKKRRMRRHR\n>6WLV_A\nMVDRGPLLTSAIIFYLAIGAAIFEVLEEPHWKEAKKNYYTQKLHLLKEFPCLSQEGLDKILQVVSDAADQGVAITGNQTFNNWNWPNAMIFAATVITTIGYGNVAPKTPAGRLFCVFYGLFGVPLCLTWISALGKFFGGRAKRLGQFLTRRGVSLRKAQITCTAIFIVWGVLVHLVIPPFVFMVTEEWNYIEGLYYSFITISTIGFGDFVAGVNPSANYHALYRYFVELWIYLGLAWLSLFVNWKVSMFVEVHKAIKKRRRRR--\n>6WM0_A\nMVDRGPLLTSAIIFYLAIGAAIFEVLEEPHWKEAKKNYYTQKLHLLKEFPCLSQEGLDKILQVVSDAADQGVAITGNQTFNNWNWPNAMIFAATVITTIGYGNVAPKTPAGRLFCVFYGLFGVPLCLTWISALGKFFGGRAKRLGQFLTRRGVSLRKAQITCTAIFIVWGVLVHLVIPPFVFMVTEEWNYIEGLYYSFITISTIGFGDFVAGVNPSANYHALYRYFVELWIYLGLAWLSLFVNWKVSMFVEVHKAIKKRRRRR--\n>4XDK_D\n----------VVVVYLVTGGLVFRALEQPFESSQKNTIALEKAEFLRDHVCVSPQELETLIQHALDADNAGVSPIGNSSNNSSHWDlgSAFFFAGTVITTIGYGNIAPSTEGGKIFCILYAIFGIPLfgfLLAGIgDQLGTIFGKSIARVEKVFRKKQVSQTKIRVISTILFILAGCIVFVTIPAVIFKYIEGWTALESIYFVVVTLTTVGFGDFVAGGNAGINYREWYKPLVWFWILVGLA----YFAAVLSMIGDWLRVLSKK------\n>4XDL_A\n----------VVVVYLVTGGLVFRALEQPFESSQKNTIALEKAEFLRDHVCVSPQELETLIQHALDADNAGVSPIGNSSNNSSHWDlgSAFFFAGTVITTIGYGNIAPSTEGGKIFCILYAIFGIPLfgfLLAGIgDQLGTIFGKSIARVEKVFRKKQVSQTKIRVISTILFILAGCIVFVTIPAVIFKYIEGWTALESIYFVVVTLTTVGFGDFVAGGNAGINYREWYKPLVWFWILVGLA----YFAAVLSMIGDWLRVLSKK------\n>4BW5_B\n----------VVVVYLVTGGLVFRALEQPFESSQKNTIALEKAEFLRDHVCVSPQELETLIQHALDADNAGVSPIGNSSNNSSHWDlgSAFFFAGTVITTIGYGNIAPSTEGGKIFCILYAIFGIPLfgfLLAGIgDQLGTIFGKSIARVEKVFRKKQVSQTKIRVISTILFILAGCIVFVTIPAVIFKYIEGWTALESIYFVVVTLTTVGFGDFVAGGNAGINYREWYKPLVWFWILVGLA----YFAAVLSMIGDWLRVLSKK------\n>6W88_B\n----------VVVLYLIIGATVFKALEQPQEISQRTTIVIQREKFLRAHPCVSDQELDELIQQIVAAINAGIipLGASSNQVSHWDLGSSFFFAGTVITTIGFGNISPRTEGGKIFCIIYALLGIPLfgfLLAGVgDQLGTIFGKGIAKVEDTFIKWNVSQTKIRIISTIIFILFGCVLFVALPAVIFKHIEGWSALDAIYFVVITLTTIGFGDYVAG-GSDIEYLDFYKPVVWFWILVGLAYFA--------------------------\n>4WFE_B\n-------LLALVLLYLVSGALVFRALEQPHEQQAQRELGEVREKFLRAHPCVSDQELGLLIKEVADALGGGadpeTQSTSQSSHSAWDLGSAFFFSGTIITTIGYGNVALRTDAGRLFCIFYALVGIPLFGILLAGVGDRLGSSLRhgigHIEAIFLKWHVPPELVRVLSAMLFLLIGCLLFVLTPTFVFCYMEDWSKLEAIYFVIVTLTTVGFGDYVAGADPRQDSPA-YQPLVWFWILLGLAYFA--------------------------\n>7LJ5_A\n-------LLALVLLYLVSGALVFRALEQPHEQQAQRELGEVREKFLRAHPCVSDQELGLLIKEVADALGGGadpeTQSTSQSSHSAWDLGSAFFFSGTIITTIGYGNVALRTDAGRLFCIFYALVGIPLFGILLAGVGDRLGSSLRhgigHIEAIFLKWHVPPELVRVLSEMLFLLIGCLLFVLTPTFVFCYMEDWSKLEAIYFVIVTLTTVGFGDYVAGADPRQDSPA-YQPLVWFWILLGLAYFA--------------------------\n>7LJ4_B\n-------LLALVLLYLVSGALVFRALEQPHEQQAQRELGEVREKFLRAHPCVSDQELGLLIKEVADALGGGadpeTQSTSQSSHSAWDLGSAFFFSGTIITTIGYGNVALRTDAGRLFCIFYALVGIPLFGILLAGVGDRLGSSLRhgigHIEAIFLKWHVPPELVRVLSAMLFLLIGCLLFVLTPTFVFCYMEDWSKLEAIYFVIVTLTTVGFGDYVAGADPRQDSPA-YQPLVWFWILLGLPYFA--------------------------\n>4TWK_B\n----------VVVLYLIIGATVFKALEQPHEISQRTTIVIQKQTFISQHSCVNSTELDELIQQIVAAINAGIipLGNTSNQISHWDLGSSFFFAGTVITTIGFGNISPRTEGGKIFCIIYALLGIPLfgfLLAGVgDQLGTIFGKGIAKVEDTFIKWNVSQTKIRIISTIIFILFGCVLFVALPAIIFKHIEGWSALDAIYFVVITLTTIGFGDYVAG-GSDIEYLDFYKPVVWFWILVGLAYFA--------------------------\n>3UKM_D\n--------------YLVFGAVVFSSVELPYEDLLRQELRKLKRRFLEEHECLSEQQLEQFLGRVLEASNYGVSVLSQASGNwNWDFTSALFFASTVLSTTGYGHTVPLSDGGKAFCIIYSVIGIPFTLLFLTAVVQRITVHVTRRPVLYFHIRWGFSK-QVVAIVHAVLLGFVTvscFFFIPAAVFSVLEdDWNFLESFYFCFISLSTIGLGDYVPGEGYNQKFRELYKIGITCYLLLGL------------------------------\n>7SK1_B\n--------------YLVFGAVVFSSVELPYEDLLRQELRKLKRRFLEEHECLSEPQLEQFLGRVLEASNYGVSVLSNASGNwNWDFTSALFFASTVLSTTGYGHTVPLSDGGKAFCIIYSVIGIPFTLLFLTAVVQRVTVHVTRRPVLYFHIRWGFSK-QVVAIVHAVLLGFVTvscFFFIPAAVFSVLEdDWNFLESFYFCFISLSTIGLGDYVPGEGYNQKFRELYKIGITCYLLLGL------------------------------\n>6RV3_D\n--------------YLLVGAAVFDALEsEPELIER-QRLELRQQELRARYN-LSQGGYEELERVVLRLKPHKAGV-------QWRFAGSFYFAITVITTIGYGHAAPSTDGGKVFCMFYALLGIPLTLVMFQSL----GERINTLVRYLLHrakKGLGMRRadVSMANMVLIGFFSCISTLCIGAAAFSHYEHWTFFQAYYYCFITLTTIGFGDYVA------------------------------------------------------\n>6ND0_D\n------------------------------------------------------------------------------------WECVYLLMVT-MSTVGYGDVYAKTTLGRLFMVFFILGGLAMFASYVPEIIELIGNRKK---------------------------------------------------------------------------------------------------------------------------\n>6V35_C\n------------------------------------------------------------------------------------WECVYLLMVT-MSTVGYGDVYAKTTLGRLFMVFFILGGLAMFASYVPEIIELIGNRKK---------------------------------------------------------------------------------------------------------------------------\n>6V22_A\n------------------------------------------------------------------------------------WECVYLLMVT-MSTVGYGDVYAKTTLGRLFMVFFILGGLAMFASYVPEIIELIGNRKK---------------------------------------------------------------------------------------------------------------------------\n>6UFE_A\n--------------------------------------------------------------------------------------DALYFSVVTLTTVGYGDFSPQTDFGKIFTILYIFIGIGLVFGFIHKL------------------------------------------------------------------------------------------------------------------------------------\n>2Q67_A\n--------------------------------------------------------------------------------------DALYFSVVTLTTVGAGNFSPQTDFGKIFTILYIFIGIGLVFGFIHKL------------------------------------------------------------------------------------------------------------------------------------\n>3E8B_B\n--------------------------------------------------------------------------------------DALYFSVVTLTTVGDGNFSPQTDFGKIFTILYIFIGIGLVFGFIHKL------------------------------------------------------------------------------------------------------------------------------------\n>2AHY_B\n--------------------------------------------------------------------------------------DALYFSVVTLTTVGDGNFSPQTDFGKIFTILYIFIGIGLVFGFIHKL------------------------------------------------------------------------------------------------------------------------------------\n>2AHZ_A\n--------------------------------------------------------------------------------------DALYFSVVTLTTVGDGNFSPQTDFGKIFTILYIFIGIGLVFGFIHKL------------------------------------------------------------------------------------------------------------------------------------\n>3VOU_A\n--------------------------------------------------------------------------------------DALYFSVVTLTTVGDGNFSPQTDFGKVFTILYIFIGIGLVFGFIHKL------------------------------------------------------------------------------------------------------------------------------------\n>7PXE_D\n----------------------------------------------------------------------------------------VYFLIVTMSTVGYGDVYCETVLGRTFLVFFLLVGLAIFASCIPEIIDLIGTRAK---------------------------------------------------------------------------------------------------------------------------\n>7PXH_D\n----------------------------------------------------------------------------------------VYFLIVTMSTVGYGDVYCETVLGRTFLVFFLLVGLAIFASCIPEIIDLIGTRAK---------------------------------------------------------------------------------------------------------------------------\n>6CJU_D\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YLSAFYWTITTLTTIGYGD----ITPSTPTQTVYTIVIEL------------------------------------\n>6CJT_D\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YLSAFYWTITTLTTIGYGD----ITPSTPTQTVYTIVIEL------------------------------------\n>3PJS_M\n---------------------------------------------------------------------------------------ALWWSVETATTVGYGDLYPVTLWGRLVAVVVMVAGITSFGLVTAALATWFvGQEQQQQQQFVRHS------------------------------------------------------------------------------------------------------------------\n>5TJ6_A\n------------------------------------------------------------------------------------WE-CLYFLMVTMSTVGFGDIFATTVLGRTFVVIFIMIFIGLFASFIPEIAEILGKRQK---------------------------------------------------------------------------------------------------------------------------\n>5VKH_C\n---------------------------------------------------------------------------------------ALWWSVETATTVGYGDLAPVTLWGRCVAVVVMVAGITSAGLVTAALATWFVGR-----------------------------------------------------------------------------------------------------------------------------\n>3EFF_M\n---------------------------------------------------------------------------------------ALWWSVETATTVGYGDLYPVTLWGRLVAVVVMVAGITSFGLVTAALATWFVGR-----------------------------------------------------------------------------------------------------------------------------\n>4H33_A\n-----------------------------------------------------------------------------------NYPDALWWAIVTATTVGYGDIVPVTPIGRILASIMMLFGIAFIGMITSTITNFF--------------------------------------------------------------------------------------------------------------------------------\n>5V4S_D\n---------------------------------------------------------------------------------------ALYWTVATIATVGYGDITPSTDSQRIYTIFVMILGAGVYATVIGNIASILGS------------------------------------------------------------------------------------------------------------------------------\n>4LBE_C\n---------------------------------------------------------------------------------------ALWWSVETATTVGYGDLYPVTLWGRLVAVVVMVAGITSFGLVTAALATWFVGR-----------------------------------------------------------------------------------------------------------------------------\n>6PBY_A\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------KNSVYISSLYFTMTSLTSVGFGNIAPSTD---------------------------------------------------\n>5K7L_A\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------KNSVYISSLYFTMTSLTSVGFGNIAPSTD---------------------------------------------------\n>1ORQ_C\n--------------------------------------------------------------------------------------DALWWAVVTATTVGYGDVVPATPIGKVI-------GIAVMLTGISALTLLIGT------------------------------------------------------------------------------------------------------------------------------\n>7E7Z_C\n------------------------------------------------------------------------------------------YTIVTMTTLGYGDMVPKTIAGKIFgsiCSLSGVLVIAL--------------------------------------------------------------------------------------------------------------------------------------------\n>6UWM_A\n--------------------------------------------------------------------------------------DALWWAVVTATTVGYGDVVPATPIGKVI-------GIAVMLTGISALTLLIGT------------------------------------------------------------------------------------------------------------------------------\n>6UWM_B\n--------------------------------------------------------------------------------------DALWWAVVTATTVGYGDVVPATPIGKVI-------GIAVMLTGISALTLLIGT------------------------------------------------------------------------------------------------------------------------------\n>7E87_A\n------------------------------------------------------------------------------------------YTIVTMTTLGYGDMVPKTIAGKIFgsiCSLSGVLVIAL--------------------------------------------------------------------------------------------------------------------------------------------\n>7E84_G\n------------------------------------------------------------------------------------------YTIVTMTTLGYGDMVPKTIAGKIFgsiCSLSGVLVIAL--------------------------------------------------------------------------------------------------------------------------------------------\n>7F3F_G\n------------------------------------------------------------------------------------------YTIVTMTTLGYGDMVPKTIAGKIFgsiCSLSGVLVIAL--------------------------------------------------------------------------------------------------------------------------------------------\n>2A9H_B\n------------------------------------------------------------------------------------YPDALWWSVETATTVGYGDLYPVTLWGRCVAVVVMVAGI----------------------------------------------------------------------------------------------------------------------------------------------\n>7CR7_B\n------------------------------------------------------------------------------------YADALWWGLITLTTIGYGDKYPQTWNGRLLAATFTLIGV----------------------------------------------------------------------------------------------------------------------------------------------\n>1F6G_B\n---------------------------------------------------------------------------------------ALWWSVETATTVGYGDLYPVTLWGRCVAVVVMVAGITSFGLVTAALATWFVGR-----------------------------------------------------------------------------------------------------------------------------\n>6CNO_D\n-------------------------------------------------------------------------------------------------TIGYGDVVPGTMWGKIVCLCTGVMGV----------------------------------------------------------------------------------------------------------------------------------------------\n>6CNM_C\n-------------------------------------------------------------------------------------------------TIGYGDVVPGTMWGKIVCLCTGVMGV----------------------------------------------------------------------------------------------------------------------------------------------\n>3IGA_C\n---------------------------------------------------------------------------------------ALWWSVETATTVGYGDLYPVTLWGRCVAVVVMVAGITSFGLVTAALATWFVGR-----------------------------------------------------------------------------------------------------------------------------\n>3LUT_B\n--------------------------------------------------------------------------------------DAFWWAVVSMTTVGYGDMVPTTIGGK---IVGSLCAIAGVLT-----------------------------------------------------------------------------------------------------------------------------------------\n>2R9R_B\n--------------------------------------------------------------------------------------DAFWWAVVSMTTVGYGDMVPTTIGGK---IVGSLCAIAGVLT-----------------------------------------------------------------------------------------------------------------------------------------\n>5VA1_A\n---------------------------------------------------------------------------------------ALYFTFSSLTSVGFGNVSPNTNSEKIFSICVMLIG-----------------------------------------------------------------------------------------------------------------------------------------------\n>2P7T_C\n---------------------------------------------------------------------------------------ALWWSVSTATTVGYGDLYPVTLWGRCVAVVVMVAGITSFGLVTAALATWFVGR-----------------------------------------------------------------------------------------------------------------------------\n>2IH3_C\n---------------------------------------------------------------------------------------ALWWACETATTVAYGDLYPVTLWGRLVAVVVMVAGITSFGLVTAALATWFVGR-----------------------------------------------------------------------------------------------------------------------------\n>7WF4_H\n--------------------------------------------------------------------------------------DAFWWAVVTMTTVGYGDMHPVTIGGK---IVGSLCAIAGVLT-----------------------------------------------------------------------------------------------------------------------------------------\n>7EJ1_D\n--------------------------------------------------------------------------------------DAFWWAVVTMTTVGYGDMHPVTIGGK---IVGSLCAIAGVLT-----------------------------------------------------------------------------------------------------------------------------------------\n>6EO1_B\n---------------------------------------------------------------------------------------AMWWAVVTLSTTGYGDTIPQSFAGRVLAGAVMMSGIGIFGLWAGILATGFYQEVRR--------------------------------------------------------------------------------------------------------------------------\n>3BEH_D\n---------------------------------------------------------------------------------------AMWWAVVTLSTTGYGDTIPQSFAGRVLAGAVMMSGIGIFGLWAGILATGFYQEVRR--------------------------------------------------------------------------------------------------------------------------\n>7BYL_G\n---------------------------------------------------------------------------KDANSDFSSYADSLWWGTITLTTIGYGDKTPHTWLGRVLAAGFALLGI----------------------------------------------------------------------------------------------------------------------------------------------\n>7VNR_A\n---------------------------------------------------------------------------KDANSDFSSYADSLWWGTITLTTIGYGDKTPHTWLGRVLAAGFALLGI----------------------------------------------------------------------------------------------------------------------------------------------\n>7VNQ_E\n---------------------------------------------------------------------------KDANSDFSSYADSLWWGTITLTTIGYGDKTPHTWLGRVLAAGFALLGI----------------------------------------------------------------------------------------------------------------------------------------------\n>7T4X_A\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YVTSMYWSITTLTTVGYGD---------------------------------------------------------\n>7T4X_B\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YVTSMYWSITTLTTVGYGD---------------------------------------------------------\n>4QE7_A\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ESWT--VSLYWTFVTIATVGYGDY--------------------------------------------------------\n>3LDD_A\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ESWT--VSLYWTFVTIATVGYGDY--------------------------------------------------------\n>6U9Z_A\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ESWT--VSLYWTFVTIATVGYGDY--------------------------------------------------------\n>4HYO_F\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ESWT--VSLYWTFVTIATVGYGDY--------------------------------------------------------\n>6U6E_B\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ESWT--VSLYWTFVTIATVGYGDY--------------------------------------------------------\n>6OLY_D\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ESWT--VSLYWTFVTIATVGYGDY--------------------------------------------------------\n>7PHH_B\n------------------------------------------------------------------------------------------WAVVTMTTLGYGDMYPQTWSGMLVGALCALAGV----------------------------------------------------------------------------------------------------------------------------------------------\n>6V1X_B\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YVTALYWSITTLTTTGYGDFHA------------------------------------------------------\n>7CAL_C\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YVTALYWSITTLTTTGYGDFHA------------------------------------------------------\n>6UZZ_G\n------------------------------------------------------------------------------------YADALWWGVVTVTTIGYGDKVPQTWVGK---------------------------------------------------------------------------------------------------------------------------------------------------------\n>6V00_G\n------------------------------------------------------------------------------------YADALWWGVVTVTTIGYGDKVPQTWVGK---------------------------------------------------------------------------------------------------------------------------------------------------------\n>4GX5_B\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YSFMAGIYWTITVMTTLGFGD---------------------------------------------------------\n>4GX0_A\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YSFMAGIYWTITVMTTLGFGD---------------------------------------------------------\n",
+      "format": "a3m"
+     }
+    }
+   },
+   "metrics": {
+    "search_type": "colabfold"
+   }
+  },
+  "upstream_success": true
+ },
+ "sequence": "MADKGPILTSVIIFYLSIGAAIFQILEEPNLNSAVDDYKNKTNNLLKKYPCLSKEVLGEIIEVVAEATGQGVTVTKEAQFNNWNWENAVIFAATVITTIGYGNVAPKTTGGRLFCILYGLCGIPLCLTWISELGTFFGSRTKRLSQLLLHSGLNVRKVQFICTIVFLLWGFLVHLIIPAFVFMFFENWTYLEGLYFSFTTLTTVGFGDYVAGVDPSVNYPTLYRFFVQLWIYLGLAWLSLFFSWNVHMVVEAHKVLKKRRMRRHR",
+ "sequence_sha256": "5d3ed17412e49fc68113dfcad16a246081ccd84c2d08e5a41c747e4a2fdd428c",
+ "source": "Q6PFU3 1-265",
+ "submit_isError": false,
+ "submit_payload": {
+  "customer_storage": {
+   "available": true,
+   "bucket": "[team-bucket-name-omitted]",
+   "files": [
+    {
+     "key": "frontier/claude-mol/msa-kcnk5b_core/op-71484e57aa8b6dcb/artifacts/84c323e4-1dc4-57f9-a237-6c409b26062c.json",
+     "path": "artifacts/84c323e4-1dc4-57f9-a237-6c409b26062c.json",
+     "sha256": "8e10078c1b4d8a0e08f20d0ed2a35f00f0126a111e5f3efd234d64aa254d0b0e",
+     "size_bytes": 21167
+    },
+    {
+     "key": "frontier/claude-mol/msa-kcnk5b_core/op-71484e57aa8b6dcb/result.json",
+     "path": "result.json",
+     "sha256": "261ae1f11fbffb7219cef70e856f8129a6f00b94a0408b16f0cdf201f987252c",
+     "size_bytes": 21915
+    }
+   ],
+   "manifest_key": "frontier/claude-mol/msa-kcnk5b_core/op-71484e57aa8b6dcb/manifest.json",
+   "prefix": "frontier/claude-mol/msa-kcnk5b_core/op-71484e57aa8b6dcb/"
+  },
+  "delivery": {
+   "export_state": "succeeded",
+   "exported_by": null,
+   "finalizing_by": null
+  },
+  "execution": "async",
+  "idempotency_key": "frontier-claude-mol-msa-kcnk5b_core-5d3ed17412e49fc68113",
+  "model_id": "msa-search-pdb70",
+  "operation": {
+   "id": "op-71484e57aa8b6dcb",
+   "status": "SUCCEEDED"
+  },
+  "result_available": true
+ },
+ "submitted_utc": "2026-11-01T14:22:17Z",
+ "tool": "msa_search_native"
+}
