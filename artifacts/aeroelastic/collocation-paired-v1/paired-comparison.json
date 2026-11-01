@@ -1,0 +1,3173 @@
+{
+  "schema": "frontier.aeroelastic.collocation-numbers/1",
+  "status": "posthoc reading of an audited return; frozen rules, no new threshold, no decision beyond the frozen ones",
+  "inputs": [
+    {
+      "path": "/data/artifacts/delphi-evolve-rethink/gcp/coupled-collocation-v1/coupled-collocation-v1/frontier-cpu-20261031-04/final-9aab24f5032f4cfca540705a27d64e6d/science/summary.json",
+      "sha256": "11df90d7faebfbd5a0b3ecefc5023566298a9c41b7f8c2fe733d573b28b4bd59"
+    },
+    {
+      "path": "/data/artifacts/delphi-evolve-rethink/gcp/coupled-collocation-v1/coupled-collocation-v1/frontier-cpu-20261031-04/final-9aab24f5032f4cfca540705a27d64e6d/science/collocation-controls.json",
+      "sha256": "37e2ec36292eec2b76f79dd4a5987e860e49df891c7cfecb97dd51346cc9b22d"
+    },
+    {
+      "path": "/data/worktrees/delphi-frontier/coupled-collocation/artifacts/aeroelastic/collocation-paired-v1/return-audit-report.json",
+      "sha256": "c3610f154966ee7415df966e9f7e22124256a685162031863b3d74c5ce9aead6"
+    }
+  ],
+  "code_sha256": {
+    "collocation_report": "915df84a280d77bf35916a4be345fd8d56cd8e43a0e6c9cedeccd66d612a27e4",
+    "collocation_compare": "9080fc90ecca46366bb39521280cfe833b6e76ed7b54f2f414dd799fd9190fca"
+  },
+  "study_valid": true,
+  "paired_comparison": {
+    "schema": "frontier.aeroelastic.collocation-paired-comparison/1",
+    "baseline": "audited fidelity-v1 return (production collocation)",
+    "repaired": "this study's repaired arms (diagnostic variant)",
+    "study_valid": true,
+    "contexts": [
+      {
+        "compliance": 0.8,
+        "speed_m_s": 20.0,
+        "effects": {
+          "dCL_one_way_minus_rigid": {
+            "fine": {
+              "baseline": -0.005899855233346157,
+              "repaired": -0.005939458534185121,
+              "difference": -3.960330083896402e-05,
+              "relative": -0.00671258857592386
+            },
+            "l32x8": {
+              "baseline": -0.005865916482769101,
+              "repaired": -0.00586831982391528,
+              "difference": -2.4033411461787946e-06,
+              "relative": -0.0004097128135455925
+            },
+            "l36x9": {
+              "baseline": -0.005886799335401233,
+              "repaired": -0.0058462684011382215,
+              "difference": 4.053093426301113e-05,
+              "relative": 0.006885054501394623
+            },
+            "l64x16": {
+              "baseline": -0.005756277916435015,
+              "repaired": -0.005760611165777252,
+              "difference": -4.333249342236556e-06,
+              "relative": -0.0007527866800636041
+            }
+          },
+          "dCL_two_way_minus_one_way": {
+            "fine": {
+              "baseline": 9.047359400207733e-05,
+              "repaired": 8.844820970846379e-05,
+              "difference": -2.0253842936135413e-06,
+              "relative": -0.02238646884710955
+            },
+            "l32x8": {
+              "baseline": 8.824552536196295e-05,
+              "repaired": 8.709929062525323e-05,
+              "difference": -1.146234736709717e-06,
+              "relative": -0.012989154203662161
+            },
+            "l36x9": {
+              "baseline": 8.64995745541719e-05,
+              "repaired": 8.67497487339608e-05,
+              "difference": 2.501741797888979e-07,
+              "relative": 0.0028922012747267544
+            },
+            "l64x16": {
+              "baseline": 8.485187246734527e-05,
+              "repaired": 8.51627823211798e-05,
+              "difference": 3.1090985383452896e-07,
+              "relative": 0.003664148412920183
+            }
+          },
+          "dCL_two_way_minus_rigid": {
+            "fine": {
+              "baseline": -0.00580938163934408,
+              "repaired": -0.005851010324476658,
+              "difference": -4.162868513257756e-05,
+              "relative": -0.007165768702583934
+            },
+            "l32x8": {
+              "baseline": -0.005777670957407138,
+              "repaired": -0.005781220533290027,
+              "difference": -3.5495758828885116e-06,
+              "relative": -0.0006143610304317961
+            },
+            "l36x9": {
+              "baseline": -0.005800299760847061,
+              "repaired": -0.005759518652404261,
+              "difference": 4.078110844280003e-05,
+              "relative": 0.0070308622182044716
+            },
+            "l64x16": {
+              "baseline": -0.00567142604396767,
+              "repaired": -0.005675448383456072,
+              "difference": -4.022339488402027e-06,
+              "relative": -0.0007092289412255194
+            }
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "fine": {
+              "baseline": -0.528502713640421,
+              "repaired": -0.5375906688251355,
+              "difference": -0.009087955184714502,
+              "relative": -0.01719566418517522
+            },
+            "l32x8": {
+              "baseline": -0.5234461780035815,
+              "repaired": -0.5249814635956298,
+              "difference": -0.0015352855920482966,
+              "relative": -0.0029330342957204513
+            },
+            "l36x9": {
+              "baseline": -0.5302575118380268,
+              "repaired": -0.5209465175890493,
+              "difference": 0.009310994248977522,
+              "relative": 0.017559382075895365
+            },
+            "l64x16": {
+              "baseline": -0.5058582515663126,
+              "repaired": -0.5063738604448531,
+              "difference": -0.0005156088785405188,
+              "relative": -0.0010192754135056905
+            }
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "fine": {
+              "baseline": 0.007917281460926517,
+              "repaired": 0.007819229361455626,
+              "difference": -9.805209947089111e-05,
+              "relative": -0.012384566590792465
+            },
+            "l32x8": {
+              "baseline": 0.007694178817882147,
+              "repaired": 0.007611039506922879,
+              "difference": -8.313931095926819e-05,
+              "relative": -0.010805482030914458
+            },
+            "l36x9": {
+              "baseline": 0.007609309688515253,
+              "repaired": 0.007550684887313253,
+              "difference": -5.8624801202000754e-05,
+              "relative": -0.007704352116261385
+            },
+            "l64x16": {
+              "baseline": 0.007288831140616736,
+              "repaired": 0.0073178537344595895,
+              "difference": 2.902259384285344e-05,
+              "relative": 0.003981789848460905
+            }
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "fine": {
+              "baseline": -0.5205854321794945,
+              "repaired": -0.5297714394636799,
+              "difference": -0.009186007284185393,
+              "relative": -0.01764553273365152
+            },
+            "l32x8": {
+              "baseline": -0.5157519991856994,
+              "repaired": -0.5173704240887069,
+              "difference": -0.0016184249030075648,
+              "relative": -0.003137990556629606
+            },
+            "l36x9": {
+              "baseline": -0.5226482021495116,
+              "repaired": -0.513395832701736,
+              "difference": 0.009252369447775521,
+              "relative": 0.017702862862099232
+            },
+            "l64x16": {
+              "baseline": -0.49856942042569585,
+              "repaired": -0.4990560067103935,
+              "difference": -0.0004865862846976654,
+              "relative": -0.0009759649604707027
+            }
+          },
+          "tip_over_L_two_way_pectoral": {
+            "fine": {
+              "baseline": 0.09734063157853867,
+              "repaired": 0.09812248551185472,
+              "difference": 0.0007818539333160485,
+              "relative": 0.00803214362427076
+            },
+            "l32x8": {
+              "baseline": 0.09729170988142011,
+              "repaired": 0.09748033798974255,
+              "difference": 0.00018862810832244448,
+              "relative": 0.0019387891173086164
+            },
+            "l36x9": {
+              "baseline": 0.0977182711061739,
+              "repaired": 0.09727153225835633,
+              "difference": -0.00044673884781756823,
+              "relative": -0.0045717023312065435
+            },
+            "l64x16": {
+              "baseline": 0.09649000847539635,
+              "repaired": 0.09647264200285614,
+              "difference": -1.736647254020618e-05,
+              "relative": -0.00017998208119791382
+            }
+          },
+          "tip_over_L_two_way_pelvic": {
+            "fine": {
+              "baseline": 0.09402544170589466,
+              "repaired": 0.09218298002962107,
+              "difference": -0.0018424616762735962,
+              "relative": -0.01959535252210454
+            },
+            "l32x8": {
+              "baseline": 0.0929028976526789,
+              "repaired": 0.0920281485110785,
+              "difference": -0.0008747491416003922,
+              "relative": -0.009415735824200834
+            },
+            "l36x9": {
+              "baseline": 0.09156011389974757,
+              "repaired": 0.09203119790087808,
+              "difference": 0.00047108400113050897,
+              "relative": 0.0051450788019586306
+            },
+            "l64x16": {
+              "baseline": 0.09183747327561063,
+              "repaired": 0.09173189773989991,
+              "difference": -0.00010557553571072242,
+              "relative": -0.0011495910323434412
+            }
+          },
+          "CL_rigid": {
+            "fine": {
+              "baseline": 0.25036031592054964,
+              "repaired": 0.251650860296317,
+              "difference": 0.0012905443757673662,
+              "relative": 0.005154748151767442
+            },
+            "l32x8": {
+              "baseline": 0.24986568532714448,
+              "repaired": 0.25017614750088196,
+              "difference": 0.0003104621737374802,
+              "relative": 0.0012425162476031788
+            },
+            "l36x9": {
+              "baseline": 0.25102924304672247,
+              "repaired": 0.24967824794401097,
+              "difference": -0.0013509951027114997,
+              "relative": -0.005381823592799695
+            },
+            "l64x16": {
+              "baseline": 0.24790919414460086,
+              "repaired": 0.2479447933579191,
+              "difference": 3.559921331824922e-05,
+              "relative": 0.00014359779370459676
+            }
+          }
+        },
+        "triples": {
+          "dCL_one_way_minus_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "oscillatory"
+            },
+            "repaired": null
+          },
+          "dCL_two_way_minus_one_way": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": null
+          },
+          "dCL_two_way_minus_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "oscillatory"
+            },
+            "repaired": null
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": null
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": null
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": null
+          },
+          "tip_over_L_two_way_pectoral": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "monotone"
+            },
+            "repaired": null
+          },
+          "tip_over_L_two_way_pelvic": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": null
+          },
+          "CL_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": null
+          }
+        },
+        "statuses": {
+          "dCL_one_way_minus_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          },
+          "dCL_two_way_minus_one_way": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          },
+          "dCL_two_way_minus_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          },
+          "tip_over_L_two_way_pectoral": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          },
+          "tip_over_L_two_way_pelvic": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          },
+          "CL_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": null
+          }
+        },
+        "decisions": {
+          "baseline_production": {
+            "bending": {
+              "decision": "undetermined",
+              "why": [
+                "triple not monotone: T2 divergent, T1.5 oscillatory"
+              ]
+            },
+            "feedback": {
+              "decision": "undetermined",
+              "why": [
+                "one-way effect not resolved"
+              ]
+            }
+          },
+          "repaired_diagnostic": {
+            "bending": {
+              "decision": "undetermined",
+              "why": [
+                "not_assessable"
+              ]
+            },
+            "feedback": {
+              "decision": "undetermined",
+              "why": [
+                "not_assessable"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "compliance": 0.8,
+        "speed_m_s": 16.0,
+        "effects": {
+          "dCL_one_way_minus_rigid": {
+            "main": {
+              "baseline": -0.0036035486631596503,
+              "repaired": -0.003737438766218515,
+              "difference": -0.00013389010305886462,
+              "relative": -0.03715507006403726
+            },
+            "fine": {
+              "baseline": -0.0036212053752067985,
+              "repaired": -0.0036474302707459882,
+              "difference": -2.622489553918972e-05,
+              "relative": -0.007242034853571948
+            },
+            "l32x8": {
+              "baseline": -0.003602343001960606,
+              "repaired": -0.0036046823834903208,
+              "difference": -2.3393815297145792e-06,
+              "relative": -0.0006494055475676111
+            },
+            "l36x9": {
+              "baseline": -0.0036169306997872464,
+              "repaired": -0.0035913430338475327,
+              "difference": 2.5587665939713622e-05,
+              "relative": 0.007074414210153025
+            },
+            "l64x16": {
+              "baseline": -0.0035370833940909507,
+              "repaired": -0.003539890357891623,
+              "difference": -2.8069638006722464e-06,
+              "relative": -0.0007935814590522684
+            }
+          },
+          "dCL_two_way_minus_one_way": {
+            "main": {
+              "baseline": 3.094637601230854e-05,
+              "repaired": 3.10861320084177e-05,
+              "difference": 1.3975599610915879e-07,
+              "relative": 0.004516069863998697
+            },
+            "fine": {
+              "baseline": 3.111876036629435e-05,
+              "repaired": 3.0352564244884306e-05,
+              "difference": -7.661961214100454e-07,
+              "relative": -0.024621678768410555
+            },
+            "l32x8": {
+              "baseline": 3.03569703818396e-05,
+              "repaired": 2.994276869736079e-05,
+              "difference": -4.142016844788099e-07,
+              "relative": -0.013644368303847512
+            },
+            "l36x9": {
+              "baseline": 2.9722518161523492e-05,
+              "repaired": 2.9839102500262005e-05,
+              "difference": 1.1658433873851237e-07,
+              "relative": 0.003922424678317922
+            },
+            "l64x16": {
+              "baseline": 2.9245414242595746e-05,
+              "repaired": 2.9351522735615587e-05,
+              "difference": 1.0610849301984082e-07,
+              "relative": 0.0036282096105615946
+            }
+          },
+          "dCL_two_way_minus_rigid": {
+            "main": {
+              "baseline": -0.0035726022871473417,
+              "repaired": -0.003706352634210097,
+              "difference": -0.00013375034706275546,
+              "relative": -0.03743779360605871
+            },
+            "fine": {
+              "baseline": -0.003590086614840504,
+              "repaired": -0.003617077706501104,
+              "difference": -2.6991091660599764e-05,
+              "relative": -0.007518228543296271
+            },
+            "l32x8": {
+              "baseline": -0.0035719860315787666,
+              "repaired": -0.00357473961479296,
+              "difference": -2.753583214193389e-06,
+              "relative": -0.0007708829737434177
+            },
+            "l36x9": {
+              "baseline": -0.003587208181625723,
+              "repaired": -0.0035615039313472707,
+              "difference": 2.5704250278452134e-05,
+              "relative": 0.007165530679293602
+            },
+            "l64x16": {
+              "baseline": -0.003507837979848355,
+              "repaired": -0.0035105388351560074,
+              "difference": -2.7008553076524056e-06,
+              "relative": -0.0007699487043495562
+            }
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "main": {
+              "baseline": -0.09831585349093075,
+              "repaired": -0.10346545805215968,
+              "difference": -0.0051496045612289265,
+              "relative": -0.05237817074642959
+            },
+            "fine": {
+              "baseline": -0.0986017445132461,
+              "repaired": -0.09981211142678603,
+              "difference": -0.0012103669135399286,
+              "relative": -0.012275309321503218
+            },
+            "l32x8": {
+              "baseline": -0.09790655866840936,
+              "repaired": -0.09808808405474068,
+              "difference": -0.00018152538633131599,
+              "relative": -0.0018540676824941572
+            },
+            "l36x9": {
+              "baseline": -0.09874722740692832,
+              "repaired": -0.09753997171175754,
+              "difference": 0.0012072556951707725,
+              "relative": 0.01222571738845671
+            },
+            "l64x16": {
+              "baseline": -0.09542379941614243,
+              "repaired": -0.09551153169082482,
+              "difference": -8.773227468239497e-05,
+              "relative": -0.0009193961592306257
+            }
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "main": {
+              "baseline": 0.0008393555986714318,
+              "repaired": 0.0008556928248637519,
+              "difference": 1.633722619232003e-05,
+              "relative": 0.019464010507798238
+            },
+            "fine": {
+              "baseline": 0.0008418256571545157,
+              "repaired": 0.0008254466308947883,
+              "difference": -1.6379026259727425e-05,
+              "relative": -0.019456553884435814
+            },
+            "l32x8": {
+              "baseline": 0.0008205187375693868,
+              "repaired": 0.0008095427379330999,
+              "difference": -1.0975999636286815e-05,
+              "relative": -0.013376903090355855
+            },
+            "l36x9": {
+              "baseline": 0.0008070758080407359,
+              "repaired": 0.000805892756932991,
+              "difference": -1.1830511077448591e-06,
+              "relative": -0.0014658488037410564
+            },
+            "l64x16": {
+              "baseline": 0.000784170851716226,
+              "repaired": 0.0007871261624181614,
+              "difference": 2.955310701935332e-06,
+              "relative": 0.003768707668064144
+            }
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "main": {
+              "baseline": -0.09747649789225932,
+              "repaired": -0.10260976522729592,
+              "difference": -0.0051332673350366065,
+              "relative": -0.05266158967580475
+            },
+            "fine": {
+              "baseline": -0.09775991885609159,
+              "repaired": -0.09898666479589124,
+              "difference": -0.001226745939799656,
+              "relative": -0.01254855726307935
+            },
+            "l32x8": {
+              "baseline": -0.09708603993083997,
+              "repaired": -0.09727854131680758,
+              "difference": -0.0001925013859676028,
+              "relative": -0.001982791615609543
+            },
+            "l36x9": {
+              "baseline": -0.09794015159888758,
+              "repaired": -0.09673407895482455,
+              "difference": 0.0012060726440630276,
+              "relative": 0.012314384084297521
+            },
+            "l64x16": {
+              "baseline": -0.0946396285644262,
+              "repaired": -0.09472440552840666,
+              "difference": -8.477696398045964e-05,
+              "relative": -0.0008957871587877955
+            }
+          },
+          "tip_over_L_two_way_pectoral": {
+            "main": {
+              "baseline": 0.06239534514759888,
+              "repaired": 0.0641606391529847,
+              "difference": 0.0017652940053858174,
+              "relative": 0.028292078539031047
+            },
+            "fine": {
+              "baseline": 0.06271218898575827,
+              "repaired": 0.06321917691939354,
+              "difference": 0.0005069879336352667,
+              "relative": 0.008084360342618594
+            },
+            "l32x8": {
+              "baseline": 0.06267852993909154,
+              "repaired": 0.06280090879807552,
+              "difference": 0.00012237885898398748,
+              "relative": 0.0019524845126857684
+            },
+            "l36x9": {
+              "baseline": 0.06295433618819873,
+              "repaired": 0.06266498125805452,
+              "difference": -0.0002893549301442172,
+              "relative": -0.004596266876346779
+            },
+            "l64x16": {
+              "baseline": 0.06215595640933892,
+              "repaired": 0.062144958279886205,
+              "difference": -1.0998129452717553e-05,
+              "relative": -0.00017694409495185704
+            }
+          },
+          "tip_over_L_two_way_pelvic": {
+            "main": {
+              "baseline": 0.06000684276582033,
+              "repaired": 0.05927618614665088,
+              "difference": -0.000730656619169448,
+              "relative": -0.012176221668933186
+            },
+            "fine": {
+              "baseline": 0.060429262892977974,
+              "repaired": 0.05920490331321368,
+              "difference": -0.0012243595797642934,
+              "relative": -0.0202610378010513
+            },
+            "l32x8": {
+              "baseline": 0.05969199149780171,
+              "repaired": 0.05911217061605528,
+              "difference": -0.0005798208817464276,
+              "relative": -0.00971354560632779
+            },
+            "l36x9": {
+              "baseline": 0.05880107620918864,
+              "repaired": 0.059117122280197686,
+              "difference": 0.00031604607100904625,
+              "relative": 0.005374834805483693
+            },
+            "l64x16": {
+              "baseline": 0.05899709808356484,
+              "repaired": 0.05893327411568634,
+              "difference": -6.382396787849715e-05,
+              "relative": -0.0010818153765477655
+            }
+          },
+          "CL_rigid": {
+            "main": {
+              "baseline": 0.2508592399869435,
+              "repaired": 0.25465404596866953,
+              "difference": 0.003794805981726046,
+              "relative": 0.015127232235589786
+            },
+            "fine": {
+              "baseline": 0.2503603159205504,
+              "repaired": 0.25165086029631745,
+              "difference": 0.0012905443757670332,
+              "relative": 0.005154748151766096
+            },
+            "l32x8": {
+              "baseline": 0.24986568532714512,
+              "repaired": 0.25017614750088235,
+              "difference": 0.0003104621737372304,
+              "relative": 0.0012425162476021759
+            },
+            "l36x9": {
+              "baseline": 0.2510292430467229,
+              "repaired": 0.249678247944011,
+              "difference": -0.001350995102711916,
+              "relative": -0.005381823592801344
+            },
+            "l64x16": {
+              "baseline": 0.24790919414459947,
+              "repaired": 0.24794479335791836,
+              "difference": 3.55992133188876e-05,
+              "relative": 0.00014359779370717263
+            }
+          }
+        },
+        "triples": {
+          "dCL_one_way_minus_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "oscillatory"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dCL_two_way_minus_one_way": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dCL_two_way_minus_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "oscillatory"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "monotone"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "monotone"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "tip_over_L_two_way_pectoral": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "monotone"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "tip_over_L_two_way_pelvic": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            }
+          },
+          "CL_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          }
+        },
+        "statuses": {
+          "dCL_one_way_minus_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dCL_two_way_minus_one_way": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dCL_two_way_minus_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "tip_over_L_two_way_pectoral": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "tip_over_L_two_way_pelvic": {
+            "baseline": "sign_resolved",
+            "repaired": "sign_resolved"
+          },
+          "CL_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          }
+        },
+        "decisions": {
+          "baseline_production": {
+            "bending": {
+              "decision": "undetermined",
+              "why": [
+                "triple not monotone: T2 divergent, T1.5 oscillatory"
+              ]
+            },
+            "feedback": {
+              "decision": "undetermined",
+              "why": [
+                "one-way effect not resolved"
+              ]
+            }
+          },
+          "repaired_diagnostic": {
+            "bending": {
+              "decision": "retain_bending",
+              "relative": 0.014154329730038709,
+              "rigid_CL_reference": 0.24572852668723316
+            },
+            "feedback": {
+              "decision": "one_way_sufficient",
+              "ratio_to_one_way": 0.008256861097596843
+            }
+          }
+        }
+      },
+      {
+        "compliance": 0.2,
+        "speed_m_s": 20.0,
+        "effects": {
+          "dCL_one_way_minus_rigid": {
+            "main": {
+              "baseline": -0.0013403276438068434,
+              "repaired": -0.0013910817101389084,
+              "difference": -5.075406633206492e-05,
+              "relative": -0.037866910054851606
+            },
+            "fine": {
+              "baseline": -0.0013477369113559512,
+              "repaired": -0.0013583593119379511,
+              "difference": -1.0622400581999925e-05,
+              "relative": -0.007881657386168034
+            },
+            "l32x8": {
+              "baseline": -0.0013416197046825784,
+              "repaired": -0.0013428789056796064,
+              "difference": -1.2592009970280316e-06,
+              "relative": -0.0009385677570425616
+            },
+            "l36x9": {
+              "baseline": -0.0013478486311860327,
+              "repaired": -0.0013380074829490718,
+              "difference": 9.841148236960917e-06,
+              "relative": 0.007301374953581581
+            },
+            "l64x16": {
+              "baseline": -0.0013182755514964395,
+              "repaired": -0.0013193818418518188,
+              "difference": -1.1062903553793468e-06,
+              "relative": -0.0008391950788464082
+            }
+          },
+          "dCL_two_way_minus_one_way": {
+            "main": {
+              "baseline": 3.804367071369441e-06,
+              "repaired": 3.806097512437656e-06,
+              "difference": 1.7304410682150717e-09,
+              "relative": 0.00045485649406385294
+            },
+            "fine": {
+              "baseline": 3.84019901378263e-06,
+              "repaired": 3.7349437551625897e-06,
+              "difference": -1.0525525862004059e-07,
+              "relative": -0.027408803096473696
+            },
+            "l32x8": {
+              "baseline": 3.747985688806743e-06,
+              "repaired": 3.6940496925819133e-06,
+              "difference": -5.393599622482981e-08,
+              "relative": -0.01439066226584274
+            },
+            "l36x9": {
+              "baseline": 3.6647613985973937e-06,
+              "repaired": 3.684168211032235e-06,
+              "difference": 1.9406812434841214e-08,
+              "relative": 0.005295518677496642
+            },
+            "l64x16": {
+              "baseline": 3.6220016137455957e-06,
+              "repaired": 3.634249632705755e-06,
+              "difference": 1.2248018960159257e-08,
+              "relative": 0.0033815608788460194
+            }
+          },
+          "dCL_two_way_minus_rigid": {
+            "main": {
+              "baseline": -0.001336523276735474,
+              "repaired": -0.0013872756126264707,
+              "difference": -5.07523358909967e-05,
+              "relative": -0.03797340216547658
+            },
+            "fine": {
+              "baseline": -0.0013438967123421686,
+              "repaired": -0.0013546243681827885,
+              "difference": -1.0727655840619965e-05,
+              "relative": -0.007982500248790403
+            },
+            "l32x8": {
+              "baseline": -0.0013378717189937717,
+              "repaired": -0.0013391848559870245,
+              "difference": -1.3131369932528614e-06,
+              "relative": -0.0009815118853401627
+            },
+            "l36x9": {
+              "baseline": -0.0013441838697874353,
+              "repaired": -0.0013343233147380396,
+              "difference": 9.860555049395758e-06,
+              "relative": 0.007335718922854708
+            },
+            "l64x16": {
+              "baseline": -0.001314653549882694,
+              "repaired": -0.001315747592219113,
+              "difference": -1.0940423364191876e-06,
+              "relative": -0.0008321906075686698
+            }
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "main": {
+              "baseline": -0.12290124590586515,
+              "repaired": -0.13160064691084727,
+              "difference": -0.008699401004982121,
+              "relative": -0.0707836681464184
+            },
+            "fine": {
+              "baseline": -0.12306834932228838,
+              "repaired": -0.12535872129782533,
+              "difference": -0.0022903719755369423,
+              "relative": -0.018610568746144245
+            },
+            "l32x8": {
+              "baseline": -0.12201846262650307,
+              "repaired": -0.12245243641340409,
+              "difference": -0.00043397378690102073,
+              "relative": -0.0035566239531259207
+            },
+            "l36x9": {
+              "baseline": -0.12376561828023469,
+              "repaired": -0.12151277909119784,
+              "difference": 0.002252839189036848,
+              "relative": 0.018202463821058012
+            },
+            "l64x16": {
+              "baseline": -0.11801847662779963,
+              "repaired": -0.11815084680484489,
+              "difference": -0.0001323701770452601,
+              "relative": -0.001121605538620212
+            }
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "main": {
+              "baseline": 0.00034744203027159415,
+              "repaired": 0.0003587992122788819,
+              "difference": 1.1357182007287747e-05,
+              "relative": 0.03268799114030585
+            },
+            "fine": {
+              "baseline": 0.0003491636894068506,
+              "repaired": 0.000343354236225224,
+              "difference": -5.809453181626623e-06,
+              "relative": -0.016638193941344696
+            },
+            "l32x8": {
+              "baseline": 0.0003394114289996253,
+              "repaired": 0.00033573468198611067,
+              "difference": -3.676747013514614e-06,
+              "relative": -0.010832714220470972
+            },
+            "l36x9": {
+              "baseline": 0.0003354499130203692,
+              "repaired": 0.000333408890977438,
+              "difference": -2.0410220429312176e-06,
+              "relative": -0.0060844315759511994
+            },
+            "l64x16": {
+              "baseline": 0.00032308466337127584,
+              "repaired": 0.0003242906095692888,
+              "difference": 1.2059461980129527e-06,
+              "relative": 0.0037326011870366252
+            }
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "main": {
+              "baseline": -0.12255380387559356,
+              "repaired": -0.1312418476985684,
+              "difference": -0.008688043822974834,
+              "relative": -0.07089167001127288
+            },
+            "fine": {
+              "baseline": -0.12271918563288153,
+              "repaired": -0.1250153670616001,
+              "difference": -0.002296181428718569,
+              "relative": -0.018710859405371795
+            },
+            "l32x8": {
+              "baseline": -0.12167905119750344,
+              "repaired": -0.12211670173141798,
+              "difference": -0.00043765053391453534,
+              "relative": -0.0035967615592610316
+            },
+            "l36x9": {
+              "baseline": -0.12343016836721432,
+              "repaired": -0.1211793702002204,
+              "difference": 0.002250798166993917,
+              "relative": 0.018235397364910158
+            },
+            "l64x16": {
+              "baseline": -0.11769539196442835,
+              "repaired": -0.1178265561952756,
+              "difference": -0.00013116423084724715,
+              "relative": -0.0011144381156986125
+            }
+          },
+          "tip_over_L_two_way_pectoral": {
+            "main": {
+              "baseline": 0.024527341992070156,
+              "repaired": 0.02522565183041069,
+              "difference": 0.0006983098383405335,
+              "relative": 0.028470669123719216
+            },
+            "fine": {
+              "baseline": 0.02465163096784225,
+              "repaired": 0.024852228038147108,
+              "difference": 0.00020059707030485596,
+              "relative": 0.008137273779837625
+            },
+            "l32x8": {
+              "baseline": 0.024637871202966614,
+              "repaired": 0.024686318255799946,
+              "difference": 4.844705283333153e-05,
+              "relative": 0.001966365212084479
+            },
+            "l36x9": {
+              "baseline": 0.024746742134087243,
+              "repaired": 0.02463242307691992,
+              "difference": -0.00011431905716732457,
+              "relative": -0.00461955988177759
+            },
+            "l64x16": {
+              "baseline": 0.024430527793912367,
+              "repaired": 0.024426235004159396,
+              "difference": -4.292789752970844e-06,
+              "relative": -0.00017571416340995003
+            }
+          },
+          "tip_over_L_two_way_pelvic": {
+            "main": {
+              "baseline": 0.023506143862814216,
+              "repaired": 0.023193677514154725,
+              "difference": -0.000312466348659491,
+              "relative": -0.013292965042803142
+            },
+            "fine": {
+              "baseline": 0.023672753860574186,
+              "repaired": 0.023176022929821655,
+              "difference": -0.0004967309307525314,
+              "relative": -0.020983233876300824
+            },
+            "l32x8": {
+              "baseline": 0.02337733534129271,
+              "repaired": 0.023142921869613194,
+              "difference": -0.00023441347167951418,
+              "relative": -0.01002738200300598
+            },
+            "l36x9": {
+              "baseline": 0.023016804353567222,
+              "repaired": 0.023146239984270945,
+              "difference": 0.00012943563070372255,
+              "relative": 0.005623527433062712
+            },
+            "l64x16": {
+              "baseline": 0.02310143875150528,
+              "repaired": 0.023078262728605418,
+              "difference": -2.3176022899862314e-05,
+              "relative": -0.0010032285499253666
+            }
+          },
+          "CL_rigid": {
+            "main": {
+              "baseline": 0.25085923998694326,
+              "repaired": 0.25465404596866964,
+              "difference": 0.003794805981726379,
+              "relative": 0.015127232235591129
+            },
+            "fine": {
+              "baseline": 0.25036031592054964,
+              "repaired": 0.251650860296317,
+              "difference": 0.0012905443757673662,
+              "relative": 0.005154748151767442
+            },
+            "l32x8": {
+              "baseline": 0.24986568532714448,
+              "repaired": 0.25017614750088196,
+              "difference": 0.0003104621737374802,
+              "relative": 0.0012425162476031788
+            },
+            "l36x9": {
+              "baseline": 0.25102924304672247,
+              "repaired": 0.24967824794401097,
+              "difference": -0.0013509951027114997,
+              "relative": -0.005381823592799695
+            },
+            "l64x16": {
+              "baseline": 0.24790919414460086,
+              "repaired": 0.2479447933579191,
+              "difference": 3.559921331824922e-05,
+              "relative": 0.00014359779370459676
+            }
+          }
+        },
+        "triples": {
+          "dCL_one_way_minus_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "monotone"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dCL_two_way_minus_one_way": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dCL_two_way_minus_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "monotone"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "tip_over_L_two_way_pectoral": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "monotone"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          },
+          "tip_over_L_two_way_pelvic": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            }
+          },
+          "CL_rigid": {
+            "baseline": {
+              "T2": "divergent",
+              "T1.5": "divergent"
+            },
+            "repaired": {
+              "T2": "monotone",
+              "T1.5": "monotone"
+            }
+          }
+        },
+        "statuses": {
+          "dCL_one_way_minus_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dCL_two_way_minus_one_way": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dCL_two_way_minus_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dRange_one_way_minus_rigid_m": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dRange_two_way_minus_one_way_m": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "dRange_two_way_minus_rigid_m": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "tip_over_L_two_way_pectoral": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "tip_over_L_two_way_pelvic": {
+            "baseline": "sign_resolved",
+            "repaired": "sign_resolved"
+          },
+          "CL_rigid": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          }
+        },
+        "decisions": {
+          "baseline_production": {
+            "bending": {
+              "decision": "undetermined",
+              "why": [
+                "triple not monotone: T2 divergent, T1.5 monotone"
+              ]
+            },
+            "feedback": {
+              "decision": "undetermined",
+              "why": [
+                "one-way effect not resolved"
+              ]
+            }
+          },
+          "repaired_diagnostic": {
+            "bending": {
+              "decision": "reject_bending",
+              "relative": 0.005278322139978065,
+              "rigid_CL_reference": 0.2457285266872378
+            },
+            "feedback": {
+              "decision": "one_way_sufficient",
+              "ratio_to_one_way": 0.00274919910880466
+            }
+          }
+        }
+      }
+    ]
+  },
+  "numerical_error_estimates": [
+    {
+      "compliance": 0.8,
+      "speed_m_s": 20.0,
+      "assessable": {
+        "baseline": true,
+        "repaired": false
+      },
+      "decisions": {
+        "baseline_production": {
+          "bending": {
+            "decision": "undetermined",
+            "why": [
+              "triple not monotone: T2 divergent, T1.5 oscillatory"
+            ]
+          },
+          "feedback": {
+            "decision": "undetermined",
+            "why": [
+              "one-way effect not resolved"
+            ]
+          }
+        },
+        "repaired_diagnostic": {
+          "bending": {
+            "decision": "undetermined",
+            "why": [
+              "not_assessable"
+            ]
+          },
+          "feedback": {
+            "decision": "undetermined",
+            "why": [
+              "not_assessable"
+            ]
+          }
+        }
+      },
+      "decision_margins_repaired": null,
+      "effects": {
+        "dCL_one_way_minus_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 0.0,
+            "repaired": 0.0
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "oscillatory",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.02451554263975022,
+            "repaired": 0.030553061074924632,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": -3.960330083896402e-05,
+            "l32x8": -2.4033411461787946e-06,
+            "l36x9": 4.053093426301113e-05,
+            "l64x16": -4.333249342236556e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0007527866800636041,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": -0.005760611165777252
+        },
+        "dCL_two_way_minus_one_way": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 3.551508776878763e-08,
+            "repaired": 3.550564833053579e-08
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.0638430304126607,
+            "repaired": 0.03782221942652305,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": -2.0253842936135413e-06,
+            "l32x8": -1.146234736709717e-06,
+            "l36x9": 2.501741797888979e-07,
+            "l64x16": 3.1090985383452896e-07
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.003664148412920183,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": 8.51627823211798e-05
+        },
+        "dCL_two_way_minus_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 3.551508776878763e-08,
+            "repaired": 3.550564833053579e-08
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "oscillatory",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.023915216791484405,
+            "repaired": 0.03044356611152837,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": -4.162868513257756e-05,
+            "l32x8": -3.5495758828885116e-06,
+            "l36x9": 4.078110844280003e-05,
+            "l64x16": -4.022339488402027e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0007092289412255194,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": -0.005675448383456072
+        },
+        "dRange_one_way_minus_rigid_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 7.651365596217374e-06,
+            "repaired": 7.507008774609858e-06
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.046626655764217075,
+            "repaired": 0.05974816068122281,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": -0.009087955184714502,
+            "l32x8": -0.0015352855920482966,
+            "l36x9": 0.009310994248977522,
+            "l64x16": -0.0005156088785405188
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0010192754135056905,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": -0.5063738604448531
+        },
+        "dRange_two_way_minus_one_way_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 1.129750821421678e-05,
+            "repaired": 1.2991074294526706e-05
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.08331699641596974,
+            "repaired": 0.06619080663937145,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": -9.805209947089111e-05,
+            "l32x8": -8.313931095926819e-05,
+            "l36x9": -5.8624801202000754e-05,
+            "l64x16": 2.902259384285344e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.003981789848460905,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": 0.0073178537344595895
+        },
+        "dRange_two_way_minus_rigid_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 1.4116085710061246e-05,
+            "repaired": 1.3979777678579475e-05
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.04670031225442369,
+            "repaired": 0.059653382527001336,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": -0.009186007284185393,
+            "l32x8": -0.0016184249030075648,
+            "l36x9": 0.009252369447775521,
+            "l64x16": -0.0004865862846976654
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0009759649604707027,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": -0.4990560067103935
+        },
+        "tip_over_L_two_way_pectoral": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 5.339725538439891e-07,
+            "repaired": 5.320406915461193e-07
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 0.6701812560965753,
+                "extrapolated": 0.09892772632536792,
+                "GCI_abs": 0.0015118190239925226,
+                "GCI_rel": 0.0154712011057777
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.01264462421772739,
+            "repaired": 0.016949852121409318,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": 0.0007818539333160485,
+            "l32x8": 0.00018862810832244448,
+            "l36x9": -0.00044673884781756823,
+            "l64x16": -1.736647254020618e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.00017998208119791382,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": 0.09647264200285614
+        },
+        "tip_over_L_two_way_pelvic": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 5.339725538439891e-07,
+            "repaired": 5.320406915461193e-07
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.026583217039971116,
+            "repaired": 0.004903411816135148,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": -0.0018424616762735962,
+            "l32x8": -0.0008747491416003922,
+            "l36x9": 0.00047108400113050897,
+            "l64x16": -0.00010557553571072242
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0011495910323434412,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": 0.09173189773989991
+        },
+        "CL_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "not_assessable"
+          },
+          "floor_at_finest": {
+            "baseline": 0.0,
+            "repaired": 0.0
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": null
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.012479959203854456,
+            "repaired": 0.014832424859004892,
+            "repaired_lattices": [
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "fine": 0.0012905443757673662,
+            "l32x8": 0.0003104621737374802,
+            "l36x9": -0.0013509951027114997,
+            "l64x16": 3.559921331824922e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.00014359779370459676,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": 0.2479447933579191
+        }
+      }
+    },
+    {
+      "compliance": 0.8,
+      "speed_m_s": 16.0,
+      "assessable": {
+        "baseline": true,
+        "repaired": true
+      },
+      "decisions": {
+        "baseline_production": {
+          "bending": {
+            "decision": "undetermined",
+            "why": [
+              "triple not monotone: T2 divergent, T1.5 oscillatory"
+            ]
+          },
+          "feedback": {
+            "decision": "undetermined",
+            "why": [
+              "one-way effect not resolved"
+            ]
+          }
+        },
+        "repaired_diagnostic": {
+          "bending": {
+            "decision": "retain_bending",
+            "relative": 0.014154329730038709,
+            "rigid_CL_reference": 0.24572852668723316
+          },
+          "feedback": {
+            "decision": "one_way_sufficient",
+            "ratio_to_one_way": 0.008256861097596843
+          }
+        }
+      },
+      "decision_margins_repaired": {
+        "bending_relative": 0.014154329730038709,
+        "bending_relative_GCI_interval": [
+          0.013685828907233672,
+          0.014633514723898643
+        ],
+        "bending_threshold": 0.01,
+        "bending_relative_per_lattice": {
+          "main": 0.014676534009117365,
+          "fine": 0.01449401073555306,
+          "l32x8": 0.014408577394364134,
+          "l36x9": 0.014383884312793128,
+          "l64x16": 0.01427692959368438
+        },
+        "feedback_ratio": 0.008256861097596843,
+        "feedback_ratio_GCI_upper": 0.00867702604143053,
+        "feedback_threshold": 0.1,
+        "note": "GCI intervals are numerical (lattice) error only, from the frozen T2 triple; they say nothing about model-form error, EI, or real fish"
+      },
+      "effects": {
+        "dCL_one_way_minus_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 0.0,
+            "repaired": 0.0
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "oscillatory",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0348930585921465,
+                "extrapolated": -0.0034781225908077145,
+                "GCI_abs": 7.72097088548857e-05,
+                "GCI_rel": 0.021811327766906377
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.1665511290052615,
+                "extrapolated": -0.003498605373892072,
+                "GCI_abs": 0.00011592207494432607,
+                "GCI_rel": 0.03227819616555388
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.023391763859304433,
+            "repaired": 0.054508789319642516,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -0.00013389010305886462,
+            "fine": -2.622489553918972e-05,
+            "l32x8": -2.3393815297145792e-06,
+            "l36x9": 2.5587665939713622e-05,
+            "l64x16": -2.8069638006722464e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0007935814590522684,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.036355062624933425,
+          "T2_minus_T1.5_extrapolated": 2.0482783084357394e-05,
+          "repaired_l64x16_value": -0.003539890357891623
+        },
+        "dCL_two_way_minus_one_way": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 4.949740382656471e-08,
+            "repaired": 4.950452733325403e-08
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 0.9514535721621634,
+                "extrapolated": 2.871837511271296e-05,
+                "GCI_abs": 7.914345286282842e-07,
+                "GCI_rel": 0.02696400237075078
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 0.8798400717732215,
+                "extrapolated": 2.864130261957328e-05,
+                "GCI_abs": 1.497249850860907e-06,
+                "GCI_rel": 0.05017744253024233
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.061871511958004985,
+            "repaired": 0.05760062408156597,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": 1.3975599610915879e-07,
+            "fine": -7.661961214100454e-07,
+            "l32x8": -4.142016844788099e-07,
+            "l36x9": 1.1658433873851237e-07,
+            "l64x16": 1.0610849301984082e-07
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.0036282096105615946,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.13407109392074196,
+          "T2_minus_T1.5_extrapolated": 7.707249313968138e-08,
+          "repaired_l64x16_value": 2.9351522735615587e-05
+        },
+        "dCL_two_way_minus_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 4.949740382656471e-08,
+            "repaired": 4.950452733325403e-08
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "oscillatory",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0356394880797355,
+                "extrapolated": -0.0034493965245098613,
+                "GCI_abs": 7.64278883076828e-05,
+                "GCI_rel": 0.021770984995893475
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.1690506880978597,
+                "extrapolated": -0.003469861828609276,
+                "GCI_abs": 0.00011455262842249339,
+                "GCI_rel": 0.03216411679746753
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.023065036899266617,
+            "repaired": 0.05448288289160986,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -0.00013375034706275546,
+            "fine": -2.6991091660599764e-05,
+            "l32x8": -2.753583214193389e-06,
+            "l36x9": 2.5704250278452134e-05,
+            "l64x16": -2.7008553076524056e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0007699487043495562,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.03533860960254879,
+          "T2_minus_T1.5_extrapolated": 2.0465304099414813e-05,
+          "repaired_l64x16_value": -0.0035105388351560074
+        },
+        "dRange_one_way_minus_rigid_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 6.644918990161841e-06,
+            "repaired": 7.294956322567714e-06
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.6661166974307902,
+                "extrapolated": -0.09889796848267794,
+                "GCI_abs": 0.00018842634468702277,
+                "GCI_rel": 0.0019081684583460252
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0614599017869017,
+                "extrapolated": -0.09314129075702532,
+                "GCI_abs": 0.0029628011672493846,
+                "GCI_rel": 0.031020350263464593
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.171300879955702,
+                "extrapolated": -0.09380221247674211,
+                "GCI_abs": 0.004672199043769286,
+                "GCI_rel": 0.04790035266337991
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.03398221601108475,
+            "repaired": 0.08043740240147174,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -0.0051496045612289265,
+            "fine": -0.0012103669135399286,
+            "l32x8": -0.00018152538633131599,
+            "l36x9": 0.0012072556951707725,
+            "l64x16": -8.773227468239497e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0009193961592306257,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.02961125965933251,
+          "T2_minus_T1.5_extrapolated": 0.0006609217197167949,
+          "repaired_l64x16_value": -0.09551153169082482
+        },
+        "dRange_two_way_minus_one_way_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 1.1404336966666214e-05,
+            "repaired": 1.202697208265588e-05
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0417674648271744,
+                "extrapolated": 0.0007659534480643869,
+                "GCI_abs": 2.6465892942218093e-05,
+                "GCI_rel": 0.033623444634226334
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.0757940084505415,
+                "extrapolated": 0.0007701330727243635,
+                "GCI_abs": 4.469960526078438e-05,
+                "GCI_rel": 0.0554659473934211
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.07043190435170377,
+            "repaired": 0.08395161710855602,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": 1.633722619232003e-05,
+            "fine": -1.6379026259727425e-05,
+            "l32x8": -1.0975999636286815e-05,
+            "l36x9": -1.1830511077448591e-06,
+            "l64x16": 2.955310701935332e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.003768707668064144,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.1116648778254919,
+          "T2_minus_T1.5_extrapolated": -4.179624659976619e-06,
+          "repaired_l64x16_value": 0.0007871261624181614
+        },
+        "dRange_two_way_minus_rigid_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 1.071366228477489e-05,
+            "repaired": 1.1364960215108772e-05
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.116456772384212,
+                "extrapolated": -0.09825495343624406,
+                "GCI_abs": 0.00039350229669560434,
+                "GCI_rel": 0.004017783210170912
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.061631549601338,
+                "extrapolated": -0.09237532284222716,
+                "GCI_abs": 0.002936353357724383,
+                "GCI_rel": 0.03099891037947773
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.1721139588053038,
+                "extrapolated": -0.09303171561834758,
+                "GCI_abs": 0.004627954170596212,
+                "GCI_rel": 0.04784202445094346
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.03403287079013188,
+            "repaired": 0.08040813455865914,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -0.0051332673350366065,
+            "fine": -0.001226745939799656,
+            "l32x8": -0.0001925013859676028,
+            "l36x9": 0.0012060726440630276,
+            "l64x16": -8.477696398045964e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0008957871587877955,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.028871512945621826,
+          "T2_minus_T1.5_extrapolated": 0.0006563927761204236,
+          "repaired_l64x16_value": -0.09472440552840666
+        },
+        "tip_over_L_two_way_pectoral": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 8.017823871641237e-07,
+            "repaired": 7.994579391755986e-07
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 0.6630982721785024,
+                "extrapolated": 0.06373931488349613,
+                "GCI_abs": 0.0009812233691217477,
+                "GCI_rel": 0.015586271391829646
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0516616882501315,
+                "extrapolated": 0.0615335865697812,
+                "GCI_abs": 0.0007642146376312542,
+                "GCI_rel": 0.012297291023825489
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.3069347274742522,
+                "extrapolated": 0.06187190265780027,
+                "GCI_abs": 0.0009913482503178096,
+                "GCI_rel": 0.01581981244413743
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.012757895095944945,
+            "repaired": 0.03199588274916469,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": 0.0017652940053858174,
+            "fine": 0.0005069879336352667,
+            "l32x8": 0.00012237885898398748,
+            "l36x9": -0.0002893549301442172,
+            "l64x16": -1.0998129452717553e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.00017694409495185704,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.01439141428487572,
+          "T2_minus_T1.5_extrapolated": -0.00033831608801906943,
+          "repaired_l64x16_value": 0.062144958279886205
+        },
+        "tip_over_L_two_way_pelvic": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "sign_resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 8.017823871641237e-07,
+            "repaired": 7.994579391755986e-07
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.02732532911361798,
+            "repaired": 0.0057994146577814605,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -0.000730656619169448,
+            "fine": -0.0012243595797642934,
+            "l32x8": -0.0005798208817464276,
+            "l36x9": 0.00031604607100904625,
+            "l64x16": -6.382396787849715e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0010818153765477655,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": 0.05893327411568634
+        },
+        "CL_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 0.0,
+            "repaired": 0.0
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0049023118293554,
+                "extrapolated": 0.24572852668723316,
+                "GCI_abs": 0.002770333338356479,
+                "GCI_rel": 0.011173186179220914
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.036624055140232,
+                "extrapolated": 0.2459024860289833,
+                "GCI_abs": 0.004719702393784636,
+                "GCI_rel": 0.018903138069292297
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.012479959203861775,
+            "repaired": 0.026749185482838483,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": 0.003794805981726046,
+            "fine": 0.0012905443757670332,
+            "l32x8": 0.0003104621737372304,
+            "l36x9": -0.001350995102711916,
+            "l64x16": 3.55992133188876e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.00014359779370717263,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.01285015518746459,
+          "T2_minus_T1.5_extrapolated": -0.0001739593417501295,
+          "repaired_l64x16_value": 0.24794479335791836
+        }
+      }
+    },
+    {
+      "compliance": 0.2,
+      "speed_m_s": 20.0,
+      "assessable": {
+        "baseline": true,
+        "repaired": true
+      },
+      "decisions": {
+        "baseline_production": {
+          "bending": {
+            "decision": "undetermined",
+            "why": [
+              "triple not monotone: T2 divergent, T1.5 monotone"
+            ]
+          },
+          "feedback": {
+            "decision": "undetermined",
+            "why": [
+              "one-way effect not resolved"
+            ]
+          }
+        },
+        "repaired_diagnostic": {
+          "bending": {
+            "decision": "reject_bending",
+            "relative": 0.005278322139978065,
+            "rigid_CL_reference": 0.2457285266872378
+          },
+          "feedback": {
+            "decision": "one_way_sufficient",
+            "ratio_to_one_way": 0.00274919910880466
+          }
+        }
+      },
+      "decision_margins_repaired": {
+        "bending_relative": 0.005278322139978065,
+        "bending_relative_GCI_interval": [
+          0.0051070653762306,
+          0.005453484417801744
+        ],
+        "bending_threshold": 0.01,
+        "bending_relative_per_lattice": {
+          "main": 0.005462633451777376,
+          "fine": 0.005397793237577226,
+          "l32x8": 0.005367733571302485,
+          "l36x9": 0.005358926914807224,
+          "l64x16": 0.005321272626794924
+        },
+        "feedback_ratio": 0.00274919910880466,
+        "feedback_ratio_GCI_upper": 0.0028771261982787,
+        "feedback_threshold": 0.1,
+        "note": "GCI intervals are numerical (lattice) error only, from the frozen T2 triple; they say nothing about model-form error, EI, or real fish"
+      },
+      "effects": {
+        "dCL_one_way_minus_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 0.0,
+            "repaired": 0.0
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 10.344891738174335,
+                "extrapolated": -0.0013478503415305092,
+                "GCI_abs": 2.1379305956610692e-09,
+                "GCI_rel": 1.5861800399498925e-06
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0366365953343462,
+                "extrapolated": -0.001297034322837438,
+                "GCI_abs": 2.7934398767975892e-05,
+                "GCI_rel": 0.021172338349577827
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.1712204324098627,
+                "extrapolated": -0.0013045250347212092,
+                "GCI_abs": 4.1853060284828196e-05,
+                "GCI_rel": 0.03128013917573975
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.022083277877068864,
+            "repaired": 0.05311330133214523,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -5.075406633206492e-05,
+            "fine": -1.0622400581999925e-05,
+            "l32x8": -1.2592009970280316e-06,
+            "l36x9": 9.841148236960917e-06,
+            "l64x16": -1.1062903553793468e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0008391950788464082,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.03960315611473273,
+          "T2_minus_T1.5_extrapolated": 7.490711883771086e-06,
+          "repaired_l64x16_value": -0.0013193818418518188
+        },
+        "dCL_two_way_minus_one_way": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 3.95276048334869e-08,
+            "repaired": 3.9555241679595385e-08
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 0.905895744152269,
+                "extrapolated": 3.5658056044337404e-06,
+                "GCI_abs": 8.555503534001838e-08,
+                "GCI_rel": 0.023541320488851873
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 0.8322006019382743,
+                "extrapolated": 3.5576529045416527e-06,
+                "GCI_abs": 1.5814413311322768e-07,
+                "GCI_rel": 0.04292532915290495
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.05840615743492004,
+            "repaired": 0.04631142323213592,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": 1.7304410682150717e-09,
+            "fine": -1.0525525862004059e-07,
+            "l32x8": -5.393599622482981e-08,
+            "l36x9": 1.9406812434841214e-08,
+            "l64x16": 1.2248018960159257e-08
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.0033815608788460194,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.1431595336438397,
+          "T2_minus_T1.5_extrapolated": 8.152699892087715e-09,
+          "repaired_l64x16_value": 3.634249632705755e-06
+        },
+        "dCL_two_way_minus_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 3.95276048334869e-08,
+            "repaired": 3.9555241679595385e-08
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 8.004655191184288,
+                "extrapolated": -0.0013441955062765054,
+                "GCI_abs": 1.45456113374457e-08,
+                "GCI_rel": 1.0821147065055836e-05
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0369554759812825,
+                "extrapolated": -0.0012934665574063588,
+                "GCI_abs": 2.7851293515942825e-05,
+                "GCI_rel": 0.02116765683680211
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.1720125397301477,
+                "extrapolated": -0.0013009527562582433,
+                "GCI_abs": 4.1713198099745374e-05,
+                "GCI_rel": 0.03126168720804725
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.022113036411151216,
+            "repaired": 0.05313204977743693,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -5.07523358909967e-05,
+            "fine": -1.0727655840619965e-05,
+            "l32x8": -1.3131369932528614e-06,
+            "l36x9": 9.860555049395758e-06,
+            "l64x16": -1.0940423364191876e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0008321906075686698,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.03928156283990647,
+          "T2_minus_T1.5_extrapolated": 7.486198851884519e-06,
+          "repaired_l64x16_value": -0.001315747592219113
+        },
+        "dRange_one_way_minus_rigid_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 1.036147835620227e-05,
+            "repaired": 9.923032145309207e-06
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0886196705087874,
+                "extrapolated": -0.11433299647475124,
+                "GCI_abs": 0.00477231291261705,
+                "GCI_rel": 0.04039169453012636
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.1943570402170594,
+                "extrapolated": -0.11533941769927696,
+                "GCI_abs": 0.0077167017399011086,
+                "GCI_rel": 0.0635052691380679
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.04712532071525834,
+            "repaired": 0.10862812060515727,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -0.008699401004982121,
+            "fine": -0.0022903719755369423,
+            "l32x8": -0.00043397378690102073,
+            "l36x9": 0.002252839189036848,
+            "l64x16": -0.0001323701770452601
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.001121605538620212,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.02773711185100616,
+          "T2_minus_T1.5_extrapolated": 0.001006421224525711,
+          "repaired_l64x16_value": -0.11815084680484489
+        },
+        "dRange_two_way_minus_one_way_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 1.4974529249275052e-05,
+            "repaired": 1.5874316164168407e-05
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0110753803220436,
+                "extrapolated": 0.000313020245279038,
+                "GCI_abs": 1.4087955362813534e-05,
+                "GCI_rel": 0.04344237837020521
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.085615358070996,
+                "extrapolated": 0.0003154240669794244,
+                "GCI_abs": 2.2481029997516973e-05,
+                "GCI_rel": 0.06742780593406035
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.07694963113180231,
+            "repaired": 0.10176000956225788,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": 1.1357182007287747e-05,
+            "fine": -5.809453181626623e-06,
+            "l32x8": -3.676747013514614e-06,
+            "l36x9": -2.0410220429312176e-06,
+            "l64x16": 1.2059461980129527e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.0037326011870366252,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.08560122224664053,
+          "T2_minus_T1.5_extrapolated": -2.403821700386441e-06,
+          "repaired_l64x16_value": 0.0003242906095692888
+        },
+        "dRange_two_way_minus_rigid_m": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 1.5082993985134622e-05,
+            "repaired": 1.4446996177521827e-05
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.0888210470073105,
+                "extrapolated": -0.1140198660028106,
+                "GCI_abs": 0.004758362740581249,
+                "GCI_rel": 0.040384467595701835
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.1946328275616966,
+                "extrapolated": -0.11502376602052178,
+                "GCI_abs": 0.0076945052246232834,
+                "GCI_rel": 0.06349682468154376
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.04715497161053268,
+            "repaired": 0.10864698335920907,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -0.008688043822974834,
+            "fine": -0.002296181428718569,
+            "l32x8": -0.00043765053391453534,
+            "l36x9": 0.002250798166993917,
+            "l64x16": -0.00013116423084724715
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0011144381156986125,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.027564991993700976,
+          "T2_minus_T1.5_extrapolated": 0.0010039000177111818,
+          "repaired_l64x16_value": -0.1178265561952756
+        },
+        "tip_over_L_two_way_pectoral": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 7.029323686814785e-07,
+            "repaired": 7.028077518377548e-07
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 0.6598913698341337,
+                "extrapolated": 0.02505677685194636,
+                "GCI_abs": 0.00038754339732389363,
+                "GCI_rel": 0.01566038047448979
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.05220434907198,
+                "extrapolated": 0.024184003242117204,
+                "GCI_abs": 0.0003027897025527415,
+                "GCI_rel": 0.012396085704619695
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.3070750678959644,
+                "extrapolated": 0.02431791592532833,
+                "GCI_abs": 0.0003931339394894874,
+                "GCI_rel": 0.015960018966134353
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.01285485661294451,
+            "repaired": 0.03228066492526084,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": 0.0006983098383405335,
+            "fine": 0.00020059707030485596,
+            "l32x8": 4.844705283333153e-05,
+            "l36x9": -0.00011431905716732457,
+            "l64x16": -4.292789752970844e-06
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.00017571416340995003,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.014177462829083836,
+          "T2_minus_T1.5_extrapolated": -0.00013391268321112648,
+          "repaired_l64x16_value": 0.024426235004159396
+        },
+        "tip_over_L_two_way_pelvic": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "sign_resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 7.029323686814785e-07,
+            "repaired": 7.028077518377548e-07
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.028110240068813366,
+            "repaired": 0.004986074499557299,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": -0.000312466348659491,
+            "fine": -0.0004967309307525314,
+            "l32x8": -0.00023441347167951418,
+            "l36x9": 0.00012943563070372255,
+            "l64x16": -2.3176022899862314e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": -0.0010032285499253666,
+          "scheme_sensitivity_over_repaired_GCI_T2": null,
+          "T2_minus_T1.5_extrapolated": null,
+          "repaired_l64x16_value": 0.023078262728605418
+        },
+        "CL_rigid": {
+          "status": {
+            "baseline": "sign_resolved",
+            "repaired": "resolved"
+          },
+          "floor_at_finest": {
+            "baseline": 0.0,
+            "repaired": 0.0
+          },
+          "triples": {
+            "baseline": {
+              "T2": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              },
+              "T1.5": {
+                "behaviour": "divergent",
+                "p": null,
+                "extrapolated": null,
+                "GCI_abs": null,
+                "GCI_rel": null
+              }
+            },
+            "repaired": {
+              "T2": {
+                "behaviour": "monotone",
+                "p": 1.004902311830252,
+                "extrapolated": 0.2457285266872378,
+                "GCI_abs": 0.0027703333383516347,
+                "GCI_rel": 0.011173186179201343
+              },
+              "T1.5": {
+                "behaviour": "monotone",
+                "p": 1.036624055141209,
+                "extrapolated": 0.24590248602898843,
+                "GCI_abs": 0.004719702393778192,
+                "GCI_rel": 0.01890313806926649
+              }
+            }
+          },
+          "five_lattice_relative_spread": {
+            "baseline": 0.012479959203854456,
+            "repaired": 0.02674918548283594,
+            "repaired_lattices": [
+              "main",
+              "fine",
+              "l32x8",
+              "l36x9",
+              "l64x16"
+            ]
+          },
+          "repaired_minus_baseline": {
+            "main": 0.003794805981726379,
+            "fine": 0.0012905443757673662,
+            "l32x8": 0.0003104621737374802,
+            "l36x9": -0.0013509951027114997,
+            "l64x16": 3.559921331824922e-05
+          },
+          "repaired_minus_baseline_relative_at_l64x16": 0.00014359779370459676,
+          "scheme_sensitivity_over_repaired_GCI_T2": 0.012850155187256625,
+          "T2_minus_T1.5_extrapolated": -0.0001739593417506291,
+          "repaired_l64x16_value": 0.2479447933579191
+        }
+      }
+    }
+  ],
+  "domain_exits": [
+    {
+      "id": "chi0.8-u20-main-one-way-frozen-load",
+      "status": "model-domain exit: proposed linear-beam shape",
+      "iterations": 1,
+      "valid_for_declared_transfer": false,
+      "domain_exit": {
+        "kind": "proposed",
+        "fins_outside_domain": [
+          "pectoral_L",
+          "pectoral_R"
+        ],
+        "closed_form": {
+          "pectoral_L": {
+            "tip_over_L": 0.10127239434753825,
+            "max_slope_rad": 0.13230032342615947,
+            "max_sampled_deflection_over_span": 0.10127239434753825,
+            "valid": false
+          },
+          "pectoral_R": {
+            "tip_over_L": 0.10127239434753817,
+            "max_slope_rad": 0.13230032342615938,
+            "max_sampled_deflection_over_span": 0.10127239434753817,
+            "valid": false
+          },
+          "pelvic_L": {
+            "tip_over_L": 0.09278816801185041,
+            "max_slope_rad": 0.12127262422492323,
+            "max_sampled_deflection_over_span": 0.09278816801185041,
+            "valid": true
+          },
+          "pelvic_R": {
+            "tip_over_L": 0.09278816801185044,
+            "max_slope_rad": 0.12127262422492326,
+            "max_sampled_deflection_over_span": 0.09278816801185044,
+            "valid": true
+          }
+        }
+      }
+    },
+    {
+      "id": "chi0.8-u20-main-two-way-static-feedback",
+      "status": "model-domain exit: proposed linear-beam shape",
+      "iterations": 1,
+      "valid_for_declared_transfer": false,
+      "domain_exit": {
+        "kind": "proposed",
+        "fins_outside_domain": [
+          "pectoral_L",
+          "pectoral_R"
+        ],
+        "closed_form": {
+          "pectoral_L": {
+            "tip_over_L": 0.10127239434753825,
+            "max_slope_rad": 0.13230032342615947,
+            "max_sampled_deflection_over_span": 0.10127239434753825,
+            "valid": false
+          },
+          "pectoral_R": {
+            "tip_over_L": 0.10127239434753817,
+            "max_slope_rad": 0.13230032342615938,
+            "max_sampled_deflection_over_span": 0.10127239434753817,
+            "valid": false
+          },
+          "pelvic_L": {
+            "tip_over_L": 0.09278816801185041,
+            "max_slope_rad": 0.12127262422492323,
+            "max_sampled_deflection_over_span": 0.09278816801185041,
+            "valid": true
+          },
+          "pelvic_R": {
+            "tip_over_L": 0.09278816801185044,
+            "max_slope_rad": 0.12127262422492326,
+            "max_sampled_deflection_over_span": 0.09278816801185044,
+            "valid": true
+          }
+        }
+      }
+    }
+  ],
+  "production_decisions": "unchanged: fidelity-v1 (all undetermined)",
+  "scope": "Bending-only, torsion-rigid, fixed-alpha scaffold with assumed constant EI; inviscid thin-surface VLM with fixed straight wake, here in a labelled diagnostic collocation variant; separate rigidized-shape point-mass descent. No tissue measurement, trimmed glide, continuous FSI or fish-function claim. biological_success_probability is null.",
+  "biological_success_probability": null
+}

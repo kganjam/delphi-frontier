@@ -1,0 +1,36 @@
+{
+  "schema": "frontier.aeroelastic.collocation-figures/1",
+  "scope": "Posthoc descriptive plots of actual returned values; statuses and decisions are the native summaries', recomputed and agreed by the independent audit; no new threshold",
+  "inputs": [
+    {
+      "path": "/data/artifacts/delphi-evolve-rethink/gcp/coupled-collocation-v1/coupled-collocation-v1/frontier-cpu-20261031-04/final-9aab24f5032f4cfca540705a27d64e6d/science/summary.json",
+      "sha256": "11df90d7faebfbd5a0b3ecefc5023566298a9c41b7f8c2fe733d573b28b4bd59"
+    },
+    {
+      "path": "/data/artifacts/delphi-evolve-rethink/gcp/coupled-collocation-v1/coupled-collocation-v1/frontier-cpu-20261031-04/final-9aab24f5032f4cfca540705a27d64e6d/science/collocation-controls.json",
+      "sha256": "37e2ec36292eec2b76f79dd4a5987e860e49df891c7cfecb97dd51346cc9b22d"
+    },
+    {
+      "path": "/data/artifacts/delphi-evolve-rethink/gcp/aeroelastic-fidelity-v1/frontier-cpu-20261031-04/final-678c747967c7472ebb9460a5a8a3cffb/science/summary.json",
+      "sha256": "da9f21ffa05316ebc30ab2245b06622ca3fc156dfe840a0845703db2f8d772cd"
+    },
+    {
+      "path": "/data/worktrees/delphi-frontier/coupled-collocation/artifacts/aeroelastic/collocation-paired-v1/paired-comparison.json",
+      "sha256": "53bc79c41b97c568cc343f4ab122a6b63a157da07a4d6ed397ab2ed3914f190e"
+    }
+  ],
+  "code_sha256": "915df84a280d77bf35916a4be345fd8d56cd8e43a0e6c9cedeccd66d612a27e4",
+  "matplotlib": "3.11.2",
+  "outputs": [
+    {
+      "path": "/data/worktrees/delphi-frontier/coupled-collocation/artifacts/aeroelastic/collocation-paired-v1/paired-ladder.png",
+      "sha256": "6a2510ea284f145a2e4de2503e6aebe8c42cc91cce12aa5ab9bd9342591837c8",
+      "bytes": 554968
+    },
+    {
+      "path": "/data/worktrees/delphi-frontier/coupled-collocation/artifacts/aeroelastic/collocation-paired-v1/collocation-controls.png",
+      "sha256": "de4216a6d665f400f2955ea3004faccbbaae2bddad6748c3f13c4e229bef1993",
+      "bytes": 136604
+    }
+  ]
+}

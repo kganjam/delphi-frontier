@@ -273,3 +273,92 @@ def test_a_changed_native_decision_is_an_analysis_disagreement(monkeypatch):
         af.frozen()["tolerance"],
     )
     assert [x["kind"] for x in found.findings] == ["analysis_disagreement"]
+
+
+def test_error_estimates_arithmetic_and_unassessable_context():
+    from engineering.aeroelastic import collocation_report as cr
+
+    lattices = cr.LADDER
+    tri = {
+        "T2": {
+            "behaviour": "monotone",
+            "p": 1.0,
+            "extrapolated": -0.9,
+            "GCI_abs": 0.1,
+            "GCI_rel": 0.1,
+        },
+        "T1.5": {
+            "behaviour": "monotone",
+            "p": 1.0,
+            "extrapolated": -0.95,
+            "GCI_abs": 0.1,
+            "GCI_rel": 0.1,
+        },
+    }
+    rigid = {
+        "T2": tri["T2"] | {"extrapolated": 10.0, "GCI_abs": 0.5},
+        "T1.5": tri["T1.5"],
+    }
+
+    def context(series, assessable):
+        effects = {
+            "dCL_one_way_minus_rigid": {
+                "status": "resolved",
+                "floor_at_finest": 0.0,
+                "triples": tri,
+            },
+            "dCL_two_way_minus_one_way": {
+                "status": "resolved",
+                "floor_at_finest": 0.0,
+                "triples": tri,
+            },
+            "CL_rigid": {
+                "status": "resolved",
+                "floor_at_finest": 0.0,
+                "triples": rigid,
+            },
+        }
+        return {
+            "compliance": 0.8,
+            "speed_m_s": 16.0,
+            "assessable": assessable,
+            "descriptive_series": {k: dict(series) for k in effects},
+            "floors_at_finest": dict.fromkeys(effects, 0.0),
+            "effects": effects if assessable else None,
+            "decision": {
+                "bending": {"decision": "retain_bending", "relative": 0.09},
+                "feedback": {
+                    "decision": "one_way_sufficient",
+                    "ratio_to_one_way": 0.01,
+                },
+            }
+            if assessable
+            else {
+                "bending": {"decision": "undetermined"},
+                "feedback": {"decision": "undetermined"},
+            },
+        }
+
+    base = context(dict.fromkeys(lattices, -1.0), True)
+    rep = context(
+        dict(zip(lattices, [-1.2, -1.1, -1.05, -1.02, -1.0], strict=True)), True
+    )
+    row = cr.error_estimates({"contexts": [rep]}, {"contexts": [base]})[0]
+    e = row["effects"]["dCL_one_way_minus_rigid"]
+    assert e["five_lattice_relative_spread"]["repaired"] == pytest.approx(0.2 / 1.074)
+    assert e["repaired_minus_baseline"]["main"] == pytest.approx(-0.2)
+    assert e["repaired_minus_baseline_relative_at_l64x16"] == 0.0
+    assert e["T2_minus_T1.5_extrapolated"] == pytest.approx(0.05)
+    m = row["decision_margins_repaired"]
+    assert m["bending_relative_GCI_interval"] == pytest.approx([0.8 / 10.5, 1.0 / 9.5])
+    assert m["feedback_ratio_GCI_upper"] == pytest.approx(1.0 / 0.8)
+    exits = context(
+        dict(zip(lattices[1:], [-1.1, -1.05, -1.02, -1.0], strict=True)), False
+    )
+    row = cr.error_estimates({"contexts": [exits]}, {"contexts": [base]})[0]
+    assert row["decision_margins_repaired"] is None
+    assert row["effects"]["CL_rigid"]["status"]["repaired"] == "not_assessable"
+    assert (
+        row["effects"]["CL_rigid"]["five_lattice_relative_spread"]["repaired_lattices"]
+        == lattices[1:]
+    )
