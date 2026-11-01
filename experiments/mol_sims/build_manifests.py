@@ -164,7 +164,9 @@ if fp.exists():
     if ncp.exists():
         na = json.loads(ncp.read_text())["analysis"]; ni = na["interface"]
         checks.insert(2, {"name": "SAME RUN ON THE NON-COGNATE IIIc CONTROL: contacts retained", "result": f"{ni['retained_fraction_last_2ns_mean'] * 100:.0f}% over the last 2 ns (minimum {ni['retained_fraction_min'] * 100:.0f}%) of {ni['n_initial_ca_pairs_lt8A']} initial pairs; CA RMSD last 2 ns {na['rmsd_ca_A']['last_2ns_mean']:.2f} A"})
-        checks.insert(3, {"name": "what the control implies for MD as a specificity test", "result": ("the non-cognate interface is as stable as the cognate one over 10 ns, so interface persistence here does NOT discriminate isoforms"
+        checks.insert(3, {"name": "what the control implies for MD as a specificity test", "result": (f"the non-cognate interface stays within the same range as the cognate one over 10 ns "
+                                                                                                        f"({ni['retained_fraction_last_2ns_mean'] * 100:.0f}% vs {iface['retained_fraction_last_2ns_mean'] * 100:.0f}% retained, from {ni['n_initial_ca_pairs_lt8A']} vs {iface['n_initial_ca_pairs_lt8A']} initial pairs), "
+                                                                                                        f"so interface persistence at this length does NOT discriminate the isoforms; the only difference is how many contacts the prediction started with"
                                                                                                         if ni["retained_fraction_last_2ns_mean"] > 0.6 * iface["retained_fraction_last_2ns_mean"] else
                                                                                                         "the non-cognate interface loosened markedly more than the cognate one over 10 ns; a longer, replicated test would be needed before treating that as a specificity signal")})
         srcs += [R / "md_fgf_negctrl/md_receipt.json", R / "md_fgf_negctrl/md_summary.json", R / "md_fgf_negctrl/final_frame_protein.pdb", R / "md_fgf_negctrl/job_log.txt"]

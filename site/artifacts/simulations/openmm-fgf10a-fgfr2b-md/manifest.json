@@ -25,6 +25,14 @@
    "result": "73% over the last 2 ns, minimum 66% of 95 initial pairs; the two chains never separate (closest CA 4.4 A at the end)"
   },
   {
+   "name": "SAME RUN ON THE NON-COGNATE IIIc CONTROL: contacts retained",
+   "result": "62% over the last 2 ns (minimum 56%) of 68 initial pairs; CA RMSD last 2 ns 1.64 A"
+  },
+  {
+   "name": "what the control implies for MD as a specificity test",
+   "result": "the non-cognate interface stays within the same range as the cognate one over 10 ns (62% vs 73% retained, from 68 vs 95 initial pairs), so interface persistence at this length does NOT discriminate the isoforms; the only difference is how many contacts the prediction started with"
+  },
+  {
    "name": "per-residue flexibility vs start-model pLDDT",
    "result": "Spearman rho -0.10 (p=0.053): NOT significant, so the correlation seen for the ShhN monomer did not reproduce here"
   },
@@ -63,7 +71,11 @@
   "results/mol-sims/claude-20261101/md_fgf_complex/md_receipt.json": "42d75a00a9975eb6d83d56d830df82389382f9baf2b5219a54f77a142a95217a",
   "results/mol-sims/claude-20261101/md_fgf_complex/md_summary.json": "9537d0b70e193f8c978e1f1cf754365a2818bac0eaa1749624c47c1f27d444df",
   "results/mol-sims/claude-20261101/md_fgf_complex/final_frame_protein.pdb": "00ec590d8b7c661121a1383168e14c9c3554341eebc0ffac7c429108e821c854",
-  "results/mol-sims/claude-20261101/md_fgf_complex/job_log.txt": "601d9670c10194f76620ba5b1dae84d8d17efbf059be9c2cf23149f9cc130bf7"
+  "results/mol-sims/claude-20261101/md_fgf_complex/job_log.txt": "601d9670c10194f76620ba5b1dae84d8d17efbf059be9c2cf23149f9cc130bf7",
+  "results/mol-sims/claude-20261101/md_fgf_negctrl/md_receipt.json": "019cb9d7d6f0a0692c44a8189b82014c012412fc536b1638f4f6968bd945621c",
+  "results/mol-sims/claude-20261101/md_fgf_negctrl/md_summary.json": "c00bbd37905c44f98c760f47c093c3c721c5ca59ceb2f7ebd6f8c08ad4988d82",
+  "results/mol-sims/claude-20261101/md_fgf_negctrl/final_frame_protein.pdb": "8a1edae6f896a3f683824094b241418a27c1e021ecc8a60e3215bd5405da38ab",
+  "results/mol-sims/claude-20261101/md_fgf_negctrl/job_log.txt": "21b6be197f0dfce63a2319321abdeb064f960db83883a73d2c18c16f09667470"
  },
  "producer": "claude-mol harness, branch claude/mol-sims-20261101"
 }
