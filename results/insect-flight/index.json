@@ -1,0 +1,125 @@
+{
+  "schema": "design-space-index-0.1",
+  "note": "The index the site build reads. A study listed here and missing from the tree is reported on the page as declared-and-absent rather than dropped, so the page cannot quietly shrink. Captions are authored here so no figure can appear without one.",
+  "routes": {
+    "title": "Routes to a redesigned insect flight apparatus",
+    "data": "results/insect-flight/routes.json",
+    "note": "Published perturbations and bounded proposals, grouped by the scale they act at. Every row carries its own evidence level and read levels on its sources. A row read only at listing level says NOT READ in place of a finding, rather than being paraphrased as if it reported one.",
+    "nothing_attempted": "None of them has been attempted here.",
+    "recommendation_title": "If you asked us to actually do it",
+    "welfare_title": "Welfare and the invertebrate question",
+    "evidence_labels": {
+      "direct_insect_phenotype": "direct insect phenotype",
+      "direct_other_species": "direct, another species",
+      "cis_regulatory_inference": "cis-regulatory inference",
+      "model_only": "model only",
+      "proposed": "proposed"
+    },
+    "outcome_filter_label": "Outcome",
+    "outcome_classes": [
+      {
+        "key": "extra-wing",
+        "label": "More wing, or a second pair",
+        "match": "^(TWO PAIRS OF WINGS|ECTOPIC WING|AN ADDITIONAL WING|FOUR WINGS|A HINDWING THAT|A SECOND PAIR|AN ECTOPIC WING|A NORMAL WING)"
+      },
+      {
+        "key": "fewer-wings",
+        "label": "Fewer wings, or none",
+        "match": "^(NO WING|WINGED OR WINGLESS|A WINGLESS CASTE|LOSS OF WING|Loss of wing|LONG-WINGED OR SHORT-WINGED|THOUSANDS OF INDEPENDENT LOSSES|A WING-LENGTH)"
+      },
+      {
+        "key": "different-wing",
+        "label": "A different kind of wing",
+        "match": "^(A HALTERE-LIKE WING|A HALTERE WITH|VEINS|A BLISTERED WING|A BIGGER haltere|A LARGER OR SMALLER BLADE|A PARTIAL|MORE OR FEWER|AN INTERMEDIATE APPENDAGE)"
+      },
+      {
+        "key": "actuation",
+        "label": "Different actuation or power",
+        "match": "^(SPECIFIC, PREDICTABLE CHANGES IN WING MOTION|DESYNCHRONISED|A CHANGE IN FLIGHT STABILISATION)"
+      },
+      {
+        "key": "steering",
+        "label": "Different steering, sensing or stability",
+        "match": "^(LOSS OF EQUILIBRIUM|A LINEAR DECLINE|A CHANGE IN WING MOTOR|SACCADE AMPLITUDE|A HARD TRADE-OFF|DEGRADED WALKING|LOSS OF POSTURAL|HALTERE FREQUENCY|A FLY WITH NO RATE GYRO|CONTROLLED FLIGHT|STEERING|A LINEAR SUM|FOUR WINGS THAT CAN BE BETTER|A FLYING INSECT WITH|THEY STILL FLY|HALTERE REMOVAL)"
+      }
+    ],
+    "outcome_classes_note": "Each route carries a hand-checked `outcome` field. An earlier attempt to assign these by regular expression over the route's own prose got six routes BACKWARDS, because a title names the starting condition rather than the result - 'a segment that has no wing' is a description of T3, not of the outcome. The regexes are kept only as an audit."
+  },
+  "studies": [
+    {
+      "id": "hox-identity",
+      "title": "Wing or haltere: is the Hox switch a dial or a cliff?",
+      "scale": "gene",
+      "kind": "simulation (ODE)",
+      "question": "Paul et al. measured the wing-versus-haltere decision from both directions - wing-like traits appear at 39% of endogenous Ubx, a haltere-like wing at 490% of endogenous Antp - and separately measured how much more Ubx than Antp a disc holds. Three numbers over-determine a one-dimensional Hox-dose model. So the model can be calibrated on the Ubx arm alone and then made to PREDICT the Antp arm, which is a test rather than a fit. Does it pass, and does it tell a dial from a cliff?",
+      "summary": "A one-state ODE for the Vestigial-Scalloped wing selector under Hox repression, run as two variants: a graded one with non-cooperative self-activation, and a bistable one with cooperative self-activation whose parameters were chosen so that it gets a FAIR test rather than a strawman one - wild-type T2 and T3 both sit outside its bistable window, and it passes the same controls the graded variant does. One parameter is fitted, to the Ubx arm only; the Antp threshold is then held out and predicted. On the protein ratio the source paper itself prefers, the graded variant lands 4.0% from the measured 490% and the bistable variant 39.2% away, so the held-out number discriminates between two mechanisms rather than merely fitting one. The study's own weakness is that it is a cartoon of a network with dozens of known nodes - vg, sd, wg, dpp, EGFR/Ras, sal, SRF and the achaete-scute complex are all collapsed into a single variable W - so a correct prediction here is evidence about the DOSE-RESPONSE SHAPE and not about the wiring; and the discrimination it reports is a 10-fold difference in error between two hand-built variants, not a model comparison with any statistical machinery behind it. The strongest result in the file needs no model at all: the two published thresholds sit on opposite branches of the switch, so their ORDERING tests hysteresis directly, and under both protein-ratio measurements the ordering is the one a hysteretic switch forbids. Verified afterwards against the paper's full text: all four numbers the study relies on are confirmed verbatim, the paper prefers the GFP-based protein ratio that the model's best arm uses, and it reports directly that 'intermediate levels led to intermediary phenotypes'.",
+      "code": "results/insect-flight/code/hox_identity.py",
+      "data": "results/insect-flight/hox-identity.json",
+      "figures": [
+        {
+          "file": "hox-identity-control.png",
+          "alt": "Simulated time courses of the wing-selector variable W for wild-type T2 and wild-type T3 starting conditions, under the graded and the bistable model variants, with the organ-call threshold marked",
+          "caption": "Simulation, control arm. The wild-type T2 and T3 conditions, each started from both the wing side and the haltere side, must run to the right organ before any sweep is read. Both variants pass: every arm settles past the pre-declared organ-call threshold of W = 0.5 and stays there, and the two starting conditions converge to the same answer, which is what says the wild-type points are not inside a bistable window. The bistable variant's parameters were chosen to make this control pass, so that the sweep is a test of a fair opponent."
+        },
+        {
+          "file": "hox-identity-sweep.png",
+          "alt": "Three panels: a heat map of the wing-selector variable over a plane of Ubx and Antp dose with the wild-type T2 and T3 points marked, then the Ubx dose-response that one parameter was fitted to, then the Antp dose-response which was predicted and not fitted, each with the measured threshold drawn as a vertical line",
+          "caption": "Simulation. Left, the Hox dose plane. Middle, the arm the single free parameter was fitted to. Right, the arm that was held out: the vertical line is Paul et al.'s measured 490% of endogenous Antp. On the GFP protein ratio the graded variant crosses the threshold 4.0% away from it and the bistable variant 39.2% away. The dashed and solid pairs on the right are the two protein-ratio measurements reported in that same paper, carried through separately rather than averaged: on the antibody ratio both variants do worse, 68% and 124%, which is the honest shape of this result - the ratio measurement moves the answer by more than the model variant does."
+        }
+      ],
+      "summary_table_title": "Calibrated on one arm, tested on the other"
+    },
+    {
+      "id": "venation",
+      "title": "How many veins can a wing have, and what sets the number?",
+      "scale": "pattern",
+      "kind": "simulation (reaction-diffusion)",
+      "question": "If you wanted a wing with different venation - more veins, fewer, somewhere else - what kind of knob would you be turning? A reaction-diffusion model is the cheapest way to ask whether vein NUMBER is set by the chemistry's own length scale or by the size of the sheet it runs on, and whether those two give the same answer.",
+      "summary": "A Gierer-Meinhardt activator-inhibitor system with saturation, run on a wing-blade-shaped domain, with the vein-counting rule declared in the module docstring before the first run and never changed. The inhibitor's diffusivity is not hand-picked: it is solved from the model's own linear stability analysis so that the fastest-growing wavelength would give five longitudinal veins, which makes the count a test of the nonlinear simulation against its own theory. It passes on SPACING and fails by one on COUNT - the measured wavelength matches the prediction to 0.1%, while the counted number falls short by a near-constant one vein across a 2.4-fold range of blade width, which is what two boundaries each suppressing half a wavelength looks like. The honest reading is that blade width is the clean knob and lateral-inhibition range is not: widen the inhibitor's reach much beyond wild type and the pattern breaks up rather than coarsening, so the counting rule goes out of its domain and the small numbers it returns mean 'no stripes' rather than 'fewer veins'. The study's largest weakness is that stripe ORIENTATION is imposed by anisotropic diffusion rather than earned: without that term the same kinetics make labyrinths, and in a real wing the orientation comes from Hedgehog and Dpp positional information laid down before lateral inhibition refines anything. Its second weakness is that NEITHER convergence control passes - the field is still drifting at the end of the run, and at least one seed's vein count still changes in the second half - so part of the reported seed spread is convergence rather than pattern formation, and the runs were deliberately not lengthened until the control passed.",
+      "code": "results/insect-flight/code/venation.py",
+      "data": "results/insect-flight/venation.json",
+      "figures": [
+        {
+          "file": "venation-normal.png",
+          "alt": "Left, a simulated activator field on a wing-blade-shaped domain showing bright longitudinal stripes against a dark background, with a vertical line marking the counting transect at 60 percent of blade length. Right, the activator profile along that transect plotted against position across the blade, with the threshold and the prominence criterion drawn as vertical lines and each counted vein shaded",
+          "caption": "Simulation. The wild-type parameter set at one seed, with the pre-declared counting rule applied in the open. The threshold is the midpoint of the field's own 5th and 95th percentiles, computed per run so it cannot be tuned per condition; a vein is a run of at least two above-threshold pixels clearing a prominence floor. The rule was written in the module docstring before any simulation was run and before any picture was looked at."
+        },
+        {
+          "file": "venation-series.png",
+          "alt": "A row of eight simulated blade-shaped activator fields across increasing inhibitor diffusivity, all on one spatial and one intensity scale, each labelled with the mean and standard deviation of vein count over eight seeds, above a matching row of bar charts comparing the counted number against the number linear stability theory predicts",
+          "caption": "Simulation. One knob - the range of lateral inhibition - across eight settings. The bold number under each panel is the mean and standard deviation over eight seeds; the image above it is ONE seed and is not the measurement. The black dash on each bar is what the model's own linear stability analysis predicts, and the gap between dash and bar is the roughly one-vein boundary deficit. The three right-hand panels are not 'fewer veins': the pattern has broken up, and a counting rule about stripes has nothing to count."
+        }
+      ],
+      "summary_table_title": "Which knob moves the vein count"
+    },
+    {
+      "id": "flight-performance",
+      "title": "Would four wings fly better? Lift, power, and the organ you spent to get them",
+      "scale": "organism",
+      "kind": "simulation (blade-element aerodynamics and delayed-feedback control)",
+      "question": "The design intuition is that more wing area means more lift means better flight. The question this study exists to answer is what that intuition leaves out - and the literature says it leaves out two things, an actuator and a sensor, because the four-winged fly's second pair has only rudimentary flight muscle and the halteres it was made from were rate gyroscopes.",
+      "summary": "Two coupled models over the same four wing configurations: a quasi-steady blade-element model for lift, power and control authority, and a one-axis attitude model written as a delay-differential equation with saturating control, run with and without the fast haltere feedback loop. One parameter is calibrated - the lift coefficient, set so the two-wing wild type supports exactly body weight - which makes every other configuration a prediction, and all part-A results are ratios so the absolute scale cancels. The result to start from is pure geometry: redistributing the SAME total area over four wings gives 0.46 body weights and does not fly, because lift scales with the second moment of wing area, so splitting one wing into two smaller ones loses more than half of it and no contested biological parameter enters. Adding a second driven pair on top does buy lift, 1.83 body weights at twice the power, while the configuration the literature actually produced reaches 0.84 and stays below 1 across the whole admissible range of the contested fore-hind interference term rather than at one chosen value of it. The control half gives every loop delay the best gain in a swept family and still finds that no loop slower than about 3 wingbeats can meet the measured 60 ms recovery at any gain - the haltere loop is inside that boundary and the visual loop is well outside it. Three weaknesses, all stated in the file: 18 of 24 parameters are assumed rather than sourced, because the journals holding the measured flight numbers were unreachable; the stroke plane is horizontal, which removes by construction the drag-based weight support Fry et al. measured in real hovering flies; and the intact model recovers in 13 ms where a real fly takes under 60, so it is OPTIMISTIC about control and understates rather than overstates what deleting a haltere costs. The delay-versus-gain trade-off it reports is also not new - Elzinga, Dickson & Dickinson 2011 measured it on a dynamically scaled robotic fly - so this is a re-derivation whose value is that it is calibrated against an independently measured recovery time.",
+      "code": "results/insect-flight/code/flight_performance.py",
+      "data": "results/insect-flight/flight-performance.json",
+      "figures": [
+        {
+          "file": "flight-lift-vs-wings.png",
+          "alt": "Four panels of bar charts comparing two-wing wild type against three four-wing configurations: mean vertical force over body weight with a line marking the threshold below which the animal does not fly, mechanical power relative to wild type, roll control authority relative to wild type, and a line plot sweeping the contested fore-hind interference term across all four configurations",
+          "caption": "Simulation. Quasi-steady blade-element model. Wild type is the single calibrated arm, so its lift is 1.00 by construction and every other bar is a prediction against it. Four wings at the same TOTAL area lose more than half the lift, because lift goes with the second moment of wing area rather than with area: splitting one wing into two smaller ones is a geometric loss before any biology enters. The rightmost panel sweeps the fore-hind interference term rather than fixing it, because the literature disagrees about its sign - dragonfly phasing can make it negative, i.e. helpful."
+        },
+        {
+          "file": "flight-stability.png",
+          "alt": "Three panels. Left, simulated body angle against time after a twenty degree disturbance for four control arms, with a shaded two degree recovery band and a line at sixty milliseconds. Middle, recovery time against disturbance size for three arms on log axes. Right, the best recovery time achievable at each feedback delay, rising roughly linearly, with vertical lines marking the haltere loop and the visual loop and a horizontal line at the measured sixty milliseconds",
+          "caption": "Simulation. One-axis attitude model with saturating control. The 60 ms / 2 degree line is the only measured quantity on this figure: Ristroph et al. report that disturbed fruit flies recover their heading to within 2 degrees in under 60 ms. In the right-hand panel every delay is given the BEST gain in the declared family, so no loop is handicapped by its tuning - and the best achievable recovery still crosses the measured line at about 3 wingbeats. A loop slower than that cannot meet it at any gain, which is why a 30 ms visual loop is not a substitute for a 4.5 ms mechanosensory one."
+        },
+        {
+          "file": "flight-stability.mp4",
+          "kind": "video",
+          "alt": "Animation of two simulated fly bodies recovering from the same twenty degree attitude disturbance side by side, one with haltere feedback and one without, with their body-angle traces drawing in beside them",
+          "caption": "Simulation. The same disturbance, with and without the fast haltere loop, played in real proportion to each other. Both bodies have identical aerodynamics; the only difference is the delay of the loop that senses the rotation. No sound."
+        }
+      ],
+      "summary_table_title": "Four configurations, three numbers each"
+    }
+  ]
+}

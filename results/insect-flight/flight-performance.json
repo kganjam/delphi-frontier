@@ -1,0 +1,3043 @@
+{
+ "id": "flight-performance",
+ "headline": "Redistributing the SAME total wing area over four wings does not fly: 0.46 body weights against 1.00. That is the result to start from, because it is geometry rather than biology - lift scales with the SECOND MOMENT of wing area, so splitting one wing into two smaller ones at constant aspect ratio loses more than half of it, and no contested biological parameter enters. Adding a second DRIVEN pair on top, at double total area, does buy lift - 1.83 body weights - at 2.00 times the mass-specific mechanical power. The configuration the literature actually produced, four wings with the T3 pair un-actuated, reaches 0.84 body weights, and it stays below 1 ACROSS THE WHOLE ADMISSIBLE RANGE of the contested fore-hind interference term rather than at one chosen value of it: it would need the undriven pair to HELP the driven pair to get off the ground. The control half is where the design fails outright. After a 20 degree disturbance the haltere-intact model is back inside 2 degrees in 13 ms, a 30 ms visual loop given its own best gain from the same family takes 101 ms, and putting the fast loop's gain on the slow sense is worse still at 144 ms. Sweeping the loop delay and giving every delay the best gain in the family puts the boundary at 3.0 wingbeats, about 14 ms: a loop slower than that cannot meet the measured recovery at ANY gain. The haltere loop is inside that boundary and the visual loop is well outside it. You cannot buy back a deleted rate gyro by turning up the gain on a slower sense - and note that this model recovers in 13 ms where a real fly takes under 60 ms, so it is OPTIMISTIC about control and understates what deleting a haltere costs.",
+ "model": {
+  "kind": "quasi-steady blade-element aerodynamics coupled to a one-axis attitude model written as a delay-differential equation with saturating control",
+  "parameters": [
+   {
+    "name": "air density",
+    "value": 1.2,
+    "units": "kg m^-3",
+    "status": "sourced",
+    "source": "Handbook value for dry air at 20 C and 101.3 kPa. A physical constant of the medium, not a property of the animal."
+   },
+   {
+    "name": "body mass",
+    "value": 1e-06,
+    "units": "kg",
+    "status": "assumed",
+    "source": "Order-of-magnitude value for Drosophila melanogaster. We did not read a measured body mass from any paper during this session: the full text of Fry et al. 2005 (PMID 15939772) is behind a bot challenge and the PubMed record carries only the abstract. Because every result in part (A) is reported as a RATIO to the two-wing arm, this value sets the scale and cancels from the comparison."
+   },
+   {
+    "name": "wing length (two-wing wild type)",
+    "value": 0.0025,
+    "units": "m",
+    "status": "assumed",
+    "source": "Order-of-magnitude value for Drosophila. Same provenance problem as body mass. Cancels from the ratios."
+   },
+   {
+    "name": "mean chord (two-wing wild type)",
+    "value": 0.0007,
+    "units": "m",
+    "status": "assumed",
+    "source": "Chosen to give an aspect ratio near 3.6, which is the usual range for dipteran wings. Not read from a paper."
+   },
+   {
+    "name": "wingbeat frequency",
+    "value": 220.0,
+    "units": "Hz",
+    "status": "assumed",
+    "source": "Order-of-magnitude value for Drosophila. Deora, Sane & Sane 2021 (PMID 34783648, full text) establish that this frequency is a property of wing-thorax RESONANCE rather than a free parameter - clipping the wings raises it 'by as much as 90 Hz' - which is why the four-wing arms below hold it fixed rather than letting the model choose it."
+   },
+   {
+    "name": "stroke amplitude (peak to peak)",
+    "value": 2.6,
+    "units": "rad",
+    "status": "assumed",
+    "source": "About 149 degrees. Within the range usually quoted for hovering flies. Not read from a paper during this session."
+   },
+   {
+    "name": "mid-stroke angle of attack",
+    "value": 0.7853981633974483,
+    "units": "rad",
+    "status": "assumed",
+    "source": "45 degrees is the angle that maximises CL_MAX*sin(2a); choosing it makes the baseline arm as generous as the model allows, which biases the comparison AGAINST the claim that four wings help."
+   },
+   {
+    "name": "profile drag coefficient at zero angle of attack",
+    "value": 0.2,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Fry et al. 2005 (PMID 15939772, abstract) state that prior time-averaged models underestimated the mean profile drag coefficient 'two- to threefold'; we therefore do not use a small value, but we did not read their number, so this is assumed."
+   },
+   {
+    "name": "drag coefficient at 90 degrees angle of attack",
+    "value": 3.4,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "A flat plate broadside in this Reynolds regime. Not read from a paper."
+   },
+   {
+    "name": "mass of one wild-type wing, as a fraction of body mass",
+    "value": 0.005,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Insect wings are a small fraction of body mass. Sets the inertial power term and the added moment of inertia of a passive extra wing pair."
+   },
+   {
+    "name": "body moment of inertia, as m_body * (0.4 * R_wing)^2",
+    "value": 0.4,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Radius of gyration of the body taken as 0.4 of wing length. Sets the absolute angular accelerations; cancels from the configuration ratios except through the ADDED inertia of extra wings, which is the effect the comparison is about."
+   },
+   {
+    "name": "differential stroke amplitude available for control",
+    "value": 0.1,
+    "units": "fraction of stroke amplitude",
+    "status": "assumed",
+    "source": "Fry, Sayaman & Dickinson 2003 (PMID 12702878, abstract) report that a fly 'generates rapid turns with surprisingly subtle modifications in wing motion'. 10% is our reading of 'subtle'; the number is assumed, and control authority scales linearly in it, so it cancels from every ratio between configurations."
+   },
+   {
+    "name": "elastic storage of wing inertial energy",
+    "value": 0.0,
+    "units": "fraction",
+    "status": "assumed",
+    "source": "Set to zero, i.e. no elastic return of wing kinetic energy. This is the pessimistic end and it is the end that penalises the configurations with MORE wing mass, so it is stated rather than hidden. The perfect-storage bound is emitted alongside every power number."
+   },
+   {
+    "name": "chord distribution exponent (beta shape, both sides)",
+    "value": 0.6,
+    "units": "nondimensional",
+    "status": "nondimensional",
+    "source": "c(r) proportional to r^p (1-r)^p, normalised to the mean chord. A smooth insect-like planform. A shape, not a measurement."
+   },
+   {
+    "name": "passive angular-rate damping time constant",
+    "value": 8.0,
+    "units": "wingbeats",
+    "status": "assumed",
+    "source": "Hedrick, Cheng & Deng 2009 (PMID 19359586, abstract) establish that flapping fliers experience 'substantial damping of angular velocity through a passive mechanism termed flapping counter-torque' and that isometrically scaled animals 'experience similar damping on a per-wingbeat time scale'. We take the CONCEPT and the per-wingbeat scaling from them; the number 8 is ours and is assumed. It is swept."
+   },
+   {
+    "name": "haltere feedback delay",
+    "value": 1.0,
+    "units": "wingbeats",
+    "status": "assumed",
+    "source": "Fayyazuddin & Dickinson 1996 (PMID 8756451, abstract) report that haltere afferents provide 'direct, electrotonic input to a steering motor neuron', i.e. a monosynaptic, non-spiking path. One wingbeat (4.5 ms here) is our stand-in for 'as fast as this animal can be'; the value is assumed. It is swept."
+   },
+   {
+    "name": "visual feedback delay",
+    "value": 30.0,
+    "units": "ms",
+    "status": "assumed",
+    "source": "Visual flight reflexes are slower than haltere reflexes; Sherman & Dickinson 2003 (PMID 12477899) compare the two modalities directly. We did not read a latency from that paper, so the number is assumed. It is swept, and the qualitative result (a slow loop cannot replace a fast one) holds across the whole sweep."
+   },
+   {
+    "name": "recovery band",
+    "value": 2.0,
+    "units": "degrees",
+    "status": "sourced",
+    "source": "Ristroph et al. 2010 (PMID 20194789, abstract): flies 'return to their original orientation ... recover their heading to within 2 deg in < 60 ms' after an applied torque impulse."
+   },
+   {
+    "name": "recovery time to be matched",
+    "value": 60.0,
+    "units": "ms",
+    "status": "sourced",
+    "source": "Same sentence of Ristroph et al. 2010 (PMID 20194789, abstract). This is the independent target the intact model is tested against; it was not used to fit anything."
+   },
+   {
+    "name": "size of the attitude perturbation used for the headline recovery test",
+    "value": 20.0,
+    "units": "degrees of peak excursion",
+    "status": "assumed",
+    "source": "Ristroph et al. describe 'gentle disturbances' but the abstract does not give the magnitude and we could not read the paper, so we could not match it. Recovery time to a FIXED angular band depends on perturbation size, so this study sweeps the perturbation and reports the whole curve rather than one number."
+   },
+   {
+    "name": "aerodynamic interference penalty on a trailing wing pair",
+    "value": 0.15,
+    "units": "fraction of lift lost",
+    "status": "assumed",
+    "source": "The sign of this term is genuinely contested. Usherwood & Lehmann 2008 (PMID 18477538) report that in dragonflies the PHASING of fore- and hindwings 'can improve aerodynamic efficiency by removing swirl', i.e. a NEGATIVE penalty is attainable; Lai et al. 2020 (PMID 33075754) study wing-wing interaction in damselflies. We sweep this parameter from -0.10 (beneficial, dragonfly-like phasing) to +0.40 and report the whole range."
+   },
+   {
+    "name": "closed-loop natural period, in multiples of that loop's own delay",
+    "value": [
+     2,
+     3,
+     4,
+     6,
+     8,
+     12,
+     16,
+     24,
+     32,
+     48
+    ],
+    "units": "dimensionless, swept",
+    "status": "nondimensional",
+    "source": "The gain rule is a FAMILY, not a value, and it is swept. Each control pathway is then given the member of the family that minimises ITS OWN recovery time, which maximally favours the slow pathway and removes any suspicion that the fast loop wins because it was tuned better. HISTORY, recorded rather than deleted: the first version of this study declared a single value, 4, on the textbook rule of thumb that a delayed loop's natural period should be about four times its delay. That is wrong for a second-order loop - it puts omega_n*tau at pi/2, which is the stability boundary - and every arm, including the intact one, chattered at about 2 degrees for ever and failed the recovery control. Rather than pick a different single number after seeing that failure, which is exactly the move that turns a control into a fit, the rule became a sweep."
+   },
+   {
+    "name": "standard gravity",
+    "value": 9.80665,
+    "units": "m s^-2",
+    "status": "sourced",
+    "source": "Defined value of standard gravity."
+   },
+   {
+    "name": "maximum lift coefficient CL_MAX",
+    "value": 1.4950150094435297,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "THE ONE CALIBRATED PARAMETER. Chosen so the two-wing wild-type arm produces exactly body weight at the nominal kinematics, which makes every other configuration a prediction relative to it. Its value lands inside the range usually quoted for a translating insect wing with a leading-edge vortex, which is a weak consistency check and not a measurement."
+   }
+  ],
+  "parameter_counts": {
+   "sourced": 4,
+   "assumed": 18,
+   "nondimensional": 2,
+   "total": 24
+  },
+  "fitted_parameters": [
+   "CL_MAX"
+  ],
+  "fitted_to": "the two-wing wild-type arm supporting exactly body weight; declared before the run as D1. The control gains are NOT fitted: they follow the declared delay-based rule D5."
+ },
+ "controls": {
+  "C1_two_wing_supports_exactly_body_weight": true,
+  "C2_zero_amplitude_gives_zero_force_and_power": true,
+  "C3_grid_refinement_lift_change_in_body_weights": 4.089586987801512e-05,
+  "C3_grid_refinement_recovery_time_relative_change": 0.0007446016381235735,
+  "C3_pass": true,
+  "C4_integrator_conserves_angular_momentum": true,
+  "C5_intact_model_meets_ristroph_criterion": true,
+  "C5_largest_perturbation_that_meets_it_deg": 80,
+  "C5_direction_of_the_miss": "The intact model recovers FASTER than the animal Ristroph et al. measured, not slower. That is the direction that makes the model optimistic about control, which weakens rather than strengthens the page's conclusion that deleting halteres is costly.",
+  "all_pass": true,
+  "note": "A first version of the attitude model used RATE feedback alone. It damped the rotation and then held the body at a constant 4.5 degree heading error for ever, so C5 failed at every perturbation size. That is the correct behaviour of a rate loop and the wrong model of an animal that returns to its original heading, so the controller was changed to a delayed PD loop and the failure is recorded rather than deleted."
+ },
+ "configurations": [
+  {
+   "name": "two_wing_wild_type",
+   "note": "The animal as it is. The calibration arm: lift/weight is 1 by construction, so read every other row against this one.",
+   "n_wings": 2,
+   "n_actuated": 2,
+   "total_wing_area_m2": 3.5e-06,
+   "weight_carried_N": 9.806649999999999e-06,
+   "weight_relative_to_wild_type": 1.0,
+   "mean_vertical_force_N": 9.806649999999997e-06,
+   "lift_over_weight": 0.9999999999999998,
+   "flies_D2": false,
+   "mechanical_power_W": 5.8660434801703116e-05,
+   "mass_specific_power_W_per_kg": 58.66043480170312,
+   "moment_of_inertia_kg_m2": 1.019346126387752e-12,
+   "control_torque_Nm": 3.3947914592306173e-09,
+   "control_authority_rad_s2": 3330.361857812429,
+   "control_authority_rad_per_beat2": 0.06880912929364523,
+   "interference_applied": 0.0
+  },
+  {
+   "name": "four_wing_area_conserved",
+   "note": "Redistribute the SAME total wing area over four wings, all of them driven. This is the fair version of 'add wings' and the one a designer would actually propose. Note that lift scales with the SECOND moment of wing area, not with area, so splitting one wing into two smaller ones loses lift even before any interference.",
+   "n_wings": 4,
+   "n_actuated": 4,
+   "total_wing_area_m2": 3.499999999999999e-06,
+   "weight_carried_N": 9.806649999999999e-06,
+   "weight_relative_to_wild_type": 1.0,
+   "mean_vertical_force_N": 4.535575624999995e-06,
+   "lift_over_weight": 0.4624999999999996,
+   "flies_D2": false,
+   "mechanical_power_W": 2.4765076990114134e-05,
+   "mass_specific_power_W_per_kg": 24.765076990114135,
+   "moment_of_inertia_kg_m2": 1.0096730631938761e-12,
+   "control_torque_Nm": 1.1102220284604656e-09,
+   "control_authority_rad_s2": 1099.585666818252,
+   "control_authority_rad_per_beat2": 0.02271871212434405,
+   "interference_applied": 0.15
+  },
+  {
+   "name": "four_wing_area_doubled",
+   "note": "Bolt on a second full-size pair and drive it. The most generous reading of 'would it fly better'. The cost is power and inertia.",
+   "n_wings": 4,
+   "n_actuated": 4,
+   "total_wing_area_m2": 7e-06,
+   "weight_carried_N": 9.904716499999999e-06,
+   "weight_relative_to_wild_type": 1.01,
+   "mean_vertical_force_N": 1.8142302499999994e-05,
+   "lift_over_weight": 1.8316831683168313,
+   "flies_D2": true,
+   "mechanical_power_W": 0.00011732086960340623,
+   "mass_specific_power_W_per_kg": 117.32086960340624,
+   "moment_of_inertia_kg_m2": 1.0386922527755042e-12,
+   "control_torque_Nm": 6.280364199576641e-09,
+   "control_authority_rad_s2": 6046.414790131333,
+   "control_authority_rad_per_beat2": 0.12492592541593661,
+   "interference_applied": 0.15
+  },
+  {
+   "name": "four_wing_T3_unactuated",
+   "note": "The configuration the LITERATURE actually produced. Fernandes et al. 1994 (PMID 7874495): in abx bx3 pbx flies 'the adults have two pairs of wings, but the homeotically transformed T3 (HT3) has only rudimentary indirect flight muscles'. Roy et al. 1997 (PMID 9094307) give the cause - Antp is still expressed in the mesoderm of the transformed segment. So the real four-winged fly carries the second pair rather than flying with it.",
+   "n_wings": 4,
+   "n_actuated": 2,
+   "total_wing_area_m2": 7e-06,
+   "weight_carried_N": 9.904716499999999e-06,
+   "weight_relative_to_wild_type": 1.01,
+   "mean_vertical_force_N": 8.335652499999997e-06,
+   "lift_over_weight": 0.8415841584158414,
+   "flies_D2": false,
+   "mechanical_power_W": 5.885916094680131e-05,
+   "mass_specific_power_W_per_kg": 58.85916094680131,
+   "moment_of_inertia_kg_m2": 1.0386922527755042e-12,
+   "control_torque_Nm": 2.885572740346024e-09,
+   "control_authority_rad_s2": 2778.082471141423,
+   "control_authority_rad_per_beat2": 0.05739839816407898,
+   "interference_applied": 0.15
+  },
+  {
+   "name": "two_wing_haltere_mass_removed",
+   "note": "Identical to wild type in part (A). It is listed so the page can say explicitly that deleting the halteres costs NOTHING in the aerodynamic model, and that everything the halteres do shows up only in part (B).",
+   "n_wings": 2,
+   "n_actuated": 2,
+   "total_wing_area_m2": 3.5e-06,
+   "weight_carried_N": 9.806649999999999e-06,
+   "weight_relative_to_wild_type": 1.0,
+   "mean_vertical_force_N": 9.806649999999997e-06,
+   "lift_over_weight": 0.9999999999999998,
+   "flies_D2": false,
+   "mechanical_power_W": 5.8660434801703116e-05,
+   "mass_specific_power_W_per_kg": 58.66043480170312,
+   "moment_of_inertia_kg_m2": 1.019346126387752e-12,
+   "control_torque_Nm": 3.3947914592306173e-09,
+   "control_authority_rad_s2": 3330.361857812429,
+   "control_authority_rad_per_beat2": 0.06880912929364523,
+   "interference_applied": 0.0
+  }
+ ],
+ "interference_sweep": {
+  "axis": [
+   -0.1,
+   -0.05,
+   0.0,
+   0.05,
+   0.1,
+   0.15,
+   0.2,
+   0.25,
+   0.3,
+   0.35,
+   0.4
+  ],
+  "rows": [
+   {
+    "interference": -0.1,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.5249999999999996,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1248.1783244963947
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 2.079207920792079,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 6863.497869878811
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 1.089108910891089,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 3595.165550888901
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": -0.05,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.5124999999999996,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1218.4597929607662
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 2.0297029702970293,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 6700.081253929316
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 1.0396039603960394,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 3431.7489349394054
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.0,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.49999999999999956,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1188.7412614251377
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.98019801980198,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 6536.66463797982
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.99009900990099,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 3268.33231898991
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.05,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.48749999999999954,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1159.0227298895093
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.9306930693069304,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 6373.248022030325
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.9405940594059404,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 3104.9157030404153
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.1,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.47499999999999964,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1129.3041983538808
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.8811881188118809,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 6209.831406080829
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.8910891089108909,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 2941.4990870909187
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.15,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.4624999999999996,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1099.585666818252
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.8316831683168313,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 6046.414790131333
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.8415841584158414,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 2778.082471141423
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.2,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.4499999999999997,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1069.867135282624
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.7821782178217818,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 5882.998174181838
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.7920792079207919,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 2614.6658551919286
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.25,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.43749999999999956,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1040.1486037469956
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.7326732673267324,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 5719.581558232343
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.7425742574257425,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 2451.2492392424324
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.3,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.42499999999999966,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 1010.4300722113668
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.6831683168316829,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 5556.164942282847
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.6930693069306929,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 2287.832623292937
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.35,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.41249999999999964,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 980.7115406757387
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.6336633663366333,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 5392.7483263333515
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.6435643564356435,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 2124.4160073434414
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   },
+   {
+    "interference": 0.4,
+    "two_wing_wild_type": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    },
+    "four_wing_area_conserved": {
+     "lift_over_weight": 0.39999999999999963,
+     "mass_specific_power_W_per_kg": 24.765076990114135,
+     "control_authority_rad_s2": 950.99300914011
+    },
+    "four_wing_area_doubled": {
+     "lift_over_weight": 1.5841584158415838,
+     "mass_specific_power_W_per_kg": 117.32086960340624,
+     "control_authority_rad_s2": 5229.331710383856
+    },
+    "four_wing_T3_unactuated": {
+     "lift_over_weight": 0.5940594059405939,
+     "mass_specific_power_W_per_kg": 58.85916094680131,
+     "control_authority_rad_s2": 1960.9993913939459
+    },
+    "two_wing_haltere_mass_removed": {
+     "lift_over_weight": 0.9999999999999998,
+     "mass_specific_power_W_per_kg": 58.66043480170312,
+     "control_authority_rad_s2": 3330.361857812429
+    }
+   }
+  ],
+  "note": "Negative values mean the trailing pair GAINS lift, which Usherwood & Lehmann 2008 (PMID 18477538) report is attainable in dragonflies at the right fore-hind phase. The sweep is reported whole because the sign is contested."
+ },
+ "attitude": {
+  "two_wing_wild_type": {
+   "I_kg_m2": 1.019346126387752e-12,
+   "control_authority_rad_s2": 3330.361857812429,
+   "passive_damping_time_constant_ms": 36.36363636363636,
+   "arms": {
+    "halteres_intact": {
+     "label": "halteres intact: a 1-wingbeat PD loop alongside the 30 ms visual loop",
+     "chosen_period_over_delay": 12,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 22.799482699117373
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 10.743140483459925
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 5.366797638072316
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": 297.48,
+       "max_excursion_deg": 3.3596755472719213
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": 296.00000000000006,
+       "max_excursion_deg": 2.9594395630365002
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": 13.420000000000002,
+       "max_excursion_deg": 3.2844057399249595
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": 18.6,
+       "max_excursion_deg": 3.6290123888562142
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": 38.2,
+       "max_excursion_deg": 4.429807687337699
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": 61.980000000000004,
+       "max_excursion_deg": 5.401910950189908
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": 114.52000000000001,
+       "max_excursion_deg": 7.572835217986176
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 13269.134805909029,
+       "k_d_s^-1": 202.88346126325152,
+       "delay_ms": 4.545454545454545
+      },
+      {
+       "k_p_s^-2": 304.61741978670864,
+       "k_d_s^-1": 7.40658503988659,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 0.8211014349812399,
+       "overshoot_past_zero_deg": 0.06909715601997166,
+       "never_left_the_2deg_band": true,
+       "recovery_time_ms": 0.0,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 1.6422028699624798,
+       "overshoot_past_zero_deg": 0.1381943120399433,
+       "never_left_the_2deg_band": true,
+       "recovery_time_ms": 0.0,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 3.2844057399249595,
+       "overshoot_past_zero_deg": 0.2763886240798866,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 13.420000000000002,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 6.956181297287787,
+       "overshoot_past_zero_deg": 0.2877143162068104,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 18.26,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 17.74298006534824,
+       "overshoot_past_zero_deg": 0.026111214010820318,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 40.32,
+       "meets_ristroph_60ms": true
+      }
+     ]
+    },
+    "halteres_deleted_vision_only": {
+     "label": "halteres deleted: only the 30 ms visual loop, given its own best gain from the same family",
+     "chosen_period_over_delay": 8,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 134.0046580139042
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 104.82572220181304
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 86.29996347351627
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 12.284428719058974
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": 100.78000000000002,
+       "max_excursion_deg": 12.853278097302455
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": 202.36,
+       "max_excursion_deg": 14.578573396806599
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 16.772843039598495
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 17.726047404386367
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.30237983417826
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.938145395423604
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 685.3891945200944,
+       "k_d_s^-1": 24.859877559829886,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 3.213319524325614,
+       "overshoot_past_zero_deg": 0.3800170129704849,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 75.34,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 6.426639048651228,
+       "overshoot_past_zero_deg": 0.7600340259409698,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 91.44000000000001,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 12.853278097302455,
+       "overshoot_past_zero_deg": 1.5200680518819396,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 100.78000000000002,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 25.70655619460491,
+       "overshoot_past_zero_deg": 3.040136103763879,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 160.88000000000002,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 51.41311238920982,
+       "overshoot_past_zero_deg": 6.080272207527758,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 221.98000000000002,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "halteres_deleted_vision_at_haltere_gain": {
+     "label": "halteres deleted and the fly tries to compensate by using the gain that suited the fast loop on the slow one",
+     "chosen_period_over_delay": 48,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 229.108971650498
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 218.43190174078114
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 208.1603619762462
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 188.92218084358916
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 171.52734803478708
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 141.79986164270187
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 120.62686952961171
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 92.03854094714802
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 30.280211644655708
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": 143.54,
+       "max_excursion_deg": 12.628276305366942
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 829.3209253693143,
+       "k_d_s^-1": 30.095865315812876,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 3.1570690763417355,
+       "overshoot_past_zero_deg": 0.7392063776868983,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 68.94,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 6.314138152683471,
+       "overshoot_past_zero_deg": 1.4784127553737967,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 82.04,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 12.628276305366942,
+       "overshoot_past_zero_deg": 2.9568255107475934,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 143.54,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 25.256552610733884,
+       "overshoot_past_zero_deg": 5.913651021495187,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 214.68,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 50.51310522146777,
+       "overshoot_past_zero_deg": 11.827302042990373,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 227.74000000000004,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "open_loop": {
+     "label": "no feedback at all: flapping counter-torque only",
+     "chosen_period_over_delay": null,
+     "bandwidth_sweep": [],
+     "pathways": [],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 4.998692988554859,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 9.997385977109719,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 19.994771954219438,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 39.989543908438876,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 79.97908781687775,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    }
+   }
+  },
+  "four_wing_area_conserved": {
+   "I_kg_m2": 1.0096730631938761e-12,
+   "control_authority_rad_s2": 1099.585666818252,
+   "passive_damping_time_constant_ms": 36.36363636363636,
+   "arms": {
+    "halteres_intact": {
+     "label": "halteres intact: a 1-wingbeat PD loop alongside the 30 ms visual loop",
+     "chosen_period_over_delay": 6,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 7.536392028725884
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 3.989399569216702
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": 53.82000000000001,
+       "max_excursion_deg": 3.989399569216702
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": 19.78,
+       "max_excursion_deg": 3.989399569216702
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": 19.8,
+       "max_excursion_deg": 3.989399569216702
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": 20.360000000000003,
+       "max_excursion_deg": 3.989399569216702
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": 22.400000000000002,
+       "max_excursion_deg": 3.989399569216702
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": 38.2,
+       "max_excursion_deg": 4.4298076873377
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": 61.980000000000004,
+       "max_excursion_deg": 5.401910950189909
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": 114.52000000000001,
+       "max_excursion_deg": 7.57283521798618
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 53076.539223636115,
+       "k_d_s^-1": 433.26692252650304,
+       "delay_ms": 4.545454545454545
+      },
+      {
+       "k_p_s^-2": 1218.4696791468346,
+       "k_d_s^-1": 42.31317007977319,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 1.1378655858297002,
+       "overshoot_past_zero_deg": 1.1378655858297002,
+       "never_left_the_2deg_band": true,
+       "recovery_time_ms": 0.0,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 1.6106651501076585,
+       "overshoot_past_zero_deg": 1.1202924663443727,
+       "never_left_the_2deg_band": true,
+       "recovery_time_ms": 0.0,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 3.989399569216702,
+       "overshoot_past_zero_deg": 1.495246627164658,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 19.78,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 10.56537335384757,
+       "overshoot_past_zero_deg": 3.8450213441233654,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 56.040000000000006,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 28.859093161612037,
+       "overshoot_past_zero_deg": 6.925217287963165,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 108.2,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "halteres_deleted_vision_only": {
+     "label": "halteres deleted: only the 30 ms visual loop, given its own best gain from the same family",
+     "chosen_period_over_delay": 8,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 44.73307997048119
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 34.61028502724715
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 28.544409020876948
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 12.28442871905898
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": 100.78000000000002,
+       "max_excursion_deg": 12.853278097302459
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": 202.36,
+       "max_excursion_deg": 14.57857339680661
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 16.772843039598502
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 17.72604740438637
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.302379834178268
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.938145395423614
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 685.3891945200944,
+       "k_d_s^-1": 24.85987755982989,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 3.2133195243256147,
+       "overshoot_past_zero_deg": 0.38001701297048524,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 75.34,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 6.4266390486512295,
+       "overshoot_past_zero_deg": 0.7600340259409705,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 91.44000000000001,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 12.853278097302459,
+       "overshoot_past_zero_deg": 1.520068051881941,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 100.78000000000002,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 25.706556194604918,
+       "overshoot_past_zero_deg": 3.040136103763882,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 160.88000000000002,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 51.413112389209836,
+       "overshoot_past_zero_deg": 6.080272207527764,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 221.98000000000002,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "halteres_deleted_vision_at_haltere_gain": {
+     "label": "halteres deleted and the fly tries to compensate by using the gain that suited the fast loop on the slow one",
+     "chosen_period_over_delay": 48,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 72.23568193130212
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 70.81658922455989
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 69.2023183046238
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 62.80131283190523
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 56.97817515441794
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 47.18966850618608
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 39.79338167820825
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 30.396838742019835
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 24.899492278670063
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": 143.54,
+       "max_excursion_deg": 12.628276305366946
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 829.3209253693143,
+       "k_d_s^-1": 30.09586531581288,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 3.1570690763417364,
+       "overshoot_past_zero_deg": 0.7392063776868988,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 68.94,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 6.314138152683473,
+       "overshoot_past_zero_deg": 1.4784127553737976,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 82.04,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 12.628276305366946,
+       "overshoot_past_zero_deg": 2.956825510747595,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 143.54,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 25.25655261073389,
+       "overshoot_past_zero_deg": 5.91365102149519,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 214.68,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 50.73859308943602,
+       "overshoot_past_zero_deg": 10.971113045348005,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 228.92000000000002,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "open_loop": {
+     "label": "no feedback at all: flapping counter-torque only",
+     "chosen_period_over_delay": null,
+     "bandwidth_sweep": [],
+     "pathways": [],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 4.99869298855486,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 9.99738597710972,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 19.99477195421944,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 39.98954390843888,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 79.97908781687777,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    }
+   }
+  },
+  "four_wing_area_doubled": {
+   "I_kg_m2": 1.0386922527755042e-12,
+   "control_authority_rad_s2": 6046.414790131333,
+   "passive_damping_time_constant_ms": 36.36363636363636,
+   "arms": {
+    "halteres_intact": {
+     "label": "halteres intact: a 1-wingbeat PD loop alongside the 30 ms visual loop",
+     "chosen_period_over_delay": 12,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 41.34379673950551
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 19.393971752909525
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 9.334203303925856
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 6.265600302529493
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 4.820333128084058
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": 13.420000000000002,
+       "max_excursion_deg": 3.2844057399249595
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": 18.6,
+       "max_excursion_deg": 3.6290123888562142
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": 38.2,
+       "max_excursion_deg": 4.429807687337699
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": 61.980000000000004,
+       "max_excursion_deg": 5.401910950189908
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": 114.52000000000001,
+       "max_excursion_deg": 7.572835217986176
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 13269.134805909029,
+       "k_d_s^-1": 202.88346126325152,
+       "delay_ms": 4.545454545454545
+      },
+      {
+       "k_p_s^-2": 304.61741978670864,
+       "k_d_s^-1": 7.40658503988659,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 0.8211014349812399,
+       "overshoot_past_zero_deg": 0.06909715601997166,
+       "never_left_the_2deg_band": true,
+       "recovery_time_ms": 0.0,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 1.6422028699624798,
+       "overshoot_past_zero_deg": 0.1381943120399433,
+       "never_left_the_2deg_band": true,
+       "recovery_time_ms": 0.0,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 3.2844057399249595,
+       "overshoot_past_zero_deg": 0.2763886240798866,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 13.420000000000002,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 6.568811479849919,
+       "overshoot_past_zero_deg": 0.5527772481597732,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 15.84,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 14.329931654218845,
+       "overshoot_past_zero_deg": 0.4707757268573342,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 36.300000000000004,
+       "meets_ristroph_60ms": true
+      }
+     ]
+    },
+    "halteres_deleted_vision_only": {
+     "label": "halteres deleted: only the 30 ms visual loop, given its own best gain from the same family",
+     "chosen_period_over_delay": 8,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 246.09730203174334
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 189.81620947024382
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 152.55168536578554
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 12.284428719058974
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": 100.78000000000002,
+       "max_excursion_deg": 12.853278097302455
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": 202.36,
+       "max_excursion_deg": 14.578573396806599
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 16.772843039598495
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 17.726047404386367
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.30237983417826
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.938145395423604
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 685.3891945200944,
+       "k_d_s^-1": 24.859877559829886,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 3.213319524325614,
+       "overshoot_past_zero_deg": 0.3800170129704849,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 75.34,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 6.426639048651228,
+       "overshoot_past_zero_deg": 0.7600340259409698,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 91.44000000000001,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 12.853278097302455,
+       "overshoot_past_zero_deg": 1.5200680518819396,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 100.78000000000002,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 25.70655619460491,
+       "overshoot_past_zero_deg": 3.040136103763879,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 160.88000000000002,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 51.41311238920982,
+       "overshoot_past_zero_deg": 6.080272207527758,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 221.98000000000002,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "halteres_deleted_vision_at_haltere_gain": {
+     "label": "halteres deleted and the fly tries to compensate by using the gain that suited the fast loop on the slow one",
+     "chosen_period_over_delay": 48,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 414.79353516037907
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 395.4387965091047
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 376.85836990256695
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 342.1019099567648
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 309.4544759211044
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 252.6213885450954
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 218.74244666819098
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 166.50133912105096
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 30.280211644655708
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": 143.54,
+       "max_excursion_deg": 12.628276305366942
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 829.3209253693143,
+       "k_d_s^-1": 30.095865315812876,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 3.1570690763417355,
+       "overshoot_past_zero_deg": 0.7392063776868983,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 68.94,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 6.314138152683471,
+       "overshoot_past_zero_deg": 1.4784127553737967,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 82.04,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 12.628276305366942,
+       "overshoot_past_zero_deg": 2.9568255107475934,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 143.54,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 25.256552610733884,
+       "overshoot_past_zero_deg": 5.913651021495187,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 214.68,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 50.51310522146777,
+       "overshoot_past_zero_deg": 11.827302042990373,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 227.74000000000004,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "open_loop": {
+     "label": "no feedback at all: flapping counter-torque only",
+     "chosen_period_over_delay": null,
+     "bandwidth_sweep": [],
+     "pathways": [],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 4.998692988554859,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 9.997385977109719,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 19.994771954219438,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 39.989543908438876,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 79.97908781687775,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    }
+   }
+  },
+  "four_wing_T3_unactuated": {
+   "I_kg_m2": 1.0386922527755042e-12,
+   "control_authority_rad_s2": 2778.082471141423,
+   "passive_damping_time_constant_ms": 36.36363636363636,
+   "arms": {
+    "halteres_intact": {
+     "label": "halteres intact: a 1-wingbeat PD loop alongside the 30 ms visual loop",
+     "chosen_period_over_delay": 12,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.940527709983577
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 8.898599243181804
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 4.58826286160116
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": 297.92,
+       "max_excursion_deg": 3.0487182251458074
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": 295.92,
+       "max_excursion_deg": 3.0487182251458074
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": 13.420000000000002,
+       "max_excursion_deg": 3.2844057399249595
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": 18.6,
+       "max_excursion_deg": 3.6290123888562142
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": 38.2,
+       "max_excursion_deg": 4.429807687337699
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": 61.980000000000004,
+       "max_excursion_deg": 5.401910950189908
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": 114.52000000000001,
+       "max_excursion_deg": 7.572835217986176
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 13269.134805909029,
+       "k_d_s^-1": 202.88346126325152,
+       "delay_ms": 4.545454545454545
+      },
+      {
+       "k_p_s^-2": 304.61741978670864,
+       "k_d_s^-1": 7.40658503988659,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 0.8211014349812399,
+       "overshoot_past_zero_deg": 0.06909715601997166,
+       "never_left_the_2deg_band": true,
+       "recovery_time_ms": 0.0,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 1.6422028699624798,
+       "overshoot_past_zero_deg": 0.1381943120399433,
+       "never_left_the_2deg_band": true,
+       "recovery_time_ms": 0.0,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 3.2844057399249595,
+       "overshoot_past_zero_deg": 0.2763886240798866,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 13.420000000000002,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 7.361495945692113,
+       "overshoot_past_zero_deg": 0.18893729938712964,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 20.46,
+       "meets_ristroph_60ms": true
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 19.11134694554704,
+       "overshoot_past_zero_deg": 0.011197062292733477,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 41.88,
+       "meets_ristroph_60ms": true
+      }
+     ]
+    },
+    "halteres_deleted_vision_only": {
+     "label": "halteres deleted: only the 30 ms visual loop, given its own best gain from the same family",
+     "chosen_period_over_delay": 8,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 112.38767012407438
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 87.45148899397198
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 71.96087574405901
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 12.284428719058974
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": 100.78000000000002,
+       "max_excursion_deg": 12.853278097302455
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": 202.36,
+       "max_excursion_deg": 14.578573396806599
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 16.772843039598495
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 17.726047404386367
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.30237983417826
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 18.938145395423604
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 685.3891945200944,
+       "k_d_s^-1": 24.859877559829886,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 3.213319524325614,
+       "overshoot_past_zero_deg": 0.3800170129704849,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 75.34,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 6.426639048651228,
+       "overshoot_past_zero_deg": 0.7600340259409698,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 91.44000000000001,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 12.853278097302455,
+       "overshoot_past_zero_deg": 1.5200680518819396,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 100.78000000000002,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 25.70655619460491,
+       "overshoot_past_zero_deg": 3.040136103763879,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 160.88000000000002,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 51.41311238920982,
+       "overshoot_past_zero_deg": 6.080272207527758,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 221.98000000000002,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "halteres_deleted_vision_at_haltere_gain": {
+     "label": "halteres deleted and the fly tries to compensate by using the gain that suited the fast loop on the slow one",
+     "chosen_period_over_delay": 48,
+     "bandwidth_sweep": [
+      {
+       "period_over_delay": 2,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 191.29547559760505
+      },
+      {
+       "period_over_delay": 3,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 182.3889943611901
+      },
+      {
+       "period_over_delay": 4,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 173.81354827623494
+      },
+      {
+       "period_over_delay": 6,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 157.73957910868504
+      },
+      {
+       "period_over_delay": 8,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 143.19502515751267
+      },
+      {
+       "period_over_delay": 12,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 118.73703733242995
+      },
+      {
+       "period_over_delay": 16,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 100.64699494795053
+      },
+      {
+       "period_over_delay": 24,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 76.78452684656757
+      },
+      {
+       "period_over_delay": 32,
+       "recovery_time_ms": null,
+       "max_excursion_deg": 30.280211644655708
+      },
+      {
+       "period_over_delay": 48,
+       "recovery_time_ms": 143.54,
+       "max_excursion_deg": 12.628276305366942
+      }
+     ],
+     "pathways": [
+      {
+       "k_p_s^-2": 829.3209253693143,
+       "k_d_s^-1": 30.095865315812876,
+       "delay_ms": 30.0
+      }
+     ],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 3.1570690763417355,
+       "overshoot_past_zero_deg": 0.7392063776868983,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 68.94,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 6.314138152683471,
+       "overshoot_past_zero_deg": 1.4784127553737967,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 82.04,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 12.628276305366942,
+       "overshoot_past_zero_deg": 2.9568255107475934,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 143.54,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 25.256552610733884,
+       "overshoot_past_zero_deg": 5.913651021495187,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 214.68,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 50.51310522146777,
+       "overshoot_past_zero_deg": 11.827302042990373,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": 227.74000000000004,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    },
+    "open_loop": {
+     "label": "no feedback at all: flapping counter-torque only",
+     "chosen_period_over_delay": null,
+     "bandwidth_sweep": [],
+     "pathways": [],
+     "rows": [
+      {
+       "peak_excursion_deg": 5,
+       "omega0_rad_s": 2.399827721492203,
+       "max_excursion_deg": 4.998692988554859,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 10,
+       "omega0_rad_s": 4.799655442984406,
+       "max_excursion_deg": 9.997385977109719,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 20,
+       "omega0_rad_s": 9.599310885968812,
+       "max_excursion_deg": 19.994771954219438,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 40,
+       "omega0_rad_s": 19.198621771937624,
+       "max_excursion_deg": 39.989543908438876,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      },
+      {
+       "peak_excursion_deg": 80,
+       "omega0_rad_s": 38.39724354387525,
+       "max_excursion_deg": 79.97908781687775,
+       "overshoot_past_zero_deg": 0.0,
+       "never_left_the_2deg_band": false,
+       "recovery_time_ms": null,
+       "meets_ristroph_60ms": false
+      }
+     ]
+    }
+   }
+  }
+ },
+ "stability_map": {
+  "gain_axis_multiples_of_declared_gain": [
+   0.1,
+   0.1281,
+   0.1642,
+   0.2104,
+   0.2697,
+   0.3455,
+   0.4428,
+   0.5674,
+   0.7271,
+   0.9318,
+   1.194,
+   1.5301,
+   1.9607,
+   2.5125,
+   3.2197,
+   4.1259,
+   5.2871,
+   6.7751,
+   8.6819,
+   11.1254,
+   14.2567,
+   18.2692,
+   23.411,
+   30.0
+  ],
+  "delay_axis_wingbeats": [
+   0.5,
+   1.0,
+   1.5,
+   2.0,
+   2.5,
+   3.0,
+   3.5,
+   4.0,
+   4.5,
+   5.0,
+   5.5,
+   6.0,
+   6.5,
+   7.0,
+   7.5,
+   8.0,
+   8.5,
+   9.0,
+   9.5,
+   10.0,
+   10.5,
+   11.0,
+   11.5,
+   12.0
+  ],
+  "haltere_loop_delay_wingbeats": 1.0,
+  "visual_loop_delay_wingbeats": 6.6,
+  "recovery_time_ms": [
+   [
+    85.84000000000002,
+    83.32000000000001,
+    80.72,
+    78.28,
+    76.08000000000001,
+    53.32000000000001,
+    99.76,
+    116.4,
+    129.0,
+    224.32000000000002,
+    245.4,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    69.60000000000001,
+    66.96000000000001,
+    64.08000000000001,
+    59.120000000000005,
+    46.36000000000001,
+    45.12,
+    102.44,
+    116.28000000000002,
+    245.64000000000001,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    56.32,
+    53.6,
+    49.84,
+    40.96,
+    39.080000000000005,
+    87.04,
+    128.92000000000002,
+    null,
+    245.8,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    45.44,
+    42.64000000000001,
+    37.2,
+    33.800000000000004,
+    34.68,
+    89.60000000000001,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    36.480000000000004,
+    33.6,
+    29.44,
+    29.560000000000002,
+    74.92,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    29.120000000000005,
+    26.360000000000003,
+    25.0,
+    26.64,
+    192.76000000000002,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    23.080000000000002,
+    21.240000000000002,
+    22.04,
+    60.800000000000004,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    18.080000000000002,
+    17.88,
+    19.880000000000003,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    14.08,
+    15.56,
+    18.2,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    11.000000000000002,
+    13.840000000000002,
+    243.64000000000001,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    8.72,
+    12.560000000000002,
+    null,
+    null,
+    null,
+    249.24,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    6.960000000000001,
+    11.520000000000001,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    249.76000000000002,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    114.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    247.60000000000002,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    249.68,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.0,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    244.72000000000003,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  ],
+  "nan_means": "did not re-enter the 2 degree band within 250 ms",
+  "best_recovery_vs_delay": {
+   "rows": [
+    {
+     "delay_wingbeats": 0.5,
+     "best_recovery_ms": 0.0,
+     "best_period_over_delay": 6
+    },
+    {
+     "delay_wingbeats": 1.0,
+     "best_recovery_ms": 13.440000000000001,
+     "best_period_over_delay": 12
+    },
+    {
+     "delay_wingbeats": 1.5,
+     "best_recovery_ms": 22.880000000000003,
+     "best_period_over_delay": 12
+    },
+    {
+     "delay_wingbeats": 2.0,
+     "best_recovery_ms": 33.400000000000006,
+     "best_period_over_delay": 12
+    },
+    {
+     "delay_wingbeats": 2.5,
+     "best_recovery_ms": 45.36000000000001,
+     "best_period_over_delay": 12
+    },
+    {
+     "delay_wingbeats": 3.0,
+     "best_recovery_ms": 59.2,
+     "best_period_over_delay": 12
+    },
+    {
+     "delay_wingbeats": 3.5,
+     "best_recovery_ms": 75.28,
+     "best_period_over_delay": 12
+    },
+    {
+     "delay_wingbeats": 4.0,
+     "best_recovery_ms": 93.36000000000001,
+     "best_period_over_delay": 12
+    },
+    {
+     "delay_wingbeats": 4.5,
+     "best_recovery_ms": 95.08000000000001,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 5.0,
+     "best_recovery_ms": 105.2,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 5.5,
+     "best_recovery_ms": 113.56,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 6.0,
+     "best_recovery_ms": 87.68,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 6.5,
+     "best_recovery_ms": 98.52000000000001,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 7.0,
+     "best_recovery_ms": 110.2,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 7.5,
+     "best_recovery_ms": 122.80000000000001,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 8.0,
+     "best_recovery_ms": 136.24,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 8.5,
+     "best_recovery_ms": 150.44000000000003,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 9.0,
+     "best_recovery_ms": 165.28,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 9.5,
+     "best_recovery_ms": 180.68,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 10.0,
+     "best_recovery_ms": 196.48000000000002,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 10.5,
+     "best_recovery_ms": 212.68,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 11.0,
+     "best_recovery_ms": 229.20000000000002,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 11.5,
+     "best_recovery_ms": 246.04000000000002,
+     "best_period_over_delay": 8
+    },
+    {
+     "delay_wingbeats": 12.0,
+     "best_recovery_ms": 263.20000000000005,
+     "best_period_over_delay": 8
+    }
+   ],
+   "slowest_loop_that_can_still_meet_60ms_wingbeats": 3.0,
+   "slowest_loop_that_can_still_meet_60ms_ms": 13.636363636363635,
+   "note": "At each delay the BEST member of the whole declared gain family is used, so no loop is handicapped by its tuning. The perturbation is the declared 20 degree one."
+  }
+ },
+ "best_recovery_vs_delay": null,
+ "limitations": [
+  "Nothing here was measured on an animal. Both halves are simulations and every figure caption says so.",
+  "THIS MODEL IS FASTER THAN THE ANIMAL. The haltere-intact arm returns inside 2 degrees in about 13 ms, where Ristroph et al. measured a real fly at under 60 ms. The miss is in the direction that makes the model OPTIMISTIC about control, so every statement here about what deleting a haltere costs is an UNDERSTATEMENT rather than an exaggeration. Said plainly because a reader who sees a model agree with its author's conclusion should be told which way its errors point.",
+  "THE CENTRAL RESULT IS NOT NEW, and pretending otherwise would be the easiest dishonesty available here. Elzinga, Dickson & Dickinson 2011 (PMID 22188766) measured the same thing on a dynamically scaled robotic fruit fly and reported 'a fundamental trade-off between sensor delay and permissible feedback gain', proposing exactly the architecture this study assumes - 'a haltere-mediated inner-loop proportional controller provides damping for slower visually mediated feedback'. Chang & Wang 2014 (PMID 25049376) derived bounds on sensing rate and delay in simulation and conjectured that flies sense every wingbeat. Our 3-wingbeat boundary is a re-derivation of a published trade-off in a different model, and its value is that it is calibrated against an independently measured recovery time, not that it is a discovery.",
+  "The four-winged configurations barely move the ATTITUDE half: their recovery curves lie within 1% of the two-wing ones, because the added wing inertia is negligible at a 0.5% wing-mass fraction. That is a genuine null and it is reported as one. The four-winged fly's control problem is the deleted SENSOR, not added rotational inertia, and no inertia story should be told from this study.",
+  "The stroke plane is horizontal and the angle of attack is constant through translation. Fry, Sayaman & Dickinson 2005 (PMID 15939772, abstract) report that hovering Drosophila instead use a U-shaped wing trajectory in which 'large drag forces during a downward plunge at the start of each stroke create peak vertical forces'. That mechanism cannot appear in this model. The model is therefore a comparison between configurations, not an estimate of a real fly's lift.",
+  "Quasi-steady blade-element aerodynamics omits wake capture, added mass and rotational circulation. Fry et al. 2005 state that quasi-steady mechanisms 'could account for nearly all of the mean measured force required to hover' while 'temporal discrepancies ... indicate that unsteady mechanisms also play a significant role'. We use the mean, which is the part they say is covered.",
+  "Most parameters are assumed rather than sourced, including body mass, wing length, chord, wingbeat frequency and stroke amplitude. We could not read the full text of the papers that hold measured values: the Journal of Experimental Biology site returns a bot challenge, and Europe PMC has no full text for Fry et al. 2005, Ristroph et al. 2010, Dickerson et al. 2019 or Yarger et al. 2021 (checked; a positive control on Deora et al. 2021, PMC8629423, returned 164 kB of full text from the same endpoint, and Paul et al. 2021, PMC8129201, returned 111 kB, so the endpoint works and the four absences are real rather than a broken query). Every part (A) result is therefore reported as a RATIO, in which the absolute scale cancels.",
+  "The interference term between fore- and hindwings is swept rather than set, because the literature disagrees about its SIGN. Usherwood & Lehmann 2008 (PMID 18477538) report that dragonfly fore-hind phasing 'can improve aerodynamic efficiency by removing swirl'. We did not pick a value: the conclusion that the un-actuated four-wing configuration does not fly holds ACROSS THE WHOLE ADMISSIBLE RANGE of that parameter, from 0 to +0.40, and fails only if the undriven pair actively HELPS the driven pair - which no mechanism we found proposes for an undriven obstacle in a wake.",
+  "Splitting one wing into two smaller ones at constant total area is done here at constant ASPECT RATIO and constant wingbeat frequency. Both are choices. Deora, Sane & Sane 2021 (PMID 34783648, full text) show wingbeat frequency is set by wing-thorax resonance and rises 'by as much as 90 Hz' when wings are clipped, so a real four-winged animal would not hold frequency fixed. Letting it rise would recover part of the lost lift and cost more power; we did not model it.",
+  "The attitude model is one axis and linear apart from the saturation. Real recovery couples roll, pitch and yaw, and Fry, Sayaman & Dickinson 2003 (PMID 12702878) report that 'inertia, not friction, dominates the flight dynamics of insects'.",
+  "The visual loop is a delay and a gain, not a model of vision. Rauscher & Fox 2021 (PMID 33499788) show haltere and visual inputs sum LINEARLY for wing motor output but not for gaze; we model only the wing-motor side.",
+  "The haltere does more than sense rotation. Dickerson et al. 2019 (PMID 31607538) argue that it also 'function[s] as an adjustable clock to set the spike timing of wing motor neurons'. A PD loop does not represent that at all, so deleting it here UNDERSTATES what deleting a haltere costs.",
+  "Recovery time to a fixed 2 degree band depends on how large the disturbance was. Ristroph et al. 2010 describe 'gentle disturbances' without a magnitude in the abstract, so the perturbation is swept and the whole curve is reported rather than one matched number.",
+  "The un-actuated wing arm models a LIMIT. Fernandes et al. 1994 report 'only rudimentary indirect flight muscles' in the transformed segment, not none; a rudimentary muscle is somewhere between our driven and un-actuated arms and nobody has published where."
+ ]
+}

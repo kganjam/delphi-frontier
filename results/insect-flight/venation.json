@@ -1,0 +1,580 @@
+{
+ "id": "venation",
+ "headline": "Under a counting rule declared before the first run, the model makes 4.0 +/- 0.0 longitudinal veins where its own linear stability analysis predicts 5.0. That deficit is not noise and it is not a one-off: across the blade-width sweep the counted number tracks the predicted number with a near-constant shortfall of 1.0 +/- 0.2 veins, which is the blade's two edges each suppressing a half-wavelength. So the model gets the SPACING right - the measured wavelength matches theory to 0.1% - and the COUNT wrong by one, every time. The lateral-inhibition sweep is messier: widening the inhibitor's reach removes veins one at a time down to about 2.5x wild type, and beyond that the pattern breaks up rather than coarsening, with the seed-to-seed spread exceeding the trend.",
+ "model": {
+  "kind": "reaction-diffusion (Gierer-Meinhardt with saturation, anisotropic activator diffusion) on a wing-blade-shaped domain",
+  "equations": "da/dt = div(D_a grad a) + rho a^2 / (h (1 + kappa a^2)) - mu a + rho_0 ;  dh/dt = div(D_h grad h) + rho a^2 - nu h",
+  "parameters": [
+   {
+    "name": "grid points along the proximodistal axis",
+    "value": 132,
+    "units": "cells",
+    "status": "nondimensional",
+    "source": "Resolution. Checked by C4 and by the wavelength control C3; not a biological quantity."
+   },
+   {
+    "name": "grid points across the anteroposterior axis",
+    "value": 76,
+    "units": "cells",
+    "status": "nondimensional",
+    "source": "Resolution."
+   },
+   {
+    "name": "blade aspect ratio (length / maximum width)",
+    "value": 2.6,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "A Drosophila wing blade is roughly two and a half times longer than it is wide. Eyeballed from the standard wing diagram, not measured from a specimen, so it is assumed."
+   },
+   {
+    "name": "position of the counting transect",
+    "value": 0.6,
+    "units": "fraction of blade length",
+    "status": "nondimensional",
+    "source": "Declared in the docstring before the first run. Chosen because it is distal to the wing hinge and proximal to the blade tip, so all five longitudinal veins are present there in a real wing."
+   },
+   {
+    "name": "activator autocatalysis rate",
+    "value": 1.0,
+    "units": "nondimensional",
+    "status": "nondimensional",
+    "source": "Sets the time unit. Not a measured rate."
+   },
+   {
+    "name": "activator decay rate",
+    "value": 1.0,
+    "units": "nondimensional",
+    "status": "nondimensional",
+    "source": "Sets the time unit with RHO."
+   },
+   {
+    "name": "inhibitor decay rate",
+    "value": 1.1,
+    "units": "nondimensional",
+    "status": "assumed",
+    "source": "Slightly faster than the activator's, which is the usual regime for a stable stripe pattern. Not a measured rate."
+   },
+   {
+    "name": "basal activator production",
+    "value": 0.02,
+    "units": "nondimensional",
+    "status": "assumed",
+    "source": "A small basal term so the field cannot be trapped at a = 0."
+   },
+   {
+    "name": "activator saturation",
+    "value": 0.25,
+    "units": "nondimensional",
+    "status": "assumed",
+    "source": "Saturation is what turns a Gierer-Meinhardt spot pattern into a STRIPE pattern. Veins are stripes, so the term is required for the model to be about veins at all. Its value is assumed."
+   },
+   {
+    "name": "activator diffusivity across the blade",
+    "value": 0.4,
+    "units": "cells^2 per time unit",
+    "status": "nondimensional",
+    "source": "Lengths in this study are grid cells and times are in units of 1/mu. Setting the activator's diffusivity fixes the length unit; every wavelength below is reported in cells and as a fraction of blade width, which is the only form that means anything here."
+   },
+   {
+    "name": "activator diffusivity along the blade, as a multiple of across",
+    "value": 8.0,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Veins run PROXIMODISTALLY. An isotropic Turing system makes labyrinths, not parallel longitudinal stripes, so something has to orient them. In the animal that something is positional information - Hh and Dpp stripes laid down before lateral inhibition refines them (Crozatier et al. 2003, PMID 12782270). This model has no such prepattern, so the orientation is imposed crudely as anisotropic diffusion. This is the single biggest liberty the study takes and the one a reviewer should attack first."
+   },
+   {
+    "name": "integration step",
+    "value": 0.004,
+    "units": "time units",
+    "status": "nondimensional",
+    "source": "Set from the explicit scheme's own stability limit, dt < 1 / (2 (D_x + D_y)) for the fastest-diffusing species, with a safety factor. HISTORY, recorded rather than deleted: the first version of this study used a step 250 times above that limit. It did not visibly blow up, because the code clipped the fields - so it produced a plausible-looking pattern from an unstable integration, and the steady-state control C4 is what caught it."
+   },
+   {
+    "name": "integration steps",
+    "value": 50000,
+    "units": "steps",
+    "status": "nondimensional",
+    "source": "Checked by C4, which requires a pointwise steady state and FAILS, and by C4b, which checks that the readout has converged and passes. Both are reported."
+   },
+   {
+    "name": "random seeds per condition",
+    "value": 8,
+    "units": "seeds",
+    "status": "nondimensional",
+    "source": "Declared as V5 before the first run. A Turing pattern is seed-dependent; one picture is not the measurement."
+   },
+   {
+    "name": "amplitude of the initial noise",
+    "value": 0.02,
+    "units": "nondimensional",
+    "status": "nondimensional",
+    "source": "The symmetry-breaking seed. Patterns are reported with their spread across seeds for this reason."
+   },
+   {
+    "name": "inhibitor diffusivity, wild type",
+    "value": 27.141804603883912,
+    "units": "nondimensional",
+    "status": "nondimensional",
+    "source": "NOT hand-picked. Solved from the linear stability analysis so that the fastest-growing wavelength equals the blade width divided by 5, which is how many longitudinal veins Drosophila has. The nonlinear simulation is then asked whether it agrees, which makes the vein count a test rather than a fit."
+   }
+  ],
+  "parameter_counts": {
+   "sourced": 0,
+   "assumed": 5,
+   "nondimensional": 11,
+   "total": 16
+  },
+  "fitted_parameters": [],
+  "fitted_to": "nothing. The one parameter that could have been fitted - the inhibitor diffusivity - is solved from the linear stability analysis instead, before any count is taken."
+ },
+ "counting_criterion": {
+  "declared": "in the module docstring, before the first run",
+  "V1": "readout is the activator field at the end of the run",
+  "V2": "threshold is the midpoint of the 5th and 95th percentiles, computed per run",
+  "V3": "transect at 60% of blade length",
+  "V4": "a vein is a run of >= 2 above-threshold pixels with peak prominence >= 10% of the percentile range",
+  "V5": "8 seeds; mean, sd and the per-seed list are all reported"
+ },
+ "controls": {
+  "C1_counter_positive_control": {
+   "painted_5_stripes_counted": 5,
+   "painted_9_stripes_counted": 9,
+   "pass": true,
+   "history": "This control failed on its first run, 5 painted stripes counting as 6 and 9 as 10. The fault was in the CONTROL's own stimulus, not in the counter: the painted field put a peak on both edges of the blade as well as in the interior, so it genuinely had n+1 stripes. The stimulus was corrected and the counter was left untouched. Recorded because a positive control that is debugged until it passes is worth nothing unless you say which side you changed."
+  },
+  "C2_no_lateral_inhibition_negative_control": {
+   "counts": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "turing_condition_met": false,
+   "fastest_growth_rate": -0.2442741812357812,
+   "pass": true
+  },
+  "C3_wavelength_matches_linear_theory": {
+   "predicted_wavelength": 10.006659475354907,
+   "measured_wavelength_mean": 10.0,
+   "measured_wavelength_sd": 0.0,
+   "relative_error": 0.0006655043445125654,
+   "pass": true
+  },
+  "C4_steady_state_reached": {
+   "declared_threshold": 0.0001,
+   "max_residual_over_seeds": 0.008580123960517074,
+   "pass": false,
+   "if_failed": "A Turing pattern keeps drifting slowly long after its stripes have stopped moving. The declared threshold is left where it was declared and the failure is reported. Running 4x longer (200,000 steps instead of 50,000) lowered the residual only from 7.6e-3 to 3.8e-3 while leaving the vein count at 4 and the dominant wavelength at 10.00 cells. C4b was added afterwards to ask whether the READOUT had nonetheless converged - and it has not, quite: see C4b."
+  },
+  "C4b_readout_converged": {
+   "what": "vein count and dominant wavelength at the half-way point of the run compared with the end",
+   "counts_half": [
+    4,
+    4,
+    4,
+    5,
+    4,
+    4,
+    4,
+    4
+   ],
+   "counts_end": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "lambda_half": [
+    10.0,
+    10.0,
+    10.0,
+    7.142857142857143,
+    10.0,
+    10.0,
+    10.0,
+    10.0
+   ],
+   "lambda_end": [
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0
+   ],
+   "added_after_C4_failed": true,
+   "n_seeds_whose_count_changed": 1,
+   "pass": false,
+   "if_failed": "C4b fails too, and the page says so. The vein count is identical between the half-way point and the end for most seeds but not all: at least one seed is still losing or gaining a vein in the second half of the run. So neither the field nor the readout is fully converged at 50,000 steps, the seed spread reported throughout this study is partly a CONVERGENCE spread rather than purely a pattern-formation one, and every count here should be read with that attached. We did not lengthen the runs until it passed, because running to a passing number and then reporting that number is how a control becomes decoration."
+  },
+  "all_pass": false,
+  "all_pass_note": "all_pass is false whenever ANY declared control fails, including C4. C4b does not rescue it and is not counted in all_pass."
+ },
+ "wild_type": {
+  "inhibitor_diffusivity": 27.141804603883912,
+  "predicted_wavelength": 10.006659475354907,
+  "predicted_veins": 4.996672478277437,
+  "counts_per_seed": [
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4
+  ],
+  "mean": 4.0,
+  "sd": 0.0,
+  "blade_width_at_transect": 50.0
+ },
+ "derived": {
+  "predicted_minus_counted_veins_over_blade_width_sweep": {
+   "values": [
+    0.7199421669817045,
+    1.1958738730640217,
+    0.9966724782774374,
+    0.99733798262195,
+    1.1978703860975597
+   ],
+   "mean": 1.0215393774085346,
+   "sd": 0.17529979379337557,
+   "reading": "A near-constant shortfall of about one vein between what linear stability theory predicts and what the nonlinear simulation builds, across a 2.4-fold range of blade width. A constant offset rather than a proportional one is what a boundary effect looks like: the two edges of the blade each suppress about half a wavelength, and that costs one stripe regardless of how many fit in between."
+  },
+  "lateral_inhibition_sweep_is_monotonic": false,
+  "inhibitor_range_at_which_the_pattern_breaks_up": 2.5
+ },
+ "sweeps": {
+  "lateral_inhibition_range": {
+   "knob": "inhibitor (Notch/Delta) diffusivity, as a multiple of the wild-type value chosen by linear stability",
+   "rows": [
+    {
+     "inhibitor_range_multiple_of_wild_type": 0.25,
+     "predicted_wavelength": null,
+     "predicted_veins": null,
+     "counts": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "mean": 1.0,
+     "sd": 0.0
+    },
+    {
+     "inhibitor_range_multiple_of_wild_type": 0.5,
+     "predicted_wavelength": 8.56387399429654,
+     "predicted_veins": 5.838479178149928,
+     "counts": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+     ],
+     "mean": 5.0,
+     "sd": 0.0
+    },
+    {
+     "inhibitor_range_multiple_of_wild_type": 0.75,
+     "predicted_wavelength": 9.373426500105666,
+     "predicted_veins": 5.334228630206505,
+     "counts": [
+      4,
+      4,
+      5,
+      4,
+      4,
+      4,
+      5,
+      4
+     ],
+     "mean": 4.25,
+     "sd": 0.4330127018922193
+    },
+    {
+     "inhibitor_range_multiple_of_wild_type": 1.0,
+     "predicted_wavelength": 10.006659475354907,
+     "predicted_veins": 4.996672478277437,
+     "counts": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+     ],
+     "mean": 4.0,
+     "sd": 0.0
+    },
+    {
+     "inhibitor_range_multiple_of_wild_type": 1.5,
+     "predicted_wavelength": 10.96707758408792,
+     "predicted_veins": 4.559099688739757,
+     "counts": [
+      3,
+      4,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ],
+     "mean": 3.125,
+     "sd": 0.33071891388307384
+    },
+    {
+     "inhibitor_range_multiple_of_wild_type": 2.5,
+     "predicted_wavelength": 12.330914977068787,
+     "predicted_veins": 4.054849140796333,
+     "counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      1
+     ],
+     "mean": 0.375,
+     "sd": 0.6959705453537527
+    },
+    {
+     "inhibitor_range_multiple_of_wild_type": 4.0,
+     "predicted_wavelength": 13.759148561257414,
+     "predicted_veins": 3.633945790860087,
+     "counts": [
+      3,
+      1,
+      0,
+      0,
+      1,
+      0,
+      2,
+      0
+     ],
+     "mean": 0.875,
+     "sd": 1.0532687216470449
+    },
+    {
+     "inhibitor_range_multiple_of_wild_type": 8.0,
+     "predicted_wavelength": 16.213476836181737,
+     "predicted_veins": 3.083854284012717,
+     "counts": [
+      3,
+      2,
+      1,
+      3,
+      3,
+      1,
+      2,
+      0
+     ],
+     "mean": 1.875,
+     "sd": 1.0532687216470449
+    }
+   ]
+  },
+  "blade_width": {
+   "knob": "blade aspect ratio, i.e. how wide the wing is at the transect while the patterning chemistry is held fixed. This is the knob Hox dosage turns in study 1: Crickmore & Mann 2006 (PMID 16741075) showed Ubx controls organ SIZE by regulating morphogen production and mobility.",
+   "rows": [
+    {
+     "aspect_ratio": 1.6,
+     "blade_width_at_transect": 76.0,
+     "predicted_veins": 7.5949421669817045,
+     "counts": [
+      6,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7
+     ],
+     "mean": 6.875,
+     "sd": 0.33071891388307384
+    },
+    {
+     "aspect_ratio": 2.1,
+     "blade_width_at_transect": 62.0,
+     "predicted_veins": 6.195873873064022,
+     "counts": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+     ],
+     "mean": 5.0,
+     "sd": 0.0
+    },
+    {
+     "aspect_ratio": 2.6,
+     "blade_width_at_transect": 50.0,
+     "predicted_veins": 4.996672478277437,
+     "counts": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+     ],
+     "mean": 4.0,
+     "sd": 0.0
+    },
+    {
+     "aspect_ratio": 3.2,
+     "blade_width_at_transect": 40.0,
+     "predicted_veins": 3.99733798262195,
+     "counts": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+     ],
+     "mean": 3.0,
+     "sd": 0.0
+    },
+    {
+     "aspect_ratio": 4.0,
+     "blade_width_at_transect": 32.0,
+     "predicted_veins": 3.1978703860975597,
+     "counts": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "mean": 2.0,
+     "sd": 0.0
+    }
+   ]
+  },
+  "activator_saturation": {
+   "knob": "saturation of the activator's self-activation. At zero the system makes SPOTS rather than stripes, which is a different organ, not a wing with different veins.",
+   "rows": [
+    {
+     "saturation": 0.0,
+     "counts": [
+      2,
+      3,
+      0,
+      3,
+      0,
+      0,
+      1,
+      1
+     ],
+     "mean": 1.25,
+     "sd": 1.1989578808281798
+    },
+    {
+     "saturation": 0.1,
+     "counts": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+     ],
+     "mean": 4.0,
+     "sd": 0.0
+    },
+    {
+     "saturation": 0.25,
+     "counts": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+     ],
+     "mean": 4.0,
+     "sd": 0.0
+    },
+    {
+     "saturation": 0.5,
+     "counts": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+     ],
+     "mean": 4.0,
+     "sd": 0.0
+    },
+    {
+     "saturation": 1.0,
+     "counts": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "mean": 1.0,
+     "sd": 0.0
+    }
+   ]
+  }
+ },
+ "limitations": [
+  "This is a simulation. No wing was imaged and no vein was counted on an animal anywhere in this study.",
+  "The mapping from the model's two chemicals to EGFR/rhomboid and Notch/Delta is an analogy, not a derivation. The real vein network is specified by POSITIONAL INFORMATION first - Hh and Dpp place the proveins (Crozatier et al. 2003, PMID 12782270; Sturtevant et al. 1993, PMID 8504935) - and lateral inhibition then refines boundaries. A pure Turing model gets the spacing without the identity, so it can say how MANY veins and not WHICH.",
+  "Stripe orientation is imposed by anisotropic diffusion, with an 8-fold ratio that is assumed. Without it the same kinetics make labyrinths. This is the study's largest liberty.",
+  "Crossveins are absent from the model entirely. A real Drosophila wing has two of them and they are patterned differently from the longitudinal veins; the counting transect was placed, and declared, to avoid them, which means the model is never tested against the part of the venation it cannot make.",
+  "The counts are integers from a thresholded field. Seed spread is reported, but the spread of a count is a crude summary of the spread of a pattern: two runs with the same count can look quite different.",
+  "NEITHER convergence control passes. C4, the declared pointwise steady-state check, fails; C4b, added afterwards to ask whether the readout had converged anyway, also fails, because at least one seed's vein count still changes in the second half of the run. Part of the seed spread quoted throughout this study is therefore convergence, not pattern formation, and the runs were deliberately not lengthened until the control passed.",
+  "At large inhibitor range the sweep stops being a vein-count sweep at all: the pattern breaks into fragments and the counting rule, which is a rule about stripes, returns small numbers that mean 'no stripes here' rather than 'fewer veins'. The rule was not changed to accommodate that, so those rows should be read as out of the model's domain rather than as measurements.",
+  "All parameters except the blade aspect ratio are nondimensional. Nothing in this study is calibrated to a measured concentration, diffusivity or rate, because we found none to calibrate to."
+ ]
+}

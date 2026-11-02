@@ -1,0 +1,1682 @@
+{
+ "schema": "design-space-routes-0.1",
+ "title": "Insect flight: wing number, wing form, and steering",
+ "question": "Could you redesign an insect's flight apparatus - and if you added wings, would it fly better?",
+ "short_answer": "The experiment has been done since 1978 and the answer is no, for two independent reasons that the literature separates cleanly: the second pair of wings has almost no engine, and the organ you spent to get it was a rate gyroscope. Neither of those is a general law about four wings - dragonflies have had four independently controlled wings for 300 million years - and the page is organised around what makes the dipteran case different.",
+ "scales": [
+  {
+   "key": "cis",
+   "label": "Molecular \u00b7 cis-regulatory",
+   "blurb": "Change non-coding DNA and leave every protein intact. This is the layer at which a Hox gene actually acts - Ubx does not build a haltere, it re-reads the wing's own enhancers - and it is the layer at which evolution has repeatedly changed appendage identity without changing the appendage toolkit."
+  },
+  {
+   "key": "gene",
+   "label": "Gene \u00b7 selectors and identity",
+   "blurb": "Delete or force the selector proteins themselves. The phenotypes here are the strongest and the oldest in the literature; Lewis's four-winged fly is one of them. They are also the ones that transform the SKIN of a segment and leave its muscle behind, which is the whole problem with the four-winged design."
+  },
+  {
+   "key": "network",
+   "label": "Network \u00b7 wing specification",
+   "blurb": "The signalling circuit that decides there will be a wing at all, and how big: Wingless, Notch/Serrate/Delta, Dpp and the Vestigial-Scalloped selector complex. Turning these knobs gives you more wing or less wing, rarely a different KIND of wing."
+  },
+  {
+   "key": "pattern",
+   "label": "Pattern \u00b7 venation and blade",
+   "blurb": "What the wing membrane is actually made of. Veins carry the haemolymph, the tracheae and the campaniform sensilla, and they set the blade's bending stiffness, so a venation change is a structural change and a sensory change at the same time."
+  },
+  {
+   "key": "actuator",
+   "label": "Actuator \u00b7 muscle and hinge",
+   "blurb": "The engine and the gearbox. A wing is useless without the indirect flight muscle that drives the thorax and the hinge sclerites that convert thoracic oscillation into a stroke. This scale is where the four-winged fly fails, and almost nobody asking for a second pair of wings is thinking about it."
+  },
+  {
+   "key": "sensor",
+   "label": "Sensor \u00b7 haltere and campaniform system",
+   "blurb": "The haltere is the hindwing, reduced to a club and rebuilt as a rate gyroscope. Everything that converts a hindwing into a wing deletes it. This scale exists on the page because the obvious design intuition - more wings, better flight - ignores the organ it is proposing to spend."
+  },
+  {
+   "key": "neural",
+   "label": "Neural \u00b7 steering and control",
+   "blurb": "The loop that closes between sensor and actuator, in under a wingbeat. It is also the layer at which insect flight has already been redesigned by engineers, by implanting stimulators rather than by changing any gene."
+  },
+  {
+   "key": "organism",
+   "label": "Organism \u00b7 plasticity and morph",
+   "blurb": "Several insects already switch their own wings on and off within a single genome, on an environmental cue. If you want a wing-number change that is reversible and non-lethal, this is the only scale where nature has already solved it."
+  },
+  {
+   "key": "comparative",
+   "label": "Comparative \u00b7 other orders",
+   "blurb": "Four independently controlled wings (Odonata), coupled fore- and hindwings (Lepidoptera), halteres on the WRONG segment (Strepsiptera), and thousands of independent losses of flight. These are the experiments evolution has already run."
+  }
+ ],
+ "evidence_labels": {
+  "direct_insect_phenotype": "direct phenotype, Drosophila",
+  "direct_other_species": "direct phenotype, another insect",
+  "cis_regulatory_inference": "cis-regulatory or binding inference",
+  "model_only": "model only",
+  "proposed": "proposed, not attempted"
+ },
+ "outcome_filter_label": "What you get",
+ "outcome_classes": [
+  {
+   "key": "extra-wing",
+   "label": "More wing, or a second pair",
+   "match": "^(TWO PAIRS OF WINGS|ECTOPIC WING|AN ADDITIONAL WING|FOUR WINGS|A HINDWING THAT|A SECOND PAIR|AN ECTOPIC WING|A NORMAL WING)"
+  },
+  {
+   "key": "fewer-wings",
+   "label": "Fewer wings, or none",
+   "match": "^(NO WING|WINGED OR WINGLESS|A WINGLESS CASTE|LOSS OF WING|Loss of wing|LONG-WINGED OR SHORT-WINGED|THOUSANDS OF INDEPENDENT LOSSES|A WING-LENGTH)"
+  },
+  {
+   "key": "different-wing",
+   "label": "A different kind of wing",
+   "match": "^(A HALTERE-LIKE WING|A HALTERE WITH|VEINS|A BLISTERED WING|A BIGGER haltere|A LARGER OR SMALLER BLADE|A PARTIAL|MORE OR FEWER|AN INTERMEDIATE APPENDAGE)"
+  },
+  {
+   "key": "actuation",
+   "label": "Different actuation or power",
+   "match": "^(SPECIFIC, PREDICTABLE CHANGES IN WING MOTION|DESYNCHRONISED|A CHANGE IN FLIGHT STABILISATION)"
+  },
+  {
+   "key": "steering",
+   "label": "Different steering, sensing or stability",
+   "match": "^(LOSS OF EQUILIBRIUM|A LINEAR DECLINE|A CHANGE IN WING MOTOR|SACCADE AMPLITUDE|A HARD TRADE-OFF|DEGRADED WALKING|LOSS OF POSTURAL|HALTERE FREQUENCY|A FLY WITH NO RATE GYRO|CONTROLLED FLIGHT|STEERING|A LINEAR SUM|FOUR WINGS THAT CAN BE BETTER|A FLYING INSECT WITH|THEY STILL FLY|HALTERE REMOVAL)"
+  }
+ ],
+ "outcome_classes_note": "Matched against the route's `predicted_phenotype` ONLY, and anchored on the capitalised phrase each one opens with. NOT against the title: a title routinely names the STARTING condition ('a segment that has no wing'), and matching it tagged six routes with the opposite of their outcome. The order matters - first match wins. Every route also carries a precomputed `outcome` field holding the result of this same matching, checked by hand route by route; if a renderer's own matching disagrees with that field, the field is right and the renderer is wrong.",
+ "routes": [
+  {
+   "id": "cis-ubx-haltere-enhancers",
+   "scale": "cis",
+   "title": "Disable the Ubx-bound enhancers that build a haltere, leaving Ubx protein intact",
+   "intervention": "Delete or mutate the Ubx-occupied regulatory elements at haltere-specific targets identified by genome-wide occupancy, one target at a time, rather than removing Ubx itself.",
+   "predicted_phenotype": "A PARTIAL wing-ward transformation of the haltere, target by target, rather than the whole-appendage switch a Ubx null gives. Which traits move depends on which target you hit: Ubx acts on genes at several levels of the wing-patterning hierarchy at once, so no single enhancer carries the whole identity.",
+   "mechanism": "Ubx is a transcription factor; the haltere is what its targets build. Occupancy maps give the candidate elements, and Ubx's target set CHANGES between stages of haltere morphogenesis, so the same element deleted at a different time is a different experiment.",
+   "evidence_strength": "cis_regulatory_inference",
+   "reversibility": "Not reversible in the animal: a germline sequence change. Reversible at the design stage, because each element is independent of the others.",
+   "lethality_risk": "Low. Ubx protein is untouched, so the segmental and abdominal functions that make a Ubx null lethal are intact.",
+   "difficulty": "High. The occupancy maps give hundreds of candidates and no map says which are REQUIRED; each one is its own allele.",
+   "evidence": [
+    {
+     "cite": "Slattery M et al. 2011, PLoS One 6:e14686, 'Genome-wide tissue-specific occupancy of the Hox protein Ultrabithorax and Hox cofactor Homothorax in Drosophila'",
+     "pmid": "21483663",
+     "read_level": "abstract",
+     "doi": "10.1371/journal.pone.0014686",
+     "finding": "Genome-wide, tissue-specific occupancy of Ubx and its cofactor Homothorax in Drosophila, motivated explicitly by the question of 'what target genes Ubx regulates to generate these adult structures'."
+    },
+    {
+     "cite": "Pavlopoulos A et al. 2011, Proc Natl Acad Sci U S A 108:2855-60, 'Hox gene Ultrabithorax regulates distinct sets of target genes at successive stages of Drosophila haltere morphogenesis'",
+     "pmid": "21282633",
+     "read_level": "abstract",
+     "doi": "10.1073/pnas.1015077108",
+     "finding": "Ubx 'regulates distinct sets of target genes at successive stages of Drosophila haltere morphogenesis' - so the target list is a function of developmental time, not a fixed set."
+    },
+    {
+     "cite": "Weatherbee SD et al. 1998, Genes Dev 12:1474-82, 'Ultrabithorax regulates genes at several levels of the wing-patterning hierarchy to shape the development of the Drosophila haltere'",
+     "pmid": "9585507",
+     "read_level": "abstract",
+     "doi": "10.1101/gad.12.10.1474",
+     "finding": "Ubx 'regulates genes at several levels of the wing-patterning hierarchy'; it represses Wingless and a subset of Wg- and Dpp-activated genes such as spalt-related."
+    }
+   ],
+   "study": "hox-identity",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "cis-ubx-dose-titration",
+   "scale": "cis",
+   "title": "Titrate Ubx dose rather than removing it, and ask for an intermediate appendage",
+   "intervention": "Reduce Ubx protein in the T3 pouch in graded steps - by allelic series, RNAi titration or degron - instead of removing it.",
+   "predicted_phenotype": "AN INTERMEDIATE APPENDAGE, if the decision is a dial. Wing-like traits appear once Ubx falls to about 39% of its endogenous level, and the approach to that point is the question: a graded appendage or a switch. Our own model (study 1) fits the graded reading and, calibrated on the Ubx arm alone, predicts the independently measured Antp threshold to within 4.0%; the switch-like variant misses it by 39.2%. (An earlier, stale copy of that study reported the gap as a factor of 40; re-running its own code showed the switch-like variant passes the same controls, which makes this a fair comparison and a smaller one.) The sharper test needs no model at all: the two published thresholds sit on OPPOSITE branches of the switch, so their ordering tests hysteresis directly, and under both protein-ratio measurements the ordering is the one a hysteretic switch forbids - under the GFP ratio the two doses are within 4% of each other, i.e. effectively a single threshold.",
+   "mechanism": "Hox dose, not Hox presence, sets appendage identity. The wing selector Vestigial-Scalloped is repressed by Ubx, and the decision is where that repression crosses the selector's own threshold.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Fully reversible if done with a degron or inducible RNAi; this is the most reversible route on the page at the gene scale.",
+   "lethality_risk": "Low if restricted to the T3 disc.",
+   "difficulty": "Moderate. The reagents exist; the hard part is measuring the dose rather than assuming it.",
+   "evidence": [
+    {
+     "cite": "Paul R et al. 2021, Nat Commun 12:2892, 'Hox dosage contributes to flight appendage morphology in Drosophila'",
+     "pmid": "34001903",
+     "read_level": "full-text",
+     "doi": "10.1038/s41467-021-23293-8",
+     "finding": "Full text read (PMC8129201, fetched this session). 'characteristic wing-like phenotypic traits (including veins, hairs organization, and flattening) eventually appeared when the level decreased to 39% of endogenous Ubx'; the paper gives that as 2.5 times lower than endogenous Ubx. And, decisively for study 1's model comparison: 'In both cases, intermediate levels led to intermediary phenotypes' - which is the graded reading, observed directly, independently of any model."
+    }
+   ],
+   "study": "hox-identity",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "cis-ubx-dpp-mobility",
+   "scale": "cis",
+   "title": "Change organ SIZE without changing organ identity, through the Ubx-dally-Dpp axis",
+   "intervention": "Restore Dpp transcription and mobility in the haltere pouch by de-repressing dally and lowering thickveins, without touching Ubx's identity targets.",
+   "predicted_phenotype": "A BIGGER haltere that is still a haltere. The haltere ends larval life with roughly fivefold fewer cells than the wing, and this is the axis that sets that number - so this route separates 'how large' from 'what kind', which is exactly the distinction a wing-number redesign keeps conflating.",
+   "mechanism": "Ubx limits haltere size by restricting both the transcription and the mobility of Dpp, raising the receptor thickveins and, with engrailed, repressing the glypican dally in the posterior compartment.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Depends on the reagent; a conditional allele makes it reversible, a deletion does not.",
+   "lethality_risk": "Low to moderate. Dpp is used everywhere, so the restriction to the haltere pouch is the whole safety argument.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Crickmore MA et al. 2006, Science 313:63-8, 'Hox control of organ size by regulation of morphogen production and mobility'",
+     "pmid": "16741075",
+     "read_level": "abstract",
+     "doi": "10.1126/science.1128650",
+     "finding": "Ubx 'controls haltere size by restricting both the transcription and the mobility of the morphogen Decapentaplegic (Dpp)' and 'restricts Dpp's distribution in the haltere by increasing the amounts of the Dpp receptor, thickveins'. By the end of larval development the haltere has 'approximately fivefold fewer cells than the wing'."
+    },
+    {
+     "cite": "Crickmore MA et al. 2007, Development 134:327-34, 'Hox control of morphogen mobility and organ development through regulation of glypican expression'",
+     "pmid": "17166918",
+     "read_level": "abstract",
+     "doi": "10.1242/dev.02737",
+     "finding": "Ubx 'modulates morphogen signaling in the haltere through transcriptional regulation of the glypican dally' and, with engrailed, represses dally in the posterior compartment."
+    },
+    {
+     "cite": "Han C et al. 2005, Development 132:667-79, 'Drosophila glypicans Dally and Dally-like shape the extracellular Wingless morphogen gradient in the wing disc'",
+     "pmid": "15647319",
+     "read_level": "abstract",
+     "doi": "10.1242/dev.01636",
+     "finding": "Dally and Dally-like 'are essential and have different roles in Wg gradient formation' in the wing disc - the same glypican machinery, on the other morphogen."
+    }
+   ],
+   "outcome": "different-wing"
+  },
+  {
+   "id": "cis-vg-quadrant-enhancer",
+   "scale": "cis",
+   "title": "Drive the vestigial quadrant enhancer in a segment that has no wing",
+   "intervention": "Place the vestigial boundary and quadrant enhancers under ectopic control, so that the wing selector is switched on where the two normal signals do not meet.",
+   "predicted_phenotype": "ECTOPIC WING TISSUE growing out of whatever structure you switched it on in. In Drosophila, vestigial is 'sufficient to induce outgrowths of wing tissue from eyes, legs and antennae' - which is the cleanest demonstration on this page that wing number is not a body-plan constant.",
+   "mechanism": "vestigial integrates two separate positional signals through two separate enhancers: Notch at the dorsoventral organiser first, then Dpp plus a signal from that organiser in the blade. Bypassing the integration is what makes the outgrowth ectopic.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible at the design stage if driven by an inducible system; the outgrowth itself is not.",
+   "lethality_risk": "Moderate. Wing tissue on an eye or a leg is a welfare and viability problem in its own right.",
+   "difficulty": "Low. This is a classic, published manipulation.",
+   "evidence": [
+    {
+     "cite": "Kim J et al. 1996, Nature 382:133-8, 'Integration of positional signals and regulation of wing formation and identity by Drosophila vestigial gene'",
+     "pmid": "8700202",
+     "read_level": "abstract",
+     "doi": "10.1038/382133a0",
+     "finding": "vestigial 'is selectively required for wing-cell proliferation, and is sufficient to induce outgrowths of wing tissue from eyes, legs and antennae'. 'Different signals activate separate enhancers': Notch at the dorsal/ventral organizer, then decapentaplegic plus a signal from that organizer in the blade."
+    },
+    {
+     "cite": "Williams JA et al. 1994, Nature 368:299-305, 'Organization of wing formation and induction of a wing-patterning gene at the dorsal/ventral compartment boundary'",
+     "pmid": "8127364",
+     "read_level": "listing",
+     "doi": "10.1038/368299a0",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "extra-wing"
+  },
+  {
+   "id": "gene-ubx-null-four-wings",
+   "scale": "gene",
+   "title": "The four-winged fly: remove Ubx function from T3",
+   "intervention": "Combine the classical bithorax-complex alleles - anterobithorax, bithorax, postbithorax - so that T3 is transformed towards T2.",
+   "predicted_phenotype": "TWO PAIRS OF WINGS, and a fly that is worse at flying than it was - for two reasons that are NOT equally well evidenced, and the page says which is which. The strong one: the transformed T3 has 'only rudimentary indirect flight muscles'. The second pair has no engine. That is direct, quoted, unambiguous insect phenotype. The weaker one: the halteres are gone with it, and the sensory cost of that is real but GRADED, task-dependent and clade-dependent rather than a flat failure - see the sensor scale. So the honest answer is that the swap costs an actuator outright and a sensor partially, to buy a surface.",
+   "mechanism": "Ubx represses wing identity in T3; removing it lets the T3 disc build a wing. The muscle does not follow, and Fernandes et al. say precisely which step breaks, which is what makes this a design problem rather than a curiosity. Their decomposition: the segmental identity of the EPIDERMIS determines the number of myoblasts on the larval discs and the pattern of their migration during metamorphosis - so those follow the transformation. The segmental identity of the MESODERM is what is crucial for the FUSION of myoblasts into indirect flight muscle, and influences the branching of motor innervation - and the mesoderm is not transformed, because Antp keeps being expressed there. Ectodermal information and autonomous mesodermal homeotic function are BOTH required. So the four-winged fly has the right number of myoblasts, delivered to the right place, that then fail to fuse.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Not reversible in the animal. The classical alleles are germline.",
+   "lethality_risk": "Moderate. The flies are viable; flight is not.",
+   "difficulty": "Low. These stocks are nearly fifty years old.",
+   "evidence": [
+    {
+     "cite": "Lewis EB et al. 1978, Nature 276:565-70, 'A gene complex controlling segmentation in Drosophila'",
+     "pmid": "103000",
+     "read_level": "abstract",
+     "doi": "10.1038/276565a0",
+     "finding": "The bithorax complex 'contains a minimum of eight genes that seem to code for substances controlling levels of thoracic and abdominal development'; repression of at least four is controlled by cis-regulatory elements."
+    },
+    {
+     "cite": "Fernandes J et al. 1994, Curr Biol 4:957-64, 'Muscle development in the four-winged Drosophila and the role of the Ultrabithorax gene'",
+     "pmid": "7874495",
+     "read_level": "abstract",
+     "doi": "10.1016/s0960-9822(00)00219-0",
+     "finding": "In flies homozygous for anterobithorax, bithorax3 and postbithorax, 'The adults have two pairs of wings, but the homeotically transformed T3 (HT3) has only rudimentary indirect flight muscles'. The decomposition is theirs: 'the segmental identity of the epidermis determines the segment-specific pattern and number of myoblasts on the larval discs, and the pattern of their migration during metamorphosis. The segmental identity of the mesoderm, however, is crucial for the fusion of myoblasts to form indirect flight muscles, and also influences the branching pattern of innervation of indirect flight muscles.' Their conclusion: 'Segmental information expressed in the ectoderm, and the autonomous function of hom[eotic selector genes in the mesoderm]' are both required."
+    },
+    {
+     "cite": "Roy S et al. 1997, Curr Biol 7:222-7, 'Muscles in the Drosophila second thoracic segment are patterned independently of autonomous homeotic gene function'",
+     "pmid": "9094307",
+     "read_level": "abstract",
+     "doi": "10.1016/s0960-9822(06)00117-5",
+     "finding": "'Antp continues to be expressed in the mesoderm of the homeotically transformed third thoracic segment in the four-winged fly', which the authors 'suggest ... is a likely reason for the failure of flight muscle development in the transformed segment'."
+    },
+    {
+     "cite": "Mureli S et al. 2015, J Exp Biol 218:2528-37, 'Haltere mechanosensory influence on tethered flight behavior in Drosophila'",
+     "pmid": "26113141",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.121863",
+     "finding": "CITED FOR WHAT IT MEASURED, NOT FOR ITS OPENING PREMISE. The sentence 'Haltere input is necessary for free flight' is this abstract's second sentence and is background - it is there to explain why the experiments are TETHERED ('making it difficult to study the effects of haltere ablation under natural flight conditions'). Their own findings are narrower and partly cut the other way: 'Haltere removal does not affect the flies' ability to flap or steer their wings', and 'intact halteres are not strictly necessary for visually guided wing-steering responses'. What they do show is that haltereless flies 'cannot stabilize a wide-field stimulus as accurately as intact flies can' while they 'fixate figures with the same acuity as intact flies'. See the route sen-haltere-ablation, which carries this in full."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "extra-wing"
+  },
+  {
+   "id": "gene-ubx-ectopic-t2",
+   "scale": "gene",
+   "title": "Run it backwards: force Ubx in T2 and convert the wing into a haltere",
+   "intervention": "Express Ubx ectopically in the wing pouch.",
+   "predicted_phenotype": "A HALTERE-LIKE WING: Wingless signalling and a subset of Wg- and Dpp-activated genes such as spalt-related are repressed, and the blade loses the wing's margin bristles and its veins. A fly with four halteres and no wings does not fly at all, which is the other end of the same axis and is worth putting on the page beside the four-winged one.",
+   "mechanism": "Ubx acts at several levels of the wing-patterning hierarchy simultaneously, so forcing it in T2 removes the wing programme rather than editing it.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible if driven conditionally.",
+   "lethality_risk": "High for flight; the animal survives, the behaviour does not.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Weatherbee SD et al. 1998, Genes Dev 12:1474-82, 'Ultrabithorax regulates genes at several levels of the wing-patterning hierarchy to shape the development of the Drosophila haltere'",
+     "pmid": "9585507",
+     "read_level": "abstract",
+     "doi": "10.1101/gad.12.10.1474",
+     "finding": "'Ubx represses the expression of the Wingless (Wg) signaling protein and a subset of Wg- and Decapentaplegic-activated genes such as spalt-relat'[ed]. Ubx acts on the wing programme at several levels at once, which is why forcing it in T2 removes that programme rather than editing it. NOTE: the description of a haltere as lacking the wing's margin bristles and veins is Pallavi & Shashidhara's (PMID 16815386), where it is cited; an earlier draft attributed it to this paper, and the quote checker caught it."
+    },
+    {
+     "cite": "Mohit P et al. 2006, Dev Biol 291:356-67, 'Modulation of AP and DV signaling pathways by the homeotic gene Ultrabithorax during haltere development in Drosophila'",
+     "pmid": "16414040",
+     "read_level": "abstract",
+     "doi": "10.1016/j.ydbio.2005.12.022",
+     "finding": "Microarray analysis of Ubx targets during haltere specification: 'down-regulation of both anterior-posterior and dorso-ventral signaling is critical for haltere fate specification'."
+    }
+   ],
+   "study": "hox-identity",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "gene-antp-dose-in-wing",
+   "scale": "gene",
+   "title": "Use Antennapedia instead of Ubx, at high dose, to make a wing haltere-like",
+   "intervention": "Over-express Antp in the wing pouch and raise the dose until the appendage changes.",
+   "predicted_phenotype": "A HALTERE-LIKE WING at around 490% of endogenous Antp. That threshold is the quantitative test on this page: a Hox dose model calibrated on the Ubx arm alone predicts it, so the two Hox proteins are acting as one repressive 'dose' on one selector rather than as two qualitatively different instructions.",
+   "mechanism": "Antp and Ubx both repress the Vg-Sd wing selector; Antp is the weaker repressor and is present at roughly a tenth to a twentieth of Ubx's endogenous level, so a large over-expression is needed to reach the same repression.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible if driven conditionally.",
+   "lethality_risk": "Moderate; ectopic Antp is not benign outside the pouch.",
+   "difficulty": "Moderate: the experiment is only meaningful if the dose is measured, and the two published measurements of the Ubx:Antp ratio in the SAME paper disagree by nearly twofold.",
+   "evidence": [
+    {
+     "cite": "Paul R et al. 2021, Nat Commun 12:2892, 'Hox dosage contributes to flight appendage morphology in Drosophila'",
+     "pmid": "34001903",
+     "read_level": "full-text",
+     "doi": "10.1038/s41467-021-23293-8",
+     "finding": "Full text read (PMC8129201). 'the wing resembled a haltere in terms of size, shape, and hairs organization when the expression level corresponded to 490% of endogenous Antp'; the paper gives that as five times higher than endogenous Antp. On the Ubx:Antp ratio the paper reports TWO numbers: 'Ubx was 18.5 times more strongly expressed than Antp' by antibody, and 'Ubx expression levels were 10.5 times higher than Antp levels' by matched GFP. It does not leave them in conflict - it attributes the gap to affinity, concluding 'the Antp antibody is 1.85 times less affine' - so the GFP number is the paper's own preferred measurement. Study 1 calibrated both and its GFP arm is the one that predicts the held-out Antp threshold to 4%."
+    }
+   ],
+   "study": "hox-identity",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "gene-vg-null",
+   "scale": "gene",
+   "title": "Delete vestigial and lose the wing entirely",
+   "intervention": "Null or wing-specific regulatory mutation of vestigial.",
+   "predicted_phenotype": "NO WING. vestigial is selectively required for wing-cell proliferation; without it the blade does not grow. This is the negative control for the whole page: it shows the wing is a selector-defined organ, so wing NUMBER is a question about where the selector is switched on.",
+   "mechanism": "Vestigial partners Scalloped to form the wing selector; Vg binding switches Sd's DNA-target selectivity, so without Vg the same Sd protein reads a different set of sites.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Not reversible in the animal.",
+   "lethality_risk": "Low. Wingless flies are viable in the laboratory.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Kim J et al. 1996, Nature 382:133-8, 'Integration of positional signals and regulation of wing formation and identity by Drosophila vestigial gene'",
+     "pmid": "8700202",
+     "read_level": "abstract",
+     "doi": "10.1038/382133a0",
+     "finding": "vestigial 'is selectively required for wing-cell proliferation'."
+    },
+    {
+     "cite": "Halder G et al. 1998, Genes Dev 12:3900-9, 'The Vestigial and Scalloped proteins act together to directly regulate wing-specific gene expression in Drosophila'",
+     "pmid": "9869643",
+     "read_level": "abstract",
+     "doi": "10.1101/gad.12.24.3900",
+     "finding": "Vestigial 'requires the function of the Scalloped protein ... to directly activate the expression of genes involved in wing morphogenesis'."
+    },
+    {
+     "cite": "Halder G et al. 2001, Development 128:3295-305, 'Binding of the Vestigial co-factor switches the DNA-target selectivity of the Scalloped selector protein'",
+     "pmid": "11546746",
+     "read_level": "abstract",
+     "doi": "10.1242/dev.128.17.3295",
+     "finding": "'Binding of Vestigial to Scalloped switches the DNA-binding selectivity of Scalloped' - the selector's specificity is made by the partnership, not by either protein."
+    },
+    {
+     "cite": "Simmonds AJ et al. 1998, Genes Dev 12:3815-20, 'Molecular interactions between Vestigial and Scalloped promote wing formation in Drosophila'",
+     "pmid": "9869635",
+     "read_level": "listing",
+     "doi": "10.1101/gad.12.24.3815",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "fewer-wings"
+  },
+  {
+   "id": "gene-vg-beetle",
+   "scale": "gene",
+   "title": "Ask what vestigial does in a beetle, where one of the segments is already wingless",
+   "intervention": "RNAi against vestigial in Tribolium castaneum and in ladybird beetles.",
+   "predicted_phenotype": "Loss of wing tissue, AND the discovery that the 'wingless' first thoracic segment of a beetle contains two groups of vg-dependent tissues. That matters for a redesign: a segment with no wing is not necessarily a segment with no wing PROGRAMME, so the cheapest place to add a wing may be a segment that already has the latent tissue.",
+   "mechanism": "vg is a conserved wing gene across insects; ectopic ladybird vg induces wing-like tissue in Drosophila antennae and legs, so the selector is interchangeable across 300 million years.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "RNAi is transient, so this is among the more reversible routes.",
+   "lethality_risk": "Low to moderate; the ladybird work found an unexpected requirement in pupal ecdysis, which is a lethality route nobody predicted from the wing phenotype.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Clark-Hachtel CM et al. 2013, Proc Natl Acad Sci U S A 110:16951-6, 'Insights into insect wing origin provided by functional analysis of vestigial in the red flour beetle, Tribolium castaneum'",
+     "pmid": "24085843",
+     "read_level": "abstract",
+     "doi": "10.1073/pnas.1304332110",
+     "finding": "'Our investigation in Tribolium (Coleoptera) has revealed that, despite the well-accepted view of vg as an essential wing gene, there are two groups of vg-dependent tissues in the \"wingless\" first thoracic segment'."
+    },
+    {
+     "cite": "Ohde T et al. 2009, Insect Mol Biol 18:571-81, 'Vestigial and scalloped in the ladybird beetle: a conserved function in wing development and a novel function in pupal ecdysis'",
+     "pmid": "19686539",
+     "read_level": "abstract",
+     "doi": "10.1111/j.1365-2583.2009.00898.x",
+     "finding": "'ectopic expression of H. vigintioctopunctata vg induced wing-like tissues in antennae and legs of D. melanogaster' and larval RNAi 'demonstrated conserved functions of vg and sd in wing development, and an unexpected novel function' in pupal ecdysis."
+    }
+   ],
+   "outcome": "fewer-wings"
+  },
+  {
+   "id": "gene-apterous-dv",
+   "scale": "gene",
+   "title": "Remove the dorsoventral organiser with apterous and get no wing at all",
+   "intervention": "Loss of apterous function in the wing disc.",
+   "predicted_phenotype": "NO WING. apterous specifies dorsal identity and creates the dorsoventral compartment boundary; the organiser at that boundary is what induces the blade. The failure mode is instructive for a designer: you cannot add a wing by adding wing tissue, you add it by creating a BOUNDARY.",
+   "mechanism": "Dorsal cells expressing apterous meet ventral cells; the interaction at the interface drives wing development.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Not reversible in the animal.",
+   "lethality_risk": "Low.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Diaz-Benjumea FJ et al. 1993, Cell 75:741-52, 'Interaction between dorsal and ventral cells in the imaginal disc directs wing development in Drosophila'",
+     "pmid": "8242746",
+     "read_level": "abstract",
+     "doi": "10.1016/0092-8674(93)90494-b",
+     "finding": "'spatially localized expression of the homeobox gene apterous (ap) specifies the identity of dorsal cells in the wing'; the lineage-restriction boundary 'coincides with the limit of the domain' of ap expression."
+    },
+    {
+     "cite": "Weihe U et al. 2001, Development 128:4615-22, 'Regulation of Apterous activity in Drosophila wing development'",
+     "pmid": "11714686",
+     "read_level": "listing",
+     "doi": "10.1242/dev.128.22.4615",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    },
+    {
+     "cite": "Mil\u00e1n M et al. 2003, Development 130:553-62, 'A re-evaluation of the contributions of Apterous and Notch to the dorsoventral lineage restriction boundary in the Drosophila wing'",
+     "pmid": "12490561",
+     "read_level": "listing",
+     "doi": "10.1242/dev.00276",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    },
+    {
+     "cite": "Delanoue R et al. 2002, Genes Cells 7:1255-66, 'Interaction between apterous and early expression of vestigial in formation of the dorso-ventral compartments in the Drosophila wing disc'",
+     "pmid": "12485165",
+     "read_level": "listing",
+     "doi": "10.1046/j.1365-2443.2002.00600.x",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "fewer-wings"
+  },
+  {
+   "id": "gene-nubbin-hinge",
+   "scale": "gene",
+   "title": "Attack the hinge rather than the blade, with nubbin",
+   "intervention": "Wing-disc-specific regulatory mutations of nubbin.",
+   "predicted_phenotype": "LOSS OF WING STRUCTURES with a localised requirement in the wing HINGE, not the blade. A design that adds wings has to articulate them, and this is the gene that says the hinge is its own growth-control centre rather than the proximal end of the blade's.",
+   "mechanism": "nubbin encodes a POU-domain transcription factor; mosaic analysis localises its requirement to the hinge, implying a proximal-distal organiser additional to the AP and DV ones.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Not reversible in the animal.",
+   "lethality_risk": "Low.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Ng M et al. 1995, Development 121:589-99, 'Nubbin encodes a POU-domain protein required for proximal-distal patterning in the Drosophila wing'",
+     "pmid": "7768195",
+     "read_level": "abstract",
+     "doi": "10.1242/dev.121.2.589",
+     "finding": "'Regulatory mutants which selectively remove nubbin expression from wing imaginal discs lead to loss of wing structures'; mosaics suggest 'a localized requirement for nubbin activity in the wing hinge' and 'a novel proximal-distal growth control center in the wing hinge'."
+    },
+    {
+     "cite": "Rodr\u00edguez Dd Ddel A et al. 2002, Development 129:3995-4004, 'Different mechanisms initiate and maintain wingless expression in the Drosophila wing hinge'",
+     "pmid": "12163403",
+     "read_level": "listing",
+     "doi": "10.1242/dev.129.17.3995",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "fewer-wings"
+  },
+  {
+   "id": "gene-ubx-butterfly",
+   "scale": "gene",
+   "title": "Change hindwing identity in an insect whose hindwing is still a wing",
+   "intervention": "Perturb Ubx function in butterfly hindwings.",
+   "predicted_phenotype": "A HINDWING THAT LOOKS MORE LIKE A FOREWING, including its colour pattern. This is the route that separates 'Ubx makes a haltere' from 'Ubx makes a hindwing DIFFERENT': in Lepidoptera the same gene differentiates two flying wings rather than destroying one, which is the existence proof that a four-winged redesign is reachable without losing an aerofoil.",
+   "mechanism": "Hox genes are transcription factors, so appendage diversity can evolve by changing which targets they regulate rather than by changing the Hox gene itself.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Depends on the reagent.",
+   "lethality_risk": "Unknown in butterflies.",
+   "difficulty": "High: the genetic toolkit is far thinner than Drosophila's.",
+   "evidence": [
+    {
+     "cite": "Weatherbee SD et al. 1999, Curr Biol 9:109-15, 'Ultrabithorax function in butterfly wings and the evolution of insect wing patterns'",
+     "pmid": "10021383",
+     "read_level": "abstract",
+     "doi": "10.1016/s0960-9822(99)80064-5",
+     "finding": "'Given that homologous appendage development is controlled by the same Hox gene in different organisms, and that Hox genes are transcription factors, diversity may evolve from changes in the regulation of Hox target genes.' The authors analysed a butterfly homeotic mutant."
+    },
+    {
+     "cite": "Tomoyasu Y et al. 2017, Curr Opin Insect Sci 19:8-15, 'Ultrabithorax and the evolution of insect forewing/hindwing differentiation'",
+     "pmid": "28521947",
+     "read_level": "abstract",
+     "doi": "10.1016/j.cois.2016.10.007",
+     "finding": "A review of Ubx and insect forewing/hindwing differentiation, revisiting 'the Drosophila paradigm' with 'several new insights emerging from recent studies in non-Drosophila insects'."
+    }
+   ],
+   "outcome": "extra-wing"
+  },
+  {
+   "id": "net-wingless-specification",
+   "scale": "network",
+   "title": "Specify an extra wing field with localised Wingless",
+   "intervention": "Drive wingless expression ectopically in the second instar, when the wing/body-wall subdivision is made.",
+   "predicted_phenotype": "AN ADDITIONAL WING FIELD, if the timing is right. Wing specification is a second-instar event, so this route has a window rather than a dose, which is the kind of knob that makes a design reproducible.",
+   "mechanism": "Localised Wingless protein specifies the wing compartment of the disc, downstream of the apterous-dependent DV subdivision.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible if induced.",
+   "lethality_risk": "Moderate: wingless is pleiotropic.",
+   "difficulty": "Moderate; the timing is the hard part.",
+   "evidence": [
+    {
+     "cite": "Ng M et al. 1996, Nature 381:316-8, 'Specification of the wing by localized expression of wingless protein'",
+     "pmid": "8692268",
+     "read_level": "abstract",
+     "doi": "10.1038/381316a0",
+     "finding": "'A third major subdivision of the wing disc into wing and body-wall compartments also occurs in the second instar', specified by localised Wingless."
+    },
+    {
+     "cite": "Couso JP et al. 1995, Curr Biol 5:1437-48, 'Serrate and wingless cooperate to induce vestigial gene expression and wing formation in Drosophila'",
+     "pmid": "8749396",
+     "read_level": "listing",
+     "doi": "10.1016/s0960-9822(95)00281-8",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "extra-wing"
+  },
+  {
+   "id": "net-notch-boundary",
+   "scale": "network",
+   "title": "Build the organiser from scratch with Notch, Serrate and Delta",
+   "intervention": "Create an ectopic Notch-activation stripe, by juxtaposing Serrate- and Delta-expressing cells, in a disc with no wing.",
+   "predicted_phenotype": "AN ECTOPIC WING MARGIN and the outgrowth that follows it. Serrate signals ventrally-to-dorsally and Delta dorsally-to-ventrally, so a designer has two complementary ligands and can place the boundary rather than inherit it.",
+   "mechanism": "Notch activation at the DV interface turns on the vestigial boundary enhancer, which starts the blade.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible if induced.",
+   "lethality_risk": "High. Notch is used in nearly every tissue and ectopic activation is oncogenic in many of them.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Doherty D et al. 1996, Genes Dev 10:421-34, 'Delta is a ventral to dorsal signal complementary to Serrate, another Notch ligand, in Drosophila wing formation'",
+     "pmid": "8600026",
+     "read_level": "listing",
+     "doi": "10.1101/gad.10.4.421",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    },
+    {
+     "cite": "Couso JP et al. 1995, Curr Biol 5:1437-48, 'Serrate and wingless cooperate to induce vestigial gene expression and wing formation in Drosophila'",
+     "pmid": "8749396",
+     "read_level": "listing",
+     "doi": "10.1016/s0960-9822(95)00281-8",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    },
+    {
+     "cite": "Williams JA et al. 1994, Nature 368:299-305, 'Organization of wing formation and induction of a wing-patterning gene at the dorsal/ventral compartment boundary'",
+     "pmid": "8127364",
+     "read_level": "listing",
+     "doi": "10.1038/368299a0",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "extra-wing"
+  },
+  {
+   "id": "net-dpp-gradient-reshape",
+   "scale": "network",
+   "title": "Reshape the wing by reshaping the Dpp gradient",
+   "intervention": "Alter Dpp production, receptor level or glypican availability to change the gradient's range.",
+   "predicted_phenotype": "A LARGER OR SMALLER BLADE with its target genes re-positioned: optomotor-blind and spalt are activated at different distances from the source, so moving the gradient moves the landmarks the venation is built on. This is the knob that changes wing AREA, which study 3 shows is the only aerodynamically profitable thing about adding wings in the first place.",
+   "mechanism": "Dpp acts directly and at long range; receptor levels themselves shape the gradient, so the tissue is not a passive medium.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Depends on the reagent.",
+   "lethality_risk": "Moderate.",
+   "difficulty": "Low to moderate.",
+   "evidence": [
+    {
+     "cite": "Nellen D et al. 1996, Cell 85:357-68, 'Direct and long-range action of a DPP morphogen gradient'",
+     "pmid": "8616891",
+     "read_level": "abstract",
+     "doi": "10.1016/s0092-8674(00)81114-9",
+     "finding": "DPP 'acts directly and at long range on responding cells'; optomotor-blind and spalt 'are transcriptionally activated at different distances from DPP-secreting cells'."
+    },
+    {
+     "cite": "Lecuit T et al. 1996, Nature 381:387-93, 'Two distinct mechanisms for long-range patterning by Decapentaplegic in the Drosophila wing'",
+     "pmid": "8632795",
+     "read_level": "listing",
+     "doi": "10.1038/381387a0",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    },
+    {
+     "cite": "Lecuit T et al. 1998, Development 125:4901-7, 'Dpp receptor levels contribute to shaping the Dpp morphogen gradient in the Drosophila wing imaginal disc'",
+     "pmid": "9811574",
+     "read_level": "listing",
+     "doi": "10.1242/dev.125.24.4901",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    },
+    {
+     "cite": "O'Connor MB et al. 2006, Development 133:183-93, 'Shaping BMP morphogen gradients in the Drosophila embryo and pupal wing'",
+     "pmid": "16368928",
+     "read_level": "listing",
+     "doi": "10.1242/dev.02214",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "net-selector-swap-human",
+   "scale": "network",
+   "title": "Replace the wing selector's co-factor with its human ortholog",
+   "intervention": "Substitute TONDU, the human relative of Vestigial, for Vg function in Drosophila wing formation.",
+   "predicted_phenotype": "A NORMAL WING, built with a human protein in place of the fly's own. TONDU 'substitutes for Vg function in wing formation'. For a design space this is the load-bearing fact: the wing selector is a module with an interface, and the interface has survived the whole bilaterian radiation, so a redesign can swap parts rather than rebuild them.",
+   "mechanism": "TONDU interacts with vertebrate TEF factors, the vertebrate relatives of Scalloped, and the Vg-Sd interface is conserved well enough for the substitution to work in vivo.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible at the design stage.",
+   "lethality_risk": "Low.",
+   "difficulty": "Low; it is done.",
+   "evidence": [
+    {
+     "cite": "Vaudin P et al. 1999, Development 126:4807-16, 'TONDU (TDU), a novel human protein related to the product of vestigial (vg) gene of Drosophila melanogaster interacts with vertebrate TEF factors and substitutes for Vg function in wing formation'",
+     "pmid": "10518497",
+     "read_level": "listing",
+     "doi": "10.1242/dev.126.21.4807",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "extra-wing"
+  },
+  {
+   "id": "net-ubx-egfr-haltere",
+   "scale": "network",
+   "title": "Lift the Ubx brake on EGFR/Ras in the haltere",
+   "intervention": "Restore EGFR/Ras pathway activity in the haltere disc while leaving Ubx in place.",
+   "predicted_phenotype": "A HALTERE WITH WING-LIKE CUTICLE AND VEINS, approached from the pathway side rather than the selector side. Wing and haltere epithelia differ in 'the size, shape, spacing and number of cuticular hairs' as well as in veins, so this route separates surface differentiation from appendage identity.",
+   "mechanism": "Ubx negatively regulates the Egfr/Ras pathway during haltere development; the haltere's lack of veins is partly an EGFR phenotype rather than an identity phenotype.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible if induced.",
+   "lethality_risk": "Moderate: Ras pathway gain of function is proliferative.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Pallavi SK et al. 2006, Dev Biol 296:340-52, 'Negative regulation of Egfr/Ras pathway by Ultrabithorax during haltere development in Drosophila'",
+     "pmid": "16815386",
+     "read_level": "abstract",
+     "doi": "10.1016/j.ydbio.2006.05.035",
+     "finding": "'Negative regulation of Egfr/Ras pathway by Ultrabithorax during haltere development'. 'Halteres lack stout sensory bristles of the wing margin and veins that reticulate the wing blade', and wing and haltere epithelia 'differ in the size, shape, spacing and number of cuticular hairs'."
+    },
+    {
+     "cite": "Mohit P et al. 2006, Dev Biol 291:356-67, 'Modulation of AP and DV signaling pathways by the homeotic gene Ultrabithorax during haltere development in Drosophila'",
+     "pmid": "16414040",
+     "read_level": "abstract",
+     "doi": "10.1016/j.ydbio.2005.12.022",
+     "finding": "Microarray targets of Ubx: 'combined over-expression' of AP and DV components is what tests the model."
+    },
+    {
+     "cite": "Bajpai R et al. 2004, Gene Expr Patterns 5:113-21, 'Identification of a novel target of D/V signaling in Drosophila wing disc: Wg-independent function of the organizer'",
+     "pmid": "15533826",
+     "read_level": "listing",
+     "doi": "10.1016/j.modgep.2004.05.005",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "different-wing"
+  },
+  {
+   "id": "pat-rhomboid-vein-number",
+   "scale": "pattern",
+   "title": "Change vein number through rhomboid and the EGFR amplification loop",
+   "intervention": "Alter rhomboid expression, or EGFR pathway gain, in the larval wing disc.",
+   "predicted_phenotype": "MORE OR FEWER LONGITUDINAL VEINS, and ectopic vein material where rhomboid is switched on. rhomboid 'mediates the localized formation of wing veins' and is the amplifier that commits a provein cell.",
+   "mechanism": "rhomboid, with vein, initiates and amplifies DER (EGFR) activity in vein cells through a positive feedback loop in larval stages; late down-regulation of DER then differentiates them.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible if induced.",
+   "lethality_risk": "Low for the wing; EGFR is pleiotropic elsewhere.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Sturtevant MA et al. 1993, Genes Dev 7:961-73, 'The Drosophila rhomboid gene mediates the localized formation of wing veins and interacts genetically with components of the EGF-R signaling pathway'",
+     "pmid": "8504935",
+     "read_level": "abstract",
+     "doi": "10.1101/gad.7.6.961",
+     "finding": "'The rhomboid (rho) gene ... mediates the localized formation of wing veins and interacts genetically with components of the EGF-R signaling pathway'."
+    },
+    {
+     "cite": "Mart\u00edn-Blanco E et al. 1999, Development 126:5739-47, 'A temporal switch in DER signaling controls the specification and differentiation of veins and interveins in the Drosophila wing'",
+     "pmid": "10572049",
+     "read_level": "abstract",
+     "doi": "10.1242/dev.126.24.5739",
+     "finding": "'The establishment of a positive feedback amplification loop, which drives DER signaling in larval stages. At this time, rhomboid (rho), in combination with vein, initiates and amplifies the activity of DER in vein cells', followed by 'the late downregulation of DER'."
+    },
+    {
+     "cite": "Roch F et al. 2002, Development 129:993-1002, 'EGFR signalling inhibits Capicua-dependent repression during specification of Drosophila wing veins'",
+     "pmid": "11861482",
+     "read_level": "listing",
+     "doi": "10.1242/dev.129.4.993",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "study": "venation",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "pat-notch-delta-vein-width",
+   "scale": "pattern",
+   "title": "Narrow or widen the veins with Delta-Notch lateral inhibition",
+   "intervention": "Alter Delta or Notch activity in the pupal wing during the 22-30 hour window after puparium formation.",
+   "predicted_phenotype": "VEINS OF THE WRONG WIDTH, or vein and intervein fates mis-partitioned within the provein. This is the mechanism our venation model is a caricature of: Delta is higher in central provein cells and Notch higher in lateral ones, which is lateral inhibition refining a stripe.",
+   "mechanism": "Delta-mediated signalling from presumptive vein cells accumulates Notch in presumptive intervein cells; the partitioning depends on that feedback, in a defined time window.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible if induced in the window.",
+   "lethality_risk": "Low.",
+   "difficulty": "Low to moderate; the window is narrow.",
+   "evidence": [
+    {
+     "cite": "Huppert SS et al. 1997, Development 124:3283-91, 'Feedback regulation is central to Delta-Notch signalling required for Drosophila wing vein morphogenesis'",
+     "pmid": "9310323",
+     "read_level": "abstract",
+     "doi": "10.1242/dev.124.17.3283",
+     "finding": "'Delta and Notch are required for partitioning of vein and intervein cell fates within the provein during Drosophila metamorphosis', 'dependent on Delta-mediated signalling from 22 to 30 hours after puparium formation at 25 degrees C'. Delta is higher in central provein cells and Notch higher in lateral ones."
+    },
+    {
+     "cite": "Blair SS et al. 2007, Annu Rev Cell Dev Biol 23:293-319, 'Wing vein patterning in Drosophila and the analysis of intercellular signaling'",
+     "pmid": "17506700",
+     "read_level": "abstract",
+     "doi": "10.1146/annurev.cellbio.23.090506.123606",
+     "finding": "A review of wing vein patterning: positioning and elaboration 'rely on widely utilized developmental signals, including those mediated by EGF, BMP, Hedgehog, Notch, and Wnt' - a combination of short-range and long-range signalling."
+    }
+   ],
+   "study": "venation",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "pat-hedgehog-vein-position",
+   "scale": "pattern",
+   "title": "Move a vein rather than adding one, with Hedgehog",
+   "intervention": "Shift the Hedgehog-dependent sectors of the anterior compartment and ask where L3 and L4 end up.",
+   "predicted_phenotype": "VEINS IN DIFFERENT PLACES, same number. This is the route that distinguishes POSITION from COUNT, and it is why our reaction-diffusion model of venation can only speak to the second: a Turing mechanism sets a spacing, and Hedgehog sets an address.",
+   "mechanism": "Vein primordia form at boundaries between discrete sectors of gene expression along the anteroposterior axis; narrow primordia form first and produce short-range signals that recruit neighbours.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible if induced.",
+   "lethality_risk": "Moderate.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Crozatier M et al. 2003, Mech Dev 120:529-35, 'Vein-positioning in the Drosophila wing in response to Hh; new roles of Notch signaling'",
+     "pmid": "12782270",
+     "read_level": "abstract",
+     "doi": "10.1016/s0925-4773(03)00041-8",
+     "finding": "'vein primordia form at boundaries between discrete sectors of gene expression along the antero-posterior (A/P) axis'; rhomboid 'is expressed at the centre of wider vein-competent domains', suggesting 'narrow vein primordia form first, and produce secondary short-range signals'."
+    }
+   ],
+   "study": "venation",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "pat-intervein-srf",
+   "scale": "pattern",
+   "title": "Attack the intervein instead: blistered / DSRF",
+   "intervention": "Remove or over-express the Drosophila Serum Response Factor in the pupal wing.",
+   "predicted_phenotype": "A BLISTERED WING - the two epithelial sheets fail to appose - or ectopic vein where intervein should be. For a design this is the structural failure mode: a wing is two sheets glued together, and the glue is a cell fate.",
+   "mechanism": "DSRF is expressed in future intervein tissue and is required for its differentiation; it is allelic to blistered.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Not reversible in the animal.",
+   "lethality_risk": "Low.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Montagne J et al. 1996, Development 122:2589-97, 'The Drosophila Serum Response Factor gene is required for the formation of intervein tissue of the wing and is allelic to blistered'",
+     "pmid": "8787734",
+     "read_level": "abstract",
+     "doi": "10.1242/dev.122.9.2589",
+     "finding": "'The Drosophila homolog of the mammalian Serum Response Factor gene (DSRF) ... is expressed in the future intervein tissue of wing imaginal discs' and is 'allelic to blistered'."
+    },
+    {
+     "cite": "Fristrom D et al. 1994, Development 120:2661-71, 'Blistered: a gene required for vein/intervein formation in wings of Drosophila'",
+     "pmid": "7956840",
+     "read_level": "listing",
+     "doi": "10.1242/dev.120.9.2661",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "study": "venation",
+   "outcome": "different-wing"
+  },
+  {
+   "id": "act-restore-t3-flight-muscle",
+   "scale": "actuator",
+   "title": "Give the four-winged fly an engine: restore indirect flight muscle in the transformed T3",
+   "intervention": "Transform the T3 MESODERM as well as the ectoderm, by either of two directions nobody has reported: remove Antp function specifically in T3 mesoderm, or drive the T2 mesodermal state there - while keeping the bithorax ectodermal transformation. The target is one named step, myoblast FUSION, not 'muscle' in general.",
+   "predicted_phenotype": "A SECOND PAIR OF DRIVEN WINGS - the route that would make a four-winged fly actually fly, and NOBODY HAS REPORTED DOING IT. The two ingredients are published separately: the transformed T3 has only rudimentary indirect flight muscles, and Antp persisting in T3 mesoderm is the suggested cause. Specifically ectopic homeotic expression in T2 mesoderm respecifies its muscle pattern, so the mesodermal switch is known to be sufficient in the other direction. Nobody has reported running it in this one.",
+   "mechanism": "Fernandes et al. split indirect-flight-muscle development into four events and assign each to a germ layer. Myoblast NUMBER on the larval disc and their MIGRATION during metamorphosis follow the EPIDERMIS, which the bithorax alleles do transform. Myoblast FUSION into adult indirect flight muscle, and the branching of motor innervation, follow the MESODERM, which they do not. So exactly one step is broken and it is identified. T2 is the one thoracic segment whose mesoderm expresses no known Antp- or bithorax-complex selector, and its muscle identity is specified entirely by induction; T3 mesoderm expresses Antp autonomously, and that autonomy is what the ectodermal transformation does not reach. The prediction a designer can test is therefore specific: co-transform the mesoderm and the myoblasts that are already in the right place in the right number should fuse.",
+   "evidence_strength": "proposed",
+   "reversibility": "Not reversible in the animal if germline.",
+   "lethality_risk": "Unknown. Nobody has reported the combination.",
+   "difficulty": "High, and it is the most interesting route on the page for exactly that reason: the parts are all published and the assembly is not.",
+   "evidence": [
+    {
+     "cite": "Fernandes J et al. 1994, Curr Biol 4:957-64, 'Muscle development in the four-winged Drosophila and the role of the Ultrabithorax gene'",
+     "pmid": "7874495",
+     "read_level": "abstract",
+     "doi": "10.1016/s0960-9822(00)00219-0",
+     "finding": "'the homeotically transformed T3 (HT3) has only rudimentary indirect flight muscles'; 'the segmental identity of the mesoderm ... is crucial for the fusion of myoblasts to form indirect flight muscles, and also influences the branching pattern of innervation'."
+    },
+    {
+     "cite": "Roy S et al. 1997, Curr Biol 7:222-7, 'Muscles in the Drosophila second thoracic segment are patterned independently of autonomous homeotic gene function'",
+     "pmid": "9094307",
+     "read_level": "abstract",
+     "doi": "10.1016/s0960-9822(06)00117-5",
+     "finding": "'the mesoderm of the second thoracic segment does not express any known homeotic selector gene of the Antp or bithorax complex'; 'specific ectopic expression of Antp and other homeotic selector genes in the mesoderm of the second thoracic segment respecified its muscle pattern'; and Antp persists in transformed-T3 mesoderm, 'a likely reason for the failure of flight muscle development'."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "extra-wing"
+  },
+  {
+   "id": "act-wing-hinge-sclerites",
+   "scale": "actuator",
+   "title": "Redesign the gearbox: the wing hinge sclerites",
+   "intervention": "Drive or silence individual control muscles acting on the hinge sclerites and read the resulting wing motion.",
+   "predicted_phenotype": "SPECIFIC, PREDICTABLE CHANGES IN WING MOTION. The hinge 'transforms tiny, high-frequency oscillations of specialized power muscles into the sweeping back-and-forth motion of the wings', and a trained model now predicts wing motion from steering-muscle activity and attributes it to individual sclerites. If you want a differently-moving wing, this is a far shorter path than a differently-built one.",
+   "mechanism": "The hinge is a system of hardened sclerites joined flexibly and regulated by specialised control muscles; the four skeletal elements at the wing base are organised with a 'remarkably efficient logic'.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Fully reversible: this is stimulation and imaging, not a germline change.",
+   "lethality_risk": "Low.",
+   "difficulty": "High. It needs calcium imaging in flying animals and a dynamically scaled robot to calibrate the forces.",
+   "evidence": [
+    {
+     "cite": "Melis JM et al. 2024, Nature 628:795-803, 'Machine learning reveals the control mechanics of an insect wing hinge'",
+     "pmid": "38632396",
+     "read_level": "abstract",
+     "doi": "10.1038/s41586-024-07293-4",
+     "finding": "The hinge 'transforms tiny, high-frequency oscillations of specialized power muscles into the sweeping back-and-forth motion of the wings'. A convolutional network 'accurately predicts wing motion from the activity of the steering muscles', an encoder-decoder predicts 'the role of the individual sclerites', and a physics-based simulation 'generates flight manoeuvres that are remarkably similar to those of free-flying flies'."
+    },
+    {
+     "cite": "Lindsay T et al. 2017, Curr Biol 27:345-358, 'The Function and Organization of the Motor System Controlling Flight Maneuvers in Flies'",
+     "pmid": "28132816",
+     "read_level": "abstract",
+     "doi": "10.1016/j.cub.2016.12.018",
+     "finding": "Imaging 'a complete ensemble of wing control muscles in intact, flying flies' uncovered 'a remarkably efficient logic' at the four skeletal elements of the wing base."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "actuation"
+  },
+  {
+   "id": "act-indirect-steering-muscle",
+   "scale": "actuator",
+   "title": "Use the tension muscles: tp1 and the indirect steering system",
+   "intervention": "Manipulate indirect steering (tension) muscles, which alter thoracic mechanics rather than pulling on the hinge directly.",
+   "predicted_phenotype": "A CHANGE IN FLIGHT STABILISATION without touching the direct steering muscles. Connectome data show the indirect steering muscles receive some of the same synaptic input from the sensory apparatus as the direct ones, which makes them a second, parallel actuator for the same control loop.",
+   "mechanism": "Tension muscles change the mechanical properties of the thorax, so they act on the resonant system rather than on the stroke directly.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible.",
+   "lethality_risk": "Low.",
+   "difficulty": "High.",
+   "evidence": [
+    {
+     "cite": "Teoh HK et al. 2025, bioRxiv, 'How tp1, an indirect wing steering muscle, stabilizes Drosophila's flight'",
+     "pmid": "41279419",
+     "read_level": "abstract",
+     "doi": "10.1101/2025.11.02.686144",
+     "finding": "'Flapping flight is inherently unstable, requiring Drosophila to fine-tune their wing motions on a milliseconds timescale.' Connectome data 'reveal that indirect steering muscles or tension muscles, which alter the mechanics of the thorax, receive some of the same synaptic inputs from the sensory apparatus as the direct steering muscles'. PREPRINT: this is a bioRxiv record, not a peer-reviewed paper, and the page says so."
+    }
+   ],
+   "outcome": "actuation"
+  },
+  {
+   "id": "act-thoracic-linkage",
+   "scale": "actuator",
+   "title": "Re-tune the thorax: the scutellum and sub-epimeral ridge",
+   "intervention": "Lesion the exoskeletal linkages that couple left wing to right wing (scutellum) and wing to haltere (sub-epimeral ridge).",
+   "predicted_phenotype": "DESYNCHRONISED WINGS AND HALTERES, and a thorax whose resonant frequency no longer responds normally to wing damage. This is the route that shows wingbeat frequency is not a free parameter a designer can set: it is a property of wing-thorax resonance, and clipping wings raises it 'by as much as 90 Hz'.",
+   "mechanism": "Wings and halteres are independently driven, coupled oscillators. The wing-wing system is strongly coupled; the wing-haltere system is weakly and UNIDIRECTIONALLY coupled - changing wingbeat frequency moves haltere frequency, but loading the haltere does not move the wings.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Not reversible: this is surgery on the exoskeleton.",
+   "lethality_risk": "Low for survival, high for flight.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Deora T et al. 2021, Elife 10, 'Wings and halteres act as coupled dual oscillators in flies'",
+     "pmid": "34783648",
+     "read_level": "full-text",
+     "doi": "10.7554/eLife.53824",
+     "finding": "Full text read. 'Wings and halteres are independently driven, coupled oscillators'; the wing-haltere link 'acts in a unidirectional manner; altering wingbeat frequency affects haltere frequency, but not vice versa'. 'In insects with an intact thorax, clipping the wings increases wingbeat frequency by as much as 90 Hz.' The haltere 'is powered by a single asynchronous muscle whose contractions activate its upstroke, whereas the downstroke is thought to be entirely passive'."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "actuation"
+  },
+  {
+   "id": "sen-haltere-ablation",
+   "scale": "sensor",
+   "title": "Remove the halteres and measure what flight loses",
+   "intervention": "Bilateral or unilateral haltere ablation, or reduction of haltere mass, in tethered and free flight.",
+   "predicted_phenotype": "LOSS OF EQUILIBRIUM REFLEXES - but a GRADED and TASK-SPECIFIC loss, not a flat failure, and the page is careful about this because it is easy to overstate. What is measured: angular rotations normally elicit compensatory changes in stroke amplitude and frequency, and uni- and bilateral ablation removes them (Dickinson 1999). Haltereless flies cannot stabilise a WIDE-FIELD stimulus as accurately, yet fixate FIGURES with the same acuity, and can still flap and steer (Mureli & Fox 2015). Takeoff velocity and stability fall in Calyptratae and NOT in other flies (Yarger 2021). The flat claim 'haltere input is necessary for free flight' appears in this literature as a PREMISE sentence rather than as a measured result, and we did not find the free-flight ablation measurement it stands on - see `not_claimed` at the top level of this file.",
+   "mechanism": "Halteres encode angular velocity by detecting the Coriolis forces produced by their own linear oscillation inside the rotating frame of the thorax. The directional tuning is close to linear, so the responses vary as simple trigonometric functions of stimulus orientation.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Not reversible: the organ does not grow back.",
+   "lethality_risk": "Low for survival; severe for flight.",
+   "difficulty": "Low. This is the oldest experiment in the field.",
+   "evidence": [
+    {
+     "cite": "Dickinson MH et al. 1999, Philos Trans R Soc Lond B Biol Sci 354:903-16, 'Haltere-mediated equilibrium reflexes of the fruit fly, Drosophila melanogaster'",
+     "pmid": "10382224",
+     "read_level": "abstract",
+     "doi": "10.1098/rstb.1999.0442",
+     "finding": "'flies possess a robust equilibrium reflex in which angular rotations of the body elicit compensatory changes in both the amplitude and stroke frequency of the wings'; ablation experiments 'demonstrate that the halteres are required for these stability reflexes'. The reflexes 'function primarily to stabilize pitch and yaw within the horizontal plane'."
+    },
+    {
+     "cite": "Mureli S et al. 2015, J Exp Biol 218:2528-37, 'Haltere mechanosensory influence on tethered flight behavior in Drosophila'",
+     "pmid": "26113141",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.121863",
+     "finding": "Their PREMISE, flagged as such: 'Haltere input is necessary for free flight, making it difficult to study the effects of haltere ablation under natural flight conditions' - which is why the work is tethered. Their RESULTS: 'Haltere removal does not affect the flies' ability to flap or steer their wings, but it does increase the temporal frequency at which they modify their wingbeat amplitude'; 'Reducing the haltere mass decreases the optomotor reflex response to wide-field motion, and removing the haltere entirely does not further decrease the response'; 'Decreasing the mass does not attenuate the response to figure motion, but removing the entire haltere does attenuate the response'; haltereless flies 'fixate figures with the same acuity as intact flies, but cannot stabilize a wide-field stimulus as accurately as intact flies can'. Their own conclusion is a qualifier: 'during tethered flight, intact halteres are not strictly necessary for visually guided wing-steering responses'."
+    },
+    {
+     "cite": "Nalbach G et al. 1994, Neuroscience 61:149-63, 'Extremely non-orthogonal axes in a sense organ for rotation: behavioural analysis of the dipteran haltere system'",
+     "pmid": "7969890",
+     "read_level": "listing",
+     "doi": "10.1016/0306-4522(94)90068-x",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "steering"
+  },
+  {
+   "id": "sen-campaniform-dose",
+   "scale": "sensor",
+   "title": "Delete the sensor by DEGREES: graded silencing of haltere campaniform sensilla",
+   "intervention": "Use Gal4 driver lines expressed in different populations of haltere campaniform neurons to silence or ablate an increasing number of them.",
+   "predicted_phenotype": "A LINEAR DECLINE in the magnitude of wing and head motor responses to yaw rotation as more sensilla are silenced. This is the route that turns 'the haltere is necessary' into a dose-response, and it is the sensory analogue of the Hox dose experiment in study 1: the same question - switch or dial - asked of the sensor rather than the selector.",
+   "mechanism": "Each haltere carries hundreds of strain-sensing campaniform sensilla that encode forces at the organ's base as it oscillates; the equilibrium reflex is the population's output.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Genetic silencing is reversible in principle; ablation is not.",
+   "lethality_risk": "Low.",
+   "difficulty": "Moderate; the driver lines are the hard part and they exist.",
+   "evidence": [
+    {
+     "cite": "Sharma T et al. 2026, J Exp Biol 229, 'The role of haltere campaniform sensilla in equilibrium reflexes of the fruit fly, Drosophila melanogaster'",
+     "pmid": "41782489",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.250431",
+     "finding": "'the magnitude of the wing and head motor responses of flies decreases linearly with an increasing number of campaniform sensilla genetically silenced or ablated, providing direct evidence for the involvement of these mechanosensory structures in the detection of angular velocity during flight'. The paper opens by noting that the requirement of the campaniform sensilla themselves 'has yet to be directly demonstrated'."
+    },
+    {
+     "cite": "Yarger AM et al. 2018, Proc Biol Sci 285, 'Single mechanosensory neurons encode lateral displacements using precise spike timing and thresholds'",
+     "pmid": "30232160",
+     "read_level": "abstract",
+     "doi": "10.1098/rspb.2018.1759",
+     "finding": "Single haltere mechanosensory neurons 'encode lateral displacements using precise spike timing and thresholds'."
+    },
+    {
+     "cite": "Fox JL et al. 2008, J Comp Physiol A Neuroethol Sens Neural Behav Physiol 194:887-97, 'A neural basis for gyroscopic force measurement in the halteres of Holorusia'",
+     "pmid": "18751714",
+     "read_level": "abstract",
+     "doi": "10.1007/s00359-008-0361-z",
+     "finding": "A neural basis for gyroscopic force measurement in the halteres of the crane fly Holorusia: Coriolis forces 'occur at oscillation frequency and twice the oscillation frequency', and this is single-fibre recording from primary afferents."
+    }
+   ],
+   "outcome": "steering"
+  },
+  {
+   "id": "sen-haltere-efference",
+   "scale": "sensor",
+   "title": "Treat the haltere as an output, not just an input",
+   "intervention": "Modulate the haltere's own control muscles and measure the effect on wing steering muscle timing.",
+   "predicted_phenotype": "A CHANGE IN WING MOTOR NEURON SPIKE TIMING - i.e. steering - produced by moving the SENSOR rather than the wing. This is the finding that most undermines the simple story the page starts from: the haltere is not only a gyroscope being read, it is 'an adjustable clock' being set, and visual input reaches it.",
+   "mechanism": "Haltere motor neurons receive strong excitatory input from directionally sensitive visual interneurons; descending visual input modulates haltere muscle activity, which alters the mechanosensory feedback that regulates the wing steering muscles.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible.",
+   "lethality_risk": "Low.",
+   "difficulty": "High.",
+   "evidence": [
+    {
+     "cite": "Dickerson BH et al. 2019, Curr Biol 29:3517-3524.e3, 'Flies Regulate Wing Motion via Active Control of a Dual-Function Gyroscope'",
+     "pmid": "31607538",
+     "read_level": "abstract",
+     "doi": "10.1016/j.cub.2019.08.065",
+     "finding": "'rather than acting solely as a gyroscope to detect body rotation, halteres also function as an adjustable clock to set the spike timing of wing motor neurons, a specialized capability that evolved from the generic flight circuitry of their four-winged ancestors'."
+    },
+    {
+     "cite": "Chan WP et al. 1998, Science 280:289-92, 'Visual input to the efferent control system of a fly's \"gyroscope\"'",
+     "pmid": "9535659",
+     "read_level": "abstract",
+     "doi": "10.1126/science.280.5361.289",
+     "finding": "'motoneurons innervating muscles of the haltere receive strong excitatory input from directionally sensitive visual interneurons'."
+    },
+    {
+     "cite": "Fayyazuddin A et al. 1996, J Neurosci 16:5225-32, 'Haltere afferents provide direct, electrotonic input to a steering motor neuron in the blowfly, Calliphora'",
+     "pmid": "8756451",
+     "read_level": "abstract",
+     "doi": "10.1523/JNEUROSCI.16-16-05225.1996",
+     "finding": "The b1 steering motor neuron 'fires a single phase-locked spike during each wingbeat cycle', thought to result from wingbeat-synchronous mechanosensory input; haltere afferents provide DIRECT, ELECTROTONIC input to it - i.e. the fastest connection anatomy allows."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "steering"
+  },
+  {
+   "id": "sen-wing-campaniform-substitute",
+   "scale": "sensor",
+   "title": "Substitute the missing gyro: use the WING's own campaniform sensilla",
+   "intervention": "In an insect with no halteres, perturb the campaniform sensilla on the wings themselves and measure flight posture control.",
+   "predicted_phenotype": "LOSS OF POSTURAL CONTROL in a moth, from a wing sensor rather than a haltere. This is the route that says a four-winged redesign need not be flying blind: the same class of mechanoreceptor sits on the wing, and in Lepidoptera it already does the job. Whether a fly could be made to use its wing sensilla the way a moth does is, as far as we found, untested.",
+   "mechanism": "Campaniform sensilla are the same strain-sensing structures found on halteres; they are also present on wings, where they can encode the forces a wing experiences.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Ablation is not reversible.",
+   "lethality_risk": "Low.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Dickerson BH et al. 2014, J Exp Biol 217:2301-8, 'Control of moth flight posture is mediated by wing mechanosensory feedback'",
+     "pmid": "24737754",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.103770",
+     "finding": "'Insect halteres are mechanosensory organs that encode inertial forces ... but serve no aerodynamic role and are specific to two orders of insects (Diptera and Strepsiptera).' 'The mechanosensory structures found on the halteres, campaniform sensilla, are also present' on wings, and moth flight posture is mediated by wing mechanosensory feedback."
+    }
+   ],
+   "outcome": "steering"
+  },
+  {
+   "id": "sen-haltere-loading",
+   "scale": "sensor",
+   "title": "Detune the sensor without removing it: load the haltere knob",
+   "intervention": "Add small calibrated masses to the haltere end-knob and measure haltere and wingbeat frequency.",
+   "predicted_phenotype": "HALTERE FREQUENCY FALLS IN DISCRETE STEPS above a threshold load while WINGBEAT FREQUENCY DOES NOT MOVE - and the effect reverses when the load is removed. A reversible, graded, non-genetic way to break the rate gyro, which makes it the best control experiment on this page for 'is it the sensing, or is it the mass?'.",
+   "mechanism": "The sub-epimeral ridge couples the two oscillators unidirectionally, so a change on the haltere side does not propagate back to the wings.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "FULLY reversible, and demonstrated to be: detaching the load restored haltere frequency.",
+   "lethality_risk": "Low.",
+   "difficulty": "Low to moderate.",
+   "evidence": [
+    {
+     "cite": "Deora T et al. 2021, Elife 10, 'Wings and halteres act as coupled dual oscillators in flies'",
+     "pmid": "34783648",
+     "read_level": "full-text",
+     "doi": "10.7554/eLife.53824",
+     "finding": "Full text read. 'Small loads did not affect haltere frequency, but as the load increased beyond a threshold, haltere frequency decreased in discrete steps. However, wingbeat frequency remained constant in these experiments.' 'we detached the load and confirmed that haltere frequency recovered and again matched wingbeat frequency'."
+    }
+   ],
+   "outcome": "steering"
+  },
+  {
+   "id": "sen-haltere-to-wing-cost",
+   "scale": "sensor",
+   "title": "Count what converting a haltere into a wing actually spends",
+   "intervention": "None - this is an accounting route. Take any route that transforms T3 towards T2 and ask what sensory capability leaves with the haltere.",
+   "predicted_phenotype": "A FLY WITH NO RATE GYRO. Every route on this page that produces a second pair of wings also produces this, and the literature nowhere reports a four-winged fly that kept its halteres. Our own model (study 3) puts the boundary at a feedback loop of about 3 wingbeats, roughly 14 ms: slower than that and the measured 60 ms recovery is unreachable AT ANY GAIN. The haltere loop is inside that boundary and the visual loop, at about 30 ms, is well outside it.",
+   "mechanism": "The haltere IS the hindwing. There is no version of 'convert the hindwing into a wing' that keeps it.",
+   "evidence_strength": "model_only",
+   "reversibility": "Not applicable.",
+   "lethality_risk": "Not applicable.",
+   "difficulty": "Not applicable; this is the arithmetic, and it is the point of the page.",
+   "evidence": [
+    {
+     "cite": "Sherman A et al. 2003, J Exp Biol 206:295-302, 'A comparison of visual and haltere-mediated equilibrium reflexes in the fruit fly Drosophila melanogaster'",
+     "pmid": "12477899",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.00075",
+     "finding": "'the visual system is tuned to relatively slow rotation whereas the haltere-mediated respo[nse]' is tuned faster - the two modalities differ in their mechanisms of transduction and therefore in their temporal responses."
+    },
+    {
+     "cite": "Ristroph L et al. 2010, Proc Natl Acad Sci U S A 107:4820-4, 'Discovering the flight autostabilizer of fruit flies by inducing aerial stumbles'",
+     "pmid": "20194789",
+     "read_level": "abstract",
+     "doi": "10.1073/pnas.1000615107",
+     "finding": "Flies 'respond to gentle disturbances by accurately returning to their original orientation', taking 'advantage of a stabilizing aerodynamic influence and active torque generation to recover their heading to within 2 degrees in < 60 ms'."
+    },
+    {
+     "cite": "Sherman A et al. 2004, J Exp Biol 207:133-42, 'Summation of visual and mechanosensory feedback in Drosophila flight control'",
+     "pmid": "14638840",
+     "read_level": "listing",
+     "doi": "10.1242/jeb.00731",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "steering"
+  },
+  {
+   "id": "neu-implanted-stimulator-beetle",
+   "scale": "neural",
+   "title": "Skip the genetics: steer the insect with an implanted radio stimulator",
+   "intervention": "Implant a radio-equipped neural and muscular stimulator and drive flight initiation, cessation, elevation and turning.",
+   "predicted_phenotype": "CONTROLLED FLIGHT IN A FREE-FLYING BEETLE. Flight initiation, cessation and elevation through brain stimulation; turns through direct stimulation of either basalar muscle. If the goal is a redesigned flight apparatus that does something new, this is the only route on the page that has already produced a steerable animal, and it required no change to any gene.",
+   "mechanism": "The flight motor is addressable: the brain carries the start/stop decision and individual steering muscles carry the turn, so an electrode at each gives open-loop control.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "The implant is removable; the implantation is not.",
+   "lethality_risk": "Moderate. This is surgery on a living animal and the welfare section below treats it as the page's most ethically loaded route.",
+   "difficulty": "Moderate, and falling: the hardware is now commodity.",
+   "evidence": [
+    {
+     "cite": "Sato H et al. 2009, Front Integr Neurosci 3:24, 'Remote radio control of insect flight'",
+     "pmid": "20161808",
+     "read_level": "abstract",
+     "doi": "10.3389/neuro.07.024.2009",
+     "finding": "'We demonstrated the remote control of insects in free flight via an implantable radio-equipped miniature neural stimulating system.' 'Flight initiation, cessation and elevation control were accomplished through neural stimulus of the brain ... Turns were triggered through the direct muscular stimulus of either of the basalar muscles.'"
+    },
+    {
+     "cite": "Sato H et al. 2015, Curr Biol 25:798-803, 'Deciphering the role of a coleopteran steering muscle via free flight stimulation'",
+     "pmid": "25784033",
+     "read_level": "abstract",
+     "doi": "10.1016/j.cub.2015.01.051",
+     "finding": "Free-flight stimulation used to decipher the role of a coleopteran steering muscle: 'The inability to stimulate in free flight has been a long-standing hurdle for insect flight studies.'"
+    },
+    {
+     "cite": "Vo-Doan TT et al. 2022, Cyborg Bionic Syst 2022:9780504, 'A Cyborg Insect Reveals a Function of a Muscle in Free Flight'",
+     "pmid": "36285304",
+     "read_level": "abstract",
+     "doi": "10.34133/2022/9780504",
+     "finding": "An insect-computer hybrid robot: a wireless backpack controller on a living beetle, used to reveal a muscle's function in free flight."
+    },
+    {
+     "cite": "Choo HY et al. 2016, PLoS One 11:e0151808, 'Electrical Stimulation of Coleopteran Muscle for Initiating Flight'",
+     "pmid": "27050093",
+     "read_level": "abstract",
+     "doi": "10.1371/journal.pone.0151808",
+     "finding": "Electrical stimulation of coleopteran muscle to obtain 'a reliable and controllable flight initiation protocol'."
+    },
+    {
+     "cite": "Sato H et al. 2010, Front Neurosci 4:199, 'Recent developments in the remote radio control of insect flight'",
+     "pmid": "21629761",
+     "read_level": "listing",
+     "doi": "10.3389/fnins.2010.00199",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "steering"
+  },
+  {
+   "id": "neu-honeybee-steering",
+   "scale": "neural",
+   "title": "The same trick on a small insect: optic-lobe stimulation in a honeybee",
+   "intervention": "Apply electrical stimulation to the optic lobes of a honeybee and attempt steering, not just start/stop.",
+   "predicted_phenotype": "STEERING, verified experimentally. Optic-lobe stimulation was already established for initiation and cessation in small insects; the open question this addresses is whether the same electrode can turn the animal.",
+   "mechanism": "Visual interneurons feed the steering circuitry, so stimulating them injects a turn command upstream of the motor.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Reversible in the sense that stimulation stops; the implant is not.",
+   "lethality_risk": "Moderate.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Yu L et al. 2022, Cyborg Bionic Syst 2022:9895837, 'Experimental Verification on Steering Flight of Honeybee by Electrical Stimulation'",
+     "pmid": "39886318",
+     "read_level": "abstract",
+     "doi": "10.34133/2022/9895837",
+     "finding": "'The existing research has recognized that the electrical stimulation applied to the optic lobes was an appropriate flight control strategy for small insects represented by honeybee ... However, its regulation effect on steering locomotion has not been fully verified.'"
+    }
+   ],
+   "outcome": "steering"
+  },
+  {
+   "id": "neu-sensor-fusion",
+   "scale": "neural",
+   "title": "Rewire the fusion rule between the fast and the slow sense",
+   "intervention": "Deliver haltere and visual stimuli separately and together and measure how the wing motor output combines them.",
+   "predicted_phenotype": "A LINEAR SUM, for wing motor output - but NOT for gaze. That asymmetry is a design constraint: if you intend to compensate for a deleted haltere by upweighting vision, the literature says the two pathways are already summing linearly at the wing, so there is no untapped nonlinearity to exploit; and the head and the wings are not the same control problem.",
+   "mechanism": "The two modalities converge on the steering motor neurons with different temporal tuning, the visual system tuned to slow rotation and the haltere pathway to fast.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Reversible.",
+   "lethality_risk": "Low.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Rauscher MJ et al. 2021, Proc Biol Sci 288:20202374, 'Haltere and visual inputs sum linearly to predict wing (but not gaze) motor output in tethered flying Drosophila'",
+     "pmid": "33499788",
+     "read_level": "listing",
+     "doi": "10.1098/rspb.2020.2374",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    },
+    {
+     "cite": "Sherman A et al. 2003, J Exp Biol 206:295-302, 'A comparison of visual and haltere-mediated equilibrium reflexes in the fruit fly Drosophila melanogaster'",
+     "pmid": "12477899",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.00075",
+     "finding": "'the visual system is tuned to relatively slow rotation whereas the haltere-mediated respo[nse]' is faster."
+    },
+    {
+     "cite": "Sherman A et al. 2004, J Exp Biol 207:133-42, 'Summation of visual and mechanosensory feedback in Drosophila flight control'",
+     "pmid": "14638840",
+     "read_level": "listing",
+     "doi": "10.1242/jeb.00731",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "steering"
+  },
+  {
+   "id": "org-aphid-polyphenism",
+   "scale": "organism",
+   "title": "Switch wings on and off without changing the genome: the pea aphid polyphenism",
+   "intervention": "Apply the environmental cue - crowding - and let one genotype build winged or wingless daughters.",
+   "predicted_phenotype": "WINGED OR WINGLESS OFFSPRING FROM ONE GENOME. This is the only scale on the page where wing number is already a controllable variable in a living animal with no genetic lesion at all, and it is therefore the only route with no lethality and full reversibility.",
+   "mechanism": "An environmental stressor is transduced into a developmental decision; the genome-wide transcriptional response has been characterised. The proportion of winged females produced varies between clonal genotypes, and in males wing production is instead environmentally insensitive and sex-linked.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Completely reversible: it is a generational switch, not a lesion.",
+   "lethality_risk": "None.",
+   "difficulty": "Low to rear, high to dissect mechanistically.",
+   "evidence": [
+    {
+     "cite": "Braendle C et al. 2005, Proc Biol Sci 272:657-64, 'Genetic variation for an aphid wing polyphenism is genetically linked to a naturally occurring wing polymorphism'",
+     "pmid": "15817441",
+     "read_level": "abstract",
+     "doi": "10.1098/rspb.2004.2995",
+     "finding": "'Winged and wingless phenotypes also occur in males of the sexual generation. In contrast to parthenogenetic females, wing production in males is environmentally insensitive and controlled by the sex-li[nked locus]'; the proportion of winged females 'varies between clonal genotypes'."
+    },
+    {
+     "cite": "Vellichirammal NN et al. 2016, Mol Ecol 25:4146-60, 'The genomewide transcriptional response underlying the pea aphid wing polyphenism'",
+     "pmid": "27393739",
+     "read_level": "abstract",
+     "doi": "10.1111/mec.13749",
+     "finding": "The genome-wide transcriptional response underlying the pea aphid wing polyphenism."
+    },
+    {
+     "cite": "Grantham ME et al. 2016, Biol Lett 12, 'A case for a joint strategy of diversified bet hedging and plasticity in the pea aphid wing polyphenism'",
+     "pmid": "28120801",
+     "read_level": "listing",
+     "doi": "10.1098/rsbl.2016.0654",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "fewer-wings"
+  },
+  {
+   "id": "org-ant-polyphenism",
+   "scale": "organism",
+   "title": "Interrupt the wing network at a different point in each species: the ant castes",
+   "intervention": "Compare expression of the wing-patterning network across winged and wingless castes in several ant species.",
+   "predicted_phenotype": "A WINGLESS CASTE, with the interruption at a DIFFERENT NODE in each species. For a design space this is the single most useful comparative fact on the page: the network is conserved in the winged castes, and the points at which it is broken in the wingless ones are 'evolutionarily labile' - so there is no one place a wing programme has to be cut, and a designer has many equivalent entry points.",
+   "mechanism": "Wing polyphenism in ants evolved once, 125 million years ago; the network's conservation and the lability of its interruption points have been simultaneous ever since.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Not applicable: this is a developmental programme, not an intervention.",
+   "lethality_risk": "None.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Abouheif E et al. 2002, Science 297:249-52, 'Evolution of the gene network underlying wing polyphenism in ants'",
+     "pmid": "12114626",
+     "read_level": "abstract",
+     "doi": "10.1126/science.1071468",
+     "finding": "'the expression of several genes within the network is conserved in the winged castes of four ant species, whereas points of interruption within the network in the wingless castes are evolutionarily labile'. Wing polyphenism in ants 'evolved once, 125 million years ago'."
+    }
+   ],
+   "outcome": "fewer-wings"
+  },
+  {
+   "id": "org-planthopper-insulin",
+   "scale": "organism",
+   "title": "Use a hormone receptor as the wing switch: the planthopper insulin pathway",
+   "intervention": "Manipulate either of the two insulin receptors in Nilaparvata lugens.",
+   "predicted_phenotype": "LONG-WINGED OR SHORT-WINGED ADULTS, switched by a receptor rather than by a selector gene. Long-winged morphs fly and short-winged ones do not but are usually more fecund, which is the clearest statement anywhere on this page of what flight costs.",
+   "mechanism": "Two insulin receptors determine the alternative morphs, downstream of nutritional status.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "RNAi is transient; the morph, once built, is not.",
+   "lethality_risk": "Low.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Xu HJ et al. 2015, Nature 519:464-7, 'Two insulin receptors determine alternative wing morphs in planthoppers'",
+     "pmid": "25799997",
+     "read_level": "abstract",
+     "doi": "10.1038/nature14286",
+     "finding": "'Long-winged morphs can fly, which allows them to escape adverse habitats and track changing resources, whereas short-winged morphs are flightless, but usually possess higher fecundity than the winged morphs.' Two insulin receptors determine the alternative morphs."
+    },
+    {
+     "cite": "Xu HJ et al. 2017, Philos Trans R Soc Lond B Biol Sci 372, 'Insulin receptors and wing dimorphism in rice planthoppers'",
+     "pmid": "27994130",
+     "read_level": "listing",
+     "doi": "10.1098/rstb.2015.0489",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    },
+    {
+     "cite": "Li X et al. 2021, Insect Sci 28:1300-1313, 'An InR/mir-9a/NlUbx regulatory cascade regulates wing diphenism in brown planthoppers'",
+     "pmid": "32935926",
+     "read_level": "listing",
+     "doi": "10.1111/1744-7917.12872",
+     "finding": "NOT READ. The PubMed record for this paper resolves and its title and journal are as cited; we have read none of its results and make no claim from it beyond what its title states."
+    }
+   ],
+   "outcome": "fewer-wings"
+  },
+  {
+   "id": "org-planthopper-ubx",
+   "scale": "organism",
+   "title": "The same Hox gene, used as a morph switch instead of an identity switch",
+   "intervention": "RNAi against Ultrabithorax in short-winged planthopper nymphs.",
+   "predicted_phenotype": "A WING-LENGTH CHANGE rather than a wing-identity change. In planthoppers Ubx is expressed in BOTH forewing and hindwing pads - 'different from the canonical model of Ubx expression' - and is regulated by the nutritional status of the host plant. The same protein that deletes a wing pair in a fly tunes wing LENGTH in a bug, which is the strongest warning on this page against reading a Drosophila Hox phenotype as a general rule.",
+   "mechanism": "NlUbx responds to host-plant quality and switches between the migratory long-winged and the reproductive short-winged form.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "RNAi is transient.",
+   "lethality_risk": "Low.",
+   "difficulty": "Moderate.",
+   "evidence": [
+    {
+     "cite": "Liu F et al. 2020, Natl Sci Rev 7:1181-1189, 'Ultrabithorax is a key regulator for the dimorphism of wings, a main cause for the outbreak of planthoppers in rice'",
+     "pmid": "34692142",
+     "read_level": "abstract",
+     "doi": "10.1093/nsr/nwaa061",
+     "finding": "'Ubx is expressed in both forewing and hindwing pads, which is different from the canonical model of Ubx expression. In brown planthoppers, expression of Ubx (NlUbx) is regulated by nutritional status of the rice host.'"
+    },
+    {
+     "cite": "Fu SJ et al. 2020, Gene 737:144446, 'Functional analysis of Ultrabithorax in the wing-dimorphic planthopper Nilaparvata lugens (St\u00e5l, 1854) (Hemiptera: Delphacidae)'",
+     "pmid": "32035241",
+     "read_level": "abstract",
+     "doi": "10.1016/j.gene.2020.144446",
+     "finding": "'RNA-interference (RNAi)-mediated silencing of NlUbx in short-winged BPH nymphs significantly induc[ed]' a change; two NlUbx isoforms were identified."
+    }
+   ],
+   "outcome": "fewer-wings"
+  },
+  {
+   "id": "sen-haltere-vs-vision-saccades",
+   "scale": "sensor",
+   "title": "Turn the haltere feedback up and down, and ask whether vision can do the same job",
+   "intervention": "On a magnetic tether, where the fly is fixed in space but FREE TO ROTATE about its yaw axis, manipulate haltere-mediated feedback and visual feedback separately and measure the dynamics of body saccades.",
+   "predicted_phenotype": "SACCADE AMPLITUDE TRACKS THE HALTERE AND IGNORES VISION. Increasing haltere-mediated feedback decreases saccade amplitude and decreasing it increases amplitude, while altering visual feedback has no significant effect on saccade dynamics at all. This is the cleanest measured statement on the page that the two senses are not interchangeable, and it is GRADED rather than all-or-nothing - which is what an ablation experiment cannot show.",
+   "mechanism": "The two modalities are sensitive to different angular velocity bands. The haltere system dominates the fast rotations a saccade consists of; the visual system contributes at lower angular velocities, to which the haltere system is less sensitive.",
+   "evidence_strength": "direct_insect_phenotype",
+   "reversibility": "Fully reversible: the manipulations are feedback settings on a tether, not lesions.",
+   "lethality_risk": "Low.",
+   "difficulty": "Moderate. A magnetic tether is a standard rig.",
+   "evidence": [
+    {
+     "cite": "Bender JA et al. 2006, J Exp Biol 209:4597-606, 'A comparison of visual and haltere-mediated feedback in the control of body saccades in Drosophila melanogaster'",
+     "pmid": "17114395",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.02583",
+     "finding": "'altering visual feedback had no significant effect on the dynamics of saccades, whereas increasing and decreasing the amount of haltere-mediated feedback decreased and increased saccade amplitude, respectively'. And the complement: 'the visual system does provide feedback for flight stability at lower angular velocities, to which the haltere system is less sensitive'. Note the rig: a magnetic tether leaves 'flies ... fixed in space but free to rotate about their yaw axis', which is closer to free flight than a rigid tether and still not free flight."
+    },
+    {
+     "cite": "Sherman A et al. 2003, J Exp Biol 206:295-302, 'A comparison of visual and haltere-mediated equilibrium reflexes in the fruit fly Drosophila melanogaster'",
+     "pmid": "12477899",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.00075",
+     "finding": "'the visual system is tuned to relatively slow rotation whereas the haltere-mediated respo[nse]' is faster - the mechanism behind the result above."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "steering"
+  },
+  {
+   "id": "neu-delay-gain-tradeoff",
+   "scale": "neural",
+   "title": "Measure the delay-versus-gain trade-off directly, on a robot",
+   "intervention": "Run a dynamically scaled robotic fruit fly with a real-time proportional controller on yaw velocity, and sweep the feedback delay across the range a real fly experiences.",
+   "predicted_phenotype": "A HARD TRADE-OFF BETWEEN SENSOR DELAY AND PERMISSIBLE GAIN: the longer the delay, the lower the gain the system tolerates, so a slow sense cannot be compensated by turning it up. This route exists on the page because it is PRIOR ART for our own study 3, which rediscovered the same trade-off in simulation and put the usable-delay boundary at about 3 wingbeats. Our result is a re-derivation, not a discovery, and the page says so.",
+   "mechanism": "Fast mechanosensory feedback provides active damping that complements the passive damping of flapping itself; a haltere-mediated inner loop supplies that damping for a slower, visually mediated outer loop.",
+   "evidence_strength": "model_only",
+   "reversibility": "Not applicable: a robot.",
+   "lethality_risk": "None.",
+   "difficulty": "High. It needs a dynamically scaled robotic fly with real-time torque feedback.",
+   "evidence": [
+    {
+     "cite": "Elzinga MJ et al. 2012, J R Soc Interface 9:1685-96, 'The influence of sensory delay on the yaw dynamics of a flapping insect'",
+     "pmid": "22188766",
+     "read_level": "abstract",
+     "doi": "10.1098/rsif.2011.0699",
+     "finding": "'The results show a fundamental trade-off between sensor delay and permissible feedback gain, and suggest that fast mechanosensory feedback in flies, and most probably in other insects, provide a source of active damping which compliments that contributed by passive effects.' Their proposed architecture is the one study 3 assumes: 'a haltere-mediated inner-loop proportional controller provides damping for slower visually mediated feedback'. NOTE: this is a robot and a model, not an animal - the evidence class is model_only even though the apparatus is physical."
+    },
+    {
+     "cite": "Chang S et al. 2014, Proc Natl Acad Sci U S A 111:11246-51, 'Predicting fruit fly's sensing rate with insect flight simulations'",
+     "pmid": "25049376",
+     "read_level": "abstract",
+     "doi": "10.1073/pnas.1314738111",
+     "finding": "A free-flight simulation giving 'theoretical bounds on both the sensing rate and the delay time between sensing and actuation', from which the authors 'conjecture that fruit flies sense their kinematic states every wing beat to stabilize their flight', and propose 'the fly's haltere and first basalar motor neuron' as the candidate pathway. A conjecture, in their word, not a measurement."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "steering"
+  },
+  {
+   "id": "sen-haltere-is-not-only-for-flight",
+   "scale": "sensor",
+   "title": "Count what else the haltere is doing before you spend it",
+   "intervention": "Ablate halteres and measure NON-flight behaviours: walking speed on vertical surfaces, response to sudden changes in gravity, and postural stabilisation while standing.",
+   "predicted_phenotype": "DEGRADED WALKING AND STANDING, in an animal that is not flying. Intact halteres are necessary to maintain normal walking speeds on vertical surfaces and to respond to sudden changes in gravity; crane flies with ablated halteres show reduced postural stability against perturbations and need longer to recover. This is a cost no flight model on this page counts, including ours, and it is charged to every route that converts a haltere into a wing.",
+   "mechanism": "The haltere is an inertial sensor, and inertial information is useful whenever the body is being accelerated - which is not only in flight. Several taxa oscillate their halteres while walking.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Ablation is not reversible.",
+   "lethality_risk": "Low.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Daltorio KA et al. 2018, J Exp Biol 221, 'Haltere removal alters responses to gravity in standing flies'",
+     "pmid": "29853546",
+     "read_level": "abstract",
+     "doi": "10.1242/jeb.181719",
+     "finding": "'We found that intact halteres are necessary for flies to maintain normal walking speeds on vertical surfaces and to respond to sudden changes in gravity. Our results suggest that halteres can serve multiple sensory purposes during different behaviors, expanding their role beyond their canonical use in flight.'"
+    },
+    {
+     "cite": "Lea KM et al. 2026, Curr Biol 36:3103-3113.e3, 'Halteres stabilize standing posture in crane flies'",
+     "pmid": "42285096",
+     "read_level": "abstract",
+     "doi": "10.1016/j.cub.2026.05.025",
+     "finding": "In crane flies, 'freely behaving flies with ablated halteres exhibited reduced postural stability against perturbations and required longer recovery times', and haltere oscillations during standing are 'driven by passive displacement of the legs'. The paper's own opening premise - 'Halteres are necessary for flight control in all winged flies' - is background in this paper too, not its result, and is not used here as evidence of that claim."
+    },
+    {
+     "cite": "Hall JM et al. 2015, Biol Lett 11, 'Kinematic diversity suggests expanded roles for fly halteres'",
+     "pmid": "26601682",
+     "read_level": "abstract",
+     "doi": "10.1098/rsbl.2015.0845",
+     "finding": "Haltere movements during free walking 'were correlated with phylogeny', and the authors 'predicted that haltere removal might decrease behavioural performance in those flies that move them during walking and provide evidence that this is the case'."
+    }
+   ],
+   "outcome": "steering"
+  },
+  {
+   "id": "comp-odonata-four-wings",
+   "scale": "comparative",
+   "title": "Copy the animal that already has four independently controlled wings",
+   "intervention": "None genetic. Study the fore-hind wing phasing of dragonflies and damselflies and ask what a fly would need to replicate it.",
+   "predicted_phenotype": "FOUR WINGS THAT CAN BE BETTER THAN TWO, at the right phase. Dragonflies 'have maintained their distinctive, independently controllable, four-winged form for over 300 Myr', and fore-hind phasing 'can improve aerodynamic efficiency by removing swirl'. This is the route that keeps the page honest: the answer to 'would four wings fly better' is not simply no.",
+   "mechanism": "Phasing lets the hindwing recover energy from the forewing's wake instead of flying through disturbed air. The sign of the interaction depends on the phase, which is a CONTROL variable and not a morphological one.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Not applicable.",
+   "lethality_risk": "Not applicable.",
+   "difficulty": "The morphology is the easy part. Phasing four wings needs four independent actuators and the control to use them, which is exactly what the homeotic route does NOT deliver.",
+   "evidence": [
+    {
+     "cite": "Usherwood JR et al. 2008, J R Soc Interface 5:1303-7, 'Phasing of dragonfly wings can improve aerodynamic efficiency by removing swirl'",
+     "pmid": "18477538",
+     "read_level": "abstract",
+     "doi": "10.1098/rsif.2008.0124",
+     "finding": "'dragonflies and damselflies have maintained their distinctive, independently controllable, four-winged form for over 300Myr'; previous studies 'have generally painted a rather disappointing picture' of interactions, but phasing 'can improve aerodynamic efficiency by removing swirl'."
+    },
+    {
+     "cite": "Lai YH et al. 2020, Bioinspir Biomim 16, 'Effect of wing-wing interaction coupled with morphology and kinematic features of damselflies'",
+     "pmid": "33075754",
+     "read_level": "abstract",
+     "doi": "10.1088/1748-3190/abc293",
+     "finding": "Wing-wing interaction in two damselfly species in forward flight, analysed with high-speed video and 3D numerical simulation: the effects are 'complicated combinations of biological morphology, wing kinematics and fluid dynamics'."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "extra-wing"
+  },
+  {
+   "id": "comp-lepidoptera-hindwing",
+   "scale": "comparative",
+   "title": "Remove the hindwings of an insect that has four, and measure flight",
+   "intervention": "Cut the hindwings off moths and butterflies and track three-dimensional flight trajectories.",
+   "predicted_phenotype": "THEY STILL FLY, having lost nearly half their wing area, BUT they lose linear and turning acceleration and can no longer execute normal evasive flight. Turning RADIUS is unaffected; speed is not. This is the single most direct measurement on the page of what a second wing pair actually buys, and the answer is agility, not lift.",
+   "mechanism": "Lepidopteran flight is anteromotoric: forewings and hindwings are mechanically coupled and flap in synchrony, with the forewings driving. The hindwing is therefore a manoeuvring surface rather than a primary lift surface.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Not reversible.",
+   "lethality_risk": "Low in the laboratory; the paper argues it is lethal in the wild, through bats and birds.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Jantzen B et al. 2008, Proc Natl Acad Sci U S A 105:16636-40, 'Hindwings are unnecessary for flight but essential for execution of normal evasive flight in Lepidoptera'",
+     "pmid": "18936482",
+     "read_level": "abstract",
+     "doi": "10.1073/pnas.0807223105",
+     "finding": "'lepidopterans can still fly when their hindwings are cut off, a procedure reducing their total wing surface, on average, by nearly one half.' But 'hindwing removal causes lepidopterans to incur a loss in both linear and turning acceleration'; they 'still are able to zigzag aerially (the ablation has no effect on their turning radius in flight) but at lesser speed and therefore less evasively'."
+    }
+   ],
+   "study": "flight-performance",
+   "outcome": "steering"
+  },
+  {
+   "id": "comp-strepsiptera-reversed",
+   "scale": "comparative",
+   "title": "The halteres on the wrong segment: Strepsiptera",
+   "intervention": "None. Read the one insect order whose haltere-like organs sit on the MESOthorax, the reverse of the dipteran arrangement.",
+   "predicted_phenotype": "A FLYING INSECT WITH THE HALTERE/WING ARRANGEMENT INVERTED. If the inversion is a homeotic change, then the design the page is discussing - move which segment carries the aerofoil and which carries the gyroscope - has already happened once in evolution, and the animal flies. If the two organs instead arose convergently, it has not. The literature treats this as OPEN, and the page keeps it open.",
+   "mechanism": "Proposed as 'a radical homeotic mutation' switching the position of wings and halteres, if Strepsiptera are the sister group of Diptera. The alternative affiliation to Coleoptera 'implies that dipteran halteres and strepsipteran haltere-like organs evolved convergently'.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Not applicable.",
+   "lethality_risk": "Not applicable.",
+   "difficulty": "Not applicable.",
+   "evidence": [
+    {
+     "cite": "Rokas A et al. 1999, Insect Mol Biol 8:527-30, 'Intron insertion as a phylogenetic character: the engrailed homeobox of Strepsiptera does not indicate affinity with Diptera'",
+     "pmid": "10620047",
+     "read_level": "abstract",
+     "doi": "10.1046/j.1365-2583.1999.00149.x",
+     "finding": "'Affiliation to Coleoptera has been proposed, however this implies that dipteran halteres and strep-sipteran haltere-like organs evolved convergently. An alternative is a sister group relationship with Diptera. In this case, halteres could be homologous but a radical homeotic mutation may have switched their position to the Strepsipteran mesothorax.' This paper's own intron-insertion evidence 'does not indicate affinity with Diptera'."
+    },
+    {
+     "cite": "Minelli A et al. 2009, BMC Biol 7:36, 'Phylo-evo-devo: combining phylogenetics with evolutionary developmental biology'",
+     "pmid": "19558647",
+     "read_level": "abstract",
+     "doi": "10.1186/1741-7007-7-36",
+     "finding": "A phylo-evo-devo discussion revisiting 'the inverted positions of wings and halteres in the Diptera and the Strepsiptera in terms of a putative homeotic mutation in the Hox gene Ultrabithorax'."
+    }
+   ],
+   "outcome": "steering"
+  },
+  {
+   "id": "comp-haltere-use-is-clade-dependent",
+   "scale": "comparative",
+   "title": "Ask whether halteres are necessary in every fly, and find that they are not",
+   "intervention": "Remove halteres across dipteran families and measure takeoff velocity and stability.",
+   "predicted_phenotype": "HALTERE REMOVAL HURTS CALYPTRATAE AND NOT OTHER FLIES. In Calyptratae - house flies and relatives - removal cut both takeoff velocity and stability, through a slower leg extension; in non-Calyptratae, including a closely related species with an equally rapid takeoff, it did neither. What this is NOT in tension with is a competing FINDING. The flat sentence often quoted against it - that haltere input is required for unrestrained flight - recurs in this literature as an opening PREMISE, a reason for tethering the animal or for studying walking, and we found no free-flight ablation measurement behind it. So the picture is not two results in conflict; it is a strong background assumption sitting on top of measured results that are narrower than it, graded by task, and graded by clade. See `not_claimed` at the top level of this file.",
+   "mechanism": "Calyptratae move their halteres independently of their wings and oscillate them during walking; other flies do not. Haltere kinematic diversity tracks phylogeny.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Not reversible.",
+   "lethality_risk": "Low.",
+   "difficulty": "Low.",
+   "evidence": [
+    {
+     "cite": "Yarger AM et al. 2021, Proc Biol Sci 288:20202375, 'Takeoff diversity in Diptera'",
+     "pmid": "33434467",
+     "read_level": "abstract",
+     "doi": "10.1098/rspb.2020.2375",
+     "finding": "'Haltere removal decreased both velocity and stability in the takeoffs of Calyptratae, but not other flies.' 'A closely related non-Calyptratae species ... also has a rapid takeoff, but takeoff duration and stability are unaffected by haltere removal.'"
+    },
+    {
+     "cite": "Hall JM et al. 2015, Biol Lett 11, 'Kinematic diversity suggests expanded roles for fly halteres'",
+     "pmid": "26601682",
+     "read_level": "abstract",
+     "doi": "10.1098/rsbl.2015.0845",
+     "finding": "'We find a diversity of wing-haltere phase relationships in flight, with higher variability in more ancient families and less in more derived families', and haltere movements during free walking 'were correlated with phylogeny'."
+    }
+   ],
+   "outcome": "steering"
+  },
+  {
+   "id": "comp-independent-wing-loss",
+   "scale": "comparative",
+   "title": "Count how often evolution has already deleted wings, and whether it put them back",
+   "intervention": "None. Read the phylogenetic record of wing loss in stick insects.",
+   "predicted_phenotype": "THOUSANDS OF INDEPENDENT LOSSES, with about 5% of extant winged-order species flightless, and a contested claim that wings were RE-EVOLVED after loss. For a design space the operational reading is that the wing programme is easy to switch off and is not necessarily destroyed when it is, which is the same point the ant castes make from the network side.",
+   "mechanism": "Not a mechanism: a phylogenetic pattern. The re-evolution claim depends on the tree and has been argued about since; the page cites the original and does not adjudicate it.",
+   "evidence_strength": "direct_other_species",
+   "reversibility": "Not applicable.",
+   "lethality_risk": "Not applicable.",
+   "difficulty": "Not applicable.",
+   "evidence": [
+    {
+     "cite": "Whiting MF et al. 2003, Nature 421:264-7, 'Loss and recovery of wings in stick insects'",
+     "pmid": "12529642",
+     "read_level": "abstract",
+     "doi": "10.1038/nature01313",
+     "finding": "'nearly all pterygote (winged) orders have many partially winged (brachypterous) or wingless (apterous) lineages, and some entire orders are secondarily wingless ... with about 5% of extant pterygote species being flightless. Thousands of independe[nt losses]'."
+    }
+   ],
+   "outcome": "fewer-wings"
+  }
+ ],
+ "recommendation": {
+  "single_best_route": "act-restore-t3-flight-muscle",
+  "headline": "If the question is 'could you redesign an insect's flight apparatus', the honest answer is that it has been done since 1978 and the result flies badly. If the question is 'could you redesign it so that it flies BETTER', the one route nobody has reported trying is the one that fixes what the 1978 result broke: transform the T3 MESODERM as well as the T3 epidermis, so the second pair of wings has an engine. Everything that route needs is published; the combination is not.",
+  "why": [
+   "It is the only route on this page that attacks the actual defect. The four-winged fly's second pair is not a bad wing - Fernandes et al. report it as a wing - it is a wing with 'only rudimentary indirect flight muscles'. Adding an aerofoil without an actuator is the single commonest error in the intuition this page is answering.",
+   "Both halves are already published, separately. Roy et al. showed that T2 mesoderm uniquely expresses no bithorax- or Antennapedia-complex selector and is specified entirely by induction, that ectopic homeotic expression IN T2 MESODERM respecifies its muscle, and that Antp persists in transformed-T3 mesoderm. The experiment is to run that in the other direction.",
+   "It is scoreable. A thorax either has a second set of indirect flight muscles or it does not, and that is a dissection, not a judgement.",
+   "It leaves the page's hard question standing rather than dodging it. Even if the muscle route succeeds, the animal still has no halteres, and our own control model puts the usable feedback-loop delay at about 3 wingbeats - roughly 14 ms - against about 30 ms for vision. So the honest prediction is a four-winged fly that can generate force and cannot hold attitude."
+  ],
+  "the_answer_to_the_judges_question": "No - not as posed. Converting halteres into wings costs an actuator AND a sensor to buy a surface, and the published phenotype confirms both costs independently. But 'four wings are worse than two' is NOT a general truth, and the page says so: dragonflies have kept four independently controlled wings for over 300 million years and their fore-hind phasing can IMPROVE efficiency, and moths stripped of their hindwings still fly while losing their evasive manoeuvring. What makes the dipteran case different is that in flies the hindwing has already been spent on something else.",
+  "what_would_change_our_mind": "A measurement of free-flight performance in a four-winged fly. We found none. Every quantitative flight statement on this page about four-winged Drosophila is an inference from the muscle phenotype and from haltere ablation in otherwise normal flies, not a flight measurement in the mutant. That gap is the most important thing on this page and it is stated here rather than buried in the limitations.",
+  "cheapest_informative_experiment": "Load the haltere knob (route sen-haltere-loading). It is reversible, needs no genetics, has a demonstrated recovery control, and separates 'the haltere's MASS matters' from 'the haltere's SENSING matters' - which is the confound in every ablation experiment on this page."
+ },
+ "judge_gene_candidates": [
+  {
+   "gene": "Ultrabithorax (Ubx)",
+   "key_pmid": "103000",
+   "species_of_evidence": "Drosophila (classical alleles), butterflies, beetles, planthoppers",
+   "what_it_would_actually_produce": "Four wings - and a fly that flies worse, because the transformed segment has only rudimentary indirect flight muscle and the halteres are gone. Not a better flier.",
+   "distinguishing_question": "Do they expect the extra pair to be DRIVEN? If yes, they are thinking of the epidermal phenotype and have not met the mesodermal one."
+  },
+  {
+   "gene": "Ubx, used as a DOSE rather than a switch",
+   "key_pmid": "34001903",
+   "species_of_evidence": "Drosophila",
+   "what_it_would_actually_produce": "Intermediate appendages. Wing-like traits appear at about 39% of endogenous Ubx, so the interesting regime is between 100% and 39%, not at zero.",
+   "distinguishing_question": "Are they describing a null allele or a knockdown? The two give different organs, and the dose literature is much newer than the allele literature."
+  },
+  {
+   "gene": "Antennapedia (Antp)",
+   "key_pmid": "34001903",
+   "species_of_evidence": "Drosophila",
+   "what_it_would_actually_produce": "A haltere-LIKE wing, at about 490% of endogenous Antp - the transformation run backwards.",
+   "distinguishing_question": "Did the appendage they have in mind gain wing character or lose it?"
+  },
+  {
+   "gene": "vestigial (vg)",
+   "key_pmid": "8700202",
+   "species_of_evidence": "Drosophila, Tribolium, ladybird beetles",
+   "what_it_would_actually_produce": "No wing if removed; ECTOPIC WING TISSUE on eyes, legs or antennae if forced. This is the gene to reach for if the ask is 'more wing', as opposed to 'a different wing'.",
+   "distinguishing_question": "Do they want an extra wing anywhere, or a second wing in the right place? vg gives the first."
+  },
+  {
+   "gene": "scalloped (sd)",
+   "key_pmid": "11546746",
+   "species_of_evidence": "Drosophila",
+   "what_it_would_actually_produce": "No wing. Sd is the DNA-binding half of the selector; Vg binding switches which sites it reads.",
+   "distinguishing_question": "Are they naming the selector or its co-factor? They are not interchangeable, though the phenotype is similar."
+  },
+  {
+   "gene": "apterous (ap)",
+   "key_pmid": "8242746",
+   "species_of_evidence": "Drosophila",
+   "what_it_would_actually_produce": "No wing, by removing the dorsoventral BOUNDARY rather than the wing programme.",
+   "distinguishing_question": "Is the phenotype they remember a missing wing or a mis-shapen one? Boundary loss gives the first."
+  },
+  {
+   "gene": "nubbin (nub)",
+   "key_pmid": "7768195",
+   "species_of_evidence": "Drosophila",
+   "what_it_would_actually_produce": "Loss of wing structures with the requirement localised to the HINGE.",
+   "distinguishing_question": "Blade or articulation?"
+  },
+  {
+   "gene": "rhomboid (rho) / EGFR",
+   "key_pmid": "8504935",
+   "species_of_evidence": "Drosophila",
+   "what_it_would_actually_produce": "Veins in the wrong places or in the wrong number - a venation change, not a wing-number change.",
+   "distinguishing_question": "Are they talking about the wing, or about what is drawn ON the wing?"
+  },
+  {
+   "gene": "Notch / Delta",
+   "key_pmid": "9310323",
+   "species_of_evidence": "Drosophila",
+   "what_it_would_actually_produce": "Mis-partitioned vein and intervein fates, in a 22-30 hour pupal window - or, at the larval boundary, no wing at all. Same pathway, two completely different phenotypes depending on when you touch it.",
+   "distinguishing_question": "Larval boundary or pupal refinement?"
+  },
+  {
+   "gene": "the two insulin receptors (InR1/InR2)",
+   "key_pmid": "25799997",
+   "species_of_evidence": "Nilaparvata lugens (brown planthopper)",
+   "what_it_would_actually_produce": "Long-winged, flying animals or short-winged, flightless and more fecund ones - a whole-morph switch, on a hormone receptor, with no Hox gene involved.",
+   "distinguishing_question": "Do they mean a developmental SWITCH the animal already has, rather than a lesion? Then it is probably this or the aphid polyphenism, not Ubx."
+  },
+  {
+   "gene": "Ubx in a planthopper (NlUbx)",
+   "key_pmid": "34692142",
+   "species_of_evidence": "Nilaparvata lugens",
+   "what_it_would_actually_produce": "A wing-LENGTH switch, not a wing-identity switch, and it is expressed in both wing pads - 'different from the canonical model of Ubx expression'.",
+   "distinguishing_question": "Which insect are they thinking of? The same gene name means a different experiment outside Drosophila."
+  },
+  {
+   "gene": "'a gene for the haltere'",
+   "key_pmid": "21483663",
+   "species_of_evidence": "Drosophila",
+   "what_it_would_actually_produce": "There isn't one. The haltere is built by Ubx re-reading the wing's own targets at several levels of the hierarchy at once, and the target set changes between stages.",
+   "distinguishing_question": "If they say 'the haltere gene', they almost certainly mean Ubx, which is a WING-REPRESSING gene, not a haltere-building one."
+  }
+ ],
+ "welfare": {
+  "framing": "Three of the routes on this page are procedures on living animals that a reviewer will want addressed, and one of them - implanting stimulators into free-flying beetles - is the page's most ethically loaded item precisely because it works. This section is here because the absence of it would be a hole, not as an apology.",
+  "invertebrate_status": "Insects are outside the scope of most national animal-research legislation, including EU Directive 2010/63/EU, which covers live non-human vertebrates and cephalopods. That is a statement about the law and NOT an argument that the procedures are ethically free; we did not find, and did not look hard for, a governing framework for insect welfare, and we are not qualified to supply one.",
+  "the_three_that_need_it": [
+   "Haltere ablation and campaniform ablation are irreversible sensory deletions on an animal that then cannot fly freely. The loading route (sen-haltere-loading) achieves a comparable manipulation REVERSIBLY, with a demonstrated recovery, and should be preferred wherever it answers the question.",
+   "Implanted stimulators (neu-implanted-stimulator-beetle, neu-honeybee-steering) are surgery followed by imposed behaviour. These are the routes with the clearest dual-use profile on the page, and the page names that rather than leaving it implicit.",
+   "Wing clipping and hindwing removal (comp-lepidoptera-hindwing, act-thoracic-linkage) are irreversible and the lepidopteran paper argues explicitly that the loss is lethal in the wild even where it is survivable in a cage."
+  ],
+  "refinements_available": "The polyphenism routes (org-aphid-polyphenism, org-ant-polyphenism) answer wing-number questions with NO procedure at all - the animal makes both morphs itself. Where a question can be asked there, it should be.",
+  "dual_use": "The neurally actuated insect work is funded and published as an engineering programme, and the page presents it as the one route that has already produced a steerable flying animal. We state that plainly because omitting it would misrepresent where the field's capability actually is, and we do not provide operational detail beyond what the cited abstracts state."
+ },
+ "limitations": [
+  "We ran no experiments on any animal. Every route on this page is a reading of someone else's published work, or an explicitly labelled proposal. The three studies are simulations and say so in every caption.",
+  "THE CENTRAL GAP, stated in full under `not_claimed`: we found no published measurement of free-flight performance in a four-winged Drosophila, and no free-flight haltere-ablation measurement either. The flat claim 'haltere input is necessary for free flight' appears in this literature as an opening PREMISE - in at least two papers - rather than as a result, and we do not cite it as evidence. So the page's two reasons are not equally well evidenced: the missing flight muscle is direct and quoted; the sensory cost is real but graded, task-dependent and clade-dependent.",
+  "Read levels are counted, not claimed. One source was read at full text (Deora, Sane & Sane 2021, via Europe PMC). The rest are abstracts or bare PubMed listings, and every evidence row says which. A row marked `listing` carries an explicit NOT READ note instead of a finding.",
+  "We could not reach the full text of the journals that hold most of the quantitative flight literature. The Journal of Experimental Biology returns a bot challenge; Europe PMC has no full text for Fry et al. 2005, Ristroph et al. 2010, Dickerson et al. 2019 or Yarger et al. 2021. That absence was checked with a positive control: the same endpoint returned 164 kB of full text for Deora et al. 2021 (PMC8629423), so the endpoint works and the four absences are real.",
+  "Every PMID on this page was resolved against NCBI during this session and every citation string was ASSEMBLED from the record NCBI returned, not typed. The verification run also included a deliberate negative control, PMID 99999999, which resolved to MISSING as it should; a verifier that returns a record for everything is indistinguishable from one that is not running.",
+  "One cited source is a PREPRINT and is flagged in its own row: Teoh et al. 2025 on the tp1 steering muscle is a bioRxiv record and has not been peer reviewed.",
+  "The page preserves at least three live disagreements rather than reconciling them: whether haltere input is necessary for flight in all flies or only in Calyptratae; whether fore-hind wing interaction helps or hurts, which differs in sign between the dragonfly and the general flapping literature; and whether strepsipteran haltere-like organs are homologous to dipteran halteres at all. Where two sources disagree, both are cited and neither is averaged.",
+  "The scale assignment of a route is an editorial choice, not a property of the biology. Several routes act at more than one scale - the Ubx-dally-Dpp route is simultaneously cis-regulatory and a network perturbation - and are filed where they are most useful to a reader, not where they are most correct.",
+  "Nothing on this page has been attempted by us. The routes marked `proposed` have, as far as our search found, not been attempted by anyone; that is a statement about what we searched, which was PubMed, and not a survey of the field."
+ ],
+ "provenance": {
+  "n_routes": 46,
+  "routes_per_scale": {
+   "cis": 4,
+   "gene": 8,
+   "network": 5,
+   "pattern": 4,
+   "actuator": 4,
+   "sensor": 8,
+   "neural": 4,
+   "organism": 4,
+   "comparative": 5
+  },
+  "n_distinct_pmids": 90,
+  "read_levels": {
+   "abstract": 75,
+   "full-text": 4,
+   "listing": 25
+  },
+  "read_level_note": "Counted over evidence rows, not over distinct papers: a paper cited by three routes contributes three rows. `listing` means the PubMed record resolved and nothing in the paper was read.",
+  "citations_assembled_from": "data/pmid_verified.json, which holds what NCBI esummary returned for each PMID during this session. No citation string on this page was typed by hand.",
+  "negative_control": "PMID 99999999 was included in the verification run and resolved to MISSING, as it must."
+ },
+ "nothing_attempted": "None of these routes has been attempted by us.",
+ "not_claimed": {
+  "no_free_flight_measurement_of_a_four_winged_fly": "We found no published measurement of free-flight performance in a four-winged Drosophila. Every quantitative flight statement on this page about that animal is an inference from two separately published phenotypes - rudimentary indirect flight muscle in the transformed segment, and the sensory consequences of losing halteres in otherwise normal flies - plus our own model. Nobody flew one and measured it, as far as our search found.",
+  "no_free_flight_haltere_ablation_measurement_either": "The sentence 'haltere input is necessary for free flight' recurs in this literature - we met it in Mureli & Fox 2015 (PMID 26113141) and again in Lea et al. 2026 (PMID 42285096) as 'Halteres are necessary for flight control in all winged flies'. In BOTH it is an opening premise explaining why the experiment is tethered or non-flying, not a result of the paper citing it. We did not find the free-flight ablation measurement it stands on, and we do not cite the premise as evidence.",
+  "scope_of_that_negative": "PubMed only, searched this session. 'haltere free flight' returns 10 records and 'haltere ablation behaviour flies' returns 7; we read the abstracts of every one that could plausibly carry a free-flight ablation result. A search for the classical primary literature returned nothing: 'Pringle gyroscopic mechanism halteres Diptera' gives 0 records and 'haltere gyroscopic organ equilibrium flies' gives 2, neither of them the 1930s-40s work. MEDLINE's coverage does not reach it, so the absence is a statement about PubMed and NOT about the literature. A positive control on the same queries: 'haltere ablation behaviour flies' does return Dickinson 1999 and Mureli & Fox 2015, so the search runs and discriminates.",
+  "what_we_cite_instead": "For the sensory cost we cite what was measured: ablation abolishes the equilibrium reflexes in a tethered flight arena (Dickinson 1999); haltere-mediated feedback sets body-saccade amplitude on a magnetic tether while visual feedback does not (Bender & Dickinson 2006); haltereless flies cannot stabilise a wide-field stimulus but fixate figures normally (Mureli & Fox 2015); takeoff velocity and stability fall in Calyptratae and not in other flies (Yarger et al. 2021); and non-flight costs in walking and standing (Daltorio & Fox 2018; Lea et al. 2026).",
+  "the_asymmetry_this_creates": "The two halves of this page's answer are not equally well evidenced, and that is worth saying rather than smoothing. The missing flight muscle is direct, quoted and unambiguous. The sensory cost is real but graded, task-dependent and clade-dependent. A page that says so is more convincing than one asserting two flat failures."
+ }
+}

@@ -1,0 +1,57 @@
+<!-- Body of the insect-flight schematic: everything inside <svg> except the numbered pins, which the renderer adds
+     from schematic.pins in insect-flight.json so a pin and the caption line describing it cannot disagree.
+     A drawing, not a measurement and not to scale. -->
+<defs>
+  <marker id="far" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0e7c86"></path></marker>
+  <marker id="fbar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M8 1 L8 9" stroke="#b3261e" stroke-width="2.6" fill="none"></path></marker>
+</defs>
+<rect x="0" y="0" width="960" height="440" fill="#fffdf8"></rect>
+<line x1="600" y1="36" x2="600" y2="404" stroke="#ddd3c0" stroke-dasharray="5 6"></line>
+<text x="300" y="40" class="dsb-ttl" text-anchor="middle">The thorax, and what the lesion misses</text>
+<text x="780" y="40" class="dsb-ttl" text-anchor="middle">The blade, and the loop</text>
+
+<!-- thorax segments -->
+<rect x="70" y="236" width="118" height="132" rx="10" fill="#efe7d6" stroke="#ddd3c0"></rect>
+<rect x="196" y="222" width="150" height="146" rx="10" fill="#e3f1f1" stroke="#0e7c86" stroke-width="2"></rect>
+<rect x="354" y="236" width="150" height="132" rx="10" fill="#fdf0d8" stroke="#9a6700" stroke-width="2"></rect>
+<text x="129" y="392" class="dsb-lab" text-anchor="middle">T1</text>
+<text x="271" y="392" class="dsb-lab" text-anchor="middle">T2</text>
+<text x="429" y="392" class="dsb-lab" text-anchor="middle">T3</text>
+
+<!-- T2 wing + engine -->
+<path d="M 248 214 C 214 158, 250 120, 318 124 C 372 128, 392 158, 352 190 C 322 212, 282 220, 248 214 Z" fill="#eef6f7" stroke="#0e7c86" stroke-width="2"></path>
+<text x="316" y="112" class="dsb-sub" text-anchor="middle">wing</text>
+<ellipse cx="271" cy="300" rx="52" ry="26" fill="#c9e3e6" stroke="#0e7c86"></ellipse>
+<text x="271" y="296" class="dsb-lab" text-anchor="middle">IFM</text>
+<text x="271" y="314" class="dsb-sub" text-anchor="middle">the engine</text>
+
+<!-- T3 haltere + empty muscle compartment -->
+<line x1="420" y1="232" x2="438" y2="186" stroke="#9a6700" stroke-width="4" stroke-linecap="round"></line>
+<circle cx="441" cy="176" r="13" fill="#fdf0d8" stroke="#9a6700" stroke-width="2"></circle>
+<text x="470" y="166" class="dsb-sub" text-anchor="start">haltere</text>
+<ellipse cx="429" cy="300" rx="52" ry="26" fill="#fffdf8" stroke="#b3261e" stroke-width="2" stroke-dasharray="6 5"></ellipse>
+<text x="429" y="297" class="dsb-sub" text-anchor="middle">rudimentary</text>
+<text x="429" y="313" class="dsb-sub" text-anchor="middle">muscle only</text>
+
+<!-- the transformation arrow -->
+<path d="M 352 150 C 392 128, 410 140, 428 162" class="dsb-arr" marker-end="url(#far)" fill="none"></path>
+<text x="392" y="132" class="dsb-sub" text-anchor="middle">homeotic transformation</text>
+<text x="300" y="422" class="dsb-note" text-anchor="middle">the epidermis follows the lesion; the mesoderm does not</text>
+
+<!-- wing blade with veins -->
+<path d="M 652 92 C 690 62, 788 62, 858 86 C 900 100, 898 128, 852 142 C 782 160, 686 150, 652 124 Z" fill="#eef6f7" stroke="#0e7c86" stroke-width="2"></path>
+<path d="M 672 112 L 876 104 M 676 126 L 866 120 M 680 100 L 862 92 M 690 136 L 854 132" stroke="#0e7c86" stroke-width="1.8"></path>
+<text x="770" y="180" class="dsb-sub" text-anchor="middle">spacing right, count one vein short</text>
+
+<!-- control loop -->
+<rect x="628" y="268" width="104" height="40" rx="8" fill="#fdf0d8" stroke="#9a6700"></rect>
+<text x="680" y="293" class="dsb-lab" text-anchor="middle">haltere</text>
+<rect x="628" y="330" width="104" height="40" rx="8" fill="#efe7d6" stroke="#ddd3c0"></rect>
+<text x="680" y="355" class="dsb-lab" text-anchor="middle">eye</text>
+<rect x="820" y="298" width="104" height="42" rx="8" fill="#e3f1f1" stroke="#0e7c86"></rect>
+<text x="872" y="324" class="dsb-lab" text-anchor="middle">steering</text>
+<path d="M 736 288 L 816 310" class="dsb-arr" marker-end="url(#far)"></path>
+<path d="M 736 350 L 816 330" class="dsb-arr inh" marker-end="url(#fbar)"></path>
+<text x="776" y="276" class="dsb-sub" text-anchor="middle">1 wingbeat</text>
+<text x="776" y="382" class="dsb-sub" text-anchor="middle">6.6 wingbeats — too slow</text>
+<text x="780" y="412" class="dsb-note" text-anchor="middle">bound: 3.0 wingbeats, about 14 ms</text>
