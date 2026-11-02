@@ -2491,3 +2491,30 @@ def test_limbless_mouse_design_space_shows_routes_studies_and_its_own_refusals(b
     assert pg.locator("#main .tex-fallback").count() == 0
     assert _overflow(pg) <= 0 and not pg.errors
     pg.close()
+
+
+def test_an_unlisted_design_space_keeps_its_url_and_leaves_the_navigation(browser, base):
+    """Un-listing must hide the entry points and nothing else. The URL is the thing people were handed; breaking it while
+    tidying the navigation would be the worst of both.
+
+    The test reads the flag rather than assuming its value, so it holds in both directions and will fail if a later edit
+    hides the page from the navigation *and* from its own route. Both halves carry a control: the same selector that finds
+    no limbless link must find the listed project's link on the same render, otherwise a zero means the query is wrong.
+    """
+    snapshot = json.loads((ROOT / "site/data/snapshot.json").read_text())
+    listed = snapshot["limbless"].get("listed") is not False
+    pg = page(browser, 1440, 900)
+
+    for route, ready in (("#/home", ".paths"), ("#/studio", ".pform")):
+        pg.goto(base + route)
+        pg.wait_for_selector(ready)
+        others = pg.locator('#main a[href*="#/studio/"]:not([href*="limbless-mouse"])').count()
+        assert others >= 1, f"control: {route} must link at least one studio project, or the selector below proves nothing"
+        found = pg.locator('#main a[href*="limbless-mouse"]').count()
+        assert (found >= 1) is listed, f"{route} links the design space {found} time(s) while listed is {listed}"
+
+    pg.goto(base + "#/studio/limbless-mouse")          # unlisted is not unreachable: the route is deliberately not gated
+    pg.wait_for_selector("#lm-a")
+    assert pg.locator(".lmroute").count() == snapshot["limbless"]["counts"]["routes"]
+    assert not pg.errors
+    pg.close()
