@@ -1,0 +1,489 @@
+{
+  "schema": "design-space-study/0.1",
+  "id": "regime-check",
+  "predeclared_questions": [
+    "Q1 Reynolds number of the real construct vs the simulated object",
+    "Q2 which of the six gaits are time-reciprocal",
+    "Q3 does the dry-friction ranking survive the regime change (predeclared: NO)",
+    "Q4 is the quasi-static assumption satisfied (declared gate tau/T <= 1e-2)"
+  ],
+  "reynolds_map": {
+    "definition": "Re = rho * U * L / mu, translational Reynolds number",
+    "fluid": {
+      "name": "water at 20 C",
+      "rho_kg_m3": 998.2,
+      "mu_Pa_s": 0.001002
+    },
+    "size_range_m": [
+      0.00030000000000000014,
+      0.0020000000000000005
+    ],
+    "speed_range_m_s": [
+      4.9999999999999996e-05,
+      0.001
+    ],
+    "Re_min": 0.014943113772455094,
+    "Re_max": 1.992415169660679,
+    "Re_at_1mm_0.1mm_s": 0.09962075848303392,
+    "grid_npz": "data/regime-reynolds-grid.npz",
+    "anchors": [
+      {
+        "name": "Anthrobot, smallest x slowest",
+        "L_m": 3e-05,
+        "U_m_s": 5e-06,
+        "source": "Gumuskaya et al. 2023 Adv Sci 11:e2303575 (PMID 38032125), abstract: diameters 30-500 um, speeds 5-50 um/s",
+        "Re": 0.00014943113772455092
+      },
+      {
+        "name": "Anthrobot, largest x fastest",
+        "L_m": 0.0005,
+        "U_m_s": 5e-05,
+        "source": "Gumuskaya et al. 2023 Adv Sci 11:e2303575 (PMID 38032125), abstract",
+        "Re": 0.02490518962075848
+      },
+      {
+        "name": "Xenobot, nominal 1 mm at 0.1 mm/s",
+        "L_m": 0.001,
+        "U_m_s": 0.0001,
+        "source": "ASSUMED engineering figure, not read from a paper",
+        "Re": 0.09962075848303392
+      }
+    ]
+  },
+  "simulated_object_regime": {
+    "what": "the voxel-actuation artifact's body, at ITS OWN simulated size and speed, IF it were in water",
+    "caveat": "the artifact has NO fluid. It is dry Coulomb friction on a rigid floor plus a numerical absolute-frame damping term. This Re is a scale comparison, not a property of that simulation.",
+    "L_m": 0.05,
+    "U_m_s": 0.012899716799999999,
+    "Re_translational": 642.5397859161676,
+    "Re_oscillatory_rho_omega_L2_over_mu": 62593.5685990685,
+    "oscillatory_definition": "Re_omega = rho * omega * L^2 / mu, the frequency Reynolds number used by Lauga 2007 for reciprocal-stroke breakdown"
+  },
+  "regime_separation_orders_of_magnitude": 3.8095501802517524,
+  "reciprocity": {
+    "method": "T(t) = sin(wt) u + cos(wt) v with u=cos(phi), v=sin(phi); the control traces a closed curve in span{u,v}; rank <= 1 means a retraced segment, i.e. time-reciprocal",
+    "per_gait": {
+      "uniform": {
+        "rank": 1,
+        "reciprocal": true,
+        "enclosed_area_per_voxel": 0.0,
+        "singular_values": [
+          6.7082039324993685,
+          0.0
+        ],
+        "distinct_phases": 1
+      },
+      "longitudinal": {
+        "rank": 1,
+        "reciprocal": true,
+        "enclosed_area_per_voxel": 1.8848046531056534e-16,
+        "singular_values": [
+          6.7082039324993685,
+          4.0246000612170226e-16
+        ],
+        "distinct_phases": 2
+      },
+      "lateral": {
+        "rank": 1,
+        "reciprocal": true,
+        "enclosed_area_per_voxel": 1.813654123067347e-16,
+        "singular_values": [
+          6.7082039324993685,
+          3.8726732145403874e-16
+        ],
+        "distinct_phases": 2
+      },
+      "dorsoventral": {
+        "rank": 1,
+        "reciprocal": true,
+        "enclosed_area_per_voxel": 1.813654123067347e-16,
+        "singular_values": [
+          6.7082039324993685,
+          3.872673214540388e-16
+        ],
+        "distinct_phases": 2
+      },
+      "travelling": {
+        "rank": 2,
+        "reciprocal": false,
+        "enclosed_area_per_voxel": 1.570796326794897,
+        "singular_values": [
+          4.743416490252569,
+          4.743416490252569
+        ],
+        "distinct_phases": 5
+      },
+      "checker": {
+        "rank": 1,
+        "reciprocal": true,
+        "enclosed_area_per_voxel": 1.9231956546495473e-16,
+        "singular_values": [
+          6.7082039324993685,
+          4.106575891926671e-16
+        ],
+        "distinct_phases": 2
+      }
+    },
+    "reciprocal_gaits": [
+      "uniform",
+      "longitudinal",
+      "lateral",
+      "dorsoventral",
+      "checker"
+    ],
+    "non_reciprocal_gaits": [
+      "travelling"
+    ],
+    "why": "five of the six patterns assign only the phases 0 and pi, so every voxel's temperature is +/- A sin(wt): the whole body is driven by ONE scalar in time and the shape sequence is a path retraced in reverse. Only 'travelling' uses phi = 2 pi x / nx, which gives five distinct phases."
+  },
+  "quasistatic_margin": {
+    "why_it_matters": "the reciprocity result above is about the CONTROL T_i(t). It transfers to the SHAPE only if the body's elastic response has no spatially varying phase lag. A flexible body whose elastic relaxation time is comparable to the drive period CAN swim on a reciprocal control (the elastohydrodynamic escape from the scallop theorem), so this gate is load-bearing.",
+    "declared_gate": "tau_elastic / T_drive <= 1e-2",
+    "simulated_body": {
+      "E_Pa": 100000.0,
+      "voxel_m": 0.01,
+      "omega_n_rad_s": 1000.0,
+      "tau_s": 0.001,
+      "drive_period_s": 0.25,
+      "ratio": 0.004
+    },
+    "real_tissue_estimate": {
+      "E_Pa": 500.0,
+      "body_m": 0.001,
+      "omega_n_rad_s": 707.1067811865476,
+      "tau_s": 0.001414213562373095,
+      "drive_period_s": 1.0,
+      "ratio": 0.001414213562373095,
+      "status": "E_Pa is ASSUMED (order-of-magnitude soft tissue); not measured here"
+    },
+    "fluid_driven_deformation_number": {
+      "definition": "mu * omega / E, the ratio of viscous stress from the surrounding water to the body's elastic stress",
+      "simulated": 2.518300671117578e-07,
+      "real_tissue": 1.2591503355587892e-05,
+      "reading": "both are many orders below 1, so the surrounding water cannot appreciably deform the body and the shape follows the imposed rest sizes quasi-statically"
+    },
+    "gate_met": true
+  },
+  "elastic_lattice_controls": {
+    "P1_free_expansion": {
+      "measured_span_m": 0.04400000142996847,
+      "closed_form_m": 0.044000000000000004,
+      "ratio": 1.0000000324992833,
+      "converged": true,
+      "final_grad_inf": 1.5861773407292597e-06
+    },
+    "P2_cantilever_vs_FL3_over_3EI": {
+      "n": 12,
+      "tip_deflection_m": 4.449700166437618e-06,
+      "free_length_m": 0.1,
+      "second_moment_m4": 6.749999999999999e-08,
+      "E_effective_Pa": 110979.87325496138,
+      "E_nominal_Pa": 100000.0,
+      "E_eff_over_E_nominal": 1.1097987325496137,
+      "converged": true
+    },
+    "uniaxial_calibration": {
+      "E_effective_Pa": 234890.53347449188,
+      "E_nominal_Pa": 100000.0,
+      "E_eff_over_E_nominal": 2.3489053347449187,
+      "nu_effective": 0.2036930370307814,
+      "applied_strain": 0.001,
+      "converged": true
+    },
+    "P1_gate": true
+  },
+  "stokes_ranking": {
+    "model": "RPY bead swimmer, 45 beads of radius s/2 at the voxel centres, shapes from a quasi-static free-floating elastic relaxation of the same actuation law",
+    "per_gait_body_lengths_per_cycle": {
+      "uniform": 4.852305816622573e-08,
+      "longitudinal": 1.650467349527899e-07,
+      "lateral": 1.049209040755713e-07,
+      "dorsoventral": 7.453620430417805e-08,
+      "travelling": 0.0341623210092819,
+      "checker": 4.018807162351004e-11
+    },
+    "per_gait_m": {
+      "uniform": 3.881844653298059e-11,
+      "longitudinal": 1.3203738796223192e-10,
+      "lateral": 8.393672326045705e-11,
+      "dorsoventral": 5.962896344334245e-11,
+      "travelling": 2.7329856807425518e-05,
+      "checker": 3.2150457298808035e-14
+    },
+    "ranking": [
+      "travelling",
+      "longitudinal",
+      "lateral",
+      "dorsoventral",
+      "uniform",
+      "checker"
+    ]
+  },
+  "dry_friction_ranking": {
+    "source": "artifacts/voxel-actuation/summary.json arm_A, read not recomputed; and reproduced bit-for-bit here for travelling (0.0145773 m)",
+    "per_gait_body_lengths_5_cycles": {
+      "travelling": 0.364432,
+      "longitudinal": 0.15318,
+      "lateral": 0.14125,
+      "dorsoventral": 0.00308,
+      "checker": 3e-05,
+      "uniform": 2e-05
+    },
+    "ranking": [
+      "travelling",
+      "longitudinal",
+      "lateral",
+      "dorsoventral",
+      "checker",
+      "uniform"
+    ]
+  },
+  "stokes_must_fail_controls": {
+    "M1_travelling_projected_onto_0_pi": {
+      "must": "collapse to ~0 (it is now reciprocal)",
+      "body_lengths_per_cycle": 2.5447134600704105e-08,
+      "ratio_to_travelling": 7.448889258370391e-07,
+      "rejected": true
+    },
+    "M2_longitudinal_plus_phase_gradient": {
+      "must": "become non-zero (it is now non-reciprocal); proves the zeros are not a solver that always returns zero",
+      "body_lengths_per_cycle": 0.0033016525570671446,
+      "ratio_to_plain_longitudinal": 20004.349422674444,
+      "rejected": true
+    },
+    "M3_free_draining_no_hydrodynamic_interaction": {
+      "must": "give 0 for every gait: a free-draining body cannot swim",
+      "travelling_body_lengths_per_cycle": 3.0476739136309004e-19,
+      "rejected": true
+    },
+    "M4_time_reversed_travelling": {
+      "must": "flip sign exactly (kinematic reversibility of Stokes flow)",
+      "forward_m": [
+        -2.7329856807425518e-05,
+        4.4916307691835874e-21,
+        -2.4206624676410367e-21
+      ],
+      "reversed_m": [
+        2.732985680742551e-05,
+        -4.4916307691835935e-21,
+        2.4206624676410307e-21
+      ],
+      "sum_over_norm": 2.4794361806510794e-16,
+      "rejected": true
+    }
+  },
+  "stokes_analytic_controls": {
+    "SP1_single_sphere_mobility_over_1_over_6_pi_mu_a": 1.0,
+    "SP2_three_sphere_scaling_exponents": {
+      "a": {
+        "measured": 1.0287884404964207,
+        "expected": 1
+      },
+      "d1": {
+        "measured": 1.0163676899346563,
+        "expected": 1
+      },
+      "d2": {
+        "measured": 1.0163676899346579,
+        "expected": 1
+      },
+      "L": {
+        "measured": -2.0410551007037867,
+        "expected": -2
+      }
+    },
+    "SP2_note": "Najafi-Golestanian three-sphere swimmer. We check the SCALING exponents (proportional to a, to d1, to d2, and to L^-2) rather than a prefactor, because we did not retrieve the published prefactor's full text. Deviations of a few percent are the expected finite-amplitude correction at d/L = 0.1.",
+    "SP3_rigid_body_gives_zero": true
+  },
+  "stokes_invariance_checks": {
+    "values_body_lengths_per_cycle": {
+      "baseline": 0.0341623210092819,
+      "size_x10": 0.03416224246071872,
+      "viscosity_x100": 0.03416232100928191,
+      "frequency_x10": 0.0341623210092819,
+      "stiffness_ratio_k2_0.25": 0.03417394490740471,
+      "stiffness_ratio_k2_1.0": 0.0344921460839377
+    },
+    "expectation": "Stokes flow is linear and has no intrinsic scale, so displacement per cycle in BODY LENGTHS must be independent of absolute size, of viscosity and of frequency. Sensitivity to k2_ratio is the lattice's elastic-constant dependence and is reported, not suppressed.",
+    "max_rel_spread_scale_mu_freq": 2.299274781920286e-06,
+    "k2_ratio_spread_rel": 0.009654644793197388
+  },
+  "stokes_timestep_refinement": {
+    "samples_per_cycle": {
+      "16": 0.033342845071328196,
+      "32": 0.03399766927508517,
+      "64": 0.0341623210092819,
+      "128": 0.03420343706930568
+    },
+    "rel_change_64_to_128": 0.0012021031670142604
+  },
+  "stokes_shape_tolerance_refinement": {
+    "why": "the five reciprocal gaits must give EXACTLY zero. What the solver returns for them is the numerical residue of an iterative elastic relaxation, not a displacement. This arm separates the two: tighten the shape solve and a residue falls while a real displacement does not.",
+    "values_body_lengths_per_cycle": {
+      "1e-10": {
+        "travelling": 0.034150938358753644,
+        "longitudinal": 0.0003389942488152047,
+        "lateral": 4.867420010283669e-05,
+        "checker": 8.976979712053394e-07
+      },
+      "1e-12": {
+        "travelling": 0.03416125224600644,
+        "longitudinal": 3.7972802811839696e-06,
+        "lateral": 9.80256837713843e-07,
+        "checker": 7.234495495890821e-08
+      },
+      "1e-14": {
+        "travelling": 0.0341623210092819,
+        "longitudinal": 1.650467349527899e-07,
+        "lateral": 1.049209040755713e-07,
+        "checker": 4.018807162351004e-11
+      },
+      "1e-16": {
+        "travelling": 0.03416225230085927,
+        "longitudinal": 3.329657399375549e-08,
+        "lateral": 5.892891560200271e-08,
+        "checker": 1.0719408560901197e-09
+      }
+    },
+    "reading": "travelling is stable to four significant figures across four decades of tolerance; the three reciprocal gaits fall by three to four orders of magnitude, tracking the tolerance, and floor near 1e-8 where double precision runs out. The reciprocal gaits' values are therefore reported as ZERO TO THE PRECISION OF THE SHAPE SOLVE and MUST NOT be ranked against each other.",
+    "adopted_tolerance": 1e-14
+  },
+  "ranking_comparison": {
+    "spearman_rho_all_six": 0.942857142857143,
+    "spearman_p": 0.004804664723032055,
+    "spearman_caveat": "computed over all six, but FIVE of the six Stokes values are numerical zero, so their relative order is meaningless and this coefficient is reported only to show that a naive correlation looks reassuring while the underlying comparison is vacuous. It is not evidence of transfer.",
+    "dry_top3": [
+      "travelling",
+      "longitudinal",
+      "lateral"
+    ],
+    "stokes_nonzero_gaits": [
+      "travelling"
+    ],
+    "verdict": "the dry-friction ranking does NOT transfer. Its 2nd and 3rd places (longitudinal 0.1532 BL, lateral 0.1412 BL) are both time-reciprocal and give exactly zero in the Stokes limit. Only the 1st place, travelling, survives the regime change.",
+    "surviving_ratio_travelling_over_longitudinal": {
+      "dry_friction": 2.379109544326935,
+      "stokes": 206985.7426689096
+    }
+  },
+  "wall_s": 165.0,
+  "headline": "A millimetre-scale living construct sits at Reynolds number below 0.1, and five of the six published actuation patterns are time-reciprocal, so Purcell's scallop theorem makes their net displacement exactly zero there. The published gait ranking does not transfer: its 2nd and 3rd places are both dead in the regime the real object occupies, and only the travelling wave survives.",
+  "model": {
+    "what_it_is": "two models and one exact classification. (1) A closed-form Reynolds-number evaluation. (2) An exact algebraic test of whether each published actuation pattern is time-reciprocal. (3) A Rotne-Prager-Yamakawa bead-model Stokes swimmer over shapes from a quasi-static, free-floating, central-force spring lattice driven by the same actuation law.",
+    "not_voxelyze": "the Stokes swimmer is OUR code and is not Voxelyze. Voxelyze at its pin is used unmodified for the dry-friction comparison, and reproduces the published travelling-wave run bit-for-bit at 0.0145773 m against 0.014577281 m.",
+    "parameters": [
+      {
+        "name": "rho_water",
+        "value": 998.2,
+        "units": "kg m^-3",
+        "status": "assumed",
+        "source": "standard value for water at 20 C; we did not retrieve a source that states the density of any culture medium used in these papers"
+      },
+      {
+        "name": "mu_water",
+        "value": 0.001002,
+        "units": "Pa s",
+        "status": "assumed",
+        "source": "standard value for water at 20 C; same caveat. Real culture media and pond water are not pure water and some are non-Newtonian"
+      },
+      {
+        "name": "construct_size_range",
+        "value": [
+          0.0003,
+          0.002
+        ],
+        "units": "m",
+        "status": "sourced",
+        "source": "brief's stated range; the lower end is covered by Gumuskaya et al. 2023's reported 30-500 um anthrobot diameters (PMID 38032125)"
+      },
+      {
+        "name": "construct_speed_range",
+        "value": [
+          5e-05,
+          0.001
+        ],
+        "units": "m s^-1",
+        "status": "sourced",
+        "source": "Gumuskaya et al. 2023 report 5-50 um/s for anthrobots (PMID 38032125); the upper end is the brief's"
+      },
+      {
+        "name": "bead_radius",
+        "value": "voxel/2",
+        "units": "m",
+        "status": "assumed",
+        "source": "our choice: touching spheres filling the lattice, so adjacent beads sit exactly at 2a where the two RPY branches agree"
+      },
+      {
+        "name": "E_lattice",
+        "value": 100000.0,
+        "units": "Pa",
+        "status": "sourced",
+        "source": "voxcraft/voxcraft-sim demos/basic/base.vxa @ dd8668f99ff74fb2fc2ee60deb91287a3b519d8f, reached through the pinned artifact's protocol.json"
+      },
+      {
+        "name": "k2_ratio",
+        "value": 0.5,
+        "units": "-",
+        "status": "assumed",
+        "source": "our choice: the face-diagonal spring stiffness relative to the nearest-neighbour one, which is what makes the lattice shear-stable. A nearest-neighbour-only cubic lattice has zero shear modulus and is a mechanism, not a solid. The Stokes result moves by under 1% across a 4x change in it."
+      },
+      {
+        "name": "cte",
+        "value": 0.01,
+        "units": "degC^-1",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol (artifacts/voxel-actuation/protocol.json, parameter_provenance.assumed_not_measured); no measured biological referent"
+      },
+      {
+        "name": "temp_amplitude",
+        "value": 10.0,
+        "units": "degC",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol (artifacts/voxel-actuation/protocol.json, parameter_provenance.assumed_not_measured); no measured biological referent"
+      },
+      {
+        "name": "samples_per_cycle",
+        "value": 64,
+        "units": "-",
+        "status": "nondimensional",
+        "source": "our choice; the refinement arm shows 64 to 128 changes the answer by 0.12%"
+      },
+      {
+        "name": "elastic_solve_tolerance",
+        "value": 1e-14,
+        "units": "-",
+        "status": "nondimensional",
+        "source": "our choice, adopted BECAUSE of the tolerance refinement arm, which shows the reciprocal gaits' residue tracks it"
+      },
+      {
+        "name": "E_tissue_estimate",
+        "value": 500.0,
+        "units": "Pa",
+        "status": "assumed",
+        "source": "order-of-magnitude soft tissue. NOT measured, and Pai et al. 2025 (PMID 40263484) show these cells are not simply epidermis, so no literature modulus for embryonic tissue is the right number either"
+      }
+    ]
+  },
+  "limitations": [
+    "The scallop-theorem result applies to a FREE SWIMMER. A construct crawling on a dish with its ventral surface in contact is not one: contact friction is not Stokes drag and is outside the theorem's assumptions, so a reciprocal gait can rectify against a surface. Kriegman et al. 2020 state their deciliated organisms 'always kept part of their ventral surfaces in contact with the surface of the dish due to negative buoyancy'.",
+    "Most published constructs are cilia-driven, and cilia are a SURFACE thrust mechanism, not a body gait. Kriegman et al. 2021's own simulation models them as an impulse force on each surface voxel. Our analysis bears directly on the 2020 cardiac-driven constructs, which do deform, and only indirectly on the cilia-driven ones.",
+    "The reciprocity test is exact for the CONTROL sequence. Carrying it to the SHAPE needs quasi-static response, which we check numerically rather than assume. The gate is met but only by a factor of 2.5 to 7 on the elastic-relaxation ratio, not by orders of magnitude; the fluid-driven deformation number mu*omega/E is the one that clears by many orders.",
+    "The elastic lattice is central-force, so it obeys the Cauchy relations and its Poisson ratio is a property of the spring topology rather than an input. We measure 0.20 against the artifact's 0.35, and its axial and bending effective moduli differ by about 2x. It is used only to generate a shape.",
+    "The reciprocal gaits return 1e-7 to 1e-8 rather than literal zero, which is the numerical residue of an iterative shape solve, not a displacement. Their relative order carries no information.",
+    "Water at 20 C is assumed for every fluid property. Real media differ, and a non-Newtonian medium would partially lift the scallop-theorem constraint (Qiu et al. 2014, PMID 25369018).",
+    "The Reynolds number for the simulated artifact body is a SCALE COMPARISON. That simulation contains no fluid at all."
+  ],
+  "what_this_cannot_establish": [
+    "that any real construct would or would not move; no organism was measured",
+    "a corrected gait ranking for a surface crawler, which is a different problem",
+    "anything about cilia-driven propulsion, whose stroke we did not model",
+    "that the travelling wave is buildable: no living construct has per-region actuation phase control"
+  ],
+  "not_diverged_gate": {
+    "what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
+    "total_runs_checked": 404,
+    "diverged_runs": [],
+    "gate_met": true,
+    "note": "regime-check's own Stokes and elastic solves are not time-stepped and cannot diverge; their analogue is the minimiser-convergence flag reported in elastic_lattice_controls and the shape-solve tolerance refinement arm."
+  }
+}

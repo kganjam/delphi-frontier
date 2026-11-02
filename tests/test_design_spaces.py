@@ -111,3 +111,30 @@ def test_the_markdown_twins_are_current_and_check_can_fail():
         finally:
             doc.write_bytes(original)
     assert run("--check").returncode == 0
+
+
+def test_every_served_figure_is_tracked_in_git():
+    """A figure can exist in the worktree, pass every other test here, and still 404 in production.
+
+    The deploy ships a `git archive` of a commit, so an untracked build artifact is invisible to it. The browser tests
+    cannot catch this: they run against a local server reading the worktree, where the file is present. And a headless
+    broken-image count does not catch it either, because a lazy-loaded image that has not loaded reports `complete`
+    false and is excluded from the count rather than reported as broken -- which is exactly how four xenobot figures
+    reached production as 404s while a live check said zero broken images.
+
+    So this test asks git, not the filesystem. It is cheap and it is the only thing between a green suite and a page of
+    missing pictures.
+    """
+    tracked = set(subprocess.run(["git", "ls-files", "site/artifacts"], cwd=ROOT, capture_output=True, text=True,
+                                 check=True).stdout.split())
+    assert tracked, "control: `git ls-files site/artifacts` returned nothing, so this test proves nothing"
+    missing = []
+    for ds_id, block in SPACES.items():
+        for study in block["studies"]:
+            for fig in study["figures"]:
+                if fig["state"] != "present":
+                    continue
+                path = f"site/{fig['href']}"
+                if path not in tracked:
+                    missing.append(f"{ds_id}: {path}")
+    assert not missing, "served but untracked, so these would 404 in production:\n  " + "\n  ".join(missing)
