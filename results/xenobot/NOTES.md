@@ -134,7 +134,7 @@ Stated openly, as asked, rather than fixed silently.
    should say which published construct, if any, each result is about.
 
 5. **The strongest single source finding, and it cuts both ways.** Kriegman et al.
-   2020's **first pass used dry gravity-plus-friction ground contact and failed**: it
+   2020 **simulated their first-pass designs "on land", and that pass failed**: it
    produced "highly performant but nontransferable designs with powerful, bounding
    gaits", airborne for 47% of the cycle, while the real deciliated organisms "always
    kept part of their ventral surfaces in contact with the surface of the dish due to
@@ -143,6 +143,17 @@ Stated openly, as asked, rather than fixed silently.
    contact went from **52.7% to 93.3%** of the evaluation period. The voxel-actuation
    artifact uses the configuration they abandoned. That is a much more concrete
    indictment than my theoretical argument, and it is *their* measurement, not mine.
+
+   **Correction, made on review before publication.** An earlier version of this note
+   said their first pass "used dry gravity-plus-friction ground contact". The paper does
+   not say that. It says only that they "simulated designs on land", and the fix they
+   applied was buoyancy plus per-face drag. That the first pass therefore lacked both is
+   a reasonable *inference* from what they replaced it with, but it is ours and not
+   theirs, and it is not what a reader should take away as a quotation. The 93.3% and
+   52.7% figures are contact with the **simulated ground plane** over the evaluation
+   period; the ventral-surface sentence is a separate qualitative observation about the
+   real organisms with no percentage attached. Those two must not be merged into a
+   sentence like "ventral contact rose from 52.7% to 93.3%", which nobody measured.
 
 ---
 
