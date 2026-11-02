@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 796e44603200",
- "input_fingerprint": "796e44603200f430618218e51c017c64199bd8abad4e680e72cf429f423b93b8",
+ "label": "snapshot of inputs 1d3f5ac53a1d",
+ "input_fingerprint": "1d3f5ac53a1df3ee13a4188dfc5bf05004434e992aa09f8049eed04395163959",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -4330,8 +4330,8 @@
   },
   {
    "path": "site/content/design-spaces/insect-flight.json",
-   "sha256": "6c3f4112d9b649e552c25f21e840df4e9c2fe7d68aa22fdf786ee875984b3daa",
-   "bytes": 13330
+   "sha256": "f2633e60af80a121766ff52245018a0cce33358647e3e92f05b3df193dc48884",
+   "bytes": 14639
   },
   {
    "path": "site/content/design-spaces/insect-flight.schematic.svg",
@@ -75735,7 +75735,7 @@
     "paragraphs": [
      "Start with the result that needs no biology at all. Lift scales with the second moment of wing area, so splitting one wing into two smaller ones at the same total area and aspect ratio loses more than half of it. In our blade-element model, four wings at the same total area carry 0.46 body weights — it does not leave the ground. Four wings at double the area do fly, at 1.83 body weights, but they cost twice the mass-specific mechanical power. That kills the intuitive \"redistribute the area\" design before any gene is named, and it falls out of geometry.",
      "The configuration the literature actually produced is worse than either, and the reason is the first thing a designer should know. In flies homozygous for the classic allele combination, the adults have two pairs of wings, but — in the authors' own words — \"the homeotically transformed T3 (HT3) has only rudimentary indirect flight muscles\". The lesion transforms the epidermis; the mesoderm keeps expressing Antennapedia, which is the likely reason the flight muscle never forms. You get a wing with no engine. Modelled, that configuration carries 0.84 body weights, and it stays below one at every non-negative value of the contested fore–hind interference term, so the conclusion does not rest on choosing a convenient value for a number nobody has pinned down.",
-     "The second cost is the sensor. A haltere is a hindwing already spent on something else — a gyroscopic rate sensor — and converting it back to a wing deletes it. The model says why that matters, and the useful form of the answer is not \"vision is weaker\". Sweeping the feedback delay and giving every delay the best gain available to it, no loop slower than about three wingbeats, 14 milliseconds, can meet the measured recovery from a disturbance at any gain. The haltere loop is inside that bound. The visual loop is well outside it. Vision is not too weak; it is too slow to be turned up.",
+     "The second cost is the sensor. A haltere is a hindwing already spent on something else — a gyroscopic rate sensor — and converting it back to a wing deletes it. The model says why that matters, and the useful form of the answer is not “vision is weaker”. Sweeping the feedback delay and giving every delay the best gain available to it, no loop slower than about three wingbeats, 14 milliseconds, can meet the measured recovery from a disturbance at any gain. The haltere loop is inside that bound. The visual loop is well outside it. Vision is not too weak; it is too slow to be turned up. This is a re-derivation, not a discovery: Elzinga, Dickson and Dickinson measured “a fundamental trade-off between sensor delay and permissible feedback gain” on a dynamically scaled robotic fly in 2012, and proposed the very architecture our study assumes — “a haltere-mediated inner-loop proportional controller provides damping for slower visually mediated feedback”. Our model recovers their result in a different medium with different parameters, which is worth something as a check and nothing as a claim of priority.",
      "A caution the page insists on: none of this says four wings are worse than two. Dragonflies have flown with four independently controlled wings for 300 million years, and their fore–hind phasing can improve efficiency rather than cost it. Remove roughly half the wing area from a moth or a butterfly and it still flies, losing acceleration but not turning radius. What makes the dipteran case different is specific to Diptera: the hindwing has already been spent, so converting it back costs a sensor and arrives without an engine.",
      "So the route worth proposing is the one nobody has run. Transform the T3 mesoderm as well as the epidermis, and give the second wing pair an engine. Both halves are published separately — that T2 mesoderm is specified entirely by induction and expresses no selector of its own, that ectopic homeotic expression in it respecifies its muscle, and that Antennapedia persists in the transformed T3 mesoderm. The experiment is to run that in the other direction."
     ],
@@ -75767,7 +75767,7 @@
       "from": "Haltere loss",
       "to": "Loss of control",
       "status": "model",
-      "note": "A delay bound rather than a gain comparison: no loop slower than about three wingbeats meets the measured recovery at any gain in the declared family. The model recovers in 13 ms where the real fly takes under 60, so it is OPTIMISTIC about control and therefore understates the cost of deleting the sensor."
+      "note": "A delay bound rather than a gain comparison: no loop slower than about three wingbeats meets the measured recovery at any gain in the declared family. The same trade-off was measured on a robotic fly by Elzinga et al. in 2012, so this junction reproduces a published result rather than establishing a new one. The model recovers in 13 ms where the real fly takes under 60, so it is OPTIMISTIC about control and therefore understates the cost of deleting the sensor."
      },
      {
       "from": "Added wing inertia",
@@ -75782,6 +75782,7 @@
     "No fly was made, no animal was used, and no wet-lab experiment was run for this page.",
     "There is no published measurement of free-flight performance in a four-winged Drosophila. The conclusion assembles two separately published phenotypes plus our own model.",
     "This page does not claim that four wings are worse than two. Odonata and the hindwing-ablation literature refute that as a general statement; the claim here is specific to Diptera, where the hindwing has already been spent on a sensor.",
+    "The delay-versus-gain bound in the flight study is a re-derivation. Elzinga, Dickson and Dickinson published the same trade-off, measured on a dynamically scaled robot, in 2012, and proposed the inner-loop architecture our model assumes. Reproducing it in a different medium is a check on our model, not a new finding.",
     "The venation study fails two of its four declared controls, including the one added to ask whether its readout had converged. Part of its quoted seed spread is convergence rather than pattern formation, and the runs were not lengthened until it passed.",
     "18 of the flight model's 24 parameters are assumed rather than sourced. Its ratios are more trustworthy than its absolute numbers.",
     "A threshold in a model is not a threshold in an animal."
@@ -75850,7 +75851,7 @@
    },
    "content_path": "site/content/design-spaces/insect-flight.json",
    "index_path": "results/insect-flight/index.json",
-   "content_sha256": "6c3f4112d9b649e552c25f21e840df4e9c2fe7d68aa22fdf786ee875984b3daa",
+   "content_sha256": "f2633e60af80a121766ff52245018a0cce33358647e3e92f05b3df193dc48884",
    "index_sha256": "3216f2b37b51b9970ae1b13a3853c57f64f6c8cf9ef4bfe3487bb6ff882ff911",
    "generated_at": null,
    "routes": {
