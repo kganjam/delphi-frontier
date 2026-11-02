@@ -67,7 +67,8 @@
     "The three studies are two simulations and an analysis. None is an observation, and none is calibrated to a measured living construct.",
     "No route on this page is a protocol. Each names published evidence and what would have to be done; none has been attempted here.",
     "The gait ranking in our own earlier artifact is withdrawn, not corrected. We are not offering a replacement ranking, because the refinement series does not converge and no magnitude from it is quotable.",
-    "voxcraft-sim failed to build in our hands on one toolkit and one platform, and the pinned CUDA 10.2 route was untried. That is a blocker we measured, not a verdict on the engine, and no cross-engine comparison is offered anywhere on this page.",
+    "voxcraft-sim, the GPU engine this literature uses, failed to build in our hands on BOTH a modern CUDA 12 toolkit and the project's own pinned nvcr.io/nvidia/cuda:10.2-devel-ubuntu18.04 image, for different reasons each time. An earlier version of this page said the pinned route was untried; it was tried, and it failed too. That is a blocker we measured on one platform, not a verdict on the engine, and no cross-engine comparison is offered anywhere on this page.",
+    "The probe script for that pinned attempt reported PROBE-VERDICT=BUILT and exited 0 while its own log showed “make: *** [all] Error 2”. It had captured the failure in a shell variable and then overwritten it with the exit code of a later command. We record it because a build we were about to call successful was not one, and because a green verdict that nobody reads the log behind is the failure this whole page is about.",
     "A threshold in a model is not a threshold in a dish."
   ],
   "closing": {
@@ -86,12 +87,48 @@
     "desc": "On the left, a dish seen from the side: a small construct resting on the dish floor in water, with loose particles in front of it, and an arrow showing it sweeping them forward. Its surface is drawn with cilia along the top and a contractile core inside. On the right, two panels stacked: above, a Reynolds-number axis running from a real millimetre construct at 0.1 to our simulated 50 millimetre body at 643, with the scallop-theorem region marked at the low end; below, the same construct redrawn as an asymmetric semitorus with a narrow mouth, gathering particles into its concavity. Six numbered pins mark where the routes on this page act; each is named in the list under the figure.",
     "caption": "Schematic, not a measurement and not to scale.",
     "pins": [
-      {"x": 120, "y": 150, "scale": "molecular", "name": "Cells and adhesion", "note": "What the construct is made of: the cell source, how cells stick, and whether a pile of them stays a pile. Adhesion is also the knob our swarm study shows is missing — stirring cannot aggregate anything that does not stick."},
-      {"x": 250, "y": 120, "scale": "cell", "name": "Cilia or contraction", "note": "Two different machines. Passive ciliary propulsion is what most published constructs actually use; engineered contractile tissue is the one that would have a gait at all. Placing cilia-inactive modules patterns thrust by construction rather than by timing."},
-      {"x": 300, "y": 300, "scale": "body", "name": "Body plan and the mouth", "note": "The shape. An asymmetric semitorus with a narrow mouth converts locomotion into gathering through geometry, needing no phase control, no actuator timing and no contractile graft. This is the route the page recommends."},
-      {"x": 640, "y": 128, "scale": "fluid", "name": "The fluid regime", "note": "Reynolds number below 0.1 for a real construct. Reciprocal actuation displaces nothing here, which is what voids the published gait ranking. Our own simulated body sits at 643 and has no fluid in it at all."},
-      {"x": 480, "y": 236, "scale": "design-loop", "name": "The design loop", "note": "The simulator used to search body plans, and whether its answers transfer. This is where our artifact failed: non-convergent under refinement, and using the ground-contact physics the foundational paper had already abandoned."},
-      {"x": 800, "y": 330, "scale": "application", "name": "Work on external material", "note": "Cargo pushed, particles gathered, a field swept. The gate is not which pattern ranks highest but whether the construct reaches its cargo at all — and a uniform swarm sweeps without corralling at every size we tested."}
+      {
+        "x": 120,
+        "y": 150,
+        "scale": "molecular",
+        "name": "Cells and adhesion",
+        "note": "What the construct is made of: the cell source, how cells stick, and whether a pile of them stays a pile. Adhesion is also the knob our swarm study shows is missing — stirring cannot aggregate anything that does not stick."
+      },
+      {
+        "x": 250,
+        "y": 120,
+        "scale": "cell",
+        "name": "Cilia or contraction",
+        "note": "Two different machines. Passive ciliary propulsion is what most published constructs actually use; engineered contractile tissue is the one that would have a gait at all. Placing cilia-inactive modules patterns thrust by construction rather than by timing."
+      },
+      {
+        "x": 300,
+        "y": 300,
+        "scale": "body",
+        "name": "Body plan and the mouth",
+        "note": "The shape. An asymmetric semitorus with a narrow mouth converts locomotion into gathering through geometry, needing no phase control, no actuator timing and no contractile graft. This is the route the page recommends."
+      },
+      {
+        "x": 640,
+        "y": 128,
+        "scale": "fluid",
+        "name": "The fluid regime",
+        "note": "Reynolds number below 0.1 for a real construct. Reciprocal actuation displaces nothing here, which is what voids the published gait ranking. Our own simulated body sits at 643 and has no fluid in it at all."
+      },
+      {
+        "x": 480,
+        "y": 236,
+        "scale": "design-loop",
+        "name": "The design loop",
+        "note": "The simulator used to search body plans, and whether its answers transfer. This is where our artifact failed: non-convergent under refinement, and using the ground-contact physics the foundational paper had already abandoned."
+      },
+      {
+        "x": 800,
+        "y": 330,
+        "scale": "application",
+        "name": "Work on external material",
+        "note": "Cargo pushed, particles gathered, a field swept. The gate is not which pattern ranks highest but whether the construct reaches its cargo at all — and a uniform swarm sweeps without corralling at every size we tested."
+      }
     ]
   }
 }
