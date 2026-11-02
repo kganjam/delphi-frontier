@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 1d3f5ac53a1d",
- "input_fingerprint": "1d3f5ac53a1df3ee13a4188dfc5bf05004434e992aa09f8049eed04395163959",
+ "label": "snapshot of inputs 707d5682f937",
+ "input_fingerprint": "707d5682f937773547551bf8427b58757267886ee2fa2a9ecd11aa5ebc2e938d",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "ababa466745cfb536b37f14cd0922bdbc662de6a830c880bc336b9195a60fd86",
-   "bytes": 3202
+   "sha256": "3673133bf27c80893a22f7f3448cf808b7f02f549020fe6b885a96e20c0d3569",
+   "bytes": 2117
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -39597,11 +39597,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release 66cc9a4bbf32)",
-    "outcome": "Browser suite plus design-space unit tests: 151 passed in 245.40s. Three design spaces now; both modules are parameterised over whatever the repository declares, so insect-flight arrived already covered. (exit 0); Every served figure is tracked in git: Passes over all three design spaces' figures. Added after seven xenobot figures 404d in production while every other test was green. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all three documents current (exit 0); Staleness scan: result files older than the code that writes them: Run because an inherited insect-flight study turned out to describe a superseded model - re-running its own code changed 70 of 428 leaves. xenobot, already in production, is clean on all three studies. The one real flag, venation.json being 2m40s older than venation.py, was resolved by RE-RUNNING rather than by asking: 417 leaves, 0 changed, byte-identical, so the edit was cosmetic. (exit 0); Stale claim removed at source and the author's own validator re-run: The authoring agent warned that the 'factor of 40' discrimination was from a stale file, then went idle with that claim still asserted in its own routes.json - the file the renderer reads. Corrected to 4.0%/39.2% in the BUILDER (editing the generated JSON would be reverted by the next rebuild), with a note recording the supersession. Its check_quotes.py then re-run over the edited output: 128 fragments, 0 not found, PASS, negative control not found and positive control found. (exit 0)",
+    "title": "limbless mouse release checks (release cf8fcc1c9cbc)",
+    "outcome": "Design-space browser and unit tests: 24 passed. The full 151-test suite passed at the previous release; this change edits one content file's prose and adds a not_claimed entry. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all three current (exit 0); Priority correction verified at the source: Verified verbatim rather than relayed: Elzinga, Dickson & Dickinson, J R Soc Interface 9(72):1685-96, 'The results show a fundamental trade-off between sensor delay and permissible feedback gain', proposing 'a control architecture whereby a haltere-mediated inner-loop proportional controller provides damping for slower visually mediated feedback'. The insect-flight page had presented its own three-wingbeat bound as our analysis; it is a re-derivation of this, and the page now says so in the answer prose, the chain link and not_claimed. Bender & Dickinson (17114395) verified in the same call. (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "ababa466745cfb536b37f14cd0922bdbc662de6a830c880bc336b9195a60fd86",
+    "sha256": "3673133bf27c80893a22f7f3448cf808b7f02f549020fe6b885a96e20c0d3569",
     "date": "no time recorded"
    },
    {

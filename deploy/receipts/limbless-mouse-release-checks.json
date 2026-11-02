@@ -1,56 +1,40 @@
 {
   "schema": "frontier.release.checks/1",
-  "sha": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076",
+  "sha": "cf8fcc1c9cbc72296af417e858228a96fb09fd51",
   "checks": [
     {
-      "name": "Browser suite plus design-space unit tests",
-      "command": "python3 -m pytest tests/test_site_browser.py tests/test_design_spaces.py -q",
+      "name": "Design-space browser and unit tests",
+      "command": "python3 -m pytest tests/test_site_browser.py::test_a_design_space_shows_its_routes_its_studies_and_its_own_refusals tests/test_design_spaces.py -q",
       "exit": 0,
-      "passed": 151,
-      "total": 151,
-      "result": "151 passed in 245.40s. Three design spaces now; both modules are parameterised over whatever the repository declares, so insect-flight arrived already covered.",
-      "at": "2026-11-02T22:57:41.386507+00:00",
-      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
-    },
-    {
-      "name": "Every served figure is tracked in git",
-      "command": "python3 -m pytest tests/test_design_spaces.py::test_every_served_figure_is_tracked_in_git -q",
-      "exit": 0,
-      "result": "Passes over all three design spaces' figures. Added after seven xenobot figures 404d in production while every other test was green.",
-      "at": "2026-11-02T22:57:41.386507+00:00",
-      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
+      "passed": 24,
+      "total": 24,
+      "result": "24 passed. The full 151-test suite passed at the previous release; this change edits one content file's prose and adds a not_claimed entry.",
+      "at": "2026-11-02T23:00:57.089570+00:00",
+      "tested_commit": "cf8fcc1c9cbc72296af417e858228a96fb09fd51"
     },
     {
       "name": "Snapshot reproducibility",
       "command": "python3 scripts/build_site.py --check",
       "exit": 0,
       "result": "stale=[]",
-      "at": "2026-11-02T22:57:41.386507+00:00",
-      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
+      "at": "2026-11-02T23:00:57.089570+00:00",
+      "tested_commit": "cf8fcc1c9cbc72296af417e858228a96fb09fd51"
     },
     {
       "name": "Generated markdown twins current",
       "command": "python3 scripts/designspace_doc.py --check",
       "exit": 0,
-      "result": "all three documents current",
-      "at": "2026-11-02T22:57:41.386507+00:00",
-      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
+      "result": "all three current",
+      "at": "2026-11-02T23:00:57.089570+00:00",
+      "tested_commit": "cf8fcc1c9cbc72296af417e858228a96fb09fd51"
     },
     {
-      "name": "Staleness scan: result files older than the code that writes them",
-      "command": "mtime comparison per study across all four design spaces",
+      "name": "Priority correction verified at the source",
+      "command": "PubMed record for PMID 22188766",
       "exit": 0,
-      "result": "Run because an inherited insect-flight study turned out to describe a superseded model - re-running its own code changed 70 of 428 leaves. xenobot, already in production, is clean on all three studies. The one real flag, venation.json being 2m40s older than venation.py, was resolved by RE-RUNNING rather than by asking: 417 leaves, 0 changed, byte-identical, so the edit was cosmetic.",
-      "at": "2026-11-02T22:57:41.386507+00:00",
-      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
-    },
-    {
-      "name": "Stale claim removed at source and the author's own validator re-run",
-      "command": "edit code/build_routes.py:230, rebuild, python3 code/check_quotes.py",
-      "exit": 0,
-      "result": "The authoring agent warned that the 'factor of 40' discrimination was from a stale file, then went idle with that claim still asserted in its own routes.json - the file the renderer reads. Corrected to 4.0%/39.2% in the BUILDER (editing the generated JSON would be reverted by the next rebuild), with a note recording the supersession. Its check_quotes.py then re-run over the edited output: 128 fragments, 0 not found, PASS, negative control not found and positive control found.",
-      "at": "2026-11-02T22:57:41.386507+00:00",
-      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
+      "result": "Verified verbatim rather than relayed: Elzinga, Dickson & Dickinson, J R Soc Interface 9(72):1685-96, 'The results show a fundamental trade-off between sensor delay and permissible feedback gain', proposing 'a control architecture whereby a haltere-mediated inner-loop proportional controller provides damping for slower visually mediated feedback'. The insect-flight page had presented its own three-wingbeat bound as our analysis; it is a re-derivation of this, and the page now says so in the answer prose, the chain link and not_claimed. Bender & Dickinson (17114395) verified in the same call.",
+      "at": "2026-11-02T23:00:57.089570+00:00",
+      "tested_commit": "cf8fcc1c9cbc72296af417e858228a96fb09fd51"
     }
   ]
 }
