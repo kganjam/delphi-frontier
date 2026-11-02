@@ -1,0 +1,71 @@
+{
+  "schema": "design-space-probe/0.1",
+  "id": "voxcraft-sim-build-probe",
+  "headline": "voxcraft-sim at its pin does NOT build against a modern CUDA toolkit. Both arms of the probe failed, for two independent reasons. No cross-engine comparison is offered anywhere on this page.",
+  "why_it_matters": "voxcraft-sim is the GPU engine the computationally designed organism literature actually uses; Kriegman et al. 2021 describe their simulator as 'a version of a voxel-based soft-body simulator modified to run on highly parallelized (GPU-based) computing platforms'. Building it would have been the strongest available check on everything else here.",
+  "target": {
+    "repo": "https://github.com/voxcraft/voxcraft-sim",
+    "pin": "dd8668f99ff74fb2fc2ee60deb91287a3b519d8f",
+    "pin_verified": "git rev-parse HEAD matched, PIN-OK printed",
+    "licence_of_record": "CC0-1.0, read from the LICENSE file bytes at that commit: 'Creative Commons Legal Code / CC0 1.0 Universal'",
+    "licence_conflict": "the project website cdorgs.github.io/code states the code is under Attribution-NonCommercial Creative Commons. The repository's own LICENSE file says CC0-1.0. Both are quoted; the conflict is not resolved in our favour."
+  },
+  "environment": {
+    "platform": "Nebius AI job, gpu-l40s-a, 1gpu-8vcpu-32gb",
+    "gpu": "NVIDIA L40S (read from nvidia-smi in the job)",
+    "image": "nvidia/cuda:12.4.1-devel-ubuntu22.04",
+    "nvcc": "Cuda compilation tools, release 12.4, V12.4.131",
+    "cmake": "3.22.1",
+    "boost": "libboost-{filesystem,thread,chrono,program_options}-dev from Ubuntu 22.04"
+  },
+  "arms": [
+    {
+      "arm": 1,
+      "CUDA_ARCH": "arch=compute_89,code=sm_89",
+      "note": "native L40S (Ada)",
+      "cmake_exit": 0,
+      "make_exit": 2,
+      "built": false
+    },
+    {
+      "arm": 2,
+      "CUDA_ARCH": "arch=compute_75,code=compute_75",
+      "note": "PTX-emitting, for forward JIT",
+      "cmake_exit": 0,
+      "make_exit": 2,
+      "built": false
+    }
+  ],
+  "blocker_1_cuda": {
+    "what": "voxcraft-sim calls cudaDeviceSynchronize() from __device__ functions. That was deprecated in device code in CUDA 10.2 and REMOVED in CUDA 12, so it cannot compile under a CUDA 12 toolkit.",
+    "first_error_verbatim": "/tmp/voxcraft-sim/src/VX3/VX3_VoxelyzeKernel.cu(269): error: calling a __host__ function(\"cudaDeviceSynchronize\") from a __device__ function(\"VX3_VoxelyzeKernel::doTimeStep\") is not allowed",
+    "also_verbatim": "/tmp/voxcraft-sim/src/VX3/VX3_VoxelyzeKernel.cu(312): error: identifier \"cudaDeviceSynchronize\" is undefined in device code",
+    "affected_lines_in_VX3_VoxelyzeKernel_cu": [
+      "232",
+      "269",
+      "303",
+      "312",
+      "428",
+      "437",
+      "446"
+    ],
+    "affected_device_functions": [
+      "doTimeStep",
+      "updateTemperature",
+      "updateAttach"
+    ]
+  },
+  "blocker_2_boost": {
+    "what": "an independent failure: nvcc cannot compile Boost.Asio's trait machinery, reached through boost::process, when building VX3_SimulationManager.cu. This one is not about CUDA versions in device code and would still have to be solved even if blocker 1 were patched.",
+    "error_verbatim": "/usr/include/boost/asio/traits/static_query.hpp:85:47: error: ''indirect_ref' not supported by dump_decl<declaration error>' is not a template [-fpermissive]",
+    "failing_target": "CMakeFiles/voxelyze.3.0.dir/src/VX3/VX3_SimulationManager.cu.o"
+  },
+  "verdict": "The 2021-era CUDA-10 codebase does not build against CUDA 12.4 with Ubuntu 22.04 Boost. The PTX arm does not help, because the failure is at COMPILE time rather than at load time, so there is no PTX to JIT forward. Making it build would need either patching the cudaDeviceSynchronize device-side calls out and resolving the Boost/nvcc conflict, or reconstructing the pinned CUDA 10.2 / Ubuntu 18.04 / Boost 1.65-1.67 environment the Dockerfile specifies and running the resulting binary on a modern driver.",
+  "what_this_does_not_establish": [
+    "that voxcraft-sim cannot be built at all. We tested one toolkit on one platform. The pinned nvcr.io/nvidia/cuda:10.2-devel-ubuntu18.04 path was NOT attempted.",
+    "anything about whether its results agree with ours. No comparison was run and none is implied."
+  ],
+  "acceptance_as_declared": "the probe's stated acceptance was that ./voxcraft-sim -i demos/basic/ -o output.xml -f produces a non-empty history file and exits 0. It was not reached in either arm.",
+  "log": "logs/voxcraft-probe-full.log",
+  "job_id": "aijob-e00n37n2d6cn00af86"
+}

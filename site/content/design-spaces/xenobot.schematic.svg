@@ -1,0 +1,53 @@
+<!-- Body of the xenobot schematic: everything inside <svg> except the numbered pins, which the renderer adds
+     from schematic.pins in xenobot.json so a pin and the caption line describing it cannot disagree.
+     A drawing, not a measurement and not to scale. -->
+<defs>
+  <marker id="xar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0e7c86"></path></marker>
+</defs>
+<rect x="0" y="0" width="960" height="440" fill="#fffdf8"></rect>
+<line x1="430" y1="36" x2="430" y2="404" stroke="#ddd3c0" stroke-dasharray="5 6"></line>
+<text x="215" y="40" class="dsb-ttl" text-anchor="middle">The construct in its dish</text>
+<text x="700" y="40" class="dsb-ttl" text-anchor="middle">The regime, and the shape that works</text>
+
+<!-- dish, side view -->
+<path d="M 40 300 L 40 345 Q 40 360 58 360 L 372 360 Q 390 360 390 345 L 390 300" fill="#eef6f7" stroke="#9fb6bb" stroke-width="2"></path>
+<line x1="40" y1="312" x2="390" y2="312" stroke="#7fa9b0" stroke-width="1.5" stroke-dasharray="4 4"></line>
+<text x="52" y="306" class="dsb-sub" text-anchor="start">water line</text>
+<line x1="48" y1="352" x2="382" y2="352" stroke="#c9b48c" stroke-width="5" stroke-linecap="round"></line>
+<text x="215" y="378" class="dsb-sub" text-anchor="middle">dish floor — contact friction, not Stokes drag</text>
+
+<!-- the construct -->
+<path d="M 200 328 Q 196 300 228 296 Q 268 292 292 302 Q 312 311 308 328 Z" fill="#fdf0d8" stroke="#9a6700" stroke-width="2"></path>
+<path d="M 206 300 l -5 -11 M 221 296 l -4 -12 M 237 294 l -2 -12 M 253 293 l 0 -12 M 269 294 l 3 -12 M 285 298 l 5 -11" stroke="#0e7c86" stroke-width="2.2" stroke-linecap="round"></path>
+<text x="252" y="276" class="dsb-sub" text-anchor="middle">cilia</text>
+<ellipse cx="252" cy="318" rx="34" ry="12" fill="#f3dcae" stroke="#c99a2e"></ellipse>
+<text x="252" y="322" class="dsb-lab" text-anchor="middle">core</text>
+
+<!-- particles and sweep -->
+<circle cx="140" cy="344" r="6" fill="#8a74b8"></circle>
+<circle cx="120" cy="334" r="5" fill="#8a74b8"></circle>
+<circle cx="160" cy="332" r="4.5" fill="#8a74b8"></circle>
+<circle cx="104" cy="347" r="4" fill="#8a74b8"></circle>
+<path d="M 196 340 L 166 340" class="dsb-arr" marker-end="url(#xar)"></path>
+<text x="128" y="316" class="dsb-sub" text-anchor="middle">loose material</text>
+
+<!-- Reynolds axis -->
+<line x1="500" y1="128" x2="900" y2="128" stroke="#555" stroke-width="2"></line>
+<rect x="500" y="110" width="150" height="36" fill="#e3f1f1" stroke="#0e7c86" stroke-dasharray="4 3"></rect>
+<text x="575" y="104" class="dsb-sub" text-anchor="middle">scallop theorem bites</text>
+<circle cx="560" cy="128" r="7" fill="#0e7c86"></circle>
+<text x="560" y="162" class="dsb-lab" text-anchor="middle">Re 0.1</text>
+<text x="560" y="178" class="dsb-sub" text-anchor="middle">1 mm construct</text>
+<circle cx="862" cy="128" r="7" fill="#b3261e"></circle>
+<text x="862" y="162" class="dsb-lab" text-anchor="middle">Re 643</text>
+<text x="862" y="178" class="dsb-sub" text-anchor="middle">our 50 mm model</text>
+<text x="700" y="202" class="dsb-note" text-anchor="middle">3.8 orders apart, and the model has no fluid in it</text>
+
+<!-- semitorus with a mouth -->
+<path d="M 700 300 m -62 0 a 62 62 0 1 1 124 0 a 62 62 0 0 1 -18 44 l -22 -26 a 28 28 0 0 0 -46 -34 a 28 28 0 0 0 -4 10 l -34 6 Z" fill="#fdf0d8" stroke="#9a6700" stroke-width="2"></path>
+<path d="M 700 238 A 62 62 0 0 0 638 300" fill="none" stroke="#0e7c86" stroke-width="4" stroke-linecap="round"></path>
+<circle cx="700" cy="300" r="7" fill="#8a74b8"></circle>
+<circle cx="686" cy="312" r="5.5" fill="#8a74b8"></circle>
+<circle cx="714" cy="313" r="5" fill="#8a74b8"></circle>
+<text x="700" y="392" class="dsb-lab" text-anchor="middle">semitorus with a mouth</text>
+<text x="700" y="410" class="dsb-sub" text-anchor="middle">geometry gathers; no phase control needed</text>

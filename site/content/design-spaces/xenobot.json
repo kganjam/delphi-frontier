@@ -1,0 +1,97 @@
+{
+  "schema": "design-space-page-0.1",
+  "id": "xenobot",
+  "title": "Living machines that do work",
+  "group": "Design space",
+  "status": "design space, mapped and simulated, with a prior result withdrawn",
+  "listed": true,
+  "doc": "docs/dossier/14-xenobot-design-space.md",
+  "doc_title": "14. Living machines that do work: the design space",
+  "live_url": "https://studio.morphoswarm.ai/#/studio/xenobot",
+  "home_blurb": "It began as a check on our own earlier simulation, and ended by withdrawing its headline result.",
+  "scope_pill": "no animal work",
+  "nothing_attempted_note": "nothing here was built from cells.",
+  "studies_note": "Three studies: one analysis, two simulations. None is an observation, none is calibrated to a measured living construct, and nothing here was built from cells. Two of the three exist to attack our own previously published artifact rather than to support it, and one of them succeeded.",
+  "goal": "Every headline result for computationally designed organisms is about the construct moving itself, or copying itself. The question that decides whether any of it becomes a product is different: can a millimetre-scale living machine do useful mechanical work on something else — push it, carry it, corral it? This page maps every route we can source, and begins by auditing the simulation we ourselves published on the subject.",
+  "summary": "We already had a preregistered soft-voxel actuation study in this repository, comparing six gait patterns. Asked to extend it toward an application, we instead checked it — and the honest outcome is that its gait ranking should be withdrawn. Five of its six patterns are provably motionless in the fluid regime a real construct occupies, the refinement series does not converge, and the authors of the foundational paper in this field had already tried that physics, found it produced designs that did not transfer, and replaced it. What survives is a one-minute test that needs no simulator, and a route that does the work with geometry instead of control.",
+  "answer": {
+    "headline": "Yes — but not by designing a gait.",
+    "paragraphs": [
+      "The obvious way to make a living machine move something is to design how it moves: pick a body, pick a pattern of contraction, optimise. That is what the computationally designed organism literature does, and it is what our own earlier artifact in this repository did, comparing six actuation patterns on a soft voxel body. Extending it toward cargo was supposed to be this page. Auditing it became this page instead.",
+      "Write the drive as a sine with a per-voxel phase and it decomposes into sin(ωt)·cos(φ) plus cos(ωt)·sin(φ). The body's shape then traces a closed curve in the span of two vectors, and that curve is retraced rather than enclosed — reciprocal — exactly when the 2×N matrix has rank one. Reading the phases out of our own driver source: five of the six patterns assign only the phases 0 and π, so sin(φ) is identically zero, the rank is one, and the whole body is driven by a single scalar in time. At the Reynolds number a millimetre-scale construct actually occupies, below 0.1, Purcell's scallop theorem makes their net displacement exactly zero. The ranking's second and third places are not merely demoted; they are dead.",
+      "The second and third checks did not rescue it. On a refinement series built to hold the physical actuation plane fixed while the lattice refines — the control the original study lacked — the model does not converge: 41% and 54% spread across a 64-fold increase in voxels, both series turning over rather than settling, with spatial error dominating temporal by seventeen-fold. And the non-monotone body-size swing an independent audit had flagged turned out to be neither a resonance nor a numerical artifact but a single line of integer division in the encoding, which splits the actuators evenly at even body lengths and unevenly at odd ones.",
+      "The strongest evidence against that physics is not ours. Kriegman and colleagues simulated their first-generation designs on land, reported that it \"resulted in highly performant but nontransferable designs\" airborne for 47% of the gait cycle while the real organisms kept ventral contact with the dish, and fixed it by adding buoyancy and a drag force on every surface voxel face — raising ground contact from 52.7% to 93.3%. Our artifact uses the physics they abandoned, and they published the abandonment.",
+      "So what does work? The route this page recommends does not control a gait at all. Sculpting the construct into an asymmetric semitorus with a narrow mouth lets locomotion become gathering through geometry: the shape does the work, the construct only has to move. It is the one body plan here that was computationally designed, physically built, and then measured on external material moved rather than on self-locomotion. And the honest commercial position sits beside it on the page — for most mechanical tasks at this scale a magnetically or acoustically driven synthetic device wins today on steering, force, speed and reliability."
+    ],
+    "precision_note": "Withdrawing the ranking is not withdrawing the artifact. The scallop theorem governs a free swimmer; a construct crawling on a dish bottom is rectifying against a surface and is outside its assumptions, and most published constructs are cilia-driven, where there is no body gait to rank at all. The claim is bounded: for a free-swimming or near-neutrally-buoyant construct the ranking is void and four of six patterns are exactly dead."
+  },
+  "chain": {
+    "title": "The chain across scales, and where it is not calibrated",
+    "intro": "These studies are meant to be read as one chain from an actuation pattern to material moved. Two of its junctions are inside a single model, one is a refusal, and only the last has a measured construct behind it.",
+    "links": [
+      {
+        "from": "Actuation phase pattern",
+        "to": "Net self-displacement",
+        "status": "model",
+        "note": "This junction is exact rather than fitted. The rank of the 2×N phase matrix decides reciprocity, and in the Stokes limit a reciprocal gait displaces nothing. It needs no simulator and no parameters, which is why it survives when the simulation does not."
+      },
+      {
+        "from": "Net self-displacement",
+        "to": "Cargo transported",
+        "status": "model",
+        "note": "Inside the dry-friction model the ordering carries over and the gap widens: the travelling wave transfers 0.95 of its own path length to the cargo against 0.51 and 0.26. This contradicted our own predeclared expectation, which is recorded in the study rather than quietly dropped."
+      },
+      {
+        "from": "The dry-friction model",
+        "to": "A real construct in water",
+        "status": "refused",
+        "note": "Refused outright. The simulated body is 40 to 50 mm with no fluid in it; a real construct is 0.5 to 1 mm in water. Every number in the cargo study is inside a model the first study shows is the wrong regime, and the refinement series does not converge in any case, so no magnitude from it is quotable."
+      },
+      {
+        "from": "Body geometry",
+        "to": "Material gathered",
+        "status": "model",
+        "note": "The only junction with a built and measured construct behind it rather than a simulation: a concave mouth converts locomotion into gathering without any per-region phase control, actuator timing or contractile tissue. The page's recommendation rests here, and it rests on someone else's measurement."
+      },
+      {
+        "from": "One construct",
+        "to": "A swarm that corrals",
+        "status": "refused",
+        "note": "Refused on our own evidence. A uniform, sensorless, single-gait swarm sweeps and does not corral at any size from 1 to 16. What first looked like onset at the largest swarm was the swarm reaching the edge of its dish: aggregation tracks how much of the arena the swarm spans, not how many constructs are in it."
+      }
+    ],
+    "verdict": "One junction is exact, two are inside a model whose own regime check condemns it, and two are refused. The end-to-end statement — this pattern moves that much material — is refused. The chain is a map of what would have to be measured, and the one link with a measurement behind it is the one that uses geometry instead of control."
+  },
+  "not_claimed": [
+    "Nothing here was built from cells. No construct was made, no animal was used, and no wet-lab experiment was run for this page.",
+    "The three studies are two simulations and an analysis. None is an observation, and none is calibrated to a measured living construct.",
+    "No route on this page is a protocol. Each names published evidence and what would have to be done; none has been attempted here.",
+    "The gait ranking in our own earlier artifact is withdrawn, not corrected. We are not offering a replacement ranking, because the refinement series does not converge and no magnitude from it is quotable.",
+    "voxcraft-sim failed to build in our hands on one toolkit and one platform, and the pinned CUDA 10.2 route was untried. That is a blocker we measured, not a verdict on the engine, and no cross-engine comparison is offered anywhere on this page.",
+    "A threshold in a model is not a threshold in a dish."
+  ],
+  "closing": {
+    "title": "Why a page that withdraws its own result is worth publishing",
+    "link": {
+      "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/xenobot/NOTES.md",
+      "text": "The working notes, including the mistakes section"
+    },
+    "text": "This design space was commissioned to extend our own simulation and ended by retiring its headline. That is the useful thing about it. The artifact it audits was preregistered, independently reviewed, and carried its own list of what it could not establish — and it was still wrong in a way none of that caught, because nobody had asked which fluid regime the object lives in. The check that found it takes a minute and needs no simulator. Every route here carries its evidence level, every junction between scales carries a label or a refusal, and the studies can be re-run from the repository. A platform that cannot retract its own results is not a design platform."
+  },
+  "schematic": {
+    "section_title": "Where the routes act",
+    "intro": "A construct, the fluid it sits in, and the material it is supposed to move. The routes below are not interchangeable tricks; they act at different places in this picture, and the one the page recommends acts on the shape rather than on the control.",
+    "viewBox": "0 0 960 440",
+    "title": "Where each family of routes acts on a living construct and its cargo",
+    "desc": "On the left, a dish seen from the side: a small construct resting on the dish floor in water, with loose particles in front of it, and an arrow showing it sweeping them forward. Its surface is drawn with cilia along the top and a contractile core inside. On the right, two panels stacked: above, a Reynolds-number axis running from a real millimetre construct at 0.1 to our simulated 50 millimetre body at 643, with the scallop-theorem region marked at the low end; below, the same construct redrawn as an asymmetric semitorus with a narrow mouth, gathering particles into its concavity. Six numbered pins mark where the routes on this page act; each is named in the list under the figure.",
+    "caption": "Schematic, not a measurement and not to scale.",
+    "pins": [
+      {"x": 120, "y": 150, "scale": "molecular", "name": "Cells and adhesion", "note": "What the construct is made of: the cell source, how cells stick, and whether a pile of them stays a pile. Adhesion is also the knob our swarm study shows is missing — stirring cannot aggregate anything that does not stick."},
+      {"x": 250, "y": 120, "scale": "cell", "name": "Cilia or contraction", "note": "Two different machines. Passive ciliary propulsion is what most published constructs actually use; engineered contractile tissue is the one that would have a gait at all. Placing cilia-inactive modules patterns thrust by construction rather than by timing."},
+      {"x": 300, "y": 300, "scale": "body", "name": "Body plan and the mouth", "note": "The shape. An asymmetric semitorus with a narrow mouth converts locomotion into gathering through geometry, needing no phase control, no actuator timing and no contractile graft. This is the route the page recommends."},
+      {"x": 640, "y": 128, "scale": "fluid", "name": "The fluid regime", "note": "Reynolds number below 0.1 for a real construct. Reciprocal actuation displaces nothing here, which is what voids the published gait ranking. Our own simulated body sits at 643 and has no fluid in it at all."},
+      {"x": 480, "y": 236, "scale": "design-loop", "name": "The design loop", "note": "The simulator used to search body plans, and whether its answers transfer. This is where our artifact failed: non-convergent under refinement, and using the ground-contact physics the foundational paper had already abandoned."},
+      {"x": 800, "y": 330, "scale": "application", "name": "Work on external material", "note": "Cargo pushed, particles gathered, a field swept. The gate is not which pattern ranks highest but whether the construct reaches its cargo at all — and a uniform swarm sweeps without corralling at every size we tested."}
+    ]
+  }
+}

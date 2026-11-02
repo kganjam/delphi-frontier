@@ -2480,7 +2480,12 @@ def test_a_design_space_shows_its_routes_its_studies_and_its_own_refusals(browse
     chain = block.get("chain") or {}
     assert pg.locator(".dslink").count() == len(chain.get("links") or [])
     if chain.get("links"):
-        assert pg.locator(".dslink.scenario").count() >= 1
+        # At least one junction must be something OTHER than a working model -- that is the criterion, and it is unchanged.
+        # The vocabulary is what widened: this read `.dslink.scenario` alone, which was the limbless chain's word for an
+        # uncalibrated junction, and it failed on a chain that refuses two junctions outright. `refused` is the STRONGER
+        # status, so demanding `scenario` specifically would have forced a weaker label onto a more honest chain.
+        hedged = sum(pg.locator(".dslink." + s).count() for s in ("scenario", "refused", "assumption"))
+        assert hedged >= 1, "a cross-scale chain whose every junction is a working model is claiming more than this site allows"
     if chain.get("verdict"):
         assert chain["verdict"].split(".")[0] in text
 

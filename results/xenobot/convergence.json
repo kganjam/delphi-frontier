@@ -1,0 +1,690 @@
+{
+  "schema": "design-space-study/0.1",
+  "id": "convergence",
+  "predeclared_questions": [
+    "Q1 does a parity-matched refinement series converge, and at what observed order",
+    "Q2 resonance or encoding; discriminators D1 (must appear in travelling) and D2 (optimum must scale as 1/L)",
+    "Q3 is the gait ranking stable under refinement"
+  ],
+  "refinement_series": {
+    "design": "the outer envelope and the PHYSICAL actuation field are held fixed while the lattice is refined. Series A uses travelling, whose phase 2*pi*x/nx is a function of fractional position and so is identical on every grid. Series B uses longitudinal with EVEN nx only, so the split at index nx/2 falls at the same physical plane (x = 20 mm) on every grid: 2x10 = 4x5 = 6x3.333 = 8x2.5 mm. The published artifact refined nx 5 -> 10, which moved that plane from 20 to 25 mm and flipped its parity at the same time.",
+    "denominator_note": "normalised by the OUTER ENVELOPE nx*voxel, which is invariant across the series. The artifact's stored metric divides by the centre-to-centre span (nx-1)*voxel, which is NOT invariant, and its own audit records that comparing two runs under two different denominators manufactured an agreement that was not in the data.",
+    "series": {
+      "A_travelling": {
+        "pattern": "travelling",
+        "invariant_outer_envelope_m": 0.05,
+        "levels": [
+          {
+            "tag": "A1",
+            "nx": 5,
+            "ny": 3,
+            "nz": 3,
+            "voxel_m": 0.01,
+            "voxels": 45,
+            "net_disp_m": 0.014577281,
+            "normalised_by_outer_envelope": 0.29154561999999995,
+            "dt_s": 5.06427969e-05,
+            "steps": 29618,
+            "diverged": false,
+            "wall_s": 0.4
+          },
+          {
+            "tag": "A2",
+            "nx": 10,
+            "ny": 6,
+            "nz": 6,
+            "voxel_m": 0.005,
+            "voxels": 360,
+            "net_disp_m": 0.016847525,
+            "normalised_by_outer_envelope": 0.33695049999999993,
+            "dt_s": 2.53213984e-05,
+            "steps": 59238,
+            "diverged": false,
+            "wall_s": 7.9
+          },
+          {
+            "tag": "A3",
+            "nx": 15,
+            "ny": 9,
+            "nz": 9,
+            "voxel_m": 0.0033333333333333335,
+            "voxels": 1215,
+            "net_disp_m": 0.013586575,
+            "normalised_by_outer_envelope": 0.27173149999999996,
+            "dt_s": 1.68809329e-05,
+            "steps": 88857,
+            "diverged": false,
+            "wall_s": 43.8
+          },
+          {
+            "tag": "A4",
+            "nx": 20,
+            "ny": 12,
+            "nz": 12,
+            "voxel_m": 0.0025,
+            "voxels": 2880,
+            "net_disp_m": 0.010889956,
+            "normalised_by_outer_envelope": 0.21779911999999998,
+            "dt_s": 1.26606992e-05,
+            "steps": 118476,
+            "diverged": false,
+            "wall_s": 125.9
+          }
+        ],
+        "successive_differences": [
+          0.04540487999999998,
+          -0.06521899999999997,
+          -0.053932379999999974
+        ],
+        "successive_difference_ratios": [
+          1.4363874543881627,
+          0.8269427620785353
+        ],
+        "monotone": false,
+        "total_spread_rel_to_coarsest": 0.4086886299303689,
+        "richardson_fit": {
+          "f0_extrapolated": -0.7029073692080527,
+          "C": 1.286469420751669,
+          "observed_order_p": 0.05000000000000002,
+          "residual_rms": 0.0341508085967681,
+          "n_points": 4
+        }
+      },
+      "B_longitudinal": {
+        "pattern": "longitudinal",
+        "invariant_outer_envelope_m": 0.04,
+        "levels": [
+          {
+            "tag": "B1",
+            "nx": 4,
+            "ny": 3,
+            "nz": 3,
+            "voxel_m": 0.01,
+            "voxels": 36,
+            "net_disp_m": 0.000600864,
+            "normalised_by_outer_envelope": 0.0150216,
+            "dt_s": 5.06427969e-05,
+            "steps": 29618,
+            "diverged": false,
+            "wall_s": 0.4
+          },
+          {
+            "tag": "B2",
+            "nx": 8,
+            "ny": 6,
+            "nz": 6,
+            "voxel_m": 0.005,
+            "voxels": 288,
+            "net_disp_m": 0.00077242,
+            "normalised_by_outer_envelope": 0.0193105,
+            "dt_s": 2.53213984e-05,
+            "steps": 59238,
+            "diverged": false,
+            "wall_s": 6.9
+          },
+          {
+            "tag": "B3",
+            "nx": 12,
+            "ny": 9,
+            "nz": 9,
+            "voxel_m": 0.0033333333333333335,
+            "voxels": 972,
+            "net_disp_m": 0.000927781,
+            "normalised_by_outer_envelope": 0.023194525,
+            "dt_s": 1.68809329e-05,
+            "steps": 88857,
+            "diverged": false,
+            "wall_s": 37.9
+          },
+          {
+            "tag": "B4",
+            "nx": 16,
+            "ny": 12,
+            "nz": 12,
+            "voxel_m": 0.0025,
+            "voxels": 2304,
+            "net_disp_m": 0.000836664,
+            "normalised_by_outer_envelope": 0.0209166,
+            "dt_s": 1.26606992e-05,
+            "steps": 118476,
+            "diverged": false,
+            "wall_s": 102.3
+          }
+        ],
+        "successive_differences": [
+          0.004288900000000002,
+          0.0038840249999999993,
+          -0.002277925
+        ],
+        "successive_difference_ratios": [
+          0.9055993378255491,
+          0.5864856688615548
+        ],
+        "monotone": false,
+        "total_spread_rel_to_coarsest": 0.5440781940672099,
+        "richardson_fit": {
+          "f0_extrapolated": 0.02304298345245816,
+          "C": -6.725953579299537,
+          "observed_order_p": 1.4598770120595936,
+          "residual_rms": 0.001108227488812951,
+          "n_points": 4
+        }
+      }
+    }
+  },
+  "parity_vs_resonance": {
+    "parity_sweep": {
+      "nx": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "longitudinal": {
+        "3": 0.481362,
+        "4": 0.020029,
+        "5": 0.153183,
+        "6": 0.008596,
+        "7": 0.079589,
+        "8": 0.00365,
+        "9": 0.034169,
+        "10": 0.001477,
+        "11": 0.023432,
+        "12": 0.000552,
+        "13": 0.013867,
+        "14": 0.00031,
+        "15": 0.010828,
+        "16": 0.000163
+      },
+      "travelling": {
+        "3": 0.347766,
+        "4": 0.373879,
+        "5": 0.364432,
+        "6": 0.377147,
+        "7": 0.376187,
+        "8": 0.370919,
+        "9": 0.352195,
+        "10": 0.328456,
+        "11": 0.294534,
+        "12": 0.258682,
+        "13": 0.22344,
+        "14": 0.190036,
+        "15": 0.159422,
+        "16": 0.128319
+      },
+      "fixed": "voxel 10 mm, freq 4 Hz, 5 cycles, same material"
+    },
+    "D1_alternation_must_appear_in_travelling_too": {
+      "longitudinal_median_odd_over_even_neighbours": 20.33346322256837,
+      "longitudinal_all": [
+        11.674350660246446,
+        14.208833080796186,
+        14.716196863828163,
+        25.950729581308575,
+        33.522170432001914,
+        48.169661893504035
+      ],
+      "travelling_median_odd_over_even_neighbours": 1.008399327415124,
+      "travelling_all": [
+        0.9705002229491675,
+        1.0057937082636406,
+        1.0090322479028893,
+        1.0104474463033495,
+        1.0077664069273586,
+        1.0209038219729465
+      ],
+      "verdict": "FAILS for a resonance: longitudinal alternates by a median factor of 20.3, travelling by 1.008, i.e. not at all."
+    },
+    "each_parity_branch_is_monotone": {
+      "odd_nx_longitudinal_monotone_decreasing": true,
+      "even_nx_longitudinal_monotone_decreasing": true,
+      "travelling_single_branch_monotone": false,
+      "reading": "the series the audit called non-monotone is TWO smooth monotone branches interleaved; the four points it flagged (nx 4,5,6,7) are two adjacent points of each branch"
+    },
+    "D2_optimum_frequency_must_scale_as_1_over_L": {
+      "per_gait": {
+        "longitudinal": {
+          "4": {
+            "L_m": 0.03,
+            "f_opt_Hz": 12.0,
+            "max_body_lengths": 0.03382,
+            "f_opt_times_L": 0.36,
+            "at_swept_boundary": false,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.9606150206978119
+          },
+          "5": {
+            "L_m": 0.04,
+            "f_opt_Hz": 6.0,
+            "max_body_lengths": 0.156321,
+            "f_opt_times_L": 0.24,
+            "at_swept_boundary": false,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.9125069568388124
+          },
+          "6": {
+            "L_m": 0.05,
+            "f_opt_Hz": 12.0,
+            "max_body_lengths": 0.021257,
+            "f_opt_times_L": 0.6,
+            "at_swept_boundary": false,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.9566730959213435
+          },
+          "7": {
+            "L_m": 0.06,
+            "f_opt_Hz": 4.0,
+            "max_body_lengths": 0.079589,
+            "f_opt_times_L": 0.24,
+            "at_swept_boundary": false,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.7719031524456896
+          },
+          "8": {
+            "L_m": 0.07,
+            "f_opt_Hz": 12.0,
+            "max_body_lengths": 0.013253,
+            "f_opt_times_L": 0.84,
+            "at_swept_boundary": false,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.9920772655247869
+          }
+        },
+        "travelling": {
+          "4": {
+            "L_m": 0.03,
+            "f_opt_Hz": 4.0,
+            "max_body_lengths": 0.373879,
+            "f_opt_times_L": 0.12,
+            "at_swept_boundary": false,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.3744954918569912
+          },
+          "5": {
+            "L_m": 0.04,
+            "f_opt_Hz": 0.25,
+            "max_body_lengths": 0.391113,
+            "f_opt_times_L": 0.01,
+            "at_swept_boundary": true,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.43103911145883667
+          },
+          "6": {
+            "L_m": 0.05,
+            "f_opt_Hz": 0.25,
+            "max_body_lengths": 0.426626,
+            "f_opt_times_L": 0.0125,
+            "at_swept_boundary": true,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.5162507676512917
+          },
+          "7": {
+            "L_m": 0.06,
+            "f_opt_Hz": 0.25,
+            "max_body_lengths": 0.432238,
+            "f_opt_times_L": 0.015,
+            "at_swept_boundary": true,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.5709724734983967
+          },
+          "8": {
+            "L_m": 0.07,
+            "f_opt_Hz": 0.25,
+            "max_body_lengths": 0.433143,
+            "f_opt_times_L": 0.0175,
+            "at_swept_boundary": true,
+            "n_frequencies": 13,
+            "freq_range_Hz": [
+              0.25,
+              16.0
+            ],
+            "total_variation_rel": 0.6275364025275717
+          }
+        }
+      },
+      "longitudinal_f_opt_nx4_Hz": 12.0,
+      "longitudinal_f_opt_nx8_Hz": 12.0,
+      "body_length_ratio_nx8_over_nx4": 2.3333333333333335,
+      "verdict": "FAILS for a resonance: body length rises by 2.33x from nx=4 to nx=8 and longitudinal's optimum frequency is 12.0 Hz at both ends. A length resonance requires f_opt to fall by the same factor.",
+      "travelling_caveat": "travelling's optimum runs to the lowest swept frequency for nx>=5, so it is a BOUNDARY not an optimum; its total variation over 0.25-16 Hz is at most 0.63, a broad shallow response rather than a peak."
+    },
+    "verdict": "ENCODING, not resonance and not a solver artifact. The alternation appears only in the pattern whose phase assignment depends on grid parity; it is absent from the pattern whose phase is a continuous function of position; each parity branch is smooth and monotone over 14 values; and it persists unchanged at every drive frequency from 0.25 to 16 Hz. It is a real mechanical consequence of a real difference in actuator layout, and that difference is an artifact of writing the split as an index comparison."
+  },
+  "headline": "On a parity-matched refinement series the model does NOT converge. Across a 4x refinement (45 to 2880 voxels) the travelling wave spans 41% of its coarsest value and the longitudinal split 54%, and BOTH series turn over rather than settling. Separately, the non-monotone body-size series the independent audit flagged is the actuation encoding, not a gait-length resonance: it is two smooth monotone branches interleaved by the parity of the actuator split, it is absent from the pattern whose phase does not depend on parity, and it does not move with drive frequency.",
+  "Q1_verdict": {
+    "converged": false,
+    "statement": "neither series converges. Both are non-monotone across four levels and the successive differences do not fall the way a converging series' do: series A gives ratios 1.44 then 0.83, series B 0.91 then 0.59. A power-law fit f(h) = f0 + C h^p returns p = 0.05 for series A with a residual of 3.4e-2 against values near 0.3, which is not a convergence order but a statement that the series is not a power law.",
+    "what_the_audit_said": "the independent audit recorded G_actual_SI_coarse_to_fine_ratio = 7.25 and the status line 'spatial G unresolved'. This study resolves it, as a NEGATIVE: most of that 7.25 was the parity confound, and what remains still does not converge.",
+    "consequence_for_the_published_artifact": "any net displacement quoted from the coarse 5x3x3 grid is provisional at best. The artifact itself predicted no convergence for its arm G and said so in advance, so this is a confirmation of its own stated expectation rather than a contradiction of a claim it made."
+  },
+  "ranking_stability": {
+    "travelling_over_longitudinal_by_level": [
+      19.40842653245992,
+      17.449082105590218,
+      11.715329371909963,
+      10.412740120287236
+    ],
+    "reading": "the ORDER is stable - travelling is ahead of longitudinal at every one of the four levels - but the SIZE of the gap is not: it falls from 19.4x to 10.4x across the refinement and is still moving at the finest grid. A ranking quoted from the coarse grid gets the winner right for this pair and the margin wrong by about a factor of two.",
+    "what_can_be_said": "this study refines TWO patterns, not all six, so it cannot report a full ranking at the fine grid. What it establishes is the prior question: whether a single pattern's value is stable enough for any ranking drawn from the coarse grid to mean anything.",
+    "per_series": {
+      "A_travelling": {
+        "total_spread_rel_to_coarsest": 0.4086886299303689,
+        "monotone": false,
+        "observed_order_p": 0.05000000000000002,
+        "successive_difference_ratios": [
+          1.4363874543881627,
+          0.8269427620785353
+        ]
+      },
+      "B_longitudinal": {
+        "total_spread_rel_to_coarsest": 0.5440781940672099,
+        "monotone": false,
+        "observed_order_p": 1.4598770120595936,
+        "successive_difference_ratios": [
+          0.9055993378255491,
+          0.5864856688615548
+        ]
+      }
+    },
+    "coarse_grid_gap_between_the_two_patterns": 19.40842653245992
+  },
+  "what_this_cannot_establish": [
+    "that the model converges. It refines two of six patterns on three or four levels each; a converged value is not demonstrated and is not claimed.",
+    "a corrected ranking of the six gaits. Only travelling and longitudinal were refined.",
+    "anything about a biological construct. This is the same generic soft-voxel model throughout, with the same assumed parameters, and the regime-check study shows it is not the regime a real construct occupies.",
+    "that the parity effect is the ONLY cause of the artifact's 8.2x arm-G gap. Varying nx at fixed voxel size changes count, length and mass together, as the independent audit already noted; this study adds that the effect is absent from a parity-free pattern and frequency-independent, which rules out a resonance but does not isolate a single cause."
+  ],
+  "timestep_separation_arm": {
+    "why": "a refinement at fixed dtScale halves dt automatically with the lattice, so spatial and temporal error are confounded. This arm repeats levels 1-3 of both series at HALF the timestep and asks whether the spatial spread survives.",
+    "per_level": {
+      "A1": {
+        "voxels": 45,
+        "pattern": "travelling",
+        "dtScale_0.5": 0.29154561999999995,
+        "dtScale_0.25": 0.2887759,
+        "rel_change_pct": -0.9500125572114498
+      },
+      "A2": {
+        "voxels": 360,
+        "pattern": "travelling",
+        "dtScale_0.5": 0.33695049999999993,
+        "dtScale_0.25": 0.33253204,
+        "rel_change_pct": -1.3113083375747947
+      },
+      "A3": {
+        "voxels": 1215,
+        "pattern": "travelling",
+        "dtScale_0.5": 0.27173149999999996,
+        "dtScale_0.25": 0.26946193999999996,
+        "rel_change_pct": -0.8352215330206487
+      },
+      "B1": {
+        "voxels": 36,
+        "pattern": "longitudinal",
+        "dtScale_0.5": 0.0150216,
+        "dtScale_0.25": 0.014222799999999999,
+        "rel_change_pct": -5.317675880066043
+      },
+      "B2": {
+        "voxels": 288,
+        "pattern": "longitudinal",
+        "dtScale_0.5": 0.0193105,
+        "dtScale_0.25": 0.016313325,
+        "rel_change_pct": -15.520960099427779
+      },
+      "B3": {
+        "voxels": 972,
+        "pattern": "longitudinal",
+        "dtScale_0.5": 0.023194525,
+        "dtScale_0.25": 0.021125525,
+        "rel_change_pct": -8.920208540593098
+      }
+    },
+    "per_series": {
+      "travelling": {
+        "spatial_spread_pct_at_dt0.5": 22.370083968334004,
+        "spatial_spread_pct_at_dt0.25": 21.840499847805866,
+        "max_temporal_change_pct_at_fixed_grid": 1.3113083375747947,
+        "spatial_over_temporal": 17.059362262354302
+      },
+      "longitudinal": {
+        "spatial_spread_pct_at_dt0.5": 54.407819406720996,
+        "spatial_spread_pct_at_dt0.25": 48.53281351070114,
+        "max_temporal_change_pct_at_fixed_grid": 15.520960099427777,
+        "spatial_over_temporal": 3.505441613030555
+      }
+    },
+    "verdict": "For the travelling wave the non-convergence is unambiguously SPATIAL: halving dt changes any level by at most 1.3% while the spread across levels 1-3 is 22% (41% over all four), and that spread is essentially unchanged at the finer dt, 22.4% against 21.8%. For the longitudinal split the temporal error is NOT negligible - up to 15.5% at level 2 - but it does not explain the spread either: halving dt moves it only from 54.4% to 48.5%. Spatial error dominates by about 17x for travelling and about 3.5x for longitudinal.",
+    "relation_to_the_artifacts_own_arm_F": "the pinned artifact's timestep arm found 0.90% spread across a 4x dt range, which does not conflict with the 5.3% we see at B1. Arm F ran longitudinal at nx=5, the ASYMMETRIC split, whose net displacement is large (0.153 body lengths). B1 is nx=4, the SYMMETRIC split, an order of magnitude smaller at 0.015 normalised, so the same absolute numerical error is a much larger relative one. The two measure the same thing on configurations separated by the parity effect this study is about."
+  },
+  "conditioning_arm": {
+    "status": "POST-HOC. Found by cross-checking the local refinement against an independent run of the same series on a Nebius L40S node, where two of fourteen runs disagreed.",
+    "what_happened": "12 of the 14 runs were bit-identical between an AWS host and a Nebius node, confirming the engine is deterministic across machines as the protocol claims. The two that disagreed were exactly the level-3 grids, where voxel = 1/300 m: the local runs passed the full double-precision value and the remote job passed a 10-digit literal. Re-running locally with the 10-digit value reproduces the remote result EXACTLY, so the engine is not at fault and the difference is entirely the input spelling.",
+    "measurement": {
+      "longitudinal": {
+        "voxel_a": "0.0033333333",
+        "voxel_b": "0.0033333333333333335",
+        "net_disp_a_m": 0.000916803,
+        "net_disp_b_m": 0.000927781,
+        "input_rel_perturbation": 1.0000000046778146e-08,
+        "output_rel_change": 0.011974219107049202,
+        "amplification": 1197421.9051036027,
+        "normalised_a": 0.022920074999999998,
+        "normalised_b": 0.023194525
+      },
+      "travelling": {
+        "voxel_a": "0.0033333333",
+        "voxel_b": "0.0033333333333333335",
+        "net_disp_a_m": 0.013588134,
+        "net_disp_b_m": 0.013586575,
+        "input_rel_perturbation": 1.0000000046778146e-08,
+        "output_rel_change": 0.00011473245700991288,
+        "amplification": 11473.245647321572,
+        "normalised_a": 0.27176268,
+        "normalised_b": 0.27173149999999996
+      }
+    },
+    "reading": "A relative perturbation of 1.0e-8 in the voxel size changes net displacement by 1.2e-2 for the SYMMETRIC longitudinal split - an amplification of about 1.2e6 - and by 1.1e-4 for the travelling wave, an amplification of about 1.1e4. The quantity being refined is therefore not a well-conditioned function of the inputs at these configurations, and the symmetric split is roughly 100x worse than the travelling wave. That is a direct explanation for why the refinement series do not converge, and it predicts that no amount of further refinement would make them: the spread is not dominated by discretisation error that shrinks with h.",
+    "caveat": "this is ONE perturbation of ONE parameter at ONE grid level per pattern. It establishes that the configuration is ill-conditioned; it does not measure a condition number, and the amplification figures should not be quoted as one.",
+    "consequence_for_the_series": "the series reported here all use the full double-precision 1/300 locally, so they are internally consistent. A reader reproducing them must pass the same value; a 10-digit literal changes level 3 by 1.2% for longitudinal."
+  },
+  "model": {
+    "engine": {
+      "name": "Voxelyze",
+      "repo": "https://github.com/jonhiller/Voxelyze",
+      "commit": "4287e365e11416dd108f2f361e9ec4c5a011a16c",
+      "licence_from_source_headers": "LGPL-3.0-or-later",
+      "licence_caveat": "there is no LICENSE file at that commit, so the GitHub API reports license: null; the per-file headers are the licence",
+      "build_defect": "the upstream makefile's default FLAGS carry -DPARDISO_5=1, which leaves undefined references to pardisoinit/pardiso; built with FLAGS overridden to drop it",
+      "driver": "scripts/voxel_actuation/soft_actuation.cpp from delphi-frontier, UNMODIFIED. We changed only the arguments."
+    },
+    "verification": "our build reproduces the published travelling-wave run bit-for-bit: 0.0145773 m against the stored 0.014577281 m",
+    "parameters": [
+      {
+        "name": "voxel_m",
+        "value": [
+          0.01,
+          0.005,
+          0.0033333333333333335,
+          0.0025
+        ],
+        "units": "m",
+        "status": "nondimensional",
+        "source": "the refinement variable; chosen so the outer envelope is identical on all four levels"
+      },
+      {
+        "name": "outer_envelope_A",
+        "value": [
+          0.05,
+          0.03,
+          0.03
+        ],
+        "units": "m",
+        "status": "assumed",
+        "source": "held fixed across series A; it is the invariant length and therefore the denominator"
+      },
+      {
+        "name": "outer_envelope_B",
+        "value": [
+          0.04,
+          0.03,
+          0.03
+        ],
+        "units": "m",
+        "status": "assumed",
+        "source": "held fixed across series B"
+      },
+      {
+        "name": "E",
+        "value": 100000.0,
+        "units": "Pa",
+        "status": "sourced",
+        "source": "voxcraft/voxcraft-sim demos/basic/base.vxa @ dd8668f99ff74fb2fc2ee60deb91287a3b519d8f, reached through the pinned artifact's protocol.json"
+      },
+      {
+        "name": "rho",
+        "value": 1000.0,
+        "units": "kg m^-3",
+        "status": "sourced",
+        "source": "voxcraft/voxcraft-sim demos/basic/base.vxa @ dd8668f99ff74fb2fc2ee60deb91287a3b519d8f, reached through the pinned artifact's protocol.json"
+      },
+      {
+        "name": "poisson",
+        "value": 0.35,
+        "units": "-",
+        "status": "sourced",
+        "source": "voxcraft/voxcraft-sim demos/basic/base.vxa @ dd8668f99ff74fb2fc2ee60deb91287a3b519d8f, reached through the pinned artifact's protocol.json"
+      },
+      {
+        "name": "mu_static",
+        "value": 1.0,
+        "units": "-",
+        "status": "sourced",
+        "source": "voxcraft/voxcraft-sim demos/basic/base.vxa @ dd8668f99ff74fb2fc2ee60deb91287a3b519d8f, reached through the pinned artifact's protocol.json"
+      },
+      {
+        "name": "mu_kinetic",
+        "value": 0.8,
+        "units": "-",
+        "status": "sourced",
+        "source": "voxcraft/voxcraft-sim demos/basic/base.vxa @ dd8668f99ff74fb2fc2ee60deb91287a3b519d8f, reached through the pinned artifact's protocol.json"
+      },
+      {
+        "name": "cte",
+        "value": 0.01,
+        "units": "degC^-1",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol (artifacts/voxel-actuation/protocol.json, parameter_provenance.assumed_not_measured); no measured biological referent"
+      },
+      {
+        "name": "temp_amplitude",
+        "value": 10.0,
+        "units": "degC",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol (artifacts/voxel-actuation/protocol.json, parameter_provenance.assumed_not_measured); no measured biological referent"
+      },
+      {
+        "name": "freq",
+        "value": 4.0,
+        "units": "Hz",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol (artifacts/voxel-actuation/protocol.json, parameter_provenance.assumed_not_measured); no measured biological referent; swept from 0.25 to 16 Hz in the resonance arm"
+      },
+      {
+        "name": "zeta_internal",
+        "value": 1.0,
+        "units": "-",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol (artifacts/voxel-actuation/protocol.json, parameter_provenance.assumed_not_measured); no measured biological referent"
+      },
+      {
+        "name": "zeta_global",
+        "value": 0.1,
+        "units": "-",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol (artifacts/voxel-actuation/protocol.json, parameter_provenance.assumed_not_measured); no measured biological referent. It is a numerical absolute-frame damping term, NOT fluid drag, so no swimming interpretation is available from it"
+      },
+      {
+        "name": "zeta_collision",
+        "value": 0.8,
+        "units": "-",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol (artifacts/voxel-actuation/protocol.json, parameter_provenance.assumed_not_measured); no measured biological referent"
+      },
+      {
+        "name": "dtScale",
+        "value": 0.5,
+        "units": "-",
+        "status": "assumed",
+        "source": "fraction of Voxelyze's recommendedTimeStep, as in the pinned artifact, whose own arm F found 0.9% spread across a 4x dt range"
+      },
+      {
+        "name": "cycles",
+        "value": 5,
+        "units": "-",
+        "status": "assumed",
+        "source": "matches the pinned artifact. The frequency sweep holds CYCLES fixed and lets duration vary as 5/f, so every point is the same number of actuation cycles"
+      }
+    ]
+  },
+  "limitations": [
+    "Two patterns were refined, not six. No corrected ranking of the six gaits is offered or possible from this.",
+    "Four levels is enough to show that a series does not settle; it is not enough to extract a reliable convergence order, and the power-law fits here have residuals of 5% and more, which is itself the finding.",
+    "Temporal and spatial error ARE separated, by a half-timestep repeat of levels 1-3 (see timestep_separation_arm): spatial dominates by about 17x for the travelling wave and 3.5x for the longitudinal split, and the spatial spread survives at the finer timestep. Two caveats: level 4 was not repeated at the finer timestep, and for longitudinal the temporal error is NOT negligible, reaching 15.5% at level 2.",
+    "Varying nx at fixed voxel size, which is how the parity sweep is done, changes voxel count, body length and mass together. The independent audit already noted this. We add that the effect is absent from a parity-free pattern and is frequency-independent, which rules out a gait-length resonance; it does not isolate a single cause.",
+    "The frequency optima for the travelling wave sit at the lowest swept frequency for nx >= 5, so they are boundaries rather than optima and are labelled as such. The longitudinal optima are interior, which is what the D2 discriminator rests on.",
+    "This is the generic soft-voxel model with assumed parameters throughout. Our own regime-check study finds it is not the regime a real construct occupies."
+  ],
+  "not_diverged_gate": {
+    "what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
+    "total_runs_checked": 404,
+    "diverged_runs": [],
+    "gate_met": true
+  }
+}

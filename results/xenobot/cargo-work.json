@@ -1,0 +1,1734 @@
+{
+  "schema": "design-space-study/0.1",
+  "id": "cargo-work",
+  "headline": "In this dry-friction model the body plan that moves itself best also pushes best: the travelling wave wins on cargo displacement, on transport ratio and on energy efficiency, contradicting our predeclared expectation. The real design gate is not which gait ranks highest but whether the gait moves an external object at all, and in 5 cycles only one of six even reaches its cargo. A uniform swarm sweeps but never corrals, over swarm sizes 1 to 16 in two field sizes.",
+  "declared_metrics": {
+    "M1_primary": "cargo net COM displacement, m",
+    "M2": "cargo net displacement per actuation cycle, m",
+    "M3": "useful work against floor friction, mu_k*m*g*path (closed form, LOWER BOUND)",
+    "M4": "efficiency = M3 / W_actuation",
+    "M5": "transport ratio = cargo net displacement / construct path length",
+    "S1_primary_swarm": "mean particle net displacement vs swarm size N",
+    "S2": "change in particle radius of gyration (negative = aggregation)",
+    "S3": "spread over 5 seeds (min/median/max)"
+  },
+  "predeclared_expectation": {
+    "statement": "the gait that moves the construct itself furthest will NOT be the gait that pushes an external object furthest",
+    "outcome": "REFUTED",
+    "evidence": "travelling is first on every metric in arm 1b: cargo displacement 103.6 mm vs 35.8 mm (longitudinal) and 21.7 mm (lateral); transport ratio 0.947 vs 0.508 and 0.260; efficiency 0.0326 vs 0.0114 and 0.0044. The ordering is identical to the self-locomotion ordering and the gap is WIDER in pushing than in self-locomotion.",
+    "note": "We record this as a failed prediction rather than reframing it. One pilot run of the travelling pattern was executed as a plumbing check before the metrics were written down, and its cargo displacement was seen; every other number here was produced afterwards."
+  },
+  "model": {
+    "engine": {
+      "name": "Voxelyze",
+      "commit": "4287e365e11416dd108f2f361e9ec4c5a011a16c",
+      "licence_from_source_headers": "LGPL-3.0-or-later",
+      "driver": "code/cargo_actuation.cpp, OUR code, extending the delphi-frontier soft_actuation driver with a second never-actuated material, an actuation-work accumulator and a seeded RNG for particle placement"
+    },
+    "regression_control": "with the cargo removed, this driver reproduces the pinned artifact's travelling run bit-for-bit at 0.0145773 m against the published 0.014577281 m",
+    "parameters": [
+      {
+        "name": "voxel_m",
+        "value": 0.01,
+        "units": "m",
+        "status": "sourced",
+        "source": "voxcraft/voxcraft-sim demos/basic/base.vxa @ dd8668f9, Lattice_Dim, via the pinned artifact's protocol.json"
+      },
+      {
+        "name": "E",
+        "value": 100000.0,
+        "units": "Pa",
+        "status": "sourced",
+        "source": "same base.vxa, Elastic_Mod"
+      },
+      {
+        "name": "rho",
+        "value": 1000.0,
+        "units": "kg m^-3",
+        "status": "sourced",
+        "source": "same base.vxa, Density"
+      },
+      {
+        "name": "poisson",
+        "value": 0.35,
+        "units": "-",
+        "status": "sourced",
+        "source": "same base.vxa, Poissons_Ratio"
+      },
+      {
+        "name": "mu_static",
+        "value": 1.0,
+        "units": "-",
+        "status": "sourced",
+        "source": "same base.vxa, uStatic"
+      },
+      {
+        "name": "mu_kinetic",
+        "value": 0.8,
+        "units": "-",
+        "status": "sourced",
+        "source": "same base.vxa, uDynamic"
+      },
+      {
+        "name": "cte",
+        "value": 0.01,
+        "units": "degC^-1",
+        "status": "assumed",
+        "source": "declared engineering choice in the pinned protocol; no measured biological referent"
+      },
+      {
+        "name": "temp_amplitude",
+        "value": 10.0,
+        "units": "degC",
+        "status": "assumed",
+        "source": "same; cte x amplitude gives 0.10 peak linear strain"
+      },
+      {
+        "name": "freq",
+        "value": 4.0,
+        "units": "Hz",
+        "status": "assumed",
+        "source": "same"
+      },
+      {
+        "name": "zeta_internal",
+        "value": 1.0,
+        "units": "-",
+        "status": "assumed",
+        "source": "same"
+      },
+      {
+        "name": "zeta_global",
+        "value": 0.1,
+        "units": "-",
+        "status": "assumed",
+        "source": "same; a numerical absolute-frame term, NOT fluid drag"
+      },
+      {
+        "name": "zeta_collision",
+        "value": 0.8,
+        "units": "-",
+        "status": "assumed",
+        "source": "same"
+      },
+      {
+        "name": "g",
+        "value": 9.80665,
+        "units": "m s^-2",
+        "status": "sourced",
+        "source": "standard gravity, used only in the closed-form friction work"
+      },
+      {
+        "name": "cargo_volume",
+        "value": 8,
+        "units": "voxels",
+        "status": "assumed",
+        "source": "our choice: the smallest block that is clearly an object rather than a particle"
+      },
+      {
+        "name": "cargo_gap",
+        "value": 1,
+        "units": "lattice sites",
+        "status": "assumed",
+        "source": "our choice, and it is the MINIMUM: at zero gap Voxelyze would link the cargo to the construct and fuse them"
+      },
+      {
+        "name": "contact_threshold",
+        "value": 1e-06,
+        "units": "m",
+        "status": "assumed",
+        "source": "our choice, declared before arm 1b was run"
+      }
+    ]
+  },
+  "controls": {
+    "C1_no_cargo_reproduces_pinned_artifact": {
+      "net_disp_m": 0.014577281,
+      "published_artifact_m": 0.014577281,
+      "rel_diff": 0.0,
+      "gate": "<= 1e-6",
+      "met": true
+    },
+    "C2_cargo_out_of_reach_must_not_move": {
+      "cargo_net_disp_m": 0.0,
+      "construct_net_disp_m": 0.014577281,
+      "gate": "cargo <= 1e-9 m while the construct still moves",
+      "met": true
+    },
+    "X-C3-amp0": {
+      "W_actuation_J": 0.0,
+      "cargo_net_disp_m": 0.0,
+      "construct_net_disp_m": 1.26e-07,
+      "gate": "W_actuation exactly 0 and cargo <= 1e-9 m",
+      "met": true
+    },
+    "X-C4-cte0": {
+      "W_actuation_J": 0.0,
+      "cargo_net_disp_m": 0.0,
+      "construct_net_disp_m": 1.26e-07,
+      "gate": "W_actuation exactly 0 and cargo <= 1e-9 m",
+      "met": true
+    },
+    "C5_swarm_zero_amplitude_particles_must_not_move": {
+      "particle_net_disp_m": 0.0,
+      "gate": "<= 1e-6 m",
+      "met": true
+    },
+    "C5b_swarm_zero_amplitude_fixed_geometry": {
+      "particle_net_disp_m": 0.0,
+      "rg_change_m": 0.0,
+      "gate": "particles must not move with the actuation off",
+      "met": true
+    },
+    "C6_degenerate_swarm_geometry_refused": {
+      "what": "the driver exits 4 if any construct is placed outside the particle field, because swarm size would then not be the only variable",
+      "why_it_exists": "the FIRST version of the swarm arm auto-spread constructs over a square field and silently pushed the outermost ones outside it at N=6 and N=8, which returned bit-identical particle outcomes for those two sizes. That run is discarded and not reported.",
+      "verified": "running 8 constructs against a field of half-width 5 sites prints the FATAL line and refuses"
+    }
+  },
+  "all_controls_met": true,
+  "arm1_reach_limited_5_cycles": {
+    "finding": "at the artifact's own 5 cycles the arm measures REACH, not push. The cargo's nearest surface sits 7.5 mm from the construct's (one clear lattice site, minus two 6.25 mm collision envelopes) and only the travelling wave covers that distance in 5 cycles. Every other gait scores exactly zero because it never arrives.",
+    "engineering_reading": "this is a real result and not only an artifact of our geometry: a construct that moves slowly never reaches its workpiece within its working life. It is reported separately from the push question rather than mixed into it.",
+    "per_gait": {
+      "uniform": {
+        "self_locomotion_m": 8.63e-07,
+        "cargo_best_m": 0.0
+      },
+      "longitudinal": {
+        "self_locomotion_m": 0.006127311,
+        "cargo_best_m": 0.0
+      },
+      "lateral": {
+        "self_locomotion_m": 0.005649904,
+        "cargo_best_m": 0.0
+      },
+      "dorsoventral": {
+        "self_locomotion_m": 0.000123129,
+        "cargo_best_m": 0.0
+      },
+      "travelling": {
+        "self_locomotion_m": 0.014577281,
+        "cargo_best_m": 0.00730504
+      },
+      "checker": {
+        "self_locomotion_m": 9.86e-07,
+        "cargo_best_m": 0.0
+      }
+    }
+  },
+  "arm1b_contact_gated_40_cycles": {
+    "design": "contact window starts at the first measurement sample where the cargo COM has moved more than 1 um; transport ratio and efficiency are computed over that window only",
+    "contact_threshold_m": 1e-06,
+    "gaits_that_made_contact": [
+      "longitudinal",
+      "lateral",
+      "travelling"
+    ],
+    "gaits_that_never_reached_the_cargo_in_40_cycles": [
+      "uniform",
+      "dorsoventral",
+      "checker"
+    ],
+    "per_gait": {
+      "uniform": {
+        "self_locomotion_40cyc_m": 3.452e-06,
+        "best_direction": null,
+        "M1_cargo_net_disp_m": 0.0,
+        "transport_ratio_after_contact": null,
+        "efficiency_after_contact": null
+      },
+      "longitudinal": {
+        "self_locomotion_40cyc_m": 0.047530966,
+        "best_direction": "-x",
+        "M1_cargo_net_disp_m": 0.035835752,
+        "transport_ratio_after_contact": 0.5077950412614651,
+        "efficiency_after_contact": 0.011364523612859771
+      },
+      "lateral": {
+        "self_locomotion_40cyc_m": 0.043447142,
+        "best_direction": "-y",
+        "M1_cargo_net_disp_m": 0.021659292,
+        "transport_ratio_after_contact": 0.26032726518755117,
+        "efficiency_after_contact": 0.00436898911604491
+      },
+      "dorsoventral": {
+        "self_locomotion_40cyc_m": 0.000829842,
+        "best_direction": null,
+        "M1_cargo_net_disp_m": 0.0,
+        "transport_ratio_after_contact": null,
+        "efficiency_after_contact": null
+      },
+      "travelling": {
+        "self_locomotion_40cyc_m": 0.117432014,
+        "best_direction": "-x",
+        "M1_cargo_net_disp_m": 0.103556761,
+        "transport_ratio_after_contact": 0.9474193165764344,
+        "efficiency_after_contact": 0.03262027463750848
+      },
+      "checker": {
+        "self_locomotion_40cyc_m": 9.99e-07,
+        "best_direction": null,
+        "M1_cargo_net_disp_m": 0.0,
+        "transport_ratio_after_contact": null,
+        "efficiency_after_contact": null
+      }
+    },
+    "ranking_self_locomotion": [
+      "travelling",
+      "longitudinal",
+      "lateral",
+      "dorsoventral",
+      "uniform",
+      "checker"
+    ],
+    "ranking_cargo_transport": [
+      "travelling",
+      "longitudinal",
+      "lateral",
+      "uniform",
+      "dorsoventral",
+      "checker"
+    ],
+    "ranking_transport_ratio_contacting_only": [
+      "travelling",
+      "longitudinal",
+      "lateral"
+    ],
+    "ranking_efficiency_contacting_only": [
+      "travelling",
+      "longitudinal",
+      "lateral"
+    ],
+    "rankings_agree": true
+  },
+  "arm2b_cargo_mass": {
+    "design": "cargo density scaled 0.25x to 32x at fixed volume (8 voxels), placed one clear lattice site away in each gait's OWN direction of travel, 40 cycles so contact is guaranteed",
+    "per_gait": {
+      "travelling": {
+        "0.25": {
+          "cargo_mass_kg": 0.002,
+          "M1_cargo_net_disp_m": 0.106821692,
+          "M3_W_cargo_friction_J": 0.001787012174,
+          "M4_efficiency": 0.00820120787,
+          "W_actuation_J": 0.2178962175,
+          "construct_net_disp_m": 0.115336779,
+          "diverged": false,
+          "W_actuation_J_derived": 0.2178962175238707,
+          "W_useful_directed_J": 0.0016761007133628799,
+          "efficiency_directed": 0.007692197379145701
+        },
+        "0.5": {
+          "cargo_mass_kg": 0.004,
+          "M1_cargo_net_disp_m": 0.105828414,
+          "M3_W_cargo_friction_J": 0.003541068997,
+          "M4_efficiency": 0.01601212306,
+          "W_actuation_J": 0.2211492494,
+          "construct_net_disp_m": 0.115101066,
+          "diverged": false,
+          "W_actuation_J_derived": 0.22114924946123912,
+          "W_useful_directed_J": 0.0033210310916899194,
+          "efficiency_directed": 0.015017148372787028
+        },
+        "1.0": {
+          "cargo_mass_kg": 0.008,
+          "M1_cargo_net_disp_m": 0.103556761,
+          "M3_W_cargo_friction_J": 0.006935827683,
+          "M4_efficiency": 0.03042056664,
+          "W_actuation_J": 0.2279979779,
+          "construct_net_disp_m": 0.11326929,
+          "diverged": false,
+          "W_actuation_J_derived": 0.22799797798243773,
+          "W_useful_directed_J": 0.0064994874256681595,
+          "efficiency_directed": 0.028506776609083802
+        },
+        "2.0": {
+          "cargo_mass_kg": 0.016,
+          "M1_cargo_net_disp_m": 0.098320721,
+          "M3_W_cargo_friction_J": 0.01328087012,
+          "M4_efficiency": 0.05635031766,
+          "W_actuation_J": 0.2356840329,
+          "construct_net_disp_m": 0.108272086,
+          "diverged": false,
+          "W_actuation_J_derived": 0.23568403287684322,
+          "W_useful_directed_J": 0.012341720302011519,
+          "efficiency_directed": 0.05236553427639576
+        },
+        "4.0": {
+          "cargo_mass_kg": 0.032,
+          "M1_cargo_net_disp_m": 0.078078527,
+          "M3_W_cargo_friction_J": 0.01974578468,
+          "M4_efficiency": 0.0822469118,
+          "W_actuation_J": 0.2400793446,
+          "construct_net_disp_m": 0.086415675,
+          "diverged": false,
+          "W_actuation_J_derived": 0.2400793445961335,
+          "W_useful_directed_J": 0.019601632942196478,
+          "efficiency_directed": 0.08164647806403652
+        },
+        "8.0": {
+          "cargo_mass_kg": 0.064,
+          "M1_cargo_net_disp_m": 0.004581131,
+          "M3_W_cargo_friction_J": 0.01036754968,
+          "M4_efficiency": 0.04168967568,
+          "W_actuation_J": 0.2486838649,
+          "construct_net_disp_m": 0.013032327,
+          "diverged": false,
+          "W_actuation_J_derived": 0.24868386503120904,
+          "W_useful_directed_J": 0.00230018807404288,
+          "efficiency_directed": 0.009249446375438203
+        },
+        "16.0": {
+          "cargo_mass_kg": 0.128,
+          "M1_cargo_net_disp_m": 0.000614091,
+          "M3_W_cargo_friction_J": 0.01731755645,
+          "M4_efficiency": 0.06865485825,
+          "W_actuation_J": 0.2522408012,
+          "construct_net_disp_m": 0.010185514,
+          "diverged": false,
+          "W_actuation_J_derived": 0.25224080118175757,
+          "W_useful_directed_J": 0.0006166707717273599,
+          "efficiency_directed": 0.00244477011188608
+        },
+        "32.0": {
+          "cargo_mass_kg": 0.256,
+          "M1_cargo_net_disp_m": 0.000104661,
+          "M3_W_cargo_friction_J": 0.03351453194,
+          "M4_efficiency": 0.133689016,
+          "W_actuation_J": 0.2506902433,
+          "construct_net_disp_m": 0.009336605,
+          "diverged": false,
+          "W_actuation_J_derived": 0.2506902432433193,
+          "W_useful_directed_J": 0.00021020135334911999,
+          "efficiency_directed": 0.0008384903641626734
+        }
+      },
+      "longitudinal": {
+        "0.25": {
+          "cargo_mass_kg": 0.002,
+          "M1_cargo_net_disp_m": 0.037340104,
+          "M3_W_cargo_friction_J": 0.0006015993805,
+          "M4_efficiency": 0.002528926379,
+          "W_actuation_J": 0.2378872653,
+          "construct_net_disp_m": 0.045762703,
+          "diverged": false,
+          "W_actuation_J_derived": 0.23788726532161336,
+          "W_useful_directed_J": 0.0005858901294265599,
+          "efficiency_directed": 0.0024628898425246163
+        },
+        "0.5": {
+          "cargo_mass_kg": 0.004,
+          "M1_cargo_net_disp_m": 0.036784235,
+          "M3_W_cargo_friction_J": 0.001187082598,
+          "M4_efficiency": 0.004970246524,
+          "W_actuation_J": 0.2388377705,
+          "construct_net_disp_m": 0.04542871,
+          "diverged": false,
+          "W_actuation_J_derived": 0.23883777037374176,
+          "W_useful_directed_J": 0.0011543363781207998,
+          "efficiency_directed": 0.004833139985834123
+        },
+        "1.0": {
+          "cargo_mass_kg": 0.008,
+          "M1_cargo_net_disp_m": 0.035835752,
+          "M3_W_cargo_friction_J": 0.002312055618,
+          "M4_efficiency": 0.009560844461,
+          "W_actuation_J": 0.2418254608,
+          "construct_net_disp_m": 0.044510154,
+          "diverged": false,
+          "W_actuation_J_derived": 0.24182546086082596,
+          "W_useful_directed_J": 0.0022491435350451196,
+          "efficiency_directed": 0.009300689542940783
+        },
+        "2.0": {
+          "cargo_mass_kg": 0.016,
+          "M1_cargo_net_disp_m": 0.034167406,
+          "M3_W_cargo_friction_J": 0.004410248114,
+          "M4_efficiency": 0.01807750201,
+          "W_actuation_J": 0.2439633591,
+          "construct_net_disp_m": 0.042874169,
+          "diverged": false,
+          "W_actuation_J_derived": 0.24396335907252928,
+          "W_useful_directed_J": 0.004288867738238719,
+          "efficiency_directed": 0.017579966739856442
+        },
+        "4.0": {
+          "cargo_mass_kg": 0.032,
+          "M1_cargo_net_disp_m": 0.028810676,
+          "M3_W_cargo_friction_J": 0.007643195572,
+          "M4_efficiency": 0.03095681726,
+          "W_actuation_J": 0.2468986236,
+          "construct_net_disp_m": 0.037561097,
+          "diverged": false,
+          "W_actuation_J_derived": 0.24689862358285602,
+          "W_useful_directed_J": 0.007232927124362239,
+          "efficiency_directed": 0.029295129391172816
+        },
+        "8.0": {
+          "cargo_mass_kg": 0.064,
+          "M1_cargo_net_disp_m": 0.001824232,
+          "M3_W_cargo_friction_J": 0.002597661905,
+          "M4_efficiency": 0.01049405418,
+          "W_actuation_J": 0.2475365441,
+          "construct_net_disp_m": 0.010619102,
+          "diverged": false,
+          "W_actuation_J_derived": 0.24753654406994877,
+          "W_useful_directed_J": 0.00091594776283136,
+          "efficiency_directed": 0.0037002526890434887
+        },
+        "16.0": {
+          "cargo_mass_kg": 0.128,
+          "M1_cargo_net_disp_m": 0.000168914,
+          "M3_W_cargo_friction_J": 0.004840750267,
+          "M4_efficiency": 0.0197190921,
+          "W_actuation_J": 0.2454854535,
+          "construct_net_disp_m": 0.008594337,
+          "diverged": false,
+          "W_actuation_J_derived": 0.24548545351132064,
+          "W_useful_directed_J": 0.00016962360095743997,
+          "efficiency_directed": 0.0006909721066206382
+        },
+        "32.0": {
+          "cargo_mass_kg": 0.256,
+          "M1_cargo_net_disp_m": 2.0326e-05,
+          "M3_W_cargo_friction_J": 0.005947857592,
+          "M4_efficiency": 0.02423415876,
+          "W_actuation_J": 0.2454328063,
+          "construct_net_disp_m": 0.008361999,
+          "diverged": false,
+          "W_actuation_J_derived": 0.24543280626754466,
+          "W_useful_directed_J": 4.082277742592e-05,
+          "efficiency_directed": 0.00016632975047932005
+        }
+      },
+      "lateral": {
+        "0.25": {
+          "cargo_mass_kg": 0.002,
+          "M1_cargo_net_disp_m": 0.031426405,
+          "M3_W_cargo_friction_J": 0.0005720751744,
+          "M4_efficiency": 0.00135575245,
+          "W_actuation_J": 0.4219613796,
+          "construct_net_disp_m": 0.039113099,
+          "diverged": false,
+          "W_actuation_J_derived": 0.4219613797489357,
+          "W_useful_directed_J": 0.0004931004073492,
+          "efficiency_directed": 0.001168591323790323
+        },
+        "0.5": {
+          "cargo_mass_kg": 0.004,
+          "M1_cargo_net_disp_m": 0.027964536,
+          "M3_W_cargo_friction_J": 0.000949725891,
+          "M4_efficiency": 0.002249841104,
+          "W_actuation_J": 0.422130207,
+          "construct_net_disp_m": 0.036595107,
+          "diverged": false,
+          "W_actuation_J_derived": 0.42213020702283344,
+          "W_useful_directed_J": 0.00087756293428608,
+          "efficiency_directed": 0.0020788915829437708
+        },
+        "1.0": {
+          "cargo_mass_kg": 0.008,
+          "M1_cargo_net_disp_m": 0.021659292,
+          "M3_W_cargo_friction_J": 0.001530986694,
+          "M4_efficiency": 0.003624290029,
+          "W_actuation_J": 0.4224238903,
+          "construct_net_disp_m": 0.031773813,
+          "diverged": false,
+          "W_actuation_J_derived": 0.422423890403281,
+          "W_useful_directed_J": 0.00135939261370752,
+          "efficiency_directed": 0.003218077018346975
+        },
+        "2.0": {
+          "cargo_mass_kg": 0.016,
+          "M1_cargo_net_disp_m": 0.015026894,
+          "M3_W_cargo_friction_J": 0.002062993682,
+          "M4_efficiency": 0.004879845184,
+          "W_actuation_J": 0.4227580187,
+          "construct_net_disp_m": 0.025439162,
+          "diverged": false,
+          "W_actuation_J_derived": 0.4227580187920978,
+          "W_useful_directed_J": 0.0018862526725772798,
+          "efficiency_directed": 0.004461778579544563
+        },
+        "4.0": {
+          "cargo_mass_kg": 0.032,
+          "M1_cargo_net_disp_m": 0.006489634,
+          "M3_W_cargo_friction_J": 0.001980170868,
+          "M4_efficiency": 0.004704532524,
+          "W_actuation_J": 0.4209070419,
+          "construct_net_disp_m": 0.017316988,
+          "diverged": false,
+          "W_actuation_J_derived": 0.4209070418576619,
+          "W_useful_directed_J": 0.00162922417321216,
+          "efficiency_directed": 0.0038707458207912675
+        },
+        "8.0": {
+          "cargo_mass_kg": 0.064,
+          "M1_cargo_net_disp_m": 0.00038682,
+          "M3_W_cargo_friction_J": 0.002275674676,
+          "M4_efficiency": 0.005452848066,
+          "W_actuation_J": 0.4173368942,
+          "construct_net_disp_m": 0.011835492,
+          "diverged": false,
+          "W_actuation_J_derived": 0.4173368941250086,
+          "W_useful_directed_J": 0.0001942225076736,
+          "efficiency_directed": 0.0004653854245999704
+        },
+        "16.0": {
+          "cargo_mass_kg": 0.128,
+          "M1_cargo_net_disp_m": 0.000234222,
+          "M3_W_cargo_friction_J": 0.003404862212,
+          "M4_efficiency": 0.008173459814,
+          "W_actuation_J": 0.4165753903,
+          "construct_net_disp_m": 0.011753911,
+          "diverged": false,
+          "W_actuation_J_derived": 0.41657539028551216,
+          "W_useful_directed_J": 0.00023520595725311997,
+          "efficiency_directed": 0.0005646179844947506
+        },
+        "32.0": {
+          "cargo_mass_kg": 0.256,
+          "M1_cargo_net_disp_m": 4.7141e-05,
+          "M3_W_cargo_friction_J": 0.005443405753,
+          "M4_efficiency": 0.01308151947,
+          "W_actuation_J": 0.4161141805,
+          "construct_net_disp_m": 0.011431803,
+          "diverged": false,
+          "W_actuation_J_derived": 0.4161141804270846,
+          "W_useful_directed_J": 9.467807491071999e-05,
+          "efficiency_directed": 0.000227529075826125
+        }
+      }
+    },
+    "stall": {
+      "travelling": {
+        "stall_between_rho": 8.0,
+        "displacement_drop_factor": 17.043504540690936,
+        "cargo_mass_at_stall_kg": 0.064,
+        "best_directed_efficiency": [
+          0.08164647806403652,
+          4.0
+        ]
+      },
+      "longitudinal": {
+        "stall_between_rho": 8.0,
+        "displacement_drop_factor": 15.793317955172368,
+        "cargo_mass_at_stall_kg": 0.064,
+        "best_directed_efficiency": [
+          0.029295129391172816,
+          4.0
+        ]
+      },
+      "lateral": {
+        "stall_between_rho": 8.0,
+        "displacement_drop_factor": 16.776883304896334,
+        "cargo_mass_at_stall_kg": 0.064,
+        "best_directed_efficiency": [
+          0.004461778579544563,
+          2.0
+        ]
+      }
+    },
+    "metric_correction": {
+      "problem": "our declared efficiency M4 uses the cargo's PATH LENGTH, so a stalled cargo that is merely jiggled back and forth still accumulates friction work. Past the stall threshold M4 therefore RISES while transport collapses: travelling at 256 g reports the highest M4 of the whole sweep (0.134) while moving the cargo 0.105 mm.",
+      "fix": "we add efficiency_directed, which uses the cargo's NET displacement instead, a stricter lower bound on useful directed work. Both are reported; M4 is the declared metric and is not deleted.",
+      "rule": "M4 is meaningful only BELOW the stall threshold."
+    },
+    "ranking_by_mass": {
+      "0.25": [
+        "travelling",
+        "longitudinal",
+        "lateral"
+      ],
+      "0.5": [
+        "travelling",
+        "longitudinal",
+        "lateral"
+      ],
+      "1.0": [
+        "travelling",
+        "longitudinal",
+        "lateral"
+      ],
+      "2.0": [
+        "travelling",
+        "longitudinal",
+        "lateral"
+      ],
+      "4.0": [
+        "travelling",
+        "longitudinal",
+        "lateral"
+      ],
+      "8.0": [
+        "travelling",
+        "longitudinal",
+        "lateral"
+      ],
+      "16.0": [
+        "travelling",
+        "lateral",
+        "longitudinal"
+      ],
+      "32.0": [
+        "travelling",
+        "lateral",
+        "longitudinal"
+      ]
+    },
+    "ranking_apparently_changes": true,
+    "ranking_change_is_not_real": "the ordering of longitudinal and lateral swaps only at 128 g and 256 g, where BOTH are stalled and both move the cargo by less than 0.25 mm. That is a swap between two noise-floor values, not a reversal, and it must not be reported as the ranking depending on cargo mass."
+  },
+  "arm3_swarm": {
+    "design": "N constructs evenly spread along y inside a FIXED rectangular particle field (x -16..+2, y -22..+22 lattice sites) holding 120 single-voxel passive particles; 40 actuation cycles; 5 seeds; every construct runs the travelling gait. The field is offset to -x because that is the direction all these gaits travel, so the swept and seeded regions coincide.",
+    "n_particles": 120,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "field": {
+      "fieldXlo": -16,
+      "fieldXhi": 2,
+      "fieldYlo": -22,
+      "fieldYhi": 22
+    },
+    "per_N": {
+      "1": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.002325077,
+            "particle_path_len_m": 0.002448848,
+            "S2_rg_change_m": 0.000346008,
+            "rg_start_m": 0.143542048,
+            "rg_end_m": 0.143888056,
+            "W_actuation_J": 0.2208899089,
+            "W_particles_friction_J": 0.002305439384,
+            "construct_net_disp_m": 0.116185593,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.001533118,
+            "particle_path_len_m": 0.00167155,
+            "S2_rg_change_m": 0.000342591,
+            "rg_start_m": 0.145700225,
+            "rg_end_m": 0.146042816,
+            "W_actuation_J": 0.2200010057,
+            "W_particles_friction_J": 0.001573661367,
+            "construct_net_disp_m": 0.116653633,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.002018188,
+            "particle_path_len_m": 0.00210625,
+            "S2_rg_change_m": 0.000269312,
+            "rg_start_m": 0.140688658,
+            "rg_end_m": 0.14095797,
+            "W_actuation_J": 0.2204969204,
+            "W_particles_friction_J": 0.001982904722,
+            "construct_net_disp_m": 0.116413255,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.002271301,
+            "particle_path_len_m": 0.002417467,
+            "S2_rg_change_m": 0.000320457,
+            "rg_start_m": 0.142807952,
+            "rg_end_m": 0.143128409,
+            "W_actuation_J": 0.2211765477,
+            "W_particles_friction_J": 0.002275896365,
+            "construct_net_disp_m": 0.116222399,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.00142525,
+            "particle_path_len_m": 0.001564907,
+            "S2_rg_change_m": 0.000213945,
+            "rg_start_m": 0.145395963,
+            "rg_end_m": 0.145609909,
+            "W_actuation_J": 0.2198777941,
+            "W_particles_friction_J": 0.001473263244,
+            "construct_net_disp_m": 0.116728018,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.00142525,
+          0.002018188,
+          0.002325077
+        ],
+        "S2_min_median_max": [
+          0.000213945,
+          0.000320457,
+          0.000346008
+        ],
+        "path_min_median_max": [
+          0.001564907,
+          0.00210625,
+          0.002448848
+        ],
+        "W_fric_median": 0.001982904722,
+        "W_act_median": 0.2204969204,
+        "S4_fric_per_actuation_median": 0.00899289077780698,
+        "any_seed_aggregated": false,
+        "all_seeds_dispersed": true,
+        "any_diverged": false
+      },
+      "2": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.002066015,
+            "particle_path_len_m": 0.002344919,
+            "S2_rg_change_m": 0.000198469,
+            "rg_start_m": 0.144618055,
+            "rg_end_m": 0.144816524,
+            "W_actuation_J": 0.4388380714,
+            "W_particles_friction_J": 0.002207596698,
+            "construct_net_disp_m": 0.116900063,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.002806325,
+            "particle_path_len_m": 0.00300689,
+            "S2_rg_change_m": 0.000352022,
+            "rg_start_m": 0.145828571,
+            "rg_end_m": 0.146180593,
+            "W_actuation_J": 0.4400959679,
+            "W_particles_friction_J": 0.00283080194,
+            "construct_net_disp_m": 0.116698124,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.004181145,
+            "particle_path_len_m": 0.00434478,
+            "S2_rg_change_m": 0.000521101,
+            "rg_start_m": 0.141035727,
+            "rg_end_m": 0.141556828,
+            "W_actuation_J": 0.4416687489,
+            "W_particles_friction_J": 0.004090343222,
+            "construct_net_disp_m": 0.116308154,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.004212027,
+            "particle_path_len_m": 0.004355691,
+            "S2_rg_change_m": 0.000431364,
+            "rg_start_m": 0.143196204,
+            "rg_end_m": 0.143627568,
+            "W_actuation_J": 0.4420286342,
+            "W_particles_friction_J": 0.0041006145,
+            "construct_net_disp_m": 0.116293858,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.002909014,
+            "particle_path_len_m": 0.003076948,
+            "S2_rg_change_m": 0.00030095,
+            "rg_start_m": 0.145036466,
+            "rg_end_m": 0.145337415,
+            "W_actuation_J": 0.4399359887,
+            "W_particles_friction_J": 0.002896756728,
+            "construct_net_disp_m": 0.116615313,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.002066015,
+          0.002909014,
+          0.004212027
+        ],
+        "S2_min_median_max": [
+          0.000198469,
+          0.000352022,
+          0.000521101
+        ],
+        "path_min_median_max": [
+          0.002344919,
+          0.003076948,
+          0.004355691
+        ],
+        "W_fric_median": 0.002896756728,
+        "W_act_median": 0.4400959679,
+        "S4_fric_per_actuation_median": 0.006584495932146503,
+        "any_seed_aggregated": false,
+        "all_seeds_dispersed": true,
+        "any_diverged": false
+      },
+      "3": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.004414427,
+            "particle_path_len_m": 0.004709326,
+            "S2_rg_change_m": 0.000418833,
+            "rg_start_m": 0.146061203,
+            "rg_end_m": 0.146480036,
+            "W_actuation_J": 0.659762297,
+            "W_particles_friction_J": 0.004433540091,
+            "construct_net_disp_m": 0.116660267,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.004681387,
+            "particle_path_len_m": 0.004880836,
+            "S2_rg_change_m": 0.000617593,
+            "rg_start_m": 0.146865538,
+            "rg_end_m": 0.14748313,
+            "W_actuation_J": 0.6606062729,
+            "W_particles_friction_J": 0.004595006757,
+            "construct_net_disp_m": 0.116568243,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.006863195,
+            "particle_path_len_m": 0.007013085,
+            "S2_rg_change_m": 0.000623388,
+            "rg_start_m": 0.141236602,
+            "rg_end_m": 0.14185999,
+            "W_actuation_J": 0.6631575097,
+            "W_particles_friction_J": 0.006602387817,
+            "construct_net_disp_m": 0.116092162,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.0065417,
+            "particle_path_len_m": 0.006740581,
+            "S2_rg_change_m": 0.000605333,
+            "rg_start_m": 0.144272288,
+            "rg_end_m": 0.144877621,
+            "W_actuation_J": 0.6635203694,
+            "W_particles_friction_J": 0.006345842114,
+            "construct_net_disp_m": 0.116266306,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.004909264,
+            "particle_path_len_m": 0.005077069,
+            "S2_rg_change_m": 0.000471381,
+            "rg_start_m": 0.146721912,
+            "rg_end_m": 0.147193293,
+            "W_actuation_J": 0.6606047426,
+            "W_particles_friction_J": 0.004779747749,
+            "construct_net_disp_m": 0.116546387,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.004414427,
+          0.004909264,
+          0.006863195
+        ],
+        "S2_min_median_max": [
+          0.000418833,
+          0.000605333,
+          0.000623388
+        ],
+        "path_min_median_max": [
+          0.004709326,
+          0.005077069,
+          0.007013085
+        ],
+        "W_fric_median": 0.004779747749,
+        "W_act_median": 0.6606062729,
+        "S4_fric_per_actuation_median": 0.00723541240437955,
+        "any_seed_aggregated": false,
+        "all_seeds_dispersed": true,
+        "any_diverged": false
+      },
+      "4": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.009208152,
+            "particle_path_len_m": 0.009445277,
+            "S2_rg_change_m": 0.000950188,
+            "rg_start_m": 0.146990244,
+            "rg_end_m": 0.147940433,
+            "W_actuation_J": 0.8864449609,
+            "W_particles_friction_J": 0.00889214668,
+            "construct_net_disp_m": 0.116046681,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.008237734,
+            "particle_path_len_m": 0.008395981,
+            "S2_rg_change_m": 0.001113439,
+            "rg_start_m": 0.147718083,
+            "rg_end_m": 0.148831522,
+            "W_actuation_J": 0.8847103384,
+            "W_particles_friction_J": 0.007904299253,
+            "construct_net_disp_m": 0.116238289,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.009146146,
+            "particle_path_len_m": 0.009396101,
+            "S2_rg_change_m": 0.001130189,
+            "rg_start_m": 0.145442023,
+            "rg_end_m": 0.146572211,
+            "W_actuation_J": 0.8872087722,
+            "W_particles_friction_J": 0.008845850411,
+            "construct_net_disp_m": 0.116222144,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.00883191,
+            "particle_path_len_m": 0.00916739,
+            "S2_rg_change_m": 0.001098887,
+            "rg_start_m": 0.144379106,
+            "rg_end_m": 0.145477993,
+            "W_actuation_J": 0.8855533572,
+            "W_particles_friction_J": 0.008630533486,
+            "construct_net_disp_m": 0.116362571,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.010441111,
+            "particle_path_len_m": 0.010632898,
+            "S2_rg_change_m": 0.000914699,
+            "rg_start_m": 0.148019307,
+            "rg_end_m": 0.148934006,
+            "W_actuation_J": 0.8877991676,
+            "W_particles_friction_J": 0.01001021874,
+            "construct_net_disp_m": 0.116168053,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.008237734,
+          0.009146146,
+          0.010441111
+        ],
+        "S2_min_median_max": [
+          0.000914699,
+          0.001098887,
+          0.001130189
+        ],
+        "path_min_median_max": [
+          0.008395981,
+          0.009396101,
+          0.010632898
+        ],
+        "W_fric_median": 0.008845850411,
+        "W_act_median": 0.8864449609,
+        "S4_fric_per_actuation_median": 0.009970427128515716,
+        "any_seed_aggregated": false,
+        "all_seeds_dispersed": true,
+        "any_diverged": false
+      },
+      "6": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.014926256,
+            "particle_path_len_m": 0.015217655,
+            "S2_rg_change_m": 0.001121318,
+            "rg_start_m": 0.146394824,
+            "rg_end_m": 0.147516142,
+            "W_actuation_J": 1.332249734,
+            "W_particles_friction_J": 0.01432648539,
+            "construct_net_disp_m": 0.116003459,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.013365437,
+            "particle_path_len_m": 0.013645936,
+            "S2_rg_change_m": 0.001448209,
+            "rg_start_m": 0.147840661,
+            "rg_end_m": 0.14928887,
+            "W_actuation_J": 1.328114624,
+            "W_particles_friction_J": 0.01284680841,
+            "construct_net_disp_m": 0.11614189,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.013886277,
+            "particle_path_len_m": 0.014265721,
+            "S2_rg_change_m": 0.001042256,
+            "rg_start_m": 0.145371172,
+            "rg_end_m": 0.146413429,
+            "W_actuation_J": 1.331694119,
+            "W_particles_friction_J": 0.01343029785,
+            "construct_net_disp_m": 0.116148776,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.012482266,
+            "particle_path_len_m": 0.012842174,
+            "S2_rg_change_m": 0.001127618,
+            "rg_start_m": 0.145229679,
+            "rg_end_m": 0.146357297,
+            "W_actuation_J": 1.326773067,
+            "W_particles_friction_J": 0.01209011607,
+            "construct_net_disp_m": 0.116321641,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.014917591,
+            "particle_path_len_m": 0.015158037,
+            "S2_rg_change_m": 0.000904636,
+            "rg_start_m": 0.148315519,
+            "rg_end_m": 0.149220154,
+            "W_actuation_J": 1.330923943,
+            "W_particles_friction_J": 0.014270358,
+            "construct_net_disp_m": 0.116182235,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.012482266,
+          0.013886277,
+          0.014926256
+        ],
+        "S2_min_median_max": [
+          0.000904636,
+          0.001121318,
+          0.001448209
+        ],
+        "path_min_median_max": [
+          0.012842174,
+          0.014265721,
+          0.015217655
+        ],
+        "W_fric_median": 0.01343029785,
+        "W_act_median": 1.330923943,
+        "S4_fric_per_actuation_median": 0.010085122145080224,
+        "any_seed_aggregated": false,
+        "all_seeds_dispersed": true,
+        "any_diverged": false
+      },
+      "8": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.020726576,
+            "particle_path_len_m": 0.021121023,
+            "S2_rg_change_m": -0.000110883,
+            "rg_start_m": 0.143469606,
+            "rg_end_m": 0.143358723,
+            "W_actuation_J": 1.778867876,
+            "W_particles_friction_J": 0.01988414238,
+            "construct_net_disp_m": 0.115972692,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.017906464,
+            "particle_path_len_m": 0.018222601,
+            "S2_rg_change_m": 0.000966052,
+            "rg_start_m": 0.146908418,
+            "rg_end_m": 0.14787447,
+            "W_actuation_J": 1.772068202,
+            "W_particles_friction_J": 0.01715545615,
+            "construct_net_disp_m": 0.116200672,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.018816492,
+            "particle_path_len_m": 0.019207648,
+            "S2_rg_change_m": 0.000744663,
+            "rg_start_m": 0.144238783,
+            "rg_end_m": 0.144983445,
+            "W_actuation_J": 1.776462184,
+            "W_particles_friction_J": 0.01808281797,
+            "construct_net_disp_m": 0.116194395,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.0181069,
+            "particle_path_len_m": 0.018441525,
+            "S2_rg_change_m": 0.000426254,
+            "rg_start_m": 0.143155777,
+            "rg_end_m": 0.14358203,
+            "W_actuation_J": 1.771957728,
+            "W_particles_friction_J": 0.0173615605,
+            "construct_net_disp_m": 0.116300847,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 120,
+            "S1_particle_net_disp_m": 0.020040999,
+            "particle_path_len_m": 0.020435767,
+            "S2_rg_change_m": -0.000456982,
+            "rg_start_m": 0.143145783,
+            "rg_end_m": 0.142688801,
+            "W_actuation_J": 1.776967917,
+            "W_particles_friction_J": 0.01923901614,
+            "construct_net_disp_m": 0.116013424,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.017906464,
+          0.018816492,
+          0.020726576
+        ],
+        "S2_min_median_max": [
+          -0.000456982,
+          0.000426254,
+          0.000966052
+        ],
+        "path_min_median_max": [
+          0.018222601,
+          0.019207648,
+          0.021121023
+        ],
+        "W_fric_median": 0.01808281797,
+        "W_act_median": 1.776462184,
+        "S4_fric_per_actuation_median": 0.010179117874202944,
+        "any_seed_aggregated": true,
+        "all_seeds_dispersed": false,
+        "any_diverged": false
+      }
+    },
+    "S1_scaling_exponent_vs_N": 1.1478584233070308,
+    "S1_scaling_reading": "mean particle displacement scales as N^1.15 over N = 1 to 8, i.e. very slightly superlinear. Eight constructs move 9.3x as much material as one.",
+    "S4_energy_efficiency_flat": {
+      "values": {
+        "1": 0.00899289077780698,
+        "2": 0.006584495932146503,
+        "3": 0.00723541240437955,
+        "4": 0.009970427128515716,
+        "6": 0.010085122145080224,
+        "8": 0.010179117874202944
+      },
+      "reading": "friction work done on the field per unit actuation work is 0.0066-0.0102 across the whole range and does not improve with swarm size. A bigger swarm moves more material because it spends more energy, not because it spends it better."
+    },
+    "S2_aggregation": {
+      "values_min_median_max_m": {
+        "1": [
+          0.000213945,
+          0.000320457,
+          0.000346008
+        ],
+        "2": [
+          0.000198469,
+          0.000352022,
+          0.000521101
+        ],
+        "3": [
+          0.000418833,
+          0.000605333,
+          0.000623388
+        ],
+        "4": [
+          0.000914699,
+          0.001098887,
+          0.001130189
+        ],
+        "6": [
+          0.000904636,
+          0.001121318,
+          0.001448209
+        ],
+        "8": [
+          -0.000456982,
+          0.000426254,
+          0.000966052
+        ]
+      },
+      "verdict": "NO aggregation. The particle field's radius of gyration INCREASED in 28 of the 30 runs. Both exceptions are at the largest swarm size, N=8, where 2 of 5 seeds turn negative (-0.111 and -0.457 mm) and the median dispersion falls 2.6-fold from its N=6 value. That is a possible ONSET rather than scatter, and it is tested in the follow-up arm rather than left as a hedge.",
+      "mechanism": "every construct runs the same gait and travels the same way, so their contributions add as a common drift rather than converging. Corralling needs either a concave body that traps material, as the published semitoroidal progenitor has, or constructs that move differently from one another.",
+      "scope": "this is a statement about a uniform, sensorless, single-gait swarm in this model. It is not a statement about swarms.",
+      "onset_tested": "The two aggregating seeds at N=8 in the main arm are a BOUNDARY effect, not an onset: the same swarm size in a wider field shows nothing, and a larger swarm in the wider field also shows nothing. Aggregation-like behaviour appears only when the swarm spans more than about 0.8 of the field."
+    }
+  },
+  "limitations": [
+    "This is the dry-friction regime - Coulomb friction on a rigid floor under gravity, plus a numerical absolute-frame damping term - matching the artifact it extends. Our own regime-check study finds that a real millimetre-scale construct sits at Reynolds number below 0.1, where four of the six gaits compared here produce exactly zero displacement and could not push anything at all. Every number in this study is inside a model the first study says is the wrong regime.",
+    "The cargo gap is one lattice site because that is the minimum that avoids Voxelyze linking the two bodies into one. That sets a 7.5 mm clear distance the construct must cross before any pushing happens, which is why arm 1 is reach-limited and arm 1b exists.",
+    "W_actuation is the axial term only: bending and torsion rest states are not actuated so they do no actuation work, but they do store and dissipate energy that is not counted. The actuation efficiency is therefore an UPPER bound on the fraction of total input energy delivered.",
+    "W_cargo_friction is a closed form that ignores collision damping and any kinetic energy left in the cargo at the end, so it is a LOWER bound on work done on the cargo.",
+    "Our declared efficiency metric M4 breaks down past the stall threshold, for the reason recorded above. We found this by running the sweep far enough to stall rather than stopping at a mass where the metric still behaved.",
+    "The swarm's particles are single voxels on the floor with the same friction and density as the construct. Nothing is calibrated to cells, debris or microplastic.",
+    "Voxelyze has no random number generator and this driver's only randomness is our own seeded particle placement, so the seed spread reported here is spread over ARENAS, not over mechanics. Repeat runs at a fixed seed are bitwise identical.",
+    "The swarm result covers N = 1 to 16 in two field sizes. Its one apparent exception, 2 of 5 seeds at N = 8 in the narrower field, was tested rather than hedged and turned out to track the swarm's span relative to the arena rather than its size. The threshold is bracketed between span/field 0.68 and 0.84, not located, and two field widths is not a scan over field width."
+  ],
+  "what_this_cannot_establish": [
+    "that any construct would push anything in water, which is the regime that matters",
+    "that a real xenobot or anthrobot can transport a defined cargo; no published one has",
+    "a force, a modulus or a transport rate for any organism",
+    "that a swarm cannot aggregate - only that this uniform single-gait swarm does not"
+  ],
+  "arm3b_onset_test": {
+    "status": "POST-HOC. Declared after seeing the N=8 result in the main arm, and reported as a diagnosis rather than as confirmatory evidence.",
+    "why": "In the main arm the field dispersed at every N from 1 to 6 in all seeds, then at N=8 the median dispersion fell 2.6-fold and 2 of 5 seeds turned negative. That is either the onset of aggregation at larger swarm size or something else. N>9 does not fit the main arm's field at the minimum construct stride, so this arm widens the field in y, scales the particle count to hold DENSITY fixed, and pushes N to 16.",
+    "predeclared_for_this_arm": "an onset predicts the median rg change keeps falling with N and crosses zero; seed scatter predicts the median stays positive with a wide spread",
+    "field": {
+      "fieldXlo": -16,
+      "fieldXhi": 2,
+      "fieldYlo": -42,
+      "fieldYhi": 42
+    },
+    "n_particles": 227,
+    "per_N": {
+      "4": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.004869196,
+            "S2_rg_change_m": 0.000333417,
+            "rg_start_m": 0.260146844,
+            "rg_end_m": 0.26048026,
+            "W_actuation_J": 0.8873054723,
+            "W_particles_friction_J": 0.008892900749,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.004889155,
+            "S2_rg_change_m": 0.00037894,
+            "rg_start_m": 0.258734052,
+            "rg_end_m": 0.259112991,
+            "W_actuation_J": 0.8864411992,
+            "W_particles_friction_J": 0.008900286691,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.005410118,
+            "S2_rg_change_m": 0.000342822,
+            "rg_start_m": 0.257463025,
+            "rg_end_m": 0.257805847,
+            "W_actuation_J": 0.8887853201,
+            "W_particles_friction_J": 0.009796179674,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.004532077,
+            "S2_rg_change_m": 0.000417305,
+            "rg_start_m": 0.260634655,
+            "rg_end_m": 0.261051961,
+            "W_actuation_J": 0.8847708812,
+            "W_particles_friction_J": 0.008308364759,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.004461794,
+            "S2_rg_change_m": 0.000436271,
+            "rg_start_m": 0.260873246,
+            "rg_end_m": 0.261309518,
+            "W_actuation_J": 0.8853051983,
+            "W_particles_friction_J": 0.008080768294,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.004461794,
+          0.004869196,
+          0.005410118
+        ],
+        "S2_min_median_max": [
+          0.000333417,
+          0.00037894,
+          0.000436271
+        ],
+        "n_seeds_aggregating": 0,
+        "any_diverged": false
+      },
+      "8": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.008299221,
+            "S2_rg_change_m": 0.000372452,
+            "rg_start_m": 0.261444292,
+            "rg_end_m": 0.261816744,
+            "W_actuation_J": 1.769167693,
+            "W_particles_friction_J": 0.01513462303,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.008250847,
+            "S2_rg_change_m": 0.000549133,
+            "rg_start_m": 0.263323698,
+            "rg_end_m": 0.263872831,
+            "W_actuation_J": 1.768089576,
+            "W_particles_friction_J": 0.01504886884,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.009958702,
+            "S2_rg_change_m": 0.00040211,
+            "rg_start_m": 0.261261456,
+            "rg_end_m": 0.261663566,
+            "W_actuation_J": 1.77384025,
+            "W_particles_friction_J": 0.01798174488,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.009762048,
+            "S2_rg_change_m": 0.000465902,
+            "rg_start_m": 0.263298632,
+            "rg_end_m": 0.263764534,
+            "W_actuation_J": 1.771959479,
+            "W_particles_friction_J": 0.01761536395,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.008434739,
+            "S2_rg_change_m": 0.000489696,
+            "rg_start_m": 0.264806507,
+            "rg_end_m": 0.265296203,
+            "W_actuation_J": 1.768825005,
+            "W_particles_friction_J": 0.01530843925,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.008250847,
+          0.008434739,
+          0.009958702
+        ],
+        "S2_min_median_max": [
+          0.000372452,
+          0.000465902,
+          0.000549133
+        ],
+        "n_seeds_aggregating": 0,
+        "any_diverged": false
+      },
+      "12": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.013608214,
+            "S2_rg_change_m": 0.00044219,
+            "rg_start_m": 0.26465686,
+            "rg_end_m": 0.265099049,
+            "W_actuation_J": 2.656750339,
+            "W_particles_friction_J": 0.02465267235,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.014054191,
+            "S2_rg_change_m": 0.000340554,
+            "rg_start_m": 0.261950491,
+            "rg_end_m": 0.262291045,
+            "W_actuation_J": 2.657972403,
+            "W_particles_friction_J": 0.02536991752,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.014414611,
+            "S2_rg_change_m": 0.000228669,
+            "rg_start_m": 0.265961887,
+            "rg_end_m": 0.266190556,
+            "W_actuation_J": 2.658237938,
+            "W_particles_friction_J": 0.02596017946,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.01596094,
+            "S2_rg_change_m": 0.00048596,
+            "rg_start_m": 0.263017539,
+            "rg_end_m": 0.263503499,
+            "W_actuation_J": 2.66172214,
+            "W_particles_friction_J": 0.02871263758,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.012759868,
+            "S2_rg_change_m": 0.000518006,
+            "rg_start_m": 0.265575171,
+            "rg_end_m": 0.266093176,
+            "W_actuation_J": 2.652851855,
+            "W_particles_friction_J": 0.02307756682,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.012759868,
+          0.014054191,
+          0.01596094
+        ],
+        "S2_min_median_max": [
+          0.000228669,
+          0.00044219,
+          0.000518006
+        ],
+        "n_seeds_aggregating": 0,
+        "any_diverged": false
+      },
+      "16": {
+        "per_seed": [
+          {
+            "seed": 1,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.019222251,
+            "S2_rg_change_m": 9.0597e-05,
+            "rg_start_m": 0.257755213,
+            "rg_end_m": 0.257845809,
+            "W_actuation_J": 3.545816222,
+            "W_particles_friction_J": 0.03479035705,
+            "diverged": false
+          },
+          {
+            "seed": 2,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.020315289,
+            "S2_rg_change_m": -0.000382135,
+            "rg_start_m": 0.255746781,
+            "rg_end_m": 0.255364645,
+            "W_actuation_J": 3.549056792,
+            "W_particles_friction_J": 0.03667791236,
+            "diverged": false
+          },
+          {
+            "seed": 3,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.020859819,
+            "S2_rg_change_m": 3.805e-05,
+            "rg_start_m": 0.256692743,
+            "rg_end_m": 0.256730793,
+            "W_actuation_J": 3.549871269,
+            "W_particles_friction_J": 0.03759766565,
+            "diverged": false
+          },
+          {
+            "seed": 4,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.021577114,
+            "S2_rg_change_m": 0.000114164,
+            "rg_start_m": 0.256035098,
+            "rg_end_m": 0.256149263,
+            "W_actuation_J": 3.550943834,
+            "W_particles_friction_J": 0.03882226908,
+            "diverged": false
+          },
+          {
+            "seed": 5,
+            "n_particles": 227,
+            "S1_particle_net_disp_m": 0.01898588,
+            "S2_rg_change_m": 5.1077e-05,
+            "rg_start_m": 0.257088405,
+            "rg_end_m": 0.257139482,
+            "W_actuation_J": 3.545054347,
+            "W_particles_friction_J": 0.03422813123,
+            "diverged": false
+          }
+        ],
+        "S1_min_median_max": [
+          0.01898588,
+          0.020315289,
+          0.021577114
+        ],
+        "S2_min_median_max": [
+          -0.000382135,
+          5.1077e-05,
+          0.000114164
+        ],
+        "n_seeds_aggregating": 1,
+        "any_diverged": false
+      }
+    },
+    "automatic_verdict_from_the_arm_script": "NOT a monotone onset; consistent with seed scatter",
+    "automatic_verdict_superseded": "the script's own test was whether the median falls monotonically with N and crosses zero. It does not (0.379, 0.466, 0.442, 0.051 mm at N = 4, 8, 12, 16), so the script returned 'consistent with seed scatter'. Pooling both fields gives a better explanation, below, and that is what is reported.",
+    "span_analysis": {
+      "hypothesis": "the apparent aggregation is a BOUNDARY effect: it appears when the swarm spans most of the field, so the constructs sweep particles into a narrower band, regardless of N.",
+      "measure": "swarm half-span in lattice sites divided by field half-width; constructs sit at stride 5 in y",
+      "rows": [
+        {
+          "field": "narrow(y +/-22)",
+          "N": 1,
+          "swarm_half_span_sites": 1.0,
+          "field_half_width_sites": 22,
+          "span_over_field": 0.045454545454545456,
+          "median_rg_change_mm": 0.320457,
+          "aggregating_seeds": 0,
+          "n_seeds": 5
+        },
+        {
+          "field": "narrow(y +/-22)",
+          "N": 2,
+          "swarm_half_span_sites": 3.5,
+          "field_half_width_sites": 22,
+          "span_over_field": 0.1590909090909091,
+          "median_rg_change_mm": 0.352022,
+          "aggregating_seeds": 0,
+          "n_seeds": 5
+        },
+        {
+          "field": "wide(y +/-42)",
+          "N": 4,
+          "swarm_half_span_sites": 8.5,
+          "field_half_width_sites": 42,
+          "span_over_field": 0.20238095238095238,
+          "median_rg_change_mm": 0.37894,
+          "aggregating_seeds": 0,
+          "n_seeds": 5
+        },
+        {
+          "field": "narrow(y +/-22)",
+          "N": 3,
+          "swarm_half_span_sites": 6.0,
+          "field_half_width_sites": 22,
+          "span_over_field": 0.2727272727272727,
+          "median_rg_change_mm": 0.605333,
+          "aggregating_seeds": 0,
+          "n_seeds": 5
+        },
+        {
+          "field": "narrow(y +/-22)",
+          "N": 4,
+          "swarm_half_span_sites": 8.5,
+          "field_half_width_sites": 22,
+          "span_over_field": 0.38636363636363635,
+          "median_rg_change_mm": 1.098887,
+          "aggregating_seeds": 0,
+          "n_seeds": 5
+        },
+        {
+          "field": "wide(y +/-42)",
+          "N": 8,
+          "swarm_half_span_sites": 18.5,
+          "field_half_width_sites": 42,
+          "span_over_field": 0.44047619047619047,
+          "median_rg_change_mm": 0.46590200000000004,
+          "aggregating_seeds": 0,
+          "n_seeds": 5
+        },
+        {
+          "field": "narrow(y +/-22)",
+          "N": 6,
+          "swarm_half_span_sites": 13.5,
+          "field_half_width_sites": 22,
+          "span_over_field": 0.6136363636363636,
+          "median_rg_change_mm": 1.121318,
+          "aggregating_seeds": 0,
+          "n_seeds": 5
+        },
+        {
+          "field": "wide(y +/-42)",
+          "N": 12,
+          "swarm_half_span_sites": 28.5,
+          "field_half_width_sites": 42,
+          "span_over_field": 0.6785714285714286,
+          "median_rg_change_mm": 0.44219,
+          "aggregating_seeds": 0,
+          "n_seeds": 5
+        },
+        {
+          "field": "narrow(y +/-22)",
+          "N": 8,
+          "swarm_half_span_sites": 18.5,
+          "field_half_width_sites": 22,
+          "span_over_field": 0.8409090909090909,
+          "median_rg_change_mm": 0.42625399999999997,
+          "aggregating_seeds": 2,
+          "n_seeds": 5
+        },
+        {
+          "field": "wide(y +/-42)",
+          "N": 16,
+          "swarm_half_span_sites": 38.5,
+          "field_half_width_sites": 42,
+          "span_over_field": 0.9166666666666666,
+          "median_rg_change_mm": 0.051077,
+          "aggregating_seeds": 1,
+          "n_seeds": 5
+        }
+      ],
+      "all_runs_with_span_over_field_below_0.70": {
+        "configurations": 8,
+        "aggregating_seeds": 0,
+        "median_rg_change_mm_range": [
+          0.320457,
+          1.121318
+        ]
+      },
+      "all_runs_with_span_over_field_at_or_above_0.80": {
+        "configurations": 2,
+        "aggregating_seeds": 3,
+        "median_rg_change_mm_range": [
+          0.051077,
+          0.42625399999999997
+        ]
+      },
+      "the_controlled_comparison": "N = 8 is the discriminator. In the narrow field its span/field is 0.84 and 2 of 5 seeds aggregate; in the wide field the SAME swarm size has span/field 0.44 and 0 of 5 aggregate. Conversely N = 12 in the wide field is a LARGER swarm at span/field 0.68 and also shows nothing. So the effect tracks the span ratio and not the swarm size.",
+      "verdict": "NOT a swarm-size onset. Across 10 configurations in two field sizes and swarm sizes 1 to 16, every configuration with span/field <= 0.68 gives 0 aggregating seeds out of 5, and both configurations with span/field >= 0.84 give some (2/5 and 1/5) with the median collapsing. The main arm's conclusion therefore stands and is strengthened: a uniform, sensorless, single-gait swarm sweeps and does not corral. What looked like aggregation is the swarm reaching the edge of its arena.",
+      "caveat": "the cut sits between 0.68 and 0.84 with no configuration in between, so the threshold is bracketed rather than located, and 'span/field' is one summary of a geometry that also changes particle count per construct. Two field widths is not a scan over field width."
+    },
+    "reading": "The two aggregating seeds at N=8 in the main arm are a BOUNDARY effect, not an onset: the same swarm size in a wider field shows nothing, and a larger swarm in the wider field also shows nothing. Aggregation-like behaviour appears only when the swarm spans more than about 0.8 of the field."
+  }
+}
