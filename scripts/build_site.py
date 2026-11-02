@@ -1807,22 +1807,42 @@ def _has_mapping(value) -> bool:
     return False
 
 
-def limbless_block(ins: Inputs, extra: dict) -> dict | None:
-    """Studio > Limbless mouse. Authored prose comes from site/content/limbless-mouse.json; the route map and the computed
-    studies come from results/limbless-mouse/, listed by that directory's own index so a figure cannot appear without a caption.
+DESIGN_SPACE_DIR = "site/content/design-spaces"
 
-    Every figure is copied under @artifacts/limbless-mouse and pinned by the sha256 of the bytes copied. A study whose data file
-    or figure is absent is reported as absent rather than dropped: the page says what is missing. Nothing here is an observation.
+
+def design_space_ids() -> list[str]:
+    """Every design space the repository declares, by id. The directory listing IS the registry: adding one is a data directory,
+    and no code here or in site/js/designspace.js names an individual design space."""
+    d = ROOT / DESIGN_SPACE_DIR
+    return sorted(f.stem for f in d.glob("*.json")) if d.is_dir() else []
+
+
+def design_space_block(ins: Inputs, extra: dict, ds_id: str) -> dict | None:
+    """Studio > one design space. Authored prose comes from site/content/design-spaces/<id>.json; the route map and the computed
+    studies come from results/<id>/, listed by that directory's own index so a figure cannot appear without a caption.
+
+    Every figure is copied under @artifacts/<id> and pinned by the sha256 of the bytes copied. A study whose data file or figure is
+    absent is reported as absent rather than dropped: the page says what is missing. Nothing here is an observation.
     """
-    content = "site/content/limbless-mouse.json"
-    index = "results/limbless-mouse/index.json"
+    content = f"{DESIGN_SPACE_DIR}/{ds_id}.json"
+    index = f"results/{ds_id}/index.json"
     if not (ROOT / content).exists() or not (ROOT / index).exists():
         return None
     page = ins.json(content)
+    page["id"] = ds_id
+    page["content_path"] = content
+    page["index_path"] = index
     page["content_sha256"] = ins.seen[content]["sha256"]
     ix = ins.json(index)
     page["index_sha256"] = ins.seen[index]["sha256"]
     page["generated_at"] = ix.get("generated_at")
+    # The schematic's drawing is an authored SVG body beside the prose; the pins that make it interactive are in the JSON. Keeping
+    # them apart means the drawing can be edited in a vector editor without touching the data, and inlining it here means the page
+    # needs no second request. A design space with no such file simply has no schematic.
+    svg = f"{DESIGN_SPACE_DIR}/{ds_id}.schematic.svg"
+    if isinstance(page.get("schematic"), dict) and (ROOT / svg).exists():
+        page["schematic"]["svg"] = ins.text(svg)
+        page["schematic"]["svg_sha256"] = ins.seen[svg]["sha256"]
 
     def trim(value, path: str, dropped: list):
         """Keep the snapshot readable: a sweep's raw samples and a phase-map grid are plotted in the figures and shipped whole in
@@ -1847,9 +1867,9 @@ def limbless_block(ins: Inputs, extra: dict) -> dict | None:
 
     routes, routes_sha = pull(ix["routes"]["data"])
     if routes is not None:
-        extra["@artifacts/limbless-mouse/routes.json"] = ins.read(ix["routes"]["data"])
+        extra[f"@artifacts/{ds_id}/routes.json"] = ins.read(ix["routes"]["data"])
     page["routes"] = {**ix["routes"], "sha256": routes_sha, "present": routes is not None,
-                      "href": "artifacts/limbless-mouse/routes.json" if routes is not None else None, **(routes or {})}
+                      "href": f"artifacts/{ds_id}/routes.json" if routes is not None else None, **(routes or {})}
     # The route file declares the scales its own rows are grouped by. Where it does, it wins: one vocabulary, held by the file
     # that uses it, so the page cannot group rows under a key the data never emits. The authored list stays as the fallback.
     if (routes or {}).get("scales"):
@@ -1863,20 +1883,20 @@ def limbless_block(ins: Inputs, extra: dict) -> dict | None:
         data, sha = pull(s["data"])
         figures = []
         for f in s.get("figures", []):
-            rel = f"results/limbless-mouse/figures/{f['file']}"
+            rel = f"results/{ds_id}/figures/{f['file']}"
             if not (ROOT / rel).exists():
                 figures.append({**f, "state": "declared_but_missing", "href": None, "sha256": None})
                 continue
             raw = ins.read(rel)
-            extra[f"@artifacts/limbless-mouse/{f['file']}"] = raw
-            figures.append({**f, "state": "present", "href": f"artifacts/limbless-mouse/{f['file']}", "sha256": digest_bytes(raw), "bytes": len(raw)})
+            extra[f"@artifacts/{ds_id}/{f['file']}"] = raw
+            figures.append({**f, "state": "present", "href": f"artifacts/{ds_id}/{f['file']}", "sha256": digest_bytes(raw), "bytes": len(raw)})
         dropped: list = []
         if data is not None:   # the study's own result file is offered for download beside the page that reads it, whole
-            extra[f"@artifacts/limbless-mouse/{s['id']}.json"] = ins.read(s["data"])
+            extra[f"@artifacts/{ds_id}/{s['id']}.json"] = ins.read(s["data"])
             data = trim(data, s["id"], dropped)
         studies.append({**{k: v for k, v in s.items() if k != "figures"}, "present": data is not None, "sha256": sha, "figures": figures, "data": data,
                         "omitted_series": sorted(dropped, key=lambda x: -x["length"]),
-                        "data_path": s["data"], "data_href": f"artifacts/limbless-mouse/{s['id']}.json" if data is not None else None})
+                        "data_path": s["data"], "data_href": f"artifacts/{ds_id}/{s['id']}.json" if data is not None else None})
     page["studies"] = studies
     page["counts"] = {"routes": len((routes or {}).get("routes", [])), "studies_present": sum(1 for s in studies if s["present"]),
                       "studies_declared": len(studies), "figures_present": sum(1 for s in studies for f in s["figures"] if f["state"] == "present")}
@@ -1966,7 +1986,7 @@ def build() -> dict[str, bytes]:
     orx_ex = openresearch_exemplars(ins)
     experimentation = experimentation_block(ins)
     blog = blog_posts(ins, extra)
-    limbless = limbless_block(ins, extra)
+    design_spaces = {i: b for i in design_space_ids() if (b := design_space_block(ins, extra, i)) is not None}
     fingerprint = digest_bytes(canonical(sorted((i["path"], i["sha256"]) for i in ins.seen.values())).encode())
     snapshot = {
         "schema": SCHEMA,
@@ -2019,7 +2039,7 @@ def build() -> dict[str, bytes]:
         "openresearch": orx_ex,
         "experimentation": experimentation,
         "blog": blog,
-        "limbless": limbless,
+        "design_spaces": design_spaces,
         "resource_inventory": resources,
         "mcp_check": mcp_chk,
         "spec_acceptance_open": len(re.findall(r"^- \[ \]", spec_text, re.M)),
@@ -2032,7 +2052,7 @@ def build() -> dict[str, bytes]:
 
 
 def generated_artifact_families() -> list[str]:
-    return ["results", "fish3d", "molecular", "rd-diffusion", "lean-gallery", "genotype", "reuse-study-visuals", "voxel-actuation", "epithelial", "coordination", "observed-allometry", "limbless-mouse", *(path.name for path in print_families())]
+    return ["results", "fish3d", "molecular", "rd-diffusion", "lean-gallery", "genotype", "reuse-study-visuals", "voxel-actuation", "epithelial", "coordination", "observed-allometry", *design_space_ids(), *(path.name for path in print_families())]
 
 
 def write(out: dict[str, bytes]) -> None:

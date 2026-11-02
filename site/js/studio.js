@@ -206,7 +206,7 @@
    * not advertised from the home page or the project list. The flag is `listed` in the authored content file, so hiding one or
    * putting it back is a field in that file rather than an edit here, and the route below is deliberately not gated by it:
    * un-listing must never break a URL someone already has. */
-  const listedDesignSpace = (snap) => Boolean(DF.limbless && snap.limbless && snap.limbless.listed !== false);
+  const listedSpaces = (snap) => (DF.designSpace ? DF.designSpace.listed(snap) : []);
 
   /* ---------------------------------------------------------------- home */
   DF.views.home = function (snap) {
@@ -233,7 +233,7 @@
           <p class="facts-line"><b id="homeq">${openQ}</b> curated questions in the snapshot <span class="faint small">(live count appears when the node is reachable)</span></p>
           <p><a class="btn" href="${DF.href("/frontier")}">Open the Frontier</a> <a class="btn ghost" href="${DF.href("/knowledge")}">Claims and evidence</a></p></article></section>
       <section class="panel crosslinks"><h2>How they connect</h2><ul><li>Every open question names the scales it touches; from a question you can jump to that subsystem in the studio.</li><li>Every subsystem lists the open questions at its scale and links to them on the Frontier.</li><li>Claims, evidence and artifacts live once, in the Delphi foundation, and both paths link to the same entity pages.</li></ul>
-        ${listedDesignSpace(snap) ? html`<p class="small"><b>Design space:</b> <a href="${DF.href("/studio/limbless-mouse")}">${snap.limbless.title}</a> — ${(snap.limbless.counts || {}).routes || 0} sourced routes to one stated outcome, across ${(snap.limbless.scales || []).length} scales, with the models that bear on them. Written in answer to a question put to us: could you make one?</p>` : ""}
+        ${listedSpaces(snap).map((id) => { const d = snap.design_spaces[id]; return html`<p class="small"><b>Design space:</b> <a href="${DF.href("/studio/" + id)}">${d.title}</a> — ${(d.counts || {}).routes || 0} sourced routes to one stated outcome, across ${(d.scales || []).length} scales, with the models that bear on them. ${d.home_blurb || ""}</p>`; })}
         <p class="small faint">Projects other than Flying fish are added as Project records; none is invented here.</p></section>`,
       async after(root) {
         DF.mountFishMini(root.querySelector("#fishmini"), snap);
@@ -264,7 +264,7 @@
       html: html`<section class="pagehead"><h1>Studio</h1><p class="lede">Design projects, each broken into subsystems by scale. ${snap.projects.note}</p></section>
         <section class="panel goalpanel">${goalForm(goal)}</section><div id="goalout"></div>
         <section class="panel"><h2 class="sr">Projects</h2>${snap.projects.projects.filter((p) => !p.template).map((p) => html`<article class="card pform"><h3>${p.title} ${p.featured ? U.pill("featured", "gen") : ""} ${U.pill(p.status, "st-unk")}</h3><p><b>Goal.</b> ${p.goal}</p><p class="small">${p.summary}</p><p><a class="btn" href="${DF.href("/studio/" + p.id)}">Open studio</a></p></article>`)}
-        ${listedDesignSpace(snap) ? html`<h2 class="small">Design spaces</h2><p class="small faint">A design space is not a design: it maps the routes to a stated outcome across scales, each with its own evidence level, and runs the models we can run. Nothing in one has been attempted here.</p>${DF.limbless.card(snap)}` : ""}
+        ${listedSpaces(snap).length ? html`<h2 class="small">Design spaces</h2><p class="small faint">A design space is not a design: it maps the routes to a stated outcome across scales, each with its own evidence level, and runs the models we can run. Nothing in one has been attempted here.</p>${listedSpaces(snap).map((id) => DF.designSpace.card(snap, id))}` : ""}
         ${reuseList(snap)}<p class="note small">${snap.projects.other_projects_note}</p><p class="small faint">Starting a new project needs a Project record and a credentialed submission route; this page does not create one.</p></section>`,
       async after(root) {
         DF.bindForm(root, "goal", (v) => DF.href("/studio", { goal: v.goal }));
@@ -344,7 +344,7 @@
     const p = snap.projects.projects.find((x) => x.id === id);
     /* Design spaces are not entries in projects.json: that file's digest is pinned by the reuse studies' publication receipt, so adding a
      * row there would silently un-stamp two stored Projects. They carry their own content block instead and are routed by id here. */
-    if (id === "limbless-mouse" && DF.limbless && snap.limbless) return DF.limbless.page(snap, route);
+    if (DF.designSpace && (snap.design_spaces || {})[id]) return DF.designSpace.page(snap, id, route);
     if (p && p.template === "reuse-study") return reuseStudy(snap, p);
     if (!p) return { html: html`<section class="pagehead"><h1>No such project</h1><p class="lede">There is no project “${id}” in this snapshot. <a href="${DF.href("/studio")}">See the projects</a>.</p></section>` };
     const m = snap.mission; const scale = route.params.scale && p.panels[route.params.scale] ? route.params.scale : "organism"; const pan = p.panels[scale]; const sc = m.scales.find((s) => s.key === scale);

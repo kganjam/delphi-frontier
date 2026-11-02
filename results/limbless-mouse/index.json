@@ -4,7 +4,27 @@
   "routes": {
     "title": "Routes to a limbless or limb-reduced mouse",
     "data": "results/limbless-mouse/routes.json",
-    "note": "Published perturbations and bounded proposals, grouped by the scale they act at. Every row carries its own evidence level and read levels on its sources. None has been attempted here."
+    "note": "Published perturbations and bounded proposals, grouped by the scale they act at. Every row carries its own evidence level and read levels on its sources. None has been attempted here.",
+    "nothing_attempted": "None of them has been attempted here.",
+    "recommendation_title": "If you asked us to actually do it",
+    "welfare_title": "Animal welfare and the 3Rs",
+    "gene_table_title": "“He said he identified a gene for it” — what that could mean",
+    "gene_table_note": "Several genes fit that description and they do not produce the same animal. This is written so we can answer sensibly whichever one he means, not to guess which it is. The last column is the question that would tell them apart.",
+    "evidence_labels": {
+      "direct_mouse_phenotype": "direct mouse phenotype",
+      "direct_other_species": "direct, another species",
+      "cis_regulatory_inference": "cis-regulatory inference",
+      "model_only": "model only",
+      "proposed": "proposed"
+    },
+    "outcome_filter_label": "Phenotype",
+    "outcome_classes": [
+      {"key": "amelia", "label": "Amelia (no limb at all)", "match": "amelia|no limb|absent limb|complete limb loss"},
+      {"key": "truncation", "label": "Truncation or micromelia", "match": "truncat|micromelia|stunted|reduced limb"},
+      {"key": "one-pair", "label": "One limb pair only", "match": "forelimb|hindlimb|one pair|single pair"},
+      {"key": "digits", "label": "Digit or element change", "match": "digit|polydactyl|element"}
+    ],
+    "outcome_classes_note": "The order matters: a route matching more than one class takes the first it matches, which is why the broadest outcome (amelia) is declared first. A route matching none carries no outcome tag and is shown under 'any outcome' only."
   },
   "studies": [
     {

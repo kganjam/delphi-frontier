@@ -67,6 +67,9 @@
       am.addEventListener("focusout", (e) => { if (am.open && e.relatedTarget && !am.contains(e.relatedTarget)) am.open = false; });
     }
     document.getElementById("gs").addEventListener("submit", (e) => { e.preventDefault(); const q = document.getElementById("gq").value.trim(); DF.go(DF.href("/search", { q, tab: "catalog" })); });
+    /* A design space answers at its own short route (#/<id>) as well as inside the Studio. The aliases are installed from the
+     * snapshot the first time one is drawn, so a new design space gets its route from its data rather than from an edit here. */
+    if (DF.registerDesignSpaceAliases) DF.registerDesignSpaceAliases(snap);
     const fn = DF.views[route.view];
     const y = lastPath === route.path ? window.scrollY : 0;
     document.title = (route.view[0].toUpperCase() + route.view.slice(1)) + " · MorphoSwarm Studio";

@@ -1,0 +1,120 @@
+/* Studio > Limbless mouse. A dense reading surface: routes in columns, figures wide, and every "what this does not establish"
+   block visually distinct from the result it qualifies, so a skim cannot pick up the claim without the limit. */
+
+.dshead-sec .lede { max-width: 62ch; }
+.dsanswer p { max-width: 74ch; }
+/* At desk width a single 74ch measure leaves half the panel empty. Two columns keep the measure and fill the panel;
+   paragraphs never split across the break, so the reading order stays obvious. */
+@media (min-width: 1250px) {
+  .dsanswer .dscols { columns: 2; column-gap: 3rem; }
+  .dsanswer .dscols p { max-width: none; break-inside: avoid; margin-top: 0; }
+}
+.dsanswer h2 { margin-bottom: .4rem; }
+.dshead { font-size: 1.02rem; }
+
+.dscard { border-left: 4px solid var(--teal); }
+
+/* ---- recommendation ---- */
+.dsrec { border-left: 4px solid var(--lime-d); }
+.dsrec ol { max-width: 74ch; }
+
+/* ---- route filter ---- */
+.dsfilter { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: end; margin: .75rem 0 1.25rem; }
+.dsfilter label { display: flex; flex-direction: column; font: 600 .78rem/1.5 var(--sans); gap: .2rem; }
+.dsfilter select { font: inherit; font-weight: 400; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink); }
+.dsfilter #dscount { align-self: center; }
+
+/* ---- routes ---- */
+.dsscale { margin: 1.5rem 0 2rem; }
+.dsscale > h3 { margin-bottom: .15rem; border-bottom: 1px solid var(--line); padding-bottom: .25rem; }
+.dsroutes { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: .9rem; }
+@media (min-width: 900px) { .dsroutes { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1400px) { .dsroutes { grid-template-columns: 1fr 1fr 1fr; } }
+.dsroute { border: 1px solid var(--line); border-radius: 10px; background: var(--paper); padding: .85rem 1rem 1rem; }
+.dsroute[hidden] { display: none; }
+.dsroute h4 { margin: 0 0 .35rem; font-size: 1.02rem; line-height: 1.3; }
+.dstags { margin: 0 0 .5rem; display: flex; flex-wrap: wrap; gap: .3rem; }
+.dsphen { margin: .35rem 0; padding: .4rem .6rem; background: #f3ede0; border-radius: 6px; font-size: .9rem; }
+.dsmeta { display: grid; grid-template-columns: max-content 1fr; gap: .15rem .7rem; margin: .5rem 0; }
+.dsmeta dt { font-weight: 600; color: var(--dim); }
+.dsmeta dd { margin: 0; }
+.dsroute details { margin-top: .4rem; }
+.dsroute details > summary { cursor: pointer; }
+.dsev ul { margin: .4rem 0 0; padding-left: 1.1rem; }
+.dsev li { margin-bottom: .5rem; }
+
+/* ---- computed studies ---- */
+.dsstudy { border-left: 4px solid var(--teal); }
+.dsstudy h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem; }
+.dsfigs { display: grid; grid-template-columns: 1fr; gap: 1.1rem; margin: 1rem 0; }
+@media (min-width: 1100px) { .dsfigs { grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); } }
+.dsfigs figure { margin: 0; }
+.dsfigs img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fffdf8; display: block; }
+.dsfigs figcaption { margin-top: .4rem; color: var(--dim); }
+.dseqs { display: grid; gap: .6rem; }
+.dseqs .eqcard { overflow-x: auto; }
+.dsjson { background: #f3ede0; border: 1px solid var(--line); border-radius: 6px; padding: .6rem .7rem; overflow-x: auto; max-height: 22rem; font: .78rem/1.5 var(--mono); }
+.dslimits { margin-top: 1rem; padding: .7rem .9rem; border: 1px dashed var(--no); border-radius: 8px; background: #fbe9e7; }
+.dslimits h4 { margin: 0 0 .35rem; color: var(--no); }
+.dslimits ul { margin: 0; padding-left: 1.1rem; }
+
+/* ---- the cross-scale chain ---- */
+.dslinks { list-style: none; counter-reset: dsk; margin: 1rem 0; padding: 0; display: grid; gap: .6rem; }
+.dslink { counter-increment: dsk; border: 1px solid var(--line); border-left-width: 5px; border-radius: 8px; padding: .6rem .85rem; background: var(--paper); }
+.dslink.model { border-left-color: var(--ok); }
+.dslink.scenario, .dslink.assumption { border-left-color: #c99a2e; }
+.dslink.refused { border-left-color: var(--no); }
+.dslink p { margin: .15rem 0; }
+.dslink p:first-child::before { content: counter(dsk) ". "; font-weight: 700; color: var(--faint); }
+.dsarrow { color: var(--teal-d); padding: 0 .25rem; }
+
+/* ---- welfare and the closing refusals ---- */
+.dswelfare { border-left: 4px solid #8a74b8; }
+.dswelfare p { max-width: 74ch; }
+.dsnot { border-left: 4px solid var(--no); }
+.dsnot ul { max-width: 80ch; }
+
+@media (prefers-reduced-motion: no-preference) { .dsroute { transition: box-shadow .12s ease; } }
+.dsroute:hover { box-shadow: 0 1px 6px rgba(15, 34, 56, .09); }
+
+/* ---- the limb-bud schematic ---- */
+.dsschemsec { border-left: 4px solid #8a74b8; }
+.dsschem { margin: 1rem 0 0; }
+.dsschem svg { width: 100%; height: auto; max-width: 980px; border: 1px solid var(--line); border-radius: 10px; background: #fffdf8; display: block; }
+.dsschem .dsb-ax { font: 600 13px var(--sans); fill: var(--faint); }
+.dsschem .dsb-lab { font: 600 14px var(--sans); fill: var(--ink); }
+.dsschem .dsb-sub { font: 12px var(--sans); fill: var(--dim); }
+.dsschem .dsb-note { font: italic 13px var(--serif); fill: var(--teal-d); }
+.dsschem .dsb-arr { fill: none; stroke: var(--teal); stroke-width: 2.2; }
+.dsschem .dspin circle { fill: var(--teal); stroke: #fffdf8; stroke-width: 2.5; }
+.dsschem .dspin .dsb-pin { font: 700 13px var(--sans); fill: #fffdf8; }
+.dsschem .dspin .dsb-pl { font: 600 12.5px var(--sans); fill: var(--ink); }
+.dsschem .dspin { cursor: pointer; }
+.dsschem .dspin:hover circle, .dsschem .dspin:focus circle { fill: var(--teal-d); }
+.dsschem .dspin:focus { outline: 2px solid var(--teal-d); outline-offset: 2px; }
+.dsschem .dspin.on circle { fill: #6b4b00; }
+.dsschem .dspin.off circle { fill: #8a96a6; }
+.dsschem .dspin.off .dsb-pl { fill: var(--faint); }
+.dspinlist { margin: .6rem 0 0; padding-left: 1.25rem; max-width: 86ch; }
+.dspinlist li { margin-bottom: .25rem; }
+
+/* Species names and gene symbols must not break mid-word: "Mus muscu lus" reads as a different organism. */
+.dsstudy table td, .dsstudy table th { overflow-wrap: normal; word-break: normal; hyphens: none; }
+.dsstudy table td:first-child, .dsstudy table th:first-child { min-width: 7.5em; }
+.dsstudy table { font-size: .88rem; }
+
+/* With 39 routes the detail has to fold, or nobody reaches the bottom of the list. */
+.dsroute .dsdet > summary { cursor: pointer; font: 600 .82rem/1.5 var(--sans); color: var(--teal-d); margin-top: .5rem; }
+.dsroute .dsdet[open] > summary { margin-bottom: .4rem; }
+.dsroute .dsdet h5 { margin: .7rem 0 .2rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; color: var(--faint); }
+.dsroute .dsevlist li { margin-bottom: .5rem; }
+.dsphen { font-size: .88rem; }
+.dsfigs video { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fffdf8; display: block; }
+.dscrit, .dsctrl { margin: 1rem 0; padding: .7rem .9rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.dscrit h4, .dsctrl h4 { margin: 0 0 .35rem; }
+
+/* Gene symbols and PMIDs must not break mid-token: "SHH / ZRS (withi n LMBR 1)" is not a gene. */
+.dsgenes td, .dsgenes th { overflow-wrap: normal; word-break: normal; hyphens: none; }
+.dsgenes td:first-child, .dsgenes th:first-child { min-width: 11em; }
+.dsgenes td:first-child a { white-space: nowrap; }
+.dsgenes { font-size: .88rem; }

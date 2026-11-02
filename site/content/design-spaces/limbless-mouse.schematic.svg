@@ -1,0 +1,38 @@
+<!-- The body of the limbless-mouse schematic: everything inside <svg> except the numbered pins, which the renderer adds from
+     the `schematic.pins` list in limbless-mouse.json so that a pin and the list item describing it cannot disagree.
+     A drawing, not a measurement and not to scale. The viewBox, title and description live in the JSON beside the pins. -->
+<defs>
+  <marker id="dsar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0e7c86"></path></marker>
+  <marker id="dsbar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M8 1 L8 9" stroke="#b3261e" stroke-width="2.6" fill="none"></path></marker>
+</defs>
+<rect x="0" y="0" width="960" height="440" fill="#fffdf8"></rect>
+<line x1="512" y1="40" x2="512" y2="400" stroke="#ddd3c0" stroke-dasharray="5 6"></line>
+<text x="265" y="42" class="dsb-ttl" text-anchor="middle">The bud</text>
+<text x="740" y="42" class="dsb-ttl" text-anchor="middle">The loop that holds it open</text>
+
+<rect x="20" y="80" width="90" height="320" rx="6" fill="#efe7d6" stroke="#ddd3c0"></rect>
+<text x="65" y="72" class="dsb-ax" text-anchor="middle">flank</text>
+<path d="M 110 150 C 210 136, 318 140, 372 152 C 418 163, 442 200, 442 245 C 442 290, 418 327, 372 338 C 318 350, 210 354, 110 340 Z" fill="#e3f1f1" stroke="#0e7c86" stroke-width="2"></path>
+<path d="M 372 152 C 418 163, 442 200, 442 245 C 442 290, 418 327, 372 338" fill="none" stroke="#9a6700" stroke-width="10" stroke-linecap="round" opacity=".9"></path>
+<text x="456" y="249" class="dsb-lab" text-anchor="start">AER</text>
+<text x="280" y="232" class="dsb-lab" text-anchor="middle">mesenchyme</text>
+<text x="280" y="250" class="dsb-sub" text-anchor="middle">progenitor pool</text>
+<ellipse cx="242" cy="310" rx="50" ry="21" fill="#fdf0d8" stroke="#c99a2e"></ellipse>
+<text x="248" y="315" class="dsb-lab" text-anchor="middle">ZPA</text>
+<path d="M 300 358 L 348 344" class="dsb-arr" marker-end="url(#dsar)"></path>
+<text x="294" y="362" class="dsb-sub" text-anchor="end">Fgf10 · Wnt3</text>
+<text x="265" y="124" class="dsb-sub" text-anchor="middle">proximal ← → distal</text>
+
+<ellipse cx="620" cy="120" rx="54" ry="23" fill="#fdf0d8" stroke="#c99a2e"></ellipse><text x="620" y="126" class="dsb-lab" text-anchor="middle">SHH</text>
+<ellipse cx="862" cy="120" rx="54" ry="23" fill="#e3f1f1" stroke="#0e7c86"></ellipse><text x="862" y="126" class="dsb-lab" text-anchor="middle">GREM1</text>
+<ellipse cx="862" cy="282" rx="54" ry="23" fill="#fffdf8" stroke="#8a74b8"></ellipse><text x="862" y="288" class="dsb-lab" text-anchor="middle">BMP</text>
+<ellipse cx="620" cy="282" rx="54" ry="23" fill="#fdf0d8" stroke="#9a6700"></ellipse><text x="620" y="288" class="dsb-lab" text-anchor="middle">FGF4/8</text>
+<path d="M 676 120 L 800 120" class="dsb-arr" marker-end="url(#dsar)"></path>
+<path d="M 862 164 L 862 257" class="dsb-arr inh" marker-end="url(#dsbar)"></path>
+<path d="M 806 282 L 676 282" class="dsb-arr inh" marker-end="url(#dsbar)"></path>
+<path d="M 620 257 L 620 164" class="dsb-arr" marker-end="url(#dsar)"></path>
+<text x="740" y="356" class="dsb-note" text-anchor="middle">break any arm and the bud stops growing</text>
+<text x="620" y="152" class="dsb-sub" text-anchor="middle">in the ZPA</text>
+<text x="862" y="152" class="dsb-sub" text-anchor="middle">in the mesenchyme</text>
+<text x="862" y="320" class="dsb-sub" text-anchor="middle">in the mesenchyme</text>
+<text x="620" y="320" class="dsb-sub" text-anchor="middle">in the ridge</text>

@@ -2445,47 +2445,59 @@ def test_about_blog_docs_groups_and_lean_page_are_readable(browser, base, width)
     pg.close()
 
 
+DESIGN_SPACE_IDS = sorted(json.loads((ROOT / "site/data/snapshot.json").read_text()).get("design_spaces") or {})
+
+
+@pytest.mark.parametrize("ds_id", DESIGN_SPACE_IDS)
 @pytest.mark.parametrize("width", [1440, 390])
-def test_limbless_mouse_design_space_shows_routes_studies_and_its_own_refusals(browser, base, width):
-    """The design space is the page a judge is pointed at, so it has to carry its limits as prominently as its results.
+def test_a_design_space_shows_its_routes_its_studies_and_its_own_refusals(browser, base, width, ds_id):
+    """A design space is the page a judge is pointed at, so it has to carry its limits as prominently as its results.
 
     What is pinned here: the route count on the page equals the count the snapshot computed (the page cannot quietly drop a
     row); every declared study renders and an absent one says so rather than disappearing; the cross-scale chain names its
     uncalibrated junctions; and selecting a pin on the schematic really filters, rather than only looking as if it does.
+
+    The test is parameterised over every design space the build carries, so a new one is covered the day its data lands.
+    Nothing here is specific to any single design space: each assertion is made against that design space's own block.
     """
     snapshot = json.loads((ROOT / "site/data/snapshot.json").read_text())
-    block = snapshot["limbless"]
+    block = snapshot["design_spaces"][ds_id]
     pg = page(browser, width, 900)
-    pg.goto(base + "#/studio/limbless-mouse")
-    pg.wait_for_selector("#lm-a")
+    pg.goto(base + "#/studio/" + ds_id)
+    pg.wait_for_selector("#ds-a")
     text = pg.locator("#main").inner_text()
 
-    assert "Truncation is not amelia" in text, "the distinction the whole page turns on"
-    assert pg.locator(".lmroute").count() == block["counts"]["routes"]
-    assert pg.locator(".lmstudy").count() == block["counts"]["studies_declared"]
-    assert pg.locator(".lmfigs img, .lmfigs video").count() == block["counts"]["figures_present"]
+    note = (block.get("answer") or {}).get("precision_note")
+    if note:
+        assert note.split(".")[0] in text, "the distinction the whole page turns on"
+    assert pg.locator(".dsroute").count() == block["counts"]["routes"]
+    assert pg.locator(".dsstudy").count() == block["counts"]["studies_declared"]
+    assert pg.locator(".dsfigs img, .dsfigs video").count() == block["counts"]["figures_present"]
     absent = [s for s in block["studies"] if not s["present"]]
-    assert pg.locator(".lmstudy .lmabsent").count() == len(absent)   # its own class: other notes in a study also use .note.warn
+    assert pg.locator(".dsstudy .dsabsent").count() == len(absent)   # its own class: other notes in a study also use .note.warn
 
     # Every junction between two models is labelled, and at least one of them is refused rather than asserted.
-    assert pg.locator(".lmlink").count() == len(block["chain"]["links"])
-    assert pg.locator(".lmlink.scenario").count() >= 1
-    assert "no calibration behind them" in text
+    chain = block.get("chain") or {}
+    assert pg.locator(".dslink").count() == len(chain.get("links") or [])
+    if chain.get("links"):
+        assert pg.locator(".dslink.scenario").count() >= 1
+    if chain.get("verdict"):
+        assert chain["verdict"].split(".")[0] in text
 
     # The page states what it does not claim, in its own section, not only in passing.
-    assert pg.locator(".lmnot li").count() >= len(block["not_claimed"])
-    assert "No mouse was made" in text
+    assert pg.locator(".dsnot li").count() >= len(block["not_claimed"])
 
     # The schematic is a figure with a real description, and its pins drive the filter.
-    assert pg.locator(".lmbud svg desc").count() == 1
-    if block["counts"]["routes"]:
-        total = pg.locator(".lmroute").count()
-        pin = pg.locator(".lmpin:not(.off)").first
-        pin.click()
-        pg.wait_for_function("document.querySelectorAll('.lmroute:not([hidden])').length < %d" % total)
-        shown = pg.locator(".lmroute:not([hidden])").count()
-        assert 0 < shown < total
-        assert "showing %d of %d routes" % (shown, total) in pg.locator("#lmcount").inner_text()
+    if (block.get("schematic") or {}).get("svg"):
+        assert pg.locator(".dsschem svg desc").count() == 1
+        total = pg.locator(".dsroute").count()
+        pin = pg.locator(".dspin:not(.off)").first
+        if pin.count() and total:
+            pin.click()
+            pg.wait_for_function("document.querySelectorAll('.dsroute:not([hidden])').length < %d" % total)
+            shown = pg.locator(".dsroute:not([hidden])").count()
+            assert 0 < shown < total
+            assert "showing %d of %d routes" % (shown, total) in pg.locator("#dscount").inner_text()
 
     assert "[object Object]" not in text and "undefined" not in text
     assert pg.locator("#main .tex-fallback").count() == 0
@@ -2493,28 +2505,35 @@ def test_limbless_mouse_design_space_shows_routes_studies_and_its_own_refusals(b
     pg.close()
 
 
-def test_an_unlisted_design_space_keeps_its_url_and_leaves_the_navigation(browser, base):
+def test_the_design_space_registry_is_not_empty():
+    """The positive control for the parameterised test above: with no design space it would pass without running."""
+    assert DESIGN_SPACE_IDS, "no design space in the snapshot, so the parameterised test above covered nothing"
+
+
+@pytest.mark.parametrize("ds_id", DESIGN_SPACE_IDS)
+def test_an_unlisted_design_space_keeps_its_url_and_leaves_the_navigation(browser, base, ds_id):
     """Un-listing must hide the entry points and nothing else. The URL is the thing people were handed; breaking it while
     tidying the navigation would be the worst of both.
 
-    The test reads the flag rather than assuming its value, so it holds in both directions and will fail if a later edit
-    hides the page from the navigation *and* from its own route. Both halves carry a control: the same selector that finds
-    no limbless link must find the listed project's link on the same render, otherwise a zero means the query is wrong.
+    The test reads each design space's own flag rather than assuming its value, so it holds in both directions and will fail
+    if a later edit hides a page from the navigation *and* from its own route. Both halves carry a control: the same selector
+    that finds no link to this design space must find some other studio link on the same render, otherwise a zero means the
+    query is wrong rather than the link being absent.
     """
     snapshot = json.loads((ROOT / "site/data/snapshot.json").read_text())
-    listed = snapshot["limbless"].get("listed") is not False
+    listed = snapshot["design_spaces"][ds_id].get("listed") is not False
     pg = page(browser, 1440, 900)
 
     for route, ready in (("#/home", ".paths"), ("#/studio", ".pform")):
         pg.goto(base + route)
         pg.wait_for_selector(ready)
-        others = pg.locator('#main a[href*="#/studio/"]:not([href*="limbless-mouse"])').count()
+        others = pg.locator('#main a[href*="#/studio/"]:not([href*="' + ds_id + '"])').count()
         assert others >= 1, f"control: {route} must link at least one studio project, or the selector below proves nothing"
-        found = pg.locator('#main a[href*="limbless-mouse"]').count()
+        found = pg.locator('#main a[href*="' + ds_id + '"]').count()
         assert (found >= 1) is listed, f"{route} links the design space {found} time(s) while listed is {listed}"
 
-    pg.goto(base + "#/studio/limbless-mouse")          # unlisted is not unreachable: the route is deliberately not gated
-    pg.wait_for_selector("#lm-a")
-    assert pg.locator(".lmroute").count() == snapshot["limbless"]["counts"]["routes"]
+    pg.goto(base + "#/studio/" + ds_id)                # unlisted is not unreachable: the route is deliberately not gated
+    pg.wait_for_selector("#ds-a")
+    assert pg.locator(".dsroute").count() == snapshot["design_spaces"][ds_id]["counts"]["routes"]
     assert not pg.errors
     pg.close()
