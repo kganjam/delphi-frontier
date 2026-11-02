@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs da853fedb03d",
- "input_fingerprint": "da853fedb03d835307ed1f1f07409710befb5430477d4a29631437fc9ef0c2e2",
+ "label": "snapshot of inputs 9813846d47ec",
+ "input_fingerprint": "9813846d47ec0265b52b9e24ac0a6cef745895ee76a7c377e401d9be97d7696a",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "4ba24c5909f477d2f8e38147fe1cb0f3fcc196f60336affcf3f47fcb5b68d533",
-   "bytes": 3154
+   "sha256": "2cefa273f75410e17a0b4285134786ba56a8537ffdeb49fb68dfdc1798943a87",
+   "bytes": 2987
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -39527,11 +39527,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release 0db1945628db)",
-    "outcome": "Browser suite plus design-space unit tests: 142 passed at the previous release; this release adds one test and the figures it guards. (exit 0); Every served figure is tracked in git: Passes, and verified in BOTH directions: unstaging one figure makes it fail naming that exact file, restaging makes it pass. It exists because all seven xenobot figures 404d in the previous release while every test was green - the browser tests read the worktree, where the files are present, and a headless broken-image count misses them because a lazy image that has not loaded reports complete=false and is excluded rather than counted as broken. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: both documents current (exit 0); Live figure fetch, with a control: To be re-run after this deploy. Before it, four xenobot figures returned HTTP 404 while a limbless-mouse figure already in production returned HTTP 200 - the control is what made the 404s meaningful. (exit 0); Source verification of the page's lead quotation: Full sentence confirmed: 'This resulted in highly performant but nontransferable designs with powerful, bounding gaits that are not obtainable in vivo with the current build method.' Separately, a characterisation of their first pass as 'dry gravity-plus-friction' was NOT supported - the paper says only 'on land' - and has been corrected in results/xenobot/NOTES.md with the correction written in rather than edited out. (exit 0)",
+    "title": "limbless mouse release checks (release 124eec08a402)",
+    "outcome": "Browser suite plus design-space unit tests: 143 passed in 246.22s. (exit 0); Every served figure is tracked in git: Passes. Verified in both directions when added: unstaging one figure fails naming that file, restaging passes. It exists because seven figures 404d in a previous release while every other test was green. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: both current (exit 0); Corrections present and the superseded string absent: Eight corrections confirmed present in the data the page renders (integer-division mechanism and the quoted driver line, 40-to-100x body size, both Reynolds speed definitions, 'no aggregation at any N', effect_size_caution, unconverged-margin wording), and the superseded '50 to 100x' asserted ABSENT rather than only checking the new string is present - which is the failure mode the author had just hit, where six prose edits matched nothing and the old text was rebuilt. (exit 0); Live figure fetch with both controls: At the previous release all seven returned HTTP 200 at their exact byte counts, a known-good limbless figure returned 200 as positive control, and a nonexistent filename returned 404 as negative control. To be re-run after this deploy. (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "4ba24c5909f477d2f8e38147fe1cb0f3fcc196f60336affcf3f47fcb5b68d533",
+    "sha256": "2cefa273f75410e17a0b4285134786ba56a8537ffdeb49fb68dfdc1798943a87",
     "date": "no time recorded"
    },
    {
