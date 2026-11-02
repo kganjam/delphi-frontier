@@ -1,52 +1,58 @@
 {
   "schema": "frontier.release.checks/1",
-  "sha": "76f584da2500b208e4ba277dc5843256ceb23fbf",
+  "sha": "27d98836631195459be1552965df9cecb30af019",
   "checks": [
     {
-      "name": "Home doorway, studio pages and the limbless design space",
-      "command": "python3 -m pytest tests/test_site_browser.py tests/test_limbless_site.py -q",
+      "name": "Browser suite plus the design-space unit tests",
+      "command": "python3 -m pytest tests/test_site_browser.py tests/test_design_spaces.py -q",
       "exit": 0,
-      "passed": 131,
-      "total": 131,
-      "result": "131 passed in 172.65s - the whole browser suite plus the limbless unit tests, on this tree.",
-      "at": "2026-11-02T18:42:29.772532+00:00",
-      "tested_commit": "76f584da2500b208e4ba277dc5843256ceb23fbf"
-    },
-    {
-      "name": "The unlisting is a flag, and the gate responds to it in both directions",
-      "command": "python3 -m pytest 'tests/test_site_browser.py::test_an_unlisted_design_space_keeps_its_url_and_leaves_the_navigation' -q, run once with \"listed\": false and once with \"listed\": true",
-      "exit": 0,
-      "passed": 2,
-      "total": 2,
-      "result": "Passed both ways. With the flag false the home page and /studio carry ZERO links to the design space and the page still renders 39 routes at its own URL; with the flag flipped to true and the site rebuilt, the same test required and found the links. The flipped run is the positive control: it is what distinguishes a hidden link from a page that stopped rendering. Each half also asserts the same selector finds a different studio project's link on the same render, so the zero is a measured zero. The tree was restored to \"listed\": false and rebuilt before this release.",
-      "at": "2026-11-02T18:42:29.772532+00:00",
-      "tested_commit": "76f584da2500b208e4ba277dc5843256ceb23fbf"
+      "passed": 142,
+      "total": 142,
+      "result": "142 passed in 302.71s. Both modules are parameterised over the design spaces the repository declares, so the new xenobot space is covered by the same cases as limbless-mouse. Each module also asserts the registry is non-empty, because a parameterised suite over an empty list passes without running anything.",
+      "at": "2026-11-02T22:11:30.209957+00:00",
+      "tested_commit": "27d98836631195459be1552965df9cecb30af019"
     },
     {
       "name": "Snapshot reproducibility",
       "command": "python3 scripts/build_site.py --check",
       "exit": 0,
       "result": "stale=[]",
-      "at": "2026-11-02T18:42:29.772532+00:00",
-      "tested_commit": "76f584da2500b208e4ba277dc5843256ceb23fbf"
+      "at": "2026-11-02T22:11:30.209957+00:00",
+      "tested_commit": "27d98836631195459be1552965df9cecb30af019"
     },
     {
-      "name": "Generated markdown twin is current",
-      "command": "python3 scripts/limbless_doc.py --check",
+      "name": "Generated markdown twins current",
+      "command": "python3 scripts/designspace_doc.py --check",
       "exit": 0,
-      "result": "docs/dossier/13-limbless-mouse-design-space.md is current - limbless_doc.py reads named keys only, so the new flag does not reach the document.",
-      "at": "2026-11-02T18:42:29.772532+00:00",
-      "tested_commit": "76f584da2500b208e4ba277dc5843256ceb23fbf"
+      "result": "docs/dossier/13-limbless-mouse-design-space.md and 14-xenobot-design-space.md both current.",
+      "at": "2026-11-02T22:11:30.209957+00:00",
+      "tested_commit": "27d98836631195459be1552965df9cecb30af019"
     },
     {
-      "name": "Site modules outside the browser suite, against the same modules on the previous main",
-      "command": "python3 -m pytest tests/test_design_control.py tests/test_web.py tests/test_extra_projects.py tests/test_flying_fish_project.py tests/test_reuse_study_site.py -q",
+      "name": "The design space's own number reconciliation",
+      "command": "python3 code/verify_numbers.py (in results/xenobot/code)",
       "exit": 0,
-      "passed": 72,
-      "total": 159,
-      "result": "72 passed, 87 errors here and 72 passed, 87 errors at f8c19cd3 in a separate worktree - identical. The errors are a `stores` fixture needing a service this host does not run; they are pre-existing and none is unique to this change. NOT a full-suite run: the full-suite comparison in the previous receipt stands, and this change touches one JSON field, one JS gate and one test.",
-      "at": "2026-11-02T18:42:29.772532+00:00",
-      "tested_commit": "76f584da2500b208e4ba277dc5843256ceb23fbf"
+      "result": "60-odd checks, ALL NUMBERS RECONCILE. Written by the authoring agent to reconcile every headline number in prose against the data file it comes from; it caught two stale numbers in its own route file before delivery (an efficiency pair quoted from a superseded arm, and a '5x to 30x' range whose own data spans 7.6x to 66x).",
+      "at": "2026-11-02T22:11:30.209957+00:00",
+      "tested_commit": "27d98836631195459be1552965df9cecb30af019"
+    },
+    {
+      "name": "Structural validation of routes.json against the renderer contract",
+      "command": "python3 (ad hoc, run by the integrating session)",
+      "exit": 0,
+      "passed": 49,
+      "total": 49,
+      "result": "49 routes, 10 scales. Zero routes at a scale the page does not declare, zero routes matching no outcome class (a route the filter hides is a route nobody reads), zero illegal read-levels, every renderer-required field present on every route and scale. 89 evidence entries, 35 distinct PMIDs (the author reported 36; recounted here as 35).",
+      "at": "2026-11-02T22:11:30.209957+00:00",
+      "tested_commit": "27d98836631195459be1552965df9cecb30af019"
+    },
+    {
+      "name": "Source verification of the page's lead claim",
+      "command": "WebFetch of PMC6994979 via r.jina.ai after a direct fetch was CAPTCHA-blocked",
+      "exit": 0,
+      "result": "Verified verbatim in Kriegman et al. 2020 Materials and Methods: 'This resulted in highly performant but nontransferable designs'; 'on average, 47% of the gait cycle' without contact; the fix 'incorporating first-order hydrodynamics' via increased buoyancy and 'applying a drag force to each voxel face'; ground contact '93.3% of their evaluation period' against 'just 52.7% on the first pass'. One inference by the authoring agent (that the first pass used gravity-plus-friction specifically) was NOT supported by the source, which says only 'on land', and is marked as inference.",
+      "at": "2026-11-02T22:11:30.209957+00:00",
+      "tested_commit": "27d98836631195459be1552965df9cecb30af019"
     }
   ]
 }

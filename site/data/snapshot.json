@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs a3e8f445ab6f",
- "input_fingerprint": "a3e8f445ab6ff15cb15ffb114d0981e11c6a5aacc97de6b1cbfb24b8f44d6d85",
+ "label": "snapshot of inputs 37b9b524ab4a",
+ "input_fingerprint": "37b9b524ab4af7d0725f47c91582a07601b7cbfecf0c0a948dcb9d0902d4447a",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "e67ffb9c0ee43671e786cd66394df105f13fdc79294a07d8985788096236c160",
-   "bytes": 3207
+   "sha256": "9311fde9c442d6dd8b3a14f6dcab097c8bc16f6cf799b7dd1905ec87af42602c",
+   "bytes": 3654
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -39527,11 +39527,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release 76f584da2500)",
-    "outcome": "Home doorway, studio pages and the limbless design space: 131 passed in 172.65s - the whole browser suite plus the limbless unit tests, on this tree. (exit 0); The unlisting is a flag, and the gate responds to it in both directions: Passed both ways. With the flag false the home page and /studio carry ZERO links to the design space and the page still renders 39 routes at its own URL; with the flag flipped to true and the site rebuilt, the same test required and found the links. The flipped run is the positive control: it is what distinguishes a hidden link from a page that stopped rendering. Each half also asserts the same selector finds a different studio project's link on the same render, so the zero is a measured zero. The tree was restored to \"listed\": false and rebuilt before this release. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twin is current: docs/dossier/13-limbless-mouse-design-space.md is current - limbless_doc.py reads named keys only, so the new flag does not reach the document. (exit 0); Site modules outside the browser suite, against the same modules on the previous main: 72 passed, 87 errors here and 72 passed, 87 errors at f8c19cd3 in a separate worktree - identical. The errors are a `stores` fixture needing a service this host does not run; they are pre-existing and none is unique to this change. NOT a full-suite run: the full-suite comparison in the previous receipt stands, and this change touches one JSON field, one JS gate and one test. (exit 0)",
+    "title": "limbless mouse release checks (release 27d988366311)",
+    "outcome": "Browser suite plus the design-space unit tests: 142 passed in 302.71s. Both modules are parameterised over the design spaces the repository declares, so the new xenobot space is covered by the same cases as limbless-mouse. Each module also asserts the registry is non-empty, because a parameterised suite over an empty list passes without running anything. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: docs/dossier/13-limbless-mouse-design-space.md and 14-xenobot-design-space.md both current. (exit 0); The design space's own number reconciliation: 60-odd checks, ALL NUMBERS RECONCILE. Written by the authoring agent to reconcile every headline number in prose against the data file it comes from; it caught two stale numbers in its own route file before delivery (an efficiency pair quoted from a superseded arm, and a '5x to 30x' range whose own data spans 7.6x to 66x). (exit 0); Structural validation of routes.json against the renderer contract: 49 routes, 10 scales. Zero routes at a scale the page does not declare, zero routes matching no outcome class (a route the filter hides is a route nobody reads), zero illegal read-levels, every renderer-required field present on every route and scale. 89 evidence entries, 35 distinct PMIDs (the author reported 36; recounted here as 35). (exit 0); Source verification of the page's lead claim: Verified verbatim in Kriegman et al. 2020 Materials and Methods: 'This resulted in highly performant but nontransferable designs'; 'on average, 47% of the gait cycle' without contact; the fix 'incorporating first-order hydrodynamics' via increased buoyancy and 'applying a drag force to each voxel face'; ground contact '93.3% of their evaluation period' against 'just 52.7% on the first pass'. One inference by the authoring agent (that the first pass used gravity-plus-friction specifically) was NOT supported by the source, which says only 'on land', and is marked as inference. (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "e67ffb9c0ee43671e786cd66394df105f13fdc79294a07d8985788096236c160",
+    "sha256": "9311fde9c442d6dd8b3a14f6dcab097c8bc16f6cf799b7dd1905ec87af42602c",
     "date": "no time recorded"
    },
    {
