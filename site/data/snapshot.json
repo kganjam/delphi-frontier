@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs b547cb6b48da",
- "input_fingerprint": "b547cb6b48dac5f597c7da3e364240319d1f6e3051ed4914bd5342129cd6009d",
+ "label": "snapshot of inputs 796e44603200",
+ "input_fingerprint": "796e44603200f430618218e51c017c64199bd8abad4e680e72cf429f423b93b8",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "2cefa273f75410e17a0b4285134786ba56a8537ffdeb49fb68dfdc1798943a87",
-   "bytes": 2987
+   "sha256": "ababa466745cfb536b37f14cd0922bdbc662de6a830c880bc336b9195a60fd86",
+   "bytes": 3202
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -39597,11 +39597,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release 124eec08a402)",
-    "outcome": "Browser suite plus design-space unit tests: 143 passed in 246.22s. (exit 0); Every served figure is tracked in git: Passes. Verified in both directions when added: unstaging one figure fails naming that file, restaging passes. It exists because seven figures 404d in a previous release while every other test was green. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: both current (exit 0); Corrections present and the superseded string absent: Eight corrections confirmed present in the data the page renders (integer-division mechanism and the quoted driver line, 40-to-100x body size, both Reynolds speed definitions, 'no aggregation at any N', effect_size_caution, unconverged-margin wording), and the superseded '50 to 100x' asserted ABSENT rather than only checking the new string is present - which is the failure mode the author had just hit, where six prose edits matched nothing and the old text was rebuilt. (exit 0); Live figure fetch with both controls: At the previous release all seven returned HTTP 200 at their exact byte counts, a known-good limbless figure returned 200 as positive control, and a nonexistent filename returned 404 as negative control. To be re-run after this deploy. (exit 0)",
+    "title": "limbless mouse release checks (release 66cc9a4bbf32)",
+    "outcome": "Browser suite plus design-space unit tests: 151 passed in 245.40s. Three design spaces now; both modules are parameterised over whatever the repository declares, so insect-flight arrived already covered. (exit 0); Every served figure is tracked in git: Passes over all three design spaces' figures. Added after seven xenobot figures 404d in production while every other test was green. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all three documents current (exit 0); Staleness scan: result files older than the code that writes them: Run because an inherited insect-flight study turned out to describe a superseded model - re-running its own code changed 70 of 428 leaves. xenobot, already in production, is clean on all three studies. The one real flag, venation.json being 2m40s older than venation.py, was resolved by RE-RUNNING rather than by asking: 417 leaves, 0 changed, byte-identical, so the edit was cosmetic. (exit 0); Stale claim removed at source and the author's own validator re-run: The authoring agent warned that the 'factor of 40' discrimination was from a stale file, then went idle with that claim still asserted in its own routes.json - the file the renderer reads. Corrected to 4.0%/39.2% in the BUILDER (editing the generated JSON would be reverted by the next rebuild), with a note recording the supersession. Its check_quotes.py then re-run over the edited output: 128 fragments, 0 not found, PASS, negative control not found and positive control found. (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "2cefa273f75410e17a0b4285134786ba56a8537ffdeb49fb68dfdc1798943a87",
+    "sha256": "ababa466745cfb536b37f14cd0922bdbc662de6a830c880bc336b9195a60fd86",
     "date": "no time recorded"
    },
    {

@@ -1,60 +1,56 @@
 {
   "schema": "frontier.release.checks/1",
-  "sha": "124eec08a402e91bba8c945d6c20ad0adc8be5a9",
+  "sha": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076",
   "checks": [
     {
       "name": "Browser suite plus design-space unit tests",
       "command": "python3 -m pytest tests/test_site_browser.py tests/test_design_spaces.py -q",
       "exit": 0,
-      "passed": 143,
-      "total": 143,
-      "result": "143 passed in 246.22s.",
-      "at": "2026-11-02T22:23:52.676949+00:00",
-      "tested_commit": "124eec08a402e91bba8c945d6c20ad0adc8be5a9"
+      "passed": 151,
+      "total": 151,
+      "result": "151 passed in 245.40s. Three design spaces now; both modules are parameterised over whatever the repository declares, so insect-flight arrived already covered.",
+      "at": "2026-11-02T22:57:41.386507+00:00",
+      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
     },
     {
       "name": "Every served figure is tracked in git",
       "command": "python3 -m pytest tests/test_design_spaces.py::test_every_served_figure_is_tracked_in_git -q",
       "exit": 0,
-      "result": "Passes. Verified in both directions when added: unstaging one figure fails naming that file, restaging passes. It exists because seven figures 404d in a previous release while every other test was green.",
-      "at": "2026-11-02T22:23:52.676949+00:00",
-      "tested_commit": "124eec08a402e91bba8c945d6c20ad0adc8be5a9"
+      "result": "Passes over all three design spaces' figures. Added after seven xenobot figures 404d in production while every other test was green.",
+      "at": "2026-11-02T22:57:41.386507+00:00",
+      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
     },
     {
       "name": "Snapshot reproducibility",
       "command": "python3 scripts/build_site.py --check",
       "exit": 0,
       "result": "stale=[]",
-      "at": "2026-11-02T22:23:52.676949+00:00",
-      "tested_commit": "124eec08a402e91bba8c945d6c20ad0adc8be5a9"
+      "at": "2026-11-02T22:57:41.386507+00:00",
+      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
     },
     {
       "name": "Generated markdown twins current",
       "command": "python3 scripts/designspace_doc.py --check",
       "exit": 0,
-      "result": "both current",
-      "at": "2026-11-02T22:23:52.676949+00:00",
-      "tested_commit": "124eec08a402e91bba8c945d6c20ad0adc8be5a9"
+      "result": "all three documents current",
+      "at": "2026-11-02T22:57:41.386507+00:00",
+      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
     },
     {
-      "name": "Corrections present and the superseded string absent",
-      "command": "regex spot-check over routes/regime-check/convergence/cargo-work JSON",
+      "name": "Staleness scan: result files older than the code that writes them",
+      "command": "mtime comparison per study across all four design spaces",
       "exit": 0,
-      "passed": 8,
-      "total": 8,
-      "result": "Eight corrections confirmed present in the data the page renders (integer-division mechanism and the quoted driver line, 40-to-100x body size, both Reynolds speed definitions, 'no aggregation at any N', effect_size_caution, unconverged-margin wording), and the superseded '50 to 100x' asserted ABSENT rather than only checking the new string is present - which is the failure mode the author had just hit, where six prose edits matched nothing and the old text was rebuilt.",
-      "at": "2026-11-02T22:23:52.676949+00:00",
-      "tested_commit": "124eec08a402e91bba8c945d6c20ad0adc8be5a9"
+      "result": "Run because an inherited insect-flight study turned out to describe a superseded model - re-running its own code changed 70 of 428 leaves. xenobot, already in production, is clean on all three studies. The one real flag, venation.json being 2m40s older than venation.py, was resolved by RE-RUNNING rather than by asking: 417 leaves, 0 changed, byte-identical, so the edit was cosmetic.",
+      "at": "2026-11-02T22:57:41.386507+00:00",
+      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
     },
     {
-      "name": "Live figure fetch with both controls",
-      "command": "curl -o /dev/null -w %{http_code} per figure URL",
+      "name": "Stale claim removed at source and the author's own validator re-run",
+      "command": "edit code/build_routes.py:230, rebuild, python3 code/check_quotes.py",
       "exit": 0,
-      "passed": 7,
-      "total": 7,
-      "result": "At the previous release all seven returned HTTP 200 at their exact byte counts, a known-good limbless figure returned 200 as positive control, and a nonexistent filename returned 404 as negative control. To be re-run after this deploy.",
-      "at": "2026-11-02T22:23:52.676949+00:00",
-      "tested_commit": "124eec08a402e91bba8c945d6c20ad0adc8be5a9"
+      "result": "The authoring agent warned that the 'factor of 40' discrimination was from a stale file, then went idle with that claim still asserted in its own routes.json - the file the renderer reads. Corrected to 4.0%/39.2% in the BUILDER (editing the generated JSON would be reverted by the next rebuild), with a note recording the supersession. Its check_quotes.py then re-run over the edited output: 128 fragments, 0 not found, PASS, negative control not found and positive control found.",
+      "at": "2026-11-02T22:57:41.386507+00:00",
+      "tested_commit": "66cc9a4bbf32b6a4f8c7fde362919b79cf17d076"
     }
   ]
 }
