@@ -1,6 +1,6 @@
 {
   "schema": "frontier.release.checks/1",
-  "sha": "cf8fcc1c9cbc72296af417e858228a96fb09fd51",
+  "sha": "1494e6f30d3093bc0cff45cb21f565ee7867c568",
   "checks": [
     {
       "name": "Design-space browser and unit tests",
@@ -8,33 +8,51 @@
       "exit": 0,
       "passed": 24,
       "total": 24,
-      "result": "24 passed. The full 151-test suite passed at the previous release; this change edits one content file's prose and adds a not_claimed entry.",
-      "at": "2026-11-02T23:00:57.089570+00:00",
-      "tested_commit": "cf8fcc1c9cbc72296af417e858228a96fb09fd51"
+      "result": "24 passed. The full 151-test suite passed two releases ago; this change edits one content file's not_claimed list.",
+      "at": "2026-11-02T23:36:21.794195+00:00",
+      "tested_commit": "1494e6f30d3093bc0cff45cb21f565ee7867c568"
     },
     {
       "name": "Snapshot reproducibility",
       "command": "python3 scripts/build_site.py --check",
       "exit": 0,
       "result": "stale=[]",
-      "at": "2026-11-02T23:00:57.089570+00:00",
-      "tested_commit": "cf8fcc1c9cbc72296af417e858228a96fb09fd51"
+      "at": "2026-11-02T23:36:21.794195+00:00",
+      "tested_commit": "1494e6f30d3093bc0cff45cb21f565ee7867c568"
     },
     {
       "name": "Generated markdown twins current",
       "command": "python3 scripts/designspace_doc.py --check",
       "exit": 0,
       "result": "all three current",
-      "at": "2026-11-02T23:00:57.089570+00:00",
-      "tested_commit": "cf8fcc1c9cbc72296af417e858228a96fb09fd51"
+      "at": "2026-11-02T23:36:21.794195+00:00",
+      "tested_commit": "1494e6f30d3093bc0cff45cb21f565ee7867c568"
     },
     {
-      "name": "Priority correction verified at the source",
-      "command": "PubMed record for PMID 22188766",
+      "name": "A COMPLETED job that nothing was watching, read rather than trusted",
+      "command": "nebius ai job get/logs for aijob-e00y2hqz6349cb8aa2; read the locally captured logs/voxcraft-p4.log",
       "exit": 0,
-      "result": "Verified verbatim rather than relayed: Elzinga, Dickson & Dickinson, J R Soc Interface 9(72):1685-96, 'The results show a fundamental trade-off between sensor delay and permissible feedback gain', proposing 'a control architecture whereby a haltere-mediated inner-loop proportional controller provides damping for slower visually mediated feedback'. The insect-flight page had presented its own three-wingbeat bound as our analysis; it is a re-derivation of this, and the page now says so in the answer prose, the chain link and not_claimed. Bender & Dickinson (17114395) verified in the same call.",
-      "at": "2026-11-02T23:00:57.089570+00:00",
-      "tested_commit": "cf8fcc1c9cbc72296af417e858228a96fb09fd51"
+      "result": "The job ran on the project's OWN pinned image nvcr.io/nvidia/cuda:10.2-devel-ubuntu18.04, reported state COMPLETED, and printed PROBE-VERDICT=BUILT with exit 0 - directly below 'make: *** [all] Error 2' in the same log. Reading the log: rc=2 at line 219 is the make failure, rc=0 at line 319 is a later command's status assigned over it, and the verdict is computed from the second. The build FAILED. The authoring agent never recorded this attempt: voxcraft-probe.json holds attempts 1-3 with any_attempt_built false. The page had said the pinned route was untried; it was tried and it failed, and both that correction and the false verdict are now in not_claimed. The page's conclusion is unchanged and better evidenced: two toolkits, two distinct failures, no cross-engine comparison offered.",
+      "at": "2026-11-02T23:36:21.794195+00:00",
+      "tested_commit": "1494e6f30d3093bc0cff45cb21f565ee7867c568"
+    },
+    {
+      "name": "Non-finite literals absent from every published file",
+      "command": "regex scan plus a strict json.loads that rejects NaN/Infinity, with a planted positive control",
+      "exit": 0,
+      "result": "No NaN or Infinity in any results/*/*.json or in site/data/snapshot.json; the live snapshot passes a strict parse, so JSON.parse cannot throw in a visitor's browser. Detector proven by a planted {\"a\": NaN} which it catches and which strict parsing rejects. Run because a NaN-truthiness bug was found in an unpublished design space's own guard.",
+      "at": "2026-11-02T23:36:21.794195+00:00",
+      "tested_commit": "1494e6f30d3093bc0cff45cb21f565ee7867c568"
+    },
+    {
+      "name": "Absence-claims checked against the domain that backs them",
+      "command": "pattern scan over live design-space data with positive and negative controls, then the flagged claim recomputed from its sweep",
+      "exit": 0,
+      "passed": 16,
+      "total": 16,
+      "result": "16 absence-claims found live. Most are descriptive or definitional; two state their own bound in the sentence ('even in forty cycles', 'within its working life'), which is the honest form. The one that did not state its domain - limbless-mouse 'below 0.31 the loop never engages' - was recomputed: threshold 0.307494, sweep covers s in [0.0, 2.0], threshold interior, and the region the claim names is covered to the end of the range. Not the boundary-artifact shape.",
+      "at": "2026-11-02T23:36:21.794195+00:00",
+      "tested_commit": "1494e6f30d3093bc0cff45cb21f565ee7867c568"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 0fb7beb2cb95",
- "input_fingerprint": "0fb7beb2cb95a2b8f58f1d089d609d1b779052d8443d3da097d3dab500f85f39",
+ "label": "snapshot of inputs 3f056e41c309",
+ "input_fingerprint": "3f056e41c3098339221b7d0aee6d72e56098023ffa0bbd37699d49b78035ede2",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "3673133bf27c80893a22f7f3448cf808b7f02f549020fe6b885a96e20c0d3569",
-   "bytes": 2117
+   "sha256": "10fb081ee0991b8d7d4cea8854ef81e73fda5b5da8c246d670513ad430bbc744",
+   "bytes": 3968
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -39597,11 +39597,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release cf8fcc1c9cbc)",
-    "outcome": "Design-space browser and unit tests: 24 passed. The full 151-test suite passed at the previous release; this change edits one content file's prose and adds a not_claimed entry. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all three current (exit 0); Priority correction verified at the source: Verified verbatim rather than relayed: Elzinga, Dickson & Dickinson, J R Soc Interface 9(72):1685-96, 'The results show a fundamental trade-off between sensor delay and permissible feedback gain', proposing 'a control architecture whereby a haltere-mediated inner-loop proportional controller provides damping for slower visually mediated feedback'. The insect-flight page had presented its own three-wingbeat bound as our analysis; it is a re-derivation of this, and the page now says so in the answer prose, the chain link and not_claimed. Bender & Dickinson (17114395) verified in the same call. (exit 0)",
+    "title": "limbless mouse release checks (release 1494e6f30d30)",
+    "outcome": "Design-space browser and unit tests: 24 passed. The full 151-test suite passed two releases ago; this change edits one content file's not_claimed list. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all three current (exit 0); A COMPLETED job that nothing was watching, read rather than trusted: The job ran on the project's OWN pinned image nvcr.io/nvidia/cuda:10.2-devel-ubuntu18.04, reported state COMPLETED, and printed PROBE-VERDICT=BUILT with exit 0 - directly below 'make: *** [all] Error 2' in the same log. Reading the log: rc=2 at line 219 is the make failure, rc=0 at line 319 is a later command's status assigned over it, and the verdict is computed from the second. The build FAILED. The authoring agent never recorded this attempt: voxcraft-probe.json holds attempts 1-3 with any_attempt_built false. The page had said the pinned route was untried; it was tried and it failed, and both that correction and the false verdict are now in not_claimed. The page's conclusion is unchanged and better evidenced: two toolkits, two distinct failures, no cross-engine comparison offered. (exit 0); Non-finite literals absent from every published file: No NaN or Infinity in any results/*/*.json or in site/data/snapshot.json; the live snapshot passes a strict parse, so JSON.parse cannot throw in a visitor's browser. Detector proven by a planted {\"a\": NaN} which it catches and which strict parsing rejects. Run because a NaN-truthiness bug was found in an unpublished design space's own guard. (exit 0); Absence-claims checked against the domain that backs them: 16 absence-claims found live. Most are descriptive or definitional; two state their own bound in the sentence ('even in forty cycles', 'within its working life'), which is the honest form. The one that did not state its domain - limbless-mouse 'below 0.31 the loop never engages' - was recomputed: threshold 0.307494, sweep covers s in [0.0, 2.0], threshold interior, and the region the claim names is covered to the end of the range. Not the boundary-artifact shape. (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "3673133bf27c80893a22f7f3448cf808b7f02f549020fe6b885a96e20c0d3569",
+    "sha256": "10fb081ee0991b8d7d4cea8854ef81e73fda5b5da8c246d670513ad430bbc744",
     "date": "no time recorded"
    },
    {
