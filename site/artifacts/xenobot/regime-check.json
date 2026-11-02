@@ -57,7 +57,9 @@
     "U_m_s": 0.012899716799999999,
     "Re_translational": 642.5397859161676,
     "Re_oscillatory_rho_omega_L2_over_mu": 62593.5685990685,
-    "oscillatory_definition": "Re_omega = rho * omega * L^2 / mu, the frequency Reynolds number used by Lauga 2007 for reciprocal-stroke breakdown"
+    "oscillatory_definition": "Re_omega = rho * omega * L^2 / mu, the frequency Reynolds number used by Lauga 2007 for reciprocal-stroke breakdown",
+    "speed_definition": "U is PATH LENGTH divided by the measurement window: 0.016124646 m / 1.25 s = 12.90 mm/s. Using the NET displacement instead gives 0.014577281 m / 1.25 s = 11.66 mm/s and Re = 581 rather than 643. Both are stated so a recomputation does not look like a discrepancy; path length is the right choice here because Re is about the speed at which the body moves through the fluid, not about how far it ends up from where it started.",
+    "Re_translational_using_net_displacement": 580.8799159361278
   },
   "regime_separation_orders_of_magnitude": 3.8095501802517524,
   "reciprocity": {
@@ -368,6 +370,35 @@
   },
   "wall_s": 165.0,
   "headline": "A millimetre-scale living construct sits at Reynolds number below 0.1, and five of the six published actuation patterns are time-reciprocal, so Purcell's scallop theorem makes their net displacement exactly zero there. The published gait ranking does not transfer: its 2nd and 3rd places are both dead in the regime the real object occupies, and only the travelling wave survives.",
+  "the_simulated_object_is_also_the_wrong_SIZE": {
+    "why_this_is_worth_stating_beside_the_Reynolds_number": "Re = 643 is an abstraction. The plain fact underneath it is checkable from the committed candidate file and may land harder: the simulated body is 40-50 mm and a real construct is 0.5-1 mm, so the artifact simulates an object roughly 40 to 100 times too large, quite apart from having no fluid in it.",
+    "simulated_centre_to_centre_span_m": 0.04,
+    "simulated_outer_envelope_m": [
+      0.05,
+      0.03,
+      0.03
+    ],
+    "source": "artifacts/voxel-actuation/candidates/*.json, params.nx * params.voxel_m and result.body_len_m",
+    "real_construct_m": [
+      0.0003,
+      0.001
+    ],
+    "real_source": "Gumuskaya et al. 2023 (PMID 38032125) report anthrobot diameters of 30-500 um; 1 mm is the nominal xenobot figure and is ASSUMED, not read from a paper",
+    "size_ratio_range": [
+      40.0,
+      100.0
+    ]
+  },
+  "the_spearman_trap": {
+    "what": "A rank correlation between the two regimes' gait orderings returns rho = 0.943 with p = 0.005, which reads as excellent transfer.",
+    "why_it_is_vacuous": "five of the six Stokes values are the same number - exactly zero - so their relative order carries no information at all. The coefficient is computed over a tie that the test treats as a ranking.",
+    "why_it_is_worth_its_own_section": "this is a statistic reporting excellent agreement at the exact moment agreement has failed completely, and failed QUALITATIVELY rather than by degree. Anyone checking 'did the ranking transfer?' with a rank correlation would conclude that it did.",
+    "what_to_do_instead": "ask how many of the ranked items are distinguishable at all before ranking them. Here the answer is one, and the comparison should never have been posed as a correlation.",
+    "rho": 0.942857142857143,
+    "p": 0.004804664723032055,
+    "distinguishable_stokes_values": 1,
+    "items_ranked": 6
+  },
   "model": {
     "what_it_is": "two models and one exact classification. (1) A closed-form Reynolds-number evaluation. (2) An exact algebraic test of whether each published actuation pattern is time-reciprocal. (3) A Rotne-Prager-Yamakawa bead-model Stokes swimmer over shapes from a quasi-static, free-floating, central-force spring lattice driven by the same actuation law.",
     "not_voxelyze": "the Stokes swimmer is OUR code and is not Voxelyze. Voxelyze at its pin is used unmodified for the dry-friction comparison, and reproduces the published travelling-wave run bit-for-bit at 0.0145773 m against 0.014577281 m.",
@@ -481,9 +512,9 @@
   ],
   "not_diverged_gate": {
     "what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
-    "total_runs_checked": 404,
+    "total_runs_checked": 440,
     "diverged_runs": [],
     "gate_met": true,
-    "note": "regime-check's own Stokes and elastic solves are not time-stepped and cannot diverge; their analogue is the minimiser-convergence flag reported in elastic_lattice_controls and the shape-solve tolerance refinement arm."
+    "note": "regime-check's own Stokes and elastic solves are not time-stepped and cannot diverge; their analogue is the minimiser-convergence flag in elastic_lattice_controls and the shape-solve tolerance refinement arm."
   }
 }

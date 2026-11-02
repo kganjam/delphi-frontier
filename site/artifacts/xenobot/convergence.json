@@ -394,6 +394,21 @@
       "verdict": "FAILS for a resonance: body length rises by 2.33x from nx=4 to nx=8 and longitudinal's optimum frequency is 12.0 Hz at both ends. A length resonance requires f_opt to fall by the same factor.",
       "travelling_caveat": "travelling's optimum runs to the lowest swept frequency for nx>=5, so it is a BOUNDARY not an optimum; its total variation over 0.25-16 Hz is at most 0.63, a broad shallow response rather than a peak."
     },
+    "mechanism_named_at_the_source": {
+      "the_line": "(x < c.nx/2) ? 0.0 : kPi",
+      "file": "scripts/voxel_actuation/soft_actuation.cpp, phaseFor(), the 'longitudinal' branch (and the identical 'lateral' and 'dorsoventral' branches with y and z)",
+      "the_operator": "c.nx/2 is C++ INTEGER division. For even nx it splits the body exactly in half; for odd nx it cannot, and leaves one extra plane of voxels on one side.",
+      "split_by_nx": {
+        "4": "2 vs 2, balanced",
+        "5": "2 vs 3, unbalanced",
+        "6": "3 vs 3, balanced",
+        "7": "3 vs 4, unbalanced"
+      },
+      "why_it_produces_two_branches": "an unbalanced split leaves a net actuation dipole along the travel axis; a balanced one cancels it to leading order. Net translation needs that broken mirror symmetry, so the odd-nx bodies move roughly an order of magnitude further than their even-nx neighbours at identical resolution, material, amplitude and duration.",
+      "why_travelling_is_immune": "its phase is 2*pi*x/nx, a continuous function of fractional position along the body. It never divides by 2 and has no parity to be odd or even, which is why the alternation is absent from it by a median factor of 1.008.",
+      "why_no_frequency_removes_it": "the asymmetry is in the spatial actuator LAYOUT, not in the timing, so changing the drive frequency cannot cancel it - and does not, from 0.25 to 16 Hz.",
+      "credit": "the integer-division operator was identified by the team lead reading the driver source; this study had established the two-branch structure and its three discriminators without naming the line."
+    },
     "verdict": "ENCODING, not resonance and not a solver artifact. The alternation appears only in the pattern whose phase assignment depends on grid parity; it is absent from the pattern whose phase is a continuous function of position; each parity branch is smooth and monotone over 14 values; and it persists unchanged at every drive frequency from 0.25 to 16 Hz. It is a real mechanical consequence of a real difference in actuator layout, and that difference is an artifact of writing the split as an index comparison."
   },
   "headline": "On a parity-matched refinement series the model does NOT converge. Across a 4x refinement (45 to 2880 voxels) the travelling wave spans 41% of its coarsest value and the longitudinal split 54%, and BOTH series turn over rather than settling. Separately, the non-monotone body-size series the independent audit flagged is the actuation encoding, not a gait-length resonance: it is two smooth monotone branches interleaved by the parity of the actuator split, it is absent from the pattern whose phase does not depend on parity, and it does not move with drive frequency.",
@@ -410,7 +425,8 @@
       11.715329371909963,
       10.412740120287236
     ],
-    "reading": "the ORDER is stable - travelling is ahead of longitudinal at every one of the four levels - but the SIZE of the gap is not: it falls from 19.4x to 10.4x across the refinement and is still moving at the finest grid. A ranking quoted from the coarse grid gets the winner right for this pair and the margin wrong by about a factor of two.",
+    "reading": "the ORDER is stable - travelling is ahead of longitudinal at every one of the four levels - but the SIZE of the gap is not: it falls from 19.4x to 10.4x across the refinement and is STILL MOVING at the finest grid, with the last step (11.7 to 10.4) no smaller than the one before it relative to the remaining gap. The margin has therefore NOT converged either.",
+    "what_is_and_is_not_quotable": "'travelling beats longitudinal' is supported at every level tested. 'travelling beats longitudinal by N times' is NOT quotable at any N, because the margin has not converged and the sequence gives no reason to believe 10.4 is closer to the limit than 19.4 was.",
     "what_can_be_said": "this study refines TWO patterns, not all six, so it cannot report a full ranking at the fine grid. What it establishes is the prior question: whether a single pattern's value is stable enough for any ranking drawn from the coarse grid to mean anything.",
     "per_series": {
       "A_travelling": {
@@ -434,12 +450,6 @@
     },
     "coarse_grid_gap_between_the_two_patterns": 19.40842653245992
   },
-  "what_this_cannot_establish": [
-    "that the model converges. It refines two of six patterns on three or four levels each; a converged value is not demonstrated and is not claimed.",
-    "a corrected ranking of the six gaits. Only travelling and longitudinal were refined.",
-    "anything about a biological construct. This is the same generic soft-voxel model throughout, with the same assumed parameters, and the regime-check study shows it is not the regime a real construct occupies.",
-    "that the parity effect is the ONLY cause of the artifact's 8.2x arm-G gap. Varying nx at fixed voxel size changes count, length and mass together, as the independent audit already noted; this study adds that the effect is absent from a parity-free pattern and frequency-independent, which rules out a resonance but does not isolate a single cause."
-  ],
   "timestep_separation_arm": {
     "why": "a refinement at fixed dtScale halves dt automatically with the lattice, so spatial and temporal error are confounded. This arm repeats levels 1-3 of both series at HALF the timestep and asks whether the spatial spread survives.",
     "per_level": {
@@ -501,7 +511,8 @@
       }
     },
     "verdict": "For the travelling wave the non-convergence is unambiguously SPATIAL: halving dt changes any level by at most 1.3% while the spread across levels 1-3 is 22% (41% over all four), and that spread is essentially unchanged at the finer dt, 22.4% against 21.8%. For the longitudinal split the temporal error is NOT negligible - up to 15.5% at level 2 - but it does not explain the spread either: halving dt moves it only from 54.4% to 48.5%. Spatial error dominates by about 17x for travelling and about 3.5x for longitudinal.",
-    "relation_to_the_artifacts_own_arm_F": "the pinned artifact's timestep arm found 0.90% spread across a 4x dt range, which does not conflict with the 5.3% we see at B1. Arm F ran longitudinal at nx=5, the ASYMMETRIC split, whose net displacement is large (0.153 body lengths). B1 is nx=4, the SYMMETRIC split, an order of magnitude smaller at 0.015 normalised, so the same absolute numerical error is a much larger relative one. The two measure the same thing on configurations separated by the parity effect this study is about."
+    "relation_to_the_artifacts_own_arm_F": "the pinned artifact's timestep arm found 0.90% spread across a 4x dt range, which does not conflict with the 5.3% we see at B1. Arm F ran longitudinal at nx=5, the ASYMMETRIC split, whose net displacement is large (0.153 body lengths). B1 is nx=4, the SYMMETRIC split, an order of magnitude smaller at 0.015 normalised, so the same absolute numerical error is a much larger relative one. The two measure the same thing on configurations separated by the parity effect this study is about.",
+    "caveat": "level 4 was not repeated at the finer timestep."
   },
   "conditioning_arm": {
     "status": "POST-HOC. Found by cross-checking the local refinement against an independent run of the same series on a Nebius L40S node, where two of fourteen runs disagreed.",
@@ -534,6 +545,12 @@
     "caveat": "this is ONE perturbation of ONE parameter at ONE grid level per pattern. It establishes that the configuration is ill-conditioned; it does not measure a condition number, and the amplification figures should not be quoted as one.",
     "consequence_for_the_series": "the series reported here all use the full double-precision 1/300 locally, so they are internally consistent. A reader reproducing them must pass the same value; a 10-digit literal changes level 3 by 1.2% for longitudinal."
   },
+  "what_this_cannot_establish": [
+    "that the model converges. It refines two of six patterns on three or four levels each; a converged value is not demonstrated and is not claimed.",
+    "a corrected ranking of the six gaits. Only travelling and longitudinal were refined.",
+    "anything about a biological construct. This is the same generic soft-voxel model throughout, with the same assumed parameters, and the regime-check study shows it is not the regime a real construct occupies.",
+    "that the parity effect is the ONLY cause of the artifact's 8.2x arm-G gap. Varying nx at fixed voxel size changes count, length and mass together, as the independent audit already noted; this study adds that the effect is absent from a parity-free pattern and frequency-independent, which rules out a resonance but does not isolate a single cause."
+  ],
   "model": {
     "engine": {
       "name": "Voxelyze",
@@ -683,7 +700,7 @@
   ],
   "not_diverged_gate": {
     "what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
-    "total_runs_checked": 404,
+    "total_runs_checked": 440,
     "diverged_runs": [],
     "gate_met": true
   }

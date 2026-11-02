@@ -1,7 +1,7 @@
 {
   "schema": "design-space-study/0.1",
   "id": "cargo-work",
-  "headline": "In this dry-friction model the body plan that moves itself best also pushes best: the travelling wave wins on cargo displacement, on transport ratio and on energy efficiency, contradicting our predeclared expectation. The real design gate is not which gait ranks highest but whether the gait moves an external object at all, and in 5 cycles only one of six even reaches its cargo. A uniform swarm sweeps but never corrals, over swarm sizes 1 to 16 in two field sizes.",
+  "headline": "In this dry-friction model the body plan that moves itself best also pushes best: the travelling wave wins on cargo displacement, on transport ratio and on energy efficiency, contradicting our predeclared expectation. The real design gate is not which gait ranks highest but whether the gait moves an external object at all, and in 5 cycles only one of six even reaches its cargo. A uniform swarm never corrals, over swarm sizes 1 to 16 in two field sizes.",
   "declared_metrics": {
     "M1_primary": "cargo net COM displacement, m",
     "M2": "cargo net displacement per actuation cycle, m",
@@ -301,6 +301,98 @@
       "lateral"
     ],
     "rankings_agree": true
+  },
+  "reach_and_push_are_different_quantities": {
+    "why_they_are_reported_separately": "time-to-contact and work-after-contact are different engineering quantities, and a body plan can be good at one and bad at the other. Collapsing them into a single cargo-displacement number hides which one a design is losing on, and in the 5-cycle arm it hid the fact that five of six gaits were losing on REACH and had not been tested on push at all.",
+    "reach_gate": "does the construct arrive at the workpiece within its working life? Measured here as time to first cargo motion above 1 um, with the cargo 7.5 mm of clear space away.",
+    "push_gate": "given contact, how much of the construct's own motion and energy reaches the cargo? Measured over the post-contact window only.",
+    "reach": {
+      "uniform": {
+        "self_speed_mm_per_cycle": 8.630000000000001e-05,
+        "made_contact_within_40_cycles": false,
+        "time_to_contact_s": null,
+        "cycles_to_contact": null,
+        "fraction_of_run_spent_reaching": null
+      },
+      "longitudinal": {
+        "self_speed_mm_per_cycle": 1.18827415,
+        "made_contact_within_40_cycles": true,
+        "time_to_contact_s": 1.79311,
+        "cycles_to_contact": 7.17244,
+        "fraction_of_run_spent_reaching": 0.15319148936170213
+      },
+      "lateral": {
+        "self_speed_mm_per_cycle": 1.08617855,
+        "made_contact_within_40_cycles": true,
+        "time_to_contact_s": 1.707726,
+        "cycles_to_contact": 6.830904,
+        "fraction_of_run_spent_reaching": 0.14468085106382977
+      },
+      "dorsoventral": {
+        "self_speed_mm_per_cycle": 0.02074605,
+        "made_contact_within_40_cycles": false,
+        "time_to_contact_s": null,
+        "cycles_to_contact": null,
+        "fraction_of_run_spent_reaching": null
+      },
+      "travelling": {
+        "self_speed_mm_per_cycle": 2.93580035,
+        "made_contact_within_40_cycles": true,
+        "time_to_contact_s": 0.939272,
+        "cycles_to_contact": 3.757088,
+        "fraction_of_run_spent_reaching": 0.06808510638297872
+      },
+      "checker": {
+        "self_speed_mm_per_cycle": 2.4975000000000004e-05,
+        "made_contact_within_40_cycles": false,
+        "time_to_contact_s": null,
+        "cycles_to_contact": null,
+        "fraction_of_run_spent_reaching": null
+      }
+    },
+    "push_contacting_gaits_only": {
+      "longitudinal": {
+        "cargo_displacement_after_contact_m": 0.0350923882620409,
+        "construct_path_after_contact_m": 0.06910738666306063,
+        "transport_ratio_after_contact": 0.5077950412614651,
+        "W_actuation_after_contact_J": 0.19931846335000003,
+        "W_cargo_friction_after_contact_J": 0.00226515938322,
+        "efficiency_after_contact": 0.011364523612859771
+      },
+      "lateral": {
+        "cargo_displacement_after_contact_m": 0.021656062644259604,
+        "construct_path_after_contact_m": 0.08318783907885187,
+        "transport_ratio_after_contact": 0.26032726518755117,
+        "W_actuation_after_contact_J": 0.35037199791,
+        "W_cargo_friction_after_contact_J": 0.0015307714454357,
+        "efficiency_after_contact": 0.00436898911604491
+      },
+      "travelling": {
+        "cargo_displacement_after_contact_m": 0.103437149163004,
+        "construct_path_after_contact_m": 0.10917779208553752,
+        "transport_ratio_after_contact": 0.9474193165764344,
+        "W_actuation_after_contact_J": 0.21237712911999998,
+        "W_cargo_friction_after_contact_J": 0.00692780027862,
+        "efficiency_after_contact": 0.03262027463750848
+      }
+    },
+    "ranking_by_reach": [
+      "travelling",
+      "lateral",
+      "longitudinal"
+    ],
+    "ranking_by_push_transport_ratio": [
+      "travelling",
+      "longitudinal",
+      "lateral"
+    ],
+    "do_the_two_rankings_agree": false,
+    "commercial_reading": "The two orderings are NOT the same, which is the reason for reporting them apart. Travelling is first on both. But between the two reciprocal gaits the order swaps: lateral reaches the cargo FIRST (1.71 s against longitudinal's 1.79 s) and then pushes WORST, transferring 0.26 of its own path against longitudinal's 0.51. So arriving sooner and pushing better are separable properties here, and a cargo-displacement number alone would have hidden it.",
+    "size_of_the_swap": {
+      "reach_difference_lateral_vs_longitudinal_pct": 4.761782601178952,
+      "push_ratio_longitudinal_over_lateral": 1.9506026035944692,
+      "honest_scale": "the reach difference between those two is about 4.8%, which is small and rests on a single contact-threshold crossing per gait with no seed spread (this model has no RNG). The push difference is about 2x and is the robust half of the comparison. Do not read the reach swap as a strong result."
+    }
   },
   "arm2b_cargo_mass": {
     "design": "cargo density scaled 0.25x to 32x at fixed volume (8 voxels), placed one clear lattice site away in each gait's OWN direction of travel, 40 cycles so contact is guaranteed",
@@ -1283,6 +1375,33 @@
           0.000966052
         ]
       },
+      "as_percent_of_field_radius": {
+        "1": {
+          "rg_start_m": 0.143542048,
+          "median_change_pct": 0.22324956656602812
+        },
+        "2": {
+          "rg_start_m": 0.144618055,
+          "median_change_pct": 0.24341497332404313
+        },
+        "3": {
+          "rg_start_m": 0.146061203,
+          "median_change_pct": 0.41443791203061636
+        },
+        "4": {
+          "rg_start_m": 0.146990244,
+          "median_change_pct": 0.7475917925546134
+        },
+        "6": {
+          "rg_start_m": 0.146394824,
+          "median_change_pct": 0.7659546761024829
+        },
+        "8": {
+          "rg_start_m": 0.143469606,
+          "median_change_pct": 0.2971040430681883
+        }
+      },
+      "effect_size_caution": "State this as an effect size, not as a mechanism. The median change is 0.22% to 0.77% of the field's radius of gyration, and it is NOT monotone in N: N=8 sits below N=6 and barely above N=1. A sub-1% change that does not scale with swarm size is 'the field barely moves', not dispersal. For scale, the particles' centre of mass travels 1.9 to 19 mm over the run while a construct travels 116 mm. The defensible claim is NO AGGREGATION AT ANY N; the word 'disperses' invites a reader to think a mechanism was identified, and none was.",
       "verdict": "NO aggregation. The particle field's radius of gyration INCREASED in 28 of the 30 runs. Both exceptions are at the largest swarm size, N=8, where 2 of 5 seeds turn negative (-0.111 and -0.457 mm) and the median dispersion falls 2.6-fold from its N=6 value. That is a possible ONSET rather than scatter, and it is tested in the follow-up arm rather than left as a hedge.",
       "mechanism": "every construct runs the same gait and travels the same way, so their contributions add as a common drift rather than converging. Corralling needs either a concave body that traps material, as the published semitoroidal progenitor has, or constructs that move differently from one another.",
       "scope": "this is a statement about a uniform, sensorless, single-gait swarm in this model. It is not a statement about swarms.",
@@ -1307,7 +1426,7 @@
   ],
   "arm3b_onset_test": {
     "status": "POST-HOC. Declared after seeing the N=8 result in the main arm, and reported as a diagnosis rather than as confirmatory evidence.",
-    "why": "In the main arm the field dispersed at every N from 1 to 6 in all seeds, then at N=8 the median dispersion fell 2.6-fold and 2 of 5 seeds turned negative. That is either the onset of aggregation at larger swarm size or something else. N>9 does not fit the main arm's field at the minimum construct stride, so this arm widens the field in y, scales the particle count to hold DENSITY fixed, and pushes N to 16.",
+    "why": "In the main arm the field dispersed at every N from 1 to 6 in all seeds, then at N=8 the median fell 2.6-fold and 2 of 5 seeds turned negative. That is either the onset of aggregation at larger swarm size or something else. N>9 does not fit the main arm's field at the minimum construct stride, so this arm widens the field in y, scales the particle count to hold DENSITY fixed, and pushes N to 16.",
     "predeclared_for_this_arm": "an onset predicts the median rg change keeps falling with N and crosses zero; seed scatter predicts the median stays positive with a wide spread",
     "field": {
       "fieldXlo": -16,
@@ -1726,9 +1845,15 @@
         ]
       },
       "the_controlled_comparison": "N = 8 is the discriminator. In the narrow field its span/field is 0.84 and 2 of 5 seeds aggregate; in the wide field the SAME swarm size has span/field 0.44 and 0 of 5 aggregate. Conversely N = 12 in the wide field is a LARGER swarm at span/field 0.68 and also shows nothing. So the effect tracks the span ratio and not the swarm size.",
-      "verdict": "NOT a swarm-size onset. Across 10 configurations in two field sizes and swarm sizes 1 to 16, every configuration with span/field <= 0.68 gives 0 aggregating seeds out of 5, and both configurations with span/field >= 0.84 give some (2/5 and 1/5) with the median collapsing. The main arm's conclusion therefore stands and is strengthened: a uniform, sensorless, single-gait swarm sweeps and does not corral. What looked like aggregation is the swarm reaching the edge of its arena.",
+      "verdict": "NOT a swarm-size onset. Across 10 configurations in two field sizes and swarm sizes 1 to 16, every configuration with span/field <= 0.68 gives 0 aggregating seeds, and both configurations with span/field >= 0.84 give some (2/5 and 1/5) with the median collapsing. The main arm's conclusion therefore stands and is strengthened: a uniform, sensorless, single-gait swarm does not corral. What looked like aggregation is the swarm reaching the edge of its arena.",
       "caveat": "the cut sits between 0.68 and 0.84 with no configuration in between, so the threshold is bracketed rather than located, and 'span/field' is one summary of a geometry that also changes particle count per construct. Two field widths is not a scan over field width."
     },
     "reading": "The two aggregating seeds at N=8 in the main arm are a BOUNDARY effect, not an onset: the same swarm size in a wider field shows nothing, and a larger swarm in the wider field also shows nothing. Aggregation-like behaviour appears only when the swarm spans more than about 0.8 of the field."
+  },
+  "not_diverged_gate": {
+    "what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
+    "total_runs_checked": 440,
+    "diverged_runs": [],
+    "gate_met": true
   }
 }

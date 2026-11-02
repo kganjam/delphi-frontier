@@ -14,8 +14,8 @@ g_ = lambda v, p: "%g" % v
 GAITS = ["travelling", "longitudinal", "lateral", "dorsoventral", "uniform", "checker"]
 
 # ------------------------------------------- 1. by gait: self vs cargo -----
-fig = plt.figure(figsize=(F.W, F.W * 0.82))
-gs = fig.add_gridspec(2, 1, height_ratios=[1.0, 0.95], hspace=0.34)
+fig = plt.figure(figsize=(F.W, F.W * 0.72))
+gs = fig.add_gridspec(2, 1, height_ratios=[1.0, 0.80], hspace=0.22)
 ax = fig.add_subplot(gs[0, 0])
 b = C["arm1b_contact_gated_40_cycles"]["per_gait"]
 y = np.arange(len(GAITS))[::-1]
@@ -43,15 +43,15 @@ ax.set_title("A.  Simulation, dry friction. The best self-mover is also the best
 # ------------------------------------------------ 2. transport ratio -------
 # Two measures on different scales get TWO axes side by side, never one axes
 # with two x-scales: a dual-axis chart lets the author choose the comparison.
-gsb = gs[1, 0].subgridspec(1, 2, wspace=0.42)
+gsb = gs[1, 0].subgridspec(1, 2, wspace=0.30)
 contacting = C["arm1b_contact_gated_40_cycles"]["gaits_that_made_contact"]
 order = sorted(contacting, key=lambda g: -b[g]["transport_ratio_after_contact"])
 x = np.arange(len(order))
 for k, (ax2, vals, col, lab, fmt, xlim) in enumerate([
         (fig.add_subplot(gsb[0, 0]), [b[g]["transport_ratio_after_contact"] for g in order],
-         F.S3, "transport ratio\ncargo displacement ÷ construct path, after contact", "{:.2f}", 1.15),
+         F.S3, "transport ratio\n(cargo displacement ÷ construct path)", "{:.2f}", 1.15),
         (fig.add_subplot(gsb[0, 1]), [b[g]["efficiency_after_contact"] * 100 for g in order],
-         F.S5, "efficiency\nfriction work on cargo ÷ actuation work  (%)", "{:.2f}%", 4.1)]):
+         F.S5, "efficiency\n(friction work on cargo ÷ actuation work, %)", "{:.2f}%", 4.1)]):
     ax2.barh(x, vals, height=0.52, color=col, edgecolor=F.SURFACE, linewidth=1.4)
     for xx, v in zip(x, vals):
         ax2.text(v + xlim * 0.025, xx, fmt.format(v), va="center", fontsize=8.2, color=F.INK2)
@@ -60,8 +60,8 @@ for k, (ax2, vals, col, lab, fmt, xlim) in enumerate([
     ax2.set_xlim(0, xlim); ax2.set_xlabel(lab, fontsize=8.4)
     ax2.grid(axis="y", visible=False)
     if k == 0:
-        ax2.set_title("B.  …and it is not just faster. It transfers 95% of its own path to the cargo,\n"
-                      "against 51% and 26%, and does seven times as much useful work per unit of energy.",
+        ax2.set_title("B.  …and it is not just faster. Measured over the post-contact window only, it transfers\n"
+                      "95% of its own path to the cargo against 51% and 26%, and does 7.5× the useful work per unit energy.",
                       loc="left", fontsize=9.3)
 F.save(fig, f"{ROOT}/figures/cargo-work-by-gait.png")
 

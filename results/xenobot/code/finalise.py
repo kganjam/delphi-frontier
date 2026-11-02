@@ -21,6 +21,29 @@ r["headline"] = ("A millimetre-scale living construct sits at Reynolds number be
                  "theorem makes their net displacement exactly zero there. The published gait ranking "
                  "does not transfer: its 2nd and 3rd places are both dead in the regime the real "
                  "object occupies, and only the travelling wave survives.")
+r["the_simulated_object_is_also_the_wrong_SIZE"] = {
+    "why_this_is_worth_stating_beside_the_Reynolds_number": "Re = 643 is an abstraction. The plain fact underneath it is checkable from the committed candidate file and may land harder: the simulated body is 40-50 mm and a real construct is 0.5-1 mm, so the artifact simulates an object roughly 40 to 100 times too large, quite apart from having no fluid in it.",
+    "simulated_centre_to_centre_span_m": 0.04,
+    "simulated_outer_envelope_m": [0.05, 0.03, 0.03],
+    "source": "artifacts/voxel-actuation/candidates/*.json, params.nx * params.voxel_m and result.body_len_m",
+    "real_construct_m": [3e-4, 1e-3],
+    "real_source": "Gumuskaya et al. 2023 (PMID 38032125) report anthrobot diameters of 30-500 um; 1 mm is the nominal xenobot figure and is ASSUMED, not read from a paper",
+    "size_ratio_range": [40e-3 / 1e-3, 50e-3 / 0.5e-3]}
+r["simulated_object_regime"]["speed_definition"] = (
+    "U is PATH LENGTH divided by the measurement window: 0.016124646 m / 1.25 s = 12.90 mm/s. "
+    "Using the NET displacement instead gives 0.014577281 m / 1.25 s = 11.66 mm/s and Re = 581 "
+    "rather than 643. Both are stated so a recomputation does not look like a discrepancy; path "
+    "length is the right choice here because Re is about the speed at which the body moves through "
+    "the fluid, not about how far it ends up from where it started.")
+r["simulated_object_regime"]["Re_translational_using_net_displacement"] = 998.2 * (0.014577281 / 1.25) * 0.05 / 1.002e-3
+r["the_spearman_trap"] = {
+    "what": "A rank correlation between the two regimes' gait orderings returns rho = 0.943 with p = 0.005, which reads as excellent transfer.",
+    "why_it_is_vacuous": "five of the six Stokes values are the same number - exactly zero - so their relative order carries no information at all. The coefficient is computed over a tie that the test treats as a ranking.",
+    "why_it_is_worth_its_own_section": "this is a statistic reporting excellent agreement at the exact moment agreement has failed completely, and failed QUALITATIVELY rather than by degree. Anyone checking 'did the ranking transfer?' with a rank correlation would conclude that it did.",
+    "what_to_do_instead": "ask how many of the ranked items are distinguishable at all before ranking them. Here the answer is one, and the comparison should never have been posed as a correlation.",
+    "rho": 0.942857142857143, "p": 0.004804664723032055,
+    "distinguishable_stokes_values": 1, "items_ranked": 6}
+
 r["model"] = {
     "what_it_is": "two models and one exact classification. (1) A closed-form Reynolds-number evaluation. (2) An exact algebraic test of whether each published actuation pattern is time-reciprocal. (3) A Rotne-Prager-Yamakawa bead-model Stokes swimmer over shapes from a quasi-static, free-floating, central-force spring lattice driven by the same actuation law.",
     "not_voxelyze": "the Stokes swimmer is OUR code and is not Voxelyze. Voxelyze at its pin is used unmodified for the dry-friction comparison, and reproduces the published travelling-wave run bit-for-bit at 0.0145773 m against 0.014577281 m.",
@@ -104,6 +127,29 @@ c["limitations"] = [
     "This is the generic soft-voxel model with assumed parameters throughout. Our own regime-check study finds it is not the regime a real construct occupies.",
 ]
 json.dump(c, open(f"{ROOT}/convergence.json", "w"), indent=2)
+# ------------------------ settled-and-not-diverged gate, from the pinned ---
+# protocol's own discipline: a run that diverged is not evidence of anything.
+import glob
+runs = []
+for f in glob.glob(f"{ROOT}/data/voxruns/*.json") + glob.glob(f"{ROOT}/data/cargo/*.json"):
+    try:
+        d = json.load(open(f))
+    except Exception:
+        continue
+    n = d.get("numerics", {})
+    if "diverged" in n:
+        runs.append((f.split("/")[-1], n["diverged"]))
+div = [r for r, v in runs if v]
+gate = {"what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
+        "total_runs_checked": len(runs), "diverged_runs": div, "gate_met": not div}
+for name in ("convergence", "cargo-work"):
+    d = json.load(open(f"{ROOT}/{name}.json")); d["not_diverged_gate"] = gate
+    json.dump(d, open(f"{ROOT}/{name}.json", "w"), indent=2)
+_rc = json.load(open(f"{ROOT}/regime-check.json"))
+_rc["not_diverged_gate"] = dict(gate, note="regime-check's own Stokes and elastic solves are not time-stepped and cannot diverge; their analogue is the minimiser-convergence flag in elastic_lattice_controls and the shape-solve tolerance refinement arm.")
+json.dump(_rc, open(f"{ROOT}/regime-check.json", "w"), indent=2)
+print(f"not-diverged gate: {len(runs)} runs checked, diverged: {div or 'none'}")
+
 for f in ("regime-check", "convergence", "cargo-work"):
     d = json.load(open(f"{ROOT}/{f}.json"))
     ps = d["model"]["parameters"]

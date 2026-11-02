@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 37b9b524ab4a",
- "input_fingerprint": "37b9b524ab4af7d0725f47c91582a07601b7cbfecf0c0a948dcb9d0902d4447a",
+ "label": "snapshot of inputs da853fedb03d",
+ "input_fingerprint": "da853fedb03d835307ed1f1f07409710befb5430477d4a29631437fc9ef0c2e2",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "9311fde9c442d6dd8b3a14f6dcab097c8bc16f6cf799b7dd1905ec87af42602c",
-   "bytes": 3654
+   "sha256": "4ba24c5909f477d2f8e38147fe1cb0f3fcc196f60336affcf3f47fcb5b68d533",
+   "bytes": 3154
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -4170,13 +4170,13 @@
   },
   {
    "path": "results/xenobot/cargo-work.json",
-   "sha256": "7bfa6d193676fa1764f2bf4a89bcdd03f0cf08d65de730af2a2366f6e07a09c8",
-   "bytes": 64860
+   "sha256": "721aa9eee7919bbf2fc8e344351ab9cb84478fef511789bf2894710daf45de09",
+   "bytes": 71262
   },
   {
    "path": "results/xenobot/convergence.json",
-   "sha256": "5b2561acb580a8353b3a5f438bfe3233b5f5da7d288b807935390682b69c862d",
-   "bytes": 30485
+   "sha256": "6eec0fde8748f0a5c24370d0f362d63097475059b1f16c513245342cd07c5522",
+   "bytes": 32505
   },
   {
    "path": "results/xenobot/figures/cargo-swarm-aggregation.png",
@@ -4190,8 +4190,8 @@
   },
   {
    "path": "results/xenobot/figures/cargo-work-by-gait.png",
-   "sha256": "9b5238ed99f0715c8f74901636a3c136d1742062566379ffadd0a94988d4bdcb",
-   "bytes": 129430
+   "sha256": "c402aeaad5563e3ed9ed03947036a4bbdd0c025af115ac2c42bf8e5afc576fa3",
+   "bytes": 131351
   },
   {
    "path": "results/xenobot/figures/convergence-parity-resonance.png",
@@ -4220,13 +4220,13 @@
   },
   {
    "path": "results/xenobot/regime-check.json",
-   "sha256": "67ec54cca519b2cf4f63207973ef763e8fae0159224b662ade41ec76626c9f77",
-   "bytes": 21658
+   "sha256": "d1a885515a57dda5a159d2ccdf359c2d7ce7eb8d6484d7e687d7dc0e2f7b6702",
+   "bytes": 24125
   },
   {
    "path": "results/xenobot/routes.json",
-   "sha256": "506424e3d49680cb6f99e8dd45c87863dbef563f66fe789d55daec5d274871da",
-   "bytes": 96480
+   "sha256": "4b25ac9c06deb83be7ffbf45ff95c431c9ae4af68b52ae9389a3a9734a01ccce",
+   "bytes": 97927
   },
   {
    "path": "scripts/fidelity_site.py",
@@ -39527,11 +39527,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release 27d988366311)",
-    "outcome": "Browser suite plus the design-space unit tests: 142 passed in 302.71s. Both modules are parameterised over the design spaces the repository declares, so the new xenobot space is covered by the same cases as limbless-mouse. Each module also asserts the registry is non-empty, because a parameterised suite over an empty list passes without running anything. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: docs/dossier/13-limbless-mouse-design-space.md and 14-xenobot-design-space.md both current. (exit 0); The design space's own number reconciliation: 60-odd checks, ALL NUMBERS RECONCILE. Written by the authoring agent to reconcile every headline number in prose against the data file it comes from; it caught two stale numbers in its own route file before delivery (an efficiency pair quoted from a superseded arm, and a '5x to 30x' range whose own data spans 7.6x to 66x). (exit 0); Structural validation of routes.json against the renderer contract: 49 routes, 10 scales. Zero routes at a scale the page does not declare, zero routes matching no outcome class (a route the filter hides is a route nobody reads), zero illegal read-levels, every renderer-required field present on every route and scale. 89 evidence entries, 35 distinct PMIDs (the author reported 36; recounted here as 35). (exit 0); Source verification of the page's lead claim: Verified verbatim in Kriegman et al. 2020 Materials and Methods: 'This resulted in highly performant but nontransferable designs'; 'on average, 47% of the gait cycle' without contact; the fix 'incorporating first-order hydrodynamics' via increased buoyancy and 'applying a drag force to each voxel face'; ground contact '93.3% of their evaluation period' against 'just 52.7% on the first pass'. One inference by the authoring agent (that the first pass used gravity-plus-friction specifically) was NOT supported by the source, which says only 'on land', and is marked as inference. (exit 0)",
+    "title": "limbless mouse release checks (release 0db1945628db)",
+    "outcome": "Browser suite plus design-space unit tests: 142 passed at the previous release; this release adds one test and the figures it guards. (exit 0); Every served figure is tracked in git: Passes, and verified in BOTH directions: unstaging one figure makes it fail naming that exact file, restaging makes it pass. It exists because all seven xenobot figures 404d in the previous release while every test was green - the browser tests read the worktree, where the files are present, and a headless broken-image count misses them because a lazy image that has not loaded reports complete=false and is excluded rather than counted as broken. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: both documents current (exit 0); Live figure fetch, with a control: To be re-run after this deploy. Before it, four xenobot figures returned HTTP 404 while a limbless-mouse figure already in production returned HTTP 200 - the control is what made the 404s meaningful. (exit 0); Source verification of the page's lead quotation: Full sentence confirmed: 'This resulted in highly performant but nontransferable designs with powerful, bounding gaits that are not obtainable in vivo with the current build method.' Separately, a characterisation of their first pass as 'dry gravity-plus-friction' was NOT supported - the paper says only 'on land' - and has been corrected in results/xenobot/NOTES.md with the correction written in rather than edited out. (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "9311fde9c442d6dd8b3a14f6dcab097c8bc16f6cf799b7dd1905ec87af42602c",
+    "sha256": "4ba24c5909f477d2f8e38147fe1cb0f3fcc196f60336affcf3f47fcb5b68d533",
     "date": "no time recorded"
    },
    {
@@ -91190,7 +91190,7 @@
      }
     ],
     "outcome_classes_note": "The order matters: a route matching more than one class takes the first it matches. Every route in this file matches at least one, asserted when the file is built, because a route the filter hides is a route nobody reads.",
-    "sha256": "506424e3d49680cb6f99e8dd45c87863dbef563f66fe789d55daec5d274871da",
+    "sha256": "4b25ac9c06deb83be7ffbf45ff95c431c9ae4af68b52ae9389a3a9734a01ccce",
     "present": true,
     "href": "artifacts/xenobot/routes.json",
     "schema": "design-space-routes-0.1",
@@ -91672,7 +91672,7 @@
       "scale": "body",
       "title": "If you do split the body, make the split asymmetric",
       "intervention": "Choose an odd voxel count along the travel axis so the two actuated halves are unequal (2|3 rather than 2|2).",
-      "predicted_phenotype": "On a dry floor, 5x to 30x more net displacement than the symmetric split at the same resolution, material, amplitude and duration. In the viscous regime, still exactly nothing — asymmetry of LAYOUT does not make a stroke non-reciprocal.",
+      "predicted_phenotype": "On a dry floor, 7.6x to 66x more net displacement than an adjacent symmetric split at the same resolution, material, amplitude and duration (median 23x over the 13 adjacent pairs in a sweep of nx = 3 to 16). In the viscous regime, still exactly nothing — asymmetry of LAYOUT does not make a stroke non-reciprocal.",
       "mechanism": "Net translation needs a broken mirror symmetry about the travel axis; an unequal split supplies one, an equal split does not.",
       "evidence_strength": "model_only",
       "reversibility": "n/a",
@@ -91689,7 +91689,7 @@
        }
       ],
       "study": "convergence",
-      "note": "Our convergence study swept nx = 3..16 and found two smooth monotone branches interleaved by parity. This is the explanation for the 'non-monotone ten-fold swing' the independent audit flagged, and it is an artifact of how the gait was encoded, not a property of the mechanics. The audit's own three adjacent-pair ratios (7.65, 17.81, 9.25) sit at the low end of the 13 pairs this wider sweep measures.",
+      "note": "Our convergence study swept nx = 3..16 and found two smooth monotone branches interleaved by parity, and the mechanism is a single operator: the split is written (x < c.nx/2), and c.nx/2 is C++ INTEGER division, so an even nx splits the body exactly in half and an odd nx cannot. The audit's own three adjacent-pair ratios (7.65, 17.81, 9.25) sit at the low end of the 13 pairs this wider sweep measures. This is the explanation for the 'non-monotone ten-fold swing' the independent audit flagged, and it is an artifact of how the gait was encoded, not a property of the mechanics. The audit's own three adjacent-pair ratios (7.65, 17.81, 9.25) sit at the low end of the 13 pairs this wider sweep measures.",
       "external_source": "NONE. This route rests only on this page's own simulation and on the delphi-frontier artifact it re-examines. No published source bears on it, and it carries no PMID or DOI for that reason."
      },
      {
@@ -91923,8 +91923,8 @@
       "id": "loop-hydrodynamics-in-the-sim",
       "scale": "design-loop",
       "title": "Put buoyancy and drag in the simulator, or it will invent gaits that cannot exist",
-      "intervention": "Replace a dry gravity-plus-friction ground model with an infinite plane submerged in water: reduce effective gravity for buoyancy and apply a drag force to every surface voxel face.",
-      "predicted_phenotype": "A design pipeline whose outputs are buildable. Kriegman et al.'s FIRST pass, without this, produced 'highly performant but nontransferable designs with powerful, bounding gaits', airborne for 47% of the cycle. After adding first-order hydrodynamics, ground contact went from 52.7% to 93.3% of the evaluation period.",
+      "intervention": "Replace a ground model that lacks buoyancy and drag with an infinite plane submerged in water: reduce effective gravity for buoyancy and apply a drag force to every surface voxel face.",
+      "predicted_phenotype": "A design pipeline whose outputs are buildable. Kriegman et al.'s first pass, in their words, 'simulated designs on land' and 'resulted in highly performant but nontransferable designs', with 'timeframes (on average, 47% of the gait cycle) in which no part of the in silico design was in contact' with the simulated ground plane. After 'incorporating first-order hydrodynamics', contact with the simulated ground plane rose from 52.7% to 93.3% of the evaluation period.",
       "mechanism": "Without buoyancy and drag the simulated body is far heavier relative to its actuation than the real one, and search exploits ballistic flight that the real construct cannot perform.",
       "evidence_strength": "direct_construct_result",
       "reversibility": "n/a — a modelling choice",
@@ -91939,7 +91939,7 @@
        }
       ],
       "study": "regime-check",
-      "note": "This is the single most important source finding on this page. The original authors ALREADY hit the sim-to-real failure our regime analysis predicts, diagnosed it, and fixed it by moving toward the viscous regime. The voxel-actuation artifact we re-examined uses the configuration they abandoned: full gravity, dry Coulomb friction, no fluid."
+      "note": "The single most important source finding on this page, and it is THEIRS rather than ours: the original authors already hit the sim-to-real failure our regime analysis predicts, diagnosed it, and fixed it by moving toward the viscous regime. SEPARATE THEIR CLAIM FROM OUR INFERENCE. They say only that the first pass 'simulated designs on land'; they do not characterise its contact model. What they state is the FIX: 'decreasing the coefficient of gravitational acceleration (increasing buoyancy)' and 'applying a drag force to each voxel face on the design's surface'. That the first pass therefore lacked buoyancy and per-face drag is OUR inference from what was added, not their wording. Also keep two things apart that are easy to merge into one false sentence: the 52.7% -> 93.3% pair is contact with the SIMULATED GROUND PLANE over the evaluation period, while 'the deciliated organisms always kept part of their ventral surfaces in contact with the surface of the dish due to negative buoyancy' is a separate qualitative observation about the REAL organisms, with no percentage attached. The voxel-actuation artifact we re-examined uses full gravity, dry Coulomb friction and no fluid."
      },
      {
       "id": "loop-cilia-as-surface-impulse",
@@ -92169,7 +92169,7 @@
       "scale": "application",
       "title": "Carry the heaviest load that still moves, not the lightest",
       "intervention": "Increase cargo mass at fixed volume and watch efficiency rather than speed.",
-      "predicted_phenotype": "In our model, a construct whose ENERGY efficiency rises with cargo mass — 0.43% at 2 g to 4.6% at 32 g — while cargo displacement barely falls until it stalls. The intuition that a lighter payload is better is backwards for useful work.",
+      "predicted_phenotype": "In our model, a construct whose ENERGY efficiency rises with cargo mass — 0.8% at 2 g to 8.2% at 32 g, while cargo displacement falls only from 107 mm to 78 mm, and then stalls: at 64 g transport collapses 17-fold to 4.6 mm. The intuition that a lighter payload is better is backwards for useful work.",
       "mechanism": "Friction work scales with mass while the construct's displacement is set by its gait, so until the cargo stalls the construct it is nearly free to make the load heavier.",
       "evidence_strength": "model_only",
       "reversibility": "n/a",
@@ -92656,7 +92656,9 @@
        "U_m_s": 0.012899716799999999,
        "Re_translational": 642.5397859161676,
        "Re_oscillatory_rho_omega_L2_over_mu": 62593.5685990685,
-       "oscillatory_definition": "Re_omega = rho * omega * L^2 / mu, the frequency Reynolds number used by Lauga 2007 for reciprocal-stroke breakdown"
+       "oscillatory_definition": "Re_omega = rho * omega * L^2 / mu, the frequency Reynolds number used by Lauga 2007 for reciprocal-stroke breakdown",
+       "speed_definition": "U is PATH LENGTH divided by the measurement window: 0.016124646 m / 1.25 s = 12.90 mm/s. Using the NET displacement instead gives 0.014577281 m / 1.25 s = 11.66 mm/s and Re = 581 rather than 643. Both are stated so a recomputation does not look like a discrepancy; path length is the right choice here because Re is about the speed at which the body moves through the fluid, not about how far it ends up from where it started.",
+       "Re_translational_using_net_displacement": 580.8799159361278
       },
       "regime_separation_orders_of_magnitude": 3.8095501802517524,
       "reciprocity": {
@@ -92967,6 +92969,35 @@
       },
       "wall_s": 165.0,
       "headline": "A millimetre-scale living construct sits at Reynolds number below 0.1, and five of the six published actuation patterns are time-reciprocal, so Purcell's scallop theorem makes their net displacement exactly zero there. The published gait ranking does not transfer: its 2nd and 3rd places are both dead in the regime the real object occupies, and only the travelling wave survives.",
+      "the_simulated_object_is_also_the_wrong_SIZE": {
+       "why_this_is_worth_stating_beside_the_Reynolds_number": "Re = 643 is an abstraction. The plain fact underneath it is checkable from the committed candidate file and may land harder: the simulated body is 40-50 mm and a real construct is 0.5-1 mm, so the artifact simulates an object roughly 40 to 100 times too large, quite apart from having no fluid in it.",
+       "simulated_centre_to_centre_span_m": 0.04,
+       "simulated_outer_envelope_m": [
+        0.05,
+        0.03,
+        0.03
+       ],
+       "source": "artifacts/voxel-actuation/candidates/*.json, params.nx * params.voxel_m and result.body_len_m",
+       "real_construct_m": [
+        0.0003,
+        0.001
+       ],
+       "real_source": "Gumuskaya et al. 2023 (PMID 38032125) report anthrobot diameters of 30-500 um; 1 mm is the nominal xenobot figure and is ASSUMED, not read from a paper",
+       "size_ratio_range": [
+        40.0,
+        100.0
+       ]
+      },
+      "the_spearman_trap": {
+       "what": "A rank correlation between the two regimes' gait orderings returns rho = 0.943 with p = 0.005, which reads as excellent transfer.",
+       "why_it_is_vacuous": "five of the six Stokes values are the same number - exactly zero - so their relative order carries no information at all. The coefficient is computed over a tie that the test treats as a ranking.",
+       "why_it_is_worth_its_own_section": "this is a statistic reporting excellent agreement at the exact moment agreement has failed completely, and failed QUALITATIVELY rather than by degree. Anyone checking 'did the ranking transfer?' with a rank correlation would conclude that it did.",
+       "what_to_do_instead": "ask how many of the ranked items are distinguishable at all before ranking them. Here the answer is one, and the comparison should never have been posed as a correlation.",
+       "rho": 0.942857142857143,
+       "p": 0.004804664723032055,
+       "distinguishable_stokes_values": 1,
+       "items_ranked": 6
+      },
       "model": {
        "what_it_is": "two models and one exact classification. (1) A closed-form Reynolds-number evaluation. (2) An exact algebraic test of whether each published actuation pattern is time-reciprocal. (3) A Rotne-Prager-Yamakawa bead-model Stokes swimmer over shapes from a quasi-static, free-floating, central-force spring lattice driven by the same actuation law.",
        "not_voxelyze": "the Stokes swimmer is OUR code and is not Voxelyze. Voxelyze at its pin is used unmodified for the dry-friction comparison, and reproduces the published travelling-wave run bit-for-bit at 0.0145773 m against 0.014577281 m.",
@@ -93080,10 +93111,10 @@
       ],
       "not_diverged_gate": {
        "what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
-       "total_runs_checked": 404,
+       "total_runs_checked": 440,
        "diverged_runs": [],
        "gate_met": true,
-       "note": "regime-check's own Stokes and elastic solves are not time-stepped and cannot diverge; their analogue is the minimiser-convergence flag reported in elastic_lattice_controls and the shape-solve tolerance refinement arm."
+       "note": "regime-check's own Stokes and elastic solves are not time-stepped and cannot diverge; their analogue is the minimiser-convergence flag in elastic_lattice_controls and the shape-solve tolerance refinement arm."
       }
      },
      "summary_table_title": "Dry friction against Stokes flow, the same six gaits",
@@ -93091,7 +93122,7 @@
       "results/xenobot/data/regime-reynolds-grid.npz"
      ],
      "present": true,
-     "sha256": "67ec54cca519b2cf4f63207973ef763e8fae0159224b662ade41ec76626c9f77",
+     "sha256": "d1a885515a57dda5a159d2ccdf359c2d7ce7eb8d6484d7e687d7dc0e2f7b6702",
      "figures": [
       {
        "file": "regime-reynolds-map.png",
@@ -93522,6 +93553,21 @@
         "verdict": "FAILS for a resonance: body length rises by 2.33x from nx=4 to nx=8 and longitudinal's optimum frequency is 12.0 Hz at both ends. A length resonance requires f_opt to fall by the same factor.",
         "travelling_caveat": "travelling's optimum runs to the lowest swept frequency for nx>=5, so it is a BOUNDARY not an optimum; its total variation over 0.25-16 Hz is at most 0.63, a broad shallow response rather than a peak."
        },
+       "mechanism_named_at_the_source": {
+        "the_line": "(x < c.nx/2) ? 0.0 : kPi",
+        "file": "scripts/voxel_actuation/soft_actuation.cpp, phaseFor(), the 'longitudinal' branch (and the identical 'lateral' and 'dorsoventral' branches with y and z)",
+        "the_operator": "c.nx/2 is C++ INTEGER division. For even nx it splits the body exactly in half; for odd nx it cannot, and leaves one extra plane of voxels on one side.",
+        "split_by_nx": {
+         "4": "2 vs 2, balanced",
+         "5": "2 vs 3, unbalanced",
+         "6": "3 vs 3, balanced",
+         "7": "3 vs 4, unbalanced"
+        },
+        "why_it_produces_two_branches": "an unbalanced split leaves a net actuation dipole along the travel axis; a balanced one cancels it to leading order. Net translation needs that broken mirror symmetry, so the odd-nx bodies move roughly an order of magnitude further than their even-nx neighbours at identical resolution, material, amplitude and duration.",
+        "why_travelling_is_immune": "its phase is 2*pi*x/nx, a continuous function of fractional position along the body. It never divides by 2 and has no parity to be odd or even, which is why the alternation is absent from it by a median factor of 1.008.",
+        "why_no_frequency_removes_it": "the asymmetry is in the spatial actuator LAYOUT, not in the timing, so changing the drive frequency cannot cancel it - and does not, from 0.25 to 16 Hz.",
+        "credit": "the integer-division operator was identified by the team lead reading the driver source; this study had established the two-branch structure and its three discriminators without naming the line."
+       },
        "verdict": "ENCODING, not resonance and not a solver artifact. The alternation appears only in the pattern whose phase assignment depends on grid parity; it is absent from the pattern whose phase is a continuous function of position; each parity branch is smooth and monotone over 14 values; and it persists unchanged at every drive frequency from 0.25 to 16 Hz. It is a real mechanical consequence of a real difference in actuator layout, and that difference is an artifact of writing the split as an index comparison."
       },
       "headline": "On a parity-matched refinement series the model does NOT converge. Across a 4x refinement (45 to 2880 voxels) the travelling wave spans 41% of its coarsest value and the longitudinal split 54%, and BOTH series turn over rather than settling. Separately, the non-monotone body-size series the independent audit flagged is the actuation encoding, not a gait-length resonance: it is two smooth monotone branches interleaved by the parity of the actuator split, it is absent from the pattern whose phase does not depend on parity, and it does not move with drive frequency.",
@@ -93538,7 +93584,8 @@
         11.715329371909963,
         10.412740120287236
        ],
-       "reading": "the ORDER is stable - travelling is ahead of longitudinal at every one of the four levels - but the SIZE of the gap is not: it falls from 19.4x to 10.4x across the refinement and is still moving at the finest grid. A ranking quoted from the coarse grid gets the winner right for this pair and the margin wrong by about a factor of two.",
+       "reading": "the ORDER is stable - travelling is ahead of longitudinal at every one of the four levels - but the SIZE of the gap is not: it falls from 19.4x to 10.4x across the refinement and is STILL MOVING at the finest grid, with the last step (11.7 to 10.4) no smaller than the one before it relative to the remaining gap. The margin has therefore NOT converged either.",
+       "what_is_and_is_not_quotable": "'travelling beats longitudinal' is supported at every level tested. 'travelling beats longitudinal by N times' is NOT quotable at any N, because the margin has not converged and the sequence gives no reason to believe 10.4 is closer to the limit than 19.4 was.",
        "what_can_be_said": "this study refines TWO patterns, not all six, so it cannot report a full ranking at the fine grid. What it establishes is the prior question: whether a single pattern's value is stable enough for any ranking drawn from the coarse grid to mean anything.",
        "per_series": {
         "A_travelling": {
@@ -93562,12 +93609,6 @@
        },
        "coarse_grid_gap_between_the_two_patterns": 19.40842653245992
       },
-      "what_this_cannot_establish": [
-       "that the model converges. It refines two of six patterns on three or four levels each; a converged value is not demonstrated and is not claimed.",
-       "a corrected ranking of the six gaits. Only travelling and longitudinal were refined.",
-       "anything about a biological construct. This is the same generic soft-voxel model throughout, with the same assumed parameters, and the regime-check study shows it is not the regime a real construct occupies.",
-       "that the parity effect is the ONLY cause of the artifact's 8.2x arm-G gap. Varying nx at fixed voxel size changes count, length and mass together, as the independent audit already noted; this study adds that the effect is absent from a parity-free pattern and frequency-independent, which rules out a resonance but does not isolate a single cause."
-      ],
       "timestep_separation_arm": {
        "why": "a refinement at fixed dtScale halves dt automatically with the lattice, so spatial and temporal error are confounded. This arm repeats levels 1-3 of both series at HALF the timestep and asks whether the spatial spread survives.",
        "per_level": {
@@ -93629,7 +93670,8 @@
         }
        },
        "verdict": "For the travelling wave the non-convergence is unambiguously SPATIAL: halving dt changes any level by at most 1.3% while the spread across levels 1-3 is 22% (41% over all four), and that spread is essentially unchanged at the finer dt, 22.4% against 21.8%. For the longitudinal split the temporal error is NOT negligible - up to 15.5% at level 2 - but it does not explain the spread either: halving dt moves it only from 54.4% to 48.5%. Spatial error dominates by about 17x for travelling and about 3.5x for longitudinal.",
-       "relation_to_the_artifacts_own_arm_F": "the pinned artifact's timestep arm found 0.90% spread across a 4x dt range, which does not conflict with the 5.3% we see at B1. Arm F ran longitudinal at nx=5, the ASYMMETRIC split, whose net displacement is large (0.153 body lengths). B1 is nx=4, the SYMMETRIC split, an order of magnitude smaller at 0.015 normalised, so the same absolute numerical error is a much larger relative one. The two measure the same thing on configurations separated by the parity effect this study is about."
+       "relation_to_the_artifacts_own_arm_F": "the pinned artifact's timestep arm found 0.90% spread across a 4x dt range, which does not conflict with the 5.3% we see at B1. Arm F ran longitudinal at nx=5, the ASYMMETRIC split, whose net displacement is large (0.153 body lengths). B1 is nx=4, the SYMMETRIC split, an order of magnitude smaller at 0.015 normalised, so the same absolute numerical error is a much larger relative one. The two measure the same thing on configurations separated by the parity effect this study is about.",
+       "caveat": "level 4 was not repeated at the finer timestep."
       },
       "conditioning_arm": {
        "status": "POST-HOC. Found by cross-checking the local refinement against an independent run of the same series on a Nebius L40S node, where two of fourteen runs disagreed.",
@@ -93662,6 +93704,12 @@
        "caveat": "this is ONE perturbation of ONE parameter at ONE grid level per pattern. It establishes that the configuration is ill-conditioned; it does not measure a condition number, and the amplification figures should not be quoted as one.",
        "consequence_for_the_series": "the series reported here all use the full double-precision 1/300 locally, so they are internally consistent. A reader reproducing them must pass the same value; a 10-digit literal changes level 3 by 1.2% for longitudinal."
       },
+      "what_this_cannot_establish": [
+       "that the model converges. It refines two of six patterns on three or four levels each; a converged value is not demonstrated and is not claimed.",
+       "a corrected ranking of the six gaits. Only travelling and longitudinal were refined.",
+       "anything about a biological construct. This is the same generic soft-voxel model throughout, with the same assumed parameters, and the regime-check study shows it is not the regime a real construct occupies.",
+       "that the parity effect is the ONLY cause of the artifact's 8.2x arm-G gap. Varying nx at fixed voxel size changes count, length and mass together, as the independent audit already noted; this study adds that the effect is absent from a parity-free pattern and frequency-independent, which rules out a resonance but does not isolate a single cause."
+      ],
       "model": {
        "engine": {
         "name": "Voxelyze",
@@ -93811,7 +93859,7 @@
       ],
       "not_diverged_gate": {
        "what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
-       "total_runs_checked": 404,
+       "total_runs_checked": 440,
        "diverged_runs": [],
        "gate_met": true
       }
@@ -93823,7 +93871,7 @@
       "results/xenobot/data/refine_local.json"
      ],
      "present": true,
-     "sha256": "5b2561acb580a8353b3a5f438bfe3233b5f5da7d288b807935390682b69c862d",
+     "sha256": "6eec0fde8748f0a5c24370d0f362d63097475059b1f16c513245342cd07c5522",
      "figures": [
       {
        "file": "convergence-series.png",
@@ -93861,7 +93909,7 @@
      "data": {
       "schema": "design-space-study/0.1",
       "id": "cargo-work",
-      "headline": "In this dry-friction model the body plan that moves itself best also pushes best: the travelling wave wins on cargo displacement, on transport ratio and on energy efficiency, contradicting our predeclared expectation. The real design gate is not which gait ranks highest but whether the gait moves an external object at all, and in 5 cycles only one of six even reaches its cargo. A uniform swarm sweeps but never corrals, over swarm sizes 1 to 16 in two field sizes.",
+      "headline": "In this dry-friction model the body plan that moves itself best also pushes best: the travelling wave wins on cargo displacement, on transport ratio and on energy efficiency, contradicting our predeclared expectation. The real design gate is not which gait ranks highest but whether the gait moves an external object at all, and in 5 cycles only one of six even reaches its cargo. A uniform swarm never corrals, over swarm sizes 1 to 16 in two field sizes.",
       "declared_metrics": {
        "M1_primary": "cargo net COM displacement, m",
        "M2": "cargo net displacement per actuation cycle, m",
@@ -94161,6 +94209,98 @@
         "lateral"
        ],
        "rankings_agree": true
+      },
+      "reach_and_push_are_different_quantities": {
+       "why_they_are_reported_separately": "time-to-contact and work-after-contact are different engineering quantities, and a body plan can be good at one and bad at the other. Collapsing them into a single cargo-displacement number hides which one a design is losing on, and in the 5-cycle arm it hid the fact that five of six gaits were losing on REACH and had not been tested on push at all.",
+       "reach_gate": "does the construct arrive at the workpiece within its working life? Measured here as time to first cargo motion above 1 um, with the cargo 7.5 mm of clear space away.",
+       "push_gate": "given contact, how much of the construct's own motion and energy reaches the cargo? Measured over the post-contact window only.",
+       "reach": {
+        "uniform": {
+         "self_speed_mm_per_cycle": 8.630000000000001e-05,
+         "made_contact_within_40_cycles": false,
+         "time_to_contact_s": null,
+         "cycles_to_contact": null,
+         "fraction_of_run_spent_reaching": null
+        },
+        "longitudinal": {
+         "self_speed_mm_per_cycle": 1.18827415,
+         "made_contact_within_40_cycles": true,
+         "time_to_contact_s": 1.79311,
+         "cycles_to_contact": 7.17244,
+         "fraction_of_run_spent_reaching": 0.15319148936170213
+        },
+        "lateral": {
+         "self_speed_mm_per_cycle": 1.08617855,
+         "made_contact_within_40_cycles": true,
+         "time_to_contact_s": 1.707726,
+         "cycles_to_contact": 6.830904,
+         "fraction_of_run_spent_reaching": 0.14468085106382977
+        },
+        "dorsoventral": {
+         "self_speed_mm_per_cycle": 0.02074605,
+         "made_contact_within_40_cycles": false,
+         "time_to_contact_s": null,
+         "cycles_to_contact": null,
+         "fraction_of_run_spent_reaching": null
+        },
+        "travelling": {
+         "self_speed_mm_per_cycle": 2.93580035,
+         "made_contact_within_40_cycles": true,
+         "time_to_contact_s": 0.939272,
+         "cycles_to_contact": 3.757088,
+         "fraction_of_run_spent_reaching": 0.06808510638297872
+        },
+        "checker": {
+         "self_speed_mm_per_cycle": 2.4975000000000004e-05,
+         "made_contact_within_40_cycles": false,
+         "time_to_contact_s": null,
+         "cycles_to_contact": null,
+         "fraction_of_run_spent_reaching": null
+        }
+       },
+       "push_contacting_gaits_only": {
+        "longitudinal": {
+         "cargo_displacement_after_contact_m": 0.0350923882620409,
+         "construct_path_after_contact_m": 0.06910738666306063,
+         "transport_ratio_after_contact": 0.5077950412614651,
+         "W_actuation_after_contact_J": 0.19931846335000003,
+         "W_cargo_friction_after_contact_J": 0.00226515938322,
+         "efficiency_after_contact": 0.011364523612859771
+        },
+        "lateral": {
+         "cargo_displacement_after_contact_m": 0.021656062644259604,
+         "construct_path_after_contact_m": 0.08318783907885187,
+         "transport_ratio_after_contact": 0.26032726518755117,
+         "W_actuation_after_contact_J": 0.35037199791,
+         "W_cargo_friction_after_contact_J": 0.0015307714454357,
+         "efficiency_after_contact": 0.00436898911604491
+        },
+        "travelling": {
+         "cargo_displacement_after_contact_m": 0.103437149163004,
+         "construct_path_after_contact_m": 0.10917779208553752,
+         "transport_ratio_after_contact": 0.9474193165764344,
+         "W_actuation_after_contact_J": 0.21237712911999998,
+         "W_cargo_friction_after_contact_J": 0.00692780027862,
+         "efficiency_after_contact": 0.03262027463750848
+        }
+       },
+       "ranking_by_reach": [
+        "travelling",
+        "lateral",
+        "longitudinal"
+       ],
+       "ranking_by_push_transport_ratio": [
+        "travelling",
+        "longitudinal",
+        "lateral"
+       ],
+       "do_the_two_rankings_agree": false,
+       "commercial_reading": "The two orderings are NOT the same, which is the reason for reporting them apart. Travelling is first on both. But between the two reciprocal gaits the order swaps: lateral reaches the cargo FIRST (1.71 s against longitudinal's 1.79 s) and then pushes WORST, transferring 0.26 of its own path against longitudinal's 0.51. So arriving sooner and pushing better are separable properties here, and a cargo-displacement number alone would have hidden it.",
+       "size_of_the_swap": {
+        "reach_difference_lateral_vs_longitudinal_pct": 4.761782601178952,
+        "push_ratio_longitudinal_over_lateral": 1.9506026035944692,
+        "honest_scale": "the reach difference between those two is about 4.8%, which is small and rests on a single contact-threshold crossing per gait with no seed spread (this model has no RNG). The push difference is about 2x and is the robust half of the comparison. Do not read the reach swap as a strong result."
+       }
       },
       "arm2b_cargo_mass": {
        "design": "cargo density scaled 0.25x to 32x at fixed volume (8 voxels), placed one clear lattice site away in each gait's OWN direction of travel, 40 cycles so contact is guaranteed",
@@ -95143,6 +95283,33 @@
           0.000966052
          ]
         },
+        "as_percent_of_field_radius": {
+         "1": {
+          "rg_start_m": 0.143542048,
+          "median_change_pct": 0.22324956656602812
+         },
+         "2": {
+          "rg_start_m": 0.144618055,
+          "median_change_pct": 0.24341497332404313
+         },
+         "3": {
+          "rg_start_m": 0.146061203,
+          "median_change_pct": 0.41443791203061636
+         },
+         "4": {
+          "rg_start_m": 0.146990244,
+          "median_change_pct": 0.7475917925546134
+         },
+         "6": {
+          "rg_start_m": 0.146394824,
+          "median_change_pct": 0.7659546761024829
+         },
+         "8": {
+          "rg_start_m": 0.143469606,
+          "median_change_pct": 0.2971040430681883
+         }
+        },
+        "effect_size_caution": "State this as an effect size, not as a mechanism. The median change is 0.22% to 0.77% of the field's radius of gyration, and it is NOT monotone in N: N=8 sits below N=6 and barely above N=1. A sub-1% change that does not scale with swarm size is 'the field barely moves', not dispersal. For scale, the particles' centre of mass travels 1.9 to 19 mm over the run while a construct travels 116 mm. The defensible claim is NO AGGREGATION AT ANY N; the word 'disperses' invites a reader to think a mechanism was identified, and none was.",
         "verdict": "NO aggregation. The particle field's radius of gyration INCREASED in 28 of the 30 runs. Both exceptions are at the largest swarm size, N=8, where 2 of 5 seeds turn negative (-0.111 and -0.457 mm) and the median dispersion falls 2.6-fold from its N=6 value. That is a possible ONSET rather than scatter, and it is tested in the follow-up arm rather than left as a hedge.",
         "mechanism": "every construct runs the same gait and travels the same way, so their contributions add as a common drift rather than converging. Corralling needs either a concave body that traps material, as the published semitoroidal progenitor has, or constructs that move differently from one another.",
         "scope": "this is a statement about a uniform, sensorless, single-gait swarm in this model. It is not a statement about swarms.",
@@ -95167,7 +95334,7 @@
       ],
       "arm3b_onset_test": {
        "status": "POST-HOC. Declared after seeing the N=8 result in the main arm, and reported as a diagnosis rather than as confirmatory evidence.",
-       "why": "In the main arm the field dispersed at every N from 1 to 6 in all seeds, then at N=8 the median dispersion fell 2.6-fold and 2 of 5 seeds turned negative. That is either the onset of aggregation at larger swarm size or something else. N>9 does not fit the main arm's field at the minimum construct stride, so this arm widens the field in y, scales the particle count to hold DENSITY fixed, and pushes N to 16.",
+       "why": "In the main arm the field dispersed at every N from 1 to 6 in all seeds, then at N=8 the median fell 2.6-fold and 2 of 5 seeds turned negative. That is either the onset of aggregation at larger swarm size or something else. N>9 does not fit the main arm's field at the minimum construct stride, so this arm widens the field in y, scales the particle count to hold DENSITY fixed, and pushes N to 16.",
        "predeclared_for_this_arm": "an onset predicts the median rg change keeps falling with N and crosses zero; seed scatter predicts the median stays positive with a wide spread",
        "field": {
         "fieldXlo": -16,
@@ -95586,10 +95753,16 @@
          ]
         },
         "the_controlled_comparison": "N = 8 is the discriminator. In the narrow field its span/field is 0.84 and 2 of 5 seeds aggregate; in the wide field the SAME swarm size has span/field 0.44 and 0 of 5 aggregate. Conversely N = 12 in the wide field is a LARGER swarm at span/field 0.68 and also shows nothing. So the effect tracks the span ratio and not the swarm size.",
-        "verdict": "NOT a swarm-size onset. Across 10 configurations in two field sizes and swarm sizes 1 to 16, every configuration with span/field <= 0.68 gives 0 aggregating seeds out of 5, and both configurations with span/field >= 0.84 give some (2/5 and 1/5) with the median collapsing. The main arm's conclusion therefore stands and is strengthened: a uniform, sensorless, single-gait swarm sweeps and does not corral. What looked like aggregation is the swarm reaching the edge of its arena.",
+        "verdict": "NOT a swarm-size onset. Across 10 configurations in two field sizes and swarm sizes 1 to 16, every configuration with span/field <= 0.68 gives 0 aggregating seeds, and both configurations with span/field >= 0.84 give some (2/5 and 1/5) with the median collapsing. The main arm's conclusion therefore stands and is strengthened: a uniform, sensorless, single-gait swarm does not corral. What looked like aggregation is the swarm reaching the edge of its arena.",
         "caveat": "the cut sits between 0.68 and 0.84 with no configuration in between, so the threshold is bracketed rather than located, and 'span/field' is one summary of a geometry that also changes particle count per construct. Two field widths is not a scan over field width."
        },
        "reading": "The two aggregating seeds at N=8 in the main arm are a BOUNDARY effect, not an onset: the same swarm size in a wider field shows nothing, and a larger swarm in the wider field also shows nothing. Aggregation-like behaviour appears only when the swarm spans more than about 0.8 of the field."
+      },
+      "not_diverged_gate": {
+       "what": "every Voxelyze run behind these studies is checked for divergence. Voxelyze's doTimeStep returns false when any link's axial strain exceeds 100; the driver records that as diverged and exits 3. A diverged run is not evidence and none is used.",
+       "total_runs_checked": 440,
+       "diverged_runs": [],
+       "gate_met": true
       }
      },
      "summary_table_title": "Self-locomotion against cargo transport, per gait",
@@ -95599,7 +95772,7 @@
       "results/xenobot/data/cargo-arm3.json"
      ],
      "present": true,
-     "sha256": "7bfa6d193676fa1764f2bf4a89bcdd03f0cf08d65de730af2a2366f6e07a09c8",
+     "sha256": "721aa9eee7919bbf2fc8e344351ab9cb84478fef511789bf2894710daf45de09",
      "figures": [
       {
        "file": "cargo-work-by-gait.png",
@@ -95608,8 +95781,8 @@
        "exists": true,
        "state": "present",
        "href": "artifacts/xenobot/cargo-work-by-gait.png",
-       "sha256": "9b5238ed99f0715c8f74901636a3c136d1742062566379ffadd0a94988d4bdcb",
-       "bytes": 129430
+       "sha256": "c402aeaad5563e3ed9ed03947036a4bbdd0c025af115ac2c42bf8e5afc576fa3",
+       "bytes": 131351
       },
       {
        "file": "cargo-swarm-aggregation.png",

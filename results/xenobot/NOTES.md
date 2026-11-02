@@ -49,6 +49,14 @@ checker assign only the phases 0 and π**, so `sin(φ) ≡ 0`, rank 1, enclosed 
 1.9×10⁻¹⁶. Only `travelling` (φ = 2πx/nx, five distinct phases) has rank 2. An RPY
 bead-model Stokes swimmer confirms it numerically.
 
+**A statistic that lied, worth its own line.** A rank correlation between the two regimes'
+gait orderings gives ρ = 0.943, p = 0.005 — which reads as excellent transfer at the exact
+moment transfer has failed completely, and failed *qualitatively*. It is vacuous because
+five of the six Stokes values are the same number, so the test is ranking a tie. Anyone
+checking "did the ranking transfer?" with a rank correlation would conclude that it did.
+The right question first is how many of the ranked items are distinguishable at all; here
+the answer is one, and the comparison should never have been posed as a correlation.
+
 **2. Convergence.** On a parity-matched refinement — outer envelope and *physical*
 actuation field held fixed while the lattice refines 4× from 45 to 2880 voxels — the
 travelling wave spans **41%** of its coarsest value and the longitudinal split **54%**,
@@ -90,11 +98,25 @@ body length (12 Hz at both nx = 4 and nx = 8, while the body doubles).
 
 **3. Cargo.** Contact-gated, 40 cycles. Travelling is first on every metric: 103.6 mm of
 cargo moved against 35.8 and 21.7; transport ratio 0.95 of its own path transferred
-against 0.51 and 0.26; 7× the useful work per unit actuation energy. All three
+against 0.51 and 0.26; 7.5× the useful work per unit actuation energy. All three
 contacting gaits stall at the same **64 g** cargo and efficiency peaks just below it.
-The swarm **disperses** rather than aggregating, in 28 of 30 runs — and the two exceptions,
-both at the largest swarm size, turned out to be a **boundary effect** rather than an
-onset (below).
+
+**Reach and push are separable, and reporting them apart was worth doing.** Time-to-contact
+and work-after-contact are different engineering quantities, and the two orderings are *not*
+the same: lateral reaches the cargo **first** (1.71 s against longitudinal's 1.79 s) and
+then pushes **worst** (transferring 0.26 of its own path against 0.51). Honest scale: the
+reach difference is 4.8% and rests on a single threshold crossing per gait with no seed
+spread — this model has no RNG — while the push difference is 1.95× and is the robust half.
+Three of six gaits never reach the cargo at all in 40 cycles, which is a reach result and
+is reported as one.
+**No aggregation at any N.** The field's radius of gyration moved *outward* in 28 of 30
+runs — but the honest statement is weaker than "disperses": the change is **0.22% to
+0.77% of the field radius** and it **does not scale monotonically with N** (N=8 sits
+below N=6 and barely above N=1). That is "the field barely moves", not a dispersal
+mechanism, and the particles travel 1.9–19 mm while a construct travels 116 mm. The two
+runs that went inward, both at the largest swarm size, turned out to be a **boundary
+effect** rather than an onset (below). Whether this negative means anything about
+*swarms* depends on the cohesion arm, below.
 
 ---
 
@@ -133,27 +155,31 @@ Stated openly, as asked, rather than fixed silently.
    explicit that "Xenobot-inspired names the design pattern, not biology" — but the page
    should say which published construct, if any, each result is about.
 
-5. **The strongest single source finding, and it cuts both ways.** Kriegman et al.
-   2020 **simulated their first-pass designs "on land", and that pass failed**: it
-   produced "highly performant but nontransferable designs with powerful, bounding
-   gaits", airborne for 47% of the cycle, while the real deciliated organisms "always
-   kept part of their ventral surfaces in contact with the surface of the dish due to
-   negative buoyancy". They fixed it by adding first-order hydrodynamics — reduced
-   effective gravity for buoyancy, drag on every surface voxel face — after which ground
-   contact went from **52.7% to 93.3%** of the evaluation period. The voxel-actuation
-   artifact uses the configuration they abandoned. That is a much more concrete
-   indictment than my theoretical argument, and it is *their* measurement, not mine.
+5. **The strongest single source finding, and it is theirs rather than mine.** Read from
+   Kriegman et al. 2020's Materials and Methods, quoted exactly: their first pass "simulated
+   designs on land" and this "resulted in highly performant but nontransferable designs",
+   with "timeframes (on average, 47% of the gait cycle) in which no part of the in silico
+   design was in contact". They fixed it by "incorporating first-order hydrodynamics",
+   "approximated by decreasing the coefficient of gravitational acceleration (increasing
+   buoyancy)" and "applying a drag force to each voxel face on the design's surface", after
+   which "designs were in contact with the ground plane for 93.3% of their evaluation
+   period" "compared to just 52.7% on the first pass".
 
-   **Correction, made on review before publication.** An earlier version of this note
-   said their first pass "used dry gravity-plus-friction ground contact". The paper does
-   not say that. It says only that they "simulated designs on land", and the fix they
-   applied was buoyancy plus per-face drag. That the first pass therefore lacked both is
-   a reasonable *inference* from what they replaced it with, but it is ours and not
-   theirs, and it is not what a reader should take away as a quotation. The 93.3% and
-   52.7% figures are contact with the **simulated ground plane** over the evaluation
-   period; the ventral-surface sentence is a separate qualitative observation about the
-   real organisms with no percentage attached. Those two must not be merged into a
-   sentence like "ventral contact rose from 52.7% to 93.3%", which nobody measured.
+   **Two separations I had blurred and have now fixed.** First, *their claim versus my
+   inference*: they say only that the first pass simulated "on land" and do not
+   characterise its contact model. That it therefore lacked buoyancy and per-face drag is
+   **my inference from what they added**, and an earlier draft of these notes stated it as
+   "dry gravity-plus-friction ground contact" as though it were their wording. Second, the
+   52.7% → 93.3% pair is contact with the **simulated ground plane** over the evaluation
+   period; the sentence about the real deciliated organisms keeping "part of their ventral
+   surfaces in contact with the surface of the dish due to negative buoyancy" is a separate,
+   **qualitative** observation about the physical organisms with no percentage attached.
+   Merging the two would produce a plausible false sentence.
+
+   The voxel-actuation artifact uses full gravity, dry Coulomb friction and no fluid. That
+   this is the configuration they abandoned is a much more concrete indictment than my
+   theoretical argument, and the measurement is theirs. *(Quotes independently verified at
+   the source by the team lead through the r.jina.ai proxy when PMC was CAPTCHA-blocked.)*
 
 ---
 
@@ -269,7 +295,31 @@ Recorded because they bear on how much to trust the rest.
    `code/verify_numbers.py`, which now reconciles every headline number in prose against
    the data file it comes from and exits 1 on a mismatch. It is worth re-running after
    any edit.
-6. **Two figures initially misled.** Clamped bars on a log axis made five exactly-zero
+6. **Six text edits failed silently, and I read the builder's success as theirs.** I
+   patched prose in `build_routes.py` and `build_index.py` with literal string
+   replacement, then ran the builder, saw `wrote routes.json`, and moved on. The
+   replacements had matched nothing: the files contain **em-dashes** and I had typed
+   ASCII hyphens. The builder succeeded at building the *old* text. Four stale numbers
+   and two un-made corrections survived two of my own verification passes, because
+   `verify_numbers.py` was checking the **JSONs** against the data and the stale values
+   lived in the **prose**, where they were internally consistent with nothing.
+
+   Two fixes, both kept. The verifier now reads `NOTES.md`, `routes.json` and
+   `index-fragment.json` as *text*, flattens whitespace (the prose is hard-wrapped, which
+   produced its own false positive), and asserts both that the corrected strings are
+   present and that the stale ones are **absent**. And every edit now goes through a
+   helper that counts matches first and exits non-zero on anything but exactly one, so a
+   missed replacement stops the run instead of printing success.
+
+7. **Three post-hoc additions were silently dropped by re-running their builder.** The
+   timestep arm, the conditioning arm, the not-diverged gate and the onset analysis were
+   each patched into a *generated* JSON by a one-off script; the next run of the builder
+   that generates that file overwrote them. I found this three separate times, each time
+   as a `KeyError` in the verifier. Every post-hoc addition is now a script in a fixed
+   chain, and `code/rebuild.sh` runs the whole pipeline in order and ends with the
+   verifier. That is the only supported way to regenerate these artifacts.
+
+8. **Two figures initially misled.** Clamped bars on a log axis made five exactly-zero
    values look substantial, and a dual-axis panel let me choose the comparison. Both
    rebuilt.
 
@@ -278,9 +328,13 @@ Recorded because they bear on how much to trust the rest.
 ## 5. Source disagreements and scoped negatives
 
 - **Licence conflict, unresolved and quoted both ways.** `cdorgs.github.io/code` states
-  the code is under Attribution-NonCommercial Creative Commons; the repositories it
-  links carry **CC0-1.0** LICENSE files. (Relayed from the handoff packet, not
-  re-verified by me.) Separately, Voxelyze has **no LICENSE file** at the pinned commit,
+  the code is under Attribution-NonCommercial Creative Commons; the repositories it link
+  carry **CC0-1.0** LICENSE files. I verified the latter from the bytes this time: the
+  `LICENSE` at voxcraft-sim's pinned commit begins "Creative Commons Legal Code / CC0 1.0
+  Universal". **A lawyer should look at this before anything from those repositories is
+  redistributed.** It does not block this page, because we redistribute nothing: we link
+  the upstream repository, commit our own driver source and a build recipe, and ship no
+  linked binary. Separately, Voxelyze has **no LICENSE file** at the pinned commit,
   so the GitHub API reports `license: null` while every source header declares
   LGPL-3.0-or-later. Null means "no detectable LICENSE file", not "unlicensed".
 - **Object transport versus object aggregation, which are routinely blurred.** Read from

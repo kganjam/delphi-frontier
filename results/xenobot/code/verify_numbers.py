@@ -99,9 +99,35 @@ nt = sum(len(sw["per_N"][n]["per_seed"]) for n in sw["per_N"])
 chk("dispersed in 28 of 30", nd, 28, 0); chk("of 30 runs", nt, 30, 0)
 s4 = [sw["per_N"][n]["S4_fric_per_actuation_median"] for n in sw["per_N"]]
 assert 0.006 <= min(s4) and max(s4) <= 0.011, s4
-print(f"  OK   S4 flat in 0.007-0.010 (actual {min(s4):.4f}-{max(s4):.4f})")
+print(f"  OK   S4 flat, no trend with N (range {min(s4):.4f}-{max(s4):.4f})")
 assert cw["all_controls_met"] and cv["not_diverged_gate"]["gate_met"]
 print("  OK   all controls met; no run diverged")
+
+print("== feedback-driven additions")
+sz = rc["the_simulated_object_is_also_the_wrong_SIZE"]
+chk("size ratio 40x", sz["size_ratio_range"][0], 40, 0.01)
+chk("size ratio 100x", sz["size_ratio_range"][1], 100, 0.01)
+chk("simulated span 40 mm", sz["simulated_centre_to_centre_span_m"] * 1000, 40, 0)
+chk("Re with net disp 581", rc["simulated_object_regime"]["Re_translational_using_net_displacement"], 581, 0.01)
+chk("spearman rho in its own section", rc["the_spearman_trap"]["rho"], 0.943, 0.01)
+chk("distinguishable stokes values 1", rc["the_spearman_trap"]["distinguishable_stokes_values"], 1, 0)
+rp = cw["reach_and_push_are_different_quantities"]
+assert rp["do_the_two_rankings_agree"] is False
+chk("reach swap 4.8%", rp["size_of_the_swap"]["reach_difference_lateral_vs_longitudinal_pct"], 4.8, 0.02)
+chk("push ratio 1.95", rp["size_of_the_swap"]["push_ratio_longitudinal_over_lateral"], 1.95, 0.01)
+chk("travelling reaches at 0.94 s", rp["reach"]["travelling"]["time_to_contact_s"], 0.94, 0.02)
+nc = [g for g, v in rp["reach"].items() if not v["made_contact_within_40_cycles"]]
+chk("3 gaits never reach", len(nc), 3, 0)
+mech = cv["parity_vs_resonance"]["mechanism_named_at_the_source"]
+assert mech["the_line"] == "(x < c.nx/2) ? 0.0 : kPi", mech["the_line"]
+assert "INTEGER division" in mech["the_operator"]
+print("  OK   integer-division line named and quoted")
+assert "NOT quotable at any N" in cv["ranking_stability"]["what_is_and_is_not_quotable"]
+print("  OK   ranking margin explicitly marked unconverged")
+tol = rc["stokes_shape_tolerance_refinement"]["values_body_lengths_per_cycle"]
+assert set(tol) == {"1e-10", "1e-12", "1e-14", "1e-16"}
+assert tol["1e-10"]["longitudinal"] > 100 * tol["1e-14"]["longitudinal"]
+print("  OK   tolerance ladder carried in full, residue falls >100x")
 
 print("== routes.json structure")
 req = ["id", "scale", "title", "intervention", "predicted_phenotype", "mechanism",
@@ -117,6 +143,43 @@ assert not [r["id"] for r in rt["routes"] if "study" in r
             and r["study"] not in {"regime-check", "convergence", "cargo-work"}]
 print(f"  OK   {len(rt['routes'])} routes, {len(rt['scales'])} scales, all keys present, "
       f"no route invisible to the filter, recommendation resolves")
+
+print("== prose files actually contain the corrected values")
+import re as _rw
+_flat = lambda s: _rw.sub(r"\s+", " ", s)   # prose is hard-wrapped; compare flattened
+notes = _flat(open(f"{ROOT}/NOTES.md").read())
+idx = _flat(open(f"{ROOT}/index-fragment.json").read())
+rts = _flat(open(f"{ROOT}/routes.json").read())
+MUST = [
+    (notes, "28 of 30", "NOTES states the corrected run count"),
+    (notes, "0.22% to 0.77%", "NOTES states the swarm effect size as a percentage"),
+    (notes, "does not scale monotonically", "NOTES flags the non-monotonicity"),
+    (notes, "my inference from what they added", "NOTES separates Kriegman's claim from our inference"),
+    (notes, "simulated designs on land", "NOTES quotes their actual wording"),
+    (notes, "qualitative", "NOTES keeps the ventral observation separate from the percentages"),
+    (notes, "ranking a tie", "NOTES carries the Spearman trap"),
+    (notes, "1.71 s against longitudinal's 1.79 s", "NOTES carries the reach/push swap"),
+    (notes, "lawyer should look", "NOTES flags the licence conflict for legal review"),
+    (notes, "7.5\u00d7 the useful work", "NOTES uses the corrected 7.5x"),
+    (idx, "40 to 100 times too large", "index states the size ratio"),
+    (idx, "reach and push are separable", "index carries the reach/push separation"),
+    (rts, "7.6x to 66x", "routes carry the corrected parity range"),
+    (rts, "0.8% at 2 g to 8.2% at 32 g", "routes carry the corrected efficiencies"),
+    (rts, "simulated designs on land", "routes quote Kriegman's actual wording"),
+]
+MUSTNOT = [
+    (rts, "gravity-plus-friction", "routes must not state our inference as their claim"),
+    (idx, "29 of 30", "index must not carry the stale run count"),
+    (rts, "5x to 30x", "routes must not carry the stale parity range"),
+]
+for text, frag, label in MUST:
+    good = frag in text
+    ok &= good
+    print(("  OK   " if good else "  FAIL ") + label)
+for text, frag, label in MUSTNOT:
+    good = frag not in text
+    ok &= good
+    print(("  OK   " if good else "  FAIL ") + label)
 
 print("\nALL NUMBERS RECONCILE" if ok else "\nSOME NUMBERS DO NOT RECONCILE")
 sys.exit(0 if ok else 1)

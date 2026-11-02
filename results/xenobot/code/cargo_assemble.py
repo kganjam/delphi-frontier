@@ -87,6 +87,56 @@ R["arm1b_contact_gated_40_cycles"] = {
     "ranking_efficiency_contacting_only": B["ranking_efficiency_contacting_only"],
     "rankings_agree": B["ranking_self_locomotion"][:3] == B["ranking_cargo_transport"][:3]}
 
+# ------------------------- reach and push are different quantities --------
+reach, push = {}, {}
+for g in GAITS:
+    row = B["per_gait"][g]
+    bd = row["best_direction"]
+    c = row["by_direction"][bd]["contact"] if bd else {"made_contact": False}
+    reach[g] = {
+        "self_speed_mm_per_cycle": row["self_locomotion_40cyc"]["net_disp_m"] * 1000 / 40.0,
+        "made_contact_within_40_cycles": c.get("made_contact", False),
+        "time_to_contact_s": c.get("contact_t_s"),
+        "cycles_to_contact": (c["contact_t_s"] * 4.0) if c.get("made_contact") else None,
+        "fraction_of_run_spent_reaching": c.get("contact_frac_of_run")}
+    if c.get("made_contact"):
+        push[g] = {
+            "cargo_displacement_after_contact_m": c["cargo_disp_after_contact_m"],
+            "construct_path_after_contact_m": c["construct_path_after_contact_m"],
+            "transport_ratio_after_contact": c["transport_ratio_after_contact"],
+            "W_actuation_after_contact_J": c["W_actuation_after_contact_J"],
+            "W_cargo_friction_after_contact_J": c["W_cargo_friction_after_contact_J"],
+            "efficiency_after_contact": c["efficiency_after_contact"]}
+_pr = None
+R["reach_and_push_are_different_quantities"] = {
+    "why_they_are_reported_separately": "time-to-contact and work-after-contact are different engineering quantities, and a body plan can be good at one and bad at the other. Collapsing them into a single cargo-displacement number hides which one a design is losing on, and in the 5-cycle arm it hid the fact that five of six gaits were losing on REACH and had not been tested on push at all.",
+    "reach_gate": "does the construct arrive at the workpiece within its working life? Measured here as time to first cargo motion above 1 um, with the cargo 7.5 mm of clear space away.",
+    "push_gate": "given contact, how much of the construct's own motion and energy reaches the cargo? Measured over the post-contact window only.",
+    "reach": reach,
+    "push_contacting_gaits_only": push,
+    "ranking_by_reach": sorted([g for g in GAITS if reach[g]["made_contact_within_40_cycles"]],
+                               key=lambda g: reach[g]["time_to_contact_s"]),
+    "ranking_by_push_transport_ratio": sorted(push, key=lambda g: -push[g]["transport_ratio_after_contact"]),
+    "do_the_two_rankings_agree": (
+        sorted([g for g in GAITS if reach[g]["made_contact_within_40_cycles"]],
+               key=lambda g: reach[g]["time_to_contact_s"])
+        == sorted(push, key=lambda g: -push[g]["transport_ratio_after_contact"])),
+    "commercial_reading": (
+        "The two orderings are NOT the same, which is the reason for reporting them apart. "
+        "Travelling is first on both. But between the two reciprocal gaits the order swaps: "
+        "lateral reaches the cargo FIRST (1.71 s against longitudinal's 1.79 s) and then pushes "
+        "WORST, transferring 0.26 of its own path against longitudinal's 0.51. So arriving "
+        "sooner and pushing better are separable properties here, and a cargo-displacement "
+        "number alone would have hidden it."),
+    "size_of_the_swap": {
+        "reach_difference_lateral_vs_longitudinal_pct": 100 * abs(
+            reach["longitudinal"]["time_to_contact_s"] - reach["lateral"]["time_to_contact_s"])
+            / reach["longitudinal"]["time_to_contact_s"],
+        "push_ratio_longitudinal_over_lateral": (
+            push["longitudinal"]["transport_ratio_after_contact"]
+            / push["lateral"]["transport_ratio_after_contact"]) if {"longitudinal","lateral"} <= set(push) else None,
+        "honest_scale": "the reach difference between those two is about 4.8%, which is small and rests on a single contact-threshold crossing per gait with no seed spread (this model has no RNG). The push difference is about 2x and is the robust half of the comparison. Do not read the reach swap as a strong result."}}
+
 # -------------------------------------------------------------- arm 2b ---
 m2 = {}
 for g, rows in M["per_gait"].items():
@@ -136,6 +186,17 @@ R["arm3_swarm"] = {
         "reading": "friction work done on the field per unit actuation work is 0.0066-0.0102 across the whole range and does not improve with swarm size. A bigger swarm moves more material because it spends more energy, not because it spends it better."},
     "S2_aggregation": {
         "values_min_median_max_m": {n: S["per_N"][n]["S2_min_median_max"] for n in ns},
+        "as_percent_of_field_radius": {
+            n: {"rg_start_m": S["per_N"][n]["per_seed"][0]["rg_start_m"],
+                "median_change_pct": 100 * S["per_N"][n]["S2_min_median_max"][1]
+                                     / S["per_N"][n]["per_seed"][0]["rg_start_m"]} for n in ns},
+        "effect_size_caution": (
+            "State this as an effect size, not as a mechanism. The median change is 0.22% to 0.77% of the "
+            "field's radius of gyration, and it is NOT monotone in N: N=8 sits below N=6 and barely above "
+            "N=1. A sub-1% change that does not scale with swarm size is 'the field barely moves', not "
+            "dispersal. For scale, the particles' centre of mass travels 1.9 to 19 mm over the run while a "
+            "construct travels 116 mm. The defensible claim is NO AGGREGATION AT ANY N; the word 'disperses' "
+            "invites a reader to think a mechanism was identified, and none was."),
         "verdict": "NO aggregation. The particle field's radius of gyration INCREASED in 28 of the 30 runs. Both exceptions are at the largest swarm size, N=8, where 2 of 5 seeds turn negative (-0.111 and -0.457 mm) and the median dispersion falls 2.6-fold from its N=6 value. That is a possible ONSET rather than scatter, and it is tested in the follow-up arm rather than left as a hedge.",
         "mechanism": "every construct runs the same gait and travels the same way, so their contributions add as a common drift rather than converging. Corralling needs either a concave body that traps material, as the published semitoroidal progenitor has, or constructs that move differently from one another.",
         "scope": "this is a statement about a uniform, sensorless, single-gait swarm in this model. It is not a statement about swarms."}}
