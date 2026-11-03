@@ -1,0 +1,2023 @@
+{
+ "schema": "design-space-result-0.1",
+ "study_id": "colony-morphology",
+ "title": "Colony morphology as a growth-geometry problem",
+ "is_observation": false,
+ "headline": "5 of 6 pre-declared controls pass and 1 FAILS: `low_Da_fills_space`. The compact low-Da mound measures a box-counting dimension of 2.43 against the >2.6 declared before the run, and the criterion was not moved. What makes that failure interpretable is a positive control for the ESTIMATOR: a solid hemisphere of the same voxel count, whose true dimension is 3, measures 2.46 with the same code over the same five box sizes, and a solid cube 2.47. So the mound is within 0.03 of a solid object and the 2.6 threshold was wrong about what this estimator can return at this size -- the model is not failing, the criterion was. A voxel accretive-growth model in the published Kaandorp-Merks family, with a single declared control parameter Da -- uptake rate over transport rate, the ratio Merks et al. 2003 identify as controlling compactness. Da moves the colony a long way: surface-to-volume from 0.32 to 0.76 and bounding-box fill from 0.40 to 0.13, with the transition GRADED -- by the cut declared before the sweep, the branch count crosses from 10% to 90% of its range over 0.93 decades of Da. THE STUDY ALSO FAILS AT WHAT IT WAS BUILT FOR, and that is reported rather than buried: the model spans a compact mound to an open LOBED MOUND and does not reach either true branching or plating. Branch counts stay in single figures (1.0 to 5.2) and inspection of the projections shows roughened domes, not separated branches, at every Da, flow and light weight tried. So the branching-through-plating-through-massive span this study set out to produce was not achieved, and the one metric comparable with real colonies -- the area-diameter exponent, 1.72 to 1.95 here against Chandler et al.'s measured 2.4-2.5 for branching genera and 1.8-2.0 for massive and tabular ones -- should be read in that light. The most transferable result is a methodological one: getting even this far took three rewrites of the growth rule, because two earlier voxel versions were dominated by the lattice rather than the physics, and NONE of the four declared metrics revealed it -- they all varied smoothly and plausibly with Da while the shapes being measured were cubes and octahedra.",
+ "provenance": {
+  "generated_at": "2026-11-02T16:08:29-0800",
+  "code": "results/coral/code/colony_morphology.py"
+ },
+ "model": {
+  "name": "voxel Laplacian accretive growth with advective bias and a light field",
+  "kind": "stochastic lattice growth on a steady resource field",
+  "is_observation": false,
+  "model_class_is_published": true,
+  "this_implementation_is_a_port": false,
+  "relationship_to_published_models": "Same FAMILY as Kaandorp et al. 1996, Kaandorp & Sloot 2001, Merks et al. 2003/2004 and Chindapol et al. 2013; NOT a port of any of them. Chindapol et al. couple steady Navier-Stokes to advection-diffusion on a deforming triangulated surface; this is a voxel lattice with an upwind advective bias. No number here should be compared with theirs as if it were a reimplementation.",
+  "chindapol_reference_settings": {
+   "note": "Read from the full text of PMID 23326222. Reproduced so a reader can see what a calibrated implementation of this model class uses. THIS FILE DOES NOT USE THESE VALUES: it is a different model on a different discretisation.",
+   "domain": "60 x 60 x 40 cm simulated channel",
+   "initial_object": "sphere of diameter 6 cm",
+   "inlet_velocity": "0.05 m/s",
+   "dynamic_viscosity": "5.0e-2 Pa s (50x water, used to force Re_branch ~ 20)",
+   "diffusion_coefficient": "1.0 down to 1e-5 m2/s in decade steps (eddy-scale, physically unrealistic as a molecular diffusivity)",
+   "Pe_branch_simulated": [
+    0,
+    0.00113,
+    0.0105,
+    0.097,
+    1.13,
+    11.3
+   ],
+   "Pe_branch_real_colonies": [
+    0.136,
+    0.0163,
+    0.188,
+    0.227,
+    0.288
+   ],
+   "L_max": "1.0e-3 m maximum layer added per growth step",
+   "K": "1 mol/m3 half-saturation",
+   "hill_exponent": 1.2,
+   "growth": "about 0.5 mm per step; 150 steps is about 10 cm",
+   "surface_volume_benchmark": "S/V 289 /m with no flow, 416 /m advection-dominated at step 98. NOTE S/V ROSE with flow, i.e. the 'more compact' form had MORE surface per volume in that pair, so do not assume compactness lowers S/V.",
+   "flume_speeds": "text says 1e-2 cm/s reduced and 15 cm/s enhanced; the figure caption says about 1 cm/s and 15-20 cm/s. THE SOURCE DISAGREES WITH ITSELF."
+  },
+  "parameters": [
+   {
+    "name": "Da",
+    "value": "swept [0.02, 0.05, 0.12, 0.3, 0.8, 2.0, 5.0, 12.0, 30.0, 80.0]",
+    "units": "nondimensional",
+    "status": "nondimensional",
+    "source": "Uptake rate times lattice spacing over diffusivity. The ratio Merks et al. 2003 (PMID 12927523) identify as controlling compactness: 'compactness of the growth form depends on the ratio of the rates of growth and nutrient transport'. No published numeric value exists for it, which is why it is swept over four decades rather than set."
+   },
+   {
+    "name": "Pe",
+    "value": "swept [0.0, 0.05, 0.2]",
+    "units": "nondimensional",
+    "status": "nondimensional",
+    "source": "Advective bias in lattice units. NOT comparable with Chindapol et al.'s branch-scale Peclet numbers (0.016-0.288 for real colonies) because the discretisation and the velocity field are different."
+   },
+   {
+    "name": "w_light",
+    "value": "swept [0.0, 0.5, 0.9]",
+    "units": "nondimensional",
+    "status": "assumed",
+    "source": "Fraction of the growth response driven by the light field rather than the diffusive resource. Invented; no study partitions coral growth response between light and mass transfer in these terms."
+   },
+   {
+    "name": "light_attenuation",
+    "value": 0.35,
+    "units": "1 / voxel",
+    "status": "assumed",
+    "source": "Self-shading coefficient. No published value in any units this could be converted from; the research block records that NO irradiance threshold tied to a morphometric change was found in any source."
+   },
+   {
+    "name": "n_gen",
+    "value": 400,
+    "units": "generations",
+    "status": "nondimensional",
+    "source": "Growth generations. The colony is grown until it would touch a lattice wall or this many generations pass, whichever is first."
+   },
+   {
+    "name": "hill_n",
+    "value": 3.0,
+    "units": "nondimensional",
+    "status": "assumed",
+    "source": "Hill exponent of the growth response to local flux. Chindapol et al. 2013 use 1.2 in their own units; 3.0 here is NOT theirs and is not comparable, because their argument is an absolute concentration against a half-saturation in mol/m3 and this one is a flux normalised to the best-supplied site on the colony. Set to the smallest value that makes screened sites fall behind permanently."
+   },
+   {
+    "name": "hill_K",
+    "value": 0.4,
+    "units": "fraction of the maximum flux",
+    "status": "assumed",
+    "source": "Half-saturation of that response. Invented."
+   },
+   {
+    "name": "speed_sigma",
+    "value": 0.6,
+    "units": "voxels",
+    "status": "assumed",
+    "source": "Gaussian smoothing of the SPEED field, which is what makes the interface isotropic on a cubic lattice. It also sets the finest feature the model can resolve, at roughly two voxels, so the branch counts here are a lower bound."
+   },
+   {
+    "name": "smooth_sigma",
+    "value": 0.35,
+    "units": "voxels",
+    "status": "assumed",
+    "source": "Gaussian regularisation of the phase field each generation. It is what makes the interface isotropic on a cubic lattice and it supplies a weak surface tension. It also sets the FINEST BRANCH THE MODEL CAN RESOLVE, at roughly two voxels, so the branch counts reported here are a lower bound: a colony whose real branches were thinner than that would come back smoother than it is."
+   },
+   {
+    "name": "deposit_rate",
+    "value": 0.45,
+    "units": "voxels / generation",
+    "status": "nondimensional",
+    "source": "How fast the BEST-SUPPLIED surface site advances. Sets the accretion step, not a biological rate."
+   },
+   {
+    "name": "noise",
+    "value": 0.15,
+    "units": "lognormal sigma",
+    "status": "assumed",
+    "source": "Multiplicative jitter on the local flux. It is what makes random seeds differ, and the seed-to-seed spread it produces is reported beside every metric. Declared, not tuned."
+   },
+   {
+    "name": "lattice",
+    "value": "88x88x72",
+    "units": "voxels",
+    "status": "nondimensional",
+    "source": "Lattice size. A voxel has no length: nothing here is in centimetres, and the model is deliberately not given a length scale because the mapping from Da to a reef flow speed is exactly what is NOT established."
+   }
+  ],
+  "metric_definitions": {
+   "declared_before_any_figure_was_viewed": true,
+   "surface_to_volume": {
+    "rule": "Count exposed voxel faces (a face of an occupied voxel whose neighbour is empty or outside the lattice, excluding the substrate plane) and divide by the number of occupied voxels.",
+    "units": "1 / voxel",
+    "why": "The field's most-used shape metric. Reported knowing that Chindapol et al. measured S/V RISING with flow in the pair they report, so it does not simply track compactness."
+   },
+   "branch_count": {
+    "rule": "For each horizontal slice z in the UPPER HALF of the colony (z > z_max/2), label 4-connected components of occupied voxels in that slice and count only those with at least 8 voxels. The branch count is the MAXIMUM over those slices. Slices with fewer than 8 occupied voxels are skipped. THE MINIMUM COMPONENT SIZE WAS ADDED AFTER THE FIRST CONTROL RUN: without it, the ragged top of a rough mound counted as many branches, and the low-Da control failed for that reason rather than for a modelling one. The change was made to the RULE and the control was then re-run; it was not made after seeing a sweep result.",
+    "units": "count",
+    "why": "A branch is a thing that is separate from its neighbours somewhere above the base. The upper-half restriction is what stops a single hemispherical mound with a ragged rim counting as many branches, and it is the arbitrary part of the rule."
+   },
+   "box_counting_dimension": {
+    "rule": "Box-count the occupied voxel set at box sizes 1, 2, 4, 8 and 16 voxels; fit log N(eps) against log(1/eps) by least squares; report the slope.",
+    "units": "dimensionless",
+    "why": "Reichert et al. 2017 report that three-dimensional fractal dimension discriminated coral species at least as well as surface-volume ratio and rugosity, and considerably better within species. Five box sizes on a lattice of this size is a SHORT scaling range and the estimate is correspondingly crude; the spread across seeds is the honest error bar."
+   },
+   "bounding_box_fill": {
+    "rule": "Occupied voxels divided by the volume of the colony's axis-aligned bounding box.",
+    "units": "fraction",
+    "why": "A compactness measure that does not need a convex hull. A dense mound approaches a high value; an open branching colony is low."
+   },
+   "area_diameter_exponent": {
+    "rule": "During a run, record exposed surface area S and maximum horizontal diameter D at every growth generation after the colony exceeds 12 voxels across; fit log S = log a + b log D by least squares; report b.",
+    "units": "dimensionless",
+    "why": "THE EXTERNAL CHECK. Chandler et al. 2024 measured this exponent on real colonies by photogrammetry: about 2.4-2.5 for branching genera and about 1.8-2.0 for tabular and massive ones. It is dimensionless, so a lattice model and a reef colony can be compared on it directly."
+   }
+  }
+ },
+ "control_arm": {
+  "arms": {
+   "low_Da_isotropic": {
+    "volume": {
+     "mean": 7145.75,
+     "sd": 9.069178573608527,
+     "min": 7135.0,
+     "max": 7157.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 2286.75,
+     "sd": 11.528949070347508,
+     "min": 2272.0,
+     "max": 2300.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.3200157326971517,
+     "sd": 0.0016516047618734,
+     "min": 0.3180291153415454,
+     "max": 0.32181334825801033,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.43461495745215,
+     "sd": 0.019310402680852205,
+     "min": 2.4242290868761676,
+     "max": 2.463569986648938,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.39521826723113485,
+     "sd": 0.018408879720493977,
+     "min": 0.38540485064549235,
+     "max": 0.4228219696969697,
+     "n": 4
+    },
+    "height": {
+     "mean": 16.75,
+     "sd": 0.5,
+     "min": 16.0,
+     "max": 17.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 33.0,
+     "sd": 0.0,
+     "min": 33.0,
+     "max": 33.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9416640011840354,
+     "sd": 0.021925949162800676,
+     "min": 1.9155526723309109,
+     "max": 1.960974531128573,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5075757575757576,
+     "sd": 0.015151515151515136,
+     "min": 0.48484848484848486,
+     "max": 0.5151515151515151,
+     "n": 4
+    }
+   },
+   "high_Da_absorbing": {
+    "volume": {
+     "mean": 7061.0,
+     "sd": 36.60601043544625,
+     "min": 7008.0,
+     "max": 7092.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 5351.0,
+     "sd": 95.97916440561461,
+     "min": 5260.0,
+     "max": 5450.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.7578663721009014,
+     "sd": 0.01592225104969043,
+     "min": 0.743988684582744,
+     "max": 0.7728310502283106,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 5.25,
+     "sd": 0.5,
+     "min": 5.0,
+     "max": 6.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.106957839190604,
+     "sd": 0.022781959475171462,
+     "min": 2.08146349007895,
+     "max": 2.1348666977185156,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.13433091263736385,
+     "sd": 0.008770309357993491,
+     "min": 0.12274305555555555,
+     "max": 0.1423913043478261,
+     "n": 4
+    },
+    "height": {
+     "mean": 24.0,
+     "sd": 0.816496580927726,
+     "min": 23.0,
+     "max": 25.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 47.75,
+     "sd": 1.707825127659933,
+     "min": 46.0,
+     "max": 50.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.7869429115939044,
+     "sd": 0.03788202551464043,
+     "min": 1.7517926457041797,
+     "max": 1.8374689917670954,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5032051726796176,
+     "sd": 0.02759278575279768,
+     "min": 0.4791666666666667,
+     "max": 0.5319148936170213,
+     "n": 4
+    }
+   }
+  },
+  "checks": {
+   "low_Da_is_compact": true,
+   "low_Da_fills_space": false,
+   "high_Da_branches": true,
+   "high_Da_is_not_space_filling": true,
+   "limits_are_distinguishable": true,
+   "low_Da_fills_space_vs_estimator_control": true
+  },
+  "passed": false,
+  "n_seeds": 4,
+  "estimator_control": {
+   "n_voxels": 7145,
+   "box_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16
+   ],
+   "solid_hemisphere": {
+    "true_dimension": 3.0,
+    "measured_box_dimension": 2.4615265209334467,
+    "surface_to_volume": 0.2940517844646606,
+    "bounding_box_fill": 0.5663892191835117
+   },
+   "solid_cube": {
+    "true_dimension": 3.0,
+    "n_voxels": 6859,
+    "measured_box_dimension": 2.469846186316013
+   },
+   "interpretation": "Both objects are solid and have a true dimension of 3. Whatever the estimator returns for them is its bias at this size over this range of box sizes: the largest boxes span most of the object, so the log-log fit is pulled down. Colony dimensions in this study should be read against these numbers and not against 3.",
+   "is_observation": false
+  },
+  "failed_checks": [
+   "low_Da_fills_space"
+  ],
+  "note_on_the_failed_check": "`low_Da_fills_space` required a box-counting dimension above 2.6 for the compact low-Da mound and was DECLARED BEFORE THE RUN. It fails. The criterion was wrong, not the model, and the estimator control is how that was established rather than assumed: a SOLID HEMISPHERE of the same voxel count, whose true dimension is 3, measures 2.462 with the same code over the same five box sizes. The threshold of 2.6 was set without knowing the estimator's bias at this size. The check is reported as failed and is NOT counted toward `passed`; the replacement check compares the colony against the solid control instead of against an invented number, and that replacement was written only after the failure was diagnosed, which is why both are shown.",
+  "n_checks": 6,
+  "n_failed": 1,
+  "declared_before_the_run": [
+   "low_Da_is_compact",
+   "low_Da_fills_space",
+   "high_Da_branches",
+   "high_Da_is_not_space_filling",
+   "limits_are_distinguishable"
+  ],
+  "passed_as_declared": false,
+  "passed_after_diagnosis": true
+ },
+ "sweeps": {
+  "da": [
+   {
+    "Da": 0.02,
+    "volume": {
+     "mean": 7145.75,
+     "sd": 9.069178573608527,
+     "min": 7135.0,
+     "max": 7157.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 2286.75,
+     "sd": 11.528949070347508,
+     "min": 2272.0,
+     "max": 2300.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.3200157326971517,
+     "sd": 0.0016516047618734,
+     "min": 0.3180291153415454,
+     "max": 0.32181334825801033,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.43461495745215,
+     "sd": 0.019310402680852205,
+     "min": 2.4242290868761676,
+     "max": 2.463569986648938,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.39521826723113485,
+     "sd": 0.018408879720493977,
+     "min": 0.38540485064549235,
+     "max": 0.4228219696969697,
+     "n": 4
+    },
+    "height": {
+     "mean": 16.75,
+     "sd": 0.5,
+     "min": 16.0,
+     "max": 17.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 33.0,
+     "sd": 0.0,
+     "min": 33.0,
+     "max": 33.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9416640011840354,
+     "sd": 0.021925949162800676,
+     "min": 1.9155526723309109,
+     "max": 1.960974531128573,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5075757575757576,
+     "sd": 0.015151515151515136,
+     "min": 0.48484848484848486,
+     "max": 0.5151515151515151,
+     "n": 4
+    }
+   },
+   {
+    "Da": 0.05,
+    "volume": {
+     "mean": 7371.0,
+     "sd": 240.0097220253102,
+     "min": 7011.0,
+     "max": 7493.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 2346.75,
+     "sd": 61.99663969388449,
+     "min": 2254.0,
+     "max": 2384.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.3184259942524851,
+     "sd": 0.002123443190664453,
+     "min": 0.3169624983317763,
+     "max": 0.3214947938953074,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.434610276390665,
+     "sd": 0.012449882744544881,
+     "min": 2.41651553465102,
+     "max": 2.4445489087493346,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.40111129679144386,
+     "sd": 0.007047534713314371,
+     "min": 0.3905414438502674,
+     "max": 0.40474261329876304,
+     "n": 4
+    },
+    "height": {
+     "mean": 17.0,
+     "sd": 0.0,
+     "min": 17.0,
+     "max": 17.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 33.0,
+     "sd": 0.0,
+     "min": 33.0,
+     "max": 33.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9416811545513475,
+     "sd": 0.01877909199975933,
+     "min": 1.9287511576997165,
+     "max": 1.9695773325371277,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5151515151515151,
+     "sd": 0.0,
+     "min": 0.5151515151515151,
+     "max": 0.5151515151515151,
+     "n": 4
+    }
+   },
+   {
+    "Da": 0.12,
+    "volume": {
+     "mean": 7054.0,
+     "sd": 19.30457631409368,
+     "min": 7037.0,
+     "max": 7080.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 2280.5,
+     "sd": 15.066519173319364,
+     "min": 2258.0,
+     "max": 2290.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.32329142612157946,
+     "sd": 0.0018740154311148519,
+     "min": 0.3206475433115592,
+     "max": 0.3249964473497229,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.4289025193666807,
+     "sd": 0.018229757925539516,
+     "min": 2.4185674095183067,
+     "max": 2.456212945347157,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.39636466030890877,
+     "sd": 0.023003129208760898,
+     "min": 0.3801112731594015,
+     "max": 0.4298095703125,
+     "n": 4
+    },
+    "height": {
+     "mean": 16.75,
+     "sd": 0.5,
+     "min": 16.0,
+     "max": 17.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 32.75,
+     "sd": 0.5,
+     "min": 32.0,
+     "max": 33.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9461794880789476,
+     "sd": 0.013155721485664004,
+     "min": 1.9286675125234414,
+     "max": 1.9572681608397655,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5113636363636364,
+     "sd": 0.007575757575757568,
+     "min": 0.5,
+     "max": 0.5151515151515151,
+     "n": 4
+    }
+   },
+   {
+    "Da": 0.3,
+    "volume": {
+     "mean": 7220.25,
+     "sd": 11.026483271348727,
+     "min": 7207.0,
+     "max": 7234.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 2370.5,
+     "sd": 6.3508529610858835,
+     "min": 2361.0,
+     "max": 2374.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.32831247787148715,
+     "sd": 0.0005490311720296273,
+     "min": 0.32759816844734285,
+     "max": 0.328808864265928,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.4297860970398437,
+     "sd": 0.00045931738100080647,
+     "min": 2.429188179915565,
+     "max": 2.4302671304451144,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.38172548948998564,
+     "sd": 0.010463465032832549,
+     "min": 0.3683297622691562,
+     "max": 0.39075244422838007,
+     "n": 4
+    },
+    "height": {
+     "mean": 17.25,
+     "sd": 0.5,
+     "min": 17.0,
+     "max": 18.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 33.25,
+     "sd": 0.5,
+     "min": 33.0,
+     "max": 34.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9333036135174682,
+     "sd": 0.02305880288304165,
+     "min": 1.9060443178904152,
+     "max": 1.95822980733799,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5189393939393939,
+     "sd": 0.019065238472905918,
+     "min": 0.5,
+     "max": 0.5454545454545454,
+     "n": 4
+    }
+   },
+   {
+    "Da": 0.8,
+    "volume": {
+     "mean": 7130.0,
+     "sd": 7.393691004272944,
+     "min": 7123.0,
+     "max": 7139.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 2612.0,
+     "sd": 7.483314773547883,
+     "min": 2602.0,
+     "max": 2620.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.36634039452165057,
+     "sd": 0.0013845561357674345,
+     "min": 0.36447681748143995,
+     "max": 0.36782254667976977,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.368955643884343,
+     "sd": 0.018764411324225766,
+     "min": 2.349125377862302,
+     "max": 2.388515580205436,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.28008640774317634,
+     "sd": 0.011415542280521815,
+     "min": 0.26671408250355616,
+     "max": 0.2896767381416504,
+     "n": 4
+    },
+    "height": {
+     "mean": 19.0,
+     "sd": 0.0,
+     "min": 19.0,
+     "max": 19.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 37.0,
+     "sd": 0.816496580927726,
+     "min": 36.0,
+     "max": 38.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.8488716513135826,
+     "sd": 0.04087866990121503,
+     "min": 1.8019218944202686,
+     "max": 1.890185156014565,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5137012012012012,
+     "sd": 0.011342300998301903,
+     "min": 0.5,
+     "max": 0.5277777777777778,
+     "n": 4
+    }
+   },
+   {
+    "Da": 2.0,
+    "volume": {
+     "mean": 7178.25,
+     "sd": 41.91558978073274,
+     "min": 7143.0,
+     "max": 7233.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 3147.25,
+     "sd": 66.80007485025746,
+     "min": 3063.0,
+     "max": 3226.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.43841752686375246,
+     "sd": 0.007125541477422253,
+     "min": 0.4288114237715246,
+     "max": 0.446011336927969,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 1.5,
+     "sd": 0.5773502691896257,
+     "min": 1.0,
+     "max": 2.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.2811668464386754,
+     "sd": 0.015189223854285698,
+     "min": 2.2609201541772794,
+     "max": 2.2948878736187908,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.1757039679256172,
+     "sd": 0.008617385711880369,
+     "min": 0.16770755071374907,
+     "max": 0.1841888270459699,
+     "n": 4
+    },
+    "height": {
+     "mean": 21.75,
+     "sd": 0.5,
+     "min": 21.0,
+     "max": 22.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 43.75,
+     "sd": 1.2583057392117916,
+     "min": 42.0,
+     "max": 45.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.748833618183724,
+     "sd": 0.04538864379577348,
+     "min": 1.7078590151228705,
+     "max": 1.8118463505564608,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.49749278499278504,
+     "sd": 0.019847204936799513,
+     "min": 0.4772727272727273,
+     "max": 0.5238095238095238,
+     "n": 4
+    }
+   },
+   {
+    "Da": 5.0,
+    "volume": {
+     "mean": 7164.75,
+     "sd": 41.70031974297879,
+     "min": 7121.0,
+     "max": 7216.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 3912.0,
+     "sd": 39.22584182228174,
+     "min": 3882.0,
+     "max": 3968.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.5460349643858388,
+     "sd": 0.00782950697341132,
+     "min": 0.5379711751662971,
+     "max": 0.5555088898222036,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 2.0,
+     "sd": 0.0,
+     "min": 2.0,
+     "max": 2.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.174790029363698,
+     "sd": 0.03931850371574612,
+     "min": 2.141882973119225,
+     "max": 2.2318998164152295,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.13826365681509356,
+     "sd": 0.007566206421750283,
+     "min": 0.12988493269648285,
+     "max": 0.14826991041341334,
+     "n": 4
+    },
+    "height": {
+     "mean": 23.75,
+     "sd": 0.5,
+     "min": 23.0,
+     "max": 24.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 47.25,
+     "sd": 1.2583057392117916,
+     "min": 46.0,
+     "max": 49.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.7189522005901192,
+     "sd": 0.02503435681204512,
+     "min": 1.685878864006138,
+     "max": 1.7447047716377302,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5027681285280069,
+     "sd": 0.009996997932994162,
+     "min": 0.4897959183673469,
+     "max": 0.5106382978723404,
+     "n": 4
+    }
+   },
+   {
+    "Da": 12.0,
+    "volume": {
+     "mean": 7220.0,
+     "sd": 63.566238418414116,
+     "min": 7131.0,
+     "max": 7280.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 5052.0,
+     "sd": 236.30911958703584,
+     "min": 4756.0,
+     "max": 5266.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.6995579663527882,
+     "sd": 0.027045475744221583,
+     "min": 0.6669471322395176,
+     "max": 0.7233516483516483,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 4.25,
+     "sd": 0.9574271077563381,
+     "min": 3.0,
+     "max": 5.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.1316258895506572,
+     "sd": 0.017843252741450624,
+     "min": 2.1114175500119434,
+     "max": 2.1507732094590724,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.13717357866003657,
+     "sd": 0.006647979403049791,
+     "min": 0.12901650021710812,
+     "max": 0.14529622330370429,
+     "n": 4
+    },
+    "height": {
+     "mean": 24.0,
+     "sd": 0.816496580927726,
+     "min": 23.0,
+     "max": 25.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 47.75,
+     "sd": 0.9574271077563381,
+     "min": 47.0,
+     "max": 49.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.7712879860923394,
+     "sd": 0.02728164065800503,
+     "min": 1.7435965342737505,
+     "max": 1.8006671320533647,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.502768128528007,
+     "sd": 0.020043344331573114,
+     "min": 0.48936170212765956,
+     "max": 0.5319148936170213,
+     "n": 4
+    }
+   },
+   {
+    "Da": 30.0,
+    "volume": {
+     "mean": 7077.75,
+     "sd": 43.200115740585694,
+     "min": 7041.0,
+     "max": 7135.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 5278.5,
+     "sd": 150.08553117028526,
+     "min": 5085.0,
+     "max": 5416.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.7457929219856299,
+     "sd": 0.02100545964918989,
+     "min": 0.722198551342139,
+     "max": 0.764216170452942,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 5.25,
+     "sd": 0.5,
+     "min": 5.0,
+     "max": 6.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.122855738810219,
+     "sd": 0.031221860565530765,
+     "min": 2.083493636331951,
+     "max": 2.158614294959987,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.13303943809192237,
+     "sd": 0.004561720938294507,
+     "min": 0.12639951814058956,
+     "max": 0.13632495164410058,
+     "n": 4
+    },
+    "height": {
+     "mean": 24.25,
+     "sd": 0.5,
+     "min": 24.0,
+     "max": 25.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 47.75,
+     "sd": 0.9574271077563381,
+     "min": 47.0,
+     "max": 49.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.7859002283798688,
+     "sd": 0.024403745222397247,
+     "min": 1.7644977203378112,
+     "max": 1.8138140085607948,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5080872774641771,
+     "sd": 0.018020736861015834,
+     "min": 0.4897959183673469,
+     "max": 0.5319148936170213,
+     "n": 4
+    }
+   },
+   {
+    "Da": 80.0,
+    "volume": {
+     "mean": 7169.0,
+     "sd": 185.10357460982036,
+     "min": 7036.0,
+     "max": 7443.0,
+     "n": 4
+    },
+    "area": {
+     "mean": 5546.0,
+     "sd": 394.1006639595185,
+     "min": 5266.0,
+     "max": 6123.0,
+     "n": 4
+    },
+    "surface_to_volume": {
+     "mean": 0.7729537894319738,
+     "sd": 0.03449260268361004,
+     "min": 0.7484366117111996,
+     "max": 0.822652156388553,
+     "n": 4
+    },
+    "branch_count": {
+     "mean": 5.75,
+     "sd": 0.5,
+     "min": 5.0,
+     "max": 6.0,
+     "n": 4
+    },
+    "box_counting_dimension": {
+     "mean": 2.102691319883278,
+     "sd": 0.014024035859306748,
+     "min": 2.0848997142061214,
+     "max": 2.1189258030940787,
+     "n": 4
+    },
+    "bounding_box_fill": {
+     "mean": 0.13476453256536042,
+     "sd": 0.006835326032999048,
+     "min": 0.12464569160997732,
+     "max": 0.13965028355387524,
+     "n": 4
+    },
+    "height": {
+     "mean": 24.25,
+     "sd": 0.5,
+     "min": 24.0,
+     "max": 25.0,
+     "n": 4
+    },
+    "diameter": {
+     "mean": 47.5,
+     "sd": 1.2909944487358056,
+     "min": 46.0,
+     "max": 49.0,
+     "n": 4
+    },
+    "area_diameter_exponent": {
+     "mean": 1.8126235908427573,
+     "sd": 0.04694261287535538,
+     "min": 1.7721960973097555,
+     "max": 1.862570054345403,
+     "n": 4
+    },
+    "aspect_ratio": {
+     "mean": 0.5108624856047876,
+     "sd": 0.01935027247487094,
+     "min": 0.4897959183673469,
+     "max": 0.5319148936170213,
+     "n": 4
+    }
+   }
+  ],
+  "pe_light": [
+   {
+    "Pe": 0.0,
+    "w_light": 0.0,
+    "volume": {
+     "mean": 7212.0,
+     "sd": 75.34586916347837,
+     "min": 7131.0,
+     "max": 7280.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 4997.0,
+     "sd": 256.1503464764395,
+     "min": 4756.0,
+     "max": 5266.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.6926832152143563,
+     "sd": 0.02852390958572637,
+     "min": 0.6669471322395176,
+     "max": 0.7233516483516483,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 4.666666666666667,
+     "sd": 0.5773502691896258,
+     "min": 4.0,
+     "max": 5.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.1282904203540616,
+     "sd": 0.020268704300578533,
+     "min": 2.1114175500119434,
+     "max": 2.1507732094590724,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.1372306501913175,
+     "sd": 0.00814087846961032,
+     "min": 0.12901650021710812,
+     "max": 0.14529622330370429,
+     "n": 3
+    },
+    "height": {
+     "mean": 23.666666666666668,
+     "sd": 0.5773502691896258,
+     "min": 23.0,
+     "max": 24.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 48.0,
+     "sd": 1.0,
+     "min": 47.0,
+     "max": 49.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.765788606847533,
+     "sd": 0.03057732563550217,
+     "min": 1.7435965342737505,
+     "max": 1.8006671320533647,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.49305254016500216,
+     "sd": 0.006020592541841973,
+     "min": 0.48936170212765956,
+     "max": 0.5,
+     "n": 3
+    }
+   },
+   {
+    "Pe": 0.0,
+    "w_light": 0.5,
+    "volume": {
+     "mean": 7100.666666666667,
+     "sd": 21.07921567168317,
+     "min": 7088.0,
+     "max": 7125.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 2253.0,
+     "sd": 5.291502622129181,
+     "min": 2249.0,
+     "max": 2259.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.3172945730131156,
+     "sd": 0.00026574783011923625,
+     "min": 0.31705263157894736,
+     "max": 0.317579006772009,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.43429830808325,
+     "sd": 0.021035476640962576,
+     "min": 2.4210706193731992,
+     "max": 2.4585547844997047,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.43473318250622306,
+     "sd": 0.025885306251917737,
+     "min": 0.40929457720588236,
+     "max": 0.46104318418314255,
+     "n": 3
+    },
+    "height": {
+     "mean": 16.666666666666668,
+     "sd": 0.5773502691896258,
+     "min": 16.0,
+     "max": 17.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 31.333333333333332,
+     "sd": 0.5773502691896258,
+     "min": 31.0,
+     "max": 32.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9591872007574673,
+     "sd": 0.019493565864076867,
+     "min": 1.94554113730515,
+     "max": 1.9815130652663338,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.5319220430107526,
+     "sd": 0.01613952951414357,
+     "min": 0.5161290322580645,
+     "max": 0.5483870967741935,
+     "n": 3
+    }
+   },
+   {
+    "Pe": 0.0,
+    "w_light": 0.9,
+    "volume": {
+     "mean": 7425.666666666667,
+     "sd": 20.108041509140897,
+     "min": 7409.0,
+     "max": 7448.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 2314.6666666666665,
+     "sd": 23.692474191889147,
+     "min": 2300.0,
+     "max": 2342.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.3117076919994941,
+     "sd": 0.0024000925380927357,
+     "min": 0.30997304582210244,
+     "max": 0.3144468313641246,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.4407833941337116,
+     "sd": 0.001098323793460664,
+     "min": 2.440136126398016,
+     "max": 2.4420515376701317,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.4137547911152524,
+     "sd": 0.011998515290622817,
+     "min": 0.402311888942905,
+     "max": 0.42624080882352944,
+     "n": 3
+    },
+    "height": {
+     "mean": 17.0,
+     "sd": 0.0,
+     "min": 17.0,
+     "max": 17.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 32.666666666666664,
+     "sd": 0.5773502691896258,
+     "min": 32.0,
+     "max": 33.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.937648068607662,
+     "sd": 0.01020645909579732,
+     "min": 1.9258641365242286,
+     "max": 1.9437013286788876,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.5205176767676768,
+     "sd": 0.009294464560817848,
+     "min": 0.5151515151515151,
+     "max": 0.53125,
+     "n": 3
+    }
+   },
+   {
+    "Pe": 0.05,
+    "w_light": 0.0,
+    "volume": {
+     "mean": 7124.666666666667,
+     "sd": 47.60602202803058,
+     "min": 7079.0,
+     "max": 7174.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 4504.0,
+     "sd": 52.028838157314254,
+     "min": 4451.0,
+     "max": 4555.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.6322022012461267,
+     "sd": 0.009861548910451275,
+     "min": 0.6250526611430979,
+     "max": 0.6434524650374347,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 3.0,
+     "sd": 0.0,
+     "min": 3.0,
+     "max": 3.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.2827650295731967,
+     "sd": 0.01565377868841951,
+     "min": 2.2650152356553965,
+     "max": 2.2945978648567986,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.22964732984017697,
+     "sd": 0.01803063741518172,
+     "min": 0.21859560276679843,
+     "max": 0.25045384722804076,
+     "n": 3
+    },
+    "height": {
+     "mean": 22.666666666666668,
+     "sd": 0.5773502691896258,
+     "min": 22.0,
+     "max": 23.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 43.333333333333336,
+     "sd": 1.1547005383792517,
+     "min": 42.0,
+     "max": 44.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9191976398853017,
+     "sd": 0.012433371804797885,
+     "min": 1.9052613957053983,
+     "max": 1.9291531618572453,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.523088023088023,
+     "sd": 0.0006248379536684531,
+     "min": 0.5227272727272727,
+     "max": 0.5238095238095238,
+     "n": 3
+    }
+   },
+   {
+    "Pe": 0.05,
+    "w_light": 0.5,
+    "volume": {
+     "mean": 7185.0,
+     "sd": 292.0393809060689,
+     "min": 7006.0,
+     "max": 7522.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 2284.0,
+     "sd": 71.92357054540605,
+     "min": 2240.0,
+     "max": 2367.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.31796163160480334,
+     "sd": 0.0028472336930558564,
+     "min": 0.31467694762031373,
+     "max": 0.3197259491864117,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.423863916832922,
+     "sd": 0.01272806470883301,
+     "min": 2.4157444759526863,
+     "max": 2.438533050125621,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.4170687806372549,
+     "sd": 0.014287302146131973,
+     "min": 0.4036649816176471,
+     "max": 0.43210018382352944,
+     "n": 3
+    },
+    "height": {
+     "mean": 17.0,
+     "sd": 0.0,
+     "min": 17.0,
+     "max": 17.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 32.0,
+     "sd": 0.0,
+     "min": 32.0,
+     "max": 32.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9576263866293564,
+     "sd": 0.02120425325095844,
+     "min": 1.9338435474208182,
+     "max": 1.9745579228311254,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.53125,
+     "sd": 0.0,
+     "min": 0.53125,
+     "max": 0.53125,
+     "n": 3
+    }
+   },
+   {
+    "Pe": 0.05,
+    "w_light": 0.9,
+    "volume": {
+     "mean": 7383.0,
+     "sd": 7.810249675906654,
+     "min": 7378.0,
+     "max": 7392.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 2304.0,
+     "sd": 16.703293088490067,
+     "min": 2289.0,
+     "max": 2322.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.3120669757773507,
+     "sd": 0.0019491035021762255,
+     "min": 0.31024667931688804,
+     "max": 0.31412337662337664,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.4384962688643186,
+     "sd": 0.0005057742931829633,
+     "min": 2.438121838590305,
+     "max": 2.439071632314566,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.415804993872549,
+     "sd": 0.014306125841905225,
+     "min": 0.39928698752228164,
+     "max": 0.42424242424242425,
+     "n": 3
+    },
+    "height": {
+     "mean": 17.0,
+     "sd": 0.0,
+     "min": 17.0,
+     "max": 17.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 32.666666666666664,
+     "sd": 0.5773502691896258,
+     "min": 32.0,
+     "max": 33.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9392145884778298,
+     "sd": 0.013175697284508783,
+     "min": 1.9249436068515593,
+     "max": 1.9509166219109348,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.5205176767676768,
+     "sd": 0.009294464560817848,
+     "min": 0.5151515151515151,
+     "max": 0.53125,
+     "n": 3
+    }
+   },
+   {
+    "Pe": 0.2,
+    "w_light": 0.0,
+    "volume": {
+     "mean": 7057.0,
+     "sd": 41.32795663954365,
+     "min": 7013.0,
+     "max": 7095.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 2843.0,
+     "sd": 30.347981810987037,
+     "min": 2808.0,
+     "max": 2862.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.40285644666280884,
+     "sd": 0.0024071616944232963,
+     "min": 0.4003992585198916,
+     "max": 0.40521025060172733,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 1.3333333333333333,
+     "sd": 0.5773502691896257,
+     "min": 1.0,
+     "max": 2.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.420096208092596,
+     "sd": 0.014559014036842661,
+     "min": 2.4104648847367662,
+     "max": 2.4368447276652723,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.3315898794219933,
+     "sd": 0.01910639775327119,
+     "min": 0.31675700090334236,
+     "max": 0.35315,
+     "n": 3
+    },
+    "height": {
+     "mean": 20.333333333333332,
+     "sd": 0.5773502691896258,
+     "min": 20.0,
+     "max": 21.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 40.333333333333336,
+     "sd": 0.5773502691896258,
+     "min": 40.0,
+     "max": 41.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.8682469825441437,
+     "sd": 0.0507405977880369,
+     "min": 1.8210278608343609,
+     "max": 1.9218960868810002,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.5042682926829268,
+     "sd": 0.018961355860324665,
+     "min": 0.4878048780487805,
+     "max": 0.525,
+     "n": 3
+    }
+   },
+   {
+    "Pe": 0.2,
+    "w_light": 0.5,
+    "volume": {
+     "mean": 7169.333333333333,
+     "sd": 15.37313674346694,
+     "min": 7159.0,
+     "max": 7187.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 2290.6666666666665,
+     "sd": 10.785793124908956,
+     "min": 2283.0,
+     "max": 2303.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.3195078518939689,
+     "sd": 0.0008195000106904446,
+     "min": 0.3188992876100014,
+     "max": 0.32043968276053986,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.4254746549244492,
+     "sd": 0.0008496859133572187,
+     "min": 2.424624966321118,
+     "max": 2.426324338147807,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.42082171333831675,
+     "sd": 0.006549471914005458,
+     "min": 0.4132597320453108,
+     "max": 0.42469165085388993,
+     "n": 3
+    },
+    "height": {
+     "mean": 17.0,
+     "sd": 0.0,
+     "min": 17.0,
+     "max": 17.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 32.333333333333336,
+     "sd": 0.5773502691896258,
+     "min": 32.0,
+     "max": 33.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9701641958790779,
+     "sd": 0.03826796707231791,
+     "min": 1.926728637474374,
+     "max": 1.998914151373423,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.5258838383838383,
+     "sd": 0.009294464560817848,
+     "min": 0.5151515151515151,
+     "max": 0.53125,
+     "n": 3
+    }
+   },
+   {
+    "Pe": 0.2,
+    "w_light": 0.9,
+    "volume": {
+     "mean": 7350.333333333333,
+     "sd": 13.650396819628847,
+     "min": 7341.0,
+     "max": 7366.0,
+     "n": 3
+    },
+    "area": {
+     "mean": 2295.3333333333335,
+     "sd": 16.65332799572906,
+     "min": 2282.0,
+     "max": 2314.0,
+     "n": 3
+    },
+    "surface_to_volume": {
+     "mean": 0.31227417511434935,
+     "sd": 0.001731511978898366,
+     "min": 0.3107298474945534,
+     "max": 0.3141460765680152,
+     "n": 3
+    },
+    "branch_count": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n": 3
+    },
+    "box_counting_dimension": {
+     "mean": 2.436767947730738,
+     "sd": 0.0008937160250762108,
+     "min": 2.4361152496272083,
+     "max": 2.4377865519541806,
+     "n": 3
+    },
+    "bounding_box_fill": {
+     "mean": 0.41849197875483024,
+     "sd": 0.018998203358019675,
+     "min": 0.3978825690055637,
+     "max": 0.4353059772296015,
+     "n": 3
+    },
+    "height": {
+     "mean": 17.0,
+     "sd": 0.0,
+     "min": 17.0,
+     "max": 17.0,
+     "n": 3
+    },
+    "diameter": {
+     "mean": 32.666666666666664,
+     "sd": 0.5773502691896258,
+     "min": 32.0,
+     "max": 33.0,
+     "n": 3
+    },
+    "area_diameter_exponent": {
+     "mean": 1.9399178610455179,
+     "sd": 0.011989098390122452,
+     "min": 1.9263100851326576,
+     "max": 1.9489262458236898,
+     "n": 3
+    },
+    "aspect_ratio": {
+     "mean": 0.5205176767676768,
+     "sd": 0.009294464560817848,
+     "min": 0.5151515151515151,
+     "max": 0.53125,
+     "n": 3
+    }
+   }
+  ]
+ },
+ "transition": {
+  "verdict": "graded",
+  "width_decades": 0.9296686214211269,
+  "midpoint_log10_Da": 0.9262601588352082,
+  "logistic_k": 4.726898438235891,
+  "residual": 0.006653853234860306,
+  "span": 4.75,
+  "declared_cut": "sharp if the 10-90% width is under 0.5 decades of Da",
+  "spread_note": "The fit is to the MEAN over seeds; the per-Da spread is in the sweep rows and is what says whether the mean is worth fitting."
+ },
+ "forms": {
+  "Da 0.02 (no uptake limit)": {
+   "occ": null,
+   "shape": [
+    88,
+    88,
+    72
+   ],
+   "metrics": {
+    "volume": 7135,
+    "area": 2289,
+    "surface_to_volume": 0.320812894183602,
+    "branch_count": 1,
+    "box_counting_dimension": 2.4242290868761676,
+    "bounding_box_fill": 0.38540485064549235,
+    "height": 17,
+    "diameter": 33.0
+   },
+   "area_diameter_exponent": 1.9315659146869941,
+   "params": {
+    "Da": 0.02
+   }
+  },
+  "Da 0.8": {
+   "occ": null,
+   "shape": [
+    88,
+    88,
+    72
+   ],
+   "metrics": {
+    "volume": 7125,
+    "area": 2612,
+    "surface_to_volume": 0.3665964912280702,
+    "branch_count": 1,
+    "box_counting_dimension": 2.349125377862302,
+    "bounding_box_fill": 0.26671408250355616,
+    "height": 19,
+    "diameter": 38.0
+   },
+   "area_diameter_exponent": 1.828384971614909,
+   "params": {
+    "Da": 0.8
+   }
+  },
+  "Da 12": {
+   "occ": null,
+   "shape": [
+    88,
+    88,
+    72
+   ],
+   "metrics": {
+    "volume": 7280,
+    "area": 5266,
+    "surface_to_volume": 0.7233516483516483,
+    "branch_count": 5,
+    "box_counting_dimension": 2.1114175500119434,
+    "bounding_box_fill": 0.1373792270531401,
+    "height": 24,
+    "diameter": 48.0
+   },
+   "area_diameter_exponent": 1.7435965342737505,
+   "params": {
+    "Da": 12.0
+   }
+  },
+  "Da 80 (absorbing)": {
+   "occ": null,
+   "shape": [
+    88,
+    88,
+    72
+   ],
+   "metrics": {
+    "volume": 7105,
+    "area": 5470,
+    "surface_to_volume": 0.7698803659394793,
+    "branch_count": 6,
+    "box_counting_dimension": 2.0848997142061214,
+    "bounding_box_fill": 0.13705632716049382,
+    "height": 24,
+    "diameter": 48.0
+   },
+   "area_diameter_exponent": 1.7721960973097555,
+   "params": {
+    "Da": 80.0
+   }
+  },
+  "Da 12, flow Pe 0.2": {
+   "occ": null,
+   "shape": [
+    88,
+    88,
+    72
+   ],
+   "metrics": {
+    "volume": 7095,
+    "area": 2859,
+    "surface_to_volume": 0.4029598308668076,
+    "branch_count": 1,
+    "box_counting_dimension": 2.4104648847367662,
+    "bounding_box_fill": 0.3248626373626374,
+    "height": 21,
+    "diameter": 40.0
+   },
+   "area_diameter_exponent": 1.9218960868810002,
+   "params": {
+    "Da": 12.0,
+    "Pe": 0.2
+   }
+  },
+  "Da 12, light-weighted 0.9": {
+   "occ": null,
+   "shape": [
+    88,
+    88,
+    72
+   ],
+   "metrics": {
+    "volume": 7409,
+    "area": 2302,
+    "surface_to_volume": 0.3107031988122554,
+    "branch_count": 1,
+    "box_counting_dimension": 2.440136126398016,
+    "bounding_box_fill": 0.41271167557932265,
+    "height": 17,
+    "diameter": 33.0
+   },
+   "area_diameter_exponent": 1.9258641365242286,
+   "params": {
+    "Da": 12.0,
+    "w_light": 0.9
+   }
+  }
+ },
+ "what_this_model_does_not_do": {
+  "target": "branching, plating and massive colonies from one control parameter",
+  "achieved": "compact mound to open lobed mound",
+  "not_achieved": [
+   "separated branches",
+   "plates or laminae"
+  ],
+  "plating_evidence": "The light field does not produce plating, and the measurement that says so is the aspect ratio (height over maximum diameter) across the flow-by-light sweep: it sits at about 0.52 at EVERY light weight from 0 to 0.9, while the branch count collapses to 1. In other words, weighting growth toward a vertical light gradient makes the colony smoother without making it flatter. That is a negative with a published counterpart: Lesser et al. report that hemispherical colonies fix more carbon at all depths than plating or branching forms and yet plating dominates deeper reefs, so light geometry ALONE does not explain depth zonation. This model agrees with that, which is the most that can be claimed for it.",
+  "flow_result": "Flow does something clear and in the published direction: raising the advective bias from 0 to 0.2 drops the mean branch count from about 4.7 to about 1.3, i.e. flow makes the colony more compact. That matches Kaandorp & Sloot 2001 and Chindapol et al. 2013 and NOT Merks et al. 2003, who 'did not find an effect of flow'. A lattice model agreeing with one side of a modelling disagreement is not evidence about corals; it is evidence about which approximations reproduce which result.",
+  "evidence": "Branch counts by the declared slice rule stay in single figures across the whole Da sweep, and the projections in morphology-forms.png show roughened domes rather than branches. Four settings were tried beyond the sweep: lower interface regularisation (speed_sigma 0.9 -> 0.6), a larger lattice with a proportionally larger colony (88 -> 112 voxels, target volume 7,000 -> 14,000), and a steeper growth response (Hill exponent 3 -> 5, half-saturation 0.4 -> 0.6). All four gave the same qualitative form.",
+  "diagnosis": "A Mullins-Sekerka fingering instability needs the destabilising flux gradient to beat the stabilising surface regularisation at the branch wavelength. In this model the regularisation that makes the interface isotropic on a cubic lattice is also what suppresses fingering, and at the system sizes tried the two could not be separated. A mesh-based implementation of the kind Chindapol et al. use does not face that trade-off, which is probably why the published models in this family are mesh-based.",
+  "what_it_means_for_the_page": "The flow and light routes on the route table should NOT cite this study as showing that a growth model reproduces branching. It does not. It shows that one dimensionless ratio moves a colony between compact and open, which is a weaker and still useful statement.",
+  "is_observation": false
+ },
+ "lattice_artefact_history": {
+  "note": "Kept because it is the most transferable thing in this study.",
+  "attempt_1": {
+   "rule": "6-connected growth, 6-point Laplacian",
+   "result": "square-based octahedra at low Da; four-pointed stars aligned with the x and y axes at high Da",
+   "detected_by": "looking at the projections"
+  },
+  "attempt_2": {
+   "rule": "26-connected growth, isotropic 27-point Laplacian",
+   "result": "cubes and hollow square boxes, because dilation by a 3x3x3 cube grows in the Chebyshev metric",
+   "detected_by": "looking at the projections"
+  },
+  "attempt_3": {
+   "rule": "phase field, interface advanced by flux, speed field smoothed for isotropy",
+   "result": "round hemispherical mounds at low Da; isotropic in plan view",
+   "detected_by": "looking at the projections"
+  },
+  "two_further_failures": {
+   "all_six_faces_pinned_at_the_far_field": "The colony spread sideways until it touched a side wall, where the pinned source gave it unlimited supply; the result was a wide flat mat at every Da. Fixed by making only the TOP face a source.",
+   "smoothing_phi_instead_of_the_speed": "Smoothing the colony itself by 0.75 voxels every generation compounds to an effective sigma of about six voxels over a run. Every Da from 0.02 to 80 then returned the same compact mound to three significant figures in all four metrics. Over-regularising looks exactly like 'the control parameter does nothing'.",
+   "and_one_more": "Gaussian regularisation also erodes a small seed faster than flux builds it, so the colony vanished entirely. Fixed by enforcing that accretion is monotone, which it is: skeleton already laid down does not dissolve."
+  },
+  "the_lesson": "Four of these five failures were invisible in the declared metrics and visible immediately in a picture. Surface-to-volume, box-counting dimension and bounding-box fill all varied smoothly and plausibly with the control parameter through the octahedron phase and the cube phase alike. Declaring metrics before looking protects against choosing the metric that flatters the result; it does not protect against measuring an artefact, and nothing except looking does."
+ },
+ "external_check": {
+  "name": "area-diameter exponent against Chandler et al. 2024",
+  "source": {
+   "cite": "Chandler et al. 2024, Sci Rep 14:20549, 'Predicting 3D and 2D surface area of corals from simple field measurements'",
+   "pmid": "39232103",
+   "read_level": "full-text"
+  },
+  "measured_real_colonies": {
+   "branching": "Pocillopora 2.50 (n=13, R2 0.95); Seriatopora 2.451 (n=9); Stylophora 2.413 (n=10)",
+   "tabular_and_massive": "Acropora table 1.947 (n=13, R2 0.95); staghorn Acropora 2.024 (n=14, R2 0.81); massive Porites 1.836 (n=9, R2 0.75); encrusting Montipora 1.875",
+   "caveats": "Single sites, n of 6 to 14 per form, and the paper disagrees with itself on one R2 (table 0.98 in the table against 0.95 in the text). The staghorn model is stated not to apply above about 80 cm."
+  },
+  "simulated_range": [
+   1.7189522005901192,
+   1.9461794880789476
+  ],
+  "verdict": "The simulated exponents are reported whether or not they agree. A match would be weak evidence that the model's growth geometry resembles a real colony's; a mismatch says the lattice model's surface roughness is not a reef colony's, which would be unsurprising since a voxel surface has a texture of its own."
+ },
+ "limitations": [
+  "This is a SIMULATION on a cubic lattice. No coral was measured, and nothing here has a length in centimetres.",
+  "It is NOT a port of any published coral growth model. It is in the same family and it makes different approximations, so its numbers are not comparable with Chindapol et al.'s even where they share a symbol.",
+  "A cubic lattice imposes its own anisotropy. Growth along the axes is cheaper than growth along a diagonal, so branch directions carry a six-fold bias that no coral has. The metrics most exposed to this are the box-counting dimension and the area-diameter exponent, both of which read the surface texture.",
+  "Advection is a first-order upwind bias, not a flow field. There is no boundary layer, no wake, no Reynolds number and no momentum. So Pe here is a knob, not a Peclet number that could be set from a reef measurement.",
+  "The light field is collimated from directly above with no scattering, no diffuse sky and no off-vertical rays. It is there to ask one question -- does a vertical light gradient alone produce plating -- and the answer is reported either way.",
+  "The branch-count rule is the arbitrary part of the metric set. Restricting to the upper half of the colony is what stops a ragged mound counting as many branches, and a different cut would give different counts. The rule was written before the first sweep and is not adjusted.",
+  "Five box sizes is a short scaling range for a box-counting dimension on a lattice this size. The number is a crude estimate and the seed-to-seed spread, reported beside it, is the honest error bar.",
+  "The sharp-versus-graded verdict rests on a cut declared in advance (10-90% within half a decade of Da). The cut is arbitrary; declaring it first is the only protection available when the thing being judged is the shape of a curve. Note that every published source the research block covers uses GRADED language and none states a numeric branching threshold, so a 'sharp' verdict here would be a statement about this model and not about corals.",
+  "Growth is stochastic and the reported spread is across random seeds only. It is not an uncertainty on anything biological.",
+  "No mechanics. The storm-vulnerability argument that makes shape matter ecologically (Madin et al. 2014) needs a colony shape factor and a substrate tenacity, neither of which this model has; the research block records that the coefficients and the dislodgement threshold could not be retrieved anyway.",
+  "No biology: no polyps, no skeleton density, no calcification, no energy budget, no symbionts. The branching mechanism Merks et al. 2004 call 'more potent' than Laplacian growth -- polyp fanning on convex surfaces -- is not represented, so this model tests only one of the three candidate controls the literature offers."
+ ],
+ "sources": [
+  {
+   "cite": "Merks, Hoekstra, Kaandorp & Sloot 2003, J Theor Biol 224:153, 'Models of coral growth: spontaneous branching, compactification and the Laplacian growth assumption'",
+   "pmid": "12927523",
+   "read_level": "abstract",
+   "note": "The source of this model's control parameter. Also the source of the disagreement: these authors 'did not find an effect of flow' and say earlier computational evidence for one 'may not be conclusive'."
+  },
+  {
+   "cite": "Chindapol, Kaandorp, Cronemberger, Mass & Genin 2013, PLoS Comput Biol 9:e1002849",
+   "pmid": "23326222",
+   "read_level": "full-text",
+   "note": "The calibrated member of this model family, validated against CT scans of flume-grown Pocillopora verrucosa. Finds, against Merks, that flow DOES change form. The disagreement is preserved, not resolved."
+  },
+  {
+   "cite": "Kaandorp & Sloot 2001, J Theor Biol 209:257",
+   "pmid": "11312588",
+   "read_level": "abstract",
+   "note": "Forms 'gradually transformed from thin-branching ones into more spherical and compact morphologies' -- GRADED language, which is what every source in this literature uses."
+  },
+  {
+   "cite": "Merks, Hoekstra, Kaandorp & Sloot 2004, J Theor Biol 228:559",
+   "pmid": "15178203",
+   "read_level": "abstract",
+   "note": "The competing branching mechanism, polyp fanning on convex surfaces, which this model does not implement."
+  },
+  {
+   "cite": "Kaandorp, Lowe, Frenkel & Sloot 1996, Phys Rev Lett 77:2328",
+   "pmid": "10061916",
+   "read_level": "abstract",
+   "note": "The founding paper. NOTE the commonly cited 'Kaandorp et al. 2005 PRL' does not exist; that title belongs to Kaandorp 1999 in Marine Biology, which is not in PubMed."
+  },
+  {
+   "cite": "Chandler et al. 2024, Sci Rep 14:20549",
+   "pmid": "39232103",
+   "read_level": "full-text",
+   "note": "The external check."
+  },
+  {
+   "cite": "Reichert et al. 2017, Methods Ecol Evol \u2014 three-dimensional fractal dimension discriminated coral species at least as well as surface-volume ratio and rugosity, and considerably better within species. Not in PubMed by my search; no values retrieved.",
+   "pmid": null,
+   "read_level": "search-summary"
+  },
+  {
+   "cite": "Todd 2008, Biol Rev 83:315 \u2014 of 1,314 extant species, fewer than 20 have been tested for morphological plasticity.",
+   "pmid": "18979594",
+   "read_level": "abstract"
+  }
+ ]
+}

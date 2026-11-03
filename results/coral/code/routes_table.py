@@ -1,0 +1,1601 @@
+#!/usr/bin/env python3
+"""routes_table.py — the 43 routes. Data only; build_routes.py validates and emits."""
+
+def R(**kw):
+    return kw
+
+
+ROUTES = [
+
+# ======================================================================================
+# MOLECULAR — sequence and regulation
+# ======================================================================================
+R(id="mol-coral-atac-first", outcome="enabling", scale="molecular",
+  title="Make the coral enhancer map that does not exist yet",
+  intervention="Generate ATAC-seq, ChIP-seq and Hi-C in Acropora and Stylophora, in "
+               "larvae, juveniles and heat-stressed adults, and validate a handful of "
+               "candidate enhancers with reporter constructs.",
+  predicted_phenotype="No coral. The product is the first map of which non-coding "
+                      "coral DNA is open and active, which is the thing every "
+                      "'tune the regulation of gene X' proposal below silently assumes "
+                      "already exists.",
+  mechanism="Infrastructure. Nothing is perturbed.",
+  evidence_strength="proposed",
+  reversibility="n/a", lethality_risk="none", difficulty="medium",
+  evidence=[
+      dict(cite="Scoped negative: PubMed query 'Acropora ATAC-seq' returns 0. The same "
+                "query shape for Nematostella returns 5 (PMIDs 36396969, 34299075, "
+                "31693674, 29856957, 24642862). Searched: PubMed only, one query shape, "
+                "genus Acropora only. NOT searched: Stylophora, Pocillopora, Porites, "
+                "Montipora individually, bioRxiv, GEO, SRA, theses. So the claim is "
+                "'no peer-reviewed coral enhancer-validation paper found in PubMed', "
+                "not 'none exists'.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Weizman et al. 2019, PLoS Genet 15:e1008397 — ATAC-seq in Nematostella; "
+                "259 active enhancers under light-dark and 333 under dark-dark. With "
+                "Schwaiger below, this is the only validated cnidarian cis-regulatory "
+                "dataset, so any 'edit coral enhancer X' proposal currently rests on "
+                "borrowing its grammar — which is cis_regulatory_inference at best.",
+           pmid="31693674", read_level="abstract"),
+      dict(cite="Schwaiger et al. 2014, Genome Res 24:639 — ChIP-seq of five chromatin "
+                "marks in Nematostella; >5,000 enhancers, 75% of those tested validated "
+                "in vivo. The positive control that makes the coral zero meaningful.",
+           pmid="24642862", read_level="abstract"),
+  ]),
+
+R(id="mol-methylation-priming", outcome="thermal", scale="molecular",
+  title="Reprogramme gene-body methylation to harden a colony",
+  intervention="Apply a conditioning regime, or a methylation-modifying treatment, "
+               "intended to leave a durable epigenetic mark.",
+  predicted_phenotype="Unpredictable, and the two papers read here point opposite ways. "
+                      "This route is in the table because it is widely proposed, not "
+                      "because anyone has shown it does anything.",
+  mechanism="Disputed. Methylation may reduce transcriptional noise and shift with "
+            "long-term stress, or may be unrelated to expression plasticity on "
+            "physiological timescales.",
+  evidence_strength="model_only",
+  reversibility="reversible in principle", lethality_risk="unknown", difficulty="high",
+  evidence=[
+      dict(cite="Liew et al. 2018, Sci Adv 4:eaar8028 — in Stylophora pistillata, "
+                "methylation reduces spurious transcription; long-term pH stress shifted "
+                "methylation in cell-cycle and body-size pathways, with larger cells and "
+                "more porous skeletons. Read as an epigenetic component of "
+                "acclimatisation BY THE AUTHORS.",
+           pmid="29881778", read_level="abstract"),
+      dict(cite="Abbott, Loockerman & Matz 2024, Evol Appl 17:e13662 — 'Modifications to "
+                "gene body methylation do not alter gene expression plasticity in a "
+                "reef-building coral'; methylation change had negligible or no "
+                "association with expression plasticity. DISAGREES with the above. The "
+                "two use different species and different stressors and neither reports "
+                "on the other, so this is unresolved rather than refuted.",
+           pmid="38390378", read_level="abstract"),
+  ]),
+
+# ======================================================================================
+# GENE — targeted edits in the animal
+# ======================================================================================
+R(id="gene-hsf1-knockout", outcome="enabling", scale="gene",
+  title="Knock out HSF1 — the calibration experiment, not a design",
+  intervention="Microinject Cas9 ribonucleoprotein and a guide against the heat-shock "
+               "transcription factor HSF1 into fertilised Acropora millepora eggs.",
+  predicted_phenotype="Larvae that live normally at 27 degC and die rapidly at 34 degC, "
+                      "where wild-type and Cas9-only larvae showed no detectable "
+                      "mortality. This marks the floor of coral thermal tolerance. It "
+                      "does NOT give you a heat-tolerant coral and was never meant to.",
+  mechanism="HSF1 is necessary for the larval heat-shock response; removing it removes "
+            "the response.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="none in that animal; injected generation only, no line",
+  lethality_risk="high at heat, low at ambient", difficulty="low — the protocol exists",
+  evidence=[
+      dict(cite="Cleves et al. 2020, PNAS 117:28899 — >90% of HSF1 gene copies mutant; "
+                "survived at 27 degC, died rapidly at 34 degC.",
+           pmid="33168726", read_level="abstract"),
+      dict(cite="Tinoco et al. 2026, Nat Protoc 21:2851 — the protocol paper, which "
+                "states this approach 'is currently the only way to perform gene editing "
+                "in corals' and takes about 2 to 4 weeks.",
+           pmid="41772232", read_level="abstract"),
+  ]),
+
+R(id="gene-hsf1-pathway-frontloading", outcome="thermal", scale="gene",
+  title="Raise the baseline instead: engineer constitutive frontloading",
+  intervention="Edit the regulation of HSF1 targets — heat-shock proteins, antioxidant "
+               "enzymes, apoptosis regulators — so they sit high before any heat arrives.",
+  predicted_phenotype="A coral that starts hot-ready, like the resilient Acropora "
+                      "hyacinthus colonies in which 60 such genes are already elevated "
+                      "at control temperature. The cost of carrying that expression "
+                      "constitutively is UNMEASURED, and is the obvious place a "
+                      "trade-off would hide.",
+  mechanism="Frontloading: constitutive expression means less to induce under stress.",
+  evidence_strength="cis_regulatory_inference",
+  reversibility="heritable if germline, and no germline coral line exists",
+  lethality_risk="unmeasured", difficulty="high",
+  evidence=[
+      dict(cite="Barshis et al. 2013, PNAS 110:1387 — resilient A. hyacinthus colonies "
+                "had higher control-condition expression of 60 'frontloaded' genes. This "
+                "is a CORRELATION between colonies, not a demonstration that those genes "
+                "cause tolerance.",
+           pmid="23297204", read_level="abstract"),
+      dict(cite="Palumbi et al. 2014, Science 344:895 — reciprocal transplant; "
+                "acclimatisation and fixed effects contributed about equally, and "
+                "acclimatisation reached in under two years what selection would take "
+                "many generations to give.",
+           pmid="24762535", read_level="abstract"),
+      dict(cite="Cleves et al. 2020 — the only targeted edit with a coral heat phenotype, "
+                "and it is loss-of-function. Nothing shows that RAISING HSF1 activity "
+                "raises tolerance.",
+           pmid="33168726", read_level="abstract"),
+  ]),
+
+R(id="gene-slc26a11-symbiosis", outcome="holobiont", scale="gene",
+  title="Edit SLC26A11 and lose the symbiosis",
+  intervention="CRISPR/Cas9 mutagenesis of the symbiosomal bicarbonate/sulfate "
+               "transporter SLC26A11.",
+  predicted_phenotype="Reduced symbiosis. Reported in Aiptasia and, per the same "
+                      "abstract, in a reef-building coral. This is a route to "
+                      "UNDERSTANDING how the symbiosome is supplied, not a route to a "
+                      "better coral: its phenotype is the thing everything else is "
+                      "trying to protect.",
+  mechanism="The symbiosome membrane transporter supplies the alga; removing it breaks "
+            "the supply. Lysosomal machinery was co-opted for this symbiosis.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="none in that animal", lethality_risk="high to the symbiosis",
+  difficulty="low once the injection pipeline runs",
+  evidence=[
+      dict(cite="Maruyama et al. 2026, Cell 189:5640 — 'Co-option of lysosomal machinery "
+                "shapes the evolution of the intracellular photosymbiosis supporting "
+                "coral reefs'; CRISPR/Cas9 showed SLC26A11 'is required for symbiosis in "
+                "Aiptasia and a reef-building coral'. The abstract does not say whether "
+                "the Aiptasia mutants are germline lines or injected mosaics.",
+           pmid="42385704", read_level="abstract"),
+  ]),
+
+R(id="gene-knockdown-toolkit-astrangia", outcome="enabling", scale="gene",
+  title="Get knockdown and knock-in working, in the coral that is easy first",
+  intervention="Build out shRNA knockdown, exogenous-mRNA overexpression and CRISPR "
+               "knock-in in Astrangia poculata, then port the toolkit to a "
+               "reef-builder.",
+  predicted_phenotype="No phenotype of interest. The product is the ability to turn a "
+                      "coral gene DOWN and to put a sequence IN, neither of which has "
+                      "been published in a reef-building coral.",
+  mechanism="Tool development. Astrangia is a hard coral, facultatively symbiotic, "
+            "temperate and not reef-building, which is exactly why it is tractable and "
+            "exactly why the transfer is not guaranteed.",
+  evidence_strength="direct_other_species",
+  reversibility="high", lethality_risk="low", difficulty="medium",
+  evidence=[
+      dict(cite="Warner et al. 2025, EvoDevo 16:6 — shRNA knockdown, overexpression from "
+                "exogenous mRNA, and CRISPR knock-in in Astrangia poculata.",
+           pmid="40380248", read_level="abstract"),
+      dict(cite="Scoped negative: PubMed 'Acropora knockdown' returns 0. 'Acropora "
+                "CRISPR' returns 4 (29695630, 33168726, 37276409, 41772232). Searched "
+                "with that one query shape; RNAi and morpholino literature under other "
+                "terms was not searched.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Cleves et al. 2018, PNAS 115:5235 — the founding method: Cas9 RNP into "
+                "fertilised A. millepora eggs targeting FGF1a, GFP and RFP, mutations in "
+                "about 50% of individuals.",
+           pmid="29695630", read_level="abstract"),
+  ]),
+
+# ======================================================================================
+# CELL — calcification
+# ======================================================================================
+R(id="cell-slc4g-knockout", outcome="skeleton", scale="cell",
+  title="Break the bicarbonate supply and watch the skeleton fail",
+  intervention="CRISPR mutation of SLC4-gamma in Acropora millepora zygotes.",
+  predicted_phenotype="Juvenile polyps with a defective skeleton, with defect severity "
+                      "tracking the mutation frequency within each animal. The cleanest "
+                      "genotype-to-skeleton link in the coral literature.",
+  mechanism="SLC4-gamma supplies concentrated bicarbonate to the extracellular "
+            "calcifying medium under the calicoblastic epithelium. It arose by gene "
+            "duplication at the origin of stony corals and is absent from their "
+            "non-skeleton-forming relatives.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="none in that animal", lethality_risk="not reported in the abstract",
+  difficulty="low",
+  evidence=[
+      dict(cite="Tinoco et al. 2023, PNAS 120:e2216144120 — 30 coral genomes and 15 "
+                "outgroups; SLC4-gamma present throughout stony corals and not in "
+                "non-skeleton-forming relatives; CRISPR mutants defective in skeleton "
+                "formation with severity correlated to mutation frequency.",
+           pmid="37276409", read_level="abstract"),
+      dict(cite="THE INVERSE IS UNTESTED. Raising SLC4-gamma — by exogenous mRNA or a "
+                "stronger promoter — might give a faster skeleton, and nobody has tried "
+                "it in a coral. A transport step that is NECESSARY is not thereby "
+                "RATE-LIMITING, so this is a proposal, not a prediction. mRNA "
+                "overexpression has been shown in Astrangia poculata (PMID 40380248), "
+                "not in Acropora.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Zoccola et al. 2015, Sci Rep 5:9983 — eight SLC genes in Stylophora "
+                "(five SLC4, three SLC26) with expression and immunostaining placing "
+                "SLC4-gamma as the bicarbonate supplier.",
+           pmid="26040894", read_level="abstract"),
+  ]),
+
+R(id="cell-untested-calcification-pathway", outcome="skeleton", scale="cell",
+  title="The rest of the calcification machinery, where nothing has been tested genetically",
+  intervention="Genetically perturb STPCA, the secreted alpha carbonic anhydrase "
+               "immunolocalised to the calicoblastic ectoderm.",
+  predicted_phenotype="Expected: reduced calcification. UNTESTED GENETICALLY in any "
+                      "coral. Every existing result on this enzyme is localisation, "
+                      "expression or in-vitro inhibitor chemistry, and inhibitors have "
+                      "off-target effects.",
+  mechanism="Carbonic anhydrase interconverts CO2 and bicarbonate at the calcifying "
+            "interface; it is expressed about twofold higher in dark than in light.",
+  evidence_strength="proposed",
+  reversibility="none in that animal", lethality_risk="unknown", difficulty="medium",
+  evidence=[
+      dict(cite="Skeletal organic matrix proteins — coral acid-rich proteins and galaxin "
+                "— are abundant in the skeletal proteome and localised in both tissue and "
+                "mineral, and NO knockdown or knockout of any of them has been published. "
+                "Ramos-Silva et al. 2013, Mol Biol Evol, 'The skeletal proteome of the "
+                "coral Acropora millepora'; listing only.",
+           pmid="23765379", read_level="listing"),
+      dict(cite="Drake et al. 2014, PNAS — immunolocalisation of skeletal matrix proteins "
+                "in tissue and mineral of Stylophora pistillata. Listing only.",
+           pmid="25139990", read_level="listing"),
+      dict(cite="Calcium ATPase is inferred to drive the pH up-regulation from boron "
+                "isotopes in cold-water corals, and no coral paper with a genetic test of "
+                "it was found; a Stylophora Ca-ATPase inhibitor query returned 0. "
+                "V-type H+-ATPase was NOT searched at all, so nothing is claimed about it.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Scoped negative: among every component in this pathway, ONLY SLC4-gamma "
+                "has a gene-level necessity result in a coral. Searches: 'coral acid-rich "
+                "protein skeletal organic matrix' (5 hits) and 'coral galaxin skeletal "
+                "organic matrix' (5 hits), titles only, no full text. A null result here "
+                "could also mean redundancy rather than irrelevance.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Moya et al. 2008, J Biol Chem 283:25475 — STPCA cloned from Stylophora "
+                "pistillata, immunolocalised to the calicoblastic ectoderm, about "
+                "twofold higher in dark than light. The authors note earlier tests of "
+                "carbonic anhydrase in calcification were 'mainly by pharmacological "
+                "approaches'.",
+           pmid="18617510", read_level="abstract"),
+  ]),
+
+R(id="cell-ecm-ph-readout", outcome="enabling", scale="cell",
+  title="Measure the calcifying fluid, so a skeleton phenotype can be diagnosed",
+  intervention="Put pH-sensitive dye imaging and microsensors on edited juveniles and "
+               "read pH, calcium, carbonate and saturation state in the extracellular "
+               "calcifying medium directly.",
+  predicted_phenotype="A readout, not a coral. It separates 'the pH pump failed' from "
+                      "'the organic matrix failed', which no amount of looking at a "
+                      "deformed skeleton can do.",
+  mechanism="Live-tissue measurement under the calicoblastic epithelium.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="non-invasive in the dye case", lethality_risk="low", difficulty="medium",
+  evidence=[
+      dict(cite="Venn et al. 2011, PLoS One 6:e20013 — extracellular pH under the "
+                "calicoblastic epithelium higher than seawater by about 0.5 pH units in "
+                "light and 0.2 in dark, in S. pistillata; intracellular pH stable.",
+           pmid="21637757", read_level="abstract"),
+      dict(cite="Sevilgen et al. 2019, Sci Adv 5:eaau7447 — microsensors and SNARF-1 dye "
+                "agreed at the same time and place; all parameters elevated relative to "
+                "seawater. THE ABSTRACT GIVES NO NUMBERS and the paper was not obtained, "
+                "so no saturation-state value is quoted from it anywhere here.",
+           pmid="30746460", read_level="abstract"),
+      dict(cite="Ross et al. 2017, Sci Rep 7:14066 — boron-isotope proxy: calcifying "
+                "fluid pH 8.38 in summer to 8.60 in winter, dissolved inorganic carbon "
+                "1.5-2x seawater, saturation about 4x seawater. Proxy-based and from the "
+                "skeleton, so NOT directly comparable with the dye numbers above; the "
+                "methods disagree and are not averaged.",
+           pmid="29062113", read_level="search-summary"),
+  ]),
+
+R(id="cell-soft-body-refuge", outcome="skeleton", scale="cell",
+  title="Give up the skeleton — the route that works and is still a failure",
+  intervention="Maintain corals as skeleton-free polyps under acidified conditions.",
+  predicted_phenotype="Polyps that live, feed and reproduce with no skeleton at all, and "
+                      "rebuild one when returned to normal conditions. And no reef: no "
+                      "structure, no refuge, no habitat, nothing that makes a coral reef "
+                      "worth having. Included because it draws the line between keeping "
+                      "the animal alive and keeping the ecosystem.",
+  mechanism="Fine & Tchernov's 'physiological refugia': some scleractinians can "
+            "alternate between soft-bodied and skeletal forms.",
+  evidence_strength="direct_other_species",
+  reversibility="high — the skeleton returns", lethality_risk="low for the polyp, total "
+                                                              "for reef function",
+  difficulty="low",
+  evidence=[
+      dict(cite="Fine & Tchernov 2007, Science 315:1811 — skeleton-producing corals in "
+                "acidified conditions sustained basic life functions including "
+                "reproduction 'in a sea anemone-like form' and resumed skeleton building "
+                "on return. The abstract names no species; duration and survival "
+                "criteria were not read.",
+           pmid="17395821", read_level="abstract"),
+      dict(cite="Stanley Jr., Science 317:1032 (2007), a Letter, and the Fine & Tchernov "
+                "Reply. Read only through a web summary; the PMID is unknown and PubMed "
+                "returned 0 hits for it under three query shapes while the ORIGINAL "
+                "paper was found, which is the positive control. Stanley is largely "
+                "supportive but doubts the two Mediterranean species generalise to "
+                "zooxanthellate reef-builders; the authors concede they chose "
+                "slow-calcifying species and write that even if corals survive "
+                "acidification, reefs will not.",
+           pmid=None, read_level="search-summary"),
+  ]),
+
+R(id="sym-durusdinium-inoculation", outcome="thermal", scale="symbiont",
+  title="Give it Durusdinium trenchii: about +1 to 2 degC, and a visibly smaller coral",
+  intervention="Bleach recruits or adult fragments chemically or by heat, then "
+               "re-inoculate with cultured Durusdinium trenchii.",
+  predicted_phenotype="A colony that bleaches at roughly 1 to 2 degC higher — and grows "
+                      "29% slower in the laboratory and 38% slower in the field, with "
+                      "Caribbean hosts calcifying at 'nearly half' the rate of those "
+                      "holding native symbionts. Juveniles are worse: clade C grows two "
+                      "to three times as fast as D. You get a coral that survives the "
+                      "heatwave and is small when it is over.",
+  mechanism="A thermotolerant symbiont genus with lower photosynthetic carbon "
+            "assimilation per cell and more host nitrogen retained by the alga; the host "
+            "transcriptome shifts toward a heat-stress-like state even at control "
+            "temperature.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="moderate — reversion toward C-types is plausible and unverified; "
+                "re-inoculation is possible",
+  lethality_risk="low in itself; the bleaching step carries the risk",
+  difficulty="low to moderate",
+  evidence=[
+      dict(cite="Berkelmans & van Oppen 2006, Proc Biol Sci 273:2305 — adult A. millepora "
+                "that shifted from type C to D gained 'around 1-1.5 degrees C', by "
+                "shuffling of types already present, not uptake from outside. The "
+                "authors add it 'may not be sufficient' over a century.",
+           pmid="16928632", read_level="abstract"),
+      dict(cite="Jones & Berkelmans 2010, PLoS One 5:e10437 — type D corals grew 29% "
+                "slower in the laboratory and 38% slower in the field; bleaching itself "
+                "cut growth by more than half for up to 18 months.",
+           pmid="20454653", read_level="abstract"),
+      dict(cite="Little, van Oppen & Willis 2004, Science 304:1492 — clade C-infected "
+                "juveniles grew two to three times as fast as clade D.",
+           pmid="15178799", read_level="abstract"),
+      dict(cite="Pettay et al. 2015, PNAS 112:7513 — Caribbean invasion by S. trenchii; "
+                "tolerance of temperatures 1-2 degC higher, calcification 'reduced by "
+                "nearly half', authors call the new symbioses 'maladapted'. That reading "
+                "is their inference, not a fitness measurement.",
+           pmid="26034268", read_level="abstract"),
+      dict(cite="Kemp et al. 2023, Proc Biol Sci 290:20231403 — COUNTER-EVIDENCE: across "
+                "diverse coral taxa, Cladocopium and Durusdinium colonies showed similar "
+                "nutrient exchange at ambient and Durusdinium maintained carbon "
+                "assimilation and transfer under heat. 'This discovery differs from the "
+                "prevailing notion that these mutualisms inevitably suffer trade-offs.' "
+                "Nutrient flux is not calcification, so this does not directly contradict "
+                "Jones & Berkelmans; it is not reconciled by any single experiment.",
+           pmid="37727091", read_level="abstract"),
+      dict(cite="Sproles et al. 2020, Environ Microbiol 22:3741 — in the ANEMONE "
+                "Exaiptasia, D. trenchii assimilated significantly less carbon per cell "
+                "and obtained more host nitrogen than Breviolum minutum. A mechanism, in "
+                "a different animal.",
+           pmid="32592285", read_level="abstract"),
+      dict(cite="Cunning et al. 2020, Mol Ecol 29:2940 — in Montastraea cavernosa, "
+                "symbiont identity explained 2-14% of transcriptional variance across "
+                "3 genets, with D. trenchii shifting host expression toward a "
+                "heat-response state.",
+           pmid="32585772", read_level="abstract"),
+  ],
+  study="bleaching-dynamics"),
+
+R(id="sym-shuffle-by-induced-bleaching", outcome="thermal", scale="symbiont",
+  title="Bleach it on purpose so the heat-tolerant symbiont it already has takes over",
+  intervention="Give colonies that already carry background Durusdinium a controlled "
+               "sub-lethal bleaching and recovery.",
+  predicted_phenotype="Colonies that come back more than 90% D1a — a type not detectable "
+                      "before — with less photodamage and less symbiont loss when "
+                      "re-heated three months later. Whether it lasts beyond three "
+                      "months is NOT KNOWN from anything verified here.",
+  mechanism="Low-abundance heat-tolerant types proliferate when sensitive types are lost. "
+            "Crucially the direction depends on severity: after SEVERE bleaching, "
+            "especially in a warm recovery environment, the heat-tolerant proportion "
+            "rises sharply; after MILD bleaching it tends to DECREASE.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="unknown beyond three months",
+  lethality_risk="moderate — you are deliberately bleaching a colony, and growth falls "
+                 "by more than half for up to 18 months afterwards",
+  difficulty="low",
+  evidence=[
+      dict(cite="Silverstein, Cunning & Baker 2015, Glob Chang Biol 21:236 — M. cavernosa "
+                "recovered with >90% D1a, not detected before bleaching; on re-exposure "
+                "to 32 degC for 10 days three months later, less photodamage and less "
+                "symbiont loss. Horizon tested: three months.",
+           pmid="25099991", read_level="abstract"),
+      dict(cite="Cunning, Silverstein & Baker 2015, Proc Biol Sci 282:20141725 — THE "
+                "RECONCILIATION PAPER. In Orbicella faveolata the heat-tolerant "
+                "proportion 'dramatically increased following severe experimental "
+                "bleaching, especially in a warmer recovery environment, but tended to "
+                "decrease if bleaching was less severe', and higher heat-tolerant "
+                "proportions 'linearly increased bleaching resistance but reduced "
+                "photochemical efficiency'. The authors describe the literature itself "
+                "as conflicting and say they help reconcile it. So the disagreement is "
+                "CONDITIONAL, not open.",
+           pmid="26041354", read_level="abstract"),
+      dict(cite="Baker et al. 2004, Nature 430:741 — the original correlative claim: "
+                "unusual thermally tolerant symbionts are much more abundant on reefs "
+                "severely affected by recent climate change. A spatial correlation; no "
+                "time course, and the abstract does not distinguish shuffling from "
+                "switching.",
+           pmid="15306799", read_level="abstract"),
+      dict(cite="YOU NEED A RESERVOIR TO SHUFFLE TO. Bay et al. 2016, R Soc Open Sci "
+                "3:160322, report that a minimum pre-stress Durusdinium-to-Cladocopium "
+                "ratio of about 0.003 predicted bleaching severity and recovery in "
+                "Acropora millepora, with Keppel colonies reaching D dominance between "
+                "September and December 2005 and cumulative mortality of 8%, 40% and 75% "
+                "in December, January and February. PMID NOT VERIFIED: a PubMed title "
+                "search returned 0 hits and the PMCID could not be converted, so this was "
+                "read at web-page level through a summariser and the numbers are "
+                "SECOND-HAND. Verify the 0.003 in the full text before using it.",
+           pmid=None, read_level="web-page"),
+      dict(cite="McIlroy et al. 2020, ISME J 14:2424 — in CULTURE, competition may drive "
+                "Cladocopium dominance outside temperature stress and 'ultimately "
+                "undermine the efficacy of symbiont turnover as an adaptive mechanism'. "
+                "No host; reversion in corals is not measured here.",
+           pmid="32518247", read_level="abstract"),
+      dict(cite="Scoped negative: NO verified multi-year Durusdinium-to-Cladocopium "
+                "reversion time course was found. Searched PubMed with two tools; "
+                "'symbiont shuffling coral' returned 43 hits of which 12 PMIDs were "
+                "returned and their abstracts not read. PMID 41877353 (2026, Glob Chang "
+                "Biol, 'Persistent Legacy Effects of Marine Heatwaves on Coral "
+                "Symbioses') is the most likely source and is TITLE ONLY. The classic "
+                "'shuffling reverts' literature (Thornhill 2006) was not located and is "
+                "not asserted in either direction.",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="bleaching-dynamics"),
+
+R(id="sym-heat-evolved-ss8", outcome="thermal", scale="symbiont",
+  title="Inoculate SS8, the one lab-evolved strain that worked in an adult coral",
+  intervention="Chemically bleach adult fragments and inoculate with Cladocopium "
+               "proliferum strain SS8, evolved about ten years at 31 degC.",
+  predicted_phenotype="In Galaxea fascicularis: thermotolerance similar to "
+                      "Durusdinium-hosting fragments of the same colony, but FASTER "
+                      "growth than those fragments at ambient, with the strain still "
+                      "present in moderate abundance two years later. And: only two of "
+                      "four coral genotypes took it up at all. Host-genotype "
+                      "compatibility is the gate.",
+  mechanism="Algal pigments involved in photobiology and oxidative stress were the "
+            "largest contributors to the difference, suggesting increased "
+            "photoprotection; SS8 also shows a dampened stress response.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="moderate", lethality_risk="low to moderate",
+  difficulty="moderate — a decade of culture, then a genotype-compatibility screen",
+  evidence=[
+      dict(cite="Chan et al. 2023, Glob Chang Biol 29:6945 — 'the first laboratory study "
+                "to show that thermotolerance of adult corals (G. fascicularis) can be "
+                "enhanced via the uptake of exogenously supplied, heat-evolved symbionts, "
+                "without a trade-off against growth under ambient temperature'. Note the "
+                "growth comparator is DURUSDINIUM-hosting fragments, not wild type, and "
+                "'without trade-off' is measured only at ambient.",
+           pmid="37913765", read_level="abstract"),
+      dict(cite="Johnston et al. 2026, New Phytol 251:1755 — SS8 showed a dampened "
+                "stress response overall where the wild-type parent responded strongly, "
+                "across in hospite, expelled and cultured contexts. Two strains.",
+           pmid="42010874", read_level="abstract"),
+      dict(cite="Chan et al. 2025, Environ Microbiol 27:e70011 — in the ANEMONE "
+                "Exaiptasia diaphana, SS8 was the most thermotolerant of six "
+                "heat-evolved strains, but the WILD-TYPE parent WT10 was second, and "
+                "SS5 and SS9 were among the most thermosensitive. Heat evolution does "
+                "not reliably help; SS8 is a lineage, not a method.",
+           pmid="39838803", read_level="abstract"),
+  ]),
+
+R(id="sym-heat-evolved-library-screen", outcome="thermal", scale="symbiont",
+  title="Screen evolved strains IN THE HOST, because in-vitro tolerance does not transfer",
+  intervention="Evolve many strains at elevated temperature, then test every one inside "
+               "coral larvae before any is deployed. The screen is the product.",
+  predicted_phenotype="Most of what you evolved will not work. All ten strains expanded "
+                      "their thermal tolerance in vitro; three of ten improved the "
+                      "holobiont. One strain killed its larvae. The headline '3 of 10' "
+                      "is itself soft: the full text shows those three differ "
+                      "significantly from one wild-type strain and show only a trend "
+                      "against the other.",
+  mechanism="Selection acts on the alga outside the host; the benefit in symbiosis is a "
+            "separate and largely unpredicted property. Reduced ROS secretion alone did "
+            "not predict thermal tolerance in symbiosis.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high — the output is a decision, not a release",
+  lethality_risk="low, except to the larvae in the failing arms",
+  difficulty="moderate; four years of culture in the cited work",
+  evidence=[
+      dict(cite="Buerger et al. 2020, Sci Adv 6:eaba2498 — read at FULL TEXT. Stepwise "
+                "ratchet 27-28-30-31 degC, about 120 asexual generations over four years "
+                "versus about 225 for wild type at 27 degC. In vitro at 31 degC for three "
+                "weeks: heat-evolved cell density up about 66%, wild-type down about 79%; "
+                "wild-type extracellular ROS 13- to 28-fold higher. In hospite: larvae "
+                "inoculated at about 10,185 +/- 5,103 cells each, 10 weeks at 27 degC, "
+                "then 31 degC for 7 days. Three strains held or increased symbiont "
+                "density (about +26%) while wild-type larvae lost about 61% and 30%. "
+                "CAVEAT FROM THE TEXT: 'no significant differences between larvae "
+                "inoculated with any of the SS strains and those inoculated with WT2'. "
+                "No degree-heating-week figure is given and none should be computed: the "
+                "holding temperature is not stated to be a climatological maximum.",
+           pmid="32426508", read_level="full-text"),
+      dict(cite="Scharfenstein et al. 2023, Evol Appl 16:1549 — chemical mutagenesis plus "
+                "4.6-5 years of thermal selection: all heat-evolved strains had higher "
+                "photosynthetic efficiency under heat, but growth-rate trade-offs "
+                "appeared in at least one lineage at BOTH ambient and elevated "
+                "temperature, with reduced phosphate and nitrate uptake in some. In "
+                "vitro only, no host. Disagrees in emphasis with the Galaxea result.",
+           pmid="37752965", read_level="abstract"),
+  ]),
+
+R(id="sym-host-matched-switching", outcome="holobiont", scale="symbiont",
+  title="Choose the symbiont per host species, because there is no universal best type",
+  intervention="Screen symbiont genus against host species and match them, instead of "
+               "deploying one 'heat-tolerant' type everywhere.",
+  predicted_phenotype="The right partner for that host — which in Acropora tenuis "
+                      "juveniles is type C1, not D, the opposite of the Acropora "
+                      "millepora answer. Avoids paying Durusdinium's growth cost in "
+                      "hosts where Durusdinium is not even the more tolerant partner.",
+  mechanism="Host-by-symbiont interaction: the ranking of symbiont types reverses "
+            "between host species and between life stages.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="moderate", lethality_risk="low",
+  difficulty="moderate — needs a per-host screen",
+  evidence=[
+      dict(cite="Abrego et al. 2008, Proc Biol Sci 275:2273 — A. tenuis juveniles showed "
+                "lower metabolic costs and better tolerance with type C1 than with D "
+                "under combined heat and light stress. 'Our results challenge "
+                "speculations that associations with type D are universally most robust "
+                "to thermal stress.' The same D type does confer higher tolerance in "
+                "A. millepora, so the conflict is between host species.",
+           pmid="18577506", read_level="abstract"),
+      dict(cite="Berkelmans & van Oppen 2006 — the A. millepora result it reverses.",
+           pmid="16928632", read_level="abstract"),
+      dict(cite="LaJeunesse et al. 2018, Curr Biol 28:2570 — the systematic revision: "
+                "former Symbiodinium 'clades' are genera in Symbiodiniaceae, with formal "
+                "descriptions for seven, diverging from about 160 Mya. The abstract does "
+                "not list the genus names; the familiar mapping is background knowledge, "
+                "not from this source.",
+           pmid="30100341", read_level="abstract"),
+  ]),
+
+R(id="sym-transgenic-symbiont", outcome="holobiont", scale="symbiont",
+  title="Genetically engineer the alga — the route everyone proposes and nobody has",
+  intervention="Stably transform a Symbiodiniaceae strain, or CRISPR it, with a "
+               "ROS-handling or heat-protective change.",
+  predicted_phenotype="Not demonstrated. The honest prediction is a culture that does "
+                      "not take up the construct. Standard methods — biolistics, "
+                      "electroporation, silicon carbide whiskers, nuclear and chloroplast "
+                      "targets — failed to confer resistance in the one published attempt "
+                      "read here.",
+  mechanism="Direct editing. A uracil auxotroph exists as a selection tool, which is a "
+            "prerequisite rather than a transformation.",
+  evidence_strength="proposed",
+  reversibility="LOW once released — a self-replicating engineered microbe in open water",
+  lethality_risk="unknown", difficulty="very high",
+  evidence=[
+      dict(cite="Chen et al. 2019, PLoS One 14:e0211936 — 'The genetic intractability of "
+                "Symbiodinium microadriaticum to standard algal transformation methods'; "
+                "unable to confer chloramphenicol or atrazine resistance on strain "
+                "CCMP2467. The authors note 'no study of successfully applied genome "
+                "editing has been reported in a dinoflagellate despite the first genetic "
+                "transformation of Symbiodinium being published about 20 years ago'. "
+                "SCOPE OF THE NEGATIVE: one strain, one species, those methods and "
+                "constructs. It does not say transformation is impossible and it "
+                "explicitly acknowledges an older positive report, which was not "
+                "verified here.",
+           pmid="30779749", read_level="abstract"),
+      dict(cite="Levin et al. 2017, Front Microbiol 8:1220 — proposes constructs and "
+                "assesses CRISPR/Cas9 potential from three Symbiodinium genomes; "
+                "'genetic transformation of Symbiodinium has seen little success likely "
+                "due to the large evolutionary divergence'. Proposed, not demonstrated.",
+           pmid="28713348", read_level="abstract"),
+      dict(cite="Gavin et al. 2026, Protist 180:126148 — 'Genetic modification in "
+                "dinoflagellate algae: Some successes, many failures'; the ability to "
+                "carry out genetic modification in dinoflagellates 'is limited'. The "
+                "abstract does not enumerate which techniques worked and the body was "
+                "not read, so no list of existing stable transformants is given here.",
+           pmid="41592424", read_level="abstract"),
+      dict(cite="Ishii et al. 2018, Sci Rep 8:3237 — a URA3 uracil auxotroph that "
+                "maintains symbiosis with Exaiptasia only in uracil-containing seawater. "
+                "A selection tool, NOT a transformation.",
+           pmid="29459692", read_level="abstract"),
+      dict(cite="Scoped negative: PubMed 'Symbiodiniaceae CRISPR' returns 0, "
+                "'Symbiodiniaceae transformation' 7, 'Symbiodinium transformation' 17 "
+                "(first 10 reviewed by title). A PubMed-index statement only: it does not "
+                "rule out preprints, non-indexed work or full-text mentions.",
+           pmid=None, read_level="search-summary"),
+  ]),
+
+R(id="sym-feed-the-host-to-pay-for-the-symbiont", outcome="holobiont", scale="symbiont",
+  title="Feed the coral to offset what the tolerant symbiont stops giving it",
+  intervention="Supply heterotrophic food, or manage nitrogen, in colonies carrying a "
+               "low-translocation heat-tolerant symbiont.",
+  predicted_phenotype="Intended: near-normal growth at +1 to 2 degC of tolerance. NOT "
+                      "DEMONSTRATED in any coral. The strongest support is indirect: the "
+                      "published bioenergetic model's own abstract states that bleaching "
+                      "in it is 'exacerbated by nutrients and attenuated by feeding'.",
+  mechanism="Replace the photosynthetic carbon the heat-tolerant alga does not "
+            "translocate with carbon the host eats.",
+  evidence_strength="proposed",
+  reversibility="high", lethality_risk="low", difficulty="moderate",
+  evidence=[
+      dict(cite="Sproles et al. 2020, Environ Microbiol 22:3741 — the carbon deficit this "
+                "route compensates, measured in an anemone.",
+           pmid="32592285", read_level="abstract"),
+      dict(cite="Cunning et al. 2017, J Theor Biol 431:49 — model abstract: bleaching "
+                "'exacerbated by nutrients and attenuated by feeding'. Model, not "
+                "measurement.",
+           pmid="28782552", read_level="abstract"),
+      dict(cite="Kemp et al. 2023, Proc Biol Sci 290:20231403 — COUNTER: no ambient "
+                "nutrient-exchange deficit was seen, which would make this route a "
+                "solution to a problem that is not there.",
+           pmid="37727091", read_level="abstract"),
+  ],
+  study="bleaching-dynamics"),
+
+R(id="sym-do-not-move-the-symbiont", outcome="holobiont", scale="symbiont",
+  title="Restraint: do not release Durusdinium trenchii where it is not native",
+  intervention="None. Explicitly rule out moving heat-tolerant symbiont lineages across "
+               "ocean basins.",
+  predicted_phenotype="Reefs that do not acquire a low-diversity clonal invader whose "
+                      "spread is associated with calcification reduced by nearly half. "
+                      "The counterfactual is the Caribbean.",
+  mechanism="An Indo-Pacific symbiont established in Caribbean hosts with low clonal "
+            "diversity and several widespread clones.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="none — a self-replicating organism in open water cannot be recalled",
+  lethality_risk="low per colony, high per reef", difficulty="low (it is a decision)",
+  evidence=[
+      dict(cite="Pettay et al. 2015, PNAS 112:7513 — 'Microbial invasion of the Caribbean "
+                "by an Indo-Pacific coral zooxanthella'; calcification reduced by nearly "
+                "half versus hosts with natives, which the authors read as maladaptive.",
+           pmid="26034268", read_level="abstract"),
+  ]),
+
+# ======================================================================================
+# MICROBIOME
+# ======================================================================================
+R(id="micro-bmc-consortium", outcome="holobiont", scale="microbiome",
+  title="Dose a defined bacterial consortium through a heatwave",
+  intervention="Apply a native, culturable Beneficial Microorganisms for Corals "
+               "consortium by water dosing every three to five days around a thermal "
+               "event.",
+  predicted_phenotype="In a tank: 100% of fragments survived a 30 degC, 10-day heat "
+                      "treatment against 60% of placebo-treated controls, with stable "
+                      "photosynthetic performance. And the effect stops when dosing "
+                      "stops — the consortium was not detectable at all after the "
+                      "15-day recovery period.",
+  mechanism="Correlational omics: dimethylsulfoniopropionate degradation patterns, lipid "
+            "maintenance, and host transcriptional reprogramming of repair, stress and "
+            "immune genes. Which of these does the work is not established.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high — the strains disappear within weeks",
+  lethality_risk="low in the tests run", difficulty="medium",
+  evidence=[
+      dict(cite="Santoro et al. 2021, Sci Adv 7:eabg3088 — 80 fragments, five 1.3 L "
+                "aquaria per treatment, 75-day experiment, ramp 0.5 degC/day to 30 degC "
+                "held 10 days. '40% survival rate increase'. Full text: 'members of the "
+                "BMC consortium were not detected after the 15-day period', and BMC and "
+                "placebo communities 'became indiscernible during the recovery period'. "
+                "Only three strains were confirmed incorporated at all. Host species "
+                "name was stripped from the extracted text and is not stated here.",
+           pmid="34389536", read_level="full-text"),
+      dict(cite="Rosado et al. 2019, ISME J 13:921 — Pocillopora damicornis, seven "
+                "strains, with a Vibrio coralliilyticus co-challenge. Fv/Fm decline over "
+                "26 days: Vibrio 54%, control 40%, probiotic 31%, probiotic+Vibrio 20%. "
+                "NOTE the consortium was added AFTER the pathogen, so part of the effect "
+                "is pathogen suppression rather than heat tolerance. The authors state it "
+                "is 'currently not known if the pBMCs colonize the host'.",
+           pmid="30518818", read_level="full-text"),
+      dict(cite="A SINGLE dose also works, at least once: de Breuyn et al. 2025, ISME "
+                "Commun 5:ycaf039 report that 'BMC supplementation significantly prevented "
+                "mortality in [P.] cf. [verrucosa] at 32 degC, contrasting with a 100% "
+                "mortality observed in the control group' over a 48-hour shock, 12 "
+                "fragments per species per treatment. The other species tested survived "
+                "in both arms, so the result rests on one species, and 48 hours is a "
+                "shock rather than a bleaching season. That it works within two days "
+                "argues against slow community assembly as the mechanism.",
+           pmid="40151579", read_level="abstract"),
+      dict(cite="THE DOSING PROBLEM IS THE ENGINEERING PROBLEM, because the inoculants do "
+                "not persist. Alginate beads release about a million viable cells per hour "
+                "per 50 mL flask into the third week at both 26 and 32 degC — IN FLASKS, "
+                "with no coral, no reef and no flow.",
+           pmid="42910909", read_level="abstract"),
+      dict(cite="Non-target effects are measurable: BMCs applied three times weekly for "
+                "three months to healthy Red Sea colonies shifted the skin and gut "
+                "microbiomes of a coral-dwelling damselfish. The direction was judged "
+                "beneficial BY THE AUTHORS; the point here is that bystanders are "
+                "affected at all.",
+           pmid="40230573", read_level="abstract"),
+      dict(cite="Peixoto et al. 2017, Front Microbiol 8:341 — the framework paper that "
+                "coined BMC. A proposal; the authors themselves write that the mechanisms "
+                "'are poorly understood'.",
+           pmid="28326066", read_level="abstract"),
+  ]),
+
+R(id="micro-postbiotic-heatkilled", outcome="holobiont", scale="microbiome",
+  title="Use dead bacteria — it worked in the water, and releases nothing alive",
+  intervention="Apply heat-killed consortia instead of live cells, in situ.",
+  predicted_phenotype="Maintained photosynthetic efficiency through a 15-day marine "
+                      "heatwave in Acropora cf. valida, where placebo-treated colonies "
+                      "declined significantly. The ecological-release objection to live "
+                      "probiotics does not apply. Fv/Fm, not survival, is what the "
+                      "abstract reports.",
+  mechanism="Unresolved. That heat-killed cells work at all suggests the mechanism is "
+            "chemical or cell-wall signalling rather than colonisation — which is "
+            "consistent with live inoculants disappearing within weeks in every study "
+            "read here.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high", lethality_risk="low", difficulty="low to medium",
+  evidence=[
+      dict(cite="Santoro et al. 2026, Cell Rep 45:117839 — the only in-water trial found: "
+                "'both live and one of the heat-killed treatments maintained "
+                "photosynthetic efficiency (Fv/Fm), whereas placebo-treated corals "
+                "exhibited significant thermal stress-induced decline'. Colony number, "
+                "temperature and mortality were not read.",
+           pmid="42692023", read_level="abstract"),
+  ]),
+
+R(id="micro-homogenate-transplant", outcome="holobiont", scale="microbiome",
+  title="Transplant the whole microbiome from a heat-tolerant donor",
+  intervention="Homogenise tissue from wild heat-tolerant donors and inoculate "
+               "conspecific heat-susceptible recipients.",
+  predicted_phenotype="Less bleaching at 34 degC, with 112 (Pocillopora) and 16 "
+                      "(Porites) donor-specific bacterial species detectable in "
+                      "recipients. The cargo is uncontrolled: a tissue homogenate also "
+                      "carries host cells, Symbiodiniaceae and viruses, so the effect "
+                      "cannot be assigned to bacteria.",
+  mechanism="Transfer of donor-associated bacteria, among everything else in the "
+            "homogenate.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="medium",
+  lethality_risk="low to medium — undefined cargo, possible pathogen carryover",
+  difficulty="medium",
+  evidence=[
+      dict(cite="Doering et al. 2021, Microbiome 9:102 — 'Recipients of both coral species "
+                "bleached at lower rates compared to the control group when exposed to "
+                "short-term heat stress (34 degC)'. The authors call for 'field-based "
+                "long-term studies testing the persistence of the effect'. Colony counts, "
+                "effect sizes and exposure duration were not read.",
+           pmid="33957989", read_level="abstract"),
+  ]),
+
+R(id="micro-amoxicillin-sctld", outcome="disease", scale="microbiome",
+  title="Amoxicillin paste on disease lesions — the one that is actually deployed",
+  intervention="Apply amoxicillin in a CoreRx Base 2B paste directly to stony coral "
+               "tissue loss disease lesions on wild colonies.",
+  predicted_phenotype="Lesions arrested on 70% to 95% of treated lesions in the water, "
+                      "across five species, where the paste alone achieved 4% and 9% — "
+                      "no better than untreated. And the colony keeps developing NEW "
+                      "lesions elsewhere, so this treats lesions, not corals.",
+  mechanism="Kills a bacterial pathogen, or the bacteria associated with one. The "
+            "pathogen of this disease is unknown, so an antibiotic that works is an "
+            "empirical fact rather than a mechanism.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="low to medium — antibiotic released onto a reef",
+  lethality_risk="low to the colony; resistance risk unquantified",
+  difficulty="high — this is diver time, per lesion, indefinitely",
+  evidence=[
+      dict(cite="Neely et al. 2020, PeerJ 8:e9289 — 'The effectiveness of the pastes "
+                "without antibiotics (placebo treatments) was 4% and 9%, no different "
+                "from untreated controls. Adding amoxicillin to both pastes significantly "
+                "increased effectiveness to 70% and 84%.' Per species 67% to 90%. A "
+                "placebo arm in the field, which is rare in this literature.",
+           pmid="32551200", read_level="abstract"),
+      dict(cite="Shilling, Combs & Voss 2021, Sci Rep 11:8566 — 95% success at healing "
+                "individual lesions on Montastraea cavernosa over 11 months, but it 'did "
+                "not necessarily prevent treated colonies from developing new lesions "
+                "over time'. Chlorinated epoxy was no better than untreated control.",
+           pmid="33883581", read_level="abstract"),
+      dict(cite="Becker et al. 2026, ISME Commun 6:ycag278 — 41 colonies fate-tracked for "
+                "4-5 years: 'Despite repeated antibiotic treatments on some colonies, "
+                "there was no effect on the diversity of beta-lactamases'. A NEGATIVE OF "
+                "LIMITED SCOPE: one species, 41 colonies, metagenomic beta-lactamase "
+                "diversity only. It is not a survey of resistance on the surrounding "
+                "reef.",
+           pmid="42909972", read_level="abstract"),
+      dict(cite="Sharp et al. 2020 — 'The pathogen is unknown.'",
+           pmid="33175886", read_level="abstract"),
+      dict(cite="Scoped negative: statewide Florida deployment totals — how many colonies "
+                "have been treated — were NOT retrieved from any source read.",
+           pmid=None, read_level="could-not-access"),
+  ]),
+
+R(id="micro-phage-prophylaxis", outcome="disease", scale="microbiome",
+  title="Phage, given before or within a day of infection — and useless after two",
+  intervention="Introduce a lytic phage against a named bacterial coral pathogen at or "
+               "within one day of exposure.",
+  predicted_phenotype="Corals that escape white-plague-like infection and do not transmit "
+                      "it, with phage persisting 37 days at about 10^4 per square "
+                      "centimetre of coral surface. Given two days after infection it "
+                      "failed. The therapeutic window is the result.",
+  mechanism="Pathogen-specific lysis.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="LOW — a self-replicating agent released into water",
+  lethality_risk="low to medium; ecological release is the real risk",
+  difficulty="medium",
+  evidence=[
+      dict(cite="Efrony, Atad & Rosenberg 2009, Curr Microbiol 58:139 — phage BA3 against "
+                "Thalassomonas loyana; 'successful when the phage was added at the same "
+                "time as the pathogen or 1 day later, but failed to protect the coral "
+                "when added 2 days after bacterial infection'. Aquarium; coral species "
+                "and replicate number not in the abstract.",
+           pmid="18923867", read_level="abstract"),
+      dict(cite="Scoped negative: no phage work against stony coral tissue loss disease "
+                "was located. One PubMed query on Thalassomonas/Vibrio phage returned "
+                "only this paper. 'Not found by one query', not 'does not exist'.",
+           pmid=None, read_level="search-summary"),
+  ]),
+
+R(id="colony-flow-regime-plasticity", outcome="morphology", scale="colony",
+  title="Change the water, not the genome: grow it in the flow you want the shape for",
+  intervention="Grow or place clonal fragments under a chosen flow regime — roughly 1 "
+               "cm/s against roughly 15 cm/s in the published flume range.",
+  predicted_phenotype="Thin, widely spaced, more symmetric branches in slow flow; more "
+                      "compact, thicker-branched, upstream-biased colonies in faster "
+                      "flow. No genetic change, and the skeleton already laid down does "
+                      "not move — only new growth re-steers.",
+  mechanism="Mass-transfer-limited uptake feeding accretive growth: the balance of "
+            "advection to diffusion sets how strongly tips out-compete the rest of the "
+            "surface.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="partial — new growth only", lethality_risk="low",
+  difficulty="low to moderate (flume infrastructure)",
+  evidence=[
+      dict(cite="Chindapol et al. 2013, PLoS Comput Biol 9:e1002849 — read at FULL TEXT. "
+                "Accretive growth coupled to Navier-Stokes and advection-diffusion, "
+                "validated against CT scans of Pocillopora verrucosa grown in a flume. "
+                "Degree of symmetry falls and compactness rises with Peclet number, in "
+                "both simulated and real colonies. NOTE the paper contradicts itself on "
+                "the flume speeds: the text says 1e-2 cm/s reduced and 15 cm/s enhanced, "
+                "the figure caption says about 1 cm/s and 15-20 cm/s. Order of magnitude "
+                "only.",
+           pmid="23326222", read_level="full-text"),
+      dict(cite="Paz-Garcia et al. 2015, Oecologia 178:207 — three Pocillopora "
+                "morphospecies of one mtDNA type across contrasting flow sites; "
+                "morphology more similar among species under high flow. Confounded by "
+                "site and species, and no flow speeds in the abstract.",
+           pmid="25556295", read_level="abstract"),
+      dict(cite="Merks et al. 2003, J Theor Biol 224:153 — COUNTER-EVIDENCE: 'We did not "
+                "find an effect of flow', and the earlier computational evidence that "
+                "hydrodynamics changes compactness in laminar flow 'may not be "
+                "conclusive'. The flow question is genuinely split between modelling "
+                "groups and is not reconciled here.",
+           pmid="12927523", read_level="abstract"),
+      dict(cite="Todd 2008, Biol Rev 83:315 — of 1,314 extant species, fewer than 20 have "
+                "been tested for plasticity; light and water movement are the most "
+                "important inducers, and adaptiveness is 'yet to be tested rigorously'.",
+           pmid="18979594", read_level="abstract"),
+  ],
+  study="colony-morphology"),
+
+R(id="colony-light-plate-induction", outcome="morphology", scale="colony",
+  title="Shade it into a plate",
+  intervention="Shade clonal colonies by roughly 70%, or place them deep or on an "
+               "inclined surface.",
+  predicted_phenotype="Flatter, laminar or foliose plates instead of digitate or "
+                      "corymbose mounds, with lower surface complexity. The strongest "
+                      "direct evidence is a one-year clonal experiment in ONE genus and "
+                      "it is a PREPRINT, not peer-reviewed.",
+  mechanism="Photoacclimation: trading biomass per unit area against light interception "
+            "per unit area.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="partial — new growth only",
+  lethality_risk="low to moderate (energy limitation)", difficulty="low",
+  evidence=[
+      dict(cite="Ducret et al. 2025, bioRxiv — NOT PEER-REVIEWED. Montipora capitata, "
+                "9 genotypes x 6 fragments, 3 shaded (73% light reduction) and 3 control "
+                "for one year: shaded corals planar/laminar/foliose, controls "
+                "digitate/corymbose with higher surface complexity, with no significant "
+                "symbiont-community change. Read at abstract level via a search tool.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Lopez-Londono et al. 2024, PLoS One 19:e0295283 — raising surface "
+                "inclination reduced light availability by an order of magnitude and "
+                "triggered photoacclimation like that along depth.",
+           pmid="38170717", read_level="abstract"),
+      dict(cite="Lesser et al. 2021 — COUNTER: hemispherical colonies fix more carbon at "
+                "all depths than plating or branching forms, yet plating dominates "
+                "deeper reefs. So light geometry alone does NOT explain depth zonation, "
+                "and this route's mechanism is incomplete. Not in PubMed by my search; "
+                "abstract level only.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Scoped negative: NO published irradiance threshold (in micromoles of "
+                "photons per square metre per second) tied to a specific morphometric "
+                "change was found. The 73% reduction above is a single point, not a "
+                "dose-response.",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="colony-morphology"),
+
+R(id="colony-compact-for-storms", outcome="morphology", scale="colony",
+  title="Pick a shape that does not snap: massive and encrusting over tabular",
+  intervention="Select or steer toward low-colony-shape-factor massive, hemispherical or "
+               "encrusting forms rather than tabular and arborescent ones.",
+  predicted_phenotype="Lower bending stress at the base and lower dislodgement rates, "
+                      "with a flatter size-mortality curve. Species that become more "
+                      "vulnerable as they grow have bathtub-shaped mortality; "
+                      "mechanically stable ones get safer with size. The bleaching "
+                      "benefit of the same choice is CONTESTED.",
+  mechanism="Smaller projected area perpendicular to flow means a smaller cantilever "
+            "bending moment at the base per unit of substrate tenacity.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="none per colony", lethality_risk="low",
+  difficulty="moderate — shape control plus species choice",
+  evidence=[
+      dict(cite="Madin et al. 2014, Ecol Lett 17:1008 — read at partial FULL TEXT "
+                "(equation images did not render). Size-dependent mortality is highly "
+                "consistent within growth form and explained by mechanical "
+                "vulnerability; 395 colonies for the shape-factor regression, 11 species "
+                "with about 30 tagged colonies each, Lizard Island. The coefficients are "
+                "in a supplementary table that was not seen.",
+           pmid="24894390", read_level="full-text"),
+      dict(cite="Madin & Connolly 2006, Nature 444:477 — model combining wave velocity "
+                "with beam theory for colonies of any shape, field-tested against change "
+                "in vulnerability, size and shape with distance from the reef crest.",
+           pmid="17122855", read_level="abstract"),
+      dict(cite="Loya et al. 2001, Ecol Lett — Sesoko Island 1998, sea temperature peak "
+                "2.8 degC above average, species richness down 61% and cover down 85%; "
+                "finely branched corals most susceptible, massive and encrusting "
+                "survived. One event, one site. Not found in PubMed by my search.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="McCowan et al. 2012 — DISAGREEMENT: across 65 studies, branching, "
+                "tabular and submassive forms bleach more overall, BUT within families "
+                "the pattern is inconsistent (branching faviids bleach LESS than massive "
+                "ones; the reverse in Acroporidae and Poritidae), so growth form is "
+                "confounded with taxonomy. Burn et al. 2023 add that massive Porites "
+                "moved from among the LEAST to among the MOST susceptible as bleaching "
+                "severity rose. 'Branching = loser' is a community-level generalisation "
+                "with strong taxonomic confounding and severity dependence.",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="colony-morphology"),
+
+R(id="colony-branching-for-habitat", outcome="morphology", scale="colony",
+  title="Pick the opposite shape, because fish live in branches",
+  intervention="Favour branching and corymbose forms where the objective is habitat "
+               "rather than persistence.",
+  predicted_phenotype="More three-dimensional surface per unit of seabed footprint — "
+                      "measured area exponents of about 2.4 to 2.5 for branching forms "
+                      "against about 1.8 to 2.0 for massive and tabular — and the "
+                      "structural complexity that fish density and biomass track. This "
+                      "route DIRECTLY OPPOSES the storm route above. They cannot both be "
+                      "satisfied by one colony.",
+  mechanism="Structural complexity provides refuge volume at the size classes fish use.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="n/a (a choice of colony)",
+  lethality_risk="moderate in storms and heat — see the opposing route",
+  difficulty="low",
+  evidence=[
+      dict(cite="Chandler et al. 2024, Sci Rep 14:20549 — read at FULL TEXT (table). "
+                "Underwater photogrammetry, three-dimensional total surface area = a * "
+                "D^b with D the maximum diameter: Pocillopora 0.709 D^2.50 (n=13, "
+                "R2 0.95), staghorn Acropora 0.838 D^2.024 (n=14, R2 0.81), table "
+                "Acropora 2.615 D^1.947 (n=13, R2 0.95), massive Porites 4.58 D^1.836 "
+                "(n=9, R2 0.75). Single sites, n of 6 to 14, and the paper disagrees "
+                "with itself on one R2 (table 0.98 against text 0.95).",
+           pmid="39232103", read_level="full-text"),
+      dict(cite="Graham & Nash, Coral Reefs — strong positive relationship between "
+                "structural complexity and fish density and biomass. Correlational, and "
+                "complexity is collinear with coral cover. Not found in PubMed by my "
+                "search; the publication year (2012 online against 2013 volume) could "
+                "not be settled.",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="colony-morphology"),
+
+R(id="colony-model-guided-placement", outcome="morphology", scale="colony",
+  title="Simulate the shape before you outplant, using a published growth model",
+  intervention="Run an accretive-growth model over the candidate site's flow and light "
+               "and predict the colony shape, then choose the site.",
+  predicted_phenotype="A predicted morphospace position — compactness, symmetry, "
+                      "upstream bias — before anything is in the water. The model class "
+                      "is real and runnable; what is MISSING is the mapping from its "
+                      "dimensionless control parameter to a reef flow speed in "
+                      "centimetres per second.",
+  mechanism="Laplacian or advection-diffusion accretive growth, where the resource field "
+            "the colony absorbs sets where it grows.",
+  evidence_strength="model_only",
+  reversibility="n/a", lethality_risk="none (computational)", difficulty="moderate",
+  evidence=[
+      dict(cite="Chindapol et al. 2013 — validated against five real P. verrucosa CT "
+                "colonies at branch-scale Peclet numbers of 0.016 to 0.288.",
+           pmid="23326222", read_level="full-text"),
+      dict(cite="Kaandorp & Sloot 2001, J Theor Biol 209:257 — three-dimensional "
+                "surface-normal accretive growth; with rising Peclet number forms "
+                "'gradually transformed from thin-branching ones into more spherical and "
+                "compact morphologies'. GRADED, not sharp.",
+           pmid="11312588", read_level="abstract"),
+      dict(cite="Merks et al. 2003, J Theor Biol 224:153 — the explicit curvature rule is "
+                "NOT needed: 'the model exhibits spontaneous branching, provided that the "
+                "resource field is computed with enough precision', and compactness "
+                "depends on the ratio of growth rate to nutrient transport rate.",
+           pmid="12927523", read_level="abstract"),
+      dict(cite="Merks et al. 2004, J Theor Biol 228:559 — polyp-oriented model: branching "
+                "arises from a 'polyp fanning effect' on convex surfaces, called a 'more "
+                "potent branching mechanism than the Laplacian growth mechanism'. Polyp "
+                "spacing sets branch thickness.",
+           pmid="15178203", read_level="abstract"),
+      dict(cite="Kaandorp et al. 1996, Phys Rev Lett 77:2328 — morphology 'changes "
+                "drastically' from diffusion-controlled to hydrodynamically dominated. "
+                "NOTE: the commonly cited 'Kaandorp 2005 PRL' does not exist; that title "
+                "belongs to Kaandorp 1999 in Marine Biology.",
+           pmid="10061916", read_level="abstract"),
+      dict(cite="Scoped negative: NO numeric branching threshold in any dimensionless "
+                "group was retrieved. Every abstract that comments uses graded language.",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="colony-morphology"),
+
+R(id="colony-lineage-selection", outcome="morphology", scale="colony",
+  title="Select the cryptic lineage that already has the shape you want",
+  intervention="Choose among sympatric morphs or cryptic lineages whose shape and "
+               "bleaching threshold differ heritably, rather than trying to induce a "
+               "shape.",
+  predicted_phenotype="A stable compact or open morph with its associated bleaching "
+                      "threshold, which does not drift back because it is a lineage "
+                      "rather than a plastic response.",
+  mechanism="Some 'morphs' are early cryptic species, not plasticity. Eighteen candidate "
+            "genes related to skeletal formation were identified in one such pair — and "
+            "none has been functionally tested.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="n/a", lethality_risk="low", difficulty="moderate",
+  evidence=[
+      dict(cite="Smith et al. 2017, Sci Rep 7:10066 — 'The molecular basis of differential "
+                "morphology and bleaching thresholds in two morphs of the coral "
+                "Pocillopora acuta'; two sympatric morphs differ in macro and micro "
+                "skeletal morphology, with 18 candidate genes and proposed early cryptic "
+                "speciation.",
+           pmid="28855618", read_level="abstract"),
+      dict(cite="Hemond, Kaluziak & Vollmer 2014, BMC Genomics 15:1133 — branch tips "
+                "versus bases in Caribbean Acropora differ in Wnt, Notch and BMP "
+                "signalling, pH regulation, ion transport and extracellular matrix; 'a "
+                "relatively small number of genes' may separate staghorn from elkhorn. "
+                "Correlative expression, no perturbation, species confounded with "
+                "everything else.",
+           pmid="25519925", read_level="abstract"),
+      dict(cite="Scoped negative: NO gene knockdown, knockout or transgenic study "
+                "demonstrating a gene that changes coral colony branching versus plating "
+                "was found. Two Consensus searches plus PubMed title searches; GWAS, QTL "
+                "and Acropora hybrid-cross literature were NOT searched, so absence there "
+                "is not established.",
+           pmid=None, read_level="search-summary"),
+  ]),
+
+# ======================================================================================
+# POPULATION — breeding and gene flow
+# ======================================================================================
+R(id="pop-selective-breeding", outcome="thermal", scale="population",
+  title="Breed heat-tolerant parents and get about one degree-heating-week per generation",
+  intervention="Select broodstock by measured heat tolerance, cross them, and rear the "
+               "offspring.",
+  predicted_phenotype="Offspring with measurably higher tolerance — narrow-sense "
+                      "heritability 0.2 to 0.3, and a possible gain of up to 1 "
+                      "degree-heating-week in one generation. Set that against heatwaves "
+                      "that already deliver more than 12 degree-heating-weeks, and "
+                      "against assaying three-to-four-year-old offspring. Worse: "
+                      "selection for short-stress tolerance did NOT improve survival of "
+                      "long stress, with no genetic correlation detected.",
+  mechanism="Additive genetic variance in thermal tolerance.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="moderate — stock can be culled, released larvae cannot be recalled",
+  lethality_risk="trade-offs unmeasured in the field",
+  difficulty="medium to high — pedigrees over multiple years",
+  evidence=[
+      dict(cite="Humanes et al. 2024, Nat Commun — parent selection raised tolerance of "
+                "3-4-year-old offspring; narrow-sense h2 0.2-0.3 for both a one-week "
+                "+3.5 degC and a one-month +2.5 degC simulated heatwave; possible gain up "
+                "to 1 degree-heating-week in one generation; selection on the short-stress "
+                "trait did not improve long-stress survival. The authors call the gains "
+                "moderate and say the result 'demands urgent climate action'.",
+           pmid="39402025", read_level="abstract"),
+      dict(cite="Lachs et al. 2026, Curr Biol — 'Choice of traits defines the scope for "
+                "assisted evolution of corals'. A rapid 38.5 degC heat-shock assay was "
+                "GENETICALLY UNCORRELATED with heatwave bleaching and mortality "
+                "tolerance, so the assay you choose decides the answer. No genetic "
+                "trade-offs with reproduction, growth, biomass or symbiont flexibility; "
+                "weak positive with calcification; and simulations say withstanding "
+                "future heatwaves 'requires extremely strong selection'.",
+           pmid="41999765", read_level="abstract"),
+      dict(cite="Quigley, Bay & van Oppen 2020, Mol Ecol — warm-by-cool GBR crosses; "
+                "heritability high for survival but not growth or bleaching in juveniles, "
+                "higher at 31 than 27.5 degC, from a limited number of crosses. Also "
+                "reports that interpopulation breeding INCREASED genetic diversity, which "
+                "counters the loss-of-local-adaptation objection.",
+           pmid="32453867", read_level="abstract"),
+      dict(cite="Fuller et al. 2020, Science 369:eaba4674 — the genomic version of this "
+                "route: chromosome-scale A. millepora assembly, 237 phenotyped whole "
+                "genomes from 12 GBR reefs with little population structure, balancing "
+                "selection at a heat-shock co-chaperone (the gene name was stripped from "
+                "the PubMed text and is not named here), and a GWAS of visual bleaching "
+                "score on 213 samples feeding a predictive model. THE VARIANCE EXPLAINED "
+                "IS NOT IN THE ABSTRACT and two attempts at the full text failed, so no "
+                "R-squared for a coral polygenic score should be quoted from this page. "
+                "Heat tolerance here is polygenic with weak per-locus effects, which is "
+                "why the engineerable unit is a score and not a gene.",
+           pmid="32675347", read_level="abstract"),
+      dict(cite="Bairos-Novak et al. 2021 — the meta-analysis whose headline (high "
+                "heritability, some above 0.5) sits awkwardly beside the 0.2-0.3 measured "
+                "directly for heat tolerance. DISAGREEMENT PRESERVED: the trait "
+                "definition drives the answer, and the meta-analysis itself notes that "
+                "explicit tests of the heritability of thermal tolerance are lacking.",
+           pmid="34482591", read_level="abstract"),
+  ]),
+
+R(id="pop-assisted-gene-flow", outcome="thermal", scale="population",
+  title="Move warm-adapted parents poleward",
+  intervention="Cross or translocate individuals from warmer, lower-latitude reefs into "
+               "cooler populations.",
+  predicted_phenotype="Larvae with up to a tenfold increase in the odds of surviving heat "
+                      "stress when a parent comes from a warmer location. At Ningaloo, "
+                      "larvae with ONE warmer-reef parent had 2.2-fold higher survival "
+                      "and those with TWO had 1.6-fold — the one-parent cross beat the "
+                      "two-parent cross, which is not what a simple dose model predicts.",
+  mechanism="Moving standing heritable variation between populations.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="LOW once admixed",
+  lethality_risk="outbreeding depression, disease translocation and loss of local "
+                 "adaptation are the named risks — named by the PROPONENTS of the "
+                 "approach, and not verified in the abstracts read here",
+  difficulty="medium",
+  evidence=[
+      dict(cite="Dixon et al. 2015, Science 348:1460 — 'up-to-10-fold increase in odds of "
+                "survival of coral larvae under heat stress when their parents come from "
+                "a warmer lower-latitude location', with heritable expression differences "
+                "and two genomic regions responding to selection. Larvae under laboratory "
+                "heat stress; no juvenile or adult field survival, and no test for "
+                "outbreeding cost. The abstract gives no heritability number.",
+           pmid="26113720", read_level="abstract"),
+      dict(cite="Kler Lago et al. 2025, Proc Biol Sci — at Ningaloo, one warmer-reef "
+                "parent gave more than 2.2-fold higher larval survival at 35.5 degC and "
+                "two parents 1.6-fold, in two species.",
+           pmid="41027478", read_level="abstract"),
+      dict(cite="Matz et al. 2018, PLoS Genet — MODEL: genomics-derived migration of "
+                "0.1-1% immigrants per generation across half the GBR latitudinal range; "
+                "high migration does not disrupt local thermal adaptation, and standing "
+                "variation suffices for 20-50 generations (100-250 years) of GRADUAL "
+                "warming, with rising sensitivity to heatwaves.",
+           pmid="29672529", read_level="abstract"),
+  ]),
+
+R(id="pop-interspecific-hybrids", outcome="thermal", scale="population",
+  title="Cross two Acropora species and hope for heterosis",
+  intervention="Interspecific crosses within Acropora, then rear and test the hybrids.",
+  predicted_phenotype="Sometimes better, sometimes not, and the two studies read here "
+                      "disagree. In one species pair some hybrid groups had higher "
+                      "survival and larger recruits; in another, hybrids did not "
+                      "outperform BOTH purebred parents and the purebred did best. One "
+                      "cross direction failed entirely.",
+  mechanism="Heterosis or novel allele combinations.",
+  evidence_strength="direct_coral_phenotype_relayed",
+  reversibility="LOW — novel genotypes capable of introgression",
+  lethality_risk="low per animal; introgression into wild populations is the real "
+                 "irreversibility",
+  difficulty="medium; the cross may work in one direction only",
+  evidence=[
+      dict(cite="Chan et al. 2018, Front Mar Sci — two GBR Acropora species pairs, 28 "
+                "weeks at ambient and elevated temperature and pCO2; 'higher survival and "
+                "larger recruit size were observed in SOME of the hybrid offspring "
+                "groups'. Field fitness and backcross potential 'remain to be "
+                "investigated'. No PMID verified.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Lamb et al. 2024, PeerJ — A. kenti eggs by A. loripes sperm; the "
+                "reciprocal cross FAILED. Under more than 12 degree-heating-weeks over "
+                "two months, hybrids 'did not outperform both of their purebred "
+                "counterparts' and purebred A. loripes did best. Small hybrid sample "
+                "sizes. DISAGREES with the above. No PMID verified.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Scoped negative: no study of hybrids OUTPLANTED to a reef, or followed "
+                "through reproduction, was found.",
+           pmid=None, read_level="search-summary"),
+  ]),
+
+R(id="pop-thermal-preconditioning", outcome="thermal", scale="population",
+  title="Precondition with a sub-bleaching pulse, which nature already does",
+  intervention="Expose colonies to a controlled sub-bleaching thermal trajectory before "
+               "the main event.",
+  predicted_phenotype="More than 50% less cell mortality and symbiont loss — measured "
+                      "for the NATURAL version of this, in which 75% of past Great "
+                      "Barrier Reef thermal stress events carried such a protective "
+                      "pre-stress trajectory. The warning in the same paper is the point: "
+                      "another 0.5 degC of local warming could abolish the protective "
+                      "trajectory altogether.",
+  mechanism="Acclimatory plasticity, possibly epigenetic.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high — non-genetic", lethality_risk="low if the pulse is sub-bleaching",
+  difficulty="low in aquaculture, unclear at reef scale; durability unknown",
+  evidence=[
+      dict(cite="Ainsworth et al. 2016, Science — 'Climate change disables coral bleaching "
+                "protection on the Great Barrier Reef'. 75% of past events had a "
+                "protective pre-stress trajectory cutting cell mortality and symbiont "
+                "loss by over 50%; +0.5 degC could abolish it. This is the NATURAL "
+                "phenomenon; no engineered preconditioning regime's durability was found.",
+           pmid="27081069", read_level="abstract"),
+      dict(cite="Palumbi et al. 2014, Science 344:895 — acclimatisation reached in under "
+                "two years what selection would take many generations to deliver.",
+           pmid="24762535", read_level="abstract"),
+      dict(cite="Scoped negative: no durability estimate for an engineered epigenetic "
+                "priming regime was obtained. PubMed and Consensus queries only.",
+           pmid=None, read_level="search-summary"),
+  ]),
+
+R(id="pop-cryobank", outcome="enabling", scale="population",
+  title="Freeze the sperm, because you cannot breed from a genotype that is gone",
+  intervention="Cryopreserve sperm from wild colonies and bank it.",
+  predicted_phenotype="Preserved genotypes and the ability to cross across years and "
+                      "across ranges. It adds NO heat tolerance. In one species frozen "
+                      "sperm fertilised as well as fresh; in another, fertilisation, "
+                      "larval yield, settlement and post-settlement survival were lower "
+                      "by 23%, 23%, 14% and 8%.",
+  mechanism="Vitrification or slow freezing with DMSO.",
+  evidence_strength="direct_coral_phenotype_relayed",
+  reversibility="high", lethality_risk="low",
+  difficulty="medium, and SEASONAL — banking is restricted to a few spawning nights a "
+             "year",
+  evidence=[
+      dict(cite="Grosso-Becerra et al. 2021, Coral Reefs — Diploria labyrinthiformis "
+                "sperm viable at least 13 months, motility down about 24%, and "
+                "fertilisation, larval yield, settlement and post-settlement survival "
+                "lower by 23%, 23%, 14% and 8% versus fresh. Cryo-recruits survived like "
+                "controls in the nursery. No PMID verified.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="da Cruz 2025 — Mussismilia harttii: 20% DMSO slow freezing, 29.7% "
+                "motility, 83.6% viability, 100% fertilisation equal to fresh; a "
+                "repository of 2.4 billion sperm. No PMID verified.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Scoped negative: whole-larva and egg cryopreservation work (Hagedorn and "
+                "colleagues, cryomesh and laser warming) was NOT retrieved. A PubMed "
+                "query returned 0 records. Sperm only, in everything read here.",
+           pmid=None, read_level="could-not-access"),
+  ]),
+
+# ======================================================================================
+# LARVAL — settlement and recruitment
+# ======================================================================================
+R(id="larval-cca-cue-substrate", outcome="recruitment", scale="larval",
+  title="Put the right crustose coralline alga on the tile",
+  intervention="Condition seeding substrates with strong inducer crustose coralline algae "
+               "— Titanoderma or Porolithon species — or their extracts.",
+  predicted_phenotype="Far more attached, metamorphosed spat per larva released: "
+                      "Titanoderma cf. tessellatum induced at least 50% settlement in 14 "
+                      "of 15 coral species, mean 81%. But no crustose coralline alga is a "
+                      "universal inducer — three species settled below 10% under every "
+                      "treatment tested — so the alga has to be matched to the coral.",
+  mechanism="Algal chemistry and its associated microbiome, including Pseudoalteromonas "
+            "and distinct lipid classes, trigger attachment AND metamorphosis together.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high", lethality_risk="low", difficulty="low to medium",
+  evidence=[
+      dict(cite="Abdul Wahab et al. 2023, Sci Rep 13:5795 — 15 coral species by 15 GBR "
+                "crustose coralline algae; Lithophyllaceae best overall; Titanoderma cf. "
+                "tessellatum at least 50% in 14 of 15 species, mean 81%; algae from a "
+                "similar light environment to the coral induce more. Laboratory.",
+           pmid="37032381", read_level="abstract"),
+      dict(cite="Whitman et al. 2020, Sci Rep 10:16397 — live Porolithon onkodes gave "
+                "over 50% settlement in 9 of 15 species and ethanol extracts in 6 "
+                "acroporids, but under 10% in Montipora aequituberculata, Mycedium "
+                "elephantotus and Porites cylindrica under ALL treatments. The authors "
+                "state it is not a universal inducer.",
+           pmid="33009428", read_level="abstract"),
+      dict(cite="Jorissen et al. 2021, Sci Rep 11:14610 — all six algae induced "
+                "settlement of Acropora cytherea but only Titanoderma prototypum promoted "
+                "settlement ON the alga rather than on nearby dead coral or plastic. Note "
+                "what this implies: larvae settle on plastic and dead coral in these "
+                "assays, so a no-cue baseline is NOT zero.",
+           pmid="34272460", read_level="abstract"),
+  ],
+  study="settlement-recruitment"),
+
+R(id="larval-tbp-negative-control", outcome="recruitment", scale="larval",
+  title="Tetrabromopyrrole: 100% metamorphosis, 0-2% attachment — a route that fails",
+  intervention="Impregnate surfaces with the bacterial morphogen tetrabromopyrrole.",
+  predicted_phenotype="Larvae that become fully developed polyps within six hours and "
+                      "then do not stick. Attachment of 0 to 2%. This is a wasted cohort, "
+                      "and it is in the table AS A NEGATIVE CONTROL: it shows that "
+                      "metamorphosis and attachment are separable processes and that an "
+                      "assay scoring only metamorphosis will call this a success.",
+  mechanism="The compound triggers metamorphosis without triggering attachment.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high", lethality_risk="medium — unattached polyps die",
+  difficulty="low",
+  evidence=[
+      dict(cite="Tebben et al. 2011, PLoS One 6:e19082 — planulae became fully developed "
+                "polyps within six hours but only a small proportion attached; biofilm "
+                "density did not change the attached-to-unattached ratio; the compound "
+                "was found in 4 of 225 isolates.",
+           pmid="21559509", read_level="abstract"),
+      dict(cite="Siboni et al. 2012, PLoS One 7:e37774 — quantified: metamorphosis 100%, "
+                "attachment 0-2% in Acropora millepora.",
+           pmid="22655067", read_level="abstract"),
+  ],
+  study="settlement-recruitment"),
+
+R(id="larval-grooved-refuge-device", outcome="recruitment", scale="larval",
+  title="Give the spat somewhere to hide: 4 mm grooves",
+  intervention="Seed onto tiles with 4 mm through-grooves and downward-facing surfaces "
+               "rather than flat tiles.",
+  predicted_phenotype="First-year survival of about 39% against 13% on flat control "
+                      "tiles, in one Acropora tenuis trial. The starkest number in the "
+                      "whole study is not the 39%: it is 100% mortality of recruits on "
+                      "UPPER surfaces, nearly all within six months. Where the spat sits "
+                      "matters more than almost anything else on this list.",
+  mechanism="Refuge from incidental grazing by herbivorous fish and from sediment "
+            "accumulation.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high", lethality_risk="low", difficulty="low to medium",
+  evidence=[
+      dict(cite="Randall et al. 2021, Front Mar Sci — 'Enhancing Coral Survival on "
+                "Deployment Devices With Microrefugia'; spat survival 2-39% across device "
+                "types, 100% mortality on upper surfaces, best device (4 mm through-"
+                "grooves) 39% against 13% for flat control tiles, about half of devices "
+                "with at least one survivor at one year. No PMID verified; read at "
+                "search-summary level.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Doropoulos et al. 2017, R Soc Open Sci 4:170082 — settlement three times "
+                "higher in crevices than on exposed surfaces, but by one month recruit "
+                "density was similar on both, because crevices carry negative "
+                "density dependence. The refuge advantage is partly spent by a month.",
+           pmid="28573015", read_level="abstract"),
+  ],
+  study="settlement-recruitment"),
+
+R(id="larval-tetrapod-seeding", outcome="recruitment", scale="larval",
+  title="Wedge unattached tetrapods into the reef instead of gluing anything",
+  intervention="Settle larvae on small concrete tetrapods and wedge them into reef "
+               "crevices without cement or bolts.",
+  predicted_phenotype="About 9.6% recruit survival at one year with 67% of tetrapods "
+                      "holding at least one colony, at 5 to 18 times lower outplanting "
+                      "cost and 1.5 to 7% of the deployment time. The trade-off is "
+                      "measured: bolting takes about 120 seconds against about 10 for "
+                      "wedging, and it doubled or quadrupled the proportion of units "
+                      "still holding a live coral.",
+  mechanism="Self-wedging geometry plus refuge, with no attachment step.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="medium", lethality_risk="low", difficulty="low",
+  evidence=[
+      dict(cite="Chamberland et al. 2017, Sci Rep 7:18076 — Curacao: average recruit "
+                "survival 9.6% after one year on concrete tetrapods, 67% of tetrapods "
+                "with at least one colony, costs 5-18x lower than traditional attached "
+                "methods, deployment 1.5-7% of the time.",
+           pmid="29273761", read_level="abstract"),
+      dict(cite="Mendoza Quiroz et al. 2025, Restoration Ecology — bolting ceramic stars "
+                "took about 120 s against about 10 s for wedging tetrapods, but doubled "
+                "(D. labyrinthiformis, 8 months) or quadrupled (A. palmata, 6 months) the "
+                "proportion of units retaining a live coral. Cementing raised retention "
+                "but not live-coral yield. No PMID verified.",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="settlement-recruitment"),
+
+R(id="larval-mass-enrichment", outcome="recruitment", scale="larval",
+  title="Release hundreds of thousands of larvae into a netted plot",
+  intervention="Rear larvae ex situ and release 3-4 x 10^5 competent larvae into a "
+               "mesh-enclosed reef plot for several days.",
+  predicted_phenotype="Colonies on the reef at three years, about 16 cm across, spawning "
+                      "— where control plots produced no visible colonies of that species "
+                      "at all. Now the arithmetic: 47 colonies survived from about 900,000 "
+                      "larvae across three plots, which is about 5 x 10^-5 larvae per "
+                      "surviving colony, at a production cost of USD 35.20 each.",
+  mechanism="Bypasses larval supply limitation at a degraded site.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="low — released larvae cannot be recalled",
+  lethality_risk="low", difficulty="medium to high",
+  evidence=[
+      dict(cite="Dela Cruz & Harrison 2020, PLoS One 15:e0242847 — about 300,000 "
+                "A. loripes larvae per plot, 27.8 +/- 6.7 spat per tile against zero in "
+                "controls, 47 colonies surviving at 35 months at a mean 7.9 cm diameter, "
+                "USD 35.20 production cost per surviving colony. The 5e-5 figure is MY "
+                "ARITHMETIC from those numbers and assumes the 47 is the total across "
+                "three plots, which the abstract does not state explicitly.",
+           pmid="33232367", read_level="abstract"),
+      dict(cite="Dela Cruz & Harrison 2017 — survivorship began stabilising after about "
+                "five months, juveniles visible to the eye at nine months, 2.3 colonies "
+                "per square metre at three years with a mean 16.1 +/- 0.7 cm diameter, "
+                "and the colonies spawned at three years. Natural recruitment produced no "
+                "visible A. tenuis colonies.",
+           pmid="29070842", read_level="abstract"),
+  ],
+  study="settlement-recruitment"),
+
+R(id="larval-acoustic-enrichment", outcome="recruitment", scale="larval",
+  title="Play reef sound at the settlement site",
+  intervention="Deploy a solar-powered reef soundscape playback system at a seeding site.",
+  predicted_phenotype="About 1.7 to 1.8 times more settlers near the speaker, detectable "
+                      "at least 30 m away, with a maximum of seven times in one trial. "
+                      "The honest frame: in flow-through conditions the response was "
+                      "minimal and the difference BETWEEN TWO REEFS was tenfold, so site "
+                      "choice outweighs the speaker.",
+  mechanism="Larval detection of low-frequency biological reef sound; fish calls below "
+            "1 kHz may be detectable hundreds of metres away.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high", lethality_risk="low", difficulty="medium",
+  evidence=[
+      dict(cite="Aoki et al. 2024, R Soc Open Sci 11:231514 — settlement 1.7x on average "
+                "(maximum 7x) at enriched sites on a degraded reef, still above control "
+                "at 30 m or more from the speaker. A brooding coral.",
+           pmid="38481984", read_level="abstract"),
+      dict(cite="Aoki et al. 2026, Sci Rep — broadcast spawner Diploria labyrinthiformis: "
+                "1.79x in static cups, but in flow-through tents the response was minimal "
+                "and there was a tenfold difference between two reefs.",
+           pmid="42409953", read_level="abstract"),
+      dict(cite="Aoki et al. 2024, JASA Express Lett 4(10) — the aquarium and field "
+                "demonstration in Favia fragum.",
+           pmid="39431916", read_level="abstract"),
+      dict(cite="Scoped negative: every verified acoustic result comes from ONE laboratory "
+                "group, no independent replication was found, and NO Acropora value "
+                "exists. Searched PubMed with 'reef sound playback coral larvae "
+                "settlement' only (8 hits).",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="settlement-recruitment"),
+
+R(id="larval-site-screen-sediment", outcome="recruitment", scale="larval",
+  title="Screen the site for sediment before you spend anything else",
+  intervention="Pre-screen candidate sites for sediment deposition and substrate "
+               "stability, and reject the bad ones.",
+  predicted_phenotype="Avoids near-total failure. Two millimetres of sediment cuts "
+                      "settlement probability to 25% or less and four millimetres "
+                      "suppresses it; burying recruits under four millimetres cuts "
+                      "ten-day survival to between 0 and 31%. The field failure case is "
+                      "stark: at one site 9% of ceramic devices held a recruit at 21 "
+                      "months and 0% of travertine tiles did, DESPITE travertine "
+                      "attracting more than 2.5 times the settlement.",
+  mechanism="Burial, abrasion and substrate instability kill recruits regardless of "
+            "everything upstream.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high (it is a decision)", lethality_risk="low", difficulty="low",
+  evidence=[
+      dict(cite="Rodriguez-Ruano et al. 2026, Commun Biol 9 — six Caribbean species: 2 mm "
+                "sediment cut settlement probability to 25% or less, 4 mm suppressed it, "
+                "and 4 mm burial cut 10-day recruit survival to 0-31%, a 3-25x mortality "
+                "risk.",
+           pmid="42310106", read_level="abstract"),
+      dict(cite="Macroalgae too: Webster et al. 2015, PLoS One 10:e0124162 — at Ningaloo "
+                "over nine months, settlement on tile undersides was 93% lower and recruit "
+                "survival 79% lower in caged macroalgae-dense plots, with recruits up to "
+                "58% smaller. CONFOUNDED: caging also removes herbivory.",
+           pmid="25898011", read_level="abstract"),
+      dict(cite="Removing the macroalgae helps for a year and then stops. Smith et al. "
+                "2025, J Environ Manage 383:125322: 'Sea-weeding enhances early coral "
+                "survival on seeding devices, but benefits of seeding diminish after one "
+                "year'; 1.3 surviving colonies per device at two years, 50% of devices "
+                "with one live coral, site survival 37-93%, and USD 334-577 per surviving "
+                "coral. So weeding buys year one at a cost that recurs forever.",
+           pmid="40267811", read_level="abstract"),
+      dict(cite="DO NOT MODEL HERBIVORY AS MONOTONIC PROTECTION. Penin et al. 2011, "
+                "Hydrobiologia: excluding predators and grazers did NOT change total "
+                "mortality of Acropora striata recruits — more than half dead within "
+                "seven days either way — it changed the CAUSE, from predation (50.0% of "
+                "dead recruits damaged or missing) to competition with turf algae and "
+                "sediment (91.7% intact). This disagrees with the caging result above. "
+                "No PMID verified.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="Waters et al. 2025, Restoration Ecology — Lizard Island, 21 months: 9% of "
+                "ceramic devices had at least one recruit (all unattached) and 0% of "
+                "travertine tiles did, despite travertine settlement more than 2.5x "
+                "ceramic. Sand deposition and unconsolidated rubble killed most. No PMID "
+                "verified. A failure case, kept in deliberately.",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="settlement-recruitment"),
+
+R(id="larval-microfragment-bypass", outcome="recruitment", scale="larval",
+  title="Skip sexual recruitment entirely: microfragment the adults",
+  intervention="Cut massive corals into roughly 1 cm2 microfragments and array them so "
+               "they fuse.",
+  predicted_phenotype="Up to ten times more tissue than large fragments over 31 months, "
+                      "once plots with heavy predation are excluded — and predation hit "
+                      "the microfragments and not the large ones. This route does not "
+                      "solve the recruitment bottleneck; it goes around it, which means "
+                      "it adds no genetic diversity at all.",
+  mechanism="Injury-driven rapid edge growth, with a possible immune trade-off.",
+  evidence_strength="direct_coral_phenotype_relayed",
+  reversibility="medium", lethality_risk="medium — predation, possible immune cost",
+  difficulty="medium",
+  evidence=[
+      dict(cite="Page et al. 2018, Ecol Eng — Florida Keys, 31 months: Orbicella faveolata "
+                "and Montastraea cavernosa microfragments against 16-64 cm2 fragments; "
+                "survival and growth did not differ, but after excluding plots with more "
+                "than 40% predation, O. faveolata microfragment arrays produced 10x more "
+                "tissue. Initial predation hit microfragments only. No PMID verified.",
+           pmid=None, read_level="search-summary"),
+  ],
+  study="settlement-recruitment"),
+
+# ======================================================================================
+# ECOLOGICAL AND REGULATORY
+# ======================================================================================
+R(id="eco-site-prioritisation", outcome="recruitment", scale="ecological",
+  title="Put it where it will still be alive in 2050",
+  intervention="Site restoration by projected bleaching risk rather than by access.",
+  predicted_phenotype="Restored colonies that are not sitting in the places most likely "
+                      "to cook. Current practice does the opposite: restoration sites "
+                      "cluster near human settlements, outcomes are not predicted by "
+                      "environmental covariates, most restored localities face high or "
+                      "severe bleaching risk by mid-century, and more than half of "
+                      "recently restored sites are ALREADY affected.",
+  mechanism="Siting. The cheapest intervention on this page and the one least often made.",
+  evidence_strength="direct_coral_phenotype",
+  reversibility="high", lethality_risk="n/a", difficulty="low",
+  evidence=[
+      dict(cite="Mula et al. 2025, Nat Ecol Evol 9:822 — 'Restoration cannot be scaled up "
+                "globally to save reefs from loss and degradation'. An erratum exists "
+                "(PMID 40442326) and was NOT read, so what it corrects is unknown.",
+           pmid="40200110", read_level="abstract"),
+  ]),
+
+R(id="eco-regulated-pilot", outcome="enabling", scale="ecological",
+  title="Get one bred cohort into the water, under permit, and measure it",
+  intervention="A permitted, monitored field trial of selectively bred stock through a "
+               "real bleaching event.",
+  predicted_phenotype="The first field survival data for bred versus wild corals. NO SUCH "
+                      "TRIAL WAS LOCATED. The programme furthest along chose larval "
+                      "seeding and seeding of aquaculture-propagated corals for its 2025 "
+                      "pilots on technology-readiness grounds; assisted evolution was not "
+                      "among them.",
+  mechanism="Permits, monitoring and readiness gating.",
+  evidence_strength="proposed",
+  reversibility="low once the cohort spawns",
+  lethality_risk="low per colony; the risks are genetic and regulatory",
+  difficulty="high",
+  evidence=[
+      dict(cite="Scoped negative: no evidence was found that any assisted-evolution "
+                "product has been deployed on the Great Barrier Reef. Scope: one web "
+                "search, two gbrrestoration.org pages (read at page-summary level), plus "
+                "PubMed and Consensus. The reports index and the programme's own papers "
+                "were NOT read. Absence of evidence in a limited search.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="REGULATION, all UNVERIFIED legal status. Australia's Gene Technology "
+                "Amendment (2019 Measures No. 1) Regulations reportedly exempt SDN-1 "
+                "edits (a site-directed nuclease with no repair template) from the "
+                "definition of a GMO, which would plausibly put a plain CRISPR indel "
+                "outside GMO law if no editing machinery is inherited. That is an "
+                "INFERENCE from a search summary, not legal advice: the Schedule 1 "
+                "wording was not obtained, the legislation.gov.au fetch returned only a "
+                "table of contents, and a 2025 minor-measures amendment may have changed "
+                "it. Separately, Marine Park and EPBC approvals would apply to any "
+                "release whatever the GM status, and neither was read.",
+           pmid=None, read_level="search-summary"),
+      dict(cite="VERIFIED by direct fetch: the United States is listed as having signed "
+                "the Convention on Biological Diversity in 1993 but not ratified it, so "
+                "it is not a Party; and neither the United States nor Australia appears "
+                "as a Party to the Cartagena Protocol. The Protocol's transboundary rules "
+                "would therefore not bind an Australian release of an Australian coral.",
+           pmid=None, read_level="web-page"),
+  ]),
+
+R(id="eco-portfolio-with-mitigation", outcome="enabling", scale="ecological",
+  title="Treat every route above as a bridge, and say what it is a bridge to",
+  intervention="Fund the interventions as a portfolio AND cut emissions, rather than "
+                "treating them as alternatives.",
+  predicted_phenotype="Under moderate warming, reefs that persist. Under high emissions, "
+                      "the same reefs lost anyway. The modelling says adaptation succeeds "
+                      "under lower-emissions scenarios and fails under higher ones, and "
+                      "transplanting tolerant individuals at 1-5% per year speeds "
+                      "adaptation without changing which side of that line you are on.",
+  mechanism="Buying time. Berkelmans and van Oppen's own phrase for the symbiont route is "
+            "that it may be enough to 'buy time while greenhouse reduction measures are "
+            "put in place'.",
+  evidence_strength="model_only",
+  reversibility="n/a", lethality_risk="n/a", difficulty="political, not technical",
+  evidence=[
+      dict(cite="Bay et al. 2017, Sci Adv — genomic models: adaptation succeeds under "
+                "RCP2.6 and RCP4.5 and fails under RCP6.0 and RCP8.5; transplanting "
+                "tolerant individuals at 1-5% per year speeds adaptation.",
+           pmid="29109975", read_level="abstract"),
+      dict(cite="Bostrom-Einarsson et al. 2020, PLoS One — 60% of restoration projects "
+                "monitored for under 18 months, MEDIAN RESTORED AREA 100 SQUARE METRES, "
+                "229 species in 72 genera, 59% of studies on fast-growing branching "
+                "corals, reported survival 60-70%. The authors list absent objectives, "
+                "non-standard monitoring and poorly designed projects, and say "
+                "restoration is not a replacement for climate action.",
+           pmid="31999709", read_level="abstract"),
+      dict(cite="Bayraktarov et al. 2016, Ecol Appl — 235 studies, 954 observations; "
+                "median reported cost about USD 80,000 per hectare in 2010 dollars, mean "
+                "about USD 1.6M, true median likely 2-4x higher, with coral reefs among "
+                "the most expensive habitats and median coral survival 64.5%, mostly "
+                "assessed over one to two years, with publication bias toward success.",
+           pmid="27509748", read_level="abstract"),
+      dict(cite="van Oppen et al. 2017, Glob Chang Biol 23:3437 — the framing paper, "
+                "naming selective breeding, assisted gene flow, conditioning and "
+                "microbiome manipulation, and proposing a decision tree and consideration "
+                "of alternative or hybrid ecosystem states.",
+           pmid="28247459", read_level="abstract"),
+      dict(cite="DISAGREEMENT PRESERVED. Against: Hughes et al. 2023 argue rehabilitation "
+                "may be feasible only for very small areas of high economic value and "
+                "that more ambitious outcomes 'remain elusive and may even be "
+                "counter-productive'. For: Anthony et al. 2020 argue interventions are "
+                "needed whatever the emissions trajectory, as a portfolio. Lockie 2025 "
+                "argues the critics show 'singular voices, polemic arguments, empirical "
+                "short-cuts, and premature closure' — which is a social-science critique "
+                "OF THE CRITICS and is itself one side. None has a verified PMID here.",
+           pmid=None, read_level="search-summary"),
+  ]),
+]

@@ -1,0 +1,99 @@
+{
+  "schema": "design-space-page-0.1",
+  "id": "coral",
+  "title": "Engineering a coral",
+  "group": "Design space",
+  "status": "design space, mapped and simulated, with one target not reached",
+  "listed": true,
+  "doc": "docs/dossier/16-coral-design-space.md",
+  "doc_title": "16. Engineering a coral: the design space",
+  "live_url": "https://studio.morphoswarm.ai/#/studio/coral",
+  "home_blurb": "Three of the four thermal interventions buy a coral that still looks brown while it starves.",
+  "scope_pill": "no animal work",
+  "nothing_attempted_note": "nothing here went in the water.",
+  "studies_note": "Three studies, all simulations. None is an observation, nothing here went in the water, and one of the three did not reach the target its brief set. The bleaching model is a line-by-line port of a published model reproduced to 5e-15 against the authors' own R code, with a thermal coupling WE added that the published model does not contain. In the morphology study one pre-declared control fails and is reported as failing.",
+  "goal": "Could you engineer a coral? The question hides four different animals: one that resists bleaching, one of a chosen shape, one that settles and survives where you put it, and one engineered through its symbiont or its microbiome rather than through the animal. They are reached at different scales and they are not interchangeable. This page lays out every route we can source and runs the models that bear on three of them.",
+  "summary": "The honest answer is that the engineering is outrun by the weather. The thermal study finds that three of four interventions keep the algae in place without keeping the host fed. The recruitment study finds that no intervention it tested moves surviving recruits as much as the difference between a normal year and a heatwave year — and that four fifths of its own uncertainty comes from stages nobody has measured in the wild. The morphology study did not reach the shapes its brief asked for, and says so.",
+  "answer": {
+    "headline": "Yes, four different ways — and the weather beats all of them.",
+    "paragraphs": [
+      "Ask for a thermally tolerant coral and you can have one, on paper, by four routes: raise the symbiont's thermal optimum, raise photoprotection, raise tolerance of reactive oxygen, or make the host hold its symbionts longer. Read on the obvious measure — how much heat it takes to lose half the symbionts — all four look comparable. Read on whether the host's carbon balance stays positive and they separate sharply: the thermal optimum moves that threshold about six times further than the other three. Photoprotection, ROS tolerance and retention mostly keep the algae in place without keeping the animal fed. Three of the four buy a coral that still looks brown while it starves, which matters because visual bleaching score is what most selection programmes actually measure.",
+      "That model is a line-by-line port of the published Cunning–Muller–Gates–Nisbet model, checked against the authors' own R code to a relative error of 5 × 10⁻¹⁵. It is worth saying what the port revealed: the published model contains no temperature variable at all. Bleaching there is driven by light — excess excitation beyond what photochemistry and non-photochemical quenching can absorb. The thermal coupling on this page is ours, it enters through one parameter, and every thermal number here is a property of that extension rather than of the published model. The first attempt to encode the measured tolerance trade-off came out with the wrong sign, because lowering the quantum yield makes each unit of fixed carbon consume more photons and so reduces the excess; the corrected encoding and the failed one are both in the file.",
+      "Ask instead for more corals on the reef and the arithmetic changes the subject. Over twenty thousand samples of a nine-stage chain, the number of recruits surviving a year spans four orders of magnitude — and about four fifths of that spread comes from stages with no published wild value, led by whether a larva encounters suitable substrate at all. So the highest-value next experiment in this entire chain is a measurement, not an intervention trial. Among interventions, two are in a different class from the rest per unit of effort — screening sites for sediment, and mass larval enrichment — and which of those two is first is a coin flip once the cost assumptions are themselves perturbed.",
+      "And then the number that frames all of it. Recruit survivorship has been measured at 33% in a normal year and 2% in a heatwave year at the same site. The best intervention in our table is a 22-fold median multiplier on a quantity whose own spread is four orders of magnitude, and the model has no thermal year in it. No intervention tested here moves recruitment as much as the difference between a normal year and a bad one.",
+      "The shape question is the one we could not answer. The growth model spans compact mound to open lobed mound and reaches neither true branching nor plating at any setting tried, including four beyond the declared sweep. Light weighting makes colonies smoother rather than flatter. The one metric comparable with real colonies agrees: an area-to-diameter exponent of 1.72 to 1.95 sits inside the measured range for massive and tabular corals and nowhere near the 2.4 to 2.5 of branching ones. That is reported as a target declared and not reached, not as a narrower success."
+    ],
+    "precision_note": "Much of this evidence has to travel to reach the animal a route targets. 22 of 42 organism-level routes rest on cross-genus transfer or weaker, and 7 rest on something that is not a reef-building coral at all — five on an anemone or Nematostella, two on a non-reef stony coral. One route carries three different transfer levels within itself, with its mechanism coming from an anemone. Every route states its own, so a reader can see how far the inference has been carried."
+  },
+  "chain": {
+    "title": "The chain across scales, and where it is not calibrated",
+    "intro": "From a molecular knob to a coral that is still alive next decade. One junction is a validated port, one is an extension we made, one is refused outright, and one was attempted and missed.",
+    "links": [
+      {
+        "from": "A thermal-tolerance knob",
+        "to": "Symbiont retention",
+        "status": "model",
+        "note": "Inside a port of a published model, reproduced to 5e-15 against the authors' own R. On this readout all four knobs look comparable — which is the problem, because the readout is confounded: one of the knobs IS the coefficient converting oxidative stress into symbiont loss, so asking whether it dominates is close to asking whether b equals b. 1,868 of 2,401 map cells censor on it."
+      },
+      {
+        "from": "Symbiont retention",
+        "to": "A fed host",
+        "status": "model",
+        "note": "The junction that separates the knobs, read on host carbon balance, where that coefficient does not appear. The thermal optimum moves the threshold about six times further than the other three. This is where 'brown while it starves' comes from."
+      },
+      {
+        "from": "Our thermal coupling",
+        "to": "The published model",
+        "status": "scenario",
+        "note": "Labelled rather than hidden. The published model has no temperature variable — bleaching there is light-driven — so the coupling is an addition of ours entering through one parameter. A break-even against the measured 29% growth penalty could not be computed at all: the model's worst steady state is -14.4% before it falls into the bleached attractor, and an independent arm hits the same wall at -22.3%. Two routes, one wall, so it is the model's bistability rather than either parameterisation."
+      },
+      {
+        "from": "An intervention",
+        "to": "Surviving recruits",
+        "status": "scenario",
+        "note": "A sensitivity analysis over stated unknowns, not a prediction. Four fifths of the spread comes from stages with no published wild value, so the ordering is a statement about our ignorance as much as about the interventions. The effort units were themselves perturbed: the top two hold in 87% of draws, and the order within them is 58/41."
+      },
+      {
+        "from": "Growth parameters",
+        "to": "Colony shape",
+        "status": "refused",
+        "note": "Declared and not reached. The model spans compact mound to open lobed mound and produces neither branching nor plating; light weighting changes smoothness, not flatness. The externally comparable metric agrees it grows mounds. A published counterpart exists — light geometry alone does not explain depth zonation either — so it is a result rather than only a shortfall."
+      }
+    ],
+    "verdict": "One junction is a validated port, two are scenario-level, one is refused, and one was aimed at and missed. The end-to-end statement — this intervention gives that reef — is refused. What the chain delivers instead is an ordering of what is worth doing: measure the stages nobody has measured, and do not expect any of this to outrun a heatwave year."
+  },
+  "not_claimed": [
+    "No coral was engineered, nothing went in the water, and no wet-lab experiment was run for this page.",
+    "The three studies are simulations. None is an observation, and none is calibrated to a measured reef.",
+    "The bleaching model's thermal coupling is ours, not the published model's. The published model contains no temperature variable at all; bleaching in it is driven by light. Every thermal number here is a property of our extension.",
+    "The morphology study did NOT reach branching or plating at any setting tried. No route on this page may cite it as showing that a growth model reproduces branching.",
+    "One pre-declared control in the morphology study fails. The criterion was not moved: a solid hemisphere of the same voxel count measures 2.462 and a solid cube 2.470 against a declared threshold of 2.6, so no object of any shape could have reached it at this size — the criterion was wrong rather than the model, and both the failure and the replacement are shown.",
+    "The bleaching study's step-halving convergence check fails at 9.3% against a declared 5%. The absolute threshold does not survive refinement; the knob ranking and the additivity verdict do, and only those are quoted.",
+    "The effort units behind the intervention ranking are mostly invented. Exactly one cost ratio has direct published support. 'Those two interventions are in a different class' is quotable; 'site screening beats larval enrichment' is not.",
+    "22 of 42 organism-level routes rest on cross-genus transfer or weaker, and 7 on an animal that is not a reef-building coral."
+  ],
+  "closing": {
+    "title": "Why the uncomfortable number is the useful one",
+    "link": {
+      "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/coral/NOTES.md",
+      "text": "The working notes, including the wrong-sign encoding and the failed criterion"
+    },
+    "text": "A design space is supposed to tell you what to do next. Here it says: stop ranking interventions and go measure how often a larva meets a surface it can settle on, because that single unmeasured stage carries more of the uncertainty than every intervention in the table combined. And it says the thing nobody selling reef restoration wants to put on a slide — that the best intervention we could model is smaller than the gap between a normal year and a hot one. Both conclusions came out of models that were built to answer something else, which is the argument for building them."
+  },
+  "schematic": {
+    "section_title": "Where the routes act",
+    "intro": "A coral is three organisms and a skeleton, and the routes below act on different ones. The page's main finding is that two of these arrows are measured on different readouts that disagree.",
+    "viewBox": "0 0 960 440",
+    "title": "Where each family of routes acts on a coral holobiont",
+    "desc": "On the left, a cutaway of a coral polyp on its skeleton: the host tissue with symbiotic algae inside its cells, a mucus layer carrying the microbiome above, and the calcifying layer below depositing skeleton. Arrows mark light entering from above and carbon passing from alga to host. On the right, two stacked panels: above, two thermometers labelled symbiont loss and host carbon balance showing that the same intervention reads differently on each; below, a larva settling on a surface, with a branching bar showing that most of the uncertainty in whether it survives lies in stages nobody has measured. Six numbered pins mark where the routes act; each is named in the list under the figure.",
+    "caption": "Schematic, not a measurement and not to scale.",
+    "pins": [
+      {"x": 150, "y": 140, "scale": "gene", "name": "The animal's own genome", "note": "The only causal genetic precedent in a reef-building coral is CRISPR in Acropora millepora, and it is a small and recent literature. Every heritable edit route runs through it, and no transgene has been expressed in a coral."},
+      {"x": 265, "y": 230, "scale": "symbiont", "name": "The alga inside the cell", "note": "The route with the most evidence and the clearest trade-off: heat-tolerant symbionts raise bleaching resistance and reduce photochemical efficiency. Our model says the host can end up retaining algae that no longer feed it."},
+      {"x": 160, "y": 318, "scale": "cell", "name": "Calcification", "note": "The calicoblastic layer and its ion pumps — where skeleton is actually made, and the cost centre the thermal trade-off is paid from."},
+      {"x": 330, "y": 116, "scale": "microbiome", "name": "The mucus microbiome", "note": "Beneficial microorganisms for corals: engineering the holobiont without touching the animal's genome, and the route with the least regulatory friction and the least durability evidence."},
+      {"x": 700, "y": 150, "scale": "colony", "name": "Two readouts that disagree", "note": "Symbiont loss and host carbon balance rank the same four interventions differently. One knob is the coefficient converting stress into symbiont loss, so the first readout cannot separate them. This is the page's central finding."},
+      {"x": 720, "y": 340, "scale": "larval", "name": "Settlement and the first year", "note": "The restoration bottleneck is recruitment, not adult survival — and four fifths of the uncertainty in it comes from stages with no published wild value. The highest-value next experiment on this page is a measurement here."}
+    ]
+  }
+}

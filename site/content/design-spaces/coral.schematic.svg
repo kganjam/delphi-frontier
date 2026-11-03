@@ -1,0 +1,54 @@
+<!-- Body of the coral schematic: everything inside <svg> except the numbered pins, which the renderer adds from
+     schematic.pins in coral.json so a pin and the caption line describing it cannot disagree.
+     A drawing, not a measurement and not to scale. -->
+<defs>
+  <marker id="car" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0e7c86"></path></marker>
+</defs>
+<rect x="0" y="0" width="960" height="440" fill="#fffdf8"></rect>
+<line x1="500" y1="36" x2="500" y2="404" stroke="#ddd3c0" stroke-dasharray="5 6"></line>
+<text x="250" y="40" class="dsb-ttl" text-anchor="middle">One animal, three organisms</text>
+<text x="730" y="40" class="dsb-ttl" text-anchor="middle">Two readouts, and the bottleneck</text>
+
+<!-- light -->
+<path d="M 120 62 L 120 96 M 200 62 L 200 96 M 280 62 L 280 96 M 360 62 L 360 96" stroke="#c99a2e" stroke-width="3" stroke-linecap="round" marker-end="url(#car)"></path>
+<text x="416" y="80" class="dsb-sub" text-anchor="start">light</text>
+
+<!-- mucus / microbiome -->
+<path d="M 70 112 Q 150 96 240 110 Q 330 124 430 108 L 430 132 Q 330 148 240 134 Q 150 120 70 136 Z" fill="#efe7d6" stroke="#c9b48c"></path>
+<text x="250" y="128" class="dsb-sub" text-anchor="middle">mucus — microbiome</text>
+
+<!-- host tissue with symbionts -->
+<rect x="70" y="150" width="360" height="118" rx="12" fill="#e3f1f1" stroke="#0e7c86" stroke-width="2"></rect>
+<text x="100" y="172" class="dsb-sub" text-anchor="start">host tissue</text>
+<circle cx="200" cy="208" r="15" fill="#9bcf6e" stroke="#4a7c2f" stroke-width="2"></circle>
+<circle cx="250" cy="232" r="15" fill="#9bcf6e" stroke="#4a7c2f" stroke-width="2"></circle>
+<circle cx="300" cy="200" r="15" fill="#9bcf6e" stroke="#4a7c2f" stroke-width="2"></circle>
+<text x="352" y="214" class="dsb-lab" text-anchor="start">symbionts</text>
+<path d="M 232 226 L 262 248" class="dsb-arr" marker-end="url(#car)"></path>
+<text x="214" y="262" class="dsb-sub" text-anchor="start">fixed carbon &#8594; host</text>
+
+<!-- calcifying layer + skeleton -->
+<rect x="70" y="278" width="360" height="26" fill="#f3dcae" stroke="#c99a2e"></rect>
+<text x="250" y="296" class="dsb-sub" text-anchor="middle">calicoblastic layer</text>
+<rect x="70" y="304" width="360" height="62" rx="6" fill="#efe7d6" stroke="#c9b48c"></rect>
+<text x="250" y="342" class="dsb-lab" text-anchor="middle">skeleton</text>
+
+<!-- two thermometers -->
+<rect x="560" y="96" width="34" height="110" rx="17" fill="#fffdf8" stroke="#0e7c86" stroke-width="2"></rect>
+<rect x="566" y="150" width="22" height="50" rx="11" fill="#0e7c86"></rect>
+<text x="577" y="226" class="dsb-sub" text-anchor="middle">symbiont</text>
+<text x="577" y="242" class="dsb-sub" text-anchor="middle">loss</text>
+<rect x="690" y="96" width="34" height="110" rx="17" fill="#fffdf8" stroke="#b3261e" stroke-width="2"></rect>
+<rect x="696" y="110" width="22" height="90" rx="11" fill="#b3261e"></rect>
+<text x="707" y="226" class="dsb-sub" text-anchor="middle">host carbon</text>
+<text x="707" y="242" class="dsb-sub" text-anchor="middle">balance</text>
+<text x="820" y="150" class="dsb-note" text-anchor="middle">same knob,</text>
+<text x="820" y="168" class="dsb-note" text-anchor="middle">different answer</text>
+
+<!-- larva and the unmeasured stages -->
+<ellipse cx="600" cy="320" rx="22" ry="13" fill="#fdf0d8" stroke="#9a6700" stroke-width="2"></ellipse>
+<text x="600" y="296" class="dsb-sub" text-anchor="middle">larva</text>
+<line x1="560" y1="356" x2="900" y2="356" stroke="#c9b48c" stroke-width="5" stroke-linecap="round"></line>
+<rect x="640" y="372" width="196" height="16" fill="#b3261e" opacity=".75"></rect>
+<rect x="836" y="372" width="64" height="16" fill="#9bcf6e"></rect>
+<text x="738" y="406" class="dsb-sub" text-anchor="middle">~4/5 of the uncertainty is in stages nobody has measured</text>

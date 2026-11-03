@@ -1,0 +1,1051 @@
+{
+ "schema": "design-space-result-0.1",
+ "study_id": "settlement-recruitment",
+ "title": "Settlement and recruitment: which intervention actually moves surviving recruits per unit effort",
+ "is_observation": false,
+ "headline": "NO INTERVENTION IN THIS TABLE MOVES RECRUITMENT AS MUCH AS THE DIFFERENCE BETWEEN A NORMAL YEAR AND A HEATWAVE YEAR, and this model has no thermal year in it at all. Speare et al. measured recruit survivorship of 33% in a normal year against 2% in a heatwave year at the same site in Moorea -- a 16-fold swing -- while the best intervention here has a median multiplier of 22x on a quantity whose own baseline spans four orders of magnitude. The second result is the decomposition, and it is the kind only a sensitivity analysis reaches: about 80% of the spread comes from stages whose range this page had to INVENT, led by 'Encounters suitable substrate' at 40%. So the highest-value next experiment in this entire chain is a MEASUREMENT, not an intervention trial. On the ranking: the effort units were invented, so they were sampled too, and what survives is that 'Mass larval enrichment into a netted plot' and 'Screen out sediment-prone and unstable sites' are in a different class from the rest (87% of draws put exactly those two on top), while the order WITHIN that pair is not stable. 4 of the 9 stages have no published wild value at all, which is why this is a distribution and not a prediction.",
+ "provenance": {
+  "generated_at": "2026-11-02T16:02:57-0800",
+  "code": "results/coral/code/settlement_recruitment.py",
+  "n_samples": 20000,
+  "sampling": "Latin hypercube over stage values; simple random for intervention multipliers and costs",
+  "rng_seed": 20261102
+ },
+ "model": {
+  "name": "multiplicative survival chain with interval-valued stages",
+  "kind": "Monte Carlo sensitivity analysis",
+  "is_observation": false,
+  "why_not_a_point_prediction": "Because the parameters for one do not exist. The research block records NO published value for eggs per colony, wild pelagic larval mortality, no-cue settlement probability, settlers per larva released in the field, or the absolute size at which a recruit escapes incidental grazing. A point prediction would be an invented number wearing a decimal place.",
+  "parameters": [
+   {
+    "key": "eggs_per_polyp",
+    "label": "Eggs per polyp",
+    "lo": 4.0,
+    "hi": 12.0,
+    "status": "sourced",
+    "distribution": "loguniform",
+    "source": "Foster & Gilmour 2020, Sci Rep 10:12313 (PMID 32703979), read at FULL TEXT. Seven Acropora species at Scott Reef, 2008-2010: mean about 6-8 eggs per polyp with an individual range of about 4-12. Only mature colonies above 20 cm were sampled and polyps were taken from the colony CENTRE to avoid sterile margins, so multiplying by a total polyp count may overstate colony fecundity. Scott Reef is Western Australia, not the Great Barrier Reef, and the per-species values could not be recovered because the figure and table values were stripped from the text retrieved."
+   },
+   {
+    "key": "polyps_per_colony",
+    "label": "Polyps per colony",
+    "lo": 2000.0,
+    "hi": 50000.0,
+    "status": "assumed",
+    "distribution": "loguniform",
+    "source": "NO VALUE WAS OBTAINED, in any source read. The research block says so explicitly and declines to supply one. This 25-fold range is invented to span plausible branching-Acropora colony sizes and is the single crudest number in this file. It is included rather than omitted because leaving it out would silently fix it at 1."
+   },
+   {
+    "key": "fertilisation",
+    "label": "Fertilisation success",
+    "lo": 0.5,
+    "hi": 0.95,
+    "status": "sourced",
+    "distribution": "uniform",
+    "source": "Dela Cruz et al. 2020, J Exp Mar Biol Ecol (no PMID verified; search-summary): above 90% at sperm concentrations of 1e5 to 1e7 per mL in Acropora tenuis, A. millepora and Favites colemani, and above 80% when gametes are combined up to 4 h after spawning. Buccheri et al. 2023 report a steep rise past 1e4 sperm/mL. Kitanobo et al. 2021 report most eggs fertilised below 1e6 in situ. Those three answer different questions (maximum against onset against field) and the range here spans a slick that is not at the laboratory optimum."
+   },
+   {
+    "key": "survive_to_competence",
+    "label": "Survives to competence",
+    "lo": 0.03,
+    "hi": 0.83,
+    "status": "assumed",
+    "distribution": "loguniform",
+    "source": "NO WILD VALUE EXISTS in anything read. The bounds are the extremes of what laboratory and rearing studies report, and they differ by a factor of more than 20 for reasons that are about HANDLING, not about the sea: Randall et al. 2025 report 3.8% survival in in-situ rearing pools against 66.1% in on-vessel tanks; Miller et al. 2020 report 71-83% persistence to competence age in A. palmata laboratory cohorts; Doropoulos et al. 2017 (PMID 28573015) report above 80% survival from day 2.5 to 12 in A. millepora. Graham et al. 2008 report that the mortality SHAPE is a bathtub, not a constant. A wild value would almost certainly be below the laboratory numbers; nothing read here bounds it from below."
+   },
+   {
+    "key": "encounter_substrate",
+    "label": "Encounters suitable substrate",
+    "lo": 0.001,
+    "hi": 0.1,
+    "status": "assumed",
+    "distribution": "loguniform",
+    "source": "NO PUBLISHED VALUE. This stage carries everything between a competent larva in the water and a larva in contact with a surface it could settle on: dispersal, retention, and how much of the benthos is settleable. The hundredfold range reflects that it is a placeholder for an entire connectivity literature that was not read."
+   },
+   {
+    "key": "settle_and_attach",
+    "label": "Settles AND attaches, given contact",
+    "lo": 0.05,
+    "hi": 0.81,
+    "status": "sourced",
+    "distribution": "uniform",
+    "source": "Abdul Wahab et al. 2023, Sci Rep 13:5795 (PMID 37032381): across 15 coral species and 15 crustose coralline algae, the best inducer (Titanoderma cf. tessellatum) gave at least 50% settlement in 14 of 15 species, mean 81%. Whitman et al. 2020 (PMID 33009428): Porolithon onkodes gave above 50% in 9 of 15 species but BELOW 10% in three species under every treatment. The low end of the range is that non-response. NOTE the stage is settlement AND ATTACHMENT together, because the two are separable: a tetrabromopyrrole cue gives 100% metamorphosis with 0-2% attachment (Siboni et al. 2012, PMID 22655067). The no-cue baseline is NONE -- no control-surface percentage was retrieved from any source -- but it is NOT zero, because bare calcified rubble and dead coral induce metamorphosis (Heyward & Negri 1999) and larvae settle on plastic in assays (Jorissen et al. 2021, PMID 34272460)."
+   },
+   {
+    "key": "survive_week_1",
+    "label": "Survives the first week",
+    "lo": 0.2,
+    "hi": 0.5,
+    "status": "sourced",
+    "distribution": "uniform",
+    "source": "Penin et al. 2011 (no PMID verified; search-summary): more than half of Acropora striata recruits died within SEVEN DAYS in the field at Moorea, in both caged and uncaged plots. That is an upper bound of 0.5 on weekly survival, and the lower bound here is assumed. The same study is the reason herbivory is not modelled as protection: excluding predators and grazers did not change total mortality, it changed the cause, from predation (50.0% of dead recruits damaged or missing) to competition with turf algae and sediment (91.7% intact)."
+   },
+   {
+    "key": "survive_to_month_1",
+    "label": "Survives week 1 to month 1",
+    "lo": 0.3,
+    "hi": 0.8,
+    "status": "assumed",
+    "distribution": "uniform",
+    "source": "NO DIRECT VALUE. Doropoulos et al. 2017 (PMID 28573015) report that A. millepora settlement was three times higher in crevices than on exposed surfaces but that by ONE MONTH recruit density was similar on both, because crevices carry negative density dependence. That says the refuge advantage is partly spent by a month; it does not give a survival fraction."
+   },
+   {
+    "key": "survive_to_year_1",
+    "label": "Survives month 1 to year 1",
+    "lo": 0.05,
+    "hi": 0.6,
+    "status": "sourced",
+    "distribution": "uniform",
+    "source": "The first-year survival literature spreads over more than tenfold and the range is that spread, not an uncertainty about one number: Chamberland et al. 2017 (PMID 29273761) 9.6% on concrete tetrapods in Curacao; Randall et al. 2021 2-39% across device types for A. tenuis, with 100% mortality on upper surfaces; Randall et al. 2025 5 +/- 8%; Speare et al. 2021 33% in a normal year against 2% in a heatwave year at Moorea; Waters et al. 2025 effectively zero yield at 21 months at one Lizard Island site. These are different species, devices, sites and thermal years. A single number here would be a fiction."
+   }
+  ],
+  "parameter_status_counts": {
+   "sourced": 5,
+   "assumed": 4
+  },
+  "interventions": [
+   {
+    "key": "cca_cue",
+    "label": "Condition substrate with a strong CCA inducer",
+    "stage": "settle_and_attach",
+    "lo": 1.5,
+    "hi": 4.0,
+    "status": "sourced",
+    "effect_source": "Abdul Wahab et al. 2023 (PMID 37032381) and Whitman et al. 2020 (PMID 33009428). The multiplier is the ratio of a strong inducer to a weak or absent one, and it is bounded ABOVE by the fact that the stage is a probability: the code caps the stage at 0.9 after any multiplier, so an intervention cannot push a probability past one.",
+    "cost_lo": 1.0,
+    "cost_hi": 3.0,
+    "cost_source": "RELATIVE EFFORT UNITS, not money. No study read here costs substrate conditioning. Anchored at 1 by definition and the other interventions are placed relative to it; the ranking is therefore only as good as these placements, which is stated in the limitations and is the weakest part of this study."
+   },
+   {
+    "key": "grooved_device",
+    "label": "Seeding device with 4 mm refuge grooves",
+    "stage": "survive_to_year_1",
+    "lo": 2.0,
+    "hi": 3.5,
+    "status": "sourced",
+    "effect_source": "Randall et al. 2021 (search-summary, no PMID): first-year survival about 39% on 4 mm through-grooved devices against 13% on flat control tiles, a ratio of 3.0. The range brackets it.",
+    "cost_lo": 1.5,
+    "cost_hi": 4.0,
+    "cost_source": "Relative effort units. Device manufacture and deployment."
+   },
+   {
+    "key": "tetrapod_wedge",
+    "label": "Unattached wedged tetrapods instead of bolting",
+    "stage": "survive_to_year_1",
+    "lo": 0.9,
+    "hi": 1.3,
+    "status": "sourced",
+    "effect_source": "Chamberland et al. 2017 (PMID 29273761): 9.6% first-year survival, 67% of tetrapods with at least one colony, at 5-18x lower outplanting cost and 1.5-7% of the deployment TIME. Mendoza Quiroz et al. 2025 (search-summary) measured the trade-off directly: bolting took about 120 s against about 10 s for wedging, but DOUBLED or QUADRUPLED the proportion of units retaining a live coral. So the survival multiplier here is near 1 or slightly below, and the whole case for this route is on the cost side.",
+    "cost_lo": 0.1,
+    "cost_hi": 0.35,
+    "cost_source": "The one cost ratio in this table with direct support: 5-18x lower outplanting cost (Chamberland) and about a twelfth of the attachment time (Mendoza Quiroz)."
+   },
+   {
+    "key": "acoustic",
+    "label": "Reef-sound playback at the settlement site",
+    "stage": "encounter_substrate",
+    "lo": 1.7,
+    "hi": 1.8,
+    "status": "sourced",
+    "effect_source": "Aoki et al. 2024 (PMID 38481984) 1.7x on average with a maximum of 7x in a brooding coral; Aoki et al. 2026 (PMID 42409953) 1.79x for a broadcast spawner in static cups. The narrow range is deliberate: the maximum of 7 is not used because in flow-through conditions the response was minimal and the difference between two reefs was TENFOLD. Every verified acoustic result comes from one laboratory group and no independent replication was found. There is no Acropora value.",
+    "cost_lo": 2.0,
+    "cost_hi": 6.0,
+    "cost_source": "Relative effort units. Hardware, power and maintenance in water."
+   },
+   {
+    "key": "sea_weeding",
+    "label": "Remove macroalgae around the devices",
+    "stage": "survive_to_year_1",
+    "lo": 1.2,
+    "hi": 4.8,
+    "status": "sourced",
+    "effect_source": "Webster et al. 2015 (PMID 25898011): recruit survival 79% lower in caged macroalgae-dense plots, a ratio of 4.8 the other way, CONFOUNDED because caging also removes herbivory. Smith et al. 2025 (PMID 40267811) measured the intervention itself and found a first-year benefit that had VANISHED by year two, at USD 334-577 per surviving coral. The low end of the range is that result.",
+    "cost_lo": 4.0,
+    "cost_hi": 12.0,
+    "cost_source": "Relative effort units, and the highest in the table because the labour RECURS: Smith et al. report the benefit disappearing in year two, so the cost does not buy a permanent gain."
+   },
+   {
+    "key": "sediment_screening",
+    "label": "Screen out sediment-prone and unstable sites",
+    "stage": "survive_week_1",
+    "lo": 1.2,
+    "hi": 3.0,
+    "status": "sourced",
+    "effect_source": "Rodriguez-Ruano et al. 2026 (PMID 42310106): 2 mm of sediment cuts settlement probability to 25% or less and 4 mm suppresses it; 4 mm burial cuts ten-day recruit survival to 0-31%, a 3-25x mortality risk. Waters et al. 2025 is the field failure case: 9% of ceramic devices and 0% of travertine tiles held a recruit at 21 months, DESPITE travertine attracting more than 2.5 times the settlement. The multiplier is conservative relative to the 3-25x, because a screened site is not a sediment-free one.",
+    "cost_lo": 0.2,
+    "cost_hi": 0.8,
+    "cost_source": "Relative effort units. Survey time before deployment, paid once."
+   },
+   {
+    "key": "larval_supply",
+    "label": "Mass larval enrichment into a netted plot",
+    "stage": "encounter_substrate",
+    "lo": 5.0,
+    "hi": 50.0,
+    "status": "sourced",
+    "effect_source": "Dela Cruz & Harrison 2017 (PMID 29070842) and 2020 (PMID 33232367): roughly 3-4 x 10^5 larvae released per plot, with control plots producing ZERO settlement of that species. The multiplier is on larval ENCOUNTER, not survival, and it is wide because the baseline it multiplies is a supply-limited reef and no study read here measures how supply-limited a given reef is.",
+    "cost_lo": 6.0,
+    "cost_hi": 20.0,
+    "cost_source": "Relative effort units. Spawning capture, ex-situ rearing, netting and release. The one anchor to real money is USD 35.20 per surviving colony at 35 months (Dela Cruz & Harrison 2020), which is not comparable with the USD 334-577 per surviving coral at two years in Smith et al. 2025: different species, years, accounting and survival horizons. They are NOT compared here."
+   }
+  ],
+  "stage_cap": {
+   "value": 0.9,
+   "note": "Every stage after fecundity is a probability and is capped at 0.9 after any intervention multiplier, so stacked interventions cannot manufacture a certainty. Declared before the run; the control arm checks the cap is not binding where it should not be."
+  }
+ },
+ "control_arm": {
+  "checks": {
+   "null_intervention_changes_nothing": true,
+   "order_independent": true,
+   "no_intervention_reduces_median_by_more_than_15pct": true
+  },
+  "passed": true,
+  "baseline": {
+   "p05": 0.03829476991121769,
+   "p25": 0.31374202342826407,
+   "median": 1.419221689298411,
+   "p75": 6.217440696899605,
+   "p95": 47.177652524835686,
+   "mean": 11.128309813372816,
+   "geometric_mean": 1.3823988782163568
+  },
+  "null_arm": {
+   "p05": 0.03829476991121769,
+   "p25": 0.31374202342826407,
+   "median": 1.419221689298411,
+   "p75": 6.217440696899605,
+   "p95": 47.177652524835686,
+   "mean": 11.128309813372816,
+   "geometric_mean": 1.3823988782163568
+  },
+  "single_intervention_median_ratios": {
+   "cca_cue": 1.914895814224203,
+   "grooved_device": 2.2957314578173684,
+   "tetrapod_wedge": 1.104161409173149,
+   "acoustic": 1.7538991692728074,
+   "sea_weeding": 2.2530575805620425,
+   "sediment_screening": 1.9495731338011781,
+   "larval_supply": 21.445435266912426
+  },
+  "note": "The baseline is recruits per SPAWNING COLONY per spawning event, spread over four orders of magnitude because the unknowns are. The number itself is not a prediction; the RATIOS below are what the study is for."
+ },
+ "sensitivity": {
+  "ranking": [
+   {
+    "stage": "encounter_substrate",
+    "label": "Encounters suitable substrate",
+    "status": "assumed",
+    "spearman": 0.6175266056973164,
+    "spearman_sq": 0.3813391087440489,
+    "range_decades": 2.0,
+    "share_of_spread": 0.4029933806611825
+   },
+   {
+    "stage": "survive_to_competence",
+    "label": "Survives to competence",
+    "status": "assumed",
+    "spearman": 0.43519790206699466,
+    "spearman_sq": 0.18939721396351347,
+    "range_decades": 1.4419568376564116,
+    "share_of_spread": 0.2001521003034461
+   },
+   {
+    "stage": "polyps_per_colony",
+    "label": "Polyps per colony",
+    "status": "assumed",
+    "spearman": 0.41933559791233893,
+    "spearman_sq": 0.17584234367649879,
+    "range_decades": 1.3979400086720377,
+    "share_of_spread": 0.18582751917307413
+   },
+   {
+    "stage": "settle_and_attach",
+    "label": "Settles AND attaches, given contact",
+    "status": "sourced",
+    "spearman": 0.28659435837548586,
+    "spearman_sq": 0.08213632625265642,
+    "range_decades": 1.209515014542631,
+    "share_of_spread": 0.08680042259674055
+   },
+   {
+    "stage": "survive_to_year_1",
+    "label": "Survives month 1 to year 1",
+    "status": "sourced",
+    "spearman": 0.26042710787406775,
+    "spearman_sq": 0.06782227851565133,
+    "range_decades": 1.0791812460476247,
+    "share_of_spread": 0.07167355426298942
+   },
+   {
+    "stage": "eggs_per_polyp",
+    "label": "Eggs per polyp",
+    "status": "sourced",
+    "spearman": 0.14235541816988853,
+    "spearman_sq": 0.02026506508232383,
+    "range_decades": 0.47712125471966244,
+    "share_of_spread": 0.021415813116419605
+   },
+   {
+    "stage": "survive_to_month_1",
+    "label": "Survives week 1 to month 1",
+    "status": "assumed",
+    "spearman": 0.11082765682006913,
+    "spearman_sq": 0.012282769516227017,
+    "range_decades": 0.42596873227228116,
+    "share_of_spread": 0.012980244348734633
+   },
+   {
+    "stage": "survive_week_1",
+    "label": "Survives the first week",
+    "status": "sourced",
+    "spearman": 0.10568171789720428,
+    "spearman_sq": 0.011168625497704266,
+    "range_decades": 0.3979400086720376,
+    "share_of_spread": 0.011802833864804232
+   },
+   {
+    "stage": "fertilisation",
+    "label": "Fertilisation success",
+    "status": "sourced",
+    "spearman": 0.07754161148135402,
+    "spearman_sq": 0.006012701511125254,
+    "range_decades": 0.2787536009528289,
+    "share_of_spread": 0.0063541316726087845
+   }
+  ],
+  "share_of_spread_from_assumed_ranges": 0.8019532444864373,
+  "interpretation": "80% of the spread in the answer comes from stages whose range this file INVENTED. The top contributor, 'Encounters suitable substrate', is assumed. That is the result most worth acting on: measuring the dominant stage once would narrow this analysis more than any intervention trial would.",
+  "method": "Spearman rank correlation of each sampled stage against the log of the final count, squared and normalised to a share. Declared before the run.",
+  "caveat": "A rank correlation measures how much a stage's DECLARED RANGE drives the output, so a stage with a wide invented range will dominate by construction. The range_decades column is published beside each row so that circularity is visible rather than hidden."
+ },
+ "comparison": {
+  "baseline_median": 1.419221689298411,
+  "per_intervention": [
+   {
+    "key": "sediment_screening",
+    "label": "Screen out sediment-prone and unstable sites",
+    "stage": "survive_week_1",
+    "effect_source": "Rodriguez-Ruano et al. 2026 (PMID 42310106): 2 mm of sediment cuts settlement probability to 25% or less and 4 mm suppresses it; 4 mm burial cuts ten-day recruit survival to 0-31%, a 3-25x mortality risk. Waters et al. 2025 is the field failure case: 9% of ceramic devices and 0% of travertine tiles held a recruit at 21 months, DESPITE travertine attracting more than 2.5 times the settlement. The multiplier is conservative relative to the 3-25x, because a screened site is not a sediment-free one.",
+    "cost_source": "Relative effort units. Survey time before deployment, paid once.",
+    "median_multiplier": 1.9663822615257622,
+    "multiplier_p05": 1.293604269342732,
+    "multiplier_p95": 2.781241621719171,
+    "median_cost": 0.4985705683487782,
+    "gain_per_unit_effort": 1.967451875897787,
+    "probability_it_helps_at_all": 1.0
+   },
+   {
+    "key": "larval_supply",
+    "label": "Mass larval enrichment into a netted plot",
+    "stage": "encounter_substrate",
+    "effect_source": "Dela Cruz & Harrison 2017 (PMID 29070842) and 2020 (PMID 33232367): roughly 3-4 x 10^5 larvae released per plot, with control plots producing ZERO settlement of that species. The multiplier is on larval ENCOUNTER, not survival, and it is wide because the baseline it multiplies is a supply-limited reef and no study read here measures how supply-limited a given reef is.",
+    "cost_source": "Relative effort units. Spawning capture, ex-situ rearing, netting and release. The one anchor to real money is USD 35.20 per surviving colony at 35 months (Dela Cruz & Harrison 2020), which is not comparable with the USD 334-577 per surviving coral at two years in Smith et al. 2025: different species, years, accounting and survival horizons. They are NOT compared here.",
+    "median_multiplier": 22.329642155447132,
+    "multiplier_p05": 7.340106733568298,
+    "multiplier_p95": 46.56020869251643,
+    "median_cost": 12.966646594804823,
+    "gain_per_unit_effort": 1.69633842954961,
+    "probability_it_helps_at_all": 1.0
+   },
+   {
+    "key": "grooved_device",
+    "label": "Seeding device with 4 mm refuge grooves",
+    "stage": "survive_to_year_1",
+    "effect_source": "Randall et al. 2021 (search-summary, no PMID): first-year survival about 39% on 4 mm through-grooved devices against 13% on flat control tiles, a ratio of 3.0. The range brackets it.",
+    "cost_source": "Relative effort units. Device manufacture and deployment.",
+    "median_multiplier": 2.2942575918375803,
+    "multiplier_p05": 1.5720720950398395,
+    "multiplier_p95": 3.3124827003500195,
+    "median_cost": 2.7440440347865755,
+    "gain_per_unit_effort": 0.48493596070426215,
+    "probability_it_helps_at_all": 1.0
+   },
+   {
+    "key": "tetrapod_wedge",
+    "label": "Unattached wedged tetrapods instead of bolting",
+    "stage": "survive_to_year_1",
+    "effect_source": "Chamberland et al. 2017 (PMID 29273761): 9.6% first-year survival, 67% of tetrapods with at least one colony, at 5-18x lower outplanting cost and 1.5-7% of the deployment TIME. Mendoza Quiroz et al. 2025 (search-summary) measured the trade-off directly: bolting took about 120 s against about 10 s for wedging, but DOUBLED or QUADRUPLED the proportion of units retaining a live coral. So the survival multiplier here is near 1 or slightly below, and the whole case for this route is on the cost side.",
+    "cost_source": "The one cost ratio in this table with direct support: 5-18x lower outplanting cost (Chamberland) and about a twelfth of the attachment time (Mendoza Quiroz).",
+    "median_multiplier": 1.1014025048197995,
+    "multiplier_p05": 0.9208009487428295,
+    "multiplier_p95": 1.2804038632521912,
+    "median_cost": 0.22440440347865756,
+    "gain_per_unit_effort": 0.45253600005465033,
+    "probability_it_helps_at_all": 0.75445
+   },
+   {
+    "key": "cca_cue",
+    "label": "Condition substrate with a strong CCA inducer",
+    "stage": "settle_and_attach",
+    "effect_source": "Abdul Wahab et al. 2023 (PMID 37032381) and Whitman et al. 2020 (PMID 33009428). The multiplier is the ratio of a strong inducer to a weak or absent one, and it is bounded ABOVE by the fact that the stage is a probability: the code caps the stage at 0.9 after any multiplier, so an intervention cannot push a probability past one.",
+    "cost_source": "RELATIVE EFFORT UNITS, not money. No study read here costs substrate conditioning. Anchored at 1 by definition and the other interventions are placed relative to it; the ranking is therefore only as good as these placements, which is stated in the limitations and is the weakest part of this study.",
+    "median_multiplier": 1.8386782599151,
+    "multiplier_p05": 1.1658545717712516,
+    "multiplier_p95": 3.5214068855917047,
+    "median_cost": 1.9952352278292604,
+    "gain_per_unit_effort": 0.4373419285636577,
+    "probability_it_helps_at_all": 1.0
+   },
+   {
+    "key": "acoustic",
+    "label": "Reef-sound playback at the settlement site",
+    "stage": "encounter_substrate",
+    "effect_source": "Aoki et al. 2024 (PMID 38481984) 1.7x on average with a maximum of 7x in a brooding coral; Aoki et al. 2026 (PMID 42409953) 1.79x for a broadcast spawner in static cups. The narrow range is deliberate: the maximum of 7 is not used because in flow-through conditions the response was minimal and the difference between two reefs was TENFOLD. Every verified acoustic result comes from one laboratory group and no independent replication was found. There is no Acropora value.",
+    "cost_source": "Relative effort units. Hardware, power and maintenance in water.",
+    "median_multiplier": 1.7503506262049502,
+    "multiplier_p05": 1.7052002371857076,
+    "multiplier_p95": 1.7951009658130481,
+    "median_cost": 3.990470455658521,
+    "gain_per_unit_effort": 0.18831067034058468,
+    "probability_it_helps_at_all": 1.0
+   },
+   {
+    "key": "sea_weeding",
+    "label": "Remove macroalgae around the devices",
+    "stage": "survive_to_year_1",
+    "effect_source": "Webster et al. 2015 (PMID 25898011): recruit survival 79% lower in caged macroalgae-dense plots, a ratio of 4.8 the other way, CONFOUNDED because caging also removes herbivory. Smith et al. 2025 (PMID 40267811) measured the intervention itself and found a first-year benefit that had VANISHED by year two, at USD 334-577 per surviving coral. The low end of the range is that result.",
+    "cost_source": "Relative effort units, and the highest in the table because the labour RECURS: Smith et al. report the benefit disappearing in year two, so the cost does not buy a permanent gain.",
+    "median_multiplier": 2.140932731836597,
+    "multiplier_p05": 1.387208538685464,
+    "multiplier_p95": 4.205021446813289,
+    "median_cost": 7.980940911317042,
+    "gain_per_unit_effort": 0.14966135444063677,
+    "probability_it_helps_at_all": 1.0
+   }
+  ],
+  "stacked": {
+   "interventions": [
+    "sediment_screening",
+    "larval_supply",
+    "grooved_device",
+    "tetrapod_wedge"
+   ],
+   "median_multiplier": 100.49865665974207,
+   "median_cost": 16.515334242887164,
+   "gain_per_unit_effort": 6.191207162525977,
+   "note": "Stacking is multiplicative by construction in this model, because the chain is a product and the interventions act on different stages. That is an ASSUMPTION, not a finding: no study read here crosses two of these interventions factorially, so whether they interact in the water is unknown."
+  }
+ },
+ "effort_unit_sensitivity": {
+  "n_draws": 400,
+  "sigma_effort": 0.5,
+  "method": "Each draw multiplies every intervention's mean effort by an independent lognormal factor with median 1 and sigma 0.5, then recomputes the ranking. The perturbation is unbiased, so this asks whether the ORDERING survives the denominators being wrong, not whether the costs are right.",
+  "per_intervention": [
+   {
+    "key": "sediment_screening",
+    "label": "Screen out sediment-prone and unstable sites",
+    "p_rank_1": 0.58,
+    "p_top_2": 0.935,
+    "modal_rank": 1,
+    "rank_distribution": [
+     0.58,
+     0.355,
+     0.0525,
+     0.0125,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "key": "larval_supply",
+    "label": "Mass larval enrichment into a netted plot",
+    "p_rank_1": 0.405,
+    "p_top_2": 0.935,
+    "modal_rank": 2,
+    "rank_distribution": [
+     0.405,
+     0.53,
+     0.06,
+     0.005,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "key": "tetrapod_wedge",
+    "label": "Unattached wedged tetrapods instead of bolting",
+    "p_rank_1": 0.005,
+    "p_top_2": 0.0525,
+    "modal_rank": 3,
+    "rank_distribution": [
+     0.005,
+     0.0475,
+     0.35,
+     0.3225,
+     0.1875,
+     0.0725,
+     0.015
+    ]
+   },
+   {
+    "key": "grooved_device",
+    "label": "Seeding device with 4 mm refuge grooves",
+    "p_rank_1": 0.0075,
+    "p_top_2": 0.05,
+    "modal_rank": 4,
+    "rank_distribution": [
+     0.0075,
+     0.0425,
+     0.285,
+     0.3125,
+     0.26,
+     0.0825,
+     0.01
+    ]
+   },
+   {
+    "key": "cca_cue",
+    "label": "Condition substrate with a strong CCA inducer",
+    "p_rank_1": 0.0025,
+    "p_top_2": 0.0275,
+    "modal_rank": 5,
+    "rank_distribution": [
+     0.0025,
+     0.025,
+     0.2375,
+     0.25,
+     0.3375,
+     0.1125,
+     0.035
+    ]
+   },
+   {
+    "key": "acoustic",
+    "label": "Reef-sound playback at the settlement site",
+    "p_rank_1": 0.0,
+    "p_top_2": 0.0,
+    "modal_rank": 6,
+    "rank_distribution": [
+     0.0,
+     0.0,
+     0.015,
+     0.0725,
+     0.14,
+     0.4575,
+     0.315
+    ]
+   },
+   {
+    "key": "sea_weeding",
+    "label": "Remove macroalgae around the devices",
+    "p_rank_1": 0.0,
+    "p_top_2": 0.0,
+    "modal_rank": 7,
+    "rank_distribution": [
+     0.0,
+     0.0,
+     0.0,
+     0.025,
+     0.075,
+     0.275,
+     0.625
+    ]
+   }
+  ],
+  "pairwise": [
+   {
+    "a": "sediment_screening",
+    "b": "sea_weeding",
+    "p_a_beats_b": 1.0
+   },
+   {
+    "a": "larval_supply",
+    "b": "acoustic",
+    "p_a_beats_b": 1.0
+   },
+   {
+    "a": "larval_supply",
+    "b": "sea_weeding",
+    "p_a_beats_b": 1.0
+   },
+   {
+    "a": "sediment_screening",
+    "b": "acoustic",
+    "p_a_beats_b": 0.9975
+   },
+   {
+    "a": "sediment_screening",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.9875
+   },
+   {
+    "a": "larval_supply",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.98
+   },
+   {
+    "a": "larval_supply",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.9725
+   },
+   {
+    "a": "larval_supply",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.97
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "sea_weeding",
+    "p_a_beats_b": 0.965
+   },
+   {
+    "a": "sediment_screening",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.965
+   },
+   {
+    "a": "sediment_screening",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.965
+   },
+   {
+    "a": "grooved_device",
+    "b": "sea_weeding",
+    "p_a_beats_b": 0.955
+   },
+   {
+    "a": "cca_cue",
+    "b": "sea_weeding",
+    "p_a_beats_b": 0.925
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "acoustic",
+    "p_a_beats_b": 0.905
+   },
+   {
+    "a": "grooved_device",
+    "b": "acoustic",
+    "p_a_beats_b": 0.895
+   },
+   {
+    "a": "cca_cue",
+    "b": "acoustic",
+    "p_a_beats_b": 0.8425
+   },
+   {
+    "a": "acoustic",
+    "b": "sea_weeding",
+    "p_a_beats_b": 0.655
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.6075
+   },
+   {
+    "a": "sediment_screening",
+    "b": "larval_supply",
+    "p_a_beats_b": 0.5875
+   },
+   {
+    "a": "grooved_device",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.565
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.54
+   },
+   {
+    "a": "grooved_device",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.46
+   },
+   {
+    "a": "cca_cue",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.435
+   },
+   {
+    "a": "larval_supply",
+    "b": "sediment_screening",
+    "p_a_beats_b": 0.4125
+   },
+   {
+    "a": "cca_cue",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.3925
+   },
+   {
+    "a": "sea_weeding",
+    "b": "acoustic",
+    "p_a_beats_b": 0.345
+   },
+   {
+    "a": "acoustic",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.1575
+   },
+   {
+    "a": "acoustic",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.105
+   },
+   {
+    "a": "acoustic",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.095
+   },
+   {
+    "a": "sea_weeding",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.075
+   },
+   {
+    "a": "sea_weeding",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.045
+   },
+   {
+    "a": "grooved_device",
+    "b": "sediment_screening",
+    "p_a_beats_b": 0.035
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "sediment_screening",
+    "p_a_beats_b": 0.035
+   },
+   {
+    "a": "sea_weeding",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.035
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "larval_supply",
+    "p_a_beats_b": 0.03
+   },
+   {
+    "a": "grooved_device",
+    "b": "larval_supply",
+    "p_a_beats_b": 0.0275
+   },
+   {
+    "a": "cca_cue",
+    "b": "larval_supply",
+    "p_a_beats_b": 0.02
+   },
+   {
+    "a": "cca_cue",
+    "b": "sediment_screening",
+    "p_a_beats_b": 0.0125
+   },
+   {
+    "a": "acoustic",
+    "b": "sediment_screening",
+    "p_a_beats_b": 0.0025
+   },
+   {
+    "a": "acoustic",
+    "b": "larval_supply",
+    "p_a_beats_b": 0.0
+   },
+   {
+    "a": "sea_weeding",
+    "b": "sediment_screening",
+    "p_a_beats_b": 0.0
+   },
+   {
+    "a": "sea_weeding",
+    "b": "larval_supply",
+    "p_a_beats_b": 0.0
+   }
+  ],
+  "robust_orderings": [
+   {
+    "a": "sediment_screening",
+    "b": "sea_weeding",
+    "p_a_beats_b": 1.0
+   },
+   {
+    "a": "larval_supply",
+    "b": "acoustic",
+    "p_a_beats_b": 1.0
+   },
+   {
+    "a": "larval_supply",
+    "b": "sea_weeding",
+    "p_a_beats_b": 1.0
+   },
+   {
+    "a": "sediment_screening",
+    "b": "acoustic",
+    "p_a_beats_b": 0.9975
+   },
+   {
+    "a": "sediment_screening",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.9875
+   },
+   {
+    "a": "larval_supply",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.98
+   },
+   {
+    "a": "larval_supply",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.9725
+   },
+   {
+    "a": "larval_supply",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.97
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "sea_weeding",
+    "p_a_beats_b": 0.965
+   },
+   {
+    "a": "sediment_screening",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.965
+   },
+   {
+    "a": "sediment_screening",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.965
+   },
+   {
+    "a": "grooved_device",
+    "b": "sea_weeding",
+    "p_a_beats_b": 0.955
+   }
+  ],
+  "fragile_orderings": [
+   {
+    "a": "acoustic",
+    "b": "sea_weeding",
+    "p_a_beats_b": 0.655
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.6075
+   },
+   {
+    "a": "sediment_screening",
+    "b": "larval_supply",
+    "p_a_beats_b": 0.5875
+   },
+   {
+    "a": "grooved_device",
+    "b": "cca_cue",
+    "p_a_beats_b": 0.565
+   },
+   {
+    "a": "tetrapod_wedge",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.54
+   },
+   {
+    "a": "grooved_device",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.46
+   },
+   {
+    "a": "cca_cue",
+    "b": "grooved_device",
+    "p_a_beats_b": 0.435
+   },
+   {
+    "a": "larval_supply",
+    "b": "sediment_screening",
+    "p_a_beats_b": 0.4125
+   },
+   {
+    "a": "cca_cue",
+    "b": "tetrapod_wedge",
+    "p_a_beats_b": 0.3925
+   },
+   {
+    "a": "sea_weeding",
+    "b": "acoustic",
+    "p_a_beats_b": 0.345
+   }
+  ],
+  "most_common_top_two": [
+   {
+    "pair": [
+     "larval_supply",
+     "sediment_screening"
+    ],
+    "frequency": 0.87
+   },
+   {
+    "pair": [
+     "larval_supply",
+     "tetrapod_wedge"
+    ],
+    "frequency": 0.0275
+   },
+   {
+    "pair": [
+     "grooved_device",
+     "larval_supply"
+    ],
+    "frequency": 0.0275
+   }
+  ],
+  "is_observation": false
+ },
+ "quotable": {
+  "note": "Which numbers in this study may be cited, and why. Written because the biology was sampled 20,000 times and the effort units were not, until they were, and the difference matters to what can be said.",
+  "may_be_quoted": [
+   {
+    "claim": "'Mass larval enrichment into a netted plot' and 'Screen out sediment-prone and unstable sites' are in a different class from the other interventions, per unit of effort.",
+    "basis": "87% of 400 draws with independently perturbed effort units put exactly those two in the top two."
+   },
+   {
+    "claim": "About four fifths of the spread in surviving recruits comes from stages with no published wild value.",
+    "basis": "Spearman rank decomposition over the Latin-hypercube sample; the stage ranges are published beside it so the circularity is visible."
+   },
+   {
+    "claim": "The baseline spans four orders of magnitude.",
+    "basis": "5th to 95th percentile of the sampled chain."
+   },
+   {
+    "claim": "No intervention here moves recruitment as much as the difference between a normal and a heatwave year.",
+    "basis": "Comparison of this table's multipliers against Speare et al.'s measured 33% against 2%. Note that is a comparison ACROSS a model and a measurement, so it is an order-of-magnitude statement and not an effect size."
+   }
+  ],
+  "may_NOT_be_quoted": [
+   {
+    "claim": "'Mass larval enrichment into a netted plot' beats 'Screen out sediment-prone and unstable sites'.",
+    "why": "The gap between them rests on invented denominators and does not survive perturbing them. See fragile_orderings."
+   },
+   {
+    "claim": "Any absolute number of surviving recruits.",
+    "why": "The baseline is a distribution four orders of magnitude wide built on four invented ranges. The median is a property of those choices."
+   },
+   {
+    "claim": "Any cost in money.",
+    "why": "The effort units are relative and mostly invented. The two real money figures in the literature are not comparable with each other and are not compared here."
+   }
+  ]
+ },
+ "limitations": [
+  "This is a SIMULATION over invented ranges. No coral was measured and no reef was surveyed.",
+  "A MULTIPLICATIVE CHAIN IS A STRONG ASSUMPTION. Real recruitment has density dependence (Doropoulos et al. 2017 find negative density dependence in crevices), size-dependent mortality, and stage-dependent causes of death that switch rather than add. None of that is here.",
+  "THE EFFORT UNITS ARE MOSTLY INVENTED, and they decide the ranking. They are now sampled rather than fixed (see effort_unit_sensitivity), which establishes WHICH parts of the ordering survive them -- but sampling an invented range does not make it a measured one. Exactly one cost ratio has direct published support: tetrapods at 5-18x lower outplanting cost and about a twelfth of the attachment time. The two real money figures in the literature -- USD 35.20 per surviving colony at 35 months in the Philippines and USD 334-577 per surviving coral at two years on the Great Barrier Reef -- are from different species, years, accounting methods and survival horizons, and they are NOT compared here, because comparing them would be the error this study exists to avoid.",
+  "Intervention effects are modelled as stage multipliers drawn independently. No study read here crosses two of these interventions factorially, so whether they interact is unknown, and the stacked arm's multiplicative combination is an assumption of the model.",
+  "Herbivory is NOT modelled as protection, deliberately. Penin et al. found that excluding predators and grazers did not change total recruit mortality, it changed the cause; Webster et al. found caging raised recruit mortality through macroalgae. The sign depends on stage and microhabitat, and a single multiplier cannot carry that.",
+  "Thermal years are not in the model. Speare et al. report recruit survival of 33% in a normal year against 2% in a heatwave year at the same site -- a larger swing than any intervention in this table produces. A recruitment model with no temperature in it will overstate what recruitment engineering can achieve.",
+  "The acoustic multiplier uses 1.7-1.8x and NOT the maximum of 7x that one study reports, because in flow-through conditions the response was minimal and the between-reef difference was tenfold. That is a judgement, it lowers the rank of that intervention, and someone could reasonably disagree.",
+  "Every verified acoustic result comes from one laboratory group and no independent replication was found. There is no Acropora value at all.",
+  "Microfragmentation is NOT in the comparison, although it is in the route table, because it bypasses sexual recruitment entirely rather than moving a stage of it. Comparing it here would be a category error.",
+  "The one-year horizon hides what the two-year results show: Smith et al. found the sea-weeding benefit present at year one and gone by year two. An analysis that stops at a year will rank recurring-cost interventions too highly, and this one does."
+ ],
+ "sources": [
+  {
+   "cite": "Foster & Gilmour 2020, Sci Rep 10:12313",
+   "pmid": "32703979",
+   "read_level": "full-text",
+   "note": "Eggs per polyp; the one sourced fecundity parameter."
+  },
+  {
+   "cite": "Abdul Wahab et al. 2023, Sci Rep 13:5795",
+   "pmid": "37032381",
+   "read_level": "abstract",
+   "note": "Settlement by crustose coralline alga, 15 corals x 15 algae."
+  },
+  {
+   "cite": "Whitman et al. 2020, Sci Rep 10:16397",
+   "pmid": "33009428",
+   "read_level": "abstract",
+   "note": "The non-responders that set the low end."
+  },
+  {
+   "cite": "Siboni et al. 2012, PLoS One 7:e37774",
+   "pmid": "22655067",
+   "read_level": "abstract",
+   "note": "Metamorphosis 100%, attachment 0-2% -- why settlement and attachment are one stage."
+  },
+  {
+   "cite": "Doropoulos et al. 2017, R Soc Open Sci 4:170082",
+   "pmid": "28573015",
+   "read_level": "abstract",
+   "note": "Larval survival in the laboratory, and negative density dependence in crevices."
+  },
+  {
+   "cite": "Chamberland et al. 2017, Sci Rep 7:18076",
+   "pmid": "29273761",
+   "read_level": "abstract",
+   "note": "9.6% first-year survival on tetrapods; the cost ratio."
+  },
+  {
+   "cite": "Smith et al. 2025, J Environ Manage 383:125322",
+   "pmid": "40267811",
+   "read_level": "abstract",
+   "note": "Sea-weeding benefit gone by year two; USD 334-577 per surviving coral."
+  },
+  {
+   "cite": "Dela Cruz & Harrison 2020, PLoS One 15:e0242847",
+   "pmid": "33232367",
+   "read_level": "abstract",
+   "note": "Mass larval enrichment; USD 35.20 per surviving colony at 35 months."
+  },
+  {
+   "cite": "Dela Cruz & Harrison 2017",
+   "pmid": "29070842",
+   "read_level": "abstract",
+   "note": "Zero settlement in control plots; 2.3 colonies per square metre at three years."
+  },
+  {
+   "cite": "Rodriguez-Ruano et al. 2026, Commun Biol 9",
+   "pmid": "42310106",
+   "read_level": "abstract",
+   "note": "Sediment burial."
+  },
+  {
+   "cite": "Webster et al. 2015, PLoS One 10:e0124162",
+   "pmid": "25898011",
+   "read_level": "abstract",
+   "note": "Macroalgae, confounded with caging."
+  },
+  {
+   "cite": "Aoki et al. 2024, R Soc Open Sci 11:231514",
+   "pmid": "38481984",
+   "read_level": "abstract",
+   "note": "Acoustic enrichment, 1.7x."
+  },
+  {
+   "cite": "Aoki et al. 2026, Sci Rep",
+   "pmid": "42409953",
+   "read_level": "abstract",
+   "note": "Acoustic enrichment in a broadcast spawner; the flow-through null and the tenfold between-reef difference."
+  },
+  {
+   "cite": "Randall et al. 2021, Front Mar Sci \u2014 grooved microrefugia, 39% against 13%, and 100% mortality on upper surfaces. No PMID verified.",
+   "pmid": null,
+   "read_level": "search-summary"
+  },
+  {
+   "cite": "Penin et al. 2011, Hydrobiologia \u2014 more than half of recruits dead in seven days, cage or no cage. No PMID verified.",
+   "pmid": null,
+   "read_level": "search-summary"
+  },
+  {
+   "cite": "Speare et al. 2021, Glob Change Biol \u2014 33% against 2% recruit survivorship between a normal and a heatwave year at Moorea. No PMID verified.",
+   "pmid": null,
+   "read_level": "search-summary"
+  },
+  {
+   "cite": "Waters et al. 2025, Restoration Ecology \u2014 the field failure case. No PMID verified.",
+   "pmid": null,
+   "read_level": "search-summary"
+  },
+  {
+   "cite": "Mendoza Quiroz et al. 2025, Restoration Ecology \u2014 the attachment time-against-retention trade-off. No PMID verified.",
+   "pmid": null,
+   "read_level": "search-summary"
+  }
+ ]
+}
