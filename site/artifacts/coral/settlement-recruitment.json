@@ -5,7 +5,7 @@
  "is_observation": false,
  "headline": "NO INTERVENTION IN THIS TABLE MOVES RECRUITMENT AS MUCH AS THE DIFFERENCE BETWEEN A NORMAL YEAR AND A HEATWAVE YEAR, and this model has no thermal year in it at all. Speare et al. measured recruit survivorship of 33% in a normal year against 2% in a heatwave year at the same site in Moorea -- a 16-fold swing -- while the best intervention here has a median multiplier of 22x on a quantity whose own baseline spans four orders of magnitude. The second result is the decomposition, and it is the kind only a sensitivity analysis reaches: about 80% of the spread comes from stages whose range this page had to INVENT, led by 'Encounters suitable substrate' at 40%. So the highest-value next experiment in this entire chain is a MEASUREMENT, not an intervention trial. On the ranking: the effort units were invented, so they were sampled too, and what survives is that 'Mass larval enrichment into a netted plot' and 'Screen out sediment-prone and unstable sites' are in a different class from the rest (87% of draws put exactly those two on top), while the order WITHIN that pair is not stable. 4 of the 9 stages have no published wild value at all, which is why this is a distribution and not a prediction.",
  "provenance": {
-  "generated_at": "2026-11-02T16:02:57-0800",
+  "generated_at": "2026-11-02T16:14:38-0800",
   "code": "results/coral/code/settlement_recruitment.py",
   "n_samples": 20000,
   "sampling": "Latin hypercube over stage values; simple random for intervention multipliers and costs",
@@ -901,10 +901,15 @@
   "may_be_quoted": [
    {
     "claim": "'Mass larval enrichment into a netted plot' and 'Screen out sediment-prone and unstable sites' are in a different class from the other interventions, per unit of effort.",
-    "basis": "87% of 400 draws with independently perturbed effort units put exactly those two in the top two."
+    "basis": "87% of 400 draws with independently perturbed effort units put exactly those two in the top two.",
+    "field": "effort_unit_sensitivity.most_common_top_two[0].frequency",
+    "value": 0.87,
+    "do_not_confuse_with": "effort_unit_sensitivity.per_intervention[].p_top_2, which is 0.935 and is the MARGINAL probability that ONE named intervention is somewhere in the top two. The joint statistic is the smaller one and is the one this claim needs. Quoting the marginal for a joint claim is how a 0.935 gets reported as '94%'."
    },
    {
     "claim": "About four fifths of the spread in surviving recruits comes from stages with no published wild value.",
+    "field": "sensitivity.share_of_spread_from_assumed_ranges",
+    "value": 0.8019532444864373,
     "basis": "Spearman rank decomposition over the Latin-hypercube sample; the stage ranges are published beside it so the circularity is visible."
    },
    {
@@ -919,7 +924,9 @@
   "may_NOT_be_quoted": [
    {
     "claim": "'Mass larval enrichment into a netted plot' beats 'Screen out sediment-prone and unstable sites'.",
-    "why": "The gap between them rests on invented denominators and does not survive perturbing them. See fragile_orderings."
+    "field": "effort_unit_sensitivity.per_intervention[].p_rank_1",
+    "value": 0.58,
+    "why": "The gap between them rests on invented denominators and does not survive perturbing them: p_rank_1 is 0.580 against 0.405, a coin flip. See fragile_orderings."
    },
    {
     "claim": "Any absolute number of surviving recruits.",
