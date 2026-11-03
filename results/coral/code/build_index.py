@@ -100,8 +100,8 @@ STUDIES = [
             "metric sees it?"),
         summary=(
             "The model class is published and runnable; this implementation is in that "
-            "family and is not a port of any member of it. Both pre-declared controls "
-            "pass and the Damkohler sweep moves surface-to-volume, fractal dimension and "
+            "family and is not a port of any member of it. {control_summary} "
+            "The Damkohler sweep moves surface-to-volume, fractal dimension and "
             "bounding-box fill smoothly and substantially. The honest result is a "
             "failure as well as a finding: the model spans compact mound to open lobed "
             "mound and DOES NOT REACH either true branching or plating, so the "
@@ -213,6 +213,28 @@ STUDIES = [
 ]
 
 
+def control_summary(doc):
+    """One sentence about the control outcome, DERIVED from the study's own control block.
+
+    An earlier version of this file hard-coded "Both pre-declared controls pass" into the
+    morphology summary. The control block in that study records six checks with one
+    failing. The claim was written before the final run and never regenerated with it,
+    which is how a page summary comes to contradict the data it summarises. It is now
+    computed, so it cannot drift.
+    """
+    ctrl = doc.get("control_arm")
+    if not isinstance(ctrl, dict) or "checks" not in ctrl:
+        return ""
+    checks = ctrl["checks"]
+    failed = [k for k, v in checks.items() if not v]
+    if not failed:
+        return f"All {len(checks)} pre-declared controls pass."
+    return (f"{len(checks) - len(failed)} of {len(checks)} pre-declared controls pass "
+            f"and {len(failed)} FAILS ({', '.join(failed)}), with the criterion left "
+            f"where it was declared and the failure diagnosed by a positive control for "
+            f"the estimator rather than explained away.")
+
+
 def main():
     errs = []
     figdir = os.path.join(ROOT, "figures")
@@ -221,6 +243,12 @@ def main():
         st["data_present"] = os.path.exists(data)
         if not st["data_present"]:
             errs.append(f"{st['id']}: declared data file missing: {data}")
+        elif "{control_summary}" in st["summary"]:
+            with open(data) as fh:
+                st["summary"] = st["summary"].replace(
+                    "{control_summary}", control_summary(json.load(fh)))
+        if "{" in st["summary"] and "}" in st["summary"]:
+            errs.append(f"{st['id']}: unfilled placeholder left in summary")
         n_sent = len([s for s in st["summary"].split(". ") if s.strip()])
         if not (3 <= n_sent <= 8):
             errs.append(f"{st['id']}: summary has {n_sent} sentences, want 3-6ish")

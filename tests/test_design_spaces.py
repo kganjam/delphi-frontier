@@ -138,3 +138,43 @@ def test_every_served_figure_is_tracked_in_git():
                 if path not in tracked:
                     missing.append(f"{ds_id}: {path}")
     assert not missing, "served but untracked, so these would 404 in production:\n  " + "\n  ".join(missing)
+
+
+@pytest.mark.parametrize("ds_id", IDS)
+def test_no_prose_asserts_a_control_outcome_its_own_data_contradicts(ds_id):
+    """The failure this whole family keeps hitting: a claim about one's own data, restated away from the data.
+
+    It reached production once. A coral study's `control_arm.passed` was False with a failed check named, its headline said
+    so correctly -- and the index study SUMMARY, a different field in a different file, still said "Both pre-declared controls
+    pass". The page rendered both, contradicting itself, because the integrator checked the field he had been looking at
+    rather than every field carrying the claim.
+
+    So this asks the question of every string in the block, not of the one that was wrong last time: if a study's data says a
+    control failed, no prose anywhere in that study may say its controls passed.
+    """
+    import re as _re
+    ALL_PASS = _re.compile(r"\b(all|both)\b[^.]{0,60}\bcontrols?\b[^.]{0,20}\bpass", _re.I)
+    assert ALL_PASS.search("Both pre-declared controls pass and the sweep moves"), "control: the pattern must match the known-bad sentence"
+    assert not ALL_PASS.search("5 of 6 pre-declared controls pass and 1 FAILS"), "control: it must NOT match the corrected sentence"
+
+    for study in SPACES[ds_id]["studies"]:
+        data = study.get("data") or {}
+        failed = []
+        for blk in (v for v in data.values() if isinstance(v, dict)):
+            if blk.get("failed_checks"):
+                failed += list(blk["failed_checks"])
+            if blk.get("passed") is False:
+                failed = failed or ["<a control block reports passed: false>"]
+        if not failed:
+            continue
+        def strings(o, path=""):
+            if isinstance(o, dict):
+                for k, v in o.items(): yield from strings(v, f"{path}.{k}")
+            elif isinstance(o, list):
+                for i, v in enumerate(o): yield from strings(v, f"{path}[{i}]")
+            elif isinstance(o, str):
+                yield path, o
+        for path, s in strings(study, ds_id + ":" + study["id"]):
+            m = ALL_PASS.search(s)
+            assert not m, (f"{path} claims all controls pass while the study's own data reports "
+                           f"failed checks {failed}: ...{s[max(0, m.start()-60):m.end()+60]}...")

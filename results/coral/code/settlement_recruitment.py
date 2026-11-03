@@ -674,9 +674,20 @@ def write_result(cache):
                            f"class from the other interventions, per unit of effort.",
                      basis=f"{100*top2['frequency']:.0f}% of {eff['n_draws']} draws with "
                            f"independently perturbed effort units put exactly those two "
-                           f"in the top two."),
+                           f"in the top two.",
+                     field="effort_unit_sensitivity.most_common_top_two[0].frequency",
+                     value=top2["frequency"],
+                     do_not_confuse_with=(
+                         "effort_unit_sensitivity.per_intervention[].p_top_2, which is "
+                         f"{eff['per_intervention'][0]['p_top_2']:.3f} and is the "
+                         "MARGINAL probability that ONE named intervention is somewhere "
+                         "in the top two. The joint statistic is the smaller one and is "
+                         "the one this claim needs. Quoting the marginal for a joint "
+                         "claim is how a 0.935 gets reported as '94%'.")),
                 dict(claim="About four fifths of the spread in surviving recruits comes "
                            "from stages with no published wild value.",
+                     field="sensitivity.share_of_spread_from_assumed_ranges",
+                     value=assumed_share,
                      basis="Spearman rank decomposition over the Latin-hypercube sample; "
                            "the stage ranges are published beside it so the circularity "
                            "is visible."),
@@ -691,8 +702,13 @@ def write_result(cache):
             ],
             may_NOT_be_quoted=[
                 dict(claim=f"'{top2_labels[0]}' beats '{top2_labels[1]}'.",
+                     field="effort_unit_sensitivity.per_intervention[].p_rank_1",
+                     value=eff["per_intervention"][0]["p_rank_1"],
                      why="The gap between them rests on invented denominators and does "
-                         "not survive perturbing them. See fragile_orderings."),
+                         "not survive perturbing them: p_rank_1 is "
+                         f"{eff['per_intervention'][0]['p_rank_1']:.3f} against "
+                         f"{eff['per_intervention'][1]['p_rank_1']:.3f}, a coin flip. "
+                         "See fragile_orderings."),
                 dict(claim="Any absolute number of surviving recruits.",
                      why="The baseline is a distribution four orders of magnitude wide "
                          "built on four invented ranges. The median is a property of "
@@ -833,8 +849,12 @@ def main():
     print("effort-unit sensitivity ...", flush=True)
     eff = effort_unit_sensitivity()
     for r in eff["per_intervention"][:4]:
-        print(f"  P(top 2) = {r['p_top_2']:.2f}  P(rank 1) = {r['p_rank_1']:.2f}  "
-              f"{r['label']}")
+        print(f"  p_top_2={r['p_top_2']:.3f} (MARGINAL: P this one is in the top two)  "
+              f"p_rank_1={r['p_rank_1']:.3f}  {r['label']}")
+    _m = eff["most_common_top_two"][0]
+    print(f"  most_common_top_two.frequency={_m['frequency']:.3f} (JOINT: P exactly "
+          f"{' + '.join(_m['pair'])} ARE the top two)  <-- THIS is the number for the "
+          f"'different class' claim; the marginals above are NOT")
     cache = dict(control_arm=ctrl, sensitivity=sens, comparison=comp,
                  effort_unit_sensitivity=eff)
     with open(CACHE, "w") as fh:

@@ -516,6 +516,19 @@ def control_arm(n_seeds=5, workers=4, **kw):
         # pass, and it is not what `passed` may mean. Both readings are now reported and
         # the strict one keeps the plain name.
         passed=bool(all(checks[k] for k in declared)),
+        # The exclusion travels WITH the boolean, not two fields away, so a reader or a
+        # renderer that reads only `passed` cannot get "all clear" from a study with a
+        # failed check in it.
+        passed_meaning="STRICT: every check declared before the run, including the one "
+                       "that failed and was later superseded. False here.",
+        passed_excludes_superseded_check=None,
+        passed_after_diagnosis_excludes_superseded_check="low_Da_fills_space",
+        passed_after_diagnosis_meaning=(
+            "Excludes `low_Da_fills_space`, which failed and was then shown to be a "
+            "mis-specified criterion rather than a model failure: a solid hemisphere of "
+            "the same voxel count measures 2.46 and a solid cube 2.47, both with true "
+            "dimension 3, so NO object of any shape reaches the declared >2.6 at this "
+            "size. The original failure stays visible in `checks` and `failed_checks`."),
         passed_as_declared=bool(all(checks[k] for k in declared)),
         passed_after_diagnosis=bool(all(
             v for k, v in checks.items() if k != "low_Da_fills_space")),

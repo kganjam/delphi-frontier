@@ -285,6 +285,24 @@ then test the thing the study actually claims — **the knob ranking is identica
 dt = 0.1, 0.05 and 0.025**. The absolute threshold is not converged. The ranking and the
 additivity verdict are.
 
+**I quoted 94% to the lead where the file says 87%, and the lead caught it one step
+before it reached the page.** The two numbers are different statistics:
+`effort_unit_sensitivity.per_intervention[].p_top_2` is **0.935** — the MARGINAL
+probability that *one named* intervention is somewhere in the top two — and
+`effort_unit_sensitivity.most_common_top_two[0].frequency` is **0.87**, the JOINT
+probability that *exactly that pair* are the top two. The joint one is what the "different
+class" claim needs. I took the marginal, let the console's `:.2f` round 0.935 to 0.94, and
+attached it to the joint claim: three errors compounding, all in the flattering direction.
+The file was right throughout; only my restatement was wrong.
+
+Two consequences, both now in the code. Every `quotable` entry carries the **field name**
+its number comes from and the value, and the joint entry carries an explicit
+`do_not_confuse_with` naming the marginal. And `check_claims.py` now binds those numbers:
+a `quotable` entry whose prose says "94% of draws" while its own named field reads 0.87
+is an error, with a positive control built from exactly my mistake. The console output was
+also changed to print field names and three decimals, because a bare rounded number next
+to a label is how the marginal got lifted in the first place.
+
 **The settlement study's ranking was sitting on point estimates, and the lead was right
 about which half survives.** I sampled the biology 20,000 times and then ranked
 interventions by effort units I had invented — the structure the study exists to avoid.
@@ -294,6 +312,37 @@ enrichment hold the top two slots in 94% of draws, and the order within them is 
 a coin flip.** So "those two are in a different class from the rest" is quotable and
 "site screening beats larval enrichment" is not. There is now a `quotable` block in the
 result file saying which numbers may be cited and why.
+
+**The morphology study has a failed control, and the headline said otherwise for an
+hour.** `low_Da_fills_space` required a box-counting dimension above 2.6 for the compact
+low-Damköhler mound and measured **2.43**. I did not move the criterion. What makes the
+failure interpretable is a positive control for the *estimator*: a solid hemisphere of
+the same voxel count, whose true dimension is 3, measures **2.462** with the same code
+over the same five box sizes, and a solid cube **2.470**. The colony is within 0.03 of a
+solid object, so the threshold was wrong about what this estimator can return at this
+size — the model is not failing, the criterion was. `control_arm.passed` is **False**
+(strict reading, all five checks declared before the run) and
+`control_arm.passed_after_diagnosis` is **True**; both are reported and the plain name
+keeps the strict meaning.
+
+The hour is the part worth keeping. The headline said *"Both pre-declared controls pass"*
+while the control block in the same file recorded six checks with one failing — and it
+offered **2.43, the failing measurement**, as evidence that it passed. The team lead
+caught it. Nothing had been relaxed and no number was wrong: a sentence written before
+the final run was never regenerated with it, and prose has no caller, no test selection
+and nothing that notices when it goes stale. I had also, separately, defined `passed` to
+*exclude* the check that failed, which is worse than the headline and is the thing I
+would have defended if nobody had looked.
+
+Three fixes, in increasing order of usefulness: the sentence is now **derived from**
+`control_arm` rather than written beside it, in both the result file and the index;
+`code/check_claims.py` binds control-outcome claims in prose to the control blocks they
+describe, including **across files** (the index fragment carried the same false claim and
+has no control block of its own, so the first version of the checker returned early and
+reported a clean run); and the checker ships a self-test whose positive control must
+produce three flags. That self-test immediately caught two bugs in the checker itself —
+`\w+` does not match the hyphen in "pre-declared", and a failed check named `b` was being
+"found" inside the word "beautifully" by a substring test.
 
 **The morphology study does not do what it was built to do.** It was meant to span
 branching through plating through massive. It spans compact mound through open *lobed
