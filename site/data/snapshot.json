@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs f682a423cd71",
- "input_fingerprint": "f682a423cd712ec716ab0098448cbdbecf608be326164007193891929e4b4aa3",
+ "label": "snapshot of inputs 04e21e7a6575",
+ "input_fingerprint": "04e21e7a657540204f5a52ba388f2e934be5edfc42b6390eb88dadfc9362f980",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "10fb081ee0991b8d7d4cea8854ef81e73fda5b5da8c246d670513ad430bbc744",
-   "bytes": 3968
+   "sha256": "b319a9cd62de640594b4b02ccad304636f1481673568bae4829afca4566807a2",
+   "bytes": 3725
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -39672,11 +39672,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release 1494e6f30d30)",
-    "outcome": "Design-space browser and unit tests: 24 passed. The full 151-test suite passed two releases ago; this change edits one content file's not_claimed list. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all three current (exit 0); A COMPLETED job that nothing was watching, read rather than trusted: The job ran on the project's OWN pinned image nvcr.io/nvidia/cuda:10.2-devel-ubuntu18.04, reported state COMPLETED, and printed PROBE-VERDICT=BUILT with exit 0 - directly below 'make: *** [all] Error 2' in the same log. Reading the log: rc=2 at line 219 is the make failure, rc=0 at line 319 is a later command's status assigned over it, and the verdict is computed from the second. The build FAILED. The authoring agent never recorded this attempt: voxcraft-probe.json holds attempts 1-3 with any_attempt_built false. The page had said the pinned route was untried; it was tried and it failed, and both that correction and the false verdict are now in not_claimed. The page's conclusion is unchanged and better evidenced: two toolkits, two distinct failures, no cross-engine comparison offered. (exit 0); Non-finite literals absent from every published file: No NaN or Infinity in any results/*/*.json or in site/data/snapshot.json; the live snapshot passes a strict parse, so JSON.parse cannot throw in a visitor's browser. Detector proven by a planted {\"a\": NaN} which it catches and which strict parsing rejects. Run because a NaN-truthiness bug was found in an unpublished design space's own guard. (exit 0); Absence-claims checked against the domain that backs them: 16 absence-claims found live. Most are descriptive or definitional; two state their own bound in the sentence ('even in forty cycles', 'within its working life'), which is the honest form. The one that did not state its domain - limbless-mouse 'below 0.31 the loop never engages' - was recomputed: threshold 0.307494, sweep covers s in [0.0, 2.0], threshold interior, and the region the claim names is covered to the end of the range. Not the boundary-artifact shape. (exit 0)",
+    "title": "limbless mouse release checks (release 078114dd80f7)",
+    "outcome": "Browser suite plus design-space unit tests: 159 passed in 187.44s. Four design spaces; both modules are parameterised over whatever the repository declares, so coral arrived already covered by the same cases. (exit 0); Every served figure is tracked in git: Passes over all four design spaces' figures, including coral's growth mp4. Added after seven xenobot figures 404d in production while every other test was green. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all four documents current (exit 0); The published model contains no temperature variable, verified independently: Confirmed here rather than relayed: thermal, heat, degC and DHW return zero files; the single 'temp' match is '# used for temporary files' in .Rbuildignore and is named and dismissed. Positive controls fire - symbiont 14 files, light 14, photo 12, carbon 9 - so the zeros are measured zeros. R 4.3.3 is installed at /usr/bin/R, so the agent's port-versus-R cross-check to 5e-15 is a real cross-check. The confound it identified is visible in one line of the upstream source, def_pars.R:43 'b=rep(5, nsym)  # Scaling parameter for bleaching response'. (exit 0); Two defects caught at integration review and fixed before publication: (1) The morphology headline asserted 'Both pre-declared controls pass' while control_arm.passed was false in the same file, said two controls where there are six, and offered box dimension 2.43 - the FAILING measurement - as evidence of passing. Regenerated from control_arm; it now names the failing check and carries the estimator control. (2) A figure quoted to the integrator as 94% reads 87% in the file it came from, where 0.935 is P(one intervention in the top two) and 0.87 is P(exactly those two ARE the top two); the page uses 87%. Both are the same failure class the receipts for the previous three releases record: a prose claim about one's own data, restated away from the data. (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "10fb081ee0991b8d7d4cea8854ef81e73fda5b5da8c246d670513ad430bbc744",
+    "sha256": "b319a9cd62de640594b4b02ccad304636f1481673568bae4829afca4566807a2",
     "date": "no time recorded"
    },
    {
