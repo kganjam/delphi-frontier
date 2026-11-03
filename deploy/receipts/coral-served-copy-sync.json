@@ -1,0 +1,41 @@
+{
+  "schema": "frontier.release.checks/1",
+  "sha": "ac55a252b135d546c1cdc2dc6091369f20cdff0e",
+  "note": "Written for the commit that synced the served coral study copies with their recorded results. A full `pytest tests/` was NOT run and cannot be collected in this worktree: 24 modules fail importing TOKENS from conftest, which resolves to tests/bioservices/conftest.py. That is pre-existing and unrelated to this diff, which is two JSON data files.",
+  "checks": [
+    {
+      "name": "Browser suite plus design-space unit tests",
+      "command": "python3 -m pytest tests/test_design_spaces.py tests/test_site_browser.py -q",
+      "exit": 0,
+      "passed": 163,
+      "total": 163,
+      "result": "163 passed in 195.24s.",
+      "at": "2026-11-03T08:23:40.501114+00:00",
+      "tested_commit": "ac55a252b135d546c1cdc2dc6091369f20cdff0e"
+    },
+    {
+      "name": "The served copy equals the recorded result, byte for byte",
+      "command": "sha256sum results/coral/<study>.json site/artifacts/coral/<study>.json",
+      "exit": 0,
+      "result": "colony-morphology 1b3a2ec43a5f and settlement-recruitment 7068107612e4 now match their results/ originals. Before this commit the served copies were the pre-correction bytes while the snapshot the page reads already carried the correction, so the raw-data download beside each study disagreed with the page above it.",
+      "at": "2026-11-03T08:23:40.501114+00:00",
+      "tested_commit": "ac55a252b135d546c1cdc2dc6091369f20cdff0e"
+    },
+    {
+      "name": "The page itself was already correct before this change",
+      "command": "GET https://studio.morphoswarm.ai/data/snapshot.json, read coral:colony-morphology control_arm",
+      "exit": 0,
+      "result": "The live snapshot already carried passed_meaning, passed_excludes_superseded_check, passed_after_diagnosis_excludes_superseded_check and passed_after_diagnosis_meaning, with passed False and failed_checks ['low_Da_fills_space']. This release fixes the standalone download only.",
+      "at": "2026-11-03T08:23:40.501114+00:00",
+      "tested_commit": "ac55a252b135d546c1cdc2dc6091369f20cdff0e"
+    },
+    {
+      "name": "Snapshot reproducibility",
+      "command": "python3 scripts/build_site.py --check",
+      "exit": 0,
+      "result": "stale=[]",
+      "at": "2026-11-03T08:23:40.501114+00:00",
+      "tested_commit": "ac55a252b135d546c1cdc2dc6091369f20cdff0e"
+    }
+  ]
+}

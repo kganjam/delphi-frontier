@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs 52c50b565b99",
- "input_fingerprint": "52c50b565b99551423de5e6ad3b7b7caf181207b1aa68a15f052a186ea9b8027",
+ "label": "snapshot of inputs 0cd47ba99b22",
+ "input_fingerprint": "0cd47ba99b22aa9c1d1b0b49be5597f614225b880d5e4b8c942cfc3809d39978",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3332,6 +3332,11 @@
    "path": "deploy/receipts/contributor-identity-live-check.json",
    "sha256": "0e0d3332d0795359a8d6de14e99fe8e6216be42fe0963f9a50dad15884830700",
    "bytes": 519
+  },
+  {
+   "path": "deploy/receipts/coral-served-copy-sync.json",
+   "sha256": "eada35ce1e915cb6aba0d15bba40cc684f43dd89c206f22bab50b44e70202e01",
+   "bytes": 2404
   },
   {
    "path": "deploy/receipts/curated-print-integration.json",
@@ -39629,6 +39634,14 @@
     "ok": false,
     "path": "deploy/receipts/claim-reuse-root-check.json",
     "sha256": "fbd5e32696625f646add8df9d21bdf17a3a498fdcd4bf5964ac7ed22d441b578",
+    "date": "no time recorded"
+   },
+   {
+    "title": "coral served copy sync (release ac55a252b135)",
+    "outcome": "Browser suite plus design-space unit tests: 163 passed in 195.24s. (exit 0); The served copy equals the recorded result, byte for byte: colony-morphology 1b3a2ec43a5f and settlement-recruitment 7068107612e4 now match their results/ originals. Before this commit the served copies were the pre-correction bytes while the snapshot the page reads already carried the correction, so the raw-data download beside each study disagreed with the page above it. (exit 0); The page itself was already correct before this change: The live snapshot already carried passed_meaning, passed_excludes_superseded_check, passed_after_diagnosis_excludes_superseded_check and passed_after_diagnosis_meaning, with passed False and failed_checks ['low_Da_fills_space']. This release fixes the standalone download only. (exit 0); Snapshot reproducibility: stale=[] (exit 0)",
+    "ok": true,
+    "path": "deploy/receipts/coral-served-copy-sync.json",
+    "sha256": "eada35ce1e915cb6aba0d15bba40cc684f43dd89c206f22bab50b44e70202e01",
     "date": "no time recorded"
    },
    {
