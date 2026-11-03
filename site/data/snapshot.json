@@ -1,7 +1,7 @@
 {
  "schema": "frontier-site-snapshot-0.1",
- "label": "snapshot of inputs ce87ea2832e7",
- "input_fingerprint": "ce87ea2832e794b2adda807ff9867d8006febe90685e7f61a8aaa83a32338a30",
+ "label": "snapshot of inputs 52c50b565b99",
+ "input_fingerprint": "52c50b565b99551423de5e6ad3b7b7caf181207b1aa68a15f052a186ea9b8027",
  "inputs": [
   {
    "path": "GOAL.md",
@@ -3395,8 +3395,8 @@
   },
   {
    "path": "deploy/receipts/limbless-mouse-release-checks.json",
-   "sha256": "b319a9cd62de640594b4b02ccad304636f1481673568bae4829afca4566807a2",
-   "bytes": 3725
+   "sha256": "99232e215853f1b596f3591d99ef6485aede71833f15f65752d112a260d6bc58",
+   "bytes": 2547
   },
   {
    "path": "deploy/receipts/mcp-expanded-check.json",
@@ -39672,11 +39672,11 @@
     "date": "no time recorded"
    },
    {
-    "title": "limbless mouse release checks (release 078114dd80f7)",
-    "outcome": "Browser suite plus design-space unit tests: 159 passed in 187.44s. Four design spaces; both modules are parameterised over whatever the repository declares, so coral arrived already covered by the same cases. (exit 0); Every served figure is tracked in git: Passes over all four design spaces' figures, including coral's growth mp4. Added after seven xenobot figures 404d in production while every other test was green. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all four documents current (exit 0); The published model contains no temperature variable, verified independently: Confirmed here rather than relayed: thermal, heat, degC and DHW return zero files; the single 'temp' match is '# used for temporary files' in .Rbuildignore and is named and dismissed. Positive controls fire - symbiont 14 files, light 14, photo 12, carbon 9 - so the zeros are measured zeros. R 4.3.3 is installed at /usr/bin/R, so the agent's port-versus-R cross-check to 5e-15 is a real cross-check. The confound it identified is visible in one line of the upstream source, def_pars.R:43 'b=rep(5, nsym)  # Scaling parameter for bleaching response'. (exit 0); Two defects caught at integration review and fixed before publication: (1) The morphology headline asserted 'Both pre-declared controls pass' while control_arm.passed was false in the same file, said two controls where there are six, and offered box dimension 2.43 - the FAILING measurement - as evidence of passing. Regenerated from control_arm; it now names the failing check and carries the estimator control. (2) A figure quoted to the integrator as 94% reads 87% in the file it came from, where 0.935 is P(one intervention in the top two) and 0.87 is P(exactly those two ARE the top two); the page uses 87%. Both are the same failure class the receipts for the previous three releases record: a prose claim about one's own data, restated away from the data. (exit 0)",
+    "title": "limbless mouse release checks (release 2760d26f8468)",
+    "outcome": "Browser suite plus design-space unit tests: 163 passed in 182.63s, including the new control-contradiction guard over all four design spaces. (exit 0); No prose asserts a control outcome its own data contradicts: Verified in BOTH directions, not merely green: re-injecting the exact offending sentence into the snapshot gives exit 1 naming coral:colony-morphology.summary and the failed check low_Da_fills_space; restoring gives exit 0, with the restored file confirmed by sha256 match. The pattern also carries inline controls - it must match the known-bad sentence and must NOT match the corrected '5 of 6 ... and 1 FAILS'. (exit 0); The claim is absent from every field, not just the one checked last time: 'Both pre-declared controls pass' occurs nowhere in the coral design-space block. The previous release had it in the study SUMMARY while the study HEADLINE correctly reported the failure, so the live page contradicted itself; the pre-deploy check had read the headline only. (exit 0); Snapshot reproducibility: stale=[] (exit 0); Generated markdown twins current: all four documents current (exit 0)",
     "ok": true,
     "path": "deploy/receipts/limbless-mouse-release-checks.json",
-    "sha256": "b319a9cd62de640594b4b02ccad304636f1481673568bae4829afca4566807a2",
+    "sha256": "99232e215853f1b596f3591d99ef6485aede71833f15f65752d112a260d6bc58",
     "date": "no time recorded"
    },
    {

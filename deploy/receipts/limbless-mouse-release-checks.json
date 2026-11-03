@@ -1,58 +1,48 @@
 {
   "schema": "frontier.release.checks/1",
-  "sha": "078114dd80f73665f55d79747c33197eca600c37",
+  "sha": "2760d26f8468eaf830d653109be6e72ca83fbe3a",
   "checks": [
     {
       "name": "Browser suite plus design-space unit tests",
       "command": "python3 -m pytest tests/test_site_browser.py tests/test_design_spaces.py -q",
       "exit": 0,
-      "passed": 159,
-      "total": 159,
-      "result": "159 passed in 187.44s. Four design spaces; both modules are parameterised over whatever the repository declares, so coral arrived already covered by the same cases.",
-      "at": "2026-11-03T00:15:42.770559+00:00",
-      "tested_commit": "078114dd80f73665f55d79747c33197eca600c37"
+      "passed": 163,
+      "total": 163,
+      "result": "163 passed in 182.63s, including the new control-contradiction guard over all four design spaces.",
+      "at": "2026-11-03T00:22:02.851695+00:00",
+      "tested_commit": "2760d26f8468eaf830d653109be6e72ca83fbe3a"
     },
     {
-      "name": "Every served figure is tracked in git",
-      "command": "python3 -m pytest tests/test_design_spaces.py::test_every_served_figure_is_tracked_in_git -q",
+      "name": "No prose asserts a control outcome its own data contradicts",
+      "command": "python3 -m pytest tests/test_design_spaces.py::test_no_prose_asserts_a_control_outcome_its_own_data_contradicts -q",
       "exit": 0,
-      "result": "Passes over all four design spaces' figures, including coral's growth mp4. Added after seven xenobot figures 404d in production while every other test was green.",
-      "at": "2026-11-03T00:15:42.770559+00:00",
-      "tested_commit": "078114dd80f73665f55d79747c33197eca600c37"
+      "result": "Verified in BOTH directions, not merely green: re-injecting the exact offending sentence into the snapshot gives exit 1 naming coral:colony-morphology.summary and the failed check low_Da_fills_space; restoring gives exit 0, with the restored file confirmed by sha256 match. The pattern also carries inline controls - it must match the known-bad sentence and must NOT match the corrected '5 of 6 ... and 1 FAILS'.",
+      "at": "2026-11-03T00:22:02.851695+00:00",
+      "tested_commit": "2760d26f8468eaf830d653109be6e72ca83fbe3a"
+    },
+    {
+      "name": "The claim is absent from every field, not just the one checked last time",
+      "command": "substring assertion over the whole coral block of the snapshot",
+      "exit": 0,
+      "result": "'Both pre-declared controls pass' occurs nowhere in the coral design-space block. The previous release had it in the study SUMMARY while the study HEADLINE correctly reported the failure, so the live page contradicted itself; the pre-deploy check had read the headline only.",
+      "at": "2026-11-03T00:22:02.851695+00:00",
+      "tested_commit": "2760d26f8468eaf830d653109be6e72ca83fbe3a"
     },
     {
       "name": "Snapshot reproducibility",
       "command": "python3 scripts/build_site.py --check",
       "exit": 0,
       "result": "stale=[]",
-      "at": "2026-11-03T00:15:42.770559+00:00",
-      "tested_commit": "078114dd80f73665f55d79747c33197eca600c37"
+      "at": "2026-11-03T00:22:02.851695+00:00",
+      "tested_commit": "2760d26f8468eaf830d653109be6e72ca83fbe3a"
     },
     {
       "name": "Generated markdown twins current",
       "command": "python3 scripts/designspace_doc.py --check",
       "exit": 0,
       "result": "all four documents current",
-      "at": "2026-11-03T00:15:42.770559+00:00",
-      "tested_commit": "078114dd80f73665f55d79747c33197eca600c37"
-    },
-    {
-      "name": "The published model contains no temperature variable, verified independently",
-      "command": "scan of the cloned coRal repo for temp/thermal/heat/degC/DHW with positive controls",
-      "exit": 0,
-      "result": "Confirmed here rather than relayed: thermal, heat, degC and DHW return zero files; the single 'temp' match is '# used for temporary files' in .Rbuildignore and is named and dismissed. Positive controls fire - symbiont 14 files, light 14, photo 12, carbon 9 - so the zeros are measured zeros. R 4.3.3 is installed at /usr/bin/R, so the agent's port-versus-R cross-check to 5e-15 is a real cross-check. The confound it identified is visible in one line of the upstream source, def_pars.R:43 'b=rep(5, nsym)  # Scaling parameter for bleaching response'.",
-      "at": "2026-11-03T00:15:42.770559+00:00",
-      "tested_commit": "078114dd80f73665f55d79747c33197eca600c37"
-    },
-    {
-      "name": "Two defects caught at integration review and fixed before publication",
-      "command": "read control_arm against the study's own headline; read the quotable block against the message quoting it",
-      "exit": 0,
-      "passed": 2,
-      "total": 2,
-      "result": "(1) The morphology headline asserted 'Both pre-declared controls pass' while control_arm.passed was false in the same file, said two controls where there are six, and offered box dimension 2.43 - the FAILING measurement - as evidence of passing. Regenerated from control_arm; it now names the failing check and carries the estimator control. (2) A figure quoted to the integrator as 94% reads 87% in the file it came from, where 0.935 is P(one intervention in the top two) and 0.87 is P(exactly those two ARE the top two); the page uses 87%. Both are the same failure class the receipts for the previous three releases record: a prose claim about one's own data, restated away from the data.",
-      "at": "2026-11-03T00:15:42.770559+00:00",
-      "tested_commit": "078114dd80f73665f55d79747c33197eca600c37"
+      "at": "2026-11-03T00:22:02.851695+00:00",
+      "tested_commit": "2760d26f8468eaf830d653109be6e72ca83fbe3a"
     }
   ]
 }
