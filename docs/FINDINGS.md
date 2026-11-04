@@ -327,12 +327,21 @@ None is a programme. Each is a measurement.
 
 ## How much of this is measured
 
-Of **295** live claims: **116 derived**, **90 unknown**, **49 measured**, 28 literature,
+Of **295** live claims: **163 derived**, **56 measured**, 37 literature, **27 unknown**,
 11 simulated, 1 assumed. Most of this project is *derived from* measurements rather than measured —
 legitimate for a design study, and the number to probe first.
 
-**The 90 `unknown` are about half a quality gap and half the discipline working.** Reading 20 of
-them by hand: **9 are correctly `unknown`** — a stated non-result (*"adult zebrafish fast-start
+**`unknown` went from 90 to 27, and most of the recovery was a bug rather than a judgement.**
+**55** of the 90 carried an explicit, valid evidence level *in their own text* — written there by
+an earlier importer that put the agent's answer in prose instead of in the column. The current
+harvester does it correctly, so this was one-off historical damage, not a live defect. Restoring
+them is mechanical and was verified: all 55 stored levels match the text they were read from.
+A further **8** were assigned by reading the full claim one at a time, each recording in its source
+field why — and the rule used was *the level describes what the conclusion rests on, not the
+strongest input in it*, which is why a figure-read input feeding a calculation lands as `derived`.
+
+**The remaining 27 are mostly correct.** Reading 20 of the original 90 by hand: **9 are correctly
+`unknown`** — a stated non-result (*"adult zebrafish fast-start
 peak velocity is unknown"*), the scope of a negative (*"the lat4a absence is against UniProtKB and
 NCBI Gene only"*), a source that could not be read (*"the table is image-only"*), a preserved
 disagreement (*"relayed as 3.8e-6 by Puri 2018 and 565e-6 in the Flammang abstract"*), and
@@ -342,8 +351,9 @@ there is no measurement to level.
 The other **11 of 20 are factual claims whose level was genuinely lost**, including a direct
 measurement (*"per-fish maximum fast-start speeds span ~0.45–1.38 m/s"*) sitting at `unknown`.
 
-So roughly half of the 90 is a real gap. **The sample is 20 taken in id order, not at random, so
-early claims are over-represented** — and the split should be treated as indicative, not measured.
+**The sample was 20 taken in id order, not at random, so early claims are over-represented** —
+the split was indicative, not measured, and the eventual recovery rate (63 of 90) came out higher
+than that sample implied.
 Each of the 11 needs reading to assign a level; nothing can do it mechanically, because a classifier
 that distinguishes *"X is unknown"* from *"X is 1.38 m/s"* by pattern is the same forbidden-string
 check this project has documented failing three times.
