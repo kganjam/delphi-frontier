@@ -351,6 +351,28 @@ That the mechanism is **enlarger + suppressor rather than uniform enlargement** 
 result concerns fin *proportions*. The design lever is differential allometry across fins, not
 growth of one fin.
 
+:::{danger} The edited gene is not fin-specific, and nothing in this project had asked
+`SLC43A2`/LAT4 — the human ortholog of the gene carrying T200K — has three **experimental**
+UniProt function statements (Q8N370, entry v169):
+
+- a uniporter for **L-phenylalanine, L-methionine and L-branched-chain amino acids**, which *"may
+  control the transepithelial (re)absorption of neutral amino acid in **kidney and small
+  intestine**"* (PMIDs 15659399, 30379325, 26305885);
+- transport by facilitated diffusion, Na⁺/Cl⁻/pH-independent (PMID 15659399);
+- **efflux of 3,3′-diiodo-L-thyronine (3,3′-T2) and 3-iodo-L-tyrosine** (PMID 26305885).
+
+If the zebrafish paralog keeps either role, **T200K is a systemic intervention** — amino-acid
+handling and thyroid-hormone-metabolite transport — not a fin-local one. The thyroid link is also
+*mechanistically suggestive* rather than merely a side effect, since thyroid hormone drives
+zebrafish fin development.
+
+**Scope, and it is the whole caveat.** This is the **human** ortholog. Zebrafish `slc43a2a` has
+**no curated function at all** — UniProt returns only the two unreviewed 153 aa fragments, neither
+with a FUNCTION comment. Nothing here establishes that the zebrafish gene does any of this. It
+establishes that **the question was never asked**, which is precisely what the registry's
+pleiotropy-closure law (G2) exists to force.
+:::
+
 **Six required capabilities contain no demonstrated zebrafish edit at all:** membrane stiffness,
 launch power, aerial stability, vestibular and visual function in air, aerial gas exchange, mass
 reduction.
