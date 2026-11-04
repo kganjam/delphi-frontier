@@ -51,9 +51,10 @@ SURVIVED is a correct and expected answer. Many of these claims are careful and 
 scope; if you cannot find a real objection, say SURVIVED. Inventing a weakness is worse than
 reporting none, because a challenge arm whose verdict is always negative measures nothing.
 
-Reply in EXACTLY this form and nothing else:
-ATTACK: <one sentence naming the specific weakness, or "none found">
+Reply in EXACTLY this form and nothing else. OUTCOME FIRST -- if you run out of room, the
+verdict must already be on the page:
 OUTCOME: <survived|weakened|refuted>
+ATTACK: <one sentence naming the specific weakness, or "none found">
 WHY: <two sentences at most>
 """
 
@@ -78,7 +79,7 @@ def lit(s) -> str:
     return "null" if s is None else "'" + str(s).replace("'", "''") + "'"
 
 
-def call(tenant: str, prompt: str, max_tokens: int = 400) -> dict:
+def call(tenant: str, prompt: str, max_tokens: int = 1200) -> dict:
     r = subprocess.run(["orchestra", "api-credits", "call", "--tenant", tenant,
                         "--prompt", prompt, "--max-tokens", str(max_tokens)],
                        capture_output=True, text=True, timeout=300)
@@ -123,6 +124,17 @@ def main() -> int:
             print(f"  claim {cid:>4} {t:13} CALL FAILED {type(e).__name__}: {str(e)[:90]}")
             continue
         att, out, why = parse(r.get("text", ""))
+        # A truncated reply that still carried its OUTCOME is usable; one that did not is a BUDGET
+        # failure, not a model judgement, and must say so. Measured on the first batch: 10 of 12
+        # verdicts were `not-run` purely because stop_reason was max_tokens at 400 tokens, with the
+        # ATTACK line present and the OUTCOME line cut off. Scoring that as "no verdict" spends
+        # credit to record nothing and reads as the model declining.
+        if r.get("stop_reason") == "max_tokens":
+            att = "[reply truncated at max_tokens] " + att
+            if out == "not-run":
+                out = "not-run"
+                why = ("TRUNCATED BEFORE THE VERDICT -- this is a token-budget failure of the "
+                       "harness, not a judgement by the model. ") + why
         spent += float(r.get("cost_usd") or 0)
         tally[out] = tally.get(out, 0) + 1
         print(f"  claim {cid:>4} {t:13} {out:9} ${r.get('cost_usd',0):.5f}  {att[:68]}")
