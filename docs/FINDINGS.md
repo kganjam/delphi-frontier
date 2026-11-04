@@ -13,11 +13,24 @@ open and what each question is blocked on.
 
 | | Required | Available | Short by |
 |---|---|---|---|
-| Water-exit speed | 4.37 m/s | 0.45–1.38 m/s *measured* | **3.2×** |
+| Water-exit speed | 4.37 m/s | 0.45–1.38 m/s *measured* | **3.2×** *(vs the fastest of 50 fish; 9.7× vs the slowest)* |
 | Launch kinetic energy | 3.82 mJ | — | **10×** |
 | Tail-beat for a taxi | 132–199 Hz | 52 Hz *measured* | **2.5–3.8×** |
 | Pectoral muscle fraction | 7.5–20% | 1.4% *measured* | **5–15×** |
-| Muscle energy per stroke (spring route) | 98.5 J/kg | 8.6 J/kg *delivered* | **1.9×** |
+| Muscle energy per stroke (spring route) | 98.5 J/kg | 53–81 J/kg *best measured spring-loading work* | **1.2–1.9×** |
+
+:::{warning} Corrected 2026-11-04 — the last row's arithmetic did not work
+It read *"98.5 J/kg | **8.6 J/kg** delivered | 1.9×"*, and 98.5 / 8.6 is **11.45**, not 1.9. The
+shortfall figure was right and the **Available cell was the wrong number to pair with it**: the
+1.9× compares the requirement against the *best measured spring-loading work* — frog, 53–81 J/kg —
+which claim 227 states as supplying *"only 54–82 % of need"*. That reproduces: 98.5/53 = 1.86 and
+53/98.5 = 53.8 %.
+
+8.6 J/kg is a different quantity that belongs elsewhere in the argument, not opposite a ratio
+computed from a different comparator. Anyone checking the table's arithmetic — which is the first
+thing a sceptical reader does — would have found it off by a factor of 6 and been right to
+distrust the rest.
+:::
 
 The best design buildable from **demonstrated** alleles is the zebrafish that already exists — the
 Daane *lat4a^nr21/+; kcnh2a^lof/+* double heterozygote. Granting it an unmeasured one-body-length
