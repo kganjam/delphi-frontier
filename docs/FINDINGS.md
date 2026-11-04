@@ -66,9 +66,50 @@ taxis** to 15–20 m/s with the lower caudal lobe still immersed.
 
 **So real fish gliders use a multi-stroke launch, and both results above modelled a single
 impulse.** The smallest real glider is ~1–2 g needing 4.23 m/s — essentially the same speed the
-zebrafish design requires. The difference is not the speed; it is the mode of reaching it. That
-question is open as S32.
+zebrafish design requires. The difference is not the speed; it is the mode of reaching it.
 :::
+
+### The third route, modelled properly, closes it — and validates against a real animal
+
+**S32** wrote the equations of motion for the phase real gliders actually use: body airborne, lower
+caudal lobe still immersed, thrust applied over many strokes.
+
+**Thrust passes.** Leaving the water cuts body drag by **816×** — exactly the water/air density
+ratio — from 4.6 mN to 8 µN. Lobe thrust exceeds drag 3–40× and **speed genuinely rises**, doubling
+in ~10 strokes. S24 had closed this prematurely on tail-beat frequency.
+
+**But the taxi stalls at 2.2–2.9 m/s, 50–65% of the 4.41 m/s glide speed.** It does not fail to
+accelerate; it accelerates to a ceiling below what is needed. From the low-end exit it fails earlier
+still, on **weight support** rather than thrust.
+
+The ceiling has a clean form, and the interesting part is what cancels:
+
+```
+U_max = f · A_pp · √(c6 / C_D(Re))
+```
+
+Measured foil thrust scales with *tail* speed squared, independent of forward speed; drag scales as
+U². **Immersed area and body mass drop out entirely.** Only tail speed and lobe drag at Reynolds
+number remain.
+
+| | f·A_pp / V_to | lobe C_D | U_max / V_to |
+|---|---|---|---|
+| zebrafish, Re ~1e4 | 0.09–0.10 | 0.06–0.08 | **0.58–0.68** |
+| exocoetid, Re ~3e5 | 0.09–0.10 | ~0.01 | **1.3–1.5** |
+
+**They differ in exactly one quantity.**
+
+**And the model validates against the animal that succeeds.** The same equations reproduce the
+exocoetid taxi to 15 m/s, and Deng 2019's 36 W, **only with Reynolds-dependent lobe drag. With a
+constant C_D a flying fish could not taxi at all.** So the Reynolds effect is not a fitted excuse
+for our failure — it is what makes the model describe the real glider.
+
+That is the strongest form this result can take: **one parameter explains both the success and the
+failure.**
+
+**Reopening condition, falsifiable:** an airborne zebrafish lobe beating at **1.4–2.2× its best
+measured burst tail speed**, or surface-piercing lobe thrust at Re 1e4 measuring well above the 2-D
+foil law.
 
 ---
 
@@ -134,10 +175,11 @@ seeded defects are real errors this project made.**
   paper's own abstract; the exact factor is not.
 - No organism was built, no measurement was taken by us, and no simulation was validated against an
   experiment. Every number is literature, derivation, or model output, labelled as such.
-- **The flight verdict above is not reopened by S30, but its explanation is.** The arithmetic of
-  S28 stands; what fails is the claim about *why*. Whether a multi-stroke launch changes the verdict
-  is open (S32), and until it returns this project does not know whether a zebrafish can be
-  engineered to glide — only that neither a bigger wing nor a single spring-loaded impulse does it.
+- **Three routes have now failed on three different terms** — wings on lift, a single spring
+  impulse on muscle energy density, and the multi-stroke taxi on Reynolds-limited lobe drag. The
+  third is the best founded because it reproduces a real glider. None of this proves no route
+  exists; it means the three that have been modelled do not work, each for a reason that can be
+  checked independently.
 - The headline 4.37 m/s **looks the most precise number here and is the most structurally
   dependent**: its ±0.11 propagates neither the wing area's total absence of an interval nor the two
   untested structural assumptions beneath it (steady lift, rigid wing).
