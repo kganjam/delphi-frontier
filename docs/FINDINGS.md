@@ -230,6 +230,39 @@ An independent check: the required wing area at a 2 m/s launch is ~20 cm² again
 whole-body dorsal silhouette — a **14× shortfall**, falling to 0.6× only at a 10 m/s launch. That
 reproduces the launch-speed barrier from a completely different direction.
 
+### A third check, formal, from a registry this project did not author
+
+The **Delphi Lean law registry** (lawset 1.6.0, 53 laws with Lean theorems) was given the design —
+*Danio rerio*, 0.4 g, 1.4 cm² lifting area, C_L,max 0.8, 4.41 m/s. It returned **exactly one
+binding violation**: `C9 / thompson1917-ch02-06`, status `accepted`, band `proved`.
+
+| | |
+|---|---|
+| v_min at 1.4 cm² | **7.56 m/s** vs the design's 4.41 — **1.71× too slow** |
+| lifting area needed at 4.41 m/s | **4.12 cm²** vs 1.4 available — **2.94× short** |
+| verdict | *lift cannot reach the weight even at C_L,max* |
+
+**The agreement is the point.** Our own figure is ~20 cm² at a 2 m/s launch; lift area scales as
+1/v², so propagated to 4.41 m/s that is **4.11 cm²**, against the registry's **4.12 cm²** — **0.06 %
+apart**, from a separately derived formula in a registry we did not write.
+
+**And it refused to over-reach, mechanically.** Seven rows came back `out-of-scope` rather than
+violated, each because the constraint is calibrated against a single *Exocoetidae* reference
+specimen and the design is *Danio rerio*. Each of those rows still records, in a separate
+`evaluator_verdict` field, what the formula *would* have said — `violated` for five of them. So the
+registry holds both facts without conflating them: **the arithmetic fails, and the law does not
+apply here.**
+
+That is precisely the distinction [two of our own entailment agents lost](architecture/cross-scale-constraints.md)
+when they refuted zebrafish claims with exocoetid measurements. The registry gets it right by
+construction, because scope is a *declared field on the law* rather than a judgement made per
+verdict — which is the design lesson worth carrying back.
+
+**Stated by the tool itself, not softened here:** this is a floating-point evaluation of
+Lean-backed formulas, **not a kernel check**; kernel certificates exist only for recorded examples.
+21 of 29 evaluated rows returned `cannot-evaluate` for missing inputs, so this is one constraint
+genuinely tested, not a clean sweep.
+
 ---
 
 ## Three decisive experiments, all cheap, all bench-scale
