@@ -283,7 +283,39 @@ no weak confidence to misread in the first place.
 there is no experimental structure for this protein to check it against. It says the model is
 internally certain about a fold nobody has measured.
 
-### T200K, folded separately: the fold survives, the effect is confined to the site
+### T200K, folded separately: the measurements stand, the conclusion does not
+
+> **WITHDRAWN 2026-11-04.** The heading below used to read *"the fold survives, the effect is
+> confined to the site"*, and the section concluded that T200K is **tolerated by the fold**. That
+> conclusion is withdrawn. Every number in it reproduces; what failed is the inference, and it
+> failed against a control run afterwards.
+>
+> **L219P** — a proline into the middle of a 93 %-hydrophobic transmembrane helix at window pLDDT
+> 98.6, one residue like T200K and 19 residues away — was folded under identical settings as a
+> **must-flag** case. ProteinMPNN, a different model on a different principle, rates it about
+> **10⁶ times less likely** than T200K (probability 7.7 × 10⁻¹⁸ against 5.5 × 10⁻¹², and its rank
+> there is *stable* across samples where T200K's is not). It is the more disruptive substitution by
+> every independent measure available.
+>
+> | at its own site | Δ pLDDT | in sd | rank among 577 |
+> |---|---|---|---|
+> | T200K | −10.0 | 15.9 | **1** |
+> | **L219P** (must flag) | **−0.1** | 0.4 | **414** |
+>
+> Globally L219P moved mean pLDDT **+0.24 — upward** — and pTM from 0.8232 to 0.8329, also upward.
+>
+> **So the statistic is anti-correlated with severity, not merely insensitive.** It gave its largest
+> response in the protein to the milder substitution and nothing to the severe one. The sentence
+> below that reads *"the informative part is that it stayed local, not that it happened"* is
+> precisely the inference the control refuses: staying local is what the metric does regardless.
+>
+> Kept rather than deleted because the reasoning is the reusable part, and because the section was
+> already carefully caveated and still reached a wrong conclusion — caveats did not save it, a
+> control did. **Whether T200K is tolerated is now an open question**, and answering it needs a
+> method whose sensitivity to a single substitution has been demonstrated rather than assumed.
+> Recorded as grader_calibration id 3 (`untrusted`) and claims 460 / 462.
+
+
 
 | | WT | T200K | Δ |
 |---|---|---|---|
@@ -296,10 +328,12 @@ internally certain about a fold nobody has measured.
 residues move more — and it is 16.0 population standard deviations of the per-residue Δ.** Yet the
 global numbers do not move at all.
 
-So the substitution is **tolerated by the fold rather than fold-breaking**, which is the pattern
-expected of a **dominant** allele acting by change- or gain-of-function rather than by loss of a
-folded product. That is consistent with what `lat4a^nr21` is reported to be — a dominant fin-size
-*suppressor*, not a null.
+~~So the substitution is **tolerated by the fold rather than fold-breaking**~~ — **withdrawn, see
+the box above.** The reasoning it supported is kept because it remains the hypothesis worth
+testing: a dominant allele acting by change- or gain-of-function rather than by loss of a folded
+product would fit what `lat4a^nr21` is reported to be, a dominant fin-size *suppressor* rather than
+a null. That remains **a hypothesis with no structural evidence for or against it**, which is a
+weaker position than this document held before the control was run.
 
 **Three things this does not show, and the first is the one most easily over-read.** A pLDDT drop
 at a substituted position is *partly expected for any substitution*, because the local sequence
