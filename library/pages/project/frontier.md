@@ -13,18 +13,17 @@ Every question this project has opened, with what settled it.
 | **S3** | organism | Does the mass and power budget close? | — |
 | **S18** | behaviour | Could a zebrafish control attitude in air? | — |
 
-## running (6)
+## running (5)
 
 | id | scale | question | answer |
 |---|---|---|---|
 | **S16-D** | dna | Deepen S16: attack its most sensitive input | — |
 | **S13-D** | protein | Deepen S13: attack its most sensitive input | — |
-| **S14-D-D** | protein | Deepen S14-D: attack its most sensitive input | — |
 | **S11** | cell | What is the real bioelectric mechanism controlling fin size? | — |
 | **S25** | organ | Which relaying of Flammang 2013 fin-ray stiffness is correct: 3.8e-6 or 565e-6 N m^2? | — |
 | **S7-D-D** | organ | Deepen S7-D: attack its most sensitive input | — |
 
-## answered (41)
+## answered (42)
 
 | id | scale | question | answer |
 |---|---|---|---|
@@ -35,6 +34,7 @@ Every question this project has opened, with what settled it.
 | **S22-D-D-D** | dna | Deepen S22-D-D: attack its most sensitive input | — |
 | **S14** | protein | Can the fin-size potassium channel be engineered for graded, pectoral-restricted control? | A predicted K2P fold with both selectivity filters resolved at pLDDT>80 once an MSA was supplied. No experimental structure; variant scoring blocked by upstream maintenance. *(simulated)* |
 | **S14-D** | protein | Deepen S14: attack its most sensitive input | — |
+| **S14-D-D** | protein | Deepen S14-D: attack its most sensitive input | — |
 | **S23** | protein | Can actinotrichia be stiffened by gain-of-function, given only loss-of-function is demonstrated? | — |
 | **S23-D** | protein | Deepen S23: attack its most sensitive input | — |
 | **S23-D-D** | protein | Deepen S23-D: attack its most sensitive input | — |

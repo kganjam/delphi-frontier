@@ -2,7 +2,7 @@
 title: Claims
 ---
 
-53 live claims of 65 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
+95 live claims of 107 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
 
 | # | sub | claim | evidence | value | source |
 |---|---|---|---|---|---|
@@ -59,3 +59,45 @@ title: Claims
 | 95 | S26 | SCALE ERROR FOUND: S6 and S26 compared a 40.3 mm bluegill ray's EI (3.8e-6 N m^2) against the requirement for a 120 mm ray. Under isometric L^4 scalin | 🟡 derived | `2.1 ratio` | S26-deepen.md; recomputed here: (120/40.3)^4 = 78.6 |
 | 96 | S26 | The single measured hemitrich-locking factor (~12x, Alben, Madden & Lauder 2007, clamped 1.98 N/m vs one-base-free) closes a 2.1x gap with 5.7x margin | 🟡 derived | `5.7 margin` | S26-deepen.md *[full-text]* |
 | 97 | S26 | CONDITIONS ON THAT CONCLUSION: it assumes isometric scaling at constant modulus and proportions from a bluegill ray to a 120 mm ray, and that the exci | 🟠 assumed |  | S26-deepen.md |
+| 109 | S22-D-D-D | [S22-D-D-D] S22-D-D's shortfall FF/(p0*f) is equally elastic in all three inputs, and its weakest input, the double-mutant pectoral fold-overgrowth f  | ⚪ unknown |  | harvest:deepen-s22-d-d-input-vncsjh |
+| 110 | S7-D-D | [S7-D-D] Measured from published wild-type µCT (Ishizaka 2024 Movie S4, my image measurement), the proximal-radial row that receives the fin root mome | 🟡 derived |  | harvest:s7-d-sensitive-input-n67r40 |
+| 122 |  | [S27] EI alone is the wrong representation of a fin ray. A ray is an interval [EI_0, M*EI_0], where M comes from hemitrich base locking (12x measured, | 🟢 measured |  | harvest:fin-ray-stiffness-screen-m78qcz |
+| 125 | S9-D-D | [S9-D-D] S9-D's answer (S9's 1.34 GPa falls; carry measured fin EI rather than E) stands, but its key number rests on an untested rigid-clamp assumpti | 🔵 literature |  | harvest:deepen-s9-d-sensitive-input-8jtunz |
+| 126 | S2-D-D | [S2-D-D] S2-D's model overpredicts the measured flying-fish L/D by about 2-4x, which back-solves to an effective span efficiency of ~0.10-0.18 rather  | 🟢 measured |  | harvest:deepen-s2-d-imobtp |
+| 127 | S9-D-D | [S9-D-D] S9-D's most sensitive input is hemitrich wall thickness t (E ~ t^-3; a factor-2 error flips its 'tissue E cannot reproduce in-vivo EI' conclu | 🔵 literature |  | harvest:deepen-s9-sensitive-input-pir4c4 |
+| 128 | S23-D-D | [S23-D-D] S23-D's weakest input is not E0 but EI_meas, which is a measurement of the zebrafish CAUDAL fin standing in for the PECTORAL glide wing via  | 🟡 derived |  | harvest:s23-sensitive-input-melodp |
+| 129 | S21-D-D-D | [S21-D-D-D] S21-D-D's margin is most sensitive to its assumed speed-pulse rise time (halving it from 5 to 2.5 ms cuts the margin from 2.78x to 2.09x,  | 🟢 measured |  | harvest:deepen-s21-d-sensitive-input-no42sx |
+| 130 | S21-D-D | [S21-D-D] The input the S21-D conclusion is most sensitive to is the fastest adult's fast-start speed (unit elasticity; no single 2x error in any inpu | 🟢 measured |  | harvest:deepen-s21-d-sensitive-input-no42sx |
+| 131 | S2-D-D | [S2-D-D] Measured teleost pectoral planforms give a wing aspect ratio of 1.8-4.2, so with S2-D's own Re-matched model the computed whole-animal L/D is | 🟢 measured |  | harvest:s2-d-sensitive-input-rasran |
+| 132 | S21-D-D-D | [S21-D-D-D] S21-D-D's conclusion is still most sensitive to the fastest adult's true peak speed, and its only gap-closing path was the assumed >=5 ms  | 🟢 measured |  | harvest:s21-d-d-sensitive-input-c6ylbu |
+| 134 | S26-D | [S26-D] S26's 'no' falls: its 165x gap compares a <=40 mm bluegill ray's passive EI (3.8e-6 N m^2) with a per-ray requirement for a 120 mm ray (6.3e-4 | 🟢 measured |  | harvest:deepen-s26-active-stiffening-48xj8q |
+| 135 | S6-D-D | [S6-D-D] S6-D's 'passive ray falls' verdict rested on transferring a 40 mm bluegill ray's absolute EI unchanged to a ~120 mm flying-fish ray (scaling  | 🟢 measured |  | harvest:deepen-s6-d-sensitive-input-fc1hm8 |
+| 136 | S6-D-D | [S6-D-D] S6-D's passive-ray verdict stands in direction but its 166x margin was an artifact of comparing absolute EI of ~40 mm bluegill rays against a | 🟢 measured |  | harvest:deepen-s6-d-sensitive-input-t6ch0y |
+| 137 | S10-D-D-D | [S10-D-D-D] S10-D-D's burst verdict is most exposed to its comparator, 134.4 W/kg measured at 80 Hz in larval zebrafish myotome, which was being set a | 🟡 derived |  | harvest:deepen-s10-d-d-juuuwn |
+| 138 | S23-D-D | [S23-D-D] S23-D's conclusion was most sensitive to E0 only because f=1 silently assumed actinotrichia span the whole fin; in adult zebrafish they occu | 🟡 derived |  | harvest:deepen-s23-sensitive-input-hynbng |
+| 139 | S13-D | [S13-D] The regime transition out of the folding representation is correct but its recorded justification is not: AlphaFold DB v6 puts 27.6% of Actino | 🟡 derived |  | harvest:deepen-s13-fin-ray-xfsos0 |
+| 140 | S20-D-D-D | [S20-D-D-D] S20-D-D's flip-prone input was its 'extreme' Danio-as-guppy exit speed (1.82 m/s, built from one illustrated guppy jump read as a sample m | 🟡 derived |  | harvest:deepen-s20-d-subproblem-b4iz3k |
+| 141 | S1-D-D | [S1-D-D] The S1-D answer is most sensitive to adult escape speed (it enters squared; a 13% drop flips the ballistic reading); a second independent sou | 🟡 derived |  | harvest:deepen-s1-d-sensitive-input-3mdmls |
+| 143 | S20-D-D-D | [S20-D-D-D] S20-D-D's conclusion was most sensitive to adult Danio exit speed, which it had only as cross-species proxies (its 1.82 m/s guppy-extreme  | 🟢 measured |  | harvest:deepen-s20-d-d-sensitive-input-5jvia6 |
+| 144 | S24-D-D | [S24-D-D] S24-D's 3-BL verdict (61-81 Hz needed, 1.2-1.6x the 52 Hz maximum) is most sensitive to f_max, and the primary source (Kyriakatos 2011, full | 🟡 derived |  | harvest:deepen-s24-sensitive-input-j77gqs |
+| 145 | S24-D-D | [S24-D-D] S24-D's 3-BL verdict is most sensitive to the 52 Hz frequency ceiling (a rise of 17-56% flips it); read at source (Kyriakatos 2011, full-tex | 🟡 derived |  | harvest:deepen-s24-sensitive-input-ls0g3m |
+| 147 | S22-D-D-D | [S22-D-D-D] An independent direct measurement of wild Danio rerio pectoral-fin length (18-26% SL, means 19.3-23.8%, search-summary) falls inside S22-D | ⚪ unknown |  | harvest:deepen-s22-d-d-j5x0vq |
+| 159 | S26 | [S26] No on current evidence: the only measured active (hemitrich base-locking) stiffening factor is ~12x (one bluegill ray), leaving a zebrafish-scal | 🟡 derived |  | harvest:active-fin-ray-stiffening-l53vks |
+| 160 | S25 | [S25] Flammang et al. 2013 report 565e-6 N m^2 in their abstract (read at abstract level in Europe PMC and PubMed; the authors call it 'calculated');  | 🔵 literature |  | harvest:s25-flammang-fin-ray-stiffness-gkwnb4 |
+| 163 | S21-D-D | [S21-D-D] The input the S21-D conclusion is most sensitive to is the fastest adult's fast-start speed (unit elasticity; no single 2x error in any inpu | 🟢 measured |  | harvest:deepen-s21-sensitive-input-mxp5t8 |
+| 164 | S22-D-D | [S22-D-D] Replacing S22-D's assumed wild-type zebrafish pectoral/SL with a same-lab figure-read (~0.21 SL, range 0.17-0.26) means a flying-fish propor | ⚪ unknown |  | harvest:s22-d-sensitive-input-pwechp |
+| 167 | S14-D | [S14-D] Engineering kcnk5b itself for graded pectoral-restricted control is unsupported: the recorded pLDDT>80 is both misstated (AlphaFold DB reports | ⚪ unknown |  | harvest:deepen-s14-potassium-channel-5miqg2 |
+| 168 | S1-D | [S1-D] No: replacing Plaut's sustained U_crit (0.56 m/s) with a measured adult escape burst speed (0.95 m/s robust lower bound, 1.57 m/s reported peak | 🟢 measured |  | harvest:zebrafish-takeoff-deepen-2gwq0o |
+| 169 | S20-D-D | [S20-D-D] S20-D's most flip-prone input was its 'guppy-class' comparator (1.51 m/s, from a review's 3.5 BL multiplied by the 33 mm zebrafish length un | 🟡 derived |  | harvest:s20-d-sensitive-input-77m8c9 |
+| 171 | S10-D-D | [S10-D-D] S10-D's burst verdict is tied for sensitivity among f, R, M and muscle power, none of which flips it at x2, and f is the weakest by evidence | 🟡 derived |  | harvest:deepen-s10-sensitive-input-k9dp4p |
+| 174 | S14-D-D | [S14-D-D] S14-D's verdict that the kcnk5b channel-engineering route cannot deliver graded control strengthens, because its one unsourced input -- sigm | ⚪ unknown |  | harvest:deepen-s14-d-sensitive-input-xa9fhc |
+| 175 | S9-D | [S9-D] S9's key number (bluegill fin-ray E = 1.34 GPa) is an E = EI/I figure whose I is assumed; recomputing from the full-text zebrafish in-vivo fin  | 🔵 literature |  | harvest:deepen-s9-fin-ray-ixdx5u |
+| 176 | S2-D | [S2-D] With Re-matched profile drag, a fin-wing fish gets a computed whole-animal L/D of about 3-5 (4.1-5.5 at AR 4, 3.2-4.8 for AR 1.5-4), so S2's ba | 🟢 measured |  | harvest:deepen-s2-lift-drag-6xxrv3 |
+| 177 | S24-D | [S24-D] The recorded 132-199 Hz (2.5-3.8x) requirement rests on Strouhal numbers measured at Re ~7e3, but the taxi operates at Re ~7.8e4, where measur | 🟡 derived |  | harvest:s24-deepen-launch-gap-2motub |
+| 178 | S6-D | [S6-D] Flying fish are observed to glide, but a lepidotrichial ray modelled as a passive cantilever fails to carry an equal share of glide lift with t | 🟢 measured |  | harvest:deepen-fin-ray-s6-cj2i2x |
+| 179 | S21-D | [S21-D] Directly measured per-fish maximum fast-start speeds of adult zebrafish span ~0.45-1.38 m/s, bracketing S21's Re-derived 0.842 m/s; the fastes | ⚪ unknown |  | harvest:zebrafish-fast-start-velocity-pgqbck |
+| 180 | S7-D | [S7-D] The conclusion is insensitive (≤27%) to factor-2 errors in every modelled input but flips with a factor-2 error in the unmeasured actual girdle | 🟡 derived |  | harvest:deepen-s7-pectoral-girdle-b6j2hx |
+| 181 | S23-D | [S23-D] The answer is most sensitive to the actinotrichial baseline modulus E0, the only input whose stated range (1.2 MPa-0.5 GPa) crosses the comput | 🟡 derived |  | harvest:deepen-s23-actinotrichia-bhvko5 |
+| 182 | S22-D | [S22-D] Daane et al. measured pectoral and caudal length/SL only within zebrafish genotypes and never numerically compared the lat4a^nr21/+; kcnh2a^lo | 🟢 measured |  | harvest:deepen-s22-daane-fin-7dqlop |
+| 183 | S20-D | [S20-D] The input S20 is most sensitive to is adult exit speed (range and required glide area both scale as v^2), and replacing S20's back-solved 3.13 | 🟡 derived |  | harvest:deepen-s20-zebrafish-flight-9smifx |
+| 184 | S10-D | [S10-D] The answer is most sensitive to the flight-muscle fraction f, which S10 assumed at 0.1-0.3; the best measured teleost proxy (Abudefduf saxatil | 🟡 derived |  | harvest:deepen-s10-flapping-muscle-wr33g7 |
