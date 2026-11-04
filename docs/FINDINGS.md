@@ -765,13 +765,20 @@ work that would obviously succeed; each is a specific question with a stated rea
 | item | why it matters | what would settle it |
 |---|---|---|
 | **Which girdle limb carries the fin-root moment** about the AP axis | if the dorsal cleithral limb is binding, the girdle **fails** at measured size (0.61×) rather than passing at 2.1–3.9× | **a structural analysis nobody has done** — whether the limbs load in *series* (weakest section governs → fail) or *parallel* (stiffer ventral limb governs → pass). Tested for reachability three ways: both analyses already decoded the mesh and agree on the numbers; a morphology paper would not give a load path; and PubMed returns **0** for *"zebrafish cleithrum biomechanics"* against **64** for *"cleithrum"* alone, so that zero is a real absence |
+| **How the ray's second moment `I` scales with length `n` in `I ~ L^n`** | it decides the **sign** of the coupling between the two largest shortfalls. The fin needs 2.2–4.8× linear enlargement for lift and is already **9–196× too compliant**; relative tip deflection goes as `L^(2−n)`, so **n > 2 means enlargement helps, n < 2 means it compounds** — at n = 0 the rigidity shortfall grows 19-fold to **172–3743×**. The span is a factor of **370**, larger than either shortfall alone, and the project has been reporting the two as independent | **micro-CT or sections of longfin vs wild-type rays** at matched proximodistal positions, fitting `I` against `L`. Subproblem **S904**. Not answerable from abstracts: the kcnk5b literature describes the phenotype as ray *lengthening* (König 2017, "an extended size of actinotrichia") and none of the six papers found states a thickness measurement |
 | **The Strouhal regime for the taxi** | the headline table row is either **2.5–3.8×** or **1.4–1.6×** | re-derive Eloy's Lighthill number at the taxi operating point; both arithmetics already reproduce |
 | ~~Whether `and1` departs from the shuffle null~~ | **CLOSED 2026-11-04** | re-run here: **p = 0.0050**, reproducing both replications. Claim 29 is refuted. Both controls pass — a planted repeat is caught at p = 0.0050, a shuffled copy of `and1` returns p = 0.607. The effect is **significant but small**: 0.1157 against a shuffle maximum of 0.1154 |
 
 ### Known weaknesses in numbers that are quoted
 
-- **C_L = 0.8 is assumed and exceeds claim 5's own ≤ 0.6 ceiling.** The honest area-shortfall range
-  is **11–23×**, not 14×.
+- **C_L = 0.8 is assumed, and the ceiling it was once measured against is superseded.** This line
+  used to read that 0.8 *exceeds* claim 5's ≤ 0.6 — **claim 5 is superseded by claim 86**, which
+  measures CL_max ≈ **1.0 (0.9–1.1)** near Re 3×10³ for cambered/corrugated thin wings and finds
+  ≤ 0.6 holds "only for a flat plate on weak evidence". So 0.8 now sits *below* the superseding
+  value, not above a ceiling. **The fin's own C_L is unknown** and a membrane is arguably neither a
+  flat plate nor a corrugated wing, so the honest area-shortfall range is **11–23×** and the linear
+  demand **2.18–4.79×** — a range, not either endpoint. *(Corrected 2026-11-04, claim 510, after the
+  4.37× figure had been headlined from the superseded end.)*
 - **η_h = 0.37 is a point from a cited 0.34–0.39 range**, and is a *pike* value applied to a
   zebrafish at Re ~10⁴. The requirement spans **93.5–107.2 J/kg** from the cited range alone.
 - **f_muscle = 0.30 is an assumption** — half of a 60 % whose own table is marked *"SECONDARY
