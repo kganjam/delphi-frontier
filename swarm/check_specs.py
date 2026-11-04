@@ -329,6 +329,16 @@ def main():
         if st != "PASS":
             print(f"            -> {detail}")
 
+    # A NEW PROJECT WILL SHOW 0 FAIL AND THAT MEANS ALMOST NOTHING. Measured 2026-11-04 on the
+    # coral project three hours after it was created: 8 pass, 0 FAIL, 17 UNCHECKED. Of the 8, three
+    # were over sets of THREE rows, three ran database-wide because their tables carry no
+    # project_id, and ASK rule 7 reads the SPEC DOCUMENT and so passes identically for every
+    # project. "0 FAIL" was reporting an absence of data as an absence of defects.
+    scoped_pass = sum(1 for r in rows if r[0] == "PASS" and "[GLOBAL" not in (r[4] or ""))
+    global_pass = sum(1 for r in rows if r[0] == "PASS" and "[GLOBAL" in (r[4] or ""))
+    print(f"\n  OF THE PASSES: {scoped_pass} scoped to {PROJECT!r}, {global_pass} database-wide.")
+    print(f"  A project with little data shows few FAILs because few rules can reach it. Read the")
+    print(f"  UNCHECKED count and the scoped-pass count together; neither alone means compliant.")
     print(f"\n  SCOPE: {SCOPE_NOTE}")
     try:
         projs = q("select project_id, count(*) from claim group by 1 order by 2 desc")
