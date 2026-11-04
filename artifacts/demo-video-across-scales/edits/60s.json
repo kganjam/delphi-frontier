@@ -1,0 +1,361 @@
+{
+  "duration_s": 60,
+  "script": "../delphi-bio-across-scales-60s.txt",
+  "output_dir": "../.build/60s",
+  "render_dir": "render",
+  "output_stem": "delphi-bio-across-scales-60s",
+  "shots": [
+    {
+      "id": "goal",
+      "anchor": "Type:",
+      "asset": "fish",
+      "layout": "hero",
+      "tag": "THE DESIGN GOAL",
+      "headline": "Design a fish\nthat can fly.",
+      "scope": "Concept illustration \u00b7 organism design is the ambition",
+      "fixed_start_frame": 0
+    },
+    {
+      "id": "compiler",
+      "anchor": "That\u2019s the promise",
+      "asset": "hook",
+      "crop": [
+        80,
+        20,
+        800,
+        515
+      ],
+      "tag": "FUNCTION FIRST",
+      "headline": "A biological compiler",
+      "scope": "Recorded candidate geometry",
+      "fixed_start_frame": 70
+    },
+    {
+      "id": "swarm",
+      "anchor": "Delphi Bio and MorphoSwarm",
+      "asset": "front",
+      "layout": "front",
+      "tag": "DELPHI BIO + MORPHOSWARM STUDIO",
+      "fixed_start_frame": 138
+    },
+    {
+      "id": "across",
+      "anchor": "proposing, simulating",
+      "asset": "studio-overview",
+      "crop": [
+        75,
+        617,
+        3032,
+        1100
+      ],
+      "tag": "ONE GOAL ACROSS SCALES",
+      "scope": "Studio prototype \u00b7 recorded models and open connections",
+      "fixed_start_frame": 280
+    },
+    {
+      "id": "challenge",
+      "anchor": "They apply mathematical biology",
+      "asset": "law-page",
+      "crop": [
+        430,
+        390,
+        1360,
+        570
+      ],
+      "tag": "PROPOSE \u00b7 SIMULATE \u00b7 CHALLENGE",
+      "scope": "A source relationship with stated conditions",
+      "fixed_start_frame": 349
+    },
+    {
+      "id": "oxygen",
+      "anchor": "Can oxygen delivery",
+      "asset": "cell-drug-discovery",
+      "layout": "art",
+      "tag": "CELLS / ENERGY",
+      "headline": "Can oxygen delivery keep up?",
+      "scope": "Design question \u00b7 original concept illustration",
+      "fixed_start_frame": 415
+    },
+    {
+      "id": "protein-question",
+      "anchor": "Could proteins make",
+      "asset": "molecular",
+      "crop": [
+        160,
+        225,
+        630,
+        260
+      ],
+      "tag": "PROTEINS  /  FIN MATERIAL",
+      "headline": "Could proteins make a tougher fin?",
+      "scope": "Collagen-mimetic fragment \u00b7 transfer to fin materials is an open question",
+      "fixed_start_frame": 481
+    },
+    {
+      "id": "signals",
+      "anchor": "Which signals shape growth",
+      "asset": "erk",
+      "crop": [
+        20,
+        60,
+        610,
+        320
+      ],
+      "tag": "CELL SIGNALING",
+      "headline": "Which signals shape growth?",
+      "scope": "Scale-regeneration model \u00b7 transfer to fin growth remains untested",
+      "fixed_start_frame": 560
+    },
+    {
+      "id": "school",
+      "anchor": "How would a school",
+      "asset": "school",
+      "crop": [
+        145,
+        105,
+        1015,
+        295
+      ],
+      "tag": "COLLECTIVE BEHAVIOR",
+      "headline": "Can local cues coordinate escape?",
+      "scope": "Collective escape \u00b7 simulated scenario with encoded rules",
+      "fixed_start_frame": 612
+    },
+    {
+      "id": "ecology",
+      "anchor": "change its ecosystem",
+      "asset": "air-water-fish",
+      "layout": "art",
+      "tag": "ECOLOGY",
+      "headline": "Predators. Prey. Ecosystems.",
+      "scope": "Design questions \u00b7 original future-applications concept",
+      "fixed_start_frame": 653
+    },
+    {
+      "id": "tissue",
+      "anchor": "Bigger fins may help lift",
+      "asset": "aero",
+      "crop": [
+        0,
+        125,
+        630,
+        430
+      ],
+      "tag": "TISSUES  /  ORGANS",
+      "headline": "Can the fin flex under load?",
+      "dark": true,
+      "scope": "Static model iterations \u00b7 assumed stiffness",
+      "fixed_start_frame": 686
+    },
+    {
+      "id": "tradeoff",
+      "anchor": "What do they cost",
+      "asset": "cfd",
+      "crop": [
+        145,
+        75,
+        960,
+        570
+      ],
+      "tag": "LIFT  /  DRAG  /  ENERGY",
+      "headline": "What does extra lift cost?",
+      "scope": "Simulated wake \u00b7 reference check failed; fins unresolved",
+      "fixed_start_frame": 723
+    },
+    {
+      "id": "laws",
+      "anchor": "We extract mathematical laws",
+      "asset": "front",
+      "layout": "front",
+      "tag": "MATHEMATICAL BIOLOGY",
+      "fixed_start_frame": 829
+    },
+    {
+      "id": "assumptions",
+      "anchor": "make assumptions explicit",
+      "asset": "deck5",
+      "crop": [
+        726,
+        335,
+        1080,
+        370
+      ],
+      "tag": "ASSUMPTIONS  /  DEDUCTIONS",
+      "scope": "Original source relationships \u00b7 conditions apply",
+      "fixed_start_frame": 901
+    },
+    {
+      "id": "composition",
+      "anchor": "Compatible models become",
+      "asset": "law-page",
+      "crop": [
+        430,
+        390,
+        1360,
+        570
+      ],
+      "tag": "COMPOSABLE MODELS",
+      "scope": "Compatible assumptions and shared variables are required",
+      "fixed_start_frame": 992
+    },
+    {
+      "id": "knobs",
+      "anchor": "with control knobs",
+      "asset": "deck5",
+      "crop": [
+        720,
+        468,
+        1090,
+        235
+      ],
+      "tag": "BIOPHYSICAL CONTROL",
+      "headline": "Geometry. Stiffness. Load.",
+      "scope": "Original mathematical relationships \u00b7 assumptions apply",
+      "fixed_start_frame": 1056
+    },
+    {
+      "id": "purpose",
+      "anchor": "Agents propose simulations",
+      "asset": "nca",
+      "crop": [
+        10,
+        75,
+        1225,
+        665
+      ],
+      "box": [
+        0,
+        235,
+        1920,
+        685
+      ],
+      "tag": "DEVELOPMENT",
+      "headline": "Can a fin pattern recover after damage?",
+      "dark": true,
+      "scope": "Computational pattern model \u00b7 repair remains a design question",
+      "inpoint": 1,
+      "fixed_start_frame": 1108
+    },
+    {
+      "id": "cells",
+      "anchor": "Each simulation should",
+      "asset": "hh",
+      "crop": [
+        65,
+        90,
+        1195,
+        570
+      ],
+      "tag": "CELLS",
+      "headline": "What changes when coupling is removed?",
+      "scope": "Assumed electrical network \u00b7 baseline and ablation",
+      "fixed_start_frame": 1204
+    },
+    {
+      "id": "knowledge",
+      "anchor": "What we learn returns",
+      "asset": "sphere",
+      "tag": "KNOWLEDGE RETURNS TO DELPHI",
+      "headline": "Evidence. Uncertainty. Disagreement.",
+      "dark": true,
+      "fixed_start_frame": 1264
+    },
+    {
+      "id": "updates",
+      "anchor": "uncertainty, disagreement",
+      "asset": "reuse-page",
+      "crop": [
+        190,
+        750,
+        1530,
+        565
+      ],
+      "tag": "REUSE + INDEPENDENT DISPUTE",
+      "scope": "Worked mathematical example \u00b7 empirical relevance unestablished",
+      "fixed_start_frame": 1339
+    },
+    {
+      "id": "next-design",
+      "anchor": "so the next design starts smarter",
+      "asset": "hook",
+      "crop": [
+        80,
+        20,
+        800,
+        515
+      ],
+      "tag": "FUNCTION FIRST",
+      "headline": "Learn. Revise. Design again.",
+      "scope": "Recorded candidate geometry \u00b7 learning-loop vision",
+      "fixed_start_frame": 1408
+    },
+    {
+      "id": "pieces",
+      "anchor": "The pieces of verified biology",
+      "asset": "deck6",
+      "layout": "applications",
+      "tag": "THE PIECES ARE COMING TOGETHER",
+      "fixed_start_frame": 1463
+    },
+    {
+      "id": "dna",
+      "anchor": "The destination:",
+      "asset": "dna",
+      "layout": "dna",
+      "tag": "CANDIDATE IMPLEMENTATION",
+      "headline": "Candidate DNA from a design",
+      "scope": "Saved 1,000 bp candidate continuation \u00b7 function untested",
+      "fixed_start_frame": 1542
+    },
+    {
+      "id": "build",
+      "anchor": "with a plan to build",
+      "asset": "repair",
+      "crop": [
+        90,
+        45,
+        410,
+        420
+      ],
+      "box": [
+        600,
+        205,
+        1170,
+        715
+      ],
+      "tag": "BUILD + TEST",
+      "headline": "How could tissue repair itself?",
+      "scope": "Tissue-repair model \u00b7 proposed application",
+      "fixed_start_frame": 1605
+    },
+    {
+      "id": "sentence",
+      "anchor": "From a sentence to an organism",
+      "asset": "air-water-fish",
+      "layout": "art",
+      "tag": "DELPHI BIO",
+      "headline": "From a sentence to an organism",
+      "scope": "The vision",
+      "fixed_start_frame": 1665
+    },
+    {
+      "id": "close",
+      "anchor": "What would you build",
+      "asset": "deck6",
+      "layout": "close",
+      "tag": "DELPHI BIO",
+      "headline": "What would you build?",
+      "fixed_start_frame": 1715,
+      "headline_emphasis": {
+        "text": "you",
+        "bold": true,
+        "italic": true,
+        "color": "#2457d6",
+        "scale": 1.08,
+        "gap_after_px": 18
+      }
+    }
+  ],
+  "assets_manifest": "../sources/assets.json",
+  "audio_manifest": "../audio/60s/manifest.json"
+}

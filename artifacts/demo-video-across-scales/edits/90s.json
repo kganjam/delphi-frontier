@@ -1,0 +1,654 @@
+{
+  "duration_s": 90,
+  "script": "../delphi-bio-across-scales-90s.txt",
+  "output_dir": "../.build/90s",
+  "render_dir": "render",
+  "output_stem": "delphi-bio-across-scales-90s",
+  "shots": [
+    {
+      "id": "goal",
+      "anchor": "Type:",
+      "asset": "fish",
+      "layout": "hero",
+      "tag": "THE DESIGN GOAL",
+      "headline": "Design a fish\nthat can fly.",
+      "scope": "Concept illustration \u00b7 organism design is the ambition",
+      "fixed_start_frame": 0
+    },
+    {
+      "id": "compiler",
+      "anchor": "That\u2019s the promise",
+      "asset": "hook",
+      "crop": [
+        80,
+        20,
+        800,
+        515
+      ],
+      "tag": "FUNCTION FIRST",
+      "headline": "A biological compiler",
+      "scope": "Recorded candidate geometry",
+      "fixed_start_frame": 68
+    },
+    {
+      "id": "across",
+      "anchor": "then engineer across scales",
+      "asset": "studio-overview",
+      "crop": [
+        75,
+        617,
+        3032,
+        1100
+      ],
+      "tag": "ONE GOAL ACROSS SCALES",
+      "scope": "Studio prototype \u00b7 recorded models and open connections",
+      "fixed_start_frame": 178
+    },
+    {
+      "id": "swarm",
+      "anchor": "Delphi Bio and MorphoSwarm",
+      "asset": "candidate-a",
+      "tag": "ADVERSARIAL DESIGN",
+      "fixed_start_frame": 267,
+      "layout": "motion",
+      "motion": {
+        "kind": "adversarial",
+        "stage": 0,
+        "candidate": "candidate-a"
+      },
+      "scope": "Recorded candidate geometry \u00b7 conceptual agent workflow"
+    },
+    {
+      "id": "challenge",
+      "anchor": "They apply mathematical",
+      "asset": "candidate-b",
+      "tag": "ADVERSARIAL DESIGN",
+      "scope": "Recorded candidate geometry \u00b7 conceptual agent workflow",
+      "fixed_start_frame": 374,
+      "layout": "motion",
+      "motion": {
+        "kind": "adversarial",
+        "stage": 1,
+        "candidate": "candidate-b"
+      }
+    },
+    {
+      "id": "objections",
+      "anchor": "design experiments",
+      "asset": "candidate-c",
+      "tag": "ADVERSARIAL DESIGN",
+      "scope": "Recorded candidate geometry \u00b7 conceptual agent workflow",
+      "fixed_start_frame": 472,
+      "layout": "motion",
+      "motion": {
+        "kind": "adversarial",
+        "stage": 2,
+        "candidate": "candidate-c"
+      }
+    },
+    {
+      "id": "respiration",
+      "anchor": "Could faster cellular respiration",
+      "asset": "energy-supply",
+      "tag": "CELLS / ENERGY",
+      "scope": "Concept illustration \u00b7 energy supply is a design question",
+      "fixed_start_frame": 572,
+      "layout": "camera",
+      "headline": "Can respiration supply launch power?",
+      "camera": {
+        "from": [
+          680,
+          470,
+          990,
+          360
+        ],
+        "to": [
+          500,
+          350,
+          1172,
+          427
+        ]
+      }
+    },
+    {
+      "id": "oxygen",
+      "anchor": "can oxygen delivery",
+      "asset": "energy-supply",
+      "tag": "CELLS / ENERGY",
+      "scope": "Concept illustration \u00b7 oxygen delivery remains a design question",
+      "fixed_start_frame": 656,
+      "layout": "camera",
+      "headline": "Can oxygen delivery keep up?",
+      "camera": {
+        "from": [
+          500,
+          350,
+          1172,
+          427
+        ],
+        "to": [
+          0,
+          140,
+          1672,
+          610
+        ]
+      }
+    },
+    {
+      "id": "protein-question",
+      "anchor": "Which proteins could",
+      "asset": "fin-material",
+      "tag": "PROTEINS / FIN MATERIAL",
+      "scope": "Concept illustration \u00b7 protein-to-fin material transfer remains open",
+      "fixed_start_frame": 713,
+      "layout": "camera",
+      "headline": "Tougher fins, less weight?",
+      "camera": {
+        "from": [
+          250,
+          240,
+          1422,
+          518
+        ],
+        "to": [
+          100,
+          150,
+          1572,
+          573
+        ]
+      }
+    },
+    {
+      "id": "signals",
+      "anchor": "How do cell signals",
+      "asset": "erk",
+      "crop": [
+        20,
+        60,
+        610,
+        320
+      ],
+      "tag": "CELL SIGNALING",
+      "headline": "Which signals shape growth?",
+      "scope": "Scale-regeneration model \u00b7 transfer to fin growth remains untested",
+      "fixed_start_frame": 788
+    },
+    {
+      "id": "tissue",
+      "anchor": "Can tissues stay flexible",
+      "asset": "beam",
+      "tag": "TISSUES / MECHANICS",
+      "scope": "Linear beam surrogate \u00b7 no tissue calibration",
+      "fixed_start_frame": 854,
+      "crop": [
+        40,
+        65,
+        585,
+        310
+      ],
+      "headline": "Can the structure stay flexible?",
+      "inpoint": 0.2
+    },
+    {
+      "id": "control",
+      "anchor": "and the nervous system steer",
+      "asset": "glide",
+      "crop": [
+        110,
+        90,
+        1060,
+        320
+      ],
+      "tag": "CONTROL",
+      "headline": "Can feedback stabilize a glide?",
+      "dark": true,
+      "scope": "Airborne release model \u00b7 assumed mass and feedback",
+      "fixed_start_frame": 909
+    },
+    {
+      "id": "school",
+      "anchor": "Then think bigger",
+      "asset": "school",
+      "crop": [
+        145,
+        105,
+        1015,
+        295
+      ],
+      "tag": "COLLECTIVE BEHAVIOR",
+      "headline": "Can local cues coordinate escape?",
+      "scope": "Collective escape \u00b7 simulated scenario with encoded rules",
+      "fixed_start_frame": 965
+    },
+    {
+      "id": "ecology",
+      "anchor": "What changes for predators",
+      "asset": "ecology",
+      "tag": "ECOLOGY",
+      "scope": "Concept illustration \u00b7 ecosystem effects remain design questions",
+      "fixed_start_frame": 1049,
+      "layout": "camera",
+      "headline": "Predators. Prey. Ecosystems.",
+      "camera": {
+        "from": [
+          0,
+          160,
+          1672,
+          610
+        ],
+        "to": [
+          110,
+          215,
+          1500,
+          547
+        ]
+      }
+    },
+    {
+      "id": "revision",
+      "anchor": "Every answer changes the design",
+      "asset": "deck5",
+      "layout": "deck",
+      "tag": "ADVERSARIAL DESIGN",
+      "headline": "Every answer changes the design",
+      "fixed_start_frame": 1133
+    },
+    {
+      "id": "tradeoff",
+      "anchor": "Bigger fins may help lift",
+      "asset": "candidate-c",
+      "tag": "LIFT / DRAG / STRENGTH / ENERGY",
+      "scope": "Conceptual tradeoff questions \u00b7 no performance result implied",
+      "fixed_start_frame": 1205,
+      "layout": "motion",
+      "motion": {
+        "kind": "tradeoff",
+        "candidate": "candidate-c"
+      }
+    },
+    {
+      "id": "laws",
+      "anchor": "We extract mathematical laws",
+      "asset": "front",
+      "layout": "front",
+      "tag": "MATHEMATICAL BIOLOGY",
+      "fixed_start_frame": 1313
+    },
+    {
+      "id": "assumptions",
+      "anchor": "make assumptions explicit",
+      "asset": "law-page",
+      "tag": "ASSUMPTIONS / DEDUCTIONS",
+      "scope": "A source relationship with stated conditions",
+      "fixed_start_frame": 1390,
+      "crop": [
+        430,
+        390,
+        1360,
+        570
+      ]
+    },
+    {
+      "id": "composition",
+      "anchor": "Compatible models become",
+      "asset": "deck5",
+      "tag": "COMPOSABLE MODELS",
+      "scope": "Compatible interfaces \u00b7 biological calibration remains open",
+      "fixed_start_frame": 1475,
+      "layout": "motion",
+      "motion": {
+        "kind": "composition"
+      }
+    },
+    {
+      "id": "knobs",
+      "anchor": "with biophysical control knobs",
+      "asset": "knob-n1",
+      "tag": "BIOPHYSICAL CONTROL",
+      "scope": "Recorded candidate geometries \u00b7 flight performance not established",
+      "fixed_start_frame": 1557,
+      "layout": "panels",
+      "headline": "Change the inputs. Compare candidates.",
+      "panels": [
+        {
+          "asset": "knob-n1",
+          "crop": [
+            110,
+            45,
+            355,
+            155
+          ],
+          "box": [
+            30,
+            315,
+            600,
+            450
+          ],
+          "label_xy": [
+            55,
+            790
+          ],
+          "label": "Baseline",
+          "label_size": 31
+        },
+        {
+          "asset": "knob-n2",
+          "crop": [
+            110,
+            45,
+            355,
+            155
+          ],
+          "box": [
+            660,
+            315,
+            600,
+            450
+          ],
+          "label_xy": [
+            685,
+            790
+          ],
+          "label": "Area \u00d71.3",
+          "label_size": 31
+        },
+        {
+          "asset": "knob-n3",
+          "crop": [
+            110,
+            45,
+            355,
+            155
+          ],
+          "box": [
+            1290,
+            315,
+            600,
+            450
+          ],
+          "label_xy": [
+            1315,
+            790
+          ],
+          "label": "Area \u00d71.3 \u00b7 aspect ratio \u00d71.2",
+          "label_size": 31
+        }
+      ]
+    },
+    {
+      "id": "molecular",
+      "anchor": "Explore protein motion",
+      "asset": "molecular",
+      "crop": [
+        160,
+        225,
+        630,
+        260
+      ],
+      "tag": "MOLECULES",
+      "headline": "Motion informs material questions",
+      "scope": "Collagen-like fragment \u00b7 short molecular simulation",
+      "inpoint": 3,
+      "fixed_start_frame": 1630
+    },
+    {
+      "id": "cells",
+      "anchor": "Compare cell signals",
+      "asset": "hh",
+      "crop": [
+        65,
+        90,
+        1195,
+        570
+      ],
+      "tag": "CELLS",
+      "headline": "What changes when coupling is removed?",
+      "scope": "Assumed electrical network \u00b7 baseline and ablation",
+      "fixed_start_frame": 1666
+    },
+    {
+      "id": "fin",
+      "anchor": "Bend a virtual fin",
+      "asset": "aero",
+      "crop": [
+        0,
+        125,
+        630,
+        430
+      ],
+      "tag": "FIN MECHANICS",
+      "headline": "How does the fin bend under load?",
+      "dark": true,
+      "scope": "Static model iterations \u00b7 assumed stiffness",
+      "fixed_start_frame": 1708
+    },
+    {
+      "id": "flow",
+      "anchor": "and follow its wake",
+      "asset": "cfd",
+      "crop": [
+        145,
+        75,
+        960,
+        570
+      ],
+      "tag": "FLUID FLOW",
+      "headline": "Where does the wake form?",
+      "scope": "Simulated wake \u00b7 reference check failed; fins unresolved",
+      "fixed_start_frame": 1745
+    },
+    {
+      "id": "purpose",
+      "anchor": "Each simulation should",
+      "asset": "nca",
+      "crop": [
+        10,
+        75,
+        1225,
+        665
+      ],
+      "box": [
+        0,
+        235,
+        1920,
+        685
+      ],
+      "tag": "DEVELOPMENT",
+      "headline": "Can a fin pattern recover after damage?",
+      "dark": true,
+      "scope": "Computational pattern model \u00b7 repair remains a design question",
+      "inpoint": 1,
+      "fixed_start_frame": 1775
+    },
+    {
+      "id": "experiments",
+      "anchor": "Agents can turn missing connections",
+      "asset": "betse",
+      "tag": "SIMULATED PERTURBATIONS",
+      "scope": "Generic voltage model \u00b7 simulated perturbations",
+      "fixed_start_frame": 1872,
+      "crop": [
+        145,
+        125,
+        1050,
+        300
+      ],
+      "headline": "Which intervention changes the response?",
+      "inpoint": 1.3
+    },
+    {
+      "id": "experiment-plan",
+      "anchor": "Agents can turn missing connections",
+      "asset": "deck5",
+      "layout": "motion",
+      "tag": "DESIGNED EXPERIMENTS",
+      "motion": {
+        "kind": "experiment"
+      },
+      "scope": "Proposed beam experiment \u00b7 assumed noise; no measurement outcome",
+      "fixed_start_frame": 1962
+    },
+    {
+      "id": "knowledge",
+      "anchor": "The knowledge goes back",
+      "asset": "deck5",
+      "tag": "KNOWLEDGE RETURNS TO DELPHI",
+      "fixed_start_frame": 2023,
+      "layout": "motion",
+      "motion": {
+        "kind": "knowledge"
+      },
+      "scope": "Conceptual knowledge workflow \u00b7 retain evidence, uncertainty and disagreement"
+    },
+    {
+      "id": "updates",
+      "anchor": "New findings update claims",
+      "asset": "allometry",
+      "tag": "RECHECK DEPENDENT DESIGNS",
+      "scope": "Refit from reused specimen data \u00b7 transfer still limited",
+      "fixed_start_frame": 2179,
+      "layout": "motion",
+      "motion": {
+        "kind": "image-reveal",
+        "headline": "New evidence. Revised prediction.",
+        "image": "allometry",
+        "crop": [
+          830,
+          50,
+          710,
+          440
+        ],
+        "box": [
+          180,
+          250,
+          1250,
+          675
+        ],
+        "reveal_box": [
+          1200,
+          270,
+          215,
+          655
+        ]
+      }
+    },
+    {
+      "id": "verified",
+      "anchor": "This is the infrastructure",
+      "asset": "evidence-page",
+      "crop": [
+        135,
+        390,
+        1285,
+        610
+      ],
+      "tag": "VERIFIED BIOLOGY",
+      "scope": "A claim with its statement, source, assumptions and evidence",
+      "fixed_start_frame": 2291
+    },
+    {
+      "id": "pieces",
+      "anchor": "The pieces are coming together",
+      "asset": "enzyme",
+      "tag": "THE PIECES ARE COMING TOGETHER",
+      "fixed_start_frame": 2377,
+      "layout": "panels",
+      "headline": "New possibilities across biology",
+      "panels": [
+        {
+          "asset": "enzyme",
+          "box": [
+            300,
+            230,
+            650,
+            650
+          ],
+          "label_xy": [
+            340,
+            850
+          ],
+          "label": "Protein design",
+          "label_size": 37
+        },
+        {
+          "asset": "self-healing-hydrogel",
+          "box": [
+            1050,
+            230,
+            650,
+            650
+          ],
+          "label_xy": [
+            1085,
+            850
+          ],
+          "label": "Repairable materials",
+          "label_size": 37
+        }
+      ],
+      "scope": "Original application concepts \u00b7 not demonstrated outcomes"
+    },
+    {
+      "id": "dna",
+      "anchor": "The destination:",
+      "asset": "dna",
+      "layout": "dna",
+      "tag": "CANDIDATE IMPLEMENTATION",
+      "headline": "Candidate DNA from a design",
+      "scope": "Saved 1,000 bp candidate continuation \u00b7 function untested",
+      "fixed_start_frame": 2436
+    },
+    {
+      "id": "build",
+      "anchor": "with a plan to build and test it",
+      "asset": "repair",
+      "crop": [
+        90,
+        45,
+        410,
+        420
+      ],
+      "box": [
+        600,
+        205,
+        1170,
+        715
+      ],
+      "tag": "BUILD + TEST",
+      "headline": "How could tissue repair itself?",
+      "scope": "Tissue-repair model \u00b7 proposed application",
+      "fixed_start_frame": 2522
+    },
+    {
+      "id": "sentence",
+      "anchor": "From a sentence to an organism",
+      "asset": "fish",
+      "tag": "DELPHI BIO",
+      "scope": "The vision",
+      "fixed_start_frame": 2572,
+      "layout": "motion",
+      "motion": {
+        "kind": "phrase"
+      }
+    },
+    {
+      "id": "close",
+      "anchor": "What would you build",
+      "asset": "deck6",
+      "layout": "close",
+      "tag": "DELPHI BIO",
+      "headline": "What would you build?",
+      "fixed_start_frame": 2610,
+      "headline_emphasis": {
+        "text": "you",
+        "bold": true,
+        "italic": true,
+        "color": "#2457d6",
+        "scale": 1.08,
+        "gap_after_px": 18
+      }
+    }
+  ],
+  "assets_manifest": "../sources/assets.json",
+  "audio_manifest": "../audio/90s/manifest.json"
+}
