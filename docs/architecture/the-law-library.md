@@ -197,6 +197,20 @@ constant with an interval, a stated `domain_of_validity`, a non-empty `where_it_
 example with arithmetic shown, and sources with read-levels. **An entry missing `where_it_breaks` is
 rejected by the build**, because that field is the difference between a library and a poster.
 
+**How to write an equation, since two spellings of it differ silently.** A fractional power is
+written `^(a/b)` with the parentheses: `d^(2/3)`, `(E/(rho*g))^(1/3)`. The bare form `d^2/3` is
+**refused by the gate**, because `U^3/2` and `U^3 / 2` are the same intent with different
+dimensions — three-halves power against a quotient — and a space is the only thing separating
+them. Nothing in the corpus was ever wrong under the loose rule; it is forbidden so that nothing
+can be. Everything else follows the same principle: every symbol in the equation must appear in
+`symbols` (an undeclared one used to be skipped, so the equation *checked* was shorter than the
+equation *written*), `pi` is the only name allowed without declaring it (`e` is not, because it is
+a plausible name for strain or energy), and a sum is checked term against term rather than being
+represented by its first term. With a FITTED exponent, write the law in normalised form — 
+`1 = sum((d_i/d)^Delta)` rather than `d^Delta = sum(d_i^Delta)` — because a raw power with a free
+exponent has a dimension that changes with the exponent, and only the normalised form balances for
+every value of it. `allometry-huxley` and `leonardo` are the worked cases.
+
 ---
 
 ## 7. What this does not establish

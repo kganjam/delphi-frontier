@@ -1,7 +1,7 @@
 id: elastic-similarity
 name: Elastic versus geometric similarity (McMahon)
 usability: descriptive
-equation: "l = k_e * d^2/3"
+equation: "l = k_e * d^(2/3)"
 latex: "l \\propto d^{2/3} \\Longleftrightarrow d \\propto l^{3/2}, \\qquad l \\propto M^{1/4}, \\quad d \\propto M^{3/8}"
 symbols:
   l:   {dimension: L, units: m, description: "segment length -- a limb bone, a trunk, a spar"}

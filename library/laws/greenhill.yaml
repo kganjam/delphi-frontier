@@ -1,7 +1,7 @@
 id: greenhill
 name: Greenhill buckling-limited column height
 usability: constraining
-equation: "l_cr = C_G * (E / (rho * g))^1/3 * d^2/3"
+equation: "l_cr = C_G * (E / (rho * g))^(1/3) * d^(2/3)"
 latex: "l_{cr} = C_G \\left(\\frac{E}{\\rho g}\\right)^{1/3} d^{2/3}, \\qquad C_G = \\left(\\frac{7.8373}{16}\\right)^{1/3} = 0.7883"
 symbols:
   l_cr: {dimension: L, units: m, description: "critical height at which a uniform vertical column, clamped at the base and free at the top, buckles under its OWN weight"}
