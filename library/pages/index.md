@@ -8,6 +8,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 |---|---|---|
 | [Murray's law for branching transport networks](./murray.md) | `constraining` | Fails in large arteries, where flow is pulsatile and inertial rather than viscous-dominated, and where measure |
 | [Reynolds number and flow-regime boundaries](./reynolds.md) | `constraining` | Re itself does not break; the inferences people hang on it do |
+| [Surface-area-to-volume scaling and the diffusion limit on the size of an exchanging body](./surface-area-volume.md) | `constraining` | The geometry never fails |
 
 :::{note}
 Every page is generated from its YAML entry. The equation is written in exactly one place and every renderer reads it from there.
