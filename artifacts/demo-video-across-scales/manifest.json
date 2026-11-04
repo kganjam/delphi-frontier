@@ -1,6 +1,6 @@
 {
   "title": "Delphi Bio — designing across scales",
-  "edition": "2026-11-03 final approved 90-second cut",
+  "edition": "2026-11-04 archive: final 90-second cut plus retained 60-second cut",
   "cuts": [
     {
       "id": "delphi-bio-across-scales-90s",
@@ -32,6 +32,55 @@
           "bytes": 763836,
           "sha256": "394ebdc9332d4aaa1659bb80031e6ee12746d55c10e5d849f0e707fdb8e8f915",
           "git_blob_sha1": "1402af16eff196cf490556f6f46663158aac1ccc"
+        },
+        "subtitles_srt": {
+          "path": "delphi-bio-across-scales-90s.srt",
+          "bytes": 3255,
+          "sha256": "6cd6bd65d512be91efd110e0087587855454122cf86bbb0e58a32330043b0eb1",
+          "git_blob_sha1": "5cb31f53bba032990ddab79e415bfd239bf70924"
+        }
+      },
+      "revision_status": "Final approved: audition 03 closing and extended reading holds."
+    },
+    {
+      "id": "delphi-bio-across-scales-60s",
+      "title": "Designing across scales — shorter cut",
+      "revision_status": "Retained earlier visual revision and earlier emphasized-you closing; not a shortened copy of the final 90-second cut.",
+      "duration_s": 60.0,
+      "frames": 1800,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "video_codec": "H.264",
+      "audio_codec": "AAC",
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2,
+      "files": {
+        "video": {
+          "path": "delphi-bio-across-scales-60s.mp4",
+          "bytes": 13269807,
+          "sha256": "e8185c096ad9492fb0a3b883c8517a680b2b47c318072b58f77529baf17612d3",
+          "git_blob_sha1": "7d0bd0443ed252d62680de0feadce4542920a728"
+        },
+        "transcript": {
+          "path": "delphi-bio-across-scales-60s.txt",
+          "bytes": 1132,
+          "sha256": "f49ce1ca837145558c8316b8ff8fdb76d502cf904027ba3c4975322f4c652058",
+          "git_blob_sha1": "ce82217fbef578d0cd79442e1e732326947bf139",
+          "source_sha256": "2018df013d6923df588ae83193261730f5736ccae21dd6e5b2da31f7fb70443a",
+          "normalization": "Trailing blank line removed; dialogue unchanged."
+        },
+        "poster": {
+          "path": "delphi-bio-across-scales-60s-poster.png",
+          "bytes": 763784,
+          "sha256": "b045c5fc992c163e380f69e6368cd6b79c3e75cdb503bd3358e39005c0165cef",
+          "git_blob_sha1": "0d8a8fe2b14998c027fba36ecaa75729f056477b"
+        },
+        "subtitles_srt": {
+          "path": "delphi-bio-across-scales-60s.srt",
+          "bytes": 2167,
+          "sha256": "12d1510632bbf658fefa0f06c037caab030aaaa51cb8b75075c58fce88026e23",
+          "git_blob_sha1": "4057dfe84f7d5726b67dd2ef492348fa44df8b2b"
         }
       }
     }
