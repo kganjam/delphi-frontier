@@ -1,0 +1,171 @@
+id: second-moment
+name: Second moment of area of a spar, and the span scaling of its bending stiffness
+usability: constraining          # yields a stiffness in N/m that a spar design is checked against
+equation: "k = 3 * E * I / L^3"
+latex: "I = \\int_A y^2\\,\\mathrm{d}A, \\qquad k = \\frac{3 E I}{L^3}, \\qquad I_{\\mathrm{rect}} = \\frac{b h^3}{12}, \\quad I_{\\mathrm{tube}} = \\frac{\\pi\\,(r_o^4 - r_i^4)}{4}"
+symbols:
+  k: {dimension: M/T^2, units: N/m, description: "tip stiffness of a cantilevered spar under a point load at the free tip (force per unit tip deflection)"}
+  E: {dimension: M/(L*T^2), units: Pa, description: "Young's modulus of the spar material, assumed uniform, isotropic and linear-elastic"}
+  I: {dimension: L^4, units: m^4, description: "second moment of area of the cross-section about the neutral axis of bending, I = integral of y^2 dA"}
+  L: {dimension: L, units: m, description: "span: length from the clamped root to the loaded tip"}
+  b: {dimension: L, units: m, description: "width of a rectangular section, measured parallel to the neutral axis"}
+  h: {dimension: L, units: m, description: "depth of a rectangular section, measured in the plane of bending"}
+  r_o: {dimension: L, units: m, description: "outer radius of a circular tube"}
+  r_i: {dimension: L, units: m, description: "inner radius of a circular tube (zero for a solid rod)"}
+constants:
+  cantilever_tip_load_coefficient:
+    value: 3
+    note: >
+      CALCULATED from Euler-Bernoulli beam theory (tip deflection = P L^3 / (3 E I)), not measured,
+      so no interval. It changes with the load case and must not be carried across: a uniformly
+      distributed load q on the same cantilever gives tip deflection q L^4 / (8 E I); a simply
+      supported span under a central load gives P L^3 / (48 E I).
+  rectangle_shear_coefficient:
+    value: 0.8333
+    note: >
+      Timoshenko shear-correction factor kappa = 5/6 for a solid rectangle. A textbook value carried
+      from memory, not re-read for this entry; used only in the shear-ratio calculation under
+      where_it_breaks.
+  elastica_alpha_at_5pct_error:
+    value: 0.676
+    note: >
+      CALCULATED for this entry (scipy solve_bvp on the inextensible elastica, clamped root, dead
+      vertical tip load, alpha = P L^2 / (E I)). At alpha = 0.676 the linear formula overestimates
+      tip deflection by 5%; the true tip deflection is then 0.214 L. Positive control: at alpha = 1
+      the same code gives tip deflection 0.3017 L, which agrees with the value I remember from the
+      Bisshopp and Drucker (1945) tables. That table was NOT read for this entry, so the control is
+      against memory, not against a quotation.
+  zebrafish_caudal_EI:
+    value: 2.75e-9
+    interval: [1.5e-9, 4.0e-9]
+    units: N*m^2
+    note: >
+      MEASURED (Puri et al. 2018, in vivo, adult zebrafish caudal fin, micronewton loads): the
+      authors report EI of 1.5e-9 to 4e-9 N m^2 varying non-monotonically along the proximal-distal
+      axis. The `value` is the midpoint I computed; the authors do not report a central value.
+  bluegill_ray_EI:
+    value: unknown
+    interval: [1.0e-6, 1.0e-5]
+    units: N*m^2
+    note: >
+      Alben, Madden and Lauder (2006/2007) give EI of order 1e-6 to 1e-5 J m (= N m^2) for bluegill
+      (Lepomis macrochirus) pectoral fin rays from three-point bending. They give an order-of-magnitude
+      range, not a point value, so `value` is left unknown rather than invented. Puri et al. 2018
+      separately quote 3.8e-6 N m^2 for bluegill, citing Flammang et al. 2013, which I did not read.
+mechanism: >
+  In a slender beam bent within its elastic range, plane sections stay plane, so axial strain grows
+  linearly with distance y from the neutral axis and so does stress. The resisting moment is the
+  integral of stress times lever arm, which gives M = E * (integral of y^2 dA) * curvature: material
+  far from the neutral axis counts with the square of its distance, which is why depth matters as
+  h^3 in a rectangle and why a tube of the same mass is stiffer than a rod. Integrating curvature
+  twice along a cantilever gives tip deflection P L^3 / (3 E I), hence k = 3 E I / L^3. The span
+  enters as L^3, the depth as h^3; those two exponents are the design content. Consequences that
+  follow by arithmetic (CALCULATED, not observed): (1) at a fixed cross-section, doubling the span
+  divides tip stiffness by 8; (2) under geometric similarity (b, h, L all proportional to one
+  length) I goes as L^4, so k rises only as L^1 while weight rises as L^3; (3) for a horizontal
+  cantilever sagging under its own weight (q = rho * g * A, proportional to L^2 under geometric
+  similarity), tip sag q L^4/(8 E I) goes as L^2 and relative sag (sag/L) as L^1 -- a geometrically
+  scaled-up spar droops proportionally more, which is the bending analogue of the Greenhill
+  self-buckling argument.
+domain_of_validity:
+  material: "linear-elastic, homogeneous across the section, same modulus in tension and compression"
+  geometry: "prismatic (I constant along span), straight, slender: span-to-depth L/h above about 10 for isotropic material and much higher for low-shear-modulus composites (see where_it_breaks)"
+  deflection: "small: tip deflection below about 0.14 L keeps the linear formula within 2% (calculated, see constants)"
+  section: "monolithic: the whole section strains together, with no slip between layers"
+  load_case: "static point load at the tip of a clamped cantilever; other load cases change the coefficient, not the L^-3 exponent"
+  notes: >
+    The definition I = integral of y^2 dA is pure geometry and holds everywhere. What fails is the
+    step from I to a stiffness, and every failure listed below is a failure of that step.
+where_it_breaks: >
+  Five boundaries, of which the first matters most for fins. (1) LAYERED, SLIPPING SECTIONS. The
+  formula assumes the whole section strains as one body. A ray-finned fish fin ray is two
+  half-rays (hemitrichia) joined by a compliant collagenous layer, so its effective I is not
+  fixed by geometry but by how strongly the halves are coupled in shear. Arithmetic bound,
+  CALCULATED for this entry: two equal rectangular halves that slide freely have one quarter the I
+  of the same section fully bonded (2 * b (h/2)^3/12 versus b h^3/12); separating the halves with a
+  core widens that ratio further. OBSERVED by Alben, Madden and Lauder (bluegill): a ray with both
+  hemitrich bases clamped was about 12 times stiffer to a point force than with one base free, and
+  the authors report ray stiffness varying over more than an order of magnitude with base
+  actuation. My inference, not the authors' statement: for a fin ray there is no single I, so a
+  value of k computed from a CT cross-section is a bracket between the slipping and bonded limits,
+  not a prediction. (2) SHEAR, in short or deep spars. Euler-Bernoulli ignores shear deflection.
+  CALCULATED for a solid rectangular cantilever with tip load: shear deflection / bending deflection
+  = 0.3 (E/G) (h/L)^2. For an isotropic material (E/G about 2.6) that is 3% at L/h = 5 and under 1%
+  at L/h = 10; for an anisotropic biological composite with E/G = 20 (an assumed illustrative ratio,
+  not a measured one) it is 24% at L/h = 5 and still 6% at L/h = 10. (3) LARGE DEFLECTION. The
+  linear formula overestimates tip deflection (underestimates effective stiffness) by 5% once the
+  tip has moved 0.21 L and by 10% at 0.30 L (CALCULATED from the elastica, see constants). A
+  flapping fin or a compliant wing tip routinely bends past this, and there k is load-dependent.
+  (4) THIN-WALLED TUBES. Bending ovalises a thin tube's section, reducing I as it bends; Brazier
+  (1927) showed the moment-curvature curve reaches a maximum and the tube then kinks (secondary
+  summaries only, see sources). Bones, quills, bamboo and hollow 3D-printed spars sit in this
+  regime at high curvature, and local wall buckling can precede it. (5) NON-UNIFORM AND
+  VISCOELASTIC MATERIAL. Tapered spars change I along the span (the L^-3 law then holds only
+  between geometrically similar tapers); biological tissue modulus depends on strain rate,
+  hydration and position, and Puri et al. found the measured EI of a zebrafish caudal fin did not
+  follow a uniform elastic beam along its length.
+worked_examples:
+  - organism: Danio rerio caudal fin, span sensitivity
+    computation: "EI = 1.5e-9 to 4e-9 N m^2 (measured, Puri et al. 2018); L = 5 mm (ASSUMED span for illustration, not measured); k = 3*EI/L^3 = 3*1.5e-9/1.25e-7 to 3*4e-9/1.25e-7"
+    value_range: [0.036, 0.096]
+    units: N/m
+    note: >
+      CALCULATED, not observed: the measured EI is real, the span is an assumption, and the
+      cantilever model inherits every caveat above. The design-relevant part is the exponent:
+      lengthening the same ray to 10 mm at unchanged section would divide k by 8.
+    evidence: derived
+  - organism: Lepomis macrochirus pectoral fin ray, homogeneous-beam estimate versus measurement
+    computation: "EI = 1e-6 to 1e-5 N m^2, L = 0.04 m (both from Alben et al.); k = 3*EI/L^3 = 3e-6/6.4e-5 to 3e-5/6.4e-5"
+    value_range: [0.047, 0.47]
+    units: N/m
+    note: >
+      CALCULATED. Alben et al. MEASURED a clamped-base ray stiffness of 1.98 N/m, about 4 to 40
+      times this homogeneous tip-load estimate. I do not know from my reading where along the ray
+      their point force was applied, and a load nearer the root raises k as the cube of the
+      shortened lever, so this comparison is NOT a clean test of the formula. It is recorded to show
+      that the homogeneous estimate and the layered measurement differ by an amount comparable to
+      the hemitrich-coupling effect, not to claim the formula failed by that factor.
+    evidence: derived
+  - organism: generic geometrically similar spar series
+    computation: "b, h, L all scale with length s: I ~ s^4, so k = 3 E I / L^3 ~ s; self-weight sag/L ~ s"
+    note: >
+      CALCULATED scaling, no organism measured. A spar scaled up by 2x at constant shape and
+      material is 2x stiffer at the tip but carries 8x the weight and sags 2x more relative to its
+      span.
+    evidence: derived
+contested_by:
+  - >
+    How BIOLOGICAL spars actually scale I with length is contested, and this entry does not
+    reconcile it. McMahon (1973) proposed elastic similarity (diameter proportional to length^(3/2)),
+    under which relative deflection stays constant across size; Alexander et al. (1979) report
+    mammalian limb bones from shrew to elephant scaling close to geometric similarity instead
+    (both known to me only through secondary summaries); later work cited in those summaries argues
+    that elastic similarity fits bovids but not a broad size range. The beam law itself is not
+    contested; the biological scaling exponent fed into it is.
+  - >
+    Whether fin-ray stiffness is governed by the rays or by their coupling is answered differently
+    by different measurements, and they may not conflict because they measure different things:
+    Puri et al. (zebrafish, in vivo) found that cutting the interray tissue did not measurably change
+    whole-fin bending stiffness; Alben et al. (bluegill, excised rays) found intra-ray hemitrich
+    coupling changes single-ray stiffness by about 12x. Recorded as two findings, not merged.
+sources:
+  - citation: "Alben S, Madden PGA, Lauder GV. The mechanics of active fin-shape control in ray-finned fishes. J R Soc Interface 4(13):243-256. doi:10.1098/rsif.2006.0181 (PMC2359861; online 2006, issue 2007)"
+    read_level: full-text
+    note: "Read on PMC through a summarising fetch tool, with section-located quotations; not read line by line."
+  - citation: "Puri S, Aegerter-Wilmsen T, Jazwinska A, Aegerter CM. In vivo quantification of mechanical properties of caudal fins in adult zebrafish. J Exp Biol 221(4):jeb171777 (2018). doi:10.1242/jeb.171777. PMC5868929"
+    read_level: full-text
+    note: >
+      Read on PMC through a summarising fetch tool; abstract quoted verbatim. Authors, volume and
+      DOI checked against the Europe PMC record.
+  - citation: "Brazier LG (1927) On the flexure of thin cylindrical shells and other 'thin' sections. Proc R Soc Lond A 116:104-114"
+    read_level: search-summary
+    note: "Full text not accessed; the ovalisation and moment-maximum claims come from secondary summaries."
+  - citation: "Bisshopp KE, Drucker DC (1945) Large deflection of cantilever beams. Q Appl Math 3:272-275 (some indexes give 272-276)"
+    read_level: search-summary
+  - citation: "McMahon T (1973) Size and shape in biology. Science 179(4079):1201-1204"
+    read_level: search-summary
+  - citation: "Alexander RM, Jayes AS, Maloiy GMO, Wathuta EM (1979) Allometry of the limb bones of mammals from shrews (Sorex) to elephant (Loxodonta). J Zool 189:305-314. doi:10.1111/j.1469-7998.1979.tb03964.x"
+    read_level: search-summary
+  - citation: "Euler-Bernoulli cantilever deflection P L^3/(3EI) and Timoshenko shear correction: standard textbook results (e.g. Timoshenko and Gere, Mechanics of Materials)"
+    read_level: could-not-access
+    note: "No textbook was opened for this entry; the formulas were derived and checked arithmetically, not quoted."
