@@ -331,10 +331,25 @@ Of **295** live claims: **116 derived**, **90 unknown**, **49 measured**, 28 lit
 11 simulated, 1 assumed. Most of this project is *derived from* measurements rather than measured —
 legitimate for a design study, and the number to probe first.
 
-**The 90 `unknown` are a real quality gap, not a rounding error.** That is 30 % of the graph, and
-it is where the harvester lands an evidence level it cannot map to the closed vocabulary. The
-agent's own words survive in the claim text, so nothing is lost — but a third of the graph cannot
-be filtered by evidence level, and any count by level silently excludes it.
+**The 90 `unknown` are about half a quality gap and half the discipline working.** Reading 20 of
+them by hand: **9 are correctly `unknown`** — a stated non-result (*"adult zebrafish fast-start
+peak velocity is unknown"*), the scope of a negative (*"the lat4a absence is against UniProtKB and
+NCBI Gene only"*), a source that could not be read (*"the table is image-only"*), a preserved
+disagreement (*"relayed as 3.8e-6 by Puri 2018 and 565e-6 in the Flammang abstract"*), and
+reproducibility or scope caveats. **An evidence level would be wrong for every one of those** —
+there is no measurement to level.
+
+The other **11 of 20 are factual claims whose level was genuinely lost**, including a direct
+measurement (*"per-fish maximum fast-start speeds span ~0.45–1.38 m/s"*) sitting at `unknown`.
+
+So roughly half of the 90 is a real gap. **The sample is 20 taken in id order, not at random, so
+early claims are over-represented** — and the split should be treated as indicative, not measured.
+Each of the 11 needs reading to assign a level; nothing can do it mechanically, because a classifier
+that distinguishes *"X is unknown"* from *"X is 1.38 m/s"* by pattern is the same forbidden-string
+check this project has documented failing three times.
+
+**An earlier version of this passage called all 90 a quality gap.** That was asserted from a count
+without reading the rows — the error this document exists to catch.
 
 **Only 10 of 295 claims carry a `run_id`** — a command that reproduces them. The rest trace to an
 agent's prose and no further. See [the empty set](architecture/the-empty-set.md) §4.
