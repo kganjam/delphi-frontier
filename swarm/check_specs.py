@@ -26,6 +26,7 @@ as UNCHECKED however green it looks.
 from __future__ import annotations
 
 import os
+import re
 import subprocess
 import sys
 
@@ -49,8 +50,7 @@ PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "desig
 # that is neither database-wide nor project-scoped, and nothing in the output would say which -- a
 # worse failure than the present one, which is at least uniform. Full scoping is open work.
 PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
-SCOPE_NOTE = ("These counts are DATABASE-WIDE, not scoped to any project. SWARM_PROJECT is read "
-              "but no rule query uses it.")
+SCOPE_NOTE = ("Rules are scoped to SWARM_PROJECT where that is PROVABLY safe (one `from` on a table\n         carrying project_id, no join). The rest run database-wide and are marked [GLOBAL] on\n         their own line. Full scoping of the join/parent cases is open work.")
 
 
 def env():
@@ -60,6 +60,42 @@ def env():
             if line.startswith("MORPHOSWARM_PG_PASSWORD="):
                 e["PGPASSWORD"] = line.split("=", 1)[1].strip().strip('"').strip("'")
     return e
+
+
+SCOPABLE = {"claim", "run", "subproblem", "artifact", "idea", "rubric", "setting",
+            "agent_session", "project_capability"}
+
+
+def scope_sql(sql: str) -> tuple[str, bool]:
+    """Inject `project_id = PROJECT` when it is PROVABLY safe, else leave the query alone.
+
+    Safe means: a single `from <table>` naming a table that carries project_id, with no join and
+    no subquery `from`. Anything else is returned untouched and reported as GLOBAL, because a
+    number that is neither database-wide nor project-scoped, with nothing saying which, is worse
+    than either (the reasoning above PROJECT).
+
+    Returns (sql, was_scoped).
+    """
+    # An ALIAS makes the bare table name invalid: `from subproblem sp` then `subproblem.project_id`
+    # is a SQL error. Caught by the zebrafish control, which is the only reason it is handled.
+    froms = re.findall(r"\bfrom\s+([a-z_]+)(\s+([a-z_]+))?", sql)
+    if len(froms) != 1 or froms[0][0] not in SCOPABLE or " join " in sql.lower():
+        return sql, False
+    t, alias = froms[0][0], (froms[0][2] or "").strip()
+    if alias and alias not in ("where", "group", "order", "limit"):
+        t = alias
+    filt = f"{t}.project_id = {_lit(PROJECT)}"
+    m = re.search(r"\bwhere\b", sql, re.I)
+    if m:
+        return sql[:m.end()] + f" {filt} and " + sql[m.end():], True
+    # no WHERE: append one, before any group/order/limit tail
+    m2 = re.search(r"\b(group\s+by|order\s+by|limit)\b", sql, re.I)
+    cut = m2.start() if m2 else len(sql)
+    return sql[:cut] + f" where {filt} " + sql[cut:], True
+
+
+def _lit(v) -> str:
+    return "'" + str(v).replace("'", "''") + "'"
 
 
 def q(sql):
@@ -252,14 +288,29 @@ def main():
     rows = []
     for spec, n, text, vsql, csql in RULES:
         try:
+            # Scope to PROJECT where provably safe; otherwise run the rule database-wide and SAY SO
+            # in its own detail line, so no single number is ambiguous about what it covered.
+            raw_csql = csql
+            vsql, v_scoped = scope_sql(vsql)
+            csql, c_scoped = (scope_sql(csql) if csql else (csql, False))
+            tag = "" if (v_scoped and (c_scoped or not csql)) else "  [GLOBAL: not project-scoped]"
             control = count(csql) if csql else 0
             if control == 0:
+                # DID SCOPING EMPTY A RULE THAT WAS BEING CHECKED? `setting` holds 8 rows with a
+                # NULL project_id, so scoping took that rule from checking 8 to checking 0 --
+                # disabling a working check by "improving" it, which is this repo's own empty-set
+                # failure introduced by the fix for a different one. Say so instead of printing a
+                # bare UNCHECKED.
+                was = count(raw_csql) if (raw_csql and c_scoped) else 0
+                extra = (f"; SCOPING EMPTIED THIS RULE -- it checks {was} row(s) database-wide and "
+                         f"0 for project {PROJECT!r}. The rows exist but carry no project_id, so "
+                         f"the rule is unevaluable per project, NOT satisfied." if was else "")
                 rows.append(("UNCHECKED", spec, n, text, "control returned 0 rows: nothing to check "
-                             "yet, so a zero-violation result would be meaningless"))
+                             "yet, so a zero-violation result would be meaningless" + extra + tag))
                 continue
             v = count(vsql)
             rows.append((("PASS" if v == 0 else "FAIL"), spec, n, text,
-                         f"{v} violating row(s) of {control}" if v else f"{control} rows checked"))
+                         (f"{v} violating row(s) of {control}" if v else f"{control} rows checked") + tag))
         except Exception as e:
             rows.append(("UNCHECKED", spec, n, text, f"query failed: {type(e).__name__}: {e}"))
 
