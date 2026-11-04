@@ -78,6 +78,7 @@ def index():
             "the old one stays readable with a pointer to what replaced it.",
             ":::\n",
             "## Pages\n",
+            "- [Subproblem board](board.md) — every question as an issue, with a dependency graph",
             "- [The frontier](frontier.md) — what is open, and what is blocked on what",
             "- [Claims](claims.md) — every claim with its evidence level and source",
             "- [Corrections](corrections.md) — what was superseded, and by what",
@@ -103,6 +104,61 @@ def frontier():
             a = esc(ans)[:200] + (f" *({kind})*" if kind else "") if ans else "—"
             out.append(f"| **{sid}** | {scale or '—'} | {esc(qn)[:110]} | {a} |")
         out.append("")
+    return "\n".join(out)
+
+
+def board():
+    """A GitHub-issues-style board plus a Mermaid dependency graph.
+
+    The table alone cannot show what a subproblem is BLOCKED ON, and that is the question anyone
+    picking up work actually asks. The graph shows the dependency edges; the board shows state.
+    """
+    rows = q(f"""select sp.id, coalesce(sp.scale_id,''), sp.status, sp.question,
+                        coalesce(sp.answer_kind,''), coalesce(s.ord::text,'9')
+                 from subproblem sp left join scale s on s.id=sp.scale_id
+                 where sp.project_id='{PROJECT}' order by sp.id""")
+    deps = q("select subproblem_id, depends_on from subproblem_dep")
+    flags = {r[0] for r in q("select distinct subproblem_id from review_flag where status='open' and subproblem_id is not null")}
+    nclaim = {r[0]: int(r[1]) for r in q(f"""select subproblem_id, count(*) from claim
+                 where project_id='{PROJECT}' and subproblem_id is not null and superseded_by is null
+                 group by 1""")}
+
+    MARK = {"open": "🔵 open", "running": "🟡 running", "answered": "🟢 answered",
+            "refuted": "🔴 refuted", "blocked": "⛔ blocked", "superseded": "⚫ superseded"}
+    out = ["---\ntitle: Subproblem board\n---\n",
+           "Every question as an issue: its state, its scale, how many claims it carries, and "
+           "whether anything it depends on has been superseded.\n"]
+
+    # The dependency graph. Only subproblems with an edge are drawn -- a graph of 50 isolated
+    # nodes communicates nothing.
+    linked = {a for a, b in deps} | {b for a, b in deps}
+    if deps:
+        out += ["## Dependencies\n", "```{mermaid}", "graph LR"]
+        cls = {"answered": "done", "refuted": "ref", "running": "run", "open": "opn"}
+        for sid, scale, st, qn, _k, _o in rows:
+            if sid in linked:
+                out.append(f'  {sid}["{sid}<br/>{scale}"]:::{cls.get(st,"opn")}')
+        for a, b in deps:
+            out.append(f"  {b} --> {a}")
+        out += ["  classDef done fill:#d4f4d4,stroke:#2a7",
+                "  classDef ref fill:#f9d4d4,stroke:#a22",
+                "  classDef run fill:#fdf2c4,stroke:#aa2",
+                "  classDef opn fill:#d4e4f9,stroke:#27a", "```\n",
+                "*An arrow runs from a prerequisite to the question it unblocks.*\n"]
+
+    for st in ("open", "running", "answered", "refuted"):
+        g = [r for r in rows if r[2] == st]
+        if not g:
+            continue
+        out.append(f"## {MARK.get(st, st)} — {len(g)}\n")
+        out.append("| id | scale | claims | blocked on | question |")
+        out.append("|---|---|---|---|---|")
+        for sid, scale, _s, qn, _k, _o in sorted(g, key=lambda r: (r[5], r[0])):
+            on = ", ".join(b for a, b in deps if a == sid) or "—"
+            warn = " ⚠️" if sid in flags else ""
+            out.append(f"| **{sid}**{warn} | {scale or '—'} | {nclaim.get(sid,0)} | {on} | {esc(qn)[:96]} |")
+        out.append("")
+    out.append("⚠️ marks a subproblem with an open review flag: something it rests on was superseded.\n")
     return "\n".join(out)
 
 
@@ -150,8 +206,8 @@ def corrections():
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for name, fn in (("index", index), ("frontier", frontier), ("claims", claims),
-                     ("corrections", corrections)):
+    for name, fn in (("index", index), ("frontier", frontier), ("board", board),
+                     ("claims", claims), ("corrections", corrections)):
         (OUT / f"{name}.md").write_text(fn())
         print(f"  wrote {name}.md")
     return 0

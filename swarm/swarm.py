@@ -143,7 +143,11 @@ def poll(project):
               result={sql_lit((d.get('result') or '')[:4000])},
               finished_at = case when {sql_lit(st)} in ('completed','failed','stopped') then now() else null end
               where id={sql_lit(sess)}""")
-        if st == "completed" and sid and not d.get("is_error"):
+        # 'idle' is how a finished cloud session reports itself; status_bucket 'completed' is the
+        # authoritative signal. Rows written before that mapping existed sat in `running` forever
+        # with a dead session behind them, silently blocking every dependent -- S15, the minimal
+        # edit stack and the project's key genetic deliverable, was held for three hours by one.
+        if st in ("completed", "idle") and sid and not d.get("is_error"):
             q(f"update subproblem set status='answered', updated_at=now() where id={sql_lit(sid)} and status='running'")
         elif st in ("failed", "stopped") and sid:
             q(f"update subproblem set status='open', updated_at=now() where id={sql_lit(sid)} and status='running'")

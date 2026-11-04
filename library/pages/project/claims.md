@@ -2,7 +2,7 @@
 title: Claims
 ---
 
-128 live claims of 144 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
+136 live claims of 152 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
 
 | # | sub | claim | evidence | value | source |
 |---|---|---|---|---|---|
@@ -134,3 +134,11 @@ title: Claims
 | 221 | S7-D-D | S7-D-D deepen FALLS "girdle bone probably not limiting": measured proximal-radial solid-equivalent section 0.12-0.20 mm vs 0.26 mm required at 1.08e-4 | 🟡 derived | `0.26 mm required solid-equivalent diameter` | branch claude/s7-d-sensitive-input-n67r40 S7-D-deepe *[abstract]* |
 | 222 |  | GRADER CALIBRATED AND TRUSTED: 7/7 on a blind benchmark, 4/4 on seeded defects spanning arithmetic, regime, scale and evidence-level inflation. The 16 | 🟢 measured | `7 of 7 items` | grader_calibration; session_01QbcBRXmj1D5f1cmzW25ocp *[full-text]* |
 | 223 |  | SCOPE: one grader, seven items, one run. It establishes that this grader catches these four defect classes, not that it catches every class, and not t | ⚪ unknown |  | scope statement |
+| 224 | S29 | A 0.4 g body at 4.37 m/s needs 3.82 mJ (9.55 J/kg); with 6.5% in-water drag, the best measured C-start hydromechanical efficiency 0.37 and 0.93 tendon | 🟡 derived | `11.8 mJ stored` | S29-organism.md; verified here *[full-text]* |
+| 225 | S29 | SPRING VOLUME PASSES: 1-4% of body volume as mammal-grade tendon, 13-24% at measured fish-tendon strains | 🟡 derived | `4 percent body volume` | S29-organism.md *[abstract]* |
+| 226 | S29 | POWER PASSES: a 5-14 ms release needs 7400-18400 W/kg muscle -- 1.3-3.2x beyond measured fish LaMSA (5795 W/kg, pipefish) but WITHIN measured insect L | 🟡 derived | `18400 W/kg muscle` | S29-organism.md *[abstract]* |
+| 227 | S29 | ENERGY PER STROKE IS THE BINDING TERM: one-sided axial muscle (30% body) at the best measured spring-loading work (frog 53, max 81 J/kg muscle) suppli | 🟡 derived | `98.5 J/kg muscle required` | S29-organism.md *[full-text]* |
+| 228 | S29 | THE SHORTFALL IS ~1.86x (1.22-3.08), against >=10x for EVERY wing route. The launch-energy representation is an order of magnitude closer to feasible  | 🟡 derived | `1.86 shortfall ratio` | S29-organism.md |
+| 229 | S29 | NO TELEOST HAS A LOCOMOTOR SPRING OR LATCH. The only fish LaMSA is the syngnathiform over-centre head latch, and it is used in FEEDING. A locomotor la | 🔵 literature |  | S29-organism.md *[abstract]* |
+| 230 | S29 | DECISIVE TEST: in-situ single-stroke spring-loading work of zebrafish fast myotomal muscle. A value at or above ~99 J/kg closes the energy term. Secon | 🟡 derived | `99 J/kg threshold` | S29-organism.md |
+| 231 | S29 | THE DEEP CONCLUSION: the barrier is a property of SINGLE-IMPULSE LAUNCH FROM WATER AT THIS SIZE, not of any one mechanism. Two independent representat | 🟡 derived |  | S29-organism.md |
