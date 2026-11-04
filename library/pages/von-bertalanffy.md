@@ -1,0 +1,106 @@
+---
+title: Von Bertalanffy growth curve, and where it fails for indeterminate growers
+label: law-von-bertalanffy
+---
+
+:::{important}
+**Descriptive** — this law describes a pattern and does not constrain a design.
+:::
+
+## The law
+
+:::{math}
+:label: eq-von-bertalanffy
+L(t) = L_\infty \left(1 - e^{-K (t - t_0)}\right)
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `L_t` | L | m | body length at age t |
+| `L_inf` | L | m | asymptotic length; a fitted parameter, not an observed maximum |
+| `K` | 1/T | 1/yr | Brody growth coefficient; rate at which L approaches L_inf |
+| `t` | T | yr | age |
+| `t0` | T | yr | hypothetical age at which L = 0; a fitting artefact, often negative |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `anabolic_exponent` | 0.6667 (interval 0.14 to 0.94) dimensionless | The value 2/3 is von Bertalanffy's ASSUMPTION (anabolism scales with an absorbing surface, W^(2/3)); it is not a measurement. The interval is the spread of best-fit exponents that Renner-Martin et al. (2018) report for the 11 of their 60 literature data sets that were free of fitting deficiencies (boundary optima or biologically meaningless parameters). It records measured spread across data sets, not an uncertainty on 2/3. The authors state that no universal exponent could be discerned for those 11. |
+| `mass_inflection_fraction` | 0.2963 dimensionless | CALCULATED here, not measured: for dW/dt = a*W^(2/3) - b*W, absolute mass growth rate peaks at W = (8/27)*W_inf (set d(dW/dt)/dW = 0; W_inf = (a/b)^3). Fixed by the 2/3 assumption, so it carries no interval. Above this mass the model REQUIRES absolute growth rate to fall, reaching zero at W_inf. |
+| `L_inf_and_K` | unknown | No universal value. Both are re-fitted for every population, sex and rearing condition, and are strongly negatively correlated within a fit. No cross-taxon value is entered because none exists to enter. |
+
+## Why it holds
+
+Growth is treated as the difference between anabolism and catabolism: dW/dt = a*W^(2/3) - b*W, with anabolism limited by a surface (gut or gill area, scaling as W^(2/3)) and catabolism proportional to mass. Under isometry (W proportional to L^3) this integrates to the length curve above, with K = b/3. The asymptote exists only because the catabolic term outgrows the anabolic one; it is a consequence of the 2/3-versus-1 exponent gap, not of any observed stop to growth. The physiological reading of the two terms is contested (see contested_by). The curve is widely attributed to von Bertalanffy (1934, 1938); a search summary notes an earlier Puetter (1920) formulation, which I did not check.
+
+## Where it holds
+
+- **life stage**: post-maturation somatic growth (Lester et al. 2004, abstract)
+- **taxa**: ['teleost fishes', 'some other ectotherms with mark-recapture or age-length data']
+- **data**: age-length or mass-age series from one population under roughly constant conditions
+- **notes**: A curve-fitting description of mean size-at-age within the range of the data. Its parameters are properties of a fit to a population, not of a species, and are not portable between populations, rearing environments or data types (age-length vs tagging; Francis 1988).
+
+
+:::{danger} Where it breaks
+(1) BEFORE MATURITY. Lester, Shuter & Abrams (2004) state in their abstract that VB "provides a good description of somatic growth after maturity, but not before" (their model adds an explicit reproductive energy demand; I read the abstract only, so the juvenile model they use instead is not recorded here). My inference: a single VB fit across the whole life therefore mixes two regimes and misplaces the bend, and Day & Taylor (1997, title-level claim; full text not read) argue VB should not be used to model age and size at maturity at all. (2) INDETERMINATE GROWERS WHOSE ABSOLUTE GROWTH DOES NOT DECLINE. The mass form forces absolute growth rate to fall above (8/27)*W_inf and to reach zero at W_inf (calculated, see constants). Stephenson et al. (2014) report from 403 tropical and temperate tree species that for most species mass growth rate INCREASES continuously with size (abstract); a search summary of the full text gives 87% of species increasing across size bins and 97% in the largest-tree bin. My inference, not the authors' statement: trees are a demonstrated regime where the VB mass form is qualitatively wrong, not merely mis-parameterised. (3) MIXED DETERMINATE/INDETERMINATE POPULATIONS. Congdon et al. (2013) used 20-30 year mark-recapture data on 13 populations of 9 freshwater turtle species and found adult growth varies between individuals, some stopping and others continuing (search-summary; a secondary source gives ~80% continuing, not checked against the paper). A single population-level asymptote describes no individual in such a population. (4) THE ASYMPTOTE IS A FIT ARTEFACT. Francis (1988) argues (search-summary) that L_inf means asymptotic mean length-at-age for age-length data but maximum length for tagging data, so the same population gives different L_inf by data type. My statement, not sourced to a survey: L_inf is a fitted extrapolation that can exceed the largest individual measured; it is not a size limit and must not be used as one in design. (5) THE EXPONENT IS NOT UNIVERSAL. Renner-Martin et al. (2018) fitted the generalised model to 60 data sets: 24 had their optimum at the upper boundary a = 0.99 and 5 at a = 0; only 11 were free of deficiencies, with a_opt from 0.14 to 0.94 and no universal value. The exponent can range widely without changing fit quality when the other parameters are re-optimised, so a good fit is weak evidence for the 2/3 mechanism. (6) EARLY LIFE AND CHONDRICHTHYANS. t0 is not a birth or hatching age, and (a property of the equation, not a measurement) the length curve has no inflection point, so it cannot follow sigmoid early growth. Cailliet et al. (2006, abstract) reviewed 28 chondrichthyan studies and recommend fitting multiple growth functions and including size at birth rather than defaulting to VB. Scope of negative claims: I did not search for, and do not claim, a quantitative error bound for any of these regimes; the boundaries above are qualitative and taken from the sources named.
+:::
+
+## Worked examples
+
+**generic VB mass form (calculation)**
+
+```
+dW/dt = a*W^(2/3) - b*W; d/dW = 0 -> W^(1/3) = 2a/(3b) -> W* = (8/27)*(a/b)^3 = 0.296*W_inf
+```
+
+- value: `0.296`
+
+- CALCULATED, not observed. The model forbids absolute mass growth rate from rising above ~30% of asymptotic mass. Any indeterminate grower observed to gain mass faster as it gets larger (e.g. most of the 403 tree species in Stephenson et al. 2014) is outside the law.
+
+- evidence: **derived**
+
+**Danio rerio (zebrafish), male, controlled rearing, 7 time points (Gomez-Requeni et al. 2010 data)**
+
+- value: `0.99`
+
+- Best-fit anabolic exponent for this data set as listed in Table 3 of Renner-Martin et al. (2018), dataset #36; 0.99 is the upper edge of their search grid, i.e. a boundary optimum the authors classify as a fitting deficiency. The paper does not discuss this data set individually. Whether a = 2/3 is statistically rejected for it is unknown -- I did not find that test reported.
+
+- evidence: **literature**
+
+**Stephenson et al. (2014) tree species**
+
+- value range: `[0.87, 0.97]`
+
+- Fraction of species whose mass growth rate increased with size (0.87 across bins; 0.97 in the largest-tree bin). Observed, as reported in the full text per a search summary; I read the abstract only. Contradicts the VB mass-form decline (my inference).
+
+- evidence: **literature**
+
+:::{seealso} Contested
+- Mechanism of the bend: von Bertalanffy attributes it to surface-limited anabolism versus mass-proportional catabolism; Lester, Shuter & Abrams (2004) attribute post-maturation deceleration to allocation to reproduction. Not reconciled here.
+- Gill-oxygen limitation: Pauly & Cheung (2018, Global Change Biology) re-assert that gill surface cannot keep pace with body volume, which they use to read the VB anabolic term and to project fish shrinking under warming; Lefevre, McKenzie & Nilsson (2017, Global Change Biology) argue these projections rest on invalid physiological assumptions. Pauly (2021, Science Advances) replies and concedes the theory still needs a solid quantitative basis. Read at search-summary level only; not reconciled.
+- Universality of the exponent: the PeerJ Preprints version (2017) of Renner-Martin et al. found VB 'weakly universal' for fish; the published 2018 version found no universal exponent. Cite the published version; the change is recorded, not resolved.
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| von Bertalanffy L (1938) A quantitative theory of organic growth (Inquiries on growth laws II). Human Biology 10:181-213. doi:10.2307/41447359 | `search-summary` |
+| Lester NP, Shuter BJ, Abrams PA (2004) Interpreting the von Bertalanffy model of somatic growth in fishes: the cost of reproduction. Proc R Soc B 271:1625-1631. doi:10.1098/rspb.2004.2778 | `abstract` |
+| Day T, Taylor PD (1997) Von Bertalanffy's growth equation should not be used to model age and size at maturity. Am Nat 149:381-393. doi:10.1086/285995 | `listing` |
+| Stephenson NL et al. (2014) Rate of tree carbon accumulation increases continuously with tree size. Nature 507:90-93. doi:10.1038/nature12914 | `abstract` |
+| Congdon JD, Gibbons JW, Brooks RJ, Rollinson N, Tsaliagos RN (2013) Indeterminate growth in long-lived freshwater turtles as a component of individual fitness. Evol Ecol 27:445-459. doi:10.1007/s10682-012-9595-x | `search-summary` |
+| Francis RICC (1988) Are growth parameters estimated from tagging and age-length data comparable? Can J Fish Aquat Sci 45:936-942. doi:10.1139/f88-115 | `search-summary` |
+| Renner-Martin K, Brunner N, Kuehleitner M, Nowak WG, Scheicher K (2018) On the exponent in the Von Bertalanffy growth model. PeerJ 6:e4205. doi:10.7717/peerj.4205 | `full-text` |
+| Cailliet GM, Smith WD, Mollet HF, Goldman KJ (2006) Age and growth studies of chondrichthyan fishes: the need for consistency in terminology, verification, validation, and growth function fitting. Environ Biol Fish 77:211-228. doi:10.1007/s10641-006-9105-5 | `abstract` |
+| Lefevre S, McKenzie DJ, Nilsson GE (2017) Global Change Biology (critique of gill-oxygen limitation in climate projections); volume and pages not verified | `search-summary` |
+| Pauly D, Cheung WWL (2018) Sound physiological knowledge and principles in modeling shrinking of fishes under climate change. Global Change Biology; volume and pages not verified | `search-summary` |
+| Pauly D (2021) The gill-oxygen limitation theory (GOLT) and its critics. Science Advances; volume and article number not verified | `search-summary` |
+
+
+---
+
+*Generated from [`library/laws/von-bertalanffy.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/von-bertalanffy.yaml). Do not edit this page; edit the YAML.*
