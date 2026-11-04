@@ -14,7 +14,6 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-from fractions import Fraction
 from pathlib import Path
 
 try:
@@ -22,130 +21,25 @@ try:
 except ImportError:
     sys.exit("needs pyyaml: uv pip install pyyaml")
 
-BASE = ["M", "L", "T", "Th", "N", "I", "J"]          # mass, length, time, temperature, amount, current, luminous
 MANDATORY = ["id", "name", "equation", "symbols", "mechanism",
              "domain_of_validity", "where_it_breaks", "usability", "sources"]
 
 
-class Dim(dict):
-    """A dimension as exponents over the base units. Dimensionless is all-zero, not empty."""
-
-    def __init__(self, **kw):
-        super().__init__({b: Fraction(0) for b in BASE})
-        for k, v in kw.items():
-            self[k] = Fraction(v)
-
-    def __mul__(self, o):
-        r = Dim()
-        for b in BASE:
-            r[b] = self[b] + o[b]
-        return r
-
-    def __truediv__(self, o):
-        r = Dim()
-        for b in BASE:
-            r[b] = self[b] - o[b]
-        return r
-
-    def __pow__(self, n):
-        r = Dim()
-        for b in BASE:
-            r[b] = self[b] * Fraction(n)
-        return r
-
-    def __str__(self):
-        parts = [f"{b}^{v}" for b, v in self.items() if v]
-        return "·".join(parts) if parts else "dimensionless"
-
-
-def _product_of_powers(expr: str, lookup) -> Dim:
-    """Parse a product of powers, honouring parentheses and division INTO a group.
-
-    One recursive function serves both a dimension string ('M/(L*T)') and an equation side
-    ('rho * U * L / mu'); they are the same grammar over different atoms, and writing it twice is
-    how `M/(L*T)` came back as M*L*T -- the self-test's viscosity control caught exactly that.
-    """
-    expr = expr.strip()
-    out, i, sign = Dim(), 0, 1
-    tokens = re.findall(r"[A-Za-z_][A-Za-z_0-9]*|\^-?\d+(?:/\d+)?(?:\.\d+)?|[*/()]|[\d.]+", expr)
-
-    def read_group(j):
-        """Return (Dim, index after the matching close paren)."""
-        depth, k = 1, j
-        while k < len(tokens) and depth:
-            k += 1
-            if k < len(tokens):
-                if tokens[k] == "(":
-                    depth += 1
-                elif tokens[k] == ")":
-                    depth -= 1
-        inner = "".join(t if t.startswith("^") else (" " + t + " ") for t in tokens[j + 1:k])
-        return _product_of_powers(inner, lookup), k + 1
-
-    while i < len(tokens):
-        t = tokens[i]
-        if t == "*":
-            sign, i = 1, i + 1
-            continue
-        if t == "/":
-            sign, i = -1, i + 1
-            continue
-        if t == "(":
-            d, i = read_group(i)
-            if i < len(tokens) and tokens[i].startswith("^"):
-                d = d ** Fraction(tokens[i][1:]); i += 1
-            out = out * d if sign > 0 else out / d
-            sign = 1
-            continue
-        if t == ")":
-            i += 1
-            continue
-        if re.fullmatch(r"[\d.]+", t):                       # a pure number is dimensionless
-            i += 1
-            continue
-        d = lookup(t)
-        if d is None:
-            i += 1
-            continue
-        if i + 1 < len(tokens) and tokens[i + 1].startswith("^"):
-            d = d ** Fraction(tokens[i + 1][1:]); i += 1
-        out = out * d if sign > 0 else out / d
-        sign = 1
-        i += 1
-    return out
-
-
-def parse_dim(expr: str) -> Dim:
-    """Parse a dimension string such as 'M/(L*T)', 'L^2/T', '1' or 'M/L^3'."""
-    expr = str(expr).strip()
-    if expr in ("1", "", "dimensionless", "-"):
-        return Dim()
-    unknown = []
-
-    def base(tok):
-        b = "Th" if tok in ("Th", "K", "Theta") else tok
-        if b not in BASE:
-            unknown.append(tok)
-            return None
-        d = Dim()
-        d[b] = Fraction(1)
-        return d
-
-    out = _product_of_powers(expr, base)
-    if unknown:
-        raise ValueError(f"unknown base dimension {unknown[0]!r} in {expr!r}")
-    return out
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from swarm_units import BASE, Dim, DimensionError, Quantity, UnitError, evaluate, parse_dim  # noqa: E402,F401
 
 
 def eval_side(expr: str, dims: dict) -> Dim:
-    """Dimension of one side of an equation. A sum preserves dimension, so the first term suffices."""
+    """Dimension of one side of an equation, by the shared units evaluator (library/swarm_units.py).
+
+    Unlike the parser this replaced, a sum is CHECKED term against term (the old one assumed the first term
+    spoke for all) and a symbol with no declared dimension is an error (the old one skipped it, which could
+    only ever make an equation look more balanced). `sum(x_i)` and subscripts are flattened first.
+    """
     expr = re.sub(r"\bsum\s*\(([^)]*)\)", r"(\1)", expr.strip())
     expr = re.sub(r"_i\b|_\{i\}", "", expr)
-    for plus in re.split(r"(?<![eE])\+", expr):
-        if plus.strip():
-            expr = plus.strip()
-            break
-    return _product_of_powers(expr, lambda t: dims.get(t))
+    expr = expr.replace("^", "**")
+    return evaluate(expr, {k: Quantity(1.0, v) for k, v in dims.items()}).dim
 
 
 def check_entry(path: Path) -> list[str]:
