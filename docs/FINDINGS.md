@@ -400,6 +400,16 @@ internally certain about a fold nobody has measured.
 > where the representation happens to be sensitive; at 219 nothing moves and there is nothing to
 > fit. **Significance against magnitude, at our own expense:** the replicate sd at 219 is 0.0050,
 > so tryptophan's 0.26 drop there is a **52-sd** effect and is still nothing at all.
+>
+> **T200L closed it (claim 525).** The second registered residue dropped **5.44**, 3.6× the
+> threshold, so *both* residues claim 518 named before folding came back wrong, and the
+> depth-from-CB rule — flagged above as post-hoc and untested — is now tested and dead, because
+> leucine sits two bonds past CB with isoleucine and aspartate. **Isoleucine against leucine is
+> the sharpest pair in the series:** same formula, same heavy-atom count, same depth, same volume
+> to 0.1 Å³, differing only in where the methyl branch sits — and **0.34 against 5.44**. No count,
+> volume or reach variable can separate a pair identical in all of them. Six models refuted at
+> this one site. The line is closed, and claim 522 says why: the drop is not a property of the
+> residue.
 
 
 

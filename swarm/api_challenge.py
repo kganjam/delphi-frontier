@@ -183,6 +183,24 @@ def main() -> int:
                           from challenge ch2 where ch2.claim_id = c.id
                           and ch2.challenger like 'api%') = 1
                      order by c.id desc limit {n}""")
+    elif "--no-opus" in sys.argv:
+        # Claims NEVER judged by the arm that demonstrably reads them. The mutation control in
+        # swarm/critic_control.py found opus catching 3 of 4 corrupted claims with no false
+        # alarm, while sonnet returned near-identical attack text for a corrupted claim and its
+        # clean original on 3 of 5 pairs and asserted an inconsistency in a claim that had none.
+        # So a claim reviewed only by the fallback has been reviewed by a model not shown to
+        # read it, and the panel's row count hides that. 244 live claims were in this state when
+        # the mode was added. Fallback verdicts keep their distinct challenger label, so they
+        # stay countable separately rather than merging into the panel.
+        rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
+                     from claim c
+                     where c.project_id={lit(PROJECT)} and c.superseded_by is null
+                     and length(c.statement) between 80 and 6000
+                     and not exists (select 1 from challenge ch
+                                     where ch.claim_id = c.id
+                                     and ch.challenger like '%claude-opus-5-5%'
+                                     and ch.outcome in ('survived','weakened','refuted'))
+                     order by c.id desc limit {n}""")
     else:
         rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
                      from claim c where c.project_id={lit(PROJECT)} and c.superseded_by is null
