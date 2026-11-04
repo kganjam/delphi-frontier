@@ -1,0 +1,249 @@
+id: muscle-power-density
+name: Maximum mass-specific mechanical power of vertebrate muscle, by fibre type
+usability: constraining   # as an UPPER BOUND only: it yields a W/kg ceiling a design is checked against; it does not predict what a given muscle delivers
+equation: "P_m = eta * sigma_0 * v_max / rho_m"
+latex: "P_m = \\eta \\, \\frac{\\sigma_0 \\, \\hat{v}_{\\max}}{\\rho_m}"
+symbols:
+  P_m:     {dimension: L^2/T^3, units: W/kg, description: "maximum mechanical power per kilogram of muscle (not of body)"}
+  eta:     {dimension: "1", units: dimensionless, description: "Hill power ratio P_max/(F_0*V_max); set by force-velocity curvature a/F_0"}
+  sigma_0: {dimension: M/(L*T^2), units: Pa, description: "isometric stress of the whole muscle (force per physiological cross-sectional area)"}
+  v_max:   {dimension: 1/T, units: 1/s, description: "unloaded shortening velocity in fibre lengths per second (strongly fibre-type and temperature dependent)"}
+  rho_m:   {dimension: M/L^3, units: kg/m^3, description: density of muscle tissue}
+constants:
+  eta_hill:
+    value: 0.095
+    interval: [0.054, 0.134]
+    units: dimensionless
+    note: >
+      CALCULATED, not measured: maximising F*v on Hill's hyperbola (F + a)(v + b) = b(F_0 + a) with
+      a/F_0 = 0.25 gives F = 0.31 F_0 and P_max = 0.0955 F_0 V_max (computed for this entry). The
+      interval is the same calculation over a/F_0 = 0.10 (0.054, more curved, typical of slow fibres)
+      to 0.50 (0.134, flatter). The a/F_0 range is an assumption for illustration, not a compiled
+      measured range. This is the ISOTONIC ceiling; cyclic (work-loop) power is lower -- see below.
+  cyclic_to_isotonic_ratio_mouse:
+    value: 0.70
+    interval: unknown
+    units: dimensionless
+    note: >
+      Askew & Marsh (1997), mouse soleus and EDL in vitro at 37 C: the best work-loop power obtained
+      by optimising the length trajectory was approximately 70% of the maximum estimated from the
+      isotonic force-velocity relation (authors' claim, read at search-summary level). Josephson
+      (1989) gives 0.5 P_max as the maximal sustainable power for sinusoidal cyclic contraction
+      (search-summary). The two figures differ because the trajectories differ; not reconciled here.
+  rho_muscle:
+    value: 1060
+    interval: [1056, 1065]
+    units: kg/m^3
+    note: >
+      1.0597 g/cm^3 for unfixed rabbit and canine muscle attributed to Mendez & Keys (1960) by Ward &
+      Lieber (2005); a 2021 Sci. Rep. paper lists 1.065, 1.0597 and 1.0564 g/cm^3 across three
+      studies, which is the interval used. Fixed human muscle measures differently (1.112 in 4%
+      formalin, 1.055 in 37% formalin; Ward & Lieber 2005) and should not be used.
+  myofibrillar_stress_WFA:
+    value: unknown
+    interval: [250000, 400000]
+    units: Pa
+    note: >
+      Weis-Fogh & Alexander (1977) estimate of maximum isometric stress of vertebrate MYOFIBRILS,
+      read only as quoted by later papers (search-summary). Whole-muscle sigma_0 is lower by the
+      fraction of cross-section that is not myofibril (mitochondria, SR, connective tissue), so this
+      range is an upper bound for sigma_0, not an estimate of it.
+  # ---- MEASURED values, by fibre type. All per kg MUSCLE. Cycle-average unless marked. ----
+  measured_cycle_avg_ceiling_quail_pectoralis:
+    value: 390
+    interval: [350, 400]
+    units: W/kg
+    note: >
+      Fast-glycolytic avian flight muscle, in vivo take-off, blue-breasted quail (Coturnix chinensis).
+      Askew, Marsh & Ellington (2001): 390 W/kg pectoralis from a kinematic + aerodynamic analysis
+      (this is a MODEL-DERIVED estimate of in-vivo power, not a direct force measurement). Askew &
+      Marsh (2002) give ~400 W/kg from two independent methods. The in-vitro companion paper
+      (Askew & Marsh 2001) reports ~350 W/kg cycle-averaged shortening power, >400 W/kg in some
+      preparations. A later review calls ~400 W/kg the highest cycle-average skeletal-muscle power
+      measured to date. All read at search-summary level.
+  measured_instantaneous_peak_quail:
+    value: 1200
+    interval: unknown
+    units: W/kg
+    note: "Instantaneous (not cycle-average) peak; quail pectoralis; quoted by a later review as the highest measured. search-summary."
+  mouse_EDL_fast_37C_workloop:
+    value: 247
+    interval: unknown
+    units: W/kg
+    note: "Fast-twitch (type II) mammalian, in vitro work loop, optimised length trajectory, 37 C. Askew & Marsh 1997. search-summary."
+  mouse_soleus_slow_37C_workloop:
+    value: 92
+    interval: unknown
+    units: W/kg
+    note: "Slow-twitch (type I-rich) mammalian, same study and protocol as the EDL value. Fast/slow ratio 2.7. search-summary."
+  mouse_EDL_sinusoidal_workloop:
+    value: 107
+    interval: unknown
+    units: W/kg
+    note: >
+      Same muscle, SINUSOIDAL work loop at 10 Hz (soleus 34 W/kg at 5 Hz); attributed to James et al.
+      (1995) by search listing, temperature not seen. Half the 247 above: the protocol, not the
+      muscle, moves the number by >2x. Kept separate; not averaged.
+  lizard_iliofibularis_temperature:
+    value: unknown
+    interval: [20, 154]
+    units: W/kg
+    note: "Dipsosaurus dorsalis, maximum power 20 W/kg at 15 C rising to 154 W/kg at 42 C (Swoap et al. 1993). search-summary."
+  fish_fast_myotomal_20C:
+    value: 142.7
+    interval: unknown
+    units: W/kg
+    note: "Fast-start myotomal fibres, Scorpaena notata, 20 C, mean (Wakeling & Johnston 1998). search-summary."
+  fish_slow_myotomal_sculpin:
+    value: unknown
+    interval: [5, 8]
+    units: W/kg
+    note: "Slow myotomal muscle, Myoxocephalus scorpius, at 2 Hz (Altringham & Johnston 1990a as cited by a later paper; original not seen). Scup red muscle 12.8 W/kg at 10 C and 27.9 W/kg at 20 C (search-summary)."
+  theoretical_limit_WFA:
+    value: 250
+    interval: unknown
+    units: W/kg
+    note: "Weis-Fogh & Alexander (1977) estimate of maximum (sustained) power of striated muscle, as quoted by Josephson; original not seen."
+  theoretical_limit_pennycuick:
+    value: 430
+    interval: unknown
+    units: W/kg
+    note: "Pennycuick (1984), aerobic muscle with equal volumes of mitochondria and myofibrils; Pennycuick & Rezende's model tends to 860 W/kg as frequency rises. search-summary. Contested against WFA; see contested_by."
+mechanism: >
+  Power is force times velocity. Per unit muscle mass, force scales with stress sigma_0 (set by
+  myofilament density and cross-bridge force, roughly conserved across vertebrate fibre types) and
+  velocity with fibre length times v_max (set by myosin heavy-chain isoform ATPase rate, which is the
+  quantity that differs most between slow and fast fibres and rises steeply with temperature).
+  Dividing by density gives W/kg. Hill's hyperbolic force-velocity relation puts the maximum of F*v
+  at about 0.3 F_0, so only ~5-13% of F_0*V_max is ever available (eta). Fibre type enters almost
+  entirely through v_max and through the curvature a/F_0; sigma_0 varies far less. In cyclic use,
+  activation and relaxation take time, so part of each cycle is spent at sub-maximal force or doing
+  negative work, and cycle-average power falls further below the isotonic ceiling. Inference (not a
+  claim of the cited authors): mitochondria and SR occupy volume that would otherwise be myofibril,
+  so a muscle built to SUSTAIN power trades away peak power per kilogram -- which is the substance
+  of the Weis-Fogh/Alexander vs Pennycuick disagreement below.
+domain_of_validity:
+  taxa: [mammals, birds, squamate reptiles, anurans, teleost fish]
+  muscle: "vertebrate striated skeletal muscle, synchronous, driven directly (no elastic intermediary)"
+  temperature: "values above are at the stated temperatures only; endotherm values at 35-40 C"
+  timescale: "single contraction to a few hundred ms (burst); not steady-state aerobic power"
+  normalisation: "per kg of the active muscle, NOT per kg body mass and NOT per kg of whole limb"
+  notes: >
+    The equation is an isotonic ceiling. As a design check: no directly-driven vertebrate muscle has
+    been shown to exceed ~400 W/kg cycle-averaged, or ~1200 W/kg instantaneous, at any temperature
+    (scope: the reviews summarised in sources, read at search-summary level; not an exhaustive survey).
+    A design requiring more than that from direct muscle drive is infeasible on current evidence.
+where_it_breaks: >
+  (1) ELASTIC POWER AMPLIFICATION. The ceiling binds the muscle, not the system. Cuban tree frog
+  take-off requires at least 7x the power the hindlimb muscles can supply, peak instantaneous about
+  twice that (Peplowski & Marsh 1997); later EMG work reports apparent muscle-mass-specific power of
+  >750 W/kg average and >2000 W/kg peak (Marsh 2022). These numbers are not muscle power: work is
+  done slowly into tendon and released fast. Any system with a catch and a spring escapes this law,
+  and reading a jump's W/kg as muscle W/kg is the standard error. (2) The converse also fails: a high
+  apparent power does NOT prove amplification. Curtin, Woledge & Aerts (2005) found lizard sprinting
+  needs ~214 W/kg cycle-averaged and ~952 W/kg instantaneous, and showed in vitro that caudofemoralis
+  fibres can deliver it directly. (3) TEMPERATURE in ectotherms: the same lizard muscle spans
+  20-154 W/kg between 15 and 42 C (7.7x); a fish or reptile value carries no meaning without its
+  temperature, and an endotherm value cannot be carried to a cold ectotherm. (4) SUSTAINED vs BURST:
+  every number above is burst. Aerobic sustainable power is lower and is bounded by mitochondrial
+  volume and O2 delivery, a different law. (5) CYCLIC vs ISOTONIC: work-loop power is ~50-70% of
+  the isotonic Hill maximum and depends on trajectory and frequency -- the same mouse EDL gives 107
+  or 247 W/kg depending on protocol. An isotonic figure plugged into a flapping or swimming design
+  overstates available power by up to 2x. (6) FIBRE TYPE is not a single axis: slow vertebrate muscle
+  ranges from ~5 W/kg (cold sculpin) to ~92 W/kg (warm mouse soleus), i.e. temperature and taxon move
+  slow-fibre power more than the slow/fast distinction moves it within one animal (fast/slow ratio
+  ~2.7 in mouse at 37 C, ~4 reported for marlin). (7) Out of scope entirely: insect asynchronous
+  flight muscle (power per contraction decoupled from neural activation), and very high-frequency
+  sound-producing muscles, which are known to trade force for speed (qualitative; no number was
+  checked for this entry).
+worked_examples:
+  - organism: generic warm fast-twitch vertebrate muscle (illustrative)
+    computation: "eta = 0.095 (a/F_0 = 0.25), sigma_0 = 2.5e5 Pa, v_max = 10 L/s, rho_m = 1060 kg/m^3  ->  P_m = 0.095*2.5e5*10/1060 = 224 W/kg"
+    value: 224
+    note: >
+      CALCULATED. sigma_0 = 2.5e5 Pa is the bottom of the Weis-Fogh/Alexander myofibrillar range, used
+      as a whole-muscle stand-in; v_max = 10 fibre lengths/s is an ASSUMED round value for warm fast
+      mammalian muscle, not taken from any source checked here. Over the stated eta interval and
+      sigma_0 = 2-3e5 Pa with v_max = 10 L/s the same arithmetic spans ~100-380 W/kg. That the
+      measured 247 W/kg (mouse EDL, work loop) sits inside it is consistency, not validation: the
+      inputs were not measured on that muscle.
+    evidence: derived
+  - organism: Coturnix chinensis, pectoralis, take-off
+    value: 390
+    value_range: [350, 400]
+    note: >
+      Highest cycle-average vertebrate value found. In-vivo figure is derived from a kinematic and
+      aerodynamic model (Askew et al. 2001), corroborated by in-vitro work loops (~350, some >400).
+    evidence: literature
+  - organism: Mus musculus, EDL vs soleus, 37 C, optimised work loop
+    value_range: [92, 247]
+    note: "Slow 92 W/kg, fast 247 W/kg: the within-animal fibre-type effect, ratio 2.7."
+    evidence: literature
+  - organism: Osteopilus septentrionalis, jump take-off
+    note: >
+      Required power >= 7x available muscle power (Peplowski & Marsh 1997). Design check: a jump
+      demanding >~400 W/kg-muscle averaged over take-off cannot be direct-drive; it needs a spring
+      and a latch. This is the boundary case for the whole entry.
+    evidence: literature
+contested_by:
+  - >
+    Theoretical ceiling: Weis-Fogh & Alexander (1977) ~250 W/kg; Pennycuick (1984) ~430 W/kg for
+    muscle with equal mitochondrial and myofibrillar volume, and Pennycuick & Rezende's model tending
+    to 860 W/kg at high frequency. Measured cycle-average maximum (~400 W/kg, quail) exceeds the first
+    and approaches the second. Not reconciled here; the two estimates differ in assumptions about
+    stress, strain and the mitochondrial volume penalty.
+  - >
+    Quail pectoralis in vitro: the same paper reports NET power of only 80 W/kg, attributed by the
+    authors to a force-record artefact during lengthening, and ~350 W/kg when lengthening is ignored.
+    The 350-400 W/kg figure therefore rests on the authors' artefact correction plus the independent
+    in-vivo aerodynamic estimate.
+  - >
+    Direct drive vs amplification in small-animal burst locomotion: frogs (Peplowski & Marsh 1997)
+    require amplification; agile lizards (Curtin et al. 2005) do not, despite ~952 W/kg instantaneous
+    demand. Whether a given apparent power implies a spring is taxon-specific and must be tested.
+sources:
+  - citation: "Askew GN, Marsh RL, Ellington CP (2001) The mechanical power output of the flight muscles of blue-breasted quail (Coturnix chinensis) during take-off. J Exp Biol 204:3601-3619"
+    read_level: search-summary
+  - citation: "Askew GN, Marsh RL (2001) The mechanical power output of the pectoralis muscle of blue-breasted quail (Coturnix chinensis): the in vivo length cycle and its implications for muscle performance. J Exp Biol 204:3587-3600"
+    read_level: search-summary
+  - citation: "Askew GN, Marsh RL (2002) Muscle designed for maximum short-term power output: quail flight muscle. J Exp Biol 205(15):2153"
+    read_level: search-summary
+  - citation: "Askew GN, Marsh RL (1997) The effects of length trajectory on the mechanical power output of mouse skeletal muscles. J Exp Biol 200(24):3119"
+    read_level: search-summary
+  - citation: "James RS, Altringham JD, Goldspink DF (1995) The mechanical properties of fast and slow skeletal muscles of the mouse in relation to their locomotory function. J Exp Biol 198(2):491"
+    read_level: listing
+    note: "Title and journal page seen in a search listing; the 107/34 W/kg values were in a search summary not explicitly tied to this paper. Attribution is my inference."
+  - citation: "Curtin NA, Woledge RC, Aerts P (2005) Muscle directly meets the vast power demands in agile lizards. Proc R Soc B 272:581-584 (PMC1564073)"
+    read_level: search-summary
+  - citation: "Peplowski MM, Marsh RL (1997) Work and power output in the hindlimb muscles of Cuban tree frogs Osteopilus septentrionalis during jumping. J Exp Biol 200:2861-2870"
+    read_level: search-summary
+  - citation: "Marsh RL (2022) J Exp Biol 225, jeb244525 (Cuban tree frog jumping, EMG and muscle power; full title not seen)"
+    read_level: search-summary
+  - citation: "Swoap SJ, Johnson TP, Josephson RK, Bennett AF (1993) Temperature, muscle power output and limitations on burst locomotor performance of the lizard Dipsosaurus dorsalis. J Exp Biol 174:185-197"
+    read_level: search-summary
+  - citation: "Wakeling JM, Johnston IA (1998) J Exp Biol 201(10):1505 (fast-start muscle power, Scorpaena notata)"
+    read_level: search-summary
+  - citation: "Altringham JD, Johnston IA (1990a) work-loop power of Myoxocephalus scorpius myotomal muscle, J Exp Biol; full citation not verified"
+    read_level: search-summary
+    note: "Known only via a later paper citing it; values are secondary."
+  - citation: "Weis-Fogh T, Alexander RMcN (1977) The sustained power output from striated muscle. In Pedley TJ (ed.) Scale Effects in Animal Locomotion. Academic Press"
+    read_level: search-summary
+    note: "Original not seen; 250 W/kg and 250-400 kN/m^2 are as quoted by later J Exp Biol papers."
+  - citation: "Pennycuick CJ, Rezende MA (1984) The specific power output of aerobic muscle, related to the power density of mitochondria. J Exp Biol 108:377"
+    read_level: search-summary
+  - citation: "Josephson RK (1989) Power output from skeletal muscle during linear and sinusoidal shortening. J Exp Biol 147:533"
+    read_level: search-summary
+  - citation: "Ward SR, Lieber RL (2005) Density and hydration of fresh and fixed human skeletal muscle. J Biomech 38"
+    read_level: search-summary
+  - citation: "Mendez J, Keys A (1960) Density and composition of mammalian muscle. Metabolism 9:184-188"
+    read_level: search-summary
+    note: "Secondary sources disagree on the title/pages (one gives Mendez, Keys, Anderson & Grande, Metabolism 9:472-477). Not resolved."
+  - citation: "Seow CY (2013) Hill's equation of muscle performance and its hidden insight on molecular mechanisms. J Gen Physiol 142(6):561"
+    read_level: search-summary
+    note: "Used for: power peaks near 0.3 F_0; Hill fit good over ~0.05-0.8 F_0. The eta values in constants are my own calculation from Hill's form, not from this source."
+search_scope: >
+  Four standard web searches plus four follow-ups (2026-11-04). Direct fetch of journals.biologists /
+  silverchair full text failed (host not reachable from this session), so NO source was read in full;
+  every value is from search-engine summaries of abstracts or citing papers. Galago and other mammal
+  jump values, toadfish swimbladder and hummingbird values were not searched and are absent, not
+  negative.
