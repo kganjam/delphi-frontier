@@ -1,0 +1,195 @@
+id: kleiber
+name: "Kleiber's law -- metabolic rate vs body mass (exponent contested, 3/4 vs 2/3)"
+# DESCRIPTIVE, not constraining. The law is a fitted interspecific regression whose exponent is still
+# disputed (3/4 vs 2/3), whose log-log relation is measurably curved rather than straight, and whose
+# exponent changes sign of allometry across prokaryotes / protists / metazoans. Over 3.6 decades of
+# mass the two candidate exponents differ by a factor of ~2 in predicted rate (see worked_examples),
+# which is too wide for a design to be checked against. It describes a trend in a clade; it does not
+# give an engineer a number to pass or fail.
+usability: descriptive
+# Written in reference-normalised form so the dimension check does not depend on which exponent is
+# chosen: with B = a * M^b the prefactor `a` has dimension M^(1-b)*L^2*T^-3, i.e. its units change
+# with the contested exponent. Normalising by a reference animal makes both sides dimensionless for
+# ANY b, so the entry does not silently pick a side by its choice of equation.
+equation: "B / B_ref = (M / M_ref)^b"
+latex: "\\frac{B}{B_\\mathrm{ref}} = \\left(\\frac{M}{M_\\mathrm{ref}}\\right)^{b} \\quad\\Longleftrightarrow\\quad B = a\\,M^{b},\\; [a] = \\mathsf{M}^{1-b}\\mathsf{L}^{2}\\mathsf{T}^{-3}"
+symbols:
+  B:     {dimension: M*L^2/T^3, units: W, description: "whole-organism metabolic rate (basal for endotherms, standard/resting for ectotherms; the state must be stated)"}
+  B_ref: {dimension: M*L^2/T^3, units: W, description: metabolic rate of a reference organism of mass M_ref under the same measurement state}
+  M:     {dimension: M, units: kg, description: body mass}
+  M_ref: {dimension: M, units: kg, description: reference body mass}
+  b:     {dimension: "1", units: dimensionless, description: "scaling exponent -- THE CONTESTED QUANTITY; see constants and contested_by"}
+constants:
+  # Both candidate exponents are recorded side by side. Neither is the entry's answer.
+  b_quarter_power_kleiber_1932:
+    value: 0.74
+    interval: unknown
+    note: >
+      Kleiber's own fitted slope in the 1932 Hilgardia monograph is reported as 0.74 (search-summary
+      level; I did not read the monograph's regression table, so no interval is given). It is
+      commonly rounded to 3/4. The rounding is a choice, not a measurement.
+  b_quarter_power_theory:
+    value: 0.75
+    note: >
+      A DERIVED value, not a measurement: the exponent predicted by the West-Brown-Enquist (1997)
+      space-filling fractal-network model, conditional on its assumptions (space-filling fractal
+      network, size-invariant terminal units, minimised dissipation). No interval: it is an exact
+      prediction of a model.
+  b_surface_law_theory:
+    value: 0.6667
+    note: >
+      A DERIVED value, not a measurement: 2/3 from surface-to-volume (heat-loss) reasoning for
+      geometrically similar bodies (Rubner's surface law). Dodds, Rothman & Weitz (2001) adopt it as
+      the null hypothesis on dimensional grounds.
+  b_mammal_BMR_white_seymour_2003_raw:
+    value: 0.69
+    interval: unknown
+    units: dimensionless
+    note: >
+      White & Seymour (2003), 619 mammal species, uncorrected: b = 0.69. The paper text (read in
+      full-text on PMC) states that the 95% CI excludes BOTH 3/4 and 2/3 but gives the numeric bounds
+      only in a figure I did not read, so the interval is recorded as unknown rather than estimated.
+  b_mammal_BMR_white_seymour_2003_subset:
+    value: 0.68
+    interval: unknown
+    units: dimensionless
+    note: >
+      Same paper, 469 species after excluding Artiodactyla, Macropodidae, Lagomorpha and Soricidae
+      (groups the authors argue rarely meet basal conditions): interspecific b = 0.68, interordinal
+      b = 0.65; the authors report both as significantly different from 3/4 and not from 2/3. After
+      temperature correction (Q10 = 3.0, 36.2 C, n = 507) they report the exponent decreased and did
+      not differ from 2/3; the corrected numeric value is in a figure I did not read: unknown.
+  b_mammal_VO2max_weibel_hoppeler_2005:
+    value: 0.872
+    interval: [0.843, 0.901]
+    units: dimensionless
+    note: >
+      Maximal (exercise-induced) O2 uptake in 34 eutherian species, reported as 0.872 +/- 0.029.
+      The interval here is value +/- 0.029 as reported; whether 0.029 is an SE or a CI half-width
+      was not stated in the abstract-level text I read. Different metabolic STATE, different
+      exponent -- this is not a third answer to the basal-rate dispute.
+  b_by_domain_delong_2010:
+    value: "prokaryotes 1.7 (active) / 2.0 (inactive); protists 1.0 / 1.1; metazoans 0.76 / 0.79"
+    interval: unknown
+    note: >
+      DeLong et al. (2010), RMA slopes; the text says "+/- SE" but the SE values are in a figure I
+      did not read. Species counts (active / inactive): prokaryotes 44 / 121, protists 51 / 52,
+      metazoans 71 / 15.
+  a_kleiber_normalisation:
+    value: 3.4
+    units: "W per kg^0.75"
+    interval: unknown
+    note: >
+      Kleiber's recommended 70 kcal/day x M^0.75 (M in kg), which converts to 70*4184/86400 = 3.39 W
+      (my arithmetic). Search-summary level (Kleiber 1947, 1961). Valid ONLY with b = 0.75: the
+      prefactor's units depend on the exponent, so it cannot be reused with b = 2/3.
+mechanism: >
+  CONTESTED -- two families of mechanism are on the record and the entry does not choose between
+  them. (1) Surface law (2/3): for geometrically similar endotherms, heat loss scales with surface
+  area ~ M^(2/3), so a steady-state heat budget gives B ~ M^(2/3). (2) Network-supply law (3/4):
+  West, Brown & Enquist (1997) derive M^(3/4) from a space-filling, fractal, dissipation-minimising
+  distribution network with size-invariant terminal units (capillaries); Banavar, Maritan & Rinaldo
+  (1999) give a different network argument for the same exponent. Kozlowski & Konarzewski (2004)
+  argue the WBE derivation is internally inconsistent (its authors replied in 2005, disputing that), and Dodds et al. (2001) argue the
+  3/4 derivations rest on assumptions too strong to reject 2/3. Glazier (2005) proposes a
+  "metabolic-level boundaries" hypothesis: the exponent varies with metabolic level between a
+  surface-area limit (resource and waste exchange) and a mass/volume limit (power production). The
+  numeric bounds ~2/3 and ~1 are my reading of that hypothesis; I read only the abstract. My inference, not any author's claim: the persistence of mutually incompatible
+  mechanisms, each fitted to some subset of the data, is itself evidence that no single mechanism
+  sets b across taxa.
+domain_of_validity:
+  taxa: [eutherian and marsupial mammals, birds, interspecific comparisons within metazoans]
+  comparison_type: "interspecific (across species). Intraspecific and ontogenetic exponents are a different quantity and frequently differ."
+  metabolic_state: "basal (endotherms) or standard (ectotherms), at a stated body temperature"
+  mass_range_kg: "White & Seymour (2003) report ~5 orders of magnitude of mammal mass; the endpoints in kg are not entered because I did not read them from the data (unknown)"
+  notes: >
+    Even inside this domain the exponent is not settled: the metazoan and mammal estimates recorded
+    under constants run from 0.65 to 0.79, depending on dataset, species exclusions, temperature
+    correction, activity state and whether data are binned. The law is safest as a ratio
+    between two animals of similar mass in the same clade and state; it degrades with the mass ratio.
+where_it_breaks: >
+  (1) ACROSS THE PROKARYOTE / PROTIST / METAZOAN BOUNDARY the exponent is not 3/4 or 2/3 at all:
+  DeLong et al. (2010) report superlinear scaling in prokaryotes (1.7 active, 2.0 inactive),
+  near-linear in protists (1.0, 1.1), and only metazoans near Kleiber (0.76, 0.79). Applying
+  Kleiber to a bacterium or a protist is outside the law. (2) LARGE MAMMALS: the log-log relation
+  is convexly curved, not straight (Kolokotrones et al. 2010; Dodds et al. 2001 report a
+  systematic increase in the exponent at larger masses), and the authors argue this curvature explains the
+  spread of published exponents. My inference from "convex", not a number I read: the local slope
+  rises with mass, so a single exponent fitted over the whole range under-predicts the slope at the
+  large end and over-predicts it at the small end.
+  (3) METABOLIC STATE: maximal aerobic rate in mammals scales as ~0.87 (Weibel & Hoppeler 2005),
+  not 3/4 or 2/3; the law is for basal/standard rate only. (4) WITHIN SPECIES / ONTOGENY: Glazier
+  (2005) classifies intraspecific scaling into four types -- linear with b < 1, isometric (b = 1),
+  isometric-then-negative, and positive (b > 1) then negative allometry -- so the interspecific exponent cannot be used to predict how one
+  organism's rate changes as it grows. (5) EXTRAPOLATION: because the two candidate exponents
+  differ by 1/12, any prediction across k decades of mass carries an exponent-choice ambiguity of
+  10^(k/12) -- a factor of ~2 over 3.6 decades -- before any scatter is counted.
+worked_examples:
+  - organism: "hypothetical 4000 kg mammal, anchored at a 1 kg animal at 3.4 W"
+    computation: "3/4: 3.4 * 4000^0.75 = 1710 W ; 2/3: 3.4 * 4000^(2/3) = 857 W ; ratio 4000^(1/12) = 2.0"
+    value_range: [857, 1710]
+    note: >
+      CALCULATED, not observed. Both predictions are arithmetic from the stated equation with a shared
+      1 kg anchor; no measured elephant BMR is being compared. The point is the spread: the unresolved
+      exponent alone puts a factor of 2.0 between the predictions over 3.6 decades of mass, which
+      is why the entry is marked descriptive.
+    evidence: derived
+  - organism: "hypothetical 0.025 kg mammal (mouse-sized), same 1 kg anchor"
+    computation: "3/4: 3.4 * 0.025^0.75 = 0.214 W ; 2/3: 3.4 * 0.025^(2/3) = 0.291 W ; ratio 0.025^(1/12) = 0.74"
+    value_range: [0.214, 0.291]
+    note: >
+      CALCULATED, not observed. Extrapolating downward the ambiguity reverses sign: the 2/3 law
+      predicts the higher rate below the anchor mass. No measured mouse BMR is asserted here.
+    evidence: derived
+  - organism: mammals, 619 species
+    value: 0.69
+    note: >
+      Observed fitted exponent (White & Seymour 2003), CI reported to exclude both 3/4 and 2/3 before
+      corrections. Recorded as an observation of the authors; the corrected values are in constants.
+    evidence: literature
+contested_by:
+  - "White & Seymour (2003, PNAS): after excluding non-basal groups and correcting for body temperature, mammalian BMR scales as M^(2/3); they report no support for 3/4."
+  - "Dodds, Rothman & Weitz (2001, J Theor Biol): reanalysis of mammal and bird data finds little evidence to reject 2/3 in favour of 3/4; current 3/4 theories rest on assumptions they judge unconvincing. They do NOT claim 2/3 is established -- only that it is not rejected."
+  - "Savage et al. (2004, Funct Ecol): defend predominance of quarter-power (3/4) scaling, using size-binned averages; conclude there is little justification for reopening the case for third-power exponents. (Binning is itself disputed as a method by later reanalyses; I did not read those reanalyses in full.)"
+  - "West, Brown & Enquist (1997, Science): derive 3/4 from a fractal supply-network model."
+  - "Kozlowski & Konarzewski (2004, Funct Ecol): WBE is internally inconsistent -- with size-invariant capillaries the model only holds if capillary length shrinks with body size or if b = 1. Brown, West & Enquist (2005, Funct Ecol) reply that the critics misread the terminal-unit assumption; Kozlowski & Konarzewski (2005) rejoin that the same questions remain. That exchange is unresolved as entered."
+  - "Kolokotrones et al. (2010, Nature): the relation is curved, so there is no single exponent; the curvature explains the spread of published estimates, and the WBE model as published fails this test."
+  - "Glazier (2005, Biol Rev): the 3/4 law is not universal within or among animal species; exponent varies with metabolic level."
+  - "DeLong et al. (2010, PNAS): exponent shifts from superlinear (prokaryotes) to linear (protists) to sublinear (metazoans)."
+  - "Status as entered: UNRECONCILED. The 3/4 and 2/3 camps disagree on the data treatment (species exclusion, temperature correction, binning, phylogenetic weighting) as much as on mechanism; this entry does not average them or pick one."
+sources:
+  - citation: "Kleiber M (1932) Body size and metabolism. Hilgardia 6(11):315-353. doi:10.3733/hilg.v06n11p315 (end page cited inconsistently as 351 or 353 across listings)"
+    read_level: search-summary
+  - citation: "Kleiber M (1947) Body size and metabolic rate. Physiol. Rev. 27(4):511-541"
+    read_level: search-summary
+  - citation: "Rubner M (1883) Ueber den Einfluss der Koerpergroesse auf Stoff- und Kraftwechsel. Z. Biol. 19:535-562"
+    read_level: search-summary
+    note: "Bibliographic details confirmed from one historical reference list (start page 535 not confirmed by a second source); paper not retrieved. Cited only as the origin of the 2/3 surface law (respiration trials on dogs)."
+  - citation: "White CR, Seymour RS (2003) Mammalian basal metabolic rate is proportional to body mass^2/3. PNAS 100(7):4046-4049. doi:10.1073/pnas.0436428100"
+    read_level: full-text
+    note: "Main text read on PMC (PMC153045); figures and supplementary tables not read, so numeric CIs are unknown."
+  - citation: "Dodds PS, Rothman DH, Weitz JS (2001) Re-examination of the '3/4-law' of metabolism. J. Theor. Biol. 209(1):9-27. doi:10.1006/jtbi.2000.2238 (arXiv:physics/0007096)"
+    read_level: abstract
+  - citation: "West GB, Brown JH, Enquist BJ (1997) A general model for the origin of allometric scaling laws in biology. Science 276(5309):122-126"
+    read_level: search-summary
+  - citation: "Savage VM et al. (2004) The predominance of quarter-power scaling in biology. Funct. Ecol. 18(2):257-282"
+    read_level: search-summary
+    note: "I could not confirm specific exponent values or sample sizes from this paper; none are entered from it."
+  - citation: "Kolokotrones T, Savage V, Deeds EJ, Fontana W (2010) Curvature in metabolic scaling. Nature 464:753-756. doi:10.1038/nature08920"
+    read_level: search-summary
+    note: "Full text attempted at nature.com (paywall redirect) and a lab mirror (host blocked by session network policy); quadratic coefficients therefore not entered."
+  - citation: "DeLong JP, Okie JG, Moses ME, Sibly RM, Brown JH (2010) Shifts in metabolic scaling, production, and efficiency across major evolutionary transitions of life. PNAS 107(29):12941-12945"
+    read_level: full-text
+    note: "Main text read on PMC (PMC2919978); figure SE values not read."
+  - citation: "Weibel ER, Hoppeler H (2005) Exercise-induced maximal metabolic rate scales with muscle aerobic capacity. J. Exp. Biol. 208:1635-1644"
+    read_level: abstract
+  - citation: "Glazier DS (2005) Beyond the '3/4-power law': variation in the intra- and interspecific scaling of metabolic rate in animals. Biol. Rev. 80:611-662. doi:10.1017/S1464793105006834"
+    read_level: abstract
+  - citation: "Kozlowski J, Konarzewski M (2004) Is West, Brown and Enquist's model of allometric scaling mathematically correct and biologically relevant? Funct. Ecol. 18:283-289"
+    read_level: search-summary
+    note: "Argument per search summary: WBE's size-invariant-capillary assumption is inconsistent with b = 3/4 unless capillary length shrinks with size or b = 1. Full text not read."
+  - citation: "Banavar JR, Maritan A, Rinaldo A (1999) Size and form in efficient transportation networks. Nature 399:130-132"
+    read_level: search-summary
+    note: "doi:10.1038/20144. Abstract-level content via search summary; full text not read."
+  - citation: "Brown JH, West GB, Enquist BJ (2005) Yes, West, Brown and Enquist's model of allometric scaling is both mathematically correct and biologically relevant. Funct. Ecol. 19:735-738"
+    read_level: search-summary
