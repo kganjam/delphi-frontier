@@ -431,12 +431,31 @@ reproduces the launch-speed barrier from a completely different direction.
 :::{caution} That 14× assumes C_L = 0.8, and this project's own claim 5 argues for ≤ 0.6
 Area scales as `1/C_L`, so the assumption moves the shortfall directly:
 
-| C_L | area at 2 m/s | shortfall vs 1.4 cm² |
-|---|---|---|
-| 0.5 *(flat plate, per a replication)* | 32.0 cm² | 22.9× |
-| 0.6 *(claim 5's ceiling at Re 2–4×10³)* | 26.7 cm² | **19.1×** |
-| **0.8** *(assumed, and used throughout)* | 20.0 cm² | **14.3×** |
-| 1.0 *(cambered/corrugated, per the same replication)* | 16.0 cm² | 11.4× |
+| C_L | area at 2 m/s | shortfall vs 1.4 cm² | **linear ×** |
+|---|---|---|---|
+| 0.5 *(flat plate, per a replication)* | 32.0 cm² | 22.9× | 4.79× |
+| 0.6 *(claim 5's ceiling at Re 2–4×10³)* | 26.7 cm² | **19.1×** | **4.37×** |
+| **0.8** *(assumed, and used throughout)* | 20.0 cm² | **14.3×** | 3.78× |
+| 1.0 *(cambered/corrugated, per the same replication)* | 16.0 cm² | 11.4× | 3.38× |
+
+:::{important} The linear column is the one a genetic phenotype can be compared against
+**Added 2026-11-04 (claim 491).** Every figure above is an *area* ratio, and this document carried
+only area ratios for months. Area scales as length², so the demand a fin-length mutant has to meet
+is the **square root** — 19.1× area is **4.37× linear**, not 19×.
+
+That changes what the target looks like. Across the inputs actually in dispute — C_L from 0.5 to
+1.07, and a stall speed allowed to rise from 2 to 3 m/s — the linear demand runs **2.18× to 4.79×**.
+A fin-length phenotype is measured in linear units, so this is the range any candidate mutant must
+be read against, and "19-fold" was never the number to compare it with.
+
+**What is still missing is the other side of the ratio.** The *reachable* enlargement is recorded
+nowhere in this project: S5 is open with no answer, and the live claim graph contains no
+enlargement factor at all. A PubMed search (`kcnk5b zebrafish fin`, 6 of 6 records retrieved,
+abstract level) found that none of the six papers states a magnitude in its abstract, and full-text
+retrieval of Daane 2018 and Jiang 2024 showed why: the measurements are in **figures**, which the
+PMC text extraction drops. So the required side is computed and controlled, and the reachable side
+cannot be obtained with the retrieval available here (claims 492, 493).
+:::
 
 **The assumed 0.8 is above the ceiling one of this project's own claims argues for**, so the
 headline 14× sits on the *optimistic* side of the internal evidence. At claim 5's ceiling it is
