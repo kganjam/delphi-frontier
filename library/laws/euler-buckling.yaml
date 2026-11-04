@@ -1,0 +1,176 @@
+id: euler-buckling
+name: Euler buckling of a slender column, and the slenderness ratio where it governs
+usability: constraining          # yields a critical load and a slenderness boundary a design is checked
+                                 # against -- but as an UPPER BOUND that real columns do not reach (see where_it_breaks)
+equation: "P_cr = pi^2 * E * I / (K * L)^2 = pi^2 * E * A / lambda^2"
+latex: "P_{cr} = \\frac{\\pi^2 E I}{(K L)^2} = \\frac{\\pi^2 E A}{\\lambda^2}, \\qquad \\lambda = \\frac{K L}{r}, \\quad r = \\sqrt{I/A}, \\qquad \\text{Euler governs only for } \\lambda > \\lambda_y = \\pi\\sqrt{E/\\sigma_y}"
+symbols:
+  P_cr:   {dimension: M*L/T^2, units: N, description: "critical axial compressive load at which the straight equilibrium of an ideal column becomes unstable"}
+  E:      {dimension: M/(L*T^2), units: Pa, description: "Young's modulus of the column material along its axis (tangent modulus once the material is inelastic -- see where_it_breaks)"}
+  I:      {dimension: L^4, units: m^4, description: "least second moment of area of the cross-section (the column buckles about its weakest axis)"}
+  A:      {dimension: L^2, units: m^2, description: cross-sectional area}
+  L:      {dimension: L, units: m, description: unbraced length of the column}
+  K:      {dimension: "1", units: dimensionless, description: "effective-length factor set by the end conditions; KL is the distance between inflection points of the buckled shape"}
+  lambda: {dimension: "1", units: dimensionless, description: "slenderness ratio KL/r, where r = sqrt(I/A) is the radius of gyration"}
+constants:
+  effective_length_factor_theoretical:
+    value: "pinned-pinned K = 1; fixed-fixed K = 0.5; fixed-pinned K = 0.699 (often rounded to 0.7); fixed-free (flagpole) K = 2"
+    note: >
+      DERIVED from the elastic eigenvalue problem for ideal end conditions, not measured, so no
+      interval. Real "fixed" ends are only partially fixed, so design practice uses LARGER K than
+      these for fixed ends; the specific recommended design values in code commentaries were not
+      verified in this session and are not quoted here.
+  euler_yield_slenderness:
+    value: "lambda_y = pi * sqrt(E / sigma_y)"
+    note: >
+      DERIVED: the slenderness at which the Euler stress pi^2 E / lambda^2 equals the yield (or
+      compressive) strength sigma_y. Below it the ideal column yields or crushes before it buckles
+      elastically. For E = 200 GPa and sigma_y = 250 MPa (round values typical of mild structural
+      steel, ASSUMED here, not a measured specimen) lambda_y = 88.9 -- my calculation. This is the
+      boundary of the IDEAL theory; the practical boundary is further out (next two constants).
+  aisc_elastic_transition:
+    value: "KL/r = 4.71 * sqrt(E / F_y)  (equivalently F_e = 0.44 F_y, i.e. F_y/F_e = 2.25)"
+    note: >
+      CODE PROVISION (AISC 360 Chapter E3), as reported by secondary sources (calculator and
+      exam-prep pages, search-summary level); I did not read the specification itself. Above this
+      slenderness AISC uses F_cr = 0.877 F_e -- i.e. Euler reduced by about 12% for out-of-straightness;
+      below it uses the inelastic curve F_cr = 0.658^(F_y/F_e) F_y. My calculation for E = 200 GPa,
+      F_y = 250 MPa: transition at KL/r = 133.2. Secondary sources report about 134 for A36 and about
+      113 for Grade 50 with E = 29,000 ksi, consistent with the formula. The 0.877 factor is
+      attributed to an assumed initial crookedness; the sources disagree on whether that is L/1000 or
+      L/1500 -- recorded, not resolved.
+  eurocode3_imperfection_factors:
+    value: "alpha = 0.13 (curve a0), 0.21 (a), 0.34 (b), 0.49 (c), 0.76 (d); plateau chi = 1 for lambda_bar <= 0.2"
+    note: >
+      CODE PROVISION (EN 1993-1-1 Table 6.1 and clause 6.3.1.2), as reported by several secondary
+      sources (search-summary level); the standard itself not read. lambda_bar = sqrt(A f_y / N_cr)
+      = lambda / lambda_y. These factors are CALIBRATED to column test programmes on steel sections,
+      not derived; they encode how far real columns fall below Euler.
+mechanism: >
+  A perfectly straight, centrally loaded, linearly elastic column has a trivial straight equilibrium
+  at every load. Writing the moment balance for a slightly bent shape, E I w'' + P w = 0, gives a
+  non-trivial solution only when P (KL)^2 / (E I) = pi^2 -- a bifurcation. At that load the bending
+  stiffness can no longer restore the straight shape against the destabilising moment P*w, and the
+  column deflects sideways with no further increase in load. The material strength does not appear:
+  Euler buckling is a STIFFNESS failure, so a stronger but equally stiff material buys nothing.
+  Dividing by A gives the critical stress sigma_cr = pi^2 E / lambda^2, which depends on geometry only
+  through the slenderness lambda = KL/r. The "where it governs" result follows directly: elastic
+  buckling controls only when sigma_cr is below the stress at which the material itself yields or
+  crushes, i.e. lambda > pi sqrt(E/sigma_y). Stocky columns fail by material failure, slender ones by
+  instability, and real columns in between fail by an interaction of the two that Euler's formula
+  does not describe.
+domain_of_validity:
+  theory: "Euler-Bernoulli bending, small deflection, bifurcation of an ideal (initially straight, centrally loaded) column"
+  material: "linear-elastic up to the buckling stress; homogeneous and isotropic, or at least uniform along the axis"
+  geometry: "prismatic; slenderness lambda above the elastic transition (practical: ~4.71 sqrt(E/F_y) per AISC; ideal: pi sqrt(E/sigma_y)); compact, thick enough walls that local buckling does not precede global buckling"
+  loading: "static axial compression applied at the end; no lateral load, no self-weight comparable to the end load (for self-weight see elastic-similarity / Greenhill)"
+  taxa: [engineered steel and aluminium struts, "slender skeletal elements under end compression (insect leg segments, thin rods) as a first approximation"]
+  notes: >
+    The formula gives the bifurcation load of an idealisation. In design it is an upper bound and
+    the reference value against which code column curves are normalised; it is never the predicted
+    strength of a real column of intermediate slenderness.
+where_it_breaks: >
+  (1) STOCKY AND INTERMEDIATE COLUMNS. Below lambda_y = pi sqrt(E/sigma_y) the Euler load exceeds
+  the squash load, and the column yields or crushes first. Between lambda_y and the code transition
+  (about 89 to 133 for mild steel, my calculation from the formulas above) the material is partly
+  inelastic at buckling, and E must be replaced by the tangent modulus. The theory here was itself
+  disputed for half a century: Engesser (1889) proposed the tangent modulus, Considere (1891) and
+  Engesser (1895) the reduced (double) modulus; the reduced modulus was treated as exact although the
+  tangent modulus matched tests better, until Shanley (1947) showed bending starts at the tangent-
+  modulus load and the maximum load lies between the two (secondary sources, search-summary level).
+  (2) IMPERFECTION SENSITIVITY -- THE MAIN BOUNDARY. Real columns are crooked, eccentrically loaded
+  and carry residual stresses, so they bend from the first increment of load and never bifurcate.
+  The loss is LARGEST near lambda_bar = 1, exactly where Euler and yield meet. My calculation from
+  the EC3 curves (code formula, not observation): at lambda_bar = 1 the design strength is 0.73
+  (curve a0) to 0.47 (curve d) of BOTH the Euler and squash loads; at lambda_bar = 0.5 it is 0.95 to
+  0.78 of squash; and even at lambda_bar = 2, deep in the "Euler regime", it is 0.93 (a0) to 0.71 (d)
+  of the Euler load (chi = 0.232 to 0.177 against 1/lambda_bar^2 = 0.25). AISC similarly applies
+  0.877 F_e throughout its elastic range. So Euler is unconservative at every slenderness; it is a
+  good predictor only for very slender columns of a straight, residual-stress-free material, and
+  dangerously so near lambda_bar = 1.
+  (3) THIN-WALLED SECTIONS. A thin tube or open section can fail by LOCAL buckling of the wall,
+  which depends on wall radius-to-thickness r/t and not on length, before the global Euler load is
+  reached; and a tube in bending can collapse by ovalisation (Brazier 1927), which reduces I as it
+  bends. Open thin sections (angles, channels, unsymmetric sections) can buckle torsionally or
+  flexural-torsionally at loads below the flexural Euler load. Taylor & Dirks (2012, read via a
+  model-generated summary of the full text) treat Euler, local and ovalisation buckling as competing
+  modes in arthropod and vertebrate tubular skeletons and report that the standard local-buckling
+  equation overpredicts the stress by about 40-60%, applying a 50% reduction; they give no single
+  r/t or slenderness cutoff between modes.
+  (4) SHEAR-SOFT AND COMPOSITE COLUMNS. Euler ignores shear deformation. For sandwich, laced,
+  built-up, fibrous or strongly anisotropic columns (low shear modulus G relative to E) shear
+  flexibility lowers the critical load (Engesser/Timoshenko shear correction). My inference, not a
+  cited measurement: biological skeletal rods built of fibre composites, or of two hemirays that
+  can slide on each other (a teleost fin ray), are in this class, and treating them as a single
+  homogeneous Euler column with the bulk E overestimates P_cr by an amount that is unknown for any
+  fin ray -- not searched in this task.
+  (5) END CONDITIONS AND LOAD TYPE. P_cr scales as 1/K^2, so misjudging end fixity by a factor 2
+  (pinned versus fixed) is a factor-4 error; real joints are neither. The formula does not apply to
+  self-weight loading (Greenhill; see elastic-similarity), to columns on an elastic foundation or
+  embedded in a matrix (higher modes; e.g. a fibre in a soft tissue), to dynamic/impact loading, or
+  to follower loads.
+worked_examples:
+  - organism: "mild-steel column, E = 200 GPa, sigma_y = 250 MPa (ASSUMED typical values, not a tested member)"
+    computation: "lambda_y = pi*sqrt(200e3/250) = 88.9 ; AISC transition 4.71*sqrt(200e3/250) = 133.2 ; Johnson-parabola C_c = sqrt(2*pi^2*200e3/250) = 125.7"
+    value: 88.9
+    note: >
+      CALCULATED in this session. Three different "where Euler starts" numbers for one material:
+      the ideal intersection (88.9), the Johnson-parabola convention (125.7) and the AISC code
+      transition (133.2). They differ because they answer different questions -- ideal bifurcation
+      versus a calibrated strength of imperfect members. Recorded, not reconciled.
+    evidence: derived
+  - organism: "same steel, EC3 buckling curves a0 / b / d at lambda_bar = 1 (KL/r = 88.9)"
+    computation: "Phi = 0.5*(1 + alpha*(lambda_bar - 0.2) + lambda_bar^2); chi = 1/(Phi + sqrt(Phi^2 - lambda_bar^2)) -> chi = 0.725 / 0.597 / 0.467"
+    value: 0.597
+    note: >
+      CALCULATED from the code formula (curve b shown as value). Ideal theory predicts 1.0 at this
+      slenderness; the code-calibrated strength is 47-73% of it. This is the quantitative content
+      of where_it_breaks item 2.
+    evidence: derived
+  - organism: "compact bone in axial compression, E = 18 GPa, compressive strength 190 MPa (ASSUMED round values, not a cited measurement)"
+    computation: "lambda_y = pi*sqrt(18e9/190e6) = 30.6"
+    value: 30.6
+    note: >
+      CALCULATED. Under these assumed properties a solid bone strut would need KL/r above about 31
+      before ideal Euler buckling could precede crushing. My inference: mammalian long bones are
+      loaded mainly in bending and fail by fracture (see elastic-similarity, where_it_breaks item 2),
+      so this boundary is rarely the operative one for them; the measured slenderness of any specific
+      bone was not looked up in this task.
+    evidence: derived
+  - organism: "millimetre-scale solid rod, d = 0.1 mm, L = 5 mm, pinned-pinned, E = 10 GPa (ASSUMED; not measured for any fin ray)"
+    computation: "I = pi*d^4/64 = 4.91e-18 m^4 ; r = d/4 = 25 um ; lambda = 200 ; P_cr = pi^2*1e10*4.91e-18/0.005^2 = 0.0194 N ; sigma_cr = 2.5 MPa"
+    value: 0.0194
+    units: N
+    note: >
+      CALCULATED. At lambda = 200 such a rod is far into the slender range, so Euler would govern
+      over material failure for any plausible strength -- IF it were a homogeneous solid rod with
+      pinned ends. A real fin ray is a pair of hemirays joined by soft tissue (where_it_breaks item 4)
+      and its end fixity is unknown; this number is an idealised upper bound, not a prediction.
+      Unlike Greenhill self-weight buckling, buoyancy does not remove this load case: an axial end
+      load from muscle or fluid acts in water as in air.
+    evidence: derived
+contested_by:
+  - "Tangent-modulus (Engesser 1889) versus reduced/double-modulus (Considere 1891; Engesser 1895) theory of inelastic buckling. Shanley (1947) is generally credited with resolving it: the tangent-modulus load is where bending begins and the maximum load lies between the two. Secondary sources describe the tangent-modulus load as now the accepted design basis. Recorded as historical disagreement; secondary sources only."
+  - "Where elastic buckling begins is answered differently by the ideal intersection pi*sqrt(E/sigma_y), the Johnson parabola sqrt(2 pi^2 E/sigma_y), and the AISC transition 4.71 sqrt(E/F_y). These are different definitions, not measurement scatter; none is reconciled with the others here."
+  - "The out-of-straightness behind AISC's 0.877 factor is reported as L/1000 by one secondary source and L/1500 by another (search-summary level). Not resolved."
+sources:
+  - citation: "Euler L (1744) Methodus inveniendi lineas curvas maximi minimive proprietate gaudentes, Appendix I (De curvis elasticis). Lausanne/Geneva"
+    read_level: could-not-access
+    note: "Cited as the origin of the formula from general knowledge; not opened or searched in this session."
+  - citation: "ANSI/AISC 360 Specification for Structural Steel Buildings, Chapter E (E3 flexural buckling)"
+    read_level: search-summary
+    note: "Equations and the 4.71 sqrt(E/Fy) transition seen only via secondary pages, e.g. steelcalculator.pages.dev/reference/column-buckling-equations/. The specification itself not read."
+  - citation: "EN 1993-1-1 Eurocode 3: Design of steel structures, clause 6.3.1 and Table 6.1"
+    read_level: search-summary
+    note: "Imperfection factors and the 0.2 plateau seen via secondary pages (steelcalculator.pages.dev/reference/eu-column-design/, sdcverifier.com). The standard itself not read."
+  - citation: "Shanley FR (1947) Inelastic column theory. J. Aeronautical Sciences 14(5):261-268"
+    read_level: search-summary
+    note: "Journal, volume and pages from general knowledge, not confirmed by the search; the search found no primary copy. The content claim (resolution of the tangent vs reduced modulus dispute) is from secondary lecture notes and a Frontiers in Built Environment article seen only in a search summary."
+  - citation: "Engesser F (1889) tangent-modulus column theory; Considere A (1891) reduced-modulus argument; Engesser F (1895) double-modulus theory. Full citations not verified"
+    read_level: search-summary
+  - citation: "Brazier LG (1927) On the flexure of thin cylindrical shells and other thin sections. Proc. R. Soc. Lond. A 116:104-114"
+    read_level: search-summary
+    note: "Year and effect confirmed in a search summary; title, volume and pages from general knowledge, not verified."
+  - citation: "Taylor D, Dirks J-H (2012) Shape optimization in exoskeletons and endoskeletons: a biomechanics analysis. J. R. Soc. Interface 9(77):3480-3489"
+    read_level: full-text
+    note: "Read through a fetch tool that returned a model-generated summary of the full PMC text (PMC3481597), not the raw text; its equations 1.4-1.6 were not legible in that summary. Treat as between abstract and full-text."
