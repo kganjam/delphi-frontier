@@ -223,7 +223,8 @@ def test_r5_catch_zone_wall_is_recomputed_from_the_bytes_and_r4_stays_thin(idx):
     st = {c["id"]: c for c in body["r5-daane-catchfair"]["checks"]}
     assert st["catch_zone_wall_dense"]["status"] == "pass"
     assert "matches the builder record: True" in st["catch_zone_wall_dense"]["detail"]
-    assert all("catch_zone_wall_dense" not in {c["id"] for c in body[r]["checks"]} for r in FROZEN_AT)
+    assert {r for r, f in body.items() if "catch_zone_wall_dense" in {c["id"] for c in f["checks"]}} == \
+        {"r5-daane-catchfair"}                                  # r1-r4 predate the gate
     assert {c["id"]: c["status"] for c in body["r4-daane-printfix"]["checks"]}["min_wall_sampled"] == "fail"
     f = {x["id"]: x for x in idx["findings"]}["body_thin_wall_near_forward_catch_slot"]
     assert f["status"] == "unresolved" and "r5-daane-catchfair" not in " ".join(f["applies_to"])
