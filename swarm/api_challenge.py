@@ -136,9 +136,36 @@ def parse(text: str) -> tuple[str, str, str]:
            (why.group(1).strip()[:900] if why else "")
 
 
+PANEL = ("claude-opus-5-5", FALLBACK)
+
+
+def panel_call(tenant: str, prompt: str) -> list[tuple[str, dict]]:
+    """Every claim to EVERY model, so the reviewer is not predicted by the topic.
+
+    MEASURED 2026-11-04: opus passed 41% of the claims it judged; sonnet passed 0 of 18. Re-running
+    sonnet on 8 claims opus had PASSED weakened 7 of them, so the asymmetry is the model. Because
+    the fallback fires on a `category: bio` refusal, that made the protein claims systematically
+    harsher-reviewed than the methodology claims -- topic selecting reviewer selecting verdict.
+    Routing every claim through both costs about $0.02 against $0.013 and removes the confound
+    rather than documenting it.
+    """
+    out = []
+    for mdl in PANEL:
+        try:
+            r = call(tenant, prompt, model=mdl)
+        except Exception as e:
+            if "refused" in str(e).lower():
+                out.append((mdl, {"_refused": True}))
+                continue
+            raise
+        out.append((mdl, r))
+    return out
+
+
 def main() -> int:
     n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5
     write = "--write" in sys.argv
+    panel = "--panel" in sys.argv
     rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
                  from claim c where c.project_id={lit(PROJECT)} and c.superseded_by is null
                  and length(c.statement) between 80 and 6000
@@ -147,13 +174,35 @@ def main() -> int:
     if not rows:
         print("  no unchallenged live claims; nothing to do.")
         return 0
-    print(f"  {len(rows)} unchallenged claim(s); tenants {TENANTS} (api_allen EXCLUDED)\n")
+    print(f"  {len(rows)} claim(s); tenants {TENANTS} (api_allen EXCLUDED)"
+          + (f"; PANEL mode, every claim to {PANEL}" if panel else "") + "\n")
     spent = 0.0
     tally: dict[str, int] = {}
     for i, (cid, ev, stmt) in enumerate(rows):
         t = TENANTS[i % len(TENANTS)]
+        prompt = PROMPT.format(cid=cid, ev=ev, stmt=stmt[:6000])
+        if panel:
+            # Both models, recorded as separate challenge rows. A claim both weaken is a different
+            # fact from one only the harsher model weakens, and only a panel can tell them apart.
+            verdicts = []
+            for mdl, rr in panel_call(t, prompt):
+                if rr.get("_refused"):
+                    print(f"  claim {cid:>4} {mdl:18} REFUSED")
+                    continue
+                a2, o2, w2 = parse(rr.get("text", ""))
+                spent += float(rr.get("cost_usd") or 0)
+                verdicts.append((mdl, o2))
+                tally[o2] = tally.get(o2, 0) + 1
+                print(f"  claim {cid:>4} {mdl:18} {o2:9} ${rr.get('cost_usd',0):.5f}  {a2[:50]}")
+                if write:
+                    q(f"""insert into challenge (claim_id, challenger, attack, outcome, evidence)
+                          values ({int(cid)}, {lit('api-panel:' + mdl + '@' + t)}, {lit(a2)},
+                                  {lit(o2)}, {lit(w2)})""")
+            if len(verdicts) == 2 and verdicts[0][1] != verdicts[1][1]:
+                print(f"       -> PANEL SPLIT: {verdicts[0][1]} vs {verdicts[1][1]}")
+            continue
         try:
-            r = call_with_fallback(t, PROMPT.format(cid=cid, ev=ev, stmt=stmt[:6000]))
+            r = call_with_fallback(t, prompt)
         except Exception as e:
             print(f"  claim {cid:>4} {t:13} CALL FAILED {type(e).__name__}: {str(e)[:90]}")
             continue
