@@ -1,0 +1,165 @@
+id: wing-loading
+name: Wing loading versus body mass scaling, and the measured ceiling on powered flight
+usability: descriptive           # Q = m*g/S is computable for any design, but the scaling exponent
+                                 # varies by clade (sign included) and the "ceiling" is a model output
+                                 # contested by roughly an order of magnitude -- neither gives a
+                                 # threshold a design can be accepted or rejected against.
+equation: "Q = m * g / S = k * m^1/3"
+latex: "Q = \\frac{m g}{S} = k\\, m^{1/3}"
+symbols:
+  Q: {dimension: M/(L*T^2), units: N/m^2, description: "wing loading: weight carried per unit wing area"}
+  m: {dimension: M,         units: kg,    description: body mass}
+  g: {dimension: L/T^2,     units: m/s^2, description: gravitational acceleration}
+  S: {dimension: L^2,       units: m^2,   description: "wing area (both wings; whether body area between the wings is included varies by author)"}
+  k: {dimension: M^2/3/(L*T^2), units: N/(m^2*kg^(1/3)), description: "clade-specific prefactor of the isometric scaling; carries the dimension that m^(1/3) leaves unbalanced"}
+constants:
+  g:
+    value: 9.81
+    units: m/s^2
+    note: Standard gravity. Not a measured biological quantity; no interval given.
+  isometric_exponent:
+    value: 0.3333
+    note: >
+      DERIVED, not measured. Under geometric similarity S scales as m^(2/3), so m/S scales as
+      m^(1/3). This is the right-hand side of the equation above; the measured exponents below
+      disagree with it, and that disagreement is the content of the entry.
+  wing_area_exponent_soaring_seabirds:
+    value: 0.58
+    interval: [0.53, 0.62]
+    note: >
+      MEASURED. Sato et al. 2009, Table 1: wing area = 0.15 * mass^0.58, 22 birds, 4 species of
+      procellariiform soaring seabirds (0.6 to ~9.4 kg), 95% CI as given. My inference, not the
+      authors' statement: this implies a wing-loading exponent of 1 - 0.58 = 0.42 (interval
+      0.38-0.47), STEEPER than isometric within this clade.
+  wing_area_exponent_birds_excluding_hummingbirds:
+    value: 0.7
+    note: >
+      Reported as "about 0.7 across all other birds" by Skandalis et al. 2017, read only via search
+      summary; no interval obtained, so none is given. Implied wing-loading exponent (my
+      arithmetic) about 0.3 -- close to, slightly below, isometric.
+  wing_area_exponent_hummingbirds:
+    value: 1.2
+    interval: [1.1, 1.3]
+    note: >
+      Reported range "between 1.1 and 1.3" (Skandalis et al. 2017, search summary). The value 1.2
+      is the midpoint I chose for display, not a published point estimate. Implied wing-loading
+      exponent (my arithmetic) -0.1 to -0.3: wing loading FALLS with mass in this clade.
+  soaring_ceiling_mass_sato:
+    value: 41
+    interval: [26, 75]
+    units: kg
+    note: >
+      CALCULATED, not observed. The mass at which the extrapolated take-off (m^-0.30) and cruising
+      (m^-0.18) flapping-frequency regressions intersect (Sato et al. 2009; bootstrap 95% CI). The
+      largest bird in the fitted data was the wandering albatross at 9.4 kg mean, so the 41 kg
+      value lies ~4x beyond the data.
+  aerobic_flapping_ceiling_mass:
+    value: unknown
+    interval: [12, 16]
+    units: kg
+    note: >
+      CALCULATED (aerodynamic power-margin theory), not observed. Range "12-16 kg for aerobically
+      powered, continuous flapping flight" as quoted by Ksepka 2014, who attributes it to
+      Pennycuick 1975, Pennycuick 2008 and Sato et al. 2009. I did not read the Pennycuick
+      sources, so I give no point value.
+mechanism: >
+  The definitional part is trivial: Q is weight over lifting area, and steady level flight needs
+  Q = 0.5 * rho * U^2 * C_L, so minimum flight speed scales as sqrt(Q). Under geometric similarity
+  Q grows as m^(1/3), so bigger animals must fly faster, and the power required to fly rises
+  faster than mass. The ceiling argument (Pennycuick; as summarised in the sources below, not read
+  in full by me) is that power required scales roughly as m^(7/6) while power available from
+  flight muscle scales roughly as m^(2/3) (muscle mass ~ m times wingbeat frequency ~ m^(-1/3)), so
+  the power margin shrinks as m^(-1/2) and vanishes at some mass. Sato et al. 2009 replace the
+  power argument with a kinematic one: the frequency a bird must flap at to stay aloft falls more
+  slowly with mass than the maximum frequency it can flap at, and the two cross. Both are
+  EXTRAPOLATIONS of fitted or theoretical exponents beyond the largest living fliers.
+domain_of_validity:
+  quantity_Q: Defined for any wing; the definition itself has no failure regime.
+  isometric_scaling: >
+    Approximately describes birds excluding hummingbirds (implied exponent ~0.3 vs 1/3). Does not
+    describe hummingbirds or procellariiform seabirds (see where_it_breaks).
+  ceiling: >
+    Sustained, aerobic, flapping, bird-type flight with bipedal launch. It is NOT a ceiling on
+    gliding, soaring once airborne, anaerobic burst launch, assisted (slope or headwind) launch,
+    or quadrupedal launch.
+  taxa_in_fitted_data: [procellariiform seabirds 0.6-9.4 kg (Sato 2009), birds broadly (Skandalis 2017 summary)]
+  notes: >
+    Not checked against insects or bats in this entry; I searched neither (scope stated below).
+where_it_breaks: >
+  (1) THE EXPONENT IS NOT 1/3 AND NOT EVEN SIGN-STABLE ACROSS CLADES. Measured wing-area exponents
+  imply (my arithmetic from the reported wing-area exponents) wing-loading exponents of about +0.42
+  in soaring seabirds, about +0.3 in birds generally, and about -0.1 to -0.3 in hummingbirds, where
+  wing area grows faster than mass. A single m^(1/3) prediction across clades can therefore be wrong
+  in direction, not just magnitude. (2) THE CEILING IS LAUNCH-MODE-SPECIFIC. Bird-derived ceilings
+  of 12-16 kg (aerobic flapping) and 41 kg [26-75] (Sato, soaring) are both exceeded by fossil
+  estimates for animals with flight skeletons: Argentavis ~70 kg, Pelagornis sandersi 21.9-40.1 kg,
+  Quetzalcoatlus northropi 180-250 kg (Witton & Habib's preferred range). The authors of the fossil
+  papers resolve this differently: Chatterjee et al. conclude Argentavis could NOT sustain flapping
+  (170 W available vs >=600 W required, a calculated result) and must have soared and used
+  slope/wind launches; Witton & Habib argue that pterosaur quadrupedal launch makes bird-based
+  limits inapplicable. So the ceiling fails as a ceiling on FLIGHT; at most it bounds aerobic,
+  bipedally launched, continuous flapping in birds. (3) Q ALONE DOES NOT PREDICT FLIGHT PERFORMANCE
+  across taxa with different wing reconstructions: the same Quetzalcoatlus fossil gives Q = 71.9 or
+  223.7 N/m^2 (factor 3.1) depending only on which mass/area reconstruction is used (Witton & Habib
+  Table 1). (4) Below ~1e4 Reynolds number (small insects; see reynolds.yaml) the quasi-steady link
+  Q = 0.5 rho U^2 C_L that gives Q its meaning is itself unreliable because lift comes from
+  unsteady mechanisms -- this is general aerodynamics, not a finding I verified for this entry.
+  (5) NO OBSERVED HARD LIMIT EXISTS among living animals: the largest verified living fliers are
+  bustards near 18-21 kg (search-summary of species records), above the 12-16 kg aerobic estimate,
+  and the theory's own authors attribute this to a reliance on burst/anaerobic take-off.
+worked_examples:
+  - organism: Argentavis magnificens (extinct)
+    computation: "m = 70 kg, S = 8.11 m^2, g = 9.81 m/s^2  ->  Q = 70*9.81/8.11 = 84.7 N/m^2"
+    value: 84.7
+    note: >
+      Inputs are the paper's ESTIMATES (mass and wing area are reconstructions, not measurements);
+      the paper's Table 1 gives 84.6 N/m^2, my recomputation gives 84.7. The paper's power result
+      (170 W available vs 600 W minimum required) is a calculation, not an observation.
+    evidence: derived
+  - organism: Quetzalcoatlus northropi (extinct), two reconstructions of one animal
+    value_range: [71.91, 223.66]
+    units: N/m^2
+    note: >
+      Witton & Habib 2010 Table 1: Chatterjee & Templin reconstruction (70 kg, 9.55 m^2) vs Witton
+      reconstruction (259 kg, 11.36 m^2). The spread is reconstruction uncertainty, not biological
+      variation -- included because it shows the input uncertainty exceeds the scaling effect.
+    evidence: literature
+  - organism: Danio rerio with a hypothetical lifting surface (design check)
+    computation: >
+      ASSUMED m = 4e-4 kg and S = 2e-3 m^2 (both are illustrative assumptions, not measurements of
+      any fish)  ->  Q = 4e-4*9.81/2e-3 = 1.96 N/m^2; with rho_air = 1.2 kg/m^3 and an ASSUMED
+      C_L = 1.0, minimum level-flight speed U = sqrt(2*1.96/(1.2*1.0)) = 1.81 m/s.
+    value: 1.96
+    note: >
+      Calculated, not observed. Shows the only legitimate use of this law at this scale: compute Q
+      and the implied stall speed directly. Do NOT obtain S by scaling down from birds with m^(1/3)
+      -- that extrapolates ~4 orders of magnitude below the smallest fitted animal and across the
+      sign change in exponent seen in hummingbirds.
+    evidence: derived
+contested_by:
+  - "Sato et al. 2009 argue their 41 kg / 5.1 m span limit 'casts doubt on the flying ability of large, extinct pterosaurs'."
+  - "Witton & Habib 2010 argue bird and pterosaur launch kinematics and anatomy are not mechanically interchangeable, that Sato et al. mis-assume slender pterosaur bodies, and that a 200-250 kg azhdarchid could launch quadrupedally from a standing start."
+  - "Chatterjee et al. 2007 accept a flapping limit (Argentavis could not sustain flapping) but conclude the animal flew by soaring with assisted launch -- i.e. they treat the limit as real for flapping and irrelevant for flight."
+  - "Ksepka 2014 states Pelagornis sandersi exceeded both the 12-16 kg flapping limit and Sato's 5.1 m span soaring limit, and that power-curve results 'do not unambiguously resolve' whether it could flap in level flight."
+  - "The m^(2/3) exponent for available power is itself debated (search-summary of JEB literature: wingbeat frequency and mass-specific power exponents vary with assumptions); the ceiling inherits this uncertainty. Not reconciled here."
+negative_searches:
+  - "Did not find a wing area or wing loading value for kori or great bustard (one standard web search, 2026-11-04); the living-bird ceiling is therefore stated in mass only."
+  - "Did not search insect or bat wing-loading scaling; their absence from this entry is a gap, not a finding."
+sources:
+  - citation: "Sato K, et al. (2009) Scaling of soaring seabirds and implications for flight abilities of giant pterosaurs. PLoS ONE 4(4):e5400"
+    read_level: full-text
+    note: Read via PMC2670537 with a tool-mediated extraction of Table 1 and the intersection result.
+  - citation: "Chatterjee S, Templin RJ, Campbell KE (2007) The aerodynamics of Argentavis, the world's largest flying bird from the Miocene of Argentina. PNAS, PMC1906724, doi 10.1073/pnas.0702040104"
+    read_level: full-text
+    note: Read via PMC1906724 with a tool-mediated extraction; mass, span, area, Q and power values quoted.
+  - citation: "Ksepka DT (2014) Flight performance of the largest volant bird. PNAS, doi 10.1073/pnas.1320297111"
+    read_level: full-text
+    note: Read via PMC4115518 with a tool-mediated extraction; source of the 12-16 kg quotation.
+  - citation: "Witton MP, Habib MB (2010) On the size and flight diversity of giant pterosaurs, the use of birds as pterosaur analogues and comments on pterosaur flightlessness. PLoS ONE 5(11):e13982"
+    read_level: full-text
+    note: Read via PMC2981443, first ~100k of ~175k characters only; Table 1 and launch argument were within the part read.
+  - citation: "Skandalis DA, et al. (2017) The biomechanical origin of extreme wing allometry in hummingbirds. Nature Communications, doi 10.1038/s41467-017-01223-x"
+    read_level: search-summary
+  - citation: "Pennycuick CJ (2008) Modelling the Flying Bird. Academic Press"
+    read_level: could-not-access
+    note: Cited only as the attributed origin of the power-margin argument and the 12-16 kg range, via Ksepka 2014. Not read.
