@@ -4,7 +4,7 @@ title: Corrections
 
 **Nothing here was deleted.** Each row is a value that was replaced, kept beside what replaced it. This page is the project's error record, and it getting longer is a sign the system is working rather than failing.
 
-## Superseded (16)
+## Superseded (17)
 
 | was | became | now |
 |---|---|---|
@@ -24,8 +24,9 @@ title: Corrections
 | **#91** S14-D deepen FALLS: engineering kcnk5b for graded pectoral-restricted control is unsupported. AFDB pLDDT is 69 `3.4` | → #216 | CHALLENGER A (axmlig) on claims 91/167: arithmetic reproduces (17.1429 mV, 3.4286; AFDB 69.5/62.82 re-fetched  `4.4` |
 | **#167** [S14-D] Engineering kcnk5b itself for graded pectoral-restricted control is unsupported: the recorded pLDDT>80 | → #217 | CHALLENGER B (6ey3si + trw1cg, independent, agree on local pLDDT) on claim 167: local pLDDT 93.6/94.0 at motif `12` |
 | **#214** COULD NOT VERIFY: the precise boundary condition behind the 1.98 N/m figure -- a challenge reports it is at ~2 | → #219 | Alben, Madden & Lauder 2007 (PMC2359861, full text via challenger): 1.98 N/m is a TRANSFER stiffness: excised  `1.98` |
+| **#231** THE DEEP CONCLUSION: the barrier is a property of SINGLE-IMPULSE LAUNCH FROM WATER AT THIS SIZE, not of any on | → #234 | S29'S "PROPERTY OF SIZE" CONCLUSION IS WRONG IN SIGN. Required specific energy scales as m^beta (beta 1/3 geom `0.45` |
 
-## Open review flags (6)
+## Open review flags (8)
 
 Raised automatically when a claim they depend on was superseded.
 
@@ -37,3 +38,5 @@ Raised automatically when a claim they depend on was superseded.
 | S1 | claim #3 | 1 | open |
 | claim 95 | claim #72 | 1 | open |
 | S26 | claim #72 | 1 | open |
+| claim 234 | claim #231 | 1 | open |
+| S30 | claim #231 | 1 | open |

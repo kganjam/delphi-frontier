@@ -2,7 +2,7 @@
 title: Claims
 ---
 
-137 live claims of 153 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
+145 live claims of 162 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
 
 | # | sub | claim | evidence | value | source |
 |---|---|---|---|---|---|
@@ -141,5 +141,13 @@ title: Claims
 | 228 | S29 | THE SHORTFALL IS ~1.86x (1.22-3.08), against >=10x for EVERY wing route. The launch-energy representation is an order of magnitude closer to feasible  | 🟡 derived | `1.86 shortfall ratio` | S29-organism.md |
 | 229 | S29 | NO TELEOST HAS A LOCOMOTOR SPRING OR LATCH. The only fish LaMSA is the syngnathiform over-centre head latch, and it is used in FEEDING. A locomotor la | 🔵 literature |  | S29-organism.md *[abstract]* |
 | 230 | S29 | DECISIVE TEST: in-situ single-stroke spring-loading work of zebrafish fast myotomal muscle. A value at or above ~99 J/kg closes the energy term. Secon | 🟡 derived | `99 J/kg threshold` | S29-organism.md |
-| 231 | S29 | THE DEEP CONCLUSION: the barrier is a property of SINGLE-IMPULSE LAUNCH FROM WATER AT THIS SIZE, not of any one mechanism. Two independent representat | 🟡 derived |  | S29-organism.md |
 | 232 | S7-D-D | [S7-D-D] The girdle section S7 guessed and S7-D could not reach is now derived from measured geometry: published µCT surface models of 24 and 20 mm SL | 🟡 derived |  | harvest:deepen-s7-d-sensitive-input-tbjg48 |
+| 233 | S15 | [S15] The minimal demonstrated stack is two alleles — kcnh2a^lof(dt2) (longfin, cis-ectopic kcnh2a; coordinated fin overgrowth) and lat4a^nr21/dmh26 ( | 🔵 literature |  | harvest:zebrafish-glide-edit-stack-7kna51 |
+| 234 | S30 | S29'S "PROPERTY OF SIZE" CONCLUSION IS WRONG IN SIGN. Required specific energy scales as m^beta (beta 1/3 geometric, 0.36-0.53 measured in exocoetids, | 🟡 derived | `0.45 mass exponent beta` | S30-organism.md *[full-text]* |
+| 235 | S30 | m* = 39 mg (8.5-173 mg) for the LaMSA route. A 0.4 g zebrafish is ~10x (2.3-47x) TOO LARGE for single-impulse launch, not too small. The muscle-only r | 🟡 derived | `10.3 times too large` | S30-organism.md; ratio verified here |
+| 236 | S30 | THE REALITY CHECK FORCED A REINTERPRETATION RATHER THAN A TUNING: the scaling predicts no exocoetid of 3-530 g reaches glide speed in one stroke, and  | 🔵 literature | `37 percent of KE at exit` | S30-organism.md; bioRxiv 765560 *[search-summary]* |
+| 237 | S30 | SO EXOCOETID FLIGHT IS A MULTI-STROKE TASK, not the single-impulse task S28 and S29 both modelled. The entire project framing -- one launch, one impul | 🟡 derived |  | S30-organism.md |
+| 238 | S30 | Sutton 2019's 2.5 g crossover is a DIFFERENT quantity -- spring versus muscle energy per kg on rigid ground -- and is not a feasibility threshold. The | 🔵 literature | `2.5 g` | Sutton et al. 2019 ICB 59:1609, PMC6907395 *[full-text]* |
+| 239 | S30 | The smallest real fish glider is ~1-2 g at wing loading 11.7 N/m2, needing 4.23 m/s -- essentially THE SAME takeoff speed as the zebrafish design requ | 🔵 literature | `4.23 m/s` | Fish 1990 via S30-organism.md *[full-text]* |
+| 242 | S31 | CROSS-SCALE CONSTRAINT CONFIRMED UNSATISFIED BY AN INDEPENDENT SOURCE: the GXL evidence API returns 0 supporting passages of 35 retrieved for "a volta | 🟢 measured | `0 supporting passages of 35` | GXL /api/v1/claims/support with positive and negativ *[full-text]* |
+| 243 | S31 | The published bioelectric mechanism therefore has an UNSATISFIED EXISTENCE CONSTRAINT at its centre: the generator is demonstrated, the reader is not. | 🟡 derived |  | cross-scale constraint framework plus the GXL check |
