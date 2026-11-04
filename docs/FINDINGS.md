@@ -327,14 +327,32 @@ None is a programme. Each is a measurement.
 
 ## How much of this is measured
 
-Of ~150 live claims: **23 measured**, 62 derived, 17 literature, 6 simulated, 1 assumed, the rest
-unknown. Most of this project is *derived from* measurements rather than measured — legitimate for a
-design study, and the number to probe first.
+Of **295** live claims: **116 derived**, **90 unknown**, **49 measured**, 28 literature,
+11 simulated, 1 assumed. Most of this project is *derived from* measurements rather than measured —
+legitimate for a design study, and the number to probe first.
 
-**231 challenges have been resolved**, and the base rate is uncomfortable and informative: 70%
-weakened, 17% survived, 13% refuted. Sampling six weakened verdicts found all six substantive. The
-recurring shape is *"the arithmetic reproduces, but the inference overreaches"* — so the low
-survival rate is a finding **about us**, not about the challengers.
+**The 90 `unknown` are a real quality gap, not a rounding error.** That is 30 % of the graph, and
+it is where the harvester lands an evidence level it cannot map to the closed vocabulary. The
+agent's own words survive in the claim text, so nothing is lost — but a third of the graph cannot
+be filtered by evidence level, and any count by level silently excludes it.
+
+**Only 10 of 295 claims carry a `run_id`** — a command that reproduces them. The rest trace to an
+agent's prose and no further. See [the empty set](architecture/the-empty-set.md) §4.
+
+**753 challenges have been resolved**, and the base rate is uncomfortable and informative:
+**70.4 % weakened, 22.7 % survived, 6.9 % refuted**. Sampling six weakened verdicts found all six
+substantive. The recurring shape is *"the arithmetic reproduces, but the inference overreaches"* —
+so the low survival rate is a finding **about us**, not about the challengers.
+
+**The weakened rate is now a measurement rather than an impression.** At 231 challenges it was
+70 %; at **753** — a 3.3× larger sample — it is **70.4 %**. A base rate that stable across that
+much more evidence is not a small-sample artifact.
+
+The other two moved, and in the direction that matters: **refuted roughly halved (13 % → 6.9 %)
+while survived rose (17 % → 22.7 %)**. The most likely reading is that the early claims were the
+easy targets and the graph has since been corrected toward statements that hold — but this is an
+inference about a changing population, not a controlled comparison, and the challengers' prompts
+were edited during that period.
 
 The grader producing those verdicts has been **calibrated**: 7/7 on a blind benchmark, 4/4 on
 seeded defects spanning arithmetic, regime, scale and evidence-level inflation. **Two of the four
