@@ -1,0 +1,241 @@
+id: turing-conditions
+name: Turing's conditions for diffusion-driven instability, and when real tissue meets them
+# descriptive for tissue. The four inequalities are exact algebra and WOULD yield a pass/fail number for
+# a two-species model whose four Jacobian entries and two diffusivities are known. For no living tissue
+# found in this session were all six measured (scope under where_it_breaks), so the criterion cannot be
+# checked as a number against real tissue. It is constraining only for a built model or circuit.
+usability: descriptive
+equation: "lambda_onset = 2 * pi * (D_u * D_v / det_J)^1/4"
+latex: >-
+  \begin{aligned}
+  &(1)\; f_u + g_v < 0 \qquad (2)\; \det J = f_u g_v - f_v g_u > 0 \\
+  &(3)\; D_v f_u + D_u g_v > 0 \qquad (4)\; (D_v f_u + D_u g_v)^2 > 4 D_u D_v \det J \\
+  &\frac{D_v}{D_u} > d_c = \left(\frac{\sqrt{\det J} + \sqrt{-f_v g_u}}{f_u}\right)^{2}, \qquad
+  k_c^2 = \frac{D_v f_u + D_u g_v}{2 D_u D_v}, \qquad
+  \lambda_{\text{onset}} = 2\pi\left(\frac{D_u D_v}{\det J}\right)^{1/4}
+  \end{aligned}
+symbols:
+  lambda_onset: {dimension: L, units: m, description: "wavelength of the first mode to go unstable, valid ONLY exactly at onset (condition 4 at equality); above onset use 2*pi/k_c instead"}
+  D_u: {dimension: L^2/T, units: m^2/s, description: "effective diffusivity of the activator u (the species with f_u > 0)"}
+  D_v: {dimension: L^2/T, units: m^2/s, description: "effective diffusivity of the inhibitor v"}
+  f_u: {dimension: 1/T, units: 1/s, description: "d(rate of u)/du at the homogeneous steady state; positive = self-activation"}
+  f_v: {dimension: 1/T, units: 1/s, description: "d(rate of u)/dv at the steady state; cross-coupling"}
+  g_u: {dimension: 1/T, units: 1/s, description: "d(rate of v)/du at the steady state; cross-coupling"}
+  g_v: {dimension: 1/T, units: 1/s, description: "d(rate of v)/dv at the steady state; negative = inhibitor self-decay"}
+  det_J: {dimension: 1/T^2, units: 1/s^2, description: "determinant of the reaction Jacobian f_u*g_v - f_v*g_u"}
+  k_c: {dimension: 1/L, units: 1/m, description: "wavenumber minimising det(J - k^2 D); the first mode to destabilise"}
+  d_c: {dimension: "1", units: dimensionless, description: "critical diffusivity ratio D_v/D_u that must be exceeded; always > 1 when conditions 1-2 hold"}
+constants:
+  D_eff_cyclops_zebrafish:
+    value: 0.7
+    interval: [0.5, 0.9]
+    units: um^2/s
+    note: "OBSERVATION (FRAP of Cyclops-GFP, zebrafish blastula), Mueller et al. 2012. Interval = reported value +/- the paper's stated error (0.2), not a confidence interval computed here."
+  D_eff_squint_zebrafish:
+    value: 3.2
+    interval: [2.7, 3.7]
+    units: um^2/s
+    note: "OBSERVATION (FRAP, Squint-GFP), Mueller et al. 2012; reported +/- 0.5."
+  D_eff_lefty1_zebrafish:
+    value: 11.1
+    interval: [10.5, 11.7]
+    units: um^2/s
+    note: "OBSERVATION (FRAP, Lefty1-GFP), Mueller et al. 2012; reported +/- 0.6."
+  D_eff_lefty2_zebrafish:
+    value: 18.9
+    interval: [15.9, 21.9]
+    units: um^2/s
+    note: "OBSERVATION (FRAP, Lefty2-GFP), Mueller et al. 2012; reported +/- 3.0."
+  clearance_rate_nodal_lefty_zebrafish:
+    value: null
+    interval: [0.53e-4, 1.22e-4]
+    units: 1/s
+    note: >
+      OBSERVATION (Dendra2 photoconversion), Mueller et al. 2012: Lefty1 0.53e-4, Lefty2 0.69e-4,
+      Squint 1.00e-4, Cyclops 1.22e-4 per second (each with its own reported error). No single value is
+      given because these are four different proteins. The paper states half-lives of 95-218 min; ln2/k
+      computed here gives 94.7-218.0 min, consistent.
+  inhibitor_activator_diffusivity_ratio_zebrafish:
+    value: "about 14 (authors' normalised ratio); 3.5-27 (raw D_eff ratios, calculated here)"
+    interval: [3.5, 27]
+    units: dimensionless
+    note: >
+      Two numbers from the same paper, kept side by side and NOT reconciled. Mueller et al. 2012 state
+      the average ratio of NORMALISED diffusivities (normalised using D/k1) is about 14. Dividing the
+      four raw effective D values pairwise (calculation here, not the authors') gives 3.5 (Lefty1/Squint)
+      to 27 (Lefty2/Cyclops). Both are ratios of EFFECTIVE (hindered, in-tissue) diffusivities. The
+      Jacobian entries needed to turn either into d_c were not measured.
+  jacobian_cross_terms_any_tissue:
+    value: unknown
+    note: >
+      f_v and g_u (and the non-decay parts of f_u and g_v) at a tissue steady state. Not found as
+      measured values in any source read in this session (scope: the sources listed below plus web
+      searches for the named systems, Nov 2026). This is the input the criterion needs and tissue
+      does not supply.
+mechanism: >
+  Linearise u_t = f(u,v) + D_u lap(u), v_t = g(u,v) + D_v lap(v) about a homogeneous steady state and
+  substitute modes exp(sigma t + i k x). The growth rate of mode k is an eigenvalue of J - k^2 diag(D_u, D_v).
+  Its trace, tr J - k^2 (D_u + D_v), only falls with k, so diffusion can destabilise only through the
+  determinant h(k^2) = D_u D_v k^4 - (D_v f_u + D_u g_v) k^2 + det J. Conditions (1)-(2) make the state
+  stable without diffusion; (3)-(4) make h dip below zero over a finite band of k. The minimum of h is at
+  k_c^2 = (D_v f_u + D_u g_v)/(2 D_u D_v); at exact onset k_c^4 = det J/(D_u D_v), which is the equation
+  dimension-checked above. Conditions (1) and (3) together force f_u and g_v to have opposite signs and
+  D_v/D_u > d_c > 1: the self-enhancing species must spread more slowly than its inhibitor (local
+  activation, long-range inhibition; Gierer and Meinhardt 1972, not read). The algebra and the closed
+  form for d_c were DERIVED in this session and checked numerically by scanning the eigenvalues of
+  J - k^2 D (script described under worked_examples); they were not transcribed from Turing 1952 or a
+  textbook. The analysis is about ONSET only: which pattern (spots, stripes, labyrinth) and what final
+  wavelength the nonlinear system settles into are not given by these inequalities.
+domain_of_validity:
+  model_class: "exactly two diffusing species; constant isotropic diffusivities; no advection, no cell movement, no mechanics"
+  analysis: "linear stability of a spatially homogeneous steady state, i.e. no imposed gradient or prepattern"
+  domain: "fixed domain larger than about one critical wavelength; growth slow compared with 1/sigma_max"
+  demonstrated_in: ["CIMA chlorite-iodide-malonic acid reaction in an open gel reactor (Castets et al. 1990)", "reconstituted Nodal-Lefty circuit in mammalian cells (Sekine et al. 2018)"]
+  proposed_in_tissue: ["mouse digits (Sheth et al. 2012; Raspopovic et al. 2014)", "zebrafish trunk pigment stripes (Nakamasu et al. 2009)", "Pomacanthus angelfish stripes (Kondo and Asai 1995)"]
+  notes: >
+    Inside the model class the four inequalities are an exact criterion. Applying them to tissue needs
+    the four Jacobian entries at the steady state and the two in-tissue effective diffusivities. The
+    best-measured tissue case found (zebrafish Nodal/Lefty, Mueller et al. 2012) supplies the
+    diffusivities and clearance rates only.
+where_it_breaks: >
+  (1) THREE OR MORE SPECIES, OR ANY IMMOBILE COMPONENT: the differential-diffusivity requirement stops
+  being necessary. Marcon et al. (2016; analytical/computational screen, i.e. CALCULATED, of 3- and
+  4-node networks -- 21 three-node and 64 four-node networks survived their final screen) report that
+  "in the presence of cell-autonomous factors, networks can form a pattern with equally diffusing
+  signals and even for any combination of diffusion coefficients"; they state 70% of the networks they
+  identify are of these two types. Consequence (our inference): D_v/D_u > d_c must never be used to
+  REJECT a candidate tissue mechanism or a synthetic design with three or more components, since real
+  signalling networks include cell-autonomous transcription factors. This is the dominant failure for
+  tissue. The two-species algebra itself remains exact; it is the wrong model.
+  (2) MEETING THE CONDITIONS AT ONE PARAMETER POINT DOES NOT MEAN IT WILL PATTERN RELIABLY. Scholes et
+  al. (2019; CALCULATED over 7,625 two- and three-node networks) report that >61% of network design
+  space can produce Turing patterns but that these are sensitive to even subtle changes in parameters,
+  network structure and regulatory mechanism. The inequalities certify "possible", not "robust".
+  (3) THE INPUTS ARE NOT MEASURED IN ANY TISSUE FOUND. No source read gives the Jacobian cross-terms
+  f_v, g_u for a living tissue (scope: the 13 sources listed, plus web searches for the named systems,
+  Nov 2026). Our inference: claims in this literature that a tissue "is a Turing system" rest on
+  network topology, perturbation phenotypes (Hox dose changes digit period, Sheth et al. 2012) and
+  simulation (Raspopovic et al. 2014), not on the inequalities evaluated with measured numbers.
+  (4) IN TISSUE THE DIFFUSIVITY IS EFFECTIVE, NOT INTRINSIC. The 3.5-27x Lefty:Nodal contrast is in
+  FRAP-measured effective diffusivity. Mueller et al. (2012) suggest differential binding may
+  contribute (their suggestion, not demonstrated); Sekine et al. (2018) report Nodal is confined
+  beneath cells and that transplanting its finger-1 domain into Lefty shortens Lefty's range and
+  prevents patterning. Our inference: D_u and D_v must be the hindered, tissue-specific values; a free
+  or in-solution diffusivity, or one from another tissue, is not transferable.
+  (5) A MEASURED DIFFUSIVITY CONTRAST DOES NOT IMPLY A TURING PATTERN. Zebrafish Nodal/Lefty has the
+  contrast, but Mueller et al. (2012) do not claim it forms a periodic pattern in the embryo; they
+  describe graded pathway activation in mesendoderm induction and exclusive pathway activation on the
+  left. For two species the conditions are necessary for linear instability, not evidence of one.
+  (6) PERIODIC PATTERNS FORM WITHOUT A DIFFUSING PAIR. Shyer et al. (2017) report avian feather-follicle
+  spacing initiated by dermal-cell aggregation that mechanically activates beta-catenin, with the
+  balance of cell traction and substrate resistance shaping the pattern. Zebrafish stripes arise from
+  interactions between pigment CELLS (Nakamasu et al. 2009), with iridophores at the horizontal
+  myoseptum initiating and orienting them (Frohnhoefer et al. 2013). A periodic pattern in tissue is
+  therefore not evidence that any molecular pair meets these conditions.
+  (7) GROWTH, GRADIENTS AND FINITE DOMAINS. The criterion assumes a fixed homogeneous domain. Raspopovic
+  et al. (2014) needed morphogen-gradient modulation in their model to reproduce digit Sox9 patterns
+  (author's model claim); Kondo and Asai (1995) fit angelfish stripes on a growing fish, and Hofer and
+  Maini (1996, search-summary only) argued reaction-diffusion alone cannot explain one of the reported
+  patterns. A domain shorter than about one critical wavelength holds no unstable mode (exact threshold
+  depends on boundary conditions). No measured minimum domain size for any tissue was found (scope as
+  in 3).
+  (8) LINEAR ANALYSIS IS NOT THE WHOLE STORY. Our statement from standard bifurcation theory, not from a
+  source read in this session: where the Turing bifurcation is subcritical, patterns can persist where
+  the linear criterion says the uniform state is stable, so failing conditions 1-4 does not exclude
+  patterning even for two species; and passing them says nothing about the final wavelength above onset
+  (the onset formula drifts: worked example 1).
+worked_examples:
+  - organism: "Toy two-species Jacobian (ILLUSTRATIVE, not a measured tissue)"
+    computation: >-
+      f_u = 1e-4, f_v = -1e-4, g_u = 2e-4, g_v = -1.5e-4 per s; tr J = -5e-5 < 0; det J = 5e-9 s^-2 > 0;
+      d_c = ((sqrt(0.5) + sqrt(2))/1)^2 = 4.5. With D_u = 0.7 um^2/s (the observed Cyclops value),
+      D_v must exceed 3.15 um^2/s; at onset lambda_onset = 2*pi*(0.7*3.15/5e-9)^(1/4) = 910.5 um.
+      Condition 3 alone would accept D_v = 1.4 um^2/s (ratio 2); the eigenvalue scan gives max growth
+      rate -2.5e-5 /s there, i.e. stable. At D_v = 6.3 um^2/s (ratio 9) the scan gives max growth
+      +2.5e-5 /s and 2*pi/k_c = 814 um, while the onset formula would give 1083 um.
+    value: 910.5
+    units: um
+    note: >
+      CALCULATED here with entirely hypothetical kinetics chosen on the 1e-4 /s scale of the measured
+      Nodal/Lefty clearance rates (numpy eigenvalue scan of J - k^2 D over k). Shows three things:
+      condition 4, not 3, binds (condition 3 alone requires only D_v/D_u > 1.5, a 3x underestimate of the needed 4.5);
+      micron^2/s diffusivities with hour-scale kinetics give near-millimetre wavelengths; and the onset
+      formula is wrong by 33% at ratio 9. Must not be read as a prediction of any zebrafish pattern.
+    evidence: derived
+  - organism: Danio rerio blastula, Nodal (Cyclops, Squint) and Lefty (Lefty1, Lefty2)
+    computation: "decay length sqrt(D_eff/k): Cyclops 75.7 um, Squint 178.9 um, Lefty1 457.6 um, Lefty2 523.4 um"
+    value_range: [75.7, 523.4]
+    units: um
+    note: >
+      CALCULATED here from the OBSERVED D_eff and clearance rates of Mueller et al. 2012. These are
+      single-species source-sink ranges, not a Turing wavelength (that needs the unmeasured
+      cross-coupling). Inhibitor range exceeds activator range by 2.6x (Lefty1/Squint) to 6.9x
+      (Lefty2/Cyclops): the qualitative precondition is met, the quantitative criterion cannot be
+      evaluated.
+    evidence: derived
+  - organism: "Repository ledger counterexample (ledger/README.md row 3)"
+    computation: >-
+      J = [[1, -1], [1.011, -1.01]]: det J = 0.001, -f_v g_u = 1.011, d_c = (0.0316 + 1.0055)^2 = 1.076;
+      at D_v/D_u = 1.1 the eigenvalue scan gives max growth rate +0.0088 (model units), unstable.
+    value: 1.076
+    units: dimensionless
+    note: >
+      CALCULATED here; agrees with the ledger's Lean-checked instability at ratio 1.1. Shows d_c is set by
+      the Jacobian and can sit just above 1 -- the folk rule "inhibitor must diffuse ~10x faster" is not
+      part of the law, and a near-degenerate Jacobian like this one is fragile (point 2 above).
+    evidence: derived
+  - organism: CIMA reaction in an open gel reactor
+    note: >
+      OBSERVATION (Castets et al. 1990, read at search-summary level): described in secondary sources as
+      the first experimental Turing pattern, in a chemical system, not tissue. Starch was present in the
+      gel (a 2024 Frontiers review says to make the pattern visible); its role in slowing the activator
+      is not established from what was read here.
+    evidence: literature
+  - organism: Mus musculus limb, reduced distal Hox dose
+    note: >
+      OBSERVATION plus model (Sheth et al. 2012, search-summary): lowering distal Hox dose gives more,
+      thinner digits without a larger limb, which the authors interpret as Hox dose setting the
+      wavelength of a Turing-type mechanism. The activator and inhibitor were not identified in that
+      paper; Raspopovic et al. 2014 later proposed Bmp-Sox9-Wnt (model plus perturbation data).
+    evidence: literature
+contested_by:
+  - "Marcon et al. (2016), calculated: differential diffusivity of the mobile signals is NOT required once cell-autonomous factors are present. Recorded as a different model class from Turing's two-species case, not a correction of the two-species algebra."
+  - "Scholes et al. (2019), calculated: Turing-capable networks are common (>61% of 2-3 node design space) but not robust -- the opposite emphasis to the older view that Turing patterns need rare, fine-tuned parameter sets. Not reconciled here."
+  - "Zebrafish stripes: Nakamasu et al. (2009) report the pigment-cell interaction network has the properties needed for a Turing pattern; Frohnhoefer et al. (2013) report iridophores, previously treated as inactive, initiate stripes at the horizontal myoseptum, after which the process self-organises. Watanabe and Kondo (2015, Trends in Genetics) ask whether fish skin patterning is really Turing-type; seen as a search-result title only, content not read."
+  - "Angelfish stripes: Kondo and Asai (1995) report the stripe rearrangement on growing Pomacanthus matches a reaction-diffusion simulation; Hofer and Maini (1996) argued reaction-diffusion alone cannot explain one of the reported patterns, and Kondo and Asai's reply agreed many mechanisms can give similar results (both seen at search-summary level)."
+  - "Feather follicles: Shyer et al. (2017) attribute primordium spacing to dermal-cell mechanics preceding the molecular programme; reaction-diffusion accounts of skin appendages exist. Whether the mechanisms compete or combine is recorded as unresolved."
+sources:
+  - citation: "Turing AM (1952) The chemical basis of morphogenesis. Phil Trans R Soc Lond B 237(641):37-72"
+    read_level: could-not-access
+    note: Not retrieved in this session; bibliographic details are from the prior entry on branch claude/turing-conditions-law-8d0w38 and were not re-verified here. The conditions above were re-derived, not transcribed.
+  - citation: "Gierer A, Meinhardt H (1972) A theory of biological pattern formation. Kybernetik 12:30-39"
+    read_level: could-not-access
+    note: Not retrieved; volume and pages not verified in this session. Cited only for the name of the local-activation/long-range-inhibition principle.
+  - citation: "Mueller P, Rogers KW, Jordan BM, Lee JS, Robson D, Ramanathan S, Schier AF (2012) Differential diffusivity of Nodal and Lefty underlies a reaction-diffusion patterning system. Science 336(6082):721-724. doi:10.1126/science.1221920"
+    read_level: full-text
+    note: PMC author manuscript PMC3525670, read through an automated summarising fetch that quoted the D, clearance, ratio and half-life values verbatim. Supplementary material not read.
+  - citation: "Marcon L, Diego X, Sharpe J, Mueller P (2016) High-throughput mathematical analysis identifies Turing networks for patterning with equally diffusing signals. eLife 5:e14022"
+    read_level: full-text
+    note: First ~100k of ~251k characters of the eLife HTML read via automated fetch (abstract, introduction, Table 1, screening counts). Remainder not read.
+  - citation: "Scholes NS, Schnoerr D, Isalan M, Stumpf MPH (2019) A comprehensive network atlas reveals that Turing patterns are common but not robust. Cell Systems 9(3):243-257"
+    read_level: search-summary
+    note: An erratum is indexed (Cell Systems 9(5):515-517); its content was not read.
+  - citation: "Sekine R, Shibata T, Ebisuya M (2018) Synthetic mammalian pattern formation driven by differential diffusivity of Nodal and Lefty. Nat Commun 9:5456. doi:10.1038/s41467-018-07847-x"
+    read_level: search-summary
+  - citation: "Castets V, Dulos E, Boissonade J, De Kepper P (1990) Experimental evidence of a sustained standing Turing-type nonequilibrium chemical pattern. Phys Rev Lett 64:2953-2956"
+    read_level: search-summary
+    note: Title taken from the prior entry; journal, volume and pages confirmed via a citing paper found by search. The letter itself was not found.
+  - citation: "Sheth R, Marcon L, Bastida MF, Junco M, Quintana L, Dahn R, Kmita M, Sharpe J, Ros MA (2012) Hox genes regulate digit patterning by controlling the wavelength of a Turing-type mechanism. Science 338(6113):1476-1480. doi:10.1126/science.1226804"
+    read_level: search-summary
+    note: The Genome Biology 2013 14:101 commentary on it could not be fetched (link.springer.com is outside this session's network allowlist).
+  - citation: "Raspopovic J, Marcon L, Russo L, Sharpe J (2014) Digit patterning is controlled by a Bmp-Sox9-Wnt Turing network modulated by morphogen gradients. Science 345(6196):566-570. doi:10.1126/science.1252960"
+    read_level: search-summary
+  - citation: "Nakamasu A, Takahashi G, Kanbe A, Kondo S (2009) Interactions between zebrafish pigment cells responsible for the generation of Turing patterns. PNAS 106(21):8429-8434"
+    read_level: search-summary
+  - citation: "Frohnhoefer HG, Krauss J, Maischein HM, Nuesslein-Volhard C (2013) Iridophores and their interactions with other chromatophores are required for stripe formation in zebrafish. Development 140(14):2997-3007"
+    read_level: search-summary
+  - citation: "Shyer AE, Rodrigues AR, Schroeder GG, Kassianidou E, Kumar S, Harland RM (2017) Emergent cellular self-organization and mechanosensation initiate follicle pattern in the avian skin. Science 357(6353):811-815. doi:10.1126/science.aai7868"
+    read_level: search-summary
+  - citation: "Kondo S, Asai R (1995) A reaction-diffusion wave on the skin of the marine angelfish Pomacanthus. Nature 376:765-768. doi:10.1038/376765a0"
+    read_level: search-summary
+    note: The Hofer and Maini (1996) critique and the reply were seen only as a search summary; their full citation was not retrieved (a search-result URL suggests Nature 380:678, unverified).
