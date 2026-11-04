@@ -1,0 +1,217 @@
+id: pennycuick-power
+name: Pennycuick flight power curve (induced + profile + parasite) and its U-shape
+usability: descriptive           # The MECHANICAL curve gives a number (V_mp, P_am, V_mr) for a
+                                 # specified bird, so it looks constraining. It is graded
+                                 # descriptive because (a) the number moves by ~40% in speed with a
+                                 # body-drag coefficient whose literature values span 0.05-0.77
+                                 # (see constants), and (b) the METABOLIC curve, which is what an
+                                 # animal or design actually pays, is measured flat in several
+                                 # species where the model predicts a U (see where_it_breaks). A
+                                 # design cannot be accepted or rejected against a curve whose
+                                 # shape is itself in dispute. It is usable as a relative,
+                                 # same-animal comparison (heavier -> V_mp rises; longer span ->
+                                 # induced power falls).
+equation: "P_mech = k * W^2 / (2 * rho * S_d * U) + 0.5 * rho * S_b * C_Db * U^3 + P_pro"
+latex: "P_\\mathrm{mech} = \\underbrace{\\frac{k\\,W^2}{2\\rho S_d U}}_{P_\\mathrm{ind}} + \\underbrace{\\tfrac12 \\rho S_b C_{Db} U^3}_{P_\\mathrm{par}} + P_\\mathrm{pro}, \\qquad S_d = \\frac{\\pi b^2}{4}"
+symbols:
+  P_mech: {dimension: M*L^2/T^3, units: W, description: "mechanical (aerodynamic) power required for steady level flapping flight"}
+  k:      {dimension: "1", units: dimensionless, description: "induced power factor: ratio of actual induced power to the ideal actuator-disc value (1 = elliptical/ideal)"}
+  W:      {dimension: M*L/T^2, units: N, description: "weight, m*g"}
+  rho:    {dimension: M/L^3, units: kg/m^3, description: air density}
+  S_d:    {dimension: L^2, units: m^2, description: "disc area swept by a circle of diameter equal to the wingspan b: pi*b^2/4"}
+  b:      {dimension: L, units: m, description: wingspan}
+  U:      {dimension: L/T, units: m/s, description: true airspeed}
+  S_b:    {dimension: L^2, units: m^2, description: "body frontal (cross-sectional) area -- the reference area for C_Db"}
+  C_Db:   {dimension: "1", units: dimensionless, description: "body (parasite) drag coefficient referred to S_b -- the contested parameter, see constants"}
+  P_pro:  {dimension: M*L^2/T^3, units: W, description: "profile power (drag of the flapping wings). Pennycuick treats it as constant with speed over the mid-range; this is a modelling assumption, not a derived result -- see contested_by"}
+constants:
+  k_induced_power_factor:
+    value: 1.2
+    interval: unknown
+    note: >
+      A MODEL DEFAULT, not a measurement. A search summary of the documentation of the R package
+      `flying` (which implements Pennycuick's Flight program) gives ipf = 1.20 as the default; I
+      could not open that page (host blocked in this session), so the value is at search-summary
+      level. No measured interval was found. I did not verify whether later versions of Flight
+      changed it.
+  C_Db_old_default:
+    value: 0.4
+    interval: [0.2, 0.4]
+    note: >
+      MEASURED on frozen bird bodies with the wings removed, in wind tunnels. The 0.2-0.4 range is
+      reported in a search summary of the AFPT R-package vignette. Pennycuick et al. 1996 (abstract
+      via search summary) call this "near 0.40 as previously assumed" and treat it as an anomaly.
+  C_Db_pennycuick_1996:
+    value: 0.08
+    interval: [0.05, 0.08]
+    note: >
+      INFERRED by the authors, not measured directly. They fitted it so that the model agrees with
+      wingbeat-frequency observations on a thrush nightingale and a teal flown in the Lund wind
+      tunnel (search summary of the abstract). They suggest about 0.05 is attainable when the feet
+      are fully retracted, and that about 0.4 may still hold for birds with trailing feet, e.g.
+      pelicans and large herons. They report no Re trend over body-diameter Re 21,600-215,000.
+  C_Db_hedenstrom_liechti_2001:
+    value: 0.37
+    interval: [0.17, 0.77]
+    note: >
+      MEASURED in the field: estimated from the maximum dive speeds of migrating passerines over the
+      western Mediterranean (search summary of the abstract). 0.37 is the mean for small
+      passerines; the range is 0.17-0.77, falling with Re. The authors say a lower value cannot be
+      excluded, because birds may control dive speed below the terminal value. A 2003 Hedenström &
+      Rosén paper, also only at search-summary level here, gives 0.1-0.2 and notes that the 2001
+      values depend on a frontal-area equation that was later revised.
+  flight_muscle_efficiency_measured:
+    value: unknown
+    interval: [0.13, 0.23]
+    note: >
+      Needed to turn P_mech into a metabolic power. MEASURED in two starlings (Ward et al. 2001,
+      search summary of the abstract): 0.13-0.23 depending on bird and speed. The fact that it
+      VARIES WITH SPEED is the reason a U-shaped mechanical curve need not yield a U-shaped
+      metabolic one. I give no point value because the source gives a range only.
+mechanism: >
+  Three drag sources, each costed as power = force x speed. (1) INDUCED power: to support weight W
+  the wings must deflect air downward. Actuator-disc momentum theory says that at forward speed U
+  the wings act on an air mass flux of rho*S_d*U, so the required downwash -- and the power lost
+  in it -- falls as 1/U. This term dominates at low speed. (2) PARASITE power: the body's pressure
+  and skin-friction drag, (1/2)rho*U^2*S_b*C_Db, times U, so it rises as U^3. This term dominates
+  at high speed. (3) PROFILE power: drag on the flapping wings themselves. Pennycuick (1968, per
+  Hedenström's 2009 JEB Classics commentary, search summary) concluded that profile power is
+  nearly constant across mid-range speeds, because the processes that raise and lower it with
+  speed roughly cancel. A falling term plus a rising term plus a constant gives the U-shape. The
+  minimum gives the minimum-power speed V_mp (longest endurance); the tangent from the origin gives
+  the maximum-range speed V_mr (least energy per distance). Without P_pro, V_mp =
+  (A/(3B))^(1/4) and V_mr = (A/B)^(1/4) = 3^(1/4)*V_mp, with A = k*W^2/(2*rho*S_d) and
+  B = rho*S_b*C_Db/2. That is my algebra from the equation above. A constant P_pro leaves V_mp
+  unchanged and pushes V_mr higher. Note that the equation as checked is MECHANICAL power;
+  metabolic power needs a muscle efficiency plus basal and circulation/ventilation overheads.
+  Those terms are not part of the U-shape argument.
+domain_of_validity:
+  flight_mode: "steady, level, continuously flapping forward flight"
+  speed_range: >
+    Intermediate and high forward speeds. The 1/U induced term is from forward-flight momentum
+    theory and diverges as U -> 0, so it is invalid near hover (see where_it_breaks for the
+    computed crossover).
+  taxa: >
+    Derived for and calibrated on birds (pigeon wind tunnel, Pennycuick 1968). Partially supported
+    in some bats (see worked_examples). Not supported for metabolic power in bumblebees.
+  reynolds: >
+    Body-drag data cited here span body-diameter Re of about 2e4-2e5 (Pennycuick et al. 1996).
+    Outside this range I found no C_Db evidence in this compilation.
+  notes: >
+    Quasi-steady aerodynamics is assumed throughout. The equation predicts power REQUIRED; it says
+    nothing about power AVAILABLE from the muscles, which sets the actual speed limits.
+where_it_breaks: >
+  (1) NEAR HOVER THE INDUCED TERM IS WRONG BY CONSTRUCTION. P_ind = k*W^2/(2*rho*S_d*U) goes to
+  infinity as U -> 0, but a hovering bird needs finite power. My CALCULATION (worked example 2) for
+  a 0.4 kg, 0.66 m-span bird puts the forward-flight induced term above the actuator-disc hover
+  power below about 2.2 m/s. Below roughly that speed, the formula must be replaced by the hover
+  (actuator-disc) form or a blended induced-velocity solution. The forward-flight formula
+  overshoots without bound.
+  (2) INSECTS: THE METABOLIC CURVE IS FLAT, NOT U-SHAPED. Ellington, Machin & Casey 1990 (search
+  summary of the abstract) measured oxygen consumption of bumblebees in free forward flight from 0
+  to 4 m/s. Metabolic rate was roughly constant, and they concluded the existing aerodynamic
+  theories are inadequate for insect flight. The same summary reports that hummingbird flight
+  metabolism did not differ significantly from hovering up to 7 m/s; I did not identify or read
+  the primary hummingbird source, so that claim is second-hand.
+  (3) BIRDS: THE MEASURED METABOLIC CURVE IS OFTEN FLAT. Laughing gulls (Tucker 1972) gave "an
+  essentially flat metabolic curve" over a wider speed range than budgerigars, and starlings
+  (Torre-Bueno & Larochelle 1978) showed no significant change in metabolic rate from 8 to
+  18 m/s; both are via search summaries. Rayner's review, also at search-summary level, says
+  metabolic power is "much flatter" with speed in most birds and bats in wind tunnels than the
+  models predict. Counter-evidence is kept under contested_by. The likely reason, which is my
+  inference from Ward et al. 2001 and not their stated conclusion, is that muscle efficiency
+  varies with speed (0.13-0.23). A U-shaped mechanical curve can then map onto a flat metabolic
+  one, so the model's mechanical U cannot be read off a metabolic measurement or vice versa.
+  (4) MECHANICAL POWER IN INTERMITTENT, BROAD-WINGED FLIERS. Dial et al. 1997 (abstract-level
+  summary) measured magpie pectoralis power from bone strain and found it statistically flat over
+  most forward speeds, rising only at hover and very slow speeds. Tobalske et al. 2003 (abstract
+  via search summary) found a strongly concave (U) curve in cockatiels and an intermediate shape in
+  doves. They attribute part of the difference to flight style: magpies have broad, rounded wings
+  and a long tail and use intermittent flight, while cockatiels and doves have pointed wings. The
+  model assumes continuous flapping at constant speed and altitude, so flap-gliding and
+  flap-bounding birds fall outside it.
+  (5) THE HIGH-SPEED ARM HINGES ON ONE CONTESTED COEFFICIENT. In my calculation, changing C_Db from
+  0.1 to 0.4 moves V_mp from 12.8 to 9.1 m/s and quadruples parasite power at a given speed. The
+  literature span of C_Db (0.05 to 0.77, see constants) is wider than that. Any prediction of V_mr,
+  migration speed or fuel use is therefore no better than the C_Db chosen.
+  (6) PROFILE POWER HELD CONSTANT. A search summary of a 2012 bat-flight model reports that, if
+  profile drag is not allowed to depend on lift, power can be underestimated by 30-60% at high
+  speed. I did not identify or read that paper beyond the summary.
+worked_examples:
+  - organism: "pigeon-sized bird (illustrative parameters, not a measured individual)"
+    computation: |
+      CALCULATED, not observed. Assumed: m = 0.4 kg, W = 3.92 N, b = 0.66 m, rho = 1.23 kg/m^3,
+      k = 1.2, S_b = 0.0044 m^2 (my assumed frontal area, chosen to be plausible for 0.4 kg; not
+      taken from a source I read). P_pro omitted (its V_mp is unaffected by a constant term).
+        S_d = pi*0.66^2/4 = 0.342 m^2
+        A = k*W^2/(2*rho*S_d) = 21.96 W*m/s
+        C_Db = 0.1 : B = 2.71e-4 W/(m/s)^3 -> V_mp = (A/(3B))^(1/4) = 12.8 m/s,
+                     P_ind+P_par at V_mp = 2.28 W, V_mr (no P_pro) = 16.9 m/s
+        C_Db = 0.4 : B = 1.08e-3          -> V_mp = 9.1 m/s, P = 3.23 W, V_mr = 11.9 m/s
+    value: 12.8
+    note: >
+      The ratio of the two V_mp values is exactly 4^(1/4) = 1.41, because V_mp scales as
+      C_Db^(-1/4). The choice between the two contested C_Db camps moves the predicted
+      endurance speed by 41%, which is why this entry is graded descriptive.
+    evidence: derived
+  - organism: "same bird, hover crossover"
+    computation: |
+      CALCULATED, not observed. Actuator-disc hover: P_hov = k*sqrt(W^3/(2*rho*S_d))
+        = 1.2*sqrt(3.92^3/(2*1.23*0.342)) = 10.2 W (25 W/kg)
+      Forward-flight induced term equals that at U = A/P_hov = 21.96/10.17 = 2.2 m/s.
+      At U = 2 m/s the forward formula already gives P_ind = 11.0 W > P_hov.
+    value: 2.2
+    note: The speed below which the forward-flight induced formula is unusable for this bird (breakage 1).
+    evidence: derived
+  - organism: "Carollia perspicillata (fruit bat), wind tunnel"
+    note: >
+      OBSERVED (von Busse, Swartz & Voigt 2013, search summary). Metabolic power from labelled
+      bicarbonate, 1-7 m/s, seven bats: U-shaped in five of seven individuals. Power was close to
+      Pennycuick-model predictions at the minimum-power speed but differed at the maximum-range
+      speed. This is partial support only.
+    evidence: literature
+  - organism: "Sturnus vulgaris (starling), wind tunnel, two birds"
+    note: >
+      OBSERVED (Ward et al. 2001, search summary). Metabolic power rose from 10.4 to 14.9 W
+      between 6.3 and 14.4 m/s, which the authors call compatible with the predicted U-shape. In
+      the same birds, Ward et al. 2002 found respirometry and heat-transfer estimates increasing
+      linearly with speed, while doubly-labelled water looked U-shaped. So the curve shape depends
+      on the measurement method.
+    evidence: literature
+contested_by:
+  - "SHAPE OF THE METABOLIC CURVE. U-shaped: budgerigar (Tucker 1968; Bundle & Dial and Ellerby & Askew 2007 report agreement, per search summary), starling (Ward et al. 2001), five of seven Carollia bats (von Busse et al. 2013). Flat: laughing gull (Tucker 1972), starling (Torre-Bueno & Larochelle 1978), bumblebee (Ellington et al. 1990). One search summary says that 'all but Tucker's study show little increase in metabolic cost across the range of speeds'. Rayner & Ward 1999 (summary) record that some workers argue for J- or L-shaped curves. Not reconciled here."
+  - "SHAPE OF THE MECHANICAL CURVE. Flat over intermediate speeds in magpies (Dial et al. 1997). Alexander's 1997 Nature commentary (summary) suggests the magpie curve may be 'a U truncated on the right side', because the birds would not fly fast enough. Strongly U-shaped in cockatiels and intermediate in doves (Tobalske et al. 2003). Not reconciled here."
+  - "BODY DRAG COEFFICIENT. About 0.4 (frozen bodies; old default) vs about 0.08, or 0.05 with feet retracted (Pennycuick et al. 1996, wind-tunnel inference) vs a mean of 0.37, range 0.17-0.77 (Hedenström & Liechti 2001, field dives) vs 0.1-0.2 (Hedenström & Rosén 2003, summary). The methods measure different things (detached body, whole-bird fit, dive terminal speed), and the disagreement is left standing."
+  - "PROFILE POWER FORM. Pennycuick holds P_pro roughly constant over mid-range speeds. Blade-element models (Rayner; Tucker adjusted Pennycuick's theory per a search summary) and a 2012 bat model (summary) let it vary with speed or lift. I did not read the primary sources for this disagreement (Rayner 1979, Tucker 1973) -- not retrieved."
+sources:
+  - citation: "Pennycuick CJ (1968) Power requirements for horizontal flight in the pigeon Columba livia. J Exp Biol 49:527-555"
+    read_level: search-summary
+  - citation: "Hedenström A (2009) Mechanics of bird flight: the power curve of a pigeon (JEB Classics). J Exp Biol 212:1421-1422, doi 10.1242/jeb.022509"
+    read_level: search-summary
+  - citation: "Pennycuick CJ, Klaassen M, Kvist A, Lindström Å (1996) Wingbeat frequency and the body drag anomaly: wind-tunnel observations on a thrush nightingale (Luscinia luscinia) and a teal (Anas crecca). J Exp Biol 199:2757-2765"
+    read_level: search-summary
+  - citation: "Hedenström A, Liechti F (2001) Field estimates of body drag coefficient on the basis of dives in passerine birds. J Exp Biol 204:1167-1175"
+    read_level: could-not-access
+    note: "Full-text PDF host (cob.silverchair.com) blocked in this session; values above come from a search summary of the abstract."
+  - citation: "Tobalske BW, Hedrick TL, Dial KP, Biewener AA (2003) Comparative power curves in bird flight. Nature 421:363-366, doi 10.1038/nature01284"
+    read_level: search-summary
+  - citation: "Dial KP, Biewener AA, Tobalske BW, Warrick DR (1997) Mechanical power output of bird flight. Nature 390:67-70"
+    read_level: search-summary
+  - citation: "Ellington CP, Machin KE, Casey TM (1990) Oxygen consumption of bumblebees in forward flight. Nature 347:472-473"
+    read_level: search-summary
+  - citation: "Tucker VA (1968) Respiratory exchange and evaporative water loss in the flying budgerigar. J Exp Biol 48:67-87, doi 10.1242/jeb.48.1.67"
+    read_level: search-summary
+  - citation: "Torre-Bueno JR, Larochelle J (1978) The metabolic cost of flight in unrestrained birds. J Exp Biol (volume and pages unknown -- not shown in the search result, and I will not supply them from memory)"
+    read_level: search-summary
+  - citation: "Ward S et al. (2001) Metabolic power, mechanical power and efficiency during wind tunnel flight by the European starling. J Exp Biol 204:3311 (title wording beyond 'Metabolic power mechanical power and efficiency' and the full author list not verified)"
+    read_level: search-summary
+  - citation: "Ward S et al. (2002) comparison of respirometry, doubly-labelled water and heat-transfer estimates in the same starlings (exact title and journal details unknown -- seen only as a search summary)"
+    read_level: search-summary
+  - citation: "Tucker VA (1972) laughing gull flight metabolism (exact title and journal details unknown -- known only from a search summary quoting it as 'an essentially flat metabolic curve')"
+    read_level: search-summary
+  - citation: "Rayner JMV, Ward S (1999) review of the shape of avian power curves (exact title and journal details unknown -- search summary only)"
+    read_level: search-summary
+  - citation: "Alexander RMcN (1997) News and Views commentary on Dial et al., Nature 390 (page unknown)"
+    read_level: search-summary
+  - citation: "von Busse R, Swartz SM, Voigt CC (2013) Flight metabolism in relation to speed in Chiroptera (subtitle as given by the search result: testing the U-shape in Carollia perspicillata). J Exp Biol, doi 10.1242/jeb.081760"
+    read_level: search-summary
