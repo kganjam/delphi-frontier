@@ -62,7 +62,8 @@ def main():
     branches = [b.strip() for b in git("branch", "-r", "--sort=-committerdate").split("\n")
                 if "origin/claude/" in b][:limit * 3]
 
-    found = recorded = 0
+    found = recorded = edges = 0
+    unresolved_deps = []
     for b in branches:
         tag = f"harvest:{b.split('/')[-1]}"
         if b in done:
@@ -116,6 +117,42 @@ def main():
                                                       "search-summary", "could-not-access"):
                         q(f"""update claim set read_level={lit(rl)} where source={lit(tag)}
                               and statement={lit(stmt)} and read_level is null""")
+                    # STORE depends_on. The generator prompt has demanded this field in four
+                    # places, with the warning that "an omitted edge means your conclusion keeps
+                    # standing on a premise that has been withdrawn, and nothing will notice".
+                    # Agents have been supplying it. NOTHING EVER PARSED IT, and nothing has ever
+                    # written claim_depends -- 6 edges exist across 330 claims, all three of the
+                    # original ones wired by hand. So the supersession trigger fires, walks an
+                    # empty graph and flags nothing, and 29 of 35 superseded claims produced no
+                    # review flag. The warning described what was happening; the edges were not
+                    # omitted by agents, they were discarded here.
+                    #
+                    # depends_on is FREE TEXT and the column is an FK to claim.id, so only
+                    # explicit claim references can become edges. Everything else is counted and
+                    # reported rather than dropped quietly -- an unresolvable premise is still a
+                    # premise, and silently losing it is the defect this field exists to prevent.
+                    dep = d.get("depends_on") or []
+                    if sid and isinstance(dep, list):
+                        new_id = q(f"""select id from claim where source={lit(tag)}
+                                       and statement={lit(stmt)} limit 1""")
+                        if new_id:
+                            cid_new = int(new_id[0][0])
+                            for item in dep[:12]:
+                                txt = str(item)[:300]
+                                m = re.search(r"(?:claim|#)\s*(\d{1,6})", txt, re.I) \
+                                    or re.fullmatch(r"\s*(\d{1,6})\s*", txt)
+                                if not m:
+                                    unresolved_deps.append(txt[:60]); continue
+                                tgt = int(m.group(1))
+                                if tgt == cid_new:
+                                    continue
+                                ok = q(f"select 1 from claim where id={tgt}")
+                                if not ok:
+                                    unresolved_deps.append(txt[:60]); continue
+                                q(f"""insert into claim_depends (claim_id, depends_on, how)
+                                      values ({cid_new}, {tgt}, {lit(txt)})
+                                      on conflict do nothing""")
+                                edges += 1
                     recorded += 1
                 elif kind == "entail":
                     # Cross-scale constraints. The vocabulary is CLOSED by a CHECK constraint on
@@ -180,6 +217,12 @@ def main():
               values ({lit(PROJECT)},'harvested',{lit(b)},{lit(tag)})
               on conflict do nothing""")
     print(f"  branches scanned: {len(branches)}  blocks found: {found}  recorded: {recorded}")
+    print(f"  dependency edges written: {edges}   unresolvable depends_on entries: "
+          f"{len(unresolved_deps)}")
+    if unresolved_deps:
+        print("  (free-text premises that name no claim id; reported, not dropped silently)")
+        for u in unresolved_deps[:5]:
+            print(f"    - {u}")
     print("  every row lands UNVERIFIED: an agent asserting a number is not evidence it is right")
     return 0
 

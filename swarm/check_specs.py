@@ -117,6 +117,28 @@ RULES = [
   "select count(*) from project p where not exists "
   "(select 1 from project_capability c where c.project_id=p.id)",
   "select count(*) from project"),
+ ("idea-intake", 3, "No score computed from anything but the checks",
+  # A score for an idea that has no recorded checks was computed from something else.
+  "select count(*) from idea_score sc where not exists "
+  "(select 1 from idea_check ck where ck.idea_id = sc.idea_id)",
+  "select count(*) from idea_check"),
+ ("idea-intake", 5, "No agent writes a locked setting",
+  # `locked` exists to stop an agent changing policy. An agent-authored locked row means it did.
+  "select count(*) from setting where locked is true and updated_by is not null "
+  "and (updated_by ilike 'agent%' or updated_by ilike '%cloud:%' or updated_by ilike 'branch:%')",
+  "select count(*) from setting"),
+ ("subproblem-lifecycle", 4, "Readiness honours subproblem_dep, with refuted satisfying a dependency",
+  # A subproblem may not be `running` while something it depends on is still unresolved. `refuted`
+  # counts as resolved -- a question settled negatively has been settled -- so it is NOT a blocker.
+  "select count(*) from subproblem sp join subproblem_dep d on d.subproblem_id = sp.id "
+  "join subproblem up on up.id = d.depends_on "
+  "where sp.status = 'running' and up.status not in ('answered','refuted')",
+  "select count(*) from subproblem_dep"),
+ ("subproblem-lifecycle", 6, "Every superseded claim flags the subproblems resting on it",
+  "select count(*) from claim c join subproblem sp on sp.id = c.subproblem_id "
+  "where c.superseded_by is not null and not exists "
+  "(select 1 from review_flag f where f.claim_id = c.id or f.subproblem_id = sp.id)",
+  "select count(*) from claim where superseded_by is not null"),
  ("subproblem-lifecycle", 1, "No answered without an answer and an answer_kind",
   "select count(*) from subproblem where status='answered' and (answer is null "
   "or btrim(answer)='' or answer_kind is null)",
