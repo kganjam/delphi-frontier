@@ -27,6 +27,9 @@ BASE = "origin/work/frontier-foundation"
 BLOCK = re.compile(r"```swarm-(result|challenge|replication|entail)\s*\n(.*?)\n```", re.S)
 
 
+PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+
+
 def env():
     e = dict(os.environ)
     if "PGPASSWORD" not in e:
@@ -90,7 +93,7 @@ def main():
                             + (f" VERDICT: {verdict}" if verdict else "")
                             + (f" [agent evidence note: {ev[:160]}]" if lvl == "unknown" and ev else ""))
                     q(f"""insert into claim (project_id, subproblem_id, statement, evidence, source)
-                          select 'zebrafish-flight',
+                          select {lit(PROJECT)},
                                  (select id from subproblem where id={lit(sid)}),
                                  {lit(stmt)}, {lit(lvl)}, {lit(tag)}
                           where not exists (select 1 from claim where source={lit(tag)}
@@ -146,7 +149,7 @@ def main():
                         q(f"""insert into constraint_entailed (project_id, source_claim,
                                  source_scale, target_scale, kind, statement, quantity, lo, hi,
                                  units, status, satisfied_by, satisfied_evidence, note)
-                              select 'zebrafish-flight',
+                              select {lit(PROJECT)},
                                  {int(src) if str(src).isdigit() else 'null'},
                                  {lit(ssc) if ssc in SCALES else 'null'}, {lit(ts)}, {lit(k)},
                                  {lit(stmt2)}, {lit(str(c.get('quantity') or '')[:200]) if c.get('quantity') else 'null'},
@@ -174,7 +177,7 @@ def main():
         # batch was deleted -- because deleting the rows fixed the symptom and left the need with
         # nowhere to go. `claim` is for assertions about the world.
         q(f"""insert into work_log (project_id, kind, ref, detail)
-              values ('zebrafish-flight','harvested',{lit(b)},{lit(tag)})
+              values ({lit(PROJECT)},'harvested',{lit(b)},{lit(tag)})
               on conflict do nothing""")
     print(f"  branches scanned: {len(branches)}  blocks found: {found}  recorded: {recorded}")
     print("  every row lands UNVERIFIED: an agent asserting a number is not evidence it is right")
