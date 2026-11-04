@@ -114,6 +114,18 @@ That query is what found all three.
 
 ## 8. What this does not establish
 
+- **Measured 2026-11-04: §1, §2 and §5 cannot fail, because the kernel was never used.**
+  `grade`, `rubric`, `candidate` and `comparison` all hold **0 rows**. The calibration this
+  project cites is real and recorded — one `grader_calibration` row, `cloud:claude-opus-5-5`,
+  7/7 items, **4/4 known-bad caught**, verdict `trusted`, behind 7 `benchmark_item` rows — but it
+  calibrated a grader that then graded **nothing through this kernel**. All 747 resolved verdicts
+  came from the `challenge` path, which has no frozen rubric, no registered criteria and no
+  both-orders requirement.
+
+  So a checker reporting those three rules green is not evidence that grading is disciplined. It
+  is evidence that grading did not happen — the same vacuous-over-an-empty-set defect this
+  project already documented for universally quantified acceptance clauses. The honest status of
+  this spec is **unimplemented**, not **satisfied**.
 - **§3 is not enforced and not satisfied.** Every verdict in the system is from an uncalibrated
   grader. Nothing downstream should be read as more certain than that allows.
 - §5 has never run.
