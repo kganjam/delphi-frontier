@@ -15,9 +15,28 @@ open and what each question is blocked on.
 |---|---|---|---|
 | Water-exit speed | 4.37 m/s | 0.45–1.38 m/s *measured* | **3.2×** *(vs the fastest of 50 fish; 9.7× vs the slowest)* |
 | Launch kinetic energy | 3.82 mJ | — | **10×** |
-| Tail-beat for a taxi | 132–199 Hz | 52 Hz *measured* | **2.5–3.8×** |
+| Tail-beat for a taxi | 132–199 Hz *(contested: see below)* | 52 Hz *measured* | **2.5–3.8×** *(or 1.4–1.6×)* |
 | Pectoral muscle fraction | 7.5–20% | 1.4% *measured* | **5–15×** |
 | Muscle energy per stroke (spring route) | 98.5 J/kg | 32–81 J/kg *measured spring-loading work* (mean 53) | **1.2–3.1×** |
+
+:::{caution} The tail-beat row rests on a contested regime assignment
+The 132–199 Hz figure comes from applying the Strouhal numbers of **small, low-Reynolds swimmers**
+— goldfish **0.54 at Re 7.1×10³**, tadpole 0.79 — on the argument that a 4 cm zebrafish is that
+case. A recovered replication recomputes Eloy's `St_opt = 0.75·Li^(1/3)` **at the taxi operating
+point** and gets St ≈ 0.30–0.34, hence **72–83 Hz** and a **1.4–1.6×** shortfall.
+
+**Both arithmetics are correct.** Checked here: St 0.54 → 131.6 Hz and St 0.30–0.34 → 73–83 Hz,
+reproducing each side exactly. The dispute is entirely *which Strouhal applies*.
+
+**And the operating point is not where the borrowed value was measured.** A 4 cm body at 1.95 m/s
+in water is **Re ≈ 7.8×10⁴**; even the caudal lobe alone is ≈2×10⁴. The goldfish value was taken
+at **7.1×10³** — a factor of **11** (or 3, lobe-only) away, in the direction where Strouhal falls
+toward the 0.2–0.4 band.
+
+**Unresolved.** Eloy's Lighthill-number formula has not been independently re-derived here, so
+this is not a verdict for the replication — it is a statement that the row inherits a value from
+a regime an order of magnitude away and did not say so.
+:::
 
 :::{warning} Corrected 2026-11-04 — the last row's arithmetic did not work
 It read *"98.5 J/kg | **8.6 J/kg** delivered | 1.9×"*, and 98.5 / 8.6 is **11.45**, not 1.9.
