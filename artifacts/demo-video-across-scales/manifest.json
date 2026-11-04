@@ -117,5 +117,26 @@
     "integrated_loudness_lufs": -15.6,
     "true_peak_dbfs": -3.4
   },
-  "scientific_scope": "Vision film combining conceptual illustrations and recorded computational outputs with their displayed limits. It does not establish a validated living organism or functional whole-organism DNA."
+  "scientific_scope": "Vision film combining conceptual illustrations and recorded computational outputs with their displayed limits. It does not establish a validated living organism or functional whole-organism DNA.",
+  "editable_archive": {
+    "build_instructions": "build/README.md",
+    "voice_instructions": "build/VOICE.md",
+    "edit_profiles": [
+      "edits/90s.json",
+      "edits/60s.json"
+    ],
+    "asset_manifest": "sources/assets.json",
+    "audio_manifests": [
+      "audio/90s/manifest.json",
+      "audio/60s/manifest.json"
+    ],
+    "dialogue_files": [
+      "delphi-bio-across-scales-90s.txt",
+      "delphi-bio-across-scales-60s.txt"
+    ],
+    "publishing_copy": "copy/",
+    "simulation_inventory": "inventory/simulation-inventory.json",
+    "capture_catalog": "sources/site-captures/index.html",
+    "scope": "Retained source bytes and portable adapters for editing and rebuilding both cuts; local caches and private service/session data excluded."
+  }
 }
