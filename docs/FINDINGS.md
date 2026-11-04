@@ -17,7 +17,7 @@ open and what each question is blocked on.
 | Launch kinetic energy | 3.82 mJ | — | **10×** |
 | Tail-beat for a taxi | 132–199 Hz | 52 Hz *measured* | **2.5–3.8×** |
 | Pectoral muscle fraction | 7.5–20% | 1.4% *measured* | **5–15×** |
-| Muscle energy per stroke (spring route) | 98.5 J/kg | 53–81 J/kg *best measured spring-loading work* | **1.2–1.9×** |
+| Muscle energy per stroke (spring route) | 98.5 J/kg | 32–81 J/kg *measured spring-loading work* (mean 53) | **1.2–3.1×** |
 
 :::{warning} Corrected 2026-11-04 — the last row's arithmetic did not work
 It read *"98.5 J/kg | **8.6 J/kg** delivered | 1.9×"*, and 98.5 / 8.6 is **11.45**, not 1.9.
@@ -97,14 +97,19 @@ the paper states.
 quantitative where the argument above uses only size-independence, which suggested the muscle
 requirement is really ~**296 J/kg** — turning a 1.2–1.9× shortfall into 3.6–5.6×.
 
-**It does not hold.** The 53–81 J/kg figures are described as the best ***measured* spring-loading
-work**, so whatever length–tension limit Sutton quantifies is **already reflected in them**.
-Multiplying by three on top counts the same limitation twice. The headline number does not move.
+**It does not hold, and the source settles it.** The figures come from **Mendoza & Azizi 2021,
+*"Tuned muscle and spring properties increase elastic energy storage"*, J Exp Biol 224(24),
+[doi:10.1242/jeb.243180](https://doi.org/10.1242/jeb.243180)** — muscle stretching its own series
+tendon in situ in Cuban tree frogs. These are **measurements of muscle work into a spring**, so
+whatever length–tension limit Sutton quantifies is already reflected in them. Multiplying by three
+on top counts the same limitation twice.
 
-*Not verified:* the primary source behind the frog 53 and 81 J/kg figures. A literature search did
-not locate it, so this rests on the word "measured" in the claim rather than on reading the
-measurement. **If those turn out to be a muscle's theoretical capacity rather than a spring-loaded
-measurement, the lead reopens.**
+**But tracing it corrected the row in the other direction.** Mendoza & Azizi measured
+**32–81 J/kg, mean 53** — and this table had been quoting **53–81**, i.e. mean-to-max, silently
+dropping the low end. The source subproblem S29 states the shortfall as **1.2–3.1×**; the table
+said 1.2–1.9×.
+
+**So the spring route is worse than this document has been reporting, not better.** Corrected above.
 :::
 
 And the hard reality check forced a reinterpretation rather than a tuning. The scaling predicts no

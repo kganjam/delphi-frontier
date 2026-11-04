@@ -26,7 +26,10 @@ ROWS = [
     ("tail-beat for a taxi hi",199.0, 52.0,  52.0,   3.8,  3.8,  0.1),
     ("pectoral muscle fraction", 7.5,  1.4,   1.4,   5.0,  5.0,  0.4),
     ("pectoral muscle frac hi",  20.0, 1.4,   1.4,  14.3, 15.0,  0.8),
-    ("muscle energy per stroke", 98.5, 53.0, 81.0,   1.2,  1.9,  0.1),
+    # Mendoza & Azizi 2021 measured 32-81 J/kg, mean 53. The table quoted 53-81 -- mean to max --
+    # which silently dropped the low end and understated the shortfall as 1.2-1.9x. S29, the source
+    # subproblem, states 1.2-3.1x. An "available" range that starts at the MEAN is not a range.
+    ("muscle energy per stroke", 98.5, 32.0, 81.0,   1.2,  3.1,  0.1),
 ]
 
 
