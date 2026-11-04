@@ -584,12 +584,21 @@ one is a detail that changes nothing.**
 | 31 | and2's cysteine depletion is z = −1.6, not −2.02 | **replication right, on method** — p flips 0.022 → 0.055 across the boundary, and z = −2.02 only appears at a window that fails the project's own control. The zero close-pairs and absent CxxC *do* reproduce |
 | 207 | the challenger survival rate | **original right** — the replication counted git blocks, a biased subset of the database |
 
-**13 remain unread.** They are stored as `artifact_signal` rows with `voter_kind: agent` and can
-be listed from the graph.
+| 31 | and2's cysteine depletion is not significant | **replication right, on method** — p flips 0.022 → 0.055, and z = −2.02 only appears at a window failing the project's own control |
+| 201, 260 | lower bounds and a pitch mode differ | **minor** — the replications state the conclusions stand; 201's moment and bone section *reproduce exactly* |
+| 11 | the a3m holds 76 records, not 72 | **undecidable here** — the file was never committed ([claim 210](#)); the substantive part, that top hits are real K2P structures, is confirmed |
+| 296, 181 | loop delay and actinotrichial modulus | **unresolved** — in both, the replication could not verify the inputs its own alternative needs |
+| 29 | and1 does depart from the shuffle null | **source-only** — two replications agree and cite the claim's own table against it; not re-run here |
 
-**The uncomfortable summary:** of the five adjudicated, the arm was right twice, wrong once, and
-raised two open questions — and one of its correct findings was in this document's **lead
-sentence**. The bug that discarded it was a dispatch with three branches for four kinds.
+**All 17 have now been read.** They are stored as `artifact_signal` rows with `voter_kind: agent`.
+
+**Final tally: the arm was right 4 times, wrong twice, raised 4 unresolved or immaterial
+questions, and exposed one internal inconsistency.** Two of its correct findings were in this
+document's headline material — the lead deliverable and the top recommended experiment.
+
+**The uncomfortable summary:** the bug that discarded all of this was a dispatch with three
+branches for four kinds. It ran for the project's entire life, and the harvester printed a
+"blocks found" total that included the blocks it was dropping.
 
 ## What this does not establish
 
