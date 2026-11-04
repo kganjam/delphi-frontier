@@ -1,0 +1,143 @@
+---
+title: Fick diffusion and the critical length beyond which diffusive supply fails
+label: law-fick-diffusion
+---
+
+:::{important}
+**Constraining** — this law yields a number a design is checked against.
+:::
+
+## The law
+
+:::{math}
+:label: eq-fick-diffusion
+L_{\mathrm{crit}} = \sqrt{\frac{k\, D\, C_0}{q}}
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `L_crit` | L | m | largest supply distance (slab half-thickness, or cylinder/sphere radius) at which the far-boundary concentration is still >= 0 |
+| `k` | 1 | dimensionless | geometry factor 2n for supply from the outer surface of an n-dimensional body: 2 slab (supplied both faces), 4 solid cylinder, 6 sphere |
+| `D` | L^2/T | m^2/s | diffusion coefficient of the solute in the consuming medium |
+| `C0` | N/L^3 | mol/m^3 | concentration held at the supplied surface (replace by C0 - C_min for a viability threshold above zero) |
+| `q` | N/(L^3*T) | mol/(m^3*s) | volumetric consumption rate, assumed uniform and independent of C (zero-order) |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `k_geometry` | 2, 4 or 6 | Not measured: derived. For C(r) = C0 - q(R^2 - r^2)/(2nD), the n-dimensional radial Laplacian of r^2 is 2n, so the centre drop is qR^2/(2nD) and k = 2n. I re-derived this in this session (calculation, not observation). It holds ONLY for supply from the outer surface; it does not hold for supply from a central vessel (Krogh geometry, see where_it_breaks). |
+| `D_O2_water_20C` | 1.97e-09 (interval 1.97e-09 to 3.24e-09) m^2/s | 1.97e-5 cm^2/s at 20 C and 3.24e-5 cm^2/s at 40 C, a table attributed to Weast (1969) on a Cornell compost-science page, read at search-summary level only. The interval is the 20-40 C temperature span, NOT a measurement uncertainty. Lango et al. (1996) review 166 references and report that investigators' D values differ significantly from one another; I did not obtain their preferred values (search-summary only), so the between-lab spread is `unknown` here. |
+| `D_O2_water_28C` | 2.48e-09 m^2/s | CALCULATED by me: linear interpolation between the 20 C and 40 C values above, to the usual zebrafish husbandry temperature. Not a measurement. |
+| `D_O2_tissue_37C` | 1.75e-09 m^2/s | One tissue (DS-carcinosarcoma) at 37 C, seen in a search summary only. The same summary states that tissue D is generally 25-50% below the value in water. D in zebrafish tissue: `unknown`; not found in the searches listed under sources. |
+| `C_O2_air_saturated_freshwater_25C` | 0.258 mol/m^3 | 8.26 mg/L at 25 C, sea-level air saturation, as returned by two calculators that attribute the equation to Benson & Krause (search-summary). 8.26 / 31.999 g/mol = 0.258 mol/m^3 is my conversion. The sources disagree on the citation year (1980 vs 1984); left unresolved. |
+| `q_zebrafish_tissue` | unknown | Volumetric O2 consumption of zebrafish larval tissue. Barrionuevo & Burggren (1999) measured whole-animal MO2 across development but the search summaries I obtained did not give the values, and the full text host was not reachable from this session. Not invented here. |
+
+## Why it holds
+
+Fick's first law makes flux proportional to the concentration gradient, J = -D dC/dx. In a body that consumes the solute throughout its volume while receiving it only at its surface, the gradient needed to carry the full demand grows with depth: supply scales with surface area and the gradient, demand with volume. Solving D * laplacian(C) = q with C = C0 at the surface gives a parabolic profile whose depth of zero concentration is L_crit. The companion scaling t ~ L^2/(2D) says the same thing in time: diffusion is fast over micrometres and hopeless over centimetres, because time grows with the SQUARE of distance. Any tissue thicker than L_crit must either lower q, raise C0, shorten the path (flatten, fold, hollow out) or add convection.
+
+## Where it holds
+
+- **transport**: pure molecular diffusion, Peclet number U*L/D well below 1
+- **kinetics**: zero-order uptake (q independent of C), uniform in space
+- **geometry**: solute supplied from the OUTER surface of a slab, solid cylinder or sphere
+- **state**: steady
+- **taxa**: ['unicells', 'embryos and early larvae', 'avascular tissue layers', 'cell spheroids and organoids', 'biofilms']
+- **notes**: Concentration-driven Fickian diffusion in a dilute, homogeneous medium. The equation is exact for its idealisation; its predictive value is limited by how well q and D are known, and q is usually the worst-known input by far.
+
+
+:::{danger} Where it breaks
+Fails once convection, vessel-fed geometry, non-zero-order uptake, carriers, or the wrong choice of length enter; seven boundaries follow. (1) CONVECTION. Once Pe = U*L/D exceeds about 1 the solute is carried, not diffused, and L_crit no longer bounds anything. This is the threshold every circulated or ventilated animal crosses: for O2 in water at 20 C, flow of only 1 mm/s over 10 um already gives Pe ~5 (calculated). The law describes the regime BEFORE circulation matters, and the size at which circulation becomes necessary. (2) KROGH (VESSEL-SUPPLIED) GEOMETRY. Tissue fed from a central capillary is not the k = 4 solid cylinder. The annular solution (derived by me in this session, D (1/r)(r C')' = q, C(r_c) = C_c, no flux at R) is C(r) = C_c + (q/4D)(r^2 - r_c^2) - (q R^2/2D) ln(r/r_c), and the supportable radius is only about 0.40-0.61 of sqrt(4 D C_c/q) for r_c/that-length = 0.01-0.1 (calculated). Using the outer-supply formula for a capillary-fed tissue overestimates the supportable radius by roughly 1.6-2.5x. (3) NON-ZERO-ORDER KINETICS. With Michaelis-Menten uptake the rate falls as C -> 0, so C approaches zero without reaching it at finite size; "first anoxic point" then does not exist and the zero-order L_crit is a conservative bound, not a prediction. Cells usually fail at a C_min above zero, so use C0 - C_min. (4) FACILITATED OR PARALLEL CARRIERS. Myoglobin or haemoglobin in the diffusing medium add a carrier flux that Fick-on-free-solute does not include. Whether this matters is regime-dependent (see contested_by for the zebrafish case). (5) THE WRONG LENGTH. The law applies to the thickness of the consuming layer, not the size of the organism. Thiomargarita magnifica reaches ~1-2 cm, but its cytoplasm is reported as a 1.8-4.8 um peripheral layer around a vacuole of 65-80% of cell volume (secondary sources); across that layer t = L^2/(2D) is ~1-6 ms for O2-like solutes at 20 C (calculated), versus ~7 h across 1 cm. It does not break Fick; it breaks a naive application of Fick to body length. (6) TEMPERATURE. D and especially q change with temperature, and not by the same factor; carrying a 37 C mammalian q into a 25-28 C fish is not licensed by this law. (7) NOT FICKIAN AT ALL. Diffusion in gas-filled tracheae becomes non-Fickian (Knudsen) when the tube diameter approaches the gas mean free path, and macromolecules in crowded cytoplasm can show anomalous (sub)diffusion where mean-squared displacement does not grow linearly with time. I did not source numbers for either in this session; stated qualitatively only.
+:::
+
+## Worked examples
+
+**generic, O2 in water at 20 C**
+
+```
+t = L^2/(2D), D = 1.97e-9 m^2/s: L = 1 um -> 2.5e-4 s; 100 um -> 2.5 s; 1 mm -> 254 s; 1 cm -> 2.5e4 s (7.1 h)
+```
+
+- value: `[0.00025, 2.54, 254, '2.54e4']`
+
+- CALCULATED. One-dimensional diffusion time scale; shows the L^2 penalty.
+
+- evidence: **derived**
+
+**Danio rerio larva, trunk treated as a solid cylinder supplied from the skin, 28 C**
+
+```
+Inverse use: q_max = 4 * D * C0 / R^2, C0 = 0.258 mol/m^3 (25 C value; the 28 C value is slightly lower and was not sourced), D = 2.48e-9 (water, interpolated) down to 1.24e-9 (50% tissue reduction). R = 100 um -> q_max 0.13-0.26 mol/(m^3*s); R = 200 um -> 0.032-0.064; R = 300 um -> 0.014-0.028. Assuming tissue density 1 g/cm^3 these are 460-920, 115-230 and 51-102 umol O2/(g*h).
+
+```
+
+- value range: `[0.014, 0.26]`
+
+- CALCULATED, and it is a CEILING, not a zebrafish estimate: the largest tissue consumption that skin-only diffusion could support at that radius. Whether real larval q lies above or below it is UNTESTED here, because measured volumetric q for zebrafish tissue is `unknown` (see constants). No zebrafish information enters this number except the temperature. I avoided deriving q from the mammalian "100-200 um from a capillary" rule, because that would make the result a rescaling of the mammalian figure.
+
+- evidence: **derived**
+
+**tumour cell spheroids (multiple lines)**
+
+```
+Inverse use, slab approximation (rim thin relative to spheroid radius): q/C0 = 2 D / delta^2. D = 1.75e-9 m^2/s (tissue, 37 C), delta = 100-250 um -> q/C0 = 0.35 down to 0.056 per second.
+
+```
+
+- value range: `[0.056, 0.35]`
+
+- The viable-rim thickness 100-250 um is reported in reviews (search-summary, observation by the cited authors). The q/C0 values are my CALCULATION. Expressing the result as q/C0 avoids having to assume a medium O2 concentration at 37 C, which I did not source.
+
+- evidence: **derived**
+
+**tumour cell spheroids**
+
+- Franko & Sutherland (1979) report that the square of viable-rim thickness increased linearly with the theoretically derived O2 diffusion distance across 5-20.3% O2 -- the delta^2 ~ C0 dependence this law predicts. Author's claim, read at search-summary level; I did not see the data.
+
+- evidence: **literature**
+
+**Krogh tissue cylinder around one capillary**
+
+```
+Solve 2 rho^2 ln(rho/rho_c) - (rho^2 - rho_c^2) = 1, lengths in units of sqrt(4 D C_c/q): rho_c = 0.01 -> rho_crit 0.397; 0.05 -> 0.520; 0.10 -> 0.614.
+
+```
+
+- value: `[0.397, 0.52, 0.614]`
+
+- CALCULATED by bisection in this session. Shows that a vessel-supplied cylinder supports about half the radius of a skin-supplied one at equal D, q and source concentration.
+
+- evidence: **derived**
+
+:::{seealso} Contested
+- Is O2 delivery in the zebrafish embryo diffusion-sufficient? Pelster & Burggren (1996): disabling haemoglobin with CO did not reduce whole-embryo O2 consumption, and they conclude diffusion is sufficient. Rombough & Drader (2009): in larvae (study range reported as 5-42 dpf) haemoglobin improved O2 extraction, but only under extreme hypoxia. Both are author claims at search-summary level. My inference, not theirs: CO ablation leaves the heart beating and blood flowing, so neither study isolates diffusion-only supply from convective mixing; they bound the carrier contribution, not L_crit.
+
+- When do larval zebrafish outgrow skin diffusion? Rombough (2002) concludes gills become necessary for ionoregulation before O2 uptake; the abstract as summarised reports that at 14 dpf both hyperoxia and 50% saline improved survival of gill-impaired larvae (gills needed for both), and that at 21 dpf only hyperoxia did. Secondary sources cite ~14 dpf as when gills take over O2 uptake. Recorded as reported; not reconciled.
+
+- Thiomargarita magnifica: the Natural History Museum summary says it exceeds the theoretical growth limit; other commentary questions whether it bears on the bacterial size limit at all. This entry's reading (item 5 of where_it_breaks) is that the relevant length is the thin cytoplasmic layer, which is my inference from the reported anatomy.
+
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Fick A (1855) Ueber Diffusion. Annalen der Physik 170(1):59-86 | `could-not-access` |
+| Weast RC (ed.) (1969) Handbook of Chemistry and Physics -- O2 diffusion coefficients in water at 20 and 40 C, as tabulated at compost.css.cornell.edu/oxygen/oxygen.diff.water.html | `search-summary` |
+| Lango T, Morland T, Brubakk AO (1996) Diffusion coefficients and solubility coefficients for gases in biological fluids and tissues: a review. Undersea & Hyperbaric Medicine 23(4) | `search-summary` |
+| Benson BB, Krause D (1980 or 1984; sources disagree) O2 solubility in fresh water, Limnology and Oceanography -- via USGS DOTABLES and Benson-Krause-based calculators | `search-summary` |
+| Franko AJ, Sutherland RM (1979) Oxygen diffusion distance and development of necrosis in multicell spheroids. Radiation Research | `search-summary` |
+| Pelster B, Burggren WW (1996) Disruption of hemoglobin oxygen transport does not impact oxygen-dependent physiological processes in developing embryos of zebra fish (Danio rerio). Circ Res 79(2):358-362. doi:10.1161/01.res.79.2.358 | `search-summary` |
+| Rombough P, Drader H (2009) Hemoglobin enhances oxygen uptake in larval zebrafish (Danio rerio) but only under conditions of extreme hypoxia. J Exp Biol 212(6):778-784. doi:10.1242/jeb.026575 | `search-summary` |
+| Rombough P (2002) Gills are needed for ionoregulation before they are needed for O2 uptake in developing zebrafish, Danio rerio. J Exp Biol 205:1787-1794 | `search-summary` |
+| Barrionuevo WR, Burggren WW (1999) O2 consumption and heart rate in developing zebrafish (Danio rerio): influence of temperature and ambient O2. Am J Physiol 276:R505-R513 | `search-summary` |
+| Volland J-M et al. (2022) A centimeter-long bacterium with DNA contained in metabolically active, membrane-bound organelles. Science 376(6600):1453-1458. doi:10.1126/science.abb3634 | `search-summary` |
+| Krogh A (1919) The number and distribution of capillaries in muscles with calculations of the oxygen pressure head necessary for supplying the tissue. J Physiol 52:409-415 | `could-not-access` |
+
+
+---
+
+*Generated from [`library/laws/fick-diffusion.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/fick-diffusion.yaml). Do not edit this page; edit the YAML.*
