@@ -102,8 +102,12 @@ def gen_challenges(accts, i=0):
             Write docs/research/fish/challenge-{cid}.md on a new branch and commit, ending with:
             ```swarm-challenge
             {{"claim_id": {cid}, "outcome": "survived|refuted|weakened", "reason": "<one sentence>",
-              "corrected_value": "<value with units, or null>"}}
+              "corrected_value": "<value with units, or null>",
+              "depends_on": ["<each input YOUR verdict rests on>"]}}
             ```
+
+            `depends_on` is required. A verdict rests on inputs exactly as the claim it judges does,
+            and when one of those is later refuted your verdict must be flagged too.
         """).strip()
         r = subprocess.run(["orchestra","cloud","start","--account",acct,"--dir",WORKDIR,"--prompt",prompt],
                            capture_output=True, text=True, timeout=300)
@@ -250,8 +254,14 @@ def gen_deepen(accts, i=0, limit=10):
             Write docs/research/fish/{sid}-deepen.md on a new branch and commit, ending with:
             ```swarm-result
             {{"subproblem": "{sid}-D", "evidence": "<level>", "answer": "<one sentence>",
-              "key_number": "<the improved input, with units>", "verdict": "stands|strengthens|falls"}}
+              "key_number": "<the improved input, with units>", "verdict": "stands|strengthens|falls",
+              "depends_on": ["<each input your conclusion rests on: a law id, a claim, a measured value>"]}}
             ```
+
+            `depends_on` is NOT optional and is not bookkeeping. When an input is later refuted, the
+            graph walks these edges to flag every conclusion that rested on it. An omitted edge means
+            your conclusion keeps standing on a premise that has been withdrawn, and nothing will
+            notice. List every input, including the ones you think are safe.
         """).strip()
         r = subprocess.run(["orchestra","cloud","start","--account",acct,"--dir",WORKDIR,"--prompt",prompt],
                            capture_output=True, text=True, timeout=300)

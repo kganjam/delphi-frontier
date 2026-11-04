@@ -89,14 +89,20 @@ def main() -> int:
         if os.path.exists("/data/swarm/monitor.log") else 1e9
 
     # Burn projection. The only question that matters before the deadline.
-    dt_h = (now - prev.get("t", now - 1)) / 3600 if prev else 0
-    burn = ((prev.get("left", left) - left) / dt_h) if dt_h > 0.05 else 0.0
+    # The credit endpoint updates in batches, so two samples minutes apart can read identical and
+    # produce a spurious "$0/h, nothing is being spent" alarm while 30 sessions are billing. Require
+    # a baseline long enough for the figure to have moved, and keep the LAST baseline that did move
+    # rather than overwriting it every run -- otherwise a fast loop can never measure a burn at all.
+    base_t, base_left = prev.get("base_t", now), prev.get("base_left", left)
+    dt_h = (now - base_t) / 3600
+    burn = ((base_left - left) / dt_h) if dt_h >= 0.25 else None   # need >= 15 min of baseline
     need = (left / hours_left) if hours_left > 0.1 else float("inf")
-    projected = left - burn * hours_left
+    projected = (left - burn * hours_left) if burn is not None else left
 
     print(f"=== progress {datetime.now(timezone.utc).astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')} ===")
     print(f"  credit      ${left:.2f} left of ${START_CREDIT:.2f}  (spent ${spent:.2f})  {hours_left:.1f}h to expiry")
-    print(f"  burn        ${burn:.0f}/h observed   ${need:.0f}/h NEEDED to finish   -> projected leftover ${max(0,projected):.0f}")
+    btxt = f"${burn:.0f}/h observed" if burn is not None else f"not yet measurable ({dt_h*60:.0f} min of baseline, need 15)"
+    print(f"  burn        {btxt}   ${need:.0f}/h NEEDED to finish   -> projected leftover ${max(0,projected):.0f}")
     print(f"  sessions    {running} running        monitor.log {mon_age:.0f} min old")
     print(f"  knowledge   {claims} claims ({sup} superseded), {chal} challenges resolved, {answered} subproblems answered")
     print(f"  content     {laws} law entries, {branches} claude branches, {commits_1h} commits in the last hour")
@@ -106,7 +112,7 @@ def main() -> int:
         alarms.append(f"monitor.log is {mon_age:.0f} min stale -- the generator may be dead")
     if running < 10:
         alarms.append(f"only {running} sessions running; credit cannot be spent at this rate")
-    if hours_left > 0.5 and burn < need * 0.6 and dt_h > 0.05:
+    if hours_left > 0.5 and burn is not None and burn < need * 0.6:
         alarms.append(f"burn ${burn:.0f}/h is below the ${need:.0f}/h needed; ~${max(0,projected):.0f} will expire unused")
     if prev and claims <= prev.get("claims", 0) and commits_1h == 0:
         alarms.append("no new claims and no commits in the last hour -- nothing is being learned")
@@ -119,7 +125,11 @@ def main() -> int:
     else:
         print("\n  no alarms")
 
-    json.dump({"t": now, "left": left, "claims": claims, "running": running, "laws": laws}, open(STATE, "w"))
+    st = {"t": now, "left": left, "claims": claims, "running": running, "laws": laws,
+          "base_t": base_t, "base_left": base_left}
+    if abs(base_left - left) > 0.01 and dt_h >= 0.25:      # baseline consumed; start a fresh one
+        st["base_t"], st["base_left"] = now, left
+    json.dump(st, open(STATE, "w"))
     return 2 if mon_age > 20 or running < 4 else (1 if alarms else 0)
 
 
