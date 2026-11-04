@@ -336,9 +336,29 @@ seeded defects are real errors this project made.**
   **But no model in reach predicts a modulus from a sequence.** ProteinMPNN designs sequences
   compatible with a *backbone*, not stiffer ones; ESMFold2 returns a structure and its own
   confidence. So a "stiffer actinodin variant" is not something this project can currently produce
-  or evaluate, and any such design would be a claim with nothing behind it. The honest status of
-  this capability is **no demonstrated allele and no in-silico route**, which is strictly worse
-  than the edit-stack table alone suggests.
+  or evaluate, and any such design would be a claim with nothing behind it.
+
+  **Folding it made that sharper: the question is at the wrong level of description.** MSA-free
+  ESMFold2 on `and1` returns **pTM 0.202**, mean pLDDT **69.7**, only **2.8 %** of residues above
+  90, and a longest ordered stretch of **49 residues**. The control is `slc43a2a` WT — same model,
+  same settings, same day, 577 aa against 570 — at **pTM 0.823**, mean **85.9**, **58.1 %** above
+  90, **477** residues above 70.
+
+  | | slc43a2a (control) | and1 |
+  |---|---|---|
+  | pTM | 0.823 | **0.202** |
+  | mean pLDDT | 85.9 | 69.7 |
+  | residues > 90 | 58.1 % | **2.8 %** |
+  | longest run > 70 | 477 | **49** |
+
+  ESMFold2 is MSA-free, so **both got identical (absent) alignment treatment** — the difference is
+  in the sequences, not an alignment-depth artifact. `and1` is predicted largely extended, with no
+  compact tertiary structure: what an extracellular fibrillar protein should look like.
+
+  So a fibrous protein's stiffness comes from **supramolecular assembly** — fibril packing and
+  cross-linking — and a single-chain monomer prediction cannot address that *even in principle*.
+  Adding a monomer stiffness predictor would not help. The honest status of this capability is
+  **no demonstrated allele, no in-silico route, and the available route is at the wrong level**.
 - The S26 active-stiffening margin rests on a boundary condition that **could not be verified**: the
   publisher blocks full text and the OA service 404s. The order of magnitude is confirmed by the
   paper's own abstract; the exact factor is not.
