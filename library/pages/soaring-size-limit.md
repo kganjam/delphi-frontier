@@ -1,0 +1,84 @@
+---
+title: Maximum size for powered and soaring flight
+label: law-soaring-size-limit
+---
+
+:::{important}
+**Constraining** — this law yields a number a design is checked against.
+:::
+
+## The law
+
+:::{math}
+:label: eq-soaring-size-limit
+f_{\max} \propto M^{-0.30}\ (\mathrm{CI}\ {-}0.33, {-}0.27), \qquad f_{\mathrm{req}} \propto M^{-0.18}\ (\mathrm{CI}\ {-}0.20, {-}0.16)
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `f_flap` | 1/T | Hz | flapping frequency -- the HIGH frequency an animal can achieve, or the LOW frequency it requires, depending on which fit is used |
+| `M` | M | kg | body mass |
+| `k_f` | M^0.30/T | Hz kg^0.30 | the fit coefficient; its fractional mass dimension marks this as a regression |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `soaring_mass_limit_kg` | 41 (interval 26 to 75) | Sato et al. 2009: the upper limit for ALBATROSS-LIKE SOARING animals, at a 5.1 m span. The 95 per cent interval is 26-75 kg and it is wide for a reason given in the worked example. This is NOT a general limit on powered flight, a misreading that is in circulation. |
+| `achievable_frequency_exponent` | -0.3 (interval -0.33 to -0.27) | Sato et al., 26 birds of 5 species. The prediction was M^(-1/3) = -0.333, which lies just inside the interval. |
+| `required_frequency_exponent` | -0.18 (interval -0.2 to -0.16) | Same study. The prediction was M^(-1/6) = -0.167, just inside the interval. The limit is where the two lines cross. |
+| `azhdarchid_mass_kg` | 225 (interval 200 to 250) | Witton & Habib 2010 for Quetzalcoatlus northropi, with 10-11 m spans, described as the most reliable upper estimates. About five times Sato's soaring limit. |
+| `argentavis_mass_kg` | 70 | Chatterjee et al. 2007. Probably too large for continuous flapping flight or standing take-off under its own muscle power; glide angle about 3 degrees, cruise 67 km/h. The ~7 m span often quoted is remembered, not retrieved. |
+
+## Why it holds
+
+Power available from flapping muscle falls with size faster than the power required to stay aloft rises, so the two curves cross. Sato et al. make this concrete and measurable by fitting the high and low flapping frequencies of real birds separately: the frequency an animal CAN achieve scales as M^-0.30 and the frequency it REQUIRES as M^-0.18. Above the crossing mass, albatross-like animals cannot flap fast enough to stay aloft under unfavourable wind conditions. Pennycuick 1969 reaches the same qualitative conclusion from the power curve, noting that small birds have a greater margin of power available over power required than large ones.
+
+## Where it holds
+
+- **flight mode**: albatross-like dynamic soaring with intermittent flapping
+- **taxa**: procellariiform seabirds; 26 birds of 5 species
+- **notes**: The number is a limit for ONE flight mode measured on ONE clade. Pennycuick's separate statement that there is an upper limit for flying birds generally, approximately the Kori bustard Ardeotis kori, is a different claim with a different basis.
+
+
+:::{danger} Where it breaks
+It fails on taxa with a different launch mechanism, and the failure is a factor of five rather than a margin. Witton & Habib 2010 explicitly reject bird-derived limits for pterosaurs: giant azhdarchids reached 200-250 kg and 10-11 m spans and launched from a standing quadrupedal start, vaulting over their forelimbs, which changes the take-off power budget entirely. The same authors note that fossil birds much larger than living bustards, such as Argentavis, appear to have been capable of launch and flight. Ksepka 2014 reports that Pelagornis sandersi's conservative ~6.4 m span already exceeds theoretical maxima based on extant soaring birds. The lesson generalises: TAKE-OFF, NOT CRUISE, IS THE BINDING CONSTRAINT, and a limit derived from cruise frequencies of extant birds says nothing about an animal that launches differently. For insects the size question is not even settled in the same terms -- Harrison et al. 2010 conclude the fossil record makes it impossible to definitively accept or reject the oxygen-size link for the largest Palaeozoic forms. Applying 41 kg as "the limit for flight" is therefore wrong in both directions: too low for a differently-launching animal, and not a statement about flapping fliers at all.
+:::
+
+## Worked examples
+
+**why the confidence interval is so wide (26-75 kg on a 41 kg estimate)**
+
+```
+available-over-required frequency ratio scales as M^(-0.30 + 0.18) = M^-0.12
+at twice the limit mass, 82 kg: 2^-0.12 = 0.92 of its value at the crossing
+
+```
+
+- value: `0.92`
+
+- The margin closes by only 8 per cent per doubling of mass. A shallow crossing is poorly localised by definition, which is why the interval spans nearly a factor of three. That is a property of the method, not noise in the data, and it means the limit should be quoted as 26-75 kg rather than as 41 kg.
+
+- evidence: **derived**
+
+:::{seealso} Contested
+- There is no single limit. Sato et al. 2009 give 41 kg for soaring; Pennycuick 1969 gives approximately the Kori bustard for birds generally; Witton & Habib 2010 give 200-250 kg for quadrupedally launching pterosaurs; Ksepka 2014 reports a fossil bird already exceeding extant-derived maxima. These are limits for DIFFERENT flight and launch modes and they are preserved as such rather than reconciled into one number.
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Sato K et al. (2009) PLoS ONE 4:e5400, doi 10.1371/journal.pone.0005400, PMC2670537 | `full-text` |
+| Witton MP, Habib MB (2010) PLoS ONE 5:e13982, On the size and flight diversity of giant pterosaurs, doi 10.1371/journal.pone.0013982, PMC2981443 | `full-text` |
+| Chatterjee S, Templin RJ, Campbell KE (2007) PNAS 104:12398-12403, The aerodynamics of Argentavis, doi 10.1073/pnas.0702040104 | `abstract` |
+| Ksepka DT (2014) PNAS 111:10624-10629, Flight performance of the largest volant bird, doi 10.1073/pnas.1320297111 | `abstract` |
+| Harrison JF, Kaiser A, VandenBrooks JM (2010) Proc R Soc B 277:1937-1946, Atmospheric oxygen level and the evolution of insect body size, doi 10.1098/rspb.2010.0001 | `abstract` |
+| Pennycuick CJ (1969) Ibis 111:525-556, The mechanics of bird migration, doi 10.1111/j.1474-919x.1969.tb02566.x | `abstract` |
+
+
+---
+
+*Generated from [`library/laws/soaring-size-limit.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/soaring-size-limit.yaml). Do not edit this page; edit the YAML.*

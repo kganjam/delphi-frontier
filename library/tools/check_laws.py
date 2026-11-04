@@ -113,7 +113,17 @@ def eval_side(expr: str, dims: dict) -> Dim:
 
 def check_entry(path: Path) -> list[str]:
     problems = []
-    doc = yaml.safe_load(path.read_text())
+    # A malformed entry must be ONE file's problem, not a traceback that aborts the run and leaves
+    # every other entry unchecked -- an unparsed file and a passing file looked the same from the
+    # exit code. The commonest cause is a LaTeX control sequence in a double-quoted scalar: `\;` is
+    # a thin space to LaTeX and an invalid escape to YAML.
+    try:
+        doc = yaml.safe_load(path.read_text())
+    except yaml.YAMLError as e:
+        first = str(e).strip().splitlines()[0]
+        return [f"{path.name}: not valid YAML: {first}"]
+    if not isinstance(doc, dict):
+        return [f"{path.name}: top level is {type(doc).__name__}, expected a mapping"]
     for f in MANDATORY:
         v = doc.get(f)
         if v is None or (isinstance(v, str) and not v.strip()):
