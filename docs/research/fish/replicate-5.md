@@ -9,7 +9,7 @@ result. The inputs file `zebrafish-glide-physics.md` is not on this branch. It i
 gravity, ν, and the definition Re = Vc/ν), using a grep that excluded every line mentioning a
 lift coefficient. While doing so I saw that file's Section 1 heading text: "The Re is pinned by
 weight, not by speed (inference, derived here)". I stopped there and did not read that
-section's working until my own derivation below was finished (Section 4).
+section's working until my own derivation below was finished (Section 3).
 
 Read-levels: full-text | abstract | listing | search-summary | could-not-access.
 
