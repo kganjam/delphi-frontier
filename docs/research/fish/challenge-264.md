@@ -32,12 +32,14 @@ read it in full.
 | Le Bleu HK, Kioussi RG, Henner AL, Lewis VM, Stewart S, Stankunas K. *Development* 2025;152(23):dev204739 | **full-text, first 100 kB of 106 kB** (PMC13078715) | `cacna1g` LOF phenotype; Ca²⁺ blockers; confirms *no* voltage dye used |
 | Kujawski S, Lin W, … Antos CL. *Dev Cell* 2014;28:573–587 | **listing** (Europe PMC metadata only) | citation verification for the FK506 result only |
 | Silic MR, Zhang G. *Cells* 2023;12(8):1148 | **full-text, first 100 kB of 314 kB** (PMC10137051) | independent corroboration that no fin-cell Vm exists; GEVI inventory |
-| Aramaki T, Kondo S. bioRxiv 10.1101/2024.03.27.587111 | **abstract only** — see §5c | cell-type-specific `kcnk5b` W169L; optogenetic Vm manipulation |
+| Aramaki T, Kondo S. bioRxiv 10.1101/2024.03.27.587111 | **abstract + search-summary** — see §5c | cell-type-specific `kcnk5b` W169L; optogenetic Vm manipulation |
 
 **Access failure, stated precisely:** I could not read the Aramaki & Kondo full text. bioRxiv returned HTTP 429 /
-Cloudflare error 1015 on five attempts across ~15 minutes (direct HTML, `.full`, `.full.pdf`); Europe PMC
-`fullTextXML` for `PPR830054` returned HTTP 500; `europepmc.org/article/PPR/PPR830054` returned HTTP 403. I therefore
-report its abstract only, and flag in §5c exactly which part of my verdict is exposed as a result.
+Cloudflare error 1015 on **eight** attempts across ~35 minutes (direct HTML, `.full`, `.full.pdf`, v1 and v2, three
+of them on a long backoff); Europe PMC `fullTextXML` for `PPR830054` returned HTTP 500;
+`europepmc.org/article/PPR/PPR830054` returned HTTP 403; `api.semanticscholar.org` and `api.unpaywall.org` are both
+blocked by this environment's egress proxy (HTTP 403 on CONNECT). I therefore report its abstract, plus one
+**search-summary**-level pass over indexed full-text snippets (§5c) which I flag as unverified against the source.
 
 **Publication status checked, not assumed:** the bioRxiv API (`api.biorxiv.org/pubs/...`) returns
 `no articles found for published version` for 10.1101/2024.03.27.587111; `api.biorxiv.org/details/...` lists v1
@@ -222,21 +224,41 @@ source's own expectation points depolarising.
 **(b) Daane et al. 2018 conductance-sign inconsistency — missed; strongest available support for the verdict.**
 Treated in §3.
 
-**(c) Aramaki & Kondo (bioRxiv 10.1101/2024.03.27.587111) — missed; the one live risk to the verdict.**
-Abstract-level only (access failure documented in §0). They expressed "the hyperactive potassium channel mutant
-kcnk5b W169L or the dominant-negative connexin mutant Cx43 T154A under a common set of cell-type-specific
-promoters", and report that "optogenetic manipulation demonstrated that membrane potential itself can regulate fin
-size and fin-ray segment length."
+**(c) Aramaki & Kondo (bioRxiv 10.1101/2024.03.27.587111) — missed; the strongest counter-pressure on the claim's
+*reasoning*, though not on its verdict.** Abstract-level plus search-summary only (access failure documented in §0).
 
-**This is the closest thing in the literature to a causal in vivo test of V_m as the fin-size variable**, and I could
-not read which actuator was used, which cell type it targeted, or **which direction** of V_m change enlarged fins.
-Stated precisely: if that experiment imposed *hyperpolarisation* in a defined fin cell type and enlarged fins, it
-would supply in vivo causal support for the sign that the claim says has only ever been seen in oocytes — and the
-claim's premise would move from "not established" toward "established, in a preprint". Two things limit that
-exposure: it remains an unpublished preprint after ~2.6 years (§0), and optogenetic actuation establishes
-*sufficiency of a V_m perturbation*, not the *resting V_m of the mutant fibroblast*, which is the quantity the
-claim's KEY says is unknown and which would still be unmeasured. **Anyone relying on this verdict should read that
-preprint's optogenetics section.** I did not, and I am not inferring its content from its abstract.
+From the **abstract** (reliable): they expressed "the hyperactive potassium channel mutant kcnk5b W169L or the
+dominant-negative connexin mutant Cx43 T154A under a common set of cell-type-specific promoters"; manipulation
+"in keratinocytes primarily affected fin size, whereas manipulation in osteoblasts preferentially altered fin-ray
+segment length"; and "optogenetic manipulation demonstrated that membrane potential itself can regulate fin size and
+fin-ray segment length."
+
+From **search-summary level only, NOT verified against the full text** — I flag this because it is load-bearing and
+my read-level for it is weak: indexed snippets indicate the optogenetic actuator was **ChR2, a depolarising tool**,
+and that the resulting phenotypic changes were **opposite to those of `kcnk5b` W169L** fish. No hyperpolarising
+actuator (ACR/Arch-class) appeared anywhere in my searches.
+
+**If that is right, it matters in two opposite directions, and I will not collapse them.**
+
+*Against the claim's reasoning.* Imposed depolarisation shrinking fins, mirroring a hyperactive-K⁺-channel
+enlargement, is the first **causal in vivo** evidence that V_m *sign* governs fin size, and it points the way the
+hyperpolarisation model predicts. That puts it in direct tension with the claim's second pillar — the DiSBAC2(3)
+depolarising sign in long fins. The two cannot both be straightforwardly true: dye says `alf` long fins are *more
+depolarised*, while ChR2 says *imposing* depolarisation makes fins *smaller*. The claim leans on the dye sign as
+counter-evidence without knowing that a causal manipulation points the other way. **This is a genuine weakness in
+the claim's argument that I did not find by any other route.** It is also, independently, a further reason to
+distrust the whole-fin dye average as a V_m proxy (§2).
+
+*For the claim's verdict nonetheless.* Three things keep the verdict standing. (i) The manipulations are in
+**keratinocytes / epidermal cells, not fibroblasts** — so this evidence does not establish the "fibroblast
+hyperpolarisation" premise the claim names; it relocates the size-controlling cell *away* from fibroblasts.
+(ii) ChR2 establishes that *imposing depolarisation* changes size; it neither imposes nor measures
+*hyperpolarisation*, so the hyperpolarising limb remains inferred from the mirror-image phenotype, not demonstrated.
+(iii) No resting V_m in mV is measured in any fin cell type, which is the KEY's actual quantity, and it remains an
+unpublished preprint after ~2.6 years (§0).
+
+**Anyone relying on this verdict should read that preprint's optogenetics section directly.** I could not, my
+actuator identification is search-summary level, and I am not treating it as established.
 
 **(d) Taxon check — flying fishes; no counter-example found.** Daane et al. 2021 (full-text) extends the
 bioelectric fin-size model across beloniforms. It reports **no membrane potential measurement in any fish fin cell
@@ -277,18 +299,29 @@ returned evidence *for* it that the claim had not collected:
 4. No fin-cell resting V_m in mV exists in any cell type, confirmed against a dedicated review that says so in
    its own words (§2).
 
+**But the verdict survives on a materially narrower basis than the claim argues**, and one of its three stated
+pillars is now contested. Per §5c, at search-summary read-level, Aramaki & Kondo's optogenetic ChR2 result indicates
+that *imposing* depolarisation changes fin size **opposite** to the hyperactive K⁺ channel — causal in vivo evidence
+pointing the way the hyperpolarisation model predicts, and in direct tension with the DiSBAC2(3) depolarising sign
+the claim relies on as counter-evidence. The verdict holds anyway because that work is in **keratinocytes, not
+fibroblasts**, imposes depolarisation rather than hyperpolarisation, measures no resting V_m in mV, and is an
+unpublished preprint. Had it hyperpolarised a defined fin cell type and enlarged fins, I would be returning
+`weakened` instead.
+
 Corrections the claim should carry: the KEY's "oocyte dVm = toward −90 to −100 mV" is the calculated K⁺ equilibrium
 potential, not a measured ΔV_m (§4, Defect 1); the measured oocyte quantity is a ~2× g_K increase, correlated across
 oocytes with more negative V_m, worth ≤ ~17 mV of hyperpolarisation in a linear two-conductance model
 (my calculation). The two in vivo dye readouts are different appendages, stages and genetic manipulations and are not
-independent replications (§4, Defect 2), and Jiang 2024's authors retain an upstream hyperpolarising step as a
-hypothesis (§4, Defect 2b).
+independent replications (§4, Defect 2); Jiang 2024's authors retain an upstream hyperpolarising step as a
+hypothesis (§4, Defect 2b); the dye sign is further undercut by the ChR2 result (§5c); and the claim's "fibroblast"
+cell assignment is correct for `lof`/`kcnh2a` but contested for `alf`/`kcnk5b` (§3).
 
-I did not manufacture a fault in the verdict because I did not find one. The one source that could overturn it
-(§5c) I could not read, and I say so rather than guessing its content.
+I did not manufacture a fault in the verdict because I did not find one. The source that could overturn it (§5c) I
+could not read at full-text level, and I report what indexed snippets say about it, labelled as such, rather than
+either guessing its content or suppressing it because it cuts against the claim.
 
 ---
 
 ```swarm-challenge
-{"claim_id": 264, "outcome": "survived", "reason": "The verdict holds and is understated: the hyperpolarisation premise rests only on Xenopus oocyte data that cannot transfer (voltage effect of a gK change is set by host conductance background), the lof/kcnh2a primary source never asserts hyperpolarisation and expects depolarising signals, and FK506/VIVIT decrease Kcnk5b conductance while alf increases it yet both enlarge fins -- a sign contradiction conceded by Daane 2018; the KEY's '-90 to -100 mV' is however the calculated K+ equilibrium potential, not a measured dVm.", "corrected_value": "in vivo fin-cell resting Vm for alf/lof: unknown in mV (confirmed negative across Perathoner 2014, Daane 2018, Stewart 2021, Daane 2021, Jiang 2024, Le Bleu 2025, Silic & Zhang 2023). Oocyte figure corrected: measured effect is ~2x gK; E_K = -100.5 mV calculated (2 mM/110 mM K+, 18 C), which is a thermodynamic ceiling, not a measured dVm; a 2x gK increase yields 9-17 mV of hyperpolarisation in a linear two-conductance model, not ~50 mV.", "depends_on": ["Perathoner 2014 PLoS Genet 10(1):e1004080 Fig. S4C DiSBAC2(3) whole-fin depolarisation in alf, p<0.001, N=21-23 (full-text)", "Perathoner 2014 Fig. 5 Xenopus oocyte ~2x gK increase and -90 to -100 mV identified by the authors as the K+ equilibrium potential (full-text)", "Xenopus oocyte intracellular [K+] ~110 mM and ND96 bath 2 mM KCl at 18 C, used for my E_K calculation", "linear two-conductance model Vm=(gK*EK+gL*EL)/(gK+gL) with EL=0 mV -- my model assumption, not an observation", "Daane 2018 Sci Rep 8:10391 FK506 and VIVIT DECREASE wild-type Kcnk5b conductance in oocytes, I290A lower and FK506-insensitive, and the authors' concession that opposite conductance directions give similar growth outcomes (full-text)", "Daane 2018 absence of any fin membrane-potential measurement (full-text)", "Stewart 2021 Development 148:dev199384 -- kcnh2a acts in intra-ray mesenchyme/fibroblast lineage, no Vm measured, 'hyperpolarization' absent, future work framed as 'putative depolarizing signals' (full-text)", "Jiang 2024 PLoS Biol 22(3):e3002565 -- DiSBAC2(3) depolarisation on kcnk5b-mCherry overexpression in EMBRYONIC PECTORAL FIN BUD 32-56 hpf, with the authors' proposed hyperpolarisation-then-Na+-channel-depolarisation two-step model and no p-values in text (full-text, first 100 kB)", "Le Bleu 2025 Development 152(23):dev204739 -- cacna1g LOF overgrowth is predominantly REGENERATIVE; uses GCaMP6s not any voltage dye; cilnidipine in vivo P=0.0004, n=8 vs 7 (full-text, first 100 kB)", "Daane 2021 Curr Biol flying fishes -- no fin Vm and no heterologous electrophysiology; 'hyperpolarization' absent (full-text)", "Silic & Zhang 2023 Cells 12(8):1148 -- 'direct evidence of bioelectricity in zebrafish fin development is still lacking'; GEVIs applied to zebrafish brain/heart/spinal cord/olfactory but not fin (full-text, first 100 kB)", "NEGATIVE SEARCH SCOPE: Europe PMC and open-web searches for zebrafish fin fibroblast/mesenchyme/blastema resting membrane potential or patch clamp returned no mV value for any fin cell type", "UNREAD RISK: Aramaki & Kondo bioRxiv 10.1101/2024.03.27.587111 (abstract-level only; bioRxiv HTTP 429/1015, Europe PMC HTTP 500/403) -- optogenetic demonstration that membrane potential regulates fin size, direction and target cell type unknown to me; also localises kcnk5b W169L size effect to KERATINOCYTES, contradicting Perathoner 2014's mesenchyme assignment", "Kujawski 2014 Dev Cell 28:573-587 FK506 fin overgrowth -- listing-level citation verification only"]}
+{"claim_id": 264, "outcome": "survived", "reason": "The verdict holds -- no fin-cell resting Vm in mV exists in any cell type, the hyperpolarisation premise rests only on Xenopus oocyte data that cannot transfer since a gK change's voltage effect is set by host conductance background, the lof/kcnh2a primary source never asserts hyperpolarisation and expects depolarising signals, and FK506/VIVIT decrease Kcnk5b conductance while alf increases it yet both enlarge fins (a sign contradiction conceded by Daane 2018) -- but on a narrower basis than argued, since the KEY's '-90 to -100 mV' is the calculated K+ equilibrium potential rather than a measured dVm, and a ChR2 optogenetic result (search-summary level) indicates imposed depolarisation changes fin size opposite to the hyperactive K+ channel, contesting the claim's dye-based depolarising pillar.", "corrected_value": "in vivo fin-cell resting Vm for alf/lof: unknown in mV (confirmed negative across Perathoner 2014, Daane 2018, Stewart 2021, Daane 2021, Jiang 2024, Le Bleu 2025, Silic & Zhang 2023). Oocyte figure corrected: measured effect is ~2x gK; E_K = -100.5 mV calculated (2 mM/110 mM K+, 18 C), which is a thermodynamic ceiling, not a measured dVm; a 2x gK increase yields 9-17 mV of hyperpolarisation in a linear two-conductance model, not ~50 mV.", "depends_on": ["Perathoner 2014 PLoS Genet 10(1):e1004080 Fig. S4C DiSBAC2(3) whole-fin depolarisation in alf, p<0.001, N=21-23 (full-text)", "Perathoner 2014 Fig. 5 Xenopus oocyte ~2x gK increase and -90 to -100 mV identified by the authors as the K+ equilibrium potential (full-text)", "Xenopus oocyte intracellular [K+] ~110 mM and ND96 bath 2 mM KCl at 18 C, used for my E_K calculation", "linear two-conductance model Vm=(gK*EK+gL*EL)/(gK+gL) with EL=0 mV -- my model assumption, not an observation", "Daane 2018 Sci Rep 8:10391 FK506 and VIVIT DECREASE wild-type Kcnk5b conductance in oocytes, I290A lower and FK506-insensitive, and the authors' concession that opposite conductance directions give similar growth outcomes (full-text)", "Daane 2018 absence of any fin membrane-potential measurement (full-text)", "Stewart 2021 Development 148:dev199384 -- kcnh2a acts in intra-ray mesenchyme/fibroblast lineage, no Vm measured, 'hyperpolarization' absent, future work framed as 'putative depolarizing signals' (full-text)", "Jiang 2024 PLoS Biol 22(3):e3002565 -- DiSBAC2(3) depolarisation on kcnk5b-mCherry overexpression in EMBRYONIC PECTORAL FIN BUD 32-56 hpf, with the authors' proposed hyperpolarisation-then-Na+-channel-depolarisation two-step model and no p-values in text (full-text, first 100 kB)", "Le Bleu 2025 Development 152(23):dev204739 -- cacna1g LOF overgrowth is predominantly REGENERATIVE; uses GCaMP6s not any voltage dye; cilnidipine in vivo P=0.0004, n=8 vs 7 (full-text, first 100 kB)", "Daane 2021 Curr Biol flying fishes -- no fin Vm and no heterologous electrophysiology; 'hyperpolarization' absent (full-text)", "Silic & Zhang 2023 Cells 12(8):1148 -- 'direct evidence of bioelectricity in zebrafish fin development is still lacking'; GEVIs applied to zebrafish brain/heart/spinal cord/olfactory but not fin (full-text, first 100 kB)", "NEGATIVE SEARCH SCOPE: Europe PMC and open-web searches for zebrafish fin fibroblast/mesenchyme/blastema resting membrane potential or patch clamp returned no mV value for any fin cell type", "PARTLY-UNREAD RISK: Aramaki & Kondo bioRxiv 10.1101/2024.03.27.587111, unpublished preprint (abstract-level, plus SEARCH-SUMMARY level for the optogenetics and NOT verified against full text; 8 failed bioRxiv fetches HTTP 429/1015, Europe PMC HTTP 500/403, Semantic Scholar and Unpaywall proxy-blocked) -- abstract: kcnk5b W169L in KERATINOCYTES affects fin size and in osteoblasts affects segment length, contradicting Perathoner 2014's mesenchyme assignment, and optogenetic manipulation shows membrane potential regulates fin size; search-summary: the actuator was ChR2 (depolarising) and phenotypes were OPPOSITE to kcnk5b W169L, which contests the claim's DiSBAC2(3) depolarising pillar and is the single input most likely to move this verdict to 'weakened' if confirmed at full-text level", "Kujawski 2014 Dev Cell 28:573-587 FK506 fin overgrowth -- listing-level citation verification only"]}
 ```
