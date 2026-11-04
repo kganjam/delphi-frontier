@@ -1,0 +1,40 @@
+{
+  "source_url": "https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/sequence-evidence/reused/evo2-armA.json",
+  "retrieved_at_utc": "2026-11-03T20:08:38.804097+00:00",
+  "source_file_sha256": "606bce68d6a38ce0f0e16df683e5ecea7520c504676c6d4791bf4654f909703e",
+  "source_bytes": 20650,
+  "source_record_count": 16,
+  "record_selector": {
+    "arm": "A_native_context",
+    "target": "myod1",
+    "sample": 0
+  },
+  "ledger_id": "evo2-A-myod1-0",
+  "sequence_length_nt": 1000,
+  "sequence_sha256": "ba27b850c3a6b5ee8fd0bd8b977b1f794cdcb2b582e7395f9790294282d34543",
+  "scope": "Existing Evo2 model output. A candidate sequence continuation under a myod1 native-context prompt. No genomic coordinates, integration locus, regulatory activity, tissue specificity, phenotype or flight established.",
+  "label": "Candidate DNA \u00b7 1,000 bp \u00b7 function untested",
+  "new_generation": false,
+  "verification_performed": "Retrieved original JSON; selected exact existing record; counted sequence length and recomputed sequence SHA256; matched original stored SHA256. No model run, biological assay or inference.",
+  "audit_url": "https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/audits/science-video-genetics/source-and-output-checks.json",
+  "input_context": {
+    "source_url": "https://raw.githubusercontent.com/kganjam/delphi-frontier/main/evo2_zebrafish/pinned/experiments/bioservices/zebrafish_evo2_regulatory_candidates/input_set.json",
+    "source_file_sha256": "41104d95770918fb422cdd56ecad9b584f280848da7fbeebdd0c24575d6f8a58",
+    "input_set_id": "zebrafish-promoter-proximal-2kb/v1",
+    "species": "danio_rerio",
+    "reference_assembly": "GRCz11",
+    "target_symbol": "myod1",
+    "description": "myogenic differentiation 1 [Source:ZFIN;Acc:ZDB-GENE-980526-561]",
+    "tissue_note": "skeletal muscle differentiation",
+    "prompt_sha256": "f6610937d03e5b5ce3a071335ba98e8de803c896bd0d3b94218ac344970c00f7",
+    "prompt_identity_matches_candidate": true,
+    "source_interpretation": "Model was conditioned on a myod1 upstream native-context prompt; the tissue note describes the source gene, not demonstrated candidate activity. Candidate output has positions 1\u20131000 only, not assigned genomic coordinates.",
+    "independent_input_crosscheck": {
+      "checked": false,
+      "reason": "EnsemblError: /sequence/region/danio_rerio/25:31423494..31425493:-1?content-type=application/json: TimeoutError: The read operation ti",
+      "symbol": "myod1"
+    }
+  },
+  "site_ledger_route": "https://studio.morphoswarm.ai/#/assemblies",
+  "site_ledger_section": "Natural references and model outputs \u2192 All 36 sequence artifacts"
+}

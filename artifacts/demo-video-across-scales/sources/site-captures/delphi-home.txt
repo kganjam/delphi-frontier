@@ -1,0 +1,260 @@
+delphi
+THE STUDY OF
+BIOLOGICAL FORM
+01
+Explore laws
+02
+Evidence & proofs
+03
+Design studio
+About
+Blog
+Test an organism
+Static snapshot
+Records built 2026-10-31 21:50 from fractastical/delphi snapshot in delphi-new
+About this workspace
+01 / EXTRACT MATHEMATICAL LAWS
+The ideas beneath the living world.
+
+Explore the claims that connect classical biology to testable mathematics.
+
+A canon of biological ideas.
+A growing body of evidence.
+1,190
+Candidate laws extracted
+delphi-new/docs/claims.json
+331
+Mathematical-biology records
+Fisher, Hamilton, Kimura, Turing, Maynard Smith
+938
+Animal taxa mapped
+test-data/organisms/merged/taxa.json
+167
+Claims with a registered test
+test-data/claim-tests result.json
+Law library
+58 with Lean
+All
+Thompson
+Darwin
+Wolfram
+Math biology
+Thompson
+Changes in the length-weight constant k reveal changes of form during growth
+Proved
+Thompson
+Tree trunk diameter must grow as the 3/2 power of height
+Proved
+Thompson
+Gravity sets an upper limit on the size of terrestrial animals
+Proved
+Thompson
+Larger fish can sprint faster but cover similar distances and tire more slowly
+Proved
+Thompson
+Power needed for flight grows as length^3.5 while muscle power grows as length^3
+Proved
+Thompson
+Similarly built animals should jump to the same absolute height regardless of size
+Proved
+Thompson
+Speed varies as the square root of linear size in swimming, flight and walking
+Proved
+Thompson
+Folded surfaces such as villi and brain convolutions keep surface in step with mass
+Proved
+Thompson
+Cell division restores the ratio of surface to mass
+Proved
+Thompson
+Weight tends to vary as the cube of linear dimensions during growth
+Proved
+Thompson
+Growth has a van’t Hoff temperature coefficient like a chemical reaction
+Proved
+Thompson
+Seasonal growth in fish and man follows a damped sine curve
+Proved
+Thompson
+Velocity of regenerative growth varies inversely as about the square of time
+Proved
+Thompson
+A cylindrical cell's end cap has twice the cylinder's radius and height about 0.27R
+Proved
+Thompson
+Viscid spider-thread coating breaks into beads at the cylinder stability limit
+Proved
+Thompson
+The biconcave red blood corpuscle is not a surface-tension equilibrium figure
+Proved
+Thompson
+Right-angled cell walls arise because older walls solidify before new partitions form
+Proved
+Thompson
+Tissue cell walls meet three at a time at 120°, regardless of cell size
+Proved
+Thompson
+Strong cell–cell tension relative to cell–medium tension makes cells round off
+Proved
+Thompson
+Cylinders or spheres pressed into full surface contact form hexagons
+Proved
+Thompson
+The bee’s cell is a hexagonal prism capped by rhombic-dodecahedral facets
+Proved
+Thompson
+Minimal bisecting walls cut the longest axis and alternate at right angles
+Proved
+Thompson
+A new cell wall has the least area that can enclose the given volume (Errera)
+Proved
+Thompson
+A cell cutting off under ~3/10 of its volume uses a curved corner wall, not a plane
+Proved
+Thompson
+A quadrant-shaped flat cell divides by a curved anticlinal wall about 3:7 along its side
+Proved
+Thompson
+Sector cells divide anticlinally only between 62½° and 90°, otherwise periclinally
+Proved
+Thompson
+Uniform growth of a disc makes its daughter cells divide at different times
+Proved
+Thompson
+All surface groupings of eight cells belong to one of thirteen types
+Proved
+Thompson
+A constant ratio of longitudinal to transverse growth rates yields a logarithmic spiral
+Untested
+Thompson
+The shell grows in size without changing its shape
+Tested · refutes
+Thompson
+Spiral foraminiferal shells are logarithmic spirals, large shells similar to small ones
+Untested
+Thompson
+Fusulina whorls increase in ratio 1:1.5, a spiral of constant angle about 86°
+Untested
+Thompson
+Rhinoceros horn is a plane logarithmic spiral from constant front-to-back growth ratio
+Proved
+Thompson
+Most horns are logarithmic spirals from constant unequal growth on opposite sides
+Proved
+Thompson
+A horn is a plane spiral only if fastest and slowest growth lie diametrically opposite
+Proved
+Thompson
+Claws, beaks and teeth grown by unequal permanent accretion are logarithmic spirals
+Proved
+Thompson
+One Fibonacci parastichy pair necessarily entails all the lower pairs
+Proved
+Thompson
+Most phyllotaxis has between two and three leaves per turn of the genetic spiral
+Proved
+Thompson
+Convergence of phyllotactic ratios to the golden mean has no biological significance
+Proved
+Thompson
+Egg form obeys p_n + T(1/r + 1/r′) = P, the equation of all eggs
+Proved
+Thompson
+Vessel wall thickness tracks radius in large arteries but falls off in small ones
+Proved
+Thompson
+Heart wall thickness varies inversely with the mean curvature of the chamber
+Proved
+Thompson
+Left ventricle wall is 6–7 times right's, matching the pressure ratio
+Proved
+Thompson
+Optimal branching angle has cosine equal to ratio of energy loss in trunk and branch
+Proved
+Wolfram
+Neighbor-independent substitution systems can only produce nested patterns
+Tested · inconclusive
+Wolfram
+One-element-deletion tag systems reduce to neighbor-independent substitution
+Tested · supports
+Wolfram
+Only rational numbers have repetitive digit sequences
+Tested · supports
+Wolfram
+The shift map only transcribes randomness from its initial condition
+Tested · supports
+Wolfram
+Neighbor-independent geometric replacement rules always give nested fractals
+Tested · supports
+Wolfram
+Additive rule 90 only transmits randomness from its initial conditions
+Tested · supports
+Wolfram
+Nested patterns arise from rules that emulate themselves
+Untested
+Wolfram
+Additive rules self-emulate; rules 90 and 150 are the only elementary ones
+Tested · supports
+Wolfram
+Nested-pattern and additive cellular automata cannot be universal
+Tested · supports
+Wolfram
+An irreducible multiway system cannot be both complete and consistent
+Untested
+Wolfram
+Complete and consistent means exactly half of all strings are generated
+Tested · mixed
+Mathematical biology
+Fisher's fundamental theorem of natural selection (partial-change form)
+Proved
+Mathematical biology
+Turing diffusion-driven instability
+Partial
+Mathematical biology
+Hamilton's rule
+Proved
+Laws with a Lean program. Compiled here, or linked from the Frontier review.
+Speed varies as the square root of linear size in swimming, flight and walking
+Selected law
+
+Swim, flight and walking speed follow the square root of length.
+The picture follows the stated relation
+
+The picture draws the relation stated in the law. It is not a new measurement.
+Claim in focus
+1917
+Proved
+Speed varies as the square root of linear size in swimming, flight and walking
+
+Leaving aside differences in mechanical construction, swimming (Froude's law), flight (minimum stable speed) and walking (the leg swinging as a pendulum) all give the same result: an animal's velocity tends to vary as the square root of its linear dimensions.
+
+v ∝ √L
+Source
+Thompson · Ch. II: On Magnitude
+Formal status
+Proved in the claim record
+Lean
+Reading programs and species…
+Nanopub
+https://w3id.org/np/RAHEYyHE7K3QBy2DxRcUjZSSkOU3RkfmhD5rioKh3D6GA
+Inspect evidence
+Explore design
+494
+Darwin assessor scores
+
+Scores stored on the Darwin claim records in the snapshot.
+
+8
+Segmented micrographs
+
+Cell-geometry masks stored with the Thompson packing tests.
+
+0.24–0.94
+Darwin testability
+
+Minimum and maximum testability on the Darwin claim records.
+
+Every claim has conditions. Every result keeps its provenance.
+Project sources
+Delphi Frontier
+Three repositories. One research chain.

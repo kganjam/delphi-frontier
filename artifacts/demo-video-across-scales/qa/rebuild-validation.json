@@ -1,0 +1,87 @@
+{
+  "checked_at_seattle": "2026-11-04 00:33:23 PST",
+  "tested_source_commit": "dd1243363bbf29568a14e0c25b4cec1ba2418564",
+  "environment": {
+    "platform": "macOS",
+    "python": "3.13.12",
+    "Pillow": "12.2.0",
+    "ffmpeg": "8.1.1"
+  },
+  "method": "Sequential full renders from archived package inputs, then verify_video.py --all-shots; Python capped at 512MiB, FFmpeg at 768MiB. No live source fetch or synthesis. Rebuild outputs are ignored and do not replace the approved exports.",
+  "commands": [
+    "python -B build/render_video.py render --profile edits/60s.json",
+    "python -B build/verify_video.py --profile edits/60s.json --all-shots",
+    "python -B build/render_video.py render --profile edits/90s.json",
+    "python -B build/verify_video.py --profile edits/90s.json --all-shots"
+  ],
+  "render_exit_codes": [
+    0,
+    0
+  ],
+  "qa_exit_codes": [
+    0,
+    0
+  ],
+  "cuts": [
+    {
+      "file": ".build/60s/delphi-bio-across-scales-60s.mp4",
+      "sha256": "ba6cd3aabbcbf9039b93998417e04ae9fd526c16af4df1af4c59d4c29d1f61af",
+      "size_bytes": 13155677,
+      "duration_s": 60.0,
+      "frames": 1800,
+      "video": "1920x1080 H.264 30fps",
+      "audio": "48kHz stereo AAC",
+      "full_decode_exit": 0,
+      "shot_count": 26,
+      "caption_cue_count": 31,
+      "caption_font_px": 52,
+      "caption_max_words": 7,
+      "caption_timing": "Provider word timestamps, adjusted with the source audio tempo; matched source text",
+      "integrated_loudness_lufs": -15.6,
+      "sample_peak_dbfs": -3.4,
+      "true_peak_dbfs": -3.4,
+      "internal_quiet_gap_max_s_at_minus45db": 0.541875000000001,
+      "internal_quiet_gap_threshold_db": -45,
+      "internal_quiet_gap_minimum_s": 0.15,
+      "audio_source_duration_s": 58.998156,
+      "audio_start_delay_s": 0.1,
+      "inserted_between_scene_audio_padding_s": 0,
+      "human_listening_review": "Not performed in this tool session",
+      "scope": "Numerical and decode QA; scientific source caveats stay visible; biological validation is not claimed",
+      "canonical_captions_byte_identical": true
+    },
+    {
+      "file": ".build/90s/delphi-bio-across-scales-90s.mp4",
+      "sha256": "c7565700bcd4457497a3cdf29be7af37737f12f95f9659a75c2ba08a4035545e",
+      "size_bytes": 13714871,
+      "duration_s": 90.0,
+      "frames": 2700,
+      "video": "1920x1080 H.264 30fps",
+      "audio": "48kHz stereo AAC",
+      "full_decode_exit": 0,
+      "shot_count": 35,
+      "caption_cue_count": 47,
+      "caption_font_px": 52,
+      "caption_max_words": 7,
+      "caption_timing": "Provider word timestamps, adjusted with the source audio tempo; matched source text",
+      "integrated_loudness_lufs": -15.6,
+      "sample_peak_dbfs": -3.4,
+      "true_peak_dbfs": -3.4,
+      "internal_quiet_gap_max_s_at_minus45db": 0.5636670000000095,
+      "internal_quiet_gap_threshold_db": -45,
+      "internal_quiet_gap_minimum_s": 0.15,
+      "audio_source_duration_s": 88.625719,
+      "audio_start_delay_s": 0.1,
+      "inserted_between_scene_audio_padding_s": 0,
+      "human_listening_review": "Not performed in this tool session",
+      "scope": "Numerical and decode QA; scientific source caveats stay visible; biological validation is not claimed",
+      "canonical_captions_byte_identical": true
+    }
+  ],
+  "scope": "Media/render integrity only. Encoded rebuild bytes differ from preserved approved masters. Provider word alignment is approximate; no new listening review, scientific recomputation, or Linux wrapper execution.",
+  "visual_review": "Viewed contact sheets covering all 26 short-cut shots and all 35 final-cut shots; expected media, captions and closing emphasis present.",
+  "preserved_master_sha256": {
+    "delphi-bio-across-scales-90s": "bbb6438e11610eec99ba8bef919ae98447504e82c7e32d9f286b2cb7f0f03eeb",
+    "delphi-bio-across-scales-60s": "e8185c096ad9492fb0a3b883c8517a680b2b47c318072b58f77529baf17612d3"
+  }
+}

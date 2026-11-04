@@ -1,0 +1,136 @@
+{
+  "url": "https://studio.morphoswarm.ai/#/design-control",
+  "title": "Design-control · MorphoSwarm Studio",
+  "text": "Skip to content\nMorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI\nStudio\nFrontier\nKnowledge\nEvidence\nSystem\nAbout\nSearch the catalog\nSearch\nLive runtime\n\nSTUDIO / DESIGN CONTROL\n\nDesign control map\n\nWhat can be set, how well each bound is known, and where the causal bridges are missing. Values are read from existing pinned results.\n\nEvidence-led science. Goal-driven engineering.\n\nBottom-up: Delphi literature claims and equations. Top-down: design requirements. The gaps appear where they do not meet.\n\nHumans set the target goals. Solver or model validity (checked equations, convergence, controls) is a different thing from empirical biological realism, which is unknown for every layer here. Biological success probability: unknown. No confidence figure or score exists in this map.\n\nGene regulation to fin program molecular/regulatory\n\nMeasured zebrafish fin multiome and methylation datasets mapped for applicability; no flying-fish measurement and no regulatory model run.\n\nNo controllable parameter is identified at this scale: the sources report observed expression/accessibility, not an intervention-response relation.\n\nCell-state rows with explicit species/tissue/assay/accession and a stated missing bridge: 7\nGSE261907 libraries listed in the GEO metadata audit (a library count, not a replicate count; the confirmed independent biological sample count stays null): 20\nMissing causal bridges\nexpression → channel density/conductance: unknown\nvoltage or transport → proliferation rate: unknown\nosteoblast/fibroblast state → mineral/ECM deposition: unknown\ndeposition → ray geometry and EI: unknown\nMembrane voltage and gap-junction coupling (Hodgkin-Huxley chain, 12 cells) cellular\n\nA published-squid-parameter simulator with closed-form and convergence controls; no fin-cell calibration and no voltage-to-tissue map.\n\nSodium conductance scale\n\nhuman-settable · 1 · assumed\n\nVALUE\n0.35\nBOUND\nassumed scenario value (x0.35 arm of a perturbation set); published squid g_Na is the baseline, not a fin measurement\nscale arm: 0.35\nSENSITIVITY\nsimulated scenario contrast\nx0.35 arm: no cell crosses 0 mV in the 30 ms window (assurance handoff, bioelectric branch)\nIDENTIFIABILITY\nnot assessed: no voltage data from target tissue exists in these sources\nGap-junction conductance\n\nhuman-settable · mS/cm2 · assumed\n\nVALUE\n0.5\nBOUND\nassumed network and coupling assumed; model source gives membrane parameters only\nSENSITIVITY\nsimulated scenario contrast\ndisconnected arm: only the stimulated cell fires (bioelectric handoff)\nIDENTIFIABILITY\nnot assessed\nScope limits stated by the producing model: [\"SIMULATED: published squid-axon membrane kinetics; not measured fin voltages.\",\"Equal-area 12-cell sealed chain and ohmic gap conductance are assumed design scenarios.\",\"All cells start at -65 mV with gates at their voltage-dependent steady states; perturbed conductances need not initially be at equilibrium.\",\"Fixed extracellular potential and reversal potentials represent infinite buffered ion reservoirs; no ion mass balance, pumps or depletion is modeled.\",\"Current is injected into cell 0 during 5 <= t < 6 ms; positive current is inward and depolarizing.\",\"No cross-scale map to gene expression, tissue pattern, fin anatomy, stiffness or flight has been established.\"]\nMissing causal bridges\nmembrane voltage → tissue/fin geometry or stiffness: unsupported\nFin ray mechanics (single Euler-Bernoulli beam, two load shapes) tissue/organ · regions: pectoral-left, pectoral-right\n\nA frozen-protocol paired ensemble over three predeclared candidates with analytic, grid, speed-law-mutant and local-sensitivity controls.\n\nRay length\n\nhuman-settable · m · assumed\n\nVALUE\n0.15 vs 0.12\nBOUND\nassumed two declared design candidates; multiplier range is an assumed latent, not measured geometry\nmultiplier: 0.85+0.30*u\nSENSITIVITY\nlocal paired elasticity, other inputs held fixed (not causal, not variance importance) elasticity 3.00 (dimensional expectation 3)\nIDENTIFIABILITY\ngeometry is a design choice here; no matched per-ray measurement exists\nFlexural rigidity multiplier (EI)\n\nhuman-settable · 1 · assumed\n\nVALUE\n1 vs 2\nBOUND\nassumed design draw 0.0003*10^u N m2 is assumed; the bluegill composite-modulus envelope is a separate source context and is never transferred to candidate EI\ndesign draw: 0.0003*10**u · source context: {\"E_range_Pa\":[100000000,1000000000],\"I_average_m4\":1e-14,\"typical_ray_length_m\":0.04} · source status: Approximate composite-modulus range and average area moment, not a per-ray dataset\nSENSITIVITY\nlocal paired elasticity, other inputs held fixed elasticity -1.00 (dimensional expectation -1)\nIDENTIFIABILITY\nstructural (Jacobian rank), prospective, abstract model. stiffness and load scale are not separable from deflection reads alone: the planner's deflection-only design has rank 1 against 2 for deflection plus an independent load read (abstract linear-Gaussian cantilever, assumed prior, not this fin)\ndeflection only rank 1; mixed rank 2; status prospective_assumption_based\nAir speed (scenario)\n\nuncontrolled context · m/s · assumed\n\nVALUE\n6-2*u\nBOUND\nassumed weather latent is a declared stress scenario with perfect negative density/speed rank correlation, not fitted weather data\nSENSITIVITY\nlocal paired elasticity; V^1-load mutant gives 1 and is detected elasticity 2.00 (dimensional expectation 2)\nIDENTIFIABILITY\nuncontrolled context\nboth-load predicate passes, baseline: 20/64 = 0.3125 [source-only] (conditional Wilson 95%, sampling variation under the assumed scenario law only: [0.21231066539482046,0.4339233570274815]). fraction of assumed-scenario draws inside the linear envelope; not a probability of biological success; draws are shared across candidates. unranked: shorter-ray and stiffer-ray intervals overlap almost entirely and the paired difference is not computed here.\nboth-load predicate passes, shorter-ray: 33/64 = 0.5156 [source-only] (conditional Wilson 95%, sampling variation under the assumed scenario law only: [0.39581601478580125,0.6336644833456737]). fraction of assumed-scenario draws inside the linear envelope; not a probability of biological success; draws are shared across candidates. unranked: shorter-ray and stiffer-ray intervals overlap almost entirely and the paired difference is not computed here.\nboth-load predicate passes, stiffer-ray: 34/64 = 0.5313 [source-only] (conditional Wilson 95%, sampling variation under the assumed scenario law only: [0.41072087051471007,0.6482401257482395]). fraction of assumed-scenario draws inside the linear envelope; not a probability of biological success; draws are shared across candidates. unranked: shorter-ray and stiffer-ray intervals overlap almost entirely and the paired difference is not computed here.\nMissing causal bridges\ncell-tissue-fin → target-fin behaviour: unsupported Target-species cell/tissue measurements and a causal developmental-to-fin map\nfin-deformation-aerodynamic-polar → target-fin behaviour: unsupported Calibrated geometry/deformation-to-lift/drag and held-out trajectories\nfin-stiffness-calibration → target-fin behaviour: unknown Target-fin effective stiffness and boundary-condition data\nMeasured fin proportions (flying fish and relatives) organ · regions: pectoral-left, pectoral-right, pelvic-left, pelvic-right\n\nThe only measured per-specimen data in this map: Daane 2021 Data S1A fin length against standard length, fitted here, plus published Fish 1990 fits without raw data.\n\nPectoral fin length against standard length (flying fish)\n\nuncontrolled context · cm vs cm · source-only (owner's fit of specimen data)\n\nVALUE\n1.0579235570986707\nBOUND\nmeasured log10-log10 OLS on specimens; bootstrap 95% CI on the exponent, in-sample fit over the stated SL range only\nci95: [1.0212328260428893,1.0989457119108639] · n: 49 · r2: 0.9834088833924874\nSENSITIVITY\nmeasured allometry exponent, not a design sensitivity\nIDENTIFIABILITY\npractical/statistical, not structural. slope is estimated with a narrow interval in sample (n=49) over the stated SL range; an allometric association between organisms, not a causal control or an intervention response\nloocv rmse log10 0.05004236649809819; quality usable\nPelvic fin length against standard length (flying halfbeak)\n\nuncontrolled context · cm vs cm · source-only (owner's fit of specimen data)\n\nVALUE\n0.10828642938485845\nBOUND\nmeasured same method; fit judged unusable\nb ci95 bootstrap: [-0.6406016672097292,0.5113313247508183] · n: 15 · r2: 0.01937077986435287 · slope b: 0.10828642938485845\nSENSITIVITY\nnone: no slope distinguishable from zero\nIDENTIFIABILITY\npractical/statistical, not structural. Practical non-detection: at n=15 the slope is imprecise and its bootstrap interval spans zero (and excludes isometry, b=1). The log-log slope is structurally identifiable over this SL range; this is a statement about these data only, scoped to flying halfbeak pelvic, not to other groups or to pelvic fins generally\nquality weak: do not use as a control relation\nControl-knob records by kind; per-specimen raw data exist only for the observed_and_fitted_here kind: 51\nMissing causal bridges\nfin length proportion → ray EI(x) and load field: unknown S1A has fin length against SL only; ray geometry, EI and load are not in it\nRigid-body glide and eight-fish escape (MuJoCo + quasi-steady VLM, not CFD) organism/collective · regions: body, pectoral-left, pectoral-right, pelvic-left, pelvic-right\n\n28 scenarios and 56 simulations with timestep and actuator gates passed; the assumed-delay arms are the only parameter contrast with saved outcomes.\n\nBody mass\n\nhuman-settable · kg · assumed\n\nVALUE\n[0.04,0.06]\nBOUND\nassumed engineering assumption; not resin mass or a measured specimen\nSENSITIVITY\npaired arms (the baseline 0.05 kg is the unlisted default)\nresponses at 0.6 s are the same as baseline in both mass arms; two seeds, no interaction estimate\nIDENTIFIABILITY\nno interaction estimate was made\nEscape reaction-delay range\n\nhuman-settable · s · computed-here (counts re-derived from saved results)\n\nVALUE\n[[0.02,0.06],[0.08,0.16]]\nBOUND\nassumed assumed delay envelope; no measured neural parameter\nSENSITIVITY\nsaved paired outcomes at the fixed 0.6 s endpoint (response flags, neighbors vs no-neighbor ablation); no variance partition\nResponses at the fixed 0.6 s endpoint (of 16 fish over 2 seeds)\nSETTING\tMODE\tRESPONSES\nbaseline\tablation\t2/16\nbaseline\tneighbors\t15/16\ndelay-fast\tablation\t2/16\ndelay-fast\tneighbors\t16/16\ndelay-slow\tablation\t2/16\ndelay-slow\tneighbors\t9/16\nhinge-soft\tablation\t2/16\nhinge-soft\tneighbors\t15/16\nhinge-stiff\tablation\t2/16\nhinge-stiff\tneighbors\t15/16\nmass-high\tablation\t2/16\nmass-high\tneighbors\t15/16\nmass-low\tablation\t2/16\nmass-low\tneighbors\t15/16\nIDENTIFIABILITY\ntwo seeds per arm; no variance partition and no interaction estimate\nHinge stiffness\n\nhuman-settable · N m/rad · assumed\n\nVALUE\n[0.1,0.3]\nBOUND\nassumed engineering hinge assumption\nSENSITIVITY\nsaved paired arms\nresponses at 0.6 s equal baseline in both hinge arms; two seeds\nIDENTIFIABILITY\nnot assessed\nAggregate scope: all declared arms computed, 28/28 computed. Exact disjoint union of original26 and separately executed2 missing arms; source partial receipts remain immutable. Shared-model axial scenarios, not biological success probabilities.\nMissing causal bridges\nsimulated glide/escape → organism behaviour: unsupported no calibrated or measured trajectory comparison\nPhase-oscillator controller with PD actuator neural/behavior · regions: body, caudal\n\nAn engineering controller with passing numerical controls; no neurons, no genotype-to-behavior map, no hydrodynamic transfer.\n\nOscillator frequency\n\nhuman-settable · Hz · assumed\n\nVALUE\n35\nBOUND\nassumed assumed scenario; literature range discussed but not fitted\nbasis text: assumed scenario; Roussel2021 discussion20–65Hz, not fitted\nSENSITIVITY\nscenario contrast (35 Hz baseline vs 25 Hz), controller metrics only\nIDENTIFIABILITY\nnot assessed\nProposed angle-to-fluid coupling is explicitly unsupported: unsupported_dynamic_transfer\nMissing causal bridges\noscillator phase/frequency → fluid force: unsupported Moving-wall fluid solver, anatomical mapping, actuation/load calibration and oscillating-body control. Do not infer forces/thrust from these ports.\nWork packages and their declared dependencies\n\nPackages with no unresolved predecessor can run concurrently under the declared dependencies. Disjoint input lists do not prove the packages are independent, and resource conflicts (people, equipment, compute) are not modelled. Nothing here is executed or decentralized: all rows are proposals.\n\nMeasure EI(x) under target clamping and the load field physical-measurement · proposed not executed\nMeasure EI(x) under the target clamping/actuation condition. No unresolved predecessor declared.\nMeasure spatial pressure/load shape physical-measurement · proposed not executed\nMeasure spatial pressure/load shape; uniform-versus-tip discrepancy is not a calibrated error bound. No unresolved predecessor declared.\nResolve GSE261907 barcode and replicate pairing from small metadata files computational-metadata · proposed not executed\nWhich fin cell states and biological replicates have usable paired measured data? No unresolved predecessor declared.\nMoving-wall fluid solver with calibration controls computational-model · not started\nMoving-wall fluid solver, anatomical mapping, actuation/load calibration and oscillating-body control. Do not infer forces/thrust from these ports. No unresolved predecessor declared.\nMass and lifting-area cost of shorter or stiffer rays physical-measurement · proposed not executed\nMeasure mass/lifting-area costs before choosing stiffer or shorter candidates. No unresolved predecessor declared.\nDeformed-fin aerodynamic polar computational-model · blocked on inputs\nCalibrated geometry/deformation-to-lift/drag and held-out trajectories Depends on: Measure EI(x) under target clamping and the load field; Measure spatial pressure/load shape.\nBest next bounded experiment\n\nMeasure EI(x) under target clamping and the load field\n\nIt is the only item that both removes an explicit essential blocker (tissue-to-EI) and has a stated measurement in the owning handoff.\nThe ensemble fractions differ across candidates only under assumed envelopes; the fin assay's own next step is EI(x), and mesh refinement alone does not address the larger uncertainties.\nPlanner structure result: deflection-only reads leave stiffness and load scale confounded (rank 1), so the measurement must include an independent load read.\n\nNo expected-information-gain or utility number ranks the packages: the assurance map leaves both null because cost and outcome models are absent.\n\nProvenance notes\nData S1A pelvic/SL column holds a corrupt value (2.4e-16, specimen 1); the owner recomputed it from lengths and kept both.\nNeighbouring groups fit differently (flying-fish pelvic, halfbeak pelvic) and are outside this map; do not generalise the flying-halfbeak pelvic non-detection.\nNot claimed\nNo new simulation, measurement or inference was run to make this map.\nFractions are conditional simulation-envelope fractions, not probabilities of biology.\nLocal elasticities hold other inputs fixed and are not causal biological effects.\nSources: 11 pinned blobs at exact commits\n\nsnapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)\n\nInput files and sha256\n\nDesign geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.",
+  "links": [
+    {
+      "text": "Skip to content",
+      "url": "https://studio.morphoswarm.ai/#main"
+    },
+    {
+      "text": "MorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI",
+      "url": "https://studio.morphoswarm.ai/#/home"
+    },
+    {
+      "text": "Studio",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Frontier",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "Knowledge",
+      "url": "https://studio.morphoswarm.ai/#/knowledge"
+    },
+    {
+      "text": "Evidence",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "System",
+      "url": "https://studio.morphoswarm.ai/#/work"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/blog"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/team"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/docs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/inspirations"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/generative"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/demo"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/faq"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/work?tab=connect"
+    },
+    {
+      "text": "STUDIO",
+      "url": "https://studio.morphoswarm.ai/#/home"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/0722fc7992a72ea4b425cd2636a30eceff3d714d/artifacts/assurance/map.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/1adc724bcdbd7f19e954b25a18d94c67426e87ca/artifacts/assurance-experiments/summary.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/1adc724bcdbd7f19e954b25a18d94c67426e87ca/artifacts/assurance-experiments/controls.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/1adc724bcdbd7f19e954b25a18d94c67426e87ca/engineering/assurance_experiments/protocol.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/d3d64c68131ecf5795d820e543c3c0309d9d901a/artifacts/ecology/uncertainty-aggregate/summary.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/73d3a83df599d84b2e225d12a95d68bf262fc670/data/fish-controls/knobs.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/bff38281e28cf65961626a342612ba2c993861d2/artifacts/fish-regulatory-map/map.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/1b77f81/artifacts/regulatory-metadata/run/coverage-reviewed.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/30db26bdd8fb5f153bfaa2fc19eafca4789c5f10/artifacts/behavior/interface.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/d0143976fc1621b350dce9e2a33ade3253657ccb/artifacts/bioelectric/sodium_reduced.json"
+    },
+    {
+      "text": "",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/cc12164addd85c124a7e596b1059c005cf5650e9/artifacts/experimental-design/result.json"
+    },
+    {
+      "text": "snapshot.json",
+      "url": "https://studio.morphoswarm.ai/data/snapshot.json"
+    },
+    {
+      "text": "catalog.json",
+      "url": "https://studio.morphoswarm.ai/data/catalog.json"
+    },
+    {
+      "text": "licence",
+      "url": "https://studio.morphoswarm.ai/vendor/katex/LICENSE"
+    }
+  ],
+  "media": []
+}

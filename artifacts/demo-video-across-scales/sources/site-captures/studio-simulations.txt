@@ -1,0 +1,298 @@
+Skip to content
+MorphoSwarm
+Studio
+CLAIMS AND EVIDENCE: DELPHI
+Studio
+Frontier
+Knowledge
+Evidence
+System
+About
+Search the catalog
+Search
+Live runtime
+Simulations
+
+Recorded simulations and observed-data analyses as manifest cards: what was run, in what time units, against which numerical checks, with which parameters still unknown, and which bridges between scales are still dashed. A card shows a player only when an actual video file is present and matches its declared digest.
+
+Scale
+all scales
+Cellular
+Organ
+Organism
+Tissue
+Molecular
+Subcellular
+Neural / control
+Developmental
+Media
+any
+has a verified video
+no video
+Search
+Apply
+
+Showing 32 of 32 simulation cards. 27 of 32 have a player.
+
+Two-cell Delta-Notch replay (BioModels BIOMD0…
+Elastic fin-ray surrogate (Euler-Bernoulli ca…
+Bioelectric cell-voltage model: baseline, sod…
+Adhesion clutch mechanics (render of a simula…
+Glide trajectories at a fixed launch (point m…
+Reaction-diffusion field time series
+Single-ray basal sliding and curvature: publi…
+2D low-Reynolds flow past the N1 silhouette (…
+BETSE bioelectric tissue patch: potassium per…
+BETSE potassium-permeability sensitivity with…
+Morpheus multicellular growth: cell cycle, di…
+Collagen-mimetic trimer: three 100 ps molecul…
+Collagen-mimetic trimer: three 900 ps continu…
+Generic zebrafish metabolic model: a steady-s…
+Collagen-mimetic trimer: 0.2 ps CPU setup run…
+Predicted structure of zebrafish Kcnj13 (Open…
+Candidate N1 as a 3D model: path-traced turnt…
+3D flow past the fish3d candidate, Re = 1000,…
+3D flow past the fish3d candidate, Re = 1000,…
+Morpheus full-horizon logger chart (t to 2.0)…
+Rhythm-generator controller driving a designe…
+Erk trigger waves and wave-gated growth on on…
+Static aeroelastic coupling of the fins: 36 a…
+Aeroelastic fidelity ladder: 45 native arms, …
+Neural cellular automaton fin pattern, origin…
+Neural cellular automaton fin pattern, correc…
+NCA curriculum repair/persistence tradeoff: 8…
+Observed-data update: added specimens worsen …
+Soft-voxel toy body under a travelling actuat…
+Epithelial gap in a Cellular Potts model: the…
+Epithelial gap in a Cellular Potts model: the…
+Glide of a point mass (glide-pointmass/1)
+Recorded simulations
+
+Nothing here is a live run and nothing is animated by this page. Counts of cards are counts of artifacts in this snapshot (snapshot of inputs 52c50b565b99), not of independent observations.
+
+Two-cell Delta-Notch replay (BioModels BIOMD0000001047)
+
+Cellular simulated: a rendering of replay output; not an observation of any biological system manifest
+
+Caption burned into every frame: Two-cell Delta-Notch lateral inhibition - BioModels BIOMD0000001047 (Collier et al. 1996) - SIMULATION | SIMULATION computed from the published SBML model; not an observation. Time and concentrations are non-dimensional (model time). Two abstract cells: this is not tissue, not a fin, and no cell shape is modelled or observed.
+
+Verified against its declared sha256. 1280x720, 16.0 s, h264 Download video
+
+MODEL
+BIOMD0000001047, Collier et al. 1996, replayed from the published SBML
+TIME UNITS
+non-dimensional model time, 0 to 60
+
+two-cell Delta-Notch concentrations vs model time and (Notch, Delta) phase portraits for three replay scenarios. SIMULATION computed from the published SBML model; not an observation. Time and concentrations are non-dimensional (model time). Two abstract cells: this is not tissue, not a fin, and no cell shape is modelled or observed. frame k < motion_frames shows csv row round(k*(rows-1)/(motion_frames-1)); later frames repeat the last row. most of the change happens before model time 30; the second half of the video is the settled state
+
+Checks, unknowns, open questions and couplings 1 check · 1 unknown · 1 open
+
+Manifest: connectors/biomodels/video/delta_notch_replay_manifest.json
+
+Elastic fin-ray surrogate (Euler-Bernoulli cantilever)
+
+Organ simulated manifest
+
+Verified against its declared sha256. 15.0 s at 24 fps, 360 frames Download video
+
+MODEL
+frontier.finmech.manifest/1
+TIME UNITS
+not a physical time axis; see the manifest
+
+Frames from beam.solve_checked (Hermite FEM) per frame; closed form overlaid for comparison. A scoped elastic surrogate, not a fin. mp4 bytes can differ across ffmpeg builds; frames_data_sha256 hashes the computed numeric frames and is the reproducible quantity
+
+Checks, unknowns, open questions and couplings 2 checks · 1 unknown · 1 open
+
+Manifest: engineering/fin_mechanics/artifacts/manifest.json
+
+Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions
+
+Cellular SimulationResult manifest
+
+Verified against its declared sha256. 180 frames at 24 fps Download video
+
+MODEL
+frontier.bioelectric.bundle/1
+TIME UNITS
+model time in milliseconds; 30.0 ms horizon shown over 7.5 s of video
+
+Saved states of an electrophysiology model rendered as frames. convergence checked for default HH scenario and smooth passive cable; not the entire atlas none; selected actual saved state frames
+
+Checks, unknowns, open questions and couplings 6 checks · 1 unknown · 1 open
+
+Manifest: artifacts/bioelectric/manifest.json
+
+Adhesion clutch mechanics (render of a simulation)
+
+Cellular render_of_simulation manifest
+
+Verified against its declared sha256. 264242 bytes Download video
+
+MODEL
+frontier.mechanobio.render-manifest/1
+TIME UNITS
+model time in seconds (see the trajectory file)
+
+Frames chosen from a saved molecular-clutch trajectory and its response sweep; not a cell and not a fin. 180 frames at 15 fps, frame indices hashed (e0f5b8273e5f…)
+
+Checks, unknowns, open questions and couplings 1 check · 1 unknown · 1 open
+
+Manifest: artifacts/mechanobio/render-manifest.json
+
+Glide trajectories at a fixed launch (point mass)
+
+Organism simulated manifest
+
+Verified against its declared sha256. 1280x720, 16.0 s, 24 fps Download video
+
+MODEL
+glide trajectory animation
+TIME UNITS
+glide seconds (physical time of the point-mass trajectory)
+
+Constant-coefficient point-mass glide; the coefficients are design assumptions. reaction-diffusion model time (see RD animation manifest); the two clocks are unrelated and not coupled
+
+Checks, unknowns, open questions and couplings 2 checks · 3 unknowns · 1 open
+
+Manifest: engineering/simulation/video/manifest.json
+
+Reaction-diffusion field time series
+
+Tissue simulated manifest
+
+Verified against its declared sha256. 1280x720, 16.04 s, 25 fps Download video
+
+MODEL
+RD field time-series animation
+TIME UNITS
+tau = gamma*t, dimensionless RD model time
+
+Brusselator, linear-stable (rho=0.97), eps=0.3 perturbation: finite-amplitude pattern in the declared model (R1 event); Schnakenberg, linear-unstable (rho=3), eps=0.01: pattern with dominant mode 7 vs fastest linear mode 6 (R3 mismatch) glide seconds; the two clocks are unrelated and not coupled
+
+Checks, unknowns, open questions and couplings 1 check · 1 unknown · 1 open
+
+Manifest: engineering/simulation/video/manifest_rd.json
+
+Couplings between the models
+
+A coupling verdict is about typed interfaces, not biology. 'composable' means the declared mapping is dimensionally and scope-consistent; it does not mean the models describe the same organism. 'scenario' results are assumption-level. No Lean theorem here proves biological correspondence.
+
+4 composable 5 scenario (assumption-level) 4 refused registered calibrations: none · timescale separation threshold 10
+
+COUPLING	FROM → TO	MAPPING	VERDICT	WHY
+c01_mass	flying_fish_constraints.m
+→ glide_pointmass.m	identity; time static_input; uncertainty exact	composable
+composable: typed, dimension- and scope-checked mapping; no biological correspondence is claimed	none
+c02_area	flying_fish_constraints.S
+→ glide_pointmass.S	identity; time static_input; uncertainty exact	composable
+composable: typed, dimension- and scope-checked mapping; no biological correspondence is claimed	none
+c03_span	flying_fish_constraints.b
+→ glide_pointmass.b	identity; time static_input; uncertainty exact	composable
+composable: typed, dimension- and scope-checked mapping; no biological correspondence is claimed	none
+c04_speed	flying_fish_constraints.V
+→ glide_pointmass.release_speed	assumed; time static_input; uncertainty unknown	scenario
+SCENARIO (assumption-level): may run, never evidence about an organism
+parameter bounds are unknown on at least one side of a value-transforming mapping
+no uncertainty edge declared
+assumption-level edges: A1
+Assumes A1.
+c05_notch_to_fin_stiffness	collier1996_two_cell.delta_asymmetry
+→ finbeam_euler_bernoulli.flexural_rigidity	none; time unknown; uncertainty unknown	refused
+refused: missing or inconsistent bridge; nothing was composed
+no mapping declared: the bridge is missing and is not invented here
+scope mismatch without a calibration that bridges it: scale cell -> organ; context 'NCBI taxon 7215 as annotated in the SBML (name unresolved by the connector owner)' -> 'Exocoetidae design envelope (Fish 1990 m / wing-loading range)'; regime 'two coupled cells; non-dimensional as stored; no time scale' -> 'static clamped-free Euler-Bernoulli ray, small deflection; the load is a mean lift-pressure PROXY, not a measured fin pressure'
+Missing calibrations (1)
+
+c06_notch_to_fin_stiffness_assumed	collier1996_two_cell.delta_asymmetry
+→ finbeam_euler_bernoulli.flexural_rigidity	assumed; time unknown; uncertainty unknown	refused
+refused: missing or inconsistent bridge; nothing was composed
+an assumption cannot stand in for a transfer across biological scale or context (that needs a calibration): scale cell -> organ; context 'NCBI taxon 7215 as annotated in the SBML (name unresolved by the connector owner)' -> 'Exocoetidae design envelope (Fish 1990 m / wing-loading range)'; regime 'two coupled cells; non-dimensional as stored; no time scale' -> 'static clamped-free Euler-Bernoulli ray, small deflection; the load is a mean lift-pressure PROXY, not a measured fin pressure'
+Assumes A2.
+Missing calibrations (2)
+
+c07_rd_wavelength_to_wing_span	rdfield_nonlinear_sweep.dominant_mode
+→ glide_pointmass.b	none; time unknown; uncertainty unknown	refused
+refused: missing or inconsistent bridge; nothing was composed
+no mapping declared: the bridge is missing and is not invented here
+scope mismatch without a calibration that bridges it: scale tissue -> organism; context 'abstract kinetics; no organism' -> 'Exocoetidae design envelope (Fish 1990 m / wing-loading range)'; regime "1-D zero-flux (Neumann) field; domain length in units of the model's own critical wavelength" -> 'point-mass vertical-plane flight; Reynolds/scale validity of the polar not established'
+Missing calibrations (1)
+
+c08_fin_deflection_to_glide_speed	finbeam_euler_bernoulli.tip_deflection
+→ glide_pointmass.release_speed	none; time unknown; uncertainty unknown	refused
+refused: missing or inconsistent bridge; nothing was composed
+no mapping declared: the bridge is missing and is not invented here
+scope mismatch without a calibration that bridges it: scale organ -> organism; regime 'static clamped-free Euler-Bernoulli ray, small deflection; the load is a mean lift-pressure PROXY, not a measured fin pressure' -> 'point-mass vertical-plane flight; Reynolds/scale validity of the polar not established'
+Missing calibrations (1)
+
+c09_span_to_fin_bridge	flying_fish_constraints.b
+→ fin_load_bridge.b	identity; time static_input; uncertainty exact	composable
+composable: typed, dimension- and scope-checked mapping; no biological correspondence is claimed	none
+c10_speed_to_fin_bridge	flying_fish_constraints.V
+→ fin_load_bridge.V	identity; time static_input; uncertainty exact	scenario
+SCENARIO (assumption-level): may run, never evidence about an organism
+port caveat (needs a calibration to be composable): flying_fish_constraints.V: speed from the level-flight proxy (L = W); not a measured or glide-derived flight speed | fin_load_bridge.V: speed from the level-flight proxy (L = W); not a measured or glide-derived flight speed
+assumption-level edges: A3
+Assumes A3.
+c11_load_proxy_to_beam	fin_load_bridge.q_line
+→ finbeam_euler_bernoulli.q_line	identity; time static_input; uncertainty unknown	scenario
+SCENARIO (assumption-level): may run, never evidence about an organism
+port caveat (needs a calibration to be composable): fin_load_bridge.q_line: derived from a mean lift-pressure PROXY (0.5*rho*V^2*CL) and a declared width; not a measured ray load | finbeam_euler_bernoulli.q_line: derived from a mean lift-pressure PROXY (0.5*rho*V^2*CL) and a declared width; not a measured ray load
+no uncertainty edge declared
+assumption-level edges: A3, A4
+Assumes A3, A4.
+c12_ray_length_to_beam	fin_load_bridge.L_ray
+→ finbeam_euler_bernoulli.L_ray	identity; time static_input; uncertainty unknown	scenario
+SCENARIO (assumption-level): may run, never evidence about an organism
+port caveat (needs a calibration to be composable): fin_load_bridge.L_ray: a DECLARED fraction/length, not a measurement | finbeam_euler_bernoulli.L_ray: a DECLARED fraction/length, not a measurement
+no uncertainty edge declared
+assumption-level edges: A4
+Assumes A4.
+c13_pressure_to_line_load_dimension_only	fin_load_bridge.p_lift_proxy
+→ finbeam_euler_bernoulli.q_line	assumed; time static_input; uncertainty unknown	scenario
+SCENARIO (assumption-level): may run, never evidence about an organism
+parameter bounds are unknown on at least one side of a value-transforming mapping
+no uncertainty edge declared
+assumption-level edges: A3, A4
+Assumes A3, A4.
+Assumptions behind the scenario rows
+A1 (assumption, dx-guilds): glide release speed equals the constraint solver's witness V (the glide model's own default is 1.5 x stall speed)
+A2 (assumption, dx-guilds): Notch/Delta lateral-inhibition spacing from a two-cell non-dimensional model sets fin-ray stiffness scale (NO source supports this)
+A3 (assumption, dx-guilds): the mean lift-pressure proxy p = 0.5*rho*V^2*CL, built from declared rho, V and CL, is the pressure carried by one fin ray (it is not a measured fin pressure; V is the solver's level-flight-proxy speed)
+A4 (assumption, dx-guilds): ray length fraction and tributary width are declared values, not measurements (fin_mechanics example: 1/5 of the semispan, 1/100 m)
+A5 (assumption, dx-guilds): the flexural-rigidity range is ASSUMED, not measured or calibrated: no calibrated fin stiffness exists in this repository
+Models in the manifest
+MODEL	STATUS	PORTS	NOT ESTABLISHED
+Collier 1996 two-cell Delta-Notch lateral inhibition (BIOMD0000001047)
+collier1996_two_cell	implemented_replayed	2	any flying-fish or fin role for Notch/Delta; SI units; parameter provenance
+Load bridge: declared flight load -> line load on one fin ray (exact rational)
+fin_load_bridge	implemented	9	a measured fin pressure; fluid-structure interaction; that the tributary width or ray length is real; that p*S balances weight (reported, not enforced)
+Elastic fin-ray surrogate: clamped-free Euler-Bernoulli cantilever (SIMULATED)
+finbeam_euler_bernoulli	implemented	5	a calibrated fin stiffness; that any real ray lies in the assumed EI range; fluid-structure interaction; biological feasibility
+Exact-rational constraint solver (mass, wing area, span, speed)
+flying_fish_constraints	implemented	4	organism feasibility; glide performance; that any witness is a viable fish
+Point-mass glide simulation (RK4)
+glide_pointmass	implemented	8	biological feasibility; fin-tissue coupling; calibrated lift/drag for any fish (Park & Choi 2010 unread)
+Reaction-diffusion field (Schnakenberg, Brusselator): saved-state rerun
+rdfield_nonlinear_sweep	implemented	4	any fin or fish tissue; SI length or time scales; that a real tissue obeys these kinetics
+9 proposed calibration questions proposals only, not claims
+
+The manifest states these must be displayed and must not be said:
+
+A coupling verdict is about typed interfaces, not biology. 'composable' means the declared mapping is dimensionally and scope-consistent; it does not mean the models describe the same organism. 'scenario' results are assumption-level. No Lean theorem here proves biological correspondence.
+Scenario results carry the label 'assumption-level'.
+Registered calibrations: NONE
+
+Not to be said: “the models are coupled”; “validated multiscale model”; “the fin pattern is explained”; “Lean proves the biological correspondence”.
+
+Manifest sha256 499d3a6159e2… · Read the coupling document
+
+Manifest format
+
+Fields the build reads: title, scales[], evidence_kind, model{name,context}, time{units,note}, video{file,sha256,note}, poster, numerical_checks[], parameter_unknowns[], open_questions[], couplings[{from,to,status}]. The video file must sit beside the manifest. The runtime serves .mp4 and .webm under site/artifacts/ with range requests; the build copies a video there only when its bytes match the declared sha256.
+
+snapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)
+
+Input files and sha256
+
+Design geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.

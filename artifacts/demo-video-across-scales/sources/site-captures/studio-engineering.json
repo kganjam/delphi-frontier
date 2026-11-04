@@ -1,0 +1,705 @@
+{
+  "url": "https://studio.morphoswarm.ai/#/engineering",
+  "title": "Engineering · MorphoSwarm Studio",
+  "text": "Skip to content\nMorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI\nStudio\nFrontier\nKnowledge\nEvidence\nSystem\nAbout\nSearch the catalog\nSearch\nLive runtime\nEngineering\n\nFrom a requirement to a constrained design: requirements and constraints, candidate checks, and what simulation would be needed. Mission: engineer toward a flying fish.\n\nGeometry and simulations, as recorded\nPrecursor-inspired short-fin form (rejected glider candidate)\nEnlarged-pectoral two-wing glider (Exocoetus-type proportions)\nEnlarged pectoral + pelvic four-wing glider (Cypselurus-type proportions)\nComparison N1: Cypselurus baseline, 0.05 kg\nComparison N2: wing area x1.3, same aspect ratio\nComparison N3: wing area x1.3, aspect ratio x1.2\n▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)\n▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)\n▶ Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions\n▶ Adhesion clutch mechanics (render of a simulation)\n▶ Glide trajectories at a fixed launch (point mass)\n▶ Reaction-diffusion field time series\n▶ 2D low-Reynolds flow past the N1 silhouette (lattice-Boltzmann), verdict FAIL\n▶ BETSE potassium-permeability sensitivity with gap-junction controls\n▶ Collagen-mimetic trimer: three 100 ps molecular dynamics runs on an H100 (OpenMM, CUDA)\n▶ Collagen-mimetic trimer: three 900 ps continuations from the 100 ps states (OpenMM, CUDA)\n▶ Collagen-mimetic trimer: 0.2 ps CPU setup run (OpenMM), the earlier short run\n▶ Candidate N1 as a 3D model: path-traced turntable\n▶ 3D flow past the fish3d candidate, Re = 1000, 128 cells along the body (WaterLily, H100)\n▶ 3D flow past the fish3d candidate, Re = 1000, 192 cells along the body (WaterLily, H100)\n▶ Morpheus full-horizon logger chart (t to 2.0): a chart of logged counts, not a spatial tissue movie\n▶ Rhythm-generator controller driving a designed joint servo (eight segments)\n▶ Erk trigger waves and wave-gated growth on one regenerating zebrafish scale\n▶ Static aeroelastic coupling of the fins: 36 arms, bending-only torsion-rigid scaffold\n▶ Aeroelastic fidelity ladder: 45 native arms, no effect magnitude resolved\n▶ Neural cellular automaton fin pattern, original run: 0 of 48 predicates\n▶ Neural cellular automaton fin pattern, corrected seed placement: 32 of 48 predicates, left-half recovery 0 of 12\n▶ NCA curriculum repair/persistence tradeoff: 89/192 design predicates\n▶ Soft-voxel toy body under a travelling actuation wave (Voxelyze)\n▶ Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off\n▶ Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off — protrusion-disabled control\n\nFiles from earlier runs, each with its hash in the sections below and in Simulations. Illustrations and simulated output, not observations.\n\n1 Goal\n2 Constraints\n3 Candidate\n4 Results\n5 Open questions\nGoal\n\nDesign requirement: a vertebrate glider reachable from a beloniform ancestor that satisfies the constraints below at a stated mass. The goal does not assert that such a design is feasible.\n\nSee it on the whiteboard\n\nScales\n\nAll eleven MorphoSwarm scales are shown. A scale without an executable coupling to its neighbours is an open question, not a gap to ignore.\n\nMolecular\nCell\nTissue\nOrgan\nOrganism\nDevelopment\nEvolution / ecology\n1\nMolecular\n2\nMacromolecular\n3\nSubcellular\n4\nCellular\n5\nTissue\n6\nOrgan\n7\nNeural / control\n8\nOrganism\n9\nDevelopmental\n10\nCollective\n11\nEcological / evolutionary\nOrganism scale\nWHAT IS INDEXED\nFish, F. E. (1990) full-text\nPark, H. & Choi, H. (2010) full-text, as returned by a fetch tool\nDavenport, J. (1992) abstract, as returned by a fetch tool\nOPEN QUESTION\n\nWing loading, aspect ratio, glide distance and ground effect are measured or computed in the literature. Maximum L/D = 11.0 is a 1929 calculation relayed by Fish, not a measurement. Davenport 2003 (the maximum-size stability argument) has not been read.\n\nCOUPLINGS\nempirical fit only Organ → Organism: Fish (1990) allometric fits relate mass to wing loading per genus. Fitted coefficients, not mechanism; valid only inside the measured mass range.\nno executable coupling Neural / control → Organism: No executable model of control.\nno executable coupling Ecological / evolutionary → Organism: Unestablished. A novel-appendage flag is metadata, not a reachability check; no model links developmental or evolutionary process to organism-scale design.\nno executable coupling Organism → Developmental: No executable model from adult design back to a developmental programme.\n\nThe browser calculation below is the only runnable organism-scale model; it is arithmetic on published fits, not a flight simulation.\n\nDesign workspace: flying-fish candidate\n\nPreliminary. This arithmetic reimplements an earlier checker table. Where the corrected solver differs (opt-in assumptions, qualitative flags that cannot pass, genus context), the solver is authoritative. With a live runtime, use the solver request below; this page does not override it.\n\nCalculation, not a solver. The numbers below are browser arithmetic on published fits (Fish 1990) and thresholds from the checker handoff. They are not an SMT solver, not a simulation, and not validated for any organism. Blank means unknown, and unknown stays unknown.\n\nSide\nTop\nFront\n3/4 view\n\nDrag to rotate, or focus the drawing and use the arrow keys. Stylised body proportions are fixed; only the entered dimensions and fin share change the shape. A design visualisation, not an observed fish and not CFD.\n\n0.001\n0.01\n0.1\n1\n10\n10\n100\n1000\nbody mass M (kg, log)\nwing loading WL (N/m², log)\n208.9 largest measured WL\ncandidate WL 113\nCypselurus\nb = 0.4\nDanichthys\nb = 0.533\nExocoetus\nb = 0.36\nFodiator\nb = 0.434\nHirundichthys\nb = 0.526\nParexocoetus\nb = 0.408\nNothing declared\nCypselurus-type, 0.1 kg\nScaled-up Cypselurus, 5 kg\nOxyporhamphus-like (CG aft)\n\nCORE DIMENSIONS\nBody mass kg\nMeasured range 0.003–0.53 kg\nStandard length m\nExtant exocoetids reach 0.50 m\nWing span (tip to tip) m\nPectoral span; the area uses span² / AR\nAspect ratio\nMeasured 3.0–16.9 (Table III up to 19.9)\nAdvanced scientific settings fin length, launch speed, air density, lift coefficient, solver requirements, premises and opt-in assumptions\nClear all (unknown)\nDownload candidate JSON\n\nThe download is a local file on your machine. Nothing is submitted anywhere.\n\nDerived (arithmetic)\nWING AREA S = SPAN² / AR\n0.008644 m²\nWING LOADING WL = M G / S\n113.5 N/m²\nREQUIRED LAUNCH SPEED 16 √(WL / 205.5)\n11.9 m/s\nMASS INSIDE MEASURED RANGE?\nYes\nRequirements and constraints, checked against this candidate\nNO FLAG RAISED\n\n3 of 8 checks could be evaluated. Cannot evaluate: C2, C3, C4, C5, C6a.\n\nScope: browser arithmetic against published thresholds. “No flag raised” means no evaluable threshold failed. It does not mean feasible, evolvable or flightworthy, and says nothing about reachability. “Flag raised” names thresholds or declared premises, not an impossibility.\n\nID\tCONSTRAINT\tSTATUS\tDETAIL\tSOURCE AND CONFIDENCE\nC1\tWing-loading envelope\nWL <= 208.9 N/m^2\tpass\tWL = 113.5 N/m^2 is within the measured maximum of 208.9.\nThe largest wing loading measured on any specimen across six genera (Danichthys; the Cypselurus maximum is 205.5). Genus context matters: a candidate is not a Danichthys unless stated. Exceeding it is outside what has been observed, not proof of impossibility.\tFish 1990\nHigh empirically; moderate as a limit\nC2\tLaunch speed implied by loading (Cypselurus taxi anchor)\nIF the taxi-speed assumption is opted in: declared speed >= 16 sqrt(WL/205.5) m/s\tcannot evaluate\tNot evaluated: the 16 m/s anchor is a Cypselurus taxiing launch speed (observed 16-20 m/s), not a flight-speed bound for every design. Opt in below to apply it as an assumption. Implied value if applied: 11.9 m/s.\nThe 16-20 m/s figures are observed Cypselurus taxi/launch speeds. Applying them as a flight-speed requirement for any design is an opt-in assumption, off by default.\tFish 1990\nModerate at best; a Cypselurus taxiing launch speed, not a universal flight bound\nC3\tPectoral fin length\nfin length <= 0.79 x standard length\tcannot evaluate\tNeeds pectoral fin length and standard length.\nDavenport (1992, abstract) reports swimming is impaired beyond about 78-79% of standard length. Treat it as a reported envelope, not a demonstrated ceiling.\tDavenport 1992\nModerate\nC4\tLongitudinal stability (qualitative flag only)\nsource-assigned qualitative CG statement; never a green pass\tcannot evaluate\tDeclared not aft. The source statement is qualitative and no numeric CG offset or threshold exists, so this cannot be a pass.\nDavenport reports CG-behind-pectorals as why Oxyporhamphus cannot take off. Without a numeric CG offset and a threshold the page cannot return a pass; it can only show the flag. Davenport 2003 is unread. No measured centre-of-gravity number exists for any exocoetid; Oxyporhamphus is the one living illustration.\tDavenport 1992\nQualitative; no numeric centre-of-gravity data exist\nC5\tAspect-ratio envelope (opt-in assumption)\nIF the fin-level AR assumption is opted in: 3.0 <= AR <= 16.9 (19.9 in Fish Table III)\tcannot evaluate\tNot evaluated: Fish's 3.0-16.9 is the aspect ratio of individual pectoral fins; this AR is whole-wing span^2/area. Opt in below to treat them as the same (an assumption). AR = 10.\nFish's 3.0-16.9 is the aspect ratio of individual pectoral fins. This page's AR is span squared over whole-wing area. Treating them as the same is an assumption, off by default.\tFish 1990\nModerate for individual pectoral fins; unestablished for a whole wing\nC6a\tNovel-appendage flag (metadata only)\na declared novel appendage or powered flapping is flagged; absence of a flag establishes nothing\tcannot evaluate\tNo flag raised. That does NOT establish evolutionary reachability: the developmental and evolutionary bridge is unestablished.\nA dorsal wing, jointed or flapping wing, novel skeletal element or sustained powered flapping falls outside the route sourced from the exocoetid literature (enlarged fin rays plus an axial/tail launch motor; flyingfishes nested in halfbeaks). That means unsupported by the sourced envelope: state your mechanism. It does not mean impossible. No check on this page establishes reachability; the developmental and evolutionary bridge is unestablished.\tLovejoy 2004\nMetadata only. NOT a reachability check\nC6b\tExtant-species size envelope\nstandard length <= 0.50 m\tpass\tSL = 0.212 m is within the extant envelope (<= 0.50 m).\nObserved over 69 extant Exocoetidae with a parsed maximum (10.3-50.0 cm TL). Not a physical bound.\tFishBase lengths\nHigh for extant species; low as a physical limit\nC6c\tOntogenetic gliding threshold\nstandard length >= 0.05 m\tpass\tSL = 0.212 m >= 0.05 m.\nJuveniles under 0.05 m do not fly (Hubbs 1933, relayed by Fish).\tFish 1990\nModerate\n\nA satisfied check means “not refuted by this threshold”. A threshold measured on one population does not transfer outside it, and the extrapolation flag says when it is being used that way. “Cannot evaluate” is never counted as a pass.\n\nWhat the measured fits say beyond the measured range\n\nBrowser arithmetic on the Cypselurus fit; extrapolates beyond the 0.53 kg maximum measured. The fit crosses 500 N/m^2, about 2.4x anything measured, near 4 kg.\n\nMASS (KG)\tCYPSELURUS WL (N/M²)\tHIRUNDICHTHYS WL (N/M²)\tREQUIRED SPEED, ANCHORED AT 16 M/S (CYPSELURUS)\tSTATUS\n0.53\t221\t279\t16.6 m/s\tedge of measured range\n1\t285\t390\t18.8 m/s\textrapolated\n2\t376\t562\t21.6 m/s\textrapolated\n5\t543\t909\t26 m/s\textrapolated\n10\t716\t1.31e+3\t29.9 m/s\textrapolated\nOpen questions that limit this design\n\nFor each constraint, the unresolved questions that stop it from being strengthened or trusted further. They update with the candidate's results; each opens on the whiteboard.\n\nC1 Wing-loading envelope pass EQ1: Turn Davenport (2003) into a real size bound · EQ2: Find raw exocoetid fin-area and mass data · EQ4: Couple fin morphometry to a mechanism, not only a fit\nC2 Launch speed implied by loading (Cypselurus taxi anchor) cannot evaluate EQ5: Is a numeric L/D measurable from the existing wind-tunnel work?\nC3 Pectoral fin length cannot evaluate no unresolved question recorded\nC4 Longitudinal stability (qualitative flag only) cannot evaluate EQ1: Turn Davenport (2003) into a real size bound\nC5 Aspect-ratio envelope (opt-in assumption) cannot evaluate EQ2: Find raw exocoetid fin-area and mass data · EQ3: Resolve the aspect-ratio upper bound\nC6a Novel-appendage flag (metadata only) cannot evaluate EQ6: Does the lat4a x kcnh2a fin mechanism transfer from zebrafish to a halfbeak or flying fish?\nC6b Extant-species size envelope pass no unresolved question recorded\nC6c Ontogenetic gliding threshold pass no unresolved question recorded\nPrintable form studies\n\nForm study pending a validated candidate. Engineered illustrative form. Not an ancestor, not a viable organism, not a demonstrated evolutionary path, not flight-tested. Fins are thickened for printing.\n\none scale per set, so sizes compare within a set; sets have different masses. morphology-v1: display scale 0.35 (3 forms); nca-comparison-v1: display scale 0.45 (3 forms). Printer and resin: unknown / unknown; nothing has been printed. Built with solver 948c2e1d7 (work/guilds-engineering); libraries manifold3d 3.5.4, matplotlib 3.11.2, numpy 2.4.4, trimesh 5.2.0, z3-solver 5.3.3.0. The 3D shapes below are files from that run, not this page's parametric drawing.\n\nPrecursor-inspired short-fin form (rejected glider candidate)\n\nForm B's body at 0.1 kg with the paired-fin lengths measured on non-gliding halfbeaks; isolates fin length, and the solver rejects it\n\nrendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 350 mm prop; fins are thickened print plates, not biological thickness. GIF\n\nDisplay scale 0.35, set morphology-v1.\n\nsolver: unsat glide: not applicable Lean: not run\n\nthe declared constraints conflict at this point (named); this form is shown as a rejected candidate Conflict: wl_hi, q_m_ge, q_S_le.\n\nBody held equal to Form B (Exocoetus fits) on purpose: no halfbeak length-mass fit was read. The elongate jaw is a qualitative halfbeak feature.\n\nBOUNDS (MM)\n110.9 × 25.33 × 20.93\nVOLUME (MM³)\n4714.2\nCLOSED 2-MANIFOLD\nyes\nCONSISTENTLY ORIENTED\nyes\nCONVERGED (COARSE/DEFAULT/FINE)\nyes\nSTL ROUND TRIP\nyes 8136 triangles\n\nNot to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.\n\nNot checked (6)\nInspect the mesh here\n\nDownload STL 8b4ac3883808… · 406884 bytes · stand STL\n\nMesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.\n\nEnlarged-pectoral two-wing glider (Exocoetus-type proportions)\n\nmonoplane design: pectorals carry 91.8% of wing area (Fish 1990 Table IV)\n\nrendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 350 mm prop; fins are thickened print plates, not biological thickness. GIF\n\nDisplay scale 0.35, set morphology-v1.\n\nsolver: feasible glide: not run Lean: not run\n\nan exact point satisfies the declared constraints in guilds' model; not organism feasibility\n\nBOUNDS (MM)\n94.93 × 111.3 × 20.93\nVOLUME (MM³)\n6046.3\nCLOSED 2-MANIFOLD\nyes\nCONSISTENTLY ORIENTED\nyes\nCONVERGED (COARSE/DEFAULT/FINE)\nyes\nSTL ROUND TRIP\nyes 7948 triangles\n\nNot to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.\n\nNot checked (6)\nInspect the mesh here\n\nDownload STL e12dbd8c8db4… · 397484 bytes · stand STL\n\nMesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.\n\nEnlarged pectoral + pelvic four-wing glider (Cypselurus-type proportions)\n\nbiplane design: pectorals 76.0%, pelvics + body the rest (Fish 1990 Table IV)\n\nrendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 350 mm prop; fins are thickened print plates, not biological thickness. GIF\n\nDisplay scale 0.35, set morphology-v1.\n\nsolver: feasible glide: not run Lean: not run\n\nan exact point satisfies the declared constraints in guilds' model; not organism feasibility\n\nPelvic length / SL is from Cheilopogon furcatus (four-wing; Cypselurus is not in Daane S1A): a cross-genus substitution.\n\nBOUNDS (MM)\n91.28 × 94.39 × 19.97\nVOLUME (MM³)\n6107.8\nCLOSED 2-MANIFOLD\nyes\nCONSISTENTLY ORIENTED\nyes\nCONVERGED (COARSE/DEFAULT/FINE)\nyes\nSTL ROUND TRIP\nyes 8154 triangles\n\nNot to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.\n\nNot checked (6)\nInspect the mesh here\n\nDownload STL 1407a294489f… · 407784 bytes · stand STL\n\nMesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.\n\nComparison N1: Cypselurus baseline, 0.05 kg\n\nFish 1990 Cypselurus wing-area and span fits at 0.05 kg (NCA baseline)\n\nrendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 450 mm prop; fins are thickened print plates, not biological thickness. GIF\n\nDisplay scale 0.45, set nca-comparison-v1.\n\nsolver: feasible glide: not run Lean: not run\n\nan exact point satisfies the declared constraints in guilds' model; not organism feasibility\n\nPelvic length / SL is from Cheilopogon furcatus (four-wing; Cypselurus is not in Daane S1A): a cross-genus substitution. Body, fins and shape parameters as Form C; only S and b differ within the set.\n\nBOUNDS (MM)\n92.53 × 93.61 × 20.57\nVOLUME (MM³)\n6473.5\nCLOSED 2-MANIFOLD\nyes\nCONSISTENTLY ORIENTED\nyes\nCONVERGED (COARSE/DEFAULT/FINE)\nyes\nSTL ROUND TRIP\nyes 8210 triangles\n\nNot to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.\n\nNot checked (6)\nInspect the mesh here\n\nDownload STL 7582e66eff22… · 410584 bytes · stand STL\n\nMesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.\n\nComparison N2: wing area x1.3, same aspect ratio\n\nN1 with wing area x1.3 at the same whole-wing b^2/S (NCA variant fS 1.3, fAR 1.0)\n\nrendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 450 mm prop; fins are thickened print plates, not biological thickness. GIF\n\nDisplay scale 0.45, set nca-comparison-v1.\n\nsolver: feasible glide: not run Lean: not run\n\nan exact point satisfies the declared constraints in guilds' model; not organism feasibility\n\nPelvic length / SL is from Cheilopogon furcatus (four-wing; Cypselurus is not in Daane S1A): a cross-genus substitution. Body, fins and shape parameters as Form C; only S and b differ within the set.\n\nBOUNDS (MM)\n92.53 × 106.8 × 20.57\nVOLUME (MM³)\n7005.4\nCLOSED 2-MANIFOLD\nyes\nCONSISTENTLY ORIENTED\nyes\nCONVERGED (COARSE/DEFAULT/FINE)\nyes\nSTL ROUND TRIP\nyes 8260 triangles\n\nNot to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.\n\nNot checked (6)\nInspect the mesh here\n\nDownload STL 1b739f8e5149… · 413084 bytes · stand STL\n\nMesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.\n\nComparison N3: wing area x1.3, aspect ratio x1.2\n\nN1 with wing area x1.3 and whole-wing b^2/S x1.2 (NCA variant fS 1.3, fAR 1.2)\n\nrendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 450 mm prop; fins are thickened print plates, not biological thickness. GIF\n\nDisplay scale 0.45, set nca-comparison-v1.\n\nsolver: feasible glide: not run Lean: not run\n\nan exact point satisfies the declared constraints in guilds' model; not organism feasibility\n\nPelvic length / SL is from Cheilopogon furcatus (four-wing; Cypselurus is not in Daane S1A): a cross-genus substitution. Body, fins and shape parameters as Form C; only S and b differ within the set.\n\nBOUNDS (MM)\n92.53 × 117 × 20.78\nVOLUME (MM³)\n7015.1\nCLOSED 2-MANIFOLD\nyes\nCONSISTENTLY ORIENTED\nyes\nCONVERGED (COARSE/DEFAULT/FINE)\nyes\nSTL ROUND TRIP\nyes 8258 triangles\n\nNot to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.\n\nNot checked (6)\nInspect the mesh here\n\nDownload STL d50513632a35… · 412984 bytes · stand STL\n\nMesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.\n\nRecorded results: Lean receipt and simulation\nLean check (offline receipt)\n\nall checks as recorded not run by this page\n\nLean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release). Mathlib 56a005855ea1, toolchain leanprover/lean4:v4.35.0. Receipt engineering/formal/RECEIPT.json sha256 b384c5ace856….\n\nPositive file: exit 0 in 85.6 s; axioms used Classical.choice, Quot.sound, propext (standard only).\nNegative controls (altered law or corrupted certificate): exit 1; each block rejected: wl_k2: rejected, mass_exponent: rejected, stall_k2: rejected, corrupted_certificate: rejected.\n\nWhat this does and does not show. It checks that a specific conflict certificate for three encoded constraints (level-lift proxy, minimum wing loading, maximum speed) is valid, and that mutated laws fail. It is a statement about the encoding of those constraints, not about any fish. The solver's other verdicts are z3 verdicts with no Lean check, and the solve endpoint reports Lean as not run.\n\nCorrected common-launch comparison preferred over the Pareto set simulated\n\n900 rows (1 unconverged), model glide-pointmass/1, protocol engineering/simulation/PROTOCOL_CONTROLLED.md. Designs are compared with a genus baseline under the same launch speeds and drag scenarios, not by their own best case.\n\nDesigns compared: 144. Robust wins over the baseline across scenarios: 0. Designs whose comparison flips between scenarios: 62.\nBaseline infeasible in 10 genus/mass/launch/drag scenarios (shown as such, not dropped).\n2 baseline masses were excluded because their wing loading falls outside the genus's measured range.\nBASELINE GENUS\tM (KG)\tS (M²)\tAR\tWL (N/M²)\tVS TABLE II FIT\nCypselurus\t0.0500\t0.00570\t7.86\t86.04\t0.053% apart\nCypselurus\t0.100\t0.00889\t8.47\t110.3\t2.8% apart\nCypselurus\t0.200\t0.0139\t9.13\t141.3\t5.6% apart\nCypselurus\t0.400\t0.0217\t9.84\t181.1\t8.3% apart\nExocoetus\t0.0500\t0.00500\t12.3\t98.13\t3.9% apart\nExocoetus\t0.100\t0.00835\t12.5\t117.4\t10% apart\nSOLVER WITNESS CHECK\n\nStatus feasible; independent verification true. Query: flying_fish_model(rho=1.225, CL=6/5, assume_pectoral_ar_applies_to_wing=True) + q_speed_max(12). Witness: m = 153/512 (≈ 0.298828); S = 1/4 (≈ 0.250000); b = 1; V = 4; wing loading 11.72 N/m². A point in the encoded model, not a design.\n\nNot established: biological feasibility of any fin or body; fin-tissue coupling or any genetic mechanism; calibrated lift/drag for any fish; Reynolds-number or scale validity of the drag polar; unsteady, flapping, taxiing or take-off phases; wind, waves, ground effect.\n\nsummary.json (63140 bytes, d62b455e16ff…) comparison.csv (264595 bytes, 6c434c4a7b09…) witness_check.json (3449 bytes, abcb2351747c…)\n\nGlide simulation (glide-pointmass/1) simulated\n\n720 designs, 48 on the Pareto set, 0 unconverged; largest step-halving range difference 0.00000162. Monte Carlo n = 200, seed 20261031. Nominal assumptions: rho = 1.225, CL_max = 1.2, CD0 = 0.06, e = 0.8, h0 = 1. These coefficients are model assumptions, not measurements.\n\nNUMERICAL CONTROL\tERROR OR DRIFT\tTOLERANCE\nballistic\t0.00000157\t0.001\nenergy no drag\t4.55e-14\t0.0001\nequilibrium\t1.28e-14\t0.0001\ndt halving single\t1.67e-8\t0.0001\n\nAll controls pass: true.\n\nThe authors' own caveat. In this point-mass model with constant coefficients the dynamics depend on mass only through wing loading m g/S, so at fixed (WL, AR) mass does not change range; mass enters the Pareto set only through the A* objective, which favours small mass trivially. Release speed 1.5 V_stall makes release kinetic energy (equivalent height >> 1 m for most designs) dominate the range, so ranges rise with wing loading mainly because of the release-speed convention. Both are model/assumption artefacts, not biological findings. The high-wing-loading Pareto designs zoom-climb from the 1 m release (peak height shown above) because release kinetic energy exceeds the potential-energy scale; that is a release-convention artefact, not a statement about fish. A release-height-only (fixed speed) policy would need a sourced speed.\n\nFigure as recorded (engineering/simulation/results/figure.png, sha256 a4c358e98368…). Simulated point-mass glides, not a fish and not CFD.\n48 selected Pareto designs from the first sweep: exploratory, uncalibrated. Open the table\n\nFiles: summary.json (16020 bytes, b63e9955db70…) controls.json (499 bytes, b5453be2da7f…) pareto.json (29698 bytes, 3101c1f6a2d2…) model_structure_findings.json (1260 bytes, b629027d4b69…) designs.csv (220669 bytes, 80ca9b5b10ea…) figure.png (118054 bytes, a4c358e98368…)\n\nThere is no mesh or print-geometry artifact in this tree; the drawing above is a parametric visualisation, not a validated model.\n\nSolver candidates and simulation\nSolver candidates\n\nNone attached to this snapshot. A solver returns satisfiable, unsatisfiable, unknown or timeout; the page will show whichever it returns, never a default.\n\nRequest a solver run\n\nSends this candidate's entered numbers as decimal strings; blank air density and lift coefficient stay unknown. No online Lean status is produced; any Lean receipt is separate and offline.\n\nSimulation\n\nNo recorded glide simulation is attached to this snapshot. Only a recorded run, with its receipt, will appear here; the arithmetic above is not a simulation.\n\nRequest a simulation run\n\nsnapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)\n\nInput files and sha256\n\nDesign geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.",
+  "links": [
+    {
+      "text": "Skip to content",
+      "url": "https://studio.morphoswarm.ai/#main"
+    },
+    {
+      "text": "MorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI",
+      "url": "https://studio.morphoswarm.ai/#/home"
+    },
+    {
+      "text": "Studio",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Frontier",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "Knowledge",
+      "url": "https://studio.morphoswarm.ai/#/knowledge"
+    },
+    {
+      "text": "Evidence",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "System",
+      "url": "https://studio.morphoswarm.ai/#/work"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/blog"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/team"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/docs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/inspirations"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/generative"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/demo"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/faq"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/work?tab=connect"
+    },
+    {
+      "text": "Precursor-inspired short-fin form (rejected glider candidate)",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scroll=pf-h"
+    },
+    {
+      "text": "Enlarged-pectoral two-wing glider (Exocoetus-type proportions)",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scroll=pf-h"
+    },
+    {
+      "text": "Enlarged pectoral + pelvic four-wing glider (Cypselurus-type proportions)",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scroll=pf-h"
+    },
+    {
+      "text": "Comparison N1: Cypselurus baseline, 0.05 kg",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scroll=pf-h"
+    },
+    {
+      "text": "Comparison N2: wing area x1.3, same aspect ratio",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scroll=pf-h"
+    },
+    {
+      "text": "Comparison N3: wing area x1.3, aspect ratio x1.2",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scroll=pf-h"
+    },
+    {
+      "text": "▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Adhesion clutch mechanics (render of a simulation)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Glide trajectories at a fixed launch (point mass)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Reaction-diffusion field time series",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ 2D low-Reynolds flow past the N1 silhouette (lattice-Boltzmann), verdict FAIL",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ BETSE potassium-permeability sensitivity with gap-junction controls",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Collagen-mimetic trimer: three 100 ps molecular dynamics runs on an H100 (OpenMM, CUDA)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Collagen-mimetic trimer: three 900 ps continuations from the 100 ps states (OpenMM, CUDA)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Collagen-mimetic trimer: 0.2 ps CPU setup run (OpenMM), the earlier short run",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Candidate N1 as a 3D model: path-traced turntable",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ 3D flow past the fish3d candidate, Re = 1000, 128 cells along the body (WaterLily, H100)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ 3D flow past the fish3d candidate, Re = 1000, 192 cells along the body (WaterLily, H100)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Morpheus full-horizon logger chart (t to 2.0): a chart of logged counts, not a spatial tissue movie",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Rhythm-generator controller driving a designed joint servo (eight segments)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Erk trigger waves and wave-gated growth on one regenerating zebrafish scale",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Static aeroelastic coupling of the fins: 36 arms, bending-only torsion-rigid scaffold",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Aeroelastic fidelity ladder: 45 native arms, no effect magnitude resolved",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Neural cellular automaton fin pattern, original run: 0 of 48 predicates",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Neural cellular automaton fin pattern, corrected seed placement: 32 of 48 predicates, left-half recovery 0 of 12",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ NCA curriculum repair/persistence tradeoff: 89/192 design predicates",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Soft-voxel toy body under a travelling actuation wave (Voxelyze)",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "▶ Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off — protrusion-disabled control",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "Simulations",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "See it on the whiteboard",
+      "url": "https://studio.morphoswarm.ai/#/frontier/G1"
+    },
+    {
+      "text": "Molecular",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=molecular"
+    },
+    {
+      "text": "Cell",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=cellular"
+    },
+    {
+      "text": "Tissue",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=tissue"
+    },
+    {
+      "text": "Organ",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=organ"
+    },
+    {
+      "text": "Organism",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=organism"
+    },
+    {
+      "text": "Development",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=developmental"
+    },
+    {
+      "text": "Evolution / ecology",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=ecological"
+    },
+    {
+      "text": "1\nMolecular",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=molecular"
+    },
+    {
+      "text": "2\nMacromolecular",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=macromolecular"
+    },
+    {
+      "text": "3\nSubcellular",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=subcellular"
+    },
+    {
+      "text": "4\nCellular",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=cellular"
+    },
+    {
+      "text": "5\nTissue",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=tissue"
+    },
+    {
+      "text": "6\nOrgan",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=organ"
+    },
+    {
+      "text": "7\nNeural / control",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=neural"
+    },
+    {
+      "text": "8\nOrganism",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=organism"
+    },
+    {
+      "text": "9\nDevelopmental",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=developmental"
+    },
+    {
+      "text": "10\nCollective",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=collective"
+    },
+    {
+      "text": "11\nEcological / evolutionary",
+      "url": "https://studio.morphoswarm.ai/#/engineering?scale=ecological"
+    },
+    {
+      "text": "Fish, F. E. (1990)",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Afish1990"
+    },
+    {
+      "text": "Park, H. & Choi, H. (2010)",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Aparkchoi2010"
+    },
+    {
+      "text": "Davenport, J. (1992)",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Adavenport1992"
+    },
+    {
+      "text": "Fish 1990",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Afish1990"
+    },
+    {
+      "text": "Fish 1990",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Afish1990"
+    },
+    {
+      "text": "Davenport 1992",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Adavenport1992"
+    },
+    {
+      "text": "Davenport 1992",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Adavenport1992"
+    },
+    {
+      "text": "Fish 1990",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Afish1990"
+    },
+    {
+      "text": "Lovejoy 2004",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Alovejoy2004"
+    },
+    {
+      "text": "FishBase lengths",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Afishbase"
+    },
+    {
+      "text": "Fish 1990",
+      "url": "https://studio.morphoswarm.ai/#/engineering?src=src%3Afish1990"
+    },
+    {
+      "text": "EQ1: Turn Davenport (2003) into a real size bound",
+      "url": "https://studio.morphoswarm.ai/#/frontier/EQ1"
+    },
+    {
+      "text": "EQ2: Find raw exocoetid fin-area and mass data",
+      "url": "https://studio.morphoswarm.ai/#/frontier/EQ2"
+    },
+    {
+      "text": "EQ4: Couple fin morphometry to a mechanism, not only a fit",
+      "url": "https://studio.morphoswarm.ai/#/frontier/EQ4"
+    },
+    {
+      "text": "EQ5: Is a numeric L/D measurable from the existing wind-tunnel work?",
+      "url": "https://studio.morphoswarm.ai/#/frontier/EQ5"
+    },
+    {
+      "text": "EQ1: Turn Davenport (2003) into a real size bound",
+      "url": "https://studio.morphoswarm.ai/#/frontier/EQ1"
+    },
+    {
+      "text": "EQ2: Find raw exocoetid fin-area and mass data",
+      "url": "https://studio.morphoswarm.ai/#/frontier/EQ2"
+    },
+    {
+      "text": "EQ3: Resolve the aspect-ratio upper bound",
+      "url": "https://studio.morphoswarm.ai/#/frontier/EQ3"
+    },
+    {
+      "text": "EQ6: Does the lat4a x kcnh2a fin mechanism transfer from zebrafish to a halfbeak or flying fish?",
+      "url": "https://studio.morphoswarm.ai/#/frontier/EQ6"
+    },
+    {
+      "text": "GIF",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/media/A-precursor-short-fin/turntable.gif"
+    },
+    {
+      "text": "Download STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/A-precursor-short-fin.stl"
+    },
+    {
+      "text": "stand STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/A-precursor-short-fin-stand.stl"
+    },
+    {
+      "text": "GIF",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/media/B-two-wing-glider/turntable.gif"
+    },
+    {
+      "text": "Download STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/B-two-wing-glider.stl"
+    },
+    {
+      "text": "stand STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/B-two-wing-glider-stand.stl"
+    },
+    {
+      "text": "GIF",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/media/C-four-wing-glider/turntable.gif"
+    },
+    {
+      "text": "Download STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/C-four-wing-glider.stl"
+    },
+    {
+      "text": "stand STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/C-four-wing-glider-stand.stl"
+    },
+    {
+      "text": "GIF",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/media/N1-cypselurus-baseline/turntable.gif"
+    },
+    {
+      "text": "Download STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N1-cypselurus-baseline.stl"
+    },
+    {
+      "text": "stand STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N1-cypselurus-baseline-stand.stl"
+    },
+    {
+      "text": "GIF",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/media/N2-area-x1.3/turntable.gif"
+    },
+    {
+      "text": "Download STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N2-area-x1.3.stl"
+    },
+    {
+      "text": "stand STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N2-area-x1.3-stand.stl"
+    },
+    {
+      "text": "GIF",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/media/N3-area-x1.3-ar-x1.2/turntable.gif"
+    },
+    {
+      "text": "Download STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N3-area-x1.3-ar-x1.2.stl"
+    },
+    {
+      "text": "stand STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N3-area-x1.3-ar-x1.2-stand.stl"
+    },
+    {
+      "text": "summary.json",
+      "url": "https://studio.morphoswarm.ai/data/docs/controlled_summary.json"
+    },
+    {
+      "text": "comparison.csv",
+      "url": "https://studio.morphoswarm.ai/artifacts/results/controlled_comparison.csv"
+    },
+    {
+      "text": "witness_check.json",
+      "url": "https://studio.morphoswarm.ai/data/docs/controlled_witness_check.json"
+    },
+    {
+      "text": "summary.json",
+      "url": "https://studio.morphoswarm.ai/data/results/summary.json"
+    },
+    {
+      "text": "controls.json",
+      "url": "https://studio.morphoswarm.ai/data/results/controls.json"
+    },
+    {
+      "text": "pareto.json",
+      "url": "https://studio.morphoswarm.ai/data/results/pareto.json"
+    },
+    {
+      "text": "model_structure_findings.json",
+      "url": "https://studio.morphoswarm.ai/data/results/model_structure_findings.json"
+    },
+    {
+      "text": "designs.csv",
+      "url": "https://studio.morphoswarm.ai/artifacts/results/designs.csv"
+    },
+    {
+      "text": "figure.png",
+      "url": "https://studio.morphoswarm.ai/data/results/figure.png"
+    },
+    {
+      "text": "snapshot.json",
+      "url": "https://studio.morphoswarm.ai/data/snapshot.json"
+    },
+    {
+      "text": "catalog.json",
+      "url": "https://studio.morphoswarm.ai/data/catalog.json"
+    },
+    {
+      "text": "licence",
+      "url": "https://studio.morphoswarm.ai/vendor/katex/LICENSE"
+    }
+  ],
+  "media": [
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/A-precursor-short-fin.png",
+      "alt": "Precursor-inspired short-fin form (rejected glider candidate)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/B-two-wing-glider.png",
+      "alt": "Enlarged-pectoral two-wing glider (Exocoetus-type proportions)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/C-four-wing-glider.png",
+      "alt": "Enlarged pectoral + pelvic four-wing glider (Cypselurus-type proportions)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/N1-cypselurus-baseline.png",
+      "alt": "Comparison N1: Cypselurus baseline, 0.05 kg",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/N2-area-x1.3.png",
+      "alt": "Comparison N2: wing area x1.3, same aspect ratio",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/N3-area-x1.3-ar-x1.2.png",
+      "alt": "Comparison N3: wing area x1.3, aspect ratio x1.2",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/biomodels-delta-notch/delta_notch_replay_poster.png",
+      "alt": "Two-cell Delta-Notch replay (BioModels BIOMD0000001047)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/fin-mechanics/poster.png",
+      "alt": "Elastic fin-ray surrogate (Euler-Bernoulli cantilever)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/bioelectric-cells/poster.png",
+      "alt": "Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/mechanobio-clutch/poster.png",
+      "alt": "Adhesion clutch mechanics (render of a simulation)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/glide-fixed-launch/poster.png",
+      "alt": "Glide trajectories at a fixed launch (point mass)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/rd-fields/poster_rd.png",
+      "alt": "Reaction-diffusion field time series",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/windtunnel-2d/poster.png",
+      "alt": "2D low-Reynolds flow past the N1 silhouette (lattice-Boltzmann), verdict FAIL",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/reconstructed/sensitivity-poster.png",
+      "alt": "BETSE potassium-permeability sensitivity with gap-junction controls",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-cuda/poster.png",
+      "alt": "Collagen-mimetic trimer: three 100 ps molecular dynamics runs on an H100 (OpenMM, CUDA)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-continuation/poster.png",
+      "alt": "Collagen-mimetic trimer: three 900 ps continuations from the 100 ps states (OpenMM, CUDA)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md/poster.png",
+      "alt": "Collagen-mimetic trimer: 0.2 ps CPU setup run (OpenMM), the earlier short run",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/fish3d-render/poster.png",
+      "alt": "Candidate N1 as a 3D model: path-traced turntable",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L128-Re1000/poster.png",
+      "alt": "3D flow past the fish3d candidate, Re = 1000, 128 cells along the body (WaterLily, H100)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L192-Re1000/poster.png",
+      "alt": "3D flow past the fish3d candidate, Re = 1000, 192 cells along the body (WaterLily, H100)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/morpheus-full-horizon-chart/full_horizon_chart_poster.png",
+      "alt": "Morpheus full-horizon logger chart (t to 2.0): a chart of logged counts, not a spatial tissue movie",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/behavior-cpg/poster.png",
+      "alt": "Rhythm-generator controller driving a designed joint servo (eight segments)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/scale-erk-wave/poster.png",
+      "alt": "Erk trigger waves and wave-gated growth on one regenerating zebrafish scale",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-coupling/render-production/poster.png",
+      "alt": "Static aeroelastic coupling of the fins: 36 arms, bending-only torsion-rigid scaffold",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/poster.png",
+      "alt": "Aeroelastic fidelity ladder: 45 native arms, no effect magnitude resolved",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/nca-pattern/returned-analysis/poster.png",
+      "alt": "Neural cellular automaton fin pattern, original run: 0 of 48 predicates",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/nca-seed-placement/returned-analysis/poster.png",
+      "alt": "Neural cellular automaton fin pattern, corrected seed placement: 32 of 48 predicates, left-half recovery 0 of 12",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/returned-analysis/poster.png",
+      "alt": "NCA curriculum repair/persistence tradeoff: 89/192 design predicates",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/tissue-microcarrier/poster.png",
+      "alt": "Soft-voxel toy body under a travelling actuation wave (Voxelyze)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/epithelial/media/A1-baseline_poster.png",
+      "alt": "Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/epithelial/media/A2-motility-off_poster.png",
+      "alt": "Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off — protrusion-disabled control",
+      "poster": ""
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/media/A-precursor-short-fin/turntable.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/print/media/A-precursor-short-fin/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/media/B-two-wing-glider/turntable.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/print/media/B-two-wing-glider/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/media/C-four-wing-glider/turntable.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/print/media/C-four-wing-glider/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/media/N1-cypselurus-baseline/turntable.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/print/media/N1-cypselurus-baseline/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/media/N2-area-x1.3/turntable.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/print/media/N2-area-x1.3/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/media/N3-area-x1.3-ar-x1.2/turntable.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/print/media/N3-area-x1.3-ar-x1.2/poster.png"
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/data/results/figure.png",
+      "alt": "Recorded simulation figure from the glide sweep",
+      "poster": ""
+    }
+  ]
+}

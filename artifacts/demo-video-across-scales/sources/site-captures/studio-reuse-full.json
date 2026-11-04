@@ -1,0 +1,124 @@
+{
+  "url": "https://studio.morphoswarm.ai/#/reuse",
+  "title": "Reuse · MorphoSwarm Studio",
+  "text": "Skip to content\nMorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI\nStudio\nFrontier\nKnowledge\nEvidence\nSystem\nAbout\nSearch the catalog\nSearch\nLive runtime\nClaim reuse and an independent dispute\n\nOne existing published Claim was read by two separate computations before they ran. An independent reviewer then recorded both results as disputed. This is a worked example of versioned reuse and of a disagreement that stays visible, not a measure of benefit.\n\nRead this first. Two illustrative mathematical stiffness candidates under one already published exact Claim context; not measured fish biology, collective benefit or biological validation. Two Actions using one Claim is a count of uses, not a saving of time or cost (not measured), not a collective benefit (not measured) and not biological evidence (empirical validation: unknown; success probability: not computed).\n\n1. The shared Claim\n\neng-finmech-claim-ei-crit @4998ef85bd98…\n\n2 distinct current Actions recorded a typed uses link to this exact version, with the neighbourhood read in full. The audit checked that each computation read the Claim and bound its input before the solver ran: yes, in that order. Chronology uses the producer's own UTC times, not an outside time anchor.\n\nagent-fin-reuse-below-threshold-v1 @0ed92cdd83a6… uses eng-finmech-claim-ei-crit @4998ef85bd98…\nagent-fin-reuse-above-threshold-v1 @6753217293d3… uses eng-finmech-claim-ei-crit @4998ef85bd98…\n2. Two computations from that Claim\nThe two computations\nCASE\tSTIFFNESS USED (N M², EXACT)\tTIP OVER SPAN\tMAX SLOPE (RAD)\tINSIDE THE DECLARED MODEL DOMAIN\tRECORDS\nbelow-threshold\t11907/20480000\nfrom the Claim's threshold 1323/2048000\t0.111111 (limit 0.1)\t0.148148\toutside: a retained counterexample numerical checks passed\tagent-fin-reuse-below-threshold-v1 @0ed92cdd83a6… state submitted\nagent-fin-reuse-evidence-below-threshold-v1 @f1d756de9af5… proposed\nresult 94407c399f8f…\nabove-threshold\t14553/20480000\nfrom the Claim's threshold 1323/2048000\t0.090909 (limit 0.1)\t0.121212\tinside numerical checks passed\tagent-fin-reuse-above-threshold-v1 @6753217293d3… state submitted\nagent-fin-reuse-evidence-above-threshold-v1 @745133a46891… proposed\nresult ae353610c4aa…\n\nThe lower candidate exceeds the declared tip-over-span limit, so it is outside the surrogate's valid domain and is kept as a counterexample, not a prediction of fin deformation. All pressure, geometry, material and validity inputs are declared illustration assumptions.\n\n3. The independent review: disputed\n\nReviewer fin-reuse-reviewer, policy frontier-independent-review-0.1. Decision recorded for both Evidence records: disputed. The computation checks passed; empirical relevance and independent replication did not. The decision lives in each Assessment's payload; the records are the source of truth.\n\nReview dimensions for each case\nDIMENSION\tBELOW CANDIDATE\tABOVE CANDIDATE\napplicability\tpassed\nApplies to the declared surrogate only (declared rho, V, CL, width, ray length, thresholds; assumed EI). Not to any fish.\tpassed\nApplies to the declared surrogate only (declared rho, V, CL, width, ray length, thresholds; assumed EI). Not to any fish.\ncomputational replay formal check\tpassed\nMy own exact-fraction closed form gives tip/L 1/9 (exact), outside the 1/10 limit; slope 4/27 within 1/5; my own Hermite FEM and a replay of the author's code (profile.csv byte-identical) agree to 5.1e-10; zero-load, L^3-mutant and five altered-Claim controls behave as required.\tpassed\nMy own exact-fraction closed form gives tip/L 1/11 (exact), within the 1/10 limit; slope 4/33 within 1/5; my own Hermite FEM and a replay of the author's code (profile.csv byte-identical) agree to 5.1e-10; zero-load, L^3-mutant and five altered-Claim controls behave as required.\nempirical relevance\tinsufficient\nEI, load and ray length are declared illustration values; no measured fin ray, pressure or outcome is involved, so relevance to any observation is unestablished.\tinsufficient\nEI, load and ray length are declared illustration values; no measured fin ray, pressure or outcome is involved, so relevance to any observation is unestablished.\nindependent replication\tinsufficient\nMy recomputation is computational and shares the declared source, model and inputs; no independent non-computational replication exists.\tinsufficient\nMy recomputation is computational and shares the declared source, model and inputs; no independent non-computational replication exists.\nsource fidelity\tpassed\nSource request and result sha256 match the Claim's declared pins; the before-run Claim read equals the live record; every listed artifact matches its committed file. The source itself is producer-made and still unreviewed.\tpassed\nSource request and result sha256 match the Claim's declared pins; the before-run Claim read equals the live record; every listed artifact matches its committed file. The source itself is producer-made and still unreviewed.\nstatistical adequacy\tnot applicable\nDeterministic computation under declared inputs: no sample, estimate or uncertainty interval exists to assess.\tnot applicable\nDeterministic computation under declared inputs: no sample, estimate or uncertainty interval exists to assess.\ntarget fidelity\tpassed\nThe Evidence addresses the Claim's stated declared-example threshold (relation qualifies) and nothing broader.\tpassed\nThe Evidence addresses the Claim's stated declared-example threshold (relation qualifies) and nothing broader.\n4. What the author said back\n\nThe author's response agreed with each finding and changed no record: the disagreement stands. Original proposals that were never leased or run were replaced before any computation, and are not counted as uses (Ready but never leased/run, superseded before compute for cache identity strengthening; excluded from executed reuse count).\n\nAuthor response (full text)\nProducer README (full text)\n\nAudit artifacts/claim-reuse/audit.json feb661036783… · review readback docs/reviews/fin-reuse-review-run/readback\n\nsnapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)\n\nInput files and sha256\n\nDesign geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.",
+  "links": [
+    {
+      "text": "Skip to content",
+      "url": "https://studio.morphoswarm.ai/#main"
+    },
+    {
+      "text": "MorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI",
+      "url": "https://studio.morphoswarm.ai/#/home"
+    },
+    {
+      "text": "Studio",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Frontier",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "Knowledge",
+      "url": "https://studio.morphoswarm.ai/#/knowledge"
+    },
+    {
+      "text": "Evidence",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "System",
+      "url": "https://studio.morphoswarm.ai/#/work"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/blog"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/team"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/docs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/inspirations"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/generative"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/demo"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/faq"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/work?tab=connect"
+    },
+    {
+      "text": "eng-finmech-claim-ei-crit",
+      "url": "https://studio.morphoswarm.ai/#/entity/Claim/eng-finmech-claim-ei-crit?v=4998ef85bd98ec64c0f4bc86e77337ea25df7ff5683ac6b62dc9095cf5f62f57&ns=node-a"
+    },
+    {
+      "text": "agent-fin-reuse-below-threshold-v1",
+      "url": "https://studio.morphoswarm.ai/#/entity/Action/agent-fin-reuse-below-threshold-v1?v=0ed92cdd83a6052f68d012be91a722017c0e21677faefba26d8301b44bb4d5f2&ns=delphi-frontier"
+    },
+    {
+      "text": "eng-finmech-claim-ei-crit",
+      "url": "https://studio.morphoswarm.ai/#/entity/Claim/eng-finmech-claim-ei-crit?v=4998ef85bd98ec64c0f4bc86e77337ea25df7ff5683ac6b62dc9095cf5f62f57&ns=node-a"
+    },
+    {
+      "text": "agent-fin-reuse-above-threshold-v1",
+      "url": "https://studio.morphoswarm.ai/#/entity/Action/agent-fin-reuse-above-threshold-v1?v=6753217293d3cea5f972bd3d2b4fe7402487ca86b6b9ffc3b3c329edae85115f&ns=delphi-frontier"
+    },
+    {
+      "text": "eng-finmech-claim-ei-crit",
+      "url": "https://studio.morphoswarm.ai/#/entity/Claim/eng-finmech-claim-ei-crit?v=4998ef85bd98ec64c0f4bc86e77337ea25df7ff5683ac6b62dc9095cf5f62f57&ns=node-a"
+    },
+    {
+      "text": "agent-fin-reuse-below-threshold-v1",
+      "url": "https://studio.morphoswarm.ai/#/entity/Action/agent-fin-reuse-below-threshold-v1?v=0ed92cdd83a6052f68d012be91a722017c0e21677faefba26d8301b44bb4d5f2&ns=delphi-frontier"
+    },
+    {
+      "text": "agent-fin-reuse-evidence-below-threshold-v1",
+      "url": "https://studio.morphoswarm.ai/#/entity/Evidence/agent-fin-reuse-evidence-below-threshold-v1?v=f1d756de9af564757d70814f938a877db45b877097674f44d61261e63ffc8001&ns=delphi-frontier"
+    },
+    {
+      "text": "agent-fin-reuse-above-threshold-v1",
+      "url": "https://studio.morphoswarm.ai/#/entity/Action/agent-fin-reuse-above-threshold-v1?v=6753217293d3cea5f972bd3d2b4fe7402487ca86b6b9ffc3b3c329edae85115f&ns=delphi-frontier"
+    },
+    {
+      "text": "agent-fin-reuse-evidence-above-threshold-v1",
+      "url": "https://studio.morphoswarm.ai/#/entity/Evidence/agent-fin-reuse-evidence-above-threshold-v1?v=745133a46891d96a026d5ae91e7fd03bd367ff4de7c16b3dcccec34981bfcff9&ns=delphi-frontier"
+    },
+    {
+      "text": "snapshot.json",
+      "url": "https://studio.morphoswarm.ai/data/snapshot.json"
+    },
+    {
+      "text": "catalog.json",
+      "url": "https://studio.morphoswarm.ai/data/catalog.json"
+    },
+    {
+      "text": "licence",
+      "url": "https://studio.morphoswarm.ai/vendor/katex/LICENSE"
+    }
+  ],
+  "media": []
+}

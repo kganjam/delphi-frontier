@@ -1,0 +1,644 @@
+Skip to content
+MorphoSwarm
+Studio
+CLAIMS AND EVIDENCE: DELPHI
+Studio
+Frontier
+Knowledge
+Evidence
+System
+About
+Search the catalog
+Search
+Live runtime
+
+EVIDENCE
+
+Lean proofs
+
+The mathematics underneath the design, written in Lean 4 so a machine checks every step. 5 small families, each with its assumptions, the receipt of the run that compiled it, and the deliberately wrong versions Lean refused.
+
+1 · Read the claim
+
+Each family opens with a plain-language summary and its equations. Assumptions are listed beside what it does not prove.
+
+2 · Check the proof
+
+Open the statements or the full source. Numbered lines scroll inside their own box.
+
+3 · Check the checks
+
+The receipt records the run. Mutants show the statements fail when the law is changed.
+
+recorded runs
+mathematics, not biology
+
+Lean checks the mathematics of each statement for all values that satisfy its hypotheses. It does not check that the statement models a fish, that a parameter is right, or that anything is true of an organism.
+
+All scope notes and the toolchain
+Geometric similarity: wing loading and speed scaling
+If you scale a fish up or down while keeping its shape, how do the load on its wings and the speed it needs to stay aloft change? Lean proves the answer from the definitions, for every size.
+compiled, recorded
+Unit algebra: conversion, interval mapping and dimensions
+A small system that tracks units as part of a quantity's type, so a conversion or an interval mapping is checked instead of trusted.
+compiled, recorded
+Cantilever guard: a small-deflection bound with satisfiable hypotheses
+A fin ray bending under a small load.
+compiled, recorded
+Oxygen transport: center-content bounds for sphere and slab
+How low can oxygen get at the center of a sphere or slab of tissue that takes it up while it diffuses in from outside? A bound, under stated assumptions and with no tissue-specific numbers supplied.
+compiled, recorded
+Scaled threshold intervals: a fixed-horizon incompatibility certificate
+Two recorded simulation intervals are shown to rule out a factor-of-two scaling band over a fixed horizon.
+compiled, recorded
+Geometric similarity: wing loading and speed scaling
+
+recorded compile matches these files Lean (version 4.35.0 · Mathlib 56a005855e
+
+Under similarity with length ratio k (area k squared, mass k cubed, same air density, lift coefficient and gravity), wing loading scales as k and the level-flight proxy speed as the square root of k. A solver-emitted conflict certificate is also checked.
+
+IN PLAIN TERMS
+If you scale a fish up or down while keeping its shape, how do the load on its wings and the speed it needs to stay aloft change? Lean proves the answer from the definitions, for every size.
+
+9 statements
+4 of 4 mutants rejected
+exit 0 (positive run)
+standard axioms only
+
+WING LOADING
+𝑊
+𝐿
+=
+𝑚
+𝑔
+𝑆
+WL=
+S
+mg
+	​
+
+LEVEL-FLIGHT PROXY SPEED
+𝑉
+=
+2
+𝑚
+𝑔
+𝜌
+𝑆
+𝐶
+V=
+ρSC
+2mg
+	​
+
+	​
+
+WING LOADING UNDER SIMILARITY (AREA K^2, MASS K^3)
+𝑊
+𝐿
+(
+𝑘
+3
+𝑚
+,
+𝑘
+2
+𝑆
+)
+=
+𝑘
+𝑊
+𝐿
+(
+𝑚
+,
+𝑆
+)
+WL(k
+3
+m,k
+2
+S)=kWL(m,S)
+SPEED UNDER SIMILARITY
+𝑉
+(
+𝑘
+3
+𝑚
+,
+𝑘
+2
+𝑆
+)
+=
+𝑘
+𝑉
+(
+𝑚
+,
+𝑆
+)
+V(k
+3
+m,k
+2
+S)=
+k
+	​
+
+V(m,S)
+WING-LOADING CEILING AT SPEED V
+2
+𝑚
+𝑔
+≤
+𝑉
+2
+𝜌
+𝑆
+𝐶
+ 
+⇒
+ 
+2
+𝑊
+𝐿
+≤
+𝜌
+𝑉
+2
+𝐶
+2mg≤V
+2
+ρSC ⇒ 2WL≤ρV
+2
+C
+Assumptions
+Every symbol is a positive real number.
+Air density, lift coefficient and gravity are unchanged between the two sizes.
+Mass ratio k^3 and area ratio k^2 are assumptions of the model (hypotheses of the theorem), not derived.
+The lift condition is a level-flight proxy (L = W), not a glide analysis.
+What the Lean statements say
+9 definitions and theorems
+def wingLoading line 23
+def stallSpeed line 26
+theorem wingLoading_scale line 29
+theorem stallSpeed_sq_scale line 35
+theorem stallSpeed_scale line 45
+theorem wingLoading_mass_exponent line 56
+theorem scaling_laws line 61
+theorem wingLoading_ceiling line 72
+theorem conflict_of_certificate line 81
+Read the Lean source
+GeometricSimilarity.lean, 93 lines
+Mutants Lean rejected
+4 of 4
+A solver conflict certificate, checked by Lean
+unsat
+Receipt of the recorded run
+exit 0 / 1
+Downloads
+4 files
+Unit algebra: conversion, interval mapping and dimensions
+
+recorded compile matches these files Lean (version 4.35.0 · Mathlib 56a005855e
+
+The arithmetic the coupling checker relies on when it validates a unit conversion: converting twice equals converting by the product, a positive factor keeps order and sign, a nonzero factor is undone by its inverse, and dimension exponents add.
+
+IN PLAIN TERMS
+A small system that tracks units as part of a quantity's type, so a conversion or an interval mapping is checked instead of trusted. The other families lean on it.
+
+7 statements
+4 of 4 mutants rejected
+exit 0 (positive run)
+standard axioms only
+
+CONVERSION COMPOSES
+(
+𝑥
+𝑓
+)
+𝑔
+=
+𝑥
+(
+𝑓
+𝑔
+)
+(xf)g=x(fg)
+INTERVAL MAPPED BY A POSITIVE FACTOR
+𝑙
+𝑜
+≤
+𝑥
+≤
+ℎ
+𝑖
+,
+ 
+𝑓
+>
+0
+ 
+⇒
+ 
+𝑙
+𝑜
+𝑓
+≤
+𝑥
+𝑓
+≤
+ℎ
+𝑖
+𝑓
+lo≤x≤hi, f>0 ⇒ lof≤xf≤hif
+DIMENSION EXPONENTS ADD
+dim
+⁡
+(
+𝑑
+𝑠
+𝑡
+)
+=
+dim
+⁡
+(
+𝑠
+𝑟
+𝑐
+)
++
+dim
+⁡
+(
+𝑓
+)
+dim(dst)=dim(src)+dim(f)
+Assumptions
+Values are exact rationals (conversion) and integer exponents (dimensions).
+A positive factor is required for the interval rule; the control shows it is necessary.
+Units themselves (what a kilogram is) are conventions checked in Python, not here.
+What the Lean statements say
+7 definitions and theorems
+structure Dim line 18
+def Dim.add line 23
+theorem convert_comp line 25
+theorem convert_pos line 27
+theorem convert_inv line 29
+theorem interval_map line 32
+theorem dim_compose line 36
+Read the Lean source
+UnitAlgebra.lean, 41 lines
+Mutants Lean rejected
+4 of 4
+Receipt of the recorded run
+exit 0 / 1
+Downloads
+4 files
+Cantilever guard: a small-deflection bound with satisfiable hypotheses
+
+recorded compile matches these files Lean (version 4.35.0 · Mathlib 56a005855e
+
+For every positive P, L, E and I, if the end-load law 3EId = PL^3 holds and the bending stiffness satisfies 10 P L^2 <= 3 E I, then the deflection satisfies d <= L/10. The hypotheses are shown to be satisfiable, and the stiffness hypothesis is shown to be necessary.
+
+IN PLAIN TERMS
+A fin ray bending under a small load. The theorem gives a bound, and a second theorem shows that its conditions can actually be met, so the bound is not true only because nothing qualifies.
+
+3 statements
+1 of 1 mutants rejected
+exit 0 (positive run)
+standard axioms only
+
+END-LOAD LAW (STATED)
+3
+𝐸
+𝐼
+𝑑
+=
+𝑃
+𝐿
+3
+3EId=PL
+3
+STIFFNESS HYPOTHESIS
+10
+𝑃
+𝐿
+2
+≤
+3
+𝐸
+𝐼
+10PL
+2
+≤3EI
+GUARD CONCLUSION
+𝑑
+≤
+𝐿
+10
+d≤
+10
+L
+	​
+
+Assumptions
+P, L, E and I are positive reals.
+The Euler-Bernoulli end-load law is a stated hypothesis, not shown to model a fin ray.
+No real stiffness is shown to satisfy the stiffness hypothesis.
+
+Proves: for all real P, L, E, I, d with P, L, E, I > 0: 3EId = PL^3 and 10 P L^2 <= 3EI imply d <= L/10 (algebra of the stated statement only)
+
+What it does not prove
+that the Euler-Bernoulli end-load law models a fin ray
+that any real stiffness satisfies the hypothesis
+fidelity of the Lean text to any source passage
+anything about biology
+What the Lean statements say
+3 definitions and theorems
+theorem cantilever_guard line 10
+theorem cantilever_guard_hypotheses_satisfiable line 19
+theorem cantilever_guard_needs_stiffness line 24
+Read the Lean source
+CantileverGuard.lean, 32 lines
+Mutants Lean rejected
+1 of 1
+Receipt of the recorded run
+exit 0 / 1
+Downloads
+3 files
+Oxygen transport: center-content bounds for sphere and slab
+
+recorded compile matches these files Lean (version 4.35.0 · Mathlib 56a005855e
+
+Lean checks the equivalence between nonnegative center oxygen and each ideal geometry's size bound. The sphere coefficient 6 follows Grimes et al. Eq. 2.6 after converting boundary partial pressure to the paper's oxygen-content variable; the one-sided slab coefficient 2 is a separately derived analogue. Both project contexts are model-reuse links with unknown parameters, not viability predictions.
+
+IN PLAIN TERMS
+How low can oxygen get at the center of a sphere or slab of tissue that takes it up while it diffuses in from outside? A bound, under stated assumptions and with no tissue-specific numbers supplied.
+
+8 statements
+4 of 4 mutants rejected
+exit 0 (positive run)
+standard axioms only
+
+SPHERICAL CENTER-CONTENT BOUND
+𝐶
+𝑐
+𝑒
+𝑛
+𝑡
+𝑒
+𝑟
+=
+𝐶
+0
+−
+𝑎
+𝑅
+2
+6
+𝐷
+,
+𝑎
+𝑅
+2
+≤
+6
+𝐷
+𝐶
+0
+C
+center
+	​
+
+=C
+0
+	​
+
+−
+6D
+aR
+2
+	​
+
+,aR
+2
+≤6DC
+0
+	​
+
+ONE-SIDED SLAB CENTER-CONTENT BOUND
+𝐶
+𝑐
+𝑒
+𝑛
+𝑡
+𝑒
+𝑟
+=
+𝐶
+0
+−
+𝑎
+𝐿
+2
+2
+𝐷
+,
+𝑎
+𝐿
+2
+≤
+2
+𝐷
+𝐶
+0
+C
+center
+	​
+
+=C
+0
+	​
+
+−
+2D
+aL
+2
+	​
+
+,aL
+2
+≤2DC
+0
+	​
+
+Pinned geometry/control figure. Its threshold curves are conditional model implications, not biological measurements.
+Assumptions
+Steady diffusion with constant, isotropic D > 0 and spatially constant consumption a > 0.
+Boundary oxygen content C0 ≥ 0; sphere has supplied outer boundary C(R)=C0 and center symmetry.
+Slab L is distance from a no-flux mid-plane to one supplied face C(L)=C0; total symmetric slab thickness is 2L.
+C0 is oxygen-gas volume per tissue mass and a is that volume consumed per tissue mass per second in the source equation context; per-volume inputs require a consistent conversion not performed here.
+
+Proves: For the stated algebraic profiles and positive diffusion coefficient, center oxygen is nonnegative exactly when aR² ≤ 6DC0 (sphere) or aL² ≤ 2DC0 (one-sided slab). The six recorded Lean statements include these two parametric equivalences, zero-size boundary values and equality at the diffusion limits.
+
+What it does not prove
+A negative continuation beyond the limit is an out-of-domain model diagnostic, not physical negative oxygen.
+No cell-specific D, consumption a, boundary C0, oxygen measurement, viability threshold or tissue calibration is supplied for either project.
+The spherical limit is from a colorectal tumor-spheroid source context; its fitted values are not transferred to either project.
+The slab is a derived 1-D analogue, not a Grimes equation; neither geometry proves repair, barrier recovery, actuation, motion or organism function.
+What the Lean statements say
+8 definitions and theorems
+def sphereCenterOxygen line 15
+def slabCenterOxygen line 17
+theorem sphere_center_oxygen_bound line 22
+theorem slab_center_oxygen_bound line 43
+theorem sphere_zero_radius_boundary line 62
+theorem slab_zero_thickness_boundary line 67
+theorem sphere_at_diffusion_limit line 72
+theorem slab_at_diffusion_limit line 82
+Read the Lean source
+OxygenDiffusionBound.lean, 98 lines
+Mutants Lean rejected
+4 of 4
+Recorded positive checks
+6 theorems
+Contextual reuse
+exact project versions matched the live registry
+Receipt of the recorded run
+exit 0 / 1
+Downloads
+6 files
+Scaled threshold intervals: a fixed-horizon incompatibility certificate
+
+recorded compile matches these files Lean (version 4.35.0 · Mathlib 56a005855e
+
+Two generic interval implications, two source-bound parametric instances, two nonempty-premise witnesses and four rational counterexamples were compiled. Four false inequality/factor variants were rejected. These are mathematical checks, not ten biological laws or a new simulation.
+
+IN PLAIN TERMS
+Two recorded simulation intervals are shown to rule out a factor-of-two scaling band over a fixed horizon. It is a checked statement about those intervals, not about tissue.
+
+10 statements
+4 of 4 mutants rejected
+exit 0 (positive run)
+standard axioms only
+
+NECESSARY ENDPOINT INEQUALITY
+𝑎
+≤
+𝑥
+,
+ 
+𝑦
+≤
+𝑏
+,
+ 
+𝑥
+≤
+𝑡
+𝑦
+,
+ 
+𝑡
+≥
+0
+ 
+⇒
+ 
+𝑎
+≤
+𝑡
+𝑏
+a≤x, y≤b, x≤ty, t≥0 ⇒ a≤tb
+STRICT INTERVAL SEPARATION
+𝑎
+>
+𝑡
+𝑏
+ 
+⇒
+ 
+¬
+(
+𝑥
+≤
+𝑡
+𝑦
+)
+a>tb ⇒ ¬(x≤ty)
+RECORDED K4 AND K7 EXCLUSIONS AT T=2
+2
+175
+>
+2
+1
+350
+,
+1
+175
+>
+2
+1
+1400
+175
+2
+	​
+
+>2
+350
+1
+	​
+
+,
+175
+1
+	​
+
+>2
+1400
+1
+	​
+
+Assumptions
+x and y are positive scaled thresholds in a fixed CPM model-unit convention; t is nonnegative.
+a <= x and y <= b are input interval premises. The relevant source brackets describe closure at sampled times by StopTime 1000, not permanent arrest.
+The factor-two band would require x <= 2y for every selected pair; the recorded k4/k7 pairs contradict it.
+The source audit and eight logger hashes bind inputs; Lean does not verify their extraction or threshold monotonicity between tested values.
+
+Proves: For every positive x,y and nonnegative t satisfying a <= x and y <= b, x <= t*y implies a <= t*b. Strict endpoint separation therefore rejects that band; the recorded k4/k7 bounds reject tolerance two.
+
+What it does not prove
+No biological law, tissue validation, physical time calibration or long-horizon stochastic arrest is established.
+No simulator execution, CSV-parser correctness, between-sample monotonicity or source-to-model interpretation is proved by Lean.
+The native fixed-horizon FAIL and historical local G9 pass remain separate recorded simulation results.
+What the Lean statements say
+10 definitions and theorems
+theorem factor_band_forces_endpoint_bound line 13
+theorem separated_intervals_reject_factor_band line 20
+theorem k4_recorded_intervals_reject_factor_two line 28
+theorem k7_recorded_intervals_reject_factor_two line 34
+theorem k4_interval_premises_nonempty line 41
+theorem k7_interval_premises_nonempty line 49
+theorem reverse_lower_counterexample line 57
+theorem reverse_upper_counterexample line 64
+theorem nonstrict_separation_counterexample line 71
+theorem dropped_factor_counterexample line 78
+Read the Lean source
+ScaledThresholdIntervals.lean, 95 lines
+Mutants Lean rejected
+4 of 4
+Recorded positive checks
+10 theorems
+Receipt of the recorded run
+exit 0 / 1
+Downloads
+7 files
+
+snapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)
+
+Input files and sha256
+
+Design geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.

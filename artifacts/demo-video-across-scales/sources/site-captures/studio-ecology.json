@@ -1,0 +1,175 @@
+{
+  "url": "https://studio.morphoswarm.ai/#/ecology",
+  "title": "Ecology · MorphoSwarm Studio",
+  "text": "Skip to content\nMorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI\nStudio\nFrontier\nKnowledge\nEvidence\nSystem\nAbout\nSearch the catalog\nSearch\nLive runtime\nEcology scenarios\n\nFour bounded airborne scenarios of the v3a biological candidate, integrated by MuJoCo from per-fin quasi-steady forces and assumed drag. The viewer plays the states the solver saved.\n\ncomputed reduced model empirical validation: unknown computed reduced-model scenarios; no calibrated biological implementation. MuJoCo3.17.0 CPU; external quasisteady forces; no CFD. The mass, centre of gravity, inertia, drag, hinges and controller are engineering assumptions, not measurements of a fish or of the print resin. Biological success probability: null (none is claimed). A school response flag is an encoded rule, not a neural circuit or measured survival. Mesh source units are metres (m; bbox_mm metadata is separate).\n\nSaved-state viewer\nWhat each run ended on (from summary.json)\nPer-scenario run receipts\nSCENARIO\tENDED AT (S)\tREASON\tPLANNED DURATION REACHED\tHALF-STEP: MAX POSITION / ORIENTATION DIFFERENCE\tFROZEN BOUNDS\tTRAJECTORY SHA256\nPassive glide\t1.065\twater interface reached; no water physics modeled\tno\t0.0002483 m / 0.00001948 rad\tpass\t9e12faab5309…\nFeedback glide\t1.2\tduration reached\tyes\t0.004174 m / 0.0005653 rad\tpass\te74892859de1…\nEscape, with neighbours\t0.8515\teffective fin alpha outside reused VLM domain\tno\t0.001518 m / 0.002143 rad\tpass\tbddb1f9394a6…\nEscape, no neighbours (ablation)\t0.8515\teffective fin alpha outside reused VLM domain\tno\t0.001602 m / 0.002143 rad\tpass\t9fee9c8dea9f…\n\nA run that ends at the water interface or at the edge of the reused VLM domain is a stop, not a result beyond it: no water physics follows and no force is extrapolated. Half-step columns compare only the common saved times.\n\nRendered movies (from the same saved states)\nglide · 62 frames. Actual saved-state selection without interpolation; stopped panels explicitly hold final observed state for comparison display, not new physics evidence Render receipt: glide.provenance.json. Download MP4\nschool · 44 frames. Actual saved-state selection without interpolation; stopped panels explicitly hold final observed state for comparison display, not new physics evidence Render receipt: school.provenance.json. Download MP4\nHow much do the assumed parameters matter?\n\nassumed engineering scenarios same-model numeric checks, not biological confidence How do assumed mass, local reaction delay and hinge stiffness alter the paired effect of neighbor cues on actual airborne motion and bounded actuator work? Seven assumed settings (seven-point axial sensitivity design; no interaction estimates) were each run for two seeds, with and without the neighbour cue: 28 scenarios, 28 computed, 28 passing the half-step numeric gate. All 28 stopped at the edge of the reused VLM domain (effective fin alpha outside reused VLM domain), so every endpoint is a domain stop, not a landing or escape outcome. Exact disjoint union of original26 and separately executed2 missing arms; source partial receipts remain immutable. Shared-model axial scenarios, not biological success probabilities.\n\nPaired differences per setting and seed, from the aggregate of 28 scenarios. Display colours are not a fitness score. Figure provenance (JSON) · Aggregate summary (JSON) · Uncertainty manifest\nPaired neighbour-cue differences (neighbours minus ablation)\nSETTING\tSEED\tRESPONSE COUNT\tPOSITIVE ACTUATOR WORK (J)\tMEAN LATERAL DISPLACEMENT (M)\nBaseline\t20261031\t6\t0.002302\t0.005116\nBaseline\t20261101\t7\t0.002468\t0.003668\nMass 0.04 kg\t20261031\t6\t0.001754\t0.005848\nMass 0.04 kg\t20261101\t7\t0.001925\t0.004208\nMass 0.06 kg\t20261031\t6\t0.002569\t0.0043\nMass 0.06 kg\t20261101\t7\t0.002703\t0.003028\nReaction delay 0.02-0.06 s\t20261031\t7\t0.003531\t0.01397\nReaction delay 0.02-0.06 s\t20261101\t7\t0.003569\t0.0131\nReaction delay 0.08-0.16 s\t20261031\t3\t0.001358\t0.001323\nReaction delay 0.08-0.16 s\t20261101\t4\t0.00115\t0.0006601\nHinge stiffness 0.1 N m/rad\t20261031\t6\t0.003114\t0.005777\nHinge stiffness 0.1 N m/rad\t20261101\t7\t0.002996\t0.004208\nHinge stiffness 0.3 N m/rad\t20261031\t6\t0.00162\t0.004351\nHinge stiffness 0.3 N m/rad\t20261101\t7\t0.001734\t0.003065\n\nThe original run of 26 scenarios is native status \"partial or failed\" and stays as recorded; two disjoint missing arms were run separately (computed requested missing arms). The aggregate is their exact disjoint union. Original 26-scenario figure · its provenance. No CFD/wake/collision model; no water phase; no calibrated nervous system or fish phenotype probability. Interactions between settings are not estimated.\n\nFiles, failures kept\nsummary.json · controls.json · receipt.json · geometry-manifest.json · RESULTS.md\nartifacts/ecology/run/failed-attempt.json: control serialization failure; no production\nartifacts/ecology/run-v2: initial dt refinement failed; preserved\nartifacts/ecology/render-v2: rejected display-unit draft\nartifacts/ecology/render-v2-corrected: correct geometry, diagnostic movie of rejected original numerics\nLimits stated by the interface\nNo underwater phase or takeoff propulsion\nNo collision/wake interactions\nNo genetic or neuronal implementation inferred\nMass/CG/inertia/drag/controller and sensory parameters are assumptions\nTerminal domain exits remain visible\n\nsnapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)\n\nInput files and sha256\n\nDesign geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.",
+  "links": [
+    {
+      "text": "Skip to content",
+      "url": "https://studio.morphoswarm.ai/#main"
+    },
+    {
+      "text": "MorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI",
+      "url": "https://studio.morphoswarm.ai/#/home"
+    },
+    {
+      "text": "Studio",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Frontier",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "Knowledge",
+      "url": "https://studio.morphoswarm.ai/#/knowledge"
+    },
+    {
+      "text": "Evidence",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "System",
+      "url": "https://studio.morphoswarm.ai/#/work"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/blog"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/team"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/docs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/inspirations"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/generative"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/demo"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/faq"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/work?tab=connect"
+    },
+    {
+      "text": "glide.provenance.json",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/render-refined/glide.provenance.json"
+    },
+    {
+      "text": "Download MP4",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/render-refined/glide.mp4"
+    },
+    {
+      "text": "school.provenance.json",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/render-refined/school.provenance.json"
+    },
+    {
+      "text": "Download MP4",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/render-refined/school.mp4"
+    },
+    {
+      "text": "Figure provenance (JSON)",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/uncertainty-aggregate/paired-sensitivity.provenance.json"
+    },
+    {
+      "text": "Aggregate summary (JSON)",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/uncertainty-aggregate/summary.json"
+    },
+    {
+      "text": "Uncertainty manifest",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/uncertainty-manifest.json"
+    },
+    {
+      "text": "Original 26-scenario figure",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/uncertainty-initial/paired-sensitivity.png"
+    },
+    {
+      "text": "its provenance",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/uncertainty-initial/paired-sensitivity.provenance.json"
+    },
+    {
+      "text": "summary.json",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/run-refined/summary.json"
+    },
+    {
+      "text": "controls.json",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/run-refined/controls.json"
+    },
+    {
+      "text": "receipt.json",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/run-refined/receipt.json"
+    },
+    {
+      "text": "geometry-manifest.json",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/geometry-manifest.json"
+    },
+    {
+      "text": "RESULTS.md",
+      "url": "https://studio.morphoswarm.ai/artifacts/ecology/RESULTS.md"
+    },
+    {
+      "text": "snapshot.json",
+      "url": "https://studio.morphoswarm.ai/data/snapshot.json"
+    },
+    {
+      "text": "catalog.json",
+      "url": "https://studio.morphoswarm.ai/data/catalog.json"
+    },
+    {
+      "text": "licence",
+      "url": "https://studio.morphoswarm.ai/vendor/katex/LICENSE"
+    }
+  ],
+  "media": [
+    {
+      "tag": "VIDEO",
+      "src": "",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/ecology/render-refined/glide.png"
+    },
+    {
+      "tag": "SOURCE",
+      "src": "https://studio.morphoswarm.ai/artifacts/ecology/render-refined/glide.mp4",
+      "alt": "",
+      "poster": ""
+    },
+    {
+      "tag": "VIDEO",
+      "src": "",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/ecology/render-refined/school.png"
+    },
+    {
+      "tag": "SOURCE",
+      "src": "https://studio.morphoswarm.ai/artifacts/ecology/render-refined/school.mp4",
+      "alt": "",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/ecology/uncertainty-aggregate/paired-sensitivity.png",
+      "alt": "Paired sensitivity of the neighbour-cue effect across seven assumed settings and two seeds: response-count, positive-work and lateral-displacement differences. Grey cells were not run.",
+      "poster": ""
+    }
+  ]
+}
