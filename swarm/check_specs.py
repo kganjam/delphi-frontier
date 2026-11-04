@@ -32,7 +32,25 @@ import sys
 SEP = "\x01"
 PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm",
       "-tAq", "-F", SEP]
+# READ THIS BEFORE TRUSTING A RESULT. This constant is NOT used by any rule query: a grep for its
+# interpolation returns 0 across all 25 rules. The checker reports on the WHOLE DATABASE. It was
+# written when `zebrafish-flight` was the only project, so database-wide and project-scoped were the
+# same answer; since the coral import on 2026-11-04 they are not.
+#
+# Defining the right constant and ignoring it is WORSE than hardcoding the id, because a reader who
+# sets SWARM_PROJECT reasonably concludes the output is scoped. That is how a run with
+# SWARM_PROJECT=coral came back reporting subproblem-lifecycle failures for a project with ZERO
+# subproblems.
+#
+# NOT scoped here, deliberately. Nine of the tables the rules touch carry project_id
+# (claim, run, subproblem, artifact, idea, rubric, setting, agent_session, project_capability) and
+# the rest reach a project only through a parent (challenge, grade, grader_calibration, review_flag,
+# subproblem_dep, idea_check, idea_score). Scoping SOME rules and not others would produce a number
+# that is neither database-wide nor project-scoped, and nothing in the output would say which -- a
+# worse failure than the present one, which is at least uniform. Full scoping is open work.
 PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+SCOPE_NOTE = ("These counts are DATABASE-WIDE, not scoped to any project. SWARM_PROJECT is read "
+              "but no rule query uses it.")
 
 
 def env():
@@ -260,6 +278,15 @@ def main():
         if st != "PASS":
             print(f"            -> {detail}")
 
+    print(f"\n  SCOPE: {SCOPE_NOTE}")
+    try:
+        projs = q("select project_id, count(*) from claim group by 1 order by 2 desc")
+        if len(projs) > 1:
+            print("    the database holds "
+                  + ", ".join(f"{p[0]} ({p[1]} claims)" for p in projs)
+                  + " -- so these counts mix them.")
+    except Exception:
+        pass
     print(f"\n  {len(rows)} rules: {len(rows)-fails-unchecked} pass, {fails} FAIL, "
           f"{unchecked} UNCHECKED")
     print("  UNCHECKED is NOT a pass. A rule this script cannot evaluate is exactly as unenforced")
