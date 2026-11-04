@@ -1,0 +1,184 @@
+id: allometry-huxley
+name: "Huxley allometry (simple allometry, y = a x^b): the exponent and how it is estimated"
+usability: descriptive           # a fitted description of covariation; no design number follows from the law itself
+# The checker cannot dimension-check y = a*x^b as written, and that is the point, not a technicality:
+# with a dimensioned x and a non-integer b the coefficient a carries units [y]*[x]^-b, which change
+# whenever b changes. The equation is therefore stated in its reference-normalised form, which is the
+# same law (a_classic = a * x_ref^-b) but makes a a value of y with fixed units.
+equation: "y = a * (x / x_ref)^b"
+latex: "y = a\\,x^{b} \\quad\\Longleftrightarrow\\quad y = a_{\\mathrm{ref}}\\left(\\frac{x}{x_{\\mathrm{ref}}}\\right)^{b},\\qquad \\log y = \\log a + b\\log x"
+symbols:
+  y:     {dimension: M, units: kg, description: "size of the part or trait (dimension shown for the mass-vs-mass case; any measure is allowed)"}
+  x:     {dimension: M, units: kg, description: "size of the whole organism or reference trait (commonly body mass)"}
+  x_ref: {dimension: M, units: kg, description: "reference size at which a is quoted (e.g. 1 kg or the sample geometric mean); a convention, not a parameter"}
+  a:     {dimension: M, units: kg, description: "allometric coefficient: the value of y when x = x_ref. Its numerical value depends on x_ref and on b"}
+  b:     {dimension: "1", units: dimensionless, description: "allometric exponent: the slope of log y on log x, i.e. the ratio of relative (specific) growth rates d ln y / d ln x"}
+constants:
+  # The law has no universal measured constant. Recorded below are (1) the isometric reference
+  # exponents, which are DERIVED from geometric similarity and so have no measurement interval, and
+  # (2) the measured exponent of the original Huxley case, which this entry could not obtain.
+  b_isometry_same_dimension:
+    value: 1.0
+    interval: null
+    units: dimensionless
+    note: "Derived, not measured: y and x of the same dimension (mass on mass, length on length) under geometric similarity. b > 1 is positive allometry, b < 1 negative."
+  b_isometry_length_on_mass:
+    value: 0.3333
+    interval: null
+    units: dimensionless
+    note: "Derived, not measured: L proportional to M^(1/3) for geometrically similar bodies of constant density."
+  b_isometry_area_on_mass:
+    value: 0.6667
+    interval: null
+    units: dimensionless
+    note: "Derived, not measured: area proportional to M^(2/3) under geometric similarity."
+  b_uca_pugnax_chela_huxley:
+    value: unknown
+    interval: unknown
+    units: dimensionless
+    note: >
+      Huxley's (1932) male fiddler-crab claw vs body data are the founding example of positive
+      allometry (b > 1). I did not obtain the numerical exponent: one standard-mode web search
+      ("Huxley 1932 Uca pugnax chela allometry exponent value") returned no value, and the
+      reanalysis pages (fiddlercrab.info) were unreachable from this session's network. Per the
+      Geraert search summary, Huxley reported several k values for different size ranges rather
+      than one, so "the" exponent for this case may not be a single number. Not invented here.
+mechanism: >
+  Huxley's argument (1924, 1932) is kinematic, not physical: if a part and the whole each grow at a
+  constant ratio of specific growth rates, (1/y) dy/dt = b (1/x) dx/dt, then integrating gives
+  ln y = ln a + b ln x, i.e. y = a x^b. The exponent b is therefore the RATIO OF RELATIVE GROWTH
+  RATES of part to whole, and it is meaningful only as that ratio: b = 1 is isometry (shape constant),
+  b > 1 positive allometry (part disproportionately larger in larger individuals), b < 1 negative
+  allometry. Nothing in the derivation predicts the value of b; that has to come from a separate
+  mechanism (geometric similarity, elastic similarity, network models, selection on a weapon), which
+  is why this entry is descriptive. The coefficient a is a scale factor whose units are
+  [y][x]^-b, so values of a are comparable between groups only when b is equal (or when a is quoted at
+  a common x_ref) -- a comparison of a across fits with different b is a comparison of numbers in
+  different units. Notation warning: Huxley wrote y = b x^k and Huxley & Teissier (1936) standardised
+  y = b x^alpha, so in the founding literature "b" is the COEFFICIENT, not the exponent; this entry
+  uses the modern y = a x^b.
+estimation: >
+  How b is estimated is itself a source of error comparable to the biological differences people try
+  to detect, so it is recorded as part of the law, not as a footnote.
+  (1) Log-transform and fit a line. The slope is b. This assumes multiplicative (lognormal,
+  heteroscedastic) error. Xiao et al. (2011, search-summary) report from simulation that log-linear
+  regression is the better estimator under that error and nonlinear regression on the raw scale is
+  better under additive normal error, and that across 471 empirical datasets both error types occur;
+  they recommend choosing by error structure. Packard and co-authors argue the opposite case, that
+  log-transformation produces invalid predictive models (see contested_by).
+  (2) Choice of line. Ordinary least squares (OLS) of log y on log x assumes x is measured without
+  error and is the right choice for PREDICTING y from x; measurement error in x attenuates the OLS
+  slope towards zero. Major axis (MA) and standardised/reduced major axis (SMA/RMA) treat the two
+  variables symmetrically and are the methods Warton et al. (2006, search-summary) review for
+  describing the line itself; they distinguish measurement error from "equation error" (real
+  biological scatter) and these have different implications for method choice. SMA slope =
+  OLS slope / |r|, so the two agree only when the correlation is tight. Kilmer & Rodriguez (2017,
+  listing) argue OLS is indicated for allometry. The disagreement is recorded in contested_by.
+  (3) Back-transformation. Exponentiating a log-scale fit estimates the geometric, not arithmetic,
+  mean of y; predictions of y in raw units are biased low unless a correction (e.g. a smearing or
+  lognormal factor) is applied. This is standard statistics, stated here as my inference, not
+  checked against an allometry source in this session.
+  (4) Comparative (across-species) fits need phylogenetic correction because species are not
+  independent data points; the slope can change when it is applied.
+domain_of_validity:
+  quantity_pairs: "any positive size measure y against a positive size measure x (part vs whole, organ vs body, trait vs trait)"
+  allometry_levels: [ontogenetic (one individual or cohort through growth), static (individuals of one stage within a population), evolutionary or interspecific (species means)]
+  notes: >
+    The three levels are different relationships and generally have different exponents for the same
+    pair of traits; an exponent fitted at one level does not transfer to another. Within a level the
+    law holds where a scatterplot of log y on log x is straight with homogeneous residuals over the
+    fitted range. The fitted (a, b) are valid only over the range of x actually sampled.
+where_it_breaks: >
+  (1) Across life-history transitions. Huxley himself described relative growth in some arthropods
+  as a series of straight log-log segments with different k values (per the Geraert search summary
+  for Uca), i.e. a single power law fails across the size at which the growth programme switches
+  (moult to maturity in crabs). Discontinuous or sigmoid trait-size relationships in male dimorphic
+  weapons (horned beetles, crab chelae) are not described by one exponent at all; fitting one returns
+  a slope that describes no animal in the sample. (2) Across broad size ranges where log-log
+  curvature appears. Kolokotrones et al. (2010, search-summary) report that mammalian basal
+  metabolic rate against body mass is convex on log-log axes even after accounting for temperature,
+  so no single exponent is correct across the whole mammalian size range; local slopes depend on
+  where in the range one sits. (3) When the error model is wrong. If scatter is additive rather than
+  multiplicative, the log-log slope is a biased estimate of the raw-scale exponent (Xiao et al. 2011,
+  search-summary); Packard (e.g. Packard & Birchard 2008, search-summary-level only, not verified in
+  this session) argues this produces invalid predictions on the arithmetic scale. (4) Under
+  measurement error in x with OLS, b is attenuated towards 0, so an isometric trait can be reported as
+  negatively allometric purely from method. (5) Outside the sampled range of x: the power law is a
+  description, not a mechanism, so extrapolating a, b beyond the data (e.g. from small to giant taxa)
+  has no support from the law itself. (6) Across levels: an ontogenetic exponent used as an
+  interspecific one, or vice versa. For an engineer the operational boundary is: do not use a
+  published (a, b) to predict a value for a size, taxon, life stage or allometry level that was not in
+  the fitted sample, and do not compare a values across fits whose b differs.
+worked_examples:
+  - organism: "generic (illustration of what b means)"
+    computation: "x doubles -> y multiplies by 2^b; b = 0.75 -> 2^0.75 = 1.68; b = 1 -> 2.00; b = 1.5 -> 2^1.5 = 2.83"
+    value: 1.68
+    note: >
+      Calculated, not observed. Shows b as a ratio of proportional changes: a 100% increase in x gives
+      a 68% increase in y at b = 0.75, so y/x falls by 16% (1.68/2 = 0.84).
+    evidence: derived
+  - organism: "generic (sensitivity of a to the unit convention)"
+    computation: "same law, b = 0.75: a quoted per kg = 3.4; re-expressed per g: a_g = 3.4 * 1000^-0.75 = 3.4 * 0.00562 = 0.0191"
+    value: 0.0191
+    note: >
+      Calculated, not observed; the value 3.4 is an arbitrary illustration, not a measurement. Changing
+      x's unit by a factor 1000 changes a by 1000^-b, so a is uninterpretable without b and the units
+      of x -- the reason the equation field carries x_ref.
+    evidence: derived
+  - organism: "generic (line-fitting choice)"
+    computation: "OLS slope 0.60 with correlation r = 0.80 -> SMA slope = 0.60/0.80 = 0.75"
+    value: 0.75
+    note: >
+      Calculated, not observed; inputs are illustrative. The same data give 0.60 or 0.75 depending
+      only on the fitting method -- a difference as large as the gap between the contested 2/3 and 3/4
+      metabolic exponents. The gap shrinks to zero only as |r| -> 1.
+    evidence: derived
+  - organism: "generic (measurement-error attenuation under OLS)"
+    computation: "true b = 1.00, reliability of log x (var true / var observed) = 0.85 -> expected OLS slope = 1.00 * 0.85 = 0.85"
+    value: 0.85
+    note: >
+      Calculated, not observed, from the classical errors-in-variables attenuation result (my
+      inference from standard regression theory, not from a source read in this session). An isometric
+      trait reads as negatively allometric because of x-error alone.
+    evidence: derived
+  - organism: Uca pugnax (male fiddler crab, major chela vs body)
+    value: unknown
+    note: >
+      The founding case of positive allometry (Huxley 1932). Exponent not obtained; see
+      constants.b_uca_pugnax_chela_huxley for what was tried. Packard (2012) reanalysed these data and
+      favoured a three-parameter power function; Geraert favoured a quadratic in log-log space (both
+      per search summary only).
+    evidence: literature
+contested_by:
+  - "Line-fitting method: Warton et al. (2006) review MA/SMA as the methods for estimating the allometric line when the aim is description and symmetric error; Kilmer & Rodriguez (2017, J Evol Biol 30:4-12) argue OLS regression is indicated for allometry. Not reconciled here; which is right depends on the question (prediction vs line description) and the error structure, and the two camps disagree about how often each applies."
+  - "Log-transformation: Packard and co-authors (e.g. Packard & Birchard 2008, Packard 2012) argue that log-log fitting gives invalid models and favour nonlinear regression on arithmetic scales, sometimes with extra parameters; Xiao et al. (2011) report from simulation plus 471 datasets that log-linear fits are generally valid where error is multiplicative and recommend choosing by error structure. Not reconciled."
+  - "Form of the Uca relationship: Huxley described it as straight log-log segments with several k; Packard (2012) proposed a three-parameter power function; Geraert proposed a single quadratic in log-log space. Not reconciled (all three per search summaries only)."
+  - "Whether a single exponent exists for mammalian metabolic rate: Kolokotrones et al. (2010) report convex curvature (no pure power law); this is disputed in follow-up correspondence (MacKay, and the authors' reply, per search summary). Contents of the dispute not read in this session."
+sources:
+  - citation: "Huxley JS (1924) Constant differential growth-ratios and their significance. Nature 114:895-896"
+    read_level: could-not-access
+    note: "Cited from prior knowledge for the origin of the growth-ratio argument; not retrieved or searched in this session."
+  - citation: "Huxley JS (1932) Problems of Relative Growth. London: Methuen"
+    read_level: search-summary
+    note: "Only secondary statements about it (via Geraert and Packard correspondence summaries) were seen."
+  - citation: "Huxley JS, Teissier G (1936) Terminology of relative growth. Nature 137:780-781"
+    read_level: could-not-access
+    note: "Cited from prior knowledge for the y = b x^alpha notation; not retrieved or searched in this session."
+  - citation: "Warton DI, Wright IJ, Falster DS, Westoby M (2006) Bivariate line-fitting methods for allometry. Biol Rev 81(2):259-291"
+    read_level: search-summary
+  - citation: "Kilmer JT, Rodriguez RL (2017) Ordinary least squares regression is indicated for studies of allometry. J Evol Biol 30(1):4-12, doi:10.1111/jeb.12986"
+    read_level: listing
+    note: "Title, volume and pages confirmed by search listing; abstract not obtained (scinapse.io unreachable)."
+  - citation: "Xiao X, White EP, Hooten MB, Durham SL (2011) On the use of log-transformation vs. nonlinear regression for analyzing biological power laws. Ecology 92(10):1887-1894, doi:10.1890/11-0538.1"
+    read_level: search-summary
+  - citation: "Kolokotrones T, Savage V, Deeds EJ, Fontana W (2010) Curvature in metabolic scaling. Nature 464:753-756, doi:10.1038/nature08920"
+    read_level: search-summary
+  - citation: "Packard GC (2012) [commentary reanalysing Huxley's Uca pugnax data] J Exp Biol 215:569-573"
+    read_level: search-summary
+    note: "Exact title not obtained; pages per search summary of the Geraert reply."
+  - citation: "Geraert E (2013) correspondence on Packard (2012), J Exp Biol 216:535; and Geraert, A quadratic approach to allometry, Belgian Journal of Zoology 146(1):14-20"
+    read_level: search-summary
+    note: "Years/volume inferred from the search result URLs (jeb 216/3/535; bjz 146-1); exact titles and years not verified."
+  - citation: "Packard GC, Birchard GF (2008) Traditional allometric analysis fails to provide a valid predictive model for mammalian metabolic rates. J Exp Biol 211:3581-3587"
+    read_level: could-not-access
+    note: "Cited from prior knowledge; not retrieved or searched in this session. Treat the citation details as unverified."
