@@ -7,6 +7,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 | Law | Usability | Where it breaks |
 |---|---|---|
 | [Murray's law for branching transport networks](./murray.md) | `constraining` | Fails in large arteries, where flow is pulsatile and inertial rather than viscous-dominated, and where measure |
+| [Phyllotaxis and the golden divergence angle: what is explained and what is not](./phyllotaxis.md) | `descriptive` | (1) NON-SPIRAL PHYLLOTAXIS -- the law simply does not apply |
 | [Reynolds number and flow-regime boundaries](./reynolds.md) | `constraining` | Re itself does not break; the inferences people hang on it do |
 
 :::{note}
