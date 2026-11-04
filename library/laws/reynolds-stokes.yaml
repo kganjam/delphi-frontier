@@ -1,0 +1,209 @@
+id: reynolds-stokes
+name: The Stokes (creeping-flow) regime below Re ~1, and what changes there
+usability: constraining          # gives a drag/settling number AND a numeric error boundary, but ONLY for a rigid sphere-like body in an unbounded Newtonian continuum (see where_it_breaks)
+equation: "F_D = 3 * pi * mu * U * d"
+latex: "F_D = 3\\pi \\mu U d = 6\\pi \\mu U a, \\qquad C_D = \\frac{24}{\\mathrm{Re}_d}\\Big(1 + \\tfrac{3}{16}\\mathrm{Re}_d + \\dots\\Big), \\qquad \\mathrm{Re}_d = \\frac{\\rho U d}{\\mu}"
+symbols:
+  F_D: {dimension: M*L/T^2, units: N, description: "steady drag force on a rigid sphere translating through quiescent fluid"}
+  mu:  {dimension: M/(L*T), units: Pa*s, description: "dynamic viscosity of a Newtonian fluid (a constant; not a shear-rate-dependent apparent viscosity)"}
+  U:   {dimension: L/T, units: m/s, description: "speed of the sphere relative to the far-field fluid"}
+  d:   {dimension: L, units: m, description: "sphere DIAMETER (the law is also written 6*pi*mu*U*a with a the RADIUS; Re conventions differ by the same factor of 2)"}
+  rho: {dimension: M/L^3, units: kg/m^3, description: fluid density (enters only through Re and the first correction)}
+  Re:  {dimension: "1", units: dimensionless, description: "Reynolds number on DIAMETER, Re_d = rho*U*d/mu; Veysey & Goldenfeld use R = U*a/nu = Re_d/2"}
+  C_D: {dimension: "1", units: dimensionless, description: "drag coefficient F_D / (0.5*rho*U^2*pi*d^2/4); Stokes gives 24/Re_d"}
+constants:
+  stokes_prefactor:
+    value: "3*pi (diameter form) = 6*pi (radius form)"
+    interval: exact
+    note: >
+      Exact consequence of the Stokes (Re -> 0) equations with no-slip on a rigid sphere (Stokes 1851).
+      A derivation, not a measurement. Of the 3*pi, 2*pi comes from viscous shear stress and pi from
+      pressure: a textbook decomposition quoted from memory and not re-checked in this session.
+  C_D_stokes_coefficient:
+    value: 24
+    interval: exact
+    units: dimensionless (diameter-based Re)
+    note: Equals 6*pi/R in the radius-based convention of Veysey & Goldenfeld (2007), read in full text.
+  oseen_first_correction:
+    value: "3/16 (diameter-based Re); 3/8 (radius-based R)"
+    interval: exact (asymptotic coefficient)
+    note: >
+      Veysey & Goldenfeld (2007, full text) give the matched-asymptotic result as
+      C_D = (6*pi/R)[1 + (3/8)R + (9/40)R^2 log R + O(R^2)], with R = U*a/nu. Writing it with
+      Re_d = 2R gives 3/16 -- that conversion is ours. They also report that Illingworth (1947,
+      unpublished, as relayed by Van Dyke) rigorously justified the 3/8 term. Its history is
+      contested: see contested_by.
+  schiller_naumann_correlation:
+    value: "C_D = (24/Re_d)*(1 + 0.15*Re_d^0.687)"
+    interval: unknown
+    note: >
+      EMPIRICAL fit, not a derivation and not a single measurement. A claimed accuracy of within 5%
+      for Re 0.2-1000 appears in an arXiv paper (arXiv:1305.1283) that attributes it to another
+      reference; we saw it only at search-summary level and could not check the primary source
+      (Schiller & Naumann 1933 was not accessed). OpenFOAM's implementation switches it off above
+      Re = 1000 (seen in source listing). The fit's own uncertainty on 0.15 and 0.687 is unknown.
+  stokes_error_vs_Re:
+    value: "Oseen term: +1.9% at Re_d=0.1, +9.4% at 0.5, +18.8% at 1. Schiller-Naumann: +3.1% at 0.1, +9.3% at 0.5, +15% at 1, +355% at 100"
+    interval: unknown
+    note: >
+      CALCULATED in this entry from the two expressions above, not observed. Each number is how much
+      larger the corrected drag is than the Stokes drag at that Re_d. The two disagree by up to a
+      factor of ~1.6 in the size of the correction near Re_d ~0.1, and Re_d=0.1 lies below the
+      Schiller-Naumann range claimed above, so that value is an extrapolation.
+  wall_ratio_for_2pct:
+    value: 100
+    interval: unknown
+    units: container diameter / sphere diameter
+    note: >
+      Tritton, as quoted in Veysey & Goldenfeld (2007, full text): "the container diameter must be
+      more than one hundred times the sphere diameter for the error to be less than 2 percent".
+      The same review relays Lindgren's estimate that a ratio of 50 changes the drag by 4%.
+  measurement_error_floor:
+    value: 0.02
+    interval: unknown
+    units: fraction of drag
+    note: >
+      Observation-quality statement: Maxworthy (1965), as quoted in Veysey & Goldenfeld (2007), says
+      earlier falling-sphere data could not fix the drag to better than +/-20% once normalised by the
+      Stokes drag, and estimates his own refined measurements at better than 2%.
+  mean_free_path_air:
+    value: 6.6e-8
+    interval: unknown
+    units: m
+    note: >
+      The value on a university aerosol-formulae sheet (search-summary level). Other course notes in
+      the same search use 0.07 um. It varies with temperature and pressure; no interval was given.
+mechanism: >
+  Re compares inertial to viscous stress. As Re -> 0 the inertial term of Navier-Stokes is dropped and
+  the remaining Stokes equations are LINEAR and contain no time derivative. Every qualitative change
+  below Re ~1 follows from that, and each is a consequence an engineer can check: (a) drag is linear
+  in speed and scales with LENGTH (F = 3*pi*mu*U*d), not with area times U^2, so halving speed halves
+  drag and power goes as U^2; (b) there is no coasting -- a body stops in a distance set by its own
+  inertia, which is tiny (worked example, calculated); (c) the flow is instantaneous and kinematically
+  reversible, so the sequence of shapes, not the rate, sets displacement. Purcell (1977) states the
+  consequence as the scallop theorem: a reciprocal stroke (one that looks the same run backward)
+  gives no net motion in a Newtonian fluid at low Re; read at search-summary level only. Our
+  inference from (a)-(c), not a cited claim: inertial designs -- glide, flap-and-coast, lift from
+  circulation -- have nothing to work with in this regime. The regime is a limit, not a sharp
+  threshold. Veysey & Goldenfeld (2007) explain why it cannot be uniform: at distance r from a body
+  of radius a, the inertial-to-viscous ratio scales as R*r/a, so for any nonzero Re there is a far
+  region where inertia dominates. The Stokes solution is right near the body and wrong far from it.
+domain_of_validity:
+  flow_regime: "steady creeping flow, Re_d << 1"
+  reynolds_max: "about 0.1 for drag within ~2-3%; about 1 for drag within ~15-19% (CALCULATED, see constants.stokes_error_vs_Re; the cutoff depends on the tolerance chosen)"
+  geometry: "rigid sphere (other compact 3D bodies need a shape factor not recorded here); unbounded fluid -- container > 100 sphere diameters for < 2% wall error"
+  fluid: "Newtonian, incompressible, continuum (particle much larger than the gas mean free path), no slip"
+  taxa: ["bacteria and other micro-swimmers (body scale)", "cilia and flagella (appendage scale; needs slender-body theory, not the sphere law)", "sperm", "sedimenting particles, cells, marine snow, small eggs"]
+  notes: >
+    No life stage of zebrafish swims in this regime. Larval Danio rerio swim at Re 60-1400 (van Leeuwen
+    et al. 2015, observed, as recorded in strouhal.yaml on branch claude/strouhal-law-8mv27w). A review relays McHenry & Lauder (2005) giving
+    newly hatched larvae Re below 100, still two orders above 1. Our inference: in this project the
+    Stokes law applies to cilia, sperm, particles and the flow inside small structures, not to the fish.
+where_it_breaks: >
+  (1) FINITE Re -- the main failure, and quantitative. Inertia adds drag on top of Stokes. From the
+  Oseen term, Stokes underestimates sphere drag by 1.9% at Re_d = 0.1 and 18.8% at Re_d = 1; the
+  Schiller-Naumann correlation gives 3.1% and 15% (both CALCULATED here, not observed). Veysey &
+  Goldenfeld (2007, full text) report "large deviations between theory and experiment" by R ~ 0.5
+  (Re_d ~ 1) even for the best matched-asymptotic expansions. Higher-order terms barely extend the
+  range: they quote Proudman calling the convergence "particularly disappointing". At Re_d = 100
+  (larval-fish scale), Schiller-Naumann gives a sphere drag 4.6x the Stokes value (calculated). The
+  linear law is then wrong by a factor, not a percentage.
+  (2) TWO-DIMENSIONAL BODIES -- the Stokes equations have NO solution for flow past an infinite
+  cylinder (Stokes's paradox). Veysey & Goldenfeld report that this holds for any unbounded 2D flow
+  (Krakowski & Charnes 1953), and that a naive next-order correction for the sphere also fails
+  (Whitehead's paradox). For a fin ray, filament or flagellum modelled as a long cylinder, the sphere
+  law is not a valid approximation; drag depends on log(Re) or on log(aspect ratio). Lamb's cylinder
+  formula and slender-body theory were not verified in this session and are not given here.
+  (3) FAR FIELD -- inertia is never negligible everywhere: beyond r ~ a/Re it dominates (Veysey &
+  Goldenfeld). Our inference: a superposed Stokes interaction between bodies many radii apart is not
+  trustworthy even when each body's own Re is small.
+  (4) WALLS AND CONFINEMENT -- the law assumes unbounded fluid. Tritton (as quoted) needs a container
+  over 100 sphere diameters for < 2% error. Lindgren (as relayed) gives 4% at a ratio of 50. A cell
+  in a capillary, a cilium near an epithelium, or a particle in a microchannel violates this, and the
+  error grows with confinement. Maxworthy (as quoted) attributes the +/-20% scatter of pre-1965 data
+  mainly to uncorrected wall effects.
+  (5) RAREFIED GAS -- for particles near the gas mean free path (~0.066 um in air) the no-slip
+  continuum assumption fails, and Stokes OVER-predicts drag by the Cunningham factor Cc. Per the
+  aerosol notes (search-summary), Cc is about 1.17 at d = 1 um and about 2.9-3.0 at 0.1 um in air.
+  Not relevant in water at these sizes.
+  (6) NON-NEWTONIAN FLUIDS -- mucus, biofilm matrix and most biological gels. A constant mu does not
+  describe them, so the drag law fails. Per search summaries (Lauga 2011 review; abstract read), the
+  scallop theorem's constraints can be escaped. Specifically, a typeset.io listing states that the
+  scallop theorem no longer holds in non-Newtonian fluids. We did not read the full text that gives
+  the mechanism.
+  (7) UNSTEADY MOTION -- the steady Stokes law omits added-mass and history (Basset) forces during
+  acceleration. Our statement from textbook knowledge, not verified against a source in this session.
+  The criterion for when they matter is not recorded here.
+worked_examples:
+  - organism: bacterium-sized sphere (a = 1 um) in water, coasting after propulsion stops
+    computation: "tau = 2*rho*a^2/(9*mu) = 2*1000*(1e-6)^2/(9*1e-3) = 2.2e-7 s; distance = U*tau = 30e-6 * 2.2e-7 = 6.7e-12 m"
+    value: 6.7e-12
+    note: >
+      CALCULATED, not observed. Inputs are assumed round numbers (U = 30 um/s, rho = 1000 kg/m^3, mu =
+      1e-3 Pa*s), not measurements of any species. The result is about 0.07 Angstrom, less than an atomic
+      diameter: "no coasting" in numbers. Purcell's own figure for this was not accessible (gwern.net was
+      outside the session network allowlist) and is not quoted.
+    evidence: derived
+  - organism: 10 um particle settling in water, density excess 50 kg/m^3 (assumed)
+    computation: "v = drho*g*d^2/(18*mu) = 50*9.81*(1e-5)^2/(18*1e-3) = 2.7e-6 m/s; check Re_d = v*d/nu = 2.7e-6*1e-5/1e-6 = 2.7e-5"
+    value: 2.7e-6
+    note: >
+      CALCULATED. Re_d << 0.1, so the result is self-consistent and the Stokes law applies, to within
+      the assumed inputs. The check step is the point: compute Re from the Stokes answer, then confirm
+      it is below the tolerance boundary before trusting the answer.
+    evidence: derived
+  - organism: cilium-scale appendage (length 10 um, tip speed 1 mm/s, assumed) in water
+    computation: "Re = U*L/nu = 1e-3*1e-5/1e-6 = 0.01"
+    value: 0.01
+    note: >
+      CALCULATED from assumed, not measured, kinematics. This lies inside the Stokes regime, but a cilium
+      is slender: break (2) applies and the sphere law is the wrong model even here.
+    evidence: derived
+  - organism: Larval Danio rerio (equivalent-sphere comparison at Re_d = 100)
+    computation: "Schiller-Naumann factor 1 + 0.15*100^0.687 = 4.55"
+    value: 4.55
+    note: >
+      CALCULATED. This is a sphere drag ratio, not a fish drag. It shows only that the linear Stokes
+      law, applied at the low end of observed larval Re (60-1400, van Leeuwen et al. 2015), would
+      under-predict drag about 4.6-fold. Zebrafish larvae are in the intermediate regime, not the
+      Stokes regime.
+    evidence: derived
+contested_by:
+  - "Faxen (1923), as reported in Veysey & Goldenfeld (2007): argued that Oseen's 3R/8 correction is invalid and that a properly solved Oseen equation returns the Stokes drag with no added term; Bohlin (1960) and Haberman & Saure (1958, as spelled in the review's bibliography) are reported to concur. Against this, the same review states that Illingworth (1947) and later matched asymptotics (Proudman & Pearson 1957; Kaplun 1957) rigorously justify the 3/8 term. Recorded as reported; not reconciled here."
+  - "Veysey & Goldenfeld (2007) report that Pruppacher's sphere-drag data disagree with all other experimental and numerical results for R < 1 while agreeing for R > ~20, and they disregard them. Whether Pruppacher's low-Re data are wrong is their judgement, not re-examined here."
+  - "The size of the first inertial correction near Re_d ~0.1-1 differs between the Oseen asymptotic term and the Schiller-Naumann empirical fit (e.g. +18.8% vs +15% at Re_d = 1, calculated here). Neither is preferred; the asymptotic term is exact only as Re -> 0, and the fit is unverified below Re_d 0.2."
+  - "The 'Re ~1' boundary itself is a convention, not a measured transition: the error grows smoothly with Re, and sources state Re on radius or diameter interchangeably (a factor of 2). Any quoted Stokes cutoff must state its tolerance and its length convention."
+sources:
+  - citation: "Veysey J II, Goldenfeld N (2007) Simple viscous flows: from boundary layers to the renormalization group. Rev Mod Phys 79:883-927; arXiv:physics/0609138v2"
+    read_level: full-text
+    note: >
+      arXiv v2 PDF, text extracted locally and read for the passages used (drag expansion Eqn. 55, Stokes
+      and Whitehead paradoxes, wall-effect and Maxworthy quotes, Faxen dispute). The journal volume and
+      pages are quoted from memory and were not checked against the journal in this session.
+  - citation: "Stokes GG (1851) On the effect of the internal friction of fluids on the motion of pendulums. Trans Camb Phil Soc 9:8-106"
+    read_level: listing
+    note: Not read. Volume and first page (9, 8, part II) match the Veysey & Goldenfeld bibliography; the title and end page are from memory and were not verified.
+  - citation: "Proudman I, Pearson JRA (1957) Expansions at small Reynolds numbers for the flow past a sphere and a circular cylinder. J Fluid Mech 2:237-262"
+    read_level: search-summary
+  - citation: "Purcell EM (1977) Life at low Reynolds number. Am J Phys 45:3-11. doi:10.1119/1.10903"
+    read_level: search-summary
+    note: The PDF host tried (gwern.net) was outside the session network allowlist; only search summaries were seen.
+  - citation: "Lauga E (2011) Life around the scallop theorem. Soft Matter 7:3060-3065. doi:10.1039/C0SM00953A; arXiv:1011.3051"
+    read_level: abstract
+  - citation: "Maxworthy T (1965) Accurate measurements of sphere drag at low Reynolds numbers. J Fluid Mech 23:369-372"
+    read_level: listing
+    note: Seen only as quoted in Veysey & Goldenfeld. Volume and first page (23, 369) match their bibliography; the title and end page are from memory and were not verified.
+  - citation: "Schiller L, Naumann A (1933) [drag correlation], Z. Ver. Dtsch. Ing. 77:318 (title and pages not verified)"
+    read_level: could-not-access
+    note: Correlation form and range seen only through arXiv:1305.1283 and OpenFOAM source listings at search-summary level.
+  - citation: "Davies CN (1945) Definitive equations for the fluid resistance of spheres. Proc Phys Soc 57:259 (pages not verified); Cunningham E (1910) Proc R Soc A 83:357 (not verified)"
+    read_level: search-summary
+    note: Slip-correction constants and Cc values from university aerosol course notes (uiowa.edu, clarkson.edu) at search-summary level.
+  - citation: "van Leeuwen JL, Voesenek CJ, Mueller UK (2015) How body torque and Strouhal number change with swimming speed and developmental stage in larval zebrafish. J R Soc Interface 12:20150479"
+    read_level: listing
+    note: >
+      Not read in this session. The larval Re range 60-1400 comes from the sibling entry strouhal.yaml
+      (branch claude/strouhal-law-8mv27w), which records a full-text read. Our own access is listing-level only.
+  - citation: "McHenry MJ, Lauder GV (2005) The mechanical scaling of coasting in zebrafish (Danio rerio). J Exp Biol 208:2289-2301"
+    read_level: search-summary
+    note: The 'Re below 100 at hatching' claim is a secondary citation in a review, seen via search; not checked in the original.
