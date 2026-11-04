@@ -1,0 +1,151 @@
+id: lighthill-ebt
+name: Lighthill elongated-body theory -- mean reactive thrust of an undulatory swimmer
+usability: constraining
+# Constraining, with a stated resolution: it returns a thrust in newtons from tail kinematics alone, and
+# it carries its own checkable validity test (eloy_validity_criterion below). But the one direct
+# measured comparison found (Tytell 2004, eels) is off by a factor of about 2 in lateral impulse, so a
+# design margin tighter than 2x must not rest on this number. Efficiency is the separate lighthill entry.
+equation: T_mean = 0.25 * rho * pi * h^2 * omega^2 * H^2 * (1 - (U/V)^2)
+latex: '\langle T \rangle = \tfrac12 m \left\langle \dot y^2 - U^2 y''^2 \right\rangle_{\mathrm{tail}} \;\overset{y = H \sin(kx - \omega t)}{=}\; \tfrac14 \rho \pi h^2 \omega^2 H^2 \left(1 - \frac{U^2}{V^2}\right), \qquad m = \rho \pi h^2, \quad V = \omega / k'
+symbols:
+  T_mean:
+    dimension: M*L/T^2
+    units: N
+    description: 'time-averaged reactive thrust over one tail-beat cycle; in steady swimming it equals the mean drag'
+  rho:
+    dimension: M/L^3
+    units: kg/m^3
+    description: fluid density
+  h:
+    dimension: L
+    units: m
+    description: 'half-span (semi-depth) of the body or caudal fin AT THE TRAILING EDGE; m = rho*pi*h^2 is the added mass per unit length there (Eloy 2012 notation)'
+  omega:
+    dimension: 1/T
+    units: rad/s
+    description: 'angular tail-beat frequency, 2*pi*f'
+  H:
+    dimension: L
+    units: m
+    description: 'zero-to-peak lateral amplitude of the trailing edge. NOT peak-to-peak: the Strouhal A in eloy_validity_criterion is peak-to-peak, A = 2H'
+  U:
+    dimension: L/T
+    units: m/s
+    description: mean forward swimming speed
+  V:
+    dimension: L/T
+    units: m/s
+    description: 'speed of the backward-travelling body wave at the tail, omega/k; U/V is the slip ratio, and thrust requires V > U'
+  St:
+    dimension: '1'
+    units: dimensionless
+    description: 'Strouhal number f*A/U with A the peak-to-peak tail amplitude (Eloy 2012 eq. 1); used only in the validity test'
+  L:
+    dimension: L
+    units: m
+    description: body length; used only in the validity test
+constants:
+  added_mass_coefficient:
+    value: 1.0
+    interval: unknown
+    units: dimensionless
+    evidence: derived
+    note: 'Coefficient on rho*pi*h^2, the two-dimensional potential-flow added mass of a flat plate of span 2h. Eloy 2012 (eq. 4) and Eloy & Michelin 2025 both write m = rho*pi*h^2 with no correction factor. No MEASURED interval was retrieved. Pineirua et al. 2015 measured added mass of elastic plates over aspect ratios 0.05-1 and state that the elongated-body form is a good approximation for 0.05 < AR < 0.4; their fitted expression did not extract cleanly from the PDF text, so no number is taken from it here. Lighthill''s own 1960/1970/1971 papers were NOT read (Cambridge Core is outside this session''s network allowlist), so whether Lighthill carries a shape factor is unknown from this session.'
+  eloy_validity_criterion:
+    value: '(U/V) * (1 - U/V) * St << h/L'
+    interval: unknown
+    units: dimensionless
+    evidence: derived
+    note: 'Eloy 2012 eq. 15, read in full text (arXiv preprint). It is a SCALING criterion: the resistive (drag-like) normal force on the whole body, of order rho*h*w^2*L*y'', must be small against the reactive force m*w*y_dot. Eloy gives no numerical threshold for "much less than". The only calibration point found is the Candelier et al. 2011 RANS case Eloy reports (see worked_examples): left-hand side 0.048 against h/L = 0.1 was "fairly satisfied" and thrust was well approximated; left-hand side 0.192 against h/L = 0.1 was not, and viscous forces were significant. That is ONE simulated pair, not a boundary.'
+  elongation_floor_h_over_L:
+    value: 0.1
+    interval: unknown
+    units: dimensionless
+    evidence: literature
+    note: 'Eloy 2012 (full text): "elongated fish such as eels and knife-fish, for which h/L < 0.1, will not in general meet this criterion". A rule of thumb derived from eq. 15, not a measured cutoff.'
+  drag_reactive_crossover_aspect_ratio:
+    value: 0.13
+    interval: unknown
+    units: dimensionless
+    evidence: derived
+    note: 'MODEL OUTPUT, not an observation. Pineirua, Godoy-Diana & Thiria 2015 (full-text preprint) add a quadratic resistive term (Cd ~ 2) to the reactive force and, for anguilliform kinematics from Gray''s eel data at slip ratio U/V ~ 0.55, find added-mass and drag thrust balance at aspect ratio max(h)/L ~ 0.13; below it drag-based thrust dominates. It agrees in order of magnitude with the Eloy 0.1 floor, from a different argument; it is not an independent measurement of it.'
+  slip_ratio_anguilliform:
+    value: null
+    interval:
+    - 0.5
+    - 0.75
+    units: dimensionless
+    evidence: literature
+    note: 'As compiled by Pineirua et al. 2015 (full-text preprint) from four kinematic sources they cite; the original measurements were not read here. The same compilation gives anguilliform aspect ratios 0.05 < AR < 0.07 and body wavelength ~0.6 L -- i.e. BELOW both the 0.1 and 0.13 thresholds above.'
+  slip_ratio_carangiform:
+    value: 0.83
+    interval: unknown
+    units: dimensionless
+    evidence: literature
+    note: 'Same compilation (Pineirua et al. 2015), quoted as "~0.83" with aspect ratios around 0.25 and body wavelength ~1 L. No spread was given, so none is invented.'
+  eel_measured_to_EBT_impulse:
+    value: 2.0
+    interval: unknown
+    units: dimensionless
+    evidence: measured
+    note: 'MEASURED (PIV), Tytell 2004 abstract: in American eels at 0.5-2 L/s, lateral impulse in the wake was significantly larger than forces estimated from kinematics via EBT and via quasi-steady resistive drag; "these simple kinematic models predict only 50% of the measured wake impulse". The 2.0 is our inversion of that 50%. The same abstract says EBT DOES correctly predict the magnitude and time course of power shed into the wake. No interval was in the abstract; the full text (harvard.edu, tufts.edu) was outside the session network allowlist.'
+mechanism: 'Reactive (inertial, potential-flow) theory. Each cross-section is treated as a slice of an infinite cylinder that must accelerate an added mass of water m = rho*pi*h^2 per unit length sideways; perpendicular motions are treated reactively and tangential ones resistively (Eloy 2012, full text). Momentum conservation over the body then makes the TIME-AVERAGED thrust depend only on the depth and kinematics of the trailing edge -- the theory''s distinctive and most useful claim -- and the only power loss is the lateral kinetic energy left in the wake. The small-amplitude form quoted by Eloy & Michelin 2025 for Lighthill 1960 is <T> = (1/2) m <y_dot^2 - U^2 y''^2> at the tail; Lighthill 1971 extends it to large amplitude, <T> = <m w y_dot - (1/2) m w^2 x''> at the tail (Eloy 2012 eq. 4a). The equation above is OUR algebra: substituting a constant-amplitude travelling wave y = H sin(kx - omega t) into the 1960 form and averaging cos^2 to 1/2. Thrust is positive only if V > U. Two consequences of that algebra that are inference, not citation: (a) if the amplitude envelope still grows at the tail, y'' gains a term A''(x) and the thrust is LOWER than the formula; (b) thrust and Froude efficiency move oppositely in U/V -- efficiency (1+U/V)/2 rises toward 1 as thrust falls toward 0. Companion entry: lighthill.yaml holds the efficiency form.'
+domain_of_validity:
+  flow_regime: 'inertial; Eloy 2012 states Re = UL/nu must be asymptotically large. No numerical lower bound in Re was found in any source read (scope below).'
+  geometry: 'slender body, h << L, cross-section varying on a length scale of order L (Eloy 2012). Excludes high-aspect-ratio (lunate) tails.'
+  kinematics: 'steady periodic swimming; (U/V)(1 - U/V) St << h/L (Eloy 2012 eq. 15). The equation above additionally assumes small amplitude and a constant-amplitude travelling wave at the tail.'
+  taxa:
+  - subcarangiform and carangiform fish with a moderately deep tail (trout-like); Eloy 2012 reports the rainbow-trout slip-ratio data of Webb et al. agree remarkably well with the EBT-based optimum
+  notes: 'Recoil: Eloy & Michelin 2025 note, after Lighthill and Pedley & Hill 1999, that a fish cannot fully prescribe its kinematics because of recoil, so the tail motion entered here must be the MEASURED one, not a commanded one.'
+where_it_breaks: 'It fails at BOTH ends of the shape range, and the failures are documented, not just inferred. (1) TOO SLENDER -- counter-intuitively, the most eel-like swimmers. Eloy 2012 (full text) shows from his eq. 15 that fish with h/L < 0.1, eels and knifefish, will not in general satisfy the reactive-dominance condition; Pineirua et al. 2015 (a model, not an observation) put the drag/reactive thrust crossover at AR ~ 0.13 for eel kinematics, with real anguilliform swimmers at 0.05-0.07. The MEASURED failure: Tytell 2004 (PIV on Anguilla rostrata, 0.5-2 L/s, abstract) found EBT and quasi-steady drag together predict only 50% of the measured lateral wake impulse -- an UNDER-prediction by about 2x -- while EBT got the wake power right. So for an eel the thrust number is wrong by a factor ~2 and the efficiency/power number is not. (2) TOO DEEP-TAILED. Eloy 2012: the cross-section must vary on a scale of order L, which is false for scombrids, dolphins and sharks with lunate tails; their measured slip ratios sit about 0.2 BELOW the EBT-optimal prediction, while elongated fishes sit ABOVE it (Eloy 2012 discussion). Hess & Videler 1984, per a search summary only, judged slender-body theory not applicable to mackerel because of its abruptly rising caudal depth while applying it to saithe. (3) HIGH STROUHAL. In the Candelier et al. 2011 RANS case reported by Eloy 2012 (a SIMULATION, not self-propelled), an eel-like body at h/L = 0.1, U/V = 0.4, Re = 6e5 was well described by EBT at St = 0.2 and not at St = 0.8, where viscous forces contributed significantly to thrust. Same geometry, same Re: amplitude alone moved it out of domain. (4) THE TRAILING EDGE. Eloy & Michelin 2025 (full text) state Lighthill''s assumptions violate the unsteady Kutta condition there, and that enforcing it REDUCES the reactive force near the trailing edge -- where this theory puts all of the mean thrust; they give no magnitude. Candelier et al. 2011 (as reported by Eloy & Michelin) found good agreement with RANS for all force components EXCEPT the longitudinal one -- which is the thrust. (5) LOW REYNOLDS NUMBER -- inferred, not demonstrated in any source read. The theory is inviscid; at larval scale (Re of order 1e2-1e3) viscous and resistive forces must matter, but no source comparing EBT thrust with simulation or measurement for larvae was found (scope below), so the Re boundary is UNKNOWN, not merely unstated. (6) ILL-CONDITIONED IN SLIP -- arithmetic. Thrust goes as 1 - (U/V)^2, a small difference near U/V = 1; and as h^2 H^2, so a 10% error in tail span and a 10% error in amplitude compound to about 46%. (7) THRUST IS NOT INDEPENDENTLY OBSERVABLE in steady swimming, where it equals drag; Eloy 2012 notes it is impossible to distinguish drag from thrust on a swimming animal, so a rigid-body drag coefficient cannot be used to validate this number. NEGATIVE-SEARCH SCOPE: about eight standard web searches, PubMed E-utilities, Crossref, and arXiv full texts of Eloy 2012, Eloy & Michelin 2025 and Pineirua et al. 2015, November 2026. Unreachable from this session: cambridge.org, core.ac.uk, sites.harvard.edu, openpolar.no.'
+worked_examples:
+- organism: eel-like body in RANS simulation (Candelier et al. 2011, as reported by Eloy 2012)
+  computation: "criterion LHS = (U/V)(1 - U/V) St\n  St = 0.2 : 0.4 * 0.6 * 0.2 = 0.048  vs  h/L = 0.1  -> about 2x margin; EBT thrust reported good\n  St = 0.8 : 0.4 * 0.6 * 0.8 = 0.192  vs  h/L = 0.1  -> criterion violated; viscous thrust significant"
+  value: 0.048
+  note: 'DERIVED arithmetic reproducing the 0.048 Eloy states for the first case; the 0.192 is our computation for the second case, which Eloy describes only as not satisfied. The outcomes (good / not good) are SIMULATION results, not observations, and the swimmers were not self-propelled. This is the only calibration of the criterion found, so the factor-of-2 margin is the evidence for what "much less than" means -- one point, not a threshold.'
+  evidence: derived
+- organism: adult-zebrafish-scale undulator, steady cruise (ALL INPUTS ASSUMED round numbers, none read from a Danio kinematics paper)
+  computation: "rho = 1000, h = 0.003 m, L = 0.03 m (h/L = 0.10), f = 10 Hz (omega = 62.8 rad/s), H = 0.003 m, lambda = 0.03 m -> V = 0.30 m/s, U = 0.15 m/s -> U/V = 0.5\n  m = 1000*pi*0.003^2 = 0.0283 kg/m\n  T = 0.25 * 0.0283 * 62.8^2 * 0.003^2 * (1 - 0.25) = 1.88e-4 N\n  validity: St = 10*0.006/0.15 = 0.40 ; LHS = 0.5*0.5*0.40 = 0.10  vs  h/L = 0.10\n  Re = 0.15*0.03/1.0e-6 = 4500"
+  value: 1.88e-4
+  units: N
+  note: 'DERIVED from assumed inputs; not an observation and not a zebrafish result. The point of the example is the validity line: with plausible-looking inputs the criterion LHS EQUALS h/L, where the Candelier calibration case had a 2x margin -- so this design is at or past the domain edge and the 1.9e-4 N has no known error bound. Sensitivity (same inputs): U/V = 0.4 gives 2.11e-4 N, U/V = 0.6 gives 1.61e-4 N. If the Tytell eel result applied here (unknown -- this body is not an eel), the true lateral impulse could be about 2x what EBT gives. A design check against this number must first show the criterion holds with margin.'
+  evidence: derived
+contested_by:
+- 'OVER-prediction: Hess & Videler 1984, Anderson et al. 2001 and Shirgaonkar et al. 2009, as summarised by Eloy & Michelin 2025, argued potential-based approaches tend to OVERESTIMATE forces; Eloy & Michelin add that enforcing the Kutta condition reduces the reactive force at the trailing edge.'
+- 'UNDER-prediction: Tytell 2004 (PIV, eels) measured lateral wake impulse about 2x larger than EBT plus resistive drag predicted, while EBT matched the shed power. Tytell & Lauder 2004 (abstract) compared the eel wake with large-amplitude EBT and note several discrepancies.'
+- 'Agreement: Eloy & Michelin 2025 report their extended EBT flow compares favourably with simulations of realistic fish geometries; Candelier et al. 2011 (as reported) found good agreement with RANS except for the longitudinal (thrust) component; Eloy 2012 found trout slip-ratio data agree remarkably well with the EBT optimum.'
+- 'Missing physics: Pineirua et al. 2015 (model) argue resistive thrust is as crucial as added mass for inertial swimmers, especially elongated ones -- a challenge to the reactive-only premise, not a correction factor.'
+- 'These positions are NOT reconciled here. Note they need not conflict: over-prediction claims concern deep-tailed or trailing-edge-dominated cases and the under-prediction measurement concerns an eel, which is outside the Eloy domain anyway. That reading is our inference.'
+sources:
+- citation: 'Lighthill MJ (1960) Note on the swimming of slender fish. J Fluid Mech 9:305-317, doi 10.1017/S0022112060001110'
+  read_level: listing
+  note: Metadata confirmed via Crossref. Not read; cambridge.org outside the network allowlist. The small-amplitude thrust formula is taken as quoted by Eloy & Michelin 2025.
+- citation: 'Lighthill MJ (1970) Aquatic animal propulsion of high hydromechanical efficiency. J Fluid Mech 44:265-301, doi 10.1017/S0022112070001830'
+  read_level: listing
+  note: Metadata via Crossref only.
+- citation: 'Lighthill MJ (1971) Large-amplitude elongated-body theory of fish locomotion. Proc R Soc B 179:125-138, doi 10.1098/rspb.1971.0085'
+  read_level: listing
+  note: Metadata via Crossref; the large-amplitude thrust formula is taken as quoted by Eloy 2012 eq. 4a.
+- citation: 'Eloy C (2012) Optimal Strouhal number for swimming animals. J Fluids Struct 30:205-218, doi 10.1016/j.jfluidstructs.2012.02.008'
+  read_level: full-text
+  note: arXiv 1102.0223 preprint, PDF text extracted locally. Source of eq. 4 and eq. 15, the h/L < 0.1 statement, the lunate-tail exclusion, the slip-ratio discrepancy, and the report of Candelier et al.
+- citation: 'Eloy C, Michelin S (2025) Flow associated with Lighthill''s elongated-body theory. J Fluid Mech 1009:A72, doi 10.1017/jfm.2025.325'
+  read_level: full-text
+  note: arXiv 2409.20162 preprint, PDF text extracted locally. Source of the 1960 formula quotation, the Kutta-condition limitation, and the summary of critics.
+- citation: 'Candelier F, Boyer F, Leroyer A (2011) Three-dimensional extension of Lighthill''s large-amplitude elongated-body theory of fish locomotion. J Fluid Mech 674:196-226, doi 10.1017/S002211201000649X'
+  read_level: listing
+  note: Not read. Its RANS comparison is known here only as reported by Eloy 2012 and Eloy & Michelin 2025.
+- citation: 'Tytell ED (2004) The hydrodynamics of eel swimming II. Effect of swimming speed. J Exp Biol 207:3265-3279, doi 10.1242/jeb.01139, PMID 15326203'
+  read_level: abstract
+  note: PubMed abstract. Source of the 50% wake-impulse measurement.
+- citation: 'Tytell ED, Lauder GV (2004) The hydrodynamics of eel swimming I. Wake structure. J Exp Biol 207:1825-1841, doi 10.1242/jeb.00968, PMID 15107438'
+  read_level: abstract
+- citation: 'Pineirua M, Godoy-Diana R, Thiria B (2015) Resistive thrust production can be as crucial as added mass mechanisms for inertial undulatory swimmers. Phys Rev E 92:021001(R), doi 10.1103/PhysRevE.92.021001'
+  read_level: full-text
+  note: arXiv 1507.04952 preprint, PDF text extracted locally; two-column extraction was partly garbled, so only cleanly extracted sentences are used.
+- citation: 'Hess F, Videler JJ (1984) Fast continuous swimming of saithe (Pollachius virens): a dynamic analysis of bending moments and muscle power. J Exp Biol 109:229-251, doi 10.1242/jeb.109.1.229'
+  read_level: search-summary
+  note: Metadata via Crossref; the mackerel non-applicability statement comes only from a search-engine summary. core.ac.uk copy unreachable.
+- citation: 'Videler JJ, Hess F (1984) Fast continuous swimming of two pelagic predators, saithe (Pollachius virens) and mackerel (Scomber scombrus): a kinematic analysis. J Exp Biol 109:209-228'
+  read_level: listing
+  note: Seen only in the Eloy 2012 reference list.
