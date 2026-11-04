@@ -1,0 +1,249 @@
+id: glide-ratio
+name: Glide ratio as lift-to-drag, and the sink-rate relation
+usability: constraining
+equation: V_s = V_h * D_f / L_f = sqrt(2 * m * g / (rho * S)) * C_D / C_L^(3/2) * cos(theta)^(3/2)
+latex: G = \frac{L}{D} = \frac{V_h}{V_s} = \cot\theta, \qquad V_s = \sqrt{\frac{2mg}{\rho S}}\,\frac{C_D}{C_L^{3/2}}\,\cos^{3/2}\theta
+symbols:
+  V_s:
+    dimension: L/T
+    units: m/s
+    description: sink rate -- vertical component of velocity relative to the air mass
+  V_h:
+    dimension: L/T
+    units: m/s
+    description: horizontal component of velocity relative to the air mass
+  D_f:
+    dimension: M*L/T^2
+    units: N
+    description: aerodynamic drag force (parallel to the flight path)
+  L_f:
+    dimension: M*L/T^2
+    units: N
+    description: aerodynamic lift force (perpendicular to the flight path)
+  m:
+    dimension: M
+    units: kg
+    description: total mass of the glider
+  g:
+    dimension: L/T^2
+    units: m/s^2
+    description: gravitational acceleration
+  rho:
+    dimension: M/L^3
+    units: kg/m^3
+    description: air density
+  S:
+    dimension: L^2
+    units: m^2
+    description: reference (lifting) area on which C_L and C_D are defined
+  C_L:
+    dimension: '1'
+    units: dimensionless
+    description: lift coefficient, L_f / (0.5 * rho * V^2 * S)
+  C_D:
+    dimension: '1'
+    units: dimensionless
+    description: drag coefficient of the WHOLE glider (body included), D_f / (0.5 * rho * V^2 * S)
+  theta:
+    dimension: '1'
+    units: rad
+    description: glide angle below the horizontal, relative to the air mass
+constants:
+  derivation_status:
+    value: null
+    evidence: derived
+    note: 'EXACT, NOT FITTED, but only under its premise. In a steady, straight, unaccelerated glide the
+      resultant aerodynamic force equals the weight, so L = W cos(theta) and D = W sin(theta); hence tan(theta)
+      = D/L and V_s / V_h = tan(theta) = D/L. Substituting L = W cos(theta) = 0.5*rho*V^2*S*C_L and V_s
+      = V sin(theta) gives the sink-rate form. The common textbook form DROPS the cos(theta)^(3/2) factor
+      (small-angle approximation); it is kept in the equation here because animal glides are often steep
+      enough for it to matter (0.955 at G = 4, 0.84 at G = 2 -- derived, not measured). There is NO measured
+      constant in this law; every number below is a measured glide performance of an animal or a model.'
+  jackdaw_max_LD:
+    value: 12.6
+    units: dimensionless
+    evidence: literature
+    note: 'MEASURED, Rosen & Hedenstrom 2001, one jackdaw (Corvus monedula) gliding freely in a tilting wind
+      tunnel; maximum L:D 12.6 at 8.5 m/s, steady gliding possible between 6 and 11 m/s. One individual, so
+      no between-animal interval exists. Read only via search summaries of the abstract.'
+  jackdaw_min_sink:
+    value: 0.62
+    units: m/s
+    evidence: literature
+    note: 'MEASURED, same study: minimum sink speed 0.62 m/s at an airspeed of 7.4 m/s; best-glide speed 8.3
+      m/s. Note the reported best-glide speed (8.3) and the speed of maximum L:D (8.5) differ slightly in
+      the summaries retrieved; both are recorded as relayed and not reconciled.'
+  laggar_falcon_max_LD:
+    value: 10.0
+    units: dimensionless
+    evidence: literature
+    note: MEASURED, Tucker & Parrott 1970, wind tunnel, maximum L/D about 10 at 12.5 m/s (speeds 6.6-15.9
+      m/s). A model aircraft of about the same span reached the same 10. Search-summary only.
+  harris_hawk_max_LD:
+    value: 10.9
+    units: dimensionless
+    evidence: literature
+    note: MEASURED, Tucker & Heine 1990, Harris' hawk gliding freely in a wind tunnel at 6.1-16.2 m/s. A
+      1987 Tucker value for this species is in circulation; that paper was NOT found, so no 1987 number
+      is given. Search-summary only.
+  flying_fish_model_max_LD:
+    value: 4.4
+    units: dimensionless
+    evidence: literature
+    note: 'MEASURED ON A MODEL, NOT A LIVE FISH: Park & Choi, IUTAM 2007 conference paper, dried/model
+      Cypselurus in a wind tunnel, "maximum lift-to-drag ratio is about 4.4 (model 3)". The final 2010 J Exp
+      Biol paper''s own maximum was NOT retrieved and may differ. The same conference paper gives hawk 3.8
+      and petrel 4.0 -- see contested_by, these conflict with the whole-bird values above.'
+  flying_snake_final_glide_angle:
+    value: 13
+    interval:
+    - 13
+    - 25
+    units: degrees
+    evidence: literature
+    note: 'MEASURED TRAJECTORY ANGLES, NOT L/D (see where_it_breaks). Chrysopelea paradisi: 13 degrees
+      at the end of the best trajectory (press coverage of Socha & LaBarbera 2005, J Exp Biol 208:1835);
+      as little as 17 degrees final angle and 25 degrees "typical" (conference abstract, Socha & O''Dempsey).
+      The interval is the span of these relayed values, NOT a confidence interval. Converted (derived):
+      cot(13 deg) = 4.33, cot(17 deg) = 3.27, cot(25 deg) = 2.14 -- valid as L/D only if the animal were
+      at equilibrium, which Socha et al. 2010 report it never was.'
+  draco_glide:
+    value: unknown
+    note: McGuire & Dudley 2005 measured glide angle and height lost over a standard distance for 11 Draco
+      species and report that larger species are relatively poorer gliders with no compensation for wing
+      loading. Their numeric glide angles were NOT retrieved (abstract-level search summaries only), so
+      no value is given.
+  insect_glide:
+    value: unknown
+    note: 'One search for measured insect glide ratios returned no measured value for a gliding locust or
+      butterfly. A robotic grasshopper-inspired glider reached L/D 2.9 (Princeton listing), which its authors
+      say is below real grasshoppers; that is a MODEL value. Hover L/D values of 0.7-1.2 for small flies
+      that turned up are FLAPPING values and are not glide ratios; they are excluded.'
+mechanism: 'Force balance. In steady straight flight with no thrust, the only forces are weight, lift and
+  drag, so the aerodynamic resultant must point straight up and equal the weight. The path angle is then
+  set entirely by the ratio of the two aerodynamic components: the glider descends along a line whose slope
+  is D/L. The sink-rate relation follows by writing lift in coefficient form: for a given wing loading the
+  air speed needed to support the weight is fixed by C_L, and the sink rate is that speed times D/L, which
+  gives V_s proportional to sqrt(W/S) * C_D / C_L^(3/2). Two different optima fall out and are routinely
+  confused: MAXIMUM RANGE (flattest glide) is at maximum C_L/C_D; MINIMUM SINK (longest time aloft) is at
+  maximum C_L^(3/2)/C_D, which lies at a higher C_L and a lower speed. Wing loading moves the whole polar
+  along the speed axis (as its square root) but does NOT change the best glide ratio, which depends only
+  on the shape of the drag polar.
+
+  '
+domain_of_validity:
+  flight_state: steady, straight, unpowered, unaccelerated glide in an air mass of uniform velocity
+  speeds_relative_to: the AIR, not the ground
+  notes: 'Valid as an identity for any glider that has reached equilibrium -- sailplane, bird, bat, or a
+    flying fish well clear of the surface. G = L/D holds exactly at equilibrium; the sink-rate form additionally
+    needs C_L and C_D to be defined on the same reference area S and measured at the operating Reynolds
+    number. Coefficients do not transfer across Reynolds number (see reynolds entry).
+
+    '
+where_it_breaks: 'THE FAILURE THAT MATTERS FOR ANIMALS IS NON-EQUILIBRIUM. The law is an identity only
+  once the glider is in steady flight, and most short animal glides never get there. Socha et al. 2010 launched
+  Chrysopelea paradisi from a 15 m tower and report that the snakes never reached equilibrium gliding and
+  showed net upward acceleration late in the glide; Bishop & Bahlman (conference abstract) report no instance
+  of equilibrium at any point of any observed glide in northern and southern flying squirrels, in the lab
+  or the field. In that regime the measured ratio of horizontal distance to height lost is a TRAJECTORY
+  ratio dominated by the launch and the ballistic dive, and reading it as L/D is wrong in an unknown direction
+  -- my inference, not a claim of those authors: a shallow final angle during pitch-up can exceed the
+  equilibrium L/D, while the steep initial dive makes the whole-glide ratio fall short of it. So a field
+  glide ratio for a squirrel, snake or lizard is NOT a lift-to-drag ratio and cannot be checked against
+  one. Second, GROUND EFFECT: within about a span of the surface, induced drag falls and L/D rises (Park
+  & Choi 2010 for flying fish, with a larger gain over water than over a solid floor; press coverage cites
+  up to 14 per cent drag reduction), so a sea-skimming value is not the free-air value and vice versa. Third,
+  VERTICAL AIR MOTION: the relation is in the air frame. A glider in a 0.6 m/s updraft with a 0.62 m/s sink
+  rate holds altitude; ground-referenced glide ratios measured in the field are therefore G modified by
+  wind and lift, not G. Fourth, TURNING: in a banked turn lift must exceed weight by 1/cos(bank), so sink
+  rises by (1/cos(bank))^(3/2) and the straight-glide polar under-predicts it (derived from the same force
+  balance, not measured here). Fifth, STEEP GLIDES: the textbook sink formula without cos(theta)^(3/2) overstates
+  sink by 5 per cent at G = 4 and 19 per cent at G = 2 (derived), exactly the range of many animal gliders.
+  Sixth, LOW REYNOLDS NUMBER: the law still holds but the achievable C_L/C_D collapses, and no measured insect
+  glide L/D was found to anchor it (scope: one web search, see constants.insect_glide), so a design at Re
+  around 1e3 cannot borrow bird polars. Finally, a design check needs a WHOLE-ANIMAL drag coefficient: an
+  L/D measured on an isolated wing or fin overstates the glide ratio of the animal that carries it.'
+worked_examples:
+- organism: Corvus monedula (jackdaw), internal consistency of the measured polar
+  computation: G at minimum sink = V / V_s = 7.4 / 0.62 = 11.9, against a reported maximum L:D of 12.6 at
+    8.5 m/s
+  value: 11.9
+  note: DERIVED from two MEASURED values in Rosen & Hedenstrom 2001 (using airspeed in place of horizontal
+    speed, an error under 0.4 per cent at this angle). The glide ratio at minimum sink lies just below the
+    maximum and at a lower speed, as the theory requires -- a passed consistency check, not an independent
+    test.
+  evidence: derived
+- organism: an illustrative fish-scale glider (HYPOTHETICAL INPUTS, not measurements of any animal)
+  computation: "m = 1.0e-3 kg, S = 1.0e-3 m^2, rho = 1.225 kg/m^3, C_L = 0.8, C_D = 0.2 (L/D = 4)\n  sqrt(2*m*g/(rho*S))\
+    \ = sqrt(2*1e-3*9.81/(1.225*1e-3)) = 4.00 m/s\n  small-angle V_s = 4.00 * 0.2 / 0.8^1.5 = 1.12 m/s\n  theta\
+    \ = atan(0.25) = 14.0 deg; cos^1.5 = 0.956  ->  V_s = 1.07 m/s, V_h = 4.28 m/s\n  check: V_h / V_s =\
+    \ 4.0 = L/D"
+  value: 1.07
+  note: CALCULATED, not observed. The inputs are round numbers chosen to show the arithmetic; C_L = 0.8
+    and C_D = 0.2 are assumptions and were not measured at the Re (about 1e3-1e4) such a glider would fly.
+    The point is the magnitude -- a 1 g glider at L/D 4 sinks about 1 m/s, so from a 0.5 m launch height it
+    has about half a second and about 2 m of glide AFTER reaching equilibrium -- and per where_it_breaks
+    it may not reach equilibrium at all in that height.
+  evidence: derived
+- organism: Chrysopelea paradisi (flying snake), a field angle that must NOT be read as L/D
+  computation: final glide angle 13 deg  ->  cot(13 deg) = 4.33
+  value: 4.33
+  note: The conversion is arithmetic; the input angle is MEASURED (press summary of Socha & LaBarbera 2005).
+    It is recorded as a counter-example to using this law on field data, because Socha et al. 2010 report
+    no equilibrium in these glides.
+  evidence: derived
+contested_by:
+- 'BIRD L/D VALUES DISAGREE BY A FACTOR OF ABOUT 2.5 BETWEEN SOURCES. Park & Choi (IUTAM 2007) give hawk
+  3.8 and petrel 4.0 as comparators for a 4.4 flying-fish model; Tucker & Heine 1990 measured 10.9 for a
+  freely gliding Harris'' hawk and Tucker & Parrott 1970 about 10 for a laggar falcon. The Park & Choi 2010
+  abstract says the fish compares with bird "components". My inference, NOT stated by either source: the
+  low values are probably for isolated wings or a different reference area, which would make the comparison
+  "flying fish glide as well as birds" in the press coverage unsupported for whole birds. Not reconciled;
+  the source of the 3.8 and 4.0 was not traced.'
+- 'Rosen & Hedenstrom 2001 report that an equation choosing span to minimise the sum of induced and profile
+  drag does NOT predict the span the jackdaw actually used. The force-balance identity is not in question,
+  but the common practice of predicting an animal''s polar from a minimum-drag morphing rule is.'
+sources:
+- citation: Rosen M, Hedenstrom A (2001) J Exp Biol 204:1153-1166, Gliding flight in a jackdaw -- a wind
+    tunnel study
+  read_level: search-summary
+  note: Values relayed from search summaries of the abstract; the full text (core.ac.uk, lup.lub.lu.se)
+    could not be fetched from this session -- the host did not resolve. Body mass, span and area were not
+    retrieved.
+- citation: Tucker VA, Parrott GC (1970) J Exp Biol 52:345-367, Aerodynamics of gliding flight in a falcon
+    and other birds, doi 10.1242/jeb.52.2.345
+  read_level: search-summary
+- citation: Tucker VA, Heine C (1990) J Exp Biol 149:469-489, Aerodynamics of gliding flight in a Harris'
+    hawk, Parabuteo unicinctus
+  read_level: search-summary
+  note: Page range and title inferred from the JEB PDF filename (jexbio_149_1_469) in the search listing;
+    the end page 489 is REMEMBERED, not retrieved.
+- citation: Park H, Choi H (2010) J Exp Biol 213:3269-3279, Aerodynamic characteristics of flying fish
+    in gliding flight, doi 10.1242/jeb.046052
+  read_level: search-summary
+  note: Abstract content and press coverage only. Full text (typeset.io) could not be fetched -- host did
+    not resolve.
+- citation: Park H, Choi H (2007) IUTAM symposium proceedings, flying-fish model wind-tunnel study (S1_Park)
+  read_level: search-summary
+  note: Source of the 4.4 model value and the hawk 3.8 / petrel 4.0 comparators. Exact title not retrieved.
+- citation: Socha JJ, Miklasz K, Jafari F, Vlachos PP (2010) Bioinsp Biomim, Non-equilibrium trajectory
+    dynamics and the kinematics of gliding in a flying snake
+  read_level: search-summary
+  note: Volume and article number not retrieved. Conference abstract (APS DFD 2010) read as relayed.
+- citation: Socha JJ, O'Dempsey T, LaBarbera M (2005) J Exp Biol 208:1817-1833, A 3-D kinematic analysis
+    of gliding in a flying snake, Chrysopelea paradisi
+  read_level: listing
+- citation: Socha JJ, LaBarbera M (2005) J Exp Biol 208:1835-1847, Effects of size and behavior on aerial
+    performance of two species of flying snakes (Chrysopelea)
+  read_level: search-summary
+  note: Only the 13-degree figure, via press coverage. Title and end page REMEMBERED, not retrieved.
+- citation: Bishop KL (2006) J Exp Biol 209:689-701, The relationship between 3-D kinematics and gliding
+    performance in the southern flying squirrel, Glaucomys volans
+  read_level: listing
+  note: Its own glide-ratio figures were NOT retrieved.
+- citation: Bishop KL, Bahlman JW, SICB conference abstract on equilibrium in flying-squirrel glides
+  read_level: search-summary
+  note: Source of the statement that no equilibrium was observed in any glide. Year and title not retrieved.
+- citation: McGuire JA, Dudley R (2005) Am Nat 166:93-106, The cost of living large -- comparative gliding
+    performance in flying lizards (Agamidae -- Draco)
+  read_level: abstract
