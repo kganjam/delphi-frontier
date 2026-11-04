@@ -6,7 +6,7 @@ latex: "\\mathrm{Re} = \\frac{\\rho U L}{\\mu} = \\frac{U L}{\\nu}"
 symbols:
   rho: {dimension: M/L^3, units: kg/m^3, description: fluid density}
   U:   {dimension: L/T,   units: m/s,    description: characteristic velocity}
-  L:   {dimension: L,     units: m,      description: characteristic length (chord, for a wing)}
+  L:   {dimension: L,     units: m,      description: "characteristic length (chord, for a wing)"}
   mu:  {dimension: M/(L*T), units: Pa*s, description: dynamic viscosity}
   nu:  {dimension: L^2/T, units: m^2/s,  description: kinematic viscosity}
   Re:  {dimension: "1",   units: dimensionless, description: ratio of inertial to viscous forces}

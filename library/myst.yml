@@ -1,0 +1,17 @@
+version: 1
+project:
+  id: delphi-law-library
+  title: The law library
+  description: Biological design laws, with the conditions where each holds and where it breaks.
+  keywords: [biological design, scaling laws, biomimetics, engineering biology]
+  github: https://github.com/kganjam/delphi-frontier
+  toc:
+    - file: pages/index.md
+    - title: Laws
+      children:
+        - file: pages/murray.md
+        - file: pages/reynolds.md
+site:
+  template: book-theme
+  options:
+    logo_text: Law library

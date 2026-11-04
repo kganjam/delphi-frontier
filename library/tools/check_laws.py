@@ -164,6 +164,19 @@ def check_entry(path: Path) -> list[str]:
         problems.append(f"{path.name}: `usability` must be constraining or descriptive")
 
     syms = doc.get("symbols") or {}
+    # A YAML flow mapping -- {dimension: L, units: m, description: ...} -- splits on EVERY comma, so an
+    # unquoted description containing one silently becomes a second key with a null value. Measured on
+    # reynolds.yaml: "characteristic length (chord, for a wing)" produced the junk key
+    # "for a wing)": None, and the page rendered a truncated description that read like a typo.
+    KNOWN = {"dimension", "units", "description", "note"}
+    for name, meta in (syms or {}).items():
+        if not isinstance(meta, dict):
+            continue
+        for k, v in meta.items():
+            if k not in KNOWN and v is None:
+                problems.append(
+                    f"{path.name}: symbol `{name}` has stray key {k!r} with no value -- an unquoted "
+                    f"comma inside a YAML flow mapping. Quote the value.")
     dims = {}
     for name, meta in syms.items():
         try:
