@@ -1,0 +1,47 @@
+id: froude-efficiency
+name: Froude propulsive efficiency
+usability: constraining
+equation: "eta_F = 2 * U / (U + V_j)"
+latex: "\\eta_F = \\frac{2U}{U + V_j} = \\frac{2}{1 + V_j/U}"
+symbols:
+  eta_F: {dimension: "1", units: dimensionless, description: "useful propulsive power divided by total power imparted to the fluid"}
+  U:     {dimension: L/T, units: m/s, description: "forward speed of the body"}
+  V_j:   {dimension: L/T, units: m/s, description: "speed of the jet or wake far downstream, in the body frame"}
+mechanism: >
+  Actuator-disc momentum theory. Thrust is the rate of momentum addition, mdot*(V_j - U), while the
+  kinetic energy wasted in the wake rises with (V_j - U)^2. Efficiency therefore favours accelerating
+  a LARGE mass of fluid a LITTLE, which is the single most portable result in propulsion and the
+  reason large slow propulsors beat small fast ones at equal thrust. The formula is exact within the
+  theory; it is the theory that is approximate.
+domain_of_validity:
+  flow: "steady, quasi-one-dimensional momentum exchange with a well-defined far wake"
+  notes: >
+    Applies to a continuously acting propulsor. Eloy's more general definition,
+    eta = D*U / (D*U + mean shed power), reduces to this one in the steady case and is what is
+    actually used for undulatory swimmers.
+where_it_breaks: >
+  Unsteady and pulsed jets break the premise that there is a steady far wake whose momentum flux can
+  be written as mdot*(V_j - U). Squid and jellyfish propel themselves with discrete vortex rings,
+  which can carry MORE impulse per unit energy than the steady theory allows, so the formula is not
+  merely inaccurate there but can underestimate the achievable efficiency. It also says nothing
+  about how much thrust is available, only about the price of it: a design can sit at eta_F = 0.95
+  and produce no useful thrust at all. And it is blind to viscous and profile losses on the
+  propulsor itself, so the number it returns is an upper bound on a part of the budget rather than a
+  system efficiency.
+worked_examples:
+  - organism: "generic propulsor, two jet-speed ratios"
+    computation: |
+      V_j = 1.5*U : eta_F = 2/(1 + 1.5) = 2/2.5 = 0.80
+      V_j = 3.0*U : eta_F = 2/(1 + 3.0) = 2/4   = 0.50
+    value: 0.8
+    note: >
+      Doubling the excess jet speed costs 30 efficiency points. This is the whole content of the
+      law as a design check, and it is exact.
+    evidence: derived
+contested_by:
+  - "Not contested as mathematics. What is contested in biology is whether a given animal's wake is steady enough for it to apply -- see Lighthill elongated-body theory for the undulatory case, where the shed power is computed rather than assumed."
+sources:
+  - citation: "Actuator-disc momentum theory is standard; no primary source was retrieved for it in this compilation."
+    read_level: remembered
+  - citation: "Eloy C (2012) J Fluids Struct 30:205-218, doi 10.1016/j.jfluidstructs.2012.02.008, eq. 12 for the general definition"
+    read_level: full-text-preprint

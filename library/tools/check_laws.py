@@ -58,6 +58,37 @@ class Dim(dict):
         return "·".join(parts) if parts else "dimensionless"
 
 
+# Exponents first, so `^2/3` stays one token; then numeric literals INCLUDING an exponent, so
+# `1.5e-5` does not decompose into a number, an identifier `e` and a subtraction.
+TOKEN = re.compile(r"\^-?\d+(?:/\d+)?(?:\.\d+)?|\d+\.?\d*(?:[eE][-+]?\d+)?|\.\d+"
+                   r"|[A-Za-z_][A-Za-z_0-9]*|[*/()+-]")
+# Names that may appear in an equation without being a declared physical symbol.
+MATH_NAMES = {"pi", "e", "exp", "ln", "log", "log10", "sqrt", "sin", "cos", "tan", "sinh", "cosh",
+              "tanh", "abs", "sum", "prod", "min", "max", "det", "tr", "lim", "const"}
+
+
+def tokenize(expr: str) -> list[str]:
+    return TOKEN.findall(expr)
+
+
+def identifiers(expr: str) -> list[str]:
+    """Every name in an expression, in order, excluding pure numbers and operators."""
+    return [t for t in tokenize(expr) if re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*", t)]
+
+
+def resolve(name: str, dims: dict):
+    """Look a symbol up, allowing a bound index: `r_child_i` resolves to the declared `r_child`.
+
+    The old code stripped `_i` from the whole expression with a regex before parsing. That silently
+    renamed any symbol legitimately CALLED `r_i` to `r`, which was then undeclared and skipped -- so
+    the equation checked was not the equation written.
+    """
+    if name in dims:
+        return dims[name]
+    stripped = re.sub(r"_i$|_\{i\}$", "", name)
+    return dims.get(stripped)
+
+
 def _product_of_powers(expr: str, lookup) -> Dim:
     """Parse a product of powers, honouring parentheses and division INTO a group.
 
@@ -67,7 +98,24 @@ def _product_of_powers(expr: str, lookup) -> Dim:
     """
     expr = expr.strip()
     out, i, sign = Dim(), 0, 1
-    tokens = re.findall(r"[A-Za-z_][A-Za-z_0-9]*|\^-?\d+(?:/\d+)?(?:\.\d+)?|[*/()]|[\d.]+", expr)
+    tokens = tokenize(expr)
+
+    # A sum or a difference PRESERVES dimension, so the first term settles the whole group and the
+    # rest can be dropped. Doing it here rather than in eval_side means it applies at every nesting
+    # depth, which is what `pi*(R^4 - r_i^4)/4` needs: the old code dropped the bare `-` in the
+    # tokenizer and then MULTIPLIED the two terms, making a tube's second moment L^8 instead of L^4.
+    depth = 0
+    for idx, t in enumerate(tokens):
+        if t == "(":
+            depth += 1
+        elif t == ")":
+            depth -= 1
+        elif t in "+-" and depth == 0:
+            if idx == 0:                       # a leading sign is unary, not a term separator
+                tokens = tokens[1:]
+                break
+            tokens = tokens[:idx]
+            break
 
     def read_group(j):
         """Return (Dim, index after the matching close paren)."""
@@ -140,12 +188,7 @@ def parse_dim(expr: str) -> Dim:
 def eval_side(expr: str, dims: dict) -> Dim:
     """Dimension of one side of an equation. A sum preserves dimension, so the first term suffices."""
     expr = re.sub(r"\bsum\s*\(([^)]*)\)", r"(\1)", expr.strip())
-    expr = re.sub(r"_i\b|_\{i\}", "", expr)
-    for plus in re.split(r"(?<![eE])\+", expr):
-        if plus.strip():
-            expr = plus.strip()
-            break
-    return _product_of_powers(expr, lambda t: dims.get(t))
+    return _product_of_powers(expr, lambda t: resolve(t, dims))
 
 
 def check_entry(path: Path) -> list[str]:
@@ -184,6 +227,17 @@ def check_entry(path: Path) -> list[str]:
         except ValueError as e:
             problems.append(f"{path.name}: {e}")
     eq = doc.get("equation", "")
+    # An undeclared symbol was SKIPPED by the parser, contributing nothing -- so a typo, or a symbol
+    # the author forgot to declare, made the equation check pass on a shorter equation than the one
+    # written. That is the failure this file's own docstring warns about: a gate that is off looks
+    # exactly like a gate that passed. Every name must be declared or be a known mathematical name.
+    if eq:
+        undeclared = sorted({n for n in identifiers(eq)
+                             if n not in MATH_NAMES and resolve(n, dims) is None})
+        for n in undeclared:
+            problems.append(
+                f"{path.name}: equation uses `{n}`, which is not in `symbols` and is not a known "
+                f"mathematical name -- the dimension check would silently ignore it")
     if eq and "=" in eq and dims:
         sides = [s for s in eq.split("=") if s.strip()]
         try:
@@ -227,6 +281,42 @@ def selftest() -> int:
     bad = eval_side("rho * U * L * mu", d)
     expect("a WRONG Reynolds (multiplying mu) is NOT dimensionless",
            str(bad) != "dimensionless", True)
+
+    # A DIFFERENCE inside parentheses. The bare `-` used to be dropped by the tokenizer, so the two
+    # terms were MULTIPLIED and a tube's second moment of area came out L^8. Measured, not supposed.
+    tube = {"R": parse_dim("L"), "r_in": parse_dim("L")}
+    expect("a tube's I = pi*(R^4 - r_in^4)/4 is an area^2",
+           str(eval_side("pi * (R^4 - r_in^4) / 4", tube)), "L^4")
+    expect("a bare difference R^4 - r_in^4 is an area^2",
+           str(eval_side("R^4 - r_in^4", tube)), "L^4")
+
+    # A SUM inside parentheses, in a denominator: Froude propulsive efficiency.
+    vel = {"U": parse_dim("L/T"), "V_j": parse_dim("L/T")}
+    expect("eta = 2*U/(U + V_j) is dimensionless",
+           str(eval_side("2 * U / (U + V_j)", vel)), "dimensionless")
+    # ...and the case it MUST flag: the same shape with a term that does not belong.
+    wrong = {"U": parse_dim("L/T"), "m": parse_dim("M")}
+    expect("2*m/(U + m) is NOT dimensionless as a velocity ratio would be",
+           str(eval_side("2 * m / (U + m)", wrong)) != "dimensionless", True)
+
+    # A BOUND INDEX must resolve to its declared symbol, and a symbol that merely ENDS in _i must
+    # not be mangled. The old global `_i` strip renamed `r_i` to `r` and then skipped it.
+    expect("r_child_i resolves to the declared r_child",
+           str(eval_side("sum(r_child_i^3)", {"r_child": parse_dim("L")})), "L^3")
+    expect("a symbol genuinely named r_i is NOT renamed away",
+           str(eval_side("r_i^4", {"r_i": parse_dim("L")})), "L^4")
+
+    # Scientific notation must stay one number, not a number, an `e` and a subtraction.
+    expect("1.5e-5 * L is a length", str(eval_side("1.5e-5 * L", {"L": parse_dim("L")})), "L^1")
+
+    # The undeclared-symbol check: a case it must flag, and a case it must not.
+    expect("an undeclared symbol is reported",
+           identifiers("rho * U * L / mu_typo") and
+           [n for n in identifiers("rho * U * L / mu_typo")
+            if n not in MATH_NAMES and resolve(n, d) is None], ["mu_typo"])
+    expect("pi and exp are NOT reported as undeclared",
+           [n for n in identifiers("pi * exp(U)") if n not in MATH_NAMES and resolve(n, d) is None],
+           [])
     return 0 if ok else 1
 
 
