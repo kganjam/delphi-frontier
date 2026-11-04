@@ -759,6 +759,23 @@ work that would obviously succeed; each is a specific question with a stated rea
   cross-linking — and a single-chain monomer prediction cannot address that *even in principle*.
   Adding a monomer stiffness predictor would not help. The honest status of this capability is
   **no demonstrated allele, no in-silico route, and the available route is at the wrong level**.
+
+  :::{danger} That hypothesis was then tested with a dimer, and it did not hold
+  OpenFold3 predicts *assemblies*, so an `and3` homodimer (2 × 295 = 590 residues) tests the claim
+  rather than arguing it. **ipTM 0.106** — the *interface* confidence — means **no confident
+  interface was predicted at all**, and pTM *fell* slightly against the monomer (0.169 vs 0.185).
+  **Dimerisation produced no order.**
+
+  So "assembly creates the structure a monomer cannot show" is **not** what two chains produce.
+  What survives is narrower: *if* actinodin order is supramolecular, it needs **more than a pair** —
+  fibril-scale assembly, cross-linking, or a non-actinodin partner.
+
+  **The caveat cuts both ways, and is why this is not a refutation of the biology.** Structure
+  predictors are trained overwhelmingly on PDB entries, where fibrillar and disordered assemblies
+  are barely represented. A low ipTM is **strong evidence about what the model can say and weak
+  evidence about what the protein does.** The honest summary: the hypothesis is **untested**, not
+  tested and passed.
+  :::
 - The S26 active-stiffening margin rests on a boundary condition that **could not be verified**: the
   publisher blocks full text and the OA service 404s. The order of magnitude is confirmed by the
   paper's own abstract; the exact factor is not.
