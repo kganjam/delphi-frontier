@@ -209,8 +209,11 @@ miss is a real miss and not a threshold artefact:
 | `MUSTFAIL_And1_shuffled` | And1 mature chain, residues shuffled (`random.seed(13)`) | **must-fail control** — same composition, no real homolog should survive | `ncbiblast-R20261104-082042-0250-52796950-p2m` |
 
 **Outcome: `could-not-access`.** All four jobs were still `QUEUED` in the EBI
-Job Dispatcher ~15 minutes after submission and returned no results within this
-session's budget. Job ids are recorded above so the run can be retrieved or
+Job Dispatcher at the last status poll, **08:43 UTC — 22 minutes after
+submission, over 41 status checks** — and returned no results within this
+session's budget. None ever reached `RUNNING`, so this looks like queue backlog
+or a submission the dispatcher accepted (HTTP 200, job id issued) but did not
+schedule; I did not diagnose which, and I did not resubmit. Job ids are recorded above so the run can be retrieved or
 repeated rather than re-invented. **I therefore report no BLAST hits, no
 BLAST misses, and no control outcome** — the controls are the reason this
 cannot be read as a negative result. The parameters and ids are the
