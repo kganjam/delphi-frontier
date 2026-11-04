@@ -75,6 +75,11 @@ RULES = [
   # replacement means a row was rewritten rather than appended.
   "select count(*) from claim a join claim b on a.superseded_by=b.id where b.created_at < a.created_at",
   "select count(*) from claim where superseded_by is not null"),
+ ("ASK-artifact-graph", 5, "Every quantity carries units",
+  # A number with no unit is not a quantity. Scoped to claims that actually committed a value.
+  "select count(*) from claim where superseded_by is null and value_num is not null "
+  "and (units is null or btrim(units)='')",
+  "select count(*) from claim where value_num is not null"),
  ("ASK-artifact-graph", 6, "Every challenge outcome recorded, INCLUDING survived",
   # IN-FLIGHT IS NOT A VIOLATION. The first version flagged every challenge dispatched in the last
   # few minutes, because an agent that has not reported yet leaves `outcome` null -- 93 of its 96
@@ -139,6 +144,41 @@ RULES = [
 ]
 
 
+# Rule 7 of SPEC-ASK is about the RECORD, not the database: "every dimension this record does not
+# satisfy is named in the record, with the reason". The spec says of it, in its own words, that it
+# "is the one that makes the other six honest" -- and it was the rule this checker originally left
+# out, which is the failure it exists to prevent, committed by the thing meant to prevent it.
+# It is checked against the spec document: all six ASK dimensions must appear in the status table
+# with a non-empty gap column.
+ASK_DIMS = ["D1 Addressability", "D2 Evidential traceability", "D3 Conditional executability",
+            "D4 Version responsiveness", "D5 Context-preserving transferability",
+            "D6 Contestable federation"]
+SPEC_ASK = "/data/worktrees/delphi-frontier/swarm-arch/docs/specs/SPEC-ASK-artifact-graph.md"
+
+
+def check_ask_rule7():
+    """Returns (status, detail). Every dimension needs a row AND a stated gap."""
+    try:
+        text = open(SPEC_ASK).read()
+    except OSError as e:
+        return "UNCHECKED", f"cannot read the spec: {e}"
+    missing, no_gap = [], []
+    for dim in ASK_DIMS:
+        rows = [l for l in text.split("\n") if dim in l and l.strip().startswith("|")]
+        if not rows:
+            missing.append(dim); continue
+        # The gap is the LAST cell of the table row; a dimension with no stated gap is the
+        # failure mode -- a clean-looking table that has quietly stopped admitting anything.
+        cells = [c.strip() for c in rows[0].strip().strip("|").split("|")]
+        if len(cells) < 4 or not cells[-1] or cells[-1] in ("-", "none", "n/a"):
+            no_gap.append(dim)
+    if missing:
+        return "FAIL", f"{len(missing)} dimension(s) absent from the status table: {missing}"
+    if no_gap:
+        return "FAIL", f"{len(no_gap)} dimension(s) with no stated gap: {no_gap}"
+    return "PASS", f"all {len(ASK_DIMS)} dimensions present with a stated gap"
+
+
 def main():
     selftest = "--selftest" in sys.argv
     rows = []
@@ -154,6 +194,10 @@ def main():
                          f"{v} violating row(s) of {control}" if v else f"{control} rows checked"))
         except Exception as e:
             rows.append(("UNCHECKED", spec, n, text, f"query failed: {type(e).__name__}: {e}"))
+
+    st7, detail7 = check_ask_rule7()
+    rows.append((st7, "ASK-artifact-graph", 7,
+                 "Every dimension NOT satisfied is named in the record, with the reason", detail7))
 
     w = max(len(r[1]) for r in rows)
     fails = unchecked = 0
