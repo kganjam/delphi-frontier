@@ -367,8 +367,15 @@ def evaluate(expr, env):
                 ex = ev(n.right)
                 if not ex.dim.dimensionless:
                     raise DimensionError(f"exponent must be dimensionless, got [{ex.dim}]")
-                if not base.dim.dimensionless and not isinstance(n.right, (ast.Constant, ast.UnaryOp)):
-                    raise DimensionError("a dimensioned base needs a literal exponent (the result's dimension depends on it)")
+                # A dimensioned base needs an exponent that is CONSTANT, because the result's
+                # dimension depends on its value. The test is semantic -- "the exponent subtree
+                # mentions no symbol" -- not syntactic. An earlier version asked for ast.Constant or
+                # ast.UnaryOp, which rejected `d**(2/3)`: a fraction is a BinOp, so a perfectly
+                # literal two-thirds power was refused as though it were symbolic. That is how the
+                # law library writes every fractional exponent (d^2/3, (E/(rho*g))^1/3), so the
+                # check refused correct entries while passing nothing extra.
+                if not base.dim.dimensionless and any(isinstance(k, ast.Name) for k in ast.walk(n.right)):
+                    raise DimensionError("a dimensioned base needs a constant exponent (the result's dimension depends on its value)")
                 return base ** ex.value if base.dim.dimensionless else base ** Fraction(ex.value).limit_denominator(1000)
             a, b = ev(n.left), ev(n.right)
             if isinstance(n.op, ast.Add):
@@ -467,6 +474,12 @@ def selftest():
         "x = a + b", {"x": "m", "a": "m", "b": "s"}), DimensionError)
     raises("exp of a dimensioned argument", lambda: evaluate("exp(L)", {"L": "1 m"}), DimensionError)
     raises("dimensioned exponent", lambda: evaluate("L**T", {"L": "1 m", "T": "1 s"}), DimensionError)
+    raises("SYMBOLIC exponent on a dimensioned base", lambda: evaluate("L**b", {"L": "1 m", "b": "1"}), DimensionError)
+    # ...and the case it must NOT flag: a constant fractional exponent on a dimensioned base, which
+    # is how every fractional power in the law library is written.
+    expect("d**(2/3) on a dimensioned base is allowed", str(evaluate("d**(2/3)", {"d": "1 m"}).dim), "L^2/3")
+    expect("a symbolic exponent on a DIMENSIONLESS base is allowed",
+           str(evaluate("(x/x_ref)**b", {"x": "1 kg", "x_ref": "1 kg", "b": "1"}).dim), "dimensionless")
     raises("degC refused, not guessed", lambda: parse_unit("degC"), UnitError)
     raises("unknown unit", lambda: parse_unit("furlong"), UnitError)
     raises("undeclared symbol", lambda: check_equation("a = b", {"a": "m"}), UnitError)

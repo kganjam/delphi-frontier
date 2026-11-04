@@ -41,3 +41,17 @@ def test_check_laws_flags_a_broken_equation_and_unknown_symbol():
         check_laws.eval_side("rho*U*Lx/mu", d)
     with pytest.raises(u.DimensionError):               # the old parser let the first term of a sum speak for all
         check_laws.eval_side("L + U", d)
+
+
+def test_constant_fractional_exponent_on_dimensioned_base():
+    """The syntactic-guard bug found by morphoswarm-ed: d**(2/3) was refused as 'symbolic'."""
+    assert u.evaluate("d**(2/3)", {"d": "1 m"}).dim == u.parse_dim("L") ** u.Fraction(2, 3)
+    with pytest.raises(u.DimensionError):
+        u.evaluate("L**b", {"L": "1 m", "b": "1"})
+
+
+def test_law_bridge_reads_caret_fraction_as_a_power_not_a_quotient():
+    """'d^2/3' written in a law entry is d to the 2/3, not (d^2)/3 (ed's bridge catch; my first bridge got it wrong)."""
+    d = {"d": u.parse_dim("L")}
+    assert check_laws.eval_side("d^2/3", d) == u.parse_dim("L") ** u.Fraction(2, 3)
+    assert check_laws.eval_side("d^2/3", d) != u.parse_dim("L") ** 2
