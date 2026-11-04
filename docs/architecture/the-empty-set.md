@@ -246,6 +246,53 @@ Until this row existed, that gap had nothing to point at.
 reports the schema's emptiness, and reads as though it had reported the project's. The vacuity
 sweep ships with a positive control for each *mechanism*; it has none for its own *domain*.
 
+## 8. The same shape in a model: a check that cannot fail, 2026-11-04
+
+The sweep in §4 looks for a mechanism walking an empty set. **A scientific instrument can walk a
+full set and still be incapable of returning a negative**, and the two are indistinguishable from
+the output.
+
+The designed edit **T200K** in `slc43a2a` changed ESMFold2 pLDDT by **−0.11** globally and **−1.39**
+locally. That reads as *structurally tolerated*, and it is the kind of sentence that goes into a
+design document and is never revisited.
+
+**It was not recorded that way, because the method's sensitivity had never been established.** A
+matched-scale positive control was run: **L219P** — one residue like T200K, 19 residues away so the
+same structural neighbourhood, a proline dropped into the middle of a 93 %-hydrophobic transmembrane
+helix whose window pLDDT is 98.6, at the same seed. Independent support that the substitution is
+severe, from a different model on a different principle: ProteinMPNN ranks proline **20th of 21** at
+that position, probability 0.0000, while placing wild-type L at 0.766.
+
+| | global pLDDT | local ±5 | pTM |
+|---|---|---|---|
+| wild type | 85.95 | — | 0.8232 |
+| **T200K** (the designed edit) | 85.83 (**−0.11**) | **−1.39** | 0.8239 |
+| **L219P** (helix breaker, must flag) | 86.19 (**+0.24**) | **−1.34** | 0.8329 |
+
+**The control did not fire.** The helix-breaker moved global pLDDT *upward*, moved pTM *upward*, and
+its local change is indistinguishable from the designed edit's. So ESMFold2's response to a point
+mutation at this magnitude is noise, the T200K null is **uninformative**, and no pLDDT comparison in
+this project may be used to judge any single substitution.
+
+**Three things make this worth a section rather than a footnote.**
+
+1. **The failing output and the passing output are the same number.** §1's mechanisms at least ran
+   over something countable. Here the instrument produced a plausible, well-formed, correctly
+   computed value for every input, and the value carried no information. Counting the subject set —
+   this document's own defence — would not have caught it: the subject set was 577 residues, full.
+2. **The control had to be matched in scale, not merely severe.** A scrambled 20-residue window
+   would also have been a "must-flag" case, and failing it would have proved something weaker: that
+   the model cannot see a *large* perturbation. The claim under test was about **one residue**, so
+   the control had to be one residue. A control at the wrong scale licenses the wrong conclusion.
+3. **The null was the attractive answer.** T200K is this project's designed edit; "structurally
+   tolerated" is the result that lets the design proceed. The control was run *against* the
+   convenient reading, which is the only direction in which a control is worth anything.
+
+**The general rule, which §3 states for mechanisms and this extends to measurements:** before
+reporting that an instrument found no effect, hand it a case where an effect must exist. If it
+reports nothing there too, you have measured the instrument, not the subject. A method that has
+never returned a negative is indistinguishable from a method that cannot.
+
 ## 5. What this does not establish
 
 - The sweep covers **tables in one Postgres schema**. A mechanism implemented in files, in a
