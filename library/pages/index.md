@@ -31,7 +31,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 | [Strouhal number and the 0.2-0.4 cruising band](./strouhal.md) | `constraining` | Small, low-Reynolds and elongate swimmers sit ABOVE the band, and the optimum is not a universal constant: fro |
 | [Turing reaction-diffusion instability](./turing.md) | `constraining` | LINEAR INSTABILITY IS NEITHER NECESSARY NOR SUFFICIENT FOR A PATTERN TO FORM |
 | [Von Bertalanffy growth](./von-bertalanffy.md) | `descriptive` | It fails before maturity, which is half the life history and the half a growth model is usually wanted for |
-| [Weis-Fogh clap-and-fling and unsteady lift at low Reynolds number](./weis-fogh.md) | `descriptive` | It is not the general explanation of insect lift, and treating it as one is the error to avoid |
+| [Weis-Fogh clap and fling, and the measured lift augmentation at low Reynolds number](./weis-fogh.md) | `descriptive` | (1) THE Re TREND IS CONTESTED, AND THE MIDDLE IS EMPTY |
 | [Wing loading and its scaling with mass](./wing-loading.md) | `descriptive` | The scaling exponents differ by clade and by flight mode, and pooling across them is the standard error: hummi |
 
 :::{note}
