@@ -41,9 +41,23 @@ Daane *lat4a^nr21/+; kcnh2a^lof/+* double heterozygote. Granting it an unmeasure
 wing, it produces **10% of body weight in lift at launch** and lengthens a 19.4 cm ballistic leap by
 **3–6 mm**.
 
-**The honest deliverable is a possibly detectable 5–10% reduction in ascent deceleration.** Not
-flight, not a glide, not a meaningfully longer leap. Calling it flight would destroy the credibility
-of everything else here.
+**The honest deliverable is a possibly detectable ~5–7% reduction in ascent deceleration — ~6%
+net.** Not flight, not a glide, not a meaningfully longer leap. Calling it flight would destroy the
+credibility of everything else here.
+
+:::{warning} Corrected 2026-11-04 — this read "5–10 %", and the 10 % was geometrically wrong
+A recovered replication caught it. **Lift acts perpendicular to the flight path**, so on a 45°
+leap its vertical component is `L·cos 45° = 0.707 L`. A lift/weight ratio of 10 % at exit therefore
+buys **7.1 %** of vertical reduction, not 10 % — and ~**6 %** once wing drag is included. The
+10 % upper end treated full lift at a 45° climb as though it acted vertically.
+
+Two further conditions the figure carries and the sentence did not: it is for the **designed
+196 mm² wing**, not any measured Daane fin (40–80 mm² fins give ~1–3 %), and it is **~0 for a
+vertical leap**, where cos θ → 0.
+
+The lift ratios themselves (10 % at exit, 5 % at apex) **replicate exactly**. Only the projection
+onto the vertical was wrong.
+:::
 
 ---
 
