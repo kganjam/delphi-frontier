@@ -1,0 +1,161 @@
+id: mcmahon-elastic
+name: McMahon elastic similarity for limb and spar proportions
+usability: constraining          # yields a diameter a spar is checked against, GIVEN a load and a sag criterion
+# Written so the checker can multiply it out. It is the self-weight sag criterion that elastic
+# similarity holds constant across sizes: fix phi (= tip deflection / length) and the required
+# diameter follows. Holding phi constant as l changes gives d proportional to l^(3/2), the
+# McMahon (1973) result; with body mass M ~ l * d^2 it gives l ~ M^(1/4), d ~ M^(3/8).
+equation: "d^2 = C_b * rho * g * l^3 / (E * phi)"
+latex: "d^2 = C_b \\, \\frac{\\rho g \\, l^3}{E \\, \\varphi} \\quad\\Rightarrow\\quad d \\propto l^{3/2},\\; l \\propto M^{1/4},\\; d \\propto M^{3/8}"
+symbols:
+  d:    {dimension: L, units: m, description: "diameter of a solid circular member (limb bone, trunk, spar)"}
+  l:    {dimension: L, units: m, description: length of the member}
+  rho:  {dimension: M/L^3, units: kg/m^3, description: "effective density of the member's distributed load (tissue density minus fluid density if buoyant)"}
+  g:    {dimension: L/T^2, units: m/s^2, description: gravitational acceleration}
+  E:    {dimension: M/(L*T^2), units: Pa, description: "Young's modulus of the member material"}
+  phi:  {dimension: "1", units: dimensionless, description: "allowed sag ratio delta/l, held constant across sizes under elastic similarity"}
+  C_b:  {dimension: "1", units: dimensionless, description: "loading/support coefficient; 2 for a uniform solid round cantilever sagging under its own weight (derived below)"}
+constants:
+  d_vs_l_exponent:
+    value: 1.5
+    note: >
+      Derived (McMahon 1973), not measured: d proportional to l^(3/2), equivalently l proportional to
+      d^(2/3). Geometric similarity would give 1.0. No interval: it is a consequence of the beam
+      equation, not a fitted value.
+  length_vs_mass_exponent:
+    value: 0.25
+    note: Derived. Geometric similarity gives 1/3.
+  diameter_vs_mass_exponent:
+    value: 0.375
+    note: Derived. Geometric similarity gives 1/3.
+  C_b_cantilever_self_weight:
+    value: 2.0
+    note: >
+      Derived here, not taken from a source. Uniform cantilever under its own weight: tip deflection
+      delta = w l^4 / (8 E I), with w = rho g pi d^2 / 4 and I = pi d^4 / 64, gives
+      delta / l = 2 rho g l^3 / (E d^2). Other supports and load distributions change C_b and leave
+      the exponents unchanged.
+  greenhill_buckling_coefficient:
+    value: 0.79
+    note: >
+      Derived here from the Greenhill self-weight column (clamped base, free top, uniform):
+      l_cr^3 = 7.837 E I / w, so l_cr = (7.837/16)^(1/3) * (E/(rho g))^(1/3) * d^(2/3) = 0.788 *
+      (E/(rho g))^(1/3) * d^(2/3). Same 2/3 exponent as the sag form; this is the version McMahon
+      applied to trees. Computed, not measured.
+  length_on_diameter_exponent_large_mammals:
+    value: unknown
+    interval: [0.75, 0.85]
+    note: >
+      MEASURED, but read only at search-summary level: a review returned by search reports that
+      long-bone length scales on diameter with b of about 0.75-0.85 in large mammals, rising toward
+      isometry (1.0) in smaller ones, citing Bertram & Biewener 1990 and Christiansen 1999a,b. I did
+      not read the primary papers and did not identify the review itself, so no point value is given.
+      Elastic similarity predicts 0.667 on this axis, so the reported band lies BETWEEN elastic and
+      geometric similarity, not on either (my inference from the reported numbers).
+mechanism: >
+  McMahon (1973) argued that for large organisms the binding design limit is not yield strength but
+  elastic stability: a column must not buckle, and a beam must not sag beyond a fixed fraction of its
+  length, under its own weight. Both the Greenhill buckling length and the self-weight cantilever sag
+  scale as l^3 / d^2 at fixed material (E, rho), so holding either margin constant across sizes forces
+  d to grow as l^(3/2) -- more slender small members, more robust large ones. Combined with mass
+  scaling as l * d^2 this gives l ~ M^(1/4) and d ~ M^(3/8). McMahon also argued (author's claim, not
+  verified here) that this, with a parallel result for limbs, yields Kleiber's 3/4-power metabolic
+  scaling; that extension is far more contested than the beam result and is not what this entry
+  certifies.
+domain_of_validity:
+  load: "gravity (self-weight or body-weight) is the dominant distributed load on the member"
+  failure_mode: "elastic instability or excessive deflection, not material yield or fatigue"
+  material: "same E and density across the size series"
+  taxa: [bovid limb bones (reported fit), tree trunks and branches (approximate; see where_it_breaks)]
+  notes: >
+    Applies across a size series of one structural plan built from one material, loaded by gravity.
+    As a single-design check (fix phi, solve for d) the equation holds for any slender elastic member
+    within small-deflection beam theory; as a SCALING LAW (fix phi across species) it holds only where
+    the organisms actually hold phi constant, which is an empirical question answered mostly "no".
+where_it_breaks: >
+  (1) Across mammals as a whole. Alexander et al. (1979), measuring shrew to elephant, reported limb
+  bones scaling close to GEOMETRIC similarity (secondary sources give length ~ M^0.35 and diameter ~
+  M^0.36; not checked against the paper). The reported elastic-similarity fit is essentially
+  restricted to bovids/ungulates (McMahon 1975). Later work (Bertram & Biewener 1990; Christiansen
+  1999a,b; search-summary level) reports DIFFERENTIAL scaling: small mammals near geometric
+  similarity, large mammals more robust but still short of the elastic exponent. A single exponent
+  across the size range is therefore not supported. (2) Where posture, not bone shape, carries the
+  scaling. Biewener (1989; abstract level) reports that mammals of about 0.04-300 kg keep peak bone
+  and muscle stresses similar mainly by running more upright as size increases, which changes the
+  effective load on the bone and decouples bone proportions from the beam argument. (3) Where yield,
+  fatigue or impact, not buckling or sag, is the binding failure mode -- which is the case for
+  running limbs, whose peak loads are dynamic and several times body weight. (4) Trees: search
+  sources report that most trees stand at roughly one quarter of the Greenhill buckling height, so
+  the margin is a safety factor of about 4, not the elastic limit itself; and a Barro Colorado Island
+  study of eight tree species reported height-diameter slopes differing from 2/3 in three of the
+  eight (author and year of that study unknown -- I did not identify it). (5) For THIS PROJECT'S
+  members -- fin rays, pectoral spars, wing spars at mm-to-cm scale -- the self-weight premise does
+  not hold at all: buoyancy removes most of the weight in water, and even in air the computed
+  self-weight sag of a 1 cm ray is of order 1e-3 (worked example below), so hydrodynamic or
+  aerodynamic load, not gravity, sets the diameter. Applying d ~ l^(3/2) to such members is a
+  category error. The beam algebra still holds if rho*g is replaced by the actual distributed
+  fluid load per unit volume, but the result is then a different law (constant deflection under
+  fluid loading) and its exponent depends on how that load scales with l.
+worked_examples:
+  - organism: "tree trunk, generic wood (illustrative inputs, not a measured tree)"
+    computation: >
+      Assumed E = 1.0e10 Pa, rho = 800 kg/m^3, g = 9.81 m/s^2, d = 0.5 m.
+      l_cr = 0.788 * (E/(rho g))^(1/3) * d^(2/3) = 0.788 * (1.274e6 m)^(1/3) * 0.5^(2/3)
+      = 0.788 * 108.4 * 0.630 = 53.8 m. At the reported safety factor of about 4, expected height
+      about 13.5 m.
+    value: 53.8
+    note: >
+      CALCULATED, not observed. E and rho are assumed round values for green wood, not measurements
+      of any species. The factor-4 margin is the search-summary report in where_it_breaks.
+    evidence: derived
+  - organism: "fin-ray-like bony cantilever, Danio-rerio scale (illustrative inputs)"
+    computation: >
+      Assumed l = 0.01 m, d = 1.0e-4 m, E = 1.0e9 Pa, tissue density 2000 kg/m^3, C_b = 2.
+      In air, phi = 2 * 2000 * 9.81 * (0.01)^3 / (1.0e9 * (1.0e-4)^2) = 3.9e-3.
+      In water (effective rho = 2000 - 1000 = 1000 kg/m^3), phi = 2.0e-3.
+    value: 0.0039
+    note: >
+      CALCULATED, not observed. E = 1 GPa and density 2000 kg/m^3 are assumed placeholders, not
+      measured fin-ray properties (the measured fin-ray modulus is unknown to this entry). The point
+      survives any plausible E within an order of magnitude: self-weight sag is a fraction of a
+      percent, so gravity does not constrain this member and elastic similarity gives no usable
+      design number for it.
+    evidence: derived
+  - organism: bovid limb bones
+    note: >
+      Reported as the clearest fit to elastic similarity (McMahon 1975, as described by secondary
+      sources). Exponent values not read; unknown here.
+    evidence: literature
+contested_by:
+  - "Alexander et al. (1979): limb bones from shrew to elephant scale near geometric, not elastic, similarity; elastic fit is confined to bovids."
+  - "Bertram & Biewener (1990) and Christiansen (1999a,b): scaling is differential with size (near-geometric in small mammals, more robust but sub-elastic in large ones), so no single exponent applies."
+  - "Biewener (1989): stress similarity is maintained mainly by posture change, not by bone proportions -- a different mechanism from McMahon's."
+  - "Kokshenev, Silva & Garcia (2003, arXiv preprint): revise the assumptions underlying McMahon's geometric, elastic and static-stress similarities (abstract only; their alternative not read)."
+  - "Tree data: trees stand well below the elastic buckling limit (safety factor ~4), and some species depart from the 2/3 height-diameter slope. These are not reconciled here."
+sources:
+  - citation: "McMahon TA (1973) Size and shape in biology. Science 179(4079):1201-1204"
+    read_level: search-summary
+  - citation: "McMahon TA (1975) Allometry and biomechanics: limb bones in adult ungulates. American Naturalist 109:547-563"
+    read_level: listing
+  - citation: "Alexander RMcN, Jayes AS, Maloiy GMO, Wathuta EM (1979) Allometry of the limb bones of mammals from shrews (Sorex) to elephant (Loxodonta). J Zool Lond 189:305-314"
+    read_level: search-summary
+    note: "Exponents 0.35/0.36 seen only in a secondary student flashcard source; not verified against the paper."
+  - citation: "Biewener AA (1989) Scaling body support in mammals: limb posture and muscle mechanics. Science 245:45-48"
+    read_level: abstract
+  - citation: "Biewener AA (2005) Biomechanical consequences of scaling. J Exp Biol 208(9):1665-1676"
+    read_level: could-not-access
+    note: "Host blocked by this session's network policy; its content reached me only through search summaries."
+  - citation: "Bertram JEA, Biewener AA (1990) Differential scaling of the long bones in the terrestrial Carnivora and other mammals. J Morphol 204:157-169"
+    read_level: search-summary
+    note: "Search confirmed only author/year as cited by a review; journal, volume and pages are from my recall and were not verified."
+  - citation: "Christiansen P (1999a) Scaling of the limb long bones to body mass in terrestrial mammals. J Morphol 239:167-190"
+    read_level: listing
+  - citation: "Christiansen P (1999b) Scaling of mammalian long bones: small and large mammals compared. J Zool"
+    read_level: search-summary
+  - citation: "Kokshenev VB, Silva JKL, Garcia GJM (2003) Long-bone allometry of terrestrial mammals and the geometric-shape and elastic-force constraints of bone evolution. arXiv:physics/0303074"
+    read_level: abstract
+search_scope: >
+  Five web searches and two fetch attempts on 2026-11-04 (one fetch, of the JEB review, blocked by
+  the network policy). No primary paper was read in full. Exponent values for McMahon (1975) bovid
+  data, and the identity of the Barro Colorado tree study, were not found within that scope and are
+  recorded as unknown.
