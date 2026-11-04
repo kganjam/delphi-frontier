@@ -33,13 +33,14 @@ import numpy as np
 
 from engineering.fishprop import build as FP
 from engineering.geometry import validate as VAL
+from engineering.glider import build as GB
 from engineering.glider import mass as MP
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "artifacts/print-law-index.json"
 DOC = ROOT / "docs/print-law-index.md"
 CODE_PATHS = ["engineering/print_law_index.py", "engineering/glider/mass.py", "engineering/geometry/validate.py",
-              "engineering/fishprop/build.py"]
+              "engineering/fishprop/build.py", "engineering/glider/build.py"]
 
 FAMILIES = [("print-v4", "artifacts/print-v4"), ("print-v3", "artifacts/print-v3"), ("print-v2", "artifacts/print-v2"),
             ("print-v1", "artifacts/print")]
@@ -118,7 +119,7 @@ def git_json(commit: str, path: str) -> tuple[dict, str]:
 
 
 def introduced_in(rel: str) -> str | None:
-    out = git("log", "--diff-filter=A", "--format=%h", "--", rel).decode().split()
+    out = git("log", "--diff-filter=A", "--format=%H", "--", rel).decode().split()   # full: %h grows with the clone
     return out[-1] if out else None
 
 
@@ -562,6 +563,8 @@ def glider(card: dict, dyn: dict, rev_checks: dict, defects: dict, findings_raw:
                                                      "lateral openings (feather edges) and 0.115 mm twice on r3"
                                                      if wst == "fail" else "same slot design, not re-measured here"))
             checks.append(chk("min_wall_sampled", wst, wdet))
+            if "catch_zone_wall" in p:
+                checks.append(catch_zone_check(V, T, p["catch_zone_wall"]))
             kind_part = p["kind"]
             is_fin = kind_part == "fin"
             base = p["id"].split("-")[0]
@@ -629,6 +632,22 @@ def glider(card: dict, dyn: dict, rev_checks: dict, defects: dict, findings_raw:
     return files, assemblies
 
 
+def catch_zone_check(V, T, rec: dict) -> dict:
+    """r5 on: the builder's catch-zone gate, recomputed here from the STL bytes over the recorded zone, and compared
+    with the record.  Wall readings (wedge < 45.6 deg, feather edges included) gate; corners are reported."""
+    z = GB.zone_walls(V, T, rec["rule_mm"], rec["zone_boxes_mm"])
+    same = (z["faces_in_zone"], z["wall_below_rule"], z["edge_limited_below_rule"]) == \
+        (rec["faces_in_zone"], rec["wall_below_rule"], rec["edge_limited_below_rule"]) and \
+        abs(z["wall_min_mm"] - rec["wall_min_mm"]) < 1e-6
+    st = "fail" if not same or not z["ok"] else "pass"
+    return chk("catch_zone_wall_dense", st,
+               f"recomputed from these bytes: {z['samples']} of {z['faces_in_zone']} faces in the catch zone "
+               f"(every face: {z['every_face']}); wall readings {z['wall_readings']}, minimum {z['wall_min_mm']:.3f} mm, "
+               f"{z['wall_below_rule']} below {z['rule_mm']} mm; corner (edge-limited) readings below the rule "
+               f"{z['edge_limited_below_rule']}, wedge >= {z['edge_limited_below_rule_min_wedge_deg']} deg, reported, "
+               f"not gated; matches the builder record: {same}")
+
+
 def bundle_row(d: str, mb: bytes, material: dict, man_src: dict) -> dict | None:
     side = ROOT / d / "download.json"
     if not side.exists():
@@ -684,7 +703,8 @@ def assembly(revn, d, m, meshes, density, dy, rv, zrow, rootc) -> dict:
     S = th["paired_flat_area_mm2"]
     cap = RHO_AIR * V_BUDGET ** 2 * S * 1e-6 * CL / (2 * G) * 1e3
     rows = {row["cg_target_x_mm"]: row for row in m["ballast"]["rows"]}
-    nom = rows[52.0]
+    target = float(m["parameters"]["nominal_cg_target_mm"]["value"])
+    nom = rows[target]
     ballasted = nom["total_mass_g"]
     def vt(mg):
         return math.sqrt(2 * mg * 1e-3 * G / (RHO_AIR * S * 1e-6 * CL))
@@ -716,9 +736,9 @@ def assembly(revn, d, m, meshes, density, dy, rv, zrow, rootc) -> dict:
                "inside the bracket")),
     ]
     xb = (M * cg[0] + nom["ballast_g"] * nom["fill_centroid_mm"][0]) / nom["total_mass_g"]
-    checks.append(chk("ballast_row_moment_balance", "pass" if abs(xb - 52.0) <= 0.01
+    checks.append(chk("ballast_row_moment_balance", "pass" if abs(xb - target) <= 0.01
                       and abs(M + nom["ballast_g"] - nom["total_mass_g"]) <= 1e-6 * M else "fail",
-                      f"52 mm row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = {xb:.4f} mm with "
+                      f"{target:g} mm (nominal target) row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = {xb:.4f} mm with "
                       f"m_b {nom['ballast_g']:.3f} g at x_fill {nom['fill_centroid_mm'][0]:.2f} mm"))
     if dy:
         checks.append(chk("catch_bond_shear", "pass" if dy["catch_pass"] else "fail",
@@ -755,8 +775,8 @@ def assembly(revn, d, m, meshes, density, dy, rv, zrow, rootc) -> dict:
         "dry": {"mass_g": r(M, 9), "cg_mm": [r(x, 4) for x in cg],
                 "basis": f"calculated: sum of part mesh volumes x {density:g} kg/m3, moved into the fish frame by each "
                          "part's print_to_fish transform; glue, tape and trapped resin excluded; not weighed"},
-        "ballasted": {"target_cg_x_mm": 52.0, "ballast_g": r(nom["ballast_g"]), "total_mass_g": r(ballasted),
-                      "basis": "the frozen manifest's 52 mm ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid "
+        "ballasted": {"target_cg_x_mm": target, "ballast_g": r(nom["ballast_g"]), "total_mass_g": r(ballasted),
+                      "basis": f"the frozen manifest's {target:g} mm (nominal target) ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid "
                                "model; not weighed"},
         "budgets": [
             {"id": "legacy_threshold_10_5g", "value_g": LEGACY_LIMIT_G, "compared_mass_g": r(ballasted),
@@ -776,7 +796,7 @@ def assembly(revn, d, m, meshes, density, dy, rv, zrow, rootc) -> dict:
         "cg_window": {**win, "dry_cg_x_mm": r(cg[0], 3)},
         "neutral_point": {"np_x_mm_bracket": [r(x, 3) for x in np_b], "pectoral_mac_mm": r(mac, 3),
                           "static_margin_dry": [r((x - cg[0]) / mac, 3) for x in np_b],
-                          "static_margin_at_52mm": [r((x - 52.0) / mac, 3) for x in np_b],
+                          "static_margin_at_ballast_target": [r((x - target) / mac, 3) for x in np_b],
                           "basis": "hand bracket from the frozen manifest; not a VLM"},
         "launch_load": launch,
         "launch_status": {"status": "not_cleared", "detail": launch_detail},
@@ -852,15 +872,19 @@ def findings(card) -> list:
          "detail": "Reviewer claude-13: readings down to 0.097 mm (0.115 mm twice on r3) at the x 20 slot's lateral "
                    "openings, judged feather edges rather than a thin wall; they can print rough, chip, or cut the "
                    "band. The builder's sampler classed its own 0.31 mm reading there as edge-limited and did not "
-                   "gate it. r1's body has a reviewer reading of 0.317 mm aft of its catch slot, also edge-limited.",
+                   "gate it. r1's body has a reviewer reading of 0.317 mm aft of its catch slot, also edge-limited. "
+                   "The r5 catch-zone gate run on the frozen r4 body reproduces 21 wall readings below 0.45 mm, 17 "
+                   "below 0.30, minimum 0.097 mm, at a 36 deg wedge. r5-daane-catchfair adds crown fairings and "
+                   "claims no wall reading below the rule in the catch zone; that claim awaits the reviewer, and "
+                   "the frozen revisions stay thin.",
          "source": "artifacts/glider/REVIEW_FINDINGS.json; " + REVIEW["doc"] + " @ " + REVIEW["commit"][:7]},
         {"id": "biological_constraints_kept_names_v3a", "status": "frozen_prose_inconsistency",
          "applies_to": ["artifacts/glider/r3-daane/manifest.json", "artifacts/glider/r4-daane-printfix/manifest.json"],
          "detail": "biological_constraints.kept reads 'v3a outline, ray count, ray roots, angles and lengths, fin "
                    "positions and dihedral', but source_candidate is fish3d-v3c-daane-length. The outline_check "
                    "itself compared against the v3c candidate's own rays.json (builder code), so the check result "
-                   "refers to v3c; the prose string is stale. The frozen manifests are not edited; a later revision "
-                   "will derive the string from the candidate.",
+                   "refers to v3c; the prose string is stale. The frozen manifests are not edited; from "
+                   "r5-daane-catchfair the builder derives the string from the candidate id.",
          "source": "engineering/glider/build.py (the 'kept' string is a literal; outline_check reads "
                    "artifacts/fish3d/<candidate>/rays.json)"},
         {"id": "assembly_md_cg_window_superseded", "status": "superseded_guidance",
@@ -868,7 +892,8 @@ def findings(card) -> list:
                         "artifacts/glider/r4-daane-printfix/print-set-r4-daane-printfix.zip"],
          "detail": "The frozen ASSEMBLY.md cites a 44-60 mm CG window and lists a 60 mm ballast row. That window "
                    "came from v3a's planform. For r3/r4 claude-07's constraint is CG x 49.5-55.2 mm, target 52.4, "
-                   "never aft of 54.1 mm before the VLM NP, so the 56 and 60 mm rows are outside it.",
+                   "never aft of 54.1 mm before the VLM NP, so the 56 and 60 mm rows are outside it. "
+                   "r5-daane-catchfair's ballast table uses 49.5-55.2 mm.",
          "source": MSG + "glider-dynamics-r3-r4-first-print-constraints.md"},
         {"id": "legacy_mass_threshold", "status": "superseded_guidance",
          "applies_to": ["artifacts/glider/*/manifest.json (trim_speed_hand.mass_limit_g)"],
@@ -912,7 +937,7 @@ def doc(idx: dict) -> str:
          "Alpha Grey V1 at 1220 kg/m³, from root's material card; the card's 1110 kg/m³ liquid density is not used."),
          ("- **Per assembly:** the parts are moved into the fish frame by their recorded transforms and summed. The "
          "CG is the mass-weighted mean."),
-         ("- **Ballast:** the dry assembly plus nose ballast from the frozen manifest's 52 mm row, at an assumed "
+         ("- **Ballast:** the dry assembly plus nose ballast from the frozen manifest's nominal-target row (52 mm to r4, 52.4 mm from r5), at an assumed "
          "4.7 g/cm³."),
          ("- **Display props:** the resin is not chosen, so their mass is unknown. A conditional mass, assuming a "
          "fully dense print at 1220 kg/m³ (the Alpha Grey V1 card value), is given separately."),

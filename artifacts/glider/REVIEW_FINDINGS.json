@@ -11,7 +11,16 @@
       "revisions_basis": "r3-daane: reviewer's reading. r4-daane-printfix: body mesh-identical to r3 (bytes after the 80-byte header identical). r2-light: same x 20 slot design, not re-measured; listed as likely, not confirmed. r1 (fixed catch at x 28) not checked.",
       "own_check_missed_it": "the builder's sampler (3000 samples, seed 7) recorded an edge-limited reading of 0.31 mm at (18.38, 6.39, 8.15) in r4's manifest (body wall.edge_limited_below_rule_at_mm), reported but not gating, because exit and entry normals were not opposed. The gate therefore passed a region a reviewer measured at 0.115 mm.",
       "consequence": "r4-daane-printfix is a FIT/BALANCE test print only. No launch clearance: the catch region may print thin, leak or break under band load.",
-      "next": "investigate the slot-liner/dorsal-shell geometry and the sampler's edge classification in a new revision (r5); r4 is not edited"
+      "next": "investigate the slot-liner/dorsal-shell geometry and the sampler's edge classification in a new revision (r5); r4 is not edited",
+      "r5_claim": {
+        "revision": "r5-daane-catchfair",
+        "status": "claimed by the builder (claude-05), NOT reviewed. This finding stays unresolved for r2-r4, whose frozen bytes are still thin.",
+        "cause_found": "not a sampler artifact: at both slots (x 20 and x 34) the slot crown (z 8.80 mm in r4) is higher than the dorsolateral skin beyond |y| ~6.1 mm (x 20) and ~9 mm (x 34), so the slot breaks out through skin sloping ~33 deg and leaves a 36 deg feather edge (r4 at x 20, y 6: skin 0.09 mm above the crown)",
+        "change": "crown fairing: the liner's 3.75 mm outer cylinder at the top seat, above the plane through the seat perpendicular to the slot axis, carried to flat end caps 0.5 mm outside the widest skin at that station (half-lengths 11.07 mm at x 20, 12.79 mm at x 34)",
+        "claim": "in the catch zone (each slot x +/- 6.75 mm, z >= top seat - 3.75 mm), one inward ray from every body face centroid: no wall reading (entry/exit wedge < 45.6 deg, feather edges included) below 0.45 mm; corner readings below the rule are reported in the manifest with their wedge angles (all >= 77 deg)",
+        "control": "the same check on the frozen r4 body: 21 wall readings below 0.45 mm, 17 below 0.30 mm, minimum 0.097 mm (claude-13's counts)",
+        "record": "artifacts/glider/r5-daane-catchfair/manifest.json, parts[id=body].catch_zone_wall"
+      }
     }
   ]
 }

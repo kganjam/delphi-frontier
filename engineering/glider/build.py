@@ -1,10 +1,10 @@
-"""Launch-prototype glider fish: printable parts at 1:1 from the v3a ray-fan fish, with measured mass properties.
+"""Launch-prototype glider fish: printable parts at 1:1 from a v3 ray-fan fish, mass properties computed from meshes.
 
 LAUNCH PROTOTYPE, UNTESTED.  Nothing here has been printed, weighed, glided or thrown, and no printer or resin
 compatibility is claimed.  Every number that is not read from a mesh is a provisional default, labelled as such.
 
 What it builds (per revision, never overwriting an earlier one):
-- body: a hollow shell of the v3a body loft with the dorsal, anal and caudal fins integral; a forward ballast bay
+- body: a hollow shell of the source candidate's body loft (v3a for r1-r2, v3c from r3) with the dorsal, anal and caudal fins integral; a forward ballast bay
   with a ventral port; a lined transverse catch slot for the launch band; one socket per paired fin; drain holes.
 - four removable paired fins (pectoral L/R, pelvic L/R), laid flat for printing: a thin membrane, a root doubler,
   a leading-edge spar under ray 0, ridges under the other rays, and a keyed root tongue.  Pelvic fins come at
@@ -23,6 +23,7 @@ import hashlib
 import itertools
 import json
 import math
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -150,6 +151,41 @@ REVISIONS = {
                            "status": "claude-07 R3 correction: seat at -1.5/0/+1.5/+3.0 mm from the design CG "
                                      "height, two arms ~15 mm apart (25 and 40 mm ahead of a CG near 60 mm); start "
                                      "tests at 0 and +1.5; slot shape, rake and plug fit assumed"},
+                 "ballast_bay": {"value": {"x_mm": [6.0, 30.0], "port_diameter_mm": 5.0, "port_x_mm": 11.0},
+                                 "status": "assumed; the loft range, clipped behind by the forward slot's axis plane "
+                                           "(its liner is the bay's rear wall)"},
+                 "main_cavity_x_mm": {"value": [6.0, 150.0], "status": "assumed; the loft range, clipped in front by "
+                                                                       "the forward slot's axis plane"}},
+    "r5-daane-catchfair": {"parent": "r4-daane-printfix", "source_variant": "c-daane-length",
+                           "title": "r5 Daane catch fairing: r4 with a crown fairing over each catch slot (the slot "
+                                    "roof no longer breaks out through the sloping dorsal skin) and claude-07's v3c "
+                                    "CG window",
+                 "body_wall_mm": {"value": 0.5, "status": "provisional"},
+                 "catch": {"value": {"x_mm": [20.0, 34.0], "seat_offsets_mm": [-1.5, 0.0, 1.5, 3.0], "slot_mm": 3.5,
+                                     "rake_deg": 30.0, "liner_mm": 2.0, "plug_clearance_mm": 0.1,
+                                     "nominal": {"slot_x_mm": 20.0, "offset_mm": 0.0},
+                                     "crown_fairing": {"end_margin_mm": 0.5}},
+                           "status": "claude-07 R3 correction: seat at -1.5/0/+1.5/+3.0 mm from the design CG "
+                                     "height, two arms ~15 mm apart; start tests at 0 and +1.5; slot shape, rake and "
+                                     "plug fit assumed. r5: crown fairing (assumed geometry) = the liner's outer "
+                                     "cylinder above the plane through the top seat perpendicular to the slot axis, "
+                                     "carried across the body to flat end caps 0.5 mm outside the widest skin at that "
+                                     "station, so the slot roof keeps the full 2.0 mm liner wall everywhere and the "
+                                     "slot opens through square end caps instead of a feather edge in sloping skin"},
+                 "catch_zone_wall_check": {"value": {"half_length_x_mm": 3.0, "below_seat_mm": 0.0, "cap": 20000,
+                                                     "seed": 11},
+                                           "status": "r5 gate, fixed before the r5 build: an inward ray from every "
+                                                     "body face whose centroid lies within (liner radius + 3 mm) of "
+                                                     "a slot's x and above (top seat - liner radius); every wall "
+                                                     "reading (wedge < 45.6 deg, feather edges included) must meet "
+                                                     "the 0.45 mm rule; blunter corners are reported with their "
+                                                     "wedge angle, count and location"},
+                 "cg_window_mm": {"value": [49.5, 55.2],
+                                  "status": "claude-07 first-print constraints for r3/r4 (v3c planform, SM 0.10-0.20 "
+                                            "on the hand NP); replaces 44-60 mm, which came from v3a's planform; "
+                                            "never aft of 54.1 mm before the VLM NP"},
+                 "nominal_cg_target_mm": {"value": 52.4, "status": "claude-07 first-print constraints (provisional; "
+                                                                   "the VLM replaces it)"},
                  "ballast_bay": {"value": {"x_mm": [6.0, 30.0], "port_diameter_mm": 5.0, "port_x_mm": 11.0},
                                  "status": "assumed; the loft range, clipped behind by the forward slot's axis plane "
                                            "(its liner is the bay's rear wall)"},
@@ -454,6 +490,30 @@ def build(rev: str) -> dict:
         cut = mf.Manifold.batch_boolean([slot_hull(cat["x_mm"], z_catch, r), *holes, *slots], mf.OpType.Add)
         return b - cut, (low, r)
 
+    def crown_fairings(z_top: float):
+        """r5: the liner's outer cylinder at the top seat, kept above the plane through the seat perpendicular to the
+        slot axis and carried across the body to flat end caps `end_margin_mm` outside the widest skin there.  Inside
+        the body it lies within the liner already; outside it is a proud arch, so the slot roof keeps the liner wall
+        where it used to break out through sloping dorsal skin, and the slot opens through square end caps."""
+        fr = cat.get("crown_fairing")
+        if not fr:
+            return [], []
+        R = r + cat["liner_mm"]
+        up = np.array([-math.sin(rk), 0.0, math.cos(rk)])   # along the slot axis, seat -> away from the mouth
+        out, rec = [], []
+        for x in cat["x_mm"]:
+            a = (float(x), 0.0, float(z_top))
+            bb = (outer ^ box((x - R, -100, z_top - R), (x + R, 100, z_top + R + 10))).bounding_box()
+            yf = max(abs(bb[1]), abs(bb[4])) + fr["end_margin_mm"]
+            tube = mf.Manifold.cylinder(2 * yf, R, R, 64).rotate((90.0, 0.0, 0.0)).translate((x, yf, z_top))
+            keep = box((0, -100, -100), (200, 100, 100)) \
+                .rotate((0.0, -math.degrees(math.atan2(up[2], up[0])), 0.0)).translate(a)
+            f = tube ^ keep
+            out.append(f)
+            rec.append({"slot_x_mm": float(x), "half_length_y_mm": float(yf), "outer_radius_mm": R,
+                        "volume_mm3": float(f.volume()), "proud_volume_mm3": float((f - outer).volume())})
+        return out, rec
+
     def assemble_adjustable(z_ref: float):
         """Adjustable catch (r2 on): one slot per x position, its top seat at the highest offset above z_ref (the
         design CG height); a plug pressed into the slot top lowers the seat to each other offset (the seat moves
@@ -476,7 +536,8 @@ def build(rev: str) -> dict:
         main_cav = loft_offset(body, -wall, cav[0], cav[1]) ^ half(+1, r)
         shell, holes = shell_body([bay_cav, main_cav])
         liners = [slot_hull(x, z_top, r + cat["liner_mm"], 25.0) ^ outer for x in cat["x_mm"]]
-        b = mf.Manifold.batch_boolean([shell, *liners, *bosses], mf.OpType.Add)
+        fairings, fair_rec = crown_fairings(z_top)
+        b = mf.Manifold.batch_boolean([shell, *liners, *fairings, *bosses], mf.OpType.Add)
         cut = mf.Manifold.batch_boolean([*(slot_hull(x, z_top, r, 25.0) for x in cat["x_mm"]), *holes, *slots],
                                         mf.OpType.Add)
         inner = loft_offset(body, -cat["plug_clearance_mm"], 0.0, sl)
@@ -494,7 +555,8 @@ def build(rev: str) -> dict:
                         mf.Manifold.cylinder(60.0, rp, rp, 32).rotate((90.0, 0.0, 0.0)).translate((0, 30.0, 0))
                         .translate((float(q[0]), 0, float(q[1]))) for q in (top, seat)]) ^ inner
                     plugs[plug_id(x, off)] = plug
-        return b - cut, {"z_top_mm": z_top, "seats": seats, "plugs": plugs, "radius_mm": r, "bay_cavity": bay_cav}
+        return b - cut, {"z_top_mm": z_top, "seats": seats, "plugs": plugs, "radius_mm": r, "bay_cavity": bay_cav,
+                         **({"crown_fairings": fair_rec} if fair_rec else {})}
 
     nominal_dec = v(p["default_decalage_deg"])
     if isinstance(cat["x_mm"], list):
@@ -529,6 +591,14 @@ def build(rev: str) -> dict:
     return {"rev": rev, "params": p, "cand": cand, "csha": csha, "body": body, "fans": fans, "rep": rep,
             "body_part": body_part, "paired": pr, "parts": parts, "props": props, "dry": cg, "z_catch": z_catch,
             "z_catch_iterations": z_hist, "slot": slot_geom, "outer": outer, "median": median}
+
+
+def src_label(g: dict) -> str:
+    """The source candidate's short name (v3a, v3c, ...), read from its id rather than written in."""
+    m = re.search(r"v3[a-z]", g["cand"]["id"])
+    if not m:
+        raise ValueError(f"cannot name the source candidate {g['cand']['id']!r}")
+    return m.group(0)
 
 
 def plug_id(x: float, off: float) -> str:
@@ -580,7 +650,9 @@ def ballast_table(g: dict) -> dict:
 
     rows = []
     M0, x0 = dry["mass_g"], dry["cg_mm"][0]
-    for xt in np.arange(v(p["cg_window_mm"])[0], v(p["cg_window_mm"])[1] + 1e-9, 1.0):
+    # the window on a 1 mm grid, plus the nominal target (already on the grid for r1-r4's 44-60 mm and 52 mm)
+    grid = np.arange(v(p["cg_window_mm"])[0], v(p["cg_window_mm"])[1] + 1e-9, 1.0)
+    for xt in sorted({*map(float, grid), float(v(p["nominal_cg_target_mm"]))}):
         if xt >= x0:
             rows.append({"cg_target_x_mm": float(xt), "ballast_g": 0.0, "feasible": False,
                          "note": "target is at or behind the dry CG; nose ballast cannot move the CG aft"})
@@ -670,19 +742,19 @@ def hand_np(g: dict) -> dict:
 
 
 # ------------------------------------------------------------------ wall check
-def wall_samples(V: np.ndarray, T: np.ndarray, rule_mm: float, n: int = 3000, seed: int = 7) -> dict:
-    """engineering.geometry.validate's inward-ray wall sampler (same sampling: area-weighted face centroids, seed 7),
-    with one addition: each ray's EXIT face normal is recorded, and a reading counts as a wall thickness only when
-    the exit face roughly opposes the entry face (normals' dot < -OPPOSED_DOT).  Otherwise the ray left through a
-    neighbouring face of an acute edge (a socket opening, the catch slot's mouth, a tapered slab's edge): the short
-    distance measures the corner, not a wall, and is reported separately as edge-limited, never dropped."""
+def _ray_mesh(V: np.ndarray, T: np.ndarray):
     m = mf.Manifold(mf.Mesh(vert_properties=V.astype(np.float32), tri_verts=T.astype(np.uint32)))
     tri = V[T]
     nrm = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
     area = 0.5 * np.linalg.norm(nrm, axis=1)
-    nrm = nrm / np.maximum(2 * area[:, None], 1e-30)
-    rng = np.random.default_rng(seed)
-    idx = rng.choice(len(T), size=min(n, int((area > 0).sum())), replace=False, p=area / area.sum())
+    return m, tri, nrm / np.maximum(2 * area[:, None], 1e-30), area
+
+
+def _inward_rays(m, tri, nrm, idx, wedge=False):
+    """One inward ray per face in idx from its centroid: (distance, centroid) split by the exit face's normal into
+    wall (exit opposes entry, dot < -OPPOSED_DOT) and edge-limited readings, plus the centroids with no exit hit.
+    With wedge=True each reading also carries the wedge angle between the entry and exit faces, 180 - the angle
+    between their outward normals (0 for parallel faces, i.e. a true wall; 45.6 deg at the OPPOSED_DOT cut)."""
     eps, far = 1e-3, 500.0
     wall, edge, nohit = [], [], []
     for r in idx:
@@ -695,7 +767,64 @@ def wall_samples(V: np.ndarray, T: np.ndarray, rule_mm: float, n: int = 3000, se
         d = hit.distance * far + eps
         hn = np.asarray(hit.normal, float)
         hn = hn / max(np.linalg.norm(hn), 1e-30)
-        (wall if float(hn @ nrm[r]) < -OPPOSED_DOT else edge).append((d, c.tolist()))
+        dot = float(hn @ nrm[r])
+        rec = (d, c.tolist(), 180.0 - math.degrees(math.acos(max(-1.0, min(1.0, dot))))) if wedge else \
+            (d, c.tolist())
+        (wall if dot < -OPPOSED_DOT else edge).append(rec)
+    return wall, edge, nohit
+
+
+def zone_walls(V: np.ndarray, T: np.ndarray, rule_mm: float, boxes: list, cap: int = 20000, seed: int = 11) -> dict:
+    """Dense check of a zone: one inward ray from EVERY face whose centroid lies in one of the boxes (an area-weighted
+    sample of `cap` if there are more).  The gate is the wall readings (entry/exit wedge under 45.6 deg, which
+    includes feather edges); every other reading is a corner blunter than that and is reported with its wedge angle,
+    its count under the rule and under 0.30 mm, and its location, never dropped."""
+    m, tri, nrm, area = _ray_mesh(V, T)
+    c = tri.mean(axis=1)
+    inz = np.zeros(len(T), bool)
+    for lo, hi in boxes:
+        inz |= np.all((c >= np.asarray(lo)) & (c <= np.asarray(hi)), axis=1)
+    faces = np.flatnonzero(inz & (area > 0))
+    idx = faces
+    if len(faces) > cap:
+        idx = np.random.default_rng(seed).choice(faces, size=cap, replace=False, p=area[faces] / area[faces].sum())
+    wall, edge, nohit = _inward_rays(m, tri, nrm, idx, wedge=True)
+
+    def rows(rs, kind):
+        return [{"mm": round(float(q[0]), 4), "at_mm": [round(x, 2) for x in q[1]], "wedge_deg": round(q[2], 1),
+                 "kind": kind} for q in sorted(rs, key=lambda q: q[0])[:20]]
+
+    wd, ed = np.array([q[0] for q in wall]), np.array([q[0] for q in edge])
+    alld = np.concatenate([wd, ed])
+    thin_edges = [q for q in edge if q[0] < rule_mm]
+    return {"method": "inward ray from the centroid of every face in the zone (manifold3d ray_cast); wall = entry "
+                      f"and exit faces opposed (dot < -{OPPOSED_DOT}, wedge < 45.6 deg, feather edges included)",
+            "zone_boxes_mm": [[list(map(float, lo)), list(map(float, hi))] for lo, hi in boxes],
+            "faces_in_zone": len(faces), "samples": len(idx), "every_face": bool(len(idx) == len(faces)),
+            "seed": seed if len(idx) < len(faces) else None, "no_hit": len(nohit),
+            "wall_readings": len(wd), "wall_min_mm": float(wd.min()) if len(wd) else None,
+            "wall_below_rule": int((wd < rule_mm).sum()), "wall_below_0_30_mm": int((wd < 0.30).sum()),
+            "thinnest_walls": rows(wall, "wall"),
+            "edge_limited_readings": len(ed), "edge_limited_min_mm": float(ed.min()) if len(ed) else None,
+            "edge_limited_below_rule": len(thin_edges), "edge_limited_below_0_30_mm": int((ed < 0.30).sum()),
+            "edge_limited_below_rule_min_wedge_deg": round(min(q[2] for q in thin_edges), 1) if thin_edges else None,
+            "thinnest_edges": rows(edge, "edge-limited"),
+            "all_readings_below_rule": int((alld < rule_mm).sum()),
+            "all_readings_below_0_30_mm": int((alld < 0.30).sum()),
+            "rule_mm": rule_mm, "ok": bool(len(wd) and wd.min() >= rule_mm and not nohit),
+            "scope": "face centroids only; a thinner spot between centroids can still be missed"}
+
+
+def wall_samples(V: np.ndarray, T: np.ndarray, rule_mm: float, n: int = 3000, seed: int = 7) -> dict:
+    """engineering.geometry.validate's inward-ray wall sampler (same sampling: area-weighted face centroids, seed 7),
+    with one addition: each ray's EXIT face normal is recorded, and a reading counts as a wall thickness only when
+    the exit face roughly opposes the entry face (normals' dot < -OPPOSED_DOT).  Otherwise the ray left through a
+    neighbouring face of an acute edge (a socket opening, the catch slot's mouth, a tapered slab's edge): the short
+    distance measures the corner, not a wall, and is reported separately as edge-limited, never dropped."""
+    m, tri, nrm, area = _ray_mesh(V, T)
+    rng = np.random.default_rng(seed)
+    idx = rng.choice(len(T), size=min(n, int((area > 0).sum())), replace=False, p=area / area.sum())
+    wall, edge, nohit = _inward_rays(m, tri, nrm, idx)
     wd = np.array([w[0] for w in wall])
     thin_edge = sorted((e for e in edge if e[0] < rule_mm), key=lambda q: q[0])
     return {"method": "inward ray from area-weighted face centroids (manifold3d ray_cast); a reading is a wall "
@@ -754,8 +883,16 @@ def build_rev(rev: str, out_root: Path, render: bool) -> dict:
         return rec
 
     I4 = np.eye(4)
-    emit("body", g["body_part"], g["body_part"], "shell", I4,
-         {"note": "hollow shell with integral dorsal, anal and caudal fins, ballast bay, catch slot, sockets"})
+    body_extra = {"note": "hollow shell with integral dorsal, anal and caudal fins, ballast bay, catch slot, sockets"}
+    if "catch_zone_wall_check" in p:
+        zc, c = v(p["catch_zone_wall_check"]), g["catch"]
+        R = c["radius_mm"] + v(p["catch"])["liner_mm"]
+        boxes = [((x - R - zc["half_length_x_mm"], -100.0, c["z_top_mm"] - R - zc["below_seat_mm"]),
+                  (x + R + zc["half_length_x_mm"], 100.0, 100.0)) for x in v(p["catch"])["x_mm"]]
+        Vb, Tb = arrays(g["body_part"])
+        cz = zone_walls(Vb, Tb, rule, boxes, zc["cap"], zc["seed"])
+        body_extra |= {"catch_zone_wall": cz, "catch_zone_wall_ok": cz["ok"]}
+    emit("body", g["body_part"], g["body_part"], "shell", I4, body_extra)
     nominal = v(p["pectoral_incidence_deg"]) - v(p["default_decalage_deg"])
     for which in PAIRED:
         pr = g["paired"][which]
@@ -836,7 +973,7 @@ def build_rev(rev: str, out_root: Path, render: bool) -> dict:
         "ballast": ballast, "hand_neutral_point": aero, "trim_speed_hand": trim, "launch_catch": hook,
         "ground_contact_points_mm": contacts,
         "biological_constraints": {
-            "kept": "v3a outline, ray count, ray roots, angles and lengths, fin positions and dihedral",
+            "kept": f"{src_label(g)} outline, ray count, ray roots, angles and lengths, fin positions and dihedral",
             "altered": ["fin thickness: membrane, root doubler, spar, ridges (manufacturing)",
                         "branched rays printed as one straight ridge each", "removable paired fins with root tongues",
                         "paired-fin root edges trimmed to the body contour with a gap",
@@ -870,7 +1007,7 @@ def catch_record(g: dict, dry: dict, target: float) -> dict:
               "ahead_of_nominal_target_mm": target - st["seat_mm"][0]} for st in c["seats"]]
     return {"adjustable": True, "design_cg_z_mm": g["z_catch"], "slot_top_z_mm": c["z_top_mm"],
             "contact_radius_mm": c["radius_mm"] - cat["plug_clearance_mm"], "seats": seats,
-            "nominal": cat["nominal"],
+            "nominal": cat["nominal"], **({"crown_fairings": c["crown_fairings"]} if "crown_fairings" in c else {}),
             "slot": {"width_mm": cat["slot_mm"], "rake_deg_from_vertical": cat["rake_deg"], "x_positions_mm": cat["x_mm"],
                      "mouth": "aft and below the seat", "across": "full body width (band loop lies across the body)"},
             "liner_wall_mm": cat["liner_mm"],
@@ -952,7 +1089,7 @@ def flight_model(g, manifest, by_id, nominal_ids, dry, ballast) -> dict:
                         "step_kg": 0.0005, "fill_model": ballast["fill_model"], "rows": ballast["rows"]},
             "assembled_dry": {"mass_kg": dry["mass_kg"], "cg_m": dry["cg_m"], "inertia_cg_kg_m2": dry["inertia_cg_kg_m2"]},
             "lifting_surfaces": surf,
-            "body": {"outer_stl": "not separately written; the shell STL's outer surface is the v3a loft",
+            "body": {"outer_stl": f"not separately written; the shell STL's outer surface is the {src_label(g)} loft",
                      "enclosed_volume_m3": g["outer"].volume() * 1e-9,
                      "wetted_area_m2": float(MP_area(Vo, To) * 1e-6),
                      "max_depth_m": float((Vo[:, 2].max() - Vo[:, 2].min()) * 1e-3),

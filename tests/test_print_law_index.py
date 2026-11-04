@@ -145,7 +145,7 @@ def test_no_law_is_related_to_a_file_without_an_evidence_record(idx):
 
 
 def test_failed_thresholds_stay_failed_and_no_launch_is_cleared(idx):
-    assert len(idx["assemblies"]) == 5
+    assert len(idx["assemblies"]) == 6                          # r1-strong, r1-light, r2, r3, r4, r5
     for a in idx["assemblies"]:
         b = {x["id"]: x for x in a["budgets"]}
         assert b["legacy_threshold_10_5g"]["value_g"] == 10.5
@@ -215,3 +215,22 @@ def test_print_v4_rows_carry_the_new_manufacturing_checks(idx):
         assert rels["euler_bernoulli_fin_root"] == ("inspired_only" if reinforced else "not_applicable")
     older = [f for f in idx["files"] if f["family"] in ("print-v1", "print-v2", "print-v3") and f["kind"] != "glb_view"]
     assert all({c["id"]: c["status"] for c in f["checks"]}["extremity_stoutness"] == "unknown" for f in older)
+
+
+def test_r5_catch_zone_wall_is_recomputed_from_the_bytes_and_r4_stays_thin(idx):
+    """r5's catch-zone gate is recomputed from body.stl in the index and must pass; r4's finding stays unresolved."""
+    body = {f["revision"]: f for f in idx["files"] if f["kind"] == "stl_part" and f["part_id"] == "body"}
+    st = {c["id"]: c for c in body["r5-daane-catchfair"]["checks"]}
+    assert st["catch_zone_wall_dense"]["status"] == "pass"
+    assert "matches the builder record: True" in st["catch_zone_wall_dense"]["detail"]
+    assert all("catch_zone_wall_dense" not in {c["id"] for c in body[r]["checks"]} for r in FROZEN_AT)
+    assert {c["id"]: c["status"] for c in body["r4-daane-printfix"]["checks"]}["min_wall_sampled"] == "fail"
+    f = {x["id"]: x for x in idx["findings"]}["body_thin_wall_near_forward_catch_slot"]
+    assert f["status"] == "unresolved" and "r5-daane-catchfair" not in " ".join(f["applies_to"])
+    a = {x["revision"]: x for x in idx["assemblies"]}["r5-daane-catchfair"]
+    assert a["ballasted"]["target_cg_x_mm"] == 52.4 and a["cg_window"]["window_mm"] == [49.5, 55.2]
+
+
+def test_introduced_in_commit_is_a_full_hash_or_null(idx):
+    """%h grows with the clone's object count (7 -> 8 characters here), which made the index clone-dependent."""
+    assert all(f["introduced_in_commit"] is None or len(f["introduced_in_commit"]) == 40 for f in idx["files"])

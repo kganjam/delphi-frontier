@@ -249,3 +249,64 @@ def test_open_review_findings_name_real_revisions_and_stay_unresolved_until_a_ne
     f = json.loads((OUT / "REVIEW_FINDINGS.json").read_text())["findings"]
     assert f and all(set(x["revisions"]) <= set(REVS) for x in f)
     assert all(x["status"] in {"unresolved", "resolved"} for x in f)
+
+
+# ---------------------------------------------------------------- catch-zone wall (r5 on)
+ZONED = [r for r in REVS if any("catch_zone_wall" in p for p in manifest(r)["parts"])]
+
+
+def zone_boxes(m: dict) -> list:
+    """The r5 catch zone rebuilt from the manifest alone: each slot x +/- (liner radius + 3), z >= top seat - radius."""
+    h, cat = m["launch_catch"], m["parameters"]["catch"]["value"]
+    R = 0.5 * cat["slot_mm"] + cat["liner_mm"]
+    return [((x - R - 3.0, -100.0, h["slot_top_z_mm"] - R), (x + R + 3.0, 100.0, 100.0)) for x in cat["x_mm"]]
+
+
+@pytest.mark.parametrize("rev", ZONED)
+def test_catch_zone_has_no_wall_below_the_rule_and_the_record_is_the_bytes(rev):
+    m = manifest(rev)
+    body = next(p for p in m["parts"] if p["id"] == "body")
+    rec = body["catch_zone_wall"]
+    assert rec["zone_boxes_mm"] == [[list(lo), list(hi)] for lo, hi in zone_boxes(m)]
+    V, T = stl_mesh(rev, body["stl"])
+    z = G.zone_walls(V, T, rec["rule_mm"], rec["zone_boxes_mm"])
+    assert z["every_face"] and z["faces_in_zone"] == rec["faces_in_zone"] > 1000
+    assert z["wall_below_rule"] == 0 and z["wall_min_mm"] >= 0.45 and z["no_hit"] == 0 and z["ok"]
+    assert z["wall_min_mm"] == pytest.approx(rec["wall_min_mm"], abs=1e-9)
+    # corners are reported, not hidden: every sub-rule corner is blunter than the feather-edge cut
+    assert z["edge_limited_below_rule"] == rec["edge_limited_below_rule"]
+    assert all(q["wedge_deg"] >= 45.6 for q in z["thinnest_edges"])
+    assert body["catch_zone_wall_ok"] is True
+    for fr in m["launch_catch"]["crown_fairings"]:
+        assert fr["proud_volume_mm3"] > 0 and fr["outer_radius_mm"] == pytest.approx(
+            0.5 * m["parameters"]["catch"]["value"]["slot_mm"] + m["parameters"]["catch"]["value"]["liner_mm"])
+
+
+def test_catch_zone_check_flags_the_r4_crown_feather_edge():
+    """Positive control: the same check on the frozen r4 body finds the wall claude-13 measured (21 readings below
+    0.45 mm, 17 below 0.30 mm, minimum 0.097 mm at the x 20 slot crown, a ~36 deg feather edge)."""
+    m = manifest("r4-daane-printfix")
+    V, T = stl_mesh("r4-daane-printfix", "stl/body.stl")
+    z = G.zone_walls(V, T, 0.45, zone_boxes(m))
+    assert not z["ok"] and z["wall_below_rule"] == 21 and z["wall_below_0_30_mm"] == 17
+    worst = z["thinnest_walls"][0]
+    assert worst["mm"] == pytest.approx(0.0965, abs=5e-4) and worst["wedge_deg"] < 45.6
+    assert 18.8 <= worst["at_mm"][0] <= 20.3 and 5.5 <= abs(worst["at_mm"][1]) <= 6.5
+
+
+@pytest.mark.parametrize("rev", ZONED)
+def test_r5_changes_only_the_body_and_plugs(rev):
+    """The fins are mesh-identical to the parent's (bytes after the 80-byte header); the body and plugs changed."""
+    parent = G.REVISIONS[rev]["parent"]
+    for p in manifest(rev)["parts"]:
+        old = OUT / parent / p["stl"]
+        same = (OUT / rev / p["stl"]).read_bytes()[80:] == old.read_bytes()[80:]
+        assert same == (p["kind"] == "fin"), p["id"]
+
+
+@pytest.mark.parametrize("rev", ZONED)
+def test_provenance_strings_name_the_source_candidate(rev):
+    m = manifest(rev)
+    assert m["biological_constraints"]["kept"].startswith("v3c") and "v3c" in m["source_candidate"]["id"]
+    assert m["parameters"]["cg_window_mm"]["value"] == [49.5, 55.2]
+    assert 52.4 in [r["cg_target_x_mm"] for r in m["ballast"]["rows"]]

@@ -6,9 +6,10 @@
    "engineering/print_law_index.py",
    "engineering/glider/mass.py",
    "engineering/geometry/validate.py",
-   "engineering/fishprop/build.py"
+   "engineering/fishprop/build.py",
+   "engineering/glider/build.py"
   ],
-  "code_sha256": "c838486cd9b21eada9b7d4cbe37495989a4b6dd2e43a5174dc6fe9280435abba"
+  "code_sha256": "720f262b9d228a3a02e680de0848a253c903e14c3894306f13ebe32c6134a263"
  },
  "grounding_note": "A law listed for a file says how the file relates to it (governing, checked, inspired_only, not_applicable); it is not evidence that the printed shape satisfies the law. Masses are calculated from mesh volume times a card density and were not weighed. No part has been printed, weighed, glided or thrown; no launch is cleared; the lift, drag, stability, beam and catch numbers are hand models or simulated scenarios with assumed coefficients (C_L in particular depends on geometry and flow and generally comes from experiment). Failed thresholds are reported as failed. Frozen revisions are read, never edited; inconsistencies in their prose are listed under findings, not corrected.",
  "vocabulary": {
@@ -833,7 +834,7 @@
    "bytes": 4264084,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -987,7 +988,7 @@
    "bytes": 883184,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -1152,7 +1153,7 @@
    "bytes": 883184,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -1333,7 +1334,7 @@
    "bytes": 301784,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -1497,7 +1498,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -1661,7 +1662,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -1826,7 +1827,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -1990,7 +1991,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -2154,7 +2155,7 @@
    "bytes": 301684,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -2318,7 +2319,7 @@
    "bytes": 301784,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -2498,7 +2499,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -2678,7 +2679,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -2859,7 +2860,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -3039,7 +3040,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -3219,7 +3220,7 @@
    "bytes": 301684,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -3399,7 +3400,7 @@
    "bytes": 2391220,
    "family": "glider",
    "revision": "r1-light",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -3450,7 +3451,7 @@
    "bytes": 4265584,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -3604,7 +3605,7 @@
    "bytes": 883184,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -3769,7 +3770,7 @@
    "bytes": 883184,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -3950,7 +3951,7 @@
    "bytes": 301784,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -4114,7 +4115,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -4278,7 +4279,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -4443,7 +4444,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -4607,7 +4608,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -4771,7 +4772,7 @@
    "bytes": 301684,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -4935,7 +4936,7 @@
    "bytes": 301784,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -5115,7 +5116,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -5295,7 +5296,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -5476,7 +5477,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -5656,7 +5657,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -5836,7 +5837,7 @@
    "bytes": 301684,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -6016,7 +6017,7 @@
    "bytes": 2391760,
    "family": "glider",
    "revision": "r1-strong",
-   "introduced_in_commit": "19f4546",
+   "introduced_in_commit": "19f4546387ba3f086de8ef7afe53c5b9da95941a",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -6067,7 +6068,7 @@
    "bytes": 3666084,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -6221,7 +6222,7 @@
    "bytes": 17684,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -6374,7 +6375,7 @@
    "bytes": 14884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -6526,7 +6527,7 @@
    "bytes": 19884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -6678,7 +6679,7 @@
    "bytes": 15284,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -6830,7 +6831,7 @@
    "bytes": 13684,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -6982,7 +6983,7 @@
    "bytes": 17084,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -7134,7 +7135,7 @@
    "bytes": 883184,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -7299,7 +7300,7 @@
    "bytes": 883184,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -7480,7 +7481,7 @@
    "bytes": 301784,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -7644,7 +7645,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -7808,7 +7809,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -7973,7 +7974,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -8137,7 +8138,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -8301,7 +8302,7 @@
    "bytes": 301684,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -8465,7 +8466,7 @@
    "bytes": 301784,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -8645,7 +8646,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -8825,7 +8826,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -9006,7 +9007,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -9186,7 +9187,7 @@
    "bytes": 301884,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -9366,7 +9367,7 @@
    "bytes": 301684,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -9546,7 +9547,7 @@
    "bytes": 2182848,
    "family": "glider",
    "revision": "r2-light",
-   "introduced_in_commit": "1fac368",
+   "introduced_in_commit": "1fac3689af641b5a6a5cbe8440ce32eb894bb7d3",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -9597,7 +9598,7 @@
    "bytes": 3674984,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -9751,7 +9752,7 @@
    "bytes": 19084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -9904,7 +9905,7 @@
    "bytes": 16284,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -10056,7 +10057,7 @@
    "bytes": 21284,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -10208,7 +10209,7 @@
    "bytes": 15684,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -10360,7 +10361,7 @@
    "bytes": 13684,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -10512,7 +10513,7 @@
    "bytes": 17084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -10664,7 +10665,7 @@
    "bytes": 1171584,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -10829,7 +10830,7 @@
    "bytes": 1171584,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -11010,7 +11011,7 @@
    "bytes": 298984,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -11174,7 +11175,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -11338,7 +11339,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -11503,7 +11504,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -11667,7 +11668,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -11831,7 +11832,7 @@
    "bytes": 298984,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -11995,7 +11996,7 @@
    "bytes": 298984,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -12175,7 +12176,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -12355,7 +12356,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -12536,7 +12537,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -12716,7 +12717,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -12896,7 +12897,7 @@
    "bytes": 298984,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": "holds the LEFT part's vertices (export defect, KNOWN_DEFECTS.json); printing it gives a second left fin; use r4-daane-printfix",
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -13076,7 +13077,7 @@
    "bytes": 2392196,
    "family": "glider",
    "revision": "r3-daane",
-   "introduced_in_commit": "361480f",
+   "introduced_in_commit": "361480fee502864a4438e367c0adaaac921e9e4b",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -13127,7 +13128,7 @@
    "bytes": 3674984,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -13281,7 +13282,7 @@
    "bytes": 19084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -13434,7 +13435,7 @@
    "bytes": 16284,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -13586,7 +13587,7 @@
    "bytes": 21284,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -13738,7 +13739,7 @@
    "bytes": 15684,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -13890,7 +13891,7 @@
    "bytes": 13684,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -14042,7 +14043,7 @@
    "bytes": 17084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -14194,7 +14195,7 @@
    "bytes": 1171584,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -14359,7 +14360,7 @@
    "bytes": 1171584,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -14535,7 +14536,7 @@
    "bytes": 298984,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -14699,7 +14700,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -14863,7 +14864,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -15028,7 +15029,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -15192,7 +15193,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -15356,7 +15357,7 @@
    "bytes": 298984,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -15520,7 +15521,7 @@
    "bytes": 298984,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -15695,7 +15696,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -15870,7 +15871,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -16046,7 +16047,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -16221,7 +16222,7 @@
    "bytes": 299084,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -16396,7 +16397,7 @@
    "bytes": 298984,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -16571,7 +16572,7 @@
    "bytes": 2392196,
    "family": "glider",
    "revision": "r4-daane-printfix",
-   "introduced_in_commit": "bd2fcf3",
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822",
    "withdrawn": null,
    "material": {
     "id": "alpha-grey-v1-default-post-cure",
@@ -16680,7 +16681,3573 @@
     }
    ],
    "withdrawn": null,
-   "introduced_in_commit": "bd2fcf3"
+   "introduced_in_commit": "bd2fcf31ca469b7063db0b86815fb568003dd822"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/body.stl",
+   "sha256": "d137c83fa34e5277e439ccd5c4c8176d820f867d870e2af308fe2e808d1e9871",
+   "bytes": 3696884,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "body",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 10596.681 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 12.927951 g vs manifest 12.927951 g (relative difference 0.0e+00); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [191.11, 27.12, 52.2] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.486 mm against 0.45 mm, 3000 samples; 3 edge-limited reading(s) below the rule, min 0.185 mm at [[8.99, 1.55, -4.73], [30.76, 3.46, 5.27], [23.89, -9.71, -3.47]]; reported, not gated"
+    },
+    {
+     "id": "catch_zone_wall_dense",
+     "status": "pass",
+     "detail": "recomputed from these bytes: 5501 of 5501 faces in the catch zone (every face: True); wall readings 4822, minimum 0.498 mm, 0 below 0.45 mm; corner (edge-limited) readings below the rule 19, wedge >= 77.0 deg, reported, not gated; matches the builder record: True"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "governing",
+     "detail": "part of the nominal assembly"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "assembly_moment_balance"
+   ],
+   "mass_g": 12.927950697,
+   "volume_mm3": 10596.680899,
+   "cg_mm_print_pose": [
+    62.7662,
+    -0.0006,
+    1.7376
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/catch_plug-x20-dz+0.0.stl",
+   "sha256": "72d946b5c69974204dde714876d8416633af8721bf34264f1a18d5942f9ade5f",
+   "bytes": 19084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "catch_plug-x20-dz+0.0",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 348.307 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.424934 g vs manifest 0.424934 g (relative difference 0.0e+00); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [5.03, 20.88, 6.3] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 3.285 mm against 0.45 mm, 380 samples; 9 edge-limited reading(s) below the rule, min 0.105 mm at [[22.81, 10.43, 2.95], [22.67, -10.43, 2.83], [22.67, 10.43, 2.83], [22.74, 10.43, 2.89], [22.74, -10.43, 2.89], [22.57, 10.42, 2.77], [22.57, -10.42, 2.77], [22.37, 10.41, 2.69], [22.16, 10.38, 2.65]]; reported, not gated"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "not_applicable",
+     "detail": "a catch plug has no biological counterpart"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "governing",
+     "detail": "part of the nominal assembly"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "assembly_moment_balance"
+   ],
+   "mass_g": 0.424934084,
+   "volume_mm3": 348.306626,
+   "cg_mm_print_pose": [
+    20.972,
+    -0.0,
+    5.4375
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/catch_plug-x20-dz+1.5.stl",
+   "sha256": "3272b463c3920aac6f1d5aec1a8e5ea6faa1362ee2769d18eb45b649d48c8452",
+   "bytes": 16284,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "catch_plug-x20-dz+1.5",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 234.352 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.285909 g vs manifest 0.285909 g (relative difference 0.0e+00); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [4.17, 19.62, 4.8] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 3.285 mm against 0.45 mm, 324 samples; 15 edge-limited reading(s) below the rule, min 0.137 mm at [[21.64, 9.79, 4.26], [21.3, 9.77, 4.11], [21.3, -9.77, 4.11], [21.4, -9.78, 4.14], [21.4, 9.78, 4.14], [21.54, -9.79, 4.21], [21.54, 9.79, 4.21], [21.72, 9.77, 4.33], [21.14, 9.75, 4.08], [21.14, -9.75, 4.08], [20.92, -9.71, 4.08], [20.92, 9.71, 4.08], [21.87, 9.74, 4.48], [20.71, 9.65, 4.13], [20.71, -9.65, 4.13]]; reported, not gated"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "not_applicable",
+     "detail": "a catch plug has no biological counterpart"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit"
+   ],
+   "mass_g": 0.285908872,
+   "volume_mm3": 234.351534,
+   "cg_mm_print_pose": [
+    20.4962,
+    0.0,
+    6.2538
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/catch_plug-x20-dz-1.5.stl",
+   "sha256": "158e0c61c8021bd7d2bc9c6655d9e33ad60e5571f29532eb24516e1c09d67785",
+   "bytes": 21284,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "catch_plug-x20-dz-1.5",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 468.643 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.571745 g vs manifest 0.571745 g (relative difference 0.0e+00); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [5.9, 21.74, 7.8] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 3.285 mm against 0.45 mm, 424 samples; 8 edge-limited reading(s) below the rule, min 0.265 mm at [[24.15, -10.8, 2.28], [24.15, 10.8, 2.28], [24.11, 10.82, 2.17], [24.11, -10.82, 2.17], [24.06, -10.83, 2.03], [24.06, 10.83, 2.03], [24.16, -10.78, 2.4], [24.16, 10.78, 2.4]]; reported, not gated"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "not_applicable",
+     "detail": "a catch plug has no biological counterpart"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit"
+   ],
+   "mass_g": 0.571744706,
+   "volume_mm3": 468.643202,
+   "cg_mm_print_pose": [
+    21.4461,
+    0.0,
+    4.6233
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/catch_plug-x34-dz+0.0.stl",
+   "sha256": "03374206cb19493c556c2cd7e788540e70b31290f8c9c8e9b454116cb0c7e9cb",
+   "bytes": 15884,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "catch_plug-x34-dz+0.0",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 437.277 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.533478 g vs manifest 0.533478 g (relative difference 0.0e+00); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [5.03, 24.48, 6.3] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 3.286 mm against 0.45 mm, 316 samples; 19 edge-limited reading(s) below the rule, min 0.020 mm at [[37.37, 11.92, 4.21], [37.37, -11.92, 4.21], [37.37, -11.91, 4.26], [37.37, 11.91, 4.26], [35.5, -12.18, 2.52], [35.5, 12.18, 2.52], [35.93, -12.22, 2.52], [35.93, 12.22, 2.52], [36.04, 12.23, 2.53], [36.04, -12.23, 2.53], [36.08, -12.23, 2.54], [36.08, 12.23, 2.54], [37.37, -11.95, 4.13], [37.37, 11.95, 4.13], [36.64, 12.23, 2.79], [36.48, 12.23, 2.72], [35.7, 12.2, 2.53], [35.7, -12.2, 2.53], [36.72, 12.21, 2.92]]; reported, not gated"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "not_applicable",
+     "detail": "a catch plug has no biological counterpart"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit"
+   ],
+   "mass_g": 0.533477715,
+   "volume_mm3": 437.276816,
+   "cg_mm_print_pose": [
+    34.9235,
+    -0.0,
+    5.5201
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/catch_plug-x34-dz+1.5.stl",
+   "sha256": "b25e9e3fab909ef59bb29cc6481e53b055fe1fd5e0ffdb1b805e08e845eb1910",
+   "bytes": 13684,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "catch_plug-x34-dz+1.5",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 301.534 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.367872 g vs manifest 0.367872 g (relative difference 0.0e+00); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [4.17, 23.56, 4.8] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 3.286 mm against 0.45 mm, 272 samples; 22 edge-limited reading(s) below the rule, min 0.200 mm at [[34.75, -11.73, 4.06], [34.75, 11.73, 4.06], [34.65, -11.71, 4.07], [34.65, 11.71, 4.07], [34.92, 11.74, 4.06], [34.92, -11.74, 4.06], [34.49, 11.69, 4.1], [34.49, -11.69, 4.1], [34.37, 11.66, 4.14], [34.37, -11.66, 4.14], [34.27, -11.63, 4.2], [35.13, -11.75, 4.1], [35.13, 11.75, 4.1], [35.28, -11.75, 4.16], [35.28, 11.75, 4.16], [36.03, 11.64, 4.65], [36.1, -11.62, 4.74], [36.1, 11.62, 4.74], [35.95, 11.66, 4.58], [34.12, -11.58, 4.3]]; reported, not gated"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "not_applicable",
+     "detail": "a catch plug has no biological counterpart"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit"
+   ],
+   "mass_g": 0.367871953,
+   "volume_mm3": 301.534388,
+   "cg_mm_print_pose": [
+    34.4639,
+    -0.0,
+    6.3116
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/catch_plug-x34-dz-1.5.stl",
+   "sha256": "a9544a0f475e545146ec74afae50365570f9c76e433de63b0540051488bdeb2e",
+   "bytes": 17084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "catch_plug-x34-dz-1.5",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 577.791 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.704905 g vs manifest 0.704905 g (relative difference 0.0e+00); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [5.9, 25.05, 7.8] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 3.286 mm against 0.45 mm, 340 samples; 1 edge-limited reading(s) below the rule, min 0.004 mm at [[37.9, -12.52, 1.64]]; reported, not gated"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "not_applicable",
+     "detail": "a catch plug has no biological counterpart"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit"
+   ],
+   "mass_g": 0.704905142,
+   "volume_mm3": 577.7911,
+   "cg_mm_print_pose": [
+    35.3828,
+    -0.0,
+    4.7291
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pectoral_L.stl",
+   "sha256": "90111be6a9f1ea7008c947a1620c8df06d9db2224b8a985dbca0361c4e82365d",
+   "bytes": 1171584,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pectoral_L",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 2458.311 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 2.999140 g vs manifest 2.999140 g (relative difference 9.4e-08); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [109.48, 46.02, 2.92] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "pass",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; no gated or edge-limited reading below the rule"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "governing",
+     "detail": "part of the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "assembly_moment_balance",
+    "euler_bernoulli_fin_root"
+   ],
+   "mass_g": 2.999139997,
+   "volume_mm3": 2458.311473,
+   "cg_mm_print_pose": [
+    45.1704,
+    19.6459,
+    0.1483
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pectoral_R.stl",
+   "sha256": "7b81ccdd3c47c27741f2ad243ea7e4c9e1bfed3bc281bdd5bd6972982ddb2297",
+   "bytes": 1171584,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pectoral_R",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 2458.311 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 2.999140 g vs manifest 2.999140 g (relative difference 9.4e-08); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [109.48, 46.02, 2.92] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "pass",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; no gated or edge-limited reading below the rule"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    },
+    {
+     "id": "chirality_mirror_pair",
+     "status": "pass",
+     "detail": "recomputed: vertex set identical to the _L file False; equal to the _L file mirrored in z True; print-to-fish det +1"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "governing",
+     "detail": "part of the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "chirality_mirror_pair",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "assembly_moment_balance",
+    "euler_bernoulli_fin_root",
+    "chirality_mirror_pair"
+   ],
+   "mass_g": 2.999139997,
+   "volume_mm3": 2458.311473,
+   "cg_mm_print_pose": [
+    45.1704,
+    19.6459,
+    -0.1483
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_L-dec+0.stl",
+   "sha256": "0234b2189db8740796094b71b36e2311fa38da2f92da9b4f8dc1368085e0ffa7",
+   "bytes": 298984,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_L-dec+0",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.507 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691139 g vs manifest 0.691139 g (relative difference 2.0e-07); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.65, 2.21] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; 1 edge-limited reading(s) below the rule, min 0.376 mm at [[2.72, 4.66, 0.72]]; reported, not gated"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root"
+   ],
+   "mass_g": 0.69113874,
+   "volume_mm3": 566.507164,
+   "cg_mm_print_pose": [
+    23.0103,
+    12.8084,
+    0.1101
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_L-dec+1.stl",
+   "sha256": "2bca9bc1aee65f90c213ce52ab9c85c917262654226704c785a516f3a3a7d306",
+   "bytes": 299084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_L-dec+1",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.511 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691144 g vs manifest 0.691144 g (relative difference 1.9e-07); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.63, 2.1] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; 1 edge-limited reading(s) below the rule, min 0.376 mm at [[2.72, 4.65, -0.71]]; reported, not gated"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root"
+   ],
+   "mass_g": 0.691143682,
+   "volume_mm3": 566.511215,
+   "cg_mm_print_pose": [
+    23.0102,
+    12.8083,
+    0.1101
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_L-dec+2.stl",
+   "sha256": "4aa3d4492a65852451425fc7eff4d23b3adcea21303a625d720c6f8b37efee62",
+   "bytes": 299084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_L-dec+2",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.514 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691148 g vs manifest 0.691147 g (relative difference 3.2e-07); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.62, 2.03] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; 1 edge-limited reading(s) below the rule, min 0.376 mm at [[2.72, 4.65, 0.71]]; reported, not gated"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "governing",
+     "detail": "part of the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "assembly_moment_balance",
+    "euler_bernoulli_fin_root"
+   ],
+   "mass_g": 0.691147536,
+   "volume_mm3": 566.514374,
+   "cg_mm_print_pose": [
+    23.0101,
+    12.8083,
+    0.1101
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_L-dec+3.stl",
+   "sha256": "a87bb954a3b65052fc1e50582c5d43d6095f3e47c6de911c1032de3b8eca9e36",
+   "bytes": 299084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_L-dec+3",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.515 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691149 g vs manifest 0.691149 g (relative difference 8.7e-08); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.63, 2.1] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; 1 edge-limited reading(s) below the rule, min 0.376 mm at [[2.72, 4.65, 0.71]]; reported, not gated"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root"
+   ],
+   "mass_g": 0.691148781,
+   "volume_mm3": 566.515394,
+   "cg_mm_print_pose": [
+    23.01,
+    12.8082,
+    0.1102
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_L-dec+4.stl",
+   "sha256": "23b83dc623c70fceb69050054da99f2399f1794524a95d3c146fedea0e4a44ab",
+   "bytes": 299084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_L-dec+4",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.515 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691149 g vs manifest 0.691148 g (relative difference 6.0e-07); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.65, 2.21] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "pass",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; no gated or edge-limited reading below the rule"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root"
+   ],
+   "mass_g": 0.691148909,
+   "volume_mm3": 566.515499,
+   "cg_mm_print_pose": [
+    23.01,
+    12.8082,
+    0.1102
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_L-dec-1.stl",
+   "sha256": "ee48497b758ee553a986e996851f4bf78851798ddd5360bc60d6d0f1ffd60563",
+   "bytes": 298984,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_L-dec-1",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.501 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691132 g vs manifest 0.691132 g (relative difference 5.3e-08); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.66, 2.31] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "pass",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; no gated or edge-limited reading below the rule"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root"
+   ],
+   "mass_g": 0.691131675,
+   "volume_mm3": 566.501373,
+   "cg_mm_print_pose": [
+    23.0105,
+    12.8085,
+    0.1101
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_R-dec+0.stl",
+   "sha256": "758a2738e176e6f5b84e56bf528c7a6c9388f48314d9fbec54ce39ded9656b37",
+   "bytes": 298984,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_R-dec+0",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.507 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691139 g vs manifest 0.691139 g (relative difference 2.0e-07); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.65, 2.21] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; 1 edge-limited reading(s) below the rule, min 0.376 mm at [[2.72, 4.66, -0.72]]; reported, not gated"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    },
+    {
+     "id": "chirality_mirror_pair",
+     "status": "pass",
+     "detail": "recomputed: vertex set identical to the _L file False; equal to the _L file mirrored in z True; print-to-fish det +1"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "chirality_mirror_pair",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root",
+    "chirality_mirror_pair"
+   ],
+   "mass_g": 0.69113874,
+   "volume_mm3": 566.507164,
+   "cg_mm_print_pose": [
+    23.0103,
+    12.8084,
+    -0.1101
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_R-dec+1.stl",
+   "sha256": "1618e5553adb2fd88a8984776be80c2e239b9140d339f0289f22361a445f77fa",
+   "bytes": 299084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_R-dec+1",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.511 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691144 g vs manifest 0.691144 g (relative difference 1.9e-07); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.63, 2.1] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; 1 edge-limited reading(s) below the rule, min 0.376 mm at [[2.72, 4.65, 0.71]]; reported, not gated"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    },
+    {
+     "id": "chirality_mirror_pair",
+     "status": "pass",
+     "detail": "recomputed: vertex set identical to the _L file False; equal to the _L file mirrored in z True; print-to-fish det +1"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "chirality_mirror_pair",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root",
+    "chirality_mirror_pair"
+   ],
+   "mass_g": 0.691143682,
+   "volume_mm3": 566.511215,
+   "cg_mm_print_pose": [
+    23.0102,
+    12.8083,
+    -0.1101
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_R-dec+2.stl",
+   "sha256": "c57593e356915bc9d02025a34f431aa5a1f6932fee04b5e5bcfc24200e12250f",
+   "bytes": 299084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_R-dec+2",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.514 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691148 g vs manifest 0.691147 g (relative difference 3.2e-07); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.62, 2.03] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; 1 edge-limited reading(s) below the rule, min 0.376 mm at [[2.72, 4.65, -0.71]]; reported, not gated"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    },
+    {
+     "id": "chirality_mirror_pair",
+     "status": "pass",
+     "detail": "recomputed: vertex set identical to the _L file False; equal to the _L file mirrored in z True; print-to-fish det +1"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "governing",
+     "detail": "part of the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "chirality_mirror_pair",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "assembly_moment_balance",
+    "euler_bernoulli_fin_root",
+    "chirality_mirror_pair"
+   ],
+   "mass_g": 0.691147536,
+   "volume_mm3": 566.514374,
+   "cg_mm_print_pose": [
+    23.0101,
+    12.8083,
+    -0.1101
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_R-dec+3.stl",
+   "sha256": "99a60a2a95eab887379032c61a11a3e03ed2755641b412e6c929a4efee0b06ad",
+   "bytes": 299084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_R-dec+3",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.515 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691149 g vs manifest 0.691149 g (relative difference 8.7e-08); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.63, 2.1] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "unresolved",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; 1 edge-limited reading(s) below the rule, min 0.376 mm at [[2.72, 4.65, -0.71]]; reported, not gated"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    },
+    {
+     "id": "chirality_mirror_pair",
+     "status": "pass",
+     "detail": "recomputed: vertex set identical to the _L file False; equal to the _L file mirrored in z True; print-to-fish det +1"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "chirality_mirror_pair",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root",
+    "chirality_mirror_pair"
+   ],
+   "mass_g": 0.691148781,
+   "volume_mm3": 566.515394,
+   "cg_mm_print_pose": [
+    23.01,
+    12.8082,
+    -0.1102
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_R-dec+4.stl",
+   "sha256": "257402cb82593ccae0698b7dae65191b8b67939992de437be3ef1ba70a9fdd7c",
+   "bytes": 299084,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_R-dec+4",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.515 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691149 g vs manifest 0.691148 g (relative difference 6.0e-07); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.65, 2.21] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "pass",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; no gated or edge-limited reading below the rule"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    },
+    {
+     "id": "chirality_mirror_pair",
+     "status": "pass",
+     "detail": "recomputed: vertex set identical to the _L file False; equal to the _L file mirrored in z True; print-to-fish det +1"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "chirality_mirror_pair",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root",
+    "chirality_mirror_pair"
+   ],
+   "mass_g": 0.691148909,
+   "volume_mm3": 566.515499,
+   "cg_mm_print_pose": [
+    23.01,
+    12.8082,
+    -0.1102
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/stl/pelvic_R-dec-1.stl",
+   "sha256": "9e4c1e83508b016187ec03555003108a9c9ad6d8d65b3864b9c3849a3a660b06",
+   "bytes": 298984,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "stl_part",
+   "part_id": "pelvic_R-dec-1",
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    },
+    {
+     "id": "closed_oriented_manifold",
+     "status": "pass",
+     "detail": "recomputed: closed True, oriented True, 1 component(s), 0 degenerate triangles, signed volume 566.501 mm3; self-intersection not checked"
+    },
+    {
+     "id": "mesh_matches_record",
+     "status": "pass",
+     "detail": "manifest stl_file.mesh_sha256"
+    },
+    {
+     "id": "mass_matches_record",
+     "status": "pass",
+     "detail": "recomputed 0.691132 g vs manifest 0.691132 g (relative difference 5.3e-08); both are volume x 1220 kg/m3, not weighed"
+    },
+    {
+     "id": "build_envelope_fit",
+     "status": "pass",
+     "detail": "recomputed extents [67.21, 32.66, 2.31] mm against [200.0, 125.0, 235.0] mm less 5.0 mm a side"
+    },
+    {
+     "id": "min_wall_sampled",
+     "status": "pass",
+     "detail": "builder sampler: gated minimum 0.500 mm against 0.45 mm, 3000 samples; no gated or edge-limited reading below the rule"
+    },
+    {
+     "id": "euler_bernoulli_fin_root",
+     "status": "unknown",
+     "detail": "no beam run on this revision found"
+    },
+    {
+     "id": "chirality_mirror_pair",
+     "status": "pass",
+     "detail": "recomputed: vertex set identical to the _L file False; equal to the _L file mirrored in z True; print-to-fish det +1"
+    }
+   ],
+   "law_relations": [
+    {
+     "law_id": "mass_from_mesh_volume",
+     "relation": "governing",
+     "detail": "mass = volume x 1220 kg/m3, recomputed here"
+    },
+    {
+     "law_id": "rigid_body_mass_properties",
+     "relation": "governing",
+     "detail": "print-pose centroid recomputed here; fish-frame CG via the recorded transform (assemblies)"
+    },
+    {
+     "law_id": "closed_oriented_manifold",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "min_wall_sampled",
+     "relation": "checked",
+     "detail": "builder's sampler; reviewer readings where they exist"
+    },
+    {
+     "law_id": "build_envelope_fit",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "source_outline_fidelity",
+     "relation": "checked",
+     "detail": "builder outline_check against fish3d-v3c-daane-length/rays.json: True"
+    },
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "not_applicable",
+     "detail": "an alternative trim key or plug, not in the nominal assembly"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "sections follow claude-07's R1/R2 requirements; not run on these bytes"
+    },
+    {
+     "law_id": "chirality_mirror_pair",
+     "relation": "checked",
+     "detail": "recomputed here"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "not_applicable",
+     "detail": "an assembly-level law; see assemblies[] for r5-daane-catchfair"
+    }
+   ],
+   "law_ids": [
+    "mass_from_mesh_volume",
+    "rigid_body_mass_properties",
+    "closed_oriented_manifold",
+    "min_wall_sampled",
+    "build_envelope_fit",
+    "source_outline_fidelity",
+    "euler_bernoulli_fin_root",
+    "chirality_mirror_pair"
+   ],
+   "mass_g": 0.691131675,
+   "volume_mm3": 566.501373,
+   "cg_mm_print_pose": [
+    23.0105,
+    12.8085,
+    -0.1101
+   ],
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "calculated: mesh volume x 1220 kg/m3 (cured density, root's card); not weighed"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/web/assembled.glb",
+   "sha256": "3eb1de4e929554e5090a8bf4a2baa7eab935b712d788d7e2037c363c9d52c918",
+   "bytes": 2400080,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "introduced_in_commit": null,
+   "withdrawn": null,
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/fish3d/fish3d-v3c-daane-length/candidate.json",
+     "sha256": "a6455a3ddfcb16cb956b6ee2355397a430a4660019666f7bb06c1d60bb90046d",
+     "role": "source candidate"
+    },
+    {
+     "path": "data/materials/formlabs-studio-2026-10-31.json",
+     "sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+     "role": "material card @ f1796ec"
+    }
+   ],
+   "kind": "glb_view",
+   "part_id": null,
+   "law_ids": [],
+   "law_relations": [],
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "file sha256 against artifacts/glider/r5-daane-catchfair/manifest.json"
+    }
+   ],
+   "mass_g": null,
+   "volume_mm3": null,
+   "cg_mm_print_pose": null,
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "not a print file: assembled viewer model (GLB, metres)"
+  },
+  {
+   "path": "artifacts/glider/r5-daane-catchfair/print-set-r5-daane-catchfair.zip",
+   "sha256": "ad20acb67fd344922310faa5c9a0f93ce9e1e7ee0d0fbcf4318adf92d966aed7",
+   "bytes": 2274644,
+   "family": "glider",
+   "revision": "r5-daane-catchfair",
+   "kind": "zip_bundle",
+   "part_id": null,
+   "law_ids": [],
+   "law_relations": [],
+   "checks": [
+    {
+     "id": "sha256_pinned",
+     "status": "pass",
+     "detail": "against artifacts/glider/r5-daane-catchfair/download.json (sha256 and bytes)"
+    },
+    {
+     "id": "manifest_pinned",
+     "status": "pass",
+     "detail": "download.json manifest_sha256 against the revision manifest"
+    },
+    {
+     "id": "members_equal_sources",
+     "status": "pass",
+     "detail": "11 members; differing from the repository files: none"
+    },
+    {
+     "id": "sha256sums",
+     "status": "pass",
+     "detail": "every member against the ZIP's SHA256SUMS"
+    },
+    {
+     "id": "assembly_md_cg_window",
+     "status": "unresolved",
+     "detail": "the frozen ASSEMBLY.md cites claude-07's v3a-planform 44-60 mm window and a 60 mm ballast row; for r3/r4 claude-07 replaced it with 49.5-55.2 mm (target 52.4, never aft of 54.1). The ZIP is not edited; see findings"
+    }
+   ],
+   "mass_g": null,
+   "volume_mm3": null,
+   "cg_mm_print_pose": null,
+   "conditional_mass_g_at_1220_kg_m3": null,
+   "mass_basis": "a bundle; its STLs are listed individually",
+   "material": {
+    "id": "alpha-grey-v1-default-post-cure",
+    "density_kg_m3": 1220.0,
+    "status": "manufacturer-reported cured density, default post-cure (root's card); provisional scenario resin; printer, cartridge and cure hardware unconfirmed",
+    "card_path": "data/materials/formlabs-studio-2026-10-31.json",
+    "card_commit": "f1796ec",
+    "card_sha256": "44b6b07f5ff30f5d072a387745383ea08d375b5170f7448c70b7f6482dc72ebc",
+    "source_url": "https://formlabs.com/materials/tds/alpha-grey-resin/"
+   },
+   "source_artifacts": [
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/manifest.json",
+     "sha256": "3cbeeb55d77f0efa590f94166cb1a64c49bfcc3a1704d7b580ad7f42596c6e03",
+     "role": "frozen revision manifest (pins this file)"
+    },
+    {
+     "path": "artifacts/glider/r5-daane-catchfair/download.json",
+     "sha256": "a07b8e83e37f1f048b5c33096e3c075183c5f183e1c8829eebcd1ab8791c1867",
+     "role": "sidecar (pins this ZIP)"
+    }
+   ],
+   "withdrawn": null,
+   "introduced_in_commit": null
   },
   {
    "path": "artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-reinforced-scales.stl",
@@ -16691,7 +20258,7 @@
    "kind": "stl_prop_relief",
    "part_id": "fish3d-v3c-daane-length-prop-reinforced",
    "withdrawn": null,
-   "introduced_in_commit": null,
+   "introduced_in_commit": "8a3e7a376206cb5d2da37abde4f586819bd61e6f",
    "source_artifacts": [
     {
      "path": "artifacts/print-v4/manifest.json",
@@ -16880,7 +20447,7 @@
    "kind": "stl_stand",
    "part_id": "fish3d-v3c-daane-length-prop-reinforced",
    "withdrawn": null,
-   "introduced_in_commit": null,
+   "introduced_in_commit": "8a3e7a376206cb5d2da37abde4f586819bd61e6f",
    "source_artifacts": [
     {
      "path": "artifacts/print-v4/manifest.json",
@@ -17069,7 +20636,7 @@
    "kind": "stl_prop",
    "part_id": "fish3d-v3c-daane-length-prop-reinforced",
    "withdrawn": null,
-   "introduced_in_commit": null,
+   "introduced_in_commit": "8a3e7a376206cb5d2da37abde4f586819bd61e6f",
    "source_artifacts": [
     {
      "path": "artifacts/print-v4/manifest.json",
@@ -17260,7 +20827,7 @@
    "kind": "stl_prop_relief",
    "part_id": "fish3d-v3c-daane-length-prop",
    "withdrawn": null,
-   "introduced_in_commit": null,
+   "introduced_in_commit": "8a3e7a376206cb5d2da37abde4f586819bd61e6f",
    "source_artifacts": [
     {
      "path": "artifacts/print-v4/manifest.json",
@@ -17448,7 +21015,7 @@
    "kind": "stl_stand",
    "part_id": "fish3d-v3c-daane-length-prop",
    "withdrawn": null,
-   "introduced_in_commit": null,
+   "introduced_in_commit": "8a3e7a376206cb5d2da37abde4f586819bd61e6f",
    "source_artifacts": [
     {
      "path": "artifacts/print-v4/manifest.json",
@@ -17637,7 +21204,7 @@
    "kind": "stl_prop",
    "part_id": "fish3d-v3c-daane-length-prop",
    "withdrawn": null,
-   "introduced_in_commit": null,
+   "introduced_in_commit": "8a3e7a376206cb5d2da37abde4f586819bd61e6f",
    "source_artifacts": [
     {
      "path": "artifacts/print-v4/manifest.json",
@@ -17827,7 +21394,7 @@
    "kind": "glb_view",
    "part_id": "fish3d-v3c-daane-length-prop-reinforced",
    "withdrawn": null,
-   "introduced_in_commit": null,
+   "introduced_in_commit": "8a3e7a376206cb5d2da37abde4f586819bd61e6f",
    "source_artifacts": [
     {
      "path": "artifacts/print-v4/manifest.json",
@@ -17883,7 +21450,7 @@
    "kind": "glb_view",
    "part_id": "fish3d-v3c-daane-length-prop",
    "withdrawn": null,
-   "introduced_in_commit": null,
+   "introduced_in_commit": "8a3e7a376206cb5d2da37abde4f586819bd61e6f",
    "source_artifacts": [
     {
      "path": "artifacts/print-v4/manifest.json",
@@ -17939,7 +21506,7 @@
    "kind": "stl_prop_relief",
    "part_id": "fish3d-v3a-fan-prop",
    "withdrawn": null,
-   "introduced_in_commit": "aaa71f8",
+   "introduced_in_commit": "aaa71f83005aa9de142e77d83999486b56358d49",
    "source_artifacts": [
     {
      "path": "artifacts/print-v3/manifest.json",
@@ -18101,7 +21668,7 @@
    "kind": "stl_stand",
    "part_id": "fish3d-v3a-fan-prop",
    "withdrawn": null,
-   "introduced_in_commit": "aaa71f8",
+   "introduced_in_commit": "aaa71f83005aa9de142e77d83999486b56358d49",
    "source_artifacts": [
     {
      "path": "artifacts/print-v3/manifest.json",
@@ -18263,7 +21830,7 @@
    "kind": "stl_prop",
    "part_id": "fish3d-v3a-fan-prop",
    "withdrawn": null,
-   "introduced_in_commit": "aaa71f8",
+   "introduced_in_commit": "aaa71f83005aa9de142e77d83999486b56358d49",
    "source_artifacts": [
     {
      "path": "artifacts/print-v3/manifest.json",
@@ -18426,7 +21993,7 @@
    "kind": "stl_prop_relief",
    "part_id": "fish3d-v3b-glide-pose-prop",
    "withdrawn": null,
-   "introduced_in_commit": "aaa71f8",
+   "introduced_in_commit": "aaa71f83005aa9de142e77d83999486b56358d49",
    "source_artifacts": [
     {
      "path": "artifacts/print-v3/manifest.json",
@@ -18588,7 +22155,7 @@
    "kind": "stl_stand",
    "part_id": "fish3d-v3b-glide-pose-prop",
    "withdrawn": null,
-   "introduced_in_commit": "aaa71f8",
+   "introduced_in_commit": "aaa71f83005aa9de142e77d83999486b56358d49",
    "source_artifacts": [
     {
      "path": "artifacts/print-v3/manifest.json",
@@ -18750,7 +22317,7 @@
    "kind": "stl_prop",
    "part_id": "fish3d-v3b-glide-pose-prop",
    "withdrawn": null,
-   "introduced_in_commit": "aaa71f8",
+   "introduced_in_commit": "aaa71f83005aa9de142e77d83999486b56358d49",
    "source_artifacts": [
     {
      "path": "artifacts/print-v3/manifest.json",
@@ -18913,7 +22480,7 @@
    "kind": "glb_view",
    "part_id": "fish3d-v3a-fan-prop",
    "withdrawn": null,
-   "introduced_in_commit": "aaa71f8",
+   "introduced_in_commit": "aaa71f83005aa9de142e77d83999486b56358d49",
    "source_artifacts": [
     {
      "path": "artifacts/print-v3/manifest.json",
@@ -18969,7 +22536,7 @@
    "kind": "glb_view",
    "part_id": "fish3d-v3b-glide-pose-prop",
    "withdrawn": null,
-   "introduced_in_commit": "aaa71f8",
+   "introduced_in_commit": "aaa71f83005aa9de142e77d83999486b56358d49",
    "source_artifacts": [
     {
      "path": "artifacts/print-v3/manifest.json",
@@ -19025,7 +22592,7 @@
    "kind": "stl_stand",
    "part_id": "A-precursor-short-fin-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -19187,7 +22754,7 @@
    "kind": "stl_prop",
    "part_id": "A-precursor-short-fin-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -19350,7 +22917,7 @@
    "kind": "stl_stand",
    "part_id": "B-two-wing-glider-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -19512,7 +23079,7 @@
    "kind": "stl_prop",
    "part_id": "B-two-wing-glider-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -19675,7 +23242,7 @@
    "kind": "stl_stand",
    "part_id": "C-four-wing-glider-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -19837,7 +23404,7 @@
    "kind": "stl_prop",
    "part_id": "C-four-wing-glider-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -20000,7 +23567,7 @@
    "kind": "stl_stand",
    "part_id": "N1-cypselurus-baseline-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -20162,7 +23729,7 @@
    "kind": "stl_prop",
    "part_id": "N1-cypselurus-baseline-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -20325,7 +23892,7 @@
    "kind": "stl_stand",
    "part_id": "N2-area-x1.3-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -20487,7 +24054,7 @@
    "kind": "stl_prop",
    "part_id": "N2-area-x1.3-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -20650,7 +24217,7 @@
    "kind": "stl_stand",
    "part_id": "N3-area-x1.3-ar-x1.2-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -20812,7 +24379,7 @@
    "kind": "stl_prop",
    "part_id": "N3-area-x1.3-ar-x1.2-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -20975,7 +24542,7 @@
    "kind": "glb_view",
    "part_id": "A-precursor-short-fin-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -21026,7 +24593,7 @@
    "kind": "glb_view",
    "part_id": "B-two-wing-glider-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -21077,7 +24644,7 @@
    "kind": "glb_view",
    "part_id": "C-four-wing-glider-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -21128,7 +24695,7 @@
    "kind": "glb_view",
    "part_id": "N1-cypselurus-baseline-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -21179,7 +24746,7 @@
    "kind": "glb_view",
    "part_id": "N2-area-x1.3-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -21230,7 +24797,7 @@
    "kind": "glb_view",
    "part_id": "N3-area-x1.3-ar-x1.2-v2",
    "withdrawn": null,
-   "introduced_in_commit": "0f6cde7",
+   "introduced_in_commit": "0f6cde78705cb0a43281aa9ff32e75bc7cabdcf6",
    "source_artifacts": [
     {
      "path": "artifacts/print-v2/manifest.json",
@@ -21281,7 +24848,7 @@
    "kind": "stl_stand",
    "part_id": "A-precursor-short-fin",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -21448,7 +25015,7 @@
    "kind": "stl_prop",
    "part_id": "A-precursor-short-fin",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -21616,7 +25183,7 @@
    "kind": "stl_stand",
    "part_id": "B-two-wing-glider",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -21783,7 +25350,7 @@
    "kind": "stl_prop",
    "part_id": "B-two-wing-glider",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -21951,7 +25518,7 @@
    "kind": "stl_stand",
    "part_id": "C-four-wing-glider",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -22118,7 +25685,7 @@
    "kind": "stl_prop",
    "part_id": "C-four-wing-glider",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -22286,7 +25853,7 @@
    "kind": "stl_stand",
    "part_id": "N1-cypselurus-baseline",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -22453,7 +26020,7 @@
    "kind": "stl_prop",
    "part_id": "N1-cypselurus-baseline",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -22621,7 +26188,7 @@
    "kind": "stl_stand",
    "part_id": "N2-area-x1.3",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -22788,7 +26355,7 @@
    "kind": "stl_prop",
    "part_id": "N2-area-x1.3",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -22956,7 +26523,7 @@
    "kind": "stl_stand",
    "part_id": "N3-area-x1.3-ar-x1.2",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -23123,7 +26690,7 @@
    "kind": "stl_prop",
    "part_id": "N3-area-x1.3-ar-x1.2",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -23291,7 +26858,7 @@
    "kind": "glb_view",
    "part_id": "A-precursor-short-fin",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -23342,7 +26909,7 @@
    "kind": "glb_view",
    "part_id": "B-two-wing-glider",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -23393,7 +26960,7 @@
    "kind": "glb_view",
    "part_id": "C-four-wing-glider",
    "withdrawn": null,
-   "introduced_in_commit": "3c97a38",
+   "introduced_in_commit": "3c97a3848e868a5ed8142e1e4e1ed4c90a7ef2be",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -23444,7 +27011,7 @@
    "kind": "glb_view",
    "part_id": "N1-cypselurus-baseline",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -23495,7 +27062,7 @@
    "kind": "glb_view",
    "part_id": "N2-area-x1.3",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -23546,7 +27113,7 @@
    "kind": "glb_view",
    "part_id": "N3-area-x1.3-ar-x1.2",
    "withdrawn": null,
-   "introduced_in_commit": "e594d0f",
+   "introduced_in_commit": "e594d0f4467dd8ed2b92975af881ff52190ee49f",
    "source_artifacts": [
     {
      "path": "artifacts/print/manifest.json",
@@ -23621,7 +27188,7 @@
     "target_cg_x_mm": 52.0,
     "ballast_g": 6.889014,
     "total_mass_g": 24.025372,
-    "basis": "the frozen manifest's 52 mm ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
+    "basis": "the frozen manifest's 52 mm (nominal target) ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
    },
    "budgets": [
     {
@@ -23672,7 +27239,7 @@
      -0.521,
      -0.351
     ],
-    "static_margin_at_52mm": [
+    "static_margin_at_ballast_target": [
      0.093,
      0.262
     ],
@@ -23782,7 +27349,7 @@
     {
      "id": "ballast_row_moment_balance",
      "status": "pass",
-     "detail": "52 mm row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 51.9999 mm with m_b 6.889 g at x_fill 11.58 mm"
+     "detail": "52 mm (nominal target) row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 51.9999 mm with m_b 6.889 g at x_fill 11.58 mm"
     },
     {
      "id": "catch_bond_shear",
@@ -23832,7 +27399,7 @@
     "target_cg_x_mm": 52.0,
     "ballast_g": 8.931386,
     "total_mass_g": 28.879743,
-    "basis": "the frozen manifest's 52 mm ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
+    "basis": "the frozen manifest's 52 mm (nominal target) ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
    },
    "budgets": [
     {
@@ -23883,7 +27450,7 @@
      -0.562,
      -0.393
     ],
-    "static_margin_at_52mm": [
+    "static_margin_at_ballast_target": [
      0.093,
      0.262
     ],
@@ -23993,7 +27560,7 @@
     {
      "id": "ballast_row_moment_balance",
      "status": "pass",
-     "detail": "52 mm row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 52.0000 mm with m_b 8.931 g at x_fill 13.26 mm"
+     "detail": "52 mm (nominal target) row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 52.0000 mm with m_b 8.931 g at x_fill 13.26 mm"
     },
     {
      "id": "catch_bond_shear",
@@ -24045,7 +27612,7 @@
     "target_cg_x_mm": 52.0,
     "ballast_g": 5.728529,
     "total_mass_g": 24.859777,
-    "basis": "the frozen manifest's 52 mm ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
+    "basis": "the frozen manifest's 52 mm (nominal target) ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
    },
    "budgets": [
     {
@@ -24096,7 +27663,7 @@
      -0.372,
      -0.203
     ],
-    "static_margin_at_52mm": [
+    "static_margin_at_ballast_target": [
      0.093,
      0.262
     ],
@@ -24206,7 +27773,7 @@
     {
      "id": "ballast_row_moment_balance",
      "status": "pass",
-     "detail": "52 mm row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 51.9999 mm with m_b 5.729 g at x_fill 10.85 mm"
+     "detail": "52 mm (nominal target) row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 51.9999 mm with m_b 5.729 g at x_fill 10.85 mm"
     },
     {
      "id": "catch_bond_shear",
@@ -24258,7 +27825,7 @@
     "target_cg_x_mm": 52.0,
     "ballast_g": 5.737232,
     "total_mass_g": 26.071823,
-    "basis": "the frozen manifest's 52 mm ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
+    "basis": "the frozen manifest's 52 mm (nominal target) ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
    },
    "budgets": [
     {
@@ -24306,7 +27873,7 @@
      -0.259,
      -0.171
     ],
-    "static_margin_at_52mm": [
+    "static_margin_at_ballast_target": [
      0.117,
      0.205
     ],
@@ -24416,7 +27983,7 @@
     {
      "id": "ballast_row_moment_balance",
      "status": "pass",
-     "detail": "52 mm row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 51.9999 mm with m_b 5.737 g at x_fill 10.86 mm"
+     "detail": "52 mm (nominal target) row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 51.9999 mm with m_b 5.737 g at x_fill 10.86 mm"
     },
     {
      "id": "catch_bond_shear",
@@ -24468,7 +28035,7 @@
     "target_cg_x_mm": 52.0,
     "ballast_g": 5.737232,
     "total_mass_g": 26.071823,
-    "basis": "the frozen manifest's 52 mm ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
+    "basis": "the frozen manifest's 52 mm (nominal target) ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
    },
    "budgets": [
     {
@@ -24516,7 +28083,7 @@
      -0.259,
      -0.171
     ],
-    "static_margin_at_52mm": [
+    "static_margin_at_ballast_target": [
      0.117,
      0.205
     ],
@@ -24626,7 +28193,7 @@
     {
      "id": "ballast_row_moment_balance",
      "status": "pass",
-     "detail": "52 mm row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 51.9999 mm with m_b 5.737 g at x_fill 10.86 mm"
+     "detail": "52 mm (nominal target) row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 51.9999 mm with m_b 5.737 g at x_fill 10.86 mm"
     },
     {
      "id": "catch_bond_shear",
@@ -24647,6 +28214,206 @@
      "id": "reviewer_mass_recompute",
      "status": "pass",
      "detail": "reviewer claude-13 (docs/reviews/launchable-fish-review-run/r4-daane-printfix-bd2fcf31ca46-check.json sha256 5693f4fad039..., read here): assembly 20.334592 g, relative difference to the manifest 4.9e-08"
+    }
+   ]
+  },
+  {
+   "id": "r5-daane-catchfair/nominal",
+   "revision": "r5-daane-catchfair",
+   "nominal_file_paths": [
+    "artifacts/glider/r5-daane-catchfair/stl/body.stl",
+    "artifacts/glider/r5-daane-catchfair/stl/pectoral_L.stl",
+    "artifacts/glider/r5-daane-catchfair/stl/pectoral_R.stl",
+    "artifacts/glider/r5-daane-catchfair/stl/pelvic_L-dec+2.stl",
+    "artifacts/glider/r5-daane-catchfair/stl/pelvic_R-dec+2.stl",
+    "artifacts/glider/r5-daane-catchfair/stl/catch_plug-x20-dz+0.0.stl"
+   ],
+   "bundle_path": "artifacts/glider/r5-daane-catchfair/print-set-r5-daane-catchfair.zip",
+   "parts_mass_g": {
+    "body": 12.927950697,
+    "pectoral_L": 2.999139997,
+    "pectoral_R": 2.999139997,
+    "pelvic_L-dec+2": 0.691147536,
+    "pelvic_R-dec+2": 0.691147536,
+    "catch_plug-x20-dz+0.0": 0.424934084
+   },
+   "dry": {
+    "mass_g": 20.733459847,
+    "cg_mm": [
+     62.8722,
+     -0.0004,
+     4.1558
+    ],
+    "basis": "calculated: sum of part mesh volumes x 1220 kg/m3, moved into the fish frame by each part's print_to_fish transform; glue, tape and trapped resin excluded; not weighed"
+   },
+   "ballasted": {
+    "target_cg_x_mm": 52.4,
+    "ballast_g": 5.181349,
+    "total_mass_g": 25.914808,
+    "basis": "the frozen manifest's 52.4 mm (nominal target) ballast row; shot at 4.7 g/cm3 ASSUMED; fill centroid model; not weighed"
+   },
+   "budgets": [
+    {
+     "id": "legacy_threshold_10_5g",
+     "value_g": 10.5,
+     "compared_mass_g": 25.914808,
+     "dry_mass_g": 20.73346,
+     "dry_also_fails": true,
+     "basis": "frozen legacy threshold: claude-07 section 0, V_trim <= 8 m/s at C_L 0.5 on v3a's 52.9 cm2. Kept as recorded; it is not this revision's area derivation",
+     "verdict": "fail"
+    },
+    {
+     "id": "area_specific_8ms_cl05",
+     "value_g": 13.545088,
+     "compared_mass_g": 25.914808,
+     "dry_mass_g": 20.73346,
+     "dry_also_fails": true,
+     "basis": "recomputed here: rho V^2 S C_L / (2 g) with rho 1.225, V 8.0 m/s, C_L 0.5 (assumed), g 9.81, S 6779.5 mm2 (this revision's paired flat area); the manifest records 13.545088 g",
+     "verdict": "fail"
+    }
+   ],
+   "trim_speed_hand_m_s": {
+    "dry": 9.898,
+    "ballasted": 11.066,
+    "basis": "V = sqrt(2 m g / (rho S C_L)), C_L 0.5 assumed; a hand number"
+   },
+   "cg_window": {
+    "window_mm": [
+     49.5,
+     55.2
+    ],
+    "target_mm": 52.4,
+    "never_aft_of_mm": 54.1,
+    "source": "claude-07 r3/r4 first-print constraints, item 4 (r3/r4's own hand NP); replaces the 44-60 mm window for r3/r4",
+    "source_file": "/data/artifacts/delphi-evolve-rethink/messages/glider-dynamics-r3-r4-first-print-constraints.md",
+    "dry_cg_x_mm": 62.872
+   },
+   "neutral_point": {
+    "np_x_mm_bracket": [
+     55.617,
+     58.324
+    ],
+    "pectoral_mac_mm": 30.881,
+    "static_margin_dry": [
+     -0.235,
+     -0.147
+    ],
+    "static_margin_at_ballast_target": [
+     0.104,
+     0.192
+    ],
+    "basis": "hand bracket from the frozen manifest; not a VLM"
+   },
+   "launch_load": [
+    {
+     "id": "envelope",
+     "v_m_s": 10.0,
+     "stroke_m": 0.1,
+     "k": 2.0,
+     "basis": "claude-07 print requirements: SPEC-010's 8 m/s x 1.25, shortest stroke, linear band",
+     "a_mean_m_s2": 500.0,
+     "peak_force_N_by_k": {
+      "1": 12.957,
+      "1.571": 20.353,
+      "2": 25.915
+     }
+    },
+    {
+     "id": "sim-8ms",
+     "v_m_s": 8.0,
+     "stroke_m": 0.2,
+     "k": 2.0,
+     "basis": "claude-07 r3/r4 simulation: 8 m/s, 0.2 m stroke, linear band profile",
+     "a_mean_m_s2": 160.0,
+     "peak_force_N_by_k": {
+      "1": 4.146,
+      "1.571": 6.513,
+      "2": 8.293
+     }
+    }
+   ],
+   "launch_status": {
+    "status": "not_cleared",
+    "detail": "not cleared: FIT/BALANCE test print only (root and reviewer claude-13); unresolved thin feather edges at the x 20 catch slot; over both mass budgets; no physical flight"
+   },
+   "flight_status": "no physical print, weighing, glide or throw; only claude-07's simulated scenarios",
+   "law_relations": [
+    {
+     "law_id": "assembly_moment_balance",
+     "relation": "governing",
+     "detail": "dry mass and CG recombined here"
+    },
+    {
+     "law_id": "ballast_lever",
+     "relation": "governing",
+     "detail": "ballast rows from the frozen manifest; moment balance re-checked"
+    },
+    {
+     "law_id": "level_flight_lift",
+     "relation": "governing",
+     "detail": "both budgets and the trim speeds; hand model with assumed C_L"
+    },
+    {
+     "law_id": "static_margin_hand_np",
+     "relation": "governing",
+     "detail": "hand NP bracket from the manifest; static margin computed here"
+    },
+    {
+     "law_id": "launch_acceleration",
+     "relation": "governing",
+     "detail": "peak band forces computed here for declared cases"
+    },
+    {
+     "law_id": "drag_equation",
+     "relation": "inspired_only",
+     "detail": "no run found"
+    },
+    {
+     "law_id": "catch_bond_shear",
+     "relation": "inspired_only",
+     "detail": "claude-07's catch check"
+    },
+    {
+     "law_id": "euler_bernoulli_fin_root",
+     "relation": "inspired_only",
+     "detail": "per fin file, claude-07"
+    }
+   ],
+   "checks": [
+    {
+     "id": "assembly_recombined",
+     "status": "pass",
+     "detail": "recombined here from the nominal STL bytes: 20.733459847 g, CG [62.872, -0.0, 4.156] mm. The frozen manifest records 20.733458847 g (relative difference 4.8e-08): it was computed from the float64 fish-frame meshes before export, and the flat-printed fins' rotated float32 STL coordinates hold slightly different volumes (parts with an identity print pose agree to 1e-10 g). The STL value is the one a printer receives"
+    },
+    {
+     "id": "budget_legacy_10_5g",
+     "status": "fail",
+     "detail": "ballasted 25.915 g (dry 20.733 g) against the frozen legacy 10.5 g threshold"
+    },
+    {
+     "id": "budget_area_specific",
+     "status": "fail",
+     "detail": "ballasted 25.915 g (dry 20.733 g) against 13.545 g on this revision's paired area"
+    },
+    {
+     "id": "cg_dry_in_window",
+     "status": "fail",
+     "detail": "dry CG x 62.87 mm against [49.5, 55.2] mm (claude-07 r3/r4 first-print constraints, item 4 (r3/r4's own hand NP); replaces the 44-60 mm window for r3/r4); nose ballast required"
+    },
+    {
+     "id": "static_stability_dry",
+     "status": "fail",
+     "detail": "dry CG x 62.87 mm against the hand NP bracket [55.62, 58.32] mm: aft of the whole bracket, statically unstable dry under the hand NP"
+    },
+    {
+     "id": "ballast_row_moment_balance",
+     "status": "pass",
+     "detail": "52.4 mm (nominal target) row re-checked here: (M x_dry + m_b x_fill) / (M + m_b) = 52.4000 mm with m_b 5.181 g at x_fill 10.49 mm"
+    },
+    {
+     "id": "reviewer_mass_recompute",
+     "status": "unknown",
+     "detail": "no reviewer recompute of this revision found"
     }
    ]
   }
@@ -24672,7 +28439,7 @@
     "artifacts/glider/r4-daane-printfix/stl/body.stl",
     "artifacts/glider/r2-light/stl/body.stl (likely, not re-measured)"
    ],
-   "detail": "Reviewer claude-13: readings down to 0.097 mm (0.115 mm twice on r3) at the x 20 slot's lateral openings, judged feather edges rather than a thin wall; they can print rough, chip, or cut the band. The builder's sampler classed its own 0.31 mm reading there as edge-limited and did not gate it. r1's body has a reviewer reading of 0.317 mm aft of its catch slot, also edge-limited.",
+   "detail": "Reviewer claude-13: readings down to 0.097 mm (0.115 mm twice on r3) at the x 20 slot's lateral openings, judged feather edges rather than a thin wall; they can print rough, chip, or cut the band. The builder's sampler classed its own 0.31 mm reading there as edge-limited and did not gate it. r1's body has a reviewer reading of 0.317 mm aft of its catch slot, also edge-limited. The r5 catch-zone gate run on the frozen r4 body reproduces 21 wall readings below 0.45 mm, 17 below 0.30, minimum 0.097 mm, at a 36 deg wedge. r5-daane-catchfair adds crown fairings and claims no wall reading below the rule in the catch zone; that claim awaits the reviewer, and the frozen revisions stay thin.",
    "source": "artifacts/glider/REVIEW_FINDINGS.json; docs/reviews/launchable-fish-review-r4-first-print.md @ 1b5afb1"
   },
   {
@@ -24682,7 +28449,7 @@
     "artifacts/glider/r3-daane/manifest.json",
     "artifacts/glider/r4-daane-printfix/manifest.json"
    ],
-   "detail": "biological_constraints.kept reads 'v3a outline, ray count, ray roots, angles and lengths, fin positions and dihedral', but source_candidate is fish3d-v3c-daane-length. The outline_check itself compared against the v3c candidate's own rays.json (builder code), so the check result refers to v3c; the prose string is stale. The frozen manifests are not edited; a later revision will derive the string from the candidate.",
+   "detail": "biological_constraints.kept reads 'v3a outline, ray count, ray roots, angles and lengths, fin positions and dihedral', but source_candidate is fish3d-v3c-daane-length. The outline_check itself compared against the v3c candidate's own rays.json (builder code), so the check result refers to v3c; the prose string is stale. The frozen manifests are not edited; from r5-daane-catchfair the builder derives the string from the candidate id.",
    "source": "engineering/glider/build.py (the 'kept' string is a literal; outline_check reads artifacts/fish3d/<candidate>/rays.json)"
   },
   {
@@ -24692,7 +28459,7 @@
     "artifacts/glider/r4-daane-printfix/ASSEMBLY.md",
     "artifacts/glider/r4-daane-printfix/print-set-r4-daane-printfix.zip"
    ],
-   "detail": "The frozen ASSEMBLY.md cites a 44-60 mm CG window and lists a 60 mm ballast row. That window came from v3a's planform. For r3/r4 claude-07's constraint is CG x 49.5-55.2 mm, target 52.4, never aft of 54.1 mm before the VLM NP, so the 56 and 60 mm rows are outside it.",
+   "detail": "The frozen ASSEMBLY.md cites a 44-60 mm CG window and lists a 60 mm ballast row. That window came from v3a's planform. For r3/r4 claude-07's constraint is CG x 49.5-55.2 mm, target 52.4, never aft of 54.1 mm before the VLM NP, so the 56 and 60 mm rows are outside it. r5-daane-catchfair's ballast table uses 49.5-55.2 mm.",
    "source": "/data/artifacts/delphi-evolve-rethink/messages/glider-dynamics-r3-r4-first-print-constraints.md"
   },
   {
