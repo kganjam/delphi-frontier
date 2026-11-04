@@ -631,6 +631,24 @@ document's headline material — the lead deliverable and the top recommended ex
 branches for four kinds. It ran for the project's entire life, and the harvester printed a
 "blocks found" total that included the blocks it was dropping.
 
+## What is and is not machine-checked in this document
+
+A precise answer, because "every number is checked" is the kind of claim this document spends its
+length refusing to accept from others. Of **49** bold numeric assertions:
+
+| | count | how it is backed |
+|---|---|---|
+| **design arithmetic** | **18** | `analysis/headline_table.py` recomputes each from its own inputs and **exits non-zero on drift** |
+| run outputs | 9 | a `run` row with a `code_sha` — ESMFold2 pLDDT, ProteinMPNN ranks, the shuffle p |
+| graph statistics | 7 | live counts; **deliberately not pinned**, since a script asserting them would go stale the moment the graph moves |
+| external lookups | 1 | a PubMed count, reproducible only by re-querying |
+| everything else | 14 | **prose arithmetic that nothing recomputes** — ratios and percentages stated in the audit sections |
+
+**So the honest statement is: the design arithmetic is machine-checked and about a quarter of the
+document's numbers are not.** The last row is the real gap. Those 14 are mostly ratios computed in
+the course of auditing — the kind of figure this document has caught other people getting wrong
+four times today, now sitting in it unchecked.
+
 ## Open items, stated so the next reader does not have to find them
 
 Everything below is unresolved **and known to be unresolved**. Nothing here is a to-do list of
