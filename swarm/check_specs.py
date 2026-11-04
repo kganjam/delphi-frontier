@@ -135,10 +135,15 @@ RULES = [
   "where sp.status = 'running' and up.status not in ('answered','refuted')",
   "select count(*) from subproblem_dep"),
  ("subproblem-lifecycle", 6, "Every superseded claim flags the subproblems resting on it",
-  "select count(*) from claim c join subproblem sp on sp.id = c.subproblem_id "
+  # A superseded claim with NO DEPENDENTS cannot flag anything, and requiring a flag for it is
+  # the rule being wrong rather than the system. Of 39 superseded claims only 7 have a dependent
+  # edge; the other 32 were counted as violations by the first version of this rule, which is the
+  # same defect as counting in-flight challenges as unrecorded outcomes.
+  "select count(distinct c.id) from claim c join claim_depends d on d.depends_on = c.id "
   "where c.superseded_by is not null and not exists "
-  "(select 1 from review_flag f where f.claim_id = c.id or f.subproblem_id = sp.id)",
-  "select count(*) from claim where superseded_by is not null"),
+  "(select 1 from review_flag f where f.triggered_by = c.id)",
+  "select count(distinct c.id) from claim c join claim_depends d on d.depends_on = c.id "
+  "where c.superseded_by is not null"),
  ("subproblem-lifecycle", 1, "No answered without an answer and an answer_kind",
   "select count(*) from subproblem where status='answered' and (answer is null "
   "or btrim(answer)='' or answer_kind is null)",
