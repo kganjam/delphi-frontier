@@ -209,6 +209,21 @@ seeded defects are real errors this project made.**
 
 - Fin **area** has never been measured in any enlarged-fin zebrafish, so the central geometric input
   is an extrapolation.
+- **Membrane stiffness has no computational route, not merely no demonstrated allele.** The
+  actinotrichia proteins are actinodins — `and1` (E7F5V5, 570 aa), `and2` (A9JRX1, 508 aa), `and3`
+  (Q7SZZ6, 295 aa). Measured here from primary sequence, they carry **no collagen triple-helix
+  signature**: glycine fractions of 5.4 / 4.5 / 2.7 % and longest in-frame Gly-X-Y runs of **2, 2
+  and 1** triplets, against a `col1a1a` positive control at **26.4 % glycine and a 339-triplet
+  run**. That is a ~170× separation, so the assay discriminates and the negative is informative.
+  It confirms the project's existing "not collagen-like despite being termed elastoidin" claim by
+  an independent route.
+
+  **But no model in reach predicts a modulus from a sequence.** ProteinMPNN designs sequences
+  compatible with a *backbone*, not stiffer ones; ESMFold2 returns a structure and its own
+  confidence. So a "stiffer actinodin variant" is not something this project can currently produce
+  or evaluate, and any such design would be a claim with nothing behind it. The honest status of
+  this capability is **no demonstrated allele and no in-silico route**, which is strictly worse
+  than the edit-stack table alone suggests.
 - The S26 active-stiffening margin rests on a boundary condition that **could not be verified**: the
   publisher blocks full text and the OA service 404s. The order of magnitude is confirmed by the
   paper's own abstract; the exact factor is not.
