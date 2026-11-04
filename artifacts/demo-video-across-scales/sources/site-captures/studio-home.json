@@ -1,0 +1,1607 @@
+{
+  "url": "https://studio.morphoswarm.ai/",
+  "title": "Home · MorphoSwarm Studio",
+  "text": "Skip to content\nMorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI\nStudio\nFrontier\nKnowledge\nEvidence\nSystem\nAbout\nSearch the catalog\nSearch\nLive runtime\n\nMORPHOSWARM STUDIO\n\nDesign together.\nKnow what's open.\n\nTwo ways in, one body of evidence. Studio is where a design goal is worked across scales, with the models, media and gaps in one place. Frontier is the shared list of open questions and who is working on them. Both read the same claims and evidence, kept in the Delphi foundation: what we know, what's next, who's working on it.\n\nWatch the demo\n\nFEATURED PROJECT · WORK IT ACROSS 11 SCALES\n\nFlying fish\n\nEngineer toward a vertebrate glider reachable from a beloniform ancestor, and make every missing bridge between scales visible.\n\nOpen the Flying fish studio\nAll projects and design spaces\n\nSubsystems by scale\n1\nMolecular\npartial\n2\nMacromolecular\nstated gap\n3\nSubcellular\nstated gap\n4\nCellular\npartial\n5\nTissue\nstated gap\n6\nOrgan\nrecorded model\n7\nNeural / control\nstated gap\n8\nOrganism\nrecorded model\n9\nDevelopmental\npartial\n10\nCollective\nstated gap\n11\nEcological / evolutionary\npartial\n\n2 of 11 scales have a recorded model, 4 are partial and 5 are stated gaps. Every gap is written out on its own subsystem page rather than left blank. The status of each scale is the Project record's own declaration, not a count of files. Of 13 declared couplings between scales, 4 are composable, 5 are scenario-level and 4 are refused.\n\nA sample of what is inside\nPrecursor-inspired short-fin form (rejected glider candidate)\nEnlarged-pectoral two-wing glider (Exocoetus-type proportions)\n▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)\n▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)\n▶ Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions\n▶ Adhesion clutch mechanics (render of a simulation)\n\nEach tile opens the subsystem it belongs to. The rest of it: all 31 recorded runs with their checks and sources · the 5 Lean proof families · the engineering workspace · what is verified and what is not · the open questions.\n\n31\nrecorded simulation runs\n6\nnamed equations\n5\nLean proof families\n21\nclaims with conditions\n6\nprintable forms\n\nNothing here is a validated organism. The candidate is an engineering design sized from published measurements, and every parameter carries its own status word on the subsystem pages.\n\nStart from real fish anatomy.\n\nRay-supported fins and a scale map, not a validated fish. Selected candidate v3a-fan: fins are modelled as individual rays with a membrane between them (anal 10, caudal 15, dorsal 13, pectoral_L 15, pectoral_R 15, pelvic_L 6, pelvic_R 6 rays); ray counts, attachments, outline and scales are sourced where the viewer's table says so and assumed otherwise. Recorded parameter statuses: 53 derived from a sourced fit, 40 assumed, 5 sourced, 2 aesthetic choice, 4 read from a published figure. Eyes and gill covers are simplified, pigment is an appearance choice, and no biological or aerodynamic validation is claimed. The data panel and region cards below describe the N1 baseline reference.\n\nCandidate \nN1 baseline (flat fin plates)\nv3a-fan\nv3b-glide-pose\nv3c-daane-length\n pectoral camber 0 · pectoral dihedral deg 7 · pectoral lead angle deg 8 · pectoral length source fish1990 · pelvic camber 0 · pelvic dihedral deg 4 · pelvic lead angle deg 22 · pelvic x over sl 0.55\nInteractive 3D candidate\n\nThe 3D model is a candidate mesh. Colours and pigment bands are appearance choices, each marked sourced or assumed in the viewer. Not an organism and not an aerodynamic result. The schematic drawing and printable models are below.\n\nHow these candidates relate: the fish design history (revisions, sibling variants and display props kept apart).\n\nPrint models: laws, checks, mass budgets & lineage\n\nLatest printable fish studies\n\nSource-conditioned geometry with thicker membranes and rays for printing. Each file has its own checks; these are display studies.\n\nV3C PROP\n\nv3c had no prop; same alterations and wall rule as the v3 props\n\n96.7 × 114.9 × 28.1 mm · 0.5× display scale\n\nCalculated mass: 12.00 g smooth, 12.71 g with scales, at 1.22 g/cm³. Not weighed.\n\n1.0 mm provisional wall rule; sampled checks and relief limits are in the file report.\n\nChoose the smooth STL for the more conservative print. Fine scale relief is ungated texture and may not resolve or survive printing. Independent file review.\n\nSmooth STL · File checks and laws\nScale-relief STL · File checks and laws\nV3C REINFORCED\n\nstronger handling prop: 1.5 mm wall rule (membranes 1.8 mm, rays 3.3 to 2.4 mm) and every fin 1.5 x as thick at its root, tapering to the plain fin 8 mm out, where a cantilevered fin's bending moment is largest\n\n97.2 × 115.7 × 29.0 mm · 0.5× display scale\n\nCalculated mass: 15.50 g smooth, 16.16 g with scales, at 1.22 g/cm³. Not weighed.\n\n1.5 mm provisional wall rule; sampled checks and relief limits are in the file report.\n\nChoose the smooth STL for the more conservative print. Fine scale relief is ungated texture and may not resolve or survive printing. Independent file review.\n\nSmooth STL · File checks and laws\nScale-relief STL · File checks and laws\n\nCompare the design history · Stands and previous revisions are under All model downloads.\n\nDownload v3a fish with scales · STL Display model, not the slingshot prototype.\n\nDownload corrected slingshot test-print set · ZIP Six parts and assembly notes. Fit/balance only: overweight, with a catch-wall concern unresolved. Not cleared for launch.\n\nAll model downloads · print revisions, stands and 3D candidates\n\nRegulatory context for a region (what sources and proposals mention it; not measured expression in this model): basal epithelium · surface epithelium · fibroblast mesenchyme · osteoblast and joint · hematopoietic · pectoral fin field · organism reference · the regulatory applicability map\n\nN1 baseline reference (a separate schematic and the printable models, not the candidate selected above)\nSide\nTop\nFront\n3/4 view\n\nDrag to rotate, or focus the drawing and use the arrow keys. Stylised body proportions are fixed; only the entered dimensions and fin share change the shape. A design visualisation, not an observed fish and not CFD.\n\nDrawing: candidate Cypselurus-type, 0.1 kg, a schematic from the Engineering parameters, not one of the printable STL models below. Dimensions are arithmetic or illustration, not a measured fish. Change it in Engineering.\n\n3D model turntable\n\nPath-traced render of the N1 candidate mesh, with assumed fin thickness and an assumed scale lattice: not an organism and not an aerodynamic result. Download MP4 · limits and hashes\n\nPrintable models (STL, millimetres) \nA-precursor-short-fin\nB-two-wing-glider\nC-four-wing-glider\nN1-cypselurus-baseline\nN2-area-x1.3\nN3-area-x1.3-ar-x1.2\n Download STL\n\nPrecursor-inspired short-fin form (rejected glider candidate). Bounding box 110.9 × 25.3 × 20.9 mm at print size. Illustrative print form, not a validated design; the drawing above does not change with this choice.\n\nPrintable fish revisions (STL, millimetres, display scale) \nDisplay prop of fish3d-v3c-daane-length\nReinforced display prop of fish3d-v3c-daane-length\nDisplay prop of fish3d-v3a-fan\nDisplay prop of fish3d-v3b-glide-pose\nDownload prop STL (smooth, gated) (2.2 MB)\nDownload prop with scale relief STL (8.8 MB)\nDownload stand STL (0.1 MB)\n\nDisplay prop of fish3d-v3c-daane-length. Prop size 96.7 × 114.9 × 28.1 mm at display scale 0.5. Engineered illustrative forms, not organisms; membranes and rays are thickened for printing, not biological thickness.\n\nPrint limits (printer and resin unknown, nothing sliced or printed)\nWhat the body and fins are sized from (N1 baseline reference)\n\nCandidate N1: standard length 158.8 mm, wing span 211.7 mm, wing area 5699 mm², mass 0.05 kg.\n\nMeasured here: pectoral fin length against standard length in 49 preserved flying fish specimens (Cheilopogon furcatus, Exocoetus volitans, Hirundichthys rondeleti; preserved specimens, Harvard Museum of Comparative Zoology) follows length ∝ SL1.058, 95% bootstrap interval 1.021 to 1.099, R² 0.983. Species and sizes are pooled. Source: Daane et al. 2021, Data S1A, fit made in this repository.\nPublished, raw data unavailable: Fish 1990 reports the pectoral fins as Cypselurus (76 ± 0.6%) to Exocoetus (91.8 ± 0.4%) of wing area by genus, and 63.1% ± 0.5 of caudal area in the lower lobe (pooled). UNAVAILABLE: 199 specimens were measured; the paper publishes only the fits and ranges below.\nEvidence kinds, kept apart 8 / 36 / 7, not one count of laws\nRegion by region: where each parameter comes from (the N1 baseline reference, not the candidate selected above; 9 regions)\n\nParameter status words are the candidate's own (components.json); unknown biology is not filled in. Modelled mechanics at the organ scale · All simulations · unsupported bridges: 4 refused and 5 scenario-level of 13 couplings · Evidence status\n\n2 sources licences and read levels as recorded\n\nAbout this project · Generative biology: from mechanistic simulation to equation-conditioned models\n\nDescribe a goal or a question in a sentence; it is routed to a project, a subsystem and open work, and nothing is generated\nFind where this lives\n\nSTUDIO · PROJECTS\n\nWork a design across scales\n\nA project names a goal, breaks it into subsystems by scale, and shows for each the model that exists, its parameters and unknowns, equations, claims, media and open questions. Gaps stay visible.\n\nfeatured project\nFlying fish\n\nEleven scales from molecule to ecology. Recorded models exist at four of them, a bounded constraint solver and illustrative print forms at the organism and organ scales; most scales hold only a stated gap.\n\nPrecursor-inspired short-fin form (rejected glider candidate)\nEnlarged-pectoral two-wing glider (Exocoetus-type proportions)\n▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)\n▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)\n\n2 of 11 scales have a recorded model; the rest are stated gaps.\n\nOpen the Flying fish studio All projects\n\nFRONTIER · OPEN WORK\n\nFind open questions and join them\n\nEvery question carries what is known, what would settle it, what it needs, and who holds a live lease. Direction filters separate top-down design questions from bottom-up theory and literature gaps.\n\n12 curated questions in the snapshot (live count appears when the node is reachable)\n\nOpen the Frontier Claims and evidence\n\nHow they connect\nEvery open question names the scales it touches; from a question you can jump to that subsystem in the studio.\nEvery subsystem lists the open questions at its scale and links to them on the Frontier.\nClaims, evidence and artifacts live once, in the Delphi foundation, and both paths link to the same entity pages.\n\nDesign space: Engineering a coral — 45 sourced routes to one stated outcome, across 9 scales, with the models that bear on them. Three of the four thermal interventions buy a coral that still looks brown while it starves.\n\nDesign space: Redesigning insect flight — 46 sourced routes to one stated outcome, across 9 scales, with the models that bear on them. The four-winged fly is famous. What nobody measured is whether it flies.\n\nDesign space: Living machines that do work — 49 sourced routes to one stated outcome, across 10 scales, with the models that bear on them. It began as a check on our own earlier simulation, and ended by withdrawing its headline result.\n\nProjects other than Flying fish are added as Project records; none is invented here.\n\nsnapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)\n\nInput files and sha256\n\nDesign geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.",
+  "links": [
+    {
+      "text": "Skip to content",
+      "url": "https://studio.morphoswarm.ai/#main"
+    },
+    {
+      "text": "MorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI",
+      "url": "https://studio.morphoswarm.ai/#/home"
+    },
+    {
+      "text": "Studio",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Frontier",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "Knowledge",
+      "url": "https://studio.morphoswarm.ai/#/knowledge"
+    },
+    {
+      "text": "Evidence",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "System",
+      "url": "https://studio.morphoswarm.ai/#/work"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/blog"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/team"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/docs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/inspirations"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/generative"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/demo"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/faq"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/work?tab=connect"
+    },
+    {
+      "text": "Watch the demo",
+      "url": "https://studio.morphoswarm.ai/#/demo"
+    },
+    {
+      "text": "Open the Flying fish studio",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish"
+    },
+    {
+      "text": "All projects and design spaces",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "1\nMolecular\npartial",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=molecular"
+    },
+    {
+      "text": "2\nMacromolecular\nstated gap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=macromolecular"
+    },
+    {
+      "text": "3\nSubcellular\nstated gap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=subcellular"
+    },
+    {
+      "text": "4\nCellular\npartial",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=cellular"
+    },
+    {
+      "text": "5\nTissue\nstated gap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=tissue"
+    },
+    {
+      "text": "6\nOrgan\nrecorded model",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "7\nNeural / control\nstated gap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=neural"
+    },
+    {
+      "text": "8\nOrganism\nrecorded model",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organism"
+    },
+    {
+      "text": "9\nDevelopmental\npartial",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=developmental"
+    },
+    {
+      "text": "10\nCollective\nstated gap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=collective"
+    },
+    {
+      "text": "11\nEcological / evolutionary\npartial",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=ecological"
+    },
+    {
+      "text": "Precursor-inspired short-fin form (rejected glider candidate)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "Enlarged-pectoral two-wing glider (Exocoetus-type proportions)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=cellular"
+    },
+    {
+      "text": "▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "▶ Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=cellular"
+    },
+    {
+      "text": "▶ Adhesion clutch mechanics (render of a simulation)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=cellular"
+    },
+    {
+      "text": "all 31 recorded runs with their checks and sources",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "the 5 Lean proof families",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "the engineering workspace",
+      "url": "https://studio.morphoswarm.ai/#/engineering"
+    },
+    {
+      "text": "what is verified and what is not",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "the open questions",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "How these candidates relate: the fish design history",
+      "url": "https://studio.morphoswarm.ai/#/history"
+    },
+    {
+      "text": "Print models: laws, checks, mass budgets & lineage",
+      "url": "https://studio.morphoswarm.ai/#/print-laws"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop.stl"
+    },
+    {
+      "text": "Independent file review",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/279fea9dff22529a449d88835fd4b475703a70d7/docs/reviews/launchable-fish-review-print-v4.md"
+    },
+    {
+      "text": "Smooth STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop.stl"
+    },
+    {
+      "text": "File checks and laws",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop.stl"
+    },
+    {
+      "text": "Scale-relief STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-scales.stl"
+    },
+    {
+      "text": "File checks and laws",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-reinforced.stl"
+    },
+    {
+      "text": "Independent file review",
+      "url": "https://github.com/kganjam/delphi-frontier/blob/279fea9dff22529a449d88835fd4b475703a70d7/docs/reviews/launchable-fish-review-print-v4.md"
+    },
+    {
+      "text": "Smooth STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-reinforced.stl"
+    },
+    {
+      "text": "File checks and laws",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-reinforced.stl"
+    },
+    {
+      "text": "Scale-relief STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-reinforced-scales.stl"
+    },
+    {
+      "text": "File checks and laws",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-reinforced-scales.stl"
+    },
+    {
+      "text": "Compare the design history",
+      "url": "https://studio.morphoswarm.ai/#/history"
+    },
+    {
+      "text": "Download v3a fish with scales · STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/stl/fish3d-v3a-fan-prop-scales.stl"
+    },
+    {
+      "text": "Download corrected slingshot test-print set · ZIP",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/print-set-r4-daane-printfix.zip"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-reinforced-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-reinforced-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-reinforced-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-reinforced-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-reinforced.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-reinforced.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fstl%2Ffish3d-v3c-daane-length-prop.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/web/fish3d-v3c-daane-length-prop-reinforced-scales.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fweb%2Ffish3d-v3c-daane-length-prop-reinforced-scales.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/web/fish3d-v3c-daane-length-prop-scales.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v4%2Fweb%2Ffish3d-v3c-daane-length-prop-scales.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/stl/fish3d-v3a-fan-prop-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v3%2Fstl%2Ffish3d-v3a-fan-prop-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/stl/fish3d-v3a-fan-prop-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v3%2Fstl%2Ffish3d-v3a-fan-prop-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/stl/fish3d-v3a-fan-prop.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v3%2Fstl%2Ffish3d-v3a-fan-prop.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/stl/fish3d-v3b-glide-pose-prop-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v3%2Fstl%2Ffish3d-v3b-glide-pose-prop-scales.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/stl/fish3d-v3b-glide-pose-prop-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v3%2Fstl%2Ffish3d-v3b-glide-pose-prop-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/stl/fish3d-v3b-glide-pose-prop.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v3%2Fstl%2Ffish3d-v3b-glide-pose-prop.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/web/fish3d-v3a-fan-prop-scales.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v3%2Fweb%2Ffish3d-v3a-fan-prop-scales.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v3/web/fish3d-v3b-glide-pose-prop-scales.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v3%2Fweb%2Ffish3d-v3b-glide-pose-prop-scales.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/A-precursor-short-fin-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FA-precursor-short-fin-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/A-precursor-short-fin-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FA-precursor-short-fin-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/B-two-wing-glider-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FB-two-wing-glider-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/B-two-wing-glider-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FB-two-wing-glider-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/C-four-wing-glider-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FC-four-wing-glider-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/C-four-wing-glider-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FC-four-wing-glider-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/N1-cypselurus-baseline-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FN1-cypselurus-baseline-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/N1-cypselurus-baseline-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FN1-cypselurus-baseline-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/N2-area-x1.3-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FN2-area-x1.3-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/N2-area-x1.3-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FN2-area-x1.3-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/N3-area-x1.3-ar-x1.2-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FN3-area-x1.3-ar-x1.2-v2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/stl/N3-area-x1.3-ar-x1.2-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fstl%2FN3-area-x1.3-ar-x1.2-v2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/web/A-precursor-short-fin-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fweb%2FA-precursor-short-fin-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/web/B-two-wing-glider-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fweb%2FB-two-wing-glider-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/web/C-four-wing-glider-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fweb%2FC-four-wing-glider-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/web/N1-cypselurus-baseline-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fweb%2FN1-cypselurus-baseline-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/web/N2-area-x1.3-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fweb%2FN2-area-x1.3-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v2/web/N3-area-x1.3-ar-x1.2-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint-v2%2Fweb%2FN3-area-x1.3-ar-x1.2-v2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/A-precursor-short-fin-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FA-precursor-short-fin-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/A-precursor-short-fin.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FA-precursor-short-fin.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/B-two-wing-glider-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FB-two-wing-glider-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/B-two-wing-glider.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FB-two-wing-glider.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/C-four-wing-glider-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FC-four-wing-glider-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/C-four-wing-glider.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FC-four-wing-glider.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N1-cypselurus-baseline-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FN1-cypselurus-baseline-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N1-cypselurus-baseline.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FN1-cypselurus-baseline.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N2-area-x1.3-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FN2-area-x1.3-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N2-area-x1.3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FN2-area-x1.3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N3-area-x1.3-ar-x1.2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FN3-area-x1.3-ar-x1.2-stand.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/N3-area-x1.3-ar-x1.2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fstl%2FN3-area-x1.3-ar-x1.2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/web/A-precursor-short-fin.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fweb%2FA-precursor-short-fin.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/web/B-two-wing-glider.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fweb%2FB-two-wing-glider.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/web/C-four-wing-glider.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fweb%2FC-four-wing-glider.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/web/N1-cypselurus-baseline.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fweb%2FN1-cypselurus-baseline.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/web/N2-area-x1.3.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fweb%2FN2-area-x1.3.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/web/N3-area-x1.3-ar-x1.2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fprint%2Fweb%2FN3-area-x1.3-ar-x1.2.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/stl/body.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fbody.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/stl/pectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpectoral_R.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/stl/pelvic_L-dec+0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_L-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/stl/pelvic_L-dec+1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_L-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/stl/pelvic_L-dec+2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_L-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/stl/pelvic_L-dec+3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_L-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/stl/pelvic_L-dec+4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_L-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/stl/pelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_R-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_R-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_R-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_R-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_R-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fstl%2Fpelvic_R-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-light/web/assembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-light%2Fweb%2Fassembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/stl/body.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fbody.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/stl/pectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpectoral_R.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/stl/pelvic_L-dec+0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_L-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/stl/pelvic_L-dec+1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_L-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/stl/pelvic_L-dec+2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_L-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/stl/pelvic_L-dec+3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_L-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/stl/pelvic_L-dec+4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_L-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/stl/pelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_R-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_R-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_R-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_R-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_R-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fstl%2Fpelvic_R-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r1-strong/web/assembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr1-strong%2Fweb%2Fassembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/body.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fbody.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/catch_plug-x20-dz+0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fcatch_plug-x20-dz%2B0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/catch_plug-x20-dz+1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fcatch_plug-x20-dz%2B1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/catch_plug-x20-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fcatch_plug-x20-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/catch_plug-x34-dz+0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fcatch_plug-x34-dz%2B0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/catch_plug-x34-dz+1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fcatch_plug-x34-dz%2B1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/catch_plug-x34-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fcatch_plug-x34-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/pectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpectoral_R.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/pelvic_L-dec+0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_L-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/pelvic_L-dec+1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_L-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/pelvic_L-dec+2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_L-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/pelvic_L-dec+3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_L-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/pelvic_L-dec+4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_L-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/stl/pelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_R-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_R-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_R-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_R-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_R-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fstl%2Fpelvic_R-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r2-light/web/assembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr2-light%2Fweb%2Fassembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/body.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fbody.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/catch_plug-x20-dz+0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fcatch_plug-x20-dz%2B0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/catch_plug-x20-dz+1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fcatch_plug-x20-dz%2B1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/catch_plug-x20-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fcatch_plug-x20-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/catch_plug-x34-dz+0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fcatch_plug-x34-dz%2B0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/catch_plug-x34-dz+1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fcatch_plug-x34-dz%2B1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/catch_plug-x34-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fcatch_plug-x34-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/pectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpectoral_R.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/pelvic_L-dec+0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_L-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/pelvic_L-dec+1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_L-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/pelvic_L-dec+2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_L-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/pelvic_L-dec+3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_L-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/pelvic_L-dec+4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_L-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/stl/pelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_R-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_R-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_R-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_R-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_R-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fstl%2Fpelvic_R-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r3-daane/web/assembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr3-daane%2Fweb%2Fassembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/print-set-r4-daane-printfix.zip"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fprint-set-r4-daane-printfix.zip"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/body.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fbody.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/catch_plug-x20-dz+0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fcatch_plug-x20-dz%2B0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/catch_plug-x20-dz+1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fcatch_plug-x20-dz%2B1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/catch_plug-x20-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fcatch_plug-x20-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/catch_plug-x34-dz+0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fcatch_plug-x34-dz%2B0.0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/catch_plug-x34-dz+1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fcatch_plug-x34-dz%2B1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/catch_plug-x34-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fcatch_plug-x34-dz-1.5.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpectoral_L.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pectoral_R.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpectoral_R.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_L-dec+0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_L-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_L-dec+1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_L-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_L-dec+2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_L-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_L-dec+3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_L-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_L-dec+4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_L-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_L-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_R-dec+0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_R-dec%2B0.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_R-dec+1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_R-dec%2B1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_R-dec+2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_R-dec%2B2.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_R-dec+3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_R-dec%2B3.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_R-dec+4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_R-dec%2B4.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/stl/pelvic_R-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fstl%2Fpelvic_R-dec-1.stl"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/glider/r4-daane-printfix/web/assembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/print-laws?file=artifacts%2Fglider%2Fr4-daane-printfix%2Fweb%2Fassembled.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/fish3d/fish3d-N1-cypselurus-baseline/fish.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/fish3d/fish3d-v3a-fan/fish-adult-fao.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/fish3d/fish3d-v3b-glide-pose/fish-adult-fao.glb"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/fish3d/fish3d-v3c-daane-length/fish-adult-fao.glb"
+    },
+    {
+      "text": "basal epithelium",
+      "url": "https://studio.morphoswarm.ai/#/blueprints?region=basal-epithelium"
+    },
+    {
+      "text": "surface epithelium",
+      "url": "https://studio.morphoswarm.ai/#/blueprints?region=surface-epithelium"
+    },
+    {
+      "text": "fibroblast mesenchyme",
+      "url": "https://studio.morphoswarm.ai/#/blueprints?region=fibroblast-mesenchyme"
+    },
+    {
+      "text": "osteoblast and joint",
+      "url": "https://studio.morphoswarm.ai/#/blueprints?region=osteoblast-and-joint"
+    },
+    {
+      "text": "hematopoietic",
+      "url": "https://studio.morphoswarm.ai/#/blueprints?region=hematopoietic"
+    },
+    {
+      "text": "pectoral fin field",
+      "url": "https://studio.morphoswarm.ai/#/blueprints?region=pectoral-fin-field"
+    },
+    {
+      "text": "organism reference",
+      "url": "https://studio.morphoswarm.ai/#/blueprints?region=organism-reference"
+    },
+    {
+      "text": "the regulatory applicability map",
+      "url": "https://studio.morphoswarm.ai/#/regulatory"
+    },
+    {
+      "text": "Change it in Engineering",
+      "url": "https://studio.morphoswarm.ai/#/engineering"
+    },
+    {
+      "text": "Download MP4",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4"
+    },
+    {
+      "text": "limits and hashes",
+      "url": "https://studio.morphoswarm.ai/#/simulations#sim-fish3d-render"
+    },
+    {
+      "text": "Download STL",
+      "url": "https://studio.morphoswarm.ai/artifacts/print/stl/A-precursor-short-fin.stl"
+    },
+    {
+      "text": "Download prop STL (smooth, gated) (2.2 MB)",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop.stl"
+    },
+    {
+      "text": "Download prop with scale relief STL (8.8 MB)",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-scales.stl"
+    },
+    {
+      "text": "Download stand STL (0.1 MB)",
+      "url": "https://studio.morphoswarm.ai/artifacts/print-v4/stl/fish3d-v3c-daane-length-prop-stand.stl"
+    },
+    {
+      "text": "Modelled mechanics at the organ scale",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "All simulations",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "Evidence status",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "About this project",
+      "url": "https://studio.morphoswarm.ai/#/about"
+    },
+    {
+      "text": "Generative biology: from mechanistic simulation to equation-conditioned models",
+      "url": "https://studio.morphoswarm.ai/#/generative"
+    },
+    {
+      "text": "Precursor-inspired short-fin form (rejected glider candidate)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "Enlarged-pectoral two-wing glider (Exocoetus-type proportions)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=cellular"
+    },
+    {
+      "text": "▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "Open the Flying fish studio",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish"
+    },
+    {
+      "text": "All projects",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Open the Frontier",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "Claims and evidence",
+      "url": "https://studio.morphoswarm.ai/#/knowledge"
+    },
+    {
+      "text": "Engineering a coral",
+      "url": "https://studio.morphoswarm.ai/#/studio/coral"
+    },
+    {
+      "text": "Redesigning insect flight",
+      "url": "https://studio.morphoswarm.ai/#/studio/insect-flight"
+    },
+    {
+      "text": "Living machines that do work",
+      "url": "https://studio.morphoswarm.ai/#/studio/xenobot"
+    },
+    {
+      "text": "snapshot.json",
+      "url": "https://studio.morphoswarm.ai/data/snapshot.json"
+    },
+    {
+      "text": "catalog.json",
+      "url": "https://studio.morphoswarm.ai/data/catalog.json"
+    },
+    {
+      "text": "licence",
+      "url": "https://studio.morphoswarm.ai/vendor/katex/LICENSE"
+    }
+  ],
+  "media": [
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/A-precursor-short-fin.png",
+      "alt": "Precursor-inspired short-fin form (rejected glider candidate)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/B-two-wing-glider.png",
+      "alt": "Enlarged-pectoral two-wing glider (Exocoetus-type proportions)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/biomodels-delta-notch/delta_notch_replay_poster.png",
+      "alt": "Two-cell Delta-Notch replay (BioModels BIOMD0000001047)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/fin-mechanics/poster.png",
+      "alt": "Elastic fin-ray surrogate (Euler-Bernoulli cantilever)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/bioelectric-cells/poster.png",
+      "alt": "Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/mechanobio-clutch/poster.png",
+      "alt": "Adhesion clutch mechanics (render of a simulation)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print-v4/img/fish3d-v3c-daane-length-prop-scales.png",
+      "alt": "Display prop of fish3d-v3c-daane-length — rendered print geometry",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print-v4/img/fish3d-v3c-daane-length-prop-reinforced-scales.png",
+      "alt": "Reinforced display prop of fish3d-v3c-daane-length — rendered print geometry",
+      "poster": ""
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/fish3d-render/poster.png"
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/A-precursor-short-fin.png",
+      "alt": "Precursor-inspired short-fin form (rejected glider candidate)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/print/img/B-two-wing-glider.png",
+      "alt": "Enlarged-pectoral two-wing glider (Exocoetus-type proportions)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/biomodels-delta-notch/delta_notch_replay_poster.png",
+      "alt": "Two-cell Delta-Notch replay (BioModels BIOMD0000001047)",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/fin-mechanics/poster.png",
+      "alt": "Elastic fin-ray surrogate (Euler-Bernoulli cantilever)",
+      "poster": ""
+    }
+  ]
+}

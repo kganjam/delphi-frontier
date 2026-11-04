@@ -1,0 +1,75 @@
+Skip to content
+MorphoSwarm
+Studio
+CLAIMS AND EVIDENCE: DELPHI
+Studio
+Frontier
+Knowledge
+Evidence
+System
+About
+Search the catalog
+Search
+Live runtime
+Ecology scenarios
+
+Four bounded airborne scenarios of the v3a biological candidate, integrated by MuJoCo from per-fin quasi-steady forces and assumed drag. The viewer plays the states the solver saved.
+
+computed reduced model empirical validation: unknown computed reduced-model scenarios; no calibrated biological implementation. MuJoCo3.17.0 CPU; external quasisteady forces; no CFD. The mass, centre of gravity, inertia, drag, hinges and controller are engineering assumptions, not measurements of a fish or of the print resin. Biological success probability: null (none is claimed). A school response flag is an encoded rule, not a neural circuit or measured survival. Mesh source units are metres (m; bbox_mm metadata is separate).
+
+Saved-state viewer
+What each run ended on (from summary.json)
+Per-scenario run receipts
+SCENARIO	ENDED AT (S)	REASON	PLANNED DURATION REACHED	HALF-STEP: MAX POSITION / ORIENTATION DIFFERENCE	FROZEN BOUNDS	TRAJECTORY SHA256
+Passive glide	1.065	water interface reached; no water physics modeled	no	0.0002483 m / 0.00001948 rad	pass	9e12faab5309…
+Feedback glide	1.2	duration reached	yes	0.004174 m / 0.0005653 rad	pass	e74892859de1…
+Escape, with neighbours	0.8515	effective fin alpha outside reused VLM domain	no	0.001518 m / 0.002143 rad	pass	bddb1f9394a6…
+Escape, no neighbours (ablation)	0.8515	effective fin alpha outside reused VLM domain	no	0.001602 m / 0.002143 rad	pass	9fee9c8dea9f…
+
+A run that ends at the water interface or at the edge of the reused VLM domain is a stop, not a result beyond it: no water physics follows and no force is extrapolated. Half-step columns compare only the common saved times.
+
+Rendered movies (from the same saved states)
+glide · 62 frames. Actual saved-state selection without interpolation; stopped panels explicitly hold final observed state for comparison display, not new physics evidence Render receipt: glide.provenance.json. Download MP4
+school · 44 frames. Actual saved-state selection without interpolation; stopped panels explicitly hold final observed state for comparison display, not new physics evidence Render receipt: school.provenance.json. Download MP4
+How much do the assumed parameters matter?
+
+assumed engineering scenarios same-model numeric checks, not biological confidence How do assumed mass, local reaction delay and hinge stiffness alter the paired effect of neighbor cues on actual airborne motion and bounded actuator work? Seven assumed settings (seven-point axial sensitivity design; no interaction estimates) were each run for two seeds, with and without the neighbour cue: 28 scenarios, 28 computed, 28 passing the half-step numeric gate. All 28 stopped at the edge of the reused VLM domain (effective fin alpha outside reused VLM domain), so every endpoint is a domain stop, not a landing or escape outcome. Exact disjoint union of original26 and separately executed2 missing arms; source partial receipts remain immutable. Shared-model axial scenarios, not biological success probabilities.
+
+Paired differences per setting and seed, from the aggregate of 28 scenarios. Display colours are not a fitness score. Figure provenance (JSON) · Aggregate summary (JSON) · Uncertainty manifest
+Paired neighbour-cue differences (neighbours minus ablation)
+SETTING	SEED	RESPONSE COUNT	POSITIVE ACTUATOR WORK (J)	MEAN LATERAL DISPLACEMENT (M)
+Baseline	20261031	6	0.002302	0.005116
+Baseline	20261101	7	0.002468	0.003668
+Mass 0.04 kg	20261031	6	0.001754	0.005848
+Mass 0.04 kg	20261101	7	0.001925	0.004208
+Mass 0.06 kg	20261031	6	0.002569	0.0043
+Mass 0.06 kg	20261101	7	0.002703	0.003028
+Reaction delay 0.02-0.06 s	20261031	7	0.003531	0.01397
+Reaction delay 0.02-0.06 s	20261101	7	0.003569	0.0131
+Reaction delay 0.08-0.16 s	20261031	3	0.001358	0.001323
+Reaction delay 0.08-0.16 s	20261101	4	0.00115	0.0006601
+Hinge stiffness 0.1 N m/rad	20261031	6	0.003114	0.005777
+Hinge stiffness 0.1 N m/rad	20261101	7	0.002996	0.004208
+Hinge stiffness 0.3 N m/rad	20261031	6	0.00162	0.004351
+Hinge stiffness 0.3 N m/rad	20261101	7	0.001734	0.003065
+
+The original run of 26 scenarios is native status "partial or failed" and stays as recorded; two disjoint missing arms were run separately (computed requested missing arms). The aggregate is their exact disjoint union. Original 26-scenario figure · its provenance. No CFD/wake/collision model; no water phase; no calibrated nervous system or fish phenotype probability. Interactions between settings are not estimated.
+
+Files, failures kept
+summary.json · controls.json · receipt.json · geometry-manifest.json · RESULTS.md
+artifacts/ecology/run/failed-attempt.json: control serialization failure; no production
+artifacts/ecology/run-v2: initial dt refinement failed; preserved
+artifacts/ecology/render-v2: rejected display-unit draft
+artifacts/ecology/render-v2-corrected: correct geometry, diagnostic movie of rejected original numerics
+Limits stated by the interface
+No underwater phase or takeoff propulsion
+No collision/wake interactions
+No genetic or neuronal implementation inferred
+Mass/CG/inertia/drag/controller and sensory parameters are assumptions
+Terminal domain exits remain visible
+
+snapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)
+
+Input files and sha256
+
+Design geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.

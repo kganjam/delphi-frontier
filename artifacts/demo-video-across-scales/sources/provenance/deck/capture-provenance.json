@@ -1,0 +1,69 @@
+{
+  "source_url": "https://delphibio.org/deck/",
+  "retrieved_at": "2026-11-03T12:43:28.915341-08:00",
+  "source_html_sha256": "998f9c854675717de1be3873a7a419d5504d8e11e73e5db4758ae35787b69511",
+  "version": "Published live six-slide deck states through3Nov2026; exact submitted hackathon version not established.",
+  "notes": "Screenshots preserve original complete slide compositions, including original headers, captions and caveats. Renderer chooses appropriate crop; no redesigned card layouts.",
+  "screenshots": [
+    {
+      "file": "../../deck/original-slide-1.png",
+      "slide": 1,
+      "sha256": "98b74268062829acb688991adef693121ac296ecd75ba6db81c2ee28be9d7ecb",
+      "bounds": {
+        "x": 16,
+        "y": 36,
+        "width": 1887.9998779296875,
+        "height": 1062
+      }
+    },
+    {
+      "file": "../../deck/original-slide-5.png",
+      "slide": 5,
+      "sha256": "9e428498e221a5559bc420e2852d07547f6b4249076aa761c36d5a2e8115f63f",
+      "bounds": {
+        "x": 16,
+        "y": 36,
+        "width": 1887.9998779296875,
+        "height": 1062
+      }
+    },
+    {
+      "file": "../../deck/original-slide-6.png",
+      "slide": 6,
+      "sha256": "8e8068c8f25393f6cd31e77776d8af384f997cf9e3b62cc821ed1d5ca2ec0522",
+      "bounds": {
+        "x": 16,
+        "y": 36,
+        "width": 1887.9998779296875,
+        "height": 1062
+      }
+    }
+  ],
+  "animation": {
+    "source": "Actual live slide1 canvas animation",
+    "frames": 180,
+    "fps": 15,
+    "output_duration_seconds": 12,
+    "actual_capture_elapsed_ms": 12399.217125000001,
+    "clip": {
+      "x": 16,
+      "y": 36,
+      "width": 1887.9998779296875,
+      "height": 1062
+    },
+    "outputs": [
+      {
+        "file": "../../deck/original-slide-1-animated-12s.mp4",
+        "sha256": "ce2e3b47345fb5249802b22afae7bfd0781bc1aca2188ceadfdabfd14b739939",
+        "bytes": 5220211
+      },
+      {
+        "file": "../../deck/original-sphere-animated-12s.mp4",
+        "sha256": "47ada355bbb3a3381da97dbbb8d87ac000c81449f441d7f5f3ad53126305b235",
+        "bytes": 5008128
+      }
+    ],
+    "notes": "180 real page screenshots over12.399seconds, encoded at15fps/12seconds, repeated to30fps. Existing canvas rendered throughout; no graph synthesis."
+  },
+  "archive_note": "Public derivative of the capture receipt: omitted private conversation pointers and per-frame cache filenames; preserved source identity, capture measurements and output hashes."
+}

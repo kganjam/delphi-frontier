@@ -1,0 +1,114 @@
+Skip to content
+MorphoSwarm
+Studio
+CLAIMS AND EVIDENCE: DELPHI
+Studio
+Frontier
+Knowledge
+Evidence
+System
+About
+Search the catalog
+Search
+Live runtime
+Experimentation
+
+How measurements could be designed to learn form and function, or sequence and function, within one scale and across scales. The interventions below are plans: no wet-lab observation has been made by this project, and no experiment is run or submitted from this page. A separate recorded update reuses published specimen measurements to test a fitted model.
+
+Plans, not results. A measurement category below is something to consider, not an experiment performed. A computed prospective design (when one exists) is a calculation under assumed noise and costs, not a measurement and not a probability of biological success. Cells, technical repeats and simulations are not independent animal replicates. The goal is a contextual transfer model for named species, genotype, cell state, stage, environment and method, not a universal law.
+
+Scale
+Molecular
+Macromolecular
+Subcellular
+Cellular
+Tissue
+Organ
+Neural / control
+Organism
+Developmental
+Collective
+Ecological / evolutionary
+Region (optional)
+Intervention (optional)
+Apply
+
+Context is kept in the address: scale Organism. A region or intervention here only labels what you are looking at; it selects no data.
+
+Within scale
+Across scales
+Current data at the Organism scale
+
+2 recorded models, 10 model or data cards, 0 linked claims and 3 open questions are recorded at this scale. Reused observations and fitted predictions are labelled separately; these are not measurements from the proposed interventions.
+
+Glide trajectories at a fixed launch (point mass) simulated
+2D low-Reynolds flow past the N1 silhouette (lattice-Boltzmann), verdict FAIL simulated (video: render_of_simulation)
+Candidate N1 as a 3D model: path-traced turntable path-traced rendering of the candidate mesh (not a measurement, not aerodynamics)
+3D flow past the fish3d candidate, Re = 1000, 128 cells along the body (WaterLily, H100) simulated (numerical demo; video is a render of solver slices)
+3D flow past the fish3d candidate, Re = 1000, 192 cells along the body (WaterLily, H100) simulated (numerical demo; video is a render of solver slices)
+Rhythm-generator controller driving a designed joint servo (eight segments) SimulationResult
+Static aeroelastic coupling of the fins: 36 arms, bending-only torsion-rigid scaffold computed (video: render of saved states)
+Aeroelastic fidelity ladder: 45 native arms, no effect magnitude resolved computed engineering result (video and plots: renders of returned states)
+Observed-data update: added specimens worsen held-out transfer Reused observed measurements and separately labelled fitted predictions
+Soft-voxel toy body under a travelling actuation wave (Voxelyze) SimulationResult: model-only computed states from a CPU engine benchmark; not the proposed biological carrier
+Open questions here
+EQ1 Turn Davenport (2003) into a real size bound
+EQ3 Resolve the aspect-ratio upper bound
+EQ5 Is a numeric L/D measurable from the existing wind-tunnel work?
+
+Open the Organism panel in the Studio
+
+Candidate interventions, readouts and controls
+
+planner artifacts present 4 files in artifacts/experimental-design. The computed plan is shown below; the files are listed at the bottom with their hashes.
+
+Prospective design comparison (a calculation, not a measurement)
+
+prospective only assumption based The prior and noise values are assumed, not fitted. 0 measurement rows exist; no observation, posterior mean or probability of biological success is produced. Unknown and unestimated; no simulator-to-beam or beam-to-biology discrepancy model is fitted.
+
+Target: log_EI_ratio (unit 1) in an abstract cantilever model, delta = F * L^3 / (3 * EI). Euler-Bernoulli static small-deflection cantilever point-load model; mathematical demonstration only. State: proposal_unlinked, design version: cantilever-identifiability-v1.
+
+Objective: expected target variance reduction per cost (assumed readout cost unit); analytic linear-Gaussian prospective covariance; no observed response values.
+
+Candidate designs, ordered by the declared objective
+ORDER	DESIGN	LIKELIHOOD RANK	COST (ASSUMED UNITS)	TARGET VARIANCE, PRIOR → EXPECTED POSTERIOR	VARIANCE REDUCTION PER COST	UNIDENTIFIED DIRECTION
+1 selected under these assumptions	mixed_load_deflection
+Acquire an independent load-scale read plus one normalized deflection read.	2 of 2	2
+two reads at one assumed unit each; not a dollar cost	0.36 → 0.0189474	0.170526	none: full rank
+2	deflection_only
+Set nominal force ratios 1 and 2; normalize out their known offsets.	1 of 2 rank deficient	2
+two reads at one assumed unit each; not a dollar cost	0.36 → 0.232941	0.0635294	nullspace [0.707107, 0.707107]
+Assumptions, controls, limits and links
+
+What a recorded plan must carry (SPEC-013): exact source claims and model version; intervention variables, ranges and units; readouts, sampling times, detection limits and noise assumptions; controls, randomization and the biological replicate unit; input dataset hashes; priors, likelihood and identifiability checks; capability, duration and cost units; protocol hash and state; and an acquisition score kept distinct from a probability of biological success.
+
+Prospective planner: protocol, run and result states
+
+A plan moves through proposal → ready → running → failed → completed → review. Failed and null experiments are kept.
+
+PLANS PROPOSED
+1 (prospective calculation, state proposal_unlinked)
+COMPUTATIONAL PROTOCOLS FROZEN
+1: the prospective calculation (protocol ab1c86803159…). It computes a design; it observes nothing
+WET-LAB PROTOCOLS FROZEN
+0 recorded
+RUNS STARTED
+0 recorded
+RESULTS INGESTED
+0: no observation from this proposed experiment exists
+
+Counts of zero mean none are recorded here, not that none could exist elsewhere.
+
+Planner artifacts
+Planner files
+FILE	SCHEMA	BYTES	SHA256
+artifacts/experimental-design/manifest.json	frontier.experimental-design.manifest/1	1090	42924e7dfffc…
+artifacts/experimental-design/plot-data.json	frontier.experimental-design.plot-data/1	2023	70754915b795…
+artifacts/experimental-design/protocol.json	frontier.experimental-design.request/1	10025	25a22fcd66e5…
+artifacts/experimental-design/result.json	frontier.experimental-design.plan/1	13971	3e65ad8a398a…
+
+snapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)
+
+Input files and sha256
+
+Design geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.
