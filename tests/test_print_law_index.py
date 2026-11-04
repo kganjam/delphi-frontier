@@ -23,7 +23,7 @@ from engineering import print_law_index as PLI
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = json.loads((ROOT / "artifacts/print-law-index.schema.json").read_text())
 FROZEN_AT = {"r1-strong": "19f4546", "r1-light": "19f4546", "r2-light": "1fac368", "r3-daane": "361480f",
-             "r4-daane-printfix": "bd2fcf3"}
+             "r4-daane-printfix": "bd2fcf3", "r5-daane-catchfair": "06a3b95"}
 
 
 @pytest.fixture(scope="module")
