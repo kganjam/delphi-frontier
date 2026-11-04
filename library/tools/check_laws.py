@@ -50,11 +50,20 @@ MANDATORY = ["id", "name", "equation", "symbols", "mechanism",
 # Mathematical constants an equation may use without declaring them. Functions (sqrt, exp, log, ...)
 # are handled by the evaluator itself; these are the bare NAMES, which it would otherwise call
 # undeclared. The other bridge had no such allowance, and refused poiseuille.yaml over `pi`.
-MATH_CONSTANTS = {"pi": math.pi, "e": math.e}
+#
+# `e` IS DELIBERATELY NOT HERE. Euler's number is a plausible name for strain, energy, eccentricity
+# or a unit vector, and this allowance applies exactly when the author FORGOT to declare the symbol
+# -- so an entry meaning strain would have been checked as though e were 2.718 and dimensionless,
+# silently. Measured under the old allowance: eval_side("e * L", {L}) returned L^1. Nothing in the
+# corpus relies on it (only `pi` is, by poiseuille), so removing it costs nothing, and `exp(1)`
+# remains available for the number itself. Found by morphoswarm-34 reviewing env_for.
+MATH_CONSTANTS = {"pi": math.pi}
 
 # The library writes exponents as `^`, which Python reads as XOR, so the expression must be
 # translated before `ast` sees it.
 _NUMERIC_EXPONENT = re.compile(r"\^(-?\d+(?:/\d+)?(?:\.\d+)?)")
+# `^2/3` spelled without parentheses -- the ambiguous form refused in check_entry below.
+_BARE_FRACTION_EXPONENT = re.compile(r"\^(-?\d+(?:\.\d+)?)/(\d+)")
 
 
 def translate(expr: str) -> str:
@@ -70,7 +79,11 @@ def translate(expr: str) -> str:
     A SYMBOLIC exponent (`(x/x_ref)^b`) is passed through as `**b`; the evaluator then refuses it if
     the base is dimensioned, since `metres**b` has no fixed dimension for arbitrary real b.
     """
-    expr = re.sub(r"\bsum\s*\(([^)]*)\)", r"(\1)", expr.strip())   # a sum preserves dimension
+    # Drop the word `sum`, keep its parentheses: `sum(r_i^3)` -> `(r_i^3)`. The previous form
+    # matched `sum\(([^)]*)\)`, whose `[^)]*` stops at the FIRST close paren; on a nested argument
+    # it gave the right answer only because the surplus `)` was left behind to close the group.
+    # Deleting the word is the same transformation with no luck in it.
+    expr = re.sub(r"\bsum\s*(?=\()", "", expr.strip())
     expr = _NUMERIC_EXPONENT.sub(r"**(\1)", expr)
     return expr.replace("^", "**")                                  # any remaining symbolic exponent
 
@@ -157,6 +170,17 @@ def check_entry(path: Path) -> list[str]:
         except (ValueError, UnitError) as e:
             problems.append(f"{path.name}: {e}")
     eq = doc.get("equation", "")
+    # WHITESPACE MUST NOT DECIDE AN EXPONENT. `U^3/2` is U to the three-halves; `U^3 / 2` is U cubed
+    # over two. Same intent, different dimension, and the only difference is a space. Both readings
+    # are defensible, so the fix is to forbid the ambiguous SPELLING rather than to pick a side: a
+    # fractional power is written `^(a/b)`, after which `^a / b` is unambiguously a quotient. No
+    # corpus entry was wrong under the old rule, so this is a hazard closed, not a bug fixed.
+    # Found by morphoswarm-34 reviewing translate().
+    for m in _BARE_FRACTION_EXPONENT.finditer(eq or ""):
+        problems.append(
+            f"{path.name}: `{m.group(0)}` is an ambiguous exponent -- adding a space would change "
+            f"its meaning. Write the power as `^({m.group(1)}/{m.group(2)})`, or space the `/` if "
+            f"a quotient was meant")
     if eq and "=" in eq and dims:
         sides = [s for s in eq.split("=") if s.strip()]
         try:
@@ -217,6 +241,17 @@ def selftest() -> int:
            dim("(E / (rho * g))^1/3 * d^2/3", E="M/(L*T^2)", rho="M/L^3", g="L/T^2", d="L"), "L^1")
     expect("M^-0.316 keeps its sign and decimal", dim("M_b^-0.316", M_b="M"), "M^-79/250")
     expect("r^4 is still an area squared", dim("r^4", r="L"), "L^4")
+
+    print("  -- the meaning of an exponent must not depend on whitespace --")
+    expect("a PARENTHESISED fractional power is the supported spelling", dim("d^(2/3)", d="L"), "L^2/3")
+    expect("`^3 / 2` with spaces is a quotient and stays one", dim("U^3 / 2", U="L/T"), "L^3·T^-3")
+    expect("a bare `^2/3` IS reported", bool(_BARE_FRACTION_EXPONENT.search("k * d^2/3")), True)
+    expect("a plain integer exponent is NOT reported", bool(_BARE_FRACTION_EXPONENT.search("I = r^4")), False)
+    expect("a spaced quotient is NOT reported", bool(_BARE_FRACTION_EXPONENT.search("P = U^3 / 2")), False)
+
+    print("  -- `e` is not silently Euler's number --")
+    refuses("an undeclared `e`, which could be strain or energy", "e * L", {"L": "L"})
+    expect("pi is still allowed undeclared", dim("pi * r^2", r="L"), "L^2")
 
     print("  -- sums and differences are CHECKED, not assumed (from swarm_units) --")
     expect("a tube's I = pi*(R^4 - r_in^4)/4 is an area^2",
