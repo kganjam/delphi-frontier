@@ -30,13 +30,29 @@ So the single-sequence model left both functionally central sites unmodelled (~4
 MSA-conditioned model resolved both (~80–83). For a channel whose job is selective K+ conduction,
 that is the difference between a structure that can be reasoned about and one that cannot.
 
-**The confident block is residues ~1–250 and the poor region is ~260–448.** That split is what a
-K2P channel plus a long cytoplasmic C-terminal tail would look like. **This mapping is my
-inference** from the fold and the alignment, *not* a cited annotation: Q6PFU3 is an unreviewed
-TrEMBL entry with **no curated FUNCTION comment and no topology** (checked against UniProtKB
-release 2026_03, 2026-11-03). A low pLDDT in a tail is also consistent with genuine disorder,
-which is a prediction about flexibility, not a failure — the two cannot be told apart from pLDDT
-alone.
+**SUPERSEDED — the "disordered C-terminal tail" reading was wrong.** I originally read Boltz2's
+collapse beyond residue ~260 as a disordered cytoplasmic tail. The ESMFold2 run (added later)
+refutes it, and the alignment shows the mechanism. Counting how many of the 71 PDB70 hits align
+at each query position:
+
+| region | mean MSA depth | Boltz2 pLDDT | ESMFold2 pLDDT |
+|---|---|---|---|
+| residues 1–250 | 21.4 | 77.5 | 89.2 |
+| residues 261–448 | **0.5** | 41.4 | **76.4** |
+
+MSA depth is **exactly 0.0 from residue 326 onward** — crystallised K2P constructs are usually
+truncated before the cytoplasmic tail, so PDB70 has no sequence there. Boltz2's confidence tracked
+*where its alignment ran out*, not where the protein is disordered. ESMFold2, which uses a language
+model and no MSA, is moderately confident (76.4) across the same region.
+
+This removes my evidence for a disordered tail. It does not establish that the tail is ordered:
+76.4 is moderate and one model's confidence is not a measurement. The correct statement is that
+the Boltz2 signal was never evidence about disorder. Q6PFU3 remains an unreviewed TrEMBL entry
+with no curated topology (UniProtKB 2026_03, checked 2026-11-03), so there is still no annotation
+to appeal to.
+
+**ESMFold2 is the best model of kcnk5b obtained here**: mean pLDDT 83.6, pTM 0.607, 90.0% of
+residues >70, both selectivity filters at 96.5 and 96.3. See `RESULTS.md`.
 
 **What the alignment contains.** 71 hits over 69 PDB entries. Ten identities were checked against
 RCSB rather than recalled (`msa_kcnk5b/HITS.md`); the other 59 were not. The relevant one:

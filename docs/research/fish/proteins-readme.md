@@ -217,7 +217,27 @@ No result in this directory came from the duplicate run.
 
 ---
 
-## 8. STATUS OF THE ESMFOLD2 CONTRACT: solved, but not yet run to completion
+## 8. STATUS OF THE ESMFOLD2 CONTRACT: SOLVED AND RUN TO COMPLETION
+
+**Closed.** `op-2112f97ee3d11f6e`, key `esmfold2-kcnk5b-fresh-1793775862`, **SUCCEEDED**.
+Validator `esmfold2-biohub-v3-4-0` status `passed`, 1 structure, 3,582 atoms, 56.0 s of compute.
+Outputs: `esmfold2_kcnk5b/kcnk5b_esmfold2.cif` and `confidence.json`
+(mean pLDDT **83.6**, pTM **0.607**) — the best kcnk5b model obtained here by a wide margin.
+
+**How the wedge cleared.** Exactly as the server instructed: replaying the original request under
+its *original* idempotency key, repeatedly, with no new keys minted. It took roughly 25 minutes of
+replays; the admission then completed on its own and the operation moved
+`ADMISSION_PENDING -> QUEUED -> RUNNING -> SUCCEEDED`. So `ADMISSION_PENDING` is a transient
+back-pressure state on this account, not a permanent wedge — provided the submission carries a key.
+Minting a fresh key instead would have added another stuck operation rather than recovering this one.
+
+**The output manifest confirms the input shape.** It uses the identical structure
+(`entries[]` with `name`, `semantic_type`, nested `artifact`) and declares
+`protein-structure-mmcif/v1` and **`structure-confidence-json/v1`** — the latter is *not* in the
+advertised catalogue either, and independently corroborates the `<thing>-json/v1` family that
+`esmfold2-input-json/v1` belongs to.
+
+### Superseded note (kept for the record)
 
 This distinction matters and is stated plainly rather than blurred.
 
@@ -253,3 +273,13 @@ clear the admission backlog.
 the ESMFold2 *structure* of kcnk5b was not obtained, and the structures that were obtained came
 from OpenFold2 and Boltz2 instead. A future session with a cleared backlog should be able to run
 the shape in §1 unchanged.
+
+---
+
+## 9. Catalogue vs runtime disagreement (one line, as requested)
+
+`list_scientific_models` reports `availability: "available"` for `esm2-3b` and `stab-ddg`, while
+submitting to either returns `MODEL_MAINTENANCE: This App is temporarily paused for maintenance`.
+`esm2-650m` behaves the same way. **The catalogue's `availability` field is not a runtime claim**
+— the only reliable test is a submission, which is cheap because the maintenance check returns
+`admission: not-submitted` and creates no operation. These were not retried further.
