@@ -1,0 +1,192 @@
+id: kleiber
+name: "Kleiber's law (metabolic rate versus body mass) -- exponent contested: 3/4 or 2/3"
+usability: descriptive           # see `usability_note`: the exponent itself is unresolved
+usability_note: >
+  Entered as descriptive. The law is often used as if it were constraining (plug in a mass, get a
+  wattage), but the exponent is contested between 3/4 and 2/3, the coefficient changes from lineage to
+  lineage, and the two candidate exponents diverge by a factor of about 2.6 across the five orders of
+  magnitude of mass in the White and Seymour (2003) mammal data set (calculated, see worked examples).
+  A number that moves by a factor of two depending on which side of an open dispute you take is not a
+  number a design can be checked against. It is usable only as an order-of-magnitude prior, and only
+  inside the taxon and metabolic state it was fitted to.
+equation: "B = B0 * (M / M0)^b"
+latex: "B = B_0 \\left(\\frac{M}{M_0}\\right)^{b}, \\qquad b \\in \\{\\tfrac{3}{4}\\ (\\text{Kleiber}),\\ \\tfrac{2}{3}\\ (\\text{geometric})\\}\\ \\text{-- unresolved}"
+symbols:
+  B:  {dimension: M*L^2/T^3, units: W, description: "basal (resting, post-absorptive, thermoneutral) metabolic rate of a whole organism"}
+  B0: {dimension: M*L^2/T^3, units: W, description: "metabolic rate of an organism of the reference mass M0; fitted per taxon and NOT transferable between exponents"}
+  M:  {dimension: M, units: kg, description: body mass}
+  M0: {dimension: M, units: kg, description: "reference mass, conventionally 1 kg; written explicitly so the coefficient keeps the units of power whatever b is"}
+  b:  {dimension: "1", units: dimensionless, description: "scaling exponent; 3/4 under Kleiber, 2/3 under geometric (surface) scaling; the contested quantity"}
+constants:
+  b_kleiber:
+    value: 0.75
+    note: >
+      The value Kleiber advocated (Kleiber 1932; 1947). No measured interval is attached here because I
+      read only bibliographic listings of those papers, not their text; I did not see the fitted
+      slope or its error. A search summary of a secondary source (Blaxter 1986) reports a slope of
+      0.739 from Kleiber's own data, but I have not read that source, so it is not entered as a value.
+  b_geometric:
+    value: 0.667
+    note: >
+      2/3, the exponent expected if heat loss through a geometrically similar surface sets the rate.
+      White and Seymour (2003, abstract) report BMR proportional to M^(2/3) for 619 mammal species
+      after correcting for body temperature, digestive state and phylogeny. Their confidence interval
+      is unknown to this entry: the full text was not reachable (PNAS returned 403; Europe PMC full
+      text returned HTTP 500).
+  b_intraspecific_heusner:
+    value: 0.67
+    interval: [0.64, 0.70]
+    note: >
+      Heusner (1982, abstract): within-group exponent 0.67 +/- 0.03 across 7 species (Peromyscus to
+      cattle), stated by the author as significantly different from 0.75. The interval is the
+      reported +/- 0.03 written as bounds; the abstract does not say whether that is an SE or a CI.
+  b_mammal_PGLS_spread:
+    value: unknown
+    note: >
+      White, Blackburn and Seymour (2009, abstract) report that a non-phylogenetic analysis of the
+      same data gives 0.67-0.69, but that most phylogenetically informed exponents differ
+      significantly from BOTH 0.67 and 0.75, and differ between lineages. The individual PGLS values
+      are not in the abstract and were not read.
+  b_order_heterogeneity_isaac_carbone:
+    value: 0.75
+    interval: [0.68, 0.82]
+    note: >
+      Isaac and Carbone (2010, abstract; 1242 animal species, mixed-effects model): the mean exponent
+      converges on 3/4, but 50% of orders lie OUTSIDE 0.68-0.82. The interval is therefore the range
+      that half of all orders fall outside, not a confidence interval on the mean.
+  b_maximal_VO2max:
+    value: 0.872
+    interval: [0.813, 0.932]
+    note: >
+      Weibel et al. (2004, abstract): maximal (exercise) metabolic rate in 34 eutherian species,
+      7 g-500 kg; 95% confidence limits as given. A different metabolic state, not a competing value
+      for basal rate -- recorded because people apply Kleiber's exponent to active animals.
+  B0_mammal_kleiber_1961:
+    value: 3.39
+    units: W
+    note: >
+      Kleiber (1961) recommended 70 kcal/day x M^0.75 (M in kg) for mammals at thermoneutrality and
+      rest. Read level search-summary only. 70 kcal/day = 70 x 4184 J / 86400 s = 3.39 W (my unit
+      conversion, calculated). Valid only with b = 0.75: with b = 2/3 the fitted coefficient is a
+      different number in different units.
+mechanism: >
+  UNRESOLVED, and the two camps propose different mechanisms, which is why the exponent matters.
+  (1) Geometric / surface argument: a body that is geometrically similar has surface area proportional
+  to M^(2/3), and if heat loss across that surface sets resting heat production the exponent is 2/3.
+  Dodds, Rothman and Weitz (2001, abstract) treat 2/3 as the dimensional-analysis null and report
+  "little evidence for rejecting alpha = 2/3 in favor of alpha = 3/4" in re-analysed mammal and bird
+  data. (2) Network argument: West, Brown and Enquist (1997, abstract) derive 3/4 from space-filling
+  fractal branching networks that minimise dissipated energy and have size-invariant terminal units.
+  Dodds et al. (2001) state that the theories for 3/4 "require assumptions that render them
+  unconvincing"; Kolokotrones et al. (2010, abstract) state that the vascular-network model fails their
+  curvature test. Heusner (1982) argues the interspecific 0.75 is a statistical artifact of pooling
+  species whose 2/3-power coefficients differ threefold. None of these is adopted here.
+domain_of_validity:
+  quantity: "basal / standard metabolic rate: resting, post-absorptive, thermoneutral. Not maximal, not field."
+  taxa: "fitted on mammals (and birds in some compilations); applied to other taxa by analogy, not by fit"
+  mass_range: "White and Seymour (2003) data span five orders of magnitude of mammal body mass"
+  comparison_type: "INTERspecific. Within a species the exponent is frequently different (see where_it_breaks)."
+  notes: >
+    Inside the fitted taxon and state, a power law with b somewhere in 0.67-0.75 describes the trend
+    to within the scatter. Which b, is the dispute. The coefficient B0 is per-taxon.
+where_it_breaks: >
+  (1) WITHIN a species and through ontogeny: Heusner (1982) measured an intraspecific exponent of
+  0.67 +/- 0.03, and Glazier (2005) classifies intraspecific scaling into four types including
+  isometric (b = 1) and ontogenetic shifts from b = 1 or b > 1 down to b < 1 -- no single exponent.
+  (2) ACROSS the major divisions of life: DeLong et al. (2010) report metabolic rate scales
+  superlinearly with mass in prokaryotes, linearly in protists and sublinearly only in metazoans, and
+  conclude in the abstract that Kleiber's 3/4 "does not apply universally". (3) PLANTS: Reich et al.
+  (2006) report whole-plant respiration scaling approximately isometrically (b ~ 1) with plant mass in
+  about 500 plants from 43 species, with no common relation across data sets. (4) ACTIVE animals:
+  maximal metabolic rate scales as M^0.872 (95% CL 0.813-0.932; Weibel et al. 2004), which the authors
+  state is significantly different from 3/4. (5) LARGE mammals and the ends of the mass range:
+  Kolokotrones et al. (2010) report convex curvature on log-log axes, so the local slope changes with
+  mass and the relation is not a pure power law; Dodds et al. (2001) report a possible systematic
+  increase in the exponent at larger masses. (6) BETWEEN lineages: Capellini et al. (2010) and White et
+  al. (2009) find exponents that differ among mammalian lineages, some near 3/4, some near 2/3, some
+  significantly different from both; Isaac and Carbone (2010) report 50% of animal orders outside
+  0.68-0.82. (7) TRANSFER OF THE COEFFICIENT: B0 fitted with one exponent cannot be used with the
+  other, and B0 differs threefold even among 7 mammal species under one exponent (Heusner 1982).
+  Practical consequence (calculated, not observed): extrapolating from 1 kg to 4000 kg, the two
+  exponents disagree by a factor of 4000^(1/12) = 2.0.
+worked_examples:
+  - organism: "any mammal, extrapolated from a 1 kg anchor (CALCULATED, not observed)"
+    computation: >-
+      Two fits forced to agree at M0 = 1 kg differ by (M/M0)^(3/4 - 2/3) = (M/M0)^(1/12).
+      M = 4000 kg -> 4000^(1/12) = 2.00.  M = 0.01 kg -> 0.01^(1/12) = 0.68.
+      Across a 1e5 mass span (White and Seymour 2003 data range) -> (1e5)^(1/12) = 2.61.
+    value: 2.61
+    note: >
+      This is arithmetic on the two candidate exponents, not a measurement. It shows that the
+      unresolved 1/12 difference in exponent becomes a factor of two to three in predicted wattage at
+      the extremes of the mammal mass range, which is why the entry is marked descriptive.
+    evidence: derived
+  - organism: "1 kg mammal under Kleiber's 1961 coefficient (CALCULATED from a search-summary value)"
+    computation: "70 kcal/day x 4184 J/kcal / 86400 s/day = 3.39 W at M = 1 kg, b = 0.75"
+    value: 3.39
+    note: >
+      Unit conversion only. The 70 kcal/day input is from a search summary of secondary sources, not
+      from reading Kleiber (1961).
+    evidence: derived
+  - organism: "seven mammal species, Peromyscus to cattle (Heusner 1982)"
+    computation: "a(cattle) / a(Peromyscus) = 6.06 / 1.91 = 3.17, both in W / kg^(2/3)"
+    value_range: [1.91, 6.06]
+    note: >
+      The two coefficients are the author's reported values (abstract); the ratio 3.17 is my
+      arithmetic. Heusner's claim is that this rise in the coefficient with size, under a 2/3 exponent
+      within groups, is what produces an apparent 0.75 when species are pooled. That is the author's
+      interpretation, entered as one side of the dispute.
+    evidence: literature
+  - organism: "Danio rerio (zebrafish)"
+    value: unknown
+    note: >
+      No zebrafish-specific basal-metabolism scaling exponent is entered. Scope of the negative
+      search: one Europe PMC query ("Danio rerio" AND ("metabolic scaling" OR "scaling exponent") AND
+      "body mass" AND "oxygen consumption"), 9 hits, of which the top two were on bluegill and on
+      teleost mtDNA substitution rates; I did not read further. Absence here is a limit of this
+      search, not evidence that no value exists. Applying the mammalian B0 to a fish is outside the
+      domain of validity (ectotherm, different taxon).
+    evidence: unknown
+contested_by:
+  - "White and Seymour (2003): BMR proportional to M^(2/3) across 619 mammal species after correcting for body temperature, digestive state and phylogeny; 'no support for a metabolic scaling exponent of 3/4' (abstract)."
+  - "Dodds, Rothman and Weitz (2001): little evidence for rejecting 2/3 in favour of 3/4 in re-analysed mammal and bird compilations; theories for 3/4 judged unconvincing (abstract)."
+  - "Heusner (1982): the interspecific 0.75 is a statistical artifact of pooling species with different coefficients; intraspecific exponent 0.67 +/- 0.03 (abstract)."
+  - "West, Brown and Enquist (1997) and Savage et al. (2004): 3/4 derived from fractal transport networks, and asserted (Savage et al. title) to predominate in biology. Savage et al. read at listing level only."
+  - "Isaac and Carbone (2010): the mean exponent over 1242 species converges on 3/4, but it is highly heterogeneous among orders and no current theory explains the spread (abstract)."
+  - "White, Blackburn and Seymour (2009) and Capellini, Venditti and Barton (2010): phylogenetically informed exponents fit neither 2/3 nor 3/4 consistently and vary among lineages (abstracts)."
+  - "Kolokotrones et al. (2010): the relation is convexly curved, not a pure power law, and the authors state this settles the debate by explaining the spread of estimates (abstract). Recorded as their claim; Isaac and Carbone, the same year, conclude current theories are inadequate. This entry does not adjudicate."
+sources:
+  - citation: "Kleiber M (1932) Body size and metabolism. Hilgardia 6(11):315-353. doi:10.3733/hilg.v06n11p315"
+    read_level: listing
+  - citation: "Kleiber M (1947) Body size and metabolic rate. Physiol Rev 27(4):511-541. doi:10.1152/physrev.1947.27.4.511"
+    read_level: listing
+  - citation: "Kleiber M (1961) The Fire of Life: An Introduction to Animal Energetics. Wiley. (70 kcal/day x M^0.75 via secondary sources)"
+    read_level: search-summary
+  - citation: "Heusner AA (1982) Energy metabolism and body size. I. Is the 0.75 mass exponent of Kleiber's equation a statistical artifact? Respir Physiol 48:1-12. doi:10.1016/0034-5687(82)90046-9"
+    read_level: abstract
+  - citation: "West GB, Brown JH, Enquist BJ (1997) A general model for the origin of allometric scaling laws in biology. Science 276:122-126. doi:10.1126/science.276.5309.122"
+    read_level: abstract
+  - citation: "Dodds PS, Rothman DH, Weitz JS (2001) Re-examination of the '3/4-law' of metabolism. J Theor Biol 209:9-27. doi:10.1006/jtbi.2000.2238"
+    read_level: abstract
+  - citation: "White CR, Seymour RS (2003) Mammalian basal metabolic rate is proportional to body mass^2/3. PNAS 100(7):4046-4049. doi:10.1073/pnas.0436428100"
+    read_level: abstract
+  - citation: "Savage VM, Gillooly JF, Woodruff WH, West GB, Allen AP, Enquist BJ, Brown JH (2004) The predominance of quarter-power scaling in biology. Funct Ecol 18:257-282. doi:10.1111/j.0269-8463.2004.00856.x"
+    read_level: listing
+  - citation: "Weibel ER, Bacigalupe LD, Schmitt B, Hoppeler H (2004) Allometric scaling of maximal metabolic rate in mammals: muscle aerobic capacity as determinant factor. Respir Physiol Neurobiol 140:115-132. doi:10.1016/j.resp.2004.01.006"
+    read_level: abstract
+  - citation: "Glazier DS (2005) Beyond the '3/4-power law': variation in the intra- and interspecific scaling of metabolic rate in animals. Biol Rev 80:611-662. doi:10.1017/S1464793105006834"
+    read_level: abstract
+  - citation: "Reich PB, Tjoelker MG, Machado JL, Oleksyn J (2006) Universal scaling of respiratory metabolism, size and nitrogen in plants. Nature 439:457-461. doi:10.1038/nature04282"
+    read_level: abstract
+  - citation: "White CR, Blackburn TM, Seymour RS (2009) Phylogenetically informed analysis of the allometry of mammalian basal metabolic rate supports neither geometric nor quarter-power scaling. Evolution 63:2658-2667. doi:10.1111/j.1558-5646.2009.00747.x"
+    read_level: abstract
+  - citation: "DeLong JP, Okie JG, Moses ME, Sibly RM, Brown JH (2010) Shifts in metabolic scaling, production, and efficiency across major evolutionary transitions of life. PNAS 107:12941-12945. doi:10.1073/pnas.1007783107"
+    read_level: abstract
+  - citation: "Kolokotrones T, Van Savage, Deeds EJ, Fontana W (2010) Curvature in metabolic scaling. Nature 464:753-756. doi:10.1038/nature08920"
+    read_level: abstract
+  - citation: "Capellini I, Venditti C, Barton RA (2010) Phylogeny and metabolic scaling in mammals. Ecology 91:2783-2793. doi:10.1890/09-0817.1"
+    read_level: abstract
+  - citation: "Isaac NJ, Carbone C (2010) Why are metabolic scaling exponents so controversial? Quantifying variance and testing hypotheses. Ecol Lett 13:728-735. doi:10.1111/j.1461-0248.2010.01461.x"
+    read_level: abstract
+  - citation: "Blaxter (1986) Bioenergetics and growth: the whole and the parts (source of the 0.739 slope figure, seen only in a search summary; not used as a value)"
+    read_level: search-summary
