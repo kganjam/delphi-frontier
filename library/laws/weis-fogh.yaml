@@ -1,0 +1,99 @@
+id: weis-fogh
+name: Weis-Fogh clap-and-fling and unsteady lift at low Reynolds number
+usability: descriptive
+equation: "Gamma = c_f * Omega * c^2"
+latex: "\\Gamma = \\pm 0.69\\, \\Omega c^2"
+symbols:
+  Gamma: {dimension: L^2/T, units: m^2/s, description: "circulation generated around each wing during the fling"}
+  Omega: {dimension: 1/T, units: rad/s, description: "angular velocity of the fling"}
+  c:     {dimension: L, units: m, description: "wing chord"}
+  c_f:   {dimension: "1", units: dimensionless, description: "the coefficient 0.69 from Lighthill's inviscid analysis"}
+constants:
+  lighthill_circulation_coefficient:
+    value: 0.69
+    note: >
+      Lighthill 1973: in the inviscid analysis the circulations around the two wings are -0.69*Omega*c^2
+      and +0.69*Omega*c^2. Equal and opposite, which is the whole trick -- see mechanism.
+  encarsia_required_lift_coefficient:
+    value: 2.5
+    interval: [2, 3]
+    note: >
+      Weis-Fogh 1973: at the Reynolds number of Encarsia formosa, 10-20, a lift coefficient of 2 or
+      3 "is not possible with steady-state aerodynamics". This is the DEFICIT the mechanism was
+      proposed to explain, and it is the entry's load-bearing number.
+  encarsia_reynolds:
+    value: 15
+    interval: [10, 20]
+    note: "Weis-Fogh 1973."
+  wing_wing_lift_augmentation:
+    value: 0.17
+    note: >
+      Lehmann, Sane & Dickinson 2005, robotic wings: wing-wing interaction augmented total lift by
+      UP TO 17 per cent, and depended strongly on stroke kinematics. It requires an angular
+      separation of no more than 10-12 degrees. The modest size of this number against the factor of
+      2-3 deficit is the reason this entry is classified descriptive.
+  required_angular_separation_deg:
+    value: 11
+    interval: [10, 12]
+    note: "Lehmann et al. 2005. A real kinematic requirement, but measured on a robot rather than on an animal."
+mechanism: >
+  At the top of the stroke the wings clap together; they then fling apart by rotating about their
+  trailing edges. Air rushes into the opening wedge and circulation of opposite sign builds around
+  each wing IMMEDIATELY -- without waiting for the starting vortex that the Kutta condition requires
+  in steady theory. Because the two circulations are equal and opposite, total vorticity is
+  conserved and no starting vortex need be shed, so lift is available from the first instant of the
+  stroke rather than after several chord lengths of travel. That is what makes it valuable at
+  Reynolds numbers where a conventional aerofoil cannot build circulation fast enough.
+domain_of_validity:
+  reynolds: "low, order 10-100, where steady aerofoil theory cannot supply the needed lift coefficient"
+  taxa: >
+    Weis-Fogh 1973 reports the fling in the normal flight of butterflies and possibly of Drosophila
+    and other small insects, and as a useful mechanism in birds and bats during take-off.
+    Ellington 1984 reports a near fling and partial fling for the ladybird. A 2025 robot modelled on
+    Cynopterus brachyotis found an upstroke clap significantly increases lift at St 0.2-0.4.
+  notes: >
+    Hover-flies and Odonata rely almost entirely on the flip rather than the fling, by the same
+    source. Clapping during pigeon take-off and in thrips is remembered, not retrieved.
+where_it_breaks: >
+  It is not the general explanation of insect lift, and treating it as one is the error to avoid.
+  Dickinson, Lehmann & Sane 1999 name three distinct yet interactive mechanisms -- delayed stall,
+  rotational circulation and wake capture -- none of which is clap-and-fling, and Ellington
+  concludes that most, if not all, hovering animals do not rely on quasi-steady aerodynamics at all.
+  So the deficit this mechanism was invented to fill is real, but several things fill it. The
+  measured benefit is also modest and fragile: at most 17 per cent augmentation, strongly dependent
+  on stroke kinematics, and requiring the wings to approach within 10-12 degrees -- a tolerance a
+  real or designed mechanism must actually hold. Repeated clapping costs wing wear, a cost that is
+  remembered rather than measured here. The reason this entry is DESCRIPTIVE despite carrying
+  numbers: it diagnoses why a quasi-steady calculation under-predicts lift, but it does not return a
+  lift coefficient a design can be checked against, and the one number that is a design tolerance
+  comes from a robot rather than from an animal.
+worked_examples:
+  - organism: "Encarsia formosa -- sizing the quasi-steady deficit"
+    computation: |
+      required C_L (Weis-Fogh, retrieved)      : 2 to 3
+      steady C_L achievable at Re 10-20        : about 1   [REMEMBERED, not retrieved]
+      unexplained factor                        : at least 2
+    value: 2.5
+    note: >
+      The factor of two is the gap any unsteady mechanism must close. Note the arithmetic rests on a
+      remembered steady C_L of about 1; if that is wrong the factor moves with it. Weis-Fogh also
+      reports specific powers of 1.3 and 4.7 W/N, but the abstract did not say which case each
+      belongs to, so neither is attributed here.
+    evidence: derived
+contested_by:
+  - "Dickinson, Lehmann & Sane 1999: delayed stall, rotational circulation and wake capture are the mechanisms they identify, and clap-and-fling is not among the three. This is a competing account of the same deficit and is preserved rather than reconciled."
+  - "Ellington 1984: most, if not all, hovering animals do not rely on quasi-steady aerodynamics -- a statement that the deficit is general rather than specific to the taxa where the fling was observed."
+sources:
+  - citation: "Weis-Fogh T (1973) J Exp Biol 59:169-230, Quick estimates of flight fitness in hovering animals, including novel mechanisms for lift production, doi 10.1242/jeb.59.1.169"
+    read_level: abstract
+  - citation: "Lighthill MJ (1973) J Fluid Mech 60:1-17, On the Weis-Fogh mechanism of lift generation, doi 10.1017/S0022112073000017"
+    read_level: abstract
+  - citation: "Ellington CP (1984) Phil Trans R Soc B 305:1-181, The aerodynamics of hovering insect flight I-VI; part VI is doi 10.1098/rstb.1984.0054"
+    read_level: abstract
+    note: "Part VI only."
+  - citation: "Dickinson MH, Lehmann F-O, Sane SP (1999) Science 284:1954-1960, Wing rotation and the aerodynamic basis of insect flight, doi 10.1126/science.284.5422.1954"
+    read_level: abstract
+  - citation: "Lehmann F-O, Sane SP, Dickinson MH (2005) J Exp Biol 208:3075-3092, The aerodynamic effects of wing-wing interaction in flapping insect wings, doi 10.1242/jeb.01744"
+    read_level: abstract
+  - citation: "Fan et al. (2025) J R Soc Interface, doi 10.1098/rsif.2024.0590"
+    read_level: abstract

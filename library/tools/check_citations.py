@@ -30,6 +30,7 @@ import ssl
 import sys
 import urllib.parse
 import urllib.request
+import unicodedata
 from pathlib import Path
 
 try:
@@ -49,7 +50,12 @@ READ_LEVELS = {
     "remembered": "RECALLED, NOT RETRIEVED -- treat as unverified until resolved",
 }
 WEAK = {"search-summary", "could-not-access", "remembered"}
-DOI_RE = re.compile(r"\b(10\.\d{4,9}/[^\s,;)\]]+)", re.I)
+# A DOI may contain PARENTHESES, and the old Elsevier ones always do -- 10.1016/0001-6160(89)90158-2.
+# Excluding ')' from the character class truncated those at the '(', and the truncated string 404s
+# at doi.org, so FIVE correct citations were reported as unresolvable DOIs. The pattern now takes a
+# balanced parenthesised run as part of the suffix, and still stops at the comma or space that ends
+# a DOI in running prose.
+DOI_RE = re.compile(r"\b(10\.\d{4,9}/(?:\([^()\s]*\)|[^\s,;)\]])+)", re.I)
 
 CTX = ssl.create_default_context()
 
@@ -88,6 +94,16 @@ def resolve(doi: str, timeout=25):
     return True, {"title": (t or "").strip(), "year": year, "family": fam}
 
 
+def fold(text: str) -> str:
+    """Lowercase and strip diacritics, so 'Kozlowski' matches 'Kozlowski' with a stroked l."""
+    decomposed = unicodedata.normalize("NFKD", str(text))
+    stripped = "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+    # NFKD does not decompose a stroked l, a slashed o or an eth; map the common ones by hand.
+    table = str.maketrans({"\u0142": "l", "\u0141": "L", "\u00f8": "o", "\u00d8": "O",
+                           "\u0111": "d", "\u0110": "D", "\u00fe": "th", "\u00df": "ss"})
+    return stripped.translate(table).lower()
+
+
 def citation_contradicts(citation: str, meta: dict):
     """Flag only a DISAGREEMENT, never a mere absence.
 
@@ -106,7 +122,12 @@ def citation_contradicts(citation: str, meta: dict):
         if years and meta["year"] not in years and not any(abs(meta["year"] - y) <= 1 for y in years):
             return f"year {meta['year']} registered, citation says {sorted(years)}"
     if meta.get("family") and len(meta["family"]) > 2:
-        if meta["family"].lower() not in c:
+        # Compare with accents folded. A citation typed in ASCII -- 'Kozlowski' -- does not
+        # contain the registry's 'Kozłowski' as a substring, and flagging that as a CONTRADICTION
+        # points the reader at a correct citation while the real ones go unnoticed. Folding is the
+        # fix rather than dropping the check, because the check caught a genuine wrong-paper DOI in
+        # the same run.
+        if fold(meta["family"]) not in fold(c):
             return f"first author {meta['family']!r} does not appear in the citation"
     return None
 
@@ -121,6 +142,38 @@ def title_agrees(citation: str, title: str) -> bool:
         return True
     hits = sum(1 for w in words if w in citation.lower())
     return hits >= max(1, len(words) // 3)
+
+
+# Evidence markers that mean "this value follows from arithmetic, not from a measurement".
+DERIVED_EVIDENCE = {"derived", "exact", "definition", "geometric"}
+
+
+def measured_constants(cons: dict) -> list[str]:
+    """Names of constants that ASSERT A MEASURED VALUE. Two kinds are excluded.
+
+    `value: null` asserts nothing. Entries use it to RECORD AN ABSENCE -- that a number in wide
+    circulation has no retrieved support, such as the ~3000 microstrain microdamage threshold or
+    the coral fractal dimensions. That is the opposite of resting a claim on a weak source, and
+    counting it inverted the rule: darcy-thompson, whose single "constant" is the observation that
+    the theory HAS no free parameters, failed for leaning on sources it does not lean on.
+
+    `evidence: derived` (or exact/definition/geometric) marks a value that follows from arithmetic
+    the entry shows -- Rubner's 2/3 from geometry, the golden angle, the Ashby exponents. A
+    derivation needs its working checked, not its provenance; no source makes 180*(3 - sqrt(5))
+    more true, and demanding one would push authors to attach a decorative citation.
+
+    The marker is explicit and the excluded count is reported every run, so using it to duck the
+    rule is visible rather than silent.
+    """
+    out = []
+    for name, c in (cons or {}).items():
+        c = c or {}
+        if c.get("value") is None:
+            continue
+        if str(c.get("evidence", "")).strip().lower() in DERIVED_EVIDENCE:
+            continue
+        out.append(name)
+    return out
 
 
 def check(path: Path, do_resolve: bool):
@@ -156,11 +209,17 @@ def check(path: Path, do_resolve: bool):
     # A measured constant may not rest on a weak source alone. This is the rule that makes the
     # read-level do work rather than decorate: the numbers are what a design is checked against.
     cons = doc.get("constants") or {}
-    if cons and srcs:
+    measured = measured_constants(cons)
+    excluded = len(cons) - len(measured)
+    if excluded:
+        notes.append(f"{path.name}: {excluded} constant(s) not counted as measured "
+                     f"(null value, or marked derived) out of {len(cons)}")
+    if measured and srcs:
         levels = {s.get("read_level") for s in srcs if isinstance(s, dict)}
         if levels and levels <= WEAK:
             problems.append(f"{path.name}: every source is weak ({', '.join(sorted(levels))}) "
-                            f"but the entry declares {len(cons)} measured constant(s)")
+                            f"but the entry declares {len(measured)} measured constant(s): "
+                            f"{', '.join(measured)}")
     return problems, notes
 
 
@@ -188,9 +247,27 @@ def main() -> int:
         expect("title agrees loosely", title_agrees("Eloy 2012, Optimal Strouhal number for swimming animals",
                                                     "Optimal Strouhal number for swimming animals"), True)
         # THE CASE IT MUST FLAG: a real DOI attached to the wrong paper.
+        # Old Elsevier DOIs carry parentheses; truncating them is a 404 on a correct citation.
+        expect("a DOI with parentheses survives extraction",
+               extract_doi({"citation": "Ashby MF (1989) Acta Metall 37:1273, doi 10.1016/0001-6160(89)90158-2"}),
+               "10.1016/0001-6160(89)90158-2")
+        expect("a DOI still stops at the comma that ends it",
+               extract_doi({"citation": "X (2001) doi 10.1234/abc.def, read in full"}), "10.1234/abc.def")
+        expect("accent folding: an ASCII surname matches the registry's", fold("Kozlowski") == fold("Koz\u0142owski"), True)
+        expect("folding does NOT collapse different surnames", fold("Kozlowski") == fold("Konarzewski"), False)
         expect("title DISAGREES is caught",
                title_agrees("Murray CD (1926) The physiological principle of minimum work",
                             "Attention Is All You Need: Transformer Architectures"), False)
+        # The measured-constant count: what it must and must not count.
+        expect("a null-valued constant is not a measured constant",
+               measured_constants({"free_parameters": {"value": None, "note": "none exist"}}), [])
+        expect("a constant marked derived is not a measured constant",
+               measured_constants({"surface_exponent": {"value": 0.6667, "evidence": "derived"}}), [])
+        # THE CASE IT MUST COUNT: a plain value with no derived marker.
+        expect("a plain measured value IS counted",
+               measured_constants({"exponent": {"value": 2.39, "interval": [2.24, 2.54]}}), ["exponent"])
+        expect("an unrecognised evidence word does NOT excuse a constant",
+               measured_constants({"x": {"value": 1.0, "evidence": "probably fine"}}), ["x"])
         if a.resolve:
             ok_r, t = resolve("10.1016/j.cub.2021.08.054")
             expect("a real DOI resolves", ok_r, True)
