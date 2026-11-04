@@ -209,6 +209,37 @@ def main():
                                                       {int(src) if str(src).isdigit() else 'null'}
                                                 and statement={lit(stmt2)})""")
                         recorded += 1
+                elif kind == "replication":
+                    # THE BLOCK TYPE THE REGEX MATCHED AND NOTHING HANDLED. 134 replication blocks
+                    # were parsed, counted in `found`, and dropped -- 17 of them independent
+                    # re-derivations that DISAGREED with the claim they checked. generate.py calls
+                    # this arm "the cheapest hallucination detector there is"; its entire output
+                    # went into the void because the dispatch had three branches and four kinds.
+                    #
+                    # A replication is a SIGNAL about a claim, not a claim: an independent agent
+                    # recomputed the number and says whether it reproduces. It goes to
+                    # artifact_signal with voter_kind 'agent' -- never pooled with a measurement.
+                    cid = d.get("claim_id")
+                    agrees = d.get("agrees")
+                    if str(cid).isdigit() and agrees is not None and q(
+                            f"select 1 from claim where id={int(cid)}"):
+                        val = 1 if agrees is True else (-1 if agrees is False else 0)
+                        myv = str(d.get("my_value") or "")[:300]
+                        note = str(d.get("note") or "")[:900]
+                        reason = (f"independent re-derivation {'AGREES' if val > 0 else 'DISAGREES'}"
+                                  + (f"; their value: {myv}" if myv else "")
+                                  + (f". {note}" if note else ""))
+                        q(f"""insert into artifact_signal (entity_type, entity_id, kind, dimension,
+                                 voter_id, voter_kind, value, weight, unit, reason, metadata)
+                              select 'claim', {lit(str(cid))}, 'replication', 'reproducibility',
+                                     {lit(tag)}, 'agent', {val}, 1, 'verdict', {lit(reason[:1400])},
+                                     {lit(json.dumps({'my_value': myv, 'agrees': agrees}))}
+                              where not exists (select 1 from artifact_signal s
+                                                where s.entity_type='claim'
+                                                and s.entity_id={lit(str(cid))}
+                                                and s.voter_id={lit(tag)}
+                                                and s.kind='replication')""")
+                        recorded += 1
                 elif kind == "challenge":
                     cid = d.get("claim_id")
                     out = str(d.get("outcome") or "")
