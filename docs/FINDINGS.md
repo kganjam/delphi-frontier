@@ -640,7 +640,7 @@ work that would obviously succeed; each is a specific question with a stated rea
 
 | item | why it matters | what would settle it |
 |---|---|---|
-| **Which girdle limb carries the fin-root moment** about the AP axis | if the dorsal cleithral limb is binding, the girdle **fails** at measured size (0.61×) rather than passing at 2.1–3.9× | decode the Nguyen 2022 meshes and resolve the load path; both candidate numbers already reproduce |
+| **Which girdle limb carries the fin-root moment** about the AP axis | if the dorsal cleithral limb is binding, the girdle **fails** at measured size (0.61×) rather than passing at 2.1–3.9× | **a structural analysis nobody has done** — whether the limbs load in *series* (weakest section governs → fail) or *parallel* (stiffer ventral limb governs → pass). Tested for reachability three ways: both analyses already decoded the mesh and agree on the numbers; a morphology paper would not give a load path; and PubMed returns **0** for *"zebrafish cleithrum biomechanics"* against **64** for *"cleithrum"* alone, so that zero is a real absence |
 | **The Strouhal regime for the taxi** | the headline table row is either **2.5–3.8×** or **1.4–1.6×** | re-derive Eloy's Lighthill number at the taxi operating point; both arithmetics already reproduce |
 | ~~Whether `and1` departs from the shuffle null~~ | **CLOSED 2026-11-04** | re-run here: **p = 0.0050**, reproducing both replications. Claim 29 is refuted. Both controls pass — a planted repeat is caught at p = 0.0050, a shuffled copy of `and1` returns p = 0.607. The effect is **significant but small**: 0.1157 against a shuffle maximum of 0.1154 |
 
