@@ -1,0 +1,170 @@
+id: hagen-poiseuille
+name: Hagen-Poiseuille flow and the r^-4 dissipation that Murray's law rests on
+usability: constraining          # gives a flow/pressure/dissipation number, but ONLY inside the laminar, Newtonian, rigid, long-tube box (see where_it_breaks)
+equation: "Q = pi * r^4 * dP / (8 * mu * L)"
+latex: "Q = \\frac{\\pi r^4 \\, \\Delta P}{8 \\mu L}, \\qquad \\dot W = Q \\, \\Delta P = \\frac{8 \\mu L Q^2}{\\pi r^4}"
+symbols:
+  Q:  {dimension: L^3/T, units: m^3/s, description: volumetric flow rate through the tube}
+  r:  {dimension: L, units: m, description: "inner radius of the tube (radius, not diameter: the law is quoted both ways)"}
+  dP: {dimension: M/(L*T^2), units: Pa, description: pressure drop along the tube length L}
+  mu: {dimension: M/(L*T), units: Pa*s, description: "dynamic viscosity of a Newtonian fluid (for blood, an apparent viscosity that is itself a function of r)"}
+  L:  {dimension: L, units: m, description: length of the tube over which dP is measured}
+  W:  {dimension: M*L^2/T^3, units: W, description: "viscous power dissipated, W = Q*dP = 8*mu*L*Q^2/(pi*r^4)"}
+constants:
+  prefactor:
+    value: "pi/8"
+    interval: exact
+    note: >
+      Exact consequence of the no-slip parabolic profile in a straight circular tube. It is not
+      measured. A non-circular cross-section changes the prefactor; the exact value for each shape
+      is not recorded here.
+  radius_exponent_laminar:
+    value: 4
+    interval: exact
+    note: >
+      Exact for steady, fully developed, laminar Newtonian flow. This exponent is the input to
+      Murray's cube law (murray.yaml). It is a derivation, not a measurement.
+  radius_exponent_turbulent_smooth:
+    value: 4.75
+    interval: unknown
+    note: >
+      CALCULATED in this entry, not observed and not taken from a source: using the Blasius
+      smooth-pipe friction factor f = 0.316 Re^-1/4, dP scales as Q^1.75 * r^-4.75 at fixed Q. Shown
+      only to make the point that the exponent changes when the regime changes. Blasius' own
+      validity range was not checked in this session, so no interval is given.
+  Re_critical_sustained_turbulence:
+    value: 2040
+    interval: [2030, 2050]
+    units: dimensionless (Re based on diameter and bulk velocity)
+    note: >
+      Observation plus simulation, Avila et al. (2011): the Reynolds number above which turbulence,
+      once started, sustains itself in a pipe instead of decaying. The +/-10 interval is the group's
+      conference abstract, as given in a search summary. Mukund & Hof (2017), per the same search
+      summary, place it in 2020-2060. This is the point where turbulence CAN persist. It is not a
+      point where laminar flow must fail: a carefully disturbance-free pipe can stay laminar much
+      higher. We did not verify a specific upper figure in this session.
+  mu_water_20C:
+    value: 1.002e-3
+    interval: unknown
+    units: Pa*s
+    note: >
+      Standard handbook value, quoted from memory and not re-checked against a primary source in
+      this session. It is used only in the worked example.
+mechanism: >
+  Under no-slip at the wall and a constant axial pressure gradient, the Navier-Stokes equations for
+  steady, fully developed, axisymmetric, incompressible flow reduce to a balance between pressure
+  force and viscous shear. That balance gives a parabolic velocity profile u(s) = (dP/(4 mu L))(r^2 - s^2).
+  Integrating it over the cross-section gives Q proportional to r^4. One factor of r^2 comes from the
+  area and one from the peak velocity, which scales as r^2 because the wall is the only brake. The
+  dissipated power Q*dP is then 8 mu L Q^2/(pi r^4). Holding Q fixed, halving r multiplies the
+  dissipation by 16. Murray's law follows by adding a volume-maintenance cost b*pi*r^2*L and
+  minimising: d/dr[8 mu L Q^2/(pi r^4) + b pi r^2 L] = 0 gives Q = (pi/4) sqrt(b/mu) r^3, so Q is
+  proportional to r^3, and conservation of Q at a junction gives the cube law. This derivation is
+  ours, reproduced here; the r^3 result is Murray's (1926). The cube depends ENTIRELY on the 4 in
+  r^-4. Any regime that changes that exponent changes Murray's exponent with it.
+domain_of_validity:
+  flow_regime: laminar, steady, fully developed
+  reynolds_max: 2040        # sustained-turbulence threshold (Avila et al. 2011); laminar flow MAY persist above it, but the law is no longer guaranteed
+  womersley_max: "about 1 (quasi-steady); a rule-of-thumb threshold, no sourced cutoff found"
+  fluid: Newtonian, incompressible, no-slip at the wall
+  geometry: "straight, rigid, circular tube with L much longer than the entrance length (about 0.05*Re*D for laminar flow; a textbook rule quoted from memory, not re-verified here)"
+  taxa: ["small arterioles and venules (with apparent viscosity)", "plant xylem lumen only (not the whole conduit)", "laboratory capillaries and microfluidics"]
+  notes: >
+    The law holds ONLY when every one of these assumptions holds at the same time. Biological
+    networks routinely violate at least one of them, so check each before trusting the number.
+where_it_breaks: >
+  (1) TURBULENCE. Above Re about 2040 in a pipe, turbulence can sustain itself (Avila et al. 2011,
+  experiment and simulation). Then dP no longer scales as Q*r^-4. Our Blasius calculation gives about
+  r^-4.75 at fixed Q. Uylings (1977), as cited in the full text of Jessen et al. (2023), extended the
+  minimisation to turbulent flow and obtained branching exponents "as low as 2.33", not 3. Murray's
+  cube is therefore a laminar-only result.
+  (2) PULSATILE FLOW IN LARGE ARTERIES. Womersley (1955) solved oscillatory flow in a tube. At a high
+  Womersley number alpha = r*sqrt(omega/nu), inertia dominates the core and the profile is not
+  parabolic, so steady Hagen-Poiseuille underestimates wall shear and misstates impedance. Our
+  CALCULATED alpha for a human aorta is about 19 (worked example below; inputs assumed, not measured).
+  murray.yaml records that measured exponents in large arteries approach 2. This is the likeliest
+  physical reason, and that link is our inference.
+  (3) BLOOD IN MICROVESSELS IS NOT A NEWTONIAN CONTINUUM. Pries, Neuhaus & Gaehtgens (1992) compiled
+  tube-flow data showing that the relative apparent viscosity of blood depends on BOTH tube diameter
+  and haematocrit, with a minimum at some intermediate diameter. This is the Fahraeus-Lindqvist
+  effect. In that range, mu in the equation is a fitted function of r, so the clean r^-4 dependence on
+  radius is lost. In capillaries near red-cell diameter, single-file cell transit makes a continuum
+  viscosity a fiction. The exact minimum diameter and the fit constants were NOT read here (full text
+  not accessed), so no number is given.
+  (4) PLANT XYLEM: THE LUMEN OBEYS IT, THE CONDUIT DOES NOT. Sperry, Hacke & Wheeler (2005), as given in
+  a search summary, report that end walls and pits account for an average of 0.54 +/- 0.07 of total
+  resistance across seven species. In the same summary, lumen resistivity was indistinguishable from
+  Hagen-Poiseuille. In Humulus stems, a conference abstract (preliminary) reports measured
+  conductivity averaging 41% of the Hagen-Poiseuille prediction. In wide-vessel grapevine, Sperry et
+  al. report end-wall effects can be negligible. Using HP on lumen diameter alone therefore
+  over-predicts whole-xylem conductivity by roughly 2x in many species, and by a species-dependent
+  amount overall.
+  (5) SHORT TUBES. Within the entrance length the profile is still developing and the pressure drop
+  exceeds the HP value. Short vessel segments between closely spaced branch points are a candidate
+  failure in real networks. That is our inference; no biological measurement was found (scope: the
+  searches listed under sources).
+  (6) RAREFIED GAS. At high Knudsen number the no-slip condition fails. Our inference, not a sourced
+  result: insect tracheoles are sub-micron, so the air mean free path (tens of nm) is not negligible
+  against their radius. Gas transport there is also usually treated as diffusive rather than
+  pressure-driven. Murray-style arguments built on HP should not be applied to tracheoles without a
+  separate check. We did not find a source quantifying this (scope: searches listed).
+  (7) COMPLIANT WALLS. HP assumes a fixed r. A vessel that distends under pressure has r(P), so Q
+  becomes non-linear in dP. No quantitative source for this was gathered in this session.
+worked_examples:
+  - organism: none (water in a glass capillary; a laboratory sanity check)
+    computation: "r = 0.5 mm, L = 0.1 m, dP = 100 Pa, mu = 1.002e-3 Pa*s -> Q = pi*(5e-4)^4*100/(8*1.002e-3*0.1) = 2.45e-8 m^3/s (24.5 uL/s); mean U = Q/(pi r^2) = 0.031 m/s; Re = U*2r/nu = 31; entrance length about 0.05*31*1e-3 = 1.6 mm << L; dissipation W = Q*dP = 2.4e-6 W"
+    value: 2.45e-8
+    note: >
+      CALCULATED, not observed. Inputs are chosen, not measured. Re = 31 and an entrance length of
+      1.6 mm << 0.1 m confirm the case sits inside the domain, so HP applies.
+    evidence: derived
+  - organism: any vessel at fixed flow (the r^-4 sensitivity that Murray's law trades against volume)
+    computation: "W proportional to r^-4 at fixed Q -> r -> r/2 gives W x 16; r -> 0.9 r gives W x 1/0.9^4 = 1.52"
+    value: 16
+    note: >
+      CALCULATED. A 10% narrowing costs about 52% more pumping power at the same flow. The steep
+      exponent is why the volume-cost term in Murray's derivation has something to balance against.
+    evidence: derived
+  - organism: Homo sapiens, ascending aorta (failure-boundary check)
+    computation: "r = 0.0125 m, heart rate 1.2 Hz (omega = 7.54 rad/s), nu_blood = 3.5e-3/1060 = 3.3e-6 m^2/s -> alpha = r*sqrt(omega/nu) = 18.9"
+    value: 18.9
+    note: >
+      CALCULATED from ASSUMED round-number inputs (radius, heart rate and blood viscosity are typical
+      values, not measurements from a cited source). alpha >> 1 places the aorta outside the
+      quasi-steady HP domain, so the r^-4 law, and Murray's cube with it, should not be used there.
+    evidence: derived
+contested_by:
+  - "Not contested as physics: inside its assumptions HP is an exact solution of the Navier-Stokes equations. What is disputed is how widely it applies to biological conduits. Sperry et al. (2005) treat lumen and end-wall resistance as roughly co-limiting in xylem, with a wall fraction of about 0.54 across seven species. Fern-tracheid work (IAWA J 1985, per a search summary) attributes up to about 70% of resistance to pit membranes. A fern-stipe study (J Exp Bot, per a search summary) found agreement with HP in narrow stipes and only about half the HP prediction in large ones. These are different species and conduit sizes, and the disagreement is recorded rather than averaged."
+  - "The value of Re at which pipe flow 'becomes turbulent' depends on the definition. Re about 2040 (Avila et al. 2011) is the threshold for SUSTAINED turbulence. Moxey & Barkley (2010, PNAS, per a search summary) place a transition near 2300, with uniform turbulence from about 2600. The commonly quoted 2000-2300 band mixes these definitions."
+sources:
+  - citation: "Poiseuille JLM (1840-1841) series of notes in Comptes Rendus Acad. Sci. Paris on flow in small-diameter tubes; Hagen G (1839) Ann. Phys. Chem. 46:423-442. Volume and pages not verified in this session."
+    read_level: could-not-access
+    note: The historical primary papers were not searched for; the citation is from memory and its page numbers are flagged unverified.
+  - citation: "Murray CD (1926) The physiological principle of minimum work. PNAS 12(3):207-214"
+    read_level: search-summary
+    note: Same read level as in murray.yaml; not re-read here.
+  - citation: "Avila K, Moxey D, de Lozar A, Avila M, Barkley D, Hof B (2011) The onset of turbulence in pipe flow. Science 333(6039):192-196. doi:10.1126/science.1203223"
+    read_level: search-summary
+    note: Re_c of about 2040 (+/-10) is from search summaries of the supplementary material and a conference abstract. research-explorer.ista.ac.at was outside the session network allowlist.
+  - citation: "Mukund V, Hof B (2017) The critical point of the transition to turbulence in pipe flow. arXiv:1709.06372"
+    read_level: search-summary
+  - citation: "Moxey D, Barkley D (2010) Distinct large-scale turbulent-laminar states in transitional pipe flow. PNAS (volume and pages not verified)"
+    read_level: search-summary
+  - citation: "Womersley JR (1955) Method for the calculation of velocity, rate of flow and viscous drag in arteries when the pressure gradient is known. J Physiol 127(3):553-563. doi:10.1113/jphysiol.1955.sp005276 (PMC1365740)"
+    read_level: listing
+    note: The bibliographic record was confirmed. Its content (the alpha regimes) comes from secondary summaries, not from the paper.
+  - citation: "Pries AR, Neuhaus D, Gaehtgens P (1992) Blood viscosity in tube flow: dependence on diameter and hematocrit. Am J Physiol 263:H1770-H1778"
+    read_level: search-summary
+    note: The empirical fit equations and their constants were not read; that is why no Fahraeus-Lindqvist numbers are given.
+  - citation: "Sperry JS, Hacke UG, Wheeler JK (2005) Comparative analysis of end wall resistivity in xylem conduits. Plant Cell Environ (volume and pages not verified)"
+    read_level: search-summary
+    note: The PDF host sperry.biology.utah.edu was outside the session network allowlist.
+  - citation: "Uylings HBM (1977) Optimization of diameters and bifurcation angles in lung and vascular tree structures. Bull Math Biol 39(5):509-520. doi:10.1007/BF02461198"
+    read_level: listing
+    note: Not read. The 'as low as 2.33' turbulent exponent is as reported by Jessen et al. (2023).
+  - citation: "Jessen E, Steinbach MC, Debbaut C, Schillinger D (2023) Branching exponents of synthetic vascular trees under different optimality principles. arXiv:2304.11998"
+    read_level: full-text
+    note: The PDF was text-extracted and searched for the passages used (the Uylings turbulent-exponent statement and the synthetic-tree exponents of about 2.7-3.0). It was not read cover to cover.
+  - citation: "Conference abstract: Do xylem vessels of a liana species behave like ideal capillaries? ESA 2012, PS 49-93 (authors not recorded)"
+    read_level: search-summary
+    note: The source of the Humulus 41% (SD 9%) figure. It is preliminary and not peer reviewed.
