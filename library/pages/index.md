@@ -12,7 +12,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 | [Cell size control -- sizer, timer and adder](./cell-size-adder.md) | `constraining` | THE ADDER SIGNATURE ALONE DOES NOT IDENTIFY THE MECHANISM, and this is stated by the people who measured it: F |
 | [Cost of transport against body mass](./cost-of-transport.md) | `constraining` | Outside the linear power-against-speed range the two-term form is simply the wrong shape, and the fit carries  |
 | [D'Arcy Thompson's theory of transformations](./darcy-thompson.md) | `descriptive` | It does not break, and that is precisely the problem: a theory that cannot fail cannot inform a design |
-| [Elastic versus geometric similarity (McMahon)](./elastic-similarity.md) | `descriptive` | It breaks on the animals it was proposed for |
+| [Elastic versus geometric similarity (McMahon) and buckling-limited scaling](./elastic-similarity.md) | `constraining` | (1) MAMMALS IN GENERAL -- the taxon the hypothesis was most famously applied to |
 | [Froude propulsive efficiency](./froude-efficiency.md) | `constraining` | Unsteady and pulsed jets break the premise that there is a steady far wake whose momentum flux can be written  |
 | [Froude number and the walk-run transition](./froude-gait.md) | `constraining` | Non-cursorial and small mammals fall outside the hypothesis by its authors' own statement, so the group does n |
 | [Phyllotaxis and the golden angle](./golden-angle.md) | `constraining` | Nearly one sunflower parastichy count in five is NOT Fibonacci -- 136 of 768, split into Fibonacci minus one,  |
