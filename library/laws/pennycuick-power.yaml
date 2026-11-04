@@ -1,0 +1,186 @@
+id: pennycuick-power
+name: Pennycuick flight power curve and its U-shape
+usability: constraining          # It yields a number -- mechanical power required at a stated airspeed,
+                                 # and the speeds V_mp and V_mr -- that a design can be checked against.
+                                 # Caveat that bounds this label: the two free parameters (k, C_Db) were
+                                 # revised DOWN after predictions missed observed airspeeds, so the number
+                                 # is calibrated on birds, and the U-SHAPE as a claim about real animals is
+                                 # contested (see contested_by). Outside the domain below, treat as descriptive.
+equation: "P = k * (m*g)^2 / (2 * rho * S_d * V) + rho * S_b * C_Db * V^3 / 2 + P_pro"
+latex: "P = \\frac{k\\,(m g)^2}{2 \\rho S_d V} + \\tfrac{1}{2}\\rho S_b C_{Db} V^3 + P_{pro}, \\qquad S_d = \\frac{\\pi b^2}{4}"
+symbols:
+  P:     {dimension: M*L^2/T^3, units: W,     description: "mechanical power required for steady level flapping flight (aerodynamic power, NOT metabolic power)"}
+  k:     {dimension: "1",       units: dimensionless, description: "induced power factor: ratio of actual induced power to that of an ideal actuator disc"}
+  m:     {dimension: M,         units: kg,    description: "all-up body mass"}
+  g:     {dimension: L/T^2,     units: m/s^2, description: gravitational acceleration}
+  rho:   {dimension: M/L^3,     units: kg/m^3, description: air density}
+  S_d:   {dimension: L^2,       units: m^2,   description: "disc area swept by the wings, taken as pi*b^2/4 where b is wing span"}
+  V:     {dimension: L/T,       units: m/s,   description: true airspeed}
+  S_b:   {dimension: L^2,       units: m^2,   description: "body frontal (cross-sectional) area"}
+  C_Db:  {dimension: "1",       units: dimensionless, description: "body drag coefficient referred to S_b"}
+  P_pro: {dimension: M*L^2/T^3, units: W,     description: "profile power: drag of the flapping wings themselves; treated as roughly speed-independent over mid-range speeds in Pennycuick's formulation"}
+constants:
+  k_original_default:
+    value: 1.2
+    note: >
+      Default in Pennycuick's Flight program, per Pennycuick, Akesson & Hedenstrom 2013 (full text
+      read), who state it "is not realistic, and should be revised downwards". An assumed modelling
+      value, not a measurement; no interval.
+  k_revised:
+    value: 0.9
+    interval: [0.8, 0.9]
+    note: >
+      Value adopted by Pennycuick et al. 2013 for all species, justified by splayed, upturned
+      primaries. The interval is the range of the two supporting estimates they cite (Berens ~0.8,
+      Eder wind-tunnel ~0.9 "or lower"); it is a range of estimates, not a confidence interval.
+  C_Db_default:
+    value: 0.10
+    interval: [0.060, 0.12]
+    note: >
+      Default recommended by Pennycuick et al. 2013. The interval is the span of species values they
+      ASSIGNED (0.060 small waders to 0.12 mute swan) -- assigned to make predicted speeds agree with
+      observed ones, so it is a fitted range, not an independent measurement. Living-bird wind-tunnel
+      estimates they cite: 0.08 (teal, thrush nightingale), mean 0.12 (rose-coloured starling).
+  C_Db_dead_bodies:
+    value: unknown
+    interval: [0.2, 0.4]
+    note: >
+      Frozen/dead-body wind-tunnel measurements, which Pennycuick et al. 2013 call "always anomalously
+      high" owing to boundary-layer separation. Recorded because older power curves used them and
+      therefore predict lower V_mp and higher parasite power than the revised parameters.
+  Vmr_over_Vmp_no_profile:
+    value: 1.316
+    note: >
+      DERIVED by me, not measured: with P_pro neglected, P = a/V + c*V^3 gives V_mp = (a/(3c))^(1/4)
+      and V_mr (minimum P/V) = (a/c)^(1/4), so V_mr/V_mp = 3^(1/4). A constant non-zero P_pro raises
+      V_mr further, so this ratio is a lower bound within the model. Pennycuick et al. 2013 state V_mr
+      "has to be computed numerically from the power curve".
+mechanism: >
+  Quasi-steady actuator-disc accounting of three drag-like losses in steady level flight. (1) Induced
+  power: to support weight m*g the wings must give momentum to air passing through the disc S_d; at
+  forward speed V the mass flux through the disc grows with V, so the downwash velocity needed falls
+  and induced power falls as 1/V. (2) Parasite power: body drag 0.5*rho*S_b*C_Db*V^2 times V, so it
+  rises as V^3. (3) Profile power of the wings, held roughly constant over mid-range speeds. The sum of
+  a falling 1/V term and a rising V^3 term is U-shaped with a minimum at V_mp (minimum power: best for
+  loitering/endurance) and, at the tangent from the origin, V_mr (maximum range: minimum energy per
+  distance). These are properties of the MODEL. Whether animals' measured power follows the U depends on
+  whether muscle efficiency, kinematics and flight style stay constant across speed, which the model
+  does not include.
+domain_of_validity:
+  flight_mode: "steady, level, continuous flapping flight in still air"
+  speeds: >
+    Forward speeds well above the hovering induced velocity v_h = sqrt(m*g/(2*rho*S_d)), where the
+    1/V actuator-disc approximation holds. No source I read gives a numerical crossover; none is given here.
+  taxa_with_supporting_tests: [birds 0.0195-8.94 kg (ornithodolite airspeeds vs V_mp; pectoralis power in cockatiels and doves), bats (Carollia perspicillata metabolic curve)]
+  quantity: >
+    Mechanical (aerodynamic) power. Metabolic power equals it divided by an efficiency that the model
+    does not supply.
+  notes: >
+    Parameters k and C_Db are calibrated on birds. Not checked in this entry against pterosaurs, gliders
+    using intermittent flight, or any animal below ~1e4 Reynolds number.
+where_it_breaks: >
+  (1) AT LOW SPEED AND HOVER THE EQUATION DIVERGES. The induced term k*(m*g)^2/(2*rho*S_d*V) goes to
+  infinity as V -> 0; this is a failure of the forward-flight actuator-disc approximation, not a
+  prediction, and the hover end of the U must be computed from a separate hovering formula. The left arm
+  of the "U" is therefore least trustworthy exactly where it is steepest. (2) MEASURED CURVES ARE NOT
+  RELIABLY U-SHAPED ACROSS SPECIES. Black-billed magpies (Dial et al. 1997, pectoralis in vivo strain,
+  abstract read): mechanical power statistically indistinguishable -- flat -- over most forward speeds,
+  higher only at hover and very slow flight. Cockatiels (Tobalske et al. 2003, search summary of abstract):
+  "acutely concave"; ringed turtle-doves intermediate. The authors attribute the difference to
+  morphology, kinematics and flight style (magpies fly intermittently), i.e. inputs the model omits.
+  Tobalske et al. also report wingbeat frequency and mechanical power need not share minima, so
+  wingbeat frequency is not a valid proxy for locating V_mp. (3) INSECTS: CONTRADICTORY MEASUREMENTS.
+  Ellington, Machin & Casey 1990 found bumblebee metabolic rate did not vary significantly over 0-4 m/s
+  and concluded the theories are "inadequate for insect flight"; Senior et al. 2025 (full text read) found
+  a U-shaped CO2-production curve in the same genus over 0-4.1 m/s with minimum at 1.87 m/s, and say the
+  cause of the difference "is unclear". Separately, quasi-steady accounting omits leading-edge-vortex
+  profile costs (Senior et al. 2025 state the Dudley & Ellington 1990 analysis predates the LEV); the
+  quasi-steady P_pro is therefore not a valid input below roughly 1e4 Re -- that threshold is my
+  inference from the general low-Re aerodynamics in reynolds.yaml, not a number a source gave me.
+  (4) THE PARAMETERS ARE FITTED, NOT INDEPENDENT. With the original defaults (k = 1.2) observed
+  cruising airspeeds of the two largest species in Pennycuick et al. 2013 fell BELOW predicted V_mp, and
+  four small waders flew ABOVE predicted V_mr; agreement (airspeed/V_mp = 0.969 +/- 0.0672) was obtained
+  only after lowering k to 0.9 and assigning per-species C_Db. A V_mp prediction for a new body plan with
+  no calibrated C_Db has, on this evidence, an uncertainty set by C_Db: V_mp scales as C_Db^(-1/4), so
+  the dead-body vs live-bird C_Db range (0.4 vs 0.1) alone moves V_mp by a factor 0.71 (my arithmetic).
+  (5) MECHANICAL != METABOLIC. The model predicts aerodynamic power; testing it with respirometry
+  assumes efficiency is constant with speed. Senior et al. 2025 report bumblebee efficiency 7.3-14.7%
+  not varying with airspeed, supporting that assumption in that case; I found no general test of it.
+worked_examples:
+  - organism: Migrating birds, 31 species analysed of 83 observed by ornithodolite (Pennycuick et al. 2013)
+    value: 0.969
+    note: >
+      OBSERVED airspeed divided by CALCULATED V_mp, combined sample, +/- 0.0672 (Table 2 as reported in
+      the full text). The observation is the airspeed; V_mp is a model output after the k and C_Db
+      revisions above. Mute swan airspeed remained close to V_mp even after C_Db was raised to 0.12.
+      The paper reports 951 runs on 83 species, 31 analysed in detail (0.0195 kg pied wagtail to
+      8.94 kg mute swan).
+    evidence: literature
+  - organism: Columba livia (Pennycuick 1968)
+    value_range: [8, 9]
+    units: m/s
+    note: >
+      CALCULATED minimum-power speed from the original three-component analysis (abstract, via search
+      summary), together with a calculated range of 3-16 m/s for horizontal flight without oxygen debt
+      and a best lift:drag ratio of 5.9. Model outputs informed by wind-tunnel work, not a measured
+      power minimum. The paper predates the k and C_Db revisions above.
+    evidence: literature
+  - organism: Bombus terrestris in free flight (Senior et al. 2025)
+    value: 1.87
+    units: m/s
+    note: >
+      OBSERVED speed of minimum metabolic rate, from a quadratic fit to CO2 production (free flight;
+      1.85 m/s tethered). From the reported quadratic V_CO2 = 6.43U^2 - 24.03U + 91.10, the fitted hover
+      value is 91.1 vs a minimum of 68.7, a ratio ~1.33 -- that ratio is my arithmetic from the fit, and
+      the authors note the U-shape depends heavily on the hover and low-speed points.
+    evidence: literature
+  - organism: Danio rerio with a hypothetical lifting surface (design check)
+    computation: >
+      ASSUMED m = 4e-4 kg, span b = 0.06 m, body frontal area S_b = 2e-5 m^2, k = 0.9, C_Db = 0.1,
+      rho = 1.2 kg/m^3 (all illustrative, not measurements of any fish). a = k*(m*g)^2/(2*rho*S_d) =
+      2.04e-3, c = 0.5*rho*S_b*C_Db = 1.2e-6. V_mp = (a/(3c))^(1/4) = 4.88 m/s; V_mr (P_pro neglected)
+      = 6.42 m/s; induced + parasite power at V_mp = 5.6e-4 W. With C_Db = 0.4 instead: V_mp = 3.45 m/s.
+      Hovering induced velocity v_h = 0.76 m/s.
+    value: 4.88
+    units: m/s
+    note: >
+      CALCULATED, not observed. The body Reynolds number at V_mp is ~1e4 (L = 0.03 m), at the edge of or
+      below the domain where bird-calibrated C_Db and quasi-steady P_pro apply, and the result moves by
+      ~30% across the plausible C_Db range. Use it only as an order-of-magnitude check; it must not be
+      presented as a predicted flight speed for a fish.
+    evidence: derived
+contested_by:
+  - "Dial et al. 1997 (magpie, in vivo pectoralis power): the mechanical power curve is flat over most forward speeds. Alexander's 1997 News & Views (search summary) read it as possibly 'a U truncated at the right-hand side'."
+  - "Tobalske et al. 2003 (cockatiel, dove): the curve is U-shaped (cockatiel 'acutely concave'), and its shape is species-specific, set by morphology, kinematics and flight style."
+  - "Ellington, Machin & Casey 1990 (bumblebee, respirometry): metabolic rate independent of speed over 0-4 m/s; theories 'inadequate for insect flight'."
+  - "Senior, Tickle, Walker & Askew 2025 (bumblebee, respirometry): U-shaped, minimum at 1.87 m/s; cause of disagreement with 1990 'unclear', possibly stricter exclusion of buzzing/walking. Not reconciled here."
+  - "Characterisation of Dudley & Ellington 1990 differs between sources: a search summary describes its result as power 'independent of airspeed' from hover to 4.5 m/s; Senior et al. 2025 describe it as 'a shallow U-shaped relationship between mechanical power and speed'. I did not read Dudley & Ellington 1990; both readings are recorded."
+  - "von Busse et al. 2013 (Carollia perspicillata, 1-7 m/s): metabolic power U-shaped and near Pennycuick's predicted V_mp but differing at V_mr (abstract via search summary); a related conference abstract on Leptonycteris reports individuals that do not conform."
+negative_searches:
+  - "Searched (one standard web search, 2026-11-04) for Clark & Dudley 2010 hummingbird forward-flight energetics; did not reach the paper, so no hummingbird curve shape is recorded. This is a gap, not a finding."
+  - "Searched for the profile power ratio and P_pro formula of Pennycuick 2008 (one standard web search); not found in anything reachable. The book was not accessed, so no numerical P_pro rule is given."
+  - "cran.r-project.org (afpt package vignette implementing the model) and eprints.whiterose.ac.uk were outside the session network allowlist and were not read."
+sources:
+  - citation: "Pennycuick CJ, Akesson S, Hedenstrom A (2013) Air speeds of migrating birds observed by ornithodolite and compared with predictions from flight theory. J R Soc Interface 10(86):20130419. doi:10.1098/rsif.2013.0419"
+    read_level: full-text
+    note: Read via PMC3730693 through a tool-mediated extraction; the V_mp and frontal-area equations are images and were not read directly.
+  - citation: "Senior EM, Tickle PG, Walker S, Askew GN (2025) Energetics of free and tethered flight in bumblebees (Bombus terrestris). Biol Lett. doi:10.1098/rsbl.2025.0325"
+    read_level: full-text
+    note: Read via PMC12606204 through a tool-mediated extraction. Methods and Figure 1 caption give different n for free vs tethered groups.
+  - citation: "Dial KP, Biewener AA, Tobalske BW, Warrick DR (1997) Mechanical power output of bird flight. Nature 390:67-70"
+    read_level: search-summary
+  - citation: "Tobalske BW, Hedrick TL, Dial KP, Biewener AA (2003) Comparative power curves in bird flight. Nature 421:363-366. doi:10.1038/nature01284"
+    read_level: search-summary
+    note: Abstract text quoted in search results; full text not fetched.
+  - citation: "Ellington CP, Machin KE, Casey TM (1990) Oxygen consumption of bumblebees in forward flight. Nature 347:472-473. doi:10.1038/347472a0"
+    read_level: search-summary
+  - citation: "Dudley R, Ellington CP (1990) Mechanics of forward flight in bumblebees II. Quasi-steady lift and power requirements. J Exp Biol 148:53"
+    read_level: search-summary
+    note: Characterised differently by two secondary sources (see contested_by); not read.
+  - citation: "von Busse R, Swartz SM, Voigt CC (2013) Flight metabolism in relation to speed in Chiroptera. J Exp Biol 216:2073-2080. doi:10.1242/jeb.081760"
+    read_level: search-summary
+  - citation: "Pennycuick CJ (1968) Power requirements for horizontal flight in the pigeon Columba livia. J Exp Biol 49:527-555"
+    read_level: search-summary
+    note: Citation verified against the JEB archive listing and Scilit; abstract content seen via search summary. Hedenstrom's JEB Classics commentary (J Exp Biol 212:1421-1422, 2009) credits it with the 7/6 mass scaling of flight power.
+  - citation: "Pennycuick CJ (2008) Modelling the Flying Bird. Academic Press"
+    read_level: could-not-access
