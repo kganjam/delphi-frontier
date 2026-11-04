@@ -11,13 +11,19 @@ Every question this project has opened, with what settled it.
 | **S3** | organism | Does the mass and power budget close? | — |
 | **S18** | behaviour | Could a zebrafish control attitude in air? | — |
 
-## running (3)
+## running (9)
 
 | id | scale | question | answer |
 |---|---|---|---|
 | **S15** | dna | What is the minimal edit stack, and is each edit individually demonstrated? | — |
 | **S16-D** | dna | Deepen S16: attack its most sensitive input | — |
+| **S13-D-D** | protein | Deepen S13-D: attack its most sensitive input | — |
+| **S11-D** | cell | Deepen S11: attack its most sensitive input | — |
+| **S25-D** | organ | Deepen S25: attack its most sensitive input | — |
+| **S26-D-D** | organ | Deepen S26-D: attack its most sensitive input | — |
 | **S5** | organ | What pectoral fin planform is actually reachable by genetic enlargement? | — |
+| **S28-D** | organism | Deepen S28: attack its most sensitive input | — |
+| **S29-D** | organism | Deepen S29: attack its most sensitive input | — |
 
 ## answered (48)
 

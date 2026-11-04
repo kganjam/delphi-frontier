@@ -54,13 +54,19 @@ graph LR
 | **S3** | organism | 0 | S5, S9 | Does the mass and power budget close? |
 | **S18** | behaviour | 0 | S5 | Could a zebrafish control attitude in air? |
 
-## 🟡 running — 3
+## 🟡 running — 9
 
 | id | scale | claims | blocked on | question |
 |---|---|---|---|---|
 | **S15** | dna | 0 | S11, S16, S22 | What is the minimal edit stack, and is each edit individually demonstrated? |
 | **S16-D** | dna | 0 | — | Deepen S16: attack its most sensitive input |
+| **S13-D-D** | protein | 0 | — | Deepen S13-D: attack its most sensitive input |
+| **S11-D** | cell | 0 | — | Deepen S11: attack its most sensitive input |
+| **S25-D** | organ | 0 | — | Deepen S25: attack its most sensitive input |
+| **S26-D-D** | organ | 0 | — | Deepen S26-D: attack its most sensitive input |
 | **S5** | organ | 0 | S11 | What pectoral fin planform is actually reachable by genetic enlargement? |
+| **S28-D** | organism | 0 | — | Deepen S28: attack its most sensitive input |
+| **S29-D** | organism | 0 | — | Deepen S29: attack its most sensitive input |
 
 ## 🟢 answered — 48
 
@@ -94,7 +100,7 @@ graph LR
 | **S6-D-D** | organ | 3 | — | Deepen S6-D: attack its most sensitive input |
 | **S7** | organ | 1 | S9 | Can the pectoral girdle bear and transmit lift? |
 | **S7-D** | organ | 1 | — | Deepen S7: attack its most sensitive input |
-| **S7-D-D** | organ | 2 | — | Deepen S7-D: attack its most sensitive input |
+| **S7-D-D** | organ | 3 | — | Deepen S7-D: attack its most sensitive input |
 | **S1** ⚠️ | organism | 4 | — | Can a 0.4 g zebrafish reach takeoff speed from water? |
 | **S1-D** | organism | 1 | — | Deepen S1: attack its most sensitive input |
 | **S1-D-D** | organism | 2 | — | Deepen S1-D: attack its most sensitive input |

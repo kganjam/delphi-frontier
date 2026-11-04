@@ -2,7 +2,7 @@
 title: Claims
 ---
 
-136 live claims of 152 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
+137 live claims of 153 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
 
 | # | sub | claim | evidence | value | source |
 |---|---|---|---|---|---|
@@ -142,3 +142,4 @@ title: Claims
 | 229 | S29 | NO TELEOST HAS A LOCOMOTOR SPRING OR LATCH. The only fish LaMSA is the syngnathiform over-centre head latch, and it is used in FEEDING. A locomotor la | 🔵 literature |  | S29-organism.md *[abstract]* |
 | 230 | S29 | DECISIVE TEST: in-situ single-stroke spring-loading work of zebrafish fast myotomal muscle. A value at or above ~99 J/kg closes the energy term. Secon | 🟡 derived | `99 J/kg threshold` | S29-organism.md |
 | 231 | S29 | THE DEEP CONCLUSION: the barrier is a property of SINGLE-IMPULSE LAUNCH FROM WATER AT THIS SIZE, not of any one mechanism. Two independent representat | 🟡 derived |  | S29-organism.md |
+| 232 | S7-D-D | [S7-D-D] The girdle section S7 guessed and S7-D could not reach is now derived from measured geometry: published µCT surface models of 24 and 20 mm SL | 🟡 derived |  | harvest:deepen-s7-d-sensitive-input-tbjg48 |

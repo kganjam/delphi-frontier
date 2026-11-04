@@ -8,9 +8,9 @@ Derive, from first principles and published measurement, what it would take to t
 
 | | |
 |---|---|
-| Claims | 152 (16 superseded) |
-| Subproblems | 54 — 48 answered, 1 refuted, 2 open |
-| Challenges resolved | 231 |
+| Claims | 153 (16 superseded) |
+| Subproblems | 60 — 48 answered, 1 refuted, 2 open |
+| Challenges resolved | 241 |
 | Open review flags | 6 |
 
 ## What the evidence actually is
@@ -19,7 +19,7 @@ This table is the point of the project. A claim is only as good as the row it si
 
 | Evidence level | Live claims |
 |---|---|
-| 🟡 derived | 72 |
+| 🟡 derived | 73 |
 | 🟢 measured | 23 |
 | 🔵 literature | 19 |
 | ⚪ unknown | 15 |
@@ -32,6 +32,7 @@ Superseded claims are **kept and shown**, not deleted. A correction creates a ne
 
 ## Pages
 
+- [Parameters](parameters.md) — every number with its provenance and assumptions
 - [Subproblem board](board.md) — every question as an issue, with a dependency graph
 - [The frontier](frontier.md) — what is open, and what is blocked on what
 - [Claims](claims.md) — every claim with its evidence level and source

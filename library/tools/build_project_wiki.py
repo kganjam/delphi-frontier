@@ -78,6 +78,7 @@ def index():
             "the old one stays readable with a pointer to what replaced it.",
             ":::\n",
             "## Pages\n",
+            "- [Parameters](parameters.md) — every number with its provenance and assumptions",
             "- [Subproblem board](board.md) — every question as an issue, with a dependency graph",
             "- [The frontier](frontier.md) — what is open, and what is blocked on what",
             "- [Claims](claims.md) — every claim with its evidence level and source",
@@ -104,6 +105,53 @@ def frontier():
             a = esc(ans)[:200] + (f" *({kind})*" if kind else "") if ans else "—"
             out.append(f"| **{sid}** | {scale or '—'} | {esc(qn)[:110]} | {a} |")
         out.append("")
+    return "\n".join(out)
+
+
+def parameters():
+    """A page per parameter: where the number came from, what it rests on, and what it assumes.
+
+    A simulation parameter is not a number, it is a posterior. The page shows the derivation route,
+    the DAG of parent estimates, and the STRUCTURAL assumptions separately from the value --
+    because "this process follows law L" can be wrong in ways no parameter refinement reveals.
+    """
+    ps = q(f"""select id, symbol, name, description, coalesce(units,''), coalesce(point::text,''),
+                      coalesce(lo::text,''), coalesce(hi::text,''), coalesce(interval_kind,''),
+                      derivation, how, coalesce(conditions,''), coalesce(source,''), coalesce(read_level,'')
+               from parameter where project_id='{PROJECT}' and superseded_by is null order by id""")
+    deps = q("select parameter_id, depends_on, relation, coalesce(sensitivity,'') from parameter_depends")
+    sas = q("""select ps.parameter_id, sa.id, sa.statement, sa.evidence, coalesce(sa.alternatives,''),
+                      sa.consequence_if_wrong
+                 from parameter_structural ps join structural_assumption sa on sa.id=ps.assumption_id""")
+    DER = {"measured": "🟢 measured", "derived": "🟡 derived", "fitted": "🟡 fitted",
+           "borrowed": "🔵 borrowed from another system", "assumed": "🟠 assumed", "unknown": "⚪ unknown"}
+    out = ["---\ntitle: Parameters\n---\n",
+           "Every simulation parameter with its provenance. A parameter is a **posterior**, not a "
+           "number: the route that produced it, the estimates it rests on, and the structural "
+           "assumptions that license it are all part of the value.\n",
+           "## The dependency graph\n", "```{mermaid}", "graph TD"]
+    for pid, sym, *_ in ps:
+        out.append(f'  {pid}["{sym}"]')
+    for a, b, rel, _s in deps:
+        out.append(f'  {b} -->|{rel}| {a}')
+    out += ["```\n", "*An arrow runs from an input to the estimate that uses it.*\n"]
+    for pid, sym, name, desc, un, pt, lo, hi, ik, der, how, cond, src, rl in ps:
+        out += [f"## `{sym}` — {name}\n", f"{desc}\n",
+                "| | |", "|---|---|",
+                f"| Value | **{pt} {un}**" + (f" (range {lo}–{hi}, *{ik}*)" if lo else " — **no interval**") + " |",
+                f"| Derivation | {DER.get(der, der)} |",
+                f"| How | {esc(how)} |",
+                f"| Conditions | {esc(cond) or '**not stated**'} |",
+                f"| Source | {esc(src)}" + (f" *[{rl}]*" if rl else "") + " |", ""]
+        d = [x for x in deps if x[0] == pid]
+        if d:
+            out.append("**Rests on:**\n")
+            out += [f"- `{b}` ({rel}) — {esc(sv)}" for _a, b, rel, sv in d] + [""]
+        sa = [x for x in sas if x[0] == pid]
+        for _p, sid, st, ev, alt, cons in sa:
+            out += [f":::{{warning}} Structural assumption: {esc(st)}",
+                    f"**Evidence:** {ev}. **Alternatives:** {esc(alt) or 'none stated'}.",
+                    f"**If wrong:** {esc(cons)}", ":::", ""]
     return "\n".join(out)
 
 
@@ -206,7 +254,7 @@ def corrections():
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for name, fn in (("index", index), ("frontier", frontier), ("board", board),
+    for name, fn in (("index", index), ("frontier", frontier), ("board", board), ("parameters", parameters),
                      ("claims", claims), ("corrections", corrections)):
         (OUT / f"{name}.md").write_text(fn())
         print(f"  wrote {name}.md")
