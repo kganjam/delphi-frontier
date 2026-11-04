@@ -216,6 +216,28 @@ The comparison carried its own control: the WT model contains **THR** at 200 and
 contains **LYS**, asserted in the analysis, so the two runs demonstrably folded different sequences
 rather than the same one twice.
 
+### A second model class, and the control that deflated it
+
+ProteinMPNN — structure-conditioned sequence design — was run on the same WT backbone and asked
+what belongs at position 200. Raw result: **lysine rank 14 of 21, probability ≈ 0, against
+threonine at rank 2** — a probability ratio of order 10¹⁵. Read alone, that looks like a strong
+verdict against the substitution.
+
+**It is not, and the control is the finding.** Lysine's *median* rank across all 577 positions of
+this protein is **12**, and **64.8 %** of positions rank lysine at least as well as position 200
+does. Lysine is simply a rarely-chosen residue throughout a hydrophobic membrane transporter. And
+the model's whole-protein sequence recovery is **32.4 %** — the native residue is top-1 at only
+32.8 % of positions — so a single-position disagreement carries almost no evidential weight by
+construction.
+
+**What survives:** the top six choices at 200 are **V, T, L, I, M, A** — all small and hydrophobic
+— so the site sits in a buried-like environment where a charged residue is locally unusual. That is
+weak, independent corroboration of the ESMFold2 result: **two different model classes agree the
+site is locally perturbed, and neither says the protein breaks.**
+
+This is what the raw number would have bought without its control: a dramatic-looking 10¹⁵ ratio
+reported as evidence, when the same ratio holds at two thirds of the protein.
+
 The parse carried its own control, and needed one: this writer orders `B_iso_or_equiv` at field 12
 and `occupancy` at 13, and every occupancy is exactly `1.0` — so a positional parse written for a
 standard mmCIF reports a mean pLDDT of **1.0** and looks fine. Reading the `_atom_site.` header
