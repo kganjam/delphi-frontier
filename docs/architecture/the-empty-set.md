@@ -166,6 +166,21 @@ fully provenanced, most are logged, and none of it is linked to the graph.** Tha
 problem, which is a better position than the one §4 described and a worse one than a file count
 suggests.
 
+**Linked, 2026-11-04.** All 14 runs the manifests describe are now `run` rows with their exit
+codes, wall times and result hashes — the table goes from 13 to **27**.
+
+**And the link surfaced a result nobody had recorded.** Four of the 14 are marked `failed`, and
+**all three `heldout-validation-h100` runs are among them.** Two exited `rc=0` and were *still*
+judged failed — the job ran cleanly and **the validation did not pass**.
+
+> A project's held-out validation failing **three times out of three** is a finding. It appeared in
+> no document, no claim and no summary until these rows existed.
+
+**One run also gave an abstract gap its first instance.** `fevo2smoke1` failed with no result and
+therefore no content hash. ASK rule 3 requires a `code_sha` **or** a stated
+`not_executable_because`, and the schema has no such column — which is precisely D3's recorded gap.
+Until this row existed, that gap had nothing to point at.
+
 **The lesson is the document's own, turned on itself.** A sweep that counts rows in a schema
 reports the schema's emptiness, and reads as though it had reported the project's. The vacuity
 sweep ships with a positive control for each *mechanism*; it has none for its own *domain*.
