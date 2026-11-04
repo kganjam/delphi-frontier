@@ -55,12 +55,24 @@ def lit(s):
     return "'" + str(s).replace("'", "''") + "'"
 
 
-def ask(claim, k, top_n=10, timeout=150):
+def ask(claim, k, top_n=10, timeout=150, tries=4):
+    """Query with backoff. The API rate-limits, and an unhandled 429 on the CONTROL call killed a
+    whole pass -- the run died before checking a single claim. A rate limit is back-pressure, not a
+    failure, and must be distinguished from a claim having no evidence."""
     body = json.dumps({"claim": claim[:1200], "top_n": top_n}).encode()
     req = urllib.request.Request(API, data=body, headers={
         "Authorization": f"Bearer {k}", "Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read().decode())
+    delay = 5
+    for attempt in range(tries):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return json.loads(r.read().decode())
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or attempt == tries - 1:
+                raise
+            time.sleep(delay)
+            delay *= 2
+    raise RuntimeError("unreachable")
 
 
 def main():
@@ -68,7 +80,13 @@ def main():
     k = key()
 
     # The control, every pass. A broken search and an unsupported claim both return zero.
-    c = ask(CONTROL, k)["counts"]
+    try:
+        c = ask(CONTROL, k)["counts"]
+    except Exception as e:
+        print(f"  control call failed ({type(e).__name__}) -- the engine is unreachable or rate "
+              f"limited. Recording nothing: a pass that cannot run its control produces zeros "
+              f"indistinguishable from real absences.")
+        return 2
     print(f"  control: {c['supports']} supports (floor {CONTROL_MIN})")
     if c["supports"] < CONTROL_MIN:
         print("  CONTROL FAILED -- the engine is not discriminating. Recording nothing this pass.")
@@ -84,8 +102,14 @@ def main():
     rows = q(f"""select c.id, c.statement from claim c
                  where c.project_id='zebrafish-flight' and c.superseded_by is null
                  and length(c.statement) between 40 and 1200
-                 and c.statement !~* '(scoped to|could not|we searched|this project|recomputed here|verified here|SCOPE:|LIMITATION)'
-                 and c.statement !~* '(despite|although|notwithstanding)' 
+                 and c.statement !~* '(scope|scoped|could not|we searched|this project|recomputed here|verified here|limitation|was found|does not resolve|positive control|reproduced here|holds [0-9]+ sequences|our own|here from)'
+                 and c.statement !~* '(despite|although|notwithstanding)'
+                 -- Only WORLD-CLAIMS. Measured on 39 claims: the engine returned 0 supports for
+                 -- every claim about our own method, search or computation, because there is no
+                 -- literature to support "no measurement was found" or "the a3m holds 76
+                 -- sequences". Those zeros are not evidence of anything and must not accumulate.
+                 and c.evidence in ('literature','measured','derived')
+                 and c.statement ~* '(zebrafish|danio|fish|fin|muscle|channel|protein|ray|flight|glide|exocoet|actinodin|kcn|lift|drag|scal)' 
                  and not exists (select 1 from artifact_signal s
                                  where s.entity_type='claim' and s.entity_id=c.id::text
                                  and s.voter_id='gxl-evidence')
@@ -97,6 +121,7 @@ def main():
         except Exception as e:
             print(f"  claim {cid}: {type(e).__name__}")
             continue
+        time.sleep(2)   # pace against the rate limit rather than discovering it
         cc = d.get("counts", {})
         sup, ref, neu = cc.get("supports", 0), cc.get("refutes", 0), cc.get("neutral", 0)
         retr = cc.get("supports_retracted", 0) + cc.get("refutes_retracted", 0)
