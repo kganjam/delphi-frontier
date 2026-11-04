@@ -1,0 +1,193 @@
+id: euler-buckling
+name: Euler buckling of a slender column, and the slenderness ratio where it governs
+usability: constraining          # yields a critical load a design is checked against -- above a stated slenderness only
+equation: "P_cr = pi^2 * E * I / (K * L)^2"
+latex: "P_{cr} = \\frac{\\pi^2 E I}{(K L)^2}, \\qquad \\sigma_{cr} = \\frac{\\pi^2 E}{\\lambda^2}, \\qquad \\lambda = \\frac{K L}{r}, \\quad r = \\sqrt{I/A}, \\qquad \\lambda_y = \\pi\\sqrt{E/\\sigma_y}"
+symbols:
+  P_cr:    {dimension: M*L/T^2,   units: N,             description: "critical (bifurcation) axial load of the ideal column"}
+  E:       {dimension: M/(L*T^2), units: Pa,            description: "Young's modulus along the column axis (tangent modulus once the material is inelastic)"}
+  I:       {dimension: L^4,       units: m^4,           description: "second moment of area of the section about the buckling axis (the weaker axis unless that one is braced)"}
+  K:       {dimension: "1",       units: dimensionless, description: "effective-length factor set by the end restraints (1 for pinned-pinned)"}
+  L:       {dimension: L,         units: m,             description: unbraced length of the column}
+  A:       {dimension: L^2,       units: m^2,           description: cross-sectional area}
+  r:       {dimension: L,         units: m,             description: "radius of gyration sqrt(I/A)"}
+  lambda:  {dimension: "1",       units: dimensionless, description: "slenderness ratio K*L/r"}
+  sigma_cr: {dimension: M/(L*T^2), units: Pa,           description: "critical mean axial stress P_cr/A = pi^2*E/lambda^2"}
+  sigma_y: {dimension: M/(L*T^2), units: Pa,            description: "yield (or proportional-limit) stress in compression"}
+constants:
+  K_pinned_pinned:
+    value: 1.0
+    note: "Theoretical. AISC Commentary Table C-A-7.1 gives the same recommended design value (secondary sources only; table not read directly)."
+  K_fixed_fixed:
+    value: 0.5
+    interval: [0.5, 0.65]
+    note: >
+      0.5 is the theoretical value for perfect rotational and translational fixity; 0.65 is the AISC
+      recommended design value, raised because real 'fixed' connections are not rigid. The interval
+      is the theory-to-practice spread, not a measurement uncertainty. Values taken from secondary
+      sources describing AISC Table C-A-7.1; the table itself was not read in this session.
+  K_fixed_pinned:
+    value: 0.7
+    interval: [0.7, 0.8]
+    note: "Theoretical 0.7; AISC recommended 0.8 (secondary sources describing Table C-A-7.1)."
+  K_fixed_free:
+    value: 2.0
+    interval: [2.0, 2.1]
+    note: >
+      Theoretical 2.0 (flagpole). The recommended 2.1 was found in only one secondary source and is
+      NOT verified against the AISC table.
+  transition_slenderness_euler_yield:
+    value: "pi*sqrt(E/sigma_y)"
+    note: >
+      Derived, not measured: the slenderness at which the Euler stress equals the yield stress.
+      Below it the ideal Euler formula predicts a stress the material cannot carry. For AISC's
+      nominal steel values (E = 29000 ksi; Fy = 50 ksi) this is 75.7; for Fy = 36 ksi it is 89.2
+      (calculated in this session).
+  transition_slenderness_AISC:
+    value: "4.71*sqrt(E/Fy)"
+    note: >
+      Code boundary (AISC 360 Sec. E3, read via secondary sources): elastic-buckling branch applies
+      only above this, i.e. where Fe <= 0.44 Fy. For E = 29000 ksi it is 113.4 at Fy = 50 ksi and
+      133.7 at Fy = 36 ksi (calculated in this session). This is an empirical design boundary
+      fitted to column tests, not a derivation.
+  AISC_elastic_branch_factor:
+    value: 0.877
+    note: >
+      AISC Eq. E3-3 takes Fcr = 0.877 Fe even in the elastic range: the code does not credit the
+      full Euler load to any real column. The factor is a code calibration, not a measured constant;
+      the test basis was not read in this session.
+  eurocode_imperfection_factor_alpha:
+    value: "curve a0: 0.13; a: 0.21; b: 0.34; c: 0.49; d: 0.76"
+    note: "EN 1993-1-1 Table 6.1, via secondary sources (Dlubal knowledge base and others). Code-calibrated; not a physical constant."
+mechanism: >
+  Bifurcation of equilibrium. A perfectly straight, centrally loaded, linear-elastic prismatic bar
+  has, besides the straight solution, a laterally deflected equilibrium whenever the axial load P
+  makes the linearised equation E*I*w'' + P*w = 0 admit a non-zero solution satisfying the end
+  conditions. The lowest such P is P_cr. Physically: the destabilising moment P*w from the axial load
+  acting through a small lateral deflection grows exactly as fast as the restoring bending moment
+  E*I*w'', and at P_cr the two balance for a half-sine (or end-condition-dependent) mode of
+  wavelength 2*K*L. Dividing by A turns it into a stress sigma_cr = pi^2*E/lambda^2 that depends only
+  on stiffness and the slenderness lambda = K*L/r -- not on strength. That is the whole design
+  content: a slender column fails by losing stiffness, and a stronger material with the same E buys
+  nothing. Euler obtained the load from the elastica (1744) and again from the linearised equation
+  in "Sur la force des colonnes" (written 1757; per secondary sources).
+domain_of_validity:
+  material: "linear elastic up to sigma_cr; homogeneous along the length"
+  geometry: "prismatic; slender enough that shear deformation is negligible; section compact enough that local wall buckling does not occur first"
+  loading: "concentric, axial, conservative (direction fixed), static"
+  slenderness_min: "lambda > pi*sqrt(E/sigma_proportional) in theory; lambda > 4.71*sqrt(E/Fy) in AISC practice"
+  output: "onset of buckling (bifurcation load), not a post-buckling or ultimate load"
+  notes: >
+    Constraining only on the slender side of the transition slenderness. For an elastic slender
+    column the post-buckling path is nearly flat, so P_cr is close to the maximum load; that is why
+    the formula is usable at all as a capacity estimate there. For a shell the same reasoning fails
+    (see where_it_breaks).
+where_it_breaks: >
+  (1) SHORT AND INTERMEDIATE COLUMNS. Below lambda_y = pi*sqrt(E/sigma_y) the Euler stress exceeds
+  yield and the formula overpredicts capacity without bound as lambda -> 0. The failure is not only
+  below lambda_y: residual stresses and gradual yielding make the column inelastic before the mean
+  stress reaches yield, so AISC places the elastic/inelastic boundary at lambda = 4.71*sqrt(E/Fy)
+  (113 for 50-ksi steel) -- well above the Euler-yield intersection (76 for the same steel). Between
+  those two slenderness values the Euler formula is non-conservative by code standards. Below the
+  boundary the tangent-modulus (Engesser/Shanley) load governs, and the code curves replace Euler
+  entirely.
+  (2) IMPERFECTION SENSITIVITY NEAR THE TRANSITION. Real columns have initial crookedness, load
+  eccentricity and residual stress. The design curves fitted to tests fall furthest below
+  min(Euler, yield) exactly where the two meet: at normalised slenderness 1 (Euler stress = yield)
+  the Eurocode reduction factor is 0.73 (curve a0) to 0.47 (curve d), and AISC gives 0.658 -- all
+  calculated in this session from the code formulas, which are themselves fits to test data. Even
+  far into the elastic range AISC caps the design stress at 0.877 of Euler.
+  (3) END RESTRAINT IS NEVER IDEAL. Using the theoretical K = 0.5 for a 'fixed-fixed' column instead
+  of the AISC recommended 0.65 overstates P_cr by a factor (0.65/0.5)^2 = 1.69 (calculated). The
+  formula is exact; the input K is the dominant error in practice.
+  (4) WRONG MODE. Thin-walled open sections (angles, channels, cruciform, many fin-ray-like and
+  stem-like profiles) can fail by torsional or flexural-torsional buckling, and thin-walled tubes by
+  local wall buckling, at loads below the flexural Euler load. The Euler formula says nothing about
+  these modes. For thin cylindrical SHELLS under axial load the classical bifurcation load is
+  unreachable in tests; NASA SP-8007 prescribes empirical lower-bound knockdown factors (e.g. 0.59
+  cited for one test article, which itself reached 0.91 -- secondary source), and those knockdowns
+  are now argued to be over-conservative. This is a different law; do not carry a column's
+  imperfection insensitivity over to a shell.
+  (5) SHEAR-SOFT AND LAMINATED MEMBERS. Where shear modulus is low relative to E (sandwich, composite,
+  wood, plausibly bone and collagenous rays -- the last two are my inference, not a sourced finding)
+  shear deformation lowers the critical load below Euler (Engesser/Timoshenko correction); the
+  formula is non-conservative for short, deep or sandwich members.
+  (6) LATERAL SUPPORT CHANGES THE ANSWER BY ORDERS OF MAGNITUDE. A rod embedded in an elastic medium
+  buckles at a short wavelength set by the medium, not by L. Brangwynne et al. (2006) report that
+  microtubules in living cells bear compressive forces about a hundredfold greater than in vitro
+  (author claim, read only via a search summary of the abstract). A free-column Euler estimate is therefore not a bound on
+  the load an embedded filament carries.
+  (7) SELF-WEIGHT, FOLLOWER LOADS, TIME. Distributed self-weight (Greenhill's tallest-column problem),
+  non-conservative follower loads, dynamic loading and creep buckling of viscoelastic materials are
+  all outside the static concentric-load derivation.
+worked_examples:
+  - organism: "none -- AISC nominal structural steel, E = 29000 ksi, Fy = 50 ksi"
+    computation: "lambda_y = pi*sqrt(29000/50) = 75.7; AISC boundary = 4.71*sqrt(29000/50) = 113.4"
+    value: 113.4
+    note: >
+      Calculated. Euler governs (in the code's sense) only for KL/r > 113. At KL/r = 100, Euler gives
+      Fe = 28.6 ksi; AISC gives Fcr = 0.658^(50/28.6)*50 = 24.1 ksi, 0.84 of Euler. At KL/r = 150
+      and 200 the AISC value is 0.877 of Euler. All four numbers calculated in this session from the
+      AISC formulas as quoted by secondary sources.
+    evidence: derived
+  - organism: "none -- Eurocode 3 buckling curves at normalised slenderness 1"
+    computation: "Phi = 0.5*(1 + alpha*(1 - 0.2) + 1); chi = 1/(Phi + sqrt(Phi^2 - 1)); alpha = 0.13/0.21/0.34/0.49/0.76"
+    value_range: [0.467, 0.725]
+    note: >
+      Calculated: chi = 0.725 (a0), 0.666 (a), 0.597 (b), 0.540 (c), 0.467 (d), against 1.0 from
+      min(Euler, yield) and 0.658 from AISC. The two codes disagree on the shape of the knockdown;
+      recorded, not reconciled.
+    evidence: derived
+  - organism: "microtubule (taxol-stabilised, in vitro), L = 10 um pinned-pinned (L chosen for illustration)"
+    computation: "EI = 2.2e-23 N*m^2 (Gittes et al. 1993, measured in vitro; value via search summary of abstract); P_cr = pi^2 * 2.2e-23 / (1e-5)^2 = 2.2e-12 N"
+    value: 2.2e-12
+    note: >
+      Calculated, not observed: about 2 pN for a free 10-um microtubule. Brangwynne et al. (2006)
+      report that microtubules in cells carry compressive loads roughly a hundredfold larger
+      (author claim, read only via a search summary of the abstract), because the surrounding cytoskeleton acts as an elastic
+      foundation. My inference: the free-column Euler formula is the wrong model for any
+      laterally embedded biological fibre, including fin-ray elements in their tissue sheath --
+      no measurement of that case was found (scope: the searches listed under sources only).
+    evidence: derived
+  - organism: "Danio rerio lepidotrichia (fin rays)"
+    value: unknown
+    note: >
+      Not computed. A real fin-ray slenderness needs a measured hemiray section (I, A) and length,
+      and the end restraint; none were looked up in this session. Left unknown rather than assumed.
+    evidence: none
+contested_by:
+  - >
+    Inelastic column buckling: Engesser's tangent-modulus load versus the reduced/double-modulus
+    load (Considere; Engesser's own later revision). Shanley (1947) is widely read as showing buckling
+    begins at the tangent-modulus load with the maximum lying between the two; secondary sources
+    differ on how much weight to put on the reduced-modulus bound. Recorded, not reconciled.
+  - >
+    Design practice: AISC 360 uses a single column curve (0.658^(Fy/Fe) inelastic; 0.877 Fe elastic)
+    while Eurocode 3 uses five imperfection curves selected by section type and axis. At the
+    transition slenderness they give 0.658 versus 0.467-0.725. Recorded, not reconciled.
+  - >
+    Shell buckling knockdowns (relevant only to failure mode 4): NASA SP-8007 lower-bound factors
+    versus newer NESC work arguing they are over-conservative. Recorded, not reconciled.
+sources:
+  - citation: "Euler L (1759) Sur la force des colonnes. Mem. Acad. Sci. Berlin 13:252-282 (written 1757; Opera Omnia ser. 2 vol. 17 pp. 89-118). Euler Archive record E238, https://scholarlycommons.pacific.edu/euler-works/238"
+    read_level: listing
+    note: "Catalogue record only. Sophie Germain (1880) cites a different venue/page (the 1757 Histoire); preserved as a bibliographic discrepancy."
+  - citation: "Euler L (1744) Methodus inveniendi lineas curvas, Additamentum I: De curvis elasticis"
+    read_level: search-summary
+  - citation: "Shanley FR (1947) Inelastic column theory. J. Aeronaut. Sci., volume/pages not confirmed in this session"
+    read_level: search-summary
+    note: "Original not retrieved; content known only from lecture notes and a Shanley-model paper (eprints.whiterose.ac.uk/43458)."
+  - citation: "AISC 360 Specification for Structural Steel Buildings, Chapter E (Eqs. E3-2, E3-3, E3-4) and Commentary Table C-A-7.1"
+    read_level: search-summary
+    note: "Formulas and K values taken from secondary sources (lecture notes, calculators); the specification text was not read."
+  - citation: "EN 1993-1-1 Eurocode 3, Clause 6.3.1.2 and Table 6.1"
+    read_level: search-summary
+    note: "Alpha values consistent across several secondary sources, including the Dlubal knowledge base."
+  - citation: "NASA SP-8007 (1965; rev. 1968; NASA/SP-8007-2020/REV 2) Buckling of thin-walled circular cylinders"
+    read_level: search-summary
+  - citation: "Gittes F, Mickey B, Nettleton J, Howard J (1993) Flexural rigidity of microtubules and actin filaments measured from thermal fluctuations in shape. J Cell Biol 120(4):923-934. doi:10.1083/jcb.120.4.923"
+    read_level: search-summary
+    note: "Abstract content seen only through a search summary; full text (open access, PMC) not read."
+  - citation: "Brangwynne CP, MacKintosh FC, Kumar S, Geisse NA, Talbot J, Mahadevan L, Parker KK, Ingber DE, Weitz DA (2006) Microtubules can bear enhanced compressive loads in living cells because of lateral reinforcement. J Cell Biol 173(5):733-741. doi:10.1083/jcb.200601060"
+    read_level: search-summary
+    note: "Abstract content seen only through a search summary; full text (open access, PMC) not read."
