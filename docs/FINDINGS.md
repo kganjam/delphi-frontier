@@ -155,6 +155,15 @@ growth of one fin.
 launch power, aerial stability, vestibular and visual function in air, aerial gas exchange, mass
 reduction.
 
+**A third fin allele exists and does NOT fit the stack, which is worth more than if it did.**
+`cacna1g` homozygous mutants regenerate extraordinarily long fins (Le Bleu et al. 2025,
+[doi:10.1242/dev.204739](https://doi.org/10.1242/dev.204739)) — a demonstrated zebrafish
+loss-of-function long-fin model. But the authors state it **decouples developmental from
+regenerative** outgrowth: the fin lengthens *while regenerating after amputation*. It is not a lever
+for a larger fin in an intact animal, so it cannot be added to the stack as a third enlarger, and
+counting it would have inflated two demonstrated slots to three on a misreading of what the allele
+does.
+
 **Two of eight slots is not a buildable stack**, and the subproblem refuted itself on the project's
 own criterion rather than assembling something speculative. So the honest answer to *"can we get to
 real genetic manipulations?"* is: **two of them, and six have never been done in this animal.**

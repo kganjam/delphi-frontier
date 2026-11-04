@@ -107,7 +107,7 @@ is bioelectric. So the chain is exactly §2's.
 |---|---|---|---|
 | C1 | A generator of a potential difference across fin mesenchyme | cell | **satisfied** — the channels themselves, demonstrated |
 | C2 | Conductance/leak balance holding the gradient against dissipation | cell | **open** — no measured conductance for zebrafish fin mesenchyme found |
-| C3 | **A voltage-sensitive transducer that reads the potential** | cell | **open — and this is the load-bearing gap** |
+| C3 | **A voltage-sensitive transducer that reads the potential** | cell | **SATISFIED — see §10. Was recorded here as the load-bearing gap; that was wrong.** |
 | C4 | A route from that transducer to ray growth rate | tissue | **open** |
 | C5 | Gradient decay length comparable to ray length (~0.1–120 mm) | tissue | **open** |
 | C6 | Gradient established fast relative to ray growth (days–weeks) | tissue | plausible, unmeasured |
@@ -118,6 +118,13 @@ mesenchyme, then the published mechanism has an unsatisfied existence constraint
 and that is a far sharper statement than "the mechanism is not fully understood".
 
 It is also **cheap to test**: it is a literature question, not an experiment.
+
+:::{note} And when it was finally tested, the answer was that a reader exists
+The paragraph above is kept because its *reasoning* is the reusable part — an existence constraint
+at the centre of a mechanism really is sharper than vague doubt, and really is cheap to settle.
+But its conclusion was wrong, and it was wrong for the reason it names: **nobody had looked.**
+§10 records what looking found.
+:::
 
 Note what this did. It took a claim at the DNA scale, propagated it to the cell scale, and produced
 **a specific, checkable, currently-open question that nobody in this project had asked** — without
@@ -262,3 +269,55 @@ error rate was **50% before review**.
 four candidate refutations and free to produce two false ones, and nothing in the pipeline
 distinguished them. A reader who had taken the table at face value would have recorded two
 refutations of the project's own best result, using the number that result was validated against.
+
+---
+
+## 10. C3 is satisfied, and the project had been calling it the load-bearing gap
+
+**A voltage-sensitive transducer in zebrafish fin mesenchyme is demonstrated.** Le Bleu et al.
+2025, *Development* 152(23) ([doi:10.1242/dev.204739](https://doi.org/10.1242/dev.204739),
+PMID 41321290; preprint [doi:10.1101/2024.08.21.608903](https://doi.org/10.1101/2024.08.21.608903)):
+
+- **membrane depolarisation of isolated fin fibroblasts triggers voltage-gated Ca²⁺
+  channel-dependent Ca²⁺ spikes** — the reader, measured directly;
+- single-cell transcriptomics identifies `cacna1c` (L-type), `cacna1ba` (N-type) and `cacna1g`
+  (T-type) as the candidate mediators;
+- **`cacna1g` homozygous mutants regenerate extraordinarily long fins** through prolonged outgrowth;
+- the authors' own conclusion is that *"bioelectricity for fin size control reflects
+  voltage-modulated Ca²⁺ fluxes in fibroblast-lineage blastemal cells."*
+
+So §6's table was wrong, and §7's warning about C2–C6 — *"marked open because nobody has looked,
+which is different from having looked and found nothing"* — was the correct reading of its own
+state. The entry that mattered most was the one nobody had checked.
+
+### The catch, which is what a designer actually needs
+
+**The effect is on REGENERATIVE outgrowth, not developmental.** The authors say `cacna1g` mutants
+*"uniquely provide a genetic loss-of-function long-finned model that **decouples** developmental and
+regenerative fin outgrowth."*
+
+So this is **not** a lever for growing a larger fin in an intact animal. It lengthens a fin that is
+regenerating after amputation. For a design whose whole premise is a fish that leaves the water
+under its own power, an allele that requires amputating the fin first is a different intervention
+from the Daane alleles, and cannot simply be added to the stack as a third enlarger.
+
+**That distinction is the finding, not a footnote.** Had this been recorded from the abstract's
+headline alone, the project would now hold a "third demonstrated fin-enlarging allele" that does
+not do what the stack needs.
+
+### How it was found, which says something about the machinery
+
+Not by the entailment generator. **By an adversarial challenge to the entailment generator's own
+verdict** — an agent attacking the `unsatisfied` row rather than the claim. Its output was labelled
+`derived` and carried *"not re-read by harvester"*, so it arrived as a lead, and the citation was
+then verified here against PubMed with both abstracts read in full.
+
+**And it sat unread.** S31 was `answered` in substance while its row said `running` with no live
+session, so it was invisible to every readiness query — the exact failure
+[SPEC-subproblem-lifecycle §4](../specs/SPEC-subproblem-lifecycle.md) was written for, recurring
+after the spec documented it. It surfaced only when a checker was finally written for that spec's
+acceptance criteria and reported 5 violations of rule 3.
+
+One correction to the agent's report: it named **cilnidipine** specifically. The abstract says only
+*"small molecule inhibition"* of L- and/or N-type channels, so that drug name is **unverified** and
+is not repeated as fact here.
