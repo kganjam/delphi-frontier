@@ -108,7 +108,16 @@ Honest, per dimension. `designswarm` has 27 tables; this is what they actually d
 |---|---|---|---|
 | **D1 Addressability** | **partial** | `part.id` assigned, `part_revision.content_sha256`, `artifact.sha256`, closed `kind` vocabulary | Ids are not **resolvable** — nothing dereferences them. No semantic type beyond `kind` |
 | **D2 Evidential traceability** | **strong** | `claim.evidence` + `read_level` + `run_id` + `artifact_id` + `created_at`; `challenge` carries contradicting evidence incl. `survived`; `check_citations.py` resolves DOIs at doi.org | Agent identity is a free-text string, not a resolvable actor id |
-| **D3 Conditional executability** | **partial** *(was weak)* | `run` has `command`, `code_sha`, `params`, `exit_code` — **13 rows now exist, none missing a `code_sha`**, where the table was empty when this row was written. **And `results/compute/` holds 19 committed GPU/CPU run families**, one of which (`evo2zf`) carries full environment capture *and* a shuffled control | **No environment capture *in the graph*** — the one run that has it (`entry.json`: torch build, H100, flash-attn version) is a committed file linked to nothing. **1 of 19** run families has it; 14 have only a `job.log`; at least one failed. ~~Still no `not_executable_because` field~~ — **added 2026-11-04** as `run.not_executable_because`, with §4 item 1's reasoning carried in a column comment. Until then the distinction was carried by the literal string `not_executable` inside free-text `notes`, where a typo would silently convert a documented non-executable run into an undocumented one. **The checker was also blind to it**: rule 3 tested `code_sha is null`, and run 17 holds the empty STRING, so the rule returned 0 violations while a run had neither a sha nor a reason — a gate reporting PASS over a real violation. Fixed with `btrim()`; the must-flag control is run 17 with its reason removed, which the new query returns 1 for and the old one 0. Still only 18 of 295 claims carry a `run_id`, and **environment capture is still absent from the graph** |
+| **D3 Conditional executability** | **partial** *(was weak)* | `run` has `command`, `code_sha`, `params`, `exit_code` — **13 rows now exist, none missing a `code_sha`**, where the table was empty when this row was written. **And `results/compute/` holds 19 committed GPU/CPU run families**, one of which (`evo2zf`) carries full environment capture *and* a shuffled control | ~~No environment capture *in the graph*~~ — **closed 2026-11-04**, and the premise was wrong twice.
+`run.environment` (jsonb) now holds the accelerator, framework build, language version and driver for
+**10 of the 14 manifest-linked runs**, each carrying `_source`, the committed file it was read from, so
+the value can be re-read. **The "1 of 19" figure was stale**: searching by CONTENT rather than filename
+finds substantive records in **10 of 19** families (`gpu_meta.json`, `atlas_meta.json`,
+`flow_results.json`, `meta.json`, `evo2_smoke.json`, `entry.json`…). Capture was never the gap; the gap
+was that it sat in files linked to nothing. The remaining **4** (runs 17, 22, 23, 27) have no record and
+are reported BY NAME by `swarm/backfill_run_environment.py` — NULL means *no record found*, never *none
+looked for*. Run 17 is among them because it failed and wrote nothing, which is consistent. Nothing is
+inferred: a run gets an environment only from a file it wrote itself. ~~Still no `not_executable_because` field~~ — **added 2026-11-04** as `run.not_executable_because`, with §4 item 1's reasoning carried in a column comment. Until then the distinction was carried by the literal string `not_executable` inside free-text `notes`, where a typo would silently convert a documented non-executable run into an undocumented one. **The checker was also blind to it**: rule 3 tested `code_sha is null`, and run 17 holds the empty STRING, so the rule returned 0 violations while a run had neither a sha nor a reason — a gate reporting PASS over a real violation. Fixed with `btrim()`; the must-flag control is run 17 with its reason removed, which the new query returns 1 for and the old one 0. Still only 18 of 295 claims carry a `run_id`, and **environment capture is still absent from the graph** |
 | **D4 Version responsiveness** | **strong** | `claim.superseded_by`, immutable `part_revision`, `retraction` table, `regime_transition` for representation change — **and automatic propagation now works** | ~~No automatic propagation~~ — **corrected 2026-11-04**: the `trg_claim_superseded` trigger was always correct; it had been walking a `claim_depends` holding **6 edges across 330 claims**. After a backfill to **236 edges** it fired unprompted, raising 22 flags. **The gap was never the propagation, it was the empty graph** |
 | **D5 Context-preserving transferability** | **partial** | `spec_parameter.conditions` + `units` mandatory; `domain_of_validity` and `where_it_breaks` mandatory on law entries and gate-enforced | No export format that carries them. A consumer reading the DB directly can drop `conditions` without noticing |
 | **D6 Contestable federation** | **partial** | Challengers and graders named; disagreement preserved; both sides of a supersession readable | **No federation.** One node, no exchange protocol, no cross-node audit |
@@ -120,12 +129,14 @@ legitimate partial activation *provided the gaps stay visible* — which is what
 
 ## 4. Required work, derived from §3
 
-1. **`run.environment`** (D3). ~~and `run.not_executable_because`~~ — **the second field was added
-   2026-11-04 and this item is half discharged.** The reasoning is kept rather than deleted because it
+1. ~~**`run.environment`** and `run.not_executable_because`~~ (D3) — **both fields added 2026-11-04;
+   this item is discharged.** The reasoning is kept rather than deleted because it
    is the reusable part: without that field a legitimately non-executable artifact is
    indistinguishable from an undocumented one, and the paper requires the distinction explicitly.
-   `run.environment` remains missing, and **1 of 19 committed GPU run families has environment
-   capture at all** — in a file linked to nothing.
+   `run.environment` is now populated for 10 of 14 manifest-linked runs; the 4 without a record are
+   named rather than skipped. What is still **not** captured is a full dependency closure — the stored
+   record is accelerator, framework build, language version and driver, which is enough to tell two
+   machines apart and **not** enough to rebuild either.
 2. **Dependency propagation** (D4). The source video states the capability directly — *"New findings
    update claims and **flag dependent designs**."* Superseding a claim must mark every claim, part
    revision and subproblem that consumed it as `needs-review`. This is the single highest-value
