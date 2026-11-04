@@ -131,7 +131,8 @@ caudal lobe still immersed, thrust applied over many strokes.
 ratio — from 4.6 mN to 8 µN. Lobe thrust exceeds drag 3–40× and **speed genuinely rises**, doubling
 in ~10 strokes. S24 had closed this prematurely on tail-beat frequency.
 
-**But the taxi stalls at 2.2–2.9 m/s, 50–65% of the 4.41 m/s glide speed.** It does not fail to
+**But the taxi stalls at 2.2–2.9 m/s, 50–65% of the 4.41 m/s glide speed** — and the source puts
+the full uncertainty span at **1.9–2.9 m/s**, which this document had not carried. It does not fail to
 accelerate; it accelerates to a ceiling below what is needed. From the low-end exit it fails earlier
 still, on **weight support** rather than thrust.
 
