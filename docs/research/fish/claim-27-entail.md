@@ -42,6 +42,7 @@ infrastructure, not as biological support for or against anything at those scale
 | `results/2026-10-31-kcne1-binding-ddg-STOPPED.md` §6 | `graph_deadline_s = 1800` in the **stab-ddg** model schema | full-text |
 | `origin/swarm-architecture:library/tools/nbx.py` | the client; `EXPIRED` is listed as a terminal state, which is a client-side constant and not a server statement | full-text (grepped) |
 | Nebius operation log for `op-2112f97ee3d11f6e`; `operations.jsonl` | timestamps of replays and polls | **could-not-access**. Not committed on any ref (challenge-27 searched all `refs/remotes/origin/*`). |
+| `origin/claude-organ/sims:results/resources/scientific-ai-capabilities-20261101.json` | the service's own tool catalogue, captured 2026-11-01. `msa_search_native` and other tools carry: *"Durable operation: submit once with an idempotency key; poll get_operation …"*. Graph Apps carry: *"Reuse that key after response loss … An omitted key creates fresh one-shot work and cannot recover a lost response."* The catalogue gives **no** retention period and **no** admission or ADMISSION_PENDING semantics. | full-text (grepped for admission, concurrency, retain, ttl, expire, deadline, hours, days) |
 | Web: `Nebius "ADMISSION_PENDING" idempotency key operation` and `Nebius AI Studio idempotency key retention period operations API` | server semantics and key retention | **search-summary**. Two standard searches returned **no Nebius result**; only other vendors' idempotency docs (e.g. Mastercard: keys removed after 24 h), which say nothing about this service. |
 
 ---
@@ -67,8 +68,11 @@ measured server responses recorded verbatim in the repo:
 Two caveats are in the note field:
 
 - The server's text is the server's description of itself. I take it as reported.
-- No **sequence-level** job (e.g. `msa_search_native`) was ever observed in a keyed-replay situation.
-  The mechanism is shown across two protein models, and **nobody has looked** at dna-scale jobs.
+- No **sequence-level** job was ever *observed* in a keyed replay. The service's own catalogue does
+  *document* the same contract for `msa_search_native`: "Durable operation: submit once with an
+  idempotency key". So for dna-scale jobs the mechanism is documented but not observed. The
+  catalogue's wording is about recovering a *lost response*, not a *pending admission*. My inference
+  is that the two may share a mechanism. The catalogue does not say they do.
 
 ## 2. dna · timescale: the key must be retained for longer than the pending interval
 
@@ -82,7 +86,10 @@ itself. That evidence is **circular**: the claim cannot certify its own precondi
 independent retention value:
 
 - **Repo:** all refs were searched by challenge-27 for the operation log, and `nbx.py` was grepped
-  for ttl/expire/deadline. The only hit is the client constant `EXPIRED`.
+  for ttl/expire/deadline. The only hit is the client constant `EXPIRED`. I also checked a
+  branch-wide `git grep` of all 765 remote branches for `ADMISSION_PENDING` or `idempotency key`, and
+  read the service's own 2026-11-01 capability catalogue. The catalogue documents the key contract but
+  states no retention period.
 - **Web:** two standard searches returned no Nebius documentation.
 
 So the gap is "nobody has published it where we could find it", not "measured and found short". The
@@ -193,14 +200,14 @@ counted as multiscale biological support.
       "status": "satisfied",
       "satisfied_by": "Server responses recorded verbatim: esmfold2 429 with retry_same_idempotency_key: true; boltz2 429 (2026-11-01) next_action 'retry with the same idempotency key'; cancel refusal 'recover the original admission with the same idempotency key first'; op-2112f97ee3d11f6e reached SUCCEEDED under its original key",
       "satisfied_evidence": "measured",
-      "note": "ba1dd261/699500a7 proteins-readme.md section 4 and 8 (full-text); mol-sims fold_fgf_attempt1_429_receipt.json lines 33-40 (full-text). The server text is the server's own description, taken as reported. Shown for two protein models only; no sequence-level (dna-scale) job was ever observed in a keyed replay, so nobody has looked at that arm. Category note: claim 27 is about compute infrastructure; this is an operational constraint, not a biological one."},
+      "note": "ba1dd261/699500a7 proteins-readme.md section 4 and 8 (full-text); mol-sims fold_fgf_attempt1_429_receipt.json lines 33-40 (full-text). The server text is the server's own description, taken as reported. Observed for two protein models only. For sequence-level (dna-scale) jobs the contract is documented, not observed: the service catalogue (origin/claude-organ/sims results/resources/scientific-ai-capabilities-20261101.json, full-text) says of msa_search_native 'Durable operation: submit once with an idempotency key'. That wording covers response loss; extending it to pending admission is inference. Category note: claim 27 is about compute infrastructure; this is an operational constraint, not a biological one."},
     {"target_scale": "dna", "kind": "timescale",
       "statement": "Server retention of the idempotency record and its pending admission must exceed the pending interval",
       "quantity": "idempotency-record retention time", "lo": 950, "hi": null, "units": "s",
       "status": "open",
       "satisfied_by": "No independent retention value found. The only evidence that retention exceeds the 950-1616 s pending interval is the recovery event itself, which is circular",
       "satisfied_evidence": "unknown",
-      "note": "Lower bound 950 s is derived (challenge-27.md, key-epoch and commit timestamps), not measured. Searched: all origin refs for the operation log (challenge-27 scope), nbx.py for ttl/expire/deadline (only client constant EXPIRED), and two standard web searches for Nebius ADMISSION_PENDING and idempotency key retention (search-summary, no Nebius result). Scope: nobody has published it where we could find it; not measured and found short."},
+      "note": "Lower bound 950 s is derived (challenge-27.md, key-epoch and commit timestamps), not measured. Searched: all origin refs for the operation log (challenge-27 scope), nbx.py for ttl/expire/deadline (only client constant EXPIRED), a git grep of all 765 remote branches, the service's own 2026-11-01 capability catalogue (full-text; documents the key contract, states no retention period), and two standard web searches for Nebius ADMISSION_PENDING and idempotency key retention (search-summary, no Nebius result). Scope: nobody has published it where we could find it; not measured and found short."},
     {"target_scale": "cell", "kind": "timescale",
       "statement": "Pending interval plus runtime must stay below any hard per-job deadline that starts at submission, or 'transient' ends in EXPIRED rather than SUCCEEDED for downstream jobs that chain on the output",
       "quantity": "pending interval + runtime", "lo": null, "hi": 1800, "units": "s",
