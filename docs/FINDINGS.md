@@ -386,6 +386,28 @@ genuinely tested, not a clean sweep.
    | 0.34 *(pike lower)* | 107.2 | 1.3–3.4× |
    | 0.25 *(hypothetical)* | 145.8 | 1.8–4.6× |
 
+   **The other two inputs, traced the same day.** `98.5 = 10.17 / (0.30 · 0.93 · 0.37)`, and the
+   0.30 is the one that matters:
+
+   | input | what it is |
+   |---|---|
+   | 10.17 J/kg | derived energy need |
+   | **0.30** | **an assumption** — S29 states *"the one-side 30 % is my assumption"*, taken as half of a 60 % whose own table is marked *"SECONDARY review figure; primary not read"* |
+   | 0.93 | tendon return |
+   | 0.37 | a point from a cited 0.34–0.39 pike range |
+
+   | f_muscle | required | shortfall vs 32–81 J/kg |
+   |---|---|---|
+   | 0.60 *all skeletal muscle* | 49.3 | 0.6–1.5× |
+   | **0.30** *the assumed one side* | **98.5** | **1.2–3.1×** |
+   | 0.20 *upper jumper value* | 147.8 | 1.8–4.6× |
+
+   **The source document is honest about this and the summary was not.** S29 flags the assumption
+   in its own text and lists the dissected axial muscle fraction as a decisive experiment. This
+   document carried neither caveat, and presented 98.5 as a number. **At 0.60 the row would read
+   0.6×, i.e. the energy term closing** — so the headline rests on an assumption that, moved to
+   the other end of its own stated range, reverses the finding.
+
    **And the value is pike** — a much larger fish at far higher Reynolds number — applied to a
    zebrafish. Whether a 0.4 g fish at Re ~10⁴ achieves the same hydromechanical efficiency is
    **not known and not asserted here in either direction**; it is listed as a decisive experiment
