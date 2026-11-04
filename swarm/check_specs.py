@@ -86,7 +86,11 @@ RULES = [
   # hits were work in progress. A checker that cannot tell "not finished" from "not recorded"
   # reports the system as broken whenever it is busy, and then gets ignored. Same distinction the
   # entailment work needed between "nobody looked" and "looked and found nothing".
-  "select count(*) from challenge where (outcome is null or outcome='not-run') "
+  # `not-run` IS a recorded outcome -- it says the challenge did not run, which a system that
+  # honestly records abandonment must be able to say. Only NULL is unrecorded. Counting both
+  # identically would make an honest record indistinguishable from lost data, which is this
+  # project's own recurring failure pointed at its own bookkeeping.
+  "select count(*) from challenge where outcome is null "
   "and created_at < now() - interval '2 hours'",
   "select count(*) from challenge"),
  ("evaluation-kernel", 1, "No grade recorded against an unfrozen rubric",
