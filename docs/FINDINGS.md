@@ -374,6 +374,24 @@ genuinely tested, not a clean sweep.
 3. **Zebrafish C-start PIV efficiency**, which sets the 0.37 hydromechanical efficiency the whole
    launch budget rests on.
 
+   **Quantified 2026-11-04.** The requirement is `10.17 / (0.30 · 0.93 · η_h)`, which reproduces
+   98.5 J/kg at η_h = 0.37. But **0.37 is a point taken from a cited range of 0.34–0.39**, and the
+   budget is linear in η_h, so the cited source alone puts the requirement at **93.5–107.2 J/kg**.
+   The document has been quoting the midpoint as if it were the number.
+
+   | η_h | required | shortfall vs 32–81 J/kg |
+   |---|---|---|
+   | 0.39 *(pike upper)* | 93.5 | 1.2–2.9× |
+   | **0.37** *(the value used)* | **98.5** | **1.2–3.1×** |
+   | 0.34 *(pike lower)* | 107.2 | 1.3–3.4× |
+   | 0.25 *(hypothetical)* | 145.8 | 1.8–4.6× |
+
+   **And the value is pike** — a much larger fish at far higher Reynolds number — applied to a
+   zebrafish. Whether a 0.4 g fish at Re ~10⁴ achieves the same hydromechanical efficiency is
+   **not known and not asserted here in either direction**; it is listed as a decisive experiment
+   precisely because nobody has measured it. What the table above establishes is only the
+   **sensitivity**: a fifth off the efficiency adds half again to the requirement.
+
 None is a programme. Each is a measurement.
 
 ---

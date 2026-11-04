@@ -70,6 +70,15 @@ def main():
         # give the stated launch energy, so a drift in ANY of the three shows up here.
         ("launch KE 0.5*m*v^2 (mJ)",           0.5 * MASS * 4.37 ** 2 * 1e3, 3.82, 0.05),
     ]
+    # The 98.5 J/kg requirement must reproduce from its own budget, so a drift in any of its
+    # four inputs surfaces here rather than in the one place the product is quoted.
+    eta = 0.37
+    req = 10.17 / (0.30 * 0.93 * eta)
+    body.append(("98.5 J/kg from its own budget", req, 98.5, 0.1))
+    # And the point value hides an interval: the cited eta_h range is 0.34-0.39.
+    body.append(("  same budget at eta=0.39", 10.17 / (0.30 * 0.93 * 0.39), 93.5, 0.2))
+    body.append(("  same budget at eta=0.34", 10.17 / (0.30 * 0.93 * 0.34), 107.2, 0.2))
+
     print()
     for name, got, stated, tol in body:
         ok = abs(got - stated) <= tol
