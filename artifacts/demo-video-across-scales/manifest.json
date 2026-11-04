@@ -1,0 +1,72 @@
+{
+  "title": "Delphi Bio — designing across scales",
+  "edition": "2026-11-03 final approved 90-second cut",
+  "cuts": [
+    {
+      "id": "delphi-bio-across-scales-90s",
+      "title": "Designing across scales",
+      "duration_s": 90.0,
+      "frames": 2700,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "video_codec": "H.264",
+      "audio_codec": "AAC",
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2,
+      "files": {
+        "video": {
+          "path": "delphi-bio-across-scales-90s.mp4",
+          "bytes": 13890751,
+          "sha256": "bbb6438e11610eec99ba8bef919ae98447504e82c7e32d9f286b2cb7f0f03eeb",
+          "git_blob_sha1": "0033d9d44651f007b3d480bdfd542ed9563c1f54"
+        },
+        "transcript": {
+          "path": "delphi-bio-across-scales-90s.txt",
+          "bytes": 1678,
+          "sha256": "cc90f26aab80fcd152f8b9a8c2f931ef55fc37ad51fde2a10903767702075137",
+          "git_blob_sha1": "7b64386127cb2586afb492c45088f19be2d515fc"
+        },
+        "poster": {
+          "path": "delphi-bio-across-scales-90s-poster.png",
+          "bytes": 763836,
+          "sha256": "394ebdc9332d4aaa1659bb80031e6ee12746d55c10e5d849f0e707fdb8e8f915",
+          "git_blob_sha1": "1402af16eff196cf490556f6f46663158aac1ccc"
+        }
+      }
+    }
+  ],
+  "poster": {
+    "source": "delphi-bio-across-scales-90s.mp4",
+    "timestamp_s": 2.0,
+    "width": 1920,
+    "height": 1080
+  },
+  "narration": {
+    "provider": "MiniMax",
+    "model": "speech-2.8-hd",
+    "voice_id": "English_expressive_narrator",
+    "closing_take": "03-yoo-caps",
+    "closing_source_sha256": "1afc4385f8a4b33087e40e0c9342ee379f417e70002ef6f6614992954a0a9353",
+    "closing_tts_text": "From a sentence to an organism. What would YOO build?",
+    "canonical_closing": "From a sentence to an organism. What would you build?",
+    "closing_post_tempo_factor": 1.0
+  },
+  "reading_holds": {
+    "one_goal_across_scales": {
+      "start_frame": 178,
+      "end_frame_exclusive": 267
+    },
+    "adversarial_design_diagram": {
+      "start_frame": 1133,
+      "end_frame_exclusive": 1205
+    }
+  },
+  "media_qa": {
+    "scope": "Previously run on these exact video bytes; copied assets compared byte-for-byte during check-in. Scientific simulations and proofs were not rerun.",
+    "full_decode_exit": 0,
+    "integrated_loudness_lufs": -15.6,
+    "true_peak_dbfs": -3.4
+  },
+  "scientific_scope": "Vision film combining conceptual illustrations and recorded computational outputs with their displayed limits. It does not establish a validated living organism or functional whole-organism DNA."
+}
