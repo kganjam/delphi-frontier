@@ -8,10 +8,10 @@ Derive, from first principles and published measurement, what it would take to t
 
 | | |
 |---|---|
-| Claims | 57 (10 superseded) |
-| Subproblems | 52 — 36 answered, 1 refuted, 4 open |
-| Challenges resolved | 12 |
-| Open review flags | 4 |
+| Claims | 65 (12 superseded) |
+| Subproblems | 52 — 41 answered, 1 refuted, 4 open |
+| Challenges resolved | 13 |
+| Open review flags | 6 |
 
 ## What the evidence actually is
 
@@ -19,11 +19,12 @@ This table is the point of the project. A claim is only as good as the row it si
 
 | Evidence level | Live claims |
 |---|---|
-| 🟡 derived | 23 |
+| 🟡 derived | 28 |
 | 🔵 literature | 10 |
 | 🟡 simulated | 6 |
 | ⚪ unknown | 5 |
 | 🟢 measured | 3 |
+| 🟠 assumed | 1 |
 
 :::{note}
 Superseded claims are **kept and shown**, not deleted. A correction creates a new row; the old one stays readable with a pointer to what replaced it.

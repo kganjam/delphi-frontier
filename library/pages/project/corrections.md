@@ -4,7 +4,7 @@ title: Corrections
 
 **Nothing here was deleted.** Each row is a value that was replaced, kept beside what replaced it. This page is the project's error record, and it getting longer is a sign the system is working rather than failing.
 
-## Superseded (10)
+## Superseded (12)
 
 | was | became | now |
 |---|---|---|
@@ -18,8 +18,10 @@ title: Corrections
 | **#31** Cysteine close pairs are ZERO in all three and significantly fewer than chance in and2 (z=-2.02), with no CxxC `0` | → #87 | Replication: Cys close pairs (\|i-j\|<=3) = 0/0/0 and 0 CxxC reproduce; but and2 z = -1.6 (p one-sided ~0.08,  `-1.6` |
 | **#36** Surface taxiing cannot close the launch gap, and the binding limit is TAIL-BEAT FREQUENCY not thrust force: su `73` | → #52 | S24 applied the Strouhal CRUISING band 0.2-0.3, but the law library records that small, low-Reynolds swimmers  `2.5` |
 | **#52** S24 applied the Strouhal CRUISING band 0.2-0.3, but the law library records that small, low-Reynolds swimmers  `2.5` | → #84 | Replication: required tail-beat frequency at 1.95 m/s is 72-83 Hz (bracket 64-101), 1.4-1.6x the 52 Hz EMG max `77.5` |
+| **#72** S6-D VERDICT FALLS: a lepidotrichial ray modelled as a passive cantilever cannot carry an equal share of glide `0.00063` | → #95 | SCALE ERROR FOUND: S6 and S26 compared a 40.3 mm bluegill ray's EI (3.8e-6 N m^2) against the requirement for  `2.1` |
+| **#82** CONSEQUENCE FOR BUILD: a construct ordered against the symbol `lat4a` would not resolve. The buildable target  | → #90 | Correction to claim 82: GeneID 393221 (slc43a2a) has a single RefSeq protein NP_956545.1 of 153 aa, so positio `153` |
 
-## Open review flags (4)
+## Open review flags (6)
 
 Raised automatically when a claim they depend on was superseded.
 
@@ -29,3 +31,5 @@ Raised automatically when a claim they depend on was superseded.
 | S24 | claim #52 | 1 | open |
 | claim 24 | claim #3 | 1 | open |
 | S1 | claim #3 | 1 | open |
+| claim 95 | claim #72 | 1 | open |
+| S26 | claim #72 | 1 | open |

@@ -2,7 +2,7 @@
 title: Claims
 ---
 
-47 live claims of 57 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
+53 live claims of 65 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
 
 | # | sub | claim | evidence | value | source |
 |---|---|---|---|---|---|
@@ -36,7 +36,6 @@ title: Claims
 | 69 | S13 | And1 PDB70 homolog hits = 0; a template-free AlphaFold model exists with 157/570 residues at pLDDT>=70 (global 57.06). PDB70 absence does not mean no  | 🟡 derived | `157 residues pLDDT>=70 of 570` | branch claude/pdb70-and1-challenge-ne0qg7 challenge- *[full-text]* |
 | 70 | S13 | and2 disorder call is NOT supported either way: FoldIndex +0.035 on mature chain, 95% bootstrap CI [-0.052,+0.152] spans the boundary (challenger-repo | 🟡 derived | `0.035 FoldIndex` | branch claude/review-and2-disorder-claim-tq2sbd chal *[full-text]* |
 | 71 | S13 | and2 max self-identity 0.098 sits at ~89th percentile of composition-preserving shuffles (p=0.106), not below null; and1/and2 carry a conserved C-x(6, | 🟡 derived | `0.098 max self-identity` | branch claude/tandem-repeat-challenge-k6d4ao challen *[full-text]* |
-| 72 | S6 | S6-D VERDICT FALLS: a lepidotrichial ray modelled as a passive cantilever cannot carry an equal share of glide lift. Required EI is ~6.3e-4 N m^2 unde | 🟡 derived | `0.00063 N m^2 required EI` | S6-deepen.md *[abstract]* |
 | 73 | S6 | DISAGREEMENT PRESERVED: Flammang 2013 fin-ray flexural stiffness is relayed as 3.8e-6 N m^2 by Puri 2018 and as 565e-6 N m^2 in the Flammang abstract  | ⚪ unknown |  | S6-deepen.md; two relayings of one source *[abstract]* |
 | 74 | S6 | Labrid fin-ray EI spans 1e-10 to 1.51e-6 N m^2 (Aiello 2018), which is below the requirement by two to six orders of magnitude | 🔵 literature | `1.51e-06 N m^2` | Aiello 2018 via S6-deepen.md *[abstract]* |
 | 75 | S21 | S21-D VERDICT STRENGTHENS: directly measured adult zebrafish fast-start maxima span 0.45-1.38 m/s (Miln et al. 2021, n=50, 120 fps, full text, values  | 🟢 measured | `1.38 m/s` | Miln et al. 2021 via S21-deepen.md *[full-text]* |
@@ -46,10 +45,17 @@ title: Claims
 | 79 | S22 | The gene symbol `lat4a` used by Daane et al. does not resolve in UniProtKB or NCBI Gene for Danio rerio. Four positive controls (kcnh2a, slc43a2a, slc | 🟢 measured | `0 hits` | fish-alleles/README.md; query form <symbol>[Gene Nam *[full-text]* |
 | 80 | S22 | lat4a = slc43a2a, resolved by the paper's OWN MAPPING rather than name similarity: Daane et al. map nr21 to chromosome 15, and of the two zebrafish SL | 🟡 derived | `393221 NCBI GeneID` | fish-alleles/README.md; GeneID 393221 chromosome 15  *[full-text]* |
 | 81 | S22 | SCOPE OF THE NEGATIVE: the lat4a absence is against UniProtKB and NCBI Gene only. ZFIN was not reached (its documented API endpoint 404s and its web s | ⚪ unknown |  | fish-alleles/README.md |
-| 82 | S22 | CONSEQUENCE FOR BUILD: a construct ordered against the symbol `lat4a` would not resolve. The buildable target is slc43a2a (GeneID 393221), and the T20 | 🟡 derived |  | inference from the two claims above |
 | 83 | S14 | PDB70 search on kcnk5b a3m holds 76 sequences (query + 75 PDB70 hit chains, 73 distinct entries); top hits are K2P structures. HARVESTER-VERIFIED: 76  | 🟡 derived | `76 sequences` | branch claude/pdb70-kcnk5b-search-s7699q replicate-1 *[full-text]* |
 | 84 | S24 | Replication: required tail-beat frequency at 1.95 m/s is 72-83 Hz (bracket 64-101), 1.4-1.6x the 52 Hz EMG max, from Eloy St_opt=0.75 Li^(1/3)=0.30-0. | 🟡 derived | `77.5 Hz` | branch claude/strouhal-band-rederivation-ljqyv7 repl *[full-text]* |
 | 85 | S24 | S24-D deepen verdict FALLS: at taxi Re ~7.8e4 measured fish kinematics (Bainbridge 1958 via Seo 2025; Wardle 1975) give peak-to-peak St 0.24-0.27, req | 🟡 derived | `71 Hz` | branch claude/s24-deepen-launch-gap-2motub S24-deepe *[abstract]* |
 | 86 | S2 | Replication: Re 1.9e3-4.0e3 reproduces, but measured steady CL_max near Re 3e3 is ~1.0 (0.9-1.1) for cambered/corrugated thin wings (snake section 1.1 | 🟡 derived | `1 CL_max` | branch claude/zebrafish-glide-replication-ptg7f5 rep *[search-summary]* |
 | 87 | S13 | Replication: Cys close pairs (\|i-j\|<=3) = 0/0/0 and 0 CxxC reproduce; but and2 z = -1.6 (p one-sided ~0.08, 2000 shuffles) at the window that reprod | 🟡 derived | `-1.6 z` | branch claude/cysteine-close-pairs-7qjmxn replicate- *[full-text]* |
 | 88 | S9 | S9-D deepen verdict FALLS: bluegill fin-ray E=1.34 GPa is EI/I with I assumed; with zebrafish in-vivo caudal EI 1.5-4e-9 N m^2 and micro-CT hemitrich  | 🟡 derived | `2.5e-09 N m^2 (caudal fin EI midpoint)` | branch claude/deepen-s9-fin-ray-ixdx5u S9-deepen.md *[full-text]* |
+| 90 | S22 | Correction to claim 82: GeneID 393221 (slc43a2a) has a single RefSeq protein NP_956545.1 of 153 aa, so position 200 does not exist and T200K cannot be | 🟡 derived | `153 aa (NP_956545.1)` | branch claude/slc43a2a-t200k-numbering-b2ak09 challe *[full-text]* |
+| 91 | S14 | S14-D deepen FALLS: engineering kcnk5b for graded pectoral-restricted control is unsupported. AFDB pLDDT is 69.5 (monomer) / 62.82 (homodimer), 33.9%  | 🟡 derived | `3.4 distinguishable setpoints` | branch claude/deepen-s14-potassium-channel-5miqg2 S1 *[full-text]* |
+| 92 | S26 | S26-D deepen FALLS the "no": 165x gap compares a <=40 mm bluegill ray (3.8e-6 N m^2) to a 120 mm per-ray requirement (6.3e-4); under ISOMETRIC L^4 sca | 🟡 derived | `2.1 x required active factor` | branch claude/deepen-s26-active-stiffening-48xj8q S2 *[abstract]* |
+| 93 | S6-D-D | S6-D-D deepen FALLS S6-D's verdict: it rested on an unstated size-transfer exponent beta=0 (bluegill 40 mm ray EI used unchanged for a 120 mm ray). Al | 🟡 derived | `4.3e-05 N m^2 (passive bluegill EI upper bound)` | branch claude/deepen-s6-d-sensitive-input-fc1hm8 S6- *[abstract]* |
+| 94 | S2-D-D | S2-D-D deepen FALLS S2-D's whole-animal L/D 3-5: model overpredicts the flying-fish measured L/D (Park & Choi 2010; max 4.4 search-summary, 5.9 relaye | 🟡 derived | `1.95 L/D midpoint of 1.2-2.7` | branch claude/deepen-s2-d-imobtp S2-D-deepen.md *[abstract]* |
+| 95 | S26 | SCALE ERROR FOUND: S6 and S26 compared a 40.3 mm bluegill ray's EI (3.8e-6 N m^2) against the requirement for a 120 mm ray. Under isometric L^4 scalin | 🟡 derived | `2.1 ratio` | S26-deepen.md; recomputed here: (120/40.3)^4 = 78.6 |
+| 96 | S26 | The single measured hemitrich-locking factor (~12x, Alben, Madden & Lauder 2007, clamped 1.98 N/m vs one-base-free) closes a 2.1x gap with 5.7x margin | 🟡 derived | `5.7 margin` | S26-deepen.md *[full-text]* |
+| 97 | S26 | CONDITIONS ON THAT CONCLUSION: it assumes isometric scaling at constant modulus and proportions from a bluegill ray to a 120 mm ray, and that the exci | 🟠 assumed |  | S26-deepen.md |

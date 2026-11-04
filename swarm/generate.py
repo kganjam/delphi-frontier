@@ -228,9 +228,15 @@ def gen_deepen(accts, i=0, limit=10):
     queue ran dry a second time. An answered question is not a finished one: every answer rests on an
     input that could move, and that input is the next question.
     """
+    # DEPTH CAP. Without it the generator deepens its own deepenings: S21-D-D-D existed within the
+    # hour, and 4 subproblems had reached depth 3. Each level is thinner than the last, and at some
+    # point it is paying to attack an input of an input of an input. One deepen per original
+    # question; if a deepening itself raises a real question it should be written as a NEW
+    # subproblem with its own id, not accreted onto the chain.
     rows = q(f"""select sp.id, sp.question, coalesce(sp.answer,''), sp.scale_id
                  from subproblem sp where sp.project_id={sql_lit(PROJECT)}
                  and sp.status in ('answered','refuted')
+                 and sp.id not like '%-D%'
                  and not exists (select 1 from subproblem d where d.id = sp.id || '-D')
                  order by sp.id limit {limit}""")
     n = 0
