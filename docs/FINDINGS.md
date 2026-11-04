@@ -129,7 +129,13 @@ no lift, glide or flight was tested. The physics needs area.
   positive controls proving the search worked.
 - Every UniProt entry for `slc43a2a` is **153 aa** — too short to contain a residue 200, so **the
   T200K substitution is unrepresentable** in the standard references. Only Ensembl GRCz11 carries
-  the full-length product.
+  the full-length product: `ENSDARP00000138218` (577 aa) and `ENSDARP00000120945` (571 aa).
+
+  **Both carry threonine at position 200**, which is what the allele name predicts — so the
+  substitution is now confirmed against a reference rather than taken from the nomenclature, the
+  1-based index convention is established rather than assumed, and the 153 aa UniProt entries are
+  demonstrably **fragments** rather than a conflicting annotation. That last point matters for an
+  implementer: the two sources do not disagree about the protein, one of them is simply partial.
 
 An implementer working from standard sources **fails twice before designing a guide RNA**.
 
