@@ -1,0 +1,137 @@
+id: elastic-similarity
+name: Elastic versus geometric similarity (McMahon)
+usability: descriptive
+equation: "l = k_e * d^2/3"
+latex: "l \\propto d^{2/3} \\Longleftrightarrow d \\propto l^{3/2}, \\qquad l \\propto M^{1/4}, \\quad d \\propto M^{3/8}"
+symbols:
+  l:   {dimension: L, units: m, description: "segment length -- a limb bone, a trunk, a spar"}
+  d:   {dimension: L, units: m, description: "segment diameter"}
+  k_e: {dimension: L^1/3, units: "m^(1/3)", description: "the proportionality constant; its FRACTIONAL length dimension is the tell that this is a similarity postulate rather than a physical law"}
+  M:   {dimension: M, units: kg, description: "body mass, used in the derived forms l ~ M^(1/4) and d ~ M^(3/8)"}
+constants:
+  exponent_length_vs_diameter:
+    value: 0.667
+    interval: [0.52, 0.97]
+    note: >
+      2/3 is the elastic-similarity PREDICTION. Geometric similarity predicts 1 and static-stress
+      similarity predicts 1/2. The interval is the measured SPREAD of reported length-versus-diameter
+      exponents, not an uncertainty on 2/3: 0.67 (Bovidae), 0.52 (Suidae), 0.83 (Cervidae), all
+      McMahon 1975 as reported second-hand in arXiv physics/0303074; and about 0.97 for limb bones
+      across mammalian orders (Alexander et al. 1979 as reported by Biewener 1983). THE INTERVAL
+      SPANS BOTH COMPETING PREDICTIONS, which is the main fact about this law.
+  elastic_mass_exponents:
+    value: 0.375
+    note: >
+      Elastic similarity: d proportional to M^(3/8) = 0.375 and l proportional to M^(1/4) = 0.25,
+      derived by combining l ~ d^(2/3) with M ~ l*d^2. Geometric similarity gives both as M^(1/3).
+      Static-stress similarity gives d ~ M^(2/5) and l ~ M^(1/5).
+  measured_mammal_length_exponent:
+    value: 0.35
+    note: >
+      Alexander, Jayes, Maloiy & Wathuta 1979, 37 mammal species from shrews to elephant: lengths
+      proportional to M^0.35, against 0.25 predicted by elastic similarity and 0.333 by geometric
+      similarity. This is the number that rules the hypothesis out, and the bovid exception is in
+      the same abstract -- Bovidae length exponents are much nearer 0.25.
+  measured_mammal_diameter_exponent:
+    value: 0.36
+    note: >
+      Same study: 0.36 against 0.375 (elastic) and 0.333 (geometric). The diameter exponent ALONE
+      cannot discriminate, since it sits between the two predictions. Quoting it without the length
+      exponent is how this hypothesis survives longer than it should.
+  two_parameterisations_agree:
+    value: 0.972
+    note: >
+      COMPUTED HERE as a cross-check, and it closes a gap between two sources read at different
+      levels. The mass exponents above imply a length-versus-diameter exponent of 0.35/0.36 = 0.972.
+      The independently reported second-hand value for the same animals is 0.97. So the
+      abstract-level primary numbers and the search-summary secondary number are the same result in
+      two parameterisations, and they corroborate rather than merely coexist. Near-geometric
+      similarity in mammals is therefore supported from both directions.
+  skeletal_safety_factor:
+    value: 3.0
+    interval: [2.0, 4.0]
+    note: >
+      Biewener 1989: peak bone stress is independent of size, maintaining a safety factor of 2-4,
+      achieved mainly through a size-dependent change in locomotor limb POSTURE rather than through
+      bone proportions. Biewener 1990 gives peak stresses at 25-50 per cent of failure strength over
+      0.1-300 kg. This is the mechanism that actually operates, in place of the one postulated.
+mechanism: >
+  Require every element to deflect, or to buckle, by the same RELATIVE amount under its own weight.
+  That is the algebra of the self-loaded cantilever, and it yields length proportional to diameter
+  to the two-thirds. McMahon 1973 derives from it a metabolic exponent of 3/4, frequencies inversely
+  as weight to the one-quarter and surface areas to the five-eighths -- an attractively complete
+  package, which is part of why the hypothesis persisted. The crucial point is that this is a design
+  rule SELECTION COULD USE, not a constraint physics imposes. The physics is in the Greenhill
+  buckling bound, which is a separate entry and is constraining; what is postulated here is that
+  organisms hold a constant fraction of it, and that postulate is what the measurements test.
+domain_of_validity:
+  original_cases: "tree trunks and ungulate (bovid) limb bones"
+  notes: >
+    Those are McMahon's own supporting cases, and Bovidae remain the one mammalian family whose
+    exponent matches. Treat the hypothesis as a description of bovid limbs and large arborescent
+    plants, and as a refuted description of mammals in general.
+where_it_breaks: >
+  It breaks on the animals it was proposed for. Across 37 mammal species from shrews to elephant,
+  limb bone lengths scale as M^0.35 and diameters as M^0.36 -- near GEOMETRIC similarity, far from
+  elastic similarity's 0.25 and 0.375 -- and the same result read second-hand in the
+  length-versus-diameter parameterisation gives about 0.97 against a predicted 2/3. Within
+  artiodactyls the exponent is not even stable: Bovidae 0.67, Cervidae 0.83, Suidae 0.52, a spread
+  that covers every competing prediction at once. Christiansen 1999 concludes long-bone data support
+  NEITHER geometric nor elastic similarity. The mechanism is also wrong for bones in a way the
+  exponent alone does not reveal: limb bones are loaded in dynamic bending and fail by fracture, not
+  by Euler buckling under body weight, so even a matching exponent would not vindicate the argument.
+  What mammals actually do is keep peak bone stress size-independent at a safety factor of 2-4 by
+  becoming more upright as they get larger -- posture does the work that bone proportions were
+  assumed to do -- and that escape route runs out above roughly 300 kg, where limbs cannot
+  straighten further. In plants the picture is no better: Norberg 1988 reports mosses through small
+  trees following geometric similarity with elastic similarity appearing only in large arborescent
+  forms, Niklas 1993 reports interspecific woody scaling fitting neither model, and Niklas 1995 plus
+  a 1998 columnar-cactus study report the buckling safety factor FALLING with size, which
+  contradicts the constant-fraction premise the whole hypothesis rests on.
+worked_examples:
+  - organism: "a limb bone of an animal 1000x heavier -- three predictions against each other"
+    computation: |
+      diameter: geometric 1000^0.333 = 10.0x ; elastic 1000^0.375 = 13.3x ; measured 1000^0.36 = 12.0x
+      length  : geometric 1000^0.333 = 10.0x ; elastic 1000^0.25  =  5.6x ; measured 1000^0.35 = 11.2x
+    note: >
+      The diameter row cannot discriminate: 12.0 sits between 10.0 and 13.3. The LENGTH row settles
+      it -- measured 11.2x against elastic similarity's 5.6x is a factor of two, far outside any
+      plausible fitting error. A design check comparing only diameters would have concluded the
+      opposite, which is why both rows are shown.
+    evidence: derived
+  - organism: "Bovidae limb bones"
+    value: 0.67
+    note: "Length-versus-diameter exponent, McMahon 1975 as reported in arXiv physics/0303074. Matches the elastic prediction -- the one family that does."
+    evidence: literature
+  - organism: "mammalian limb bones, shrew to elephant"
+    value: 0.97
+    note: "Length-versus-diameter exponent, Alexander et al. 1979 via Biewener 1983. Near geometric similarity; contradicts 2/3, and agrees with the 0.972 implied by the mass exponents."
+    evidence: literature
+contested_by:
+  - "McMahon 1973/1975 against Alexander et al. 1979 and Biewener 1989/1990. Preserved as a genuine disagreement rather than reconciled: McMahon's derivation is sound and its prediction is measured to be wrong for mammals in general and right for bovids."
+  - "Christiansen 1999, quoted in arXiv physics/0303074: long-bone data support neither geometric nor elastic similarity. Economos 1983, cited there, doubts any single power law explains mammalian allometry."
+  - "Niklas 1993 (neither model) against Norberg 1988 (geometric for small growth forms, elastic only for large trees). These two plant results disagree with each other as well as with McMahon, and are recorded rather than reconciled."
+  - "arXiv physics/0303074 proposes rebuilding the elastic-force constraint on MUSCLE forces rather than bone self-weight. That is the letter's proposal, not an established correction."
+sources:
+  - citation: "McMahon T (1973) Science 179:1201-1204, Size and shape in biology, doi 10.1126/science.179.4079.1201"
+    read_level: abstract
+  - citation: "McMahon TA (1975) Am Nat 109:547-563, Allometry and biomechanics: limb bones in adult ungulates, doi 10.1086/283026"
+    read_level: metadata
+    note: "The family-level exponents are used only as reported second-hand in arXiv physics/0303074."
+  - citation: "Alexander RMcN, Jayes AS, Maloiy GMO, Wathuta EM (1979) J Zool 189:305-314, Allometry of the limb bones of mammals from shrews to elephant, doi 10.1111/j.1469-7998.1979.tb03964.x"
+    read_level: abstract
+  - citation: "Biewener AA (1989) Science 245:45-48, Scaling body support in mammals: limb posture and muscle mechanics, doi 10.1126/science.2740914"
+    read_level: abstract
+  - citation: "Biewener AA (1990) Science 250:1097-1103, Biomechanics of mammalian terrestrial locomotion, doi 10.1126/science.2251499"
+    read_level: abstract
+  - citation: "Long-bone allometry of terrestrial mammals and the geometric-shape and elastic-force constraints of bone evolution, arXiv:physics/0303074 (2003); author names not printed in the extracted text"
+    read_level: full-text-preprint
+  - citation: "Biewener AA (1983) limb-bone allometry and stress paper; journal not verified"
+    read_level: search-summary
+  - citation: "Christiansen P (1999) long-bone scaling in terrestrial mammals; journal not verified"
+    read_level: search-summary
+    note: "Quoted only through arXiv physics/0303074."
+  - citation: "Niklas KJ (1993) interspecific woody-plant height scaling; journal not verified"
+    read_level: search-summary
+  - citation: "Norberg RA (1988) plant growth geometry and similarity models; journal not verified"
+    read_level: search-summary
