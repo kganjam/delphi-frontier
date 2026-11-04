@@ -1,0 +1,121 @@
+---
+title: Gompertz growth, and where it departs from von Bertalanffy
+label: law-gompertz
+---
+
+:::{important}
+**Descriptive** — this law describes a pattern and does not constrain a design.
+:::
+
+## The law
+
+:::{math}
+:label: eq-gompertz
+\frac{dW}{dt} = k\,W \ln\frac{W_\infty}{W} \quad\Longrightarrow\quad W(t) = W_\infty \exp\!\left(-e^{-k\,(t - t_i)}\right)
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `dW_dt` | M/T | kg/s | rate of change of body (or tumour or colony) size; in practice reported per day |
+| `W` | M | kg | size at time t. Mass is used here; tumour studies use volume (mm^3) and microbiology uses log cell count, and the dimension check holds for any size measure because only W_inf/W enters the log |
+| `W_inf` | M | kg | upper asymptote: a FITTED parameter, not an observed maximum size |
+| `W_0` | M | kg | size at t = 0 in the Laird form (in Vaghi et al. 2020, the injected tumour volume) |
+| `k` | 1/T | 1/s | Gompertz rate constant; equals beta in the Laird form. Not numerically comparable to the von Bertalanffy K or a logistic r (Tjorve & Tjorve 2017) |
+| `alpha` | 1/T | 1/s | Laird form: specific growth rate at t = 0 (at W = W_0) |
+| `beta` | 1/T | 1/s | Laird form: rate at which the specific growth rate decays |
+| `t` | T | s | time or age |
+| `t_i` | T | s | time of the inflection point (maximum absolute growth rate) |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `inflection_fraction` | 0.3679 dimensionless | W_i / W_inf = 1/e = 0.3679 for every Gompertz curve. Tjorve & Tjorve (2017) state the inflection is "locked at 36.8% of the upper asymptote". This is the single structural fact that separates Gompertz from its neighbours: logistic 0.5; von Bertalanffy in mass under isometry (W = a*L^3) (2/3)^3 = 8/27 = 0.296 (calculated in this session from W = W_inf*(1 - exp(-K t))^3, not taken from a source); von Bertalanffy in length has no inflection at all. |
+| `winsor_fitting_range` | 0.35-0.40 (interval 0.35 to 0.4) dimensionless | Winsor (1932), as reported by a search summary of the abstract: the Gompertz curve "should fit well" data whose inflection falls at roughly 35-40% of final size. This is Winsor's judgement, not a fitted interval; the paper was not read in this session. |
+| `alpha_beta_correlation_mouse_tumours` | 0.968 (interval 0.923 to 0.99) dimensionless (R^2) | Vaghi et al. (2020), individual-level R^2 between alpha_i and beta_i across animals: 0.968 breast (calipers volume), 0.923 lung, 0.99 breast (fluorescence). Population-level random-effect correlations 0.981, 0.967 and 0.998. Calculated by the authors from observed growth curves (833 measurements in 94 mice, per the abstract as summarised). The listed value is the breast-volume group; the interval is the range across their three groups, which is our construction. |
+| `alpha_mouse_breast` | 0.58 unknown -- the units of alpha were not stated in the portion of Vaghi et al. (2020) read; per day is plausible from the study design but is our inference, not their statement | Vaghi et al. (2020) population fixed effect for alpha, breast tumour volume data, reported as close to the in-vitro proliferation rate 0.837. The confidence interval was in a table (Table 2) that was not read. A calculated fit to observations, for one cell line under one injection protocol (V_inj fixed at 1 mm^3, about 10^6 cells); not a constant of anything. |
+| `W_inf_mouse_tumours` | 2600 mm^3 (breast); 12300 mm^3 (lung) mm^3 | Vaghi et al. (2020) fitted Gompertz carrying capacities for two mouse models. The two values differ by a factor of ~4.7 and are protocol- and cell-line-specific. The same authors report the logistic fit gives K of about 1303 mm^3 on the breast data, which they judge biologically implausible: the asymptote is a property of the chosen curve family as much as of the tumour. |
+| `gompertz_parameters_zebrafish` | unknown kg (W_inf); 1/s (k) | No published Gompertz fit to Danio rerio growth was found. Scope of the negative: one web search ("zebrafish Danio rerio growth Gompertz von Bertalanffy model comparison standard length larvae", Nov 2026), which returned only other fish and larval taxa. FishBase, add-my-pet and Google Scholar were not checked. Not filled from memory. |
+
+## Why it holds
+
+There is no accepted first-principles derivation. Gompertz (1825) proposed the double-exponential as a law of human MORTALITY (age-specific mortality rising roughly exponentially with adult age); it was taken up as a growth curve later (Winsor 1932) and for tumours by Laird (1964). In the Laird form the specific growth rate (1/W)(dW/dt) = alpha*exp(-beta*t) decays exponentially with time, which is algebraically the same as the autonomous form (1/W)(dW/dt) = k*ln(W_inf/W): specific growth rate falls linearly in log-size. Contrast with von Bertalanffy, whose deceleration is derived (as an assumption) from a surface-limited anabolism term m^(2/3) against mass-proportional catabolism. Gompertz therefore carries no claim about WHY growth slows; mechanistic readings (a shrinking proliferating fraction, nutrient limitation) are attached after the fit and are not tested by it. Our inference: agreement of a Gompertz fit with data is evidence about curve shape only, not about mechanism.
+
+## Where it holds
+
+- **taxa**: ['mouse, rat and rabbit tumours (Laird 1964/1965, search-summary level)', 'mouse xenograft and syngeneic tumours (Vaghi et al. 2020; Benzekry et al. 2014)', 'bird and poultry growth', 'larval fish (Zweifel & Lasker 1976)', 'bacterial growth curves in log-count form (Zwietering et al. 1990 modification)']
+- **size range**: between roughly the inflection and the plateau, within the sampled range; NOT toward zero size (see where_it_breaks)
+- **data requirement**: a sigmoid series whose inflection lies near 37% of the plateau and which spans the inflection
+- **notes**: Valid as a three-parameter descriptive fit to a single sigmoid growth series, interpolated within the sampled times. Tjorve & Tjorve (2017) list fits to plants, birds, fish, other animals, tumours and bacteria; listing in that review is evidence that the curve has been FITTED to those taxa, not that it was shown superior to alternatives in each.
+
+
+:::{danger} Where it breaks
+(1) THE INFLECTION IS FIXED AT 1/e OF THE ASYMPTOTE. Every Gompertz curve inflects at W_inf/e = 36.8% (Tjorve & Tjorve 2017, full text). Winsor (1932, abstract via search summary) gave 35-40% as the range where it should fit and said there is no reason to expect it to fit more widely than the logistic. Our inference: a series whose maximum growth rate occurs near 50% (logistic-like) or near 30% (VB-mass-like) of final size is outside the law; forcing Gompertz onto it biases W_inf and t_i together. The fix in the literature is a fourth shape parameter (Richards / Unified-Richards family), which is then a different model. (2) BACK-EXTRAPOLATION TO SMALL SIZE FAILS. The specific growth rate k*ln(W_inf/W) tends to infinity as W tends to zero; Vaghi et al. (2020, full text) state this and suggest a Gomp-Exp model (exponential phase then Gompertz) for extrapolation toward one cell. Their numbers (calculated from observed mouse data, not direct observations): estimating tumour age from late measurements by likelihood maximisation gave about 156% mean error with the full Gompertz (Fisher information often singular), 79% with the reduced Gompertz, and 12.2% only when the reduced Gompertz was combined with population priors (Bayesian). Our inference: an unconstrained Gompertz fit says almost nothing about the early, small-size phase, and any design quantity read off its left tail (initiation time, seeding size, time-from-one-cell) is not supported. Note that this divergence is NOT unique to Gompertz: von Bertalanffy in mass also has a specific growth rate diverging as W tends to zero, faster (as W^(-1/3)) than Gompertz's logarithm (calculated in this session from the two ODEs; no source checked for it). (3) DESCRIPTION IS NOT PREDICTION. Benzekry et al. (2014, abstract): Gompertz was among the best DESCRIPTIVE models for both mouse data sets, yet for the lung data no model, Gompertz included, reached a 70% prediction rate beyond the next-day point; for breast data the best predictor was exponential-linear, not Gompertz. Their stated conclusion: the most descriptive model was not necessarily the most predictive. (4) TWO PARAMETERS BEHAVE AS ONE. Within a population alpha and beta are almost collinear (R^2 > 0.92 in all three groups, Vaghi et al. 2020), and the slope k linking them depends on the injected volume, so it is not universal (their statement). Our inference: a Gompertz fit to one series cannot identify alpha and beta separately, and alpha/beta values from different seeding protocols must not be compared. (5) PARAMETERS ARE NOT PORTABLE ACROSS PARAMETERISATIONS OR MODELS. Tjorve & Tjorve (2017) review seven re-parameterisations and state that traditional Gompertz rate constants are not comparable to those of other models and do not represent absolute or relative growth rates. Our inference: a Gompertz k cannot be checked against a von Bertalanffy K, a logistic r, or a measured doubling time without conversion. (6) MICROBIAL MAXIMUM GROWTH RATE IS DEFINITION-DEPENDENT. Perni, Andrew & Shama (2005, search-summary level) report that mu_max from Gompertz and logistic fits to Listeria data were similar to each other but substantially different from Baranyi-Roberts; other secondary sources (search-summary level) report the modified Gompertz mu_max as typically higher than Baranyi or exponential estimates. Recorded as reported; direction and size of the bias were not verified from a primary source in this session. Tjorve & Tjorve (2017) also note the four-parameter Gompertz is not a Gompertz model when the response is log-transformed. (7) THE ASYMPTOTE IS A FIT ARTIFACT. W_inf moves with curve family (Vaghi et al. 2020: Gompertz 2600 mm^3 vs logistic about 1303 mm^3 on the same breast data) and with protocol. It must not be used as a maximum size in a design check. (8) ZEBRAFISH: NO FIT FOUND. No published Gompertz parameters for Danio rerio were found (scope in constants.gompertz_parameters_zebrafish), so any zebrafish Gompertz value used in this repository would be an assumption.
+:::
+
+## Worked examples
+
+**any population (no taxon)**
+
+```
+Specific growth rate relative to its value at inflection, at W = W_inf/1000. Gompertz: k*ln(1000) / k*ln(e) = 6.91 / 1 = 6.9. VB-mass (isometric): 3K*((W_inf/W)^(1/3) - 1) -> 3K*(10 - 1) = 27K at W_inf/1000 and 3K*((27/8)^(1/3) - 1) = 1.5K at inflection; ratio 18.
+
+```
+
+- value: `6.9`
+
+- DERIVED, not observed. Both curves put very high specific growth rates at small size, VB-mass more steeply. The point is that neither left tail is a measurement; what a design reads off it is the model family, not the organism.
+
+- evidence: **derived**
+
+**Mus musculus xenograft and syngeneic tumours (breast and lung cell lines)**
+
+- value: `12.2`
+
+- value range: `[12.2, 156]`
+
+- Vaghi et al. (2020): 12.2% with reduced Gompertz plus Bayesian population priors; 79% reduced Gompertz by likelihood alone; about 156% full Gompertz by likelihood alone (breast, volume data). Calculated by the authors by fitting late measurements and comparing to the known injection date; not direct observations of growth. The abstract gives 78% where the results text gives 79%; both recorded.
+
+- evidence: **literature**
+
+**Mus musculus, Lewis lung carcinoma and orthotopic human breast xenograft**
+
+- Benzekry et al. (2014): Gompertz and power law most parsimonious and identifiable for lung data; Gompertz and exponential-linear for breast. Lung forecasts: no model reached 70% prediction beyond the next day. Abstract-level; their fitted parameter values were not read.
+
+- evidence: **literature**
+
+**Engraulis mordax larvae (laboratory-reared), as reported via search summary**
+
+- A NOAA larval-growth study chose Gompertz over von Bertalanffy because VB poorly described growth of young fish (search-summary of Zweifel & Lasker 1976; the paper itself was not accessible). No parameter values recorded.
+
+- evidence: **literature**
+
+:::{seealso} Contested
+- Tumour growth law: Gompertz (Laird 1964; Vaghi et al. 2020) vs power law and exponential-linear, which matched or beat Gompertz in description or prediction for some data in Benzekry et al. (2014). Not reconciled here.
+- Early phase: Vaghi et al. (2020) suggest a Gomp-Exp (exponential then Gompertz) model for extrapolation to one cell, implying pure Gompertz is wrong at small size; Laird (1965, title via search summary) extrapolated Gompertz growth curves back to one cell. Laird's method and conclusion were not read in this session.
+- Microbial mu_max: Gompertz/logistic vs Baranyi-Roberts give materially different maximum specific growth rates on the same Listeria curves (Perni et al. 2005, search-summary); Buchanan, Whiting & Damert (1997, search-summary) found close agreement among Gompertz, Baranyi and three-phase linear predicted curves for E. coli O157:H7. The disagreement is preserved: one compares the rate parameter, the other the predicted curve.
+- Which sigmoid: Winsor (1932) held that Gompertz has no wider fitting power than the logistic; Tjorve & Tjorve (2017) argue for Gompertz within a unified Richards family, adding a shape parameter. Whether the fixed-inflection Gompertz is a law or a special case is unresolved.
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Gompertz B (1825) On the nature of the function expressive of the law of human mortality, and on a new mode of determining the value of life contingencies. Phil Trans R Soc Lond 115:513-583 | `search-summary` |
+| Winsor CP (1932) The Gompertz curve as a growth curve. PNAS 18(1):1-8. doi:10.1073/pnas.18.1.1 | `search-summary` |
+| Laird AK (1964) Dynamics of tumour growth. Br J Cancer 18(3):490-502. doi:10.1038/bjc.1964.55 | `listing` |
+| Laird AK (1965) Dynamics of tumour growth: comparison of growth rates and extrapolation of growth curve to one cell. Br J Cancer (PMC2071357) | `search-summary` |
+| Tjorve KMC, Tjorve E (2017) The use of Gompertz models in growth analyses, and new Gompertz-model approach: An addition to the Unified-Richards family. PLoS ONE 12(6):e0178691 | `full-text` |
+| Vaghi C, et al. (2020) Population modeling of tumor growth curves and the reduced Gompertz model improve prediction of the age of experimental tumors. PLoS Comput Biol 16(2):e1007178. doi:10.1371/journal.pcbi.1007178 | `full-text` |
+| Benzekry S, et al. (2014) Classical mathematical models for description and prediction of experimental tumor growth. PLoS Comput Biol 10(8):e1003800. arXiv:1406.1446 | `abstract` |
+| Zweifel JR, Lasker R (1976) Fishery Bulletin 74(3) (title and pages not verified in this session; volume and issue inferred from the NOAA archive URL path) | `search-summary` |
+| Zwietering MH, et al. (1990) Appl Environ Microbiol (title, volume and pages not verified in this session; the 1990 re-parameterisation of Gompertz for microbial growth is from search summaries and Tjorve & Tjorve 2017) | `search-summary` |
+| Perni S, Andrew PW, Shama G (2005) Estimating the maximum growth rate from microbial growth curves: definition is everything. Food Microbiology (volume and pages not verified) | `search-summary` |
+| Buchanan RL, Whiting RC, Damert WC (1997) When is simple good enough: a comparison of the Gompertz, Baranyi, and three-phase linear models for fitting bacterial growth curves. Food Microbiology 14(4):313-326 | `search-summary` |
+
+
+---
+
+*Generated from [`library/laws/gompertz.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/gompertz.yaml). Do not edit this page; edit the YAML.*
