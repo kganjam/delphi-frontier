@@ -9,7 +9,13 @@ recorded with the evidence level it earned rather than the one it claims.
 """
 import json, os, subprocess, sys, textwrap, datetime
 
-PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm", "-tAq"]
+# -F with a control character: the default field separator is `|`, and a claim statement containing
+# one silently splits a row into extra fields. That crashed gen_challenges with "too many values to
+# unpack", which stopped the generator refilling and let concurrency fall from 40 to 8 unnoticed --
+# the failure looked like "no work to do" rather than like a crash.
+SEP = "\x01"
+PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm",
+      "-tAq", "-F", SEP]
 ENV = dict(os.environ)
 if "PGPASSWORD" not in ENV:
     for line in open("/home/ubuntu/git/morphoswarm/.env"):
@@ -33,7 +39,7 @@ def q(sql):
     r = subprocess.run(PG + ["-c", sql], capture_output=True, text=True, env=ENV)
     if r.returncode:
         raise RuntimeError(r.stderr.strip())
-    return [l.split("|") for l in r.stdout.strip().split("\n") if l]
+    return [l.split(SEP) for l in r.stdout.strip().split("\n") if l]
 
 
 def sql_lit(s):
