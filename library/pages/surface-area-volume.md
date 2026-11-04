@@ -1,0 +1,145 @@
+---
+title: Surface-area-to-volume scaling and the flux an exchange surface must carry
+label: law-surface-area-volume
+---
+
+:::{important}
+**Constraining** — this law yields a number a design is checked against.
+:::
+
+## The law
+
+:::{math}
+:label: eq-surface-area-volume
+j_{\mathrm{req}} = q\,\frac{V}{A} = \frac{q\,L}{\varphi}, \qquad \frac{A}{V} = \frac{\varphi}{L} \;\propto\; L^{-1}\ \text{at fixed shape}
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `j_req` | N/(L^2*T) | mol/(m^2*s) | flux the exchange surface must carry to supply (or clear) the whole volume at steady state |
+| `q` | N/(L^3*T) | mol/(m^3*s) | volumetric consumption (or production) rate of the exchanged substance, averaged over V |
+| `V` | L^3 | m^3 | volume served by the surface |
+| `A` | L^2 | m^2 | area of the surface across which exchange happens |
+| `L` | L | m | characteristic length of the body (radius for a sphere; side for a cube) |
+| `phi` | 1 | dimensionless | shape factor A*L/V. Fixed while shape is fixed; 3 for a sphere of radius L, 6 for a cube of side L |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `phi_sphere` | 3 | Exact geometry (A = 4 pi r^2, V = 4/3 pi r^3, L = r). Not measured, so no interval. |
+| `phi_cube` | 6 | Exact geometry (L = side). Not measured, so no interval. |
+| `D_O2_water_25C` | 2.1e-09 (interval 2e-09 to 2.3e-09) m^2/s | O2 diffusivity in water. 2.0e-9 (room temperature, BioNumbers citing St-Denis and Fell 1971), 2.10e-9 (25 C, a table citing Cussler) and 2.30e-9 (listed for 20 C in an Altman and Dittmer table) were all seen at search-summary level only. The interval records the spread of those reported values; I did not read the primary measurements, and the 20 C value being HIGHER than the 25 C values is unexplained and is left unreconciled. |
+| `O2_solubility_seawater_20C` | 0.0255 cc O2 (NTP) per cc seawater per atm O2 | Harvey (1928), full text, stated as a single value with no interval. Interval unknown; I did not search for a modern seawater solubility table. |
+| `K_O2_connective_tissue_Krogh` | 1.15e-05 cc O2 cm^-2 min^-1 per (atm/cm), i.e. cm^2 min^-1 atm^-1 | Krogh's (1919) permeation constant for connective tissue, as QUOTED by Harvey (1928). I did not read Krogh (1919) itself, so this is secondary. Interval unknown. K already contains the tissue O2 solubility (K = D * alpha), which matters for worked example 2. |
+| `exponent_DLO2_mammals` | 0.99 exponent of body mass | Gehr et al. (1981), abstract: morphometric pulmonary O2 diffusing capacity proportional to Mb^0.99 across 21 African mammals, 0.4-240 kg. The abstract gives no confidence interval; interval unknown. |
+| `exponent_VO2max_mammals` | 0.79 exponent of body mass | Gehr et al. (1981), abstract, same 21 individuals. Interval unknown (not in the abstract). |
+
+## Why it holds
+
+At fixed shape, area scales as L^2 and volume as L^3, so A/V = phi/L falls as 1/L. If every unit of volume consumes at rate q, steady state requires the surface to carry j_req = qV/A = qL/phi, a flux that GROWS LINEARLY with size. Every transport process that delivers flux to a surface has a ceiling j_max (diffusion through a boundary layer, permeation through a membrane, carrier density, ventilation of a gill). A body of fixed shape and fixed q therefore has a maximum size L_max = phi * j_max / q, beyond which the surface cannot keep up. This is pure geometry plus conservation of mass (or heat); nothing biological enters until j_max and q are supplied. The design check is the inequality j_req <= j_max, evaluated with measured q and a measured or computed j_max for the actual surface. Diffusion adds a second, independent length scale. Supplying the centre of a sphere by internal diffusion needs a surface concentration C_s >= q r^2 / (6 D) (equivalently P_s >= q r^2 / (6 K) with Krogh's K = D * alpha), so internal diffusion caps r as sqrt(6 D C_s / q). That cap scales as q^-1/2, not q^-1, and is a different constraint from the surface-flux one; whichever is smaller binds.
+
+## Where it holds
+
+- **geometry**: shape held constant as size changes (isometric scaling). The 1/L law is an identity only under that condition.
+- **transport**: exchange limited by transport across the outer surface; q uniform over V
+- **scales checked**: single cells (about 1 um) to small aquatic larvae, by the worked examples below
+- **notes**: Within this domain the equation is exact and the check j_req <= j_max is a hard number. The domain is narrow in biology because organisms do not hold shape, q or the transport mode constant as they grow -- which is the whole content of where_it_breaks.
+
+
+:::{danger} Where it breaks
+The geometric identity (A/V = phi/L) does not break. What breaks is every inference that treats it as a size limit, and each failure below is documented. (1) SHAPE IS NOT HELD FIXED. Folded, branched or flattened surfaces make A grow faster than L^2. Mammal lungs: pulmonary diffusing capacity scales as Mb^0.99 against VO2max at Mb^0.79 (Gehr et al. 1981, abstract), i.e. exchange capacity rises roughly in proportion to body volume, not as Mb^0.67. Fish gills: Lefevre et al. (2017, abstract) state gill area "can, in fact, increase linearly in proportion to gill volume and body mass" because gills are folded. Any check that uses the OUTER body surface for an organism with an internal exchanger understates A by an unknown and taxon-specific factor. (2) q IS NOT UNIFORM. Metabolically inert volume decouples V from demand. Thiomargarita namibiensis reaches about 750 um (Volland et al. 2022, abstract) with cytoplasm in a thin shell around a vacuole that holds most of the volume (shell thickness and vacuole fraction seen at search-summary level only); worked example 3 calculates that a solid sphere of that size would fail the check by about 20x while the shell passes. Ca. Thiomargarita magnifica, >9000 um long, is described by its authors as growing "orders of magnitude over theoretical limits for bacterial cell size" (abstract); its filament shape (L = small radius, not length) and internal bioenergetic membranes are both escapes of type (1) and (2), and I did not read the full text to apportion between them. (3) THE TRANSPORT MODE CHANGES. Once internal convection (circulation) or external ventilation replaces diffusion, j_max is no longer a property of the outer surface and the relevant surface moves inward. The zebrafish larva crosses this boundary during development: cutaneous exchange sufficed for O2 at 3 and 7 dpf, but gills were required for O2 by 14 dpf (Rombough 2002, abstract, ablation experiments). Rombough reports ages, not masses, in the abstract, so the body SIZE at which the outer-surface check fails is unknown from what I read. (4) THE DIFFUSION COROLLARY FAILS AT BACTERIAL SCALE with tissue coefficients. Using Krogh's connective-tissue K, the internal-diffusion threshold for Harvey's luminous bacterium is 1.53e-5 atm (Harvey's own number) against an observed dimming threshold of about 0.0026 atm -- about 170x apart (my calculation; about 70-330x across Harvey's own end-point figures; see worked example 2 for why this is not Harvey's 4x). Harvey also notes that the derivation assumes O2-independent consumption and that it is "questionable" for an object as small as a bacterium. (5) q ITSELF SCALES WITH SIZE across species (mass-specific metabolic rate falls with mass), so j_req does not grow as L at fixed q, and whether the falling q is CAUSED by the surface constraint is exactly what is contested below. Scope of negative searches: I did not search heat exchange (Bergmann/Rubner; see rubner.yaml on the law-library branch), plant leaves, multicellular spheroid necrotic cores, or a fish-gill area exponent I could attribute to a primary source; a "median 0.8, range 0.6-1.0" figure appeared in a search summary without a confirmable source and is NOT used here.
+:::
+
+## Worked examples
+
+**luminous marine bacterium (Harvey 1928), rod 2.2 um x 1.1 um**
+
+```
+Harvey's stated A = 7.6 um^2 and V = 1.695 um^3 give V/A = 0.223 um (A/V = 4.48 per um). Harvey's q = 0.291 cc O2 per g per min at density 1 -> 0.291 / 22414 cc/mol = 1.30e-5 mol cm^-3 min^-1 = 0.216 mol m^-3 s^-1. j_req = 0.216 * 0.223e-6 = 4.83e-8 mol O2 m^-2 s^-1 = 5.56 mg O2 m^-2 h^-1.
+
+```
+
+- value: `4.83e-08`
+
+- CALCULATED by me from Harvey's measured geometry and respiration. Harvey reports "5.6 mg O2 per sq. m. of bacterial surface" without a time unit in the text I extracted; my per-hour figure matches it, so reading his value as per hour is my inference from the agreement, not his statement.
+
+- evidence: **derived**
+
+**luminous marine bacterium (Harvey 1928), internal-diffusion corollary**
+
+```
+Short-cylinder form used by Harvey: P_s = q r^2 / (5K) = 0.29 * (5.5e-5 cm)^2 / (5 * 1.15e-5) = 1.53e-5 atm (Harvey's number, reproduced; sphere form q r^2/6K gives 1.27e-5 atm). Harvey then divides by seawater O2 solubility (0.0255) to get 0.0006 atm and reports it as about 4x below the observed dimming threshold of about 0.0026 atm.
+
+```
+
+- value: `1.53e-05`
+
+- The 1.53e-5 atm is Harvey's calculation, which I reproduced. The solubility division is, in my inference from his own unit definitions, a dimensional error: Harvey defines D as "cc. oxygen diffusing per sq. cm. for a pressure gradient of one atmosphere per cm", which is Krogh's K = D * alpha, and q r^2 / K already has units of atm; dividing by a solubility (cc/cc/atm) does not return a pressure, and partial pressure is continuous across the cell surface. With the division removed the calculated threshold is about 170x below the observed one (my arithmetic: 0.0026 / 1.53e-5 = 170), not 4x. This is my reading, not a statement in any source I read; an internal repository review (docs/research/fish/challenge-57.md, commit 1e9b1f01) reached the same conclusion independently of this entry. A further unresolved tension in the observation itself: Harvey writes that dimming represents "utilization of at least 99.5 per cent of the dissolved oxygen", which from air equilibrium leaves at most 0.005 * 0.21 = 1.05e-3 atm (my calculation), but in the same sentence describes the end state as equilibrium "with < 0.5 per cent oxygen", i.e. up to 5e-3 atm; and he quotes 0.0026 atm elsewhere. Against 1.53e-5 atm these give ratios of about 70, 170 and 330 (my arithmetic). Every reading leaves the diffusion corollary one to two-and-a-half orders of magnitude off; I do not pick among them.
+
+- evidence: **literature (calculation reproduced; one step disputed by me)**
+
+**Thiomargarita namibiensis, about 750 um diameter (HYPOTHETICAL respiration rate)**
+
+```
+External stagnant-medium limit for a sphere: j_max = D C_inf / r. With D = 2.1e-9 m^2/s and C_inf = 0.0255 * 0.209 atm / 22414 cc/mol = 0.238 mol/m^3 (air-saturated seawater, Harvey's solubility), r = 375 um gives j_max = 1.33e-6 mol m^-2 s^-1. Solid sphere at Harvey's bacterial q: j_req = q r / 3 = 0.216 * 375e-6 / 3 = 2.7e-5 -> fails by about 20x. Active shell of 2 um only: j_req ~ q t = 4.3e-7 -> passes, with margin about 3x. Solid-sphere r_max from q r/3 = D C_inf / r is sqrt(3 D C_inf / q) = 81-87 um over the D interval.
+
+```
+
+- value: `20`
+
+- CALCULATED and HYPOTHETICAL. Thiomargarita's own O2 consumption rate is unknown to me (not searched), and its abstract says it oxidizes sulfide with nitrate held in the vacuole, so O2 is not even its principal electron acceptor; Harvey's luminous-bacterium q is a stand-in. The example shows only the structure of escape (2): inert volume removes most of V from demand. It is not a prediction about Thiomargarita. The 2 um shell is the upper end of a 0.5-2 um range seen at search-summary level; a 2 um shell is about 1.6% of the volume (my calculation), consistent with the search-summary figure of about 98% vacuole.
+
+- evidence: **derived**
+
+**Danio rerio larva, 3-21 dpf**
+
+- OBSERVATION (Rombough 2002, abstract): with gills blocked, hyperoxia did not improve survival at 3 or 7 dpf but did at 14 and 21 dpf, i.e. the skin stopped meeting O2 demand between 7 and 14 dpf, while ion exchange shifted to the gill earlier. This is the outer-surface check failing during growth and being replaced by an internal exchanger (break 3). The abstract gives no body masses, surface areas or q, so I cannot compute j_req for these larvae; that number is unknown.
+
+- evidence: **literature**
+
+**African mammals, 0.4-240 kg**
+
+```
+DLO2 / VO2max proportional to Mb^(0.99-0.79) = Mb^0.20
+```
+
+- value: `0.2`
+
+- The exponents are the authors' (Gehr et al. 1981, abstract); the ratio exponent 0.20 is stated in the same abstract. The comparison with the isometric surface prediction Mb^0.67 is my inference: exchange capacity outruns outer-surface scaling, which is break (1).
+
+- evidence: **literature**
+
+:::{seealso} Contested
+- Pauly (2021, Science Advances, abstract) -- the gill-oxygen limitation theory (GOLT): gills "as two-dimensional structures" cannot supply oxygen fast enough "to keep up with the growth of their three-dimensional bodies", and this "dimensional tension" drives maturation and the slowing and cessation of growth in water-breathing ectotherms. Pauly himself writes that the theory "still needs to be put on a solid quantitative basis".
+
+- Lefevre, McKenzie and Nilsson (2017, Global Change Biology, abstract) -- the assumption that "insurmountable geometric constraints prevent respiratory surface areas from growing as fast as body volume" is "not valid"; gills are folded surfaces not constrained by spherical geometry, gill area can scale linearly with body mass, and respiratory surface area reflects metabolic need "not vice versa".
+
+- Kuparinen, Gielewski and Hutchings (2022, J Fish Biol, abstract) -- across 44 teleosts from FishBase, gill area explains about 26-28% of species-level deviation from mass-predicted metabolic rate, which they read as gill area "might indeed be one of the factors limiting metabolic rate". This is a correlation; it does not settle the direction of causation that Lefevre et al. dispute. Not reconciled here.
+
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Harvey EN (1928) The oxygen consumption of luminous bacteria. J Gen Physiol 11(5):469-475. PMC2141004 | `full-text` |
+| Krogh A (1919) The rate of diffusion of gases through animal tissues. J Physiol 52:391-408 | `listing` |
+| Gehr P, Mwangi DK, Ammann A, Maloiy GMO, Taylor CR, Weibel ER (1981) Design of the mammalian respiratory system V. Respir Physiol 44:61-86. PMID 7232887 | `abstract` |
+| Schulz HN, Brinkhoff T, Ferdelman TG, Mariné MH, Teske A, Jorgensen BB (1999) Dense populations of a giant sulfur bacterium in Namibian shelf sediments. Science 284:493-495. PMID 10205058 | `abstract` |
+| Volland JM, Gonzalez-Rizzo S, Gros O, et al. (2022) A centimeter-long bacterium with DNA contained in metabolically active, membrane-bound organelles. Science 376:1453-1458. doi:10.1126/science.abb3634. PMID 35737788 | `abstract` |
+| Rombough P (2002) Gills are needed for ionoregulation before they are needed for O2 uptake in developing zebrafish, Danio rerio. J Exp Biol 205:1787-1794. doi:10.1242/jeb.205.12.1787 | `abstract` |
+| Rombough P (2007) The functional ontogeny of the teleost gill: which comes first, gas or ion exchange? Comp Biochem Physiol A 148:732-742. doi:10.1016/j.cbpa.2007.03.007 | `abstract` |
+| Lefevre S, McKenzie DJ, Nilsson GE (2017) Models projecting the fate of fish populations under climate change need to be based on valid physiological mechanisms. Glob Change Biol 23(9):3449-3459. doi:10.1111/gcb.13652 | `abstract` |
+| Pauly D (2021) The gill-oxygen limitation theory (GOLT) and its critics. Sci Adv 7(2):eabc6050. doi:10.1126/sciadv.abc6050 | `abstract` |
+| Kuparinen A, Gielewski D, Hutchings JA (2022) Gill area explains deviations from body size-metabolic rate relationship in teleost fishes. J Fish Biol 101(1):308-311. doi:10.1111/jfb.15084 | `abstract` |
+| O2 diffusivity in water: BioNumbers 114984/115123; Case Western 'table transport and reaction properties' (citing Cussler); Altman and Dittmer table via search | `search-summary` |
+| Thiomargarita namibiensis shell thickness 0.5-2 um and vacuole about 98% of biovolume (BioNumbers 110079 and secondary pages) | `search-summary` |
+| Gill-area review: Palzenberger M, Pohla H (1992) Rev Fish Biol Fish 2:187-216 | `search-summary` |
+
+
+---
+
+*Generated from [`library/laws/surface-area-volume.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/surface-area-volume.yaml). Do not edit this page; edit the YAML.*
