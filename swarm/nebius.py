@@ -88,8 +88,12 @@ def manifest(entries, model_id, idem):
     for name, sem, data, mt in entries:
         ref = upload(data, mt, model_id, f"{idem}-{name}")
         items.append({"name": name, "semantic_type": sem, "artifact": ref})
+    # The wrapper key is `artifacts`, NOT `entries`, and each entry NESTS its ref under `artifact`
+    # rather than spreading it. Both were established the hard way in a previous session and are
+    # recorded in the nebius-scientific-ai-workbench memory; the server's error for a wrong shape
+    # is the same string as for an empty manifest, so it cannot be found by guessing.
     body = json.dumps({"schema": "fs2-serve.nebius.ai/scientific-artifact-manifest/v1",
-                       "entries": items}).encode()
+                       "artifacts": items}).encode()
     return upload(body, "application/vnd.fs2.scientific-manifest+json", model_id, f"{idem}-mf")
 
 
@@ -99,7 +103,20 @@ def record(op_id, tool, note):
 
 
 def submit(tool, args, note=""):
-    out = call(tool, args)
+    # An ADMISSION_PENDING / 503 reply arrives as an ERROR and still carries an operation_id. That
+    # id is the only handle on the work: there is no list-pending view, and cancel is refused until
+    # admission is recovered. Recording only on success is how four operations were lost
+    # permanently. Record from the error path too, then re-raise.
+    try:
+        out = call(tool, args)
+    except RuntimeError as e:
+        try:
+            op = json.loads(str(e)).get("operation_id")
+        except json.JSONDecodeError:
+            op = None
+        if op:
+            record(op, tool, f"{note} -- ADMISSION_PENDING at submit; replay the SAME key")
+        raise
     op = out.get("operation_id") or out.get("id") or out.get("operation", {}).get("id")
     if op:
         record(op, tool, note)      # BEFORE returning: an unrecorded id is an unreclaimable slot
@@ -113,7 +130,11 @@ def wait(op, timeout=1800, every=20):
     while time.time() - t0 < timeout:
         st = call("get_operation", {"operation_id": op})
         s = (st.get("status") or st.get("state") or "").lower()
-        if st.get("done") or s in ("succeeded", "failed", "cancelled", "completed", "error"):
+        # `result_available` is how this API signals completion; there is no top-level `status` on
+        # a finished native op. Polling only for "succeeded" waits out the full timeout on a job
+        # that finished minutes ago -- the request succeeds every time, so nothing looks wrong.
+        if st.get("result_available") or st.get("done") or s in (
+                "succeeded", "failed", "cancelled", "completed", "error"):
             return st
         time.sleep(every)
     return {"status": "TIMEOUT-LOCALLY", "note": "still running server side", "operation_id": op}
