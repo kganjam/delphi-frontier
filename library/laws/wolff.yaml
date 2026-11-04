@@ -1,0 +1,236 @@
+id: wolff
+name: "Wolff's law of bone remodelling: what is measured versus what is asserted"
+usability: descriptive           # no in-vivo set point exists that a design can be checked against; see where_it_breaks
+# Wolff (1892) gave NO equation. The equation below is the strain-energy-density (SED) remodelling rule
+# of Huiskes et al. (1987) -- the most widely used quantitative formalisation of "bone adapts to load".
+# It is a SIMULATION RULE with tuned parameters, not a measured law. Recording it here lets the
+# dimensions be checked and makes explicit what the formalisation assumes.
+equation: "drho_dt + B * k = B * S / rho"
+equation_note: >
+  Written with the subtraction moved to the left because check_laws.py splits sides on '+' only and
+  dimension-checks only the FIRST term of each side; a '-' inside parentheses is not parsed. So the
+  gate checks drho_dt against B*S/rho. The B*k term was checked separately by me with the checker's
+  own parse_dim/eval_side functions (B*k = M L^-3 T^-1, equal to drho_dt). In the usual form the rule
+  reads drho/dt = B (S/rho - k) outside a "lazy zone" (1-s)k < S/rho < (1+s)k, and drho/dt = 0 inside it.
+latex: "\\frac{d\\rho}{dt} = B\\left(\\frac{S}{\\rho} - k\\right)\\ \\text{outside}\\ (1-s)k < \\frac{S}{\\rho} < (1+s)k;\\qquad \\frac{d\\rho}{dt} = 0\\ \\text{inside}"
+symbols:
+  drho_dt:
+    dimension: M/(L^3*T)
+    units: kg/(m^3*s)
+    description: "rate of change of apparent bone density at a point (a model output, not a measured quantity)"
+  rho:
+    dimension: M/L^3
+    units: kg/m^3
+    description: "apparent density of bone tissue at the point"
+  S:
+    dimension: M/(L*T^2)
+    units: J/m^3
+    description: "strain energy density at the point, 0.5*sigma*epsilon for a uniaxial load"
+  k:
+    dimension: L^2/T^2
+    units: J/kg
+    description: "reference (homeostatic) strain energy per unit bone mass -- the assumed set point"
+  B:
+    dimension: M*T/L^5
+    units: kg*s/m^5
+    description: "remodelling rate constant; a time-scaling parameter chosen by the modeller"
+  s:
+    dimension: "1"
+    units: dimensionless
+    description: "half-width of the lazy zone as a fraction of k; not in the dimension-checked equation"
+constants:
+  k_reference_SED_per_mass:
+    value: unknown
+    note: >
+      UNKNOWN. I tried to read the value used by Weinans, Huiskes & Grootenboer (1992) from its
+      open-access PDF (repub.eur.nl) and the fetch was blocked by this session's network policy; the
+      search summaries of that paper and of Huiskes et al. (1987) did not state it. A value of k is in
+      any case CHOSEN so a simulation reproduces a reference density field; it is not measured in
+      vivo, so no measured interval exists for it.
+  B_rate_constant:
+    value: unknown
+    note: "UNKNOWN for the same reason. It sets only the time scale of the simulation."
+  s_lazy_zone_halfwidth:
+    value: unknown
+    note: >
+      UNKNOWN. A value of 0.75 circulates in secondary discussion; I did not find it in any source I
+      could read, so it is not asserted here.
+  human_tibia_peak_strain:
+    value: 2066
+    units: microstrain
+    note: >
+      OBSERVED. Hillam et al. 2015, rosette gauge on ONE human subject (29 y, 70 kg male), tensile
+      strain during a jump from 1.3 m, +0.2066 %. Walking gave -0.0712 % (712 microstrain compressive).
+      n = 1, so no interval can be given; the paper did no statistics for that reason.
+  human_parietal_peak_strain:
+    value: 192
+    units: microstrain
+    note: >
+      OBSERVED, same subject and study: +0.0192 % while heading a 4.5 kg ball, the largest skull
+      strain recorded. Walking gave +0.0047 % (47 microstrain). n = 1.
+  long_bone_set_point_proposed:
+    value: 1500
+    units: microstrain
+    note: >
+      ASSERTED, not measured: Hillam et al. 2015 PROPOSE a skeleton with a spectrum of set points,
+      long bones around 0.15 %, the skull much lower. The 1500 figure is the authors' proposal.
+  femoral_neck_trabecular_intersection_angle:
+    value: 70
+    interval: unknown
+    units: degree
+    note: >
+      OBSERVED (Skedros & Baucom 2007, as relayed by one library-catalogue abstract; I did not read
+      the paper). Trabecular tracts in human and chimpanzee femoral necks intersect at about 70 degrees
+      on average, against the 90 degrees that the trajectorial hypothesis ASSERTS. I could not see the
+      spread, so the interval is unknown.
+  trabecular_reorientation_guinea_fowl:
+    value: 18
+    units: degree
+    note: >
+      OBSERVED (Pontzer et al. 2006, search summary of the abstract). The orientation of peak
+      trabecular density in the distal femur was about 18 degrees more flexed in birds that ran on a
+      20-degree incline than in level runners (p < 0.05). The knee-angle difference that drove it is
+      about 16 degrees according to a related 2005 conference abstract, which is a separate source.
+      Interval not available to me.
+  spaceflight_hip_bone_loss_rate:
+    value: 1.5
+    interval: [1.0, 1.5]
+    units: percent per month
+    note: >
+      OBSERVED by DEXA in Mir cosmonauts (LeBlanc et al. 2000; n = 18 for spine and hip, flights
+      4-14.4 months). I read this only through secondary sources and NASA slides. They give hip loss as
+      1.5 %/month or as 1-1.5 %/month, and the lumbar spine as about 1 %/month. They DISAGREE on whole
+      body (0.3 vs 0.5 %/month), and I have left that disagreement as it stands. The interval
+      records the spread across secondary sources, not a confidence interval.
+mechanism: >
+  ASSERTED by Wolff (1892), building on von Meyer and Culmann (1867): trabecular bone aligns with
+  the principal stress trajectories of the load, and the trajectories cross at right angles, as in
+  Culmann's graphic statics of a crane. Wolff called this a mathematical law but, according to the
+  historical reviews I read in summary, never stated it in mathematical form. The modern reading is
+  a feedback loop: a mechanical signal (strain, strain rate, or the fluid flow strain drives through
+  the lacuno-canalicular network) is sensed and bone is added where the signal exceeds a set point
+  and removed where it falls below it. The SED rule above is one formalisation of that loop. Each
+  element of the loop is a separate claim with separate evidence: (1) bone mass responds to load
+  (well measured); (2) orientation responds to load direction (measured, in fewer systems); (3)
+  there is a single set point (contradicted, see where_it_breaks); (4) osteocytes are the sensor
+  (contradicted as a NECESSARY condition by anosteocytic fish bone).
+domain_of_validity:
+  quantity: "direction of change of bone mass and of trabecular orientation under a sustained change in load"
+  taxa: "measured in human, bird (guinea fowl, turkey) and fish (tilapia, zebrafish) bone"
+  sites: "best supported for limb long bones and for trabecular regions under simple, dominant loads"
+  notes: >
+    Within this domain the law correctly predicts the SIGN of the response: more load gives more bone
+    (and spaceflight or disuse gives less), and a change in load direction rotates trabecular
+    orientation. It does not predict the MAGNITUDE of a set point that holds across skeletal sites,
+    and the SED rule's density field is a simulation output that depends on tuned parameters.
+where_it_breaks: >
+  (1) THE SINGLE SET POINT FAILS ACROSS SKELETAL SITES. In the one human subject instrumented at both
+  sites (Hillam et al. 2015, n = 1), peak parietal strain was 192 microstrain and peak tibial strain
+  2066 microstrain. The ratio, 10.8, is my calculation from their observed values. The skull is
+  maintained at strains the same authors say would produce disuse loss in a long bone, and it does
+  not lose mass in disuse or after menopause as other bones do (the authors' statement). Any rule with
+  one k for the whole skeleton therefore misses the skull. Under a linear-elastic assumption, which I
+  did not test, SED scales with strain squared. With equal E/rho at both sites, which I did not
+  measure, S/rho differs by about 10.8^2 = 116-fold. That is a calculated value, not an observation.
+  (2) THE TRAJECTORIAL CLAIM FAILS WHERE IT WAS FIRST APPLIED. The orthogonal crossing Wolff asserted
+  is not found in the human or chimpanzee femoral neck: the tracts cross at about 70 degrees (Skedros &
+  Baucom 2007, read only as a catalogue abstract). The same study reports artiodactyl calcanei and
+  simple beams as broadly consistent. Shear in the femoral neck is the explanation offered in
+  secondary summaries, not one I verified. (3) THE SED FORMALISATION IS NOT UNIQUE. Weinans, Huiskes &
+  Grootenboer (1992) report, per the summaries I read, that the rule drives elements to full density or
+  to zero and produces a discontinuous patchwork. The end state depends on rule parameters, load and
+  INITIAL CONDITIONS. A simulated density field is therefore one of many solutions of a nonlinear
+  dynamical system and must not be reported as a prediction of measured density. (4) THE
+  MECHANOSENSOR ASSUMPTION FAILS IN MOST TELEOSTS. Tilapia opercular bone, which has no osteocytes,
+  still adapts to controlled loading, with resorption and deposition at the loaded site (Atkins et al.
+  2015, search summary). The phenomenon survives but the osteocyte mechanism does not generalise.
+  Davesne et al. argue that teleost osteocytes serve mineral homeostasis rather than strain sensing.
+  For fin-ray (lepidotrichia) bone specifically, I found NO measured in-vivo strain set point. The
+  scope of that negative search is the web searches listed under sources (Nov 2026); it was not a
+  systematic database search. (5) IT IS NOT A STRENGTH CRITERION. The set-point strains describe
+  adaptation of living tissue. Hillam et al. estimate safety factors of about 3-4:1 in the tibia and
+  over 40:1 in the skull against a failure strain of about 0.8 %. A strain above a remodelling set
+  point is not evidence of failure, and a strain below one is not evidence of safety.
+worked_examples:
+  - organism: "Homo sapiens, tibia vs parietal, single subject"
+    computation: |
+      observed : tibia peak +0.2066 % = 2066 microstrain ; parietal peak +0.0192 % = 192 microstrain
+      derived  : ratio = 2066 / 192 = 10.76
+      derived  : if SED = 0.5*E*eps^2 and E/rho is equal at both sites (ASSUMED, not measured),
+                 (S/rho)_tibia / (S/rho)_parietal = 10.76^2 = 115.8
+    value: 10.76
+    note: >
+      The strains are observations (Hillam et al. 2015, n = 1). The ratio and the SED ratio are
+      calculations of mine. The SED ratio rests on an assumption I have not checked. One k cannot sit
+      at both sites, which is failure (1) above.
+    evidence: derived
+  - organism: "Numida meleagris (guinea fowl), distal femur"
+    note: >
+      Juvenile birds ran 10 min/day for 45 days on a 0- or 20-degree treadmill. The peak trabecular
+      orientation shifted about 18 degrees, roughly matching the change in knee angle at peak load. This
+      is an observation that SUPPORTS the orientation claim: direction tracks load direction. It
+      tests direction only. It does not test orthogonality or a set point.
+    evidence: literature
+  - organism: "Oreochromis aureus (tilapia), operculum -- anosteocytic bone"
+    note: >
+      Controlled loading produced local resorption and deposition, and the new bone was stiffer than the
+      old (Atkins et al. 2015, search summary). This is an observation that the response occurs
+      WITHOUT osteocytes. The authors' suggestion that osteoblasts are the sensor is their inference,
+      not a demonstrated mechanism.
+    evidence: literature
+  - organism: "Danio rerio (zebrafish), caudal vertebrae"
+    note: >
+      Four weeks of swim-tunnel exercise at 4-6 h/day raised the bone formation rate, the
+      mineralised surface and the degree of mineralisation. Mineral apposition rate did not change
+      significantly (Suniaga et al. 2018, search summary). This is an observation of the SIGN of the
+      response. No bone strain was reported in what I read, so it gives no set point. Nothing here
+      transfers to fin rays: unknown.
+    evidence: literature
+  - organism: "Homo sapiens, Mir cosmonauts (unloading)"
+    note: >
+      Hip areal BMD fell about 1-1.5 %/month and the lumbar spine about 1 %/month (LeBlanc et al. 2000,
+      read only through secondary sources). This is an observation of the disuse arm. It gives a rate
+      but no threshold.
+    evidence: literature
+contested_by:
+  - "Bertram & Swartz (1991), 'The law of bone transformation: a case of crying Wolff?', Biol Rev 66:245-273. Known to me only by title and listing, so I make no claim about their argument beyond the title's evident scepticism."
+  - "Hammer (2014, Ir J Med Sci), per a search summary, argues that the trajectorial theory and 'Wolff's law' are conflated in the literature and are different concepts. Pontzer et al. (2006) read their result as support for Wolff's law. These positions are recorded side by side and not reconciled."
+  - "Atkins et al. (2015) present anosteocytic tilapia bone as adapting to load, with osteoblasts as the likely sensor. Davesne et al. (year not confirmed in what I read) argue that teleost osteocytes serve mineral homeostasis rather than strain detection. These are compatible on the phenomenon and disagree on mechanism. Left unreconciled."
+  - "Hillam et al. (2015) favour a low skull set point, with genetic influences dominating, over skull insensitivity to strain. They name both options and judge the first more likely; neither was tested directly in their n = 1 study."
+see_also: >
+  Two overlapping entries exist on other branches and were NOT merged into this one: bone-strain.yaml
+  on origin/work/law-library (Frost mechanostat thresholds, dynamic strain similarity) and wolff.yaml
+  on origin/claude/wolff-law-bone-remodelling-01vcyd (written by another session; I did not read it
+  before writing this entry). A curator should pick one id or merge them; this entry does not.
+sources:
+  - citation: "Wolff J (1892) Das Gesetz der Transformation der Knochen. Berlin: Hirschwald. English translation: The Law of Bone Remodelling, Springer 1986"
+    read_level: listing
+  - citation: "Huiskes et al. (1987) Adaptive bone-remodeling theory applied to prosthetic-design analysis. J Biomech 20:1135-1150"
+    read_level: listing
+  - citation: "Weinans, Huiskes & Grootenboer (1992) The behavior of adaptive bone-remodeling simulation models. J Biomech 25(12):1425-1441"
+    read_level: search-summary
+    note: "Open-access PDF at repub.eur.nl could-not-access: host blocked by this session's network policy."
+  - citation: "Hillam, Goodship & Skerry (2015) Peak strain magnitudes and rates in the tibia exceed greatly those in the skull: an in vivo study in a human subject. J Biomech 48(12):3292-3298. PMC4601046"
+    read_level: full-text
+    note: "Read via PMC through a summarising fetch tool; strain values were quoted from the results text."
+  - citation: "Skedros & Baucom (2007) Mathematical analysis of trabecular 'trajectories' in apparent trajectorial structures: the unfortunate historical emphasis on the human proximal femur. J Theor Biol 244(1):15-45. doi:10.1016/j.jtbi.2006.06.029"
+    read_level: search-summary
+  - citation: "Pontzer et al. (2006) Trabecular bone in the bird knee responds with high sensitivity to changes in load orientation. J Exp Biol 209(1):57-65"
+    read_level: search-summary
+    note: "Full text at core.ac.uk could-not-access: host blocked."
+  - citation: "Atkins, Milgram, Weiner & Shahar (2015) The response of anosteocytic bone to controlled loading. J Exp Biol 218(22):3559-3569"
+    read_level: search-summary
+  - citation: "Davesne D et al., the phylogenetic origin and evolution of acellular bone in teleosts (survey of >600 species). Year, journal and pages unknown: not shown in what I read"
+    read_level: search-summary
+  - citation: "Suniaga et al. (2018) Increased mechanical loading through controlled swimming exercise induces bone formation and mineralization in adult zebrafish. Sci Rep 8:3646. doi:10.1038/s41598-018-21776-1"
+    read_level: search-summary
+  - citation: "LeBlanc et al. (2000), DEXA of Mir cosmonauts. J Musculoskelet Neuronal Interact 1:157 (exact title unknown: not shown in what I read)"
+    read_level: search-summary
+    note: "Article page at ismni.org could-not-access: host blocked."
+  - citation: "Rubin & Lanyon (1985) Regulation of bone mass by mechanical strain magnitude. Calcif Tissue Int 37(4):411-417"
+    read_level: search-summary
+    note: "Graded dose-response between peak strain and bone mass change. No threshold value taken from it here, because none was visible in what I read."
+  - citation: "Bertram JEA, Swartz SM (1991) The 'law of bone transformation': a case of crying Wolff? Biol Rev 66(3):245-273"
+    read_level: listing
+  - citation: "Hammer (2014) The paradox of Wolff's theories. Ir J Med Sci. doi:10.1007/s11845-014-1070-y"
+    read_level: search-summary
