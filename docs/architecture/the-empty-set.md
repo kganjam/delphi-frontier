@@ -117,6 +117,33 @@ well-formed. It does not say the computations are covered.
 
 ---
 
+## 6. Cost attribution, done once: 58.7 % of spend left no trace
+
+`SPEC-evaluation-kernel` rule 6 asks for a cost-attribution query and its **no-output bucket**. It
+had never been run. Joining `agent_session.branch` to the `harvest:<leaf>` tag that appears in
+`claim.source`, `artifact_signal.voter_id` and `constraint_entailed.note`:
+
+| | |
+|---|---|
+| sessions with a cost and a branch | **722** ($935.49) |
+| of those leaving **no artefact** anywhere | **465** (**$549.15**) |
+| | **58.7 % of attributable spend** |
+
+**It is not a harvest coverage gap** — that was checked first. `work_log` records **all 732**
+`claude/*` branches as harvested.
+
+**What the figure means.** *"Nothing that reached the graph"* is not *"nothing produced"*. An agent
+that wrote a prose research document without a machine-readable block leaves no artefact by this
+join, and so does one killed mid-flight when the credit ran out — 30 challenges were marked
+`not-run` for that reason. **The figure bounds what the pipeline captured, not what the agents
+did.**
+
+**The first attempt at this number was wrong**, and the way it was wrong is this document's own
+subject. Joining through `subproblem_id` alone gave 632 sessions and $740 — because **627 of those
+are challenge, replicate and entail work that carries no `subproblem_id` at all.** The query would
+have reported $740 of waste by looking in a column that the majority of sessions legitimately
+leave empty.
+
 ## 5. What this does not establish
 
 - The sweep covers **tables in one Postgres schema**. A mechanism implemented in files, in a

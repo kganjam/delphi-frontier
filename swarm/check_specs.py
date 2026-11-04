@@ -103,6 +103,13 @@ RULES = [
   "select count(*) from (select distinct grader from grade) g where not exists "
   "(select 1 from grader_calibration c where c.grader=g.grader and c.caught_known_bad > 0)",
   "select count(*) from grade"),
+ ("evaluation-kernel", 6, "A cost-attribution query is runnable and its no-output bucket readable",
+  # SPEC-evaluation-kernel rule 6. Not a state rule but a capability one: can spend be attributed
+  # to output at all? It can, through agent_session.branch -> 'harvest:<leaf>' in claim.source,
+  # artifact_signal.voter_id and constraint_entailed.note. This flags sessions that cost money and
+  # carry NO branch, because those cannot be attributed in either direction.
+  "select count(*) from agent_session where cost_usd > 0 and (branch is null or branch = '')",
+  "select count(*) from agent_session where cost_usd > 0"),
  ("evaluation-kernel", 5, "Every pairwise comparison run in both orders with the order recorded",
   "select count(*) from grade where order_seed is null",
   "select count(*) from grade"),
