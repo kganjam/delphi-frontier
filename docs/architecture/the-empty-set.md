@@ -176,6 +176,32 @@ judged failed — the job ran cleanly and **the validation did not pass**.
 > A project's held-out validation failing **three times out of three** is a finding. It appeared in
 > no document, no claim and no summary until these rows existed.
 
+**Read, 2026-11-04.** One of the three (`fgpuho2`) crashed in 2 s with 171 bytes — infrastructure,
+not science. But `fgpuho3` ran 151 s, produced field data and a trajectory video, exited `rc=0`,
+and was still judged failed. Its `exp2_comparison.json` is a Schnakenberg reaction–diffusion
+CPU-vs-GPU comparison over **96 parameter cells**:
+
+| | |
+|---|---|
+| max CPU/GPU numerical error | **3.4 × 10⁻¹⁰** |
+| cells agreeing on **pattern formation** | **96 / 96** |
+| cells disagreeing on the **dominant mode** | **26 / 96 (27 %)** |
+| cells that **did not converge** | **30 / 96** |
+| "old" criterion passes | 70 / 96 (72.9 %) |
+| "revised" criterion passes | **96 / 96 (100 %)** |
+
+**The good half is genuinely good:** zero disagreement on whether a Turing pattern appears, which
+is the biologically meaningful outcome.
+
+**The bad half is specific:** a discrete mode classification that flips between platforms in 27 %
+of cells *despite* 10⁻¹⁰ agreement is sitting on a near-degenerate selection. Any claim about a
+*particular* mode from this solver inherits that instability.
+
+**And one line needs a person.** A criterion was **revised**, and the pass rate went from 72.9 % to
+100 %. That may be entirely principled — the old criterion may have been wrong. But *"never relax
+an acceptance criterion to make a task pass"* is a named rule in this project, and **nothing in the
+file says which happened.**
+
 **One run also gave an abstract gap its first instance.** `fevo2smoke1` failed with no result and
 therefore no content hash. ASK rule 3 requires a `code_sha` **or** a stated
 `not_executable_because`, and the schema has no such column — which is precisely D3's recorded gap.
