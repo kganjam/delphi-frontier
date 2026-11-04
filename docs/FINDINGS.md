@@ -383,7 +383,19 @@ genuinely tested, not a clean sweep.
 
 1. **Measure pectoral fin AREA in the existing Daane double heterozygote.** The authors measured
    length and never area — **the animal exists and the measurement does not.** It decides whether
-   even the 5–10% phenotype is detectable.
+   even the ~5–7% phenotype is detectable.
+
+   **Sizing, with one correction.** At CV_area = 0.10, 90 % power and α = 0.0167, **n ≈ 28 per
+   genotype** — a figure an independent replication reproduces. But the claim that measuring
+   *area* rather than *length* cuts the required n **four-fold is wrong**: it is **~1×**.
+
+   Under isotropic scaling `area = length²`, so a 5 % length effect becomes a 10.25 % area effect
+   — **and the CV doubles with it** (delta method: `d(L²)/L² = 2·dL/L`). Sample size scales as
+   `(CV / effect)²`, so both transformations nearly cancel: 4.00 → 3.81, a reduction of **1.05×**.
+   The four-fold figure comes from doubling the effect and **not** the noise.
+
+   This does not weaken the recommendation — area is still the quantity the physics needs, and
+   length cannot substitute for it. It removes a statistical argument that was never real.
 2. **In-situ single-stroke spring-loading work of zebrafish fast myotomal muscle.** At or above
    **~99 J/kg** the energy term closes and the launch route reopens.
 3. **Zebrafish C-start PIV efficiency**, which sets the 0.37 hydromechanical efficiency the whole
