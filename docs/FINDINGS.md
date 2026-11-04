@@ -540,6 +540,32 @@ seeded defects are real errors this project made.**
 
 ---
 
+## An independent replication arm was running, and its output was being thrown away
+
+`generate.py` describes replication as *"the cheapest hallucination detector there is"*: an agent
+re-derives a claim's number **without being shown the original**. **134 such results were produced.
+None was ever recorded.** The harvester's block regex matched four kinds and its dispatch had
+three branches, so every `swarm-replication` block was parsed, counted in the "blocks found"
+total, and dropped. Recovered 2026-11-04: **103 stored, 86 agreeing, 17 disagreeing.**
+
+**Four of the 17 have been adjudicated. Two corrected this document; one is now openly contested;
+one is a detail that changes nothing.**
+
+| claim | the disagreement | outcome |
+|---|---|---|
+| 194 | the 10 % upper end treats full lift at a 45° climb as vertical | **replication right** — headline deliverable corrected to ~5–7 % |
+| 310 | measuring area does not cut n four-fold | **replication right** — real reduction is 1.05×; isotropy doubles the CV too |
+| 52 | the tail-beat row borrows a Strouhal measured 11× away in Re | **unresolved** — both arithmetics reproduce; the row now carries both |
+| 298 | the AR convention factor mixes two of Fish 1990's tables | **unsettled, and immaterial** — both candidate bars leave the conclusion intact |
+| 207 | the challenger survival rate | **original right** — the replication counted git blocks, a biased subset of the database |
+
+**13 remain unread.** They are stored as `artifact_signal` rows with `voter_kind: agent` and can
+be listed from the graph.
+
+**The uncomfortable summary:** of the five adjudicated, the arm was right twice, wrong once, and
+raised two open questions — and one of its correct findings was in this document's **lead
+sentence**. The bug that discarded it was a dispatch with three branches for four kinds.
+
 ## What this does not establish
 
 - Fin **area** has never been measured in any enlarged-fin zebrafish, so the central geometric input
