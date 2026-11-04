@@ -1,0 +1,186 @@
+id: hagen-poiseuille
+name: Hagen-Poiseuille flow and the r^-4 dissipation that Murray's law rests on
+usability: constraining          # yields a pressure drop, a resistance and a dissipation a design is checked against
+equation: "dP = 8 * mu * L * Q / (pi * r^4)"
+latex: "\\Delta P = \\frac{8 \\mu L Q}{\\pi r^4}, \\qquad R_h = \\frac{8 \\mu L}{\\pi r^4}, \\qquad \\dot W = \\Delta P\\,Q = \\frac{8 \\mu L Q^2}{\\pi r^4}"
+symbols:
+  dP: {dimension: M/(L*T^2), units: Pa,    description: "pressure drop along the tube"}
+  mu: {dimension: M/(L*T),   units: Pa*s,  description: "dynamic viscosity of a Newtonian fluid (one value, independent of r and shear rate)"}
+  L:  {dimension: L,         units: m,     description: "tube length, long compared with the entrance length"}
+  Q:  {dimension: L^3/T,     units: m^3/s, description: "volume flow rate, steady"}
+  r:  {dimension: L,         units: m,     description: "internal radius of a rigid circular tube"}
+constants:
+  radius_exponent:
+    value: 4
+    interval: "none -- derived, not measured"
+    note: >
+      Exact under the stated assumptions (steady, fully developed, laminar, Newtonian, rigid
+      circular tube, no-slip wall). It is not a fitted value, so it carries no measurement interval.
+      Two powers of r come from the cross-sectional area and two from the parabolic velocity
+      profile whose peak scales as r^2 at fixed pressure gradient.
+  numeric_prefactor:
+    value: 8
+    interval: "none -- derived"
+    note: "8/pi follows from integrating the parabolic profile; it is geometry-specific (circular section only)."
+  laminar_transition_reynolds:
+    value: 2000
+    interval: unknown
+    units: dimensionless
+    note: >
+      Conventional design threshold for pipe flow, Re = rho*U*(2r)/mu. Not a measured constant of
+      this entry. Avila et al. (2011, Science 333:192-196; abstract read) state that pipe turbulence
+      which is transient at low Re "becomes sustained at a distinct critical point", but the abstract
+      does not give the number, so no interval is recorded here. I did not retrieve the paper body.
+  viscosity_minimum_diameter_blood_glass_tube:
+    value: 6.5e-6
+    interval: [6.0e-6, 7.0e-6]
+    units: m
+    note: >
+      MEASURED (in vitro, glass tubes): apparent blood viscosity falls with diameter to a minimum at
+      "about 6-7 micrometres" -- Pries & Secomb 2005, abstract. The point value 6.5e-6 is my midpoint
+      of their stated range, not a number they report.
+  endothelial_surface_layer_thickness:
+    value: 0.9e-6
+    interval: [0.8e-6, 1.0e-6]
+    units: m
+    note: >
+      FITTED, not directly observed: Pries & Secomb 2005 (abstract) infer an ESL of about 0.8-1
+      micrometre in 10-40 micrometre vessels by fitting a resistance model to three rat-mesentery
+      networks (392, 546 and 383 segments). Thickness declines sharply in smaller vessels. The point
+      value 0.9e-6 is my midpoint.
+mechanism: >
+  Hagen-Poiseuille is not an empirical regression; it is the exact solution of the Navier-Stokes
+  equations for steady, fully developed, laminar flow of a Newtonian fluid in a rigid circular tube
+  with a no-slip wall. The velocity profile is a paraboloid, u(s) = (dP/(4 mu L)) (r^2 - s^2);
+  integrating it over the section gives Q = pi r^4 dP / (8 mu L). Multiplying by Q gives the viscous
+  power dissipated, W = 8 mu L Q^2 / (pi r^4) -- the r^-4 term. Murray's law is a consequence of
+  exactly this term: adding a volume-maintenance cost b*pi*r^2*L and setting dW_total/dr = 0 gives
+  Q = (pi/4) sqrt(b/mu) r^3 (my derivation, below), hence Q proportional to r^3, hence the cube law
+  at a junction, and hence a wall shear stress tau = 4 mu Q/(pi r^3) = sqrt(b mu) that is the SAME in
+  every vessel. That constant-shear prediction is the testable fingerprint: wherever the r^-4 term
+  stops describing the loss, Murray's cube and the uniform wall shear go with it. Because the law is
+  exact, every failure is a failure of a named assumption, and each can be diagnosed in advance by
+  a separate dimensionless check (Re, Womersley alpha, entrance length, d/cell size).
+domain_of_validity:
+  flow_regime: "steady, fully developed, laminar"
+  reynolds_max: 2000            # conventional threshold; see constants
+  womersley_max: "about 1 (quasi-steady); above it the profile is not parabolic -- order-of-magnitude criterion, my statement"
+  fluid: "Newtonian, homogeneous on the scale of r"
+  walls: "rigid, impermeable, no-slip, circular section"
+  geometry: "straight; L much greater than the entrance length (order 0.05*Re*d for laminar flow, textbook rule, not retrieved here)"
+  taxa: "applies to any taxon only as far as the vessel meets the assumptions above; the law has no biological content of its own"
+where_it_breaks: >
+  It breaks at BOTH ends of the vascular size range, in opposite directions, and the two failures
+  are documented by measurement, not argued. (1) Small vessels -- the rheology fails. Blood is a
+  suspension, not a Newtonian fluid of one viscosity. Pries, Neuhaus & Gaehtgens (1992; abstract
+  read) compiled tube-flow data over 3.3-1978 micrometre diameters and hematocrits up to 0.9:
+  apparent viscosity depends on diameter (the effect usually named Fahraeus-Lindqvist), viscosity rises linearly with
+  hematocrit in tubes <= 6 micrometres but disproportionately in tubes >= 9 micrometres, which they
+  attribute to a shift from single-file to multi-file cells. Glass-tube viscosity reaches a minimum
+  at about 6-7 micrometres (Pries & Secomb 2005; abstract read). In living microvessels resistance is
+  "substantially higher" than the in vitro viscosity predicts, which those authors explain with an
+  endothelial surface layer of about 0.8-1 micrometre in 10-40 micrometre vessels -- a fitted, not
+  directly imaged, quantity. So applying the formula with one bulk blood viscosity is wrong across
+  the measured small-tube range, and wrong by a different amount in vivo than in a glass tube. (The
+  diameter at which the error becomes material for a given design is not stated in the abstracts
+  read; I record it as unknown rather than guess.)
+  (2) Large arteries -- the flow assumptions fail. Reneman & Hoeks (2008; full text read) state "In
+  general Poiseiulle's law does not hold for the arterial system in vivo", citing pulsatile flow
+  and branching, curved, tapering vessels; measured velocity profiles are "generally flattened
+  parabolas" (substantially flattened in the common carotid, close to parabolic in the brachial).
+  Their consequence for Murray's law: mean wall shear stress is NOT uniform along the arterial tree
+  (higher in human carotid, 1.1-1.3 Pa, than brachial or femoral), so "Murray's cube law of minimal
+  energy discharge does not hold for the whole arterial system", with the exponent "probably from 2
+  in large arteries near the heart to 3 in arterioles" (their wording; "probably" is theirs).
+  (3) Turbulence (Re above roughly 2000) replaces the r^-4 dissipation with a weaker radius
+  dependence; secondary sources attribute to Uylings (1977) a Murray exponent falling toward 7/3 in
+  fully turbulent flow (search-summary only; primary not accessed). (4) Short tubes and junctions:
+  inside the entrance length the profile is not yet parabolic and losses exceed the formula. NOT
+  CHECKED in this entry: plant xylem (pit membranes and end walls are widely said to lower
+  conductance below the Hagen-Poiseuille value, but I retrieved no source and record no number),
+  insect tracheae (gas flow, partly diffusive), and non-circular or compliant tubes.
+worked_examples:
+  - organism: "any vessel -- halving the radius at fixed Q, mu, L"
+    computation: "R_h(r/2) / R_h(r) = (r / (r/2))^4 = 2^4 = 16 ; dissipation at fixed Q also x16"
+    value: 16
+    note: "Exact within the domain. This sensitivity is why radius is the variable every transport network is built around."
+    evidence: derived
+  - organism: "Murray's cube recovered from the r^-4 term (derivation, not observation)"
+    computation: |
+      W_total = 8 mu L Q^2 / (pi r^4) + b pi r^2 L      (b = metabolic cost per unit blood volume per time, W/m^3)
+      dW/dr = -32 mu L Q^2 / (pi r^5) + 2 b pi r L = 0
+      => Q^2 = pi^2 b r^6 / (16 mu)  =>  Q = (pi/4) sqrt(b/mu) r^3
+      wall shear tau = 4 mu Q / (pi r^3) = sqrt(b mu)    -- independent of r
+    value: "Q proportional to r^3; tau uniform"
+    note: >
+      Calculated by me from the equation in this entry; it reproduces the standard result that
+      murray.yaml cites to Murray (1926). The uniform-tau line is the prediction that Reneman &
+      Hoeks (2008) report is FALSIFIED by in vivo wall-shear measurements across arteries.
+    evidence: derived
+  - organism: "human aorta -- a FAILURE case, diagnosed by checks outside the law"
+    computation: |
+      inputs are ASSUMED illustrative values, not retrieved measurements:
+        r = 0.0125 m, rho = 1060 kg/m^3, mu = 3.5e-3 Pa*s, heart rate 1.2 Hz, U_mean = 0.2 m/s, U_peak = 1.0 m/s
+      Re_mean = 1060*0.2*0.025/3.5e-3 = 1514 ; Re_peak = 1060*1.0*0.025/3.5e-3 = 7571
+      omega = 2*pi*1.2 = 7.54 1/s
+      Womersley alpha = r*sqrt(omega*rho/mu) = 0.0125*sqrt(7.54*1060/3.5e-3) = 0.0125*1511 = 18.9
+    value: 18.9
+    note: >
+      Calculated, not observed. alpha >> 1 means the oscillatory profile is blunt and
+      inertia-dominated, and peak Re exceeds the laminar threshold. Hagen-Poiseuille will still
+      return a number for this tube; only the side checks say not to trust it. Consistent with, but
+      not a reproduction of, Reneman & Hoeks's measured flattened profiles (they report no alpha).
+    evidence: derived
+  - organism: "a 50 micrometre arteriole -- flow assumptions pass, rheology fails"
+    computation: |
+      ASSUMED illustrative inputs: r = 25e-6 m, U = 5e-3 m/s, same rho, mu, heart rate as above
+      Re = 1060*5e-3*50e-6/3.5e-3 = 0.076
+      alpha = 25e-6*1511 = 0.038
+    value: 0.076
+    note: >
+      Calculated, not observed. Re << 1 and alpha << 1, so steady laminar Poiseuille kinematics are
+      an excellent approximation here -- and yet the formula with bulk mu is still wrong, because
+      this diameter lies in the measured Fahraeus-Lindqvist range (Pries et al. 1992) and in the
+      in vivo ESL range (Pries & Secomb 2005). The flow-regime checks pass and the law fails anyway;
+      the regime checks are necessary, not sufficient.
+    evidence: derived
+contested_by:
+  - >
+    The law itself is not contested within its assumptions -- it is a derivation. What is contested
+    is the exponent that replaces Murray's 3 where the r^-4 term fails, and the sources do not agree
+    on WHY it falls. Reneman & Hoeks (2008, full text) attribute the drop toward 2 in large arteries
+    to non-uniform wall shear under pulsatile in vivo flow. Uylings (1977, as summarised by secondary
+    sources; primary not accessed) is credited with 7/3 for fully turbulent flow. Kassab and
+    colleagues are credited (2024 coronary meta-analysis, search-summary) with a theoretical 7/3
+    from a whole-tree minimum-energy hypothesis -- a different mechanism arriving at the same
+    number; that meta-analysis reports a pooled coronary exponent of 2.39 (search-summary; the
+    meta-analysis itself was not opened, and I could not identify its authors from the summary).
+    These are recorded side by side, not reconciled.
+  - >
+    Whether a corrected "effective viscosity" (Fahraeus-Lindqvist fits plus an ESL) rescues the
+    Hagen-Poiseuille form in the microcirculation, or whether that correction is a new law wearing
+    the old equation, is a matter of reading; Pries & Secomb 2005 frame it as in vitro viscosity
+    plus an ESL explaining in vivo resistance.
+sources:
+  - citation: "Pries AR, Neuhaus D, Gaehtgens P (1992) Blood viscosity in tube flow: dependence on diameter and hematocrit. Am J Physiol 263(6 Pt 2):H1770-H1778. doi:10.1152/ajpheart.1992.263.6.H1770. PMID 1481902"
+    read_level: abstract
+    note: "Retrieved via Europe PMC by DOI. The abstract gives no numeric diameter for the viscosity minimum."
+  - citation: "Pries AR, Secomb TW (2005) Microvascular blood viscosity in vivo and the endothelial surface layer. Am J Physiol Heart Circ Physiol 289(6):H2657-H2664. doi:10.1152/ajpheart.00297.2005. PMID 16040719"
+    read_level: abstract
+  - citation: "Reneman RS, Hoeks APG (2008) Wall shear stress as measured in vivo: consequences for the design of the arterial system. Med Biol Eng Comput 46(5):499-507. doi:10.1007/s11517-008-0330-2. PMC2441533"
+    read_level: full-text
+    note: "Read on PMC. Contains no Womersley number; the alpha in the aorta example is my calculation."
+  - citation: "Avila K, Moxey D, de Lozar A, Avila M, Barkley D, Hof B (2011) The onset of turbulence in pipe flow. Science 333(6039):192-196. doi:10.1126/science.1203223"
+    read_level: abstract
+  - citation: "Sherman TF (1981) On connecting large vessels to small: the meaning of Murray's law. J Gen Physiol 78(4):431-453. doi:10.1085/jgp.78.4.431. PMC2228620"
+    read_level: abstract
+    note: "Abstract states the cube law and that a functional relation follows between radius, flow, velocity profile, wall shear and Re; the PDF body was not read."
+  - citation: "Womersley JR (1955) Method for the calculation of velocity, rate of flow and viscous drag in arteries when the pressure gradient is known. J Physiol 127(3):553-563. doi:10.1113/jphysiol.1955.sp005276. PMC1365740"
+    read_level: listing
+    note: "Bibliographic record confirmed by search; content not retrieved. Cited only as the origin of the alpha parameter."
+  - citation: "Uylings HBM (1977) Bull Math Biol -- optimisation of diameters and bifurcation angles in lung and vascular trees (exact title, volume and pages not verified)"
+    read_level: could-not-access
+    note: "Europe PMC query (author Uylings, 1977, turbulent OR branching) returned 0 hits; the 7/3 turbulent claim is known to me only from secondary citations (arXiv 1501.03546; Front Physiol 2022 10.3389/fphys.2022.871912), seen as search snippets."
+  - citation: "Murray CD (1926) The physiological principle of minimum work. PNAS 12(3):207-214"
+    read_level: search-summary
+    note: "Cited through murray.yaml; not re-read for this entry."
