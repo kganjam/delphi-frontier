@@ -68,7 +68,19 @@ RULES = [
   "or (evidence='literature' and read_level is null))",
   "select count(*) from claim where superseded_by is null"),
  ("ASK-artifact-graph", 3, "Every run has a code_sha or a stated reason it is not executable",
-  "select count(*) from run where code_sha is null and coalesce(notes,'') not ilike '%not_executable%'",
+  # btrim(): `code_sha = ''` is NOT `code_sha is null`, and run 17 holds exactly that. The
+  # original test asked only `is null`, so it returned 0 violations while a run had no code_sha
+  # and no stated reason -- the rule reported PASS with a real violation in the table. An empty
+  # string is the shape a missing value takes when it comes from a shell variable that did not
+  # expand, so it is the likely shape, not an exotic one.
+  #
+  # not_executable_because is the field SPEC-ASK section 4 item 1 asks for, added 2026-11-04.
+  # `notes ilike '%not_executable%'` is kept for rows written before the column existed: that
+  # convention carried the distinction in free-text prose, where a typo silently converted a
+  # documented non-executable run into an undocumented one.
+  "select count(*) from run where btrim(coalesce(code_sha,'')) = '' "
+  "and btrim(coalesce(not_executable_because,'')) = '' "
+  "and coalesce(notes,'') not ilike '%not_executable%'",
   "select count(*) from run"),
  ("ASK-artifact-graph", 4, "No recorded value changed in place; corrections supersede",
   # Enforced structurally. A superseding claim must be NEWER than what it replaces; an older
