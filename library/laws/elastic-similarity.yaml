@@ -1,0 +1,187 @@
+id: elastic-similarity
+name: Elastic versus geometric similarity (McMahon) and the Greenhill buckling-limited height
+usability: constraining          # the buckling bound gives a number a design is checked against;
+                                 # the similarity EXPONENTS are descriptive and mostly fail (see below)
+# The constraining part is the self-weight buckling bound (Greenhill 1881), which is what McMahon's
+# elastic similarity is built on. Elastic similarity proper is the claim that organisms keep a
+# CONSTANT fraction of that bound as they grow, which forces l proportional to d^(2/3), and with
+# mass M proportional to d^2 * l, gives l ~ M^(1/4), d ~ M^(3/8). Geometric similarity is l ~ d ~ M^(1/3).
+equation: "l_crit = C_G * (E / (rho * g))^1/3 * d^2/3"
+latex: "l_{\\mathrm{crit}} = C_G \\left(\\frac{E}{\\rho g}\\right)^{1/3} d^{2/3}"
+symbols:
+  l_crit: {dimension: L, units: m, description: "critical height of a self-loaded vertical column, clamped at the base and free at the top, above which it buckles under its own weight"}
+  C_G:    {dimension: "1", units: dimensionless, description: "Greenhill prefactor for a solid, uniform (untapered), circular section; 0.7883 (derived, see constants)"}
+  E:      {dimension: M/(L*T^2), units: Pa, description: Young's modulus of the column material in the axial direction}
+  rho:    {dimension: M/L^3, units: kg/m^3, description: "mass density of the column (for an immersed column use rho minus the fluid density)"}
+  g:      {dimension: L/T^2, units: m/s^2, description: gravitational acceleration}
+  d:      {dimension: L, units: m, description: basal diameter of the column}
+constants:
+  greenhill_eigenvalue:
+    value: 7.837
+    interval: [7.837, 7.837]
+    note: >
+      DERIVED, not measured: (3 j / 2)^2 where j = 1.866351 is the first positive zero of the Bessel
+      function J_{-1/3}. I computed it in this session (power-series J_nu, bisection): j = 1.866351,
+      eigenvalue = 7.8373. The critical condition is q * l^3 / (E I) = 7.837, q = weight per length.
+      The interval is degenerate because this is an exact mathematical constant, not a measurement.
+  C_G:
+    value: 0.7883
+    interval: [0.7883, 0.7883]
+    note: >
+      DERIVED in this session: (7.837 / 16)^(1/3), using I/A = d^2/16 for a solid circle. Valid ONLY
+      for a prismatic, solid, circular, clamped-free column. Taper and a hollow section both raise
+      it (they raise I/A or move weight downward); I did not compute the tapered value. McMahon (1973)
+      is widely reported as using a coefficient of 0.79; I could not open McMahon 1973 to confirm the
+      coefficient or whether his density symbol is a mass or weight density (read-level search-summary).
+  length_exponent_elastic:
+    value: 0.25
+    note: "Predicted (not measured) exponent of bone/trunk length on body mass under elastic similarity: 1/4."
+  diameter_exponent_elastic:
+    value: 0.375
+    note: "Predicted exponent of diameter on body mass under elastic similarity: 3/8."
+  exponent_geometric:
+    value: 0.3333
+    note: "Predicted exponent of every linear dimension on body mass under geometric similarity: 1/3."
+  bovid_long_bone_exponents:
+    value: "diameter 0.34, length 0.26 on body mass (Bovidae)"
+    interval: unknown
+    note: >
+      MEASURED, as reported second-hand by Kokshenev et al. (2003) for Alexander's antelope data
+      (they cite it in the text as 'Alexander (1997)', but their reference list gives Alexander 1977,
+      J. Zool. 183:125-146 -- a typo in the secondary source; I have not read the primary). Length is
+      close to the elastic 0.25; diameter (0.34) is closer to geometric 1/3 than to elastic 3/8.
+      No interval was given in what I read.
+  artiodactyl_length_on_diameter_exponents:
+    value: "Bovidae 0.67, Suidae 0.52, Cervidae 0.83"
+    interval: unknown
+    note: >
+      MEASURED, attributed by Kokshenev et al. (2003) to McMahon (1975). Elastic similarity predicts
+      2/3, geometric 1. Only Bovidae lands on 2/3. Kokshenev et al. attribute these to McMahon 1975b
+      (J Appl Physiol) in the sentence, but the ungulate limb-bone paper in their reference list is
+      McMahon 1975a (Am Nat 109:547-563); which of the two holds the numbers is unresolved here.
+  tree_buckling_safety_factor:
+    value: "about 4 (McMahon); median 1.8 to 2.9 (in-repo Tallo measurement)"
+    interval: [1.8, 4]
+    note: >
+      Two sources DISAGREE and are not reconciled. (a) McMahon (1973) and McMahon & Kronauer (1976)
+      are widely reported as finding large trees at roughly one quarter of Greenhill height --
+      search-summary only; I have no interval for it. (b) This repository's ledger/README.md reports a
+      MEASURED per-tree median safety factor of 1.8 to 2.9 on Tallo v1.0.0 (range set by the taper
+      assumption), with 0.068% to 3.24% of trees exceeding the critical height, and notes that DBH at
+      1.3 m rather than basal diameter overstates the ratio by about 13%. The interval [1.8, 4] spans
+      the two claims; it is not a confidence interval.
+mechanism: >
+  A slender column carrying its own weight buckles when the destabilising moment of the distributed
+  weight (rho g A l, acting over lever arms that grow with l) exceeds the elastic restoring moment
+  (E I / l^2). With A proportional to d^2 and I proportional to d^4, equating the two gives
+  l^3 proportional to E d^2 / (rho g), hence l_crit proportional to (E/(rho g))^(1/3) d^(2/3).
+  McMahon (1973, 1975) proposed that organisms grow so as to keep a constant margin below this bound
+  (and, for animals, a constant elastic deflection under their own weight), which fixes the shape
+  change with size: elastic similarity, l proportional to d^(2/3). Geometric similarity, by contrast,
+  keeps shape fixed and so lets the buckling margin shrink as l^(-1/2) as an organism grows.
+  The cube root is the reason the bound is robust: a 2x spread in E/rho moves l_crit by only 1.26x.
+domain_of_validity:
+  loading: static self-weight, axial, gravity-dominated
+  geometry: slender (l/d well above about 10), prismatic, solid circular section, clamped base, free top
+  taxa: [trees and tall herbaceous stems (bound), Bovidae limb bones (exponents, approximately)]
+  notes: >
+    The Greenhill BOUND is a theorem of elastic stability and holds wherever its geometric
+    assumptions do. The SIMILARITY RULE (stay at a constant fraction of the bound) is an empirical
+    hypothesis, and in what I could read it is supported only in a narrow taxonomic slice (bovid
+    limb-bone lengths; the upper envelope of tree heights). Use the bound as a ceiling, not as a
+    prediction of actual size.
+where_it_breaks: >
+  (1) MAMMALIAN LONG BONES ACROSS ORDERS: the similarity exponents fail. Alexander et al. (1979,
+  shrews to elephant) reported long-bone lengths and diameters close to GEOMETRIC similarity (a
+  study-guide summary gives about 0.35 and 0.36 on mass -- search-summary, not verified against the
+  paper), not 0.25/0.375. Kokshenev et al. (2003) report that broad samples look isometric and quote
+  Christiansen (1999) that the data "support neither geometric nor elastic similarity". Within
+  Artiodactyla the length-on-diameter exponent ranges 0.52 to 0.83 by family (as reported by Kokshenev
+  et al.), so even the supporting order is not uniform. (2) THE WRONG LOAD CASE FOR ANIMALS: peak bone
+  stresses in locomotion come from muscle forces and bending, not static axial self-weight (Biewener
+  1983, 1990, cited via Kokshenev et al.); large mammals hold stress roughly constant by straightening
+  posture, not by thickening bones elastically. The buckling model is therefore the wrong mechanism
+  for running animals, independent of whether an exponent happens to fit. (3) TREES: the bound is an
+  upper envelope, not a scaling law; most trees sit well below it, and a fitted 2/3 slope cannot
+  discriminate elastic similarity from metabolic-scaling theory, which predicts the same slope (Price
+  et al. 2009, listing-level). Mangalam et al. (2024) quantile-regressed Tallo against 2/3 with mixed
+  results (listing-level). The safety factor is not constant: in three Sonoran columnar cacti it
+  declined as stems grew (Molina-Freaner et al. 1998, search-summary). (4) GEOMETRY: hollow stems
+  (grasses, bamboo, bird bones), tapered trunks, guyed or leaning stems, and wind-dominated loading
+  all void C_G = 0.788; taper and hollowness raise l_crit, wind lowers the usable height below it.
+  (5) IMMERSED BODIES: in water the effective rho is rho minus rho_water, close to zero for soft tissue,
+  so l_crit becomes very large and self-weight buckling does not bind -- the law does not constrain a
+  fish fin ray or an aquatic stem at all.
+worked_examples:
+  - organism: tree trunk, assumed green-wood properties
+    computation: "E = 9e9 Pa, rho = 800 kg/m^3 (both ASSUMED, not measured), g = 9.81, d = 0.5 m -> l_crit = 0.7883 * (9e9/(800*9.81))^(1/3) * 0.5^(2/3) = 52.0 m"
+    value: 52.0
+    note: >
+      CALCULATED in this session. With d = 0.1 m the same inputs give 17.8 m. If McMahon's reported
+      safety factor of about 4 held, a 0.5 m trunk would be about 13 m tall; at the in-repo Tallo median
+      of 1.8 to 2.9 it would be 18 to 29 m. That spread is the unresolved disagreement, not a range of
+      model uncertainty.
+    evidence: derived
+  - organism: herbaceous stem, assumed properties
+    computation: "E = 1e9 Pa, rho = 1000 kg/m^3 (ASSUMED), d = 2 mm -> l_crit = 0.585 m"
+    value: 0.585
+    note: "CALCULATED. Assumes a solid section; a hollow stem of the same outer diameter has a higher bound."
+    evidence: derived
+  - organism: "mammal, 1000-fold body-mass range"
+    computation: "elastic similarity: (l/d) scales as M^(0.25 - 0.375) -> 1000^(-0.125) = 0.42; geometric: 1.0"
+    value: 0.42
+    note: >
+      CALCULATED prediction, the design check the law offers: elastic similarity says a 1000x heavier
+      animal has limb bones 0.42 times as slender. Measured shrew-to-elephant bones (Alexander et al.
+      1979, as reported) are close to the geometric 1.0, which is the failure in where_it_breaks (1).
+    evidence: derived
+  - organism: Bovidae long bones
+    value: "diameter exponent 0.34, length exponent 0.26 on body mass"
+    note: "MEASURED (Alexander 1977, as reported by Kokshenev et al. 2003); length fits elastic, diameter is nearer geometric."
+    evidence: literature
+contested_by:
+  - "Alexander et al. 1979 (J Zool 189:305-314): mammalian limb bones from shrew to elephant scale close to geometric, not elastic, similarity."
+  - "Christiansen 1999 (as quoted by Kokshenev et al. 2003): long-bone data support neither geometric nor elastic similarity."
+  - "Economos 1983 (J Theor Biol 103:167-172, cited via Kokshenev et al.): questions whether any single power law describes mammalian design."
+  - "Biewener 1983/1990: bone stress is held near-constant by posture change, so the static self-weight buckling premise is the wrong mechanism for running mammals."
+  - "Price et al. 2009 (Ecol Lett 12:641): a 2/3 height-diameter slope in plants cannot distinguish elastic similarity from metabolic scaling."
+  - "Tree safety factor: about 4 (McMahon 1973; McMahon & Kronauer 1976, as reported) versus a measured median 1.8 to 2.9 on Tallo (this repo, ledger/README.md). Not reconciled."
+sources:
+  - citation: "Greenhill AG (1881) Determination of the greatest height consistent with stability that a vertical pole or mast can be made. Proc. Camb. Phil. Soc. 4:65-73"
+    read_level: listing
+    note: "Bibliographic details from prior knowledge; not searched or opened in this session. The eigenvalue 7.837 was rederived in this session, not taken from the paper."
+  - citation: "McMahon TA (1973) Size and shape in biology. Science 179(4079):1201-1204"
+    read_level: search-summary
+    note: "A copy at sccs.swarthmore.edu was found but could not be fetched (host blocked by this session's network policy)."
+  - citation: "McMahon TA (1975) Using body size to understand the structural design of animals: quadrupedal locomotion. J. Appl. Physiol. 39:619-627"
+    read_level: search-summary
+    note: "Abstract as summarised by a search engine: elastic similarity correlates best with the data the author examined."
+  - citation: "McMahon TA (1975) Allometry and biomechanics: limb bones in adult ungulates. Am. Nat. 109:547-563"
+    read_level: listing
+  - citation: "McMahon TA, Kronauer RE (1976) Tree structures: deducing the principle of mechanical design. J. Theor. Biol. 59:443-466"
+    read_level: listing
+    note: "Cited from memory of the literature and the secondary claim of a ~4x safety factor; not opened. Bibliographic details not verified in this session."
+  - citation: "Alexander RMcN (1977) Allometry of the limbs of antelopes (Bovidae). J. Zool. 183:125-146"
+    read_level: listing
+  - citation: "Alexander RMcN, Jayes AS, Maloiy GMO, Wathuta EM (1979) Allometry of the limb bones of mammals from shrews (Sorex) to elephant (Loxodonta). J. Zool. 189:305-314"
+    read_level: search-summary
+  - citation: "Kokshenev VB, Silva JKL, Garcia GJM (2003) Long-bone allometry of terrestrial mammals and the geometric-shape and elastic-force constraints of bone evolution. arXiv:physics/0303074"
+    read_level: full-text
+    note: "Read via pdftotext in this session. Source of the Bovidae, Suidae and Cervidae exponents and the Christiansen quote."
+  - citation: "Christiansen P (1999) Scaling of mammalian long bones: small and large mammals compared. J. Zool. 247:333-348"
+    read_level: listing
+  - citation: "Biewener AA (1990) Biomechanics of mammalian terrestrial locomotion. Science 250:1097-1103"
+    read_level: listing
+  - citation: "Price CA, Enquist BJ, Savage VM et al. (2009) Ecol. Lett. 12:641"
+    read_level: listing
+    note: "Known only from this repository's ledger/README.md; author list beyond the first is from memory and unverified."
+  - citation: "Mangalam M et al. (2024) Sci. Rep. 14:19957"
+    read_level: listing
+    note: "Known only from this repository's ledger/README.md."
+  - citation: "Molina-Freaner F, Tinoco-Ojanguren C, Niklas KJ (1998) Stem biomechanics of three columnar cacti from the Sonoran Desert. Am. J. Bot."
+    read_level: search-summary
+  - citation: "Niklas KJ (1994) Interspecific allometries of critical buckling height and actual plant height"
+    read_level: could-not-access
+    note: "Title found in an author listing; journal unconfirmed and the abstract host (zendy.io) is blocked by the network policy. Not used for any claim above."
+  - citation: "This repository, ledger/README.md: per-tree Greenhill safety factor on Tallo v1.0.0 (Zenodo 10.5281/zenodo.6637599)"
+    read_level: full-text
