@@ -1,0 +1,230 @@
+id: adder-cell-size
+name: The adder model of cell-size homeostasis (constant added size per cell cycle)
+usability: descriptive           # classifies a size-control strategy from single-cell data; the added size Delta is measured per strain and condition, never predicted (see where_it_breaks)
+# The equation is written in the generalised linear-map form so that one entry covers the three
+# classical strategies and the measured deviations between them: a = 1 is the adder, a = 0 is a
+# sizer, a = 2 is a timer under exponential growth (convention as stated in Cadart et al. 2018).
+# The pure adder is the special case a = 1, i.e. V_d - V_b = Delta independent of V_b.
+equation: "V_d = a * V_b + Delta"
+adder_special_case: "V_d - V_b = Delta, with Delta statistically independent of V_b"
+latex: "V_d = a\\,V_b + \\Delta \\qquad (\\text{adder: } a = 1 \\;\\Rightarrow\\; V_d - V_b = \\Delta \\perp V_b)"
+symbols:
+  V_d:   {dimension: L^3, units: m^3, description: "cell size at division (reported as volume or as length in rod-shaped cells; the measure must be stated per data set)"}
+  V_b:   {dimension: L^3, units: m^3, description: cell size at birth}
+  Delta: {dimension: L^3, units: m^3, description: "size added between birth and division; under a pure adder its conditional mean does not depend on V_b"}
+  a:     {dimension: "1", units: dimensionless, description: "slope of division size on birth size: 1 adder, 0 sizer, 2 timer (exponential growth)"}
+constants:
+  slope_pure_adder:
+    value: 1.0
+    units: dimensionless
+    note: >
+      Definitional, not measured. Equivalent statement: the regression slope of added size on birth size
+      is 0. For ordinary least squares the two slopes differ by exactly 1 (slope(V_d on V_b) =
+      slope(Delta on V_b) + 1, because Delta = V_d - V_b); this identity is ours, not quoted from a source.
+  mean_relations_pure_adder:
+    value: "<Delta> = <V_b> = <V_d>/2"
+    units: dimensionless
+    note: >
+      Stated by Taheri-Araghi et al. (2015) for symmetric division at steady state. A consequence of the
+      model plus symmetric division, not an independent measurement.
+  added_size_E_coli_birth_correlation:
+    value: "-0.12 to -0.04 (per condition; deliberately not pooled)"
+    interval: [-0.12, -0.04]
+    units: dimensionless
+    note: >
+      MEASURED Pearson correlation r between added length and birth length (a correlation, NOT a slope),
+      Witz, van Nimwegen & Julou (2019) Appendix 1 Table 1: glycerol (doubling ~89 min) -0.07; glycerol,
+      automated analysis (86 min) -0.10; glucose (53 min) -0.04; glucose + 8 amino acids (41 min) -0.12.
+      The authors themselves say the fastest condition "deviates from pure adder behavior".
+  slope_E_coli_slow_growth:
+    value: 0.69
+    interval: unknown
+    units: dimensionless
+    note: >
+      Si et al. (2019) report a MEASURED slope of -0.31 for added size (birth to division) vs birth size
+      in nutrient-limited E. coli (MOPS minus NH4Cl, 0.4% glucose, 5 mM arginine; doubling time about 4 h),
+      significantly different from 0 (p = 1.4e-6 as relayed). The value 0.69 is CALCULATED by us from
+      -0.31 via the identity under slope_pure_adder. No confidence interval on the slope was extracted;
+      interval recorded as unknown rather than reconstructed from the p-value.
+  slope_mammalian_cell_lines:
+    value: unknown
+    interval: [0.7, 1.2]
+    units: dimensionless
+    note: >
+      Cadart et al. (2018): MEASURED slope of volume at mitosis vs volume at birth across their mammalian
+      cell lines "ranging from 0.7 to 1.2". The per-line values are in a table rendered as an image that
+      our text extraction did not capture, so no single value is given. Not to be averaged.
+  deviation_decay_per_generation_pure_adder:
+    value: 0.5
+    units: dimensionless
+    note: >
+      CALCULATED, not observed: with a = 1 and exact symmetric division, V_b(n+1) = (V_b(n) + Delta)/2, so
+      a deviation of birth size from its steady state Delta is multiplied by a/2 = 0.5 per generation.
+      Taheri-Araghi et al. (2015) state the matching observation (autocorrelations of birth size, division
+      size and generation time decay by a factor of 2 per generation in their data).
+  generation_time_mother_daughter_correlation:
+    value: -0.25
+    units: dimensionless
+    note: >
+      Predicted by the adder model for exponentially growing, symmetrically dividing cells and reported as
+      confirmed in data by Taheri-Araghi et al. (2015, their Fig. S4). The predicted value is a calculation;
+      the paper's statement that the data agree is an observation we did not re-derive from their data.
+  Delta_absolute:
+    value: unknown
+    units: m^3
+    note: >
+      There is no universal Delta. It is fixed per strain and per growth condition; Taheri-Araghi et al.
+      (2015) show mean newborn size rising exponentially with growth rate, and with <Delta> = <V_b> mean
+      Delta must rise too (our inference from their two statements; they report no Delta-vs-growth-rate
+      fit numbers that we extracted).
+mechanism: >
+  The adder is a phenomenological statement about single-cell statistics, and its mechanistic origin is
+  CONTESTED (see contested_by). The most specific mechanistic claim is Si et al. (2019): an adder follows
+  from (1) a threshold -- division triggers once a division protein or precursor (FtsZ in their
+  experiments) has accumulated to a fixed absolute number -- and (2) balanced biosynthesis -- that protein
+  is made in proportion to volume growth and not degraded. If production per unit added volume is constant
+  and the count resets at division, the volume added before the threshold is reached is constant,
+  independent of birth size. Our inference from those two conditions (not a claim made in the source in
+  these words): anything that makes the counted quantity decay or depend on absolute cell size -- active
+  degradation, dilution-based concentration sensing, a size-dependent synthesis rate -- pulls the slope
+  away from 1. Their own perturbations agree: oscillating ftsZ expression broke the division adder, and in
+  slow growth ClpXP degradation of FtsZ is proposed to cause the sizer-ward deviation, which repressing
+  clpX removed. The consequence that matters for homeostasis is arithmetic, not molecular: under a = 1 and
+  symmetric division a size deviation halves each generation, so size converges without the cell ever
+  measuring its absolute size.
+domain_of_validity:
+  taxa:
+    - "Escherichia coli (K12 NCM3722 derivative, MG1655, B/r; size mutants pgm and ftsA*) -- Taheri-Araghi et al. 2015"
+    - "Bacillus subtilis (3610 background) -- Taheri-Araghi et al. 2015"
+    - "Caulobacter crescentus -- Campos et al. 2014 (search-summary only)"
+    - "Mycobacterium smegmatis on optimal carbon source -- Priestman et al. 2017 (search-summary only)"
+    - "Halobacterium salinarum (archaeon) -- Eun et al. 2018 (search-summary only)"
+    - "Saccharomyces cerevisiae, with the increment counted between budding events -- Soifer et al. 2016 (search-summary only)"
+    - "several mammalian cell lines (HT29, HeLa, MDCK) and primary NAF cells as adder or near-adder -- Cadart et al. 2018"
+  growth_regime: "balanced, steady-state exponential growth"
+  doubling_time_tested: "E. coli 17.1 to 51.4 min and B. subtilis 16.9 to 38.9 min at 37 C (Taheri-Araghi et al. 2015)"
+  notes: >
+    A steady-state statistical regularity of populations of single cells, tested by regressing division
+    (or added) size on birth size across many cell cycles. It says nothing about the absolute size a cell
+    adopts; that is set by Delta, which must be measured for each strain and condition. Transients (nutrient
+    shifts, temperature shifts) are outside what the cited steady-state experiments test; our search found
+    no source in this session establishing the adder through a shift (scope: the eleven papers listed in
+    sources, nothing more).
+where_it_breaks: >
+  (1) FISSION YEAST -- a SIZER, not an adder. Pan et al. (2014) conclude Schizosaccharomyces pombe enters
+  mitosis at a threshold surface area (about 150 um^2 +/- 8 across wild type, rga2 and rga4 strains), with
+  Cdr2 having "properties of a 'sizer' not a 'timer'". Facchetti et al. (2019, search-summary) report that
+  without cdr2 division is better specified by volume, i.e. a secondary sizer. Do not import the adder into
+  a S. pombe-based design. (Pan et al. read to ~55% of text; no birth-vs-division slope found in the part
+  read.)
+  (2) SLOW-GROWING E. COLI -- deviates toward a sizer. Si et al. (2019): at ~4 h doubling the added size vs
+  birth size slope is -0.31 (a = 0.69 by our calculation), statistically significant; the deviation is
+  attributed to ClpXP degradation of FtsZ and disappeared when clpX was repressed. Wallden et al. (2016,
+  search-summary) independently describe E. coli as sizer-like at slow growth and adder-like at fast growth,
+  from an initiation-centred model. So the regime boundary is at the slow end of the growth-rate range;
+  the exact doubling time at which deviation becomes significant is unknown (only one slow condition was
+  extracted).
+  (3) FAST-GROWING E. COLI -- a smaller deviation. Witz et al. (2019) measured a weak anti-correlation
+  (r = -0.12) at 41 min doubling and state the data deviate from a pure adder there. Not reconciled with
+  Taheri-Araghi et al. (2015), who report a constant conditional mean of Delta across 17-51 min doublings.
+  (4) PERTURBED DIVISION-PROTEIN SUPPLY. Periodically under-expressing ftsZ breaks the division adder with a
+  sizer-like negative slope in E. coli, and in B. subtilis xylose-driven ftsZ oscillation gives systematic
+  deviations (Si et al. 2019). Any engineered change to division-protein expression or turnover should be
+  expected to change a, and must be re-measured.
+  (5) MYCOBACTERIA ON POOR CARBON SOURCES. Priestman et al. (2017, abstract-level) report M. smegmatis is
+  an adder on optimal carbon but deviates on sub-optimal carbon, in a manner that depends on inherited
+  pole age. Asymmetric, pole-age-dependent growers therefore break the single-population form above.
+  (6) MAMMALIAN CELLS -- partial and line-dependent. Cadart et al. (2018): Raji cells show added volume
+  positively correlated with birth volume (timer-ward); HT29-wt and RPE1 a weak negative correlation
+  (sizer-ward); over G1 alone HeLa added volume vs birth volume slope is -0.25 +/- 0.01 and G1/S volume vs
+  birth volume a = 0.69 +/- 0.01 (HT29-hgem: 0.71 +/- 0.01), i.e. G1 is sizer-like even where the whole cycle looks like an adder.
+  Their primary NHDF/NAF cells had a mitosis/birth volume ratio of ~1.5-1.6, not 2, so they were not at
+  steady state and the adder test is not strictly applicable to them.
+  (7) BUDDING YEAST WITH THE WRONG REFERENCE POINTS. Soifer et al. (2016, search-summary) state the S.
+  cerevisiae increment is added between budding events, not from birth to division; Chandler-Brown et al.
+  (2017, search-summary) report the adder in first-cycle daughters but different behaviour in mother cells.
+  A birth-to-division adder fitted to mixed mother/daughter yeast data is a misspecified model.
+  (8) MEASUREMENT ARTEFACT -- our inference, not a cited finding. Error in measured birth size biases the
+  slope of V_d on V_b toward 0 (regression dilution) and induces a spurious negative correlation between
+  Delta = V_d - V_b and V_b, because V_b appears in both. Both artefacts push an adder toward looking like
+  a sizer, so slopes such as -0.04 to -0.12 must be read against the size-measurement error of the
+  imaging pipeline before being called a biological deviation.
+worked_examples:
+  - organism: "generic symmetric divider under a pure adder (a = 1)"
+    computation: "born at V_b = 2*Delta  ->  V_d = 3*Delta  ->  next V_b = 1.5*Delta  ->  1.25*Delta  ->  1.125*Delta"
+    value: 0.5
+    note: >
+      CALCULATED, not observed: the excess over the steady-state birth size Delta halves every generation
+      (1, 0.5, 0.25, 0.125 Delta). This is the homeostasis property, obtained without any absolute size
+      measurement by the cell.
+    evidence: derived
+  - organism: "Escherichia coli, nutrient-limited (doubling ~4 h)"
+    computation: "slope(Delta on V_b) = -0.31  ->  a = 1 - 0.31 = 0.69  ->  per-generation deviation factor a/2 = 0.345"
+    value: 0.345
+    note: >
+      The -0.31 is MEASURED (Si et al. 2019); a = 0.69 and the decay factor 0.345 are CALCULATED by us
+      assuming exact symmetric division and a linear map. Slow-growing E. coli therefore corrects size
+      deviations faster than a pure adder would -- the sizer-ward deviation is not a loss of homeostasis but
+      a stronger correction.
+    evidence: derived
+  - organism: "Escherichia coli, M9 glucose + amino acids (doubling 41 min)"
+    value: -0.12
+    note: "MEASURED Pearson r between added length and birth length (Witz et al. 2019); a correlation, not a slope."
+    evidence: literature
+contested_by:
+  - >
+    DIVISION-CENTRED vs INITIATION-CENTRED ORIGIN (unresolved). Campos et al. (2014, search-summary) state
+    the constant extension is implemented at or close to division, which they take to argue against DNA
+    replication initiation setting division timing; Si et al. (2019) place it in the accumulation of
+    division proteins (FtsZ) to a threshold, and report that oscillating the initiator DnaA changed
+    initiation size but not division size or the adder. Witz, van Nimwegen & Julou (2019) instead propose a
+    DOUBLE adder reset at replication initiation -- one adder to the next initiation, one to division --
+    from which the birth-to-division adder "naturally emerges", and they reject models with initiation at a
+    critical absolute volume and models with a timer from initiation to division. Wallden et al. (2016,
+    search-summary) propose initiation at a nearly fixed volume per chromosome plus a growth-rate-dependent
+    initiation-to-division time, which yields an adder only at fast growth. These are recorded side by side;
+    they are not reconciled here.
+  - >
+    MECHANISM vs EMERGENT STATISTIC IN YEAST. Chandler-Brown et al. (2017, search-summary) argue the budding
+    yeast adder is emergent from independent control of pre- and post-Start phases rather than a molecular
+    mechanism that measures added growth; Soifer et al. (2016, search-summary) treat it as a common
+    incremental strategy shared with bacteria, with the increment counted between budding events.
+  - >
+    A peer reviewer of Witz et al. (eLife public review, search-summary) objected that the double adder does
+    not capture the exponential dependence of mean cell size on growth rate at fast growth.
+sources:
+  - citation: "Taheri-Araghi S, Bradde S, Sauls JT, Hill NS, Levin PA, Paulsson J, Vergassola M, Jun S (2015) Cell-size control and homeostasis in bacteria. Curr Biol 25(3):385-391. doi:10.1016/j.cub.2014.12.009"
+    read_level: full-text
+    note: Read via PMC4323405 through an automated summariser; it reports no numeric slope or correlation for Delta vs birth size, only the constant conditional mean, so none is attributed to it here.
+  - citation: "Si F, Le Treut G, Sauls JT, Vadia S, Levin PA, Jun S (2019) Mechanistic origin of cell-size control and homeostasis in bacteria. Curr Biol 29(11). doi:10.1016/j.cub.2019.04.062"
+    read_level: full-text
+    note: Read via PMC6548602 through an automated summariser, first ~80% of the text. The slope -0.31, p = 1.4e-6 and the ClpXP/clpX results come from that read. Page range not recorded (not verified in this session).
+  - citation: "Witz G, van Nimwegen E, Julou T (2019) Initiation of chromosome replication controls both division and replication cycles in E. coli through a double-adder mechanism. eLife 8:e48063"
+    read_level: full-text
+    note: Read via PMC6890467 through an automated summariser, first ~63% of the text including Appendix 1 Table 1.
+  - citation: "Cadart et al. (2018) Size control in mammalian cells involves modulation of both growth rate and cell cycle duration. Nat Commun 9. doi:10.1038/s41467-018-05393-0"
+    read_level: full-text
+    note: Read via PMC6095894 through an automated summariser, first ~72% of the text; the per-line slope table is an image and was not captured. Full author list and article number not recorded (not verified in this session); the DOI was confirmed by search.
+  - citation: "Pan et al. (2014) Cortical regulation of cell size by a sizer cdr2p. eLife 3:e02040"
+    read_level: full-text
+    note: Read via PMC3956294 through an automated summariser, first ~55% of the text. Full author list not recorded (not verified in this session).
+  - citation: "Campos et al. (2014) A constant size extension drives bacterial cell size homeostasis. Cell 159(6):1433-1446. doi:10.1016/j.cell.2014.11.022"
+    read_level: search-summary
+    note: Full author list not recorded (not verified in this session); journal, pages and DOI were confirmed by search.
+  - citation: "Wallden M, Fange D, Lundius EG, Baltekin O, Elf J (2016) The synchronization of replication and division cycles in individual E. coli cells. Cell. doi:10.1016/j.cell.2016.06.052"
+    read_level: search-summary
+    note: Volume, issue and pages not recorded (not verified in this session).
+  - citation: "Facchetti, Knapp, Flor-Parra, Chang, Howard (2019) Reprogramming Cdr2-dependent geometry-based cell size control in fission yeast. Curr Biol"
+    read_level: search-summary
+    note: Volume and pages unknown; not looked up.
+  - citation: "Priestman, Thomas, Robertson, Shahrezaei (2017) Mycobacteria modify their cell size control under sub-optimal carbon sources. Front Cell Dev Biol 5:64"
+    read_level: search-summary
+  - citation: "Eun Y-J, Ho P-Y, Kim M, LaRussa S, Robert L, Renner LD, Schmid A, Garner E, Amir A (2018) Archaeal cells share common size control with bacteria despite noisier growth and division. Nat Microbiol 3(2):148-154. doi:10.1038/s41564-017-0082-6"
+    read_level: search-summary
+    note: Press coverage says constant added VOLUME; an indexed abstract says constant added LENGTH. Not resolved; full text not read.
+  - citation: "Soifer I, Robert L, Amir A (2016) Single-cell analysis of growth in budding yeast and bacteria reveals a common size regulation strategy. Curr Biol 26(3)"
+    read_level: search-summary
+    note: Page range not looked up.
+  - citation: "Chandler-Brown et al. (2017) The adder phenomenon emerges from independent control of pre- and post-Start phases of the budding yeast cell cycle. Curr Biol 27(18):2774-2783.e3"
+    read_level: search-summary
+    note: Full author list not recorded (not verified in this session).
