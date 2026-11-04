@@ -133,6 +133,30 @@ no lift, glide or flight was tested. The physics needs area.
 
 An implementer working from standard sources **fails twice before designing a guide RNA**.
 
+### The edit stack: two demonstrated alleles out of eight required slots
+
+**S15** asked for a minimal stack where *every edit is individually demonstrated in zebrafish*.
+
+**Two alleles** produce the fin allometry: `kcnh2a^lof(dt2)` (longfin, cis-ectopic *kcnh2a*,
+coordinated fin overgrowth) crossed with `lat4a^nr21/dmh26` (dominant T200K — and notably a fin-size
+**suppressor**). Their viable transheterozygote is the published flying-fish-like phenocopy.
+
+That the mechanism is **enlarger + suppressor rather than uniform enlargement** is why the published
+result concerns fin *proportions*. The design lever is differential allometry across fins, not
+growth of one fin.
+
+**Six required capabilities contain no demonstrated zebrafish edit at all:** membrane stiffness,
+launch power, aerial stability, vestibular and visual function in air, aerial gas exchange, mass
+reduction.
+
+**Two of eight slots is not a buildable stack**, and the subproblem refuted itself on the project's
+own criterion rather than assembling something speculative. So the honest answer to *"can we get to
+real genetic manipulations?"* is: **two of them, and six have never been done in this animal.**
+
+An independent check: the required wing area at a 2 m/s launch is ~20 cm² against a ~1.4 cm²
+whole-body dorsal silhouette — a **14× shortfall**, falling to 0.6× only at a 10 m/s launch. That
+reproduces the launch-speed barrier from a completely different direction.
+
 ---
 
 ## Three decisive experiments, all cheap, all bench-scale
