@@ -139,6 +139,35 @@ no lift, glide or flight was tested. The physics needs area.
 
 An implementer working from standard sources **fails twice before designing a guide RNA**.
 
+### The protein scale, measured rather than asserted
+
+Three independent routes now agree that **position 200 of the full-length product is threonine** —
+the Ensembl sequence, the query row of the alignment search, and the folded structure. That is the
+cheapest possible check on an off-by-one in the edit, and it is the only one available: a guide RNA
+aimed at the wrong codon fails silently.
+
+| | |
+|---|---|
+| PDB70 alignment depth at residue 200 | **0** (474 of 577 positions uncovered; max depth 2) |
+| ESMFold2 pLDDT at residue 200 | **97.7** |
+| mean pLDDT / pTM (577 aa, MSA-free) | 85.9 / 0.823 |
+| window 190–210 vs whole protein | 95.1 vs 85.9 |
+
+**The two rows that look contradictory are the result.** The alignment database has nothing to say
+about residue 200, and an MSA-free model folds that exact region at the *highest confidence in the
+molecule*. So low alignment depth here does **not** indicate a flexible or disordered region — had
+the fold come back weak, the honest reading would have been *the alignment ran out*, and there is
+no weak confidence to misread in the first place.
+
+**What this does not license.** pLDDT is the model's confidence in itself, not an accuracy, and
+there is no experimental structure for this protein to check it against. It says the model is
+internally certain about a fold nobody has measured.
+
+The parse carried its own control, and needed one: this writer orders `B_iso_or_equiv` at field 12
+and `occupancy` at 13, and every occupancy is exactly `1.0` — so a positional parse written for a
+standard mmCIF reports a mean pLDDT of **1.0** and looks fine. Reading the `_atom_site.` header
+gives 85.9, matching the run's own `plddt_mean` of 0.8595.
+
 ### The edit stack: two demonstrated alleles out of eight required slots
 
 **S15** asked for a minimal stack where *every edit is individually demonstrated in zebrafish*.
