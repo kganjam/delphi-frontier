@@ -1,0 +1,43 @@
+{
+  "validation_scope": "Offline on macOS; no synthesis, network request, ASR, or video render. Linux adapter not exercised.",
+  "platform": "Darwin",
+  "python_version": "3.14.7",
+  "ffmpeg_version": "ffmpeg version 8.1.1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "cli_help_and_python_compile": [
+    "prepare_voice.py",
+    "compose_close.py",
+    "synthesize_voice.py"
+  ],
+  "dry_run_no_credentials_or_network": true,
+  "relative_references_and_hashes_checked": 73,
+  "text_files_checked_for_private_home_paths_trace_ids_or_literal_bearer_tokens": 42,
+  "mp3_full_decodes": 9,
+  "reproductions": [
+    {
+      "variant": "90s",
+      "base_wav_sha256": "19e245ef4d6d9a81c26ed0ae391f2dc7eb352dcc59fce511d0d5971aeae46aae",
+      "final_wav_sha256": "5a74ae797a7454009ab67cf81f14d59b1671b52e7dcbdc09d2e64412e9dc893d",
+      "raw_to_prepared_wav_byte_identical": true,
+      "prepared_to_final_wav_byte_identical": true,
+      "archive_base_direct_composition_byte_identical": true,
+      "caption_text_and_time_values_identical": true,
+      "pcm_sha256": "7fd069db8460334d84283a2ddb5ff0fa8c5bf27c720a6d0281d2f7192d6c1fb0"
+    },
+    {
+      "variant": "60s",
+      "base_wav_sha256": "b272e5fd3a685a543073b6b4532449fa3bec65fc04957411db680039aacf1fc2",
+      "final_wav_sha256": "02f4823934599c9a3b499790086734f1a019593ec4887dc4d36b714a3c5798cb",
+      "raw_to_prepared_wav_byte_identical": true,
+      "prepared_to_final_wav_byte_identical": true,
+      "archive_base_direct_composition_byte_identical": true,
+      "caption_text_and_time_values_identical": true,
+      "pcm_sha256": "f64517db8249e71c0f98d0a4cf1ade94246ad00e2d4253d5d10c14a85878aa37"
+    }
+  ],
+  "timing_metadata_note": "Archived arrays are retained exactly. Portable outputs use a generic timing_origin label and exclude leading paragraph whitespace from the first closing sentence span; caption text and every start/end value match.",
+  "limitations": [
+    "Provider timestamps are approximate.",
+    "No claim of subjective voice quality is made by these checks.",
+    "Re-synthesis is nondeterministic; exact reproduction uses the included takes."
+  ]
+}
