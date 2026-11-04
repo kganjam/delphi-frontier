@@ -8,8 +8,8 @@ C-start hydromechanical efficiency of 0.37 and 0.93 tendon return, the spring mu
 **Adjacent scales:** organ, behaviour.
 
 **Status of this document.** I wrote down five constraints and checked each against the literature.
-None is `satisfied` and none is `unsatisfiable`. Four are `unsatisfied`, each with a stated search
-scope. One (C3) has two sources that disagree, and I record both. All literature access in this session was
+None is `satisfied` and none is `unsatisfiable`. All five are `unsatisfied`, each with a stated
+search scope. For C3, two sources also disagree, and I record both. All literature access in this session was
 at **search-summary** level. Direct fetches of journal pages (cob.silverchair.com,
 open.library.ubc.ca, sciencegate.app) failed because those hosts are outside this session's network
 allow-list. So no number below was read from a full text or from an abstract I opened myself. Every
