@@ -304,6 +304,20 @@ internally certain about a fold nobody has measured.
 >
 > Globally L219P moved mean pLDDT **+0.24 — upward** — and pTM from 0.8232 to 0.8329, also upward.
 >
+> **UPDATED later the same day — the box below was itself superseded twice, and the final reading is
+> different again.** Two things in it are now wrong. First, the "0.4 sd" used the *per-residue delta
+> distribution* as its noise estimate, not replicates; four wild-type replicates put residue 219's own
+> noise at **0.0050**, which makes L219P's −0.09 an **18.5 sd** effect that *was* detected (claim 477).
+> Second, "anti-correlated with severity" was the best model of two points and did not survive five
+> more. A seven-point ladder at residue 200 — A, T, V, I, K, F, W — shows the uncharged response is a
+> smooth **dose** in volume (+0.40, +0.05, +0.24, −0.34, −3.59, −7.23 across 88.6→227.8 Å³), and that
+> **I at 166.7 Å³ gives −0.34 while K at 168.6 Å³ gives −9.99**. 1.9 Å³ apart, 9.65 pLDDT different.
+> The driver is **charge**, worth **−9.38** at one position against **−7.63** for the entire volume
+> range (claim 501). And none of it generalises: the same ladder at residue 219 gives −0.03 to −0.26
+> (claim 494). **The conclusion that T200K is not shown "tolerated" is unchanged throughout**; what
+> changed four times is why. Kept rather than rewritten, because the sequence of readings is the
+> honest record of how the number was understood.
+>
 > **So the statistic is anti-correlated with severity, not merely insensitive.** It gave its largest
 > response in the protein to the milder substitution and nothing to the severe one. The sentence
 > below that reads *"the informative part is that it stayed local, not that it happened"* is
