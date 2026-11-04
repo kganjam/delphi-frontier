@@ -57,12 +57,25 @@ def git(*a, timeout=90):
 
 def main():
     limit = int(sys.argv[1]) if len(sys.argv) > 1 else 40
+    only = None
+    if "--only" in sys.argv:
+        only = sys.argv[sys.argv.index("--only") + 1]
+    # A re-sweep for one kind uses its OWN skip list, so re-running it cannot disturb or
+    # duplicate what the general harvest already recorded.
+    # work_log.kind is a CLOSED vocabulary (check constraint). A one-kind re-sweep needs its
+    # own skip list, so it namespaces the free-text REF rather than widening a shared schema.
+    wl_kind = "harvested"
+    ref_prefix = "" if not only else f"{only}:"
     subprocess.run(["git", "-C", REPO, "fetch", "-q", "origin"], timeout=180)
-    done = {r[0] for r in q("select ref from work_log where kind='harvested'")}
+    done = {r[0] for r in q(f"select ref from work_log where kind='{wl_kind}'"
+                            f" and ref like {lit(ref_prefix + '%')}")
+            if not ref_prefix or r[0].startswith(ref_prefix)}
+    done = {r[len(ref_prefix):] for r in done} if ref_prefix else done
     branches = [b.strip() for b in git("branch", "-r", "--sort=-committerdate").split("\n")
                 if "origin/claude/" in b][:limit * 3]
 
     found = recorded = edges = 0
+    dropped_challenges = []
     unresolved_deps = []
     for b in branches:
         tag = f"harvest:{b.split('/')[-1]}"
@@ -74,6 +87,8 @@ def main():
             text = git("show", f"{b}:{f}")
             for kind, body in BLOCK.findall(text):
                 found += 1
+                if only and kind != only:
+                    continue
                 try:
                     d = json.loads(body)
                 except json.JSONDecodeError:
@@ -93,10 +108,30 @@ def main():
                     stmt = (f"[{sid}] {ans}" + (f" KEY: {key}" if key else "")
                             + (f" VERDICT: {verdict}" if verdict else "")
                             + (f" [agent evidence note: {ev[:160]}]" if lvl == "unknown" and ev else ""))
-                    q(f"""insert into claim (project_id, subproblem_id, statement, evidence, source)
+                    # READ_LEVEL. SPEC-ASK-artifact-graph §2 requires a literature claim to
+                    # carry one, and this INSERT did not have the column -- so every literature
+                    # claim harvest ever wrote violated that rule by construction (7 of 316 live
+                    # rows when this was found, all of them harvest-sourced).
+                    #
+                    # The gap is two-sided and this fixes only the recording half. The agent
+                    # prompt asks for read_level in the DEEPEN template alone (generate.py ~line
+                    # 291, "required when your evidence is `literature`"); the general result
+                    # template does not, and 0 of 40 branches sampled carried the field. So most
+                    # blocks still cannot supply it and those rows stay NULL.
+                    #
+                    # NULL IS THE HONEST ENCODING FOR "THE BLOCK DID NOT SAY" and the vocabulary
+                    # is closed to §5b's five levels, so nothing is invented here: an unrecognised
+                    # or absent value becomes NULL rather than a guess. Inferring the level from
+                    # the answer's prose is exactly what §5b forbids.
+                    rl = str(d.get("read_level") or "").strip().lower()
+                    rl = rl if rl in ("full-text", "abstract", "listing", "search-summary",
+                                      "could-not-access") else None
+                    q(f"""insert into claim (project_id, subproblem_id, statement, evidence,
+                                             read_level, source)
                           select {lit(PROJECT)},
                                  (select id from subproblem where id={lit(sid)}),
-                                 {lit(stmt)}, {lit(lvl)}, {lit(tag)}
+                                 {lit(stmt)}, {lit(lvl)},
+                                 {"null" if rl is None else lit(rl)}, {lit(tag)}
                           where not exists (select 1 from claim where source={lit(tag)}
                                             and statement={lit(stmt)})""")
                     # SET answer_kind ON THE SUBPROBLEM. The harvester has always known the
@@ -241,19 +276,66 @@ def main():
                                                 and s.kind='replication')""")
                         recorded += 1
                 elif kind == "challenge":
+                    # TWO DEFECTS LIVED HERE AND THE SECOND HID THE FIRST.
+                    #
+                    # (1) It was an UPDATE and nothing else, gated on
+                    #     `outcome is null or outcome='not-run'`. So a challenge landed ONLY if
+                    #     somebody had already created an unresolved row for that claim. A
+                    #     challenge of a claim with no row, or -- far more common -- a SECOND
+                    #     challenge of a claim some earlier arm had already resolved, matched
+                    #     zero rows and was discarded. That second case is multi-round
+                    #     adversarial review, which is the thing this swarm exists to do:
+                    #     an independent agent re-attacking a claim that already survived once
+                    #     is the most informative block the fleet produces, and it was the one
+                    #     guaranteed to be thrown away. swarm-challenge is also the MOST COMMON
+                    #     block kind on the branches -- 28 of 42 in a 45-branch sample.
+                    #
+                    # (2) `recorded += 1` ran whether or not the UPDATE touched a row, so the
+                    #     harvest summary counted every dropped block as recorded. A silent
+                    #     drop that increments a success counter is indistinguishable from
+                    #     success, which is why this survived 732 branches.
+                    #
+                    # Now: resolve an outstanding row if there is one, otherwise INSERT a new
+                    # challenge. Both paths use RETURNING, and `recorded` counts only real rows.
                     cid = d.get("claim_id")
                     out = str(d.get("outcome") or "")
-                    if cid and out in ("survived", "refuted", "weakened"):
-                        q(f"""update challenge set outcome={lit(out)},
-                                 evidence={lit(str(d.get('reason') or '')[:900])}
-                               where claim_id={int(cid)} and (outcome is null or outcome='not-run')""")
-                        recorded += 1
+                    reason = str(d.get("reason") or "")[:900]
+                    attack = str(d.get("attack") or d.get("objection") or reason or
+                                 "(no attack text in block)")[:900]
+                    if (str(cid).isdigit() and out in ("survived", "refuted", "weakened")
+                            and q(f"select 1 from claim where id={int(cid)}")):
+                        hit = q(f"""update challenge set outcome={lit(out)},
+                                       evidence={lit(reason)}
+                                     where claim_id={int(cid)}
+                                       and (outcome is null or outcome='not-run')
+                                     returning id""")
+                        if not hit:
+                            hit = q(f"""insert into challenge
+                                          (claim_id, challenger, attack, outcome, evidence)
+                                        select {int(cid)}, {lit(tag)}, {lit(attack)},
+                                               {lit(out)}, {lit(reason)}
+                                        where not exists (select 1 from challenge
+                                                          where claim_id={int(cid)}
+                                                            and challenger={lit(tag)})
+                                        returning id""")
+                        if hit:
+                            recorded += 1
+                        else:
+                            # Distinguish the two reasons, because they mean opposite things:
+                            # a duplicate is the idempotency guard WORKING, while a missing
+                            # claim is a block that genuinely has nowhere to land.
+                            dup = q(f"""select 1 from challenge where claim_id={int(cid)}
+                                        and challenger={lit(tag)}""")
+                            dropped_challenges.append(
+                                f"{b.split('/')[-1]} claim {cid} "
+                                + ("(already recorded by this branch -- idempotent, not a loss)"
+                                   if dup else "(NO LANDING SPOT -- investigate)"))
         # Bookkeeping goes in work_log, NOT in claim. It went in claim twice tonight -- LAWENTRY
         # dispatch markers, then HARVESTED branch markers introduced twenty minutes after the first
         # batch was deleted -- because deleting the rows fixed the symptom and left the need with
         # nowhere to go. `claim` is for assertions about the world.
         q(f"""insert into work_log (project_id, kind, ref, detail)
-              values ({lit(PROJECT)},'harvested',{lit(b)},{lit(tag)})
+              values ({lit(PROJECT)},{lit(wl_kind)},{lit(ref_prefix + b)},{lit(tag)})
               on conflict do nothing""")
     print(f"  branches scanned: {len(branches)}  blocks found: {found}  recorded: {recorded}")
     print(f"  dependency edges written: {edges}   unresolvable depends_on entries: "
@@ -262,6 +344,12 @@ def main():
         print("  (free-text premises that name no claim id; reported, not dropped silently)")
         for u in unresolved_deps[:5]:
             print(f"    - {u}")
+    if dropped_challenges:
+        real = [x for x in dropped_challenges if "NO LANDING SPOT" in x]
+        print(f"  challenge blocks not newly recorded: {len(dropped_challenges)}"
+              f"  (of which genuine losses: {len(real)}; the rest are idempotent re-runs)")
+        for x in dropped_challenges[:5]:
+            print(f"    - {x}")
     print("  every row lands UNVERIFIED: an agent asserting a number is not evidence it is right")
     return 0
 

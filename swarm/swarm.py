@@ -47,13 +47,23 @@ def sql_lit(s):
 
 
 def accounts_with_credit():
+    """Accounts with unexpired credit, RICHEST FIRST.
+
+    Round-robin drains them unevenly -- measured at 09:5x, max_gmail was at $78 while max_allen
+    held $158. An account that empties early stops contributing, so the remaining credit finishes
+    later than it needs to. Sorting by balance biases dispatch toward the fullest account and the
+    four drain together.
+    """
     r = subprocess.run(["orchestra", "cloud", "credit"], capture_output=True, text=True, timeout=180)
     out = []
     for line in r.stdout.strip().split("\n"):
         p = line.split()
         if len(p) >= 2 and p[1] not in ("-",) and "usable" in line:
-            out.append((p[0], float(p[1])))
-    return out
+            try:
+                out.append((p[0], float(p[1])))
+            except ValueError:
+                pass
+    return sorted(out, key=lambda x: -x[1])
 
 
 def ready_subproblems(project):
@@ -95,8 +105,22 @@ def build_prompt(project, sid, scale, question, acceptance, falsifier, why):
         ```swarm-result
         {{"subproblem": "{sid}", "evidence": "<one of: measured|simulated|derived|literature|refused|unknown>",
           "answer": "<one sentence>", "key_number": "<the single number that decides it, with units, or null>",
+          "read_level": "<full-text|abstract|listing|search-summary|could-not-access, or null>",
           "blocked_on": "<what you could not get, or null>"}}
         ```
+
+        `read_level` is REQUIRED when your evidence is `literature`, and it is how you actually
+        read the source -- not how thoroughly you believe you understand it. Listing a paper is
+        not reading it, and a search summary is a lead rather than evidence. "abstract" is an
+        honest answer and a common one; say it rather than implying more.
+
+        This field was MISSING from this template until 2026-11-04 and the harvest path had no
+        column for it either, so every literature claim the swarm recorded failed
+        SPEC-ASK-artifact-graph rule 2 by construction -- 7 of 316 live rows, none of them the
+        fault of the agent that wrote them. If you leave it out, the row lands with a NULL and
+        stays non-conformant; nothing downstream will guess a level for you, deliberately,
+        because inferring how a source was read from how confidently it is described is the
+        exact failure that vocabulary exists to prevent.
     """).strip()
 
 
