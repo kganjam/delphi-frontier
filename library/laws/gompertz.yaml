@@ -1,61 +1,175 @@
 id: gompertz
-name: Gompertz growth
-usability: descriptive
-equation: "N_t = N_0 * exp(a_g / b_g * (1 - exp(-b_g * t)))"
-latex: "\\frac{dN}{dt} = a N e^{-bt} \\Rightarrow N(t) = N_0 \\exp\\left[\\frac{a}{b}\\left(1 - e^{-bt}\\right)\\right]"
+name: Gompertz growth, and where it departs from von Bertalanffy
+usability: descriptive           # a fitted sigmoid; no design number can be checked against it (see where_it_breaks)
+# The equation is the autonomous differential form because that is the form the dimension gate can
+# check: the gate accepts log() only of a dimensionless argument, and W_inf/W is M/M. The integrated
+# form is in `latex` and `integrated_form`. Its exponent -k*(t - t_i) is dimensionless because k is
+# 1/T. That was checked by hand, not by the gate.
+equation: "dW_dt = k * W * log(W_inf / W)"
+integrated_form: "W(t) = W_inf * exp(-exp(-k * (t - t_i)))"
+integrated_form_laird: "W(t) = W_0 * exp((alpha / beta) * (1 - exp(-beta * t))), with beta = k and W_inf = W_0 * exp(alpha / beta)"
+latex: "\\frac{dW}{dt} = k\\,W\\ln\\frac{W_\\infty}{W} \\;\\Longleftrightarrow\\; W(t) = W_\\infty \\exp\\!\\left(-e^{-k(t-t_i)}\\right) = W_0 \\exp\\!\\left[\\frac{\\alpha}{\\beta}\\left(1-e^{-\\beta t}\\right)\\right]"
 symbols:
-  N_t: {dimension: "1", units: dimensionless, description: "size or cell number at time t; dimensionless because the curve is used for counts and for normalised sizes alike"}
-  N_0: {dimension: "1", units: dimensionless, description: "initial size or number"}
-  a_g: {dimension: 1/T, units: 1/d, description: "initial specific growth rate"}
-  b_g: {dimension: 1/T, units: 1/d, description: "rate at which that specific growth rate decays"}
-  t:   {dimension: T, units: d, description: "time"}
+  dW_dt: {dimension: M/T, units: kg/d, description: "absolute growth rate of mass (volume can stand in for mass; the dimension check is unchanged because only the ratio W_inf/W enters the log)"}
+  W:     {dimension: M, units: kg, description: "body or tumour mass at time t"}
+  W_inf: {dimension: M, units: kg, description: "upper asymptote; a FITTED parameter, not an observed size (see where_it_breaks)"}
+  k:     {dimension: 1/T, units: 1/d, description: "Gompertz rate constant; the rate at which log(W_inf/W) decays. Equals beta in the Laird form. NOT the maximum specific growth rate -- Tjorve and Tjorve 2017 say that is k/e at inflection"}
+  t:     {dimension: T, units: d, description: "time or age"}
+  t_i:   {dimension: T, units: d, description: "time of inflection; a fitted offset"}
+  W_0:   {dimension: M, units: kg, description: "mass at t = 0 (Laird form only)"}
+  alpha: {dimension: 1/T, units: 1/d, description: "initial specific growth rate at t = 0 (Laird form only)"}
+  beta:  {dimension: 1/T, units: 1/d, description: "rate of exponential decay of the specific growth rate (Laird form only)"}
 constants:
-  asymptote:
-    value: null
-    note: "DERIVED, exact: the curve approaches N_0*exp(a/b). The ratio a/b is dimensionless, which is why it can sit inside an exponential at all."
-  half_log_asymptote_time:
-    value: null
-    note: "DERIVED: half of the log-asymptote is reached at t = ln(2)/b, independent of a and N_0 -- the same parameter-light invariant that von Bertalanffy has."
-mechanism: >
-  NONE IS GIVEN, and that is the honest statement. It is an empirical curve whose specific growth
-  rate decays exponentially in time: dN/dt = a*N*exp(-b*t). Gompertz's own use in 1825 was human
-  mortality, not growth at all; Winsor 1932 applied the curve to growth. A function that was
-  invented for one phenomenon and transplanted to another, with no derivation in either, is a
-  fitting family and should be labelled as one.
-domain_of_validity:
-  use: "tumour growth (Laird 1964) and many organism growth curves"
-  notes: >
-    It is applied wherever a sigmoid on a log scale is wanted. The domain is therefore a statement
-    about convention rather than about biology. That its tumour fits are Gompertzian is remembered.
-where_it_breaks: >
-  There is no regime where it is derived to hold, so there is no regime where it can be said to
-  break -- which sounds like strength and is the opposite. A curve family with two free parameters
-  plus an initial value will fit most monotone saturating data, so a good fit is close to
-  uninformative: the only meaningful question is whether it fits BETTER than the logistic or von
-  Bertalanffy alternatives on the same data, and no retrieved source tests that here. Because it is
-  not derived, its parameters a and b do not correspond to measurable biological rates, so they
-  cannot be predicted from physiology, compared across studies with different sampling, or used to
-  constrain a design. Fitting it and reporting a and b is a description of the data, and
-  extrapolating it beyond the sampled interval has no justification at all.
-worked_examples:
-  - organism: "illustrative parameters -- no fitted values for any system were retrieved"
-    computation: |
-      a = 1, b = 0.2
-      asymptote = N_0 * e^(a/b) = N_0 * e^5 = 148 * N_0
-      half of the log-asymptote when 1 - e^(-0.2 t) = 0.5, i.e. t = ln(2)/0.2 = 3.47 time units
-    value: 3.47
+  inflection_fraction:
+    value: 0.3679
+    interval: null
     note: >
-      Note that a 5-fold change in the dimensionless ratio a/b produces a 148-fold change in the
-      asymptote. The curve's output is exponentially sensitive to a ratio of two fitted rates,
-      which is a further reason not to extrapolate it.
+      DERIVED, exact: 1/e of the asymptote, fixed by the functional form and not measured.
+      Tjorve and Tjorve 2017 state the same value (36.8% of A). The comparison values below are
+      calculated in this session from the closed forms; they are not observations. Von Bertalanffy
+      in mass (W = W_inf*(1 - e^-Kt)^3) inflects at (2/3)^3 = 8/27 = 0.2963. Von Bertalanffy in
+      length has no inflection. Logistic inflects at 0.5.
+  span_1_to_99_percent:
+    value: "6.13/k for Gompertz, against 5.46/K for von Bertalanffy in mass"
+    interval: null
+    note: "DERIVED in this session from the closed forms: -ln(-ln f) for Gompertz and -ln(1 - f^(1/3)) for VB-mass, each evaluated between f = 0.01 and f = 0.99. Not an observation."
+  alpha_beta_coupling_mouse_tumours:
+    value: "R^2 = 0.968 (breast volume)"
+    interval: [0.923, 0.99]
+    units: dimensionless (coefficient of determination, not r)
+    note: >
+      The interval is the spread across the paper's three datasets (breast volume, lung volume,
+      breast fluorescence), not a confidence interval. The summary I read did not say which of
+      0.923 and 0.99 belongs to lung and which to fluorescence.
+      MEASURED by Vaghi et al 2020: the individual-level coefficient of determination between the
+      fitted Gompertz alpha and beta. It is the empirical basis of their one-parameter "reduced
+      Gompertz". Benzekry et al 2014 report a correlation of R = 0.99 between the two Gompertz
+      parameters in both of their datasets. MY INFERENCE: if alpha and beta move together this
+      tightly, the two-parameter Gompertz is over-parameterised for data of this kind. That is
+      consistent with Vaghi's report that the Fisher information matrix was often singular.
+  gompertz_alpha_fixed_effect_breast:
+    value: 0.58
+    interval: unknown
+    units: 1/d (units are my inference from the model; the source summary gave only the number)
+    note: >
+      MEASURED (fitted) by Vaghi et al 2020: the population fixed effect, compared in that paper with
+      an in vitro proliferation rate of 0.837. No confidence interval was in the text I read. The
+      paper states that relative standard errors of the population parameters were below 3.81%.
+      That is a bound on all of them, not an interval on this one, so the interval is recorded as
+      unknown.
+mechanism: >
+  The specific growth rate (1/W)*dW/dt = k*ln(W_inf/W) falls as the logarithm of the distance to the
+  asymptote. Equivalently, in the Laird form, it decays exponentially in TIME: alpha*exp(-beta*t). No
+  physiological derivation of either statement is established. Gompertz 1825 wrote the function for
+  human mortality, and Winsor 1932 carried it over to growth. Those two facts are from the citations
+  and titles only; neither paper was read in this session. Proposed mechanisms include progressive
+  loss of proliferating fraction in tumours, and the limit of a surface/volume balance. The second
+  is my derivation, stated as a calculation: dW/dt = p*W^a - q*W tends to the Gompertz form as
+  a -> 1 with p - q -> 0 at a suitable rate. Tjorve and Tjorve 2017 make the corresponding statement
+  for the Richards family: Gompertz is reached as the shape parameter d -> 1, not at a fixed d. Von
+  Bertalanffy instead fixes the anabolic exponent at 2/3. So Gompertz and von Bertalanffy are two
+  points in one family, and they differ only in the assumed exponent.
+domain_of_validity:
+  use: "fitting saturating growth of tumours (mouse xenograft and syngeneic volumes), animal and fish growth curves, and bacterial growth (the Zwietering form)"
+  size_range: "the range sampled by the data, and specifically from near the inflection (W/W_inf about 0.37) up toward the asymptote"
+  notes: >
+    Within the sampled interval and away from W -> 0, Gompertz describes tumour volume curves about
+    as well as the alternatives. Benzekry et al 2014 found it among a group of five models with
+    similar RMSE on Lewis lung carcinoma, 14-1492 mm^3 over 4-22 days. In that group it was preferred
+    with the power law for parsimony. It is also within the best group on breast LM2-4LUC+, 202-1902
+    mm^3, although there exponential-linear fitted best. Outside the sampled interval it carries no
+    information that the data did not.
+where_it_breaks: >
+  (1) SMALL SIZE AND BACK-EXTRAPOLATION -- the demonstrated failure. As W -> 0 the specific growth
+  rate k*ln(W_inf/W) goes to infinity. Benzekry et al 2014 call that biologically unrealistic, and
+  Vaghi et al 2020 say the same. The failure shows up in prediction. Vaghi et al 2020 used the full
+  two-parameter Gompertz with likelihood maximisation to back-predict the age of experimental
+  tumours, and the mean absolute relative error was 156% on breast volume. It was 178% on lung and
+  236% on breast fluorescence. Their Bayesian reduced Gompertz cut breast error to 12.2%, and the
+  reduced model by likelihood alone gave 79%. Both papers suggest an exponential phase at small
+  size, the Gomp-Exp model, for initiation-time work. So the model breaks below the smallest size
+  observed. Gompertz should not be used to date a tumour's onset or a larva's hatching from later
+  sizes.
+  (2) THE ASYMPTOTE IS NOT A PROPERTY OF THE ORGANISM. On the same breast data, Vaghi et al 2020
+  report a fitted Gompertz carrying capacity of 2600 mm^3, against 1303 mm^3 for the logistic. That
+  is a factor of 2.0 (my calculation), and both values are model artefacts at the edge of the data.
+  On lung they report a Gompertz carrying capacity of 12300 mm^3. Benzekry et al 2014 give the Lewis
+  lung data range as 14-1492 mm^3. MY INFERENCE: if that is the same Lewis lung dataset, and both
+  papers come from the same group with 20 LLC mice each, the fitted asymptote lies about 8.2x above
+  the largest volume observed. So W_inf was extrapolated rather than measured. I did not confirm
+  that the datasets are identical.
+  (3) FORECASTING. Benzekry et al 2014 report that on lung data no model, Gompertz included,
+  reached a 70% prediction rate beyond the next data point. Gompertz "interpreted too strongly an
+  initial slowdown" and underestimated later volumes. On breast, Gompertz, von Bertalanffy, power
+  law and dynamic carrying capacity reached 58.8-63.3% overall success, against 83.8% for
+  exponential-linear.
+  (4) WHERE IT DEPARTS FROM VON BERTALANFFY, quantified. These are CALCULATED in this session, with
+  k = K chosen so that the two agree near the asymptote; they are not observations. Near W_inf the
+  two are indistinguishable: the specific rates are 0.105k and 0.107K at W/W_inf = 0.9, and 0.69 and
+  0.78 at 0.5. They split only at small relative size. At W/W_inf = 1e-3 the specific rates are
+  6.9k against 27K, a factor of 3.9. At 1e-6 they are 13.8k against 297K, a factor of 21.
+  Gompertz's divergence is logarithmic; VB-mass's goes as W^(-1/3). Inflection is at 0.368 against
+  0.296 of the asymptote. CONSEQUENCE, my inference: data taken mostly above the inflection cannot
+  discriminate the two, and that is what Benzekry et al 2014 found. On lung data the von
+  Bertalanffy and Gompertz curves were "visually indistinguishable" and tied for best global score
+  at n = 5. The choice between them is settled only by the early, small-size data, which is exactly
+  where both fail. Calling one of them the law of a taxon from post-inflection data is therefore not
+  supported.
+  (5) Fish length-at-age: Katsanevakis 2006 fitted VB, generalised VB, Gompertz, Schnute-Richards
+  and logistic to four fish species. Per the abstract, model-selection uncertainty inflated the
+  standard error of the best model's asymptotic length by up to 3.9x. Which model won per species
+  was NOT retrieved, so no claim is made that Gompertz fails or succeeds for fish.
+worked_examples:
+  - organism: "generic -- calculated, not observed"
+    computation: |
+      Gompertz specific growth rate at W = W_inf/1000:  k*ln(1000) = 6.91 k
+      VB-mass specific growth rate (3K((W_inf/W)^(1/3) - 1)) at the same size:  3K*(10 - 1) = 27 K
+      ratio, with k = K matched near the asymptote: 27/6.91 = 3.9
+    value: 3.9
+    note: >
+      This is how far apart the two models are when back-extrapolated three decades below the
+      asymptote, even though they agree within 2% at 0.9 W_inf. Any design or dating that depends on
+      early growth inherits a model choice the late data cannot make.
     evidence: derived
+  - organism: "Mus musculus, orthotopic LM2-4LUC+ breast tumour (Vaghi et al 2020)"
+    computation: "age back-prediction, mean absolute relative error: Gompertz (likelihood) 156%; reduced Gompertz (likelihood) 79%; reduced Gompertz (Bayesian, population prior) 12.2%"
+    value: 1.56
+    note: "MEASURED in the source as model prediction error against known injection dates. The 12.2% depends on a population prior, not on Gompertz alone."
+    evidence: literature
+  - organism: "Mus musculus, same breast data, fitted asymptote by model (Vaghi et al 2020)"
+    value_range: [1303, 2600]
+    note: "mm^3; logistic 1303 against Gompertz 2600 on the same data. Preserved as disagreement; the true asymptote is unknown."
+    evidence: literature
+  - organism: Danio rerio
+    value: unknown
+    note: >
+      NO fitted Gompertz parameters for zebrafish were retrieved. Scope of that negative: this session
+      ran no zebrafish-specific search; FishBase, add-my-pet and Google Scholar were not consulted.
+      It is a gap, not evidence of absence.
+    evidence: none
 contested_by:
-  - "Logistic and von Bertalanffy growth are the standard alternatives. Which fits best is a per-dataset empirical question and no retrieved source settles it; the three are preserved as a choice the analyst must make and justify, not as a ranking."
+  - "Benzekry et al 2014 on breast tumours: exponential-linear, not Gompertz, gave the best fit and the best forecasts (83.8% against 58.8-63.3%). On lung tumours Gompertz was preferred with the power law, and tied with von Bertalanffy. The two datasets disagree on the best model, and that disagreement is left unreconciled."
+  - "Vaghi et al 2020 retain Gompertz (in reduced form) as the best model for dating tumours. They reject the logistic, saying its carrying capacity is implausible and saturates below the data, and they reject the exponential. Benzekry et al 2014 and Vaghi et al 2020 both suggest an exponential initial phase (Gomp-Exp) for small sizes, which concedes the small-size failure of pure Gompertz."
+  - "Katsanevakis 2006 (fish) argues against choosing any single growth model a priori, VB or Gompertz alike, and recommends Akaike-weighted model averaging instead. That position contests the premise of a 'growth law' entry rather than the Gompertz form."
+  - "Tjorve and Tjorve 2017: the Gompertz k is widely misreported as a relative growth rate; the maximum relative rate is k/e. Rate constants are therefore not comparable across published Gompertz, logistic and VB fits without reparameterisation."
 sources:
+  - citation: "Benzekry S et al (2014) PLoS Comput Biol 10(8):e1003800, Classical mathematical models for description and prediction of experimental tumor growth, doi 10.1371/journal.pcbi.1003800"
+    read_level: full-text
+    note: "Main text read via a WebFetch summary, first 100000 characters; the remainder was checked for VB equations and none were found. Tables 1-6 are images and were NOT read, so no fitted Gompertz parameter values are taken from this paper."
+  - citation: "Vaghi C et al (2020) PLoS Comput Biol 16(2):e1007178, Population modeling of tumor growth curves and the reduced Gompertz model improve prediction of the age of experimental tumors, doi 10.1371/journal.pcbi.1007178"
+    read_level: full-text
+    note: "Read via a WebFetch summary, first 100000 of 119145 characters. Table 2 was only partly extracted."
+  - citation: "Tjorve KMC, Tjorve E (2017) PLoS ONE 12(6):e0178691, The use of Gompertz models in growth analyses, and new Gompertz-model approach: An addition to the Unified-Richards family, doi 10.1371/journal.pone.0178691"
+    read_level: full-text
+    note: "Read via a WebFetch summary. The summary reported no direct discussion of where Gompertz departs from von Bertalanffy."
+  - citation: "Katsanevakis S (2006) Fisheries Research 81:229-235, Modelling fish growth: model selection, multi-model inference and model selection uncertainty"
+    read_level: search-summary
+  - citation: "Winsor CP (1932) PNAS 18(1):1-8, The Gompertz curve as a growth curve, doi 10.1073/pnas.18.1.1"
+    read_level: could-not-access
+    note: "pnas.org returned HTTP 403 on 2026-11-04. Cited for priority only; no content is drawn from it."
   - citation: "Gompertz B (1825) Phil Trans R Soc Lond 115:513-583, On the nature of the function expressive of the law of human mortality, doi 10.1098/rstl.1825.0026"
-    read_level: metadata
-  - citation: "Winsor CP (1932) PNAS 18:1-8, The Gompertz curve as a growth curve, doi 10.1073/pnas.18.1.1"
-    read_level: metadata
+    read_level: could-not-access
+    note: "Not attempted in this session; cited for the origin of the function only. The citation details were taken from the previous library entry at this path, not checked independently."
   - citation: "Laird AK (1964) Br J Cancer 18:490-502, Dynamics of tumour growth, doi 10.1038/bjc.1964.55"
-    read_level: metadata
-    note: "The PMC copy is a scan with no text layer."
+    read_level: could-not-access
+    note: "Not attempted in this session. The previous entry at this path records that the PMC copy is a scan with no text layer. Cited only as the source of the alpha/beta parameterisation name."
