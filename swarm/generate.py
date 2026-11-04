@@ -240,15 +240,19 @@ def gen_deepen(accts, i=0, limit=10):
     queue ran dry a second time. An answered question is not a finished one: every answer rests on an
     input that could move, and that input is the next question.
     """
-    # DEPTH CAP. Without it the generator deepens its own deepenings: S21-D-D-D existed within the
-    # hour, and 4 subproblems had reached depth 3. Each level is thinner than the last, and at some
-    # point it is paying to attack an input of an input of an input. One deepen per original
-    # question; if a deepening itself raises a real question it should be written as a NEW
-    # subproblem with its own id, not accreted onto the chain.
+    # DEPTH CAP, SET AT 2 ON EVIDENCE RATHER THAN AT 1 ON INTUITION.
+    # Unbounded, this deepens its own deepenings: S21-D-D-D existed within the hour. The first cap
+    # was depth 1, on the assumption that deeper levels are thin. Harvesting then showed two
+    # depth-2 results that are NOT thin: S23-D-D found that a conclusion was sensitive to E0 only
+    # because f=1 silently assumed actinotrichia span the whole fin, when in adult zebrafish they
+    # occupy only the distal 200-300 um of a ray; and S7-D-D measured a bending section from
+    # published uCT imagery. Both are real corrections that depth 1 would never have reached.
+    # So the cap is 2: deep enough for an assumption buried under an answer, shallow enough that
+    # S21-D-D-D cannot recur.
     rows = q(f"""select sp.id, sp.question, coalesce(sp.answer,''), sp.scale_id
                  from subproblem sp where sp.project_id={sql_lit(PROJECT)}
                  and sp.status in ('answered','refuted')
-                 and sp.id not like '%-D%'
+                 and sp.id not like '%-D-D%'
                  and not exists (select 1 from subproblem d where d.id = sp.id || '-D')
                  order by sp.id limit {limit}""")
     n = 0

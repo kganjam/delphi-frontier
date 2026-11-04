@@ -4,7 +4,7 @@ title: Corrections
 
 **Nothing here was deleted.** Each row is a value that was replaced, kept beside what replaced it. This page is the project's error record, and it getting longer is a sign the system is working rather than failing.
 
-## Superseded (12)
+## Superseded (16)
 
 | was | became | now |
 |---|---|---|
@@ -20,6 +20,10 @@ title: Corrections
 | **#52** S24 applied the Strouhal CRUISING band 0.2-0.3, but the law library records that small, low-Reynolds swimmers  `2.5` | → #84 | Replication: required tail-beat frequency at 1.95 m/s is 72-83 Hz (bracket 64-101), 1.4-1.6x the 52 Hz EMG max `77.5` |
 | **#72** S6-D VERDICT FALLS: a lepidotrichial ray modelled as a passive cantilever cannot carry an equal share of glide `0.00063` | → #95 | SCALE ERROR FOUND: S6 and S26 compared a 40.3 mm bluegill ray's EI (3.8e-6 N m^2) against the requirement for  `2.1` |
 | **#82** CONSEQUENCE FOR BUILD: a construct ordered against the symbol `lat4a` would not resolve. The buildable target  | → #90 | Correction to claim 82: GeneID 393221 (slc43a2a) has a single RefSeq protein NP_956545.1 of 153 aa, so positio `153` |
+| **#90** Correction to claim 82: GeneID 393221 (slc43a2a) has a single RefSeq protein NP_956545.1 of 153 aa, so positio `153` | → #218 | Correction to claim 90 (which corrected 82): NP_956545.1 = 153 aa is verified (harvester efetch) BUT it is a P `222` |
+| **#91** S14-D deepen FALLS: engineering kcnk5b for graded pectoral-restricted control is unsupported. AFDB pLDDT is 69 `3.4` | → #216 | CHALLENGER A (axmlig) on claims 91/167: arithmetic reproduces (17.1429 mV, 3.4286; AFDB 69.5/62.82 re-fetched  `4.4` |
+| **#167** [S14-D] Engineering kcnk5b itself for graded pectoral-restricted control is unsupported: the recorded pLDDT>80 | → #217 | CHALLENGER B (6ey3si + trw1cg, independent, agree on local pLDDT) on claim 167: local pLDDT 93.6/94.0 at motif `12` |
+| **#214** COULD NOT VERIFY: the precise boundary condition behind the 1.98 N/m figure -- a challenge reports it is at ~2 | → #219 | Alben, Madden & Lauder 2007 (PMC2359861, full text via challenger): 1.98 N/m is a TRANSFER stiffness: excised  `1.98` |
 
 ## Open review flags (6)
 

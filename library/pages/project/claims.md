@@ -2,7 +2,7 @@
 title: Claims
 ---
 
-124 live claims of 136 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
+128 live claims of 144 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
 
 | # | sub | claim | evidence | value | source |
 |---|---|---|---|---|---|
@@ -51,8 +51,6 @@ title: Claims
 | 86 | S2 | Replication: Re 1.9e3-4.0e3 reproduces, but measured steady CL_max near Re 3e3 is ~1.0 (0.9-1.1) for cambered/corrugated thin wings (snake section 1.1 | 🟡 derived | `1 CL_max` | branch claude/zebrafish-glide-replication-ptg7f5 rep *[search-summary]* |
 | 87 | S13 | Replication: Cys close pairs (\|i-j\|<=3) = 0/0/0 and 0 CxxC reproduce; but and2 z = -1.6 (p one-sided ~0.08, 2000 shuffles) at the window that reprod | 🟡 derived | `-1.6 z` | branch claude/cysteine-close-pairs-7qjmxn replicate- *[full-text]* |
 | 88 | S9 | S9-D deepen verdict FALLS: bluegill fin-ray E=1.34 GPa is EI/I with I assumed; with zebrafish in-vivo caudal EI 1.5-4e-9 N m^2 and micro-CT hemitrich  | 🟡 derived | `2.5e-09 N m^2 (caudal fin EI midpoint)` | branch claude/deepen-s9-fin-ray-ixdx5u S9-deepen.md *[full-text]* |
-| 90 | S22 | Correction to claim 82: GeneID 393221 (slc43a2a) has a single RefSeq protein NP_956545.1 of 153 aa, so position 200 does not exist and T200K cannot be | 🟡 derived | `153 aa (NP_956545.1)` | branch claude/slc43a2a-t200k-numbering-b2ak09 challe *[full-text]* |
-| 91 | S14 | S14-D deepen FALLS: engineering kcnk5b for graded pectoral-restricted control is unsupported. AFDB pLDDT is 69.5 (monomer) / 62.82 (homodimer), 33.9%  | 🟡 derived | `3.4 distinguishable setpoints` | branch claude/deepen-s14-potassium-channel-5miqg2 S1 *[full-text]* |
 | 92 | S26 | S26-D deepen FALLS the "no": 165x gap compares a <=40 mm bluegill ray (3.8e-6 N m^2) to a 120 mm per-ray requirement (6.3e-4); under ISOMETRIC L^4 sca | 🟡 derived | `2.1 x required active factor` | branch claude/deepen-s26-active-stiffening-48xj8q S2 *[abstract]* |
 | 93 | S6-D-D | S6-D-D deepen FALLS S6-D's verdict: it rested on an unstated size-transfer exponent beta=0 (bluegill 40 mm ray EI used unchanged for a 120 mm ray). Al | 🟡 derived | `4.3e-05 N m^2 (passive bluegill EI upper bound)` | branch claude/deepen-s6-d-sensitive-input-fc1hm8 S6- *[abstract]* |
 | 94 | S2-D-D | S2-D-D deepen FALLS S2-D's whole-animal L/D 3-5: model overpredicts the flying-fish measured L/D (Park & Choi 2010; max 4.4 search-summary, 5.9 relaye | 🟡 derived | `1.95 L/D midpoint of 1.2-2.7` | branch claude/deepen-s2-d-imobtp S2-D-deepen.md *[abstract]* |
@@ -86,7 +84,6 @@ title: Claims
 | 160 | S25 | [S25] Flammang et al. 2013 report 565e-6 N m^2 in their abstract (read at abstract level in Europe PMC and PubMed; the authors call it 'calculated');  | 🔵 literature |  | harvest:s25-flammang-fin-ray-stiffness-gkwnb4 |
 | 163 | S21-D-D | [S21-D-D] The input the S21-D conclusion is most sensitive to is the fastest adult's fast-start speed (unit elasticity; no single 2x error in any inpu | 🟢 measured |  | harvest:deepen-s21-sensitive-input-mxp5t8 |
 | 164 | S22-D-D | [S22-D-D] Replacing S22-D's assumed wild-type zebrafish pectoral/SL with a same-lab figure-read (~0.21 SL, range 0.17-0.26) means a flying-fish propor | ⚪ unknown |  | harvest:s22-d-sensitive-input-pwechp |
-| 167 | S14-D | [S14-D] Engineering kcnk5b itself for graded pectoral-restricted control is unsupported: the recorded pLDDT>80 is both misstated (AlphaFold DB reports | ⚪ unknown |  | harvest:deepen-s14-potassium-channel-5miqg2 |
 | 168 | S1-D | [S1-D] No: replacing Plaut's sustained U_crit (0.56 m/s) with a measured adult escape burst speed (0.95 m/s robust lower bound, 1.57 m/s reported peak | 🟢 measured |  | harvest:zebrafish-takeoff-deepen-2gwq0o |
 | 169 | S20-D-D | [S20-D-D] S20-D's most flip-prone input was its 'guppy-class' comparator (1.51 m/s, from a review's 3.5 BL multiplied by the 33 mm zebrafish length un | 🟡 derived |  | harvest:s20-d-sensitive-input-77m8c9 |
 | 171 | S10-D-D | [S10-D-D] S10-D's burst verdict is tied for sensitivity among f, R, M and muscle power, none of which flips it at x2, and f is the weakest by evidence | 🟡 derived |  | harvest:deepen-s10-sensitive-input-k9dp4p |
@@ -128,5 +125,12 @@ title: Claims
 | 209 |  | OPEN DEPENDENCY: a challenge reports Alben 2007 places the 1.98 N/m stiffness at ~2/3 of ray length and in the BASE-CLAMPED state, not at the tip. The | ⚪ unknown |  | challenge evidence; not yet verified here |
 | 210 |  | REPRODUCIBILITY GAP: kcnk5b_pdb70.a3m was never committed, so the MSA depth profile behind the "alignment ran out, not disorder" finding cannot be ind | ⚪ unknown | `36.4 pLDDT` | challenge evidence; not yet verified here |
 | 211 | S14 | REPRODUCIBILITY GAP CLOSED and the finding CONFIRMED: recomputed per-residue MSA depth directly from the now-committed kcnk5b_pdb70.a3m (72 sequences) | 🟢 measured | `0 MSA depth past residue 326` | recomputed here from results/fish-proteins/structure *[full-text]* |
-| 214 | S26 | COULD NOT VERIFY: the precise boundary condition behind the 1.98 N/m figure -- a challenge reports it is at ~2/3 of ray length and base-clamped rather | ⚪ unknown |  | attempted via NCBI efetch db=pmc id=2359861 and the  *[could-not-access]* |
 | 215 | S26 | SCOPE OF WHAT S26 RESTS ON: the ORDER OF MAGNITUDE of active stiffening is confirmed by the paper's own abstract (>10x). The exact 12x factor, and the | ⚪ unknown |  | scope statement *[could-not-access]* |
+| 216 | S14 | CHALLENGER A (axmlig) on claims 91/167: arithmetic reproduces (17.1429 mV, 3.4286; AFDB 69.5/62.82 re-fetched by challenger). But whole-chain mean is  | 🟡 derived | `4.4 setpoints` | branch claude/challenge-s14-falls-kcnk5b-axmlig chal *[full-text]* |
+| 217 | S14 | CHALLENGER B (6ey3si + trw1cg, independent, agree on local pLDDT) on claim 167: local pLDDT 93.6/94.0 at motifs 98-102/203-207 and 90.7/84.8 (trw: 90. | 🟡 derived | `12 mV (midpoint of 8-17 range, derived)` | branches claude/challenge-kcnk5b-claim-6ey3si, claud *[full-text]* |
+| 218 | S22 | Correction to claim 90 (which corrected 82): NP_956545.1 = 153 aa is verified (harvester efetch) BUT it is a PROVISIONAL RefSeq, frameshift-truncated  | 🟡 derived | `222 slc43a2b residue homologous to slc43a2a-200 (challenger-derived)` | branch claude/slc43a2-t200k-challenge-wkixy4 challen *[full-text]* |
+| 219 | S26 | Alben, Madden & Lauder 2007 (PMC2359861, full text via challenger): 1.98 N/m is a TRANSFER stiffness: excised bluegill pectoral ray clamped at the bas | 🔵 literature | `1.98 N/m` | branch claude/challenge-214-fish-stiffness-cml8qn ch *[full-text]* |
+| 220 | S22-D-D | S22-D-D-D deepen FALLS the claim that the Daane phenocopy "most likely falls short by 1.5-2x": shortfall FF/(p0*f) is equally elastic in all three inp | 🟡 derived | `3.4 x break-even pectoral overgrowth (midpoint of 3.1-3.7)` | branch claude/deepen-s22-d-d-input-vncsjh S22-D-D-de *[abstract]* |
+| 221 | S7-D-D | S7-D-D deepen FALLS "girdle bone probably not limiting": measured proximal-radial solid-equivalent section 0.12-0.20 mm vs 0.26 mm required at 1.08e-4 | 🟡 derived | `0.26 mm required solid-equivalent diameter` | branch claude/s7-d-sensitive-input-n67r40 S7-D-deepe *[abstract]* |
+| 222 |  | GRADER CALIBRATED AND TRUSTED: 7/7 on a blind benchmark, 4/4 on seeded defects spanning arithmetic, regime, scale and evidence-level inflation. The 16 | 🟢 measured | `7 of 7 items` | grader_calibration; session_01QbcBRXmj1D5f1cmzW25ocp *[full-text]* |
+| 223 |  | SCOPE: one grader, seven items, one run. It establishes that this grader catches these four defect classes, not that it catches every class, and not t | ⚪ unknown |  | scope statement |
