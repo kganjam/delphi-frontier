@@ -13,7 +13,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 | [Cost of transport against body mass](./cost-of-transport.md) | `constraining` | Outside the linear power-against-speed range the two-term form is simply the wrong shape, and the fit carries  |
 | [D'Arcy Thompson's theory of transformations](./darcy-thompson.md) | `descriptive` | It does not break, and that is precisely the problem: a theory that cannot fail cannot inform a design |
 | [Elastic versus geometric similarity (McMahon)](./elastic-similarity.md) | `descriptive` | It breaks on the animals it was proposed for |
-| [Froude propulsive efficiency, and the Froude number of a surface-piercing body](./froude-efficiency.md) | `constraining` | FROUDE EFFICIENCY |
+| [Froude propulsive efficiency, and the Froude number of a surface-piercing body](./froude-efficiency.md) | `constraining` | Hull speed is not a speed limit for an animal that can plane -- eiders steam at Fr 2 |
 | [Froude number and the walk-run transition](./froude-gait.md) | `constraining` | Non-cursorial and small mammals fall outside the hypothesis by its authors' own statement, so the group does n |
 | [Phyllotaxis and the golden angle](./golden-angle.md) | `constraining` | Nearly one sunflower parastichy count in five is NOT Fibonacci -- 136 of 768, split into Fibonacci minus one,  |
 | [Gompertz growth](./gompertz.md) | `descriptive` | There is no regime where it is derived to hold, so there is no regime where it can be said to break -- which s |
