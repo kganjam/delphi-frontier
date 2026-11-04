@@ -1,0 +1,160 @@
+id: von-bertalanffy
+name: Von Bertalanffy growth, and where it fails for indeterminate growers
+usability: descriptive           # K and L_inf are fitted to the same population they describe; nothing is predicted a priori
+# Written in its linear ODE form so check_laws.py can dimension-check it. The checker cannot see
+# inside exp(), so the integrated form in `latex` is checked by hand here: K is 1/T and (t - t0) is T,
+# so the exponent K*(t - t0) is dimensionless, and L_inf*(1 - exp(...)) is a length. Note the checker
+# only evaluates the FIRST term of a sum; the second term on the left, K*L, is T^-1 * L = L/T, which
+# matches dLdt -- checked by hand, not by the tool.
+equation: "dLdt + K * L = K * L_inf"
+latex: "\\frac{dL}{dt} = K\\,(L_\\infty - L) \\;\\Longrightarrow\\; L(t) = L_\\infty\\left(1 - e^{-K (t - t_0)}\\right)"
+symbols:
+  L:     {dimension: L,   units: m,     description: "body length at age t (standard, fork or total length -- must be stated, they are not interchangeable)"}
+  dLdt:  {dimension: L/T, units: m/s,   description: "instantaneous length growth rate dL/dt (in practice reported per year)"}
+  L_inf: {dimension: L,   units: m,     description: "asymptotic length: the mean length the fitted curve approaches as t goes to infinity -- a fitted parameter, not an observed maximum"}
+  K:     {dimension: 1/T, units: 1/s,   description: "Brody growth coefficient: the rate at which L approaches L_inf (in practice reported per year)"}
+  t:     {dimension: T,   units: s,     description: age}
+  t0:    {dimension: T,   units: s,     description: "hypothetical age at which the fitted curve crosses L = 0; a fitting artefact, frequently negative"}
+constants:
+  # The law has no universal measured constant: K and L_inf are re-fitted for every population.
+  # The entries below are the derived exponent of the original mass form and the cross-species
+  # ratios most often hung on the fitted parameters.
+  anabolism_mass_exponent:
+    value: 0.6667
+    interval: unknown
+    units: dimensionless
+    note: >
+      2/3, the ASSUMED exponent in von Bertalanffy's mass form dW/dt = H*W^(2/3) - k*W (anabolism
+      proportional to a surface, catabolism proportional to mass). It is a modelling assumption, not
+      a measurement, so it has no measured interval. The length form above follows from it only when
+      W is proportional to L^3 (isometric growth). Search summaries of von Bertalanffy (1957) say he
+      himself assigned 2/3 to fish and some invertebrates and a different exponent (1) to insects; I
+      could not open the 1957 text to confirm the wording.
+  M_over_K:
+    value: 1.5
+    interval: unknown
+    units: dimensionless
+    note: >
+      Beverton-Holt "invariant" ratio of natural mortality M to K. 1.5 is the value given by Jensen
+      (1996) from a bioenergetic optimality argument, as reported in search summaries; it is a
+      derived optimum, not a pooled measurement, and I found no measured interval. Search summaries
+      also report studies in which the ratio is NOT invariant (walleye across populations; Eastern
+      South Pacific fishes for Lm/L_inf). Recorded as disputed, not averaged.
+  Lm_over_Linf:
+    value: 0.66
+    interval: unknown
+    units: dimensionless
+    note: >
+      Ratio of length at maturity to L_inf, same provenance and same dispute as M_over_K. Interval
+      unknown: I searched for a measured range (query on Beverton-Holt invariants, Charnov 1993) and
+      the results gave point values only.
+mechanism: >
+  Von Bertalanffy's argument: net growth is the difference between anabolism, limited by an absorbing
+  surface and so scaling as W^(2/3), and catabolism, scaling as W^1. Because the loss term grows
+  faster with size than the gain term, growth slows and stops at the size where they balance (W_inf).
+  With W proportional to L^3 this gives dL/dt = K*(L_inf - L): length approaches its asymptote
+  exponentially, at a rate K that is one third of the catabolic rate constant. The mechanism is
+  CONTESTED (see contested_by): Lester, Shuter and Abrams (2004) attribute the decelerating curve not
+  to surface limitation but to the diversion of energy into reproduction after maturity. The curve
+  shape is the same under both readings, so a good fit does not discriminate between them.
+domain_of_validity:
+  growth_type: "indeterminate growers after maturity (most teleost fish; per Lester et al. 2004 the fit is to POST-maturation growth)"
+  environment: "constant temperature and food; growth parameters change with both"
+  allometry: "length form assumes isometric growth (W proportional to L^3)"
+  taxa: [teleost fish, many aquatic invertebrates]
+  notes: >
+    Standard tool of fisheries age-length analysis. Valid as a descriptive fit over the age range
+    that was sampled. Not valid as an extrapolation beyond the oldest or largest fish sampled, and
+    not valid across the maturation transition without a separate juvenile phase.
+where_it_breaks: >
+  (1) BEFORE MATURITY. Lester, Shuter and Abrams (2004) report, per the abstract as summarised in a
+  search result, that the von Bertalanffy equation describes growth after maturity but not before;
+  juvenile growth in their model is close to linear in length. Quince et al. (2008, part II) report
+  that a biphasic model fitted lake trout data better than von Bertalanffy (search summary; I could
+  not open the paper, so the statistic is unknown). Day and Taylor (1997) argue by title and abstract
+  that the equation should not be used to model age and size at maturity. My simulated worked example
+  below shows the consequence: fitting one VB curve across the maturation break roughly doubles K.
+  (2) EARLY LARVAL GROWTH. In DEB-based work on zebrafish, Augustine et al. (2011) report a roughly
+  threefold metabolic acceleration during the larval period (abstract via search summary), and the
+  related Kooijman et al. (2011) model combines an exponential (Gompertz-like) start with a VB tail.
+  A single VB curve therefore misdescribes the larva-to-juvenile phase of the very species this
+  project works on. (3) THE ASYMPTOTE ITSELF, for indeterminate growers. Growth in these taxa does
+  not stop at a fixed size; L_inf is a statistical extrapolation set by the oldest few fish sampled,
+  and it moves when older fish are added (my simulation: 53.6 to 57.2 cm for the same true curve as
+  the sampled age range changes). An L_inf larger than any fish ever measured is common and is not
+  a contradiction of the data, but it means L_inf must not be read as a maximum size. K and L_inf
+  are strongly negatively correlated in fits, so neither is interpretable alone. (4) THE MECHANISM'S
+  EXPONENT. The 2/3 surface exponent is an assumption; reported metabolic scaling is often near 3/4
+  (Kleiber), and the gill-oxygen-limitation reading of the same equation has been disputed directly
+  (contested_by). Projections that depend on the exponent -- e.g. fish shrinking under warming --
+  inherit the dispute. (5) NON-CONSTANT ENVIRONMENT. The equation assumes constant K; seasonal
+  temperature makes real growth oscillate within a year (my statement from general knowledge, no
+  source opened this session), and food density changes K and L_inf (Hazlerigg et al. 2012 fit a
+  separate VB curve per feeding regime in laboratory zebrafish for exactly this reason).
+  Not established here: I did not find, in this session, a quantitative failure boundary (an age, a
+  size or a residual threshold) that applies across taxa. The boundary is "the maturation transition
+  and the edge of the sampled age range", stated qualitatively.
+worked_examples:
+  - organism: "hypothetical biphasic fish (SIMULATED, not an observation)"
+    computation: >
+      Synthetic growth: linear 10 cm/yr until maturity at age 4 (L = 40 cm), then VB with
+      L_inf = 60 cm, K = 0.15 /yr. A single VB curve was least-squares fitted to the noise-free
+      synthetic lengths at half-year steps (scipy curve_fit). Ages 1-6: L_inf = 55.1, K = 0.325,
+      t0 = 0.48. Ages 1-10: L_inf = 53.6, K = 0.342. Ages 1-20: L_inf = 57.2, K = 0.272. Max
+      absolute residual 2.5-3.6 cm.
+    value: "K overestimated by a factor of 1.8-2.3; L_inf underestimated by 5-11 percent"
+    note: >
+      Calculated by me, not measured. All input parameters are assumed values chosen for
+      illustration, not taken from any species; the parameters above are the full reproduction
+      recipe. It shows the shape of failure mode (1): the fitted curve is visually acceptable
+      (residuals of a few cm), yet K, the parameter people compare across populations, is wrong by
+      about twofold. Real data with noise would make the bias harder to see, not smaller -- that last
+      clause is my inference, not tested.
+    evidence: simulated
+  - organism: Danio rerio (laboratory)
+    value: unknown
+    note: >
+      Hazlerigg et al. (2012, PLoS One 7:e37550) fitted VB curves to laboratory zebrafish total
+      length at 26 +/- 1.5 C under different feeding regimes, but the fitted L_inf and K values were
+      not readable in the version I accessed (equations rendered as images). I also searched for any
+      published zebrafish VB L_inf and K (query: zebrafish Danio rerio von Bertalanffy L_inf K
+      standard length) and found none stated in the results. Value left as unknown rather than
+      estimated.
+    evidence: literature
+contested_by:
+  - "Mechanism of the asymptote: von Bertalanffy (1957) attributes it to surface-limited anabolism versus mass-proportional catabolism; Lester, Shuter and Abrams (2004) attribute it to the energy cost of reproduction after maturity. Not reconciled here."
+  - "Gill-oxygen limitation: Pauly and Cheung defend gill surface limitation as the basis of VB-type growth and of predicted body-size decline under warming; Lefevre, McKenzie and Nilsson (2017) argue the theory lacks a valid physiological mechanism, and their 2018 letter reports that changing the catabolism exponent in the revised model gives implausible shrinkage (98 percent smaller per 1 C, as quoted in a search summary). Pauly and Cheung replied again in 2018. The exchange was unresolved as of the sources found."
+  - "Beverton-Holt invariants (M/K about 1.5, Lm/L_inf about 0.66): treated as near-constants in data-poor stock assessment, reported as NOT invariant across walleye populations and Eastern South Pacific fishes (search summaries)."
+sources:
+  - citation: "von Bertalanffy L (1957) Quantitative laws in metabolism and growth. Quarterly Review of Biology 32(3):217-231"
+    read_level: search-summary
+  - citation: "Lester NP, Shuter BJ, Abrams PA (2004) Interpreting the von Bertalanffy model of somatic growth in fishes: the cost of reproduction. Proc R Soc B 271:1625-1631. doi:10.1098/rspb.2004.2778"
+    read_level: search-summary
+    note: "Volume and pages from my prior knowledge; the DOI was in the search result."
+  - citation: "Quince C, Abrams PA, Shuter BJ, Lester NP (2008) Biphasic growth in fish I: theoretical foundations; II: empirical assessment. Journal of Theoretical Biology"
+    read_level: search-summary
+    note: "harkness.ca full-text PDF blocked by the session network policy; volume and pages unknown."
+  - citation: "Day T, Taylor PD (1997) Von Bertalanffy's growth equation should not be used to model age and size at maturity. American Naturalist 149(2):381-393. doi:10.1086/285995"
+    read_level: listing
+  - citation: "Augustine S, Gagnaire B, Adam-Guillermin C, Kooijman SALM (2011) Developmental energetics of zebrafish, Danio rerio. Comp Biochem Physiol A 159(3):275-283"
+    read_level: search-summary
+    note: "PubMed abstract page blocked by the session network policy."
+  - citation: "Kooijman SALM, Pecquerie L, Augustine S, Jusup M (2011) Journal of Sea Research (title not retrieved)"
+    read_level: search-summary
+  - citation: "Hazlerigg CRE, Lorenzen K, Thorbek P, Wheeler JR, Tyler CR (2012) Density-dependent processes in the life history of fishes: evidence from laboratory populations of zebrafish Danio rerio. PLoS One 7(5):e37550"
+    read_level: full-text
+    note: "PMC HTML read via an automated summariser; equation images, and so the fitted parameters, were not readable."
+  - citation: "Lefevre S, McKenzie DJ, Nilsson GE (2017) Models projecting the fate of fish populations under climate change need to be based on valid physiological mechanisms. Global Change Biology 23:3449-3459. doi:10.1111/gcb.13652"
+    read_level: search-summary
+  - citation: "Pauly D, Cheung WWL (2018) Sound physiological knowledge and principles in modeling shrinking of fishes under climate change. Global Change Biology 24:e15-e26"
+    read_level: search-summary
+    note: "Volume and pages from my prior knowledge, not confirmed in the search result."
+  - citation: "Lefevre S, McKenzie DJ, Nilsson GE (2018) In modelling effects of global warming, invalid assumptions lead to unrealistic projections. Global Change Biology 24:553-556"
+    read_level: search-summary
+  - citation: "Pauly D, Cheung WWL (2018) On confusing cause and effect in the oxygen limitation of fish. Global Change Biology"
+    read_level: listing
+  - citation: "Jensen AL (1996) Beverton and Holt life history invariants result from optimal trade-off of reproduction and survival. Can J Fish Aquat Sci 53:820-822"
+    read_level: search-summary
+    note: "Title from a search listing; journal, volume and pages from my prior knowledge."
+  - citation: "Charnov EL (1993) Life History Invariants. Oxford University Press"
+    read_level: search-summary
