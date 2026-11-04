@@ -36,18 +36,20 @@ result, no number, no equation and no scientific conclusion about Lighthill EBT.
 | `grep -ri lighthill`, `lawentry`, `ebt` over working tree of `kganjam/delphi-frontier` (excl. `.git`) | full-text (local) | 0 hits |
 | `git log --all -S lighthill`, and commit subjects matching light/lawentry/ebt/dispatch | listing | 0 hits |
 | `docs/` directory before this file | listing | did not exist |
-| Remote branch `origin/claude/lawentry-lighthill-ebt-chmlhj` | listing | **exists**, tip `3272d3e` (2026-10-31), **identical** to `origin/work/frontier-foundation`, so it holds no Lighthill content |
+| Branch `claude/lawentry-lighthill-ebt-chmlhj` | listing | A local remote-tracking ref existed, identical to `work/frontier-foundation` (`3272d3e`). But my first `git push` of this file reported `[new branch]`, so **the branch did not exist on GitHub** before this review. It was created for *this challenge session*, so it is **not** independent evidence of the dispatch (it would be circular). |
 
 ## Verdict
 
-**SURVIVED (narrowly, as a logistics claim only).** A branch whose name matches the
-dispatched task exists on the remote. That is consistent with a dispatch having
-happened, and I found nothing that contradicts it. I could not confirm it from the
-source session, which was not found. The claim survives because it asserts almost
+**SURVIVED (narrowly, as a logistics claim only; unconfirmed).** I found nothing that
+contradicts a dispatch, and I also found **no independent corroboration**. The source
+session was not accessible, and the only matching branch was created by this review
+session, not by the dispatch. I first wrote that the branch was corroboration. That
+was wrong, and I corrected it after the push showed the branch was new. The evidence
+level should stay **unknown**. The claim survives because it asserts almost
 nothing. It must **not** be cited as evidence that a Lighthill-EBT law entry exists,
 was verified, or applies to any fish taxon. As of this review, no such entry exists
 in the repo (scope: the full working tree and all git history of `kganjam/delphi-frontier`).
 
 ```swarm-challenge
-{"claim_id": 47, "outcome": "survived", "reason": "A pure dispatch/logistics assertion with no number or scientific content; a matching branch exists and nothing contradicts it, but it carries no evidence about Lighthill EBT itself and the source session was not accessible.", "corrected_value": null}
+{"claim_id": 47, "outcome": "survived", "reason": "A pure dispatch/logistics assertion with no number or scientific content; nothing contradicts it, but nothing independently corroborates it either (source session not found; the matching branch was created by this review), and it carries no evidence about Lighthill EBT itself.", "corrected_value": null}
 ```
