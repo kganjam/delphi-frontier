@@ -245,6 +245,15 @@ def main():
           f"{unchecked} UNCHECKED")
     print("  UNCHECKED is NOT a pass. A rule this script cannot evaluate is exactly as unenforced")
     print("  as it was before the script existed.")
+    print()
+    print("  AND A FAIL IS A HYPOTHESIS, NOT A VERDICT. Five of this file's own rules were found")
+    print("  over-strict on 2026-11-04, and in every case the first reading blamed the system:")
+    print("    - in-flight challenges counted as unrecorded outcomes")
+    print("    - `not-run` counted the same as NULL, so honest abandonment looked like lost data")
+    print("    - superseded claims with NO dependents required to have flagged something")
+    print("    - a shortfall required to span a whole measured range when one end is the right one")
+    print("    - pre-cap rows counted against a cap that now holds (still red, deliberately)")
+    print("  Before fixing data to clear a red, check whether the rule is asking the right thing.")
 
     if selftest:
         # POSITIVE CONTROL. Every rule above is a count of BAD rows, so a rule whose query is
