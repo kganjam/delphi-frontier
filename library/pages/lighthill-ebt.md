@@ -1,0 +1,112 @@
+---
+title: Lighthill elongated-body theory -- mean reactive thrust of an undulating slender swimmer
+label: law-lighthill-ebt
+---
+
+:::{important}
+**Constraining** — this law yields a number a design is checked against.
+:::
+
+## The law
+
+:::{math}
+:label: eq-lighthill-ebt
+\langle T \rangle = \tfrac12 m_a \left\langle \dot h^2 - U^2 h'^2 \right\rangle_{x=L} \;\overset{h = H\sin(kx-\omega t)}{=}\; \tfrac14 m_a \,\omega^2 H^2 \left(1 - \frac{U^2}{V^2}\right), \qquad m_a = \rho \pi b^2
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `T_mean` | M*L/T^2 | N | time-averaged reactive thrust over one tail-beat cycle |
+| `m_a` | M/L | kg/m | added (virtual) mass per unit length of the cross-section AT THE TRAILING EDGE; m_a = rho*pi*b^2 with b the local semi-span (Eloy & Michelin 2025 notation) |
+| `omega` | 1/T | rad/s | angular tail-beat frequency (2*pi*f) |
+| `H` | L | m | HALF (zero-to-peak) lateral amplitude of the trailing edge -- not peak-to-peak as in strouhal.yaml |
+| `U` | L/T | m/s | mean forward swimming speed |
+| `V` | L/T | m/s | speed of the backward-travelling body wave (omega/k); U/V is the slip ratio |
+| `rho` | M/L^3 | kg/m^3 | fluid density |
+| `b` | L | m | semi-span (half depth) of the body or caudal-fin section at the trailing edge |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `added_mass_coefficient` | 1 dimensionless | Coefficient on rho*pi*b^2. 1.0 is the potential-flow value for a flat plate of span 2b (Eloy & Michelin 2025, Eq. 7, which uses no correction factor). Lighthill's own papers are recalled by us as carrying a shape factor ("beta") close to 1, but we did NOT read Lighthill 1960/1970/1971 in this session, so no measured or fitted value is given; interval recorded as unknown. |
+| `froude_efficiency` | (1 + U/V) / 2 dimensionless | DERIVED by us, not read from Lighthill: dividing T_mean*U by the mean rate of working m_a*U*<h_t*(h_t + U*h_x)> for the same travelling wave gives eta = (1 + U/V)/2. The rate-of-working expression is from our recollection of Lighthill (1960), whose abstract (search-summary level) confirms that the paper is framed on Froude efficiency but whose formula we did not see. Eloy & Michelin (2025) give no efficiency formula. Treat the expression as a derivation to be checked against the 1960 text. |
+| `slip_ratio_U_over_V` | unknown dimensionless | The thrust is extremely sensitive to U/V (see where_it_breaks), so a measured range matters. We did not find a measured slip-ratio range in the sources read this session (scope: the web searches and fetches listed under sources, Nov 2026); recorded as unknown rather than quoted from memory. |
+
+## Why it holds
+
+Reactive (inertial) theory. The body is treated as a stack of thin two-dimensional slices, each carrying an added mass of water m_a that it accelerates sideways; the thrust is the rate at which lateral momentum is shed into the wake at the trailing edge (Eloy & Michelin 2025, section 3.2, describing Lighthill 1960/1971). The small-amplitude result as quoted by Eloy & Michelin is <T> = (1/2) m_a <h_t^2 - U^2 h_x^2> evaluated at the tail, so -- the theory's distinctive claim -- mean thrust depends ONLY on the depth and kinematics of the trailing edge, not on the body shape upstream. Substituting a travelling wave h = H sin(kx - omega t) gives the equation above (our algebra). Thrust is positive only if the wave travels backward faster than the fish swims (V > U); the wasted power is the kinetic energy of lateral water motion left in the wake, which is why efficiency rises as U/V -> 1 while thrust falls to zero. Lighthill (1971, search-summary) extends the reactive force to arbitrary amplitude.
+
+## Where it holds
+
+- **regime**: steady, periodic swimming; inertia-dominated (potential) flow
+- **reynolds min**: unknown
+- **geometry**: slender body, cross-section b << L; b, its slope and the lateral velocity vary slowly along the body; curvature kappa*b << 1 (Eloy & Michelin 2025, section 3.1 and 3.3)
+- **amplitude**: H << L for the 1960 small-amplitude form used in `equation`; the 1971 form removes this but keeps small curvature
+- **taxa**: ['anguilliform swimmers (eels)', 'subcarangiform and carangiform fish with a slender caudal peduncle']
+- **notes**: Eloy & Michelin (2025) state the theory relies on potential flow and inherently neglects viscous effects. We found NO source giving a Reynolds-number lower bound for the theory (scope: the searches listed under sources, Nov 2026); reynolds_min is unknown, not omitted.
+
+
+:::{danger} Where it breaks
+(1) THE TRAILING EDGE -- a stated violation, direction inferred. Eloy & Michelin (2025, section 5) state that Lighthill's assumptions violate the unsteady Kutta condition at the caudal-fin trailing edge, that a finite pressure jump exists there, and that the main effect of the Kutta condition is a reduction of the reactive force near the trailing edge. Because the theory puts ALL the mean thrust at the trailing edge, our inference is that the formula is biased HIGH; neither we nor they report a magnitude. In the same section they record that Hess & Videler (1984), Anderson et al. (2001) and Shirgaonkar et al. (2009) argued potential-based approaches tend to overestimate forces. (2) HIGH-ASPECT-RATIO (LUNATE) TAILS -- outside the slenderness assumption by construction. A tuna or cetacean fluke has span comparable to or larger than its chord, violating b << L locally; Lighthill himself treated the lunate tail separately (1970) and it was later handled by finite-aspect-ratio wing theory (Chopra 1974, as listed). Do not apply this equation to thunniform swimmers or flukes. (3) LOW REYNOLDS NUMBER -- inferred from the assumptions, NOT demonstrated in a source we read. The theory is inviscid. Larval fish swim at Re of order 10-1000 (a range from a search-result snippet whose source we did not identify; consistent with our worked example), where Li et al. (2012, a simulation) resolve both pressure and shear forces on 3 and 5 dpf zebrafish larvae. We found no paper directly comparing EBT thrust with simulation or measurement for larvae (scope: web searches listed under sources, Nov 2026). Our inference: a larval-scale design (see worked example) must not be checked against this equation; the boundary in Re is unknown. (4) ILL-CONDITIONED IN THE SLIP RATIO -- arithmetic, not a citation. Thrust scales as (1 - (U/V)^2), a small difference of near-equal quantities in efficient swimmers: at U/V = 0.7 the factor is 0.51, at 0.8 it is 0.36, at 0.9 it is 0.19. A 0.1 error in measured slip changes predicted thrust by roughly a factor 1.4-1.9. Thrust also scales as b^2, so a 20% error in trailing-edge span is a 44% error in thrust. (5) THRUST IS NOT INDEPENDENTLY OBSERVABLE IN STEADY SWIMMING. Mean thrust equals mean drag, and the drag of a swimming fish is not the drag of the same fish held rigid: Anderson et al. (2001, search-summary) report greater friction drag on swimming fish than on the same fish held straight. Using rigid-body drag to "validate" EBT therefore under-counts the drag the thrust must meet. Maertens, Triantafyllou & Yue (2015, abstract) argue that self-propelled efficiency is ill-defined unless measured against towing a rigid body; by that argument the Froude efficiency above is not a measure of propulsive fitness. (6) FORCES AT THE CAUDAL FIN MAY NOT BE REACTIVE AT ALL. Ming et al. (arXiv 2018, 3D CFD -- a simulation, not an observation) report that body forces are dominated by reactive forces in both anguilliform and carangiform models, but that the carangiform CAUDAL FIN is dominated by drag-like forces -- the opposite of the reactive picture this equation assumes at exactly the place it evaluates the thrust. (7) MEDIAN FINS, RIBBON FINS AND NON-STEADY MOTION. Vorticity shed by dorsal and anal fins upstream of the tail is not represented (Eloy & Michelin do not discuss median fins; our inference). Gymnotiform ribbon-fin propulsion is a different Lighthill theory (Lighthill & Blake 1990), whose "momentum enhancement" Shirgaonkar et al. (2009, APS abstract, simulation) did not find. Fast starts and burst-and-coast are outside the periodic averaging in `equation`; the 1971 large-amplitude form gives instantaneous reactive force but we did not read its validation.
+:::
+
+## Worked examples
+
+**Danio rerio, adult, steady cruise (ASSUMED inputs, not measurements)**
+
+```
+b = 0.004 m, rho = 1000 kg/m^3 -> m_a = 1000*pi*0.004^2 = 0.0503 kg/m; f = 10 Hz -> omega = 62.8 rad/s; H = 0.005 m; U/V = 0.7 -> T = 0.25*0.0503*62.8^2*0.005^2*(1-0.49) = 6.3e-4 N
+```
+
+- value: `0.00063`
+
+- DERIVED, not observed. Every input is an assumed round number chosen to be plausible for a ~3 cm fish, not a value read from a zebrafish kinematics paper in this session. With the same inputs the derived Froude efficiency is (1+0.7)/2 = 0.85. Per where_it_breaks (4), U/V = 0.8 gives 4.5e-4 N and U/V = 0.6 gives 7.9e-4 N, so the number is only as good as the measured slip. Per (1) and (6), the true thrust is more likely below than above this figure (our inference).
+
+- evidence: **derived**
+
+**Danio rerio larva, routine swimming (ASSUMED inputs)**
+
+```
+L = 0.004 m, U = 10 body lengths/s = 0.04 m/s, nu = 1.0e-6 m^2/s -> Re = 0.04*0.004/1.0e-6 = 160
+```
+
+- value: `160`
+
+- DERIVED from assumed inputs, not observed. The speed is inside the 7-21 body lengths/s range Li et al. (2012) report from their SIMULATION (search-summary). Re ~ 160 is in the intermediate regime where viscous shear is resolved alongside pressure; the inviscid thrust equation is NOT computed here because its result would have no known error bound (where_it_breaks (3)). The example exists to mark the scale at which this project must stop using the entry.
+
+- evidence: **derived**
+
+:::{seealso} Contested
+- Eloy & Michelin (2025, section 5), reporting Hess & Videler (1984), Anderson et al. (2001) and Shirgaonkar et al. (2009): potential-based approaches tend to overestimate forces. Eloy & Michelin themselves report that their extended theory compares favourably with simulations of realistic fish geometries, and give no percent error. Both positions recorded; not reconciled.
+- Schultz & Webb (2002, abstract/search-summary): elongated-body power estimates were generally consistent with physiological performance and several experiments appeared to support them, but those results can be explained in other ways; newer methods do not fully resolve the question.
+- Ming et al. (arXiv:1812.02410, simulation): the carangiform caudal fin is dominated by drag-like rather than reactive forces, contradicting the reactive-only premise at the trailing edge.
+- Maertens, Triantafyllou & Yue (2015, abstract): Froude efficiency of a self-propelled body is not a rational measure; only quasi-propulsive efficiency (rigid towing power / self-propulsion power) is. This contests the use of (1+U/V)/2 as a performance figure, not the thrust formula itself.
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Lighthill MJ (1960) Note on the swimming of slender fish. J Fluid Mech 9(2):305-317 | `search-summary` |
+| Lighthill MJ (1971) Large-amplitude elongated-body theory of fish locomotion. Proc R Soc B 179(1055):125-138. doi:10.1098/rspb.1971.0085 | `search-summary` |
+| Lighthill MJ (1970) Aquatic animal propulsion of high hydromechanical efficiency. J Fluid Mech 44:265 (end page not verified). doi:10.1017/S0022112070001830 | `search-summary` |
+| Eloy C, Michelin S (2025) Flow associated with Lighthill's elongated-body theory. J Fluid Mech 1009:A72. doi:10.1017/jfm.2025.325; arXiv:2409.20162 | `full-text` |
+| Candelier F, Boyer F, Leroyer A (2011) Three-dimensional extension of Lighthill's large-amplitude elongated-body theory of fish locomotion. J Fluid Mech 674:196-226. doi:10.1017/S002211201000649X | `listing` |
+| Chopra MG (1974) Hydromechanics of lunate-tail swimming propulsion. J Fluid Mech 64:375 (end page not verified) | `listing` |
+| Hess F, Videler JJ (1984), as cited by Eloy & Michelin (2025); full reference not verified in this session | `listing` |
+| Anderson EJ, McGillis WR, Grosenbaugh MA (2001) The boundary layer of swimming fish. J Exp Biol 204:81 (end page not verified). doi:10.1242/jeb.204.1.81 | `search-summary` |
+| Schultz WW, Webb PW (2002) Power requirements of swimming: do new methods resolve old questions? Integr Comp Biol 42(5):1018-1025. doi:10.1093/icb/42.5.1018 | `search-summary` |
+| Maertens AP, Triantafyllou MS, Yue DKP (2015) Efficiency of fish propulsion. Bioinspir Biomim 10(4):046013. doi:10.1088/1748-3190/10/4/046013; arXiv:1409.7263 | `abstract` |
+| Ming T, Jin B, Song J, Luo H, Du R, Ding Y (2018) How fish power swimming: a 3D computational fluid dynamics study. arXiv:1812.02410 | `abstract` |
+| Li G, Mueller UK, van Leeuwen JL, Liu H (2012) Body dynamics and hydrodynamics of swimming fish larvae: a computational study. J Exp Biol 215:4015-4033. doi:10.1242/jeb.071837 | `search-summary` |
+| Shirgaonkar AA, Curet OM, Patankar NA, MacIver MA (2008) The hydrodynamics of ribbon-fin propulsion during impulsive motion. J Exp Biol 211:3490-3503 | `search-summary` |
+| Lighthill J, Blake R (1990) ribbon-fin (gymnotiform/balistiform) elongated-body analysis; title, journal and pages not verified in this session | `listing` |
+| Shirgaonkar AA, Patankar NA, MacIver MA (2009) On the 'momentum enhancement' and hydrodynamic efficiency of gymnotiform and balistiform swimmers. APS Division of Fluid Dynamics meeting abstract | `search-summary` |
+
+
+---
+
+*Generated from [`library/laws/lighthill-ebt.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/lighthill-ebt.yaml). Do not edit this page; edit the YAML.*
