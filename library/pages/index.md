@@ -25,6 +25,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 | [Pennycuick power curve for flapping flight](./pennycuick.md) | `descriptive` | The decisive measurement is Tobalske et al |
 | [Hagen-Poiseuille flow in a tube](./poiseuille.md) | `constraining` | Blood in small tubes is the first failure and it is quantitative, not marginal: apparent viscosity depends on  |
 | [Reynolds number and flow-regime boundaries](./reynolds.md) | `constraining` | Re itself does not break -- it is a definition, and the inferences people hang on it are what fail |
+| [The Stokes (creeping-flow) regime below Re ~1, and what changes there](./reynolds-stokes.md) | `constraining` | (1) FINITE Re, the main failure, and it is quantitative |
 | [Rubner's surface law](./rubner.md) | `descriptive` | Ectotherms, plants and unicells do not thermoregulate metabolically, so the mechanism simply does not apply to |
 | [Second moment of area, beam stiffness and span](./second-moment.md) | `constraining` | Thin walls buckle locally before they yield: Brazier ovalisation flattens the section of a bent tube, which co |
 | [Maximum size for powered and soaring flight](./soaring-size-limit.md) | `constraining` | It fails on taxa with a different launch mechanism, and the failure is a factor of five rather than a margin |
