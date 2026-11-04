@@ -24,7 +24,7 @@ REPO = "/data/worktrees/delphi-frontier/foundation"
 SEP = "\x01"
 PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm", "-tAq", "-F", SEP]
 BASE = "origin/work/frontier-foundation"
-BLOCK = re.compile(r"```swarm-(result|challenge|replication)\s*\n(.*?)\n```", re.S)
+BLOCK = re.compile(r"```swarm-(result|challenge|replication|entail)\s*\n(.*?)\n```", re.S)
 
 
 def env():
@@ -96,6 +96,53 @@ def main():
                           where not exists (select 1 from claim where source={lit(tag)}
                                             and statement={lit(stmt)})""")
                     recorded += 1
+                elif kind == "entail":
+                    # Cross-scale constraints. The vocabulary is CLOSED by a CHECK constraint on
+                    # both columns, so an out-of-vocabulary kind or status would abort the whole
+                    # harvest with a FK/CHECK error rather than skip one row. Filter here.
+                    KINDS = ("existence", "range", "timescale", "spatial", "energetic",
+                             "conservation")
+                    STATUS = ("open", "satisfied", "unsatisfied", "unsatisfiable", "assumed")
+                    EV = ("measured", "simulated", "derived", "literature", "assumed", "unknown")
+                    SCALES = ("dna", "protein", "cell", "tissue", "organ", "organism",
+                              "behaviour", "ecology")
+                    src = d.get("source_claim")
+                    ssc = str(d.get("source_scale") or "")
+                    for c in (d.get("constraints") or [])[:8]:
+                        k = str(c.get("kind") or "").strip().lower()
+                        st = str(c.get("status") or "open").strip().lower()
+                        ts = str(c.get("target_scale") or "").strip().lower()
+                        if k not in KINDS or st not in STATUS or ts not in SCALES:
+                            continue
+                        ev2 = str(c.get("satisfied_evidence") or "").strip().lower()
+                        ev2 = ev2 if ev2 in EV else None
+                        def num(x):
+                            try:
+                                v = float(x)
+                                return "null" if v != v or v in (float("inf"), float("-inf")) else repr(v)
+                            except (TypeError, ValueError):
+                                return "null"
+                        stmt2 = str(c.get("statement") or "")[:900]
+                        if not stmt2:
+                            continue
+                        q(f"""insert into constraint_entailed (project_id, source_claim,
+                                 source_scale, target_scale, kind, statement, quantity, lo, hi,
+                                 units, status, satisfied_by, satisfied_evidence, note)
+                              select 'zebrafish-flight',
+                                 {int(src) if str(src).isdigit() else 'null'},
+                                 {lit(ssc) if ssc in SCALES else 'null'}, {lit(ts)}, {lit(k)},
+                                 {lit(stmt2)}, {lit(str(c.get('quantity') or '')[:200]) if c.get('quantity') else 'null'},
+                                 {num(c.get('lo'))}, {num(c.get('hi'))},
+                                 {lit(str(c.get('units') or '')[:60]) if c.get('units') else 'null'},
+                                 {lit(st)},
+                                 {lit(str(c.get('satisfied_by') or '')[:900]) if c.get('satisfied_by') else 'null'},
+                                 {lit(ev2) if ev2 else 'null'},
+                                 {lit((str(c.get('note') or '')[:900]) + f' [{tag}]')}
+                              where not exists (select 1 from constraint_entailed
+                                                where source_claim is not distinct from
+                                                      {int(src) if str(src).isdigit() else 'null'}
+                                                and statement={lit(stmt2)})""")
+                        recorded += 1
                 elif kind == "challenge":
                     cid = d.get("claim_id")
                     out = str(d.get("outcome") or "")

@@ -14,6 +14,9 @@ Four generators, in descending order of what they are worth:
   3. LAW         -- fill the law library from a named list. Each entry is bounded, checkable by
                     check_laws.py, and useful whether or not the fish works.
   4. DEEPEN      -- each answered subproblem's "what would change this" becomes a new subproblem.
+  5. ENTAIL      -- each claim is propagated to its neighbouring scales, and the requirements it
+                    makes there are written down and CHECKED. The only generator that can refute a
+                    claim from below, using a measurement instead of a simulation.
 """
 import json, os, subprocess, sys, textwrap
 sys.path.insert(0, "/data/swarm")
@@ -309,6 +312,111 @@ def gen_deepen(accts, i=0, limit=10):
     return n, i
 
 
+ADJACENT = {"dna": ["protein"], "protein": ["dna", "cell"], "cell": ["protein", "tissue"],
+            "tissue": ["cell", "organ"], "organ": ["tissue", "organism"],
+            "organism": ["organ", "behaviour"], "behaviour": ["organism", "ecology"],
+            "ecology": ["behaviour"]}
+
+
+def gen_entail(accts, i=0, limit=10):
+    """Propagate each claim DOWN to its neighbouring scales and check what must be true there.
+
+    This is the central idea of docs/architecture/cross-scale-constraints.md, which says in its own
+    closing section that NOTHING AUTOMATES ENTAILMENT and that the valuable outcome -- refuting a
+    high-scale claim with a low-scale measurement -- HAS NEVER HAPPENED HERE. The `constraint_entailed`
+    table was created with exactly the six kinds and four statuses that document specifies, and has
+    held six rows ever since: the worked example, entered by hand.
+
+    So this generator is not new scope. It is the one piece of that architecture that was specified,
+    given a schema, and then never connected to anything.
+
+    It is also the answer to a practical problem. CHALLENGE, REPLICATE and DEEPEN all run out: there
+    are finitely many claims to attack and the depth cap is 2. Entailment does not run out in the
+    same way, because each claim entails constraints at two neighbouring scales and an unsatisfied
+    constraint is itself a question. But the reason to run it is that it can REFUTE FROM BELOW, which
+    is cheaper and more decisive than any simulation -- not that it keeps the queue full.
+    """
+    rows = q(f"""select c.id, c.scale_id, c.statement, c.evidence from claim c
+                 where c.project_id={sql_lit(PROJECT)} and c.superseded_by is null
+                 and c.scale_id is not null
+                 and not exists (select 1 from constraint_entailed e where e.source_claim = c.id)
+                 order by case c.evidence when 'measured' then 0 when 'derived' then 1 else 2 end,
+                          c.id desc
+                 limit {limit}""")
+    n = 0
+    for cid, scale, stmt, ev in rows:
+        acct = accts[i % len(accts)][0]; i += 1
+        nbrs = ", ".join(ADJACENT.get(scale, []))
+        prompt = textwrap.dedent(f"""
+            PROPAGATE A CLAIM TO ITS NEIGHBOURING SCALES AND CHECK WHAT MUST BE TRUE THERE.
+
+            Claim {cid} sits at the `{scale}` scale (evidence: {ev}):
+            {stmt}
+
+            If this claim is true, things MUST be true at the adjacent scales: {nbrs}.
+            Your job is to write those requirements down and then go and check them.
+
+            1. ENTAIL. What does this claim REQUIRE at {nbrs}? Use exactly these six kinds:
+                 existence     -- something must exist that does X
+                 range         -- a parameter must lie in [a, b]
+                 timescale     -- process A must be fast or slow relative to B
+                 spatial       -- a length scale must match within a factor
+                 energetic     -- power or energy must be available
+                 conservation  -- mass, charge or momentum must balance
+
+               Write 2-5 constraints. Each must be GENERIC -- it names a requirement, not a
+               favourite molecule. "A voltage-sensitive transducer must exist" is a constraint;
+               "TRPV4 must be present" is a guess at how it is satisfied.
+
+               `range`, `timescale` and `spatial` are the valuable ones, because they can be checked
+               against measured numbers with no simulation at all. Prefer them where the claim
+               supports one, and give lo/hi with units.
+
+            2. CHECK EACH ONE. This is the part that matters and the part that gets skipped.
+               Go to the literature. For each constraint decide:
+                 satisfied      -- a named mechanism or measured value meets it. Name it and cite it.
+                 unsatisfied    -- nothing known meets it. Say what you searched, so the negative
+                                   has a scope. "Nobody has looked" and "people looked and found
+                                   nothing" are different findings and must not be merged.
+                 unsatisfiable  -- a MEASURED value CONTRADICTS it. The claim is then refuted from
+                                   below, without simulating anything.
+
+               `unsatisfiable` is the most valuable result available to you. Do not reach for it:
+               a constraint is only unsatisfiable if a measured number actually contradicts it, and
+               you must quote that number with its source. But do not flinch from it either, and in
+               particular do not soften it to `unsatisfied` because the claim is one of ours.
+
+            {HONESTY}
+
+            Write docs/research/fish/claim-{cid}-entail.md on a new branch and commit, ending with:
+            ```swarm-entail
+            {{"source_claim": {cid}, "source_scale": "{scale}",
+              "constraints": [
+                {{"target_scale": "<adjacent scale>", "kind": "<one of the six>",
+                  "statement": "<the requirement, generically stated>",
+                  "quantity": "<what is bounded, or null>", "lo": <number or null>,
+                  "hi": <number or null>, "units": "<or null>",
+                  "status": "open|satisfied|unsatisfied|unsatisfiable",
+                  "satisfied_by": "<the mechanism or measurement, or what you searched and did not find>",
+                  "satisfied_evidence": "measured|simulated|derived|literature|assumed|unknown",
+                  "note": "<the citation, and the scope of any negative>"}}
+              ]}}
+            ```
+
+            A constraint you did not check is `open`, and saying so is a correct answer. Marking it
+            `satisfied` because it is plausible is the failure this whole structure exists to catch.
+        """).strip()
+        r = subprocess.run(["orchestra","cloud","start","--account",acct,"--dir",WORKDIR,"--prompt",prompt],
+                           capture_output=True, text=True, timeout=300)
+        try: d = json.loads(r.stdout)
+        except Exception: print(f"  entail {cid} failed"); continue
+        q(f"""insert into agent_session (id, project_id, harness, account, status)
+              values ({sql_lit(d['session_id'])}, {sql_lit(PROJECT)}, 'cloud', {sql_lit(acct)},
+                      'running') on conflict (id) do nothing""")
+        print(f"  entail     claim {cid:>4}  {scale:<9} {acct}"); n += 1
+    return n, i
+
+
 if __name__ == "__main__":
     accts = accounts_with_credit()
     if not accts:
@@ -327,4 +435,6 @@ if __name__ == "__main__":
         n, i = gen_laws(accts, i, limit=want - running - total); total += n
     if running + total < want:
         n, i = gen_deepen(accts, i, limit=want - running - total); total += n
+    if running + total < want:
+        n, i = gen_entail(accts, i, limit=want - running - total); total += n
     print(f"dispatched {total}")
