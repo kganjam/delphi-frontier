@@ -1,0 +1,265 @@
+id: wolff
+name: "Wolff's law of bone remodelling, and what is actually measured versus asserted"
+usability: descriptive           # no number a design can be checked against transfers across sites; see where_it_breaks
+equation: "drho_dt = B * (S / rho - k)"
+latex: "\\frac{d\\rho}{dt} = B\\left(\\frac{S}{\\rho} - k\\right)"
+equation_note: >
+  Wolff (1892) stated a qualitative law, not an equation: bone architecture follows the stress
+  trajectories of the loads it carries and transforms when those loads change. The equation above is
+  NOT Wolff's. It is the strain-energy-density (SED) adaptive-remodelling rule of the Huiskes group
+  (Huiskes et al. 1987; Weinans, Huiskes & Grootenboer 1992), the most-used formalisation, written
+  here without its "lazy zone" (a dead band around k in which drho/dt = 0). The form shown is our
+  transcription of that rule as it is reported in the abstracts and secondary literature; the 1987
+  and 1992 full texts were not reached (repub.eur.nl is outside this session's network allowlist), so
+  the exact published notation was not checked. Dimension check by hand: S/rho = (M/(L*T^2))/(M/L^3)
+  = L^2/T^2, which matches k; B * L^2/T^2 must equal M/(L^3*T), so B is M*T/L^5.
+symbols:
+  drho_dt: {dimension: "M/(L^3*T)", units: "kg/(m^3*s)", description: "rate of change of apparent bone density at a material point"}
+  rho:     {dimension: "M/L^3", units: "kg/m^3", description: "apparent (bulk) bone density at that point"}
+  S:       {dimension: "M/(L*T^2)", units: "J/m^3", description: "strain energy density at that point, averaged over the applied load cases"}
+  k:       {dimension: "L^2/T^2", units: "J/kg", description: "reference (homeostatic) stimulus: SED per unit mass; usually quoted in J/g (1 J/g = 1000 J/kg)"}
+  B:       {dimension: "M*T/L^5", units: "kg*s/m^5", description: "remodelling rate constant; in the simulations the time unit is an iteration and is not calibrated to days"}
+constants:
+  avian_ulna_strain_boundary_Rubin_Lanyon_1985:
+    value: 0.001
+    interval: unknown
+    units: strain (dimensionless; = 1000 microstrain)
+    note: >
+      OBSERVATION. Functionally isolated avian ulna, 100 consecutive 1 Hz load cycles per day for
+      8 weeks: a graded dose-response between peak strain magnitude and change in bone mass; lower
+      peak strains were associated with loss (increased remodelling and porosity) and peak strains
+      above 0.001 with periosteal and endosteal new bone (abstract, via Europe PMC). One bone, one
+      frequency, one cycle count; the abstract gives no interval on the boundary. Species: the
+      abstract summary reached does not name it; we did not confirm it.
+  avian_ulna_BMC_gain_36_cycles_Rubin_Lanyon_1984:
+    value: see interval
+    interval: [133, 143]
+    units: percent of original bone-mineral content after 6 weeks
+    note: >
+      OBSERVATION. 36 cycles/day at 0.5 Hz of a load giving physiological strain magnitude with an
+      altered strain distribution. 4 cycles/day prevented the disuse loss but added no bone. Raising
+      the count from 36 to 1800 cycles/day changed neither the size nor the character of the response
+      (abstract). The interval is the reported range, not a confidence interval.
+  avian_ulna_static_load_area_change_Lanyon_Rubin_1984:
+    value: -13
+    interval: unknown
+    units: percent change in cortical cross-sectional area, 8 weeks
+    note: >
+      OBSERVATION. A CONTINUOUS (static) 525 N compressive load engendering about -0.002 midshaft
+      strain produced the same increase in endosteal diameter and porosity, and a similar -13% area
+      change, as disuse alone (abstract). The abstract is truncated before the dynamic-load result,
+      which we therefore do not quote.
+  avian_ulna_in_vivo_peak_strain_wing_flapping:
+    value: -0.0033
+    interval: unknown
+    units: strain (dimensionless)
+    note: OBSERVATION, strain gauge in vivo, peak strain rate 0.056 s^-1 (Lanyon & Rubin 1984 abstract).
+  human_tibia_peak_tensile_strain_1p3m_jump:
+    value: 0.002066
+    interval: unknown
+    units: strain (reported as 0.2066%)
+    note: OBSERVATION, ONE subject (Hillam, Goodship & Skerry 2015, full text). n = 1, so no interval exists.
+  human_parietal_peak_tensile_strain_heading:
+    value: 0.000192
+    interval: unknown
+    units: strain (reported as 0.0192%)
+    note: >
+      OBSERVATION, same single subject, heading a 4.5 kg ball -- the largest parietal strain recorded
+      in the study. Walking gave +0.0047% parietal against -0.0712% tibial compressive strain.
+  long_bone_set_point_Hillam_2015:
+    value: 0.0015
+    interval: unknown
+    units: strain (stated as "in the order of 0.15%")
+    note: >
+      ASSERTED by the authors, not measured: "In long bones that set point may be in the order of
+      0.15%, but in the skull it is so much lower that genetic influences dominate over functional
+      ones."
+  Frost_1987_modelling_setpoint:
+    value: see interval
+    interval: [1500, 3000]
+    units: microstrain
+    note: >
+      PROPOSED, summarising earlier in vivo work: strains "in or above the 1500-3000 microstrain
+      range" cause modelling to increase cortical mass (Frost 1987, abstract). Frost calls the
+      mechanostat a proposal that "requires critique and experimental study". The interval is the
+      range he gives, not a measured spread.
+  Frost_1987_remodelling_release_setpoint:
+    value: see interval
+    interval: [100, 300]
+    units: microstrain
+    note: PROPOSED (Frost 1987 abstract) -- strains below the 100-300 microstrain range release BMU-based remodelling that removes bone.
+  Frost_1997_MESr:
+    value: see interval
+    interval: [50, 100]
+    units: microstrain
+    note: >
+      ASSERTED. MESr "centered near 50-100 microstrain" -- search-summary level only; the 1997
+      abstract (read) does not give the numbers. This DISAGREES with Frost's own 1987 figure of
+      100-300 microstrain; both are kept (see contested_by).
+  Frost_1997_MESm:
+    value: 1000
+    interval: unknown
+    units: microstrain
+    note: ASSERTED, search-summary level. Disagrees with Frost 1987 (1500-3000); both kept.
+  SED_reference_stimulus_k:
+    value: unknown
+    interval: unknown
+    units: J/g
+    note: >
+      Not obtained. Tried: Europe PMC abstracts of Huiskes et al. 1987 and Weinans et al. 1992 (no
+      values in abstracts); repub.eur.nl full text (host not reachable from this session); one web
+      search (no value returned). Not reconstructed from memory.
+  SED_rate_constant_B:
+    value: unknown
+    interval: unknown
+    units: "(g/cm^3)^2/(MPa*time unit)"
+    note: >
+      Not obtained (same searches). Our inference, stated as such: because the simulation time unit
+      is an iteration, B sets the pace of iterations, and no simulated time-to-equilibrium from this
+      rule should be read as days or weeks.
+mechanism: >
+  Claimed (Wolff 1892; Frost's mechanostat 1987): bone senses its own mechanical usage, adds material
+  where strain is high and removes it where strain is low, so structure tracks load. The SED rule
+  encodes this as negative feedback on a set point: each point compares its stimulus S/rho with k and
+  changes density in proportion to the error. Weinans et al. (1992) report that in practice the
+  feedback is SELF-ENHANCING -- denser bone attracts more strain energy and becomes denser still -- so
+  the rule drives elements to full density or complete resorption rather than to a uniform stimulus.
+  What is MEASURED is input-output behaviour of particular bones under controlled loading (avian ulna,
+  tilapia operculum) and in vivo strain at particular sites (avian ulna, one human's tibia and
+  skull). The single set point, the trajectorial geometry, and the osteocyte-as-sensor mechanism are
+  each ASSERTED in general and each has a documented exception below. Atkins et al. (2015) show
+  load adaptation in bone with no osteocytes and propose osteoblasts as the most likely sensors.
+domain_of_validity:
+  regime: "dynamic (cyclic) loading of living bone, within the physiological strain range of the site; static load does not count as load"
+  taxa: ["birds (isolated ulna preparation)", "mammals (human tibia in vivo strain; human femur in calibrated periprosthetic simulation)", "teleost fish (tilapia operculum, anosteocytic; qualitative only)"]
+  scale: continuum apparent density over many trabeculae; the SED rule is a continuum model
+  notes: >
+    The qualitative claim -- dynamically loaded bone adapts, unloaded bone is lost -- is supported in
+    birds, mammals and one teleost. Every NUMBER attached to it is site-, species- and
+    protocol-specific. We found no measured remodelling set point for any fish bone and none for
+    zebrafish fin rays (scope: Europe PMC title/author queries and general web searches listed under
+    sources, Nov 2026; not a systematic review).
+where_it_breaks: >
+  (1) NO SINGLE SET POINT ACROSS SITES -- demonstrated, n = 1. In one human subject, parietal tensile
+  strain while walking was 0.0047% (47 microstrain) against 0.0712% tibial compressive strain, and the
+  largest parietal strain recorded (0.0192%, heading a 4.5 kg ball) was an order of magnitude below
+  the tibial peak (0.2066%, 1.3 m jump) (Hillam et al. 2015, observation). Our inference: habitual
+  parietal strain lies below BOTH of Frost's remodelling thresholds (100-300 microstrain in 1987,
+  50-100 in 1997), so a mechanostat with one threshold predicts disuse loss of the skull, which is not
+  what happens to a maintained skull. The authors propose "a spectrum of different set points". A
+  threshold measured on a long bone therefore cannot be used to check any other bone.
+  (2) STATIC LOAD IS INDISTINGUISHABLE FROM DISUSE. A continuous 525 N compressive load at about
+  -0.002 strain gave the same -13% area change as no load at all in the avian ulna (Lanyon & Rubin
+  1984, observation). Wolff's formulation is in terms of stress trajectories, which are static
+  quantities. Our inference: any rule driven by static stress or strain magnitude -- including an SED
+  rule fed static finite-element load cases -- would predict maintenance here and is wrong for this
+  preparation unless a rate or cycle term is added.
+  (3) CYCLE COUNT SATURATES. 36 cycles/day and 1800 cycles/day gave the same response; 4 cycles/day
+  prevented loss without adding bone (Rubin & Lanyon 1984, observation). Our inference: a rule driven
+  by a daily-summed stimulus over-predicts the effect of more cycles.
+  (4) THE TRAJECTORIAL (ORTHOGONALITY) CLAIM FAILS IN THE FEMORAL NECK -- Wolff's own showcase.
+  Trabecular tracts intersected orthogonally in sheep and deer calcanei and matched cantilever-beam
+  stress trajectories, but in human and chimpanzee femoral necks they were non-orthogonal (mean about
+  70 degrees) and differed in shape from beam trajectories (Skedros & Baucom 2007, measurement,
+  abstract level). The authors attribute this to more complex, shear-dominated loading.
+  (5) THE FORMAL RULE IS DIVERGENT AND NON-UNIQUE. Weinans et al. (1992) report that the SED rule is a
+  nonlinear dynamical system that "behaves divergent relative to the objective", with many possible
+  solutions, a discontinuous patchwork end state, and dependence on rule parameters, load and initial
+  conditions. Any density map from this rule is a SIMULATION result, partly an artefact of those
+  choices, never an observation.
+  (6) THE OSTEOCYTE MECHANISM DOES NOT TRANSFER, BUT THE RESPONSE DOES. Anosteocytic tilapia opercula
+  adapted to controlled loading with resorption plus deposition (Atkins et al. 2015, observation,
+  qualitative). Mechanistic models built on osteocyte sensing have no sensor to model there. For
+  zebrafish lepidotrichia, Weigele & Franz-Odendaal (2016) report CELLULAR compact bone, while earlier
+  reports they cite found dermal fin rays acellular (contested; see contested_by).
+  (7) WHERE IT WORKS BEST IT IS CALIBRATED, NOT PREDICTIVE. After total hip arthroplasty, SED
+  simulations on retrieved specimens gave loss patterns that "corresponded very well" with DEXA and
+  reproduced the inverse correlation of loss with initial bone mineral content (Kerner et al. 1999).
+  That is a SIMULATION compared with observations on the same specimens, with the set point chosen
+  by the modellers; it supports relative patterns, not absolute rates.
+worked_examples:
+  - organism: Homo sapiens (one subject), tibia vs parietal, same activity
+    computation: "walking: tibial |-0.0712%| / parietal +0.0047% = 15.1; heading 4.5 kg ball: tibial +0.083% / parietal +0.0192% = 4.3"
+    value_range: [4.3, 15.1]
+    note: >
+      Strains are OBSERVED (Hillam et al. 2015); the ratios are OUR arithmetic. Walking compares the
+      tibial compressive peak with the parietal tensile peak, the largest principal strain at each
+      site; that choice is ours. Two bones of one person, both maintained, habitually strained 4x to
+      15x apart: the single-set-point reading of the law cannot hold for both.
+    evidence: derived
+  - organism: Homo sapiens (one subject), parietal, check against Frost's thresholds
+    computation: "walking parietal strain 0.0047% = 47 microstrain; Frost 1987 remodelling threshold 100-300; Frost 1997 MESr 50-100; 47 < 50"
+    value: 47
+    note: >
+      Our arithmetic and inference: a design check using Frost's threshold would flag this bone as
+      being in disuse. It is the law, applied as a constraint, giving the wrong answer.
+    evidence: derived
+  - organism: avian ulna, functionally isolated (Rubin & Lanyon 1984)
+    value_range: [133, 143]
+    note: >
+      Bone-mineral content, percent of original, after 6 weeks at 36 cycles/day, 0.5 Hz; no further
+      change at 1800 cycles/day. Observed.
+    evidence: literature
+  - organism: Oreochromis aureus (tilapia), operculum, anosteocytic
+    note: >
+      Loaded opercula showed resorption and deposition in the loaded area, layered new bone adjacent
+      to it, and new bone stiffer than the pre-existing bone (Atkins et al. 2015). Observed,
+      qualitative; no strain threshold in the abstract.
+    evidence: literature
+  - organism: Danio rerio, fin ray (lepidotrichium)
+    value: unknown
+    note: >
+      No measured in vivo fin-ray strain, remodelling threshold or SED set point was found (scope:
+      as in domain_of_validity.notes). The law can say only that loaded fin-ray bone is expected to
+      adapt; it gives no number to check a fin-ray design against.
+    evidence: none
+contested_by:
+  - "Bertram JEA & Swartz SM (1991), 'The law of bone transformation: a case of crying Wolff?' -- the title disputes the status of Wolff's law as a law. Europe PMC holds no abstract; the argument was NOT read and is not summarised here."
+  - "Frost against Frost: the remodelling threshold is 100-300 microstrain and the modelling threshold 1500-3000 in the 1987 abstract, but 50-100 and about 1000 in the 1997 paper (search-summary level). Not reconciled."
+  - "Hillam, Goodship & Skerry (2015) against a general mechanostat: they propose a spectrum of site-specific set points with genetic control dominating in the skull; Frost presents his thresholds as general."
+  - "Skedros & Baucom (2007): the trajectory hypothesis holds in artiodactyl calcanei and fails in human and chimpanzee femoral necks -- the bone Wolff used as his example."
+  - "Wood et al. (2019): 3D-printed replicas of a sheep talus trabecular structure were stiffer and stronger loaded OFF the principal in vivo loading axis than on it, which the authors say conflicts with Roux's principle of functional adaptation, though it 'may not disprove' it (abstract)."
+  - "Weigele & Franz-Odendaal (2016) report cellular compact bone in zebrafish lepidotrichia; earlier reports they cite (Murciano et al. 2002; Laue et al. 2011; Akiva et al. 2015) describe dermal fin rays as acellular. The authors suggest the difference comes from earlier studies examining only specific bones."
+sources:
+  - citation: "Wolff J (1892) Das Gesetz der Transformation der Knochen. Berlin: A. Hirschwald. English translation: The Law of Bone Remodelling, transl. Maquet P & Furlong R, Springer-Verlag 1986"
+    read_level: listing
+    note: Library catalogue records and a table-of-contents PDF surfaced in search; the text was not read.
+  - citation: "Huiskes R, Weinans H, Grootenboer HJ, Dalstra M, Fudala B, Slooff TJ (1987) Adaptive bone-remodeling theory applied to prosthetic-design analysis. J Biomech 20:1135-1150. doi 10.1016/0021-9290(87)90030-3"
+    doi: "10.1016/0021-9290(87)90030-3"
+    read_level: abstract
+  - citation: "Weinans H, Huiskes R, Grootenboer HJ (1992) The behavior of adaptive bone-remodeling simulation models. J Biomech 25:1425-1441. doi 10.1016/0021-9290(92)90056-7"
+    doi: "10.1016/0021-9290(92)90056-7"
+    read_level: abstract
+    note: Full text at repub.eur.nl was not reachable from this session (host outside the network allowlist).
+  - citation: "Rubin CT, Lanyon LE (1985) Regulation of bone mass by mechanical strain magnitude. Calcif Tissue Int 37:411-417. doi 10.1007/BF02553711"
+    read_level: abstract
+    note: Abstract read via Europe PMC through an automated summarising fetch.
+  - citation: "Rubin CT, Lanyon LE (1984) Regulation of bone formation by applied dynamic loads. J Bone Joint Surg Am 66:397-402. doi 10.2106/00004623-198466030-00012"
+    read_level: abstract
+  - citation: "Lanyon LE, Rubin CT (1984) Static vs dynamic loads as an influence on bone remodelling. J Biomech 17:897-905. doi 10.1016/0021-9290(84)90003-4"
+    doi: "10.1016/0021-9290(84)90003-4"
+    read_level: abstract
+    note: Abstract truncated at 250 words in Europe PMC, before the dynamic-load result.
+  - citation: "Frost HM (1987) Bone 'mass' and the 'mechanostat': a proposal. Anat Rec 219:1-9. doi 10.1002/ar.1092190104"
+    read_level: abstract
+  - citation: "Frost HM (1997) On our age-related bone loss: insights from a new paradigm. J Bone Miner Res 12:1539-1546. doi 10.1359/jbmr.1997.12.10.1539"
+    read_level: search-summary
+    note: Abstract read (Europe PMC) but it contains no threshold values; the 50-100 and ~1000 microstrain figures come from a search summary only.
+  - citation: "Hillam RA, Goodship AE, Skerry TM (2015) Peak strain magnitudes and rates in the tibia exceed greatly those in the skull: an in vivo study in a human subject. J Biomech 48:3292-3298. PMC4601046. doi 10.1016/j.jbiomech.2015.06.021"
+    read_level: full-text
+    note: Read from PMC through an automated summarising fetch; Table 1 and text disagree slightly (heading tibial strain 0.084% vs 0.083%); we use the text value.
+  - citation: "Skedros JG, Baucom SL (2007) Mathematical analysis of trabecular 'trajectories' in apparent trajectorial structures: the unfortunate historical emphasis on the human proximal femur. J Theor Biol 244:15-45. doi 10.1016/j.jtbi.2006.06.029"
+    read_level: abstract
+  - citation: "Atkins A, Milgram J, Weiner S, Shahar R (2015) The response of anosteocytic bone to controlled loading. J Exp Biol 218:3559-3569. doi 10.1242/jeb.124073"
+    read_level: abstract
+  - citation: "Weigele J, Franz-Odendaal TA (2016) Functional bone histology of zebrafish reveals two types of endochondral ossification, different types of osteoblast clusters and a new bone type. J Anat 229:92-103. doi 10.1111/joa.12480. PMC5341596"
+    read_level: full-text
+    note: Read from PMC through an automated summarising fetch; the cited earlier acellular-fin-ray papers were not read.
+  - citation: "Kerner J, Huiskes R, van Lenthe GH, Weinans H, van Rietbergen B, Engh CA, Amis AA (1999) Correlation between pre-operative periprosthetic bone density and post-operative bone loss in THA can be explained by strain-adaptive remodelling. J Biomech 32:695-703. doi 10.1016/s0021-9290(99)00041-x"
+    doi: "10.1016/s0021-9290(99)00041-x"
+    read_level: abstract
+  - citation: "Wood Z, Lynn L, Nguyen JT, Black MA, Patel M, Barak MM (2019) Are we crying Wolff? 3D printed replicas of trabecular bone structure demonstrate higher stiffness and strength during off-axis loading. Bone 127:635-645. doi 10.1016/j.bone.2019.08.002"
+    read_level: abstract
+  - citation: "Bertram JEA, Swartz SM (1991) The 'law of bone transformation': a case of crying Wolff? Biol Rev Camb Philos Soc 66:245-273. doi 10.1111/j.1469-185x.1991.tb01142.x"
+    read_level: listing
+    note: Bibliographic record only (Europe PMC has no abstract).
