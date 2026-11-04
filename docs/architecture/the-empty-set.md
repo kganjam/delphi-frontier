@@ -97,7 +97,18 @@ three ESMFold2 folds and a ProteinMPNN design, each pinned by its model revision
 local analyses pinned by the sha256 of scripts committed under `analysis/`, both of which
 re-derive their reported numbers on demand.
 
-**But only 4 of 11 simulated claims and 2 of 49 measured ones carry a `run_id`.** The rest were
+**Nine runs now, and the headline number is among them.** `analysis/lift_budget.py` re-derives
+v_min and the required lifting area from mass, area and C_L,max alone, and agrees with the Delphi
+Lean registry's **independently written** C9 evaluator to **0.00000 %** on both — 7.561853784 m/s
+and 4.116303686 cm². It also reproduces this project's own *"~20 cm² at 2 m/s"* as **20.01**. So
+the number the whole argument rests on is now a command anyone can run, checked against an
+implementation we do not maintain.
+
+`analysis/collagen_signature.py` **refuses to report a negative** unless its positive control
+separates first: a real collagen must come back collagen-like, or the actinodin result is not
+printed at all.
+
+**But only 5 of 11 simulated claims and 3 of 49 measured ones carry a `run_id`.** The rest were
 produced by agents in prose, and nothing can retroactively give them a command — writing one would
 invent provenance, which is the exact failure this field exists to prevent. So the mechanism is now
 exercised and the backlog is unchanged: **the great majority of this project's computed numbers
