@@ -1,0 +1,177 @@
+id: elastic-similarity
+name: Elastic versus geometric similarity (McMahon) and buckling-limited scaling
+usability: constraining          # the Greenhill bound yields a critical height a design can be checked
+                                 # against; the elastic-similarity EXPONENT as a description of organisms
+                                 # is descriptive at best and contested (see contested_by)
+equation: "l_cr = C_G * (E / (rho * g))^1/3 * d^2/3"
+latex: "l_{cr} = C_G \\left(\\frac{E}{\\rho g}\\right)^{1/3} d^{2/3}, \\qquad C_G = \\left(\\frac{7.837}{16}\\right)^{1/3} \\approx 0.788"
+symbols:
+  l_cr: {dimension: L, units: m, description: "critical height at which a uniform vertical column, clamped at the base and free at the top, buckles under its own weight"}
+  d:    {dimension: L, units: m, description: "diameter of a solid circular cross-section (basal trunk or bone diameter)"}
+  E:    {dimension: M/(L*T^2), units: Pa, description: "Young's modulus of the column material"}
+  rho:  {dimension: M/L^3, units: kg/m^3, description: "density of the column material (bulk density including water for green wood)"}
+  g:    {dimension: L/T^2, units: m/s^2, description: gravitational acceleration}
+  C_G:  {dimension: "1", units: dimensionless, description: "Greenhill prefactor for a solid circular section; (7.837/16)^(1/3)"}
+constants:
+  greenhill_eigenvalue:
+    value: 7.837
+    units: dimensionless
+    note: >
+      CALCULATED, not measured, so no interval. It is the critical value of q*l^3/(E*I) (q = weight per
+      unit length, I = second moment of area) for a heavy clamped-free column. I computed it in this
+      session as (3/2 * j)^2 where j = 1.86635 is the first zero of the Bessel function J_{-1/3}, giving
+      7.8373. I could not open Greenhill (1881) or any source that prints the number (en.wikipedia.org
+      and the Swarthmore copy of McMahon 1973 were outside this session's network allowance), so the
+      value rests on my calculation, not on a quotation.
+  C_G:
+    value: 0.788
+    units: dimensionless
+    note: >
+      CALCULATED in this session from 7.837 and I/A = d^2/16 for a solid circle: (7.837/16)^(1/3) = 0.7883.
+      A hollow section (bone, bamboo) has a larger I/A at the same d and so a larger prefactor; this
+      value does not apply to it.
+  exponent_length_vs_diameter_elastic:
+    value: 0.667
+    interval: [0.52, 0.97]
+    units: dimensionless
+    note: >
+      2/3 is the elastic-similarity PREDICTION (l proportional to d^(2/3)). Geometric similarity
+      predicts 1, static-stress similarity predicts 1/2. The interval is the MEASURED SPREAD of
+      length-versus-diameter exponents I found reported, not an uncertainty on 2/3: 0.67 (Bovidae),
+      0.52 (Suidae), 0.83 (Cervidae), all McMahon 1975 as reported second-hand in arXiv
+      physics/0303074; and about 0.97 for limb bones across mammalian orders (Alexander et al. 1979,
+      as reported by Biewener 1983, seen only in a search summary). The interval spans both the
+      elastic and the geometric predictions, which is the main fact about this law.
+  mass_exponents_elastic:
+    value: "d ~ M^(3/8), l ~ M^(1/4)"
+    note: >
+      DERIVED, not measured: combine l ~ d^(2/3) with mass M ~ l*d^2. Geometric similarity gives
+      d ~ l ~ M^(1/3); static-stress similarity gives d ~ M^(2/5), l ~ M^(1/5). The arXiv letter
+      reports Alexander (1997) measured d ~ M^0.34 and l ~ M^0.26 for Bovidae (read at full-text level
+      in the letter, not in the original).
+  tree_safety_factor_against_buckling:
+    value: 4
+    interval: unknown
+    units: dimensionless
+    note: >
+      McMahon (1973) and McMahon & Kronauer (1976) are reported to have found that trees stand at
+      about one quarter of their Greenhill buckling height. I saw this only in a search summary and
+      could not open either paper, so the sample size, the spread and the data source are unknown.
+mechanism: >
+  A slender column carrying its own weight becomes elastically unstable (buckles) when its height
+  exceeds a critical value set by bending stiffness E*I against weight per length rho*g*A (Greenhill
+  1881). For a solid circle I/A = d^2/16, so l_cr^3 is proportional to (E/(rho*g))*d^2 and
+  l_cr proportional to d^(2/3). McMahon (1973) proposed that organisms whose dominant load is
+  gravitational buckling or bending scale so that every size sits at the SAME fraction of its
+  critical height -- "elastic similarity" -- which requires diameter to grow faster than length
+  (d ~ l^(3/2)). Under geometric similarity (d ~ l) a scaled-up column grows relatively closer to its
+  buckling limit, because l_cr/l falls as l^(-1/3); this is the actual design content. McMahon also
+  linked the elastic-similarity mass exponents to the 3/4-power metabolic scaling; that link is his
+  argument, not something this entry tests.
+domain_of_validity:
+  load_case: "self-weight (gravitational) loading of a slender, prismatic, solid column clamped at the base"
+  medium: air (organism weight not offset by buoyancy)
+  taxa: [trees and other self-supporting woody stems, "bovid limb bones (the one mammalian family where the exponent matches)"]
+  notes: >
+    The critical-height formula is exact for a uniform, straight, solid, isotropic, linearly elastic
+    column with no crown or branch load, clamped at the base. Real trees taper and carry a crown,
+    which shifts the prefactor; the d^(2/3) dependence survives only while the shape changes in
+    proportion. The elastic-similarity exponent is a hypothesis about how organisms ADJUST to the
+    bound, not a consequence of the bound.
+where_it_breaks: >
+  (1) Mammalian limb bones across orders: Alexander et al. (1979, shrew to elephant) and Biewener
+  (1983) are reported to find bones scaling near GEOMETRIC similarity (length-diameter exponent about
+  0.97), not 2/3; Christiansen (1999), as quoted in arXiv physics/0303074, says the data "support
+  neither geometric nor elastic similarity". Only Bovidae fit 2/3; Suidae (0.52) and Cervidae (0.83)
+  do not (McMahon 1975, as reported second-hand). (2) The mechanism is wrong for bones: limb bones
+  are loaded in dynamic bending and fail by fracture, not by Euler buckling under body weight.
+  Biewener (1990, abstract-level via search summary) reports that mammals of about 0.1 to 300 kg keep
+  peak bone stress roughly constant mainly by becoming more upright (raising muscle mechanical
+  advantage) rather than by changing bone shape, with safety factors of 2 to 4 against fracture --
+  so the size compensation is postural, and the law predicts the wrong lever. (3) Plants below tree
+  size: Norberg (1988) is reported to find mosses through small trees follow geometric similarity,
+  with elastic similarity appearing only in large arborescent forms; Niklas (1993) is reported to
+  find interspecific woody scaling fits neither model. (4) Constant safety factor fails within
+  stems: Niklas (1995, herbaceous stems) is reported to find the buckling safety factor falls
+  roughly as d^(-1/3), and a 1998 study of three columnar cacti found it falls with size in each
+  species -- the opposite of the elastic-similarity premise. (5) Water: my inference, not a cited
+  result -- for an immersed organism the effective weight is (rho - rho_water)*g, which is near zero
+  for fish tissue, so self-weight buckling sets no useful bound on fish or fin geometry; the
+  formula must not be applied there with the dry density. (6) Small scale in air: my calculation,
+  not an observation -- for millimetre-scale rods the computed l_cr is orders of magnitude longer than
+  the structure (see worked example), so self-weight buckling is never the active constraint and
+  aerodynamic, inertial or contact loads govern instead. All items 1-4 rest on secondary reports; I
+  could not open the primary papers in this session.
+worked_examples:
+  - organism: "idealised solid tree trunk, d = 1 m"
+    computation: "C_G = 0.788; E = 10 GPa, rho = 600 kg/m^3, g = 9.81 m/s^2 -> l_cr = 0.788 * (1e10/(600*9.81))^(1/3) * 1^(2/3) = 94 m"
+    value: 94
+    units: m
+    note: >
+      CALCULATED in this session. E and rho are round illustrative values for green wood that I
+      ASSUMED, not taken from a cited measurement of any species. If trees stand at about a quarter
+      of l_cr (McMahon, search-summary level), the expected height for this trunk would be about
+      24 m; that is an inference combining my calculation with a second-hand ratio.
+    evidence: derived
+  - organism: "idealised solid tree trunks, d = 0.1 / 0.5 / 3 m, same assumed E and rho"
+    computation: "l_cr = 20 / 59 / 196 m"
+    note: >
+      CALCULATED. Illustrates the d^(2/3) law: a 30-fold increase in diameter buys under a 10-fold
+      increase in critical height.
+    evidence: derived
+  - organism: "millimetre-scale skeletal rod in air (e.g. a fin ray of a candidate gliding fish), d = 0.1 mm"
+    computation: "E = 10 GPa, rho = 2000 kg/m^3 (both ASSUMED round values, not measured for any fin ray) -> l_cr = 0.788 * (1e10/(2000*9.81))^(1/3) * (1e-4)^(2/3) = 0.14 m"
+    value: 0.14
+    units: m
+    note: >
+      CALCULATED. The computed self-weight buckling length is roughly two orders of magnitude longer
+      than a millimetre-scale ray, so this law is not the binding constraint at that size. Measured
+      E and density for zebrafish fin rays: unknown -- not searched in this task.
+    evidence: derived
+  - organism: Bovidae limb bones
+    value: 0.67
+    note: "Length-versus-diameter exponent, McMahon 1975 as reported in arXiv physics/0303074. Matches the elastic prediction."
+    evidence: literature
+  - organism: Mammalian limb bones, shrew to elephant
+    value: 0.97
+    note: "Length-versus-diameter exponent, Alexander et al. 1979 as reported by Biewener 1983 (search-summary level). Near geometric similarity; contradicts 2/3."
+    evidence: literature
+contested_by:
+  - "Alexander et al. (1979) and Biewener (1983): mammalian limb bones across orders scale close to geometric similarity, not elastic similarity (reported second-hand)."
+  - "Christiansen (1999), quoted in arXiv physics/0303074: long-bone data 'support neither geometric nor elastic similarity'. Economos (1983), cited there, doubts that any single power law can explain mammalian allometry."
+  - "Biewener (1990): size compensation in mammals is chiefly postural (mechanical advantage), not shape change, so the elastic-similarity mechanism is not the operative one."
+  - "Niklas (1993): interspecific woody-plant scaling fits neither the stress nor the elastic model. Norberg (1988): geometric similarity for small growth forms and elastic similarity only for large trees. These two plant results disagree with each other and with McMahon; recorded, not reconciled."
+  - "Niklas (1995) and a 1998 columnar-cactus study: buckling safety factor falls with size, contradicting the constant-safety-factor premise."
+  - "arXiv physics/0303074 argues the elastic-force constraint should be rebuilt on muscle forces rather than bone self-weight; this is that letter's proposal, not an established correction."
+sources:
+  - citation: "McMahon TA (1973) Size and shape in biology. Science 179(4079):1201-1204"
+    read_level: search-summary
+    note: "A copy hosted at sccs.swarthmore.edu was outside this session's network allowance."
+  - citation: "McMahon TA, Kronauer RE (1976) tree-form paper; journal and pages not verified"
+    read_level: search-summary
+  - citation: "McMahon TA (1975) bovid/artiodactyl limb-bone allometry; full citation not verified"
+    read_level: search-summary
+    note: "Exponents taken only as reported in arXiv physics/0303074."
+  - citation: "Greenhill AG (1881) Determination of the greatest height consistent with stability that a vertical pole or mast can be made, and of the greatest height to which a tree of given proportions can grow. Proc. Cambridge Philos. Soc. 4:65-73"
+    read_level: search-summary
+    note: "Title and journal from a search summary; volume and pages not verified. The 7.837 constant is my calculation, not read from this paper."
+  - citation: "Alexander RMcN, Jayes AS, Maloiy GMO, Wathuta EM (1979) Allometry of the limb bones of mammals from shrews (Sorex) to elephant (Loxodonta). J. Zool. 189(3):305-314"
+    read_level: search-summary
+  - citation: "Biewener AA (1983) limb-bone allometry and stress paper; journal not verified"
+    read_level: search-summary
+  - citation: "Biewener AA (1990) Biomechanics of mammalian terrestrial locomotion. Science 250"
+    read_level: search-summary
+    note: "Abstract content seen only through a search summary. The M^0.26 mechanical-advantage exponent often attributed to this paper was searched for and NOT confirmed (one search, standard mode), so it is not used here."
+  - citation: "Long-bone allometry of terrestrial mammals and the geometric-shape and elastic-force constraints of bone evolution. arXiv:physics/0303074 (2003); author names not printed in the extracted text"
+    read_level: full-text
+  - citation: "Christiansen P (1999) long-bone scaling in terrestrial mammals; journal not verified"
+    read_level: search-summary
+    note: "Quoted only through arXiv physics/0303074."
+  - citation: "Niklas KJ (1995) Plant height and the properties of some herbaceous stems. Annals of Botany. doi:10.1006/anbo.1995.1004"
+    read_level: search-summary
+  - citation: "Niklas KJ (1993) interspecific woody-plant height scaling; journal not verified"
+    read_level: search-summary
+  - citation: "Norberg RA (1988) plant growth geometry and similarity models; journal not verified"
+    read_level: search-summary
+  - citation: "Stem biomechanics of three columnar cacti from the Sonoran Desert (1998). Am. J. Bot.; authors not verified"
+    read_level: search-summary
