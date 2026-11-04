@@ -129,7 +129,14 @@ def wait(op, timeout=1800, every=20):
     t0 = time.time()
     while time.time() - t0 < timeout:
         st = call("get_operation", {"operation_id": op})
-        s = (st.get("status") or st.get("state") or "").lower()
+        # THREE RESPONSE SHAPES, all seen on this endpoint in one session:
+        #   batch tools (submit_esmfold2)      -> top-level "status"
+        #   some native tools (msa_search)     -> top-level "result_available"
+        #   other native tools (proteinmpnn)   -> status NESTED under "operation"
+        # Reading only the top level returns None for the third, so a poll loop prints a blank
+        # status forever and is blind to SUCCEEDED. Read all three.
+        s = (st.get("status") or st.get("state")
+             or (st.get("operation") or {}).get("status") or "").lower()
         # `result_available` is how this API signals completion; there is no top-level `status` on
         # a finished native op. Polling only for "succeeded" waits out the full timeout on a job
         # that finished minutes ago -- the request succeeds every time, so nothing looks wrong.
