@@ -70,11 +70,11 @@ MEAN_KC10_56: <value>
 """
 
 
-def ask_once(tenant: str, img_b64: str, model: str) -> tuple[dict, float]:
+def ask_once(tenant: str, img_b64: str, model: str, ask: str = "") -> tuple[dict, float]:
     content = [
         {"type": "image",
          "source": {"type": "base64", "media_type": "image/png", "data": img_b64}},
-        {"type": "text", "text": ASK},
+        {"type": "text", "text": ask or ASK},
     ]
     out = api_credits.call(tenant, content, model=model, max_tokens=900,
                            purpose="figure-read", project="zebrafish-flight")
@@ -94,13 +94,96 @@ def num(s: str | None) -> float | None:
     return float(m.group()) if m else None
 
 
+
+def generic(a) -> int:
+    """Read any figure, with the controls declared on the command line rather than hard-coded.
+
+    The Jiang path above is kept because it carries its own documented controls; this is the
+    same method with the panel-specific parts lifted out, so the next figure does not need a
+    new script. A read is USABLE only if every --expect matches and every --absent comes back
+    absent. Discarding happens BEFORE any data value is averaged.
+    """
+    img_b64 = base64.standard_b64encode(Path(a.image).read_bytes()).decode()
+    ask = Path(a.ask_file).read_text() if a.ask_file else ASK
+    keys = [k.strip() for k in (a.values or "").split(",") if k.strip()]
+    expects = [e.split("=", 1) for e in a.expect]
+    print(f"image {a.image}  {a.reads} reads on {a.model}")
+    print(f"controls: {len(expects)} printed-value, {len(a.absent)} must-be-absent\n")
+
+    reads, spend = [], 0.0
+    for i in range(a.reads):
+        t_ = TENANTS[i % len(TENANTS)]
+        try:
+            f, c = ask_once(t_, img_b64, a.model, ask)
+        except Exception as e:
+            print(f"  read {i+1}: FAILED on {t_}: {str(e)[:110]}")
+            continue
+        spend += c
+        bad = []
+        for k, v in expects:
+            got = f.get(k)
+            if got is None or (num(got) != num(v) if num(v) is not None
+                               else v.lower() not in got.lower()):
+                bad.append(f"{k}={got!r} want {v!r}")
+        for k in a.absent:
+            got = (f.get(k) or "").strip().lower()
+            if not (got.startswith("absent") or got in ("n/a", "none", "not present", "")):
+                bad.append(f"{k} INVENTED as {got!r}")
+        ok = not bad
+        print(f"  read {i+1} on {t_:<13} {'USABLE' if ok else 'DISCARDED'}  ${c:.4f}"
+              + ("" if ok else "   " + "; ".join(bad)[:150]))
+        if ok:
+            reads.append(f)
+
+    if not reads:
+        print("\nNO USABLE READ -- every read failed a control, so there is no measurement "
+              "here. Reporting nothing is the correct outcome.")
+        return 1
+
+    print(f"\n{len(reads)} usable of {a.reads}\n")
+    print(f"  {'field':>22} {'mean':>10} {'sd':>9} {'min':>9} {'max':>9}  n")
+    out = {}
+    for k in keys:
+        vals = [num(r.get(k)) for r in reads]
+        vals = [v for v in vals if v is not None]
+        if not vals:
+            print(f"  {k:>22}  (no usable value in any read)")
+            continue
+        m = statistics.mean(vals)
+        sd = statistics.stdev(vals) if len(vals) > 1 else 0.0
+        out[k] = (m, sd, len(vals))
+        print(f"  {k:>22} {m:>10.4f} {sd:>9.4f} {min(vals):>9.3f} {max(vals):>9.3f}  {len(vals)}")
+    if len(reads) > 1 and all(v[1] == 0.0 for v in out.values()):
+        print("\n  every read agreed EXACTLY. That is not a zero error bar: repeated reads from")
+        print("  one model are not independent. Cross-MODEL agreement is the real check.")
+    print(f"\n  total spend ${spend:.4f}")
+    if a.write:
+        Path(a.write).write_text(json.dumps(
+            {"image": a.image, "model": a.model, "reads": reads,
+             "fields": {k: v for k, v in out.items()}, "spend_usd": spend}, indent=2))
+        print(f"  wrote {a.write}")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("image")
     ap.add_argument("--reads", type=int, default=6)
     ap.add_argument("--model", default="claude-opus-5-5")
     ap.add_argument("--write")
+    ap.add_argument("--ask-file", help="question text; default is the Jiang Fig 2C preset")
+    ap.add_argument("--expect", action="append", default=[],
+                    help="KEY=VALUE control: a PRINTED value the read must return. "
+                         "Repeatable. A read missing any of these is DISCARDED.")
+    ap.add_argument("--absent", action="append", default=[],
+                    help="KEY that must come back 'absent'. A read that invents it is "
+                         "DISCARDED -- this is the control that catches a confident "
+                         "hallucinator, and it is the one people leave out.")
+    ap.add_argument("--values", help="comma-separated KEYs to average across reads")
     a = ap.parse_args()
+
+    if a.ask_file or a.values:
+        return generic(a)
 
     img_b64 = base64.standard_b64encode(Path(a.image).read_bytes()).decode()
     print(f"image {a.image}  ({len(img_b64)*3//4} bytes)  {a.reads} independent reads "
