@@ -1,0 +1,65 @@
+<!-- Body of the programmable-skin schematic: everything inside <svg> except the numbered pins, which the renderer
+     adds from schematic.pins in chromatophore.json so a pin and the caption line describing it cannot disagree.
+     A drawing, not a measurement and not to scale. -->
+<defs>
+  <marker id="cha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0e7c86"></path></marker>
+  <marker id="chl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#c99a2e"></path></marker>
+</defs>
+<rect x="0" y="0" width="960" height="440" fill="#fffdf8"></rect>
+<line x1="470" y1="36" x2="470" y2="404" stroke="#ddd3c0" stroke-dasharray="5 6"></line>
+<text x="235" y="40" class="dsb-ttl" text-anchor="middle">Three layers, two mechanisms</text>
+<text x="715" y="40" class="dsb-ttl" text-anchor="middle">Fewer channels than cells</text>
+
+<!-- incoming light -->
+<path d="M 96 56 L 96 84 M 168 56 L 168 84 M 240 56 L 240 84 M 312 56 L 312 84" stroke="#c99a2e" stroke-width="3" stroke-linecap="round" marker-end="url(#chl)"></path>
+<text x="356" y="74" class="dsb-sub" text-anchor="start">light in</text>
+
+<!-- CHROMATOPHORE: pigment sac with radial muscle -->
+<rect x="60" y="92" width="360" height="92" rx="10" fill="#f6e8e4" stroke="#b05a3c" stroke-width="2"></rect>
+<text x="78" y="110" class="dsb-sub" text-anchor="start">chromatophore layer &#8212; muscle, ~0.1 s</text>
+<circle cx="196" cy="146" r="22" fill="#8c3b22" stroke="#5e2512" stroke-width="2"></circle>
+<path d="M 196 112 L 196 124 M 196 168 L 196 180 M 162 146 L 174 146 M 218 146 L 230 146 M 172 122 L 181 131 M 211 161 L 220 170 M 220 122 L 211 131 M 181 161 L 172 170" stroke="#b05a3c" stroke-width="3" stroke-linecap="round"></path>
+<text x="248" y="142" class="dsb-lab" text-anchor="start">pigment sac</text>
+<text x="248" y="160" class="dsb-sub" text-anchor="start">15&#8211;25 radial fibres</text>
+<!-- motor axon arriving -->
+<path d="M 196 206 L 196 182" class="dsb-arr" stroke="#0e7c86" stroke-width="2" marker-end="url(#cha)"></path>
+<text x="206" y="202" class="dsb-sub" text-anchor="start">motor axon</text>
+
+<!-- IRIDOPHORE: Bragg stack -->
+<rect x="60" y="212" width="360" height="70" rx="10" fill="#e3f1f1" stroke="#0e7c86" stroke-width="2"></rect>
+<text x="78" y="230" class="dsb-sub" text-anchor="start">iridophore &#8212; reflectin Bragg stack, minutes</text>
+<path d="M 150 244 L 330 244 M 150 252 L 330 252 M 150 260 L 330 260 M 150 268 L 330 268" stroke="#0e7c86" stroke-width="3" stroke-linecap="round" opacity="0.75"></path>
+<text x="346" y="262" class="dsb-sub" text-anchor="start">425&#8211;675 nm</text>
+
+<!-- LEUCOPHORE floor -->
+<rect x="60" y="292" width="360" height="40" rx="8" fill="#f1efe8" stroke="#a8a08c" stroke-width="2"></rect>
+<text x="240" y="317" class="dsb-sub" text-anchor="middle">leucophore &#8212; broadband white floor</text>
+
+<!-- the speed contrast, stated -->
+<text x="240" y="362" class="dsb-lab" text-anchor="middle">two optical systems, ~100&#215; apart in speed</text>
+<text x="240" y="382" class="dsb-sub" text-anchor="middle">muscle moves the pigment; protein assembly moves the colour</text>
+
+<!-- RIGHT: the array and its wiring -->
+<rect x="530" y="68" width="300" height="200" rx="10" fill="#fdf7ee" stroke="#c9b48c" stroke-width="2"></rect>
+<text x="680" y="60" class="dsb-sub" text-anchor="middle">a 4 &#215; 4 mm patch &#8212; 3,904 actuators</text>
+<g fill="#8c3b22" opacity="0.72">
+  <circle cx="560" cy="98" r="6"></circle><circle cx="590" cy="98" r="6"></circle><circle cx="620" cy="98" r="6"></circle><circle cx="650" cy="98" r="6"></circle><circle cx="680" cy="98" r="6"></circle><circle cx="710" cy="98" r="6"></circle><circle cx="740" cy="98" r="6"></circle><circle cx="770" cy="98" r="6"></circle><circle cx="800" cy="98" r="6"></circle>
+  <circle cx="560" cy="128" r="6"></circle><circle cx="590" cy="128" r="6"></circle><circle cx="620" cy="128" r="6"></circle><circle cx="650" cy="128" r="6"></circle><circle cx="680" cy="128" r="6"></circle><circle cx="710" cy="128" r="6"></circle><circle cx="740" cy="128" r="6"></circle><circle cx="770" cy="128" r="6"></circle><circle cx="800" cy="128" r="6"></circle>
+  <circle cx="560" cy="158" r="6"></circle><circle cx="590" cy="158" r="6"></circle><circle cx="620" cy="158" r="6"></circle><circle cx="650" cy="158" r="6"></circle><circle cx="680" cy="158" r="6"></circle><circle cx="710" cy="158" r="6"></circle><circle cx="740" cy="158" r="6"></circle><circle cx="770" cy="158" r="6"></circle><circle cx="800" cy="158" r="6"></circle>
+  <circle cx="560" cy="188" r="6"></circle><circle cx="590" cy="188" r="6"></circle><circle cx="620" cy="188" r="6"></circle><circle cx="650" cy="188" r="6"></circle><circle cx="680" cy="188" r="6"></circle><circle cx="710" cy="188" r="6"></circle><circle cx="740" cy="188" r="6"></circle><circle cx="770" cy="188" r="6"></circle><circle cx="800" cy="188" r="6"></circle>
+  <circle cx="560" cy="218" r="6"></circle><circle cx="590" cy="218" r="6"></circle><circle cx="620" cy="218" r="6"></circle><circle cx="650" cy="218" r="6"></circle><circle cx="680" cy="218" r="6"></circle><circle cx="710" cy="218" r="6"></circle><circle cx="740" cy="218" r="6"></circle><circle cx="770" cy="218" r="6"></circle><circle cx="800" cy="218" r="6"></circle>
+  <circle cx="560" cy="248" r="6"></circle><circle cx="590" cy="248" r="6"></circle><circle cx="620" cy="248" r="6"></circle><circle cx="650" cy="248" r="6"></circle><circle cx="680" cy="248" r="6"></circle><circle cx="710" cy="248" r="6"></circle><circle cx="740" cy="248" r="6"></circle><circle cx="770" cy="248" r="6"></circle><circle cx="800" cy="248" r="6"></circle>
+</g>
+<!-- motor units outlined around groups of about nine -->
+<rect x="546" y="84" width="104" height="104" rx="8" fill="none" stroke="#0e7c86" stroke-width="2" stroke-dasharray="4 4"></rect>
+<rect x="666" y="84" width="104" height="104" rx="8" fill="none" stroke="#0e7c86" stroke-width="2" stroke-dasharray="4 4"></rect>
+<rect x="546" y="204" width="104" height="58" rx="8" fill="none" stroke="#0e7c86" stroke-width="2" stroke-dasharray="4 4"></rect>
+<text x="598" y="200" class="dsb-sub" text-anchor="middle">one motor unit &#8776; 9 actuators</text>
+
+<!-- the nerve bundle: far fewer lines than cells -->
+<path d="M 470 300 L 530 300 M 470 316 L 530 316 M 470 332 L 530 332" stroke="#0e7c86" stroke-width="3" stroke-linecap="round" marker-end="url(#cha)"></path>
+<text x="476" y="356" class="dsb-sub" text-anchor="start">nerve &#8212; far fewer channels than cells</text>
+
+<text x="700" y="306" class="dsb-lab" text-anchor="middle">knee 579 channels &#183; animal 1,609</text>
+<text x="700" y="326" class="dsb-sub" text-anchor="middle">0.412 channels per actuator, 2.78&#215; past the knee</text>
+<text x="700" y="350" class="dsb-sub" text-anchor="middle">579 is the nearest point on a log grid of 306 &#8211; 1094</text>

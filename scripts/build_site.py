@@ -17,6 +17,7 @@ import copy
 import datetime
 import importlib.util
 import json
+import math
 import re
 import shutil
 import sys
@@ -2045,10 +2046,42 @@ def build() -> dict[str, bytes]:
         "spec_acceptance_open": len(re.findall(r"^- \[ \]", spec_text, re.M)),
     }
     catalog = {"schema": "frontier-site-catalog-0.1", "mode": "snapshot", "namespace": NAMESPACE, "snapshot": snapshot["label"], "records": build_catalog(snapshot)}
-    out = {"snapshot.json": (json.dumps(snapshot, indent=1, ensure_ascii=False) + "\n").encode(),
-           "catalog.json": (json.dumps(catalog, indent=1, ensure_ascii=False) + "\n").encode()}
+    out = {"snapshot.json": (dumps_browser_safe(snapshot) + "\n").encode(),
+           "catalog.json": (dumps_browser_safe(catalog) + "\n").encode()}
     out.update(files); out.update(extra)
     return out
+
+
+def dumps_browser_safe(obj) -> str:
+    """Serialise so a browser can parse it. `json.dump` emits bare NaN and Infinity, which Python reads back happily and
+    `JSON.parse` rejects outright -- so a snapshot containing one loads fine in every Python check here and takes the WHOLE
+    SITE down in the browser with "data could not be loaded", not just the page that owns the number.
+
+    That is not hypothetical. A study recording an undefined retraction time -- the organ never returned inside the window,
+    so the honest value is neither 0 nor absent -- put 16 bare NaNs into the snapshot. Every build check passed, because
+    they were all Python. The browser suite caught it; nothing else could have.
+
+    Non-finite floats become null, which is what JSON has for "no value". The meaning is not lost: the studies that produce
+    them already report the count of such points beside the sweep, which is where a reader should be looking anyway. The
+    assertion afterwards is the real guard -- it refuses to emit at all rather than trusting this function to have caught
+    every path, since `json.dumps` can reach a float through a dict key, a nested list, or a subclass.
+    """
+    def clean(o):
+        if isinstance(o, float):
+            return None if (math.isnan(o) or math.isinf(o)) else o
+        if isinstance(o, dict):
+            return {k: clean(v) for k, v in o.items()}
+        if isinstance(o, list):
+            return [clean(v) for v in o]
+        return o
+
+    text = json.dumps(clean(obj), indent=1, ensure_ascii=False, allow_nan=False)
+    # Re-parse the way a browser does, rather than grepping for "NaN". A regex over the serialised text cannot tell a bare
+    # token from the word appearing inside a note -- these studies legitimately discuss NaN in prose, and the first version
+    # of this guard refused a perfectly good snapshot for 8 such mentions. `parse_constant` fires only on the real thing.
+    json.loads(text, parse_constant=lambda c: (_ for _ in ()).throw(
+        AssertionError(f"refusing to emit JSON a browser cannot parse: bare {c!r}")))
+    return text
 
 
 def generated_artifact_families() -> list[str]:

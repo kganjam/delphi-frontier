@@ -1,0 +1,55 @@
+{
+  "schema": "frontier.release.checks/1",
+  "sha": "PENDING",
+  "checks": [
+    {
+      "name": "Claim checker on the chromatophore results, proved able to fail",
+      "command": "python3 code/check_claims.py (in /data/scratch/designspaces/chromatophore)",
+      "exit": 0,
+      "result": "20 claims, 0 failing, exit 0. Verified in BOTH directions rather than accepted green: injecting results.headline.knee95_mean_channels=999.0 gives exit 1 naming knee-grid-neighbours (computed 999 vs asserted 579); restoring gives exit 0 with the file confirmed byte-identical by cmp.",
+      "at": "2026-11-03T09:24:18.659876+00:00",
+      "tested_commit": "PENDING"
+    },
+    {
+      "name": "The recovered 11,200-row sweep is the full declared design",
+      "command": "independent arithmetic over control-channels-raw.json",
+      "exit": 0,
+      "result": "5 seeds x 5 unit sizes x 4 wirings x 8 targets x 14 grid points = 11,200, and the file holds exactly 11,200 rows. K=3904, elapsed 3742.8 s. controls: [] in the raw file independently confirms the agent's own report that the job's controls block never printed, which is why five of seven controls are declared-and-absent.",
+      "at": "2026-11-03T09:24:18.659876+00:00",
+      "tested_commit": "PENDING"
+    },
+    {
+      "name": "Deliverables copied byte-for-byte, with cmp itself controlled",
+      "command": "cmp per file from /data/scratch/designspaces/chromatophore to results/chromatophore",
+      "exit": 0,
+      "result": "12 of 12 byte-identical, 0 mismatches. Control: cmp on two deliberately differing one-byte files reports them as different, so the 12 passes are not a broken comparison.",
+      "at": "2026-11-03T09:24:18.659876+00:00",
+      "tested_commit": "PENDING"
+    },
+    {
+      "name": "Every served figure is tracked in git",
+      "command": "git diff --cached --name-only, joined against the snapshot's present figures",
+      "exit": 0,
+      "result": "All 7 served chromatophore figures are staged; served-but-unstaged is empty, against a non-empty staged set of 38 files. This is the check that did not exist when four xenobot figures reached production as 404s, because the deploy ships a git archive and a headless broken-image count excludes lazy images.",
+      "at": "2026-11-03T09:24:18.659876+00:00",
+      "tested_commit": "PENDING"
+    },
+    {
+      "name": "Snapshot reproducibility",
+      "command": "python3 scripts/build_site.py --check",
+      "exit": 0,
+      "result": "stale=[]",
+      "at": "2026-11-03T09:24:18.659876+00:00",
+      "tested_commit": "PENDING"
+    },
+    {
+      "name": "Generated markdown twin current",
+      "command": "python3 scripts/designspace_doc.py --check",
+      "exit": 0,
+      "result": "exit 0 over all five design spaces, including the new docs/dossier/17-chromatophore-design-space.md",
+      "at": "2026-11-03T09:24:18.659876+00:00",
+      "tested_commit": "PENDING"
+    }
+  ],
+  "note": "Receipt for the fifth design space. The browser and unit suite result is appended separately once it completes. A full `pytest tests/` is NOT run: 24 modules fail at collection in this worktree importing TOKENS from conftest, which resolves to tests/bioservices/conftest.py -- pre-existing and unrelated."
+}

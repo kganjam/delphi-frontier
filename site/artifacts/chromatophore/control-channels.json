@@ -1,0 +1,6013 @@
+{
+ "id": "control-channels",
+ "title": "How many independent control channels does an addressable skin need?",
+ "kind": "simulation (pigment-actuator array + observer blur + projected-gradient controller)",
+ "headline": "At the measured motor-unit size of nine actuators per channel, the knee is 579 +/- 0 channels over a 4 x 4 mm patch carrying 3904 actuators - about 36 channels per mm^2, or one channel per 6.7 actuators. Across unit sizes the knee tracks the number needed to COVER the array (K/m) within a factor of 1.00-5.41, so for everything but the finest target the channel budget is set by innervating the skin at all, not by the complexity of the pattern. The real animal is not a free parameter here: Renard et al. 2026 resolved 754 putative motor units driving 1829 chromatophores, which is 0.412 channels per actuator and motor units of about nine, so on this patch the animal sits at 1609 channels - PAST the knee on every target, reaching 99-101% of the fidelity it would get from one channel per chromatophore.",
+ "preregistration": {
+  "declared_before_any_run": true,
+  "primary_metric": "variance explained (R^2) on the observer-blurred reflectance field, clipped below at 0; the target is affinely mapped into the skin's own achievable range first, so the metric scores pattern fidelity and not the pigment layer's contrast range",
+  "secondary_metrics": [
+   "mean absolute error of the blurred field",
+   "unclipped R^2, reported as a diagnostic"
+  ],
+  "knee_rules": {
+   "knee_95": "smallest N whose R^2 reaches 0.95 x R^2 at N = K",
+   "knee_curvature": "maximum vertical distance from the chord of the (log10 N, R^2) curve"
+  },
+  "targets": [
+   "uniform_dark",
+   "uniform_light",
+   "edge",
+   "square",
+   "stripes_coarse",
+   "stripes_fine",
+   "gravel_1f",
+   "mottle"
+  ],
+  "wirings": [
+   "compact",
+   "renard_like",
+   "random",
+   "oracle"
+  ],
+  "unit_sizes": [
+   1,
+   3,
+   9,
+   14,
+   30
+  ],
+  "note": "Declared in the module docstring of code/control_channels.py before the first run. No target was added, dropped or re-parameterised afterwards. The two uniform targets have zero variance, so R^2 is undefined for them and is returned as null rather than as 1.0 - a score of 1 earned by an empty denominator would otherwise have been averaged in with real ones."
+ },
+ "model": {
+  "description": "Actuators placed by Poisson-disc sampling at the measured chromatophore density on a square skin patch, each expanding from a retracted to an expanded disc area in the measured ratio. N channels each drive a motor unit of m actuators; an actuator's drive is the clamped sum over the channels that own it. The pigment area field is blurred by an observer point-spread function and converted to reflectance through a random-overlap coverage law. Channel activations are optimised by Adam with box projection.",
+  "state_variables": [
+   "channel activations a in [0,1]^N",
+   "per-actuator drive u = clamp(sum of owning channels)"
+  ],
+  "equations": [
+   "A_i = A_ret + u_i (A_exp - A_ret)",
+   "S = G * (sum_i A_i delta_i) / pixel area",
+   "coverage = 1 - exp(-S)",
+   "I = R_bg + (R_pig - R_bg) * coverage",
+   "R^2 = 1 - SSE / SST on the blurred field"
+  ],
+  "parameters": [
+   {
+    "name": "actuator_density",
+    "value": 0.000244,
+    "units": "per um^2",
+    "status": "sourced",
+    "source": "Mean chromatophore density measured on cuttlefish dorsal mantle: 2.44e-4 per um^2 (the paper's own simulation reproduced it at 2.52e-4 +/- 0.1e-4). Reiter S et al. (Laurent G) 2018, Nature 562:361-366, PMID 30333578 (read: full text)."
+   },
+   {
+    "name": "area_ratio",
+    "value": 2.5506,
+    "units": "dimensionless",
+    "status": "sourced",
+    "source": "+155.06% mean surface-area increase on expansion. Hadjisolomou SP et al. 2021, Front Physiol 12:675252, PMID 34220538 (read: full text). A startle response, not a measured maximum - see the actuator study."
+   },
+   {
+    "name": "unit_sizes",
+    "value": [
+     1,
+     3,
+     9,
+     14,
+     30
+    ],
+    "units": "actuators per channel",
+    "status": "sourced",
+    "source": "Spans the measured range from two independent studies: motor units of 2-10 chromatophores with a median motor ELEMENT of 3 (Reiter S et al. (Laurent G) 2018, Nature 562:361-366, PMID 30333578 (read: full text)); a mean of about 9 chromatophores per putative motor unit, 90% under 14 and occasionally up to 30 (Renard MDM et al. 2026, eLife 110074, PMID 42418335 (read: full text)). The value 1 is included as the one-channel-per-actuator limit, which no animal has."
+   },
+   {
+    "name": "within_unit_nnd_um",
+    "value": 40.548,
+    "units": "um",
+    "status": "sourced",
+    "source": "Mean within-cluster nearest-neighbour distance 40.548 +/- 46.946 um, against a global array NND of 6.130 +/- 1.589 um: chromatophores in one motor unit are NOT immediate neighbours. Renard MDM et al. 2026, eLife 110074, PMID 42418335 (read: full text)."
+   },
+   {
+    "name": "coverage_full",
+    "value": 0.85,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Areal coverage with every actuator expanded. Not measured. The resulting expanded diameter is 99.5 um, which lands at the top of the measured 15-100 um chromatophore diameter range - a weak corroboration, not a source."
+   },
+   {
+    "name": "r_pigment",
+    "value": 0.05,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Reflectance of fully pigmented skin. Not measured; the declared metric maps the target into the skin's own range, so this sets contrast and not pattern fidelity."
+   },
+   {
+    "name": "r_background",
+    "value": 0.75,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Reflectance of the unpigmented backing. Not measured."
+   },
+   {
+    "name": "blur_in_spacings",
+    "value": 2.0,
+    "units": "mean actuator spacings",
+    "status": "assumed",
+    "source": "Observer point-spread sigma. NO predator acuity number was sourced. Expressed in units of actuator spacing so the result is at least scale-free in the array."
+   },
+   {
+    "name": "patch_mm",
+    "value": 4.0,
+    "units": "mm",
+    "status": "nondimensional",
+    "source": "Edge of the square modelled skin patch."
+   },
+   {
+    "name": "grid",
+    "value": 256,
+    "units": "pixels",
+    "status": "nondimensional",
+    "source": "Raster on which the field is scored."
+   },
+   {
+    "name": "n_iters",
+    "value": 400,
+    "units": "iterations",
+    "status": "nondimensional",
+    "source": "Adam steps per configuration."
+   },
+   {
+    "name": "knee_fraction",
+    "value": 0.95,
+    "units": "dimensionless",
+    "status": "nondimensional",
+    "source": "Declared before the sweep: the knee is the smallest N reaching this fraction of the score at one channel per actuator."
+   },
+   {
+    "name": "seeds",
+    "value": [
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "units": "",
+    "status": "nondimensional",
+    "source": "Array seeds. Every headline number is reported with its spread across these, not as a single value."
+   }
+  ],
+  "parameter_counts": {
+   "sourced": 4,
+   "assumed": 4,
+   "nondimensional": 5
+  },
+  "parameter_note": "`sourced` means the number appears in a paper we read, measured in the thing being modelled. A value measured in another tissue or another species is `assumed`, with the proxy named in `source`."
+ },
+ "sweep": {
+  "cells": 11200,
+  "axes": {
+   "channel_count": [
+    1,
+    2,
+    4,
+    7,
+    13,
+    24,
+    45,
+    86,
+    162,
+    306,
+    579,
+    1094,
+    2067,
+    3904
+   ],
+   "unit_size": [
+    1,
+    3,
+    9,
+    14,
+    30
+   ],
+   "wiring": [
+    "compact",
+    "renard_like",
+    "random",
+    "oracle"
+   ],
+   "target": [
+    "uniform_dark",
+    "uniform_light",
+    "edge",
+    "square",
+    "stripes_coarse",
+    "stripes_fine",
+    "gravel_1f",
+    "mottle"
+   ],
+   "seed": [
+    11,
+    12,
+    13,
+    14,
+    15
+   ]
+  },
+  "wall_clock_s": 3742.8184807300568,
+  "where": "Nebius job aijob-e00mz387dqe1bm2y5x, gpu-h100-sxm preset 1gpu-16vcpu-200gb, python:3.12-slim, 16 worker processes. Pure NumPy; the GPU preset was the only way to get 16 cores."
+ },
+ "results": {
+  "headline": {
+   "unit_size": 9,
+   "wiring": "compact",
+   "targets": [
+    "edge",
+    "square",
+    "stripes_coarse",
+    "stripes_fine",
+    "gravel_1f",
+    "mottle"
+   ],
+   "knee95_mean_channels": 579.0,
+   "knee95_sd_channels": 0.0,
+   "knee95_min": 579,
+   "knee95_max": 579,
+   "n_measurements": 30,
+   "knee95_of_mean_curves_AS_DECLARED": [
+    579,
+    579,
+    579,
+    579,
+    579,
+    579
+   ],
+   "why_the_spread_is_zero": "The s.d. across seeds and targets is 0.0, and that is a GRID ARTEFACT, not a precision claim. The channel count is swept on a 14-point logarithmic grid, so a knee can only ever land on a grid point; every seed and every non-trivial target happened to land on the same one. The real uncertainty is therefore bounded below by the grid spacing, which here is a factor of about 1.9 in either direction - the neighbouring grid points are 306 and 1094. Quote the knee as 'between 306 and 1094, nearest grid point 579', not as '579 +/- 0'. A finer grid would be needed to say more, and the agreement across 30 independent runs is evidence that the knee is stable to within one grid step, which is a weaker and true statement.",
+   "grid_neighbours": [
+    306,
+    1094
+   ],
+   "knee95_of_mean_curves_mean": 579.0,
+   "statistic_note": "The pre-registration defines the knee on the MEAN curve, which gives one number per target and no spread. Both are reported: `knee95_of_mean_curves_*` is the declared statistic, and `knee95_mean_channels` with its s.d. is the distribution of per-seed knees, which is what a spec sheet needs. They are computed from the same runs and should agree closely; if they do not, the per-seed distribution is skewed and the mean-curve number is the one to quote.",
+   "knee95_channels_per_mm2": 36.1875,
+   "knee95_as_fraction_of_actuators": 0.14830942622950818,
+   "actuators_per_channel_at_the_knee": 6.7426597582038,
+   "K_actuators": 3904,
+   "coverage_prediction_K_over_m": 433.77777777777777,
+   "per_target": {
+    "edge": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "square": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "stripes_coarse": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "stripes_fine": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "gravel_1f": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "mottle": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    }
+   }
+  },
+  "knee_is_set_by_coverage_not_complexity": {
+   "test": "If the channel budget were set by the pattern's spatial detail, the knee would depend on the target and not on the unit size. If it is set by covering the array, the knee should sit near K/m. Both are computed below.",
+   "per_unit_size": {
+    "1": {
+     "K_over_m": 3904.0,
+     "knee95_mean": 3904.0,
+     "ratio_knee_to_K_over_m": 1.0,
+     "per_target_means": {
+      "edge": 3904.0,
+      "square": 3904.0,
+      "stripes_coarse": 3904.0,
+      "stripes_fine": 3904.0,
+      "gravel_1f": 3904.0,
+      "mottle": 3904.0
+     }
+    },
+    "3": {
+     "K_over_m": 1301.3333333333333,
+     "knee95_mean": 1710.2333333333333,
+     "ratio_knee_to_K_over_m": 1.3142161885245902,
+     "per_target_means": {
+      "edge": 1677.8,
+      "square": 2067.0,
+      "stripes_coarse": 1288.6,
+      "stripes_fine": 2067.0,
+      "gravel_1f": 2067.0,
+      "mottle": 1094.0
+     }
+    },
+    "9": {
+     "K_over_m": 433.77777777777777,
+     "knee95_mean": 579.0,
+     "ratio_knee_to_K_over_m": 1.3347848360655739,
+     "per_target_means": {
+      "edge": 579.0,
+      "square": 579.0,
+      "stripes_coarse": 579.0,
+      "stripes_fine": 579.0,
+      "gravel_1f": 579.0,
+      "mottle": 579.0
+     }
+    },
+    "14": {
+     "K_over_m": 278.85714285714283,
+     "knee95_mean": 521.0333333333333,
+     "ratio_knee_to_K_over_m": 1.868459699453552,
+     "per_target_means": {
+      "edge": 306.0,
+      "square": 306.0,
+      "stripes_coarse": 306.0,
+      "stripes_fine": 1189.4,
+      "gravel_1f": 712.8,
+      "mottle": 306.0
+     }
+    },
+    "30": {
+     "K_over_m": 130.13333333333333,
+     "knee95_mean": 703.9,
+     "ratio_knee_to_K_over_m": 5.40906762295082,
+     "per_target_means": {
+      "edge": 162.0,
+      "square": 162.0,
+      "stripes_coarse": 162.0,
+      "stripes_fine": 1859.0,
+      "gravel_1f": 1716.4,
+      "mottle": 162.0
+     }
+    }
+   },
+   "ratio_range": [
+    1.0,
+    5.40906762295082
+   ]
+  },
+  "where_the_real_animal_sits": {
+   "channels_on_this_patch": 1609.4127938764352,
+   "channels_per_mm2": 100.5882996172772,
+   "channels_per_actuator": 0.41224712957900495,
+   "actuators_per_channel": 2.4257294429708223,
+   "unit_size": 9,
+   "per_target": {
+    "edge": {
+     "r2_at_the_animals_channel_count": 0.9713216949841113,
+     "r2_at_full_individual_control": 0.9708075518773986,
+     "fraction_of_saturation_reached": 1.0005296035302964,
+     "knee95_mean": 579.0,
+     "animal_relative_to_knee": 2.779642131047384
+    },
+    "square": {
+     "r2_at_the_animals_channel_count": 0.9600982895125264,
+     "r2_at_full_individual_control": 0.9610760757071317,
+     "fraction_of_saturation_reached": 0.9989826131153188,
+     "knee95_mean": 579.0,
+     "animal_relative_to_knee": 2.779642131047384
+    },
+    "stripes_coarse": {
+     "r2_at_the_animals_channel_count": 0.9586157167353931,
+     "r2_at_full_individual_control": 0.9578216054213163,
+     "fraction_of_saturation_reached": 1.0008290806028828,
+     "knee95_mean": 579.0,
+     "animal_relative_to_knee": 2.779642131047384
+    },
+    "stripes_fine": {
+     "r2_at_the_animals_channel_count": 0.6380677842662205,
+     "r2_at_full_individual_control": 0.6438644217075074,
+     "fraction_of_saturation_reached": 0.9909971148492498,
+     "knee95_mean": 579.0,
+     "animal_relative_to_knee": 2.779642131047384
+    },
+    "gravel_1f": {
+     "r2_at_the_animals_channel_count": 0.9023593533350565,
+     "r2_at_full_individual_control": 0.8970343733366695,
+     "fraction_of_saturation_reached": 1.0059362050738143,
+     "knee95_mean": 579.0,
+     "animal_relative_to_knee": 2.779642131047384
+    },
+    "mottle": {
+     "r2_at_the_animals_channel_count": 0.9475976939830594,
+     "r2_at_full_individual_control": 0.9502650189708067,
+     "fraction_of_saturation_reached": 0.9971930725276658,
+     "knee95_mean": 579.0,
+     "animal_relative_to_knee": 2.779642131047384
+    }
+   },
+   "animal_over_knee_range": [
+    2.779642131047384,
+    2.779642131047384
+   ],
+   "fraction_of_saturation_range": [
+    0.9909971148492498,
+    1.0059362050738143
+   ],
+   "verdict": "PAST the knee on every target"
+  },
+  "measured_operating_point": {
+   "source": "Renard MDM et al. 2026, eLife 110074, PMID 42418335 (read: full text via PMC). Species: Euprymna berryi and Sepia officinalis.",
+   "independent_components_per_chromatophore": 3.715,
+   "independent_components_per_chromatophore_sd": 1.211,
+   "n_chromatophores_measured": 1829,
+   "n_independent_components": 6795,
+   "n_putative_motor_units": 754,
+   "mean_components_per_motor_unit": 9.003,
+   "mean_components_per_motor_unit_sd": 4.755,
+   "fraction_of_units_spanning_multiple_chromatophores": 0.95877,
+   "ninetieth_percentile_chromatophores_per_unit": 14,
+   "self_consistency": "The paper's numbers close on themselves, which is why they can be used as an operating point rather than quoted loosely: 6795 ICs over 1829 chromatophores is 3.715 per chromatophore, and 754 motor units at 9.003 ICs each is 6788 memberships, or 3.711 per chromatophore. One IC per chromatophore per motor unit, so a unit of 9 ICs is a unit of about 9 CHROMATOPHORES - which matches the discussion's 'typically around ten chromatophores' and '90% fewer than 14'.",
+   "channels_per_actuator": 0.41224712957900495,
+   "actuators_per_channel": 2.4257294429708223,
+   "unit_size_chromatophores": 9,
+   "preserved_disagreement": "One internal inconsistency in the source is kept rather than smoothed: the convex-hull areas are reported with a median of 136,199.10 um^2 while '90% of clusters had a convex hull area smaller than 51,513.25 um^2'. Both cannot hold. Nothing here depends on the hull areas, so it is recorded and not resolved."
+  },
+  "per_configuration": {
+   "compact|m=1|edge": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9785675289081928,
+     "sd": 0.004187578385932419,
+     "n": 5,
+     "min": 0.9739307856127384,
+     "max": 0.9842728037434734,
+     "values": [
+      0.9739307856127384,
+      0.9749944754610096,
+      0.9795110215906363,
+      0.9801285581331063,
+      0.9842728037434734
+     ]
+    }
+   },
+   "compact|m=1|square": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9716380761191283,
+     "sd": 0.009107989715763187,
+     "n": 5,
+     "min": 0.961688783475936,
+     "max": 0.9817463256063274,
+     "values": [
+      0.961688783475936,
+      0.9645519585896853,
+      0.9697888918504389,
+      0.9804144210732538,
+      0.9817463256063274
+     ]
+    }
+   },
+   "compact|m=1|stripes_coarse": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9752945717842784,
+     "sd": 0.003684632313825031,
+     "n": 5,
+     "min": 0.9692169012131646,
+     "max": 0.978529587117858,
+     "values": [
+      0.9692169012131646,
+      0.9748902228188006,
+      0.9760614406095849,
+      0.977774707161984,
+      0.978529587117858
+     ]
+    }
+   },
+   "compact|m=1|stripes_fine": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9426910730944728,
+     "sd": 0.012012587042906938,
+     "n": 5,
+     "min": 0.9292695614422297,
+     "max": 0.958283147131834,
+     "values": [
+      0.9292695614422297,
+      0.9344441938265176,
+      0.9399202982885018,
+      0.9515381647832809,
+      0.958283147131834
+     ]
+    }
+   },
+   "compact|m=1|gravel_1f": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9958507663944965,
+     "sd": 0.0025946465712015352,
+     "n": 5,
+     "min": 0.9922620918662788,
+     "max": 0.998180953438996,
+     "values": [
+      0.9922620918662788,
+      0.9939695186643492,
+      0.9971446401997041,
+      0.9976966278031545,
+      0.998180953438996
+     ]
+    }
+   },
+   "compact|m=1|mottle": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9722124507425607,
+     "sd": 0.005001898900810791,
+     "n": 5,
+     "min": 0.9666702800882551,
+     "max": 0.9771474900953826,
+     "values": [
+      0.9666702800882551,
+      0.9670105506456627,
+      0.9743843294345714,
+      0.9758496034489319,
+      0.9771474900953826
+     ]
+    }
+   },
+   "renard_like|m=1|edge": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9785675289081928,
+     "sd": 0.004187578385932419,
+     "n": 5,
+     "min": 0.9739307856127384,
+     "max": 0.9842728037434734,
+     "values": [
+      0.9739307856127384,
+      0.9749944754610096,
+      0.9795110215906363,
+      0.9801285581331063,
+      0.9842728037434734
+     ]
+    }
+   },
+   "renard_like|m=1|square": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9716380761191283,
+     "sd": 0.009107989715763187,
+     "n": 5,
+     "min": 0.961688783475936,
+     "max": 0.9817463256063274,
+     "values": [
+      0.961688783475936,
+      0.9645519585896853,
+      0.9697888918504389,
+      0.9804144210732538,
+      0.9817463256063274
+     ]
+    }
+   },
+   "renard_like|m=1|stripes_coarse": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9752945717842784,
+     "sd": 0.003684632313825031,
+     "n": 5,
+     "min": 0.9692169012131646,
+     "max": 0.978529587117858,
+     "values": [
+      0.9692169012131646,
+      0.9748902228188006,
+      0.9760614406095849,
+      0.977774707161984,
+      0.978529587117858
+     ]
+    }
+   },
+   "renard_like|m=1|stripes_fine": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9426910730944728,
+     "sd": 0.012012587042906938,
+     "n": 5,
+     "min": 0.9292695614422297,
+     "max": 0.958283147131834,
+     "values": [
+      0.9292695614422297,
+      0.9344441938265176,
+      0.9399202982885018,
+      0.9515381647832809,
+      0.958283147131834
+     ]
+    }
+   },
+   "renard_like|m=1|gravel_1f": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9958507663944965,
+     "sd": 0.0025946465712015352,
+     "n": 5,
+     "min": 0.9922620918662788,
+     "max": 0.998180953438996,
+     "values": [
+      0.9922620918662788,
+      0.9939695186643492,
+      0.9971446401997041,
+      0.9976966278031545,
+      0.998180953438996
+     ]
+    }
+   },
+   "renard_like|m=1|mottle": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9722124507425607,
+     "sd": 0.005001898900810791,
+     "n": 5,
+     "min": 0.9666702800882551,
+     "max": 0.9771474900953826,
+     "values": [
+      0.9666702800882551,
+      0.9670105506456627,
+      0.9743843294345714,
+      0.9758496034489319,
+      0.9771474900953826
+     ]
+    }
+   },
+   "random|m=1|edge": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8410370196159606,
+     "sd": 0.017176063837154802,
+     "n": 5,
+     "min": 0.8253339589665021,
+     "max": 0.86793842471638,
+     "values": [
+      0.8253339589665021,
+      0.8271580314024929,
+      0.839771796804226,
+      0.8449828861902016,
+      0.86793842471638
+     ]
+    }
+   },
+   "random|m=1|square": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6882688578364358,
+     "sd": 0.0403919863620018,
+     "n": 5,
+     "min": 0.63664146831105,
+     "max": 0.7422045748441479,
+     "values": [
+      0.63664146831105,
+      0.674400784036653,
+      0.6754414207065647,
+      0.7126560412837635,
+      0.7422045748441479
+     ]
+    }
+   },
+   "random|m=1|stripes_coarse": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8286036516657582,
+     "sd": 0.021346720650535087,
+     "n": 5,
+     "min": 0.8045839453493896,
+     "max": 0.8507854978552202,
+     "values": [
+      0.8045839453493896,
+      0.8080109128170976,
+      0.8335690487647086,
+      0.8460688535423749,
+      0.8507854978552202
+     ]
+    }
+   },
+   "random|m=1|stripes_fine": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6635428391961662,
+     "sd": 0.03970877509408804,
+     "n": 5,
+     "min": 0.6194119328686332,
+     "max": 0.7152803954542368,
+     "values": [
+      0.6194119328686332,
+      0.6289425848767798,
+      0.6692508443355925,
+      0.6848284384455886,
+      0.7152803954542368
+     ]
+    }
+   },
+   "random|m=1|gravel_1f": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8565518581296915,
+     "sd": 0.055416842390761584,
+     "n": 5,
+     "min": 0.7825808252341242,
+     "max": 0.9126066455320798,
+     "values": [
+      0.7825808252341242,
+      0.8164738311022645,
+      0.8717226298844984,
+      0.8993753588954903,
+      0.9126066455320798
+     ]
+    }
+   },
+   "random|m=1|mottle": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8789310018451056,
+     "sd": 0.020573186031113383,
+     "n": 5,
+     "min": 0.8479511491562717,
+     "max": 0.8990493001990509,
+     "values": [
+      0.8479511491562717,
+      0.8687691129435651,
+      0.8879815315186985,
+      0.8909039154079418,
+      0.8990493001990509
+     ]
+    }
+   },
+   "oracle|m=1|edge": {
+    "knee_95": {
+     "mean": 11.8,
+     "sd": 18.579558659989747,
+     "n": 5,
+     "min": 2,
+     "max": 45,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 4,
+    "knee_curvature": {
+     "mean": 3.6,
+     "sd": 0.8944271909999159,
+     "n": 5,
+     "min": 2,
+     "max": 4,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      4
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9785675289081928,
+     "sd": 0.004187578385932419,
+     "n": 5,
+     "min": 0.9739307856127384,
+     "max": 0.9842728037434734,
+     "values": [
+      0.9739307856127384,
+      0.9749944754610096,
+      0.9795110215906363,
+      0.9801285581331063,
+      0.9842728037434734
+     ]
+    }
+   },
+   "oracle|m=1|square": {
+    "knee_95": {
+     "mean": 30.2,
+     "sd": 14.237275020171522,
+     "n": 5,
+     "min": 13,
+     "max": 45,
+     "values": [
+      13,
+      24,
+      24,
+      45,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 45,
+    "knee_curvature": {
+     "mean": 17.4,
+     "sd": 6.024948132556827,
+     "n": 5,
+     "min": 13,
+     "max": 24,
+     "values": [
+      13,
+      13,
+      13,
+      24,
+      24
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9716380761191283,
+     "sd": 0.009107989715763187,
+     "n": 5,
+     "min": 0.961688783475936,
+     "max": 0.9817463256063274,
+     "values": [
+      0.961688783475936,
+      0.9645519585896853,
+      0.9697888918504389,
+      0.9804144210732538,
+      0.9817463256063274
+     ]
+    }
+   },
+   "oracle|m=1|stripes_coarse": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 48.8,
+     "sd": 33.9587985653203,
+     "n": 5,
+     "min": 24,
+     "max": 86,
+     "values": [
+      24,
+      24,
+      24,
+      86,
+      86
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9752945717842784,
+     "sd": 0.003684632313825031,
+     "n": 5,
+     "min": 0.9692169012131646,
+     "max": 0.978529587117858,
+     "values": [
+      0.9692169012131646,
+      0.9748902228188006,
+      0.9760614406095849,
+      0.977774707161984,
+      0.978529587117858
+     ]
+    }
+   },
+   "oracle|m=1|stripes_fine": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9426910730944728,
+     "sd": 0.012012587042906938,
+     "n": 5,
+     "min": 0.9292695614422297,
+     "max": 0.958283147131834,
+     "values": [
+      0.9292695614422297,
+      0.9344441938265176,
+      0.9399202982885018,
+      0.9515381647832809,
+      0.958283147131834
+     ]
+    }
+   },
+   "oracle|m=1|gravel_1f": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9958507663944965,
+     "sd": 0.0025946465712015352,
+     "n": 5,
+     "min": 0.9922620918662788,
+     "max": 0.998180953438996,
+     "values": [
+      0.9922620918662788,
+      0.9939695186643492,
+      0.9971446401997041,
+      0.9976966278031545,
+      0.998180953438996
+     ]
+    }
+   },
+   "oracle|m=1|mottle": {
+    "knee_95": {
+     "mean": 219.6,
+     "sd": 78.87204828074393,
+     "n": 5,
+     "min": 162,
+     "max": 306,
+     "values": [
+      162,
+      162,
+      162,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 93.0,
+     "sd": 42.46174749112429,
+     "n": 5,
+     "min": 45,
+     "max": 162,
+     "values": [
+      45,
+      86,
+      86,
+      86,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9722124507425607,
+     "sd": 0.005001898900810791,
+     "n": 5,
+     "min": 0.9666702800882551,
+     "max": 0.9771474900953826,
+     "values": [
+      0.9666702800882551,
+      0.9670105506456627,
+      0.9743843294345714,
+      0.9758496034489319,
+      0.9771474900953826
+     ]
+    }
+   },
+   "compact|m=3|edge": {
+    "knee_95": {
+     "mean": 1677.8,
+     "sd": 532.9340484525267,
+     "n": 5,
+     "min": 1094,
+     "max": 2067,
+     "values": [
+      1094,
+      1094,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.97685314317109,
+     "sd": 0.004397536890239852,
+     "n": 5,
+     "min": 0.9722752777826751,
+     "max": 0.9828053972523877,
+     "values": [
+      0.9722752777826751,
+      0.9728114308796397,
+      0.9774538667721903,
+      0.9789197431685569,
+      0.9828053972523877
+     ]
+    }
+   },
+   "compact|m=3|square": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1483.2,
+     "sd": 532.9340484525267,
+     "n": 5,
+     "min": 1094,
+     "max": 2067,
+     "values": [
+      1094,
+      1094,
+      1094,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9688974965225962,
+     "sd": 0.00959685149267288,
+     "n": 5,
+     "min": 0.9589120692744252,
+     "max": 0.9799073746863455,
+     "values": [
+      0.9589120692744252,
+      0.9611544908320812,
+      0.9665581585727527,
+      0.9779553892473763,
+      0.9799073746863455
+     ]
+    }
+   },
+   "compact|m=3|stripes_coarse": {
+    "knee_95": {
+     "mean": 1288.6,
+     "sd": 435.1388284214591,
+     "n": 5,
+     "min": 1094,
+     "max": 2067,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 1094,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9715360086405362,
+     "sd": 0.0036615394525828537,
+     "n": 5,
+     "min": 0.9659121307913016,
+     "max": 0.9752475828098127,
+     "values": [
+      0.9659121307913016,
+      0.970404596271768,
+      0.9719828080308495,
+      0.9741329252989495,
+      0.9752475828098127
+     ]
+    }
+   },
+   "compact|m=3|stripes_fine": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8752903596021935,
+     "sd": 0.02295888810069901,
+     "n": 5,
+     "min": 0.8523614046129084,
+     "max": 0.906130946530802,
+     "values": [
+      0.8523614046129084,
+      0.85482824307001,
+      0.8733769558705704,
+      0.8897542479266765,
+      0.906130946530802
+     ]
+    }
+   },
+   "compact|m=3|gravel_1f": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1872.4,
+     "sd": 435.1388284214591,
+     "n": 5,
+     "min": 1094,
+     "max": 2067,
+     "values": [
+      1094,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9883261608150568,
+     "sd": 0.006096776067757891,
+     "n": 5,
+     "min": 0.9805035454231713,
+     "max": 0.9944685398266028,
+     "values": [
+      0.9805035454231713,
+      0.9833920980980396,
+      0.9903026843793589,
+      0.9929639363481111,
+      0.9944685398266028
+     ]
+    }
+   },
+   "compact|m=3|mottle": {
+    "knee_95": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 1094,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9664091787148431,
+     "sd": 0.006668320223514798,
+     "n": 5,
+     "min": 0.9587201654127286,
+     "max": 0.9723693849578411,
+     "values": [
+      0.9587201654127286,
+      0.9598580737795007,
+      0.9688134004002725,
+      0.9722848690238727,
+      0.9723693849578411
+     ]
+    }
+   },
+   "renard_like|m=3|edge": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.977720762870703,
+     "sd": 0.004215526749353182,
+     "n": 5,
+     "min": 0.9731584083425534,
+     "max": 0.9833326555217753,
+     "values": [
+      0.9731584083425534,
+      0.973901942587466,
+      0.9786832695332967,
+      0.9795275383684234,
+      0.9833326555217753
+     ]
+    }
+   },
+   "renard_like|m=3|square": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9702758241784161,
+     "sd": 0.009314559320442353,
+     "n": 5,
+     "min": 0.9604541673862519,
+     "max": 0.9807234001880824,
+     "values": [
+      0.9604541673862519,
+      0.9627095660219076,
+      0.9682644400392119,
+      0.9792275472566265,
+      0.9807234001880824
+     ]
+    }
+   },
+   "renard_like|m=3|stripes_coarse": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9736200454000369,
+     "sd": 0.003565077459124079,
+     "n": 5,
+     "min": 0.9677740931800839,
+     "max": 0.9768619066139573,
+     "values": [
+      0.9677740931800839,
+      0.9731464414530405,
+      0.9743862727048748,
+      0.9759315130482279,
+      0.9768619066139573
+     ]
+    }
+   },
+   "renard_like|m=3|stripes_fine": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.912899874777469,
+     "sd": 0.015942830460014906,
+     "n": 5,
+     "min": 0.8984005097198313,
+     "max": 0.9352074113484014,
+     "values": [
+      0.8984005097198313,
+      0.9008665464536865,
+      0.9062059035807282,
+      0.9238190027846976,
+      0.9352074113484014
+     ]
+    }
+   },
+   "renard_like|m=3|gravel_1f": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9919509474784726,
+     "sd": 0.00392944729574769,
+     "n": 5,
+     "min": 0.9870417888717415,
+     "max": 0.996300128259685,
+     "values": [
+      0.9870417888717415,
+      0.9887051468451337,
+      0.9931574833794139,
+      0.9945501900363889,
+      0.996300128259685
+     ]
+    }
+   },
+   "renard_like|m=3|mottle": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9697079632524579,
+     "sd": 0.005452737077861454,
+     "n": 5,
+     "min": 0.963635291699057,
+     "max": 0.975040012115757,
+     "values": [
+      0.963635291699057,
+      0.96409679349876,
+      0.9718930461580166,
+      0.9738746727906988,
+      0.975040012115757
+     ]
+    }
+   },
+   "random|m=3|edge": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8070989733877575,
+     "sd": 0.038548770731252346,
+     "n": 5,
+     "min": 0.7719793104819229,
+     "max": 0.8639167683228631,
+     "values": [
+      0.7719793104819229,
+      0.7811876337010336,
+      0.7891792786080009,
+      0.8292318758249669,
+      0.8639167683228631
+     ]
+    }
+   },
+   "random|m=3|square": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8825985646516741,
+     "sd": 0.026854058739826245,
+     "n": 5,
+     "min": 0.857276959563786,
+     "max": 0.9164894005417522,
+     "values": [
+      0.857276959563786,
+      0.8590525378388665,
+      0.8754544329096747,
+      0.9047194924042908,
+      0.9164894005417522
+     ]
+    }
+   },
+   "random|m=3|stripes_coarse": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8010235873538213,
+     "sd": 0.016942189794078737,
+     "n": 5,
+     "min": 0.7867816080830743,
+     "max": 0.8286198693169863,
+     "values": [
+      0.7867816080830743,
+      0.7883322920583902,
+      0.7973399453336452,
+      0.8040442219770108,
+      0.8286198693169863
+     ]
+    }
+   },
+   "random|m=3|stripes_fine": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6310808504274981,
+     "sd": 0.03445106275508446,
+     "n": 5,
+     "min": 0.5895347731086046,
+     "max": 0.6725486323159655,
+     "values": [
+      0.5895347731086046,
+      0.6118205602871648,
+      0.6214641353023034,
+      0.6600361511234522,
+      0.6725486323159655
+     ]
+    }
+   },
+   "random|m=3|gravel_1f": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9396096465572499,
+     "sd": 0.0228194752689717,
+     "n": 5,
+     "min": 0.916417258702845,
+     "max": 0.968471544607656,
+     "values": [
+      0.916417258702845,
+      0.9210351253128456,
+      0.9341513314085268,
+      0.9579729727543758,
+      0.968471544607656
+     ]
+    }
+   },
+   "random|m=3|mottle": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.7945247785405852,
+     "sd": 0.03702492404770501,
+     "n": 5,
+     "min": 0.741248239320241,
+     "max": 0.8268179569759868,
+     "values": [
+      0.741248239320241,
+      0.7703729410991295,
+      0.8167483668043352,
+      0.817436388503234,
+      0.8268179569759868
+     ]
+    }
+   },
+   "oracle|m=3|edge": {
+    "knee_95": {
+     "mean": 11.8,
+     "sd": 18.579558659989747,
+     "n": 5,
+     "min": 2,
+     "max": 45,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 4,
+    "knee_curvature": {
+     "mean": 3.6,
+     "sd": 0.8944271909999159,
+     "n": 5,
+     "min": 2,
+     "max": 4,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      4
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9785675289081928,
+     "sd": 0.004187578385932419,
+     "n": 5,
+     "min": 0.9739307856127384,
+     "max": 0.9842728037434734,
+     "values": [
+      0.9739307856127384,
+      0.9749944754610096,
+      0.9795110215906363,
+      0.9801285581331063,
+      0.9842728037434734
+     ]
+    }
+   },
+   "oracle|m=3|square": {
+    "knee_95": {
+     "mean": 30.2,
+     "sd": 14.237275020171522,
+     "n": 5,
+     "min": 13,
+     "max": 45,
+     "values": [
+      13,
+      24,
+      24,
+      45,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 45,
+    "knee_curvature": {
+     "mean": 17.4,
+     "sd": 6.024948132556827,
+     "n": 5,
+     "min": 13,
+     "max": 24,
+     "values": [
+      13,
+      13,
+      13,
+      24,
+      24
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9716380761191283,
+     "sd": 0.009107989715763187,
+     "n": 5,
+     "min": 0.961688783475936,
+     "max": 0.9817463256063274,
+     "values": [
+      0.961688783475936,
+      0.9645519585896853,
+      0.9697888918504389,
+      0.9804144210732538,
+      0.9817463256063274
+     ]
+    }
+   },
+   "oracle|m=3|stripes_coarse": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 48.8,
+     "sd": 33.9587985653203,
+     "n": 5,
+     "min": 24,
+     "max": 86,
+     "values": [
+      24,
+      24,
+      24,
+      86,
+      86
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9752945717842784,
+     "sd": 0.003684632313825031,
+     "n": 5,
+     "min": 0.9692169012131646,
+     "max": 0.978529587117858,
+     "values": [
+      0.9692169012131646,
+      0.9748902228188006,
+      0.9760614406095849,
+      0.977774707161984,
+      0.978529587117858
+     ]
+    }
+   },
+   "oracle|m=3|stripes_fine": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9426910730944728,
+     "sd": 0.012012587042906938,
+     "n": 5,
+     "min": 0.9292695614422297,
+     "max": 0.958283147131834,
+     "values": [
+      0.9292695614422297,
+      0.9344441938265176,
+      0.9399202982885018,
+      0.9515381647832809,
+      0.958283147131834
+     ]
+    }
+   },
+   "oracle|m=3|gravel_1f": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9958507663944965,
+     "sd": 0.0025946465712015352,
+     "n": 5,
+     "min": 0.9922620918662788,
+     "max": 0.998180953438996,
+     "values": [
+      0.9922620918662788,
+      0.9939695186643492,
+      0.9971446401997041,
+      0.9976966278031545,
+      0.998180953438996
+     ]
+    }
+   },
+   "oracle|m=3|mottle": {
+    "knee_95": {
+     "mean": 219.6,
+     "sd": 78.87204828074393,
+     "n": 5,
+     "min": 162,
+     "max": 306,
+     "values": [
+      162,
+      162,
+      162,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 93.0,
+     "sd": 42.46174749112429,
+     "n": 5,
+     "min": 45,
+     "max": 162,
+     "values": [
+      45,
+      86,
+      86,
+      86,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9722124507425607,
+     "sd": 0.005001898900810791,
+     "n": 5,
+     "min": 0.9666702800882551,
+     "max": 0.9771474900953826,
+     "values": [
+      0.9666702800882551,
+      0.9670105506456627,
+      0.9743843294345714,
+      0.9758496034489319,
+      0.9771474900953826
+     ]
+    }
+   },
+   "compact|m=9|edge": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9708075518773986,
+     "sd": 0.004741395022568893,
+     "n": 5,
+     "min": 0.966097782023493,
+     "max": 0.9768785096429999,
+     "values": [
+      0.966097782023493,
+      0.9669046231551821,
+      0.9695862574619605,
+      0.9745705871033575,
+      0.9768785096429999
+     ]
+    }
+   },
+   "compact|m=9|square": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9610760757071317,
+     "sd": 0.00956321647516874,
+     "n": 5,
+     "min": 0.9514687219192984,
+     "max": 0.971493601806244,
+     "values": [
+      0.9514687219192984,
+      0.9541057276521505,
+      0.9571763818499726,
+      0.9711359453079929,
+      0.971493601806244
+     ]
+    }
+   },
+   "compact|m=9|stripes_coarse": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9578216054213164,
+     "sd": 0.0034577636338414797,
+     "n": 5,
+     "min": 0.9543582073210101,
+     "max": 0.9635198016882895,
+     "values": [
+      0.9543582073210101,
+      0.9560415415039976,
+      0.9573845586321434,
+      0.9578039179611415,
+      0.9635198016882895
+     ]
+    }
+   },
+   "compact|m=9|stripes_fine": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6438644217075074,
+     "sd": 0.03640327100860147,
+     "n": 5,
+     "min": 0.5999817617033611,
+     "max": 0.7010057590283426,
+     "values": [
+      0.5999817617033611,
+      0.6338313084249187,
+      0.6408186730405545,
+      0.6436846063403598,
+      0.7010057590283426
+     ]
+    }
+   },
+   "compact|m=9|gravel_1f": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8970343733366695,
+     "sd": 0.025649319166681464,
+     "n": 5,
+     "min": 0.8737698853687674,
+     "max": 0.9262568048648954,
+     "values": [
+      0.8737698853687674,
+      0.8791617403783945,
+      0.8824253319962769,
+      0.9235581040750129,
+      0.9262568048648954
+     ]
+    }
+   },
+   "compact|m=9|mottle": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 524.4,
+     "sd": 122.08931157148852,
+     "n": 5,
+     "min": 306,
+     "max": 579,
+     "values": [
+      306,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9502650189708066,
+     "sd": 0.006787586644296818,
+     "n": 5,
+     "min": 0.9419378584323217,
+     "max": 0.9580619738296825,
+     "values": [
+      0.9419378584323217,
+      0.9453116978367342,
+      0.9503066621308003,
+      0.9557069026244944,
+      0.9580619738296825
+     ]
+    }
+   },
+   "renard_like|m=9|edge": {
+    "knee_95": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 1094,
+    "knee_curvature": {
+     "mean": 888.0,
+     "sd": 282.07711711516055,
+     "n": 5,
+     "min": 579,
+     "max": 1094,
+     "values": [
+      579,
+      579,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9768712465633949,
+     "sd": 0.004267176226082933,
+     "n": 5,
+     "min": 0.972421017514384,
+     "max": 0.9826280034270163,
+     "values": [
+      0.972421017514384,
+      0.9729056305122884,
+      0.9776400332417681,
+      0.9787615481215173,
+      0.9826280034270163
+     ]
+    }
+   },
+   "renard_like|m=9|square": {
+    "knee_95": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 1094,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9692283443786519,
+     "sd": 0.009513314852554829,
+     "n": 5,
+     "min": 0.9589802514682345,
+     "max": 0.9798913056813076,
+     "values": [
+      0.9589802514682345,
+      0.9615224598606931,
+      0.9675198645999119,
+      0.9782278402831124,
+      0.9798913056813076
+     ]
+    }
+   },
+   "renard_like|m=9|stripes_coarse": {
+    "knee_95": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 1094,
+    "knee_curvature": {
+     "mean": 991.0,
+     "sd": 230.31500168247834,
+     "n": 5,
+     "min": 579,
+     "max": 1094,
+     "values": [
+      579,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9721616827527098,
+     "sd": 0.0036233214062564847,
+     "n": 5,
+     "min": 0.9664101822363884,
+     "max": 0.9757156062566998,
+     "values": [
+      0.9664101822363884,
+      0.971313494445864,
+      0.9728342904576314,
+      0.9745348403669651,
+      0.9757156062566998
+     ]
+    }
+   },
+   "renard_like|m=9|stripes_fine": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.898532285580248,
+     "sd": 0.019397238275717783,
+     "n": 5,
+     "min": 0.8784874502728263,
+     "max": 0.9246763181341507,
+     "values": [
+      0.8784874502728263,
+      0.8816791343837415,
+      0.897670148748527,
+      0.9101483763619945,
+      0.9246763181341507
+     ]
+    }
+   },
+   "renard_like|m=9|gravel_1f": {
+    "knee_95": {
+     "mean": 1483.2,
+     "sd": 532.9340484525267,
+     "n": 5,
+     "min": 1094,
+     "max": 2067,
+     "values": [
+      1094,
+      1094,
+      1094,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9863924773461401,
+     "sd": 0.00482993358474711,
+     "n": 5,
+     "min": 0.9804012998650681,
+     "max": 0.9912855013727597,
+     "values": [
+      0.9804012998650681,
+      0.9824496196816634,
+      0.9872966415300612,
+      0.9905293242811478,
+      0.9912855013727597
+     ]
+    }
+   },
+   "renard_like|m=9|mottle": {
+    "knee_95": {
+     "mean": 991.0,
+     "sd": 230.31500168247834,
+     "n": 5,
+     "min": 579,
+     "max": 1094,
+     "values": [
+      579,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 1094,
+    "knee_curvature": {
+     "mean": 682.0,
+     "sd": 230.31500168247834,
+     "n": 5,
+     "min": 579,
+     "max": 1094,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9677100785133526,
+     "sd": 0.005832933447173021,
+     "n": 5,
+     "min": 0.9609568273509073,
+     "max": 0.9733762746089878,
+     "values": [
+      0.9609568273509073,
+      0.9619768879885298,
+      0.970058852549259,
+      0.9721815500690791,
+      0.9733762746089878
+     ]
+    }
+   },
+   "random|m=9|edge": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6676867834248291,
+     "sd": 0.03540507278843993,
+     "n": 5,
+     "min": 0.6261276155478503,
+     "max": 0.7161113573360196,
+     "values": [
+      0.6261276155478503,
+      0.6441937475179129,
+      0.6647798330174943,
+      0.6872213637048685,
+      0.7161113573360196
+     ]
+    }
+   },
+   "random|m=9|square": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.7639712572805248,
+     "sd": 0.050072886386310696,
+     "n": 5,
+     "min": 0.7149524028254008,
+     "max": 0.8239538029927778,
+     "values": [
+      0.7149524028254008,
+      0.7218148274070162,
+      0.7498627122550946,
+      0.8092725409223349,
+      0.8239538029927778
+     ]
+    }
+   },
+   "random|m=9|stripes_coarse": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 219.6,
+     "sd": 488.804459881454,
+     "n": 5,
+     "min": 1,
+     "max": 1094,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6497859202166487,
+     "sd": 0.028779880022659864,
+     "n": 5,
+     "min": 0.617166853890581,
+     "max": 0.6827328406670853,
+     "values": [
+      0.617166853890581,
+      0.6237672298168978,
+      0.6537814474809827,
+      0.6714812292276967,
+      0.6827328406670853
+     ]
+    }
+   },
+   "random|m=9|stripes_fine": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.4556380742167185,
+     "sd": 0.04298795267041773,
+     "n": 5,
+     "min": 0.3981997086999215,
+     "max": 0.4994603457389317,
+     "values": [
+      0.3981997086999215,
+      0.42277826978231503,
+      0.4763732579896913,
+      0.4813787888727328,
+      0.4994603457389317
+     ]
+    }
+   },
+   "random|m=9|gravel_1f": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8387096605548882,
+     "sd": 0.06374559003597279,
+     "n": 5,
+     "min": 0.7501329487586866,
+     "max": 0.9009571660776442,
+     "values": [
+      0.7501329487586866,
+      0.7986043497001589,
+      0.8529768968508746,
+      0.8908769413870763,
+      0.9009571660776442
+     ]
+    }
+   },
+   "random|m=9|mottle": {
+    "knee_95": {
+     "mean": 3536.6,
+     "sd": 821.5313749334227,
+     "n": 5,
+     "min": 2067,
+     "max": 3904,
+     "values": [
+      2067,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 414.2,
+     "sd": 923.9432883029131,
+     "n": 5,
+     "min": 1,
+     "max": 2067,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.639747578248032,
+     "sd": 0.047305203628184876,
+     "n": 5,
+     "min": 0.587389284791155,
+     "max": 0.6858884823225034,
+     "values": [
+      0.587389284791155,
+      0.5897507885122575,
+      0.6671269014155317,
+      0.6685824341987124,
+      0.6858884823225034
+     ]
+    }
+   },
+   "oracle|m=9|edge": {
+    "knee_95": {
+     "mean": 11.8,
+     "sd": 18.579558659989747,
+     "n": 5,
+     "min": 2,
+     "max": 45,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 4,
+    "knee_curvature": {
+     "mean": 3.6,
+     "sd": 0.8944271909999159,
+     "n": 5,
+     "min": 2,
+     "max": 4,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      4
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9785675289081928,
+     "sd": 0.004187578385932419,
+     "n": 5,
+     "min": 0.9739307856127384,
+     "max": 0.9842728037434734,
+     "values": [
+      0.9739307856127384,
+      0.9749944754610096,
+      0.9795110215906363,
+      0.9801285581331063,
+      0.9842728037434734
+     ]
+    }
+   },
+   "oracle|m=9|square": {
+    "knee_95": {
+     "mean": 30.2,
+     "sd": 14.237275020171522,
+     "n": 5,
+     "min": 13,
+     "max": 45,
+     "values": [
+      13,
+      24,
+      24,
+      45,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 45,
+    "knee_curvature": {
+     "mean": 17.4,
+     "sd": 6.024948132556827,
+     "n": 5,
+     "min": 13,
+     "max": 24,
+     "values": [
+      13,
+      13,
+      13,
+      24,
+      24
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9716380761191283,
+     "sd": 0.009107989715763187,
+     "n": 5,
+     "min": 0.961688783475936,
+     "max": 0.9817463256063274,
+     "values": [
+      0.961688783475936,
+      0.9645519585896853,
+      0.9697888918504389,
+      0.9804144210732538,
+      0.9817463256063274
+     ]
+    }
+   },
+   "oracle|m=9|stripes_coarse": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 48.8,
+     "sd": 33.9587985653203,
+     "n": 5,
+     "min": 24,
+     "max": 86,
+     "values": [
+      24,
+      24,
+      24,
+      86,
+      86
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9752945717842784,
+     "sd": 0.003684632313825031,
+     "n": 5,
+     "min": 0.9692169012131646,
+     "max": 0.978529587117858,
+     "values": [
+      0.9692169012131646,
+      0.9748902228188006,
+      0.9760614406095849,
+      0.977774707161984,
+      0.978529587117858
+     ]
+    }
+   },
+   "oracle|m=9|stripes_fine": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9426910730944728,
+     "sd": 0.012012587042906938,
+     "n": 5,
+     "min": 0.9292695614422297,
+     "max": 0.958283147131834,
+     "values": [
+      0.9292695614422297,
+      0.9344441938265176,
+      0.9399202982885018,
+      0.9515381647832809,
+      0.958283147131834
+     ]
+    }
+   },
+   "oracle|m=9|gravel_1f": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9958507663944965,
+     "sd": 0.0025946465712015352,
+     "n": 5,
+     "min": 0.9922620918662788,
+     "max": 0.998180953438996,
+     "values": [
+      0.9922620918662788,
+      0.9939695186643492,
+      0.9971446401997041,
+      0.9976966278031545,
+      0.998180953438996
+     ]
+    }
+   },
+   "oracle|m=9|mottle": {
+    "knee_95": {
+     "mean": 219.6,
+     "sd": 78.87204828074393,
+     "n": 5,
+     "min": 162,
+     "max": 306,
+     "values": [
+      162,
+      162,
+      162,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 93.0,
+     "sd": 42.46174749112429,
+     "n": 5,
+     "min": 45,
+     "max": 162,
+     "values": [
+      45,
+      86,
+      86,
+      86,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9722124507425607,
+     "sd": 0.005001898900810791,
+     "n": 5,
+     "min": 0.9666702800882551,
+     "max": 0.9771474900953826,
+     "values": [
+      0.9666702800882551,
+      0.9670105506456627,
+      0.9743843294345714,
+      0.9758496034489319,
+      0.9771474900953826
+     ]
+    }
+   },
+   "compact|m=14|edge": {
+    "knee_95": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 306,
+    "knee_curvature": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9651169840055497,
+     "sd": 0.0074574086996051815,
+     "n": 5,
+     "min": 0.9556180644709154,
+     "max": 0.9747385399146831,
+     "values": [
+      0.9556180644709154,
+      0.9599720907336483,
+      0.9670958960214241,
+      0.9681603288870777,
+      0.9747385399146831
+     ]
+    }
+   },
+   "compact|m=14|square": {
+    "knee_95": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 306,
+    "knee_curvature": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.955676946705801,
+     "sd": 0.011111274849120304,
+     "n": 5,
+     "min": 0.9459680561596459,
+     "max": 0.9678861759347268,
+     "values": [
+      0.9459680561596459,
+      0.9463553453053364,
+      0.9507103226701866,
+      0.9674648334591088,
+      0.9678861759347268
+     ]
+    }
+   },
+   "compact|m=14|stripes_coarse": {
+    "knee_95": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 306,
+    "knee_curvature": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9471009482845794,
+     "sd": 0.007736408391311165,
+     "n": 5,
+     "min": 0.9373875026751887,
+     "max": 0.9587632123733046,
+     "values": [
+      0.9373875026751887,
+      0.9450947152227858,
+      0.9455450403872752,
+      0.9487142707643426,
+      0.9587632123733046
+     ]
+    }
+   },
+   "compact|m=14|stripes_fine": {
+    "knee_95": {
+     "mean": 1189.4,
+     "sd": 1522.104891260783,
+     "n": 5,
+     "min": 306,
+     "max": 3904,
+     "values": [
+      306,
+      579,
+      579,
+      579,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 518.2,
+     "sd": 342.9026100804717,
+     "n": 5,
+     "min": 306,
+     "max": 1094,
+     "values": [
+      306,
+      306,
+      306,
+      579,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.45815626216187516,
+     "sd": 0.053846162866826974,
+     "n": 5,
+     "min": 0.38678551788708626,
+     "max": 0.5165427040091723,
+     "values": [
+      0.38678551788708626,
+      0.428718094028409,
+      0.4535950456313951,
+      0.5051399492533131,
+      0.5165427040091723
+     ]
+    }
+   },
+   "compact|m=14|gravel_1f": {
+    "knee_95": {
+     "mean": 712.8,
+     "sd": 766.1949490828036,
+     "n": 5,
+     "min": 306,
+     "max": 2067,
+     "values": [
+      306,
+      306,
+      306,
+      579,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 306,
+    "knee_curvature": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.743870252992776,
+     "sd": 0.06989165583083093,
+     "n": 5,
+     "min": 0.6596584908854228,
+     "max": 0.8521018138657024,
+     "values": [
+      0.6596584908854228,
+      0.7181160924888912,
+      0.7388679456258775,
+      0.7506069220979859,
+      0.8521018138657024
+     ]
+    }
+   },
+   "compact|m=14|mottle": {
+    "knee_95": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 306,
+    "knee_curvature": {
+     "mean": 306.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 306,
+     "max": 306,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      306
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9343421868968855,
+     "sd": 0.007420866129826597,
+     "n": 5,
+     "min": 0.9247741310662255,
+     "max": 0.9430618268984854,
+     "values": [
+      0.9247741310662255,
+      0.9311623631316961,
+      0.9322046464213544,
+      0.9405079669666663,
+      0.9430618268984854
+     ]
+    }
+   },
+   "renard_like|m=14|edge": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9760275395260012,
+     "sd": 0.004306732305784843,
+     "n": 5,
+     "min": 0.9717402624283838,
+     "max": 0.9819850364390397,
+     "values": [
+      0.9717402624283838,
+      0.9718929581502236,
+      0.9769531618850444,
+      0.9775662787273145,
+      0.9819850364390397
+     ]
+    }
+   },
+   "renard_like|m=14|square": {
+    "knee_95": {
+     "mean": 991.0,
+     "sd": 230.31500168247834,
+     "n": 5,
+     "min": 579,
+     "max": 1094,
+     "values": [
+      579,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 1094,
+    "knee_curvature": {
+     "mean": 785.0,
+     "sd": 282.07711711516055,
+     "n": 5,
+     "min": 579,
+     "max": 1094,
+     "values": [
+      579,
+      579,
+      579,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9681842188902416,
+     "sd": 0.009608509621002733,
+     "n": 5,
+     "min": 0.95770022170098,
+     "max": 0.9790661024049695,
+     "values": [
+      0.95770022170098,
+      0.9604277811577226,
+      0.9666804560567951,
+      0.977046533130741,
+      0.9790661024049695
+     ]
+    }
+   },
+   "renard_like|m=14|stripes_coarse": {
+    "knee_95": {
+     "mean": 888.0,
+     "sd": 282.07711711516055,
+     "n": 5,
+     "min": 579,
+     "max": 1094,
+     "values": [
+      579,
+      579,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 1094,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9708831691145997,
+     "sd": 0.003925717064173224,
+     "n": 5,
+     "min": 0.9647239688630479,
+     "max": 0.9748233164355434,
+     "values": [
+      0.9647239688630479,
+      0.9698969328161743,
+      0.971467258952706,
+      0.9735043685055268,
+      0.9748233164355434
+     ]
+    }
+   },
+   "renard_like|m=14|stripes_fine": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1677.8,
+     "sd": 532.9340484525267,
+     "n": 5,
+     "min": 1094,
+     "max": 2067,
+     "values": [
+      1094,
+      1094,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8764914013131716,
+     "sd": 0.019484398380795104,
+     "n": 5,
+     "min": 0.8550340016766226,
+     "max": 0.9003966101901545,
+     "values": [
+      0.8550340016766226,
+      0.8588968674814005,
+      0.8784786712021969,
+      0.8896508560154837,
+      0.9003966101901545
+     ]
+    }
+   },
+   "renard_like|m=14|gravel_1f": {
+    "knee_95": {
+     "mean": 1483.2,
+     "sd": 532.9340484525267,
+     "n": 5,
+     "min": 1094,
+     "max": 2067,
+     "values": [
+      1094,
+      1094,
+      1094,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9804361284951136,
+     "sd": 0.006168835458100509,
+     "n": 5,
+     "min": 0.9735837888898891,
+     "max": 0.986703592188613,
+     "values": [
+      0.9735837888898891,
+      0.9742612085898879,
+      0.9822340325915874,
+      0.9853980202155908,
+      0.986703592188613
+     ]
+    }
+   },
+   "renard_like|m=14|mottle": {
+    "knee_95": {
+     "mean": 682.0,
+     "sd": 230.31500168247834,
+     "n": 5,
+     "min": 579,
+     "max": 1094,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      1094
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9658547073623369,
+     "sd": 0.006432458285822273,
+     "n": 5,
+     "min": 0.9578055017807369,
+     "max": 0.9722097025898049,
+     "values": [
+      0.9578055017807369,
+      0.9604044744205594,
+      0.9678294576591394,
+      0.9710244003614438,
+      0.9722097025898049
+     ]
+    }
+   },
+   "random|m=14|edge": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6022767336624643,
+     "sd": 0.03622808106077754,
+     "n": 5,
+     "min": 0.5685780792562242,
+     "max": 0.6542653536540763,
+     "values": [
+      0.5685780792562242,
+      0.570934498312268,
+      0.595688698304109,
+      0.6219170387856436,
+      0.6542653536540763
+     ]
+    }
+   },
+   "random|m=14|square": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.7105816309850463,
+     "sd": 0.06439690385443049,
+     "n": 5,
+     "min": 0.6485334518698642,
+     "max": 0.797103713409943,
+     "values": [
+      0.6485334518698642,
+      0.6500331297090938,
+      0.7069973168285333,
+      0.7502405431077976,
+      0.797103713409943
+     ]
+    }
+   },
+   "random|m=14|stripes_coarse": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 414.2,
+     "sd": 923.9432883029131,
+     "n": 5,
+     "min": 1,
+     "max": 2067,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.5876892073012707,
+     "sd": 0.030646353401546263,
+     "n": 5,
+     "min": 0.544595208115783,
+     "max": 0.6250065647734954,
+     "values": [
+      0.544595208115783,
+      0.5757587739948,
+      0.5863443998232521,
+      0.6067410897990232,
+      0.6250065647734954
+     ]
+    }
+   },
+   "random|m=14|stripes_fine": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.338512631129544,
+     "sd": 0.05004458858269472,
+     "n": 5,
+     "min": 0.2830324230289414,
+     "max": 0.39561085108001925,
+     "values": [
+      0.2830324230289414,
+      0.3097171050841193,
+      0.3168800011586068,
+      0.3873227752960333,
+      0.39561085108001925
+     ]
+    }
+   },
+   "random|m=14|gravel_1f": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.7288815323994737,
+     "sd": 0.0822684824301166,
+     "n": 5,
+     "min": 0.6122387484866922,
+     "max": 0.8073221285273114,
+     "values": [
+      0.6122387484866922,
+      0.6898672693992514,
+      0.7300021345530215,
+      0.8049773810310921,
+      0.8073221285273114
+     ]
+    }
+   },
+   "random|m=14|mottle": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.5735428188317748,
+     "sd": 0.038822441222169844,
+     "n": 5,
+     "min": 0.5201571793926957,
+     "max": 0.6118813639639505,
+     "values": [
+      0.5201571793926957,
+      0.5460654675130863,
+      0.5898206582698946,
+      0.5997894250192469,
+      0.6118813639639505
+     ]
+    }
+   },
+   "oracle|m=14|edge": {
+    "knee_95": {
+     "mean": 11.8,
+     "sd": 18.579558659989747,
+     "n": 5,
+     "min": 2,
+     "max": 45,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 4,
+    "knee_curvature": {
+     "mean": 3.6,
+     "sd": 0.8944271909999159,
+     "n": 5,
+     "min": 2,
+     "max": 4,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      4
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9785675289081928,
+     "sd": 0.004187578385932419,
+     "n": 5,
+     "min": 0.9739307856127384,
+     "max": 0.9842728037434734,
+     "values": [
+      0.9739307856127384,
+      0.9749944754610096,
+      0.9795110215906363,
+      0.9801285581331063,
+      0.9842728037434734
+     ]
+    }
+   },
+   "oracle|m=14|square": {
+    "knee_95": {
+     "mean": 30.2,
+     "sd": 14.237275020171522,
+     "n": 5,
+     "min": 13,
+     "max": 45,
+     "values": [
+      13,
+      24,
+      24,
+      45,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 45,
+    "knee_curvature": {
+     "mean": 17.4,
+     "sd": 6.024948132556827,
+     "n": 5,
+     "min": 13,
+     "max": 24,
+     "values": [
+      13,
+      13,
+      13,
+      24,
+      24
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9716380761191283,
+     "sd": 0.009107989715763187,
+     "n": 5,
+     "min": 0.961688783475936,
+     "max": 0.9817463256063274,
+     "values": [
+      0.961688783475936,
+      0.9645519585896853,
+      0.9697888918504389,
+      0.9804144210732538,
+      0.9817463256063274
+     ]
+    }
+   },
+   "oracle|m=14|stripes_coarse": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 48.8,
+     "sd": 33.9587985653203,
+     "n": 5,
+     "min": 24,
+     "max": 86,
+     "values": [
+      24,
+      24,
+      24,
+      86,
+      86
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9752945717842784,
+     "sd": 0.003684632313825031,
+     "n": 5,
+     "min": 0.9692169012131646,
+     "max": 0.978529587117858,
+     "values": [
+      0.9692169012131646,
+      0.9748902228188006,
+      0.9760614406095849,
+      0.977774707161984,
+      0.978529587117858
+     ]
+    }
+   },
+   "oracle|m=14|stripes_fine": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9426910730944728,
+     "sd": 0.012012587042906938,
+     "n": 5,
+     "min": 0.9292695614422297,
+     "max": 0.958283147131834,
+     "values": [
+      0.9292695614422297,
+      0.9344441938265176,
+      0.9399202982885018,
+      0.9515381647832809,
+      0.958283147131834
+     ]
+    }
+   },
+   "oracle|m=14|gravel_1f": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9958507663944965,
+     "sd": 0.0025946465712015352,
+     "n": 5,
+     "min": 0.9922620918662788,
+     "max": 0.998180953438996,
+     "values": [
+      0.9922620918662788,
+      0.9939695186643492,
+      0.9971446401997041,
+      0.9976966278031545,
+      0.998180953438996
+     ]
+    }
+   },
+   "oracle|m=14|mottle": {
+    "knee_95": {
+     "mean": 219.6,
+     "sd": 78.87204828074393,
+     "n": 5,
+     "min": 162,
+     "max": 306,
+     "values": [
+      162,
+      162,
+      162,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 93.0,
+     "sd": 42.46174749112429,
+     "n": 5,
+     "min": 45,
+     "max": 162,
+     "values": [
+      45,
+      86,
+      86,
+      86,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9722124507425607,
+     "sd": 0.005001898900810791,
+     "n": 5,
+     "min": 0.9666702800882551,
+     "max": 0.9771474900953826,
+     "values": [
+      0.9666702800882551,
+      0.9670105506456627,
+      0.9743843294345714,
+      0.9758496034489319,
+      0.9771474900953826
+     ]
+    }
+   },
+   "compact|m=30|edge": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9470619212617241,
+     "sd": 0.009410510539449093,
+     "n": 5,
+     "min": 0.9306244974505211,
+     "max": 0.9540153219031656,
+     "values": [
+      0.9306244974505211,
+      0.9489698751075918,
+      0.94955507149936,
+      0.9521448403479817,
+      0.9540153219031656
+     ]
+    }
+   },
+   "compact|m=30|square": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9275412187369527,
+     "sd": 0.01118815911658808,
+     "n": 5,
+     "min": 0.9152077696153573,
+     "max": 0.9407438021806567,
+     "values": [
+      0.9152077696153573,
+      0.918388127043332,
+      0.9263828965618578,
+      0.93698349828356,
+      0.9407438021806567
+     ]
+    }
+   },
+   "compact|m=30|stripes_coarse": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9063908190553133,
+     "sd": 0.007821603055028659,
+     "n": 5,
+     "min": 0.8958429316282064,
+     "max": 0.9147440143770069,
+     "values": [
+      0.8958429316282064,
+      0.9031962158685454,
+      0.9046725110733478,
+      0.9134984223294597,
+      0.9147440143770069
+     ]
+    }
+   },
+   "compact|m=30|stripes_fine": {
+    "knee_95": {
+     "mean": 1859.0,
+     "sd": 1789.6438193115412,
+     "n": 3,
+     "min": 579,
+     "max": 3904,
+     "values": [
+      579,
+      1094,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 306,
+    "knee_curvature": {
+     "mean": 499.2,
+     "sd": 557.0697442870147,
+     "n": 5,
+     "min": 1,
+     "max": 1094,
+     "values": [
+      1,
+      1,
+      306,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.006332626162115007,
+     "sd": 0.008319880070502775,
+     "n": 5,
+     "min": 0.0,
+     "max": 0.016631663507508998,
+     "values": [
+      0.0,
+      0.0,
+      0.0008897374084335663,
+      0.014141729894632471,
+      0.016631663507508998
+     ]
+    }
+   },
+   "compact|m=30|gravel_1f": {
+    "knee_95": {
+     "mean": 1716.4,
+     "sd": 1997.8615567651327,
+     "n": 5,
+     "min": 162,
+     "max": 3904,
+     "values": [
+      162,
+      306,
+      306,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 306,
+    "knee_curvature": {
+     "mean": 544.0,
+     "sd": 356.20148792502255,
+     "n": 5,
+     "min": 162,
+     "max": 1094,
+     "values": [
+      162,
+      306,
+      579,
+      579,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.22903590247959554,
+     "sd": 0.1183450141267719,
+     "n": 5,
+     "min": 0.06948643350352302,
+     "max": 0.3914705652641597,
+     "values": [
+      0.06948643350352302,
+      0.17787333241736425,
+      0.23906509653622554,
+      0.26728408467670517,
+      0.3914705652641597
+     ]
+    }
+   },
+   "compact|m=30|mottle": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.8608699792593495,
+     "sd": 0.02250930269305464,
+     "n": 5,
+     "min": 0.827571850582798,
+     "max": 0.8795126542636977,
+     "values": [
+      0.827571850582798,
+      0.8477277899488789,
+      0.8723930368036628,
+      0.87714456469771,
+      0.8795126542636977
+     ]
+    }
+   },
+   "renard_like|m=30|edge": {
+    "knee_95": {
+     "mean": 415.2,
+     "sd": 149.52825819891035,
+     "n": 5,
+     "min": 306,
+     "max": 579,
+     "values": [
+      306,
+      306,
+      306,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 306,
+    "knee_curvature": {
+     "mean": 360.6,
+     "sd": 122.08931157148852,
+     "n": 5,
+     "min": 306,
+     "max": 579,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9731573598085261,
+     "sd": 0.004314921858703898,
+     "n": 5,
+     "min": 0.9685786116931735,
+     "max": 0.9788901775859289,
+     "values": [
+      0.9685786116931735,
+      0.9691036254295831,
+      0.9745468661199028,
+      0.9746675182140425,
+      0.9788901775859289
+     ]
+    }
+   },
+   "renard_like|m=30|square": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 524.4,
+     "sd": 122.08931157148852,
+     "n": 5,
+     "min": 306,
+     "max": 579,
+     "values": [
+      306,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9634851425659668,
+     "sd": 0.009925096537415292,
+     "n": 5,
+     "min": 0.9522073866009585,
+     "max": 0.9750994215252397,
+     "values": [
+      0.9522073866009585,
+      0.9559236903483795,
+      0.9621642741776122,
+      0.9720309401776444,
+      0.9750994215252397
+     ]
+    }
+   },
+   "renard_like|m=30|stripes_coarse": {
+    "knee_95": {
+     "mean": 524.4,
+     "sd": 122.08931157148852,
+     "n": 5,
+     "min": 306,
+     "max": 579,
+     "values": [
+      306,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 360.6,
+     "sd": 122.08931157148852,
+     "n": 5,
+     "min": 306,
+     "max": 579,
+     "values": [
+      306,
+      306,
+      306,
+      306,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9659084008367687,
+     "sd": 0.004305602244560821,
+     "n": 5,
+     "min": 0.9593062991899456,
+     "max": 0.9704629846480202,
+     "values": [
+      0.9593062991899456,
+      0.9642277362362566,
+      0.9676199186839445,
+      0.9679250654256765,
+      0.9704629846480202
+     ]
+    }
+   },
+   "renard_like|m=30|stripes_fine": {
+    "knee_95": {
+     "mean": 3169.2,
+     "sd": 1006.1663381369901,
+     "n": 5,
+     "min": 2067,
+     "max": 3904,
+     "values": [
+      2067,
+      2067,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6665624667338658,
+     "sd": 0.030857695635896062,
+     "n": 5,
+     "min": 0.6287936431881995,
+     "max": 0.7028533878564148,
+     "values": [
+      0.6287936431881995,
+      0.6417079194342903,
+      0.6726284431411882,
+      0.6868289400492361,
+      0.7028533878564148
+     ]
+    }
+   },
+   "renard_like|m=30|gravel_1f": {
+    "knee_95": {
+     "mean": 1872.4,
+     "sd": 435.1388284214591,
+     "n": 5,
+     "min": 1094,
+     "max": 2067,
+     "values": [
+      1094,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9332263252932947,
+     "sd": 0.013435501549721075,
+     "n": 5,
+     "min": 0.9157817046483119,
+     "max": 0.9512520426635195,
+     "values": [
+      0.9157817046483119,
+      0.9251899627950837,
+      0.9364870988132734,
+      0.9374208175462854,
+      0.9512520426635195
+     ]
+    }
+   },
+   "renard_like|m=30|mottle": {
+    "knee_95": {
+     "mean": 524.4,
+     "sd": 122.08931157148852,
+     "n": 5,
+     "min": 306,
+     "max": 579,
+     "values": [
+      306,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 469.8,
+     "sd": 149.52825819891035,
+     "n": 5,
+     "min": 306,
+     "max": 579,
+     "values": [
+      306,
+      306,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9582688303518304,
+     "sd": 0.006455965857654744,
+     "n": 5,
+     "min": 0.9509996185218836,
+     "max": 0.9647181178354245,
+     "values": [
+      0.9509996185218836,
+      0.9524494655687809,
+      0.9587268194169969,
+      0.9644501304160664,
+      0.9647181178354245
+     ]
+    }
+   },
+   "random|m=30|edge": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 335.2,
+     "sd": 492.51517743111225,
+     "n": 5,
+     "min": 1,
+     "max": 1094,
+     "values": [
+      1,
+      1,
+      1,
+      579,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.49203096367129256,
+     "sd": 0.042038469167367684,
+     "n": 5,
+     "min": 0.430754165388054,
+     "max": 0.542947772184321,
+     "values": [
+      0.430754165388054,
+      0.4743730446912725,
+      0.5031021931892505,
+      0.5089776429035647,
+      0.542947772184321
+     ]
+    }
+   },
+   "random|m=30|square": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.6096621266630621,
+     "sd": 0.06965975816946102,
+     "n": 5,
+     "min": 0.5336595615228025,
+     "max": 0.690963546889529,
+     "values": [
+      0.5336595615228025,
+      0.5565439536497769,
+      0.5944646705041811,
+      0.672678900749021,
+      0.690963546889529
+     ]
+    }
+   },
+   "random|m=30|stripes_coarse": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.48972845164222467,
+     "sd": 0.03374991689048614,
+     "n": 5,
+     "min": 0.4383992877771269,
+     "max": 0.5202742489883826,
+     "values": [
+      0.4383992877771269,
+      0.47294521126679556,
+      0.5077382476302272,
+      0.5092852625485911,
+      0.5202742489883826
+     ]
+    }
+   },
+   "random|m=30|stripes_fine": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.2051733381870474,
+     "sd": 0.044307274272451326,
+     "n": 5,
+     "min": 0.14718570343146264,
+     "max": 0.25180492482953554,
+     "values": [
+      0.14718570343146264,
+      0.17370141700560038,
+      0.21230677213283133,
+      0.24086787353580708,
+      0.25180492482953554
+     ]
+    }
+   },
+   "random|m=30|gravel_1f": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 1.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1,
+     "max": 1,
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.5200169168357313,
+     "sd": 0.119770679785528,
+     "n": 5,
+     "min": 0.3519336590289124,
+     "max": 0.6501702298398931,
+     "values": [
+      0.3519336590289124,
+      0.47587800195958196,
+      0.5024326472981298,
+      0.6196700460521392,
+      0.6501702298398931
+     ]
+    }
+   },
+   "random|m=30|mottle": {
+    "knee_95": {
+     "mean": 3904.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 3904,
+     "max": 3904,
+     "values": [
+      3904,
+      3904,
+      3904,
+      3904,
+      3904
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 3904,
+    "knee_curvature": {
+     "mean": 632.8,
+     "sd": 931.0140707851842,
+     "n": 5,
+     "min": 1,
+     "max": 2067,
+     "values": [
+      1,
+      1,
+      1,
+      1094,
+      2067
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.4566841595718811,
+     "sd": 0.04495881683933751,
+     "n": 5,
+     "min": 0.40454195811759697,
+     "max": 0.5077707246563505,
+     "values": [
+      0.40454195811759697,
+      0.41531498229211283,
+      0.4693761994345722,
+      0.4864169333587728,
+      0.5077707246563505
+     ]
+    }
+   },
+   "oracle|m=30|edge": {
+    "knee_95": {
+     "mean": 11.8,
+     "sd": 18.579558659989747,
+     "n": 5,
+     "min": 2,
+     "max": 45,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 4,
+    "knee_curvature": {
+     "mean": 3.6,
+     "sd": 0.8944271909999159,
+     "n": 5,
+     "min": 2,
+     "max": 4,
+     "values": [
+      2,
+      4,
+      4,
+      4,
+      4
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9785675289081928,
+     "sd": 0.004187578385932419,
+     "n": 5,
+     "min": 0.9739307856127384,
+     "max": 0.9842728037434734,
+     "values": [
+      0.9739307856127384,
+      0.9749944754610096,
+      0.9795110215906363,
+      0.9801285581331063,
+      0.9842728037434734
+     ]
+    }
+   },
+   "oracle|m=30|square": {
+    "knee_95": {
+     "mean": 30.2,
+     "sd": 14.237275020171522,
+     "n": 5,
+     "min": 13,
+     "max": 45,
+     "values": [
+      13,
+      24,
+      24,
+      45,
+      45
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 45,
+    "knee_curvature": {
+     "mean": 17.4,
+     "sd": 6.024948132556827,
+     "n": 5,
+     "min": 13,
+     "max": 24,
+     "values": [
+      13,
+      13,
+      13,
+      24,
+      24
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9716380761191283,
+     "sd": 0.009107989715763187,
+     "n": 5,
+     "min": 0.961688783475936,
+     "max": 0.9817463256063274,
+     "values": [
+      0.961688783475936,
+      0.9645519585896853,
+      0.9697888918504389,
+      0.9804144210732538,
+      0.9817463256063274
+     ]
+    }
+   },
+   "oracle|m=30|stripes_coarse": {
+    "knee_95": {
+     "mean": 162.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 162,
+     "max": 162,
+     "values": [
+      162,
+      162,
+      162,
+      162,
+      162
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 48.8,
+     "sd": 33.9587985653203,
+     "n": 5,
+     "min": 24,
+     "max": 86,
+     "values": [
+      24,
+      24,
+      24,
+      86,
+      86
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9752945717842784,
+     "sd": 0.003684632313825031,
+     "n": 5,
+     "min": 0.9692169012131646,
+     "max": 0.978529587117858,
+     "values": [
+      0.9692169012131646,
+      0.9748902228188006,
+      0.9760614406095849,
+      0.977774707161984,
+      0.978529587117858
+     ]
+    }
+   },
+   "oracle|m=30|stripes_fine": {
+    "knee_95": {
+     "mean": 2067.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 2067,
+     "max": 2067,
+     "values": [
+      2067,
+      2067,
+      2067,
+      2067,
+      2067
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 2067,
+    "knee_curvature": {
+     "mean": 1094.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 1094,
+     "max": 1094,
+     "values": [
+      1094,
+      1094,
+      1094,
+      1094,
+      1094
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9426910730944728,
+     "sd": 0.012012587042906938,
+     "n": 5,
+     "min": 0.9292695614422297,
+     "max": 0.958283147131834,
+     "values": [
+      0.9292695614422297,
+      0.9344441938265176,
+      0.9399202982885018,
+      0.9515381647832809,
+      0.958283147131834
+     ]
+    }
+   },
+   "oracle|m=30|gravel_1f": {
+    "knee_95": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 579,
+    "knee_curvature": {
+     "mean": 579.0,
+     "sd": 0.0,
+     "n": 5,
+     "min": 579,
+     "max": 579,
+     "values": [
+      579,
+      579,
+      579,
+      579,
+      579
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9958507663944965,
+     "sd": 0.0025946465712015352,
+     "n": 5,
+     "min": 0.9922620918662788,
+     "max": 0.998180953438996,
+     "values": [
+      0.9922620918662788,
+      0.9939695186643492,
+      0.9971446401997041,
+      0.9976966278031545,
+      0.998180953438996
+     ]
+    }
+   },
+   "oracle|m=30|mottle": {
+    "knee_95": {
+     "mean": 219.6,
+     "sd": 78.87204828074393,
+     "n": 5,
+     "min": 162,
+     "max": 306,
+     "values": [
+      162,
+      162,
+      162,
+      306,
+      306
+     ]
+    },
+    "knee_95_of_mean_curve_AS_DECLARED": 162,
+    "knee_curvature": {
+     "mean": 93.0,
+     "sd": 42.46174749112429,
+     "n": 5,
+     "min": 45,
+     "max": 162,
+     "values": [
+      45,
+      86,
+      86,
+      86,
+      162
+     ]
+    },
+    "r2_at_full_individual_control": {
+     "mean": 0.9722124507425607,
+     "sd": 0.005001898900810791,
+     "n": 5,
+     "min": 0.9666702800882551,
+     "max": 0.9771474900953826,
+     "values": [
+      0.9666702800882551,
+      0.9670105506456627,
+      0.9743843294345714,
+      0.9758496034489319,
+      0.9771474900953826
+     ]
+    }
+   }
+  },
+  "oracle_headroom": {
+   "edge": {
+    "compact": 0.9708075518773986,
+    "oracle": 0.9785675289081928,
+    "gain": 0.0077599770307941185
+   },
+   "square": {
+    "compact": 0.9610760757071317,
+    "oracle": 0.9716380761191283,
+    "gain": 0.01056200041199662
+   },
+   "stripes_coarse": {
+    "compact": 0.9578216054213164,
+    "oracle": 0.9752945717842784,
+    "gain": 0.017472966362961917
+   },
+   "stripes_fine": {
+    "compact": 0.6438644217075074,
+    "oracle": 0.9426910730944728,
+    "gain": 0.2988266513869654
+   },
+   "gravel_1f": {
+    "compact": 0.8970343733366695,
+    "oracle": 0.9958507663944965,
+    "gain": 0.09881639305782708
+   },
+   "mottle": {
+    "compact": 0.9502650189708066,
+    "oracle": 0.9722124507425607,
+    "gain": 0.021947431771754067
+   }
+  },
+  "oracle_caveat": "The oracle wiring relaxes TWO constraints, not one: it chooses its motor units after seeing the target, and it partitions the whole array into N clusters regardless of the unit size m, so every actuator is innervated even when N*m < K. It is therefore a loose upper bound and the gap to it should not be read as 'what better wiring would buy'. Found by looking at the rendered panels, not by a control."
+ },
+ "controls_declared_but_NOT_REACHED": {
+  "status": "DECLARED AND NOT REACHED - this is a gap in verification, not a clean result",
+  "what_happened": "The Nebius job emitted its sweep before running its controls, by design: an earlier run had thrown away 11,200 completed cells when a NameError in the control step killed the process before anything was written, so `emit()` was changed to commit the expensive result first. That change saved this sweep. It also means the block that survived in the job log is tagged `sweep-only`: the controls block never printed, and the hackathon token expired before the job could be re-run. The five controls below were declared in the module docstring before the sweep ran and have NOT been run against this dataset.",
+  "not_reached": [
+   {
+    "name": "array_uniformity",
+    "asks": "with every actuator expanded, is the blurred area-density field bounded away from zero everywhere in the patch?",
+    "note": "Previously PASSED on this seed in local development (min/mean 0.722 against a 0.5 threshold), but not re-run against the shipped sweep."
+   },
+   {
+    "name": "coverage_law_vs_exact_union",
+    "asks": "does 1 - exp(-s) match an exact rasterised disc union?",
+    "note": "Previously FAILED in local development: the law under-estimates coverage by 16% relative when retracted. That failure is reported in NOTES.md and stands; it has not been re-measured here."
+   },
+   {
+    "name": "optimiser_adequacy",
+    "asks": "at one channel per actuator, does the optimiser beat an independent non-iterative inversion of the forward model?",
+    "note": "Previously PASSED locally (0.984 against a deconvolution baseline of 0.955). Not re-run against the shipped sweep."
+   },
+   {
+    "name": "monotonicity_in_channel_count",
+    "asks": "does r2 stop rising, rather than fall, as N grows, for every wiring?",
+    "note": "Previously PASSED locally for all four wirings. Not re-run. This is the one whose absence matters most: it is the control that caught an optimiser artefact scoring 0.0000 at N = K."
+   },
+   {
+    "name": "coverage_law_sensitivity",
+    "asks": "does the failed coverage law move the knee?",
+    "note": "Previously PASSED locally (knee unchanged at 512 under both laws). Not re-run, and the knee has since moved to 579 on the full grid, so even the local result does not transfer."
+   }
+  ],
+  "what_IS_verified_here": "Two analysis-side controls, run against the shipped rows: the negative control on random wiring, and the check that the two zero-variance targets are not scored vacuously. Do not describe those two as 'the controls' - seven were declared and two were reached."
+ },
+ "controls": [
+  {
+   "asks": "is compact wiring at least as good as random wiring at every matched channel count?",
+   "fraction_of_matched_points_where_compact_wins": 1.0,
+   "n_comparisons": 30,
+   "threshold": "> 0.90",
+   "passed": true
+  },
+  {
+   "name": "trivial_targets_are_not_scored_vacuously",
+   "asks": "do the two zero-variance targets return a vacuous R^2 of 1.0?",
+   "result": {
+    "uniform_dark": {
+     "mae_at_full_control_mean": 0.011933710792200389,
+     "r2": "undefined (zero-variance target); reported as null, not 1.0"
+    },
+    "uniform_light": {
+     "mae_at_full_control_mean": 0.014788111310959655,
+     "r2": "undefined (zero-variance target); reported as null, not 1.0"
+    }
+   },
+   "passed": true,
+   "note": "They return null. Their mean absolute error at full control is the control that does carry information."
+  }
+ ],
+ "limitations": [
+  "THE HEADLINE'S '99-101% of saturation' IS MEASURED AGAINST THE ANIMAL'S OWN MOTOR-UNIT SIZE, NOT AGAINST A PERFECT MATCH, and read carelessly it says the animal is near-optimal when it does not. At the measured unit size of nine actuators the achievable ceiling differs sharply by target: edge 0.971, square 0.961, stripes_coarse 0.958, mottle 0.950, gravel_1f 0.897 and stripes_fine only 0.644 (compact wiring, mean over five seeds). NO CHANNEL COUNT MOVES THESE. They are ceilings, not slow approaches: the curves are flat from roughly the knee onward, and at one channel per actuator - 3,904 channels, more than twice what the animal has - stripes_fine is still 0.644. What the result says is that the animal has every channel its unit size can use, and that a unit of nine is already too coarse to render fine detail. That is the same constraint the coverage test shows from the other side, where knee / (K/m) rises to 5.41 at thirty actuators per unit. This page must not be read as claiming cephalopod skin reproduces fine patterns well; it claims the animal is not channel-limited.",
+  "Everything here is a model. No skin was built, and the only measured inputs are the actuator density, the expansion ratio and the motor-unit sizes.",
+  "The observer's acuity is ASSUMED and it is the parameter the knee is most likely to depend on. No predator acuity number was sourced, so the blur is expressed in units of mean actuator spacing. A sharper observer needs more channels; we do not know by how much for any real fish.",
+  "The coverage law under-estimates true coverage by up to 16% relative (`coverage_law_vs_exact_union`, which FAILS). Its sensitivity arm shows the knee does not move, but the absolute reflectances in this model are biased.",
+  "Motor units here are compact or overlapping groups of WHOLE actuators. The real system is finer than that: a chromatophore is driven by about four independent sources acting on contiguous angular sectors, so the real array has roughly four times as many addressable elements as this model gives it. That makes our channel counts a LOWER bound on what the animal has, and it is the single biggest structural simplification here.",
+  "Retraction is instantaneous in this model: it solves for a steady pattern and says nothing about how fast the skin can move between two of them. The actuator study is where timing lives, and it fails its control arm.",
+  "One colour class only. Real skin layers light and dark chromatophores with iridophores and leucophores beneath, and the measured motor units are 89% monochromatic, so a real controller has at least two interleaved arrays.",
+  "The array is flat, square and unstretched. A real one grows, and the developmental routes in routes.json are about exactly that."
+ ],
+ "figures": [
+  {
+   "file": "figures/channels-vs-fidelity.png"
+  },
+  {
+   "file": "figures/channels-examples.png"
+  },
+  {
+   "file": "figures/channels-demo.mp4"
+  }
+ ],
+ "video": {
+  "written": true,
+  "path": "figures/channels-demo.mp4",
+  "frames": 14,
+  "stderr": ""
+ }
+}

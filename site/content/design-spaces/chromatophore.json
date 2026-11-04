@@ -1,0 +1,194 @@
+{
+  "schema": "design-space-page-0.1",
+  "id": "chromatophore",
+  "title": "Programmable skin",
+  "group": "Design space",
+  "status": "design space, mapped and simulated, with the actuator control arm failing",
+  "listed": true,
+  "doc": "docs/dossier/17-chromatophore-design-space.md",
+  "doc_title": "17. Programmable skin: the design space",
+  "live_url": "https://studio.morphoswarm.ai/#/studio/chromatophore",
+  "home_blurb": "A cephalopod chromatophore is an actuator with a datasheet. Our model of it fails its own control arm, and that is the most useful thing on the page.",
+  "scope_pill": "no animal work",
+  "nothing_attempted_note": "no animal was used, and nothing here was built.",
+  "studies_note": "Three studies: two mechanistic simulations and one sweep over control architectures. None is an observation. The first one FAILS its pre-declared control arm against measured kinetics, and that failure is reported as the result rather than repaired away. Each study carries its controls, what it sourced against what it assumed, and a statement of what it does not establish.",
+  "goal": "Could you build skin that changes appearance on command? The question only becomes an engineering question once you ask what the actuator is. A cephalopod chromatophore is a real one with a real datasheet — a pigment sac pulled open by 15–25 radial muscle fibres under direct motor-neuron control, expanding in about a tenth of a second — sitting on an optical stack that works by a different mechanism and runs a hundred times slower. This page maps the routes into that system at eight scales, models three of them, and is deliberately blunt about how few of them anyone can currently take.",
+  "summary": "The sharpest result is a count, and it is computed from the route table rather than asserted over it. Of 46 routes, 12 give addressable runtime control — appearance you can change on command rather than once, heritably, at the embryo stage. Seven of those 12 are not alive. The three cephalopod entries among them are all acute electrode work in a dissected or anaesthetised preparation, and the remaining two are optogenetic edits in a frog and a zebrafish. So nothing in this table gives addressable runtime control of a living cephalopod chromatophore array by any means other than putting electrodes into it. That is the gap this design space is actually about, and the genetic-access scale is the gate on it: two knockouts exist in the whole clade and there is no transgenic line.",
+  "answer": {
+    "headline": "The actuator is real and well-measured. Our model of it does not reproduce it, and the channel count is set by innervation rather than by pattern complexity.",
+    "paragraphs": [
+      "The chromatophore is the part of this that is genuinely an engineering component, and it is the part our model gets wrong. Two parameters were fitted to two measured quantities — the sacculus stiffness to the steady-state expansion ratio of 2.55, and the dermal damping to the measured expansion-to-retraction asymmetry, which it reaches at 1.27 against Renard 2026's 1.34. The two fits are mutually inconsistent: at that damping the peak expansion collapses to 1.73, 32% short of the ratio the stiffness was fitted to. And the one genuinely free prediction fails outright — a 90% rise of 232 ms against a measured expansion phase of 67–83 ms, 2.8 to 3.5 times too slow. The control arm fails. A lumped linear actuator with five sourced parameters and thirteen assumed ones is the wrong object, and three independent measurements say so in three different ways.",
+      "An earlier version of this study claimed something stronger and it was wrong. It said a lumped elastic recoil was STRUCTURALLY incapable of retracting more slowly than it expands. That claim came from a damping sweep whose maximum sat at its own boundary — the domain had excluded the answer — and it is retracted here rather than quietly dropped. What replaces it is weaker and true: a three-way incompatibility between two fits and one free prediction.",
+      "The optics come out cleanly and the answer is counter-intuitive. Freezing the iridophore stack removes 88% of the achievable gamut, so the multilayer is what makes the colour. But widening its measured 425–675 nm tuning range buys 1%, while raising the reflectin refractive index from the live-cell mean of 1.405 to the measured maximum of 1.44 buys 68%, and a nearly transparent retracted state buys 61%. The limit is refractive-index contrast and the chromatophore's retraction floor, not tuning range. Removing the yellow pigment class makes the gamut BIGGER, because at the only sourced expansion ratio a retracted chromatophore still covers 52% of the skin.",
+      "On how many wires it would take: at the measured motor-unit size of nine actuators per channel, the knee is at 579 channels over a 4 × 4 mm patch carrying 3,904 actuators — about 36 channels per mm², one channel per 6.7 actuators. Across unit sizes the knee tracks the number needed simply to COVER the array within a factor of 1.00 to 5.41, so for everything but the finest target the channel budget is set by innervating the skin at all rather than by the complexity of the pattern you want. The animal is not a free parameter here: Renard et al. 2026 resolved 754 putative motor units driving 1,829 chromatophores. Those two counts are their measurement; the ratio is ours — 754/1829 = 0.4122 channels per actuator — which puts this patch at 1,609 channels — 2.78 times past the knee, and reaching 99–101% of the fidelity one channel per chromatophore would give. That last figure is easy to misread, so state it precisely: it is measured against the ceiling of the animal's own motor-unit size, not against a perfect match. At nine actuators per channel the ceiling for fine detail is itself low — fine stripes plateau at 0.64 and 1/f gravel at 0.90, against 0.95–0.97 for the coarse targets — and no channel count moves them. So the animal has every channel its motor-unit size can use, and for fine patterns a unit of nine is already too coarse. That is the sharper engineering statement, and it is the same breakdown the coverage test shows at large unit sizes.",
+      "That last number is the one with a design consequence. If the animal is already well past the knee, then a synthetic array does not need to match cephalopod innervation density to match cephalopod performance, and the engineering target drops by most of a factor of three. It rests on a knee whose uncertainty is a grid spacing, not a standard deviation — see the precision note below."
+    ],
+    "precision_note": "The knee's reported spread across 30 runs is 0.0, and that is a GRID ARTEFACT rather than a precision claim: channel count was swept on a 14-point logarithmic grid, so a knee can only land on a grid point, and all 30 landed on the same one. The honest quote is \"between 306 and 1094, nearest grid point 579\". What the agreement shows is that the knee is stable to within one grid step — a factor of about 1.9 in either direction — which is the weaker true statement."
+  },
+  "scales": [
+    {
+      "key": "molecular",
+      "label": "Molecular · pigment and protein",
+      "blurb": "Ommochrome synthesis and the reflectin proteins. This is where the only two demonstrated cephalopod knockouts live, and where a voltage-switchable reflectin film becomes a device rather than an animal."
+    },
+    {
+      "key": "organelle",
+      "label": "Organelle · the optical stack",
+      "blurb": "The Bragg reflector inside an iridophore and the pigment sacculus inside a chromatophore. Two mechanisms, two timescales: one is muscle in a tenth of a second, the other is protein assembly over minutes."
+    },
+    {
+      "key": "cell",
+      "label": "Cell · the chromatophore as an actuator",
+      "blurb": "A pigment sac pulled open by 15–25 radial muscle fibres under direct motor-neuron control. This is the component with a datasheet, and the one our model fails to reproduce."
+    },
+    {
+      "key": "circuit",
+      "label": "Circuit · how many independent channels",
+      "blurb": "Motor units, polyneuronal innervation and sub-chromatophore sectors. The question a hardware engineer asks first and the one the biology answers best."
+    },
+    {
+      "key": "development",
+      "label": "Development · laying out an addressable array",
+      "blurb": "A cuttlefish goes from a few thousand chromatophores to a few million while keeping the array addressable throughout. Nothing we build scales that way."
+    },
+    {
+      "key": "genetic_access",
+      "label": "Genetic access · can you build anything at all",
+      "blurb": "The gate on the entire cephalopod half of this design space. Two knockouts exist in the clade. There is no transgenic line, so most routes below are proposals rather than plans."
+    },
+    {
+      "key": "vertebrate",
+      "label": "Vertebrate chromatophores · the tractable substrate",
+      "blurb": "Teleost and amphibian chromatophores move pigment along microtubules rather than by muscle: slower, but with real genetic access, and the only two living routes here with addressable runtime control."
+    },
+    {
+      "key": "synthetic",
+      "label": "Synthetic and non-living · the honest comparator",
+      "blurb": "What a funder will ask about, and where seven of the twelve addressable routes sit. A 16 × 16 addressable colour-changing sheet was built in 2014 and it is not alive."
+    }
+  ],
+  "chain": {
+    "title": "The chain across scales, and where it is not calibrated",
+    "intro": "Three models, read as one chain from a pigment molecule to a patch of skin you could address. Two of its junctions are inside a model and explicit; two cross between models with nothing calibrating them; and the first link is a model that fails its own control.",
+    "links": [
+      {
+        "from": "Radial muscle force",
+        "to": "Chromatophore expansion",
+        "status": "refused",
+        "note": "This is the actuator-mechanics model, and it FAILS its control arm: 232 ms to 90% expansion against a measured 67–83 ms. The two fitted parameters are also mutually inconsistent. Nothing downstream may be read as calibrated through this junction; it is here to say where the chain breaks, not to carry a number across it."
+      },
+      {
+        "from": "Chromatophore expansion",
+        "to": "Skin coverage fraction",
+        "status": "model",
+        "note": "Inside the optical model and explicit: the only sourced expansion ratio is 2.55, which leaves a retracted chromatophore still covering 52% of the skin. That single sourced number does a lot of work and is flagged where it is used."
+      },
+      {
+        "from": "Skin coverage and the multilayer",
+        "to": "Achievable colour gamut",
+        "status": "model",
+        "note": "Inside the optical model, computed against CIE colour-matching functions and D65. The sensitivity ranking — index contrast 68%, retraction floor 61%, tuning range 1% — is a property of this model's layer stack."
+      },
+      {
+        "from": "Gamut and pattern target",
+        "to": "Channels required",
+        "status": "scenario",
+        "note": "The channel sweep scores a reconstruction against pattern targets, not against colours a real skin can make. Joining the gamut result to the channel count would need the targets to be drawn from the achievable gamut, and they are not."
+      },
+      {
+        "from": "Channels required",
+        "to": "A buildable array",
+        "status": "scenario",
+        "note": "The sweep says how many independent channels a pattern needs. It says nothing about routing them, powering them, or whether any fabrication process reaches 36 channels per mm² in a soft material."
+      }
+    ],
+    "verdict": "One junction is refused outright because the model behind it fails its control; two are inside a single model and explicit; two cross between models with no calibration. The end-to-end statement — \"this many wires gives that much colour\" — is not available from this page, and the first link is the reason."
+  },
+  "not_claimed": [
+    "No animal was used. Nothing on this page was built, fabricated or implanted, and no skin of any kind was made.",
+    "The three studies are simulations. None is an observation, and none is calibrated to a measurement of the system it models.",
+    "The actuator model FAILS its pre-declared control arm against measured expansion kinetics. It is published as a failure, not as a working model, and must not be cited as one.",
+    "A retracted structural claim is kept visible on this page rather than deleted: an earlier version asserted that a lumped elastic recoil was structurally incapable of slow retraction. That was an artifact of a sweep bounded at its own maximum and is withdrawn.",
+    "The knee at 579 channels has grid-limited uncertainty, not measured uncertainty. A reported spread of 0.0 across 30 runs reflects a 14-point logarithmic grid, not precision.",
+    "\"The animal reaches 99–101% of the fidelity one channel per chromatophore would give\" is NOT a claim that the animal is near-optimal. It is measured against the ceiling imposed by its own motor-unit size of nine, and that ceiling is 0.64 for fine stripes and 0.90 for 1/f gravel against 0.95–0.97 for coarse targets. The page must not be read as saying cephalopod skin reproduces fine detail well; it says the animal is not channel-limited.",
+    "Five of the seven controls declared for the channel study did not run. The job emitted its sweep before its controls block and only the sweep survived; those five are declared-and-absent, which is a gap in verification rather than a clean result. Do not describe the two that did run as \"the controls\" — seven were declared and two were reached.",
+    "The most consequential of those five absences is `monotonicity_in_channel_count`, because that is the control that previously caught an optimiser artefact scoring 0.0000 at N = K. Its earlier passing run does NOT transfer to these results: the knee moved from 512 to 579 once the sweep ran on the full grid, so the arm would have to be re-run against the current numbers to mean anything.",
+    "Neither 0.412 nor 0.4122 is a figure Renard et al. publish. They report 754 motor units and 1,829 chromatophores; every channels-per-actuator number on this page is our quotient of those two counts, at different roundings of the same value.",
+    "The route table's evidence levels are read levels on sources, not replications. No route here has been attempted by us.",
+    "A model gamut is not a gamut anyone has measured off an animal, and the layer stack it is computed over is a model of a stack."
+  ],
+  "closing": {
+    "title": "Why a failed control arm is the point",
+    "link": {
+      "href": "https://github.com/kganjam/delphi-frontier/blob/main/results/chromatophore/NOTES.md",
+      "text": "The working notes, including the retracted structural claim and how the sweep was recovered"
+    },
+    "text": "The useful output of this page is not a design. It is that the one component here with a real datasheet — a cell whose kinetics, expansion ratio and innervation have all been measured by somebody — defeats a lumped linear model in three independent ways, and that the number of wires you would need turns out to be set by covering the skin rather than by the pattern you want to draw on it. Both of those are things you only learn by writing the model down and letting it fail against the measurements, which is what a design space is for and what a review article cannot do."
+  },
+  "schematic": {
+    "section_title": "Where the routes act",
+    "intro": "Programmable skin is two optical systems stacked on each other, running a hundred times apart in speed, with a wiring problem underneath. The routes below act at different places in that stack, which is why they do not substitute for one another.",
+    "viewBox": "0 0 960 440",
+    "title": "Where each family of routes acts on a patch of chromatophore skin",
+    "desc": "On the left, a cutaway through a patch of cephalopod skin in three layers: at the top a chromatophore, drawn as a pigment sac ringed by radial muscle fibres, with a motor axon arriving from below; beneath it an iridophore containing a stack of thin reflectin platelets acting as a Bragg reflector; and beneath that a diffuse white leucophore layer. On the right, the control problem drawn as an array: a grid of chromatophores with motor units outlined around groups of about nine, and a nerve bundle of far fewer channels than cells entering from the side. Eight numbered pins mark where the route families on this page act; each one is named in the list under this figure.",
+    "caption": "Schematic, not a measurement and not to scale.",
+    "pins": [
+      {
+        "x": 120,
+        "y": 96,
+        "scale": "molecular",
+        "name": "Pigment and reflectin chemistry",
+        "note": "Ommochrome synthesis sets what colours exist at all; reflectin sets the refractive index that the optical model says is the binding constraint. The clade's only two demonstrated knockouts are here."
+      },
+      {
+        "x": 196,
+        "y": 150,
+        "scale": "cell",
+        "name": "The chromatophore actuator",
+        "note": "A pigment sac opened by 15–25 radial muscle fibres. Expansion ratio 2.55, expansion phase 67–83 ms, asymmetry 1.34. This is the component our mechanics model fails to reproduce."
+      },
+      {
+        "x": 150,
+        "y": 236,
+        "scale": "organelle",
+        "name": "The iridophore Bragg stack",
+        "note": "Thin reflectin platelets tuned over 425–675 nm. Freezing it costs 88% of the gamut, but widening its tuning range buys 1% — the index contrast is what matters."
+      },
+      {
+        "x": 150,
+        "y": 318,
+        "scale": "organelle",
+        "name": "The leucophore floor",
+        "note": "A broadband diffuser under everything else. It sets the white point the other two layers work against, and a nearly transparent retracted chromatophore above it buys 61% more gamut."
+      },
+      {
+        "x": 300,
+        "y": 196,
+        "scale": "genetic_access",
+        "name": "Genetic access",
+        "note": "The gate on the whole cephalopod half of this page. Two knockouts in the clade and no transgenic line, so most cephalopod routes here are proposals rather than plans."
+      },
+      {
+        "x": 620,
+        "y": 130,
+        "scale": "circuit",
+        "name": "Motor units",
+        "note": "About nine actuators per channel, measured. Renard et al. 2026 counted 754 motor units and 1,829 chromatophores; the ratio 0.4122 is ours, not a figure they print, and it puts the animal 2.78 times past this model's knee."
+      },
+      {
+        "x": 790,
+        "y": 236,
+        "scale": "development",
+        "name": "Growing the array",
+        "note": "A cuttlefish adds chromatophores from thousands to millions and keeps every one of them addressable. No fabrication process we know of has that property."
+      },
+      {
+        "x": 700,
+        "y": 350,
+        "scale": "synthetic",
+        "name": "The non-living comparator",
+        "note": "Seven of the twelve routes with addressable runtime control are devices, not animals — thermochromic sheets, pumped fluid, voltage-switched reflectin films, electrophoretic panels."
+      }
+    ]
+  }
+}

@@ -1049,6 +1049,32 @@ def _overflow(pg):
     return pg.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
 
 
+# A JS value that reached the DOM un-rendered shows up as a placeholder word. Searching the page text for that word
+# cannot tell the defect from a sentence that legitimately uses it: `"undefined" not in text` failed the chromatophore
+# page on "the score is undefined and is reported as null rather than as a vacuous 1.0" -- prose that is correct, and
+# that says the study REFUSED to report a vacuous R2 of 1.0 on a zero-variance target. A forbidden-string check cannot
+# tell claiming from quoting, so pin the defect's shape instead: a placeholder that reached the DOM is a text node that
+# is nothing BUT the placeholder, or a run of them glued together by a map over a list of undefineds. `[object Object]`
+# stays banned outright -- no sentence contains it.
+_PLACEHOLDER_JS = """() => {
+  const out = [];
+  const root = document.querySelector('#main') || document.body;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let n;
+  while (n = w.nextNode()) {
+    const v = n.nodeValue.trim();
+    if (v.includes('[object Object]') || /^(undefined|null|NaN)$/.test(v) || /(undefined|null|NaN){2,}/.test(v)) {
+      out.push({text: n.nodeValue.slice(0, 80), tag: n.parentElement.tagName, cls: n.parentElement.className});
+    }
+  }
+  return out;
+}"""
+
+
+def _placeholder_leaks(pg):
+    return pg.evaluate(_PLACEHOLDER_JS)
+
+
 def test_frontier_question_table_keeps_bounded_columns_and_short_rows(browser, base):
     pg = page(browser, 1280, 900)
     pg.goto(base + "#/frontier")
@@ -2504,7 +2530,8 @@ def test_a_design_space_shows_its_routes_its_studies_and_its_own_refusals(browse
             assert 0 < shown < total
             assert "showing %d of %d routes" % (shown, total) in pg.locator("#dscount").inner_text()
 
-    assert "[object Object]" not in text and "undefined" not in text
+    assert "[object Object]" not in text
+    assert _placeholder_leaks(pg) == [], "a JS value reached the DOM un-rendered"
     assert pg.locator("#main .tex-fallback").count() == 0
     assert _overflow(pg) <= 0 and not pg.errors
     pg.close()
@@ -2513,6 +2540,37 @@ def test_a_design_space_shows_its_routes_its_studies_and_its_own_refusals(browse
 def test_the_design_space_registry_is_not_empty():
     """The positive control for the parameterised test above: with no design space it would pass without running."""
     assert DESIGN_SPACE_IDS, "no design space in the snapshot, so the parameterised test above covered nothing"
+
+
+def test_the_placeholder_detector_flags_a_real_leak_and_spares_the_word_in_prose(browser, base):
+    """The positive control for `_placeholder_leaks`: a check that never fires is not a check.
+
+    The detector replaced `"undefined" not in text`, which was failing a page for a sentence that used the word
+    correctly. Narrowing a check is how a check quietly stops working, so both arms are pinned here: it must still
+    catch a value that really reached the DOM un-rendered, and it must not catch the English word inside a sentence.
+    Both arms run against the live page, by mutating it, rather than against a hand-written fixture.
+    """
+    pg = page(browser, 1440, 900)
+    pg.goto(base + "#/studio/" + DESIGN_SPACE_IDS[0])
+    pg.wait_for_selector("#ds-a")
+    assert _placeholder_leaks(pg) == [], "the page starts clean, so anything found below is what the test injected"
+
+    # ARM 1 -- each of these is what a real leak looks like, and each must be caught.
+    for leak in ("undefined", "[object Object]", "undefinedundefinedundefined", "null", "NaN"):
+        pg.evaluate("(v) => { const p = document.createElement('p'); p.id = 'leak'; p.textContent = v;"
+                    "document.querySelector('#main').appendChild(p); }", leak)
+        found = _placeholder_leaks(pg)
+        assert any(leak in f["text"] for f in found), f"detector missed a real leak: {leak!r}"
+        pg.evaluate("() => document.querySelector('#leak').remove()")
+
+    # ARM 2 -- the sentence that made the old check fail. It must NOT be flagged.
+    pg.evaluate("""() => { const p = document.createElement('p'); p.id = 'prose';
+        p.textContent = 'Their variance is zero, so the score is undefined and is reported as null rather than '
+                      + 'as a vacuous 1.0, and the NaN rows are dropped.';
+        document.querySelector('#main').appendChild(p); }""")
+    assert _placeholder_leaks(pg) == [], "the detector flagged legitimate prose, which is the bug it was written to fix"
+    pg.evaluate("() => document.querySelector('#prose').remove()")
+    pg.close()
 
 
 @pytest.mark.parametrize("ds_id", DESIGN_SPACE_IDS)

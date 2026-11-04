@@ -1,0 +1,599 @@
+{
+ "id": "optical-gamut",
+ "title": "A pigment layer over a tunable Bragg reflector: how much colour is reachable, and which layer stops it",
+ "kind": "optical model (transfer-matrix multilayer + areal pigment mixing + CIE colorimetry)",
+ "headline": "Freezing the iridophore stack removes 88% of the achievable gamut, so the multilayer is what produces the colour; but widening its measured 425-675 nm tuning range buys 1%, whereas raising the reflectin refractive index from the live-cell mean 1.405 to the measured maximum 1.44 buys 68% and a nearly transparent retracted state buys 61%. The limit is refractive-index contrast and the chromatophore's retraction floor, not tuning range. Removing the yellow pigment class makes the gamut BIGGER, because at the only sourced expansion ratio a retracted chromatophore still covers 52% of the skin.",
+ "model": {
+  "description": "Seawater over three independently driven ommochrome pigment classes (areal coverage each, double-pass absorbers), over an N-pair reflectin/inter-lamellar Bragg stack computed by transfer matrix at normal incidence, over a switchable broadband leucophore backing. Chromaticity in CIE 1976 u'v' under CIE D65 and the CIE 1931 2-degree observer; gamut is the convex-hull area of the achievable u'v' set.",
+  "state_variables": [
+   "areal coverage of each of three pigment classes, in [f_retracted, f_expanded]",
+   "Bragg peak wavelength (set by scaling the layer pair at fixed ratio)",
+   "number of lamella pairs (8 or 9)",
+   "leucophore backing present or absent"
+  ],
+  "equations": [
+   "stack: characteristic-matrix product over N (high, low) pairs at normal incidence",
+   "first-order Bragg peak: lambda = 2 (n_H d_H + n_L d_L)",
+   "pigment: T(lambda) = 10^(-OD * a(lambda)), a a long-pass sigmoid",
+   "areal mixing, double pass: R = R_under * prod_k (f_k T_k^2 + 1 - f_k)",
+   "backing: R_under = R_bragg + (1 - R_bragg)^2 * R_backing (one bounce)",
+   "XYZ = k * integral CMF(lambda) * E(lambda) * R(lambda) d lambda"
+  ],
+  "parameters": [
+   {
+    "name": "n_low",
+    "value": 1.34,
+    "units": "dimensionless",
+    "status": "sourced",
+    "source": "Inter-lamellar space. Ghoshal A, DeMartini DG, Eck E, Morse DE 2013, J R Soc Interface 10:20130386, PMID 23740489 (read: full text via PMC) set n_L = 1.34 to match the refractive index of the artificial-seawater bath, which they measured with a refractometer, because the spaces are continuous with it."
+   },
+   {
+    "name": "n_high",
+    "value": 1.405,
+    "units": "dimensionless",
+    "status": "sourced",
+    "source": "Reflectin-filled lamellae in LIVE cells: 1.405 +/- 0.012, range 1.38-1.44, rarely to 1.48. Ghoshal A, DeMartini DG, Eck E, Morse DE 2013, J R Soc Interface 10:20130386, PMID 23740489 (read: full text via PMC). Ghoshal A et al. 2014, J R Soc Interface 11:20140106, PMID 24694894 (read: abstract) measured the condensed lamellae directly at about 1.44 by index matching."
+   },
+   {
+    "name": "n_medium",
+    "value": 1.34,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Incident medium taken as the same seawater index. Not separately measured for the skin surface, which carries mucus and epidermis."
+   },
+   {
+    "name": "n_pairs",
+    "value": [
+     8,
+     9
+    ],
+    "units": "pairs",
+    "status": "sourced",
+    "source": "Eight or nine pairs contribute in live cells; six or seven in chemically fixed ones. Ghoshal A, DeMartini DG, Eck E, Morse DE 2013, J R Soc Interface 10:20130386, PMID 23740489 (read: full text via PMC)."
+   },
+   {
+    "name": "d_high_live",
+    "value": 120.0,
+    "units": "nm",
+    "status": "sourced",
+    "source": "120 +/- 15 nm, live cells, table 1. Ghoshal A, DeMartini DG, Eck E, Morse DE 2013, J R Soc Interface 10:20130386, PMID 23740489 (read: full text via PMC)."
+   },
+   {
+    "name": "d_low_live",
+    "value": 95.0,
+    "units": "nm",
+    "status": "sourced",
+    "source": "95 +/- 14 nm, live cells, table 1. Ghoshal A, DeMartini DG, Eck E, Morse DE 2013, J R Soc Interface 10:20130386, PMID 23740489 (read: full text via PMC)."
+   },
+   {
+    "name": "lambda_tuning_range",
+    "value": [
+     425.0,
+     675.0
+    ],
+    "units": "nm",
+    "status": "sourced",
+    "source": "Measured peak tuning, 675 nm (red) to 425 nm (blue). Ghoshal A, DeMartini DG, Eck E, Morse DE 2013, J R Soc Interface 10:20130386, PMID 23740489 (read: full text via PMC)."
+   },
+   {
+    "name": "thickness_ratio",
+    "value": 1.263157894736842,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Held constant while scaling the pair to a target peak. The Bragg condition is one equation in two thicknesses; the live-cell mean ratio is used to close it. The paper reports a weak positive correlation (Pearson R ~ 0.59) of BOTH thicknesses with peak wavelength, which is consistent with scaling at fixed ratio but does not establish it."
+   },
+   {
+    "name": "pigment_edge_nm",
+    "value": [
+     480.0,
+     570.0,
+     660.0
+    ],
+    "units": "nm",
+    "status": "assumed",
+    "source": "Long-pass absorption edges of the three ommochrome classes. NO measured cephalopod ommochrome absorption spectrum was found. Reiter S, Laurent G et al. 2018, Nature 562:361-366, PMID 30333578 (read: full text) measured chromatophore transmission spectra, found them bimodal at 615 nm, and localised xanthommatin to the light class, which fixes the ORDER yellow < red < brown and the long-pass SHAPE. The three numbers are chosen by hand inside that ordering."
+   },
+   {
+    "name": "pigment_width_nm",
+    "value": [
+     28.0,
+     32.0,
+     60.0
+    ],
+    "units": "nm",
+    "status": "assumed",
+    "source": "Sharpness of each absorption edge. No measurement; chosen by hand."
+   },
+   {
+    "name": "pigment_od",
+    "value": [
+     1.1,
+     1.6,
+     2.2
+    ],
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Peak optical density of one expanded pigment disc. No measurement."
+   },
+   {
+    "name": "area_ratio",
+    "value": 2.5506,
+    "units": "dimensionless",
+    "status": "sourced",
+    "source": "+155.06% mean chromatophore surface area on expansion. Hadjisolomou SP et al. 2021, Front Physiol 12:675252, PMID 34220538 (read: abstract here; the actuator study read the full text). This is a startle response, not a measured maximum."
+   },
+   {
+    "name": "coverage_full",
+    "value": 0.85,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Areal coverage with every chromatophore of a class expanded. Not measured. The retracted coverage is then DERIVED from the sourced area ratio rather than assumed separately, and comes out at 0.52."
+   },
+   {
+    "name": "r_leucophore",
+    "value": 0.6,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Broadband diffuse reflectance of the leucophore layer. Not measured in any source read; leucophores are described as broadband scatterers."
+   },
+   {
+    "name": "r_dermis",
+    "value": 0.04,
+    "units": "dimensionless",
+    "status": "assumed",
+    "source": "Reflectance of the tissue below the stack when no leucophore is present."
+   },
+   {
+    "name": "illuminant",
+    "value": "CIE D65",
+    "units": "",
+    "status": "sourced",
+    "source": "CIE standard illuminant D65, 1 nm, from the CVRL database (cvrl.ioo.ucl.ac.uk/database/data/cie/Illuminantd65.csv, retrieved 2026-11-02). NOT a measured underwater spectrum; see limitations."
+   },
+   {
+    "name": "observer",
+    "value": "CIE 1931 2-degree",
+    "units": "",
+    "status": "sourced",
+    "source": "CIE 1931 2-degree colour-matching functions, 1 nm, from the CVRL database (ciexyz31_1.csv, retrieved 2026-11-02). A HUMAN observer; cephalopods are colour-blind and their fish predators are not human."
+   },
+   {
+    "name": "peak_sampling_step",
+    "value": 31.25,
+    "units": "nm",
+    "status": "nondimensional",
+    "source": "Sampling step of the Bragg peak across whatever tuning range an arm uses. Held constant so arms differ in coverage, not in sampling."
+   }
+  ],
+  "parameter_counts": {
+   "sourced": 9,
+   "assumed": 8,
+   "nondimensional": 1
+  },
+  "parameter_note": "`sourced` means the number appears in a paper we read, measured in the thing being modelled. A value measured in another tissue or another species is `assumed`, with the proxy named in `source`."
+ },
+ "derived": {
+  "coverage_retracted": 0.5246926403503998,
+  "coverage_expanded": 0.85,
+  "note_on_coverage": "f_expanded is assumed at 0.85; f_retracted is then DERIVED from the sourced 2.5506x area ratio and comes out at 0.52. The model therefore has no transparent state, and that is a consequence of the only sourced expansion number rather than a choice.",
+  "live_mean_stack_peak_nm": 591.8
+ },
+ "gamut": {
+  "full": {
+   "label": "every dial free",
+   "hull_area_upvp": 0.019748953003258275,
+   "n_states": 4500,
+   "Y_min": 0.09993721026759006,
+   "Y_max": 12.041287011933456,
+   "gamut_relative_to_full": 1.0
+  },
+  "bragg_fixed_at_live_mean": {
+   "label": "iridophore held at the live-cell mean stack",
+   "hull_area_upvp": 0.002270982402824764,
+   "n_states": 500,
+   "Y_min": 0.24125959896514118,
+   "Y_max": 11.883407805197882,
+   "gamut_relative_to_full": 0.1149925468175496
+  },
+  "chromatophores_retracted": {
+   "label": "all chromatophores held retracted",
+   "hull_area_upvp": 0.0116599453969947,
+   "n_states": 36,
+   "Y_min": 0.8578521172225518,
+   "Y_max": 12.041287011933456,
+   "gamut_relative_to_full": 0.5904082811413338
+  },
+  "chromatophores_expanded": {
+   "label": "all chromatophores held expanded",
+   "hull_area_upvp": 0.005225311801213841,
+   "n_states": 36,
+   "Y_min": 0.09993721026759006,
+   "Y_max": 1.4272700809008907,
+   "gamut_relative_to_full": 0.26458677583321727
+  },
+  "no_leucophore": {
+   "label": "leucophore backing removed",
+   "hull_area_upvp": 0.019748953003258275,
+   "n_states": 2250,
+   "Y_min": 0.09993721026759006,
+   "Y_max": 2.198851692241226,
+   "gamut_relative_to_full": 1.0
+  },
+  "eight_pairs_only": {
+   "label": "stack fixed at eight pairs",
+   "hull_area_upvp": 0.01714498627911808,
+   "n_states": 2250,
+   "Y_min": 0.10030986318517024,
+   "Y_max": 12.04093741925624,
+   "gamut_relative_to_full": 0.868146593710027
+  },
+  "wider_area_ratio_10x": {
+   "label": "WIDENING: chromatophore area ratio 10x, not the measured 2.55x",
+   "hull_area_upvp": 0.029178612105996714,
+   "n_states": 4500,
+   "Y_min": 0.09993721026759006,
+   "Y_max": 39.13140540009801,
+   "gamut_relative_to_full": 1.4774764060242935
+  },
+  "wider_bragg_380_780": {
+   "label": "WIDENING: Bragg tuning over the whole visible band",
+   "hull_area_upvp": 0.020019492837506224,
+   "n_states": 7000,
+   "Y_min": 0.09741521944610564,
+   "Y_max": 12.049577563629692,
+   "gamut_relative_to_full": 1.0136989456708572
+  },
+  "higher_n_high_1p44": {
+   "label": "WIDENING: n_H at the measured maximum 1.44, not the mean 1.405",
+   "hull_area_upvp": 0.03313878315103381,
+   "n_states": 4500,
+   "Y_min": 0.10617123213757095,
+   "Y_max": 12.028637643020565,
+   "gamut_relative_to_full": 1.6780020260095012
+  },
+  "wider_area_ratio_50x": {
+   "label": "WIDENING: chromatophore area ratio 50x, i.e. a retracted state that is nearly transparent",
+   "hull_area_upvp": 0.03172335577301412,
+   "n_states": 4500,
+   "Y_min": 0.09993721026759006,
+   "Y_max": 54.98382354505053,
+   "gamut_relative_to_full": 1.606331017536993
+  },
+  "wider_bragg_and_n_high": {
+   "label": "WIDENING: both optical dials at once",
+   "hull_area_upvp": 0.034815722286479146,
+   "n_states": 7000,
+   "Y_min": 0.10008859560502588,
+   "Y_max": 12.046328977677577,
+   "gamut_relative_to_full": 1.7629148381048394
+  }
+ },
+ "sweeps": {
+  "lamella_pair_count": [
+   {
+    "n_pairs": 1,
+    "hull_area_upvp": 0.0015175639827152137,
+    "peak_reflectance_at_550nm": 0.002240345316672968
+   },
+   {
+    "n_pairs": 2,
+    "hull_area_upvp": 0.0020571507647359497,
+    "peak_reflectance_at_550nm": 0.008604176731401776
+   },
+   {
+    "n_pairs": 3,
+    "hull_area_upvp": 0.0036934747284499397,
+    "peak_reflectance_at_550nm": 0.019094618773803286
+   },
+   {
+    "n_pairs": 4,
+    "hull_area_upvp": 0.006340275566043036,
+    "peak_reflectance_at_550nm": 0.03353513915382853
+   },
+   {
+    "n_pairs": 5,
+    "hull_area_upvp": 0.00910606491109254,
+    "peak_reflectance_at_550nm": 0.051687264223262294
+   },
+   {
+    "n_pairs": 6,
+    "hull_area_upvp": 0.011854819792752961,
+    "peak_reflectance_at_550nm": 0.07326418250566488
+   },
+   {
+    "n_pairs": 7,
+    "hull_area_upvp": 0.014524031719014988,
+    "peak_reflectance_at_550nm": 0.09792350360707706
+   },
+   {
+    "n_pairs": 8,
+    "hull_area_upvp": 0.01714498627911808,
+    "peak_reflectance_at_550nm": 0.1253180703783454
+   },
+   {
+    "n_pairs": 9,
+    "hull_area_upvp": 0.019748953003258275,
+    "peak_reflectance_at_550nm": 0.15503714146207384
+   },
+   {
+    "n_pairs": 10,
+    "hull_area_upvp": 0.022215844217041206,
+    "peak_reflectance_at_550nm": 0.18667847172013444
+   },
+   {
+    "n_pairs": 11,
+    "hull_area_upvp": 0.0246120634603394,
+    "peak_reflectance_at_550nm": 0.21983916160323275
+   },
+   {
+    "n_pairs": 12,
+    "hull_area_upvp": 0.026886083081764406,
+    "peak_reflectance_at_550nm": 0.2541372348718549
+   }
+  ],
+  "reflectin_refractive_index": [
+   {
+    "n_high": 1.35,
+    "index_contrast_n_high_over_n_low": 1.0075,
+    "hull_area_upvp": 0.002015020594123801,
+    "peak_reflectance_at_550nm": 0.004309567497191848
+   },
+   {
+    "n_high": 1.375,
+    "index_contrast_n_high_over_n_low": 1.0261,
+    "hull_area_upvp": 0.007810689623296889,
+    "peak_reflectance_at_550nm": 0.049962891137546143
+   },
+   {
+    "n_high": 1.4,
+    "index_contrast_n_high_over_n_low": 1.0448,
+    "hull_area_upvp": 0.017619618471604447,
+    "peak_reflectance_at_550nm": 0.13480236151632988
+   },
+   {
+    "n_high": 1.425,
+    "index_contrast_n_high_over_n_low": 1.0634,
+    "hull_area_upvp": 0.027909417523948574,
+    "peak_reflectance_at_550nm": 0.24237654392339095
+   },
+   {
+    "n_high": 1.45,
+    "index_contrast_n_high_over_n_low": 1.0821,
+    "hull_area_upvp": 0.03609829402401281,
+    "peak_reflectance_at_550nm": 0.3571110264610088
+   },
+   {
+    "n_high": 1.475,
+    "index_contrast_n_high_over_n_low": 1.1007,
+    "hull_area_upvp": 0.04210232831266945,
+    "peak_reflectance_at_550nm": 0.467437426632348
+   },
+   {
+    "n_high": 1.5,
+    "index_contrast_n_high_over_n_low": 1.1194,
+    "hull_area_upvp": 0.04685499760966995,
+    "peak_reflectance_at_550nm": 0.5665094079909225
+   },
+   {
+    "n_high": 1.525,
+    "index_contrast_n_high_over_n_low": 1.1381,
+    "hull_area_upvp": 0.05039374944718712,
+    "peak_reflectance_at_550nm": 0.6514107545640178
+   },
+   {
+    "n_high": 1.55,
+    "index_contrast_n_high_over_n_low": 1.1567,
+    "hull_area_upvp": 0.05264405295597021,
+    "peak_reflectance_at_550nm": 0.7218655541955632
+   },
+   {
+    "n_high": 1.575,
+    "index_contrast_n_high_over_n_low": 1.1754,
+    "hull_area_upvp": 0.053763124132417406,
+    "peak_reflectance_at_550nm": 0.7790655289102919
+   },
+   {
+    "n_high": 1.6,
+    "index_contrast_n_high_over_n_low": 1.194,
+    "hull_area_upvp": 0.05402026312623214,
+    "peak_reflectance_at_550nm": 0.824862009305941
+   }
+  ],
+  "chromatophore_area_ratio": [
+   {
+    "area_ratio": 1.5,
+    "coverage_retracted": 0.7176891913356914,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.012087722066589576
+   },
+   {
+    "area_ratio": 2.0,
+    "coverage_retracted": 0.6127016653792583,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.016566272887521088
+   },
+   {
+    "area_ratio": 2.5506,
+    "coverage_retracted": 0.5246926403503998,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.019748953003258275
+   },
+   {
+    "area_ratio": 4.0,
+    "coverage_retracted": 0.37766702271152164,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.02430542361129154
+   },
+   {
+    "area_ratio": 6.0,
+    "coverage_retracted": 0.27107662639252295,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.027019971783255024
+   },
+   {
+    "area_ratio": 10.0,
+    "coverage_retracted": 0.17280266627688423,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.029178612105996714
+   },
+   {
+    "area_ratio": 20.0,
+    "coverage_retracted": 0.09049610571305644,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.030776742404564607
+   },
+   {
+    "area_ratio": 50.0,
+    "coverage_retracted": 0.037231604955321296,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.03172335577301412
+   },
+   {
+    "area_ratio": 100.0,
+    "coverage_retracted": 0.018792379236341916,
+    "coverage_expanded": 0.85,
+    "hull_area_upvp": 0.032036497222863995
+   }
+  ]
+ },
+ "sweep_note": "Each sweep moves ONE dial and recomputes the whole achievable set. The pair-count and refractive-index sweeps are the quantitative form of the ablation's claim that index contrast, not tuning range, is the limit; the area-ratio sweep shows what a chromatophore with a transparent off-state would be worth. The live animal sits at 8-9 pairs, n_H = 1.405 and an area ratio of 2.55, all three of which are measured.",
+ "pigment_drop_one": {
+  "without_yellow": {
+   "hull_area_upvp": 0.022215003625141026,
+   "relative_to_full": 1.1248699422939479
+  },
+  "without_red": {
+   "hull_area_upvp": 0.014368497388005996,
+   "relative_to_full": 0.7275574247219796
+  },
+  "without_brown": {
+   "hull_area_upvp": 0.0196453882990043,
+   "relative_to_full": 0.9947559395054063
+  }
+ },
+ "which_layer_limits": {
+  "largest_loss_when_frozen": "bragg_fixed_at_live_mean",
+  "largest_loss_fraction": 0.8850074531824504,
+  "largest_gain_when_widened": "wider_bragg_and_n_high",
+  "largest_gain_factor": 1.7629148381048394,
+  "largest_gain_from_a_SINGLE_dial": "higher_n_high_1p44",
+  "largest_single_dial_gain_factor": 1.6780020260095012,
+  "field_note": "`largest_gain_when_widened` can name a combination arm, which is not a dial anyone could turn on its own. The single-dial winner is reported separately, and it is the number quoted in the headline.",
+  "answer": "Two different questions have two different answers, and conflating them is the easy mistake. The layer that PROVIDES the gamut is the iridophore stack: freeze it and 88% of the chromaticity area goes. The layer that LIMITS the gamut is not the same one. Widening the stack's tuning range beyond the measured 425-675 nm gains 1%, because that range already spans the visually useful band. What gains is refractive-index contrast (n_H 1.405 -> 1.44, the measured maximum: +68%) and chromatophore retraction (area ratio 2.55 -> 50, i.e. a retracted state that gets out of the way: +61%). Both are measured quantities that the animal is already at the edge of, so neither is a free lunch; the engineering reading is that a synthetic version should spend its effort on index contrast in the reflector and on a pigment actuator with a genuinely transparent off-state, and not on a wider tunable range."
+ },
+ "controls": [
+  {
+   "name": "illuminant_white_point",
+   "asks": "does a perfect diffuse white under the loaded D65 and CIE 1931 2-degree CMFs land on the published D65 chromaticity?",
+   "computed_xy": [
+    0.3127393367303431,
+    0.3290540175247964
+   ],
+   "published_xy": [
+    0.3127,
+    0.329
+   ],
+   "abs_error": [
+    3.933673034312024e-05,
+    5.4017524796390326e-05
+   ],
+   "threshold": "both < 0.002",
+   "passed": true,
+   "note": "This is the control for the data files, not for the model. It is the positive control that makes the gamut numbers below readable: a mis-parsed CMF table and a correct one both produce a gamut."
+  },
+  {
+   "name": "tmm_vs_quarter_wave_closed_form",
+   "asks": "does the transfer matrix reproduce the textbook quarter-wave reflectance at the design wavelength?",
+   "cases": [
+    {
+     "pairs": 2,
+     "tmm": 0.008921365673768895,
+     "closed_form": 0.008921365673768913,
+     "abs_error": 1.734723475976807e-17
+    },
+    {
+     "pairs": 4,
+     "tmm": 0.03505715703433932,
+     "closed_form": 0.035057157034339426,
+     "abs_error": 1.0408340855860843e-16
+    },
+    {
+     "pairs": 8,
+     "tmm": 0.13089046782520192,
+     "closed_form": 0.13089046782520222,
+     "abs_error": 3.0531133177191805e-16
+    },
+    {
+     "pairs": 9,
+     "tmm": 0.1617907793384033,
+     "closed_form": 0.1617907793384037,
+     "abs_error": 3.885780586188048e-16
+    }
+   ],
+   "worst_abs_error": 3.885780586188048e-16,
+   "threshold": "worst absolute error < 0.01",
+   "passed": true,
+   "note": "This control failed on its first run with a worst error of 0.033, and reading it showed the error was in the CLOSED FORM, not in the transfer matrix: the admittance had been written as (n_H/n_L)^2N * n_H^2/(n_in n_L) instead of (n_H/n_L)^2N * n_out. The wrong side is recorded because a control that is itself wrong is the failure mode this check exists to make visible."
+  },
+  {
+   "name": "index_matched_stack_is_dark",
+   "asks": "with the two indices equal, does the stack reflect nothing?",
+   "max_R_index_matched": 7.139112112854448e-31,
+   "max_R_real_stack": 0.15503143472174327,
+   "threshold": "index-matched max R < 1e-6 while the real stack is > 0.1",
+   "passed": true,
+   "note": "The positive arm is shipped beside the negative one: a transfer matrix that silently returned zero would pass the negative arm alone."
+  },
+  {
+   "name": "reproduce_published_tuning",
+   "asks": "do the paper's quoted endpoint thicknesses reproduce its quoted 425-675 nm tuning range?",
+   "live_average_stack": {
+    "d_high_nm": 120.0,
+    "d_low_nm": 95.0,
+    "bragg_condition_nm": 591.8,
+    "tmm_peak_nm": 593.0
+   },
+   "endpoints": {
+    "red_end": {
+     "stated_peak_nm": 675.0,
+     "bragg_condition_nm": 743.1,
+     "tmm_peak_nm": 744.0,
+     "quoted_thicknesses_nm": [
+      150.0,
+      120.0
+     ]
+    },
+    "blue_end": {
+     "stated_peak_nm": 425.0,
+     "bragg_condition_nm": 358.8,
+     "tmm_peak_nm": 380.0,
+     "quoted_thicknesses_nm": [
+      80.0,
+      50.0
+     ]
+    }
+   },
+   "worst_discrepancy_nm": 68.10000000000002,
+   "passed": false,
+   "finding": "FAILS, and the failure is in the source rather than in this model. Ghoshal 2013's abstract and conclusion give the tuning excursion as 'ca 150 to 80 nm' for the high-index lamellae and 'ca 120 to 50 nm' for the inter-lamellar spaces, for a measured peak moving 675 -> 425 nm. Taking those four numbers literally with the paper's own n_L = 1.34 and mean n_H = 1.405, the first-order Bragg condition gives 743 nm and 359 nm. No constant pair of indices satisfies both endpoints: matching 675 nm at d_H = 150 needs n_L = 1.06, and matching 425 nm at d_H = 80 needs n_L = 2.0. The quoted excursions are evidently rounded ('ca'). We therefore drive the model from the MEASURED peak range 425-675 nm and solve for thicknesses at the measured live-cell thickness ratio, rather than from the quoted endpoint dimensions. The live-cell averages are consistent: d_H = 120, d_L = 95 give 592 nm, a green, inside the range."
+  }
+ ],
+ "limitations": [
+  "The illuminant is CIE D65, not a measured underwater downwelling spectrum. We did not find one we could read, and did not invent one. Seawater attenuates red strongly with depth, so the real gamut of a cephalopod in its own light field is smaller than this and shifted blue-green; we do not estimate by how much.",
+  "The observer is the CIE 1931 2-degree HUMAN observer. Cephalopods are colour-blind (one visual pigment in the species studied) and the predators they hide from are fish, often tetrachromatic. A gamut area in human u'v' is a convenient common currency, not the quantity that matters to either animal.",
+  "No measured absorption spectrum for a cephalopod ommochrome was found, so all nine pigment numbers (three edges, three widths, three optical densities) are assumed. The ORDER of the classes and the long-pass SHAPE are supported by Reiter et al. 2018's measured transmission spectra and xanthommatin localisation; the positions are not.",
+  "The stack is computed at normal incidence only. Real iridophore reflectance is strongly angle-dependent and the lamellae are not parallel to the skin surface, so an off-axis observer sees a different colour. This model cannot say anything about the angular gamut.",
+  "Scattering is ignored. The leucophore is a diffuse backing with a single number; pigment granules are treated as a pure absorber with no surface reflection, so the pigment can only darken and filter, never add a specular highlight.",
+  "The one-bounce addition of the backing beneath the stack is an approximation; a full multiple-scattering treatment would raise the reflectance of the leucophore-on states somewhat.",
+  "The Bragg peak is placed by holding the live-cell thickness RATIO constant and scaling the pair. The source reports both thicknesses correlating with peak wavelength, which is consistent with that but does not establish it; the animal may move the two thicknesses independently, which would make the reachable set larger than modelled.",
+  "Iridophores and chromatophores run at timescales two orders of magnitude apart (chromatophore expansion ~0.2 s; neurally evoked iridophore colour shift 17 s and brightness 32 s, Wardill et al. 2012). This model is steady-state and says nothing about what gamut is reachable QUICKLY."
+ ],
+ "figures": [
+  {
+   "file": "figures/gamut-space.png"
+  },
+  {
+   "file": "figures/gamut-limiting-layer.png"
+  }
+ ]
+}

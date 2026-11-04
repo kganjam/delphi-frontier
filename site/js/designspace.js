@@ -35,9 +35,15 @@
    * `outcome_classes: [{key, label, match}]`, `match` being a regular expression read against the route's predicted phenotype. A design
    * space that declares none simply has no outcome filter; nothing here invents a classification for it. */
   const outcomeClasses = (R) => ((R || {}).outcome_classes || []).filter((c) => c && c.key && c.label);
+  /* These patterns are authored in Python files, and Python accepts a leading inline flag — `(?i)` — that JavaScript's RegExp
+   * rejects outright as a syntax error. Every match then throws, every route silently loses its outcome tag, the filter has
+   * nothing to offer and is not rendered, and the page dies later on a missing form field: a long way from the cause. The
+   * flag is redundant here because the "i" below already supplies it, so stripping it changes no behaviour and costs nothing
+   * for a pattern that never had one. */
+  const jsRe = (p) => new RegExp(String(p).replace(/^\(\?[imsx]+\)/, ""), "i");
   const outcomeKey = (R, r) => {
     const t = String(r.predicted_phenotype || "");
-    const hit = outcomeClasses(R).find((c) => { try { return c.match && new RegExp(c.match, "i").test(t); } catch (e) { return false; } });
+    const hit = outcomeClasses(R).find((c) => { try { return c.match && jsRe(c.match).test(t); } catch (e) { return false; } });
     return hit ? hit.key : "";
   };
 
@@ -70,6 +76,15 @@
   /* An authored block whose keys ARE its headings: the route file decides what sections it has, and a section it adds later
    * appears without a code change rather than being silently dropped. Keys are humanised; nothing is reordered or renamed. */
   const HEAD = (k) => k.replace(/_/g, " ").replace(/\biacuc\b/i, "IACUC").replace(/^./, (c) => c.toUpperCase());
+  /* A record's field can itself hold an object or a list, and `String()` renders an object as the literal "[object Object]".
+   * One such field -- a control whose `result` is a dict of its own measurements -- put that on a published page, and it is
+   * the kind of defect that reads as a rendering glitch rather than as missing data, so nobody files it. Flatten instead:
+   * lists join, objects become "key: value; key: value", and the content stays readable without inventing a layout for an
+   * arbitrarily nested shape. A design space that wants better presentation than this should give the field a schema. */
+  const flat = (v) => (v === null || v === undefined ? ""
+    : Array.isArray(v) ? v.map(flat).join(", ")
+    : typeof v === "object" ? Object.entries(v).map(([k, x]) => `${HEAD(k)}: ${flat(x)}`).join("; ")
+    : String(v));
   function blocks(obj, skip = []) {
     if (!obj) return "";
     return Object.entries(obj).filter(([k, v]) => !skip.includes(k) && v !== null && v !== undefined && (!Array.isArray(v) || v.length)).map(([k, v]) => {
@@ -81,7 +96,7 @@
         const ent = Object.entries(x); const [k0, v0] = ent[0] || ["", ""];
         const lead = k.toLowerCase().includes(k0.toLowerCase()) && typeof v0 === "string";
         const rest = lead ? ent.slice(1) : ent;
-        return html`<li>${lead ? html`${v0} ` : ""}${rest.map(([kk, vv]) => html`<b>${HEAD(kk)}:</b> ${String(vv)} `)}</li>`;
+        return html`<li>${lead ? html`${v0} ` : ""}${rest.map(([kk, vv]) => html`<b>${HEAD(kk)}:</b> ${flat(vv)} `)}</li>`;
       })}</ul>`;
       if (typeof v === "object") return html`<h3>${HEAD(k)}</h3><dl class="dsmeta">${Object.entries(v).map(([kk, vv]) => html`<dt>${HEAD(kk)}</dt><dd>${typeof vv === "string" ? vv : JSON.stringify(vv)}</dd>`)}</dl>`;
       return html`<h3>${HEAD(k)}</h3><p>${String(v)}</p>`;
@@ -114,6 +129,11 @@
   }
 
   /* ----------------------------------------------------------------- routes */
+  /* Several of these fields are authored as a list of one or more strings (species an observation was made in, for
+   * instance) and several as a plain string. Joining here rather than at each call site means a design space may
+   * author either shape without the renderer caring, and an empty list renders as nothing rather than as "". */
+  const listish = (v) => (Array.isArray(v) ? v.filter((x) => x !== null && x !== undefined && String(x).trim()).join(", ") : (v === null || v === undefined ? "" : String(v).trim()));
+
   const routeCard = (R) => function (r, i) {
     const ev = r.evidence || [];
     /* The card leads with the one thing that distinguishes these routes from each other — the outcome it predicts — and folds the
@@ -127,6 +147,9 @@
         <p class="small"><b>What you would actually do.</b> ${r.intervention || "not stated"}</p>
         <dl class="dsmeta small">
           ${r.specificity ? html`<dt>Specificity</dt><dd>${r.specificity}</dd>` : ""}
+          ${listish(r.species_of_evidence) ? html`<dt>Evidence comes from</dt><dd>${listish(r.species_of_evidence)}</dd>` : ""}
+          ${r.route_kind ? html`<dt>Kind of route</dt><dd>${String(r.route_kind).replace(/_/g, " ")}</dd>` : ""}
+          ${r.addressable_runtime_control === undefined ? "" : html`<dt>Addressable at runtime?</dt><dd>${r.addressable_runtime_control ? "yes — appearance can be changed on command" : "no — the change is made once, not driven"}</dd>`}
           ${r.reversibility ? html`<dt>Reversible?</dt><dd>${r.reversibility}</dd>` : ""}
           ${r.lethality_risk ? html`<dt>Lethality risk</dt><dd>${r.lethality_risk}</dd>` : ""}
           ${r.difficulty ? html`<dt>Difficulty</dt><dd>${r.difficulty}</dd>` : ""}
@@ -166,12 +189,27 @@
   }
 
   /* ----------------------------------------------------------------- one computed study: figures, equations, parameter provenance, controls */
+  /* A parameter arrives in one of two shapes and `String(p.value)` was wrong for both of the interesting ones. A point
+   * value is `value` + `units`. A PRIOR is `lo`/`hi`/`distribution` with no `value` at all (coral's settlement study),
+   * and reading `value` there printed the word "undefined" into nine live rows that also lost their names, because the
+   * names are under `label`/`key` in that shape. A null `value` is the third case and it is deliberate: chromatophore
+   * marks its one fitted parameter and its one swept parameter that way, and "null" in the cell reports a decision as
+   * a glitch. Say which of the three it is; never stringify the raw value. */
+  function paramValue(p) {
+    if (typeof p.value === "number") return DF.fmt(p.value, 4);
+    if (p.value !== null && p.value !== undefined && String(p.value).trim() !== "") return String(p.value);
+    if (typeof p.lo === "number" && typeof p.hi === "number") {
+      return html`${DF.fmt(p.lo, 4)} to ${DF.fmt(p.hi, 4)}${p.distribution ? html` <span class="faint small">(${String(p.distribution)})</span>` : ""}`;
+    }
+    return html`<span class="faint">not a fixed input</span>`;
+  }
+
   function paramTable(params) {
     if (!params || !params.length) return "";
     const tone = { sourced: "ok", measured: "ok", assumed: "warn", nondimensional: "grp", derived: "cur" };
     return html`<details><summary><b>${params.length} parameters</b> <span class="faint small">each marked sourced or assumed; an assumed value is not a measurement</span></summary>
       <div class="tablewrap"><table><thead><tr><th scope="col">Parameter</th><th scope="col">Value</th><th scope="col">Units</th><th scope="col">Status</th><th scope="col">Source or justification</th></tr></thead>
-      <tbody>${params.map((p) => html`<tr><td><code>${p.name}</code></td><td>${typeof p.value === "number" ? DF.fmt(p.value, 4) : String(p.value)}</td><td class="small">${p.units || ""}</td><td>${U.pill(String(p.status || "not stated").replace(/_/g, " "), tone[p.status] || "st-unk")}</td><td class="small">${p.source || p.justification || ""}</td></tr>`)}</tbody></table></div></details>`;
+      <tbody>${params.map((p) => html`<tr><td><code>${p.name || p.label || p.key || ""}</code></td><td>${paramValue(p)}</td><td class="small">${p.units || ""}</td><td>${U.pill(String(p.status || "not stated").replace(/_/g, " "), tone[p.status] || "st-unk")}</td><td class="small">${p.source || p.justification || ""}</td></tr>`)}</tbody></table></div></details>`;
   }
 
   /* The threshold of each design knob, with the numerical uncertainty taken from the refinement arm when the sweep itself
@@ -207,7 +245,10 @@
 
   function listOf(title, items, cls) {
     if (!items || !items.length) return "";
-    return html`<h4>${title}</h4><ul class="small ${cls || ""}">${items.map((x) => html`<li>${typeof x === "string" ? x : (x.name ? html`<b>${x.name}.</b> ${x.result || x.text || x.note || ""}` : JSON.stringify(x))}</li>`)}</ul>`;
+    /* `result` is whatever the study recorded, and a control that reports several measurements records a dict there. Passing
+     * that straight into the template prints "[object Object]" where the result belongs -- which looks like a styling bug
+     * rather than a missing measurement, so it gets ignored. `flat` renders it instead. */
+    return html`<h4>${title}</h4><ul class="small ${cls || ""}">${items.map((x) => html`<li>${typeof x === "string" ? x : (x.name ? html`<b>${x.name}.</b> ${flat(x.result || x.text || x.note || "")}` : JSON.stringify(x))}</li>`)}</ul>`;
   }
 
   function studySection(s) {
