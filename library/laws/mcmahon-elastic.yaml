@@ -1,0 +1,195 @@
+id: mcmahon-elastic
+name: McMahon elastic similarity for limb and spar proportions (self-weight bending criterion)
+usability: descriptive           # The beam formula below yields a number (relative tip sag) a design
+                                 # could be checked against, but ONLY when the spar's own weight is the
+                                 # governing load. For limbs (dynamic locomotor bending) and wing or fin
+                                 # spars (aerodynamic / hydrodynamic load) it is not, and the proportion
+                                 # rule d ~ l^(3/2) as a description of real limbs mostly fails (see
+                                 # where_it_breaks). Recorded honestly as descriptive. The sibling entry
+                                 # `elastic-similarity` (Greenhill buckling height, on branch
+                                 # claude/elastic-similarity-law-dqxwsj) is the constraining half.
+equation: "delta / l = C_s * rho * g * l^3 / (E * d^2)"
+latex: "\\frac{\\delta}{l} = C_s \\, \\frac{\\rho g \\, l^{3}}{E \\, d^{2}}, \\qquad C_s = 2 \\;\\Rightarrow\\; \\frac{\\delta}{l} = \\text{const} \\iff d \\propto l^{3/2}"
+symbols:
+  delta: {dimension: L, units: m, description: "tip deflection of a horizontal cantilever spar under its own weight (small-deflection theory)"}
+  l:     {dimension: L, units: m, description: "spar or limb-segment length (cantilever span)"}
+  d:     {dimension: L, units: m, description: "diameter of a solid circular cross-section"}
+  rho:   {dimension: M/L^3, units: kg/m^3, description: "density of the spar material (in a fluid use rho - rho_fluid)"}
+  g:     {dimension: L/T^2, units: m/s^2, description: gravitational acceleration}
+  E:     {dimension: M/(L*T^2), units: Pa, description: "Young's modulus of the spar material"}
+  C_s:   {dimension: "1", units: dimensionless, description: "prefactor for a uniform solid circular cantilever under uniform self-weight; equals 2"}
+constants:
+  C_s:
+    value: 2
+    units: dimensionless
+    note: >
+      CALCULATED in this session, not measured, so no interval. Standard Euler-Bernoulli result for a
+      uniform cantilever under uniform load q: delta = q*l^4/(8*E*I). With q = rho*g*A and, for a solid
+      circle, I/A = d^2/16: delta = 16*rho*g*l^4/(8*E*d^2) = 2*rho*g*l^4/(E*d^2). A hollow section
+      (most limb bones, bird wing bones, bamboo) has larger I/A at the same d, so C_s < 2 and this value
+      does not apply to it; a tapered spar also has a different prefactor. Only the prefactor changes
+      under those relaxations; the l^3/d^2 dependence survives while shape changes in proportion.
+  diameter_vs_length_exponent_elastic:
+    value: 1.5
+    units: dimensionless
+    note: >
+      DERIVED, not measured: holding delta/l constant across sizes requires l^3/d^2 constant, i.e.
+      d ~ l^(3/2). Geometric similarity is d ~ l^1 (then delta/l grows in proportion to l: a spar scaled
+      up geometrically sags relatively more, which is the design content of this law). McMahon (1973)
+      is reported (search-summary level) to derive the SAME proportion from Euler/Greenhill buckling;
+      that the two criteria agree is why the rule is called elastic similarity rather than tied to one
+      load case.
+  length_vs_diameter_exponent_measured:
+    value: 0.667
+    interval: [0.52, 0.97]
+    units: dimensionless
+    note: >
+      0.667 (= 1/1.5) is the PREDICTION. The interval is the MEASURED SPREAD of limb-bone
+      length-versus-diameter exponents as reported in the sibling repository entry
+      `elastic-similarity.yaml` (which in turn reports them second-hand): 0.67 Bovidae, 0.52 Suidae,
+      0.83 Cervidae (McMahon 1975 as reported in arXiv physics/0303074), and about 0.97 across
+      mammalian orders shrew to elephant (Alexander et al. 1979). I did not read any of these primary
+      papers. The interval spans both the elastic (0.67) and the geometric (1.0) predictions; it is not
+      an uncertainty on 0.67.
+  mass_exponents_elastic:
+    value: "l ~ M^(1/4), d ~ M^(3/8)"
+    note: >
+      DERIVED, not measured: combine d ~ l^(3/2) with M ~ l*d^2. Geometric similarity gives
+      l ~ d ~ M^(1/3).
+  bird_humerus_length_vs_mass_exponent:
+    value: 0.44
+    interval: unknown
+    units: dimensionless
+    note: >
+      MEASURED by others, read only at search-summary level: humerus length ~ body mass^0.44 across
+      birds, reported in a 2019 Science Advances paper ("Scaling of bird wings and feathers for
+      efficient flight"). Elastic similarity predicts 0.25 and geometric 0.33, so the wing spar is
+      positively allometric in LENGTH, opposite in sign of departure to the elastic prediction. The
+      paper's sample size and confidence interval are unknown to me; I could not open it.
+mechanism: >
+  A horizontal cantilever carrying its own weight sags by delta = C_s*rho*g*l^4/(E*d^2) (Euler-Bernoulli,
+  small deflection). The relative sag delta/l therefore scales as l^3/d^2. McMahon (1973; 1975 for
+  ungulate limbs) proposed that organisms scale so that every size has the SAME relative elastic
+  deflection (and the same fraction of the buckling limit), which forces d ~ l^(3/2): bigger animals
+  and trees get relatively stouter limbs and branches. Under geometric similarity delta/l grows as l,
+  so a scaled-up spar becomes relatively floppier -- this is the physical claim a designer can use. That
+  organisms actually ADJUST proportions to hold delta/l constant is McMahon's hypothesis, not a
+  consequence of the beam formula, and it is the part that the data mostly contradict. McMahon also
+  linked the M^(3/8) and M^(1/4) exponents to 3/4-power metabolic scaling; that link is his argument and
+  is not tested here.
+domain_of_validity:
+  load_case: "self-weight (gravitational) bending of a slender, prismatic, solid, linearly elastic cantilever"
+  medium: "air, or any fluid only with buoyancy-corrected density (rho - rho_fluid)"
+  deflection: "small (delta/l well below about 0.1) so linear beam theory holds"
+  taxa: ["tree and shrub branches (horizontal self-weight cantilevers)", "Bovidae limb bones (the one mammalian family whose reported exponent matches; mechanism there is uncertain)"]
+  notes: >
+    The formula is exact only for a uniform, straight, solid, isotropic column clamped at one end
+    with no tip load. The proportion rule d ~ l^(3/2) is meaningful only where self-weight bending (or
+    self-weight buckling) is the dominant load; that is a property of the structure's loading, not of
+    the material, and has to be checked before the rule is used.
+where_it_breaks: >
+  (1) WRONG LOAD FOR LIMBS. Limb bones are loaded in dynamic bending and axial compression by ground
+  reaction and muscle forces several times body weight during locomotion, and fail by fracture, not by
+  sagging under their own weight. Biewener (1983, J Exp Biol 105:147-171; abstract content seen only
+  through a search summary) reports that geometric scaling would make peak bone stress rise as about
+  M^0.28, that measured peak locomotor bone stresses are instead similar across size, and that the
+  compensation comes mainly from limb posture (bone curvature about M^-0.09, limb angle to ground force
+  about M^-0.07), not from the shape change elastic similarity requires. The operative lever is
+  postural, so the law predicts the wrong lever. (2) MAMMALIAN LIMB BONES ACROSS ORDERS scale near
+  geometric similarity: length-vs-diameter exponent about 0.97 from shrew to elephant (Alexander et al.
+  1979, second-hand), not 0.67. Within the artiodactyls only Bovidae fit; Suidae (0.52) and Cervidae
+  (0.83) do not (McMahon 1975, as reported second-hand). Bertram & Biewener (1990, J Morphol
+  204:157-169; abstract via search summary, 118 carnivoran species) report linear (geometric) scaling
+  within families and non-linear scaling across most orders, with the largest animals departing --
+  a SIZE-DEPENDENT regime in which neither single exponent holds. A 2022 bioRxiv preprint on carnivoran
+  forelimbs (search summary) reports low conformity to either geometric or elastic similarity.
+  (3) AQUATIC MAMMALS: a J Morphol study of cetacean forelimb bones (vol 222 issue 2, listing via search
+  summary; authors not verified) reports that none of the relationships fit elastic similarity and
+  several show NEGATIVE allometry in diameter (large bones relatively slenderer) -- the opposite
+  direction. My inference, not that paper's claim: buoyancy removes the self-weight load the law is
+  built on. (4) WING SPARS: bird humerus length is reported to scale as about M^0.44 (search summary),
+  against 0.25 predicted -- wing spars lengthen faster than geometric, not slower. My inference: the
+  governing load is aerodynamic lift, which scales with body weight rather than spar weight, and bone
+  strength rather than self-weight deflection is the cited constraint in that paper (search summary).
+  (5) MILLIMETRE SPARS (fin rays, insect veins): my calculation, not an observation -- see worked
+  examples: self-weight sag of a 10 mm fin-ray-like rod is of order 4e-4 of its length, and an assumed
+  modest aerodynamic load is about 50 times its self-weight, so self-weight bending is never the
+  active constraint at that scale in air, and in water (rho - rho_water near 0 for tissue) it vanishes.
+  (6) HOLLOW OR TAPERED sections change C_s; the proportion rule assumes shape is preserved. Items 1-4
+  rest on abstracts and secondary reports; I could not open any primary paper in this session.
+worked_examples:
+  - organism: "idealised horizontal tree branch, l = 5 m, d = 0.2 m"
+    computation: "C_s = 2; rho = 600 kg/m^3, g = 9.81 m/s^2, E = 10 GPa -> delta/l = 2*600*9.81*5^3/(1e10*0.2^2) = 3.7e-3"
+    value: 0.0037
+    units: dimensionless
+    note: >
+      CALCULATED in this session. rho and E are round green-wood values I ASSUMED, not measurements of
+      any species. Small-deflection theory holds at this ratio.
+    evidence: derived
+  - organism: "same branch scaled up 2x in length"
+    computation: "geometric (d = 0.4 m): delta/l = 7.4e-3 (doubles); elastic (d = 0.2*2^1.5 = 0.566 m): delta/l = 3.7e-3 (unchanged)"
+    note: >
+      CALCULATED. Shows the design content: geometric scaling doubles relative sag per doubling of
+      length; holding sag fixed costs 2^1.5 = 2.83x in diameter, i.e. 8x in cross-sectional area for
+      2x length.
+    evidence: derived
+  - organism: "millimetre-scale fin-ray-like rod in air (candidate gliding-fish fin spar), l = 10 mm, d = 0.1 mm"
+    computation: "rho = 2000 kg/m^3, E = 10 GPa (both ASSUMED) -> delta/l = 2*2000*9.81*0.01^3/(1e10*(1e-4)^2) = 3.9e-4"
+    value: 0.00039
+    units: dimensionless
+    note: >
+      CALCULATED. Self-weight sag is negligible. Comparison load, also CALCULATED from ASSUMED inputs:
+      air density 1.2 kg/m^3, speed 5 m/s, lift coefficient 0.5 -> pressure 0.5*0.5*1.2*5^2 = 7.5 Pa;
+      over an assumed 1 mm membrane strip per ray this is 7.5e-3 N/m, against self-weight
+      2000*9.81*(pi/4)*(1e-4)^2 = 1.5e-4 N/m, a ratio of about 49. The spar is sized by aerodynamic
+      load, so this law does not bind. Measured E, density and spacing for zebrafish fin rays: unknown
+      -- not searched in this task.
+    evidence: derived
+  - organism: Bovidae limb bones
+    value: 0.67
+    note: "Length-vs-diameter exponent; McMahon 1975 as reported second-hand (via the sibling repo entry and arXiv physics/0303074). Matches the prediction."
+    evidence: literature
+  - organism: "Mammalian limb bones, shrew to elephant"
+    value: 0.97
+    note: "Length-vs-diameter exponent; Alexander et al. 1979, second-hand. Near geometric; contradicts 0.67."
+    evidence: literature
+contested_by:
+  - "Alexander et al. (1979): mammalian limb bones across orders scale near geometric similarity (second-hand)."
+  - "Biewener (1983; 1990): size compensation in mammalian limbs is chiefly postural, keeping peak bone stress roughly constant without the elastic-similarity shape change (abstract / search-summary level)."
+  - "Bertram & Biewener (1990): geometric within carnivoran families, non-linear across orders -- differential scaling, not one exponent (abstract via search summary)."
+  - "Cetacean forelimb study, J Morphol 222(2): no fit to elastic similarity; negative diameter allometry (listing via search summary)."
+  - "Bird wing bones: humerus length ~ M^0.44 (2019 Sci Adv, search summary), opposite in direction to the elastic prediction of M^0.25."
+  - "Price et al. (2009, Ecol Lett 12:641), per this repo's ledger/README.md (listing level): an exponent of 2/3 cannot discriminate elastic similarity from metabolic-scaling theory, so a matching exponent is not evidence for McMahon's mechanism. Recorded, not reconciled with the Bovidae match."
+sources:
+  - citation: "McMahon TA (1973) Size and shape in biology. Science 179(4079):1201-1204"
+    read_level: search-summary
+    note: >
+      Swarthmore-hosted PDF (www.sccs.swarthmore.edu) failed to resolve -- outside this session's
+      network allowance. A quote ("there are no data points to the left of the solid line") is
+      available only via this repo's ledger/README.md. Whether McMahon states the self-weight BENDING
+      criterion explicitly (as opposed to buckling) is NOT verified; the bending derivation in this
+      entry is my own beam calculation.
+  - citation: "McMahon TA (1975) Allometry and biomechanics: limb bones in adult ungulates. Am. Nat. 109:547-563"
+    read_level: search-summary
+    note: "Volume and pages from a reference list seen in a search summary. Labelled 1975a or 1975b inconsistently across sources."
+  - citation: "Alexander RMcN, Jayes AS, Maloiy GMO, Wathuta EM (1979) Allometry of the limb bones of mammals from shrews (Sorex) to elephant (Loxodonta). J. Zool. 189(3):305-314"
+    read_level: listing
+    note: "Citation and the 0.97 exponent taken from the sibling repo entry elastic-similarity.yaml, which itself reports them at search-summary level."
+  - citation: "Biewener AA (1983) Allometry of quadrupedal locomotion: the scaling of duty factor, bone curvature and limb orientation to body size. J. Exp. Biol. 105:147-171"
+    read_level: search-summary
+    note: "biewenerlab.oeb.harvard.edu failed to resolve in this session; exponents quoted from a search summary of the abstract."
+  - citation: "Bertram (initials not verified), Biewener AA (1990) Differential scaling of the long bones in the terrestrial Carnivora and other mammals. J. Morphol. 204:157-169"
+    read_level: search-summary
+    note: "Exact exponents not obtained."
+  - citation: "Scaling pattern of the carnivoran forelimb (bioRxiv 10.1101/2022.06.29.498091); authors not verified"
+    read_level: search-summary
+  - citation: "Cetacean forelimb bone allometry, J. Morphol. 222(2), doi:10.1002/jmor.1052220208; authors and year not verified"
+    read_level: search-summary
+  - citation: "Scaling of bird wings and feathers for efficient flight. Science Advances (2019); authors not verified"
+    read_level: search-summary
+  - citation: "Price CA, et al. (2009) Ecol. Lett. 12:641"
+    read_level: listing
+    note: "Known only from this repo's ledger/README.md."
+  - citation: "Sibling law entry library/laws/elastic-similarity.yaml, branch claude/elastic-similarity-law-dqxwsj, commit 9f15ab2c"
+    read_level: full-text
+    note: "Read in full; source of the second-hand family exponents. Not merged to main at time of writing."
