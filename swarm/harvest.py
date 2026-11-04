@@ -95,6 +95,24 @@ def main():
                                  {lit(stmt)}, {lit(lvl)}, {lit(tag)}
                           where not exists (select 1 from claim where source={lit(tag)}
                                             and statement={lit(stmt)})""")
+                    # SET answer_kind ON THE SUBPROBLEM. The harvester has always known the
+                    # evidence level -- it is parsed two lines above -- and simply never wrote it
+                    # to the subproblem, so 75 of 86 `answered` rows carried a null answer_kind
+                    # while SPEC-subproblem-lifecycle rule 1 forbids exactly that and claims to be
+                    # "enforced in code". It was not enforced anywhere.
+                    # `answer_kind` and `evidence` draw on the same vocabulary, minus 'unknown':
+                    # an unclassifiable level stays NULL rather than being coerced, because a
+                    # wrong kind is worse than a missing one.
+                    if sid and lvl in ("measured", "simulated", "derived", "literature"):
+                        q(f"""update subproblem set answer_kind={lit(lvl)}, updated_at=now()
+                              where id={lit(sid)} and answer_kind is null""")
+                    # A literature claim needs a read_level (SPEC-ASK rule 2). The agent now
+                    # reports it; when it does not, the row is left null and the checker flags it.
+                    rl = str(d.get("read_level") or "").strip().lower()
+                    if lvl == "literature" and rl in ("full-text", "abstract", "listing",
+                                                      "search-summary", "could-not-access"):
+                        q(f"""update claim set read_level={lit(rl)} where source={lit(tag)}
+                              and statement={lit(stmt)} and read_level is null""")
                     recorded += 1
                 elif kind == "entail":
                     # Cross-scale constraints. The vocabulary is CLOSED by a CHECK constraint on

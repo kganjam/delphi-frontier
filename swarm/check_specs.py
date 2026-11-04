@@ -76,7 +76,13 @@ RULES = [
   "select count(*) from claim a join claim b on a.superseded_by=b.id where b.created_at < a.created_at",
   "select count(*) from claim where superseded_by is not null"),
  ("ASK-artifact-graph", 6, "Every challenge outcome recorded, INCLUDING survived",
-  "select count(*) from challenge where outcome is null or outcome='not-run'",
+  # IN-FLIGHT IS NOT A VIOLATION. The first version flagged every challenge dispatched in the last
+  # few minutes, because an agent that has not reported yet leaves `outcome` null -- 93 of its 96
+  # hits were work in progress. A checker that cannot tell "not finished" from "not recorded"
+  # reports the system as broken whenever it is busy, and then gets ignored. Same distinction the
+  # entailment work needed between "nobody looked" and "looked and found nothing".
+  "select count(*) from challenge where (outcome is null or outcome='not-run') "
+  "and created_at < now() - interval '2 hours'",
   "select count(*) from challenge"),
  ("evaluation-kernel", 1, "No grade recorded against an unfrozen rubric",
   "select count(*) from grade g join rubric r on r.id=g.rubric_id where r.frozen is not true",
@@ -118,8 +124,17 @@ RULES = [
   "select count(*) from subproblem sp where sp.status='running' and not exists "
   "(select 1 from agent_session s where s.subproblem_id=sp.id and s.status in ('running','working'))",
   "select count(*) from subproblem where status='running'"),
- ("subproblem-lifecycle", 5, "Deepening capped at depth 2",
+ ("subproblem-lifecycle", 5, "Deepening capped at depth 2 (pre-cap rows are kept, not deleted)",
+  # Reports 4 rows created BEFORE the cap existed. They are `answered` and carry 2-4 claims each,
+  # so deleting them to turn this green would destroy real results to satisfy a checker -- which is
+  # the "never relax an acceptance criterion to make it pass" rule, inverted. The cap itself is
+  # verified separately below and holds: no depth-2 row is eligible for deepening, so no new
+  # depth-3 row can be created. This rule stays RED on purpose and the detail says why.
   "select count(*) from subproblem where id like '%-D-D-D%'",
+  "select count(*) from subproblem where id like '%-D%'"),
+ ("subproblem-lifecycle", "5b", "The depth cap is live: no depth-2 row is eligible for deepening",
+  "select count(*) from subproblem sp where sp.status in ('answered','refuted') "
+  "and sp.id not like '%-D-D%' and sp.id like '%-D-%'",
   "select count(*) from subproblem where id like '%-D%'"),
 ]
 

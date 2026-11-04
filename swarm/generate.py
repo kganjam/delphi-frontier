@@ -288,8 +288,13 @@ def gen_deepen(accts, i=0, limit=10):
             ```swarm-result
             {{"subproblem": "{sid}-D", "evidence": "<level>", "answer": "<one sentence>",
               "key_number": "<the improved input, with units>", "verdict": "stands|strengthens|falls",
+              "read_level": "full-text|abstract|listing|search-summary|could-not-access",
               "depends_on": ["<each input your conclusion rests on: a law id, a claim, a measured value>"]}}
             ```
+
+            `read_level` is how you READ the source, and it is required when your evidence is
+            `literature`. Listing a paper is not reading it and a search summary is a lead, not
+            evidence. Say which you did; "abstract" is an honest answer and a common one.
 
             `depends_on` is NOT optional and is not bookkeeping. When an input is later refuted, the
             graph walks these edges to flag every conclusion that rested on it. An omitted edge means
