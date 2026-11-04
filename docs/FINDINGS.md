@@ -363,6 +363,27 @@ An independent check: the required wing area at a 2 m/s launch is ~20 cm² again
 whole-body dorsal silhouette — a **14× shortfall**, falling to 0.6× only at a 10 m/s launch. That
 reproduces the launch-speed barrier from a completely different direction.
 
+:::{caution} That 14× assumes C_L = 0.8, and this project's own claim 5 argues for ≤ 0.6
+Area scales as `1/C_L`, so the assumption moves the shortfall directly:
+
+| C_L | area at 2 m/s | shortfall vs 1.4 cm² |
+|---|---|---|
+| 0.5 *(flat plate, per a replication)* | 32.0 cm² | 22.9× |
+| 0.6 *(claim 5's ceiling at Re 2–4×10³)* | 26.7 cm² | **19.1×** |
+| **0.8** *(assumed, and used throughout)* | 20.0 cm² | **14.3×** |
+| 1.0 *(cambered/corrugated, per the same replication)* | 16.0 cm² | 11.4× |
+
+**The assumed 0.8 is above the ceiling one of this project's own claims argues for**, so the
+headline 14× sits on the *optimistic* side of the internal evidence. At claim 5's ceiling it is
+19×. A recovered replication disputes claim 5 in the other direction — ~1.0 for a
+cambered/corrugated thin wing (snake section 1.1, dragonfly 0.93–1.07 at Re ~3×10³), 0.4–0.55 for
+a flat plate — and a fin membrane is arguably neither.
+
+**The conclusion is unaffected** — every value in that range leaves an order-of-magnitude
+shortfall. What the spread shows is that the *precision* of "14×" is not earned: the honest range
+is **11–23×**, and the figure quoted is the most favourable third of it.
+:::
+
 ### A third check, formal, from a registry this project did not author
 
 The **Delphi Lean law registry** (lawset 1.6.0, 53 laws with Lean theorems) was given the design —
