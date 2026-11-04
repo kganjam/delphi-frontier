@@ -1,0 +1,143 @@
+---
+title: Measured safety factors in vertebrate skeletal elements
+label: law-bone-safety-factor
+---
+
+:::{important}
+**Constraining** — this law yields a number a design is checked against.
+:::
+
+## The law
+
+:::{math}
+:label: eq-bone-safety-factor
+\mathrm{SF} = \frac{\sigma_{\mathrm{fail}}}{\sigma_{\mathrm{peak}}} = \frac{\varepsilon_{\mathrm{fail}}}{\varepsilon_{\mathrm{peak}}}
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `SF` | 1 | dimensionless | safety factor of one skeletal element in one loading mode (bending, compression or shear/torsion) |
+| `sigma_fail` | M/(L*T^2) | Pa | failure stress of the bone in the SAME loading mode -- yield stress by convention since Biewener 1993; some studies use ultimate (fracture) stress |
+| `sigma_peak` | M/(L*T^2) | Pa | peak stress the element experiences during strenuous but normal activity (usually fast locomotion) |
+| `eps_fail` | 1 | strain | yield (or ultimate) strain of the bone tissue in the same loading mode |
+| `eps_peak` | 1 | strain | peak in vivo strain recorded at the bone surface during strenuous activity |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `SF_yield_mammal_bird` | 2.75 (interval 1.4 to 4.1) | Biewener 1993 (abstract): safety factors to YIELD in mammalian and avian long bones range from 1.4 to 4.1, computed as yield strain over peak functional strain. The listed 2.75 is the midpoint of that range, a label I chose, not a reported mean. Biewener 1990 states the same pattern as "a safety factor of between two and four" (peak stress 25-50% of failure strength). |
+| `peak_compressive_strain_mammal_bird` | -0.0025 (interval -0.0052 to -0.0017) strain | Biewener 1993 (abstract): peak principal compressive strains at cortical sites during strenuous activity in various mammals and birds range from -1700 to -5200 microstrain, averaging -2500. The average is the author's; the threefold spread is attributed by the author to activity intensity, species and bone. Peak strain can vary up to tenfold between cortical sites within one bone. |
+| `yield_strain_compressive` | -0.007 (interval -0.008 to -0.006) strain | Biewener 1993 (abstract): compact bone begins to yield at -6000 to -8000 microstrain. The listed -7000 is the midpoint, a label, not a measurement. |
+| `ultimate_strain_compressive` | unknown (interval -0.021 to -0.014) strain | Biewener 1993 (abstract): compact bone fails in longitudinal compression at -14000 to -21000 microstrain. No central value asserted. Using this instead of yield roughly doubles to triples the computed SF -- the single largest convention-driven swing in this entry. |
+| `bending_failure_stress_small_animals` | 2.33e+08 (interval 1.8e+08 to 2.86e+08) Pa | Biewener 1982 (abstract): whole-bone bending failure stress 233 +/- 53 MN/m^2 in small mammals and bipedal birds. The interval is mean +/- 1 SD, computed by me from the reported SD, not a confidence interval. This is FAILURE stress, not yield. |
+| `bending_failure_stress_large_animals` | 2e+08 (interval 1.72e+08 to 2.28e+08) Pa | Biewener 1982 (abstract): 200 +/- 28 MN/m^2 for large mammalian cortical bone (horses and bovids, from published data). No significant difference from small animals (P > 0.2) over 0.05-700 kg. Interval is mean +/- 1 SD, computed by me. |
+| `SF_bending_alligator_iguana_strain` | unknown (interval 5.5 to 10.8) | Blob & Biewener 1999 (abstract): bending SFs from in vivo strain in hindlimb bones. Reported as a range only. |
+| `SF_shear_alligator_iguana_strain` | unknown (interval 3.9 to 5.4) | Blob & Biewener 1999 (abstract): 3.9-5.4. A search snippet attributes to a later erratum (attached to a turtle paper) the values 4.9 (lizard) and 5.4 (crocodilian). I could not retrieve the erratum; both are recorded and not reconciled (see contested_by). |
+| `SF_bending_turtle_femur_load_model` | 13.9 | Butcher & Blob 2008a (abstract): force-platform/kinematic stress model, safety factor to yield in bending, Pseudemys concinna femur. Torsion 6.3. |
+| `SF_bending_turtle_femur_strain_gauge` | unknown (interval 4.4 to 6.9) | Butcher et al. 2008b (abstract): in vivo strain gauges on the same species and bone. Torsion 3.8. The same animal-bone pair gives 4.4-6.9 by gauge and 13.9 by load model. |
+| `SF_bending_tegu_femur` | unknown (interval 8.8 to 18.6) | Sheffield et al. 2011 (abstract): Tupinambis (Salvator) merianae femur, estimated range in bending; torsion 7.8-17.5. |
+| `SF_bending_tiger_salamander_femur` | 10.5 | Sheffield & Blob 2011 (abstract): Ambystoma tigrinum femur, from a force-platform stress model (peak tensile 14.9 +/- 0.8 MPa; compressive -18.9 +/- 1.0 MPa) and measured yield strength 157.1 +/- 3.7 MPa. |
+| `SF_pigeon_humerus` | 3.5 (interval 1.9 to 3.5) | Biewener & Dial 1995, read only as a search summary: about 3.5 in compression and about 1.9 in shear for the humerus in flight, torsional strength being the critical design feature. The interval spans the two loading modes; it is not an uncertainty. |
+| `SF_primitive_tetrapod` | 7 | Blob et al. 2014 (abstract): "A high SF (~7) is primitive for tetrapods", with birds and eutherian mammals having evolved lower SFs independently. This is the authors' phylogenetic inference from femoral data, not a direct measurement on an ancestor. |
+
+## Why it holds
+
+The safety factor is a ratio, so the "law" is an empirical regularity about the two terms. The denominator (material strength) is roughly size-invariant: Biewener 1982 found no significant difference in bone bending failure stress across 0.05-700 kg. The numerator (peak locomotor stress) would rise with size under geometric similarity, but is held roughly constant in mammals of 0.1-300 kg, per Biewener 1990, chiefly by a more upright posture that raises muscle mechanical advantage and lowers mass-specific muscle force; Rubin & Lanyon 1984 instead attribute the constancy to allometric scaling of peak force (6.9 body weights in a 7 kg turkey to 2.8 in a 130 kg horse). Why the SF sits at a particular value is an evolutionary-economics argument (Alexander 1981, 1997): extra bone costs mass and energy to build, carry and maintain, so selection balances that cost against the probability of failure under variable and unpredictable loads. Under that argument, elements with cheaper material or more variable loads should carry HIGHER SF -- the "mixed chain" -- rather than all links matching the weakest.
+
+## Where it holds
+
+- **quantity**: peak stress or strain during strenuous NORMAL activity (usually fast locomotion), divided into yield in the same loading mode
+- **elements**: diaphyses (mid-shafts) of tetrapod long limb bones; cortical bone; measurement at the bone surface
+- **taxa 2 to 4 band**: ['eutherian mammals', 'ground-running birds', 'pigeon humerus in flight']
+- **taxa measured higher**: ['Alligator mississippiensis', 'Iguana iguana', 'Pseudemys concinna', 'Tupinambis merianae', 'Ambystoma tigrinum']
+- **body mass kg**: [0.05, 700]
+- **notes**: The 2-4 band is a description of birds and eutherian mammals only. Strength data span 0.05-700 kg (Biewener 1982); the posture mechanism is stated for 0.1-300 kg (Biewener 1990). No measured SF was found for any fish skeletal element (see where_it_breaks for search scope).
+
+
+:::{danger} Where it breaks
+(1) TAXON. The 2-4 band fails outside birds and eutherian mammals. Measured or modelled femoral bending SFs are 5.5-10.8 in alligator and iguana, 4.4-13.9 in river cooter turtles (method dependent), 8.8-18.6 in tegus and 10.5 in tiger salamanders; Blob et al. 2014 infer a primitive tetrapod value near 7 and independent reduction in birds and eutherians. A designer who imports "2-4" as "what biology does" is importing a derived trait of two clades. (2) LOADING MODE. A bending SF overstates the margin of an element loaded in torsion: the pigeon humerus is ~3.5 in compression but ~1.9 in shear (search-summary source), and Swartz et al. 1992 report that torsion and shear dominate bat wing bones in flight. Quote the SF for the governing mode, not the largest one. (3) METHOD. Load-model (force plate plus beam theory) and strain-gauge estimates on the SAME bone disagree by 1.5-3x: horse radius film/force stresses were 1.5-2x the strain-gauge values, metacarpus 2-3x, and the loading mode itself differed (Biewener et al. 1983); turtle femur SF was 13.9 by load model and 4.4-6.9 by gauge (Butcher & Blob 2008a,b). Strain gauges sample the surface at a few sites while peak strain can vary tenfold between sites in one bone (Biewener 1993), so a gauge that misses the peak site inflates SF. An SF without its method has roughly a factor-of-two uncertainty from method alone. (4) DENOMINATOR. Ultimate compressive strain (-14000 to -21000 microstrain) is about two to three times yield (-6000 to -8000), so SFs to fracture are about 2-3x SFs to yield; Biewener 1982 used failure stress, Biewener 1993 argues for yield. Values computed on different denominators are not comparable. (5) TIME. The SF is a single-cycle static ratio. Biewener 1993 frames fatigue-damage accumulation as the competing failure route; a static SF of 2-4 does not bound fatigue life, and I retrieved no source giving a fatigue safety factor for limb bone (unknown). (6) SCALE. Biewener 1990 states that at small sizes skeletal STIFFNESS may be more critical than strength, and that above ~300 kg the mechanism maintaining constant stress changes (allometry, reduced performance). My inference, not the author's claim: for a gram-scale animal such as Danio rerio, a strength SF is probably not the binding constraint, and a deflection criterion should be checked first. (7) WITHIN ONE ANIMAL. SF is not a property of the animal: alligator humerus SF exceeds femur SF in both bending and torsion (Blob et al. 2014), and salamander humerus exceeds femur (Kawano et al. 2016). (8) FISH. No measured safety factor for any fish skeletal element (fin ray, lepidotrichium, vertebra) was found; scope of that negative search is stated in the worked example below. The law has no observational basis in fishes.
+:::
+
+## Worked examples
+
+**Ambystoma tigrinum femur (check of the published value)**
+
+```
+SF = sigma_y / sigma_peak = 157.1 MPa / 14.9 MPa = 10.5 (tensile side); 157.1 / 18.9 = 8.3 (compressive side)
+```
+
+- value: `10.5`
+
+- CALCULATED by me from the abstract's numbers. The tensile-side ratio reproduces the authors' reported 10.5 exactly, so I infer -- not stated in the abstract -- that their headline SF used peak tensile stress against a single yield strength. The compressive side gives 8.3. If yield differs between tension and compression, neither number is the true compressive margin.
+
+- evidence: **derived**
+
+**Equus caballus radius at constant-speed locomotion**
+
+```
+SF = 200 MPa / 40.8 MPa = 4.9 (strain-gauge stress); with film/force stress 1.5-2x higher: 200 / 61.2-81.6 = 3.3-2.5
+```
+
+- value range: `[2.5, 4.9]`
+
+- CALCULATED by me by combining two papers: peak stress -40.8 +/- 4.1 MPa from strain gauges (Biewener et al. 1983) and large-animal bending FAILURE stress 200 +/- 28 MPa (Biewener 1982). Because the denominator is failure, not yield, and is a bending strength applied to a compressive peak, these figures overstate the yield SF; they illustrate that the method alone (gauge vs film/force) moves the answer from ~5 to ~2.5. Not an observation.
+
+- evidence: **derived**
+
+**Pseudemys concinna femur, one bone measured two ways**
+
+- value range: `[4.4, 13.9]`
+
+- Observed values from two papers on the same species and bone: 13.9 in bending from the force-platform model, 4.4-6.9 from in vivo strain gauges (Butcher & Blob 2008a; Butcher et al. 2008b). Aiello et al. 2013 attribute part of the gap to muscle-force assumptions in the equilibrium model (author claim).
+
+- evidence: **literature**
+
+**Danio rerio lepidotrichia (fin rays) and other fish skeletal elements**
+
+- value: `unknown`
+
+- NEGATIVE SEARCH. Europe PMC queries on 2026-11-04: '"safety factor" AND ("fin ray" OR lepidotrichia OR lepidotrich*)' (5 hits, none a skeletal SF measurement) and '"safety factor" AND (teleost OR "fish skeleton" OR "fish bone") AND (strain OR yield OR fracture)' (16 hits, top 6 inspected, none relevant); a broader fish query returned 125 hits of which the top 8 by relevance were inspected and none was relevant. Abstracts only; full-text hosts (silverchair, core.ac.uk) were not reachable from this session. Absence from these searches is not proof that no measurement exists. A design check of a fin ray against the 2-4 band would be an extrapolation across both taxon and loading regime (hydrodynamic and bending loads in a segmented, jointed ray, not a continuous tubular diaphysis).
+
+- evidence: **negative-search**
+
+:::{seealso} Contested
+- Alexander 1997 (mixed chains) predicts unequal SFs across elements of one limb when material cost or load variability differ; a weakest-link argument predicts equal SFs. Alligator and salamander humerus > femur (Blob et al. 2014; Kawano et al. 2016) are cited as consistent with the mixed chain, but Kawano et al. note the salamander humerus and femur are similar in size and so similar in cost -- the predicted driver is absent there.
+- How mammals hold SF constant with size: Biewener 1990 credits posture and muscle mechanical advantage; Rubin & Lanyon 1984 credit allometric scaling of peak force with near-isometric bone dimensions. Biewener 1982 left open that small animals' bones may simply be stronger than they need to be.
+- Strain-gauge vs force-platform SF estimates disagree by 1.5-3x on the same bone (horse, turtle); which is closer to the true peak is unresolved and varies by bone (gauge agreed better for horse radius than metacarpus).
+- Yield vs ultimate as the denominator: Biewener 1993 argues for yield because yielding accumulates microdamage; earlier work (Biewener 1982) and much of the literature report against failure stress. Not reconciled here.
+- Alligator and Iguana shear SF: 3.9-5.4 in the Blob & Biewener 1999 abstract vs 4.9 (lizard) and 5.4 (crocodilian) attributed by a search snippet to a later erratum. Erratum not retrieved; both kept.
+- Flying vertebrates: Palmer & Dyke 2010 argue that Kirkpatrick 1994, the most-cited source of wing-bone SF estimates, is inaccurate; a reply by the original author accompanies it. Neither text was retrieved, and no Kirkpatrick 1994 values are used in this entry.
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Biewener AA (1982) Bone strength in small mammals and bipedal birds: do safety factors change with body size? J Exp Biol 98:289-301. doi:10.1242/jeb.98.1.289 | `abstract` |
+| Biewener AA (1990) Biomechanics of mammalian terrestrial locomotion. Science 250:1097-1103. doi:10.1126/science.2251499 | `abstract` |
+| Biewener AA (1993) Safety factors in bone strength. Calcif Tissue Int 53 Suppl 1:S68-74. doi:10.1007/BF01673406 | `abstract` |
+| Biewener AA, Thomason J, Goodship A, Lanyon LE (1983) Bone stress in the horse forelimb during locomotion at different gaits: a comparison of two experimental methods. J Biomech 16:565-576. doi:10.1016/0021-9290(83)90107-0 | `abstract` |
+| Biewener AA, Dial KP (1995) In vivo strain in the humerus of pigeons (Columba livia) during flight. J Morphol 225. doi:10.1002/jmor.1052250106 | `search-summary` |
+| Rubin CT, Lanyon LE (1984) Dynamic strain similarity in vertebrates; an alternative to allometric limb bone scaling. J Theor Biol 107:321-327. doi:10.1016/s0022-5193(84)80031-4 | `abstract` |
+| Blob RW, Biewener AA (1999) In vivo locomotor strain in the hindlimb bones of Alligator mississippiensis and Iguana iguana. J Exp Biol 202:1023-1046. doi:10.1242/jeb.202.9.1023 | `abstract` |
+| Blob RW, Biewener AA (2001) Mechanics of limb bone loading during terrestrial locomotion in the green iguana and American alligator. J Exp Biol 204:1099-1122. doi:10.1242/jeb.204.6.1099 | `abstract` |
+| Butcher MT, Blob RW (2008a) Mechanics of limb bone loading during terrestrial locomotion in river cooter turtles (Pseudemys concinna). J Exp Biol 211:1187-1202. doi:10.1242/jeb.012989 | `abstract` |
+| Butcher MT, Espinoza NR, Cirilo SR, Blob RW (2008b) In vivo strains in the femur of river cooter turtles during terrestrial locomotion: tests of force-platform models of loading mechanics. J Exp Biol 211:2397-2407. doi:10.1242/jeb.018986 | `abstract` |
+| Erratum revising Alligator/Iguana shear SFs to 4.9 and 5.4 (attached to a turtle limb-bone paper) | `search-summary` |
+| Aiello BR, Blob RW, Butcher MT (2013) Correlation of muscle function and bone strain in the hindlimb of the river cooter turtle. J Morphol 274:1060-1069. doi:10.1002/jmor.20162 | `abstract` |
+| Sheffield KM, Blob RW (2011) Loading mechanics of the femur in tiger salamanders (Ambystoma tigrinum) during terrestrial locomotion. J Exp Biol 214:2603-2615. doi:10.1242/jeb.048736 | `abstract` |
+| Sheffield KM, Butcher MT, Shugart SK, Gander JC, Blob RW (2011) Locomotor loading mechanics in the hindlimbs of tegu lizards (Tupinambis merianae). J Exp Biol 214:2616-2630. doi:10.1242/jeb.048801 | `abstract` |
+| Kawano SM, Economy DR, Kennedy MS, Dean D, Blob RW (2016) Comparative limb bone loading in the humerus and femur of the tiger salamander: testing the 'mixed-chain' hypothesis for skeletal safety factors. J Exp Biol 219:341-353. doi:10.1242/jeb.125799 | `abstract` |
+| Blob RW, Espinoza NR, Butcher MT, Lee AH, D'Amico AR, Baig F, Sheffield KM (2014) Diversity of limb-bone safety factors for locomotion in terrestrial vertebrates: evolution and mixed chains. Integr Comp Biol 54:1058-1071. doi:10.1093/icb/icu032 | `abstract` |
+| Swartz SM, Bennett MB, Carrier DR (1992) Wing bone stresses in free flying bats and the evolution of skeletal design for flight. Nature 359:726-729. doi:10.1038/359726a0 | `abstract` |
+| Alexander RM (1981) Factors of safety in the structure of animals. Sci Prog 67:109-130. PMID 7013065 | `listing` |
+| Alexander RM (1997) A theory of mixed chains applied to safety factors in biological systems. J Theor Biol 184:247-252. doi:10.1006/jtbi.1996.0270 | `abstract` |
+| Palmer C, Dyke GJ (2010) Moving on from Kirkpatrick (1994): estimating 'safety factors' for flying vertebrates. J Exp Biol 213:2174 (author reply 2175). doi:10.1242/jeb.044537 | `listing` |
+
+
+---
+
+*Generated from [`library/laws/bone-safety-factor.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/bone-safety-factor.yaml). Do not edit this page; edit the YAML.*
