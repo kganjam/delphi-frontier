@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+"""Run every claim in the graph past the GXL evidence API, and record what comes back.
+
+This is an INDEPENDENT check. Our own challenges are agents re-reasoning over the same material;
+this queries a separate corpus with a separate engine, so agreement between them is worth something
+that agreement among our own agents is not.
+
+The zero is only informative because the engine discriminates: the same endpoint returns 28
+supporting passages for "potassium channel mutations regulate fin size in zebrafish" and 0 for the
+open constraint we were testing. That control is re-run every pass (--control) rather than assumed,
+because a search that silently stops working returns the same zeros as a search that found nothing.
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import sys
+import time
+import urllib.request
+
+API = "https://paperclip.gxl.ai/api/v1/claims/support"
+SEP = "\x01"
+PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm", "-tAq", "-F", SEP]
+# A claim we know the corpus supports. If this stops returning supports, the engine is broken and
+# every zero in the same pass is meaningless.
+CONTROL = "Potassium channel mutations regulate fin size in zebrafish"
+CONTROL_MIN = 5
+
+
+def env():
+    e = dict(os.environ)
+    if "PGPASSWORD" not in e:
+        for line in open("/home/ubuntu/git/morphoswarm/.env"):
+            if line.startswith("MORPHOSWARM_PG_PASSWORD="):
+                e["PGPASSWORD"] = line.split("=", 1)[1].strip().strip('"').strip("'")
+    return e
+
+
+def key():
+    for line in open(os.path.expanduser("~/.config/morphoswarm/paperclip.env")):
+        if line.startswith("PAPERCLIP_API_KEY="):
+            return line.split("=", 1)[1].strip().strip('"').strip("'")
+    raise SystemExit("no PAPERCLIP_API_KEY")
+
+
+def q(sql):
+    r = subprocess.run(PG + ["-c", sql], capture_output=True, text=True, env=env(), timeout=90)
+    if r.returncode:
+        raise RuntimeError(r.stderr.strip()[:300])
+    return [l.split(SEP) for l in r.stdout.strip().split("\n") if l]
+
+
+def lit(s):
+    return "'" + str(s).replace("'", "''") + "'"
+
+
+def ask(claim, k, top_n=10, timeout=150):
+    body = json.dumps({"claim": claim[:1200], "top_n": top_n}).encode()
+    req = urllib.request.Request(API, data=body, headers={
+        "Authorization": f"Bearer {k}", "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode())
+
+
+def main():
+    n_max = int(sys.argv[1]) if len(sys.argv) > 1 else 20
+    k = key()
+
+    # The control, every pass. A broken search and an unsupported claim both return zero.
+    c = ask(CONTROL, k)["counts"]
+    print(f"  control: {c['supports']} supports (floor {CONTROL_MIN})")
+    if c["supports"] < CONTROL_MIN:
+        print("  CONTROL FAILED -- the engine is not discriminating. Recording nothing this pass.")
+        return 2
+
+    # EXCLUDE claims the engine cannot judge. Two measured limitations:
+    #  * It scores the claim text AS GIVEN, so a concessive clause ("NOT collagen-like DESPITE
+    #    being termed elastoidin") gets scored as refuting the claim it belongs to. Claim 14 showed
+    #    2/6 with the clause and 0/35 without it.
+    #  * It is a LITERATURE engine. A claim about our own method or search scope ("the no-homolog
+    #    result is scoped to PDB70") has no literature to support or refute, so its verdict is
+    #    meaningless and must not be aggregated with the rest.
+    rows = q(f"""select c.id, c.statement from claim c
+                 where c.project_id='zebrafish-flight' and c.superseded_by is null
+                 and length(c.statement) between 40 and 1200
+                 and c.statement !~* '(scoped to|could not|we searched|this project|recomputed here|verified here|SCOPE:|LIMITATION)'
+                 and c.statement !~* '(despite|although|notwithstanding)' 
+                 and not exists (select 1 from artifact_signal s
+                                 where s.entity_type='claim' and s.entity_id=c.id::text
+                                 and s.voter_id='gxl-evidence')
+                 order by c.id limit {n_max}""")
+    agree = disagree = 0
+    for cid, stmt in rows:
+        try:
+            d = ask(stmt, k)
+        except Exception as e:
+            print(f"  claim {cid}: {type(e).__name__}")
+            continue
+        cc = d.get("counts", {})
+        sup, ref, neu = cc.get("supports", 0), cc.get("refutes", 0), cc.get("neutral", 0)
+        retr = cc.get("supports_retracted", 0) + cc.get("refutes_retracted", 0)
+        # A signal, not a verdict. value is supports minus refutes; weight is the pool size.
+        q(f"""insert into artifact_signal (entity_type, entity_id, kind, dimension, voter_id,
+                 voter_kind, value, weight, unit, reason, metadata)
+              values ('claim', {lit(str(cid))}, 'external-evidence', 'literature-support',
+                      'gxl-evidence', 'literature', {sup - ref}, {sup + ref + neu}, 'passages',
+                      {lit(f'GXL claims/support: {sup} support, {ref} refute, {neu} neutral'
+                            + (f', {retr} RETRACTED' if retr else '')
+                            + '. Control passed this pass.')},
+                      {lit(json.dumps(cc))})""")
+        flag = ""
+        if ref > sup and ref > 0:
+            disagree += 1
+            flag = "  <-- MORE REFUTING THAN SUPPORTING"
+        elif sup > 0:
+            agree += 1
+        if retr:
+            flag += f"  [{retr} RETRACTED]"
+        print(f"  claim {cid:>4}: {sup:>2} sup / {ref:>2} ref / {neu:>2} neu{flag}")
+    print(f"\n  {len(rows)} checked: {agree} with supporting literature, {disagree} where "
+          f"refuting evidence outweighs supporting")
+    print("  These are SIGNALS, not verdicts: an engine finding no support is not the same as a "
+          "claim being false, and our claims are often more specific than any single passage.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
