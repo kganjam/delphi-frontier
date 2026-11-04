@@ -1,0 +1,182 @@
+id: induced-drag
+name: Induced drag, and why aspect ratio is said to dominate glide ratio
+usability: constraining          # Given lift, speed, span and a span-efficiency factor it returns a
+                                 # drag in newtons, and with a profile-drag coefficient it returns a
+                                 # maximum L/D a design can be checked against. The SLOGAN in the
+                                 # title -- "aspect ratio dominates glide ratio" -- is NOT
+                                 # constraining; it is a descriptive generalisation from high-Re
+                                 # aircraft, and where_it_breaks records where it fails.
+# Checked equation: induced drag in dimensional form (first equality, span-loading form) and in
+# coefficient form (second equality, using AR = b^2/S). The two are the same statement; the
+# dimensional form is kept because it shows that, at fixed weight and speed, it is SPAN b and not
+# aspect ratio that sets induced drag.
+equation: "D_i = F_L^2 / (0.5 * rho * V^2 * pi * e * b^2) = 0.5 * rho * V^2 * S * C_L^2 / (pi * e * AR)"
+latex: "D_i = \\frac{L^2}{\\tfrac12 \\rho V^2 \\, \\pi e b^2}, \\qquad C_{D_i} = \\frac{C_L^2}{\\pi e \\, AR}, \\qquad AR = \\frac{b^2}{S}, \\qquad \\left(\\frac{L}{D}\\right)_{\\max} = \\frac12\\sqrt{\\frac{\\pi e \\, AR}{C_{D_0}}}"
+symbols:
+  D_i:  {dimension: M*L/T^2, units: N, description: "induced (vortex) drag: the drag that is the cost of producing lift with a wing of finite span"}
+  F_L:  {dimension: M*L/T^2, units: N, description: "lift; equal to weight times cos(glide angle) in a steady glide"}
+  rho:  {dimension: M/L^3,   units: kg/m^3, description: fluid density}
+  V:    {dimension: L/T,     units: m/s, description: airspeed}
+  e:    {dimension: "1",     units: dimensionless, description: "span-efficiency (Oswald or span) factor; 1 for an elliptic lift distribution on a planar wing"}
+  b:    {dimension: L,       units: m, description: wing span tip to tip}
+  S:    {dimension: L^2,     units: m^2, description: "reference wing area on which C_L and C_D are defined"}
+  C_L:  {dimension: "1",     units: dimensionless, description: lift coefficient}
+  AR:   {dimension: "1",     units: dimensionless, description: "aspect ratio b^2/S"}
+  C_D0: {dimension: "1",     units: dimensionless, description: "profile (zero-lift) drag coefficient; appears in latex for (L/D)max and not in the checked equation"}
+constants:
+  e_planar_elliptic:
+    value: 1.0
+    note: >
+      THEORETICAL, not measured: the minimum induced drag of a PLANAR wing is reached with an
+      elliptic spanwise lift distribution (constant downwash), giving e = 1 (Munk 1923; Prandtl).
+      It is an upper bound for planar wings only. Non-planar tips (winglets, slotted primaries) can
+      exceed it -- see where_it_breaks. No interval: it is a derivation, not a measurement.
+  e_bird_and_insect_wings:
+    value: unknown
+    interval: [0.2, 0.8]
+    note: >
+      MEASURED range, as quoted from the Withers (1981) abstract by a search summary (I did not read
+      the abstract or paper myself): "aerofoil efficiency factors (0.2-0.8)" for bird and insect
+      wings tested as fixed aerofoils at Reynolds numbers given in the abstract as 1-5 x 10^4,
+      against 0.9-0.95 for conventional aerofoils. Withers attributes the low values to low Reynolds
+      number and high profile drag. I have NOT verified that Withers' "efficiency factor" is defined
+      identically to e in this entry's equation; it is recorded here as the measured interval for
+      the closest quantity found. No central value is given because none was read. One secondary
+      source (a 2016 review, seen only in a search snippet) states the Re range as 1-5 x 10^5;
+      the disagreement is preserved, not resolved.
+  C_D0_bird_wings:
+    value: unknown
+    interval: [0.03, 0.13]
+    note: >
+      MEASURED minimum drag coefficients of isolated, fixed bird wings, Withers (1981) abstract as
+      quoted in a search summary. Recorded because it is the term that decides whether aspect ratio
+      dominates (see mechanism): across this one measured range C_D0 varies by a factor of 4.3.
+mechanism: >
+  A wing of finite span leaks pressure around its tips; the resulting trailing vortex sheet induces
+  a downwash at the wing, which tilts the local lift vector backwards. The rearward component is
+  induced drag. Lifting-line theory (Prandtl) gives D_i = L^2 / (q pi e b^2) with q = rho V^2 / 2:
+  induced drag is set by SPAN LOADING (L/b), falls as the square of speed, and is minimised for a
+  planar wing by an elliptic lift distribution (Munk 1923). Dividing by q S gives the coefficient
+  form C_Di = C_L^2 / (pi e AR), which is where aspect ratio enters. With a parabolic drag polar
+  C_D = C_D0 + C_L^2 / (pi e AR), the maximum lift-to-drag ratio is (1/2) sqrt(pi e AR / C_D0),
+  reached where induced and profile drag are EQUAL. This is the derivation behind "aspect ratio
+  dominates glide ratio" -- and, read honestly, it says no such thing: AR and C_D0 enter with
+  equal and opposite exponents (1/2), and e enters with the same exponent as AR. My inference, not
+  a claim from any source read: aspect ratio dominates only in a population of designs where AR
+  varies much more than C_D0 and e, which is the situation for high-Re aircraft with attached flow
+  and smooth surfaces, and is not obviously the situation for animal wings.
+domain_of_validity:
+  flow_regime: "steady, incompressible, attached flow; the wake is a thin planar vortex sheet"
+  geometry: >
+    Planar, unswept or moderately swept wings of moderate to high aspect ratio. The usual statement
+    that lifting-line theory is reliable above an aspect ratio of roughly 4 is recalled from
+    textbook knowledge and was not verified against a source read for this entry.
+  height_above_surface: "out of ground effect -- height large compared with span"
+  reynolds: >
+    The induced-drag formula itself has no Reynolds dependence. The CONCLUSION drawn from it
+    (aspect ratio dominates L/D) requires C_D0 small and roughly constant, which holds at high Re
+    (order 10^6 and above, aircraft) and is contradicted by measurement at 10^4-10^5 (see
+    where_it_breaks).
+  notes: >
+    Exact within lifting-line theory; it is the theory and the parabolic-polar assumption that are
+    approximate. Fixed-wing gliding only: it does not describe a flapping wing, whose wake is not
+    steady.
+where_it_breaks: >
+  (1) LOW REYNOLDS NUMBER, isolated bird wings: the slogan fails as an observation. Lees, Dimitriadis
+  & Nudds (2016, full text read) measured fixed wings of several bird species at 8-16 m/s with aspect
+  ratios 4.35-8.33 and found aspect ratio had NO significant effect on maximum L/D (p = 0.11) and no
+  significant effect on minimum drag coefficient (p = 0.66); measured maximum C_L/C_D species means
+  were only about 2.8-4.0. The authors read the C_D0 result as "a minimal role of induced drag" at
+  low angle of attack. At these Re profile drag, not induced drag, sets L/D. (The species count was
+  not recorded from the paper: unknown here.) (2) PROFILE-DRAG-LIMITED WINGS, analytic: Traub (2013, abstract-level via search summary) reports,
+  from a simulation using measured airfoil section data, that without airfoil pressure drag wing
+  efficiency rises essentially without bound with AR, but that low airfoil efficiency FAVOURS
+  MODERATE aspect ratios -- partly because raising AR at fixed area shortens the chord and lowers
+  Re. This is a calculated result, not an observation. (3) LOW ASPECT RATIO, below roughly 2: the
+  lift is no longer linear in angle of attack because tip vortices contribute lift, so the
+  parabolic polar and the lifting-line coefficient form do not apply (Torres & Mueller 2004 studied
+  exactly this regime; the specific statement here is from my recall of that work, not from a text
+  read for this entry). This is the regime of flying squirrels, sugar gliders and most gliding
+  lizards, and of any 1 cm fin-wing. (4) NON-PLANAR TIPS: e = 1 is not a ceiling. Tucker (1993,
+  search-summary) reports that slotted primary feathers acting as winglets raised the span factor
+  of a model wing and reduced drag by about 12 % against comparable unslotted wings; the measured
+  span-factor values themselves were not retrieved (unknown). (5) GROUND EFFECT: near a surface the
+  image vortex reduces downwash and induced drag, so the out-of-ground-effect formula overpredicts
+  D_i. Park & Choi (2010, search-summary) report that flying fish models gain L/D close to the sea
+  surface; the magnitude was not read. (6) SPAN-CONSTRAINED DESIGNS: at fixed weight and speed D_i
+  depends on b, not AR. Raising AR by shrinking chord at fixed span does not reduce induced drag at
+  all -- it raises C_L at the operating point and lowers Re; the coefficient form hides this.
+worked_examples:
+  - organism: "generic high-Re glider (aircraft-like inputs, not a measured aircraft)"
+    computation: "AR = 30, e = 0.9, C_D0 = 0.010  ->  (L/D)max = 0.5*sqrt(pi*0.9*30/0.010) = 0.5*sqrt(8482) = 46.1"
+    value: 46.1
+    note: >
+      CALCULATED from assumed inputs. Shows the regime in which the slogan is true: with C_D0 small
+      and fixed, AR is the lever.
+    evidence: derived
+  - organism: "bird-wing-like inputs spanning the Withers (1981) measured C_D0 range"
+    computation: |
+      e = 0.5 (inside the 0.2-0.8 measured interval), C_D0 at the two ends of 0.03-0.13:
+      AR =  6, C_D0 = 0.03 : (L/D)max = 0.5*sqrt(pi*0.5*6/0.03)  = 0.5*sqrt(314.2) =  8.86
+      AR =  6, C_D0 = 0.13 : (L/D)max = 0.5*sqrt(pi*0.5*6/0.13)  = 0.5*sqrt(72.5)  =  4.26
+      AR = 26, C_D0 = 0.13 : (L/D)max = 0.5*sqrt(pi*0.5*26/0.13) = 0.5*sqrt(314.2) =  8.86
+      AR =  6, C_D0 = 0.03, e = 0.2 : 5.60     e = 0.8 : 11.21
+    value: 4.26
+    note: >
+      CALCULATED, not observed. Moving C_D0 across the measured range for real bird wings costs as
+      much L/D as cutting AR from 26 to 6, and moving e across ITS measured range costs a factor of
+      2. Within the inputs measured for animal wings, aspect ratio is one lever among three of equal
+      weight, not the dominant one. The parabolic polar is itself an assumption that the Lees et al.
+      data (C_L rising curvilinearly with airspeed) suggest is poor for these wings.
+    evidence: derived
+  - organism: "50 g glider, span 0.30 m, 8 m/s, sea-level air (illustrative inputs)"
+    computation: "D_i = (0.05*9.81)^2 / (0.5*1.225*8^2 * pi * 0.8 * 0.30^2) = 0.2406 / 8.866 = 0.0271 N, i.e. 5.5 % of weight"
+    value: 0.0271
+    note: >
+      CALCULATED. The answer depends on b and e only, for any chord; doubling AR by halving chord at
+      this span leaves D_i unchanged. Lift taken equal to weight (small glide angle).
+    evidence: derived
+  - organism: "Lees et al. 2016, fixed wings of several bird species, 8-16 m/s"
+    value_range: [2.76, 4.02]
+    note: >
+      MEASURED species-mean maximum C_L/C_D over aspect ratios 4.35-8.33; no significant AR effect
+      (p = 0.11). Isolated wings, not whole birds, so body drag and live wing morphing are absent.
+    evidence: literature
+contested_by:
+  - "The induced-drag formula itself is not contested within its domain. What is contested is the generalisation that aspect ratio dominates glide ratio: Lees, Dimitriadis & Nudds (2016) found no significant effect of aspect ratio on maximum L/D in fixed bird wings, and Traub (2013) argues from simulation that sectional pressure drag favours moderate aspect ratios. These are recorded as disagreement with the textbook generalisation and are not reconciled here."
+  - "Withers (1981) as quoted gives a test Reynolds range of 1-5 x 10^4; a 2016 review seen only as a search snippet gives 1-5 x 10^5. Not resolved; the full text was not accessible."
+  - "A secondary web page (not read in source form) attributes to K. L. Bishop's mammalian-glider work the statement that aerodynamic performance DECLINES with increasing aspect ratio at the high angles of attack gliders use. I could not verify it against the original and it carries no weight in this entry beyond flagging that the disagreement may extend to whole-animal gliders."
+negative_searches:
+  - "Measured span-factor values for slotted vs unslotted wings in Tucker (1993): not retrieved. One web search; full text at core.ac.uk and journals.biologists.com was blocked by this session's network policy (DNS failure / HTTP 403)."
+  - "Magnitude of the ground-effect L/D gain in Park & Choi (2010): not retrieved. One web search; typeset.io full text blocked by network policy. A press figure was seen but is not used because it was not read in the paper."
+  - "Munk (1923) full text: NTRS download blocked by network policy (proxy connect_rejected). The listing and a search summary were seen."
+sources:
+  - citation: "Prandtl L (1918) Tragflügeltheorie. I. Mitteilung. Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, Math.-Phys. Klasse, 451-477 (lifting-line theory)"
+    read_level: remembered
+  - citation: "Munk MM (1923) The minimum induced drag of aerofoils. NACA Report 121 (NTRS 19930091456; re-release 19800006779)"
+    read_level: search-summary
+    note: "Catalogue dates disagree (1921 vs 1923) across listings seen; not resolved."
+  - citation: "Withers PC (1981) An aerodynamic analysis of bird wings as fixed aerofoils. J Exp Biol 90:143-162"
+    doi: 10.1242/jeb.90.1.143
+    read_level: search-summary
+    note: "DOI resolved via doi.org; title matched. Abstract wording seen only as quoted by a search summary."
+  - citation: "Lees JJ, Dimitriadis G, Nudds RL (2016) The influence of flight style on the aerodynamic properties of avian wings as fixed lifting surfaces. PeerJ 4:e2495"
+    doi: 10.7717/peerj.2495
+    read_level: full-text
+    note: "Read from PubMed Central (PMC5075716) through an automated page-extraction tool, so values are as extracted from the full text, not transcribed by hand."
+  - citation: "Traub LW (2013) Aerodynamic impact of aspect ratio at low Reynolds number. J Aircraft 50(2):626-634"
+    doi: 10.2514/1.C031980
+    read_level: search-summary
+    note: "Metadata confirmed via Crossref; abstract seen only as excerpted by a search summary."
+  - citation: "Torres GE, Mueller TJ (2004) Low aspect ratio aerodynamics at low Reynolds numbers. AIAA J 42(5):865-873"
+    doi: 10.2514/1.439
+    read_level: metadata
+    note: "Only the catalogue record was read. The low-AR nonlinear-lift statement attributed to this regime in where_it_breaks is from recall."
+  - citation: "Tucker VA (1993) Gliding birds: reduction of induced drag by wing tip slots between the primary feathers. J Exp Biol 180:285-310"
+    doi: 10.1242/jeb.180.1.285
+    read_level: search-summary
+    note: "DOI resolved via doi.org; title matched. Full text blocked by network policy."
+  - citation: "Park H, Choi H (2010) Aerodynamic characteristics of flying fish in gliding flight. J Exp Biol 213:3269-3279"
+    doi: 10.1242/jeb.046052
+    read_level: search-summary
+    note: "DOI resolved via doi.org; title matched. Full text blocked by network policy."
