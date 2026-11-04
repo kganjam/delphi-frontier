@@ -163,6 +163,35 @@ no weak confidence to misread in the first place.
 there is no experimental structure for this protein to check it against. It says the model is
 internally certain about a fold nobody has measured.
 
+### T200K, folded separately: the fold survives, the effect is confined to the site
+
+| | WT | T200K | Δ |
+|---|---|---|---|
+| mean pLDDT | 85.95 | 85.83 | **−0.11** |
+| pTM | 0.823 | 0.824 | +0.001 |
+| pLDDT at residue 200 | 97.7 | 87.7 | **−10.0** |
+| window 190–210 mean | — | — | −0.79 |
+
+**The −10.0 at residue 200 is the largest absolute shift anywhere in the protein — 0 of 577
+residues move more — and it is 16.0 population standard deviations of the per-residue Δ.** Yet the
+global numbers do not move at all.
+
+So the substitution is **tolerated by the fold rather than fold-breaking**, which is the pattern
+expected of a **dominant** allele acting by change- or gain-of-function rather than by loss of a
+folded product. That is consistent with what `lat4a^nr21` is reported to be — a dominant fin-size
+*suppressor*, not a null.
+
+**Three things this does not show, and the first is the one most easily over-read.** A pLDDT drop
+at a substituted position is *partly expected for any substitution*, because the local sequence
+context changed; the informative part is that it stayed local, not that it happened. pLDDT is not a
+stability measure and no ΔΔG was computed — `stab-ddg` turned out to be a binding-interface tool
+and ESM-2 was paused platform-side. And nothing here touches transport function or the fin
+phenotype.
+
+The comparison carried its own control: the WT model contains **THR** at 200 and the mutant
+contains **LYS**, asserted in the analysis, so the two runs demonstrably folded different sequences
+rather than the same one twice.
+
 The parse carried its own control, and needed one: this writer orders `B_iso_or_equiv` at field 12
 and `occupancy` at 13, and every occupancy is exactly `1.0` — so a positional parse written for a
 standard mmCIF reports a mean pLDDT of **1.0** and looks fine. Reading the `_atom_site.` header
