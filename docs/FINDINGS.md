@@ -45,13 +45,30 @@ and the required 7400–18400 W/kg sits **within measured insect LaMSA** (36,000
 still fails, because break-even needs essentially **all skeletal muscle loading one spring in a
 single stroke**.
 
-**When two unrelated framings hit a wall, the wall belongs to the problem.** The barrier is a
-property of *single-impulse launch from water at this size* — not of any one mechanism, and not of
-our imagination. That is a far stronger claim than "bigger fins did not work", and it is the result
-the project exists to have produced.
+**When two unrelated framings hit a wall, the wall belongs to the problem.** Changing
+representation moved the shortfall from **≥10× to 1.9×**, so the reframe was right even though it
+still failed.
 
-Worth noting for its own sake: changing representation moved the shortfall from **≥10× to 1.9×**.
-The reframe was right even though it still fails.
+:::{danger} That conclusion was then refuted, and the refutation is the better result
+**Superseded by S30.** The claim above continued *"the barrier is a property of single-impulse
+launch from water at this size"*. **The sign is wrong**, and so is the framing.
+
+Required specific energy scales as **m^0.36–0.53** (measured in exocoetids, Fish 1990), while
+single-stroke LaMSA supply per kg is **size-independent** (Sutton 2019). Since the exponent on
+demand exceeds the exponent on supply, the budget closes as mass **decreases**. The crossover is an
+**upper** bound at **m\* = 39 mg**, which makes a 0.4 g zebrafish **~10× too LARGE** for
+single-impulse launch, not too small.
+
+And the hard reality check forced a reinterpretation rather than a tuning. The scaling predicts no
+exocoetid of 3–530 g can reach glide speed in one stroke — and that is what is observed. A **300 g
+*Cypselurus* needs 16.4 m/s, exits the water at only ~10 m/s (37% of the kinetic energy), and
+taxis** to 15–20 m/s with the lower caudal lobe still immersed.
+
+**So real fish gliders use a multi-stroke launch, and both results above modelled a single
+impulse.** The smallest real glider is ~1–2 g needing 4.23 m/s — essentially the same speed the
+zebrafish design requires. The difference is not the speed; it is the mode of reaching it. That
+question is open as S32.
+:::
 
 ---
 
@@ -117,5 +134,10 @@ seeded defects are real errors this project made.**
   paper's own abstract; the exact factor is not.
 - No organism was built, no measurement was taken by us, and no simulation was validated against an
   experiment. Every number is literature, derivation, or model output, labelled as such.
-- S30 — the body mass at which the launch budget *does* close — is still running. Until it returns,
-  "too small" has no threshold attached.
+- **The flight verdict above is not reopened by S30, but its explanation is.** The arithmetic of
+  S28 stands; what fails is the claim about *why*. Whether a multi-stroke launch changes the verdict
+  is open (S32), and until it returns this project does not know whether a zebrafish can be
+  engineered to glide — only that neither a bigger wing nor a single spring-loaded impulse does it.
+- The headline 4.37 m/s **looks the most precise number here and is the most structurally
+  dependent**: its ±0.11 propagates neither the wing area's total absence of an interval nor the two
+  untested structural assumptions beneath it (steady lift, rigid wing).
