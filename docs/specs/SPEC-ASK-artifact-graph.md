@@ -104,6 +104,22 @@ the receiving project cannot see what it is missing.
 
 Honest, per dimension. `designswarm` has 27 tables; this is what they actually deliver today.
 
+> **Read the row counts before the prose (added 2026-11-04).** This table's *What exists* column
+> lists **schema, not exercised capability**, and a reader cannot tell the two apart from it. Counted:
+> **4 of the 14 tables cited below as evidence are EMPTY** — `part` 0, `part_revision` 0,
+> `retraction` 0, `spec_parameter` 0. The other ten carry data (claim 320, challenge 847,
+> constraint_entailed 381, subproblem 95, review_flag 63, run 27, artifact 9, parameter 5,
+> grader_calibration 4, regime_transition 1).
+>
+> **The four are not equivalent and must not be reported as one number.** An empty `retraction`
+> plausibly means nothing has needed retracting — the mechanism may be correct though unexercised,
+> and citing it is weak rather than false. Empty `part`/`part_revision` mean the addressability
+> layer D1 describes **has never been used at all**. Empty `spec_parameter` makes a *mandatory*
+> constraint vacuously true, which is the one that actively misleads (claim 471: D5 is satisfiable
+> for **5 of 434** live quantities).
+>
+> The check is one query per table and takes seconds. It was always cheap; nobody had run it.
+
 | Dimension | Status | What exists | What is missing, stated as a gap |
 |---|---|---|---|
 | **D1 Addressability** | **partial** | `part.id` assigned, `part_revision.content_sha256`, `artifact.sha256`, closed `kind` vocabulary | Ids are not **resolvable** — nothing dereferences them. No semantic type beyond `kind` |
