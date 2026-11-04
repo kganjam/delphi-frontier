@@ -110,6 +110,14 @@ def main():
                     if sid and lvl in ("measured", "simulated", "derived", "literature"):
                         q(f"""update subproblem set answer_kind={lit(lvl)}, updated_at=now()
                               where id={lit(sid)} and answer_kind is null""")
+                    # AND THE ANSWER ITSELF. `ans` is parsed above and was written only into the
+                    # claim, never into the subproblem row -- so 68 of 81 `answered` subproblems
+                    # had no answer text, which SPEC-subproblem-lifecycle rule 1 forbids and
+                    # claims is "enforced in code". Same shape as the answer_kind and depends_on
+                    # bugs: the value is in hand and goes nowhere.
+                    if sid and ans:
+                        q(f"""update subproblem set answer={lit(ans[:1400])}, updated_at=now()
+                              where id={lit(sid)} and coalesce(btrim(answer),'')=''""")
                     # A literature claim needs a read_level (SPEC-ASK rule 2). The agent now
                     # reports it; when it does not, the row is left null and the checker flags it.
                     rl = str(d.get("read_level") or "").strip().lower()
