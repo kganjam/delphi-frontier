@@ -79,6 +79,25 @@ def main():
     body.append(("  same budget at eta=0.39", 10.17 / (0.30 * 0.93 * 0.39), 93.5, 0.2))
     body.append(("  same budget at eta=0.34", 10.17 / (0.30 * 0.93 * 0.34), 107.2, 0.2))
 
+    # --- AUDIT ARITHMETIC ----------------------------------------------------
+    # Ratios computed while auditing other people's ratios, which this document named as its own
+    # unchecked gap. These are the recomputable ones; the rest of that gap is run outputs (backed
+    # by a code_sha) and live graph counts (deliberately unpinned).
+    import math
+    body += [
+        # the quotient that exposed the broken table row
+        ("98.5 / 8.6 (the wrong pairing)",   98.5 / 8.6,                11.45, 0.01),
+        # lift at a 45-degree climb: vertical component is L*cos(theta)
+        ("10 % lift at 45 deg, vertical",    10.0 * math.cos(math.radians(45)), 7.1, 0.05),
+        # Sutton's one-third ceiling applied to the requirement (the double-count that was rejected)
+        ("98.5 / (1/3) if the ceiling applied", 98.5 * 3,              295.5, 0.6),
+        # the project's 20 cm2 at 2 m/s, propagated to 4.41 m/s by 1/v^2
+        ("20 cm2 at 2 m/s -> 4.41 m/s",      20.0 * (2.0 / 4.41) ** 2,  4.11, 0.02),
+        # area-vs-length sample size: isotropy doubles the CV along with the effect
+        ("area-vs-length n ratio",
+         ((0.10 / 0.05) ** 2) / (((2 * 0.10) / ((1.05 ** 2) - 1)) ** 2), 1.05, 0.02),
+    ]
+
     print()
     for name, got, stated, tol in body:
         ok = abs(got - stated) <= tol
@@ -90,7 +109,7 @@ def main():
         print(f"\n  {bad} row(s) no longer reproduce. A shortfall ratio and the cell it is")
         print("  computed from must not drift apart -- that is how this table was wrong before.")
         return 1
-    print(f"\n  all {len(ROWS)} table rows and {len(body)} body figures reproduce.")
+    print(f"\n  all {len(ROWS)} table rows and {len(body)} body/audit figures reproduce.")
     print("  This check is not vacuous: it caught the 98.5/8.6 row, so a clean pass means")
     print("  something. A checker that has never failed is indistinguishable from one that cannot.")
     return 0

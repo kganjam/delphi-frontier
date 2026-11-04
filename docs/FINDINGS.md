@@ -638,16 +638,24 @@ length refusing to accept from others. Of **49** bold numeric assertions:
 
 | | count | how it is backed |
 |---|---|---|
-| **design arithmetic** | **18** | `analysis/headline_table.py` recomputes each from its own inputs and **exits non-zero on drift** |
+| **design arithmetic + audit ratios** | **23** | `analysis/headline_table.py` recomputes each from its own inputs and **exits non-zero on drift** |
 | run outputs | 9 | a `run` row with a `code_sha` — ESMFold2 pLDDT, ProteinMPNN ranks, the shuffle p |
 | graph statistics | 7 | live counts; **deliberately not pinned**, since a script asserting them would go stale the moment the graph moves |
 | external lookups | 1 | a PubMed count, reproducible only by re-querying |
-| everything else | 14 | **prose arithmetic that nothing recomputes** — ratios and percentages stated in the audit sections |
+| everything else | 9 | counts about this document, and ratios whose inputs are run outputs |
 
-**So the honest statement is: the design arithmetic is machine-checked and about a quarter of the
-document's numbers are not.** The last row is the real gap. Those 14 are mostly ratios computed in
-the course of auditing — the kind of figure this document has caught other people getting wrong
-four times today, now sitting in it unchecked.
+**So the honest statement is: the design arithmetic and the recomputable audit ratios are
+machine-checked; nine numbers are not.**
+
+The audit ratios were the gap this section named an hour ago, and five of them are now checked —
+the quotient that exposed the broken table row (`98.5/8.6 = 11.45`), the 45° lift projection
+(`10·cos 45° = 7.07`), the one-third ceiling that was rejected as a double-count (`98.5×3 = 295.5`),
+the 1/v² propagation (`20·(2/4.41)² = 4.11`), and the area-vs-length sample-size ratio (**1.05**,
+where ignoring the CV doubling gives the 4.2 that was wrong).
+
+The nine that remain are **counts about this document itself** and **ratios whose inputs are run
+outputs** — a ProteinMPNN rank percentile, a sequence-recovery fraction. Those are backed by a
+`run_id` rather than by recomputation, which is a different guarantee, not an absent one.
 
 ## Open items, stated so the next reader does not have to find them
 
