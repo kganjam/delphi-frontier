@@ -41,6 +41,12 @@ ROWS = [
     ("water-exit speed, Demesmay", 4.37, 1.57, 1.57,  2.78, 2.78, 0.02),
     # Fin AREA at CL 0.6, 2 m/s, 0.4 g against the 1.4 cm^2 whole-body silhouette.
     ("pectoral fin area",         26.7,  1.4,  1.4,  19.1, 19.1, 0.1),
+    # The row above is computed at CL 0.6, which is claim 5's ceiling -- and claim 5 is SUPERSEDED
+    # by claim 86 (CL_max ~1.0, 0.9-1.1, for cambered/corrugated thin wings near Re 3e3; 0.6 holds
+    # "only for a flat plate on weak evidence"). Both are checked because both are in the table and
+    # the FIN'S OWN CL IS UNKNOWN, so neither endpoint is the answer. Checking only the superseded
+    # one is how it came to be bolded as the headline in the first place.
+    ("pectoral fin area at CL 1.0", 16.0, 1.4,  1.4,  11.4, 11.4, 0.1),
 ]
 
 
