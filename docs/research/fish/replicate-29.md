@@ -98,9 +98,9 @@ I then implemented *their* statistic myself (`replicate-29_global_offset_identit
 
 | protein | obs (mine) | obs (recorded) | my null max, 200 shuf (seed 29) | p, 200 shuf | p, 2000 shuf (seed 7) |
 |---|---|---|---|---|---|
-| kcnk5b | 0.1101 | 0.110 | 0.111 | 0.010 | **0.0020** |
-| and1 | 0.1157 | 0.116 | 0.107 | 0.005 | **0.0020** |
-| and2 | 0.0984 | 0.098 | 0.122 | 0.134 | 0.119 |
+| kcnk5b | 0.1101 | 0.110 | 0.1111 | 0.010 | **0.0020** |
+| and1 | 0.1157 | 0.116 | 0.1101 | 0.005 | **0.0020** |
+| and2 | 0.0984 | 0.098 | 0.1179 | 0.134 | 0.119 |
 
 My observed values and Σf² (0.060 / 0.067 / 0.065) match the recorded ones exactly. My largest
 7-mer count is 1 in every sequence, which agrees with "no 7-mer recurs 3 times".
