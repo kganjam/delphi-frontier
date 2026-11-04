@@ -166,11 +166,29 @@ def main() -> int:
     n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5
     write = "--write" in sys.argv
     panel = "--panel" in sys.argv
-    rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
-                 from claim c where c.project_id={lit(PROJECT)} and c.superseded_by is null
-                 and length(c.statement) between 80 and 6000
-                 and not exists (select 1 from challenge ch where ch.claim_id = c.id)
-                 order by c.id desc limit {n}""")
+    if "--repanel" in sys.argv:
+        # Claims that have been challenged by exactly ONE model. Those verdicts are confounded:
+        # claim 497 measured that opus passes 41% of what it judges and sonnet 0 of 18, and that
+        # re-running sonnet on opus-PASSED claims weakens 7 of 8 -- so a single-model verdict
+        # records which model happened to see it as much as what it says. Re-running these through
+        # the panel replaces one model's opinion with two, at about $0.02 a claim.
+        rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
+                     from claim c
+                     where c.project_id={lit(PROJECT)} and c.superseded_by is null
+                     and length(c.statement) between 80 and 6000
+                     and exists (select 1 from challenge ch where ch.claim_id = c.id
+                                 and ch.challenger like 'api%')
+                     and (select count(distinct split_part(
+                              replace(replace(ch2.challenger,'api-panel:',''),'api:',''),'@',1))
+                          from challenge ch2 where ch2.claim_id = c.id
+                          and ch2.challenger like 'api%') = 1
+                     order by c.id desc limit {n}""")
+    else:
+        rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
+                     from claim c where c.project_id={lit(PROJECT)} and c.superseded_by is null
+                     and length(c.statement) between 80 and 6000
+                     and not exists (select 1 from challenge ch where ch.claim_id = c.id)
+                     order by c.id desc limit {n}""")
     if not rows:
         print("  no unchallenged live claims; nothing to do.")
         return 0
