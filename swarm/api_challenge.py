@@ -120,10 +120,15 @@ def call_with_fallback(tenant: str, prompt: str) -> dict:
 
 def parse(text: str) -> tuple[str, str, str]:
     """Closed vocabulary. A reply naming none of the three, or more than one, is NOT guessed at."""
-    att = re.search(r"ATTACK:\s*(.+)", text)
-    why = re.search(r"WHY:\s*(.+)", text, re.S)
-    m = re.search(r"OUTCOME:\s*([a-z-]+)", text, re.I)
-    out = (m.group(1).lower() if m else "")
+    # LAST match, not first -- a self-correcting reply ("Correction: the verdict should be X")
+    # otherwise records the model's discarded first thought. Measured on the recompute arm, which
+    # shares this parser shape, and fixed in both.
+    atts = re.findall(r"ATTACK:\s*(.+)", text)
+    whys = re.findall(r"WHY:\s*(.+)", text)
+    outs = re.findall(r"OUTCOME:\s*([a-z-]+)", text, re.I)
+    att = type("M", (), {"group": lambda self, _n, v=(atts[-1] if atts else None): v})() if atts else None
+    why = type("M", (), {"group": lambda self, _n, v=(whys[-1] if whys else None): v})() if whys else None
+    out = (outs[-1].lower() if outs else "")
     if out not in OUTCOMES:
         named = [o for o in OUTCOMES if re.search(rf"\b{o}\b", text, re.I)]
         out = named[0] if len(named) == 1 else "not-run"
