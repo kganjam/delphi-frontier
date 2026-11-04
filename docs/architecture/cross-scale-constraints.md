@@ -131,8 +131,68 @@ running any simulation.
   literature. C2–C6 are marked open because nobody has looked, which is different from having
   looked and found nothing.
 - Six kinds (§3) is a guess at sufficiency from one worked example.
-- Nothing automates entailment. A human or agent writes the constraints a claim implies, and a
-  wrong or incomplete set produces false confidence in exactly the way this document is meant to
-  prevent.
-- The "refuted from below" case (§4) is the most valuable and has **never happened here**. Until it
-  does, its value is an argument rather than a demonstration.
+- A wrong or incomplete constraint set produces false confidence in exactly the way this document
+  is meant to prevent. Entailment is now generated (§8) rather than hand-written, which changes who
+  makes that mistake, not whether it can be made.
+- The "refuted from below" case (§4) is the most valuable and **still has not happened**. §8 says
+  how close it came.
+
+---
+
+## 8. Measured: what happened when entailment was actually run
+
+Until 2026-11-04 this document described a mechanism nothing executed. The `constraint_entailed`
+table existed with exactly the six kinds and four statuses specified above, and held **6 rows** —
+the §6 worked example, entered by hand. The closing section said *"nothing automates entailment"*
+and left it there.
+
+It is now the swarm's fifth generator. Each live claim carrying a scale is propagated to its
+neighbours, the agent writes 2–5 generic constraints, and then **checks each one against the
+literature**. First measured pass, over 3 claims:
+
+| | |
+|---|---|
+| constraints generated | **15** (plus the 6 hand-written) |
+| `satisfied` | 10 |
+| `open` | 7 |
+| `unsatisfied` | 3 |
+| `assumed` | 1 |
+| **`unsatisfiable`** | **0** |
+
+By kind: existence 10, range 5, conservation 2, spatial 2, timescale 1, energetic 1.
+
+### The one that came closest, and why it was right not to claim it
+
+Claim 283 — *required wing area at a 2 m/s launch is ~20 cm² against a ~1.4 cm² silhouette* —
+entailed an **energetic** constraint at the tissue scale: the escape branch needs **~290–4800 W/kg
+muscle**. The agent found the highest measured fish fast-muscle values it could: **142.7 W/kg**
+work-loop mean (*Scorpaena notata*, 20 °C) and **307 W/kg** peak instantaneous (sculpin C-bend).
+Both sit at or below the bottom of the required band.
+
+That is the shape of a refutation from below, and the agent **declined to call it one**, for three
+reasons it wrote down: the requirement depends on an *assumed* launch duration and muscle fraction,
+the measurements come from other taxa, and elastic storage or a multi-stroke taxi bypasses the
+muscle-power limit entirely — which is [the project's own S30 result](../FINDINGS.md), reached
+independently.
+
+**That is the correct verdict, and it is the result worth reporting from this pass.** `unsatisfiable`
+requires a measured number to contradict a requirement that is itself firm. Here the requirement is
+soft at both ends, so the comparison bounds nothing. An agent that had marked it `unsatisfiable`
+would have produced this document's showcase outcome out of an assumption about launch duration.
+
+The sources are labelled `search-summary` — leads, not evidence — and the negative carries its
+scope: *"2 searches; no gasteropelecid muscle data searched beyond these."*
+
+### What this changes, and what it does not
+
+**Established:** the mechanism runs end to end, and the distribution is informative rather than
+flat — two thirds of the generated constraints landed on something other than `satisfied`, and the
+`existence` kind dominates (10 of 15), which matches §3's prediction that it is the kind most often
+left unsatisfied.
+
+**Not established:** 3 claims is not a sweep, and 0 `unsatisfiable` from 15 constraints is weak
+evidence either way about how often the valuable case occurs. Nothing yet checks that a generated
+constraint is *entailed* rather than merely related, which is the failure mode §7 names and which
+generation makes cheaper to commit at scale, not rarer. And the one near-miss above turned on a
+judgment call that a different agent could plausibly have made the other way — so the verdict
+distribution is, for now, partly a measurement of the prompt.
