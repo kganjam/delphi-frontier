@@ -342,6 +342,27 @@ internally certain about a fold nobody has measured.
 > changed four times is why. Kept rather than rewritten, because the sequence of readings is the
 > honest record of how the number was understood.
 >
+> **FINAL READING, after thirteen substitutions at this one site (claim 517).** The charge reading
+> above is also superseded. Glutamine — the **uncharged** isostere of glutamate — drops **−7.72**,
+> *more* than charged glutamate's −6.29, so removing the charge while holding shape and length fixed
+> does not remove the effect. The variable that separates all thirteen residues is **side-chain
+> heavy-atom count**:
+>
+> | | residues | Δ pLDDT |
+> |---|---|---|
+> | **≤ 4 atoms — flat** | A(1) T(3) V(3) D(4) N(4) I(4) | +0.40 … −0.59 |
+> | **≥ 5 atoms — drops** | E(5) Q(5) K(5) H(6) R(7) F(7) W(10) | −3.59 … −15.38 |
+>
+> Max flat = 4, min dropping = 5, **no exceptions**. Charge, sign, β-branching and volume all cut
+> *across* the two groups — valine at 140.0 Å³ gives +0.24 while glutamate at 138.4 gives −6.29.
+>
+> **Four successive models were refuted here, each by the next residue placed**: a steric gate near
+> 168 Å³ (by isoleucine), positive-charge-specificity (by glutamate), charge dominance (by
+> glutamine), and the reach hypothesis (by the same structure). **The conclusion that T200K is not
+> shown "tolerated" survived all four.** What this section demonstrates is not a result about
+> lysine — it is that a pLDDT delta at one position tracks a property of the *substituted residue*
+> that has nothing to do with how damaging the substitution is.
+>
 > **So the statistic is anti-correlated with severity, not merely insensitive.** It gave its largest
 > response in the protein to the milder substitution and nothing to the severe one. The sentence
 > below that reads *"the informative part is that it stayed local, not that it happened"* is
