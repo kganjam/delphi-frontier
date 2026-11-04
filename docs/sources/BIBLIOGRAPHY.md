@@ -31,8 +31,32 @@ grain-boundary analogy. **Lee Marom** is the second author (LAMM / Dept. of Mech
 ### [B2] Wang & Buehler (2026)
 **Self-Revising Discovery Systems for Science: A Categorical Framework for Agentic Artificial Intelligence**
 arXiv:2606.01444v2, 21 Aug 2026.
-→ `pdf/arxiv-2606.01444.pdf` · **read-level: partial-text** (abstract and §1 Introduction read in
-the archived PDF; the Builder/Breaker and CategoryScienceClaw case studies are **not yet read**)
+→ `pdf/arxiv-2606.01444.pdf` · **read-level: partial-text** (abstract, §1 Introduction, and the
+case-study summaries in §2 read in the archived PDF; the Materials and Methods formal definitions
+in §4 and the Supplementary Information are **still unread**)
+
+**Authorship, checked against the PDF title page rather than recalled: Fiona Y. Wang and Markus J.
+Buehler only. Lee Marom is NOT an author of this paper** — Marom is second author of [B1],
+arXiv:2603.14312. The two are easy to conflate because both come from LAMM and both concern
+agentic discovery.
+
+**The CategoryScienceClaw case study is the one worth having, and it is directly analogous to our
+own work.** Their high-entropy-alloy fatigue investigation *rejects a threshold-only ΔK_th ranking*
+because FCC+BCC records have a higher median threshold **but substantially steeper Paris slopes** —
+a one-axis screen that hides a trade-off. The accepted representation is a **two-axis
+damage-tolerance map** separating crack-growth threshold from post-threshold stability, and the
+resulting claim is explicitly "a reproducible public-data hypothesis and prospective validation
+target, not a substitute for new fatigue testing."
+
+*Our inference:* that is the same move as a regime transition, and it is a template we should apply
+to **S6**. We currently screen fin rays on a single axis, flexural stiffness EI, and it fails. The
+analogous question is whether a second axis — post-yield behaviour, damping, or flutter margin —
+separates designs that a stiffness-only screen collapses together. Their case is evidence the
+one-axis screen is a recurring failure mode rather than a one-off.
+
+**Builder/Breaker** revises a protein-mechanics symbolic world model under an MDL gate, *retaining
+rejected edits and retractions*; its accepted law "expresses within-chain flexibility as all-mode
+elastic compliance conditioned by slow collective-mode participation".
 
 The category-theory paper, and the most important single reference for our design. Its claims, as
 the authors state them:
