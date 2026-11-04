@@ -33,6 +33,12 @@ def fmt_interval(c: dict) -> str:
         s += f" (interval {iv[0]:g} to {iv[1]:g})"
     if c.get("units"):
         s += f" {c['units']}"
+    # Whether a number was MEASURED or DERIVED changes what it can be argued from, so it belongs on
+    # the page and not only in the checker. check_citations.py reads the same field to decide
+    # whether a constant needs a non-weak source.
+    ev = str(c.get("evidence", "")).strip()
+    if ev:
+        s += f" — *{ev}*"
     return s
 
 

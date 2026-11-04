@@ -1,0 +1,61 @@
+id: gompertz
+name: Gompertz growth
+usability: descriptive
+equation: "N_t = N_0 * exp(a_g / b_g * (1 - exp(-b_g * t)))"
+latex: "\\frac{dN}{dt} = a N e^{-bt} \\Rightarrow N(t) = N_0 \\exp\\left[\\frac{a}{b}\\left(1 - e^{-bt}\\right)\\right]"
+symbols:
+  N_t: {dimension: "1", units: dimensionless, description: "size or cell number at time t; dimensionless because the curve is used for counts and for normalised sizes alike"}
+  N_0: {dimension: "1", units: dimensionless, description: "initial size or number"}
+  a_g: {dimension: 1/T, units: 1/d, description: "initial specific growth rate"}
+  b_g: {dimension: 1/T, units: 1/d, description: "rate at which that specific growth rate decays"}
+  t:   {dimension: T, units: d, description: "time"}
+constants:
+  asymptote:
+    value: null
+    note: "DERIVED, exact: the curve approaches N_0*exp(a/b). The ratio a/b is dimensionless, which is why it can sit inside an exponential at all."
+  half_log_asymptote_time:
+    value: null
+    note: "DERIVED: half of the log-asymptote is reached at t = ln(2)/b, independent of a and N_0 -- the same parameter-light invariant that von Bertalanffy has."
+mechanism: >
+  NONE IS GIVEN, and that is the honest statement. It is an empirical curve whose specific growth
+  rate decays exponentially in time: dN/dt = a*N*exp(-b*t). Gompertz's own use in 1825 was human
+  mortality, not growth at all; Winsor 1932 applied the curve to growth. A function that was
+  invented for one phenomenon and transplanted to another, with no derivation in either, is a
+  fitting family and should be labelled as one.
+domain_of_validity:
+  use: "tumour growth (Laird 1964) and many organism growth curves"
+  notes: >
+    It is applied wherever a sigmoid on a log scale is wanted. The domain is therefore a statement
+    about convention rather than about biology. That its tumour fits are Gompertzian is remembered.
+where_it_breaks: >
+  There is no regime where it is derived to hold, so there is no regime where it can be said to
+  break -- which sounds like strength and is the opposite. A curve family with two free parameters
+  plus an initial value will fit most monotone saturating data, so a good fit is close to
+  uninformative: the only meaningful question is whether it fits BETTER than the logistic or von
+  Bertalanffy alternatives on the same data, and no retrieved source tests that here. Because it is
+  not derived, its parameters a and b do not correspond to measurable biological rates, so they
+  cannot be predicted from physiology, compared across studies with different sampling, or used to
+  constrain a design. Fitting it and reporting a and b is a description of the data, and
+  extrapolating it beyond the sampled interval has no justification at all.
+worked_examples:
+  - organism: "illustrative parameters -- no fitted values for any system were retrieved"
+    computation: |
+      a = 1, b = 0.2
+      asymptote = N_0 * e^(a/b) = N_0 * e^5 = 148 * N_0
+      half of the log-asymptote when 1 - e^(-0.2 t) = 0.5, i.e. t = ln(2)/0.2 = 3.47 time units
+    value: 3.47
+    note: >
+      Note that a 5-fold change in the dimensionless ratio a/b produces a 148-fold change in the
+      asymptote. The curve's output is exponentially sensitive to a ratio of two fitted rates,
+      which is a further reason not to extrapolate it.
+    evidence: derived
+contested_by:
+  - "Logistic and von Bertalanffy growth are the standard alternatives. Which fits best is a per-dataset empirical question and no retrieved source settles it; the three are preserved as a choice the analyst must make and justify, not as a ranking."
+sources:
+  - citation: "Gompertz B (1825) Phil Trans R Soc Lond 115:513-583, On the nature of the function expressive of the law of human mortality, doi 10.1098/rstl.1825.0026"
+    read_level: metadata
+  - citation: "Winsor CP (1932) PNAS 18:1-8, The Gompertz curve as a growth curve, doi 10.1073/pnas.18.1.1"
+    read_level: metadata
+  - citation: "Laird AK (1964) Br J Cancer 18:490-502, Dynamics of tumour growth, doi 10.1038/bjc.1964.55"
+    read_level: metadata
+    note: "The PMC copy is a scan with no text layer."

@@ -105,7 +105,7 @@ elephant : 70 * 4000^0.75  = 70 * 503    = 35,200 kcal/d
 | DeLong JP, Okie JG, Moses ME, Sibly RM, Brown JH (2010) PNAS 107:12941-12945, doi 10.1073/pnas.1007783107, PMC2919978 | `full-text` |
 | Banavar JR, Maritan A, Rinaldo A (1999) Nature 399:130-132, doi 10.1038/20144 | `abstract` |
 | Etienne RS, Apol MEF, Olff H (2006) Funct Ecol 20:394-399, doi 10.1111/j.1365-2435.2006.01136.x | `abstract` |
-| Kozlowski J, Konarzewski M (2004) Funct Ecol 18:283-289, doi 10.1111/j.0269-8463.2004.00830.x | `metadata` |
+| Kozlowski J, Konarzewski M (2004) Funct Ecol 18:283-289, Is West, Brown and Enquist's model of allometric scaling mathematically correct and biologically relevant?, doi 10.1111/j.0269-8463.2004.00830.x | `metadata` |
 | Brown JH, West GB, Enquist BJ (2005) Funct Ecol 19:735-738, doi 10.1111/j.1365-2435.2005.01022.x | `metadata` |
 
 

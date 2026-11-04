@@ -27,7 +27,7 @@ B = c_h S, \qquad S \propto M^{2/3} \Rightarrow B \propto M^{2/3}
 
 | Constant | Value | Note |
 |---|---|---|
-| `surface_exponent` | 0.6667 | DERIVED from geometry, not measured: for geometrically similar bodies at constant density, area scales as length squared and mass as length cubed, so S is proportional to M^(2/3). Everything in this law rests on that one step, which is why it fails exactly where geometric similarity or the heat-balance premise fails. |
+| `surface_exponent` | 0.6667 — *derived* | DERIVED from geometry, not measured: for geometrically similar bodies at constant density, area scales as length squared and mass as length cubed, so S is proportional to M^(2/3). Everything in this law rests on that one step, which is why it fails exactly where geometric similarity or the heat-balance premise fails. |
 
 ## Why it holds
 
