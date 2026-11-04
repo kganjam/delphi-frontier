@@ -20,8 +20,12 @@ open and what each question is blocked on.
 | Muscle energy per stroke (spring route) | 98.5 J/kg | 53–81 J/kg *best measured spring-loading work* | **1.2–1.9×** |
 
 :::{warning} Corrected 2026-11-04 — the last row's arithmetic did not work
-It read *"98.5 J/kg | **8.6 J/kg** delivered | 1.9×"*, and 98.5 / 8.6 is **11.45**, not 1.9. The
-shortfall figure was right and the **Available cell was the wrong number to pair with it**: the
+It read *"98.5 J/kg | **8.6 J/kg** delivered | 1.9×"*, and 98.5 / 8.6 is **11.45**, not 1.9.
+
+**Both numbers were right; they came from different comparisons.** Claim 227 states a **11.5×**
+gap against the 8.6 J/kg the muscle *"effectively delivers today"* **and** *"54–82 % of need"*
+against the 53–81 J/kg spring-loading work. The table took its Available cell from the first and
+its ratio from the second. A row about the **spring route** needs the spring comparator, so the
 1.9× compares the requirement against the *best measured spring-loading work* — frog, 53–81 J/kg —
 which claim 227 states as supplying *"only 54–82 % of need"*. That reproduces: 98.5/53 = 1.86 and
 53/98.5 = 53.8 %.
@@ -89,11 +93,18 @@ the question of why large ones do not use springs. Applying its size-independenc
 the same, so the transfer is reasonable — but it is an inference this project makes, not a result
 the paper states.
 
-**And the paper offers a tighter bound than the one used.** Its one-third ceiling on recoverable
-muscle work is a *quantitative* limit; the argument above uses only the weaker "size-independent"
-property. If 98.5 J/kg must come through a spring that can deliver at most a third of muscle work,
-the muscle requirement is ~**296 J/kg**, far above the 53–81 J/kg best measured. That has not been
-worked through and is recorded here as an open lead, not a result.
+**A tighter bound looked available, and it was a double-count.** Sutton's one-third ceiling is
+quantitative where the argument above uses only size-independence, which suggested the muscle
+requirement is really ~**296 J/kg** — turning a 1.2–1.9× shortfall into 3.6–5.6×.
+
+**It does not hold.** The 53–81 J/kg figures are described as the best ***measured* spring-loading
+work**, so whatever length–tension limit Sutton quantifies is **already reflected in them**.
+Multiplying by three on top counts the same limitation twice. The headline number does not move.
+
+*Not verified:* the primary source behind the frog 53 and 81 J/kg figures. A literature search did
+not locate it, so this rests on the word "measured" in the claim rather than on reading the
+measurement. **If those turn out to be a muscle's theoretical capacity rather than a spring-loaded
+measurement, the lead reopens.**
 :::
 
 And the hard reality check forced a reinterpretation rather than a tuning. The scaling predicts no
