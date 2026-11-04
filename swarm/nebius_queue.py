@@ -120,7 +120,19 @@ def run_job(job: dict) -> bool:
     t0 = time.time()
     while time.time() - t0 < MAX_WAIT:
         try:
-            st = fr.status_of(nbx.call("get_operation", {"operation_id": op})) or "?"
+            raw = nbx.call("get_operation", {"operation_id": op})
+            st = fr.status_of(raw) or "?"
+            # ADMISSION_PENDING / admission-unknown is NOT a state to wait out. The reply carries
+            # `retry_same_idempotency_key: true`, which is the server saying to REPLAY the original
+            # key -- doing so converts the opaque state into a readable QUEUED with a stage graph.
+            # Measured 2026-11-04: an operation sat at admission_pending for 861 s of polling and
+            # resolved on the first replay. Polling alone would have waited to the job cap.
+            if st == "admission_pending" and raw.get("retry_same_idempotency_key"):
+                try:
+                    submit_job(job)          # same label -> same idempotency key -> same operation
+                    print(f"  replayed the idempotency key to resolve admission_pending", flush=True)
+                except Exception as e:
+                    print(f"  replay failed: {type(e).__name__}: {str(e)[:90]}", flush=True)
         except Exception as e:
             st = f"poll-error {type(e).__name__}"
         if st in ("succeeded", "success", "completed"):
