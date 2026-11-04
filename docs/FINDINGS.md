@@ -472,11 +472,18 @@ Area scales as `1/C_L`, so the assumption moves the shortfall directly:
 | C_L | area at 2 m/s | shortfall vs 1.4 cm² | **linear ×** |
 |---|---|---|---|
 | 0.5 *(flat plate, per a replication)* | 32.0 cm² | 22.9× | 4.79× |
-| 0.6 *(claim 5's ceiling at Re 2–4×10³)* | 26.7 cm² | **19.1×** | **4.37×** |
+| 0.6 *(claim 5 — **SUPERSEDED by claim 86**)* | 26.7 cm² | 19.1× | 4.37× |
 | **0.8** *(assumed, and used throughout)* | 20.0 cm² | **14.3×** | 3.78× |
-| 1.0 *(cambered/corrugated, per the same replication)* | 16.0 cm² | 11.4× | 3.38× |
+| **1.0** *(cambered/corrugated — **the superseding value, claim 86**)* | 16.0 cm² | **11.4×** | **3.38×** |
 
 :::{important} The linear column is the one a genetic phenotype can be compared against
+**Corrected within the same day.** The 4.37× figure was first reported against **claim 5's CL ≤ 0.6**,
+and claim 5 is **superseded by claim 86**, which measures CL_max ≈ **1.0 (0.9–1.1)** near Re 3×10³ for
+cambered/corrugated thin wings and finds ≤0.6 holds "only for a flat plate on weak evidence". At the
+superseding value the demand is **3.38× linear**, not 4.37×. Both rows are kept and the superseded one
+is labelled, because **the fin's own CL is unknown** and a membrane is arguably neither a flat plate
+nor a corrugated wing — so the honest statement is the **range**, not either endpoint.
+
 **Added 2026-11-04 (claim 491).** Every figure above is an *area* ratio, and this document carried
 only area ratios for months. Area scales as length², so the demand a fin-length mutant has to meet
 is the **square root** — 19.1× area is **4.37× linear**, not 19×.
