@@ -54,6 +54,12 @@ def test(seq, n_shuffles, rng):
 
 
 def main():
+    # Print the usage the docstring defines instead of raising IndexError. Caught by running the
+    # committed script from a clean checkout of the pushed branch rather than from the working
+    # tree it was written in -- where it was always invoked with an argument.
+    if len(sys.argv) < 2:
+        print(__doc__)
+        return 2
     path = sys.argv[1]
     n = int(sys.argv[2]) if len(sys.argv) > 2 else 200
     rng = random.Random(29)

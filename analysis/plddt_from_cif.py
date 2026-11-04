@@ -32,6 +32,9 @@ def parse(path):
 
 
 def main():
+    if len(sys.argv) < 2:
+        print(__doc__)
+        return 2
     per = parse(sys.argv[1])
     v = [x for x, _ in per.values()]
     print(f"residues {len(per)}  mean {sum(v)/len(v):.2f}  median {statistics.median(v):.2f}  "
