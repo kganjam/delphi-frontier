@@ -1,0 +1,135 @@
+id: fick-diffusion
+name: Fick diffusion and the length scale beyond which diffusive supply fails
+usability: constraining
+equation: L_crit = sqrt(2 * n * D * C_s / q)
+latex: 'J = -D \frac{\partial C}{\partial x}, \qquad t_{diff} \approx \frac{L^2}{2D}, \qquad L_{crit} = \sqrt{\frac{2 n D C_s}{q}}'
+symbols:
+  L_crit:
+    dimension: L
+    units: m
+    description: 'largest half-thickness (slab), radius (cylinder) or radius (sphere) of tissue that diffusion alone can keep supplied -- the depth at which the concentration first reaches zero'
+  n:
+    dimension: '1'
+    units: dimensionless
+    description: 'geometry index: 1 for a slab supplied from both faces, 2 for a cylinder supplied from its surface, 3 for a sphere'
+  D:
+    dimension: L^2/T
+    units: m^2/s
+    description: diffusion coefficient of the solute in the tissue
+  C_s:
+    dimension: N/L^3
+    units: mol/m^3
+    description: 'concentration held at the supplying surface (the medium, or the capillary wall)'
+  q:
+    dimension: N/(L^3*T)
+    units: mol/(m^3*s)
+    description: 'volumetric consumption rate, assumed uniform and zero-order (independent of local concentration)'
+constants:
+  geometry_factor:
+    value: '2*n (2 slab, 4 cylinder, 6 sphere)'
+    evidence: derived
+    note: 'EXACT under the assumptions, not fitted. Solving D*laplacian(C) = q with C = C_s at the surface and C = 0 at the centre gives L_crit^2 = 2*n*D*C_s/q, i.e. 2 (slab half-thickness), 4 (cylinder radius) and 6 (sphere radius). Derived here from the steady diffusion equation; this is the standard Hill/Krogh-type result, but the derivation in Hill 1928 itself was NOT read (no full text accessed), so the attribution of this exact form to Hill is unverified.'
+  D_O2_water_25C:
+    value: 2.13e-09
+    interval:
+    - 2.12e-09
+    - 2.14e-09
+    units: m^2/s
+    evidence: literature-secondary
+    note: 'Two secondary values were seen, both at search-summary level only: 2.12e-9 (BioNumbers entry 115123, which cites Jordan, Ackerman & Berger 1956) and 2.14e-9 (a table in J Biol Eng 7:28). The interval is the spread of those TWO quoted values, not a measurement uncertainty, and it is far narrower than the real uncertainty for TISSUE. Ferrell & Himmelblau 1967 was located as a citation but its number was not retrieved.'
+  D_O2_tissue:
+    value: null
+    note: 'unknown -- no tissue value was retrieved. It is commonly remembered as somewhat below the water value (roughly 1.5e-9 to 2e-9 m^2/s) but that range is REMEMBERED, unsourced, and not used as a constant here. Because L_crit scales as sqrt(D), a factor 1.4 uncertainty in D moves L_crit by only about 18 per cent.'
+  thomlinson_gray_necrosis_radius:
+    value: 1.8e-04
+    interval:
+    - 1.6e-04
+    - 2.0e-04
+    units: m
+    evidence: literature-secondary
+    note: 'MEASURED (histology of human lung-cancer cords, 159 of 160 areas consistent), as reported by the review Worth, Papandreou & Hammond 2023 (full text read): no necrosis in cords under 160 micrometres radius, necrosis present above 200 micrometres, and the viable rim never exceeded 180 micrometres. The original 1955 paper could not be accessed (PMC page images only), so these are the review''s numbers, not the authors'' verbatim. Secondary sources seen in search disagree: one says about 100 micrometres of viable rim and a 70 micrometre diffusion distance. That disagreement is recorded, not resolved.'
+  franko_sutherland_diffusion_floor:
+    value: 8.0e-05
+    units: m
+    evidence: literature-abstract-secondary
+    note: 'From summaries of Franko & Sutherland 1979 (V79 spheroids; abstract-level text relayed by search): between 5 and 20.3 per cent O2 the SQUARE of viable rim thickness rose linearly with the theoretical oxygen diffusion distance, but below a diffusion distance of about 80 micrometres an unknown mechanism controls necrosis. This 80 micrometres is the measured lower edge of the regime in which the diffusion prediction works.'
+mechanism: 'Fick''s first law says net flux runs down a concentration gradient, J = -D dC/dx, as a consequence of random molecular motion; the mean-square displacement grows linearly with time, so the time to diffuse a distance L scales as L^2/(2D) in one dimension. The square is the whole story for design: diffusion is fast over micrometres and hopeless over centimetres. Combining Fick''s law with mass conservation and a uniform sink q gives the steady profile in a consuming tissue, and setting the concentration to zero at the centre yields the critical size L_crit = sqrt(2*n*D*C_s/q). Beyond it the core is starved, so any larger living structure must bring the supply closer by convection -- a circulation, a ventilated tracheal system, a flow-through body plan -- or must thin itself.
+
+  '
+domain_of_validity:
+  transport: 'molecular diffusion with no bulk flow inside the tissue (Peclet number well below 1 over L)'
+  medium: 'continuum: pore or tube size much larger than the molecular mean free path (Knudsen number small)'
+  kinetics: 'zero-order uptake, i.e. consumption independent of concentration down to zero'
+  state: 'steady state; the tissue is homogeneous and isotropic, with D and q uniform'
+  notes: 'Fick''s first law itself is very general for dilute solutes in liquids and continuum gases. It is the L_crit FORMULA, with its zero-order sink and its zero-at-centre criterion, that carries the restrictive assumptions, and it is that formula an engineer will actually use.
+
+    '
+where_it_breaks: 'Four boundaries, of which two are MEASURED failures of the critical-size prediction and two are failures of Fick''s law itself.
+
+  (1) NECROSIS IS NOT TRIGGERED AT ZERO OXYGEN, so the zero-at-centre criterion overestimates the viable size. Search summaries of Mueller-Klieser & Sutherland 1982 (EMT6/Ro and V79 spheroids; not read beyond search-summary level) report that the first signs of necrosis appear at a central PO2 of about 57 mmHg (EMT6/Ro) and 42 mmHg (V79), and that central PO2 fell from 66 mmHg at 400 micrometres diameter to 13 mmHg at 1000 micrometres. If those numbers hold, cells die while oxygen is still far above zero, and the true limit is set by a nonzero threshold concentration -- the formula then needs C_s replaced by (C_s - C_threshold). That inference is mine, drawn from the summarised numbers.
+
+  (2) BELOW ABOUT 80 MICROMETRES THE DIFFUSION PREDICTION STOPS TRACKING. Franko & Sutherland 1979 (abstract-level, via summaries) found viable-rim thickness followed diffusion theory between 5 and 20.3 per cent O2, but when the theoretical diffusion distance fell below about 80 micrometres an unknown mechanism controlled necrosis. So the law constrains thick tissue well and thin, hypoxic tissue poorly -- the regime boundary is measured, its cause is not known.
+
+  (3) KNUDSEN REGIME IN GAS-FILLED TUBES. When a tube diameter approaches the mean free path of the gas, molecule-wall collisions dominate and the effective D falls below the free-gas value; Fick''s law with the bulk D overpredicts supply. Insect tracheoles are the biological case. The air mean free path (about 70 nm) and tracheole diameters (sub-micrometre) are REMEMBERED, not retrieved, so no Knudsen number is asserted here.
+
+  (4) CONVECTION OR FACILITATION IS PRESENT. Once bulk flow moves the solute (Peclet above 1), diffusion is no longer the rate-limiting supply and L_crit is not a ceiling. The insect tracheal system was long modelled as diffusive; Westneat et al. 2003 (abstract-level) imaged major tracheae collapsing and reinflating in 1-2 s in beetles, crickets, ants and flies, i.e. active convective ventilation, so a diffusion-only size limit computed for those insects is wrong at the scale of the main trunks. Carrier-facilitated transport (myoglobin in muscle) likewise adds flux that Fick on the free solute omits; no source was retrieved for its magnitude, so none is stated.
+
+  Also: Michaelis-Menten (non-zero-order) uptake makes the starved core shrink gradually rather than appear at a sharp radius, and crowded cytoplasm can show anomalous (non-linear-in-time) diffusion. Neither was checked against a source in this entry.'
+worked_examples:
+- organism: 'diffusion time versus distance, oxygen in water'
+  computation: "t = L^2 / (2*D), D = 2.1e-9 m^2/s\n  L = 1 micrometre : 1e-12 / 4.2e-9 = 2.4e-4 s\n  L = 100 micrometres: 1e-8 / 4.2e-9 = 2.4 s\n  L = 1 mm          : 1e-6 / 4.2e-9 = 238 s  (4 min)\n  L = 1 cm          : 1e-4 / 4.2e-9 = 2.4e4 s (6.6 h)"
+  value: 238
+  note: 'CALCULATED, not observed. Each tenfold increase in distance costs a hundredfold in time, which is why no centimetre-scale animal relies on diffusion for its core.'
+  evidence: derived
+- organism: 'tissue cylinder around one capillary (Krogh-type), checked against tumour-cord histology'
+  computation: "L_crit = sqrt(2*n*D*C_s/q), n = 2 (cylinder), capillary radius neglected\n  D   = 2.0e-9 m^2/s        (water-like; tissue value unknown)\n  C_s = 0.053 mol/m^3       (about 40 mmHg: air-saturated water at 37 C ~0.21 mol/m^3 scaled by 40/160 -- REMEMBERED)\n  q   = 0.02 mol/(m^3*s)    (REMEMBERED, order-of-magnitude tissue O2 uptake; real tissues span several-fold)\n  L_crit = sqrt(4 * 2e-9 * 0.053 / 0.02) = sqrt(2.12e-8) = 1.46e-4 m = 146 micrometres"
+  value: 0.000146
+  note: 'CALCULATED from REMEMBERED inputs, not observed. The measured comparator is the Thomlinson & Gray boundary of 160-200 micrometres reported by Worth et al. 2023. The agreement within about 25 per cent should not be read as validation: q and C_s were not retrieved, and a factor-2 change in q moves the answer by a factor 1.4. What the example does show is that the formula gives the right ORDER (a tenth of a millimetre), which is the design-relevant fact.'
+  evidence: derived
+- organism: 'spheroid in air-saturated medium'
+  computation: "n = 3, D = 2.0e-9, C_s = 0.21 mol/m^3 (remembered), q = 0.02 mol/(m^3*s) (remembered)\n  R_crit = sqrt(6 * 2e-9 * 0.21 / 0.02) = sqrt(1.26e-7) = 3.55e-4 m = 355 micrometres radius (710 micrometres diameter)"
+  value: 0.000355
+  note: 'CALCULATED. The summarised Mueller-Klieser & Sutherland data have central PO2 still 13 mmHg at 1000 micrometres diameter, which is LARGER than this zero-centre prediction; with those numbers, either their cells consume less than the remembered q or their surface concentration is higher. That is my inference; their q and C_s were not retrieved. It is a reminder that this calculation is only as good as the measured q of the specific cells.'
+  evidence: derived
+contested_by:
+- 'Whether diffusion limits through the tracheal system set the maximum size of insects. Kaiser et al. 2007 (PNAS, synchrotron imaging of 44 tenebrionid beetles across 1.6-1700 mg) found tracheal investment rising disproportionately with size, most strongly at the leg orifices, and argue this supports oxygen limitation of insect gigantism. Clapham & Karr 2012 (PNAS, more than 10,500 fossil wing lengths) found maximum size tracked atmospheric O2 for about 200 million years but DECOUPLED from it around 150 Ma as birds radiated, and argue predation superseded oxygen as the constraint. A letter by Dorrington 2012 disputed Clapham & Karr; the search summary of that letter is internally inconsistent about which way it argued, so its position is recorded as unknown. These are not reconciled here.'
+- 'The viable-rim distance in tumours: the Worth et al. 2023 review reports Thomlinson & Gray as no necrosis below 160 micrometres radius and a rim never above 180 micrometres; another secondary source seen in search gives about 100 micrometres of viable rim and a 70 micrometre diffusion distance. The original was not accessed.'
+sources:
+- citation: 'Fick A (1855) Ueber Diffusion, Ann Phys 170:59-86'
+  read_level: listing
+  note: 'Cited from memory as the origin of the law; not retrieved in this session, and the volume and page numbers are remembered and unverified.'
+- citation: 'Hill AV (1928) Proc R Soc Lond B 104:39-96, The diffusion of oxygen and lactic acid through tissues'
+  read_level: search-summary
+  note: 'Citation confirmed by search. Full text not accessed, so the critical-radius derivation is NOT confirmed as Hill''s own form.'
+- citation: 'Krogh A (1919) J Physiol 52:409-415, The number and distribution of capillaries in muscles with calculations of the oxygen pressure head necessary for supplying the tissue'
+  read_level: search-summary
+  note: 'Source of the tissue-cylinder model. Secondary accounts dispute Krogh''s capillary counts; that dispute does not touch the diffusion geometry.'
+- citation: 'Thomlinson RH, Gray LH (1955) Br J Cancer 9:539-549, The histological structure of some human lung cancers and the possible implications for radiotherapy, doi 10.1038/bjc.1955.55, PMC2073776'
+  read_level: could-not-access
+  note: 'PMC page offers only page images and a PDF that did not load through the fetch tool. Numbers in this entry come from the review below.'
+- citation: 'Worth KR, Papandreou I, Hammond EM (2023) Br J Cancer 128:407-412, How the histological structure of some lung cancers shaped almost 70 years of radiobiology, doi 10.1038/s41416-022-02041-9, PMC9938174'
+  read_level: full-text
+  note: 'Read via a summarising fetch tool, so quotes are relayed, not inspected directly.'
+- citation: 'Franko AJ, Sutherland RM (1979) Radiat Res 79:439-453, Oxygen diffusion distance and development of necrosis in multicell spheroids, doi 10.2307/3575173'
+  read_level: search-summary
+  note: 'Abstract text seen only as relayed by search and aggregator pages.'
+- citation: 'Mueller-Klieser WF, Sutherland RM (1982) Br J Cancer, oxygen tensions in multicell spheroids (nature.com article bjc198241)'
+  read_level: search-summary
+  note: 'Title, volume and pages not confirmed; the publisher page redirected to a login. The 66/13 mmHg and 57/42 mmHg figures are from search summaries.'
+- citation: 'Groebe K, Mueller-Klieser W (1991) Eur Biophys J, On the relation between size of necrosis and diameter of tumor spheroids'
+  read_level: search-summary
+  note: 'Reported to show necrosis diameter rising rapidly once necrosis begins, not linearly with spheroid diameter. Volume and pages not retrieved.'
+- citation: 'Westneat MW, Betz O, Blob RW, Fezzaa K, Cooper WJ, Lee W-K (2003) Science 299:558-560, Tracheal respiration in insects visualized with synchrotron x-ray imaging'
+  read_level: abstract
+- citation: 'Kaiser A et al. (2007) PNAS 104:13198-13203, Increase in tracheal investment with beetle size supports hypothesis of oxygen limitation on insect gigantism, PMC1941816'
+  read_level: abstract
+- citation: 'Clapham ME, Karr JA (2012) PNAS 109:10927-10930, Environmental and biotic controls on the evolutionary history of insect body size, doi 10.1073/pnas.1204026109, PMC3390886'
+  read_level: abstract
+- citation: 'BioNumbers entry 115123, O2 diffusion coefficient in water at 25 C (cites Jordan, Ackerman & Berger 1956)'
+  read_level: search-summary
+- citation: 'J Biol Eng 7:28 (2013), Table 1, oxygen solubility and diffusion coefficient in deionized water at 25 C, doi 10.1186/1754-1611-7-28'
+  read_level: search-summary
+  note: 'Authors and title not retrieved.'
+- citation: 'Ferrell RT, Himmelblau DM (1967) J Chem Eng Data 12:111-115, Diffusion coefficients of nitrogen and oxygen in water'
+  read_level: listing
+  note: 'Located as a citation; its numerical value was not retrieved.'
