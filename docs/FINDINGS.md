@@ -30,12 +30,21 @@ reproducing each side exactly. The dispute is entirely *which Strouhal applies*.
 
 **And the operating point is not where the borrowed value was measured.** A 4 cm body at 1.95 m/s
 in water is **Re ≈ 7.8×10⁴**; even the caudal lobe alone is ≈2×10⁴. The goldfish value was taken
-at **7.1×10³** — a factor of **11** (or 3, lobe-only) away, in the direction where Strouhal falls
-toward the 0.2–0.4 band.
+at **7.1×10³**.
 
-**Unresolved.** Eloy's Lighthill-number formula has not been independently re-derived here, so
-this is not a verdict for the replication — it is a statement that the row inherits a value from
-a regime an order of magnitude away and did not say so.
+**Settled against claim 52 by this project's own law library.** `library/laws/strouhal.yaml`
+declares `domain_of_validity: reynolds_min: 1.0e4`. The taxi point sits **inside** that domain.
+The goldfish (0.54, Re 7.1×10³) and lungfish (1.02, Re 7.0×10³) figures claim 52 borrowed are
+listed under `where_it_breaks` and are **below the law's own stated minimum** — so the claim
+applied out-of-domain exceptions to an in-domain case.
+
+The same file also gives Eloy's relation as `Li = (S/h²)·C_d/**2**`. The replication wrote it
+without the `/2`, which would scale its St by 0.794 — to **0.24–0.27**, further into the band and
+further from 0.54. **Both corrections push the same way.**
+
+**Still not a full re-derivation** — S and h for a zebrafish were not retrieved, so the 72–83 Hz
+figure itself is unverified. What is settled is that the 132–199 Hz figure rests on values the
+project's own law file places outside the applicable regime.
 :::
 
 :::{warning} Corrected 2026-11-04 — the last row's arithmetic did not work
