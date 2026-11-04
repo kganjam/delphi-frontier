@@ -581,6 +581,7 @@ one is a detail that changes nothing.**
 | 203 | fish red muscle reaches ~28 W/kg, not 5–10 | **original right, on method** — 28 is an *optimized isolated-tissue* value; Rome & Swank's own conclusion warns against using those to predict whole-animal performance |
 | 5 | C_L,max is ~1.0, not ≤ 0.6 | **exposed an internal inconsistency** — the project assumes 0.8, above claim 5's own ceiling; honest shortfall range is 11–23×, not 14× |
 | 232 / 304 | the girdle section modulus is ~1.0e-3, not 3.6–6.8e-3 mm³ | **unresolved and conclusion-relevant** — both numbers reproduce on *different sections*; if the dorsal cleithral limb is load-bearing the girdle **fails** at measured size (0.61×) and passes only after scaling to 40 mm |
+| 31 | and2's cysteine depletion is z = −1.6, not −2.02 | **replication right, on method** — p flips 0.022 → 0.055 across the boundary, and z = −2.02 only appears at a window that fails the project's own control. The zero close-pairs and absent CxxC *do* reproduce |
 | 207 | the challenger survival rate | **original right** — the replication counted git blocks, a biased subset of the database |
 
 **13 remain unread.** They are stored as `artifact_signal` rows with `voter_kind: agent` and can
