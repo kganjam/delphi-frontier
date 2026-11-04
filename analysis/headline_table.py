@@ -50,11 +50,37 @@ def main():
     if not (53 <= pct_lo <= 55 and 81 <= pct_hi <= 83):
         print("  BAD: does not reproduce claim 227"); bad += 1
 
+    # --- the BODY prose, recomputed from the same inputs -----------------------
+    # The table was wrong where nothing checked it; there is no reason to assume the prose is
+    # better. These are every derived figure stated in the body of docs/FINDINGS.md.
+    RHO, G, MASS, CL = 1.225, 9.80665, 4.0e-4, 0.8
+    area10 = 2 * MASS * G / (RHO * 10.0 ** 2 * CL) * 1e4      # cm^2 at a 10 m/s launch
+    body = [
+        ("area shortfall, 20 cm2 vs 1.4",      20 / 1.4,                 14.0,  0.4),
+        ("area needed at 10 m/s (cm2)",        area10,                    0.80, 0.05),
+        ("  that as a shortfall",              area10 / 1.4,              0.60, 0.05),
+        ("taxi 2.19 m/s as % of 4.41",         100 * 2.19 / 4.41,        50.0,  1.0),
+        ("taxi 2.88 m/s as % of 4.41",         100 * 2.88 / 4.41,        65.0,  1.0),
+        ("Cypselurus (10/16.4)^2 as % KE",     100 * (10 / 16.4) ** 2,   37.0,  1.0),
+        ("water/air density ratio",            1000 / RHO,              816.0,  1.0),
+        # This one ties the table to itself: 0.5*m*v^2 at the stated mass and exit speed must
+        # give the stated launch energy, so a drift in ANY of the three shows up here.
+        ("launch KE 0.5*m*v^2 (mJ)",           0.5 * MASS * 4.37 ** 2 * 1e3, 3.82, 0.05),
+    ]
+    print()
+    for name, got, stated, tol in body:
+        ok = abs(got - stated) <= tol
+        if not ok:
+            bad += 1
+        print(f"  {'ok ' if ok else 'BAD'} {name:30} computed {got:9.3f}  stated {stated:8.3f}")
+
     if bad:
         print(f"\n  {bad} row(s) no longer reproduce. A shortfall ratio and the cell it is")
         print("  computed from must not drift apart -- that is how this table was wrong before.")
         return 1
-    print(f"\n  all {len(ROWS)} rows reproduce from their own cells.")
+    print(f"\n  all {len(ROWS)} table rows and {len(body)} body figures reproduce.")
+    print("  This check is not vacuous: it caught the 98.5/8.6 row, so a clean pass means")
+    print("  something. A checker that has never failed is indistinguishable from one that cannot.")
     return 0
 
 
