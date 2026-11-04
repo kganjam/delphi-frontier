@@ -1,0 +1,178 @@
+id: glide-ratio
+name: Glide ratio as lift-to-drag, and the sink-rate relation
+usability: constraining          # In a steady glide in still air it gives a number a design is
+                                 # checked against: glide distance = G * height lost, and the sink
+                                 # rate implied by mass, wing area and the drag polar. It stops
+                                 # being constraining the moment the glide is not steady (see
+                                 # where_it_breaks) -- which, for most small animal gliders, is
+                                 # most of the glide.
+# The checked equation carries both halves of the entry. First equality: exact for a steady,
+# unaccelerated, straight glide in still air (V_s / V_h = tan(theta) = F_D / F_L). Second equality:
+# the sink-rate relation, which additionally DROPS a factor cos(theta)^(3/2) (small-angle
+# approximation) -- see where_it_breaks (3). The glide ratio itself is G = F_L / F_D = V_h / V_s.
+equation: "V_s = V_h * F_D / F_L = (2 * m * g / (rho * S))^1/2 * C_D / C_L^3/2"
+latex: "G \\equiv \\frac{L}{D} = \\frac{V_h}{V_s} = \\cot\\theta, \\qquad V_s = V_h\\,\\frac{D}{L} = \\sqrt{\\frac{2 m g \\cos\\theta}{\\rho S}}\\;\\frac{C_D}{C_L^{3/2}}\\,\\cos\\theta \\;\\approx\\; \\sqrt{\\frac{2 m g}{\\rho S}}\\;\\frac{C_D}{C_L^{3/2}}"
+symbols:
+  V_s:   {dimension: L/T,       units: m/s,   description: "sink rate: vertical component of velocity relative to the air mass (not to the ground)"}
+  V_h:   {dimension: L/T,       units: m/s,   description: horizontal component of velocity relative to the air mass}
+  F_L:   {dimension: M*L/T^2,   units: N,     description: "aerodynamic lift (perpendicular to the flight path)"}
+  F_D:   {dimension: M*L/T^2,   units: N,     description: "aerodynamic drag (parallel to the flight path; total of induced, profile and parasite drag)"}
+  m:     {dimension: M,         units: kg,    description: body mass of the glider}
+  g:     {dimension: L/T^2,     units: m/s^2, description: gravitational acceleration}
+  rho:   {dimension: M/L^3,     units: kg/m^3, description: air density}
+  S:     {dimension: L^2,       units: m^2,   description: "reference (wing) area on which C_L and C_D are defined"}
+  C_L:   {dimension: "1",       units: dimensionless, description: lift coefficient at the operating point}
+  C_D:   {dimension: "1",       units: dimensionless, description: "drag coefficient at the same operating point (same reference area S)"}
+  G:     {dimension: "1",       units: dimensionless, description: "glide ratio = F_L/F_D = V_h/V_s = cot(theta); appears in latex, not in the checked equation"}
+  theta: {dimension: "1",       units: rad,   description: "glide angle below the horizontal, measured relative to the air"}
+constants:
+  g:
+    value: 9.81
+    units: m/s^2
+    note: Standard gravity. Not a measured biological quantity; no interval given.
+  rho_air_sea_level_15C:
+    value: 1.225
+    interval: [1.16, 1.29]
+    units: kg/m^3
+    note: >
+      ISA sea-level value; the interval is an approximate span for sea-level air from about 0 to
+      30 C written from general knowledge, NOT taken from a source read for this entry. Density
+      enters the sink rate as rho^(-1/2), so a 10 % density change moves V_s by about 5 %.
+  parachuting_boundary_angle:
+    value: 45
+    units: deg
+    note: >
+      A CONVENTION, not a measured constant: descent shallower than 45 deg (G > 1) is called
+      gliding, steeper is called parachuting. Commonly attributed to Oliver (1951); I could not
+      locate or read Oliver 1951 (one standard web search, 2026-11-04), so the attribution is
+      unverified here. It is a classification line, not a physical transition.
+  jackdaw_max_L_over_D:
+    value: 12.6
+    units: dimensionless
+    note: >
+      MEASURED (wind tunnel, one tamed bird, tilting tunnel), Rosen & Hedenstrom 2001 abstract: max
+      L:D 12.6 at 8.5 m/s. No interval is given in the abstract and I did not read the full text,
+      so none is given here. Reynolds number 3.8e4-7.6e4 over 6-11 m/s (same abstract).
+mechanism: >
+  In a steady, straight, unaccelerated glide the only forces are lift L (perpendicular to the
+  flight path), drag D (along it) and weight W = m g. The path descends at angle theta. Balancing
+  forces along and across the path gives D = W sin(theta) and L = W cos(theta), so
+  tan(theta) = D / L exactly, and because the velocity vector lies along the path,
+  V_s / V_h = tan(theta) too. Hence the glide ratio -- horizontal distance per unit height lost,
+  relative to the air -- equals L/D, and the best still-air glide is flown at the angle of attack
+  that maximises C_L/C_D. Writing L = 0.5 rho V^2 S C_L = W cos(theta) and V_s = V sin(theta)
+  gives V_s = sqrt(2 W cos(theta) / (rho S)) * (C_D / C_L^(3/2)) * cos(theta); for small theta both
+  cosines are ~1 and V_s ~ sqrt(2 m g / (rho S)) * C_D / C_L^(3/2). So minimum SINK is flown at
+  the angle of attack maximising C_L^(3/2)/C_D, which is a higher C_L and lower speed than best
+  GLIDE (max C_L/C_D). The wing-loading term m g / S sets speeds (V scales as its square root) but
+  does not appear in the glide ratio itself: two gliders with the same polar glide equally far
+  from the same height, the heavier one faster. This is standard flight mechanics derived from
+  force balance; it is not a finding of any source listed below.
+domain_of_validity:
+  conditions: >
+    Steady (no acceleration), straight (no bank, load factor 1), in an air mass with no vertical
+    motion, out of ground effect, with fixed wing geometry over the interval considered.
+  sink_rate_relation: >
+    Additionally requires a small glide angle for the cos(theta)^(3/2) factor to be dropped. The
+    exact form (with the cosines) is valid at any steady angle.
+  reynolds_range_with_measured_support: >
+    The force balance is scale-free. Measured animal L/D values cited here span Re ~4e4-8e4
+    (jackdaw, abstract value). I did not search for measured L/D at Re below ~1e4 for this entry.
+  taxa_with_measured_support: [Corvus monedula (wind tunnel, live bird), Cypselurus hiraii (wind tunnel, mounted specimens)]
+where_it_breaks: >
+  (1) NON-EQUILIBRIUM GLIDES -- THE DOMINANT FAILURE FOR SMALL ANIMAL GLIDERS. G = L/D holds only
+  once the glider stops accelerating. Field and tower data show many animal glides never get
+  there. Bahlman et al. 2013 (abstract, read): wild northern flying squirrels "do not glide at
+  equilibrium", with "continuously changing velocities, forces and force coefficients", and
+  generate more lift than body weight. Flying snakes (Chrysopelea paradisi), per search summaries
+  of Socha's 2010 APS abstract and Yeaton, Socha & Ross 2017: no equilibrium glide from a 15 m
+  tower, and only 1 of 14 trials from 9.6 m appeared to reach it. Consequence: a field "glide
+  ratio" (horizontal distance / height dropped over a whole glide, including the launch dive and
+  landing flare) is a TRAJECTORY ratio, not L/D, and inverting it to get L/D is wrong. Example: the
+  flying-squirrel field glide ratio of ~2 (Vernes 2001, search summary) must not be read as a
+  measured aerodynamic L/D of 2. (2) VERTICAL AIR MOTION. V_s is relative to the air. In thermals,
+  ridge or wave lift, or downdrafts, the ground-referenced glide ratio can be anything, including
+  infinite or negative; a ground-based observation of glide angle measures L/D only in still air.
+  Horizontal wind likewise changes ground-referenced distance but not L/D. (3) STEEP GLIDES -- THE
+  SINK-RATE FORMULA ONLY. The approximate form drops cos(theta)^(3/2): at G = 3 (theta = 18.4 deg)
+  the error is ~8 %; at the 45 deg gliding/parachuting line (G = 1) the approximate formula
+  overstates V_s by a factor 1/0.59 = 1.68 (my arithmetic). The exact relation G = L/D is
+  unaffected. (4) GROUND EFFECT. Near a surface induced drag falls and L/D rises above its
+  free-air value. Park & Choi 2010 (abstract) report that flying fish reduce drag and increase L/D
+  by flying close to the sea surface; a free-air polar therefore UNDER-predicts a skimming
+  glider's range. I did not obtain their numerical magnitudes (full text not read; a secondary
+  news report gives a 14 % drag reduction, which I have not verified against the paper). (5)
+  TURNING / BANKED FLIGHT. Load factor n = 1/cos(bank) > 1 raises the required C_L and, at fixed
+  C_L, raises sink rate by n^(3/2) (standard flight mechanics, not from a source read here).
+  Bishop & Brim-DeForest 2008 (search summary) report lower L/D in turning flying squirrels than in
+  straight glides. (6) MORPHING OR FLAPPING. The relation assumes one polar; a bird that changes
+  span with speed (the jackdaw does, Rosen & Hedenstrom 2001) traces a super-polar envelope, and any
+  flapping injects power so the force balance above no longer applies at all. (7) L/D IS NOT A
+  PROPERTY OF THE ANIMAL ALONE. It depends on angle of attack, Re, fin/wing posture and surface
+  proximity, so a single quoted "L/D of species X" is a point on a curve, and transferring it to a
+  different body, size or posture is the Reynolds-transfer error recorded in reynolds.yaml.
+worked_examples:
+  - organism: Corvus monedula (jackdaw), consistency check of the relation against measured data
+    computation: >
+      Minimum sink speed 7.4 m/s with sink 0.62 m/s (both measured, Rosen & Hedenstrom 2001
+      abstract)  ->  V_h/V_s ~ 7.4/0.62 = 11.9 (my arithmetic; the cos(theta) correction at
+      theta ~4.8 deg is <0.4 % and is neglected). This is below the reported maximum L:D of 12.6
+      at 8.5 m/s.
+    value: 11.9
+    note: >
+      Calculated from two observed values; the comparison is mine, not the authors'. It is what the
+      mechanism predicts: L/D at the minimum-sink speed lies below max L/D, and best-glide speed
+      (8.3 m/s reported) lies above minimum-sink speed. This is a consistency check, not an
+      independent test -- the authors' L:D values were themselves derived from the same tunnel
+      glide angles.
+    evidence: derived
+  - organism: Glaucomys sabrinus (northern flying squirrel), field glides
+    value: 1.98
+    note: >
+      Observed TRAJECTORY ratio (horizontal distance / height dropped), 100 glides, mean glide
+      angle 26.8 deg (Vernes 2001, via search summary; full text not read). cot(26.8 deg) = 1.98,
+      so the two reported numbers are mutually consistent (my arithmetic). Per where_it_breaks (1)
+      and Bahlman et al. 2013, this is NOT a measurement of aerodynamic L/D.
+    evidence: literature
+  - organism: Danio rerio with a hypothetical lifting surface (design check)
+    computation: >
+      ASSUMED inputs, none measured: m = 4e-4 kg, S = 2e-3 m^2 (same illustrative values as
+      wing-loading.yaml), rho = 1.225 kg/m^3, operating point C_L = 0.8, C_D = 0.2 (so L/D = 4).
+      sqrt(2*4e-4*9.81/(1.225*2e-3)) = sqrt(3.20) = 1.79 m/s;  C_D/C_L^1.5 = 0.2/0.716 = 0.280;
+      V_s ~ 1.79*0.280 = 0.50 m/s. Glide angle = atan(1/4) = 14.0 deg, cos^1.5 = 0.956, so the
+      exact V_s is ~0.48 m/s. Airspeed along path ~ V_s / sin(14.0 deg) ~ 2.0 m/s.
+    value: 0.48
+    units: m/s
+    note: >
+      CALCULATED, not observed, from assumed inputs. Shows the legitimate design use: a launch from
+      height h in still air, IF the fish reaches equilibrium, covers at most G*h = 4h horizontally.
+      For an animal this small the launch transient (where_it_breaks 1) is likely to consume a
+      large fraction of any short glide, so 4h is an upper bound, not a prediction. The assumed
+      C_D and C_L are placeholders; no measured polar for any zebrafish-scale lifting surface was
+      searched for in this entry.
+    evidence: derived
+contested_by:
+  - "Equilibrium vs non-equilibrium framing: Bahlman et al. 2013 state the equilibrium model 'may not be realistic' for inter-tree gliding and that simulations with varying force coefficients outperform the equilibrium state; Yeaton, Socha & Ross 2017 (search summary) argue animal gliding has been studied within a 'limited theoretical framework of equilibrium'. The law itself is not disputed; its APPLICABILITY to short animal glides is. Not reconciled here."
+  - "The 45 deg gliding/parachuting boundary is a convention attributed to Oliver 1951. I searched for criticism of it as arbitrary (one standard web search, 2026-11-04) and found none in the results; I record the convention, not a dispute I could not document."
+negative_searches:
+  - "Park & Choi 2010: tried the publisher page (fetch returned unrelated content) and typeset.io (host blocked in this session). Read the abstract via Europe PMC only; numerical max L/D and ground-effect magnitudes are therefore unknown here."
+  - "Vernes 2001 and Bishop & Brim-DeForest 2008: one standard web search each; values taken from search summaries, full texts not read."
+  - "Did not search sailplane, hang-glider or insect gliding L/D values; their absence is a gap, not a finding."
+  - "Oliver 1951: one standard web search found no copy or bibliographic record; attribution unverified."
+sources:
+  - citation: "Rosen M, Hedenstrom A (2001) Gliding flight in a jackdaw: a wind tunnel study. J Exp Biol 204(6):1153-1166. doi:10.1242/jeb.204.6.1153"
+    read_level: abstract
+  - citation: "Park H, Choi H (2010) Aerodynamic characteristics of flying fish in gliding flight. J Exp Biol 213:3269-3279. doi:10.1242/jeb.046052"
+    read_level: abstract
+  - citation: "Bahlman JW, Swartz SM, Riskin DK, Breuer KS (2013) Glide performance and aerodynamics of non-equilibrium glides in northern flying squirrels (Glaucomys sabrinus). J R Soc Interface. doi:10.1098/rsif.2012.0794"
+    read_level: abstract
+  - citation: "Vernes K (2001) Gliding performance of the northern flying squirrel (Glaucomys sabrinus) in mature mixed forest of eastern Canada. J Mammal 82(4):1026-1033. doi:10.1644/1545-1542(2001)082<1026:GPOTNF>2.0.CO;2"
+    read_level: search-summary
+  - citation: "Yeaton IJ, Socha JJ, Ross SD (2017). Title and venue unknown: seen only as a PDF hit (rossaoe.s4.es.cloud.vt.edu/papers/yeaton-socha-ross-2017.pdf) with a search-summary of its content"
+    read_level: search-summary
+  - citation: "Socha JJ (2010) Gliding flight in snakes: non-equilibrium trajectory dynamics and kinematics. APS Division of Fluid Dynamics meeting abstract"
+    read_level: search-summary
+  - citation: "Bishop KL, Brim-DeForest W (2008) Kinematics of turning maneuvers in the southern flying squirrel, Glaucomys volans"
+    read_level: search-summary
+  - citation: "Oliver JA (1951) -- source of the 45 deg gliding/parachuting convention; full citation unknown, could not locate"
+    read_level: could-not-access
