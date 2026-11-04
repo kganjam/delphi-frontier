@@ -1,0 +1,145 @@
+id: second-moment
+name: Second moment of area for a spar, and how bending stiffness scales with span
+usability: constraining          # yields a tip stiffness a spar design is checked against; the span-scaling corollaries below are descriptive
+equation: "k = F / delta = 3 * E * I / L^3"
+latex: "k = \\frac{F}{\\delta} = \\frac{3 E I}{L^3}, \\qquad I = \\int_A y^2 \\, dA"
+symbols:
+  k:     {dimension: M/T^2, units: N/m, description: "tip bending stiffness of a cantilevered spar under a point load at the tip"}
+  F:     {dimension: M*L/T^2, units: N, description: transverse force applied at the tip}
+  delta: {dimension: L, units: m, description: transverse tip deflection (small-deflection)}
+  E:     {dimension: M/(L*T^2), units: Pa, description: "Young's modulus of the spar material along the span"}
+  I:     {dimension: L^4, units: m^4, description: "second moment of area of the cross-section about the neutral axis, I = integral of y^2 over the section"}
+  L:     {dimension: L, units: m, description: "span: free length from the clamped root to the loaded tip"}
+constants:
+  tip_load_coefficient:
+    value: 3
+    note: >
+      Exact, derived from Euler-Bernoulli theory for a uniform cantilever with a point load at the
+      tip (delta = F L^3 / 3EI). Not measured, so no interval. A uniformly distributed load w per unit
+      span gives delta = w L^4 / 8EI instead; using the wrong load case is a factor-of-2.7 error.
+  section_forms:
+    value: "solid circle I = pi r^4 / 4; thin-walled tube I = pi r^3 t (t << r); solid rectangle I = b h^3 / 12 (h in the bending direction)"
+    note: >
+      Exact geometric results, not measured. The r^4 and h^3 dependence is the whole engineering
+      content: doubling depth h multiplies I by 8, doubling width b only by 2, which is why spars are
+      deep and why tubes beat rods for the same mass.
+  zebrafish_caudal_fin_EI:
+    value: null
+    interval: [1.5e-9, 4.0e-9]
+    units: N*m^2
+    note: >
+      MEASURED (in vivo, anaesthetised adult Danio rerio, whole caudal fin, micro-Newton cantilever
+      loading; Puri et al. 2018) as reported in a search summary I could not check against the full
+      text: the range varies along the proximal-distal axis non-monotonically. No central value is
+      given here because I did not read one. The search summary also states the authors computed EI
+      from EI = F L^3 / (3 y) with an effective length -- i.e. THIS law, inverted.
+  insect_spanwise_EI_exponent:
+    value: 3
+    note: >
+      MEASURED interspecific scaling exponent of spanwise flexural stiffness against wing span, 16
+      insect species from six orders (Combes & Daniel 2003, from abstract-level summaries). The
+      confidence interval is unknown: I could not reach the full text (two publisher/mirror hosts
+      were outside this session's network allowlist), so only the rounded exponent is recorded.
+mechanism: >
+  Under pure bending a plane section stays plane and rotates, so axial strain grows linearly with
+  distance y from the neutral axis, and (for a linear-elastic material) so does stress. The resisting
+  moment is the integral of stress times lever arm, which puts y in twice: M = (E/R) * integral(y^2 dA)
+  = E I / R. Material far from the neutral axis therefore counts with the square of its distance --
+  the reason I-beams, tubes and leading-edge vein complexes put material at the periphery. Integrating
+  the curvature M/EI along a cantilever with a tip load gives delta = F L^3 / 3EI. The span enters as
+  L^3 because the root moment grows as L and that curvature is then integrated twice over L.
+  Scaling corollaries (DERIVED here, not observed): at fixed cross-section, k scales as L^-3, so
+  doubling span cuts tip stiffness by 8x. Under geometric similarity (all lengths scale together) I
+  scales as L^4 and k scales as E*L, so a larger isometric spar is stiffer in absolute terms; but its
+  relative self-weight sag delta/L = rho g A L^3 / (8 E I) scales as L (Galileo's square-cube penalty),
+  while relative deflection under an aerodynamic load at fixed dynamic pressure (load per span
+  proportional to chord) is size-independent.
+domain_of_validity:
+  theory: Euler-Bernoulli (plane sections remain plane and normal to the neutral axis)
+  material: "linear-elastic, homogeneous along the span, same modulus in tension and compression"
+  geometry: "slender (span-to-depth L/h well above 10 for an isotropic section -- see where_it_breaks for the derived boundary); prismatic, or I(x) integrated explicitly if tapered"
+  deflection: "small: tip slope and delta/L small (under 1% error while delta/L < 0.1 for a tip load -- derived, see where_it_breaks)"
+  loading: "static, quasi-static, or dynamic well below the first bending natural frequency"
+  notes: >
+    Valid for engineered spars (tubes, box beams, rods) and as a first approximation for single
+    biological elements such as insect leading-edge veins or a single fin ray, provided the
+    composite-section caveats in where_it_breaks are honoured.
+where_it_breaks: >
+  (1) SHORT, DEEP OR SHEAR-SOFT SPANS. Euler-Bernoulli ignores shear deformation. DERIVED here from
+  Timoshenko beam theory for a tip-loaded rectangular cantilever (shear correction 5/6): shear adds a
+  fraction 0.3 (E/G)(h/L)^2 to the bending deflection. For an isotropic material (nu = 0.3, E/G = 2.6)
+  that is 0.8% at L/h = 10, 3.1% at L/h = 5 and 8.7% at L/h = 3. For anisotropic or shear-soft
+  material the boundary moves out sharply: with an assumed E/G = 20 (illustrative of fibre composites
+  and fibrous biological tissue, not a measured value for any organism) shear adds 6% even at
+  L/h = 10 and 24% at L/h = 5. So the familiar "L/h > 10" rule is only safe for isotropic metals.
+  (2) LARGE DEFLECTION. The linear formula assumes small slopes. COMPUTED here by shooting the
+  inextensible elastica for a vertical tip load (scratch computation, not an observation): the linear
+  formula over-predicts tip deflection by 1% at true delta/L = 0.10, 5% at delta/L = 0.21 and 10% at
+  delta/L = 0.30 (load parameter F L^2/EI = 0.30, 0.68, 0.98). Beyond that the spar stiffens
+  geometrically and k is no longer a constant. Flapping wings and fins routinely exceed delta/L = 0.2.
+  (3) THIN-WALLED TUBES. Bending ovalises the section and progressively reduces I (Brazier 1927),
+  giving a limit-point collapse; in practice local shell buckling usually precedes it. I = pi r^3 t
+  overstates the stiffness of a thin tube near its collapse moment, and the law gives no collapse
+  load at all. (4) COMPOSITE OR SLIDING SECTIONS -- the case that matters for fish. A ray-finned fin
+  ray is two hemitrichs that can slide past each other (Alben, Madden & Lauder 2007). DERIVED here:
+  two layers of thickness h bonded together give I = 8 b h^3/12; the same two layers free to slide
+  give 2 b h^3/12 -- a factor of 4 from interlayer coupling alone, with real rays somewhere between,
+  set by the connective tissue's shear stiffness, which this law does not contain. Distal fin rays are
+  also segmented, so E is not uniform along the span. (5) SPAN SCALING IN ORGANISMS. The isometric
+  prediction EI proportional to L^4 does NOT describe insect wings: measured spanwise EI scales
+  approximately with span^3 (Combes & Daniel 2003). Using the isometric exponent to scale a biological
+  spar up or down is therefore a demonstrated error, not a safe default.
+worked_examples:
+  - organism: generic spar, fixed cross-section, span doubled
+    computation: "k2/k1 = (L1/L2)^3 = (1/2)^3 = 0.125"
+    value: 0.125
+    note: >
+      Same tube, twice the span: one-eighth the tip stiffness. Derived from the law, not observed.
+    evidence: derived
+  - organism: generic spar, geometrically similar, all lengths doubled
+    computation: "I2/I1 = 2^4 = 16;  k2/k1 = 16 / 2^3 = 2;  self-weight delta/L ratio = 2"
+    value: 2
+    note: >
+      Isometric scaling doubles tip stiffness yet also doubles relative sag under self-weight.
+      Derived; and see where_it_breaks (5) -- insect wings do not scale isometrically.
+    evidence: derived
+  - organism: Danio rerio caudal fin, back-calculated tip stiffness
+    computation: "k = 3 EI / L^3 with EI in [1.5e-9, 4.0e-9] N m^2 (measured, Puri et al. 2018, search-summary) and an ASSUMED effective length L = 5e-3 m  ->  k = 4.5e-9/1.25e-7 to 1.2e-8/1.25e-7 = 0.036 to 0.096 N/m"
+    value_range: [0.036, 0.096]
+    note: >
+      Calculated, not measured. EI is the authors' measurement; the 5 mm effective length is my
+      assumption for illustration, not a value taken from the paper, and k scales as L^-3 so the
+      result is only as good as that assumption. Note also that the whole-fin EI already lumps rays
+      and interray tissue, so where_it_breaks (4) applies.
+    evidence: derived
+  - organism: insect wings, 16 species from six orders
+    note: >
+      Measured spanwise flexural stiffness scales with roughly the cube of wing span, and chordwise
+      stiffness with the square of chord; wing size explains over 95% of the variance (Combes & Daniel
+      2003, per abstract-level summaries). MY INFERENCE, not the authors' claim: an exponent of 3
+      rather than the isometric 4 means larger insect wings are relatively more flexible than a
+      geometrically scaled spar would be.
+    evidence: literature
+contested_by:
+  - "Exponent of EI against wing size in insects: Combes & Daniel (2003) report interspecific spanwise EI ~ span^3 and chordwise EI ~ chord^2. Ribak et al. (2025, iScience; summary-level read) state that WITHIN a beetle species chordwise stiffness grows with chord^4, attributing this to an earlier flower-chafer (Protaetia cuprea) study. Interspecific and intraspecific exponents disagree; this entry does not reconcile them, and isometry (EI ~ L^4) is a third, separate prediction."
+sources:
+  - citation: "Timoshenko SP, Gere JM, Mechanics of Materials (standard Euler-Bernoulli and Timoshenko beam results; cantilever tip-load formula)"
+    read_level: could-not-access
+    note: Textbook result stated from standard knowledge; edition and page not checked in this session.
+  - citation: "Combes SA, Daniel TL (2003) Flexural stiffness in insect wings I. Scaling and the influence of wing venation. J Exp Biol 206(17):2979-2987"
+    read_level: search-summary
+    note: Full text not reached (publisher and mirror hosts not in this session's network allowlist); exponents and the >95% figure are from abstract-level summaries.
+  - citation: "Puri S, Aegerter-Wilmsen T, Jazwinska A, Aegerter CM (2018) In vivo quantification of mechanical properties of caudal fins in adult zebrafish. J Exp Biol 221(4):jeb171777"
+    read_level: search-summary
+    note: EI range and the EI = F L^3 / 3y method are from a search summary of the article and an associated poster; not verified against the full text.
+  - citation: "Alben S, Madden PG, Lauder GV (2007) The mechanics of active fin-shape control in ray-finned fishes. J R Soc Interface 4(13):243-256"
+    read_level: search-summary
+  - citation: "Brazier LG (1927) On the flexure of thin cylindrical shells and other thin sections. Proc R Soc Lond A 116:104-114"
+    read_level: search-summary
+    note: Mechanism (ovalisation, limit-point moment, usually preceded by local buckling) confirmed via secondary sources only; the closed-form critical moment was garbled in the summary and is deliberately not quoted.
+  - citation: "Ribak G et al. (2025) Insect wing flexibility improves the aerodynamic performance of small revolving wings. iScience (PMC11927721)"
+    read_level: search-summary
+    note: Co-authors not retrieved; only the summary statement of intraspecific chord^4 scaling is used.
+  - citation: "This entry's own scratch computations: Timoshenko shear-to-bending ratio 0.3 (E/G)(h/L)^2 and elastica shooting solution for a tip-loaded cantilever (scipy solve_ivp + brentq)"
+    read_level: full-text
+    note: Calculated, not observed. Elastica result at F L^2/EI = 1 gives delta/L = 0.3017, matching the classical large-deflection value, which is the check on the solver. Script not committed.
