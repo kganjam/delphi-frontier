@@ -72,6 +72,30 @@ demand exceeds the exponent on supply, the budget closes as mass **decreases**. 
 **upper** bound at **m\* = 39 mg**, which makes a 0.4 g zebrafish **~10× too LARGE** for
 single-impulse launch, not too small.
 
+:::{note} The Sutton citation checked, 2026-11-04 — sound, with one scope caveat and one missed bound
+Resolved via PubMed to Sutton, Mendoza, Azizi, Longo, Olberding, Ilton & Patek,
+*Integr Comp Biol* 59(6):1609–1618, [doi:10.1093/icb/icz145](https://doi.org/10.1093/icb/icz145).
+The size-independence premise is supported: the abstract states that length–tension properties
+limit spring-actuated systems to **one third** of the work a muscle could produce, and muscle work
+per kg is itself size-independent, so LaMSA supply per kg is too.
+
+**The m\* = 39 mg crossover above is this project's own**, derived from the exponent comparison —
+it is *not* the "size related crossover point" the Sutton abstract names, which is between spring-
+and muscle-actuated *jumping*. The two are distinct and are not conflated here.
+
+**Scope, stated because the citation does not carry it:** Sutton's subject is jumping animals and
+the question of why large ones do not use springs. Applying its size-independence result to
+**water exit in a fish** is a cross-domain transfer. The underlying muscle and spring physics is
+the same, so the transfer is reasonable — but it is an inference this project makes, not a result
+the paper states.
+
+**And the paper offers a tighter bound than the one used.** Its one-third ceiling on recoverable
+muscle work is a *quantitative* limit; the argument above uses only the weaker "size-independent"
+property. If 98.5 J/kg must come through a spring that can deliver at most a third of muscle work,
+the muscle requirement is ~**296 J/kg**, far above the 53–81 J/kg best measured. That has not been
+worked through and is recorded here as an open lead, not a result.
+:::
+
 And the hard reality check forced a reinterpretation rather than a tuning. The scaling predicts no
 exocoetid of 3–530 g can reach glide speed in one stroke — and that is what is observed. A **300 g
 *Cypselurus* needs 16.4 m/s, exits the water at only ~10 m/s (37% of the kinetic energy), and
