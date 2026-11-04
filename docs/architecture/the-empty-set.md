@@ -197,10 +197,45 @@ is the biologically meaningful outcome.
 of cells *despite* 10⁻¹⁰ agreement is sitting on a near-degenerate selection. Any claim about a
 *particular* mode from this solver inherits that instability.
 
-**And one line needs a person.** A criterion was **revised**, and the pass rate went from 72.9 % to
-100 %. That may be entirely principled — the old criterion may have been wrong. But *"never relax
-an acceptance criterion to make a task pass"* is a named rule in this project, and **nothing in the
-file says which happened.**
+**And one line looked like it needed a person — it did not.** A criterion was **revised**, and the
+pass rate went from 72.9 % to 100 %. That is the exact shape *"never relax an acceptance criterion
+to make a task pass"* exists to catch, so it was recorded as an open question rather than an
+accusation. **Then it was checked, and the revision is principled.** `frontier_compute/compare2.py`
+holds both functions:
+
+| | `agree_old` | `agree_revised` |
+|---|---|---|
+| `pattern` must match | yes | yes |
+| `settled` must match | yes | yes |
+| `mode` must match | **always** | **only if a pattern formed** |
+| numerical error within `tol` | **not checked at all** | yes |
+
+So the revision **drops one requirement and adds another**. The dropped one is the argmax of a
+spectrum that has no peak: when no pattern forms, "dominant mode" is a readout of noise, and
+requiring two platforms to agree on it is a requirement no correct solver could be expected to
+meet. Three measurements say that is exactly what was happening, not a story told after the fact:
+
+- All **26** cells failing the old criterion are mode disagreements, and **0 of the 26** had a
+  pattern on either platform. Not most — all of them.
+- **0** cells pass `old` and fail `revised`, so on this data the revision is a strict superset:
+  nothing that used to pass was let go of.
+- Pattern agreement is **96/96**, so the criterion that survived is the one that was never in
+  doubt.
+
+**What this does not establish, stated because the new clause is the interesting half.** The added
+tolerance check **never binds on this run**: max error 3.4 × 10⁻¹⁰ against `tol` 1 × 10⁻⁹, so all 96
+cells clear it and it has not yet rejected anything. It is stricter *in principle* and **untested in
+practice** — this very document's subject. And this is a reading of the **code**, not of the
+author's rationale: `compare2.py` carries no comment saying why the mode clause was conditioned, so
+the inference is mine from the clause's structure and the 26/26 count, not a statement anyone made.
+
+**The lesson is one I had already written down and failed to apply.** The flag said this *"needs a
+person"*. The answer was one `git grep` away, in a committed file in the same repository. That is
+the fifth time today I have called something unreachable and been wrong — four of the five — which
+is now a worse hit rate than the sweeps this document criticises. **"Blocked route ≠ blocked
+question" means: name the question without the route, then look for it, *before* writing that a
+human is required.** Escalating is not the cautious option; it is an answer, and it can be wrong in
+the direction that stops work.
 
 **One run also gave an abstract gap its first instance.** `fevo2smoke1` failed with no result and
 therefore no content hash. ASK rule 3 requires a `code_sha` **or** a stated
