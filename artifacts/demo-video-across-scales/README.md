@@ -24,7 +24,7 @@ Rebuilding uses archived media and audio; it does not require live sites or a sp
 - [49-record simulation/media inventory](inventory/simulation-inventory.html), also available as [text](inventory/simulation-inventory.txt), [CSV](inventory/simulation-inventory.csv), and [JSON](inventory/simulation-inventory.json). Each entry distinguishes recorded output from a proposed design question or future experiment.
 - [Public-site capture catalog](sources/site-captures/index.html).
 - [Master-file manifest](manifest.json) and recorded media QA for [90 seconds](qa/90s.json) and [60 seconds](qa/60s.json).
-- [Audio reproduction checks](audio/validation.json), [source/preview parity checks](build/validation.json), and [public archive audit](public-archive-audit.json).
+- [Audio reproduction checks](audio/validation.json), [source/preview parity checks](build/validation.json), and [public archive audit](public-archive-audit.json), and [full rebuild checks](qa/rebuild-validation.json).
 - [Archive omissions](archive-omissions.txt): private transcripts, credentials, sharing-session state, unused binaries, and redundant caches are excluded.
 
 The film presents a biological-compiler vision using concept illustrations and recorded simulations with their limits. It does not establish a validated living organism or functional whole-organism DNA. Media checks establish file identity, render behavior, and audio/video integrity; scientific simulations and proofs were not rerun for the archive.

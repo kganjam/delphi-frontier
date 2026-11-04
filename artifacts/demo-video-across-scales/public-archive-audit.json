@@ -106,5 +106,15 @@
       "after_sha256": "03694226c5daa29568ddc7592796735c86ab3d533c6958808f34bb40ba67c793",
       "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
     }
-  ]
+  ],
+  "merged_archive_review": {
+    "review": "Read-only review of merged archive by support reviewer; no network or edits.",
+    "local_html_links_resolved": 84,
+    "inventory_records": 49,
+    "capture_cards": 24,
+    "concept_cards": 3,
+    "provenance_targets_resolved": 24,
+    "normalization_after_hashes_matched": 8,
+    "public_boundary": "Machine-specific paths only in ignored/untracked build caches; no findings outside those caches."
+  }
 }
