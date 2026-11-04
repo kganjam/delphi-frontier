@@ -51,19 +51,53 @@ def fetch_artifact(artifact_id: str, expect_sha: str | None = None) -> bytes:
     return raw
 
 
+EXT = {"chemical/x-mmcif": ".cif", "application/json": ".json",
+       "text/plain": ".txt", "application/x-tar": ".tar"}
+
+
+def status_of(res: dict) -> str:
+    """Read the status out of whichever shape this operation uses.
+
+    FOUR shapes are live on this endpoint, and the fourth cost three finished runs a day of
+    invisibility. The scientific-batch tools put it at the top level as `status` or
+    `terminal_status`; the async/native tools (proteinmpnn, msa-search, openfold3) nest it under
+    `operation.status` and otherwise report completion only through `result_available` and
+    `progress.steps[].state`. A reader that knows three of the four prints "?" for the fourth --
+    and an operation that reads "?" looks exactly like one that failed, so nobody fetches it.
+    """
+    for v in (res.get("terminal_status"), res.get("status"),
+              (res.get("operation") or {}).get("status"), res.get("state")):
+        if v:
+            return str(v).lower()
+    if res.get("result_available") is True:
+        return "succeeded"
+    return ""
+
+
 def fetch_run(op_id: str, outdir: str) -> list[tuple[str, str, int]]:
     """Fetch every output file of a finished run. Returns (name, path, bytes) per file."""
     res = nbx.call("get_operation_result", {"operation_id": op_id})
-    status = (res.get("terminal_status") or res.get("status") or "").lower()
-    if status != "succeeded":
+    status = status_of(res)
+    if status not in ("succeeded", "success", "completed"):
         raise RuntimeError(f"{op_id} is {status or 'unknown'}, not succeeded -- nothing to fetch")
+
+    os.makedirs(outdir, exist_ok=True)
+
+    # Shape B: a single direct result artifact, no manifest (the async/native tools).
+    direct = (res.get("result") or {}).get("artifact") or {}
+    if direct.get("artifact_id") and not (res.get("output_manifest") or {}).get("artifact_id"):
+        raw = fetch_artifact(direct["artifact_id"], direct.get("sha256"))
+        path = os.path.join(outdir, f"result{EXT.get(direct.get('media_type'), '.bin')}")
+        with open(path, "wb") as f:
+            f.write(raw)
+        return [("result", path, len(raw))]
 
     om = res.get("output_manifest") or {}
     if not om.get("artifact_id"):
-        raise RuntimeError(f"{op_id} succeeded but carries no output manifest")
+        raise RuntimeError(f"{op_id} succeeded but carries neither an output manifest nor a "
+                           f"direct result artifact; top-level keys were {sorted(res.keys())}")
     manifest = json.loads(fetch_artifact(om["artifact_id"], om.get("sha256")))
 
-    os.makedirs(outdir, exist_ok=True)
     written = []
     for entry in manifest.get("artifacts", []) or manifest.get("entries", []):
         art = entry.get("artifact") or {}
@@ -72,7 +106,7 @@ def fetch_run(op_id: str, outdir: str) -> list[tuple[str, str, int]]:
             continue
         raw = fetch_artifact(aid, art.get("sha256"))
         name = entry.get("name", aid)
-        ext = {"chemical/x-mmcif": ".cif", "application/json": ".json"}.get(art.get("media_type"), ".bin")
+        ext = EXT.get(art.get("media_type"), ".bin")
         path = os.path.join(outdir, f"{name}{ext}")
         with open(path, "wb") as f:
             f.write(raw)
