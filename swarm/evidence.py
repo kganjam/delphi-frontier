@@ -26,6 +26,21 @@ PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "desig
 # every zero in the same pass is meaningless.
 CONTROL = "Potassium channel mutations regulate fin size in zebrafish"
 CONTROL_MIN = 5
+# The five sibling tools (harvest, generate, swarm, check_specs, check_grader_use) all read
+# SWARM_PROJECT. This one hardcoded 'zebrafish-flight' INSIDE ITS SQL, so running the pipeline for
+# another project would have silently scored the fish's claims against that project's evidence and
+# reported a clean pass. A replicable pipeline cannot have one tool that ignores the switch.
+PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+
+# The domain whitelist keeps the engine away from claims it cannot judge. It was a FISH TERM LIST
+# written into the SQL, which is the same replicability defect as the hardcoded project id and a
+# worse one: for a coral or insect project nearly every claim would fail this filter, the query
+# would return 0 rows, and the pass would print "0 checked" -- indistinguishable from "checked
+# everything and found nothing". A mechanism walking an empty set, in a new place.
+DOMAIN_TERMS = os.environ.get(
+    "SWARM_DOMAIN_TERMS",
+    "zebrafish|danio|fish|fin|muscle|channel|protein|ray|flight|glide|exocoet|actinodin|kcn|"
+    "lift|drag|scal")
 
 
 def env():
@@ -100,7 +115,7 @@ def main():
     #    result is scoped to PDB70") has no literature to support or refute, so its verdict is
     #    meaningless and must not be aggregated with the rest.
     rows = q(f"""select c.id, c.statement from claim c
-                 where c.project_id='zebrafish-flight' and c.superseded_by is null
+                 where c.project_id={lit(PROJECT)} and c.superseded_by is null
                  and length(c.statement) between 40 and 1200
                  and c.statement !~* '(scope|scoped|could not|we searched|this project|recomputed here|verified here|limitation|was found|does not resolve|positive control|reproduced here|holds [0-9]+ sequences|our own|here from)'
                  and c.statement !~* '(despite|although|notwithstanding)'
@@ -109,11 +124,27 @@ def main():
                  -- literature to support "no measurement was found" or "the a3m holds 76
                  -- sequences". Those zeros are not evidence of anything and must not accumulate.
                  and c.evidence in ('literature','measured','derived')
-                 and c.statement ~* '(zebrafish|danio|fish|fin|muscle|channel|protein|ray|flight|glide|exocoet|actinodin|kcn|lift|drag|scal)' 
+                 and c.statement ~* {lit('(' + DOMAIN_TERMS + ')')} 
                  and not exists (select 1 from artifact_signal s
                                  where s.entity_type='claim' and s.entity_id=c.id::text
                                  and s.voter_id='gxl-evidence')
                  order by c.id limit {n_max}""")
+    # POSITIVE CONTROL ON THE FILTER ITSELF. If the domain whitelist admits nothing while the
+    # project has claims, that is a misconfigured filter, not an absence of work -- and the two
+    # print the same "0 checked". Refuse rather than report a clean pass over an empty set.
+    if not rows:
+        total = q(f"select count(*) from claim where project_id={lit(PROJECT)} "
+                  f"and superseded_by is null")[0][0]
+        if int(total) > 0:
+            print(f"  REFUSING: the domain whitelist admitted 0 of {total} live claims for "
+                  f"project {PROJECT!r}. Either every claim is already scored, or "
+                  f"SWARM_DOMAIN_TERMS does not match this project's vocabulary. Set it to this "
+                  f"project's terms. Recording nothing: a filter that excludes everything and a "
+                  f"project with nothing to check both print '0 checked'.")
+            return 2
+        print(f"  project {PROJECT!r} has no live claims at all; nothing to check.")
+        return 0
+
     agree = disagree = 0
     for cid, stmt in rows:
         try:
