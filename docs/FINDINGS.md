@@ -600,6 +600,45 @@ document's headline material — the lead deliverable and the top recommended ex
 branches for four kinds. It ran for the project's entire life, and the harvester printed a
 "blocks found" total that included the blocks it was dropping.
 
+## Open items, stated so the next reader does not have to find them
+
+Everything below is unresolved **and known to be unresolved**. Nothing here is a to-do list of
+work that would obviously succeed; each is a specific question with a stated reason it is open.
+
+### Could change a conclusion
+
+| item | why it matters | what would settle it |
+|---|---|---|
+| **Which girdle limb carries the fin-root moment** about the AP axis | if the dorsal cleithral limb is binding, the girdle **fails** at measured size (0.61×) rather than passing at 2.1–3.9× | decode the Nguyen 2022 meshes and resolve the load path; both candidate numbers already reproduce |
+| **The Strouhal regime for the taxi** | the headline table row is either **2.5–3.8×** or **1.4–1.6×** | re-derive Eloy's Lighthill number at the taxi operating point; both arithmetics already reproduce |
+| **Whether `and1` departs from the shuffle null** | claim 29 says no; two replications say yes and cite its own table | re-run the shuffle test — not done here, so this is `source-only` |
+
+### Known weaknesses in numbers that are quoted
+
+- **C_L = 0.8 is assumed and exceeds claim 5's own ≤ 0.6 ceiling.** The honest area-shortfall range
+  is **11–23×**, not 14×.
+- **η_h = 0.37 is a point from a cited 0.34–0.39 range**, and is a *pike* value applied to a
+  zebrafish at Re ~10⁴. The requirement spans **93.5–107.2 J/kg** from the cited range alone.
+- **f_muscle = 0.30 is an assumption** — half of a 60 % whose own table is marked *"SECONDARY
+  review figure; primary not read"*. At 0.60 the energy term **closes**.
+- **The 0.93 spring-return efficiency has never been traced** to a source by anyone.
+
+### Structural gaps in the record itself
+
+- **Only 11 of 295 claims carry a `run_id`** — a command that reproduces them. The rest trace to
+  an agent's prose and cannot be given one retroactively without inventing provenance.
+- **11 of 21 mechanisms in the schema hold no rows at all** ([the empty set](architecture/the-empty-set.md)),
+  so any rule quantified over them is vacuously true. `grade` and `rubric` are empty, which is why
+  [SPEC-evaluation-kernel](specs/SPEC-evaluation-kernel.md) reads green: **grading never happened.**
+- **20 literature claims have no `read_level`** and 10 subproblems no `answer_kind`. Both are left
+  red deliberately — the agent never supplied the value, and inventing one is the fabrication those
+  fields exist to prevent.
+- **Formal verification reaches the organism scale and not the DNA scale.** The Delphi registry's
+  five genotype laws (G1–G5) return `cannot-evaluate`; supplying `genotype_edits` cleared the
+  `missing` list without producing a verdict.
+- **The `kcnk5b` a3m was never committed**, so the MSA-depth result behind *"the alignment ran out,
+  not disorder"* cannot be independently checked from this repository.
+
 ## What this does not establish
 
 - Fin **area** has never been measured in any enlarged-fin zebrafish, so the central geometric input
