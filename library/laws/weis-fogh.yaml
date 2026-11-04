@@ -1,0 +1,213 @@
+id: weis-fogh
+name: Weis-Fogh clap and fling, and the measured lift augmentation at low Reynolds number
+# DESCRIPTIVE, not constraining. The "law" is an empirical augmentation factor, not a relation that
+# predicts a number for a new wing from first principles: every measured value below is tied to one
+# apparatus, one kinematic set and one Re band. Two numbers in this entry CAN be used as sanity
+# bounds on a design claim (lift gain no more than ~17% at Re 100-200 on a rigid robotic wing pair;
+# no gain beyond 10-12 deg wing separation), but they are bounds from a single study, not a law that
+# yields a number for a design you have not built.
+usability: descriptive
+equation: "L_pair = A_cf * 0.5 * rho * U^2 * S * C_L"
+latex: "L_{\\mathrm{pair}} = A_{cf}\\,\\tfrac{1}{2}\\rho U^2 S\\,C_L, \\qquad A_{cf} \\equiv \\frac{L_{\\mathrm{pair}}}{L_{\\mathrm{single}}}"
+symbols:
+  L_pair:    {dimension: M*L/T^2, units: N, description: "lift of one wing when it claps and flings against a partner wing (or its mirror image)"}
+  A_cf:      {dimension: "1", units: dimensionless, description: "clap-and-fling augmentation factor: lift with wing-wing interaction divided by lift of the same wing with the same kinematics and no partner"}
+  rho:       {dimension: M/L^3, units: kg/m^3, description: fluid density}
+  U:         {dimension: L/T, units: m/s, description: "characteristic wing speed (mean wingtip or radius-of-gyration speed)"}
+  S:         {dimension: L^2, units: m^2, description: area of one wing}
+  C_L:       {dimension: "1", units: dimensionless, description: "lift coefficient of the isolated wing (no partner) under the same kinematics and Re"}
+  c:         {dimension: L, units: m, description: mean chord; the length used in Re}
+  nu:        {dimension: L^2/T, units: m^2/s, description: kinematic viscosity}
+  Re:        {dimension: "1", units: dimensionless, description: "Re = U * c / nu; the axis along which A_cf is reported to change"}
+  delta_sep: {dimension: "1", units: rad, description: "angular separation between the two wings at stroke reversal (0 = wings touch)"}
+constants:
+  A_cf_max_robotic_drosophila:
+    value: 1.17
+    interval: [1.082, 1.17]
+    units: dimensionless
+    note: >
+      MEASURED on a dynamically scaled robotic fruit-fly model at Re 100-200 (Lehmann, Sane &
+      Dickinson 2005). The authors' claim, as quoted in search results: "augmented total lift
+      production by up to 17%, but depended strongly on stroke kinematics". 1.17 is the MAXIMUM over
+      the kinematics they tested, not a typical value. The lower end, 1.082, is an 8.2% gain for
+      kinematics modelled on a tethered fly, which I found only in a search summary and could not
+      attribute to a page of the paper. The interval is the spread across kinematic sets, not a
+      measurement uncertainty, and the true minimum over all their kinematics is unknown to me.
+  A_cf_partial_clap_liriomyza:
+    value: 1.07
+    interval: unknown
+    units: dimensionless
+    note: >
+      CALCULATED, not observed: CFD on measured hovering kinematics of the leafminer fly Liriomyza
+      sativae at wing Re ~40, which uses a PARTIAL clap and fling (Cheng & Sun 2016). Authors' claim:
+      partial clap-fling "increased the lift by ~7%" relative to no wing interaction. No interval
+      was available at the read level reached.
+  delta_sep_max:
+    value: "10-12 deg"
+    interval: [0.175, 0.209]
+    units: rad
+    note: >
+      MEASURED (robotic model, Re 100-200; Lehmann, Sane & Dickinson 2005). Authors' claim: lift
+      enhancement "requires an angular separation between the two wings of no more than 10-12 deg".
+      Interval converted by me from 10-12 deg to radians.
+  lift_per_flight_muscle_gain_clappers:
+    value: 1.25
+    interval: unknown
+    units: dimensionless
+    note: >
+      Comparative take-off load-lifting measurement across flying animals (Marden 1987), reported
+      SECOND-HAND in a citing paper as "approximately 25% more aerodynamic lift per unit flight
+      muscle when insects clap-and-fling". I have not read Marden 1987; the figure, its spread and
+      the taxa behind it are unverified by me. It is a whole-animal correlation, not a measurement of
+      A_cf, and it does not isolate the clap from other differences between the taxa.
+  fling_drag_penalty_rigid_low_re:
+    value: "up to ~10x"
+    interval: unknown
+    units: dimensionless
+    note: >
+      CALCULATED (2D immersed-boundary simulation), not observed. A Miller-group abstract reports
+      that drag during fling with rigid wings "can be up to 10 times larger" than without wing-wing
+      interaction at tiny-insect Re (~10). Which paper of that group the abstract summarises was not
+      established; treat as an order-of-magnitude statement.
+  bristled_peak_drag_reduction:
+    value: "50-90%"
+    interval: [0.5, 0.9]
+    units: dimensionless (fractional reduction of peak drag coefficient vs solid wing)
+    note: >
+      MEASURED on a dynamically scaled robotic model of bristled wing pairs during clap and fling
+      (Kasoju et al. 2018). The same authors report that bristles also weakened the leading-edge
+      vortex and LOWERED lift; the drag reduction exceeded the lift reduction (that last comparison
+      is from a citing paper). The exact Re of the experiments was not available at my read level;
+      the papers describe the regime as Re of order 10.
+mechanism: >
+  Weis-Fogh (1973) described the kinematics in the chalcid wasp Encarsia formosa: at the top of the
+  stroke the wings "clap" together, then "fling" apart by rotating about their trailing edges, so
+  the leading edges separate first and air is drawn into the opening V-shaped gap. Lighthill (1973)
+  gave the inviscid 2D analysis: the inrush sets up equal and opposite circulation around the two
+  wings, so the total circulation of the system stays zero (Kelvin's theorem is satisfied) and each
+  wing starts its translation already carrying bound circulation, without first having to shed a
+  starting vortex. That removes the Wagner-effect delay in lift build-up, which is the part that
+  matters at low Re, where the delay is long relative to a short stroke. The clap at the end of the
+  previous stroke is held to shed or annihilate the trailing vorticity of that stroke, so it does
+  not oppose the next one, and to expel a jet. Experiments then showed the circulation is carried
+  mainly by a leading-edge separation vortex rather than by an attached inviscid flow (Maxworthy
+  1979). The above is my summary of the cited authors' arguments at the read levels listed; the
+  Kelvin/Wagner framing is the standard textbook reading, not a quotation.
+domain_of_validity:
+  reynolds_range_measured_or_simulated: [8, 200]
+  regime: "unsteady, low-Re flapping hover; wings rigid or flexible; leading-edges separate first"
+  taxa_observed_using_it: >
+    Encarsia formosa (Weis-Fogh 1973); thrips and other tiny insects -- a citing paper states that
+    "all tiny insects that have been filmed to date appear to use clap and fling"; the lacewing
+    Chrysopa carnea (Ellington 1984, cited second-hand, where clap is suggested to serve steering as
+    well as lift); butterflies (clap observed in free flight; not examined further here). Many
+    larger insects show only a PARTIAL or near clap, with the wings not touching (Ellington 1984;
+    Ennos 1989, both cited second-hand).
+  notes: >
+    The augmentation factor is defined only relative to an isolated-wing baseline with IDENTICAL
+    kinematics. It is not a property of the wing, of the animal, or of Re alone: it depends on wing
+    separation at reversal, rotation timing, wing flexibility and porosity. No measurement located in
+    this search covers Re above ~200.
+where_it_breaks: >
+  (1) WING SEPARATION: on the robotic Drosophila model the gain disappears once the wings are more
+  than 10-12 deg apart at stroke reversal (measured). Any design whose wings do not nearly touch
+  should be credited A_cf ~ 1, and a partial clap gave only ~7% in CFD on Liriomyza (calculated).
+  (2) HIGH Re: in 2D simulations at Re 8-128 (Miller & Peskin 2005, calculated) the lift benefit of
+  a two-winged fling shrinks as Re rises, and at Re = 128 the mean translational lift per wing after
+  a two-winged fling is about equal to that after a one-winged fling, i.e. A_cf ~ 1. The robotic
+  measurement at Re 100-200 still found up to +17%, so the two sources disagree on whether the
+  benefit is gone by Re ~100-200 (see contested_by). Above Re ~200 I found no measurement or
+  simulation at all in this search, so no gain should be assumed there; that is an absence of
+  evidence, not a measured failure.
+  (3) LOW Re -- the "lift augmentation" stops being a performance gain: at Re ~10 the same 2D
+  simulations report fling drag on rigid solid wings far above the one-wing case (up to ~10x in a
+  Miller-group abstract, calculated), so the lift-to-drag ratio and power cost can be worse than
+  not clapping. Lift gain is not efficiency gain at the scale where the gain is largest. Bristled
+  (porous) wings, as in thrips and other sub-millimetre insects, cut peak drag 50-90% in robotic
+  measurements but also cut lift, so A_cf for a bristled wing is below that of a solid one.
+  (4) THEORY: Lighthill's inviscid 2D model is not a quantitative predictor. Maxworthy (1979) and
+  Spedding & Maxworthy (1986) report circulation and lift LARGER than inviscid theory; a later
+  robotic study reports early-fling leading-edge-vortex circulation SMALLER than inviscid 2D models.
+  Both cannot be used to calibrate a design; use measured A_cf for the exact kinematics.
+  (5) TAXON / BEHAVIOUR: the measured robotic gain is for Drosophila-like kinematics, but free-flying
+  Drosophila rarely clap; they clap mostly when tethered (Ennos 1989; Fry et al. 2003, cited
+  second-hand). A gain measured on a kinematic pattern the animal does not normally use is not
+  evidence that the animal benefits from it in free flight.
+worked_examples:
+  - organism: "Danio rerio candidate wing in air (the reynolds.yaml example), as a clap-and-fling design check"
+    computation: "U = 2 m/s, c = 0.01 m, nu = 1.5e-5 m^2/s -> Re = 2*0.01/1.5e-5 = 1333"
+    value: 1333
+    note: >
+      DERIVED by me from the reynolds.yaml inputs, not observed. Re = 1333 is roughly 7x above the
+      highest Re (~200) at which any clap-and-fling augmentation was measured or simulated in the
+      sources found. Conclusion: there is no evidential basis for crediting this wing with any
+      clap-and-fling lift; the design should be checked with A_cf = 1. This is a negative result
+      about the evidence, not a measurement that A_cf = 1 at Re 1333.
+    evidence: derived
+  - organism: Drosophila melanogaster (dynamically scaled robotic model)
+    value_range: [1.082, 1.17]
+    note: >
+      Re 100-200. MEASURED forces on a robot, not on flies. Maximum +17%; strongly kinematics-
+      dependent; requires delta_sep <= 10-12 deg. The +8.2% value is search-summary level only.
+    evidence: literature
+  - organism: Liriomyza sativae (partial clap and fling)
+    value: 1.07
+    note: >
+      Re ~40. Kinematics MEASURED by high-speed video; forces CALCULATED by CFD. Authors report the
+      fly relies mainly on delayed stall, with the partial clap adding ~7%.
+    evidence: literature
+  - organism: Encarsia formosa
+    value: unknown
+    note: >
+      The species in which Weis-Fogh (1973) described the mechanism. I did not find a measured A_cf
+      for it; a reanalysis cited in search results estimates ~3.8 cm^2/s circulation per wing from
+      fling and flip, but that is a circulation, not an augmentation ratio, and I could not open the
+      paper to check how it was obtained. Searched: Weis-Fogh 1973 and Lighthill 1973 via web
+      search summaries only.
+    evidence: literature
+contested_by:
+  - "Re at which the gain vanishes: Miller & Peskin (2005, 2D CFD) find A_cf ~ 1 per wing at Re = 128; Lehmann, Sane & Dickinson (2005, 3D robotic) measure up to +17% at Re 100-200. Possible reasons (2D vs 3D, kinematics, how lift is averaged) are my conjecture and are not reconciled here."
+  - "Circulation vs inviscid theory: Maxworthy (1979) and Spedding & Maxworthy (1986) report circulation/lift larger than Lighthill's inviscid prediction; a later robotic clap-and-fling study (identity not pinned down at search-summary level) reports early-fling LEV circulation smaller than inviscid 2D models."
+  - "Magnitude: a review (cited via search summary, attribution not verified) quotes a 20-70% mean-lift gain for FULL clap-fling across kinematic configurations from CFD, against the 17% robotic maximum and the ~7-9% partial clap-fling values. The ranges are recorded as found, not averaged."
+  - "Lift trend with Re in 2D clap-fling CFD: Miller & Peskin (2005) figure captions are summarised as lift rising with Re, while a 2014 Phys. Fluids study is summarised as mean lift falling to a minimum then rising. Not resolved at the read level reached."
+sources:
+  - citation: "Weis-Fogh T (1973) Quick estimates of flight fitness in hovering animals, including novel mechanisms for lift production. J. Exp. Biol. 59:169-230. doi:10.1242/jeb.59.1.169"
+    read_level: search-summary
+  - citation: "Lighthill MJ (1973) On the Weis-Fogh mechanism of lift generation. J. Fluid Mech. 60:1-17"
+    read_level: search-summary
+  - citation: "Maxworthy T (1979) Experiments on the Weis-Fogh mechanism of lift generation by insects in hovering flight. Part 1. Dynamics of the fling. J. Fluid Mech. 93:47-63"
+    read_level: search-summary
+    note: "Title confirmed via search listing; volume/pages from my recall, not verified this session."
+  - citation: "Spedding GR, Maxworthy T (1986) The generation of circulation and lift in a rigid two-dimensional fling. J. Fluid Mech. 165:247-272"
+    read_level: search-summary
+    note: "Title confirmed via search listing; volume/pages from my recall, not verified this session."
+  - citation: "Lehmann F-O, Sane SP, Dickinson M (2005) The aerodynamic effects of wing-wing interaction in flapping insect wings. J. Exp. Biol. 208:3075-3092. doi:10.1242/jeb.01744"
+    read_level: abstract
+    note: "17% and 10-12 deg quoted from abstract text returned by search; full text not opened (network policy)."
+  - citation: "Miller LA, Peskin CS (2005) A computational fluid dynamics of 'clap and fling' in the smallest insects. J. Exp. Biol. 208:195-212. doi:10.1242/jeb.01376"
+    read_level: search-summary
+    note: "PDF at math.nyu.edu could not be fetched: host blocked by this session's network policy."
+  - citation: "Cheng X, Sun M (2016) Wing-kinematics measurement and aerodynamics in a small insect in hovering flight. Sci. Rep. 6:25706"
+    read_level: abstract
+  - citation: "Cheng X, Sun M (2017) Aerodynamic forces and flows of the full and partial clap-fling motions in insects. PeerJ 5:e3002"
+    read_level: could-not-access
+    note: "peerj.com blocked by network policy; only its existence and title were confirmed via search listings."
+  - citation: "Kasoju VT, Terrill CL, Ford MP, Santhanakrishnan A (2018) Leaky flow through simplified physical models of bristled wings of tiny insects during clap and fling. Fluids 3(2):44"
+    read_level: abstract
+  - citation: "Santhanakrishnan A et al. (2014) Clap and fling mechanism with interacting porous wings in tiny insect flight. J. Exp. Biol. 217"
+    read_level: search-summary
+    note: "Described only second-hand by citing papers; page numbers not verified."
+  - citation: "Marden JH (1987) Maximum lift production during takeoff in flying animals. J. Exp. Biol. 130:235-258"
+    read_level: search-summary
+    note: "The ~25% figure is from a citing paper, not from Marden. Title, volume and pages from my recall, not verified this session."
+  - citation: "Ellington CP (1984) The aerodynamics of hovering insect flight. III. Kinematics. Phil. Trans. R. Soc. Lond. B 305:41-78"
+    read_level: search-summary
+    note: "Cited second-hand for partial/near clap; volume/pages from my recall, not verified this session."
+  - citation: "Ennos AR (1989) The kinematics and aerodynamics of the free flight of some Diptera. J. Exp. Biol. 142:49-85"
+    read_level: search-summary
+    note: "Cited second-hand for free-flying Drosophila rarely clapping; volume/pages from my recall, not verified this session."
+  - citation: "Fry SN, Sayaman R, Dickinson MH (2003) The aerodynamics of free-flight maneuvers in Drosophila. Science 300:495-498"
+    read_level: search-summary
+    note: "Cited second-hand only (free-flying Drosophila rarely clap); bibliographic details from my recall, not verified this session."
+  - citation: "Lift-drag and flow structures associated with the 'clap and fling' motion. Phys. Fluids 26:071906 (2014); authors not retrieved"
+    read_level: listing
