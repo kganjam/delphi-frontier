@@ -13,6 +13,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 | [Cost of transport against body mass](./cost-of-transport.md) | `constraining` | Outside the linear power-against-speed range the two-term form is simply the wrong shape, and the fit carries  |
 | [D'Arcy Thompson's theory of transformations](./darcy-thompson.md) | `descriptive` | It does not break, and that is precisely the problem: a theory that cannot fail cannot inform a design |
 | [Elastic versus geometric similarity (McMahon)](./elastic-similarity.md) | `descriptive` | It breaks on the animals it was proposed for |
+| [Euler buckling of a slender column, and the slenderness ratio where it governs](./euler-buckling.md) | `constraining` | The ideal Euler load is an UPPER BOUND that real columns fall short of, and the shortfall is largest exactly w |
 | [Froude propulsive efficiency](./froude-efficiency.md) | `constraining` | Unsteady and pulsed jets break the premise that there is a steady far wake whose momentum flux can be written  |
 | [Froude number and the walk-run transition](./froude-gait.md) | `constraining` | Non-cursorial and small mammals fall outside the hypothesis by its authors' own statement, so the group does n |
 | [Phyllotaxis and the golden angle](./golden-angle.md) | `constraining` | Nearly one sunflower parastichy count in five is NOT Fibonacci -- 136 of 768, split into Fibonacci minus one,  |
