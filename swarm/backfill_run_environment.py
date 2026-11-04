@@ -27,7 +27,11 @@ import sys
 SEP = "\x01"
 PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm",
       "-tAq", "-F", SEP]
-ROOT = "results/compute"
+# RESOLVED FROM THIS FILE, not from the caller's cwd. As a relative path it silently reported
+# "0 run(s) with an environment record, 14 without" when run from anywhere but the worktree root
+# -- a wrong answer shaped exactly like a finding, and in the script whose own docstring says NULL
+# must mean "no record found" and never "none looked for". Found by running it from /tmp.
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results", "compute")
 # Normalised field -> the key spellings seen across the families. Kept explicit so a reviewer can
 # disagree with a row, rather than inferred by fuzzy matching.
 FIELDS = {
@@ -93,6 +97,10 @@ def find_env(run_tag: str) -> tuple[dict, str] | tuple[None, None]:
 
 def main() -> int:
     write = "--write" in sys.argv
+    if not os.path.isdir(ROOT):
+        print(f"  REFUSING: {ROOT} does not exist, so every run would report NO ENVIRONMENT "
+              f"RECORD FOUND. That is a missing tree, not a measurement.", file=sys.stderr)
+        return 2
     rows = q("select id, tool, coalesce(substring(notes from 'manifest-([a-z0-9]+)\\.json'),'') "
              "from run order by id")
     found = missed = 0
