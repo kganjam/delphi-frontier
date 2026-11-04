@@ -1,0 +1,124 @@
+---
+title: Weis-Fogh clap and fling, and the measured lift augmentation at low Reynolds number
+label: law-weis-fogh
+---
+
+:::{important}
+**Descriptive** — this law describes a pattern and does not constrain a design.
+:::
+
+## The law
+
+:::{math}
+:label: eq-weis-fogh
+\Gamma = g(\phi)\,\Omega\,c^{2}
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `Gamma` | L^2/T | m^2/s | bound circulation on EACH wing at the moment the trailing edges separate (equal and opposite on the two wings) |
+| `g_phi` | 1 | dimensionless | Lighthill's inviscid shape factor, a function of the opening angle phi between the wings; 0.69 at phi = 2*pi/3 (120 degrees) |
+| `Omega` | 1/T | rad/s | angular velocity of the fling (wings rotating apart about their common trailing edge) |
+| `c` | L | m | wing chord |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `g_lighthill_120deg` | 0.69 dimensionless | CALCULATED, not measured: Lighthill's (1973) inviscid potential-flow result for two flat plates opening at constant Omega to 120 degrees, as quoted by his abstract (circulations of about 0.69*Omega*c^2 of opposite sign) and, for the 120-degree condition, by a later JFM paper on the spreading phase (search-summary level). There is no measurement interval because it is a theoretical coefficient. Maxworthy (1979) measured circulation "substantially larger" than the inviscid value (search-summary level; we found no numeric ratio), so 0.69 is neither an upper bound nor a predictor of real circulation. |
+| `max_wing_separation_for_benefit` | unknown (interval 10 to 12) degrees | MEASURED on a dynamically scaled robotic Drosophila wing pair (Lehmann, Sane & Dickinson 2005, abstract): lift enhancement "requires an angular separation between the two wings ... of no more than 10-12 degrees". A physical-model measurement, not an observation of a flying animal. |
+| `lift_augmentation_robot_Re100_200` | unknown (interval 0 to 0.17) fraction of total lift | MEASURED on the robotic model, Re 100-200 (Lehmann, Sane & Dickinson 2005, abstract): "up to 17%", "within the limitations of the robotic apparatus", depending "strongly on stroke kinematics". The lower end 0.0 is OUR placeholder for "depends on kinematics"; the paper's abstract gives no minimum. |
+| `vertical_force_augmentation_robot_Re134` | unknown (interval 0.014 to 0.174) fraction of vertical force | MEASURED on a robotic wing pair at Re about 134 in mineral oil, across 17 generic stroke patterns that match no particular insect (Lehmann & Pick 2007; abstract plus results as read through an automated summarising fetch). Total force rose 3.6-12.2%. Augmentation "significantly decreased with increasing vertical force production", i.e. the largest relative gain came from a low-lift pattern. No tested pattern gave negative augmentation. |
+| `full_clapfling_lift_gain_CFD` | unknown (interval 0.2 to 0.7) fraction of mean lift coefficient | CALCULATED (numerical simulation), not observed. Range attributed to Miller & Peskin (2005) and Sun & Yu (2006) by the introduction of Cheng & Sun (2017), "depending on the wing kinematic model". We did not read Sun & Yu (2006) ourselves. |
+| `full_clapfling_lift_gain_CFD_Re20` | 0.28 fraction of mean lift coefficient | CALCULATED. Cheng & Sun (2017), 3D Navier-Stokes simulation at Re = 20: full clap-fling raised mean CL about 28% over a single wing while mean CD roughly doubled (as read through an automated summarising fetch of the PMC full text; the 28% and 'roughly doubled' are the fetch's reading of the results, not quoted from the abstract). Partial clap-fling: +12% mean lift "without suffering any efficiency degradation" (abstract). |
+| `fling_drag_penalty_Re10` | unknown (interval 1 to 10) ratio to drag without wing-wing interaction | CALCULATED (2D immersed-boundary simulation, rigid wings, Re = 10): drag during fling "can be up to 10 times larger than what would be produced without the effects of wing-wing interaction" (Miller & Peskin 2009, abstract). Wing flexibility cut the PEAK fling drag by about 50%. The lower bound 1 is ours (no penalty), not the paper's. |
+| `encarsia_required_CL` | unknown (interval 2 to 3) dimensionless | ESTIMATED by Weis-Fogh (1973, summary) for Encarsia formosa hovering at Re 10-20: "the high lift coefficient of 2 or 3 is not possible with steady-state aerodynamics". This is a quick-estimate calculation from filmed kinematics, not a force measurement. |
+
+## Why it holds
+
+Weis-Fogh (1973) filmed the chalcid wasp Encarsia formosa bringing its wings together at the top of the stroke (clap) and then rotating them apart about their trailing edges "like a book" (fling). His claim is that the fling is "a hitherto undescribed mechanism for creating lift" and that lift appears "almost instantaneously", without the Wagner delay that a single wing starting from rest suffers. Lighthill (1973) gave the inviscid explanation: Kelvin's theorem forbids net circulation around a body that starts from rest, but when the closed pair splits into two bodies each can carry equal and opposite circulation, and the fluid sucked into the opening gap sets up Gamma = g(phi)*Omega*c^2 on each wing (0.69*Omega*c^2 at 120 degrees). Lift per unit span then follows from Kutta-Joukowski, rho*U*Gamma, once the wings translate. Maxworthy (1979) found experimentally that a leading-edge separation vortex accounts for "virtually all" of the circulation during the initial fling and that its magnitude is "substantially larger" than inviscid theory -- so the mechanism that actually carries the circulation is viscous separation, not Lighthill's potential flow (search-summary level). The clap, separately, is claimed to expel a jet and to cancel the trailing-edge vorticity of the previous stroke; Cheng & Sun (2017) describe a high-pressure region in the closing gap and two drag peaks 8-9 times the single-wing value in the full clap (calculated).
+
+## Where it holds
+
+- **regime**: hovering or slow flight with dorsal stroke reversal in which the two wings meet or nearly meet
+- **reynolds min**: 4
+- **reynolds max**: 200
+- **geometric condition**: wing angular separation at stroke reversal no more than 10-12 degrees (robotic measurement)
+- **taxa**: ['Encarsia formosa', 'greenhouse whitefly', 'thrips', 'parasitoid wasps (Muscidifurax raptor, Nasonia vitripennis)', 'Liriomyza sativae (partial clap-fling)', 'Limacina helicina (near fling, in water)']
+- **notes**: The Re bounds are the span of the evidence we found, not a validity limit any author states: Re 4-10 (Santhanakrishnan et al. 2014, 2D porous-wing simulation), 8-128 (Miller & Peskin 2005, 2D simulation), 20 (Cheng & Sun 2017, 3D simulation), 10-20 (Weis-Fogh's Encarsia estimate) and 100-200 (Lehmann et al. 2005, robotic measurement). Maxworthy (1979) used a laboratory model described in a secondary summary as "high Reynolds number"; its Re is unknown to us. The taxon list is the one given by Cheng & Sun (2017); we did not check the primary kinematic study for each. Cheng & Sun state that larger insects "rarely use clap and fling mechanism in free flight, with few exceptions" (some moths in forward flight, some butterflies at take-off, some locusts in climbing flight).
+
+
+:::{danger} Where it breaks
+(1) ABOVE Re ~ 64 THE AUGMENTATION LARGELY DISAPPEARS -- calculated and measured. Miller & Peskin (2005, 2D simulation, abstract) report that at Re >= 64 lift is enhanced only during the initial rotation and is "not substantially greater than in the one-wing case" thereafter, and that "lift enhancement increases with decreasing Re". On a robot at Re 100-200 the measured whole-stroke gain is at most 17% (Lehmann et al. 2005) and as little as 1.4% of vertical force at Re ~134 (Lehmann & Pick 2007), and it shrinks as the stroke's own lift production rises. We found no measured whole-cycle augmentation above Re ~200 (scope: the searches and journal pages listed under sources, Nov 2026). (2) BELOW Re ~ 10 THE LIFT GAIN IS BOUGHT WITH A LARGER DRAG BILL -- calculated, not observed. At Re 10 fling drag on rigid wings is up to 10x the no-interaction value (Miller & Peskin 2009) and "an order of magnitude larger" than a single wing (Santhanakrishnan et al. 2014); both groups call the rigid-wing clap and fling inefficient. So "clap and fling augments lift" is true at Re ~10 and still the wrong design criterion: a lift-only check would approve a motion whose power cost the authors judge prohibitive. Real insects at this scale have bristled or flexible wings, which the authors report reduce the drag (porosity; ~50% cut in PEAK drag from flexibility); a solid-plate model of the law misrepresents the actual animals. (3) GEOMETRY -- the benefit requires the wings to come within 10-12 degrees (robotic measurement). A wing pair that does not nearly touch at reversal gets none of it. Once the wings are more than about one chord apart, Kolomenskiy et al. (2011, simulation, search-summary level) report that 3D effects become essential, so the 2D Lighthill/Maxworthy picture stops describing the flow. (4) THE INVISCID NUMBER IS NOT THE REAL CIRCULATION. Measured circulation in the fling is "substantially larger" than Lighthill's 0.69*Omega*c^2 (Maxworthy 1979) and is carried by a leading-edge vortex; Edwards & Cheng (1982, as summarised) report that it depends on the history of the wing motion. The equation therefore gives an order of magnitude, not a value a design can be held to. (5) THE SIGN AND SIZE OF THE GAIN ARE KINEMATICS-SPECIFIC. Reported gains span 1.4% to ~70% across robots, 2D and 3D CFD, full and partial claps and Re 10-200 (see constants). No figure from one study transfers to another wing motion. Our inference: treat any single augmentation percentage as a property of that study's kinematics, not of the mechanism. (6) SIDE EFFECT. Lehmann & Pick (2007) measured clap-and-fling reinforcing mean pitching moments by ~21%, nose-down in most patterns. A design that adopts the clap for lift inherits a pitch-trim change. (7) THIS PROJECT'S SCALE IS OUTSIDE ALL OF THE EVIDENCE. The zebrafish-scale candidate wing in reynolds.yaml sits at Re ~1333 (derived there). Every augmentation figure we found was obtained at Re <= 200. Our inference, not a cited result: no clap-and-fling lift gain should be assumed for that wing; the trend in (1) suggests a small gain at most, but that is an extrapolation and no source we found measured it.
+:::
+
+## Worked examples
+
+**Encarsia formosa hovering**
+
+- value range: `[2, 3]`
+
+- Required mean lift coefficient estimated by Weis-Fogh (1973) at Re 10-20, beyond steady-state aerodynamics. A calculation from filmed kinematics, not a force measurement.
+
+- evidence: **literature**
+
+**Robotic Drosophila-scale wing pair, Re 100-200 and Re ~134**
+
+- value range: `[0.014, 0.174]`
+
+- Measured lift/vertical-force augmentation on dynamically scaled robots (Lehmann et al. 2005; Lehmann & Pick 2007). Physical-model measurements; the kinematics are generic, not those of a flying animal.
+
+- evidence: **literature**
+
+**Model tiny-insect wings, 3D CFD at Re 20**
+
+- value: `full clap-fling +28% mean CL with ~2x mean CD; partial clap-fling +12% mean CL`
+
+- Calculated (Cheng & Sun 2017); figures as read through an automated summarising fetch of the full text.
+
+- evidence: **literature**
+
+**Danio rerio candidate wing in air (same case as reynolds.yaml)**
+
+```
+c = 0.01 m, Omega = 100 rad/s (ASSUMED), g = 0.69 -> Gamma = 0.69*100*0.01^2 = 6.9e-3 m^2/s; with rho_air = 1.2 kg/m^3 and U = 2 m/s, Kutta-Joukowski lift per span = 1.2*2*6.9e-3 = 0.0166 N/m
+```
+
+- value: `0.0069`
+
+- DERIVED, not observed; Omega is an assumed value with no measurement behind it, and the formula is inviscid. Its only use is to show the order of magnitude Lighthill's model gives. At Re ~1333 this case lies outside every Re at which augmentation was measured or simulated (see where_it_breaks (7)), and measured fling circulation exceeds the inviscid value (where_it_breaks (4)), so this number must not be used to check a design.
+
+- evidence: **derived**
+
+:::{seealso} Contested
+- Lighthill (1973) vs Maxworthy (1979): Lighthill derives the fling circulation from inviscid potential flow; Maxworthy reports that a leading-edge separation vortex carries virtually all of it and that it is substantially larger than the inviscid value. Two different mechanisms for the same circulation; recorded, not reconciled.
+- Benefit at the smallest scale: Miller & Peskin (2005) report that lift enhancement increases with decreasing Re and read this as the mechanism favouring tiny insects; Miller & Peskin (2009) and Santhanakrishnan et al. (2014), for rigid or solid wings at Re ~10, conclude it is 'rather inefficient' and 'dramatically reduces efficiency'. Cheng & Sun (2017) argue partial clap-fling is 'a more practical choice'. All three are simulation results.
+- Magnitude: up to 17% measured on a robot at Re 100-200 (Lehmann et al. 2005); 1.4-17.4% at Re ~134 (Lehmann & Pick 2007); 20-70% from CFD (Miller & Peskin 2005, Sun & Yu 2006, as cited by Cheng & Sun 2017); 35% per wing averaged over a 4.5-chord translation after fling in 2D CFD (Miller & Peskin 2005). Differing Re, 2D vs 3D, and kinematics; the spread is preserved, not averaged.
+- Dimensionality: Kolomenskiy et al. (2011, simulation) report that 3D effects become essential once the wings are more than about one chord apart, which the 2D models behind most of the figures above do not capture (search-summary level).
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Weis-Fogh T (1973) Quick estimates of flight fitness in hovering animals, including novel mechanisms for lift production. J Exp Biol 59(1):169-230. doi:10.1242/jeb.59.1.169 | `abstract` |
+| Lighthill MJ (1973) On the Weis-Fogh mechanism of lift generation. J Fluid Mech 60:1-17 | `search-summary` |
+| Maxworthy T (1979) Experiments on the Weis-Fogh mechanism of lift generation by insects in hovering flight. Part 1. Dynamics of the 'fling'. J Fluid Mech 93:47-63 | `search-summary` |
+| Edwards RH, Cheng HK (1982) The separation vortex in the Weis-Fogh circulation-generation mechanism. J Fluid Mech (volume and pages not verified in this session) | `search-summary` |
+| Spedding GR, Maxworthy T (1986) The generation of circulation and lift in a rigid two-dimensional fling. J Fluid Mech 165:247-272 | `search-summary` |
+| Lehmann F-O, Sane SP, Dickinson MH (2005) The aerodynamic effects of wing-wing interaction in flapping insect wings. J Exp Biol 208:3075-3092. doi:10.1242/jeb.01744 | `abstract` |
+| Lehmann F-O, Pick S (2007) The aerodynamic benefit of wing-wing interaction depends on stroke trajectory in flapping insect wings. J Exp Biol 210(8):1362-1377. doi:10.1242/jeb.02746 | `full-text` |
+| Miller LA, Peskin CS (2005) A computational fluid dynamics of 'clap and fling' in the smallest insects. J Exp Biol 208(2):195-. doi:10.1242/jeb.01376 | `abstract` |
+| Miller LA, Peskin CS (2009) Flexible clap and fling in tiny insect flight. J Exp Biol 212(19):3076-. doi:10.1242/jeb.028662 | `abstract` |
+| Santhanakrishnan A, Robinson AK, Jones S, Low AA, Gadi S, Hedrick TL, Miller LA (2014) Clap and fling mechanism with interacting porous wings in tiny insect flight. J Exp Biol 217(21):3898-3909. doi:10.1242/jeb.084897 | `abstract` |
+| Cheng X, Sun M (2017) Aerodynamic forces and flows of the full and partial clap-fling motions in insects. PeerJ e3002 (PMC5346288) | `full-text` |
+| Sun M, Yu X (2006) (cited by Cheng & Sun 2017 for the 20-70% range and for CL +20% / CD +52% at Re 15; title and journal not verified) | `listing` |
+| Kolomenskiy D, Moffatt HK, Farge M, Schneider K (2011) Two- and three-dimensional numerical simulations of the clap-fling-sweep of hovering insects. J Fluids Struct 27(5):784-791; and The Lighthill-Weis-Fogh clap-fling-sweep mechanism revisited. J Fluid Mech 676:572-606 | `search-summary` |
+| Kasoju VT, Santhanakrishnan A (2020) Aerodynamic interaction of bristled wing pairs in fling. arXiv:2011.00939 (related DOI 10.1063/5.0036018) | `abstract` |
+
+
+---
+
+*Generated from [`library/laws/weis-fogh.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/weis-fogh.yaml). Do not edit this page; edit the YAML.*
