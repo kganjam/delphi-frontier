@@ -1,0 +1,214 @@
+id: strouhal
+name: "Strouhal number of flapping and undulatory propulsion, and the 0.2-0.4 cruising band"
+usability: descriptive          # the band is an efficiency optimum observed in cruising, not a feasibility bound; see usability_note
+usability_note: >
+  St = fA/U is exact arithmetic, so given any two of f, A, U it returns the third. What it does NOT
+  give is a pass/fail number for a design. The 0.2-0.4 band is where cruising animals are OBSERVED to
+  sit and where flapping-foil efficiency is reported to peak. It is not the minimum St at which thrust
+  balances drag: in the source table (Eloy 2012), animals swim steadily at St = 0.54-1.02, outside the
+  band. A design outside the band is therefore predicted to be less efficient, not predicted to fail.
+  That is my reading of the sources, and it is why this entry is `descriptive`. Inside the high-Re
+  domain below, the band is a reasonable first guess for tail-beat frequency. It is not a constraint.
+equation: "St = f * A / U"
+latex: "\\mathrm{St} = \\frac{f A}{U}"
+symbols:
+  St: {dimension: "1", units: dimensionless, description: "Strouhal number of the propulsor: wake vortex spacing relative to shedding frequency"}
+  f:  {dimension: 1/T, units: Hz, description: "tail-beat or wingbeat frequency (full cycles per second, not half-strokes)"}
+  A:  {dimension: L, units: m, description: "PEAK-TO-PEAK excursion of the tail tip (swimmers) or wingtip (fliers) normal to the path; the wake width proxy"}
+  U:  {dimension: L/T, units: m/s, description: "mean forward speed over whole cycles, steady self-propelled cruise"}
+constants:
+  cruising_band_taylor_2003:
+    value: 0.3
+    interval: [0.2, 0.4]
+    units: dimensionless
+    note: >
+      OBSERVED band, from Taylor, Nudds & Thomas (2003). Per the abstract (search-summary), propulsive
+      efficiency of flapping foils "usually peaks within the interval 0.2 < St < 0.4". The abstract also
+      says dolphins, sharks and bony fish swim in that interval, and that birds, bats and insects
+      converge on it "but only when cruising". 0.3 is the midpoint I chose for the `value` slot. It is
+      not a reported central tendency, and I did not read the paper's per-species values.
+  foil_wake_peak_triantafyllou_1993:
+    value: 0.3
+    interval: [0.25, 0.35]
+    units: dimensionless
+    note: >
+      PREDICTED band, from a stability analysis of the mean jet behind an oscillating foil:
+      the frequency of maximum spatial amplification. Per the abstract (search-summary), fish and
+      cetacean data are said to fall in it. This is a linear-instability prediction, not a measurement
+      on animals. 0.3 is the midpoint I chose.
+  odontocete_observed_rohr_fish_2004:
+    value: unknown
+    interval: [0.2, 0.3]
+    units: dimensionless
+    note: >
+      OBSERVED, 248 St values on six captive odontocete species (search-summary of the abstract).
+      74% of values fall in 0.20-0.30 and 55% in 0.25-0.35. The authors' claim is that the optimum
+      for odontocetes is about 20% lower than the 0.25-0.35 prediction. The interval is the band holding
+      74% of the data, not a confidence interval. The species mean is not in the summary I read, so
+      `value` is unknown. I could not reach the full text (cob.silverchair.com and math.wcupa.edu
+      do not resolve from this session).
+  bird_cruise_fit_nudds_2004:
+    value: "0.21 (continuous flappers); 0.25 (intermittent flappers)"
+    interval: unknown
+    units: dimensionless
+    note: >
+      FITTED, 60 bird species (search-summary of the abstract). The fit predicts wingbeat frequency from
+      wingspan and speed, with St as the free constant, and is reported to explain about 90% of the
+      variance in f. The authors claim cruising birds sit at the LOW end of the 0.2-0.4 band. No
+      interval was given in what I read.
+  eloy_optimum_range:
+    value: "0.15 (largest cetaceans) to 0.8 (smallest tadpoles)"
+    interval: [0.15, 0.8]
+    units: dimensionless
+    note: >
+      CALCULATED, not observed: the efficiency optimum from Lighthill elongated-body theory, constrained
+      so that thrust equals drag (Eloy 2012, full-text of the arXiv preprint). The range spans the
+      Lighthill numbers of the animals Eloy compiled. The band is not universal: its centre moves with
+      the drag-to-thrust ratio Li.
+  eloy_power_law_coefficient:
+    value: 0.75
+    interval: unknown
+    units: dimensionless
+    note: >
+      Eloy's fit to his own CALCULATED optimum curve: St_opt ~ 0.75 Li^(1/3), where
+      Li = pi D / (2 m U^2) = (S / h^2) C_d is the Lighthill number. This is a fit to model output, not
+      to animal data, so it has no measured interval. An independent re-implementation on this repo
+      (challenge-84, branch claude/strouhal-challenge-84-xogjpb; calculated) ran 7-15% above the power
+      law at Li = 0.01-1.0.
+mechanism: >
+  St is the ratio of the wake width (about A) to the streamwise spacing between successive shed
+  vortices (about U/f). A flapping or undulating propulsor sheds a reverse von Karman street, a jet,
+  and how much of each stroke's work goes into that jet depends on how the vortices are packed. If St
+  is too low, the vortices are weak and spread out, and thrust does not cover profile drag. If St is
+  too high, the vortices crowd together, lateral (wasted) kinetic energy dominates and efficiency
+  falls. Triantafyllou et al. (1993) attribute the optimum to the frequency of maximum amplification of
+  the mean jet's convective instability, a LINEAR argument. Eloy (2012) instead derives the optimum
+  from elongated-body theory, as the gait of least wasted energy among gaits whose thrust equals body
+  drag. On his account the optimum depends on drag, so the band is not fixed. Both are mechanisms
+  claimed by the authors. My inference from the two: the narrow band of 0.2-0.4 is what you see when
+  the sample is dominated by large, streamlined, high-Re animals with similar drag-to-thrust ratios.
+domain_of_validity:
+  regime: steady, cruising, self-propelled locomotion using lift-based flapping or carangiform/thunniform undulation
+  reynolds_min: 1.0e4
+  reynolds_note: >
+    reynolds_min is MY reading of where the band holds in Eloy's Table 1-3 (full-text). Every
+    compiled point with St above 0.45 has either Re < 5e4 or a slender body (S/h^2 >= 14.6). The
+    points above Re 5e4 are lungfish 6e4 (St 0.75, S/h^2 14.6), European eel 2.5e5 (0.52), longnose
+    gar 3.3e5 (0.59), lesser siren 1.7e5 (0.54) and saltwater crocodile 4.2e5 (0.78), and all of them are
+    slender. The 14.6 cut is mine: Eloy's own "elongated" group uses S/h^2 > 17 and puts lungfish under
+    "other fishes". The sharpest failures are the two points at Re ~ 7e3. No author states 1e4 as a threshold; it is
+    a boundary I drew from the table and should be read as approximate.
+  taxa: [cetaceans and pinnipeds, sharks, scombrids, salmonids and perciform fishes, cruising birds, cruising bats, cruising insects (per Taylor 2003 abstract)]
+  notes: >
+    St is defined for any oscillating propulsor at any speed. The 0.2-0.4 BAND applies only in the
+    domain above. Peak-to-peak amplitude is the convention in Eloy, Taylor and Triantafyllou. Using
+    half-amplitude halves St and silently moves a design out of the band. Check the convention before
+    comparing against any number in this entry.
+where_it_breaks: >
+  (1) LOW REYNOLDS NUMBER, small body. Observed St rises well above 0.4 as Re falls toward ~1e4. In
+  Eloy's compilation (full-text, Table 2-3; observed values): eggfish goldfish St 0.54 at Re 7.1e3;
+  fantail goldfish 0.47 at 7.7e3; West African lungfish 1.02 at 7.0e3 (and 0.75 at 6.0e4); juvenile
+  bullfrog tadpole 0.79 at 2.3e4; lake sturgeon 0.48 at 4.1e4. Eloy notes that larvae are NOT in his
+  data set because elongated-body theory could not be validated for them. So below Re ~ 1e4 the band
+  is untested in that source as well as violated, which is not the same thing. I did not find a source
+  giving larval-fish St; that search was limited to the queries recorded under `sources`.
+  (2) ELONGATE AND ANGUILLIFORM BODIES, at ANY Re. Observed (Eloy, Table 3): European eel 0.52 at
+  Re 2.5e5; longnose gar 0.59 at 3.3e5; saltwater crocodile 0.78 at 4.2e5; lesser siren 0.54;
+  hagfish 0.56. Eloy states that Lighthill's theory itself is not valid for bodies with h/L < 0.1,
+  because resistive normal forces cannot be neglected. These animals break the band at high Re, so Re
+  is not the only boundary.
+  (3) HOVERING AND SLOW FLIGHT. As U -> 0, St = fA/U diverges, and St stops being a meaningful
+  parameter. Taylor et al. (2003) report convergence on the band "only when cruising". Hovering
+  insects, hummingbirds and slow-flying bats fall outside it by construction. I did not record
+  numerical St values for hovering animals; the argument here is definitional.
+  (4) UNSTEADY MANOEUVRES: fast starts, acceleration, burst-and-coast. St assumes steady thrust = drag.
+  During acceleration thrust exceeds drag and the band does not apply. Rohr & Fish (2004, abstract)
+  report wide within-individual scatter even in captive steady swimming.
+  (5) FEASIBILITY. Using the band as a REQUIRED St, to compute the tail-beat frequency an animal "must"
+  reach, is a misuse. The band is an efficiency optimum. A repo challenge (challenge-84, calculated
+  in Eloy's model) found that thrust balance at a 4 cm fish's taxi speed is reachable at roughly 40-50%
+  of the St_opt-based frequency. That is a model calculation, not an observation.
+worked_examples:
+  - organism: "bottlenose dolphin (Tursiops truncatus), 2.58 m, Re 1.2e7"
+    value: 0.26
+    note: >
+      Observed St 0.26 (Eloy Table 1, compiled from refs 20, 21, 55). Inside the band. Eloy's power law
+      at Li = 0.063 gives 0.75 * 0.063^(1/3) = 0.298 (my calculation). So the model optimum is about 15%
+      above the observation, in the same direction as Rohr & Fish's claim that odontocetes sit about 20%
+      below the 0.25-0.35 prediction.
+    evidence: literature
+  - organism: "eggfish goldfish (Carassius auratus), 5.3 cm, Re 7.1e3"
+    value: 0.54
+    note: >
+      Observed St 0.54 (Eloy Table 2, from Blake et al. 2009). Outside the band, at the low-Re
+      boundary. The power law at Li = 0.538 gives 0.75 * 0.538^(1/3) = 0.61 (my calculation). Eloy's
+      Li-dependent optimum tracks this point; the fixed band does not.
+    evidence: literature
+  - organism: "West African lungfish (Protopterus annectens), 55 cm, Re 7.0e3"
+    value: 1.02
+    note: >
+      Observed St 1.02 (Eloy Table 2, from ref 28). The power law gives 0.75 * 0.463^(1/3) = 0.58 (my
+      calculation), so this point is outside even Eloy's power-law optimum by a factor of about 1.8.
+      Neither the band nor the size-corrected model accounts for it. I could not read off Eloy's Fig. 4
+      (an image) whether it falls within his "acceptable" efficiency envelope.
+    evidence: literature
+  - organism: "Danio rerio adult, 4 cm, slow cruise (hypothetical design check)"
+    computation: >
+      U = 0.2 m/s, L = 0.04 m, nu = 1.0e-6 m^2/s -> Re = 0.2*0.04/1e-6 = 8.0e3.
+      A = 0.2 L = 0.008 m peak-to-peak (ASSUMED, not measured).
+      f = St*U/A -> St 0.2: 5.0 Hz; St 0.3: 7.5 Hz; St 0.4: 10.0 Hz; St 0.54 (goldfish at Re 7.1e3): 13.5 Hz.
+    value_range: [5.0, 13.5]
+    note: >
+      CALCULATED, not observed. At Re 8e3 this fish is at the low-Re boundary in (1), next to the
+      goldfish. A frequency taken from the 0.2-0.4 band is therefore a probable UNDER-estimate. The
+      0.2-0.4 range spans 5-10 Hz, and the nearest analogue at that Re (goldfish, St 0.54) gives 13.5
+      Hz. Amplitude is an assumption, so this range is only as good as A = 0.2 L.
+    evidence: derived
+contested_by:
+  - >
+    Universal band vs Li-dependent optimum. Taylor et al. (2003) and Triantafyllou et al. (1993) present
+    a narrow band (0.2-0.4; 0.25-0.35) as a general principle of oscillatory propulsion. Eloy (2012)
+    argues the optimum is not a constant but rises with the Lighthill number from about 0.15 to 0.8,
+    and that the narrow band is what you get from a sample of large streamlined animals. Not reconciled
+    here.
+  - >
+    Where in the band. Rohr & Fish (2004) claim the odontocete optimum lies about 20% below the
+    0.25-0.35 foil prediction, and that fluke kinematics are not set by St alone. Nudds et al. (2004)
+    claim cruising birds sit at the low end (fitted 0.21-0.25). Triantafyllou et al. (1993) centre the
+    optimum at 0.25-0.35. These are different claims about the same band.
+  - >
+    Mechanism. Triantafyllou et al. (1993) attribute the optimum to a linear wake-instability
+    frequency. A later review (Landmarks and Frontiers in Biological Fluid Dynamics, arXiv 1904.13013,
+    search-summary) objects that the instability analysis is linear, while vortex formation by animal
+    appendages is nonlinear, so the link to efficient vortex formation is open. Eloy derives the
+    optimum without any wake-instability argument.
+  - >
+    St as a consequence, not a target. Gazzola, Argentina & Mahadevan (2014; abstract only) report
+    Re ~ Sw^alpha, with Sw = omega A L / nu, alpha = 1 (turbulent) and alpha = 4/3 (laminar), across more
+    than 1,000 measurements. MY INFERENCE, not their stated claim: since Sw/Re = omega A / U = 2 pi St,
+    alpha = 1 implies constant St at high Re, while alpha = 4/3 implies St rising as Re^(-1/4) at lower
+    Re. On that reading, the band is a drag-scaling consequence that breaks exactly where (1) says. I
+    have not read their full text, which may define A differently (amplitude rather than
+    peak-to-peak), which would shift the constant.
+sources:
+  - citation: "Taylor GK, Nudds RL, Thomas ALR (2003) Flying and swimming animals cruise at a Strouhal number tuned for high power efficiency. Nature 425:707-711. doi:10.1038/nature02000"
+    read_level: search-summary
+    note: "nature.com redirects to an auth wall; biology.ox.ac.uk does not resolve from this session."
+  - citation: "Eloy C (2012) Optimal Strouhal number for swimming animals. J Fluids Struct 30:205-218. doi:10.1016/j.jfluidstructs.2012.02.008 (read as arXiv:1102.0223 preprint)"
+    read_level: full-text
+    note: "Text, equations and Tables 1-3 read via pdftotext. Figures 2-5 are images and were not read. The preprint is not the version of record."
+  - citation: "Triantafyllou GS, Triantafyllou MS, Grosenbaugh MA (1993) Optimal thrust development in oscillating foils with application to fish propulsion. J Fluids Struct 7(2):205-224. doi:10.1006/jfls.1993.1012"
+    read_level: search-summary
+  - citation: "Rohr JJ, Fish FE (2004) Strouhal numbers and optimization of swimming by odontocete cetaceans. J Exp Biol 207(10):1633-1642. doi:10.1242/jeb.00948"
+    read_level: search-summary
+    note: "Full-text hosts (cob.silverchair.com, math.wcupa.edu) do not resolve from this session."
+  - citation: "Nudds RL, Taylor GK, Thomas ALR (2004) Tuning of Strouhal number for high propulsive efficiency accurately predicts how wingbeat frequency and stroke amplitude relate and scale with size and flight speed in birds. Proc R Soc B 271:2071-2076. doi:10.1098/rspb.2004.2838"
+    read_level: search-summary
+  - citation: "Gazzola M, Argentina M, Mahadevan L (2014) Scaling macroscopic aquatic locomotion. Nat Phys 10:758-761"
+    read_level: search-summary
+  - citation: "Landmarks and Frontiers in Biological Fluid Dynamics (review), arXiv:1904.13013; authors unknown"
+    read_level: search-summary
+    note: "I did not retrieve the author list. It is cited only for the linear-vs-nonlinear objection, as a search summary relayed it."
+  - citation: "challenge-84 (this repo, branch claude/strouhal-challenge-84-xogjpb), re-implementation of Eloy's optimisation"
+    read_level: full-text
+    note: "Internal calculation, not a peer-reviewed source. Used only for the 7-15% power-law gap and the feasibility point in where_it_breaks (5)."
