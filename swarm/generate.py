@@ -62,6 +62,7 @@ def unchallenged_claims(limit=12):
                         coalesce(c.source,'')
                  from claim c where c.project_id={sql_lit(PROJECT)} and c.superseded_by is null
                  and not exists (select 1 from challenge ch where ch.claim_id=c.id)
+                 and c.statement not like 'LAWENTRY %'
                  order by c.id limit {limit}""")
 
 
@@ -72,6 +73,7 @@ def underived_claims(limit=8):
                  and c.superseded_by is null
                  and not exists (select 1 from challenge ch where ch.claim_id=c.id
                                  and ch.attack like 'independent re-derivation%')
+                 and c.statement not like 'LAWENTRY %'
                  order by c.id limit {limit}""")
 
 
@@ -164,7 +166,10 @@ def gen_replications(accts, i=0):
 
 
 def gen_laws(accts, i=0, limit=8):
-    done = {r[0] for r in q("select distinct coalesce(statement,'') from claim where statement like 'LAWENTRY %'")}
+    done = {r[0] for r in q("select distinct coalesce(result,'') from agent_session where result like 'LAWENTRY %'")}
+    done |= {f"LAWENTRY {r[0]}" for r in q(
+        "select distinct substring(id from 'law-([a-z0-9-]+)') from agent_session where id like 'law-%'")
+        if r[0]}
     n = 0
     for slug, desc in LAWS:
         if n >= limit: break
@@ -204,8 +209,11 @@ def gen_laws(accts, i=0, limit=8):
                            capture_output=True, text=True, timeout=300)
         try: d = json.loads(r.stdout)
         except Exception: print(f"  law {slug} failed"); continue
-        q(f"""insert into claim (project_id, statement, evidence, source)
-              values ({sql_lit(PROJECT)}, {sql_lit(marker+' dispatched')}, 'unknown', {sql_lit(d['session_id'])})""")
+        # Dispatch bookkeeping does NOT go in `claim`. It did, and the consequence was not cosmetic:
+        # unchallenged_claims() picked the markers up as claims, so the swarm spent 31 adversarial
+        # sessions attacking strings like "LAWENTRY strouhal dispatched". agent_session already
+        # records every dispatch; the marker was pure duplication with a cost.
+        pass
         q(f"""insert into agent_session (id, project_id, harness, account, status)
               values ({sql_lit(d['session_id'])}, {sql_lit(PROJECT)}, 'cloud', {sql_lit(acct)}, 'running')
               on conflict (id) do nothing""")
