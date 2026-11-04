@@ -10,11 +10,20 @@ can recover a caveat that was never carried, so the summary is where this error 
   * one-sided muscle fraction: source calls it an assumption, summary quoted it as an input
   * taxi ceiling: source states 1.9-2.9 m/s as the uncertainty span, summary carries 2.2-2.9
 
-THIS IS A SWEEP, NOT A GATE, and the measurement says why. On the corrected document it returns 7
-hits of which 2 are the correction notes QUOTING the old value -- a forbidden-string check cannot
-tell claiming from quoting, which this project has now documented four times -- and at least one
-more is a different quantity that happens to share a unit (Park & Choi's 7-20% body share against
-a 7.5-20% muscle fraction). Read every hit; expect roughly half to be nothing.
+THIS IS A SWEEP, NOT A GATE, and every hit of one full run has been adjudicated to say how good
+it is. On the corrected document: 7 raw hits, 5 unique after duplicates, of which
+
+  1  REAL      the taxi ceiling, 2.2-2.9 vs a stated uncertainty span of 1.9-2.9 m/s
+  1  a QUOTE   "53-81 J/kg" inside this project's own note explaining that correction;
+               a string matcher cannot tell claiming from quoting (documented 4x here)
+  3  WRONG     different quantities that happen to share a unit:
+                 7.5-20% muscle fraction      vs Park & Choi's 7-20% BODY SHARE
+                 15-20 m/s exocoetid taxi     vs 10-20 m/s max FLIGHT speed
+                 0.45-1.38 m/s measured burst vs 0.36-1.39 m/s MINIMUM SUPPORTABLE speed
+
+So the hit rate is 1 in 5, and the dominant failure is unit-collision between unrelated
+quantities. That is useful for a sweep somebody reads and useless as a gate, which is the same
+conclusion this project reached for its zero-cell sweep at 1 in 9. Read every hit.
 
 IT EARNS ITS KEEP ON THE MUST-FLAG TEST. Against the pre-correction document it flags
 "53-81 J/kg vs 32-81 J/kg", which is the real error, found independently of knowing it was there.
