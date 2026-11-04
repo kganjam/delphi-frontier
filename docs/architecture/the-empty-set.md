@@ -144,6 +144,32 @@ are challenge, replicate and entail work that carries no `subproblem_id` at all.
 have reported $740 of waste by looking in a column that the majority of sessions legitimately
 leave empty.
 
+## 7. The sweep's own blind spot: it reads the database, not the repository
+
+§4 reported `run` holding **0 rows** and concluded that *"the provenance mechanism for simulation
+has never been exercised"* and that *"every simulated claim traces to an agent's prose and no
+further."*
+
+**That was a statement about the database presented as one about the project.** `results/` holds
+**972 committed files**, including **19 GPU and CPU compute run families** — `evo2zf` (a zebrafish
+genomic model on an H100, 496 s, rc=0), Navier–Stokes flow refinement, a wind tunnel, held-out
+validation sets.
+
+**And the correction needs its own correction, because the record is thin as well as real.** Of
+the 19 families, **exactly one** (`evo2zf`) carries an `entry.json` with full environment capture,
+a `SHA256SUMS.json`, and a `control_check.json` — whose control is a good one: natural zebrafish
+sequence at **0.452** nats/nt against mono-shuffles at **1.394/1.396** and iid-random at **1.398**.
+**14 have only a `job.log`. At least one failed.**
+
+So the accurate statement is neither "no provenance" nor "extensive provenance": **one run is
+fully provenanced, most are logged, and none of it is linked to the graph.** That is a *linking*
+problem, which is a better position than the one §4 described and a worse one than a file count
+suggests.
+
+**The lesson is the document's own, turned on itself.** A sweep that counts rows in a schema
+reports the schema's emptiness, and reads as though it had reported the project's. The vacuity
+sweep ships with a positive control for each *mechanism*; it has none for its own *domain*.
+
 ## 5. What this does not establish
 
 - The sweep covers **tables in one Postgres schema**. A mechanism implemented in files, in a
