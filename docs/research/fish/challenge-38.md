@@ -67,7 +67,7 @@ downgrade to "weakened."
 - Not every flying fish has the convergent lat4a change. Search summaries of the paper report that the
   sailfin flying fish lacks the convergent lat4a allele (search-summary level, not verified in the full
   text). This bears on the evolutionary inference. It does not bear on the zebrafish phenocopy claim.
-- The zebrafish nr21 T200K is an ENU-induced allele. The claim does not say it is the same substitution
+- The zebrafish nr21 T200K allele came from a zebrafish mutant collection (how it was induced: `unknown`, not checked). The claim does not say it is the same substitution
   as the flying-fish variants, and it should not be read that way. Whether the residues match is
   `unknown` from what I read.
 - I found no published paper that fails to reproduce this result. Scope of that search: two web searches
