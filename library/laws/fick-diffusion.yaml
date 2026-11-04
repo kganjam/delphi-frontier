@@ -1,0 +1,225 @@
+id: fick-diffusion
+name: Fick diffusion and the critical length beyond which diffusive supply fails
+usability: constraining          # gives a maximum thickness/radius a design can be checked against, but ONLY if q (consumption rate) is known for the tissue in question -- see where_it_breaks
+equation: "L_crit = (k * D * C0 / q)^1/2"
+latex: "J = -D\\,\\frac{\\partial C}{\\partial x}, \\qquad D\\,\\nabla^2 C = q \\;\\Rightarrow\\; L_{\\mathrm{crit}} = \\sqrt{\\frac{k\\,D\\,C_0}{q}}, \\quad k = 2\\ (\\text{slab half-thickness}),\\ 4\\ (\\text{solid cylinder}),\\ 6\\ (\\text{sphere}); \\qquad t_{\\mathrm{diff}} \\approx \\frac{L^2}{2D}"
+symbols:
+  L_crit: {dimension: L, units: m, description: "largest half-thickness (slab) or radius (cylinder, sphere) whose centre still receives a non-zero concentration when supplied only by diffusion from the surface"}
+  k:      {dimension: "1", units: dimensionless, description: "geometry factor: 2 for a slab supplied from both faces (L_crit = half-thickness), 4 for a solid cylinder supplied from its curved surface, 6 for a sphere"}
+  D:      {dimension: L^2/T, units: m^2/s, description: "diffusion coefficient of the solute (here O2) in the tissue or medium -- NOT the value in pure water unless the medium is water"}
+  C0:     {dimension: N/L^3, units: mol/m^3, description: "dissolved concentration held at the supplied surface (for O2: solubility times partial pressure)"}
+  q:      {dimension: N/(L^3*T), units: mol/(m^3*s), description: "volumetric consumption rate, assumed uniform and zero-order (independent of C) throughout the body"}
+  J:      {dimension: N/(L^2*T), units: mol/(m^2*s), description: "diffusive flux in Fick's first law J = -D dC/dx (latex only; not in the checked equation)"}
+constants:
+  geometry_factor_k:
+    value: "2 | 4 | 6 (slab | cylinder | sphere)"
+    interval: exact
+    note: >
+      DERIVED in this entry, not measured: solving D*laplacian(C) = q with C = C0 at the surface and a
+      symmetric centre gives C(centre) = C0 - q*L^2/(k*D) with k = 2 x (number of dimensions in which
+      the body is finite). Setting C(centre) = 0 gives L_crit. The spherical case is usually credited
+      to Harvey (1928) and the cylindrical (capillary-supplied tissue cylinder) to Krogh (1919); we
+      read neither paper's full text in this session and did not confirm the exact form each wrote.
+  D_O2_water_25C:
+    value: 2.1e-9
+    interval: [2.10e-9, 2.14e-9]
+    units: m^2/s
+    note: >
+      Spread across three compiled values seen as search summaries: 2.10e-9 (Cussler-type table),
+      about 2.12e-9 (BioNumbers 100615 / 115123), 2.14e-9 (Case engineering property table). The
+      interval is the spread between compilations, not a measurement uncertainty. The often-quoted
+      Han & Bartels (1996) measurement was NOT reached in this session, so its value is not used. A
+      Wilke-Chang CORRELATION (calculated, not measured) gives 1.97e-9 at 20 C (Cornell compost page),
+      showing the temperature dependence. D in tissue is lower than in water by an amount we did not
+      source; treat D_water as an UPPER bound, which makes L_crit computed from it an upper bound.
+  D_O2_tissue:
+    value: unknown
+    interval: unknown
+    units: m^2/s
+    note: >
+      Krogh (1919, J Physiol 52:392-408) measured gas diffusion through animal tissues; we have only
+      the citation (search summary), not the numbers. Not invented here.
+  C0_O2_freshwater_25C_air_saturated:
+    value: 0.258
+    interval: [0.257, 0.259]
+    units: mol/m^3
+    note: >
+      259 uM (8.3 mg/L) from a PMC table (PMC3969821 table 3) and 8.24 mg/L = about 257 uM (BioNumbers
+      100982, Vesilind text), both as search summaries. BioNumbers 114988 gives a generic 230 uM for
+      "air-saturated water" with no temperature pinned; recorded here as a disagreement, not averaged
+      in. About 200 uM at 37 C in air-saturated buffer (BioNumbers 109182, search summary). Salinity
+      and temperature both lower it.
+  q_O2_tissue:
+    value: unknown
+    interval: unknown
+    units: mol/(m^3*s)
+    note: >
+      The single number that decides L_crit, and the one we could NOT source. Searched (web, two
+      queries: zebrafish larval mass-specific O2 consumption from Barrionuevo & Burggren 1999; and
+      volumetric O2 consumption for engineered tissues) -- the zebrafish full text was not reached,
+      and the only volumetric per-cell figure found (a bioprinting simulation) appears to contain a
+      units error and was rejected. Magliaro et al. (2019) report that hepatocyte Vmax per cell FALLS
+      with cell density (search summary), so q is not a cell-type constant even in principle.
+mechanism: >
+  Fick's first law, J = -D dC/dx, says net flux runs down a concentration gradient at a rate set by
+  D (from the random thermal walk of solute molecules: mean-square displacement grows as 2*D*t per
+  dimension). Conservation then gives dC/dt = D*laplacian(C) - q. At steady state with uniform,
+  zero-order consumption q, the concentration falls parabolically from the surface inward, and the
+  drop from surface to centre is q*L^2/(k*D). Supply fails at the centre when that drop equals C0,
+  giving L_crit = sqrt(k*D*C0/q). The scaling is the whole point: supply capacity grows as L
+  (gradient times area) but demand grows as L^2 per unit area of supplied surface, and diffusion time
+  grows as L^2/(2D) -- about 2.4 s for 100 um but about 6.6 h for 1 cm of water (calculated with
+  D = 2.1e-9 m^2/s). This quadratic penalty is why bodies, organs and engineered tissues above a few
+  hundred micrometres in their supply-limited dimension need convection (blood, ventilation,
+  perfusion) or a geometry that keeps every cell close to a surface (sheets, tubes, tracheae).
+domain_of_validity:
+  transport: "pure diffusion; Peclet number Pe = U*L/D well below 1 inside the body"
+  kinetics: "zero-order (q independent of C); breaks near C = 0 where uptake is saturable"
+  medium: "dilute solute in a homogeneous, isotropic medium with a single D (normal diffusion, MSD proportional to t)"
+  geometry: "slab, solid cylinder or sphere with the whole surface held at C0 and no internal sources"
+  state: steady state (times much longer than L^2/(2D))
+  taxa: ["unicells and small multicellular organisms", "zebrafish embryos and early larvae (cutaneous O2 uptake)", "avascular tissue layers, cell spheroids, engineered constructs and organoids", "the tissue cylinder around one capillary (Krogh)"]
+  notes: >
+    Fick's law itself is near-universal for dilute solutes. What is fragile is the L_crit number: it
+    is only as good as q, D-in-tissue and C0 at the actual surface, and q is the least known of the
+    three (see constants).
+where_it_breaks: >
+  (1) CONVECTION. When Pe = U*L/D exceeds about 1, flow carries solute faster than diffusion and the
+  diffusion-only L_crit no longer bounds anything. With D = 2.1e-9 m^2/s, a flow of 1 mm/s over 10 um
+  already gives Pe of about 5 (calculated). Perfused constructs, ventilated surfaces and any vascularised
+  tissue are outside this law except at the last few tens of micrometres from the vessel -- which is
+  exactly the Krogh-cylinder use.
+  (2) THE CENTRE DIES BEFORE IT REACHES ZERO. L_crit is the thickness at which the centre reaches
+  C = 0. Cells fail earlier. Mueller-Klieser & Sutherland (1982, per search summary of their abstract
+  and a later citing paper) report first signs of necrosis in spheroids at central pO2 of 57 mmHg
+  (EMT6/Ro) and 42 mmHg (V-79-171B) -- far above anoxia. Franko & Sutherland (1979, abstract via
+  search summary) found necrosis when the O2 diffusion distance fell below about 80 um and noted an
+  unknown mechanism controlling onset at very low O2. So L_crit computed with C(centre) = 0 is an
+  UPPER bound on viable thickness, not the design value; the design value needs a threshold C_min > 0
+  (replace C0 by C0 - C_min).
+  (3) SATURABLE (Michaelis-Menten) UPTAKE. Real uptake falls as C falls (q = Vmax*C/(Km + C)), so
+  the zero-order L_crit underestimates the thickness at which C first touches zero but the tissue near
+  the centre is already rate-limited before then. The zero-order result is the conservative design
+  bound only for the anoxia criterion.
+  (4) q IS NOT A CONSTANT. Per Magliaro et al. (2019, search summary) hepatocyte per-cell Vmax falls,
+  and Km tends to rise, with cell density in 3D. An L_crit computed with a 2D-culture q will be wrong
+  for a dense construct, in a direction set by that dependence.
+  (5) ANOMALOUS DIFFUSION. In crowded cytoplasm, macromolecule MSD grows sublinearly in time
+  (Weiss, Elsner, Kartberg & Nilsson 2004, abstract via search summary), so a single D does not
+  exist for large solutes at intracellular scales. Small gases like O2 are much less affected, but
+  this was not checked quantitatively here.
+  (6) FACILITATED DIFFUSION. A mobile carrier (myoglobin, haemoglobin) adds a parallel carried flux,
+  so effective transport exceeds D*dC/dx. How much this matters in vivo is CONTESTED (see
+  contested_by).
+  (7) MULTICOMPONENT, NON-DILUTE AND GAS-PORE TRANSPORT. Concentrated mixtures need Maxwell-Stefan
+  coupling, and gas diffusion in pores narrower than the mean free path (e.g. finest tracheoles,
+  stomatal pores) is Knudsen rather than molecular. Neither regime's boundary was quantified in this
+  entry.
+  (8) NUMERICAL. The spheroid evidence shows the boundary is cell-line dependent: the outer viable
+  rim of large spheroids is reported as roughly 100 to 250 um (arXiv 1403.7161 review, search
+  summary) and the commonly repeated "100-200 um from a vessel" figure is attributed to Carmeliet &
+  Jain (2000) only by secondary sources -- we could not find it in their text. Use these as order-of-
+  magnitude checks, not as constants.
+worked_examples:
+  - organism: "generic mammalian tissue, slab supplied from both faces (k = 2), 37 C"
+    computation: >
+      INVERSE calculation, not an observation. If the widely repeated viable distance L = 100-200 um
+      is taken as L_crit, with D = 2.1e-9 m^2/s (water, an upper bound) and C0 = 0.2 mol/m^3
+      (air-saturated buffer at 37 C), the implied consumption is q = 2*D*C0/L^2 =
+      8.4e-10/(2e-4)^2 = 0.021 mol/(m^3*s) for 200 um, and 8.4e-10/(1e-4)^2 = 0.084 mol/(m^3*s) for
+      100 um.
+    value_range: [0.021, 0.084]
+    units: mol/(m^3*s)
+    note: >
+      This is what q WOULD HAVE TO BE for the textbook distance to be a pure-diffusion limit. Our
+      inference, not a source's claim: it is of the order a cell density near 1e14 cells/m^3 at
+      about 1e-16 mol O2/cell/s would give, but neither of those two numbers was sourced in this
+      session, so the agreement is not evidence. In vivo C0 at the capillary wall is lower than
+      air saturation, which would push the implied q lower still.
+    evidence: derived
+  - organism: Danio rerio embryo and early larva, whole body treated as a solid cylinder (k = 4), 25 C
+    computation: >
+      CALCULATED. R_crit = sqrt(4 * 2.1e-9 * 0.258 / q) = sqrt(2.17e-9 / q) m. For q = 0.021 ->
+      R_crit = 3.2e-4 m (320 um); for q = 0.084 -> 1.6e-4 m (160 um). The q values are the INFERRED
+      range from the example above, not zebrafish measurements (the zebrafish value is unknown, see
+      constants.q_O2_tissue).
+    value_range: [1.6e-4, 3.2e-4]
+    units: m
+    note: >
+      Observations to set beside it (not derived from it): Pelster & Burggren (1996) report that
+      disrupting haemoglobin O2 transport did not impair O2 consumption, cardiac performance or swim
+      bladder filling in zebrafish embryos -- consistent with diffusion alone sufficing at that size.
+      Rombough (2002) reports that with gill ventilation blocked, hyperoxia improved survival at 14
+      dpf and at 21 dpf larvae suffocated before ionoregulatory failure showed -- i.e. cutaneous
+      diffusion stops being enough for O2 somewhere around 14-21 dpf. We did NOT check zebrafish
+      body radius at those stages in this session, so whether the calculated range brackets the
+      observed transition is UNTESTED, not confirmed.
+    evidence: derived
+  - organism: "any body, O2 in water (diffusion time)"
+    computation: "t = L^2/(2*D), D = 2.1e-9 m^2/s: L = 1 um -> 2.4e-4 s; 100 um -> 2.4 s; 1 mm -> 238 s; 1 cm -> 2.4e4 s (6.6 h)"
+    note: Calculated. The quadratic growth is the physical content of the failure boundary.
+    evidence: derived
+  - organism: multicellular tumour spheroids
+    value_range: [1.0e-4, 2.5e-4]
+    units: m
+    note: >
+      Reported thickness of the outer viable rim in advanced spheroids, roughly constant as the
+      spheroid grows (Burton 1966; Groebe & Mueller-Klieser 1996), as stated in the arXiv 1403.7161
+      review (search summary). Observation, cell-line dependent.
+    evidence: literature
+contested_by:
+  - >
+    Facilitated O2 diffusion by myoglobin. Garry et al. (1998, Nature 395:905-908) report that
+    myoglobin-knockout mice are viable, fertile, with normal exercise capacity; Godecke et al. (1999,
+    PNAS) attribute this to compensation (steeper gradient, shorter diffusion path). A 2024 J Physiol
+    study (Zoladz and co-workers, per search summary) reports that myoglobin deficiency DOES impair
+    maximal O2 uptake and exercise performance in Mb-/- mice. The size of the carried flux relative to
+    the Fickian flux in vivo is therefore disputed; not reconciled here.
+  - >
+    Necrosis onset vs spheroid size. The common rule that necrosis begins at a diameter of twice the
+    viable rim thickness is disputed by Groebe & Mueller-Klieser (1996, abstract via search summary),
+    who derive from diffusion theory a rapid initial increase of necrosis rather than a linear
+    relation.
+sources:
+  - citation: "Fick A (1855) Ueber Diffusion. Annalen der Physik 170(1):59-86"
+    read_level: could-not-access
+    note: Citation from memory; not retrieved in this session. The law is stated here in its standard textbook form.
+  - citation: "Krogh A (1919) The number and distribution of capillaries in muscles with calculation of the oxygen pressure head necessary for supplying the tissue. J Physiol 52:409-415"
+    read_level: search-summary
+  - citation: "Krogh A (1919) The rate of diffusion of gases through animal tissues. J Physiol 52:392-408"
+    read_level: search-summary
+  - citation: "Harvey EN (1928) The oxygen consumption of luminous bacteria. J Gen Physiol 11:469-475"
+    read_level: search-summary
+  - citation: "Pelster B, Burggren WW (1996) Disruption of hemoglobin oxygen transport does not impact oxygen-dependent physiological processes in developing embryos of zebra fish (Danio rerio). Circ Res 79(2):358-362. doi:10.1161/01.res.79.2.358"
+    read_level: search-summary
+  - citation: "Rombough P (2002) Gills are needed for ionoregulation before they are needed for O2 uptake in developing zebrafish, Danio rerio. J Exp Biol 205:1787-1794"
+    read_level: abstract
+    note: Abstract content via search summary; page range from memory, not re-checked.
+  - citation: "Barrionuevo WR, Burggren WW (1999) O2 consumption and heart rate in developing zebrafish (Danio rerio). Am J Physiol 276:R505-R513"
+    read_level: listing
+    note: Searched for mass-specific O2 consumption; full text not reached, no value taken.
+  - citation: "Mueller-Klieser WF, Sutherland RM (1982) Br J Cancer (bjc198241) -- oxygen tensions in multicell spheroids"
+    read_level: search-summary
+  - citation: "Franko AJ, Sutherland RM (1979) Oxygen diffusion distance and development of necrosis in multicell spheroids"
+    read_level: search-summary
+  - citation: "Groebe K, Mueller-Klieser W (1996) On the relation between size of necrosis and diameter of tumor spheroids. Int J Radiat Oncol Biol Phys"
+    read_level: search-summary
+    note: Journal from memory; abstract seen via an index record.
+  - citation: "arXiv:1403.7161, Joint fitting reveals hidden interactions in tumor growth (review section on spheroid viable rim)"
+    read_level: search-summary
+  - citation: "Carmeliet P, Jain RK (2000) Angiogenesis in cancer and other diseases. Nature 407:249-257"
+    read_level: listing
+    note: The 100-200 um figure is attributed to this paper only by secondary sources; not found in its text by us.
+  - citation: "Weiss M, Elsner M, Kartberg F, Nilsson T (2004) Anomalous subdiffusion is a measure for cytoplasmic crowding in living cells. Biophys J 87(5):3518-3524"
+    read_level: abstract
+  - citation: "Magliaro C et al. (2019) Oxygen consumption characteristics in 3D constructs depend on cell density. Front Bioeng Biotechnol 7:251"
+    read_level: search-summary
+  - citation: "Garry DJ et al. (1998) Mice without myoglobin. Nature 395:905-908"
+    read_level: abstract
+  - citation: "Godecke A et al. (1999) PNAS -- myoglobin knockout mice and compensatory mechanisms"
+    read_level: search-summary
+  - citation: "Zoladz JA et al. (2024) J Physiol -- myoglobin deficiency impairs maximal O2 uptake in Mb-/- mice"
+    read_level: search-summary
+    note: Author list and title not verified beyond the search summary.
+  - citation: "BioNumbers entries 100615, 115123 (D_O2 in water); 100982, 109182, 114988 (O2 solubility)"
+    read_level: search-summary
