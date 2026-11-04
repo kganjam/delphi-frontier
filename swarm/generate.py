@@ -57,7 +57,7 @@ LAWS = [
 ]
 
 
-def unchallenged_claims(limit=12):
+def unchallenged_claims(limit=30):
     return q(f"""select c.id, c.statement, c.evidence, coalesce(c.value_num::text,'n/a'), coalesce(c.units,''),
                         coalesce(c.source,'')
                  from claim c where c.project_id={sql_lit(PROJECT)} and c.superseded_by is null
@@ -166,15 +166,24 @@ def gen_replications(accts, i=0):
 
 
 def gen_laws(accts, i=0, limit=8):
-    done = {r[0] for r in q("select distinct coalesce(result,'') from agent_session where result like 'LAWENTRY %'")}
-    done |= {f"LAWENTRY {r[0]}" for r in q(
-        "select distinct substring(id from 'law-([a-z0-9-]+)') from agent_session where id like 'law-%'")
-        if r[0]}
+    # GROUND TRUTH IS THE FILESYSTEM. Two earlier versions of this check were wrong in the same
+    # direction -- they asked the database what had been dispatched, and re-dispatched laws that
+    # already existed as entries. strouhal, wing-loading and elastic-similarity were each sent out
+    # again while sitting in library/laws/. An entry that exists is done, whatever any ledger says.
+    import glob as _glob
+    existing = {os.path.basename(f)[:-5] for f in
+                _glob.glob("/data/worktrees/delphi-frontier/swarm-arch/library/laws/*.yaml")}
+    existing |= {r[0] for r in q("select ref from work_log where kind='dispatched'")}
     n = 0
     for slug, desc in LAWS:
         if n >= limit: break
-        marker = f"LAWENTRY {slug}"
-        if any(marker in d for d in done): continue
+        # Name-tolerant match. The LAWS slugs and the on-disk filenames drifted apart --
+        # `pennycuick-power` vs `pennycuick`, `hagen-poiseuille` vs `poiseuille`,
+        # `turing-conditions` vs `turing` -- so an exact check would have re-dispatched four laws
+        # that exist, landing DUPLICATE entries under different names. A duplicate law is worse
+        # than a missing one: two entries can disagree and neither knows about the other.
+        tokens = set(slug.split("-"))
+        if slug in existing or any(tokens & set(e.split("-")) for e in existing): continue
         acct = accts[i % len(accts)][0]; i += 1
         prompt = textwrap.dedent(f"""
             Write ONE law-library entry: {desc}
@@ -209,6 +218,9 @@ def gen_laws(accts, i=0, limit=8):
                            capture_output=True, text=True, timeout=300)
         try: d = json.loads(r.stdout)
         except Exception: print(f"  law {slug} failed"); continue
+        q(f"""insert into work_log (project_id, kind, ref, detail)
+              values ({sql_lit(PROJECT)},'dispatched',{sql_lit(slug)},{sql_lit(d['session_id'])})
+              on conflict do nothing""")
         # Dispatch bookkeeping does NOT go in `claim`. It did, and the consequence was not cosmetic:
         # unchallenged_claims() picked the markers up as claims, so the swarm spent 31 adversarial
         # sessions attacking strings like "LAWENTRY strouhal dispatched". agent_session already
