@@ -373,6 +373,33 @@ internally certain about a fold nobody has measured.
 > control did. **Whether T200K is tolerated is now an open question**, and answering it needs a
 > method whose sensitivity to a single substitution has been demonstrated rather than assumed.
 > Recorded as grader_calibration id 3 (`untrusted`) and claims 460 / 462.
+>
+> **FIFTH MODEL REFUTED, AND THIS ONE TAKES THE SITE WITH IT (claims 521 / 522).** The
+> heavy-atom reading above was registered as a prediction before being tested — claim 518 named
+> methionine and leucine, each four heavy atoms, each required to be **flat** under 1.5 pLDDT.
+> **Methionine dropped 3.33**, 2.2× the threshold the prediction itself named and 29× the
+> replicate sd of 0.1160. So "no exceptions" was true of the thirteen residues in the table and
+> false of the fourteenth. Claim 518 had already given the reason: all thirteen were chosen to
+> test charge, sign and reach, **none to test atom count**, so the clean break at four-versus-five
+> was a property of the sample. The discarded volume model is not vindicated by getting methionine
+> right — it is refuted twice by the table above, where I(166.7 Å³) is flat and E(138.4 Å³) drops.
+> A depth-from-CB rule (flat iff the side chain reaches at most two bonds past CB) separates all
+> fourteen, but it was found *after* seeing the residue that broke the atom model, so it is a
+> hypothesis and not a result — and **no remaining natural amino acid at this site can separate
+> the two readings**, so the queued leucine fold cannot decide it either.
+>
+> **The sentence that has to go furthest is the one claiming the delta tracks a property of the
+> substituted residue.** It does not. The same three substitutions were folded at residue 200 and
+> at residue 219: **lysine drops 9.99 at site 200 and 0.03 at site 219**, nineteen residues apart
+> in the same protein. Mean paired effect 5.87 against 0.13, a factor of **47** — and the *ordering
+> flips*, K > W > A at 200 against W > A > K at 219, so no per-site normalisation rescues it. A
+> pLDDT delta reports how tolerant a **position** is in the model's own representation. **This
+> project must not build a design pipeline that ranks variants by pLDDT delta**, which is what the
+> characterisation was for; the answer came back negative and that closes the line rather than
+> extending it. Every model in this section, this one included, was fitted at site 200 alone,
+> where the representation happens to be sensitive; at 219 nothing moves and there is nothing to
+> fit. **Significance against magnitude, at our own expense:** the replicate sd at 219 is 0.0050,
+> so tryptophan's 0.26 drop there is a **52-sd** effect and is still nothing at all.
 
 
 
