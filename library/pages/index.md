@@ -6,6 +6,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 
 | Law | Usability | Where it breaks |
 |---|---|---|
+| [The adder model of cell-size homeostasis](./adder-cell-size.md) | `constraining` | THE MEASURED FAILURE BOUNDARIES, each tied to a named condition and number |
 | [Huxley allometry y = a x^b -- what the exponent means and how it is estimated](./allometry-huxley.md) | `descriptive` | (1) CURVATURE: THE EXPONENT IS A PROPERTY OF THE MASS RANGE SAMPLED |
 | [Ashby material-selection indices](./ashby.md) | `constraining` | The indices assume one property per material, and biological materials are anisotropic, hierarchical and hydra |
 | [Wolff's law, Frost's mechanostat and dynamic strain similarity](./bone-strain.md) | `constraining` | Wolff's law as originally stated has NO equation at all -- it says bone adapts to load, which is not checkable |
