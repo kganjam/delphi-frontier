@@ -6,6 +6,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 
 | Law | Usability | Where it breaks |
 |---|---|---|
+| [Fractal (similarity) dimension of branching structures in trees and corals](./fractal-branching.md) | `descriptive` | A single D holds only over the ranks and the one-to-two-decade scale window where it was measured, and neither |
 | [Murray's law for branching transport networks](./murray.md) | `constraining` | Fails in large arteries, where flow is pulsatile and inertial rather than viscous-dominated, and where measure |
 | [Reynolds number and flow-regime boundaries](./reynolds.md) | `constraining` | Re itself does not break; the inferences people hang on it do |
 

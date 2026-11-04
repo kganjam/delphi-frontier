@@ -1,0 +1,134 @@
+---
+title: Fractal (similarity) dimension of branching structures in trees and corals
+label: law-fractal-branching
+---
+
+:::{important}
+**Descriptive** — this law describes a pattern and does not constrain a design.
+:::
+
+## The law
+
+:::{math}
+:label: eq-fractal-branching
+D = \frac{\ln N_b}{\ln\left(l_{k}/l_{k+1}\right)}
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `D` | 1 | dimensionless | similarity (fractal) dimension of the branching skeleton; 1 <= D <= 3 in three-dimensional space |
+| `N_b` | 1 | dimensionless | number of daughter branches per node, assumed the same at every node |
+| `l_parent` | L | m | length of a branch of rank k |
+| `l_child` | L | m | length of each daughter branch of rank k+1, assumed the same ratio to its parent at every rank |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `foliage_surface_D_trees` | 2.5 (interval 2.2 to 2.8) dimensionless | The interval is what Eloy (2011) reports as the MEASURED fractal dimension of the tree FOLIAGE surface, citing Zeide (1993). It is not a measurement of the branching skeleton. I read the interval in Eloy's preprint full text; Zeide (1993) itself was not read, so the species, sample size and method behind 2.2-2.8 are unknown to this entry. The value 2.5 is the midpoint and is a label for the interval, not a measurement. |
+| `tree_skeleton_D` | unknown (interval 2 to 3) dimensionless | Eloy (2011), in his words: "The fractal dimension D has never been measured directly on real trees." The interval 2 < D < 3 is an ASSUMPTION he adopts (following Mandelbrot), justified by his claim that D equals the foliage dimension except for "very particular architectures", and by an argument that D < 3 because branches packed arbitrarily close would break as the tree sways. It is a bound, not a measurement. Scope of the negative: I did not search for direct skeleton measurements published after 2011 (e.g. from terrestrial laser scanning); "unknown" means unknown to this entry, not proven absent from the literature. |
+| `empirical_scaling_range_decades` | 1.5 (interval 0.5 to 2) decades of length scale | Malcai, Lidar, Biham & Avnir (1997) surveyed every experimental paper with "fractal" in the title or abstract in Physical Review A-E and Letters 1990-1996 (165 papers; 86 contained a log-log plot, 96 plots in all) and found reported scaling ranges "typically between 0.5 - 2 decades", peaked near 1.5, with hardly any self-similar exceptions above 2. That survey is of PHYSICS systems, not organisms. Applying the same window to trees and corals is MY inference, supported only by the worked example below showing that a branching hierarchy of ordinary depth spans about 1.25 decades by construction. |
+| `leonardo_exponent` | 2 (interval 1.8 to 2.3) dimensionless | Not the fractal dimension, but the companion exponent of the DIAMETER rule d_parent^Delta = sum(d_child^Delta). Eloy (2011) states the available data put Delta in 1.8-2.3 "for a large number of species" (his refs 2-4, not read here). His wind-stress model then CALCULATES 1.93 < Delta < 2.21 for 2 < D < 3 with m = 10 -- a model result, not an observation. It is listed because a branching design is specified by both D (lengths) and Delta (diameters), and the two are routinely conflated. |
+
+## Why it holds
+
+Purely geometric. If every node produces N_b daughters, each a fixed fraction l_child/l_parent of its parent's length, the skeleton is exactly self-similar and the number of branches grows as N_b^k while their length shrinks as (l_child/l_parent)^k; the exponent linking count to length is D. The equation is therefore a DEFINITION for an idealised tree, not a law derived from physiology. The biological explanations for why real D values fall where they do are separate and contested. Eloy (2011) argues that branch DIAMETERS are set by wind-induced stress and treats D as an input whose environmental control "remains to be explored". Kaandorp et al. (2005) argue, from a simulation compared to 3D images of Madracis mirabilis, that branching coral form is driven by diffusion-limited supply of dissolved inorganic carbon; that paper's abstract reports no fractal dimension, so any link from that mechanism to a value of D is not established by this entry.
+
+## Where it holds
+
+- **structure**: branching skeletons with a repeated node rule: trees (woody, sympodial or monopodial), branching scleractinian corals
+- **scale window**: roughly 0.5 to 2 decades of length between the finest and coarsest resolved branch (see empirical_scaling_range_decades)
+- **dimension bounds**: [1.0, 3.0]
+- **notes**: Valid as a description only over the ranks where both the branching number and the length ratio are approximately constant, and only for one stated estimator (similarity, box- or cube-counting, divider, area-based). Values from different estimators are not interchangeable: Young et al. (2017) state "different methods will yield different results" for the same reef surfaces.
+
+
+:::{danger} Where it breaks
+A single D holds only over the ranks and the one-to-two-decade scale window where it was measured, and neither of its inputs is constant across real reefs or real trees. (1) SCALE. A single D does not hold across scales on coral reefs. Bradbury & Reichelt (1983) reported D = 1.9-2.0 for a reef-slope contour; a year later Bradbury, Reichelt & Green (1984), re-analysing with finer data, reversed the conclusion -- the reef was very smooth at the scale of coral colonies, roughly a 5-10 m window, with a fractal index near 1.05 at 10 cm (both read only as search summaries, so the numbers carry that weakness). Halley et al. (2004) state in their abstract that "strictly speaking, no ecological pattern can be truly fractal". (2) BRANCH-LENGTH RATIOS ARE NOT CONSTANT IN REAL TREES. Bentley et al. (2013), measuring five species, found branching area-preserving and statistically self-similar in RADII, but scaling exponents for branch LENGTH "change across branching orders", and node-level and whole-tree exponents differ, challenging symmetric branching. My inference: the length ratio is exactly the input this equation needs, so the D it returns depends on which ranks are sampled; it is not a property of the tree. (3) THE SKELETON D OF TREES HAS NOT BEEN MEASURED (Eloy 2011); a number quoted for a "tree" is usually the foliage or crown surface dimension (2.2-2.8 per Eloy citing Zeide 1993), a different object. (4) CONDITION, NOT TAXON. Engleman et al. (2023) found dead Acropora palmata had HIGHER fractal dimension than live colonies of the same species, so D tracks state and erosion, not taxonomy; a species-level D used as a design target is not supported. (5) UNBRANCHED AND IRREGULAR FORMS. For N_b = 1 (unbranched palms, columnar corals) the equation returns D = 0 and says nothing; for highly asymmetric or stochastic branching (one leader plus laterals) a single N_b and length ratio do not exist, so the equation is undefined and only an estimator-based D can be quoted. (6) THE WINDOW ITSELF. Empirical fractal behaviour in physics spans 0.5-2 decades (Malcai et al. 1997); a ten-rank tree with a 0.75 length ratio spans only about 1.25 decades (calculated below), so extrapolating D to sizes outside the measured ranks is unsupported. (7) Upper bound: D >= 3 is geometrically impossible for non-overlapping branches in space; a design that implies D > 3 has branches intersecting, which is the one hard check the law provides.
+:::
+
+## Worked examples
+
+**Eloy (2011) model tree skeleton, his Fig. 2b**
+
+```
+binary branching, N_b = 2, both daughter length ratios r1 = r2 = 0.75, branching probability p = 1
+D = ln(2) / ln(1/0.75) = 0.6931 / 0.2877 = 2.41
+
+```
+
+- value: `2.41`
+
+- Reproduces the value Eloy states for this skeleton ("D = 2.41 [as given by (9)]"). This is a calculation on a model tree, not an observation of a real one.
+
+- evidence: **derived**
+
+**the same model tree, scaling window**
+
+```
+K = 10 ranks, length ratio 0.75
+l_finest / l_trunk = 0.75^10 = 0.0563  ->  -log10(0.0563) = 1.25 decades
+
+```
+
+- value: `1.25`
+
+- Calculated. A branching hierarchy of ordinary depth spans little more than one decade of length, inside the 0.5-2 decade window physics surveys find for empirical fractals. Any D quoted for such a structure is supported over that window and no further.
+
+- evidence: **derived**
+
+**non-uniqueness check: what architecture gives D = 2.5**
+
+```
+l_child/l_parent = N_b^(-1/D)
+N_b = 2:  2^(-1/2.5) = 0.758
+N_b = 3:  3^(-1/2.5) = 0.644
+
+```
+
+- Calculated. Two quite different trees share D = 2.5, so a target D does not specify an architecture; it constrains only the pairing of branching number and length ratio. This is why the entry is marked descriptive.
+
+- evidence: **derived**
+
+**coral reef topography (1983 reef-slope contour; 1984 re-analysis, Myrmidon Reef crest per search summary)**
+
+- value range: `[1.05, 2.0]`
+
+- 1983 estimate 1.9-2.0 versus 1984 re-analysis near 1.05 at 10 cm, from the same research group. Literature values, read only as search summaries; the spread is the point -- it is a scale effect, not measurement noise.
+
+- evidence: **literature**
+
+:::{seealso} Contested
+- Bradbury & Reichelt (1983) reported reef-contour D = 1.9-2.0 (highly complex); Bradbury, Reichelt & Green (1984) reversed this with finer data, finding the reef very smooth at colony scale. Both are recorded; neither is preferred here.
+- Avnir et al. (1998) and Malcai et al. (1997) argue that limited-range (0.5-2 decade) power laws make the claim that nature is fractal questionable; Mandelbrot (1998) objected to turning the number of decades into a litmus test for fractality (his position read only via a search summary). Unreconciled.
+- West, Brown & Enquist (1999) model plant vascular networks as symmetric self-similar branching; Bentley et al. (2013) report that real trees are self-similar in radii but not in branch length across orders, and call for asymmetric-branching theory. The disagreement is about exactly the length ratio this equation uses.
+- Eloy (2011) claims the skeleton D equals the foliage surface dimension except for particular architectures. That equality is his argument, not a measurement, and it is the only route by which a measured number (2.2-2.8) attaches to a tree skeleton.
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Eloy C (2011) Phys Rev Lett 107:258101, Leonardo's rule, self-similarity, and wind-induced stresses in trees, doi 10.1103/PhysRevLett.107.258101 | `full-text-preprint` |
+| Malcai O, Lidar DA, Biham O, Avnir D (1997) Phys Rev E 56:2817-2828, Scaling range and cutoffs in empirical fractals, doi 10.1103/PhysRevE.56.2817 | `full-text-preprint` |
+| Avnir D, Biham O, Lidar D, Malcai O (1998) Science 279:39-40, Is the geometry of nature fractal?, doi 10.1126/science.279.5347.39 | `metadata` |
+| Mandelbrot BB (1998) Science 279:783, Is nature fractal?, doi 10.1126/science.279.5352.783c | `search-summary` |
+| Halley JM, Hartley S, Kallimanis AS, Kunin WE, Lennon JJ, Sgardelis SP (2004) Ecology Letters 7:254-271, Uses and abuses of fractal methodology in ecology, doi 10.1111/j.1461-0248.2004.00568.x | `abstract` |
+| Bentley LP, Stegen JC, Savage VM, Smith DD, von Allmen EI, Sperry JS et al. (2013) Ecology Letters 16:1069-1078, An empirical assessment of tree branching networks and implications for plant allometric scaling models, doi 10.1111/ele.12127 | `abstract` |
+| West GB, Brown JH, Enquist BJ (1999) Nature 400:664-667, A general model for the structure and allometry of plant vascular systems, doi 10.1038/23251 | `metadata` |
+| Zeide B (1993) Ecology 74:1598-1602, Primary unit of the tree crown, doi 10.2307/1940088 | `metadata` |
+| Zeide B, Pfeifer P (1991) Forest Science 37:1253-1265, A method for estimation of fractal dimension of tree crowns, doi 10.1093/forestscience/37.5.1253 | `metadata` |
+| Bradbury RH, Reichelt RE (1983) Mar Ecol Prog Ser 10:169-171, Fractal dimension of a coral reef at ecological scales, doi 10.3354/meps010169 | `search-summary` |
+| Bradbury RH, Reichelt RE, Green DG (1984) Mar Ecol Prog Ser 14:295-296, Fractals in ecology: methods and interpretation, doi 10.3354/meps014295 | `search-summary` |
+| Young GC, Dey S, Rogers AD, Exton D (2017) PLoS One 12:e0175341, Cost and time-effective method for multi-scale measures of rugosity, fractal dimension, and vector dispersion from coral reef 3D models, doi 10.1371/journal.pone.0175341 | `full-text` |
+| Engleman A, Cox K, Brooke S (2023) PeerJ 11:e16101, Dead but not forgotten: complexity of Acropora palmata colonies increases with greater composition of dead coral, doi 10.7717/peerj.16101 | `abstract` |
+| Kaandorp JA, Sloot PMA, Merks RMH, Bak RPM, Vermeij MJA, Maier C (2005) Proc R Soc B 272:127-133, Morphogenesis of the branching reef coral Madracis mirabilis, doi 10.1098/rspb.2004.2934 | `abstract` |
+| Torres-Pulliza D, Dornelas MA, Pizarro O, Bewley M, Blowes SA, Boutros N et al. (2020) Nat Ecol Evol 4:1495-1501, A geometric basis for surface habitat complexity and biodiversity, doi 10.1038/s41559-020-1281-8 | `abstract` |
+| Zawada KJA, Dornelas M, Madin JS (2019) Coral Reefs 38:1281-1292, Quantifying coral morphology, doi 10.1007/s00338-019-01842-4 | `metadata` |
+| Martin-Garin B, Lathuiliere B, Verrecchia EP, Geister J (2007) Coral Reefs 26:541-550, Use of fractal dimensions to quantify coral shape, doi 10.1007/s00338-007-0256-4 | `search-summary` |
+
+
+---
+
+*Generated from [`library/laws/fractal-branching.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/fractal-branching.yaml). Do not edit this page; edit the YAML.*
