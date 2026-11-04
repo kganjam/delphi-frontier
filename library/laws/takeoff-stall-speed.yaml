@@ -1,0 +1,159 @@
+id: takeoff-stall-speed
+name: Stall speed from wing loading, and its sensitivity to CL_max
+usability: constraining
+equation: V_s = sqrt(2 * m * g / (rho * S * C_Lmax))
+latex: "V_s = \\sqrt{\\frac{2\\,m g}{\\rho\\,S\\,C_{L,\\max}}} = \\sqrt{\\frac{2\\,(W/S)}{\\rho\\,C_{L,\\max}}}, \\qquad \\frac{\\partial \\ln V_s}{\\partial \\ln C_{L,\\max}} = -\\frac{1}{2}"
+symbols:
+  V_s:
+    dimension: L/T
+    units: m/s
+    description: "stall speed -- the lowest airspeed at which steady level flight (lift = weight) is possible"
+  m:
+    dimension: M
+    units: kg
+    description: total mass carried by the lifting surfaces
+  g:
+    dimension: L/T^2
+    units: m/s^2
+    description: gravitational acceleration
+  rho:
+    dimension: M/L^3
+    units: kg/m^3
+    description: air density
+  S:
+    dimension: L^2
+    units: m^2
+    description: "total lifting area (both wings; for a flying fish, pectoral plus pelvic fins if both are spread)"
+  C_Lmax:
+    dimension: '1'
+    units: dimensionless
+    description: "maximum lift coefficient of the whole lifting system at the operating Reynolds number, referenced to the same S"
+constants:
+  sensitivity_exponent:
+    value: -0.5
+    evidence: derived
+    note: "EXACT under the equation, not fitted: V_s goes as C_Lmax^(-1/2). A fractional error e in C_Lmax gives a fractional error in V_s of (1+e)^(-1/2) - 1, about -e/2 for small e. The same -1/2 applies to rho and S, and +1/2 to m and to load factor n (V_s at load factor n is V_s * sqrt(n), derived from lift = n * weight)."
+  rho_sea_level_ISA:
+    value: 1.225
+    units: kg/m^3
+    evidence: tabulated-remembered
+    note: "International Standard Atmosphere sea-level density. The value is a DEFINITION of the standard atmosphere and is REMEMBERED; no source was retrieved for it in this compilation. Real air departs from it with temperature, humidity and altitude; no interval is asserted because none was retrieved."
+  CLmax_bird_wings_static:
+    value: null
+    interval:
+    - 0.69
+    - 1.1
+    note: "MEASURED. Lees, Dimitriadis & Nudds 2016, dried fully extended wings of ten bird species pinned on a force sensor in a wind tunnel at 8-16 m/s, mean +/- se per species: magpie 0.69 +/- 0.04, jay 0.70 +/- 0.04, golden plover 0.76 +/- 0.03, snipe 0.77 +/- 0.02, teal 0.79 +/- 0.01, mallard 0.80 +/- 0.02, wigeon 0.96 +/- 0.04, woodcock 0.97 +/- 0.05, jackdaw 1.09 +/- 0.1, woodpigeon 1.1 +/- 0.1. The interval is the RANGE OF SPECIES MEANS, not a confidence interval. Values relayed by a page summariser from the full text and not checked against the PDF table. The paper does not report its own Reynolds number; it compares with Eppler 387 at about 7e4."
+  CLmax_bird_wings_withers_1981:
+    value: null
+    interval:
+    - 0.8
+    - 1.2
+    note: "MEASURED, Withers 1981, fixed wings of 8 species at Re 1-5e4. Read only through a search summary of an OCR'd scanned copy, so the range is search-summary grade and could carry an OCR error. Lees et al. 2016 independently relay Withers's woodcock value as 0.9 at 15 degrees."
+  CLmax_revolving_pigeon_wing:
+    value: 1.64
+    note: "MEASURED, Usherwood 2009, a dried pigeon wing on a propeller rig (continuous 'downstroke'), against 1.44 for a flat card replica; a citing paper puts the Re at up to 10,800. NOT A STEADY-GLIDE VALUE: revolution sustains a leading-edge vortex that a translating wing does not, so this belongs to flapping and must not be put into the equation for a glider. Read only as a search summary."
+  CLmax_flying_fish:
+    value: unknown
+    note: "Park & Choi 2010 measured lift on wind-tunnel models of Cypselurus hiraii at Re 1.9-2.2e4 (pectoral chord), with lift largest at 30-35 degrees, and pectoral-only models more than 20 per cent below the pectoral-plus-pelvic models. The numerical peak C_L is in their Fig. 5A, which was NOT read; a secondary search snippet citing a 2019 numerical study gives 1.03, which is a SIMULATED value for the same fish and is not used here. So no measured flying-fish C_Lmax is asserted."
+mechanism: >
+  Steady level flight requires lift equal to weight, L = (1/2) * rho * V^2 * S * C_L = m * g. The lift
+  coefficient cannot exceed C_Lmax, the value at which further increase in angle of attack no longer
+  increases lift because the flow separates (stall). Solving for V at C_L = C_Lmax gives the lowest
+  speed at which lift can still balance weight. Because V enters squared and C_Lmax enters linearly,
+  V_s goes as the square root of wing loading over C_Lmax: halving C_Lmax raises V_s by sqrt(2), about
+  41 per cent, while a 10 per cent error in C_Lmax moves V_s by only about 5 per cent. This is the
+  practical content of the sensitivity: V_s is forgiving of moderate uncertainty in C_Lmax but not of
+  using a C_Lmax from the wrong flow regime, which can be off by a factor of two.
+domain_of_validity:
+  flight_state: "steady, unaccelerated, wings-level flight or glide at load factor 1, out of ground effect"
+  reynolds_retrieved: "measured C_Lmax values retrieved here span roughly 1e4 to 1e5 (Withers 1-5e4; Park & Choi 1.9-2.2e4; Lees et al. about 7e4 by their own comparison; the revolving pigeon wing up to 1.08e4)"
+  notes: >
+    The equation itself is exact wherever lift = weight holds and C_Lmax is a single well-defined
+    number. The usable domain is set entirely by whether C_Lmax is known for the geometry and Reynolds
+    number in question. In a glide at angle gamma the weight component normal to the path is
+    m*g*cos(gamma), so V_s falls by sqrt(cos(gamma)); for glide angles under about 15 degrees this is
+    under 2 per cent (derived) and is ignored here.
+where_it_breaks: >
+  The equation does not fail; its INPUT does, and the failures are specific. (1) BELOW THE MEASURED
+  REYNOLDS RANGE. Every steady C_Lmax retrieved for this entry was measured at Re of about 1e4 or above.
+  A 4 cm span, 8 mm chord glider stalls near 5 m/s at Re near 2,700 (calculated below), so its C_Lmax is
+  an extrapolation by a factor of about four below the lowest steady measurement retrieved (Park & Choi,
+  1.9e4). No measured steady C_Lmax at Re below 1e4 was retrieved -- scope of that negative: searches on
+  Withers 1981, Laitone 1997, Pelletier & Mueller 2000, Lees et al. 2016, Park & Choi 2010 and Usherwood
+  2009; Laitone's and Pelletier & Mueller's numerical C_Lmax values were not reached at all. (2) FLAPPING,
+  REVOLVING OR ACCELERATING WINGS. A wing in continuous revolution reached C_L 1.64 (Usherwood 2009)
+  against 0.69-1.1 for static bird wings (Lees et al. 2016); Usherwood & Ellington 2002 attribute the
+  high coefficients of revolving wings to a leading-edge vortex. A take-off that is flapped or launched
+  is therefore NOT bounded by a static V_s, and using the static value would wrongly reject a design that
+  can lift off slower. Conversely, applying a revolving-wing C_Lmax to a glider overstates its low-speed
+  ability by a factor of about 1.5-2.4 in C_Lmax, i.e. about 1.2-1.5 in V_s (calculated from the ranges
+  above). (3) NO SHARP STALL. Park & Choi 2010 report broad lift peaks with little loss after the peak
+  ('thin-airfoil stall') on flying-fish models, and Lees et al. 2016 report no abrupt step changes on
+  bird wings; at these Re 'stall speed' is a soft boundary, so V_s is the speed of maximum lift, not a
+  cliff, and a design margin cannot be read as distance from a discontinuity. (4) GROUND EFFECT. Within
+  about a span of the surface, induced drag falls and lift at a given angle can change; Park & Choi
+  report reduced drag near the sea surface, which is where a flying fish taxis and takes off. Their
+  quantitative ground-effect lift results were not read, so the size of the correction is unknown here.
+  (5) WHICH AREA. C_Lmax and S must be referenced to the same area; Park & Choi's pectoral-only models
+  lost more than 20 per cent of lift relative to pectoral-plus-pelvic, so mixing a whole-system C_Lmax
+  with a pectoral-only S (or the reverse) is an error of that size. (6) MANOEUVRE. In a banked turn or
+  pull-up V_s rises as sqrt(n): 1.19 times at a 45-degree bank and 1.41 times at 60 degrees (derived).
+worked_examples:
+- organism: "hypothetical fish-sized glider, 0.4 g, span 4 cm, aspect ratio 5 (design inputs, not a measured animal)"
+  computation: |
+    CALCULATED, not observed.
+    S = b^2/AR = 0.04^2/5 = 3.2e-4 m^2 ; chord c = S/b = 8 mm
+    W = 0.4e-3 * 9.80665 = 3.923e-3 N ; W/S = 12.26 N/m^2 ; rho = 1.225 kg/m^3 (ISA)
+    V_s = sqrt(2 * 12.26 / (1.225 * C_Lmax))
+      C_Lmax 0.69 (lowest static bird species mean)  -> 5.39 m/s   Re = V*c/1.5e-5 = 2,870
+      C_Lmax 0.80                                     -> 5.00 m/s   Re = 2,670
+      C_Lmax 1.10 (highest static bird species mean) -> 4.27 m/s   Re = 2,280
+      C_Lmax 1.64 (revolving pigeon wing; NOT valid for a glide) -> 3.49 m/s
+  value: 5.0
+  note: "The 0.69-1.1 static range (a factor of 1.59 in C_Lmax) moves V_s by a factor of 1.26 (sqrt of 1.59). The decisive caveat is the Re column: about 2,300-2,900, which is BELOW every steady C_Lmax measurement retrieved for this entry, so none of the C_Lmax values used is measured for this regime. Kinematic viscosity 1.5e-5 m^2/s is the reynolds entry's remembered value."
+  evidence: derived
+- organism: "sensitivity of V_s to C_Lmax, any flier"
+  computation: |
+    CALCULATED. V_s(new)/V_s(old) = (C_Lmax_new/C_Lmax_old)^(-1/2)
+      +10% C_Lmax -> V_s x 0.9535  (-4.65%)
+      -10% C_Lmax -> V_s x 1.0541  (+5.41%)
+      C_Lmax halved -> V_s x 1.414
+  value: -0.5
+  note: "An honest +/-10 per cent on C_Lmax costs only about 5 per cent on V_s. What the sensitivity does NOT protect against is a C_Lmax borrowed from the wrong regime (static vs revolving, or a different Re), which is a 1.5-2.4x error in C_Lmax per the ranges above."
+  evidence: derived
+- organism: "the same 0.4 g glider in a banked turn"
+  computation: |
+    CALCULATED. n = 1/cos(bank); V_s(n) = V_s(1) * sqrt(n)
+      bank 45 deg: n = 1.414 -> V_s x 1.189 -> 5.00 m/s becomes 5.95 m/s at C_Lmax 0.8
+      bank 60 deg: n = 2     -> V_s x 1.414 -> 7.07 m/s
+  value: 5.95
+  note: "A design checked only at load factor 1 has not been checked for turning."
+  evidence: derived
+contested_by:
+- "WHICH C_Lmax a flying animal should be credited with is not settled, and the sources here pull in different directions. Lees et al. 2016 measure static bird-wing C_Lmax of 0.69-1.1 and state agreement with Withers 1981's static values. Usherwood 2009 measures 1.64 on a revolving pigeon wing, and Usherwood & Ellington 2002 argue that the traditional attached-flow accounts of the function of twist and camber 'are not supported' for revolving wings. These are measurements of different flows, not a contradiction in data, but they imply different V_s for the same animal at take-off, and they are recorded here unreconciled."
+- "Lees et al. 2016 suggest wing flexibility may delay flow separation in real wings; their measurements are on dried, pinned wings. Whether a live wing's C_Lmax is higher or lower than the dried-wing value was not resolved by any source retrieved."
+sources:
+- citation: "Lees JJ, Dimitriadis G, Nudds RL (2016) PeerJ 4:e2495, The influence of flight style on the aerodynamic properties of avian wings as fixed lifting surfaces, doi 10.7717/peerj.2495, PMC5075716"
+  read_level: full-text
+  note: "Read through a page summariser; the Table 1 values were relayed, not checked against the PDF."
+- citation: "Withers PC (1981) J Exp Biol 90:143-162, An aerodynamic analysis of bird wings as fixed aerofoils"
+  read_level: search-summary
+  note: "The 0.8-1.2 C_Lmax range comes from a search summary of an OCR'd scanned copy. core.ac.uk, which hosts a copy, could not be reached from this session (outside allowed network domains)."
+- citation: "Park H, Choi H (2010) J Exp Biol 213:3269-3279, Aerodynamic characteristics of flying fish in gliding flight, doi 10.1242/jeb.046052"
+  read_level: full-text
+  note: "PARTIAL: the first 100,000 of about 157,000 characters were read through a page summariser. The numerical C_L values are in Fig. 5A and were not read; the ground-effect results were in the unread part."
+- citation: "Usherwood JR, Ellington CP (2002) J Exp Biol 205:1547-1564, The aerodynamics of revolving wings I. Model hawkmoth wings, doi 10.1242/jeb.205.11.1547"
+  read_level: abstract
+- citation: "Usherwood JR (2009) Exp Fluids 46:991-1003, The aerodynamic forces and pressure distribution of a revolving pigeon wing, doi 10.1007/s00348-008-0596-z"
+  read_level: search-summary
+  note: "1.64 vs 1.44 relayed from an abstract summary on x-mol; the Re of up to 10,800 is from a citing arXiv paper (2302.09602), not the original."
+- citation: "Laitone EV (1997) Exp Fluids 23:405-409, Wind tunnel tests of wings at Reynolds numbers below 70 000, doi 10.1007/s003480050128"
+  read_level: search-summary
+  note: "Relevant claim relayed: a thin plate with 5 per cent circular-arc camber gave the highest lift at all angles below Re 7e4, and NACA 0012 was badly affected below about Re 5e4. Numerical C_Lmax values were NOT retrieved."
+- citation: "Pelletier A, Mueller TJ (2000) J Aircraft 37(5):825-832, Low Reynolds number aerodynamics of low-aspect-ratio, thin/flat/cambered-plate wings"
+  read_level: listing
+  note: "Bibliographic record only (Re 6e4-2e5). No C_Lmax values were retrieved; the DOI was not verified, so none is given."
+- citation: "14 CFR 25.107, Takeoff speeds (US transport-category airworthiness margins over stall speed)"
+  read_level: could-not-access
+  note: "Tried www.ecfr.gov; it is outside this session's allowed network domains. Regulatory take-off margins over V_s are therefore NOT stated in this entry."
