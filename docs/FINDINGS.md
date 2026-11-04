@@ -463,6 +463,22 @@ agent's prose and no further. See [the empty set](architecture/the-empty-set.md)
 substantive. The recurring shape is *"the arithmetic reproduces, but the inference overreaches"* —
 so the low survival rate is a finding **about us**, not about the challengers.
 
+:::{note} An independent replication disputed these numbers, and the database settles it in their favour
+A re-derivation of the original audit got **29.5 % survival** against the recorded 17 %, and
+flagged in its own note that *"the database the claim counted was not accessible to settle which
+record is wrong"*. Counted directly: the first 156 resolved challenges give 107 weakened,
+**26 survived** — exactly as recorded — and 23 refuted, i.e. **16.7 %**. The original stands.
+
+**The cause is a population mismatch worth knowing about.** Git holds **305** `swarm-challenge`
+blocks; the database holds **843** challenge rows, 753 resolved. A row is created when the
+generator *dispatches* a challenge; a block exists only where an agent *wrote the result up*. So
+git blocks are a **biased subset**, not a proxy for the population, and any statistic taken from
+them diverges systematically.
+
+The replication was wrong and behaved correctly: it recomputed independently, reached a different
+number, named exactly what would settle it, and declined to assert which record was in error.
+:::
+
 **The weakened rate is now a measurement rather than an impression.** At 231 challenges it was
 70 %; at **753** — a 3.3× larger sample — it is **70.4 %**. A base rate that stable across that
 much more evidence is not a small-sample artifact.
