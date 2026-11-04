@@ -23,6 +23,7 @@ except ImportError:
 HERE = Path(__file__).resolve().parent
 LAWS = HERE.parent / "laws"
 PAGES = HERE.parent / "pages"
+MYST = HERE.parent / "myst.yml"
 
 
 def fmt_interval(c: dict) -> str:
@@ -133,6 +134,23 @@ def index(docs: list[dict]) -> str:
     return "\n".join(out)
 
 
+def toc(docs: list[dict]) -> str:
+    """Rewrite myst.yml's table of contents from the entries that exist.
+
+    A law absent from the toc does not render, and nothing says so -- the build succeeds and the
+    page is simply not there. Keeping the toc by hand makes that a matter of remembering. Generating
+    it from the same directory listing the pages come from removes the failure mode instead of
+    warning about it, which is the house rule for this kind of gap.
+    """
+    cfg = yaml.safe_load(MYST.read_text())
+    cfg["project"]["toc"] = [
+        {"file": "pages/index.md"},
+        {"title": "Laws",
+         "children": [{"file": f"pages/{d['id']}.md"} for d in sorted(docs, key=lambda x: x["id"])]},
+    ]
+    return yaml.safe_dump(cfg, sort_keys=False, default_flow_style=False, width=100)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true", help="fail if any page is stale")
@@ -151,13 +169,17 @@ def main() -> int:
             target.write_text(text)
     idx = PAGES / "index.md"
     itext = index(docs)
+    mtext = toc(docs)
     if a.check:
         if not idx.exists() or idx.read_text() != itext:
             stale.append("index.md")
+        if MYST.read_text() != mtext:
+            stale.append("myst.yml")
         print(f'{{"stale": {stale}}}')
         return 1 if stale else 0
     idx.write_text(itext)
-    print(f"wrote {len(docs)} law pages + index to {PAGES}")
+    MYST.write_text(mtext)
+    print(f"wrote {len(docs)} law pages + index to {PAGES}, and the toc in {MYST.name}")
     return 0
 
 
