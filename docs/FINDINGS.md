@@ -621,7 +621,12 @@ work that would obviously succeed; each is a specific question with a stated rea
   zebrafish at Re ~10⁴. The requirement spans **93.5–107.2 J/kg** from the cited range alone.
 - **f_muscle = 0.30 is an assumption** — half of a 60 % whose own table is marked *"SECONDARY
   review figure; primary not read"*. At 0.60 the energy term **closes**.
-- **The 0.93 spring-return efficiency has never been traced** to a source by anyone.
+- **The 0.93 spring-return efficiency is the most favourable reading of its own sources.** Traced
+  2026-11-04: S29 cites *"hysteresis ~7–10 % for tendon: **Ker 1981, ABSTRACT**; **Gosline 2002
+  resilience 90–92 %, SECONDARY**"*. That gives 0.90–0.93 from Ker and 0.90–0.92 from Gosline, so
+  **0.93 is the top of one range and above the other entirely**, and neither source was read in
+  full. The effect is small — 98.5 → 101.8 J/kg at 0.90, a 3.3 % spread — but it is the **fourth
+  input in a row** taken from the favourable end of its own evidence.
 
 ### Structural gaps in the record itself
 
