@@ -90,6 +90,20 @@ traceable to an agent's prose and no further.
 That is a direct qualification on this project's central promise of grounded, non-hallucinated
 simulation, and it was invisible until something counted the rows.
 
+**Partly closed, 2026-11-04, and the fraction matters more than the fix.** Seven runs are now
+recorded with a `code_sha` and zero missing one, so ASK rule 3 moves from `UNCHECKED` to `PASS`:
+three ESMFold2 folds and a ProteinMPNN design, each pinned by its model revision
+(`8fc3ff47…`, `v_48_020`) and operation id; an MSA search pinned by its database version; and two
+local analyses pinned by the sha256 of scripts committed under `analysis/`, both of which
+re-derive their reported numbers on demand.
+
+**But only 4 of 11 simulated claims and 2 of 49 measured ones carry a `run_id`.** The rest were
+produced by agents in prose, and nothing can retroactively give them a command — writing one would
+invent provenance, which is the exact failure this field exists to prevent. So the mechanism is now
+exercised and the backlog is unchanged: **the great majority of this project's computed numbers
+still trace to an agent's prose and no further.** ASK rule 3 passing says the runs that exist are
+well-formed. It does not say the computations are covered.
+
 ---
 
 ## 5. What this does not establish
