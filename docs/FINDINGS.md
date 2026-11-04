@@ -14,10 +14,34 @@ open and what each question is blocked on.
 | | Required | Available | Short by |
 |---|---|---|---|
 | Water-exit speed | 4.37 m/s | 0.45–1.38 m/s *measured* | **3.2×** *(vs the fastest of 50 fish; 9.7× vs the slowest)* |
+| ↳ *same row, newer source* | 4.37 m/s | **1.57 ± 0.27 m/s** *(Demesmay 2025, 240 fps)* | **2.78×** *(7.75× in kinetic energy)* |
+| **Pectoral fin area** | 26.7 cm² *(CL 0.6, 2 m/s)* | 1.4 cm² *whole-body silhouette* | **19.1× area = 4.37× LINEAR** |
+| **Fin-ray rigidity** | tip deflection ≤ 10% span | EI 1.5–4×10⁻⁹ N m² *in vivo* | **9–196×** *(and coupled — see below)* |
 | Launch kinetic energy | 3.82 mJ | — | **10×** |
 | Tail-beat for a taxi | 132–199 Hz *(contested: see below)* | 52 Hz *measured* | **2.5–3.8×** *(or 1.4–1.6×)* |
 | Pectoral muscle fraction | 7.5–20% | 1.4% *measured* | **5–15×** |
 | Muscle energy per stroke (spring route) | 98.5 J/kg | 32–81 J/kg *measured spring-loading work* (mean 53) | **1.2–3.1×** |
+
+:::{important} Two rows added and one re-sourced, 2026-11-04
+**The water-exit row now carries both measurements, and neither is deleted.** The original 0.45–1.38
+m/s is a *range across 50 fish*; Demesmay et al. 2025 ([DOI](https://doi.org/10.1371/journal.pbio.3003484))
+report 157 ± 27 cm/s as a *mean of maximal escape speeds* in controls, at 240 fps. These are
+different quantities and the disagreement is kept visible rather than reconciled. On the newer
+figure the deficit is **2.78× in speed and 7.75× in kinetic energy** — against **5.19× and 26.9×**
+on the superseded number, so the gap is materially smaller than this document carried for months.
+
+**The two new rows are the largest constraints in the project and were absent from this table.**
+Fin area had only ever been quoted as a 19.1× *area* ratio; area scales as length², so the figure a
+fin-length phenotype must be read against is **4.37× linear**. Rigidity had never appeared here at
+all, and at 9–196× it is the larger of the two.
+
+**And they are not independent.** Relative tip deflection scales as `L²/I(L)`, so enlarging the fin
+to fix the lift changes the stiffness problem by `4.37^(2−n)`, where `I ~ L^n` is **unmeasured**.
+That spans **0.052× to 19.1×** — a factor of 370, larger than either shortfall alone. Subproblem
+**S904** is open to measure `n`; until it is, the sign of the interaction is unknown, and the one
+phenotype the literature describes (König 2017: "an extended size of actinotrichia") is an
+*elongation*, which points to the unfavourable end.
+:::
 
 :::{caution} The tail-beat row rests on a contested regime assignment
 The 132–199 Hz figure comes from applying the Strouhal numbers of **small, low-Reynolds swimmers**
