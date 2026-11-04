@@ -725,11 +725,12 @@ work that would obviously succeed; each is a specific question with a stated rea
   same settings, same day, 577 aa against 570 — at **pTM 0.823**, mean **85.9**, **58.1 %** above
   90, **477** residues above 70.
 
-  | | slc43a2a (control) | and1 | **and2** |
-  |---|---|---|---|
-  | pTM | 0.823 | **0.202** | **0.196** |
-  | mean pLDDT | 85.9 | 69.7 | **64.6** |
-  | residues > 90 | 58.1 % | **2.8 %** | **2.8 %** |
+  | | slc43a2a (control) | and1 | and2 | **and3** |
+  |---|---|---|---|---|
+  | length | 577 | 570 | 508 | **295** |
+  | pTM | 0.823 | **0.202** | **0.196** | **0.185** |
+  | mean pLDDT | 85.9 | 69.7 | 64.6 | **71.6** |
+  | residues > 90 | 58.1 % | **2.8 %** | **2.8 %** | **7.5 %** |
   | residues > 70 | 477 of 577 | **304 of 570** |
   | **longest contiguous run > 70** | **102** | **49** |
 
@@ -738,10 +739,13 @@ work that would obviously succeed; each is a specific question with a stated rea
   largely extended, with no compact tertiary structure: what an extracellular fibrillar protein
   should look like.
 
-  **`and2` reproduces `and1` almost exactly** — pTM 0.196 against 0.202, and **both sit at 2.8 %
-  of residues above 90 against the control's 58.1 %**. Two paralogs independently landing on the
-  same profile is a stronger statement than one protein doing so, and it was not guaranteed: they
-  share 44 % of their length and could have differed.
+  **All three paralogs land within pTM 0.185–0.202**, across a **twofold range in length**
+  (295–570 aa), against the control's 0.823. Three independent sequences converging on the same
+  answer is a far stronger statement than one, and it was not guaranteed.
+
+  **`and3` is the shortest and scores the lowest**, which cuts *against* the usual length
+  dependence — shorter chains generally reach a confident global topology more easily. A short
+  protein scoring lowest is therefore stronger evidence, not weaker.
 
   *(Corrected 2026-11-04: an earlier version of this table labelled **477** as the "longest run",
   when 477 is the **count** of residues above 70 out of 577. The control's longest contiguous run
