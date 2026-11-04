@@ -30,6 +30,17 @@ ROWS = [
     # which silently dropped the low end and understated the shortfall as 1.2-1.9x. S29, the source
     # subproblem, states 1.2-3.1x. An "available" range that starts at the MEAN is not a range.
     ("muscle energy per stroke", 98.5, 32.0, 81.0,   1.2,  3.1,  0.1),
+    # ADDED 2026-11-04 with the rows themselves. Two rows were put into the headline table and this
+    # checker PASSED without them, reporting "all 6 table rows reproduce" while the table had 8.
+    # Its row list is fixed, so a figure added to the document is unchecked until it is added here
+    # too -- a coverage gap that looks exactly like coverage.
+    #
+    # Water-exit against the NEWER source (Demesmay 2025, 157 +/- 27 cm/s). Kept beside the 1.38
+    # row rather than replacing it: the two measure different things (range across 50 fish vs mean
+    # of maximal), and both are in the table.
+    ("water-exit speed, Demesmay", 4.37, 1.57, 1.57,  2.78, 2.78, 0.02),
+    # Fin AREA at CL 0.6, 2 m/s, 0.4 g against the 1.4 cm^2 whole-body silhouette.
+    ("pectoral fin area",         26.7,  1.4,  1.4,  19.1, 19.1, 0.1),
 ]
 
 
