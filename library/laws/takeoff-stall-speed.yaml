@@ -1,0 +1,181 @@
+id: takeoff-stall-speed
+name: Stall speed from wing loading, and its sensitivity to CL_max
+usability: constraining          # yields a speed a design is checked against (a launch speed must
+                                 # exceed it) -- BUT only as tightly as CL_max is known. For a fin,
+                                 # a membrane or an unmeasured wing, CL_max is the unknown, and the
+                                 # honest output is a band, not a number. See where_it_breaks.
+equation: "V_s = (2 * W / (rho * S * CL_max))^1/2"
+latex: "V_s = \\sqrt{\\frac{2W}{\\rho\\, S\\, C_{L,\\max}}} \\qquad \\frac{\\delta V_s}{V_s} \\approx -\\tfrac{1}{2}\\,\\frac{\\delta C_{L,\\max}}{C_{L,\\max}}"
+symbols:
+  V_s:    {dimension: L/T,       units: m/s,   description: "1-g stall speed: the lowest steady level-flight speed at which lift can equal weight"}
+  W:      {dimension: M*L/T^2,   units: N,     description: "weight, m*g (equals lift only in unaccelerated 1-g flight)"}
+  rho:    {dimension: M/L^3,     units: kg/m^3, description: air (or fluid) density}
+  S:      {dimension: L^2,       units: m^2,   description: "reference wing area; W/S is the wing loading"}
+  CL_max: {dimension: "1",       units: dimensionless, description: "maximum STEADY lift coefficient of the whole configuration (wing + body + high-lift devices) at the operating Reynolds number"}
+constants:
+  sensitivity_exponent:
+    value: -0.5
+    note: >
+      DERIVED, exact for the equation as written: V_s is proportional to CL_max^(-1/2). Small-error
+      form: a fractional error e in CL_max gives about -e/2 in V_s. Exact, calculated: +10% CL_max
+      gives -4.65% V_s; -10% gives +5.41%. The asymmetry matters when CL_max is a lower bound.
+  g:
+    value: 9.80665
+    units: m/s^2
+    note: Standard gravity (a definition, not a measurement); no interval.
+  rho_air_ISA_sea_level:
+    value: 1.225
+    units: kg/m^3
+    note: ISA standard-atmosphere value (a definition). Real air varies with temperature and altitude; V_s varies as rho^(-1/2).
+  V2_over_VSR_transport:
+    value: 1.13
+    note: >
+      REGULATORY, not physical. 14 CFR 25.107(b): minimum takeoff safety speed V2MIN not less than
+      1.13 VSR for most transport airplanes, 1.08 VSR for four-engine airplanes on which applying
+      power significantly reduces stall speed (as quoted in search summaries; I could not fetch the
+      eCFR text -- www.ecfr.gov did not resolve from this session). My arithmetic: at 1.13 VSR the
+      operating CL is CL_max/1.13^2 = 0.783 CL_max; at 1.08 it is 0.857 CL_max. The margin is set on
+      speed, so the CL margin is its square.
+  CL_max_harris_hawk:
+    value: 1.6
+    interval: "[1.6, unknown] -- a LOWER BOUND, not a confidence interval"
+    note: >
+      MEASURED, free gliding in a wind tunnel, 0.702 kg bird, 6.1-16.2 m/s (Tucker & Heine 1990).
+      The authors state it is probably less than the maximum attainable because the wings never
+      appeared to stall. Read at search-summary level only; full text could-not-access.
+  CL_max_bat_rousettus:
+    value: 1.5
+    interval: unknown
+    note: >
+      MEASURED, gliding in a tilted wind tunnel (Pennycuick 1971), as relayed by a search summary;
+      no interval retrieved. Read-level search-summary.
+  CL_max_thin_insect_wings_Re_7e2_to_1e4:
+    value: unknown
+    interval: [0.7, 1.15]
+    note: >
+      A BAND OF RELAYED MEASUREMENTS, not an uncertainty on one value, and no single point value is
+      defensible. 1.07 (Sympetrum sanguineum) and 1.15 (Calopteryx splendens) are isolated dragonfly
+      wings at Re 700-2,400 (Wakeling & Ellington 1997); their own source calls them higher than all
+      other insects except the locust. ~0.8 for a thin aerofoil at Re 1e4; 0.7-0.9 for other
+      dragonfly species. 0.93 in free glides is an OPERATING CL, not a maximum, and is excluded.
+      All search-summary level, as compiled in this repository's challenge-23 review.
+  CL_max_conventional_clean_wing:
+    value: unknown
+    note: >
+      Commonly quoted as about 1.5 for an unflapped wing at aircraft Re, but the only retrieved
+      source was an unreviewed engineering explainer; I could not verify it against Raymer or
+      Abbott & von Doenhoff, so no value is entered. Flapped-wing values (single/double-slotted,
+      Fowler) likewise unknown: the LibreTexts table that lists them could not be fetched
+      (eng.libretexts.org did not resolve) and the snippet columns were garbled.
+mechanism: >
+  Definitional at its core. Lift L = 0.5 * rho * V^2 * S * CL; in steady 1-g level flight L = W;
+  CL cannot exceed CL_max, so the smallest V satisfying L = W is the expression above. Wing loading
+  W/S and density fix the dynamic pressure needed per unit lift; CL_max sets how much lift each
+  unit of dynamic pressure can buy before the boundary layer separates from the upper surface.
+  Every physical difficulty is therefore concentrated in CL_max, which is NOT a geometric
+  property of the wing: it depends on section thickness and camber, Reynolds number, free-stream
+  turbulence, surface condition, planform, high-lift devices, and power setting. The equation is
+  exact; its input is not. For takeoff, the field length scales roughly with V^2 and hence with
+  1/CL_max (my inference from the kinematics, not a retrieved result), so the design pressure on
+  CL_max is twice as strong for takeoff distance as for speed.
+domain_of_validity:
+  flight_condition: "steady, unaccelerated, 1-g, wings level"
+  flow: "incompressible; quasi-steady (wing incidence changing slowly relative to the convective time chord/V)"
+  input_requirement: >
+    CL_max must have been MEASURED at the operating Reynolds number, turbulence level and
+    configuration. A value borrowed across Re, section shape or configuration voids the result
+    (see the reynolds entry: Re does not license transferring CL between geometries).
+  taxa: "fixed-wing aircraft; gliding birds, bats and other gliders whose wing shape is held fixed during the measurement"
+where_it_breaks: >
+  (1) FLAPPING AND HOVERING FLIERS -- the equation predicts a nonzero minimum speed, yet insects,
+  hummingbirds and some bats hover at V = 0. The steady CL_max is not a ceiling for an unsteady
+  wing: a leading-edge vortex (delayed stall) lets a translating or revolving wing sustain lift
+  beyond its steady stall angle; a revolving fruit-fly wing at Re about 75 did not stall
+  (Dickinson et al. 1999, as paraphrased in a later review read at search-summary level). For
+  these animals V_s is not a lower bound on flight speed at all. (2) LOW REYNOLDS NUMBER WITH A
+  BORROWED CL_max -- below roughly Re 5e4, a NACA 0012 was "very seriously affected" by Re and
+  turbulence while thin and cambered plates were relatively insensitive (Laitone 1997,
+  search-summary). A thick-section CL_max carried down to Re 1e3-1e4 can be wrong by a factor
+  near two (the zebrafish dispute: 0.6 vs 0.7-1.15), which moves V_s by up to about 40%. (3)
+  CL_max NOT ACTUALLY REACHED -- the Harris hawk's 1.6 is a lower bound because its wings never
+  stalled; feeding a lower-bound CL_max in gives an UPPER bound on V_s, and treating it as the
+  stall speed overstates it. (4) MORPHING WINGS -- birds change S and section with speed (Pennycuick
+  1968, search-summary), so fixed S and fixed CL_max misdescribe them. (5) LOAD FACTOR -- in a turn
+  or pull-up lift must equal n*W, so stall speed rises as sqrt(n); the 1-g formula underpredicts.
+  (6) POWERED / BLOWN LIFT -- thrust and propwash or slipstream over the wing lower the speed at
+  which the aircraft stalls; the regulation's separate 1.08 factor for airplanes with a
+  "significant reduction in stall speed" under power acknowledges this (search-summary). Items
+  (5)-(6), plus ground effect near the runway and the fall of CL_max with Mach number at high
+  altitude, are textbook mechanism remembered rather than retrieved here; no number is attached.
+worked_examples:
+  - organism: Danio rerio with a hypothetical pectoral wing in air (repository design question)
+    computation: "m = 0.4 g, W = 3.924e-3 N, S = 3.2e-4 m^2 (span 0.04 m, AR 5), rho = 1.2  ->  W/S = 12.3 N/m^2; V_s = 5.84 m/s at CL_max 0.6, 5.40 at 0.7, 5.05 at 0.8, 4.37 at 1.07, 4.22 at 1.15"
+    value_range: [4.22, 5.84]
+    note: >
+      CALCULATED, not observed: no such wing exists or was tested. The inputs are design
+      assumptions taken from this repository's challenge-23 review and reproduced here by my own
+      arithmetic. The point of the example is the sensitivity: the full disputed CL_max range
+      (0.6 to 1.15, a factor 1.92) moves V_s only by a factor 1.38 (= sqrt 1.92). Every value
+      remains 7.7-10.7x the fish's critical swimming speed (Ucrit 0.548 m/s) as recorded in that
+      review (its calculation, re-checked by mine), so the conclusion survives the CL_max dispute -- the square root is what makes that
+      robust. The quantity that matters, a fin membrane's CL_max in air, is unknown.
+    evidence: derived
+  - organism: generic -- halving CL_max
+    computation: "V_s(CL_max/2) / V_s(CL_max) = sqrt(2) = 1.414"
+    value: 1.414
+    note: >
+      CALCULATED. E.g. using a thin-plate-like 0.8 instead of the hawk's measured lower bound 1.6
+      raises the predicted stall speed by 41% for the same wing loading; the take-off distance
+      (proportional to V^2, my inference) would double.
+    evidence: derived
+  - organism: transport airplane takeoff (regulatory)
+    computation: "V2 >= 1.13 VSR  ->  CL at V2 <= CL_max / 1.13^2 = 0.783 CL_max"
+    value: 0.783
+    note: >
+      CALCULATED from the regulatory factor (search-summary of 14 CFR 25.107). A 13% speed margin
+      is a 22% lift-coefficient margin.
+    evidence: derived
+contested_by:
+  - >
+    The CL_max to use for a thin, low-aspect-ratio wing at Re ~2e3-3e3 is disputed inside this
+    repository. The original zebrafish glide analysis used CL_max <= 0.6 (probably, not confirmed,
+    from a NACA 0012 at Re ~2e4 via Laitone 1997). Challenge-5 replaced it with 1.07 (thin
+    dragonfly wings). Challenge-23 judged 1.07 cherry-picked and gave 0.7-1.15 as the relayed
+    band, with the fin-membrane value unknown. Not reconciled here; all three are recorded above.
+  - >
+    Bird CL_max: Tucker & Heine report 1.6 for the Harris hawk as a probable underestimate; a
+    search summary attributed a value of 1.8 to the 1968-1970 gliding-bird series, but the
+    attribution was unclear and I could not confirm which paper or species it belongs to, so 1.8
+    is not entered as a constant.
+sources:
+  - citation: "Tucker VA & Heine C (1990) Aerodynamics of gliding flight in a Harris' hawk, Parabuteo unicinctus. J. Exp. Biol. 149:469-489"
+    read_level: search-summary
+    note: "CL_max 1.6, wings never appeared to stall. Full text could-not-access (cob.silverchair.com did not resolve)."
+  - citation: "Pennycuick CJ (1968) A wind-tunnel study of gliding flight in the pigeon Columba livia. J. Exp. Biol. 49:509-526"
+    read_level: search-summary
+    note: "Wing area and shape change with speed. No pigeon CL_max value retrieved."
+  - citation: "Pennycuick CJ (1971) Gliding flight of the dog-faced bat Rousettus aegyptiacus observed in a wind tunnel. J. Exp. Biol. 55:833 (end page not verified)"
+    read_level: search-summary
+    note: "CL_max 1.5, best glide ratio 6.8 as relayed. Volume and first page from the search-result DOI 10.1242/jeb.55.3.833."
+  - citation: "Wakeling JM & Ellington CP (1997) J. Exp. Biol. 200:543 (title and end page not verified in this session)"
+    read_level: search-summary
+    note: "1.07 / 1.15 isolated-wing values, relayed via challenge-23; full text not read by anyone in the chain."
+  - citation: "Laitone EV (1997) Wind tunnel tests of wings at Reynolds numbers below 70 000. Exp. Fluids 23:405"
+    read_level: search-summary
+    note: "NACA 0012 seriously affected by Re and turbulence below Re 5e4; thin plates relatively insensitive."
+  - citation: "Dickinson MH et al. (1999) Science (June 1999; the 'robofly' paper; co-authors, title and pages not retrieved in this session)"
+    read_level: search-summary
+    note: "Only press and review paraphrases retrieved; no lift-coefficient number taken from it."
+  - citation: "14 CFR 25.107 Takeoff speeds (V2MIN factors 1.13 and 1.08 VSR)"
+    read_level: search-summary
+    note: "eCFR and GPO pages listed; www.ecfr.gov did not resolve for a direct fetch."
+  - citation: "This repository: docs/research/fish/challenge-23.md (commit 6a0a23d6) and replicate-1.md (commit 463f469e)"
+    read_level: full-text
+    note: "Source of the zebrafish inputs and of the relayed thin-wing CL_max band."
+negative_search_scope: >
+  Seven web searches (standard mode) on: the stall-speed equation with 14 CFR 25.107; bird CL_max
+  (Pennycuick, pigeon, hawk); conventional-wing and flapped CL_max tables (Raymer); Tucker & Heine
+  1990; CL_max versus Re for NACA 0012 below 1e5; Dickinson 1999 delayed stall. Three direct
+  fetches failed on DNS (eng.libretexts.org, cob.silverchair.com, www.ecfr.gov). Not found: a
+  verified clean-wing or flapped-wing CL_max table, Pennycuick's pigeon CL_max, any fin-membrane
+  CL_max in air at any Re.
