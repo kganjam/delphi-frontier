@@ -18,6 +18,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 | [Phyllotaxis and the golden angle](./golden-angle.md) | `constraining` | Nearly one sunflower parastichy count in five is NOT Fibonacci -- 136 of 768, split into Fibonacci minus one,  |
 | [Gompertz growth](./gompertz.md) | `descriptive` | There is no regime where it is derived to hold, so there is no regime where it can be said to break -- which s |
 | [Greenhill buckling-limited column height](./greenhill.md) | `constraining` | The headline failure is that the tallest trees are NOT limited by buckling |
+| [Hagen-Poiseuille viscous dissipation and the r^-4 cost that Murray's law rests on](./hagen-poiseuille.md) | `constraining` | Each failure below is a failure of an ASSUMPTION, and the useful question is what it does to the r^-4 exponent |
 | [Kleiber's law and the 2/3 versus 3/4 dispute](./kleiber.md) | `descriptive` | It breaks as a universal law in four measured ways, none of them an open question |
 | [Leonardo's rule for branch diameters, and fractal dimension](./leonardo.md) | `constraining` | Delta varies with species and with the branching geometry itself: Minamino & Tateno 2014 found biomechanical m |
 | [Lighthill elongated-body theory](./lighthill.md) | `constraining` | It fails at BOTH ends of the shape range, which is the fact most likely to catch a designer out |
