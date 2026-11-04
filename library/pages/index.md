@@ -23,6 +23,7 @@ Biological design laws, each with the conditions where it is measured to hold an
 | [Lighthill elongated-body theory](./lighthill.md) | `constraining` | It fails at BOTH ends of the shape range, which is the fact most likely to catch a designer out |
 | [Murray's law for branching transport networks](./murray.md) | `constraining` | This field is the reason Murray's law cannot be applied blindly, and the failures are measured rather than the |
 | [Pennycuick power curve for flapping flight](./pennycuick.md) | `descriptive` | The decisive measurement is Tobalske et al |
+| [Phyllotaxis and the golden divergence angle: what is explained and what is not](./phyllotaxis.md) | `descriptive` | (1) NON-SPIRAL PHYLLOTAXIS: the law does not apply at all |
 | [Hagen-Poiseuille flow in a tube](./poiseuille.md) | `constraining` | Blood in small tubes is the first failure and it is quantitative, not marginal: apparent viscosity depends on  |
 | [Reynolds number and flow-regime boundaries](./reynolds.md) | `constraining` | Re itself does not break -- it is a definition, and the inferences people hang on it are what fail |
 | [Rubner's surface law](./rubner.md) | `descriptive` | Ectotherms, plants and unicells do not thermoregulate metabolically, so the mechanism simply does not apply to |
