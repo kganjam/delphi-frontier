@@ -143,6 +143,28 @@ A library of laws is inert without tools to apply them. The honest inventory, as
 | Uncertainty propagation | **MISSING** | We multiply numbers with confidence intervals and report point values |
 | Geometry and meshing | **have** | Printable STL pipeline exists from the coral and insect work |
 
+:::{danger} This inventory was wrong, and the way it was wrong matters
+**Corrected 2026-11-04, after `morphoswarm-34` checked it against the repository.** The table above
+was written from what this session had personally *probed* — the Nebius workbench and our scratch
+directories — and presented as the inventory. `origin/main` already carries a large `engineering/`
+tree: `fin_mechanics` (an Euler-Bernoulli beam), `cfd3d/vlm.py` (a thin-surface vortex-lattice
+method), `aeroelastic`, `coupled_mechanics`, `windtunnel`, `glider`, `launch_glider`, `fish3d`,
+`bioelectric` and more. So "almost no mechanical tooling" was false.
+
+This is the same error as reading `list_scientific_models` (26 models) as the workbench's capability
+list when `tools/list` returns 69 — **an enumeration whose domain excludes the answer looks exactly
+like a finding.** It happened twice in one night, in two different systems, which is why it is
+recorded here rather than quietly fixed.
+
+**What is genuinely missing, after checking:** a *viscous* low-Reynolds membrane solver validated
+against measured polars — `vlm.py` cannot supply it and says so in its own header, *"Inviscid,
+attached flow, small angle of attack; Reynolds-number independent"* — and a units/dimensional
+library, which `grep` finds nowhere on `main`.
+
+**And S6 may already be answered.** Whether `fin_mechanics` bounds tip deflection and buckling for a
+real ray geometry is now a review question, not a build one.
+:::
+
 **The three to build first**, judged by what currently blocks the fish:
 
 1. **Dimensional analysis and units.** Cheapest, and it gates the correctness of everything else.
