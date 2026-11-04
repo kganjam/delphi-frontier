@@ -2,7 +2,7 @@
 title: Claims
 ---
 
-95 live claims of 107 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
+124 live claims of 136 recorded. Superseded rows are on [Corrections](corrections.md) and are not deleted.
 
 | # | sub | claim | evidence | value | source |
 |---|---|---|---|---|---|
@@ -101,3 +101,32 @@ title: Claims
 | 182 | S22-D | [S22-D] Daane et al. measured pectoral and caudal length/SL only within zebrafish genotypes and never numerically compared the lat4a^nr21/+; kcnh2a^lo | 🟢 measured |  | harvest:deepen-s22-daane-fin-7dqlop |
 | 183 | S20-D | [S20-D] The input S20 is most sensitive to is adult exit speed (range and required glide area both scale as v^2), and replacing S20's back-solved 3.13 | 🟡 derived |  | harvest:deepen-s20-zebrafish-flight-9smifx |
 | 184 | S10-D | [S10-D] The answer is most sensitive to the flight-muscle fraction f, which S10 assumed at 0.1-0.3; the best measured teleost proxy (Abudefduf saxatil | 🟡 derived |  | harvest:deepen-s10-flapping-muscle-wr33g7 |
+| 185 | S22 | BUILD BLOCKER: every UniProt slc43a2a entry (Q7ZUS0, A0A8N7V006) and RefSeq NP_956545.1 are 153 aa -- a truncated gene model that CANNOT carry a resid | 🟢 measured | `153 aa` | verified here against UniProt REST; agent finding fr *[full-text]* |
+| 186 | S22 | The two reference failures COMPOUND: the symbol lat4a resolves to nothing, and the gene it actually is (slc43a2a) has a truncated reference model. An  | 🟡 derived |  | inference from the two verified findings |
+| 187 | S14 | stab-ddg is unavailable, measured not relayed: a SCHEMA-VALID submit_stab_ddg request returns MODEL_MAINTENANCE with admission not-submitted and creat | 🟢 measured |  | fish-alleles/probe_stab_ddg.json |
+| 188 | S1-D-D | [S1-D-D] The S1 conclusion that Molino cavefish lack oca2 exon 21 was most sensitive to the unmeasured intact-allele fraction hidden by a haploid asse | 🟢 measured |  | harvest:s1-d-sensitive-input-4x930e |
+| 189 | S28 | S28 VERDICT NEGATIVE: the best design buildable from demonstrated alleles is the EXISTING Daane lat4a^nr21/+;kcnh2a^lof/+ zebrafish, and it cannot fly | 🟡 derived |  | S28-organism.md |
+| 190 | S28 | Granting an unmeasured 1-BL span and AR-5 fin (S=192 mm2), the wing produces 10% of body weight at launch and ~5% at the apex | 🟡 derived | `10 percent of weight` | S28-organism.md |
+| 191 | S28 | At the measured maximum burst of 1.38 m/s the ballistic leap is 19.4 cm and the wing lengthens it by only +1.5 to +3.0% (3-6 mm); at 0.45 m/s the gain | 🟡 derived | `3 percent range gain` | S28-organism.md; ballistic range v^2/g = 19.4 cm rep |
+| 192 | S28 | A 3x leap would require a 2.39 m/s exit, 1.73x the measured maximum. Flight requires 4.37 m/s: 3.2x the speed and 10x the kinetic energy. Both ratios  | 🟡 derived | `3.2 speed ratio` | S28-organism.md; verified here |
+| 193 | S28 | A tail-driven skim at the measured 52 Hz maximum reaches only 1.15-1.72 m/s, giving 7-16% of the lift needed | 🟡 derived | `16 percent of lift` | S28-organism.md |
+| 194 | S28 | THE DELIVERABLE: a falsifiable small aerodynamic phenotype -- a possibly detectable 5-10% reduction in ascent deceleration -- in an animal that ALREAD | 🟡 derived |  | S28-organism.md |
+| 195 | S28 | CHEAPEST DECISIVE MEASUREMENT: pectoral fin AREA in the existing Daane double heterozygote. Daane et al. measured fin LENGTH only and never reported a | 🟡 derived |  | S28-organism.md |
+| 196 | S24 | [S24] Surface taxiing cannot close the 1-BL (5.84 m/s) launch gap and does not demonstrably close the 3-BL (1.95 m/s) gap: the binding limit is tail-b | 🟡 derived |  | harvest:s24-surface-taxiing-launch-tsepbn |
+| 197 | S13 | [S13] No: closing the ~245-654x flexural-rigidity gap to a 0.4 g glider would need a ray modulus of 10^1-10^2 GPa against a measured ~10-30 GPa ceilin | 🟡 derived |  | harvest:s13-protein-fin-ray-e8y8d8 |
+| 198 | S23 | [S23] No published gain-of-function raises actinotrichia at all, and the computed material-only ceiling for stiffening an unmineralised collagenous fi | 🟡 derived |  | harvest:s23-actinotrichia-stiffness-protein-wwp5m2 |
+| 199 | S6 | [S6] No: at the in-vivo measured zebrafish fin rigidity (EI 1.5-4e-9 N m^2 over 5-8 mm, i.e. 1.9-8.0e-7 N m per width) a cantilevered lepidotrichial f | 🟡 derived |  | harvest:s6-fin-ray-load-kqweu7 |
+| 200 | S21 | [S21] No directly reported adult zebrafish peak fast-start velocity could be read; from the measured mean maximum Reynolds number (27,800 ± 2,140 s.e. | 🟡 derived |  | harvest:zebrafish-fast-start-velocity-pxsv7e |
+| 201 | S7 | [S7] The computed root bending moment at design lift (2e-5 to 1.1e-4 N·m per fin for a 0.4 g fish) needs only a ~0.12–0.35 mm solid-equivalent bone se | 🟡 derived |  | harvest:s7-organ-pectoral-girdle-xlxpkt |
+| 202 | S22 | [S22] Daane et al. 2021 (Curr Biol 31:5052-5061.e8, doi:10.1016/j.cub.2021.08.054) phenocopied flying-fish fin proportions in zebrafish by crossing tw | 🔵 literature |  | harvest:s22-daane-fin-phenocopy-9l9y75 |
+| 203 | S10 | [S10] Sustained flapping is not supported: measured fish aerobic (red/slow) muscle gives 5-10 W/kg, below the computed hover requirement of at least ~ | 🟡 derived |  | harvest:s10-tissue-flapping-power-2kag3x |
+| 204 | S16 | [S16] No pectoral-restricted regulatory element adequate to drive the edits is published: of four named elements with pectoral reporter activity, tbx5 | 🔵 literature |  | harvest:s16-pectoral-regulatory-element-czmhrn |
+| 205 | S9 | [S9] Teleost fin-ray (lepidotrichia) modulus is reported only from non-zebrafish bending tests (bluegill proximal mean 1.34 GPa, range 0.24-3.7; dista | 🔵 literature |  | harvest:s9-fin-ray-materials-t0royp |
+| 206 | S20 | [S20] Flight would be energetically almost free for a zebrafish (derived: ~2e-3 to 2e-2 J per 0.1-1 m launch, about 1e-4 to 1e-3 of daily standard met | ⚪ unknown |  | harvest:zebrafish-flight-ecology-z4f08c |
+| 207 |  | CHALLENGER AUDIT: 156 resolved challenges returned 109 weakened, 26 survived, 21 refuted -- a 17% survival rate. I suspected the challengers were manu | 🟡 derived | `17 percent survival` | sampled audit of challenge.evidence |
+| 208 |  | The recurring challenge shape is "the arithmetic reproduces, BUT the inference overreaches". So the low survival rate is not evidence of bad challenge | 🟡 derived |  | audit inference |
+| 209 |  | OPEN DEPENDENCY: a challenge reports Alben 2007 places the 1.98 N/m stiffness at ~2/3 of ray length and in the BASE-CLAMPED state, not at the tip. The | ⚪ unknown |  | challenge evidence; not yet verified here |
+| 210 |  | REPRODUCIBILITY GAP: kcnk5b_pdb70.a3m was never committed, so the MSA depth profile behind the "alignment ran out, not disorder" finding cannot be ind | ⚪ unknown | `36.4 pLDDT` | challenge evidence; not yet verified here |
+| 211 | S14 | REPRODUCIBILITY GAP CLOSED and the finding CONFIRMED: recomputed per-residue MSA depth directly from the now-committed kcnk5b_pdb70.a3m (72 sequences) | 🟢 measured | `0 MSA depth past residue 326` | recomputed here from results/fish-proteins/structure *[full-text]* |
+| 214 | S26 | COULD NOT VERIFY: the precise boundary condition behind the 1.98 N/m figure -- a challenge reports it is at ~2/3 of ray length and base-clamped rather | ⚪ unknown |  | attempted via NCBI efetch db=pmc id=2359861 and the  *[could-not-access]* |
+| 215 | S26 | SCOPE OF WHAT S26 RESTS ON: the ORDER OF MAGNITUDE of active stiffening is confirmed by the paper's own abstract (>10x). The exact 12x factor, and the | ⚪ unknown |  | scope statement *[could-not-access]* |

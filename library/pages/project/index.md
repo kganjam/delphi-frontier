@@ -8,9 +8,9 @@ Derive, from first principles and published measurement, what it would take to t
 
 | | |
 |---|---|
-| Claims | 107 (12 superseded) |
-| Subproblems | 52 — 42 answered, 1 refuted, 4 open |
-| Challenges resolved | 56 |
+| Claims | 136 (12 superseded) |
+| Subproblems | 53 — 43 answered, 1 refuted, 4 open |
+| Challenges resolved | 166 |
 | Open review flags | 6 |
 
 ## What the evidence actually is
@@ -19,10 +19,10 @@ This table is the point of the project. A claim is only as good as the row it si
 
 | Evidence level | Live claims |
 |---|---|
-| 🟡 derived | 45 |
-| 🟢 measured | 18 |
-| 🔵 literature | 14 |
-| ⚪ unknown | 11 |
+| 🟡 derived | 62 |
+| 🟢 measured | 22 |
+| 🔵 literature | 17 |
+| ⚪ unknown | 16 |
 | 🟡 simulated | 6 |
 | 🟠 assumed | 1 |
 

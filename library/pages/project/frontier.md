@@ -23,7 +23,7 @@ Every question this project has opened, with what settled it.
 | **S25** | organ | Which relaying of Flammang 2013 fin-ray stiffness is correct: 3.8e-6 or 565e-6 N m^2? | — |
 | **S7-D-D** | organ | Deepen S7-D: attack its most sensitive input | — |
 
-## answered (42)
+## answered (43)
 
 | id | scale | question | answer |
 |---|---|---|---|
@@ -56,6 +56,7 @@ Every question this project has opened, with what settled it.
 | **S1-D** | organism | Deepen S1: attack its most sensitive input | — |
 | **S1-D-D** | organism | Deepen S1-D: attack its most sensitive input | — |
 | **S2** | organism | What lift-to-drag is physically available at Re 1e3-1e4? | — |
+| **S28** | organism | Given everything established, what is the best achievable design and what can it actually do? | NEGATIVE. The best design buildable from demonstrated alleles is the EXISTING Daane double heterozygote. It cannot fly, glide, skim, or meaningfully extend its leap. The honest phenotype is a possibly *(derived)* |
 | **S2-D** | organism | Deepen S2: attack its most sensitive input | — |
 | **S2-D-D** | organism | Deepen S2-D: attack its most sensitive input | — |
 | **S21** | behaviour | What is the measured PEAK velocity of an adult zebrafish fast-start? | 0.842 m/s (25.5 TL/s), derived from a measured Reynolds number rather than read directly; ~7x below the 5.84 m/s refutation threshold, so it narrows the gap without closing it. *(derived)* |
