@@ -79,14 +79,43 @@ def lit(s) -> str:
     return "null" if s is None else "'" + str(s).replace("'", "''") + "'"
 
 
-def call(tenant: str, prompt: str, max_tokens: int = 1200) -> dict:
-    r = subprocess.run(["orchestra", "api-credits", "call", "--tenant", tenant,
-                        "--prompt", prompt, "--max-tokens", str(max_tokens)],
-                       capture_output=True, text=True, timeout=300)
+FALLBACK = "claude-sonnet-5-5"
+
+
+def call(tenant: str, prompt: str, max_tokens: int = 1200, model: str | None = None) -> dict:
+    args = ["orchestra", "api-credits", "call", "--tenant", tenant,
+            "--prompt", prompt, "--max-tokens", str(max_tokens)]
+    if model:
+        args += ["--model", model]
+    r = subprocess.run(args, capture_output=True, text=True, timeout=300)
     i = r.stdout.find("{")
     if i < 0:
         raise RuntimeError((r.stderr or r.stdout)[:300])
     return json.loads(r.stdout[i:])
+
+
+def call_with_fallback(tenant: str, prompt: str) -> dict:
+    """Try the default model; on a refusal, retry on FALLBACK.
+
+    This is the API's OWN documented remedy -- a refusal reply says so in its explanation field:
+    "API integrators: you can reduce refusals for your users by configuring a fallback model".
+    It is a supported feature, not prompt engineering around a classifier, and the prompt is sent
+    UNCHANGED to the fallback.
+
+    It matters because the refusals are not confined to biology. Claim 465 is about an evaluation
+    kernel and a claim graph, and was refused with category "bio" -- almost certainly because the
+    project's claims quote protein names and variant ids in passing. claude-sonnet-5-5 answered the
+    identical prompt, returned `weakened` with a substantive objection, and cost $0.00524 against
+    opus's $0.016.
+    """
+    try:
+        return call(tenant, prompt)
+    except Exception as e:
+        if "refused" not in str(e).lower():
+            raise
+        out = call(tenant, prompt, model=FALLBACK)
+        out["_fallback_from_refusal"] = True
+        return out
 
 
 def parse(text: str) -> tuple[str, str, str]:
@@ -119,7 +148,7 @@ def main() -> int:
     for i, (cid, ev, stmt) in enumerate(rows):
         t = TENANTS[i % len(TENANTS)]
         try:
-            r = call(t, PROMPT.format(cid=cid, ev=ev, stmt=stmt[:6000]))
+            r = call_with_fallback(t, PROMPT.format(cid=cid, ev=ev, stmt=stmt[:6000]))
         except Exception as e:
             print(f"  claim {cid:>4} {t:13} CALL FAILED {type(e).__name__}: {str(e)[:90]}")
             continue
@@ -137,9 +166,10 @@ def main() -> int:
                        "harness, not a judgement by the model. ") + why
         spent += float(r.get("cost_usd") or 0)
         tally[out] = tally.get(out, 0) + 1
-        print(f"  claim {cid:>4} {t:13} {out:9} ${r.get('cost_usd',0):.5f}  {att[:68]}")
+        fb = " FB" if r.get("_fallback_from_refusal") else "   "
+        print(f"  claim {cid:>4} {t:13}{fb} {out:9} ${r.get('cost_usd',0):.5f}  {att[:62]}")
         if write:
-            who = f"api:{r.get('model','?')}@{t}"
+            who = f"api:{r.get('model','?')}@{t}" + ("  [fallback after a refusal]" if r.get("_fallback_from_refusal") else "")
             q(f"""insert into challenge (claim_id, challenger, attack, outcome, evidence)
                   values ({int(cid)}, {lit(who)}, {lit(att)}, {lit(out)}, {lit(why)})""")
     print(f"\n  outcomes: {tally}")
