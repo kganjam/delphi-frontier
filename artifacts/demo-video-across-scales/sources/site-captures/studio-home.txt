@@ -1,0 +1,256 @@
+Skip to content
+MorphoSwarm
+Studio
+CLAIMS AND EVIDENCE: DELPHI
+Studio
+Frontier
+Knowledge
+Evidence
+System
+About
+Search the catalog
+Search
+Live runtime
+
+MORPHOSWARM STUDIO
+
+Design together.
+Know what's open.
+
+Two ways in, one body of evidence. Studio is where a design goal is worked across scales, with the models, media and gaps in one place. Frontier is the shared list of open questions and who is working on them. Both read the same claims and evidence, kept in the Delphi foundation: what we know, what's next, who's working on it.
+
+Watch the demo
+
+FEATURED PROJECT · WORK IT ACROSS 11 SCALES
+
+Flying fish
+
+Engineer toward a vertebrate glider reachable from a beloniform ancestor, and make every missing bridge between scales visible.
+
+Open the Flying fish studio
+All projects and design spaces
+
+Subsystems by scale
+1
+Molecular
+partial
+2
+Macromolecular
+stated gap
+3
+Subcellular
+stated gap
+4
+Cellular
+partial
+5
+Tissue
+stated gap
+6
+Organ
+recorded model
+7
+Neural / control
+stated gap
+8
+Organism
+recorded model
+9
+Developmental
+partial
+10
+Collective
+stated gap
+11
+Ecological / evolutionary
+partial
+
+2 of 11 scales have a recorded model, 4 are partial and 5 are stated gaps. Every gap is written out on its own subsystem page rather than left blank. The status of each scale is the Project record's own declaration, not a count of files. Of 13 declared couplings between scales, 4 are composable, 5 are scenario-level and 4 are refused.
+
+A sample of what is inside
+Precursor-inspired short-fin form (rejected glider candidate)
+Enlarged-pectoral two-wing glider (Exocoetus-type proportions)
+▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)
+▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)
+▶ Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions
+▶ Adhesion clutch mechanics (render of a simulation)
+
+Each tile opens the subsystem it belongs to. The rest of it: all 31 recorded runs with their checks and sources · the 5 Lean proof families · the engineering workspace · what is verified and what is not · the open questions.
+
+31
+recorded simulation runs
+6
+named equations
+5
+Lean proof families
+21
+claims with conditions
+6
+printable forms
+
+Nothing here is a validated organism. The candidate is an engineering design sized from published measurements, and every parameter carries its own status word on the subsystem pages.
+
+Start from real fish anatomy.
+
+Ray-supported fins and a scale map, not a validated fish. Selected candidate v3a-fan: fins are modelled as individual rays with a membrane between them (anal 10, caudal 15, dorsal 13, pectoral_L 15, pectoral_R 15, pelvic_L 6, pelvic_R 6 rays); ray counts, attachments, outline and scales are sourced where the viewer's table says so and assumed otherwise. Recorded parameter statuses: 53 derived from a sourced fit, 40 assumed, 5 sourced, 2 aesthetic choice, 4 read from a published figure. Eyes and gill covers are simplified, pigment is an appearance choice, and no biological or aerodynamic validation is claimed. The data panel and region cards below describe the N1 baseline reference.
+
+Candidate
+N1 baseline (flat fin plates)
+v3a-fan
+v3b-glide-pose
+v3c-daane-length
+ pectoral camber 0 · pectoral dihedral deg 7 · pectoral lead angle deg 8 · pectoral length source fish1990 · pelvic camber 0 · pelvic dihedral deg 4 · pelvic lead angle deg 22 · pelvic x over sl 0.55
+Interactive 3D candidate
+
+The 3D model is a candidate mesh. Colours and pigment bands are appearance choices, each marked sourced or assumed in the viewer. Not an organism and not an aerodynamic result. The schematic drawing and printable models are below.
+
+How these candidates relate: the fish design history (revisions, sibling variants and display props kept apart).
+
+Print models: laws, checks, mass budgets & lineage
+
+Latest printable fish studies
+
+Source-conditioned geometry with thicker membranes and rays for printing. Each file has its own checks; these are display studies.
+
+V3C PROP
+
+v3c had no prop; same alterations and wall rule as the v3 props
+
+96.7 × 114.9 × 28.1 mm · 0.5× display scale
+
+Calculated mass: 12.00 g smooth, 12.71 g with scales, at 1.22 g/cm³. Not weighed.
+
+1.0 mm provisional wall rule; sampled checks and relief limits are in the file report.
+
+Choose the smooth STL for the more conservative print. Fine scale relief is ungated texture and may not resolve or survive printing. Independent file review.
+
+Smooth STL · File checks and laws
+Scale-relief STL · File checks and laws
+V3C REINFORCED
+
+stronger handling prop: 1.5 mm wall rule (membranes 1.8 mm, rays 3.3 to 2.4 mm) and every fin 1.5 x as thick at its root, tapering to the plain fin 8 mm out, where a cantilevered fin's bending moment is largest
+
+97.2 × 115.7 × 29.0 mm · 0.5× display scale
+
+Calculated mass: 15.50 g smooth, 16.16 g with scales, at 1.22 g/cm³. Not weighed.
+
+1.5 mm provisional wall rule; sampled checks and relief limits are in the file report.
+
+Choose the smooth STL for the more conservative print. Fine scale relief is ungated texture and may not resolve or survive printing. Independent file review.
+
+Smooth STL · File checks and laws
+Scale-relief STL · File checks and laws
+
+Compare the design history · Stands and previous revisions are under All model downloads.
+
+Download v3a fish with scales · STL Display model, not the slingshot prototype.
+
+Download corrected slingshot test-print set · ZIP Six parts and assembly notes. Fit/balance only: overweight, with a catch-wall concern unresolved. Not cleared for launch.
+
+All model downloads · print revisions, stands and 3D candidates
+
+Regulatory context for a region (what sources and proposals mention it; not measured expression in this model): basal epithelium · surface epithelium · fibroblast mesenchyme · osteoblast and joint · hematopoietic · pectoral fin field · organism reference · the regulatory applicability map
+
+N1 baseline reference (a separate schematic and the printable models, not the candidate selected above)
+Side
+Top
+Front
+3/4 view
+
+Drag to rotate, or focus the drawing and use the arrow keys. Stylised body proportions are fixed; only the entered dimensions and fin share change the shape. A design visualisation, not an observed fish and not CFD.
+
+Drawing: candidate Cypselurus-type, 0.1 kg, a schematic from the Engineering parameters, not one of the printable STL models below. Dimensions are arithmetic or illustration, not a measured fish. Change it in Engineering.
+
+3D model turntable
+
+Path-traced render of the N1 candidate mesh, with assumed fin thickness and an assumed scale lattice: not an organism and not an aerodynamic result. Download MP4 · limits and hashes
+
+Printable models (STL, millimetres)
+A-precursor-short-fin
+B-two-wing-glider
+C-four-wing-glider
+N1-cypselurus-baseline
+N2-area-x1.3
+N3-area-x1.3-ar-x1.2
+ Download STL
+
+Precursor-inspired short-fin form (rejected glider candidate). Bounding box 110.9 × 25.3 × 20.9 mm at print size. Illustrative print form, not a validated design; the drawing above does not change with this choice.
+
+Printable fish revisions (STL, millimetres, display scale)
+Display prop of fish3d-v3c-daane-length
+Reinforced display prop of fish3d-v3c-daane-length
+Display prop of fish3d-v3a-fan
+Display prop of fish3d-v3b-glide-pose
+Download prop STL (smooth, gated) (2.2 MB)
+Download prop with scale relief STL (8.8 MB)
+Download stand STL (0.1 MB)
+
+Display prop of fish3d-v3c-daane-length. Prop size 96.7 × 114.9 × 28.1 mm at display scale 0.5. Engineered illustrative forms, not organisms; membranes and rays are thickened for printing, not biological thickness.
+
+Print limits (printer and resin unknown, nothing sliced or printed)
+What the body and fins are sized from (N1 baseline reference)
+
+Candidate N1: standard length 158.8 mm, wing span 211.7 mm, wing area 5699 mm², mass 0.05 kg.
+
+Measured here: pectoral fin length against standard length in 49 preserved flying fish specimens (Cheilopogon furcatus, Exocoetus volitans, Hirundichthys rondeleti; preserved specimens, Harvard Museum of Comparative Zoology) follows length ∝ SL1.058, 95% bootstrap interval 1.021 to 1.099, R² 0.983. Species and sizes are pooled. Source: Daane et al. 2021, Data S1A, fit made in this repository.
+Published, raw data unavailable: Fish 1990 reports the pectoral fins as Cypselurus (76 ± 0.6%) to Exocoetus (91.8 ± 0.4%) of wing area by genus, and 63.1% ± 0.5 of caudal area in the lower lobe (pooled). UNAVAILABLE: 199 specimens were measured; the paper publishes only the fits and ranges below.
+Evidence kinds, kept apart 8 / 36 / 7, not one count of laws
+Region by region: where each parameter comes from (the N1 baseline reference, not the candidate selected above; 9 regions)
+
+Parameter status words are the candidate's own (components.json); unknown biology is not filled in. Modelled mechanics at the organ scale · All simulations · unsupported bridges: 4 refused and 5 scenario-level of 13 couplings · Evidence status
+
+2 sources licences and read levels as recorded
+
+About this project · Generative biology: from mechanistic simulation to equation-conditioned models
+
+Describe a goal or a question in a sentence; it is routed to a project, a subsystem and open work, and nothing is generated
+Find where this lives
+
+STUDIO · PROJECTS
+
+Work a design across scales
+
+A project names a goal, breaks it into subsystems by scale, and shows for each the model that exists, its parameters and unknowns, equations, claims, media and open questions. Gaps stay visible.
+
+featured project
+Flying fish
+
+Eleven scales from molecule to ecology. Recorded models exist at four of them, a bounded constraint solver and illustrative print forms at the organism and organ scales; most scales hold only a stated gap.
+
+Precursor-inspired short-fin form (rejected glider candidate)
+Enlarged-pectoral two-wing glider (Exocoetus-type proportions)
+▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)
+▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)
+
+2 of 11 scales have a recorded model; the rest are stated gaps.
+
+Open the Flying fish studio All projects
+
+FRONTIER · OPEN WORK
+
+Find open questions and join them
+
+Every question carries what is known, what would settle it, what it needs, and who holds a live lease. Direction filters separate top-down design questions from bottom-up theory and literature gaps.
+
+12 curated questions in the snapshot (live count appears when the node is reachable)
+
+Open the Frontier Claims and evidence
+
+How they connect
+Every open question names the scales it touches; from a question you can jump to that subsystem in the studio.
+Every subsystem lists the open questions at its scale and links to them on the Frontier.
+Claims, evidence and artifacts live once, in the Delphi foundation, and both paths link to the same entity pages.
+
+Design space: Engineering a coral — 45 sourced routes to one stated outcome, across 9 scales, with the models that bear on them. Three of the four thermal interventions buy a coral that still looks brown while it starves.
+
+Design space: Redesigning insect flight — 46 sourced routes to one stated outcome, across 9 scales, with the models that bear on them. The four-winged fly is famous. What nobody measured is whether it flies.
+
+Design space: Living machines that do work — 49 sourced routes to one stated outcome, across 10 scales, with the models that bear on them. It began as a check on our own earlier simulation, and ended by withdrawing its headline result.
+
+Projects other than Flying fish are added as Project records; none is invented here.
+
+snapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)
+
+Input files and sha256
+
+Design geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "variant": "60s",
+  "text": "Type: “Design a fish that can fly.”\n\nThat’s the promise of a biological compiler.\n\nDelphi Bio and MorphoSwarm Studio bring a decentralized swarm of agents to the challenge—proposing, simulating, and challenging each other’s designs. They apply mathematical biology.\n\nCan oxygen delivery support launch power? Could proteins make fins tougher without adding weight? Which signals shape growth? How would a school coordinate—and change its ecosystem?\n\nBigger fins may help lift. What do they cost in drag, strength, and energy?\n\nWe extract mathematical laws from literature and data, make assumptions explicit, and formally check deductions. Compatible models become building blocks, with control knobs to explore.\n\nAgents propose simulations and experiments across scales. Each simulation should answer a design question. What we learn returns to Delphi—with evidence, uncertainty, disagreement, and limits—so the next design starts smarter.\n\nThe pieces of verified biology are coming together.\n\nThe destination: candidate DNA, with a plan to build and test it.\n\nFrom a sentence to an organism. What would you build?\n",
+  "text_sha256": "f49ce1ca837145558c8316b8ff8fdb76d502cf904027ba3c4975322f4c652058",
+  "word_count_whitespace": 163,
+  "wav_file": "narration.wav",
+  "wav_sha256": "02f4823934599c9a3b499790086734f1a019593ec4887dc4d36b714a3c5798cb",
+  "wav_duration_s": 58.998156,
+  "pcm_sha256": "f64517db8249e71c0f98d0a4cf1ade94246ad00e2d4253d5d10c14a85878aa37",
+  "timings_file": "timings.json",
+  "timings_sha256": "73925e48cb03fe5b6617a778211b2af72685d23ae26bfc2beea15a4983191c7a",
+  "base_manifest": "base-manifest.json",
+  "base_manifest_sha256": "ae95f715923e1cdc352cede455a470280bd978c7708508f9ac3776c943643070",
+  "closing_take": "sources/closing.json",
+  "closing_take_sha256": "4671bd184bf2ee8e52ef931da5af508a69e3d0e22c3eb945f167a2d5680f20a1",
+  "model": "speech-2.8-hd",
+  "voice_id": "English_expressive_narrator",
+  "closing_provider_speed": 1.2,
+  "selected_closing": "paired_close",
+  "closing_tts_text": "From a sentence to an organism. What would YOU build?",
+  "splice_time_s": 55.5,
+  "splice_frame": 1776000,
+  "closing_post_tempo_factor": 1.0,
+  "preserve_base_duration": true,
+  "canonical_display_text_changed": false,
+  "pcm_prefix_byte_identical": true,
+  "closing_pcm_byte_identical": true,
+  "archive_metadata_changes": [
+    {
+      "change": "Parent-timing versus raw-subtitle hash references separated and recomputed.",
+      "old_mislabeled_source_sha256": "ad218c16ba0477c289974bdc4a2e4a9fcb567eaecfadeca3ea9951ec3131904f",
+      "actual_original_parent_timings_sha256": "a1c0b6a986fa29e1a76808903bb6ab7e0bcddb32d99b687fc9881be9eecff28d"
+    },
+    {
+      "change": "Absolute local paths and provider trace identifiers omitted; references are relative to each JSON file. Word/sentence/paragraph timing arrays and recorded audio bytes retained."
+    },
+    {
+      "change": "Canonical dialogue changed from two trailing newlines to one; spoken words and timing spans unchanged.",
+      "original_text_sha256": "2018df013d6923df588ae83193261730f5736ccae21dd6e5b2da31f7fb70443a",
+      "canonical_text_sha256": "f49ce1ca837145558c8316b8ff8fdb76d502cf904027ba3c4975322f4c652058"
+    }
+  ],
+  "unchanged_pcm_prefix_sha256": "ce8da2274e1e6153c0364579cc6bc3212c7992a7a036cda83b44ffc0d6a2a2b3"
+}

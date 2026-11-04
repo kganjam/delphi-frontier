@@ -1,0 +1,120 @@
+{
+  "prepared_at_seattle": "2026-11-04 00:23:06 PST",
+  "publishing_copy_unchanged": true,
+  "inventory_records": 49,
+  "all_ids_preserved": true,
+  "scientific_descriptions_and_proposed_questions_unchanged": true,
+  "csv_rows": 49,
+  "html_cards": 49,
+  "html_videos": 45,
+  "public_urls_checked": 81,
+  "non_200_current_urls": 0,
+  "manifest_links_remapped": 8,
+  "expected_renderer_supplied_images": [
+    "sources/site-captures/delphi-home.png",
+    "sources/site-captures/delphi-evidence.png",
+    "sources/site-captures/studio-reuse-full.png"
+  ],
+  "catalog_home_image_renamed": "studio-home-later-capture.png",
+  "sources_recomputed_from_two_film_manifests": {
+    "distinct_files": 38,
+    "bytes": 22684085,
+    "all_hashes_match": true
+  },
+  "sanitized_provenance_records": [
+    {
+      "source_record_name": "provenance.json",
+      "archived_file": "sources/provenance/deck/capture-provenance.json",
+      "original_sha256": "b096979bb938e5e9dbee8fa3f6bd75616af6b568def7b0e3df40ac8fe07d1d73",
+      "archived_sha256": "6ef20eab429be2406d8411214e941b0fc8f49efa289d3b424cbbbd33e3d82bb4",
+      "transformation": "Omitted raw-chat pointers and cached frame names; package-relative outputs."
+    },
+    {
+      "source_record_name": "manifest.json",
+      "archived_file": "sources/provenance/deck/native-art-manifest.json",
+      "original_sha256": "65ef5c1ec9b676dc13e98f34980aa0631bae17b2d4dad62d67d800f0346191f9",
+      "archived_sha256": "229f09e586b8b090c6334d339f3da03cffc055993e8b0e1ba3c14dccc82972f3",
+      "transformation": "Rebased snapshot/artwork paths only."
+    },
+    {
+      "source_record_name": "print-turntable-provenance.json",
+      "archived_file": "sources/provenance/print-turntable-provenance.json",
+      "original_sha256": "8e0d6852529352c8d9f60897b14ff7276c2edd8e9c4844e22b1be9822f35408f",
+      "archived_sha256": "0bd624fdc6c47170eed649084ccec524092d3fb55853d5ccc86bec0f6e38c590",
+      "transformation": "Replaced machine-specific media/receipt paths with archive-relative paths."
+    }
+  ],
+  "checks": [
+    "CSV authored with @oai/artifact-tool and exact value round-trip checked.",
+    "All 49 HTML/CSV IDs and substantive scientific/proposed prose matched the original curated inventory.",
+    "Local HTML references resolve except the three declared shared renderer images.",
+    "Capture JS and shell scripts passed syntax checks; capture browsers were not rerun.",
+    "Selected text files scanned for personal machine paths, raw-chat/session identifiers and obvious credential assignments; no hits."
+  ],
+  "limitations": [
+    "Public URLs can change after the recorded checks.",
+    "The optional Linux capture launcher was not exercised on the production Mac.",
+    "Licensing and third-party reuse terms were not independently established.",
+    "Public capture and film asset paths require merging this support tree with the renderer source tree."
+  ],
+  "archive_whitespace_normalization": [
+    {
+      "file": "inventory/simulation-inventory.csv",
+      "before_sha256": "092c27bc76f0116132d6c7fe62ddbce5b0eadbd7420c57f078ad4c35d7d3b216",
+      "after_sha256": "8063a5fd415b7b7d6f5086251fc9c28fff3a05da2f4346d246ccfe2f715848cc",
+      "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
+    },
+    {
+      "file": "sources/site-captures/studio-cellular.txt",
+      "before_sha256": "785c6da406201929028659cd33de0f3d64708648ee6b06880141915e5ea80227",
+      "after_sha256": "bdbd78fdb3112cb64895e3e128bb8edebf936c6dc0a4d78e58746b1c21f9bb01",
+      "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
+    },
+    {
+      "file": "sources/site-captures/studio-flying-fish.txt",
+      "before_sha256": "c5cac4685262400d03ebc68b85e7e547906ef189a11f6fc9474a4f761776490a",
+      "after_sha256": "4c7f5ac4183252ed638cc6589a83a27c54113e5464fe6d6964f8ecfc3d0e5a11",
+      "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
+    },
+    {
+      "file": "sources/site-captures/studio-home.txt",
+      "before_sha256": "910da80c05ac8cff7d9d03b062f93f636f215ed7d7f37b31b66307e2873accb8",
+      "after_sha256": "eba98ba0afbb6ef1d1dafb6b3172ab96c79a823a46f23c072d5526d785106663",
+      "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
+    },
+    {
+      "file": "sources/site-captures/studio-molecular.txt",
+      "before_sha256": "731f161e462fbe76333a12d3e38e9dc2d6a498eb9e7bc62b2f947543dc1aa828",
+      "after_sha256": "32880fc1a5ae4e6e5e03a1cc96fef66b173f4219e5e761ac399074fb44cc5a9a",
+      "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
+    },
+    {
+      "file": "sources/site-captures/studio-neural.txt",
+      "before_sha256": "02eae5f22f6396778c42c039aaa595bfc9e6b38cb1b60b8d01ac67334067f405",
+      "after_sha256": "cf7ebb7c63e83e2529e5684d1d89fe76b52103bbff4a8b29417452eff15fa27a",
+      "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
+    },
+    {
+      "file": "sources/site-captures/studio-organ.txt",
+      "before_sha256": "f1b6b405a3a5462bee35886926d68c2f6fa502eca524da85aa4589fe03c3e1e8",
+      "after_sha256": "ba147882871129e6b9fd556715a9d55379de68aef6a647bf92c4c011b9d26e54",
+      "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
+    },
+    {
+      "file": "sources/site-captures/studio-simulations.txt",
+      "before_sha256": "0ae5f1a4e42b36a04ae2188202e81504be8a53b07b2a163aeebca328927880b3",
+      "after_sha256": "03694226c5daa29568ddc7592796735c86ab3d533c6958808f34bb40ba67c793",
+      "transformation": "Normalize line endings to LF and remove trailing horizontal whitespace; preserve content."
+    }
+  ],
+  "merged_archive_review": {
+    "review": "Read-only review of merged archive by support reviewer; no network or edits.",
+    "local_html_links_resolved": 84,
+    "inventory_records": 49,
+    "capture_cards": 24,
+    "concept_cards": 3,
+    "provenance_targets_resolved": 24,
+    "normalization_after_hashes_matched": 8,
+    "public_boundary": "Machine-specific paths only in ignored/untracked build caches; no findings outside those caches."
+  }
+}

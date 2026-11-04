@@ -1,0 +1,699 @@
+{
+  "url": "https://studio.morphoswarm.ai/#/simulations",
+  "title": "Simulations · MorphoSwarm Studio",
+  "text": "Skip to content\nMorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI\nStudio\nFrontier\nKnowledge\nEvidence\nSystem\nAbout\nSearch the catalog\nSearch\nLive runtime\nSimulations\n\nRecorded simulations and observed-data analyses as manifest cards: what was run, in what time units, against which numerical checks, with which parameters still unknown, and which bridges between scales are still dashed. A card shows a player only when an actual video file is present and matches its declared digest.\n\nScale\nall scales\nCellular\nOrgan\nOrganism\nTissue\nMolecular\nSubcellular\nNeural / control\nDevelopmental\nMedia\nany\nhas a verified video\nno video\nSearch\nApply\n\nShowing 32 of 32 simulation cards. 27 of 32 have a player.\n\nTwo-cell Delta-Notch replay (BioModels BIOMD0…\nElastic fin-ray surrogate (Euler-Bernoulli ca…\nBioelectric cell-voltage model: baseline, sod…\nAdhesion clutch mechanics (render of a simula…\nGlide trajectories at a fixed launch (point m…\nReaction-diffusion field time series\nSingle-ray basal sliding and curvature: publi…\n2D low-Reynolds flow past the N1 silhouette (…\nBETSE bioelectric tissue patch: potassium per…\nBETSE potassium-permeability sensitivity with…\nMorpheus multicellular growth: cell cycle, di…\nCollagen-mimetic trimer: three 100 ps molecul…\nCollagen-mimetic trimer: three 900 ps continu…\nGeneric zebrafish metabolic model: a steady-s…\nCollagen-mimetic trimer: 0.2 ps CPU setup run…\nPredicted structure of zebrafish Kcnj13 (Open…\nCandidate N1 as a 3D model: path-traced turnt…\n3D flow past the fish3d candidate, Re = 1000,…\n3D flow past the fish3d candidate, Re = 1000,…\nMorpheus full-horizon logger chart (t to 2.0)…\nRhythm-generator controller driving a designe…\nErk trigger waves and wave-gated growth on on…\nStatic aeroelastic coupling of the fins: 36 a…\nAeroelastic fidelity ladder: 45 native arms, …\nNeural cellular automaton fin pattern, origin…\nNeural cellular automaton fin pattern, correc…\nNCA curriculum repair/persistence tradeoff: 8…\nObserved-data update: added specimens worsen …\nSoft-voxel toy body under a travelling actuat…\nEpithelial gap in a Cellular Potts model: the…\nEpithelial gap in a Cellular Potts model: the…\nGlide of a point mass (glide-pointmass/1)\nRecorded simulations\n\nNothing here is a live run and nothing is animated by this page. Counts of cards are counts of artifacts in this snapshot (snapshot of inputs 52c50b565b99), not of independent observations.\n\nTwo-cell Delta-Notch replay (BioModels BIOMD0000001047)\n\nCellular simulated: a rendering of replay output; not an observation of any biological system manifest\n\nCaption burned into every frame: Two-cell Delta-Notch lateral inhibition - BioModels BIOMD0000001047 (Collier et al. 1996) - SIMULATION | SIMULATION computed from the published SBML model; not an observation. Time and concentrations are non-dimensional (model time). Two abstract cells: this is not tissue, not a fin, and no cell shape is modelled or observed.\n\nVerified against its declared sha256. 1280x720, 16.0 s, h264 Download video\n\nMODEL\nBIOMD0000001047, Collier et al. 1996, replayed from the published SBML\nTIME UNITS\nnon-dimensional model time, 0 to 60\n\ntwo-cell Delta-Notch concentrations vs model time and (Notch, Delta) phase portraits for three replay scenarios. SIMULATION computed from the published SBML model; not an observation. Time and concentrations are non-dimensional (model time). Two abstract cells: this is not tissue, not a fin, and no cell shape is modelled or observed. frame k < motion_frames shows csv row round(k*(rows-1)/(motion_frames-1)); later frames repeat the last row. most of the change happens before model time 30; the second half of the video is the settled state\n\nChecks, unknowns, open questions and couplings 1 check · 1 unknown · 1 open\n\nManifest: connectors/biomodels/video/delta_notch_replay_manifest.json\n\nElastic fin-ray surrogate (Euler-Bernoulli cantilever)\n\nOrgan simulated manifest\n\nVerified against its declared sha256. 15.0 s at 24 fps, 360 frames Download video\n\nMODEL\nfrontier.finmech.manifest/1\nTIME UNITS\nnot a physical time axis; see the manifest\n\nFrames from beam.solve_checked (Hermite FEM) per frame; closed form overlaid for comparison. A scoped elastic surrogate, not a fin. mp4 bytes can differ across ffmpeg builds; frames_data_sha256 hashes the computed numeric frames and is the reproducible quantity\n\nChecks, unknowns, open questions and couplings 2 checks · 1 unknown · 1 open\n\nManifest: engineering/fin_mechanics/artifacts/manifest.json\n\nBioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions\n\nCellular SimulationResult manifest\n\nVerified against its declared sha256. 180 frames at 24 fps Download video\n\nMODEL\nfrontier.bioelectric.bundle/1\nTIME UNITS\nmodel time in milliseconds; 30.0 ms horizon shown over 7.5 s of video\n\nSaved states of an electrophysiology model rendered as frames. convergence checked for default HH scenario and smooth passive cable; not the entire atlas none; selected actual saved state frames\n\nChecks, unknowns, open questions and couplings 6 checks · 1 unknown · 1 open\n\nManifest: artifacts/bioelectric/manifest.json\n\nAdhesion clutch mechanics (render of a simulation)\n\nCellular render_of_simulation manifest\n\nVerified against its declared sha256. 264242 bytes Download video\n\nMODEL\nfrontier.mechanobio.render-manifest/1\nTIME UNITS\nmodel time in seconds (see the trajectory file)\n\nFrames chosen from a saved molecular-clutch trajectory and its response sweep; not a cell and not a fin. 180 frames at 15 fps, frame indices hashed (e0f5b8273e5f…)\n\nChecks, unknowns, open questions and couplings 1 check · 1 unknown · 1 open\n\nManifest: artifacts/mechanobio/render-manifest.json\n\nGlide trajectories at a fixed launch (point mass)\n\nOrganism simulated manifest\n\nVerified against its declared sha256. 1280x720, 16.0 s, 24 fps Download video\n\nMODEL\nglide trajectory animation\nTIME UNITS\nglide seconds (physical time of the point-mass trajectory)\n\nConstant-coefficient point-mass glide; the coefficients are design assumptions. reaction-diffusion model time (see RD animation manifest); the two clocks are unrelated and not coupled\n\nChecks, unknowns, open questions and couplings 2 checks · 3 unknowns · 1 open\n\nManifest: engineering/simulation/video/manifest.json\n\nReaction-diffusion field time series\n\nTissue simulated manifest\n\nVerified against its declared sha256. 1280x720, 16.04 s, 25 fps Download video\n\nMODEL\nRD field time-series animation\nTIME UNITS\ntau = gamma*t, dimensionless RD model time\n\nBrusselator, linear-stable (rho=0.97), eps=0.3 perturbation: finite-amplitude pattern in the declared model (R1 event); Schnakenberg, linear-unstable (rho=3), eps=0.01: pattern with dominant mode 7 vs fastest linear mode 6 (R3 mismatch) glide seconds; the two clocks are unrelated and not coupled\n\nChecks, unknowns, open questions and couplings 1 check · 1 unknown · 1 open\n\nManifest: engineering/simulation/video/manifest_rd.json\n\nCouplings between the models\n\nA coupling verdict is about typed interfaces, not biology. 'composable' means the declared mapping is dimensionally and scope-consistent; it does not mean the models describe the same organism. 'scenario' results are assumption-level. No Lean theorem here proves biological correspondence.\n\n4 composable 5 scenario (assumption-level) 4 refused registered calibrations: none · timescale separation threshold 10\n\nCOUPLING\tFROM → TO\tMAPPING\tVERDICT\tWHY\nc01_mass\tflying_fish_constraints.m\n→ glide_pointmass.m\tidentity; time static_input; uncertainty exact\tcomposable\ncomposable: typed, dimension- and scope-checked mapping; no biological correspondence is claimed\tnone\nc02_area\tflying_fish_constraints.S\n→ glide_pointmass.S\tidentity; time static_input; uncertainty exact\tcomposable\ncomposable: typed, dimension- and scope-checked mapping; no biological correspondence is claimed\tnone\nc03_span\tflying_fish_constraints.b\n→ glide_pointmass.b\tidentity; time static_input; uncertainty exact\tcomposable\ncomposable: typed, dimension- and scope-checked mapping; no biological correspondence is claimed\tnone\nc04_speed\tflying_fish_constraints.V\n→ glide_pointmass.release_speed\tassumed; time static_input; uncertainty unknown\tscenario\nSCENARIO (assumption-level): may run, never evidence about an organism\t\nparameter bounds are unknown on at least one side of a value-transforming mapping\nno uncertainty edge declared\nassumption-level edges: A1\nAssumes A1.\nc05_notch_to_fin_stiffness\tcollier1996_two_cell.delta_asymmetry\n→ finbeam_euler_bernoulli.flexural_rigidity\tnone; time unknown; uncertainty unknown\trefused\nrefused: missing or inconsistent bridge; nothing was composed\t\nno mapping declared: the bridge is missing and is not invented here\nscope mismatch without a calibration that bridges it: scale cell -> organ; context 'NCBI taxon 7215 as annotated in the SBML (name unresolved by the connector owner)' -> 'Exocoetidae design envelope (Fish 1990 m / wing-loading range)'; regime 'two coupled cells; non-dimensional as stored; no time scale' -> 'static clamped-free Euler-Bernoulli ray, small deflection; the load is a mean lift-pressure PROXY, not a measured fin pressure'\nMissing calibrations (1)\n\nc06_notch_to_fin_stiffness_assumed\tcollier1996_two_cell.delta_asymmetry\n→ finbeam_euler_bernoulli.flexural_rigidity\tassumed; time unknown; uncertainty unknown\trefused\nrefused: missing or inconsistent bridge; nothing was composed\t\nan assumption cannot stand in for a transfer across biological scale or context (that needs a calibration): scale cell -> organ; context 'NCBI taxon 7215 as annotated in the SBML (name unresolved by the connector owner)' -> 'Exocoetidae design envelope (Fish 1990 m / wing-loading range)'; regime 'two coupled cells; non-dimensional as stored; no time scale' -> 'static clamped-free Euler-Bernoulli ray, small deflection; the load is a mean lift-pressure PROXY, not a measured fin pressure'\nAssumes A2.\nMissing calibrations (2)\n\nc07_rd_wavelength_to_wing_span\trdfield_nonlinear_sweep.dominant_mode\n→ glide_pointmass.b\tnone; time unknown; uncertainty unknown\trefused\nrefused: missing or inconsistent bridge; nothing was composed\t\nno mapping declared: the bridge is missing and is not invented here\nscope mismatch without a calibration that bridges it: scale tissue -> organism; context 'abstract kinetics; no organism' -> 'Exocoetidae design envelope (Fish 1990 m / wing-loading range)'; regime \"1-D zero-flux (Neumann) field; domain length in units of the model's own critical wavelength\" -> 'point-mass vertical-plane flight; Reynolds/scale validity of the polar not established'\nMissing calibrations (1)\n\nc08_fin_deflection_to_glide_speed\tfinbeam_euler_bernoulli.tip_deflection\n→ glide_pointmass.release_speed\tnone; time unknown; uncertainty unknown\trefused\nrefused: missing or inconsistent bridge; nothing was composed\t\nno mapping declared: the bridge is missing and is not invented here\nscope mismatch without a calibration that bridges it: scale organ -> organism; regime 'static clamped-free Euler-Bernoulli ray, small deflection; the load is a mean lift-pressure PROXY, not a measured fin pressure' -> 'point-mass vertical-plane flight; Reynolds/scale validity of the polar not established'\nMissing calibrations (1)\n\nc09_span_to_fin_bridge\tflying_fish_constraints.b\n→ fin_load_bridge.b\tidentity; time static_input; uncertainty exact\tcomposable\ncomposable: typed, dimension- and scope-checked mapping; no biological correspondence is claimed\tnone\nc10_speed_to_fin_bridge\tflying_fish_constraints.V\n→ fin_load_bridge.V\tidentity; time static_input; uncertainty exact\tscenario\nSCENARIO (assumption-level): may run, never evidence about an organism\t\nport caveat (needs a calibration to be composable): flying_fish_constraints.V: speed from the level-flight proxy (L = W); not a measured or glide-derived flight speed | fin_load_bridge.V: speed from the level-flight proxy (L = W); not a measured or glide-derived flight speed\nassumption-level edges: A3\nAssumes A3.\nc11_load_proxy_to_beam\tfin_load_bridge.q_line\n→ finbeam_euler_bernoulli.q_line\tidentity; time static_input; uncertainty unknown\tscenario\nSCENARIO (assumption-level): may run, never evidence about an organism\t\nport caveat (needs a calibration to be composable): fin_load_bridge.q_line: derived from a mean lift-pressure PROXY (0.5*rho*V^2*CL) and a declared width; not a measured ray load | finbeam_euler_bernoulli.q_line: derived from a mean lift-pressure PROXY (0.5*rho*V^2*CL) and a declared width; not a measured ray load\nno uncertainty edge declared\nassumption-level edges: A3, A4\nAssumes A3, A4.\nc12_ray_length_to_beam\tfin_load_bridge.L_ray\n→ finbeam_euler_bernoulli.L_ray\tidentity; time static_input; uncertainty unknown\tscenario\nSCENARIO (assumption-level): may run, never evidence about an organism\t\nport caveat (needs a calibration to be composable): fin_load_bridge.L_ray: a DECLARED fraction/length, not a measurement | finbeam_euler_bernoulli.L_ray: a DECLARED fraction/length, not a measurement\nno uncertainty edge declared\nassumption-level edges: A4\nAssumes A4.\nc13_pressure_to_line_load_dimension_only\tfin_load_bridge.p_lift_proxy\n→ finbeam_euler_bernoulli.q_line\tassumed; time static_input; uncertainty unknown\tscenario\nSCENARIO (assumption-level): may run, never evidence about an organism\t\nparameter bounds are unknown on at least one side of a value-transforming mapping\nno uncertainty edge declared\nassumption-level edges: A3, A4\nAssumes A3, A4.\nAssumptions behind the scenario rows\nA1 (assumption, dx-guilds): glide release speed equals the constraint solver's witness V (the glide model's own default is 1.5 x stall speed)\nA2 (assumption, dx-guilds): Notch/Delta lateral-inhibition spacing from a two-cell non-dimensional model sets fin-ray stiffness scale (NO source supports this)\nA3 (assumption, dx-guilds): the mean lift-pressure proxy p = 0.5*rho*V^2*CL, built from declared rho, V and CL, is the pressure carried by one fin ray (it is not a measured fin pressure; V is the solver's level-flight-proxy speed)\nA4 (assumption, dx-guilds): ray length fraction and tributary width are declared values, not measurements (fin_mechanics example: 1/5 of the semispan, 1/100 m)\nA5 (assumption, dx-guilds): the flexural-rigidity range is ASSUMED, not measured or calibrated: no calibrated fin stiffness exists in this repository\nModels in the manifest\nMODEL\tSTATUS\tPORTS\tNOT ESTABLISHED\nCollier 1996 two-cell Delta-Notch lateral inhibition (BIOMD0000001047)\ncollier1996_two_cell\timplemented_replayed\t2\tany flying-fish or fin role for Notch/Delta; SI units; parameter provenance\nLoad bridge: declared flight load -> line load on one fin ray (exact rational)\nfin_load_bridge\timplemented\t9\ta measured fin pressure; fluid-structure interaction; that the tributary width or ray length is real; that p*S balances weight (reported, not enforced)\nElastic fin-ray surrogate: clamped-free Euler-Bernoulli cantilever (SIMULATED)\nfinbeam_euler_bernoulli\timplemented\t5\ta calibrated fin stiffness; that any real ray lies in the assumed EI range; fluid-structure interaction; biological feasibility\nExact-rational constraint solver (mass, wing area, span, speed)\nflying_fish_constraints\timplemented\t4\torganism feasibility; glide performance; that any witness is a viable fish\nPoint-mass glide simulation (RK4)\nglide_pointmass\timplemented\t8\tbiological feasibility; fin-tissue coupling; calibrated lift/drag for any fish (Park & Choi 2010 unread)\nReaction-diffusion field (Schnakenberg, Brusselator): saved-state rerun\nrdfield_nonlinear_sweep\timplemented\t4\tany fin or fish tissue; SI length or time scales; that a real tissue obeys these kinetics\n9 proposed calibration questions proposals only, not claims\n\nThe manifest states these must be displayed and must not be said:\n\nA coupling verdict is about typed interfaces, not biology. 'composable' means the declared mapping is dimensionally and scope-consistent; it does not mean the models describe the same organism. 'scenario' results are assumption-level. No Lean theorem here proves biological correspondence.\nScenario results carry the label 'assumption-level'.\nRegistered calibrations: NONE\n\nNot to be said: “the models are coupled”; “validated multiscale model”; “the fin pattern is explained”; “Lean proves the biological correspondence”.\n\nManifest sha256 499d3a6159e2… · Read the coupling document\n\nManifest format\n\nFields the build reads: title, scales[], evidence_kind, model{name,context}, time{units,note}, video{file,sha256,note}, poster, numerical_checks[], parameter_unknowns[], open_questions[], couplings[{from,to,status}]. The video file must sit beside the manifest. The runtime serves .mp4 and .webm under site/artifacts/ with range requests; the build copies a video there only when its bytes match the declared sha256.\n\nsnapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)\n\nInput files and sha256\n\nDesign geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.",
+  "links": [
+    {
+      "text": "Skip to content",
+      "url": "https://studio.morphoswarm.ai/#main"
+    },
+    {
+      "text": "MorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI",
+      "url": "https://studio.morphoswarm.ai/#/home"
+    },
+    {
+      "text": "Studio",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Frontier",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "Knowledge",
+      "url": "https://studio.morphoswarm.ai/#/knowledge"
+    },
+    {
+      "text": "Evidence",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "System",
+      "url": "https://studio.morphoswarm.ai/#/work"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/blog"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/team"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/docs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/inspirations"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/generative"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/demo"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/faq"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/work?tab=connect"
+    },
+    {
+      "text": "Download video",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/biomodels-delta-notch/delta_notch_replay.mp4"
+    },
+    {
+      "text": "Download video",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/fin-mechanics/fin_mechanics.mp4"
+    },
+    {
+      "text": "Download video",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/bioelectric-cells/bioelectric.mp4"
+    },
+    {
+      "text": "Download video",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/mechanobio-clutch/mechanobio.mp4"
+    },
+    {
+      "text": "Download video",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/glide-fixed-launch/glide_fixed_launch.mp4"
+    },
+    {
+      "text": "Download video",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/rd-fields/rd_fields.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/windtunnel-2d/windtunnel.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/betse-tissue/bioelectric_tissue.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/reconstructed/sensitivity.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/worker-return/protocol.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/worker-return/collection_receipt.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/reconstructed/summary.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/index.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/morpheus-multicell/baseline.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-cuda/trajectory.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-continuation/trajectory.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md/trajectory.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L128-Re1000/flow.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L192-Re1000/flow.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/morpheus-full-horizon-chart/full_horizon_chart.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/behavior-cpg/behavior.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/scale-erk-wave/erk_growth.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-coupling/render-production/coupled-states.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-coupling/render-production/provenance.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/coupled-states.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/provenance.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/fidelity-ladder.png"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/ladder-diagnostic.png"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/RESULTS.md"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/return-audit-report.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/ladder-diagnostic.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/fidelity-figures.provenance.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/provenance.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-pattern/returned-analysis/damage-trajectories.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-pattern/returned-analysis/training-and-holdout.png"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-pattern/returned-analysis/render-provenance.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-seed-placement/returned-analysis/damage-trajectories.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-seed-placement/returned-analysis/training-and-holdout.png"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-seed-placement/returned-analysis/render-provenance.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/returned-analysis/curriculum-trajectories.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/returned-analysis/training-and-evaluation.png"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/returned-analysis/render-provenance.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/protocol.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/returned-analysis/audit.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/run/checkpoint-before-holdout.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/QUESTION-OUTCOME.md"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/index.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/observed-allometry/RESULTS.md"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/observed-allometry/prepared-bundle-component-purge-v2/bundle.frontier-bundle-0.1.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/observed-allometry/live-import/public-receipt.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/observed-allometry/CORRECTION.md"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/observed-allometry/source-observations.csv"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/observed-allometry/publication.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/tissue-microcarrier/travelling-voxels.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/studio/tissue-microcarrier"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/voxel-actuation/protocol.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/voxel-actuation/summary.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/voxel-actuation/trajectory/travelling.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/voxel-actuation/run-log.txt"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/voxel-actuation/controls/B-passive-cte0.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/voxel-actuation/controls/C-zero-amplitude.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/voxel-actuation/controls/D-frictionless.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/voxel-actuation/controls/E-zero-gravity.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/media/A1-baseline.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/studio/epithelial-repair"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/sources/epithelial-repair-card.md"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/protocol.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/protocol-r2.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/results.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/results-r2.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/A1-baseline/build.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/A1-baseline/run.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/A2-motility-off/build.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/A2-motility-off/run.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/F1-no-drive-NEGATIVE/build.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/F1-no-drive-NEGATIVE/run.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/media/A2-motility-off.mp4"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/studio/epithelial-repair"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/sources/epithelial-repair-card.md"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/protocol.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/protocol-r2.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/results.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/results-r2.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/A1-baseline/build.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/A1-baseline/run.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/A2-motility-off/build.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/A2-motility-off/run.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/F1-no-drive-NEGATIVE/build.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/epithelial/arms/F1-no-drive-NEGATIVE/run.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/data/results/summary.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/data/results/controls.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/data/results/pareto.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/data/results/model_structure_findings.json"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/artifacts/results/designs.csv"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/data/results/figure.png"
+    },
+    {
+      "text": "Read the coupling document",
+      "url": "https://studio.morphoswarm.ai/#/simulations?src=doc%3Amodel-coupling"
+    },
+    {
+      "text": "snapshot.json",
+      "url": "https://studio.morphoswarm.ai/data/snapshot.json"
+    },
+    {
+      "text": "catalog.json",
+      "url": "https://studio.morphoswarm.ai/data/catalog.json"
+    },
+    {
+      "text": "licence",
+      "url": "https://studio.morphoswarm.ai/vendor/katex/LICENSE"
+    }
+  ],
+  "media": [
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/biomodels-delta-notch/delta_notch_replay.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/biomodels-delta-notch/delta_notch_replay_poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/fin-mechanics/fin_mechanics.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/fin-mechanics/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/bioelectric-cells/bioelectric.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/bioelectric-cells/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/mechanobio-clutch/mechanobio.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/mechanobio-clutch/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/glide-fixed-launch/glide_fixed_launch.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/glide-fixed-launch/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/rd-fields/rd_fields.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/rd-fields/poster_rd.png"
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/fin-ray-bilaminar/ray-response.png",
+      "alt": "Recorded figure (not a video)",
+      "poster": ""
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/windtunnel-2d/windtunnel.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/windtunnel-2d/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/betse-tissue/bioelectric_tissue.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/betse-tissue/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/reconstructed/sensitivity.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/reconstructed/sensitivity-poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/morpheus-multicell/baseline.mp4",
+      "alt": "",
+      "poster": ""
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-cuda/trajectory.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-cuda/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-continuation/trajectory.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-continuation/poster.png"
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/metabolism-gem/o2_atp_biomass.png",
+      "alt": "Recorded figure (not a video)",
+      "poster": ""
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md/trajectory.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/molecular-md/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/fish3d-render/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L128-Re1000/flow.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L128-Re1000/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L192-Re1000/flow.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L192-Re1000/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/morpheus-full-horizon-chart/full_horizon_chart.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/morpheus-full-horizon-chart/full_horizon_chart_poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/behavior-cpg/behavior.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/behavior-cpg/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/scale-erk-wave/erk_growth.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/scale-erk-wave/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-coupling/render-production/coupled-states.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-coupling/render-production/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/coupled-states.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/poster.png"
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/fidelity-ladder.png",
+      "alt": "Fidelity ladder: five lattices, both effect triples and the native statuses",
+      "poster": ""
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/ladder-diagnostic.png",
+      "alt": "Posthoc rigid-solve diagnostic (not frozen, changes no decision)",
+      "poster": ""
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/nca-pattern/returned-analysis/damage-trajectories.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/nca-pattern/returned-analysis/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/nca-seed-placement/returned-analysis/damage-trajectories.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/nca-seed-placement/returned-analysis/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/returned-analysis/curriculum-trajectories.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/returned-analysis/poster.png"
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/artifacts/observed-allometry/observed-update.png",
+      "alt": "Recorded figure (not a video)",
+      "poster": ""
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/tissue-microcarrier/travelling-voxels.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/tissue-microcarrier/poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/epithelial/media/A1-baseline.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/epithelial/media/A1-baseline_poster.png"
+    },
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/epithelial/media/A2-motility-off.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/epithelial/media/A2-motility-off_poster.png"
+    },
+    {
+      "tag": "IMG",
+      "src": "https://studio.morphoswarm.ai/data/results/figure.png",
+      "alt": "Recorded figure (not a video)",
+      "poster": ""
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "provider": "MiniMax",
+  "endpoint": "https://api.minimax.io/v1/t2a_v2",
+  "model": "speech-2.8-hd",
+  "voice_id": "English_expressive_narrator",
+  "speed": 1.2,
+  "text_sha256": "9924f65157adbc66124733b48b919edaa8f81ce465bc5850a2a62e4af8faec0c",
+  "audio_sha256": "bd5cd635361fbfa54cbd094b0d60581a6cd8504cb3f305d7c45ce712b4a67384",
+  "audio_bytes": 53556,
+  "usage": {
+    "audio_length": 3240,
+    "audio_sample_rate": 32000,
+    "audio_size": 53556,
+    "bitrate": 128000,
+    "word_count": 53,
+    "usage_characters": 53,
+    "audio_format": "mp3",
+    "audio_channel": 1
+  },
+  "subtitle_enabled": true,
+  "subtitle_type": "word",
+  "subtitle_status": "downloaded",
+  "audio_file": "closing.mp3",
+  "subtitle_file": "closing.subtitles.json",
+  "subtitle_sha256": "d3117660d43dfd8901d40de05d95a5faac50ff720f932c5f2b43ffdb181fc6c9",
+  "archive_note": "Provider trace identifier omitted; filenames made package-relative. Audio and subtitle bytes unchanged."
+}

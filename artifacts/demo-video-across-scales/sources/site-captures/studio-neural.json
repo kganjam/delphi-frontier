@@ -1,0 +1,231 @@
+{
+  "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=neural",
+  "title": "Studio · MorphoSwarm Studio",
+  "text": "Skip to content\nMorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI\nStudio\nFrontier\nKnowledge\nEvidence\nSystem\nAbout\nSearch the catalog\nSearch\nLive runtime\n\nSTUDIO / PROJECT\n\nFlying fish\n\nEngineer toward a vertebrate glider reachable from a beloniform ancestor, and make every missing bridge between scales visible.\n\nStudio\nEngineering workspace\nSimulations\nBelief\nProposal checker\nFish design history\nRegulatory applicability\nGenetic blueprints\nExperimentation\nEcology scenarios\nAssemblies\nClaim reuse and dispute\nOpen questions at this scale\nSubsystems\n1\nMolecular\npartial\n2\nMacromolecular\ngap\n3\nSubcellular\ngap\n4\nCellular\npartial\n5\nTissue\ngap\n6\nOrgan\nrecorded model\n7\nNeural / control\ngap\n8\nOrganism\nrecorded model\n9\nDevelopmental\npartial\n10\nCollective\ngap\n11\nEcological / evolutionary\npartial\nNeural / control scale\n\nNo control model or source is indexed.\n\nProject record draft: unimplemented Nothing indexed.\n\nEquations and claims\n\nNo equation is attached at this scale.\n\nParameters and unknowns\nJoint inertia, damping, stiffness and feedback gains are engineering values, not measured fish values.\nNo target-species circuit or kinematic recording constrains frequency, phase lag or amplitude.\nMedia\nRHYTHM-GENERATOR CONTROLLER DRIVING A DESIGNED JOINT SERVO (EIGHT SEGMENTS)\n\nSimulationResult. seconds (2 s run, 0.2 ms step)\n\nModel\n\nNo model is attached at this scale. No control model or source is indexed.\n\nOpen questions at this scale\n\nNo curated question names this scale.\n\nFilter the Frontier to this scale\n\nCouplings\nabsent No executable model.\nabsent No executable model of control.\nComments and proposed edits for this subsystem\n\nDrafts stay on this browser. Writing here stores a draft locally. Nothing is submitted, no agent is notified and nothing is regenerated. This box only keeps local drafts and exports them as JSON. To propose an annotation to the node, use the Contribute panel on this page: its contributor credential is held in memory only and a submission stays proposed.\n\nKind \ncomment\nquestion\nchallenge\nproposed_edit\n Comment or proposed change for the Neural / control subsystem\n\nSave as a local draft\n\nNo drafts for this subsystem.\nRun a bounded preview\n\nA preview, not a result about a fish. It runs a model with the parameters you set, for a short bounded time, on the node. The request is exactly {model, parameters}; values outside the preview limits are refused, not clamped. Nothing is stored or calibrated, and the plots are the returned numbers only.\n\nModel \nBioelectric (cell voltage)\nMechanobiology (adhesion clutch)\nSodium conductance scale\nmodel's own validation\nGap-junction conductance (mS/cm²)\nmodel's own validation\nDuration (ms)\n10 to 30\nTime step (ms)\n0.0125 to 0.025\n\nRun a preview Sends one bounded request; nothing is stored.\n\nRelated panels and their status\n\nWhat exists on this site and what does not. Nothing is simulated to fill a gap.\n\nGenomic data. A retrieved data slice (identifiers, annotations and counts, with their licences) is on the molecular scale panel: data, not a model. No genome editing has been performed.\nAutoformalization. A proposal checker shows a proposed formalization in separate parts and asks the node to check the constraints as written (units, exact-value consistency, negative controls). It does not check that a proposal matches its source or compile Lean. Separately, the Lean proof gallery provides actual theorem source, compiler receipts and rejected controls for three bounded model families.\nEvo2 candidates. Recorded Evo2 sequence continuations are model outputs. Regulatory applicability and genetic blueprints separate their proposed use from unmeasured promoter function, expression specificity and organism feasibility.\nRegenerating candidate geometry\n\nThe recorded STL files are outputs of earlier runs. The bounded solver returns an exact point in the encoded model, not a mesh, and this page generates no geometry. Open the solver and the print forms to request a solver run; a solver request and a generated artifact are different things.\n\nProject-wide: design review, contribution, record and assurance\nDesign controls and missing connections\n\nInspect parameter bounds, measured relationships, sensitivity and the next experiments needed to connect scales.\n\nOpen the design-control map\nDesign review: challenges to this design\n\nWhat this is. A design review is an authored, falsifiable challenge attached to one exact Project version. It is not a vote, consensus score, answer, scientific adjudication or project resolution. A reply does not change the challenged Project. Replies are ordinary annotations pinned to the same Project version.\n\nLooking for a Project record on the node…\nReview prompts from repository sources 4 · not reviewer challenges\n\nSource-only review prompts written from this repository's own project projection and model-coupling report. They are not challenges by reviewers, not new findings and not biological observations. Replace them with Project records and real annotations when the node serves them.\n\nFin-beam load bridge is scenario-level\n\naerodynamics organ source-only prompt\n\nThe organ panel calls the fin-beam model a scoped elastic surrogate. docs/model-coupling.md marks the load-to-beam bridge scenario-level: mean lift-pressure proxy times a declared tributary width, a declared ray-length fraction and an assumed EI. There is no calibrated fin stiffness or measured ray pressure.\n\nChallenge to write: Which loading regime and measured stiffness would falsify this bridge?\n\nSource: docs/model-coupling.md; site/content/projects.json\n\nStart a challenge from this\nNotch/Delta to fin stiffness is refused\n\ngenotype bridge cellular source-only prompt\n\nThe coupling report refuses the Collier Notch/Delta to fin-stiffness bridge: there is no mapping, and the transfer spans cell-to-organ and taxon contexts.\n\nChallenge to write: What exact, context-matched developmental or tissue measurement would be required before this counts as a biological bridge?\n\nSource: docs/model-coupling.md\n\nStart a challenge from this\nZebrafish interaction phenocopies fin proportion; transfer to halfbeaks unestablished\n\ngenotype bridge developmental source-only prompt\n\nThe Daane 2021 zebrafish interaction phenocopies flying-fish fin proportion, but transfer to halfbeaks is unestablished and no developmental model connects adult proportions to a program.\n\nChallenge to write: Which test separates correlation from the asserted genotype-to-fin pathway, with exact source and model pins?\n\nSource: site/content/projects.json; docs/model-coupling.md\n\nStart a challenge from this\nGlide release convention drives much of the range\n\naerodynamics organism source-only prompt\n\nThe glide report uses a release at 1.5 times stall speed from 1 m, equivalent to release heights from about 1.8 m to 32.6 m. It says this convention drives much of the range and is a model artifact.\n\nChallenge to write: Compare a sourced fixed-speed or fixed-height release; what observable would reject either?\n\nSource: engineering/simulation/results/summary.json; site/data/snapshot.json (glide findings)\n\nStart a challenge from this\nOther dimensions to inspect\nbiology Identify which measured animal, life stage and loading regime justify the modeled fin stiffness; if none is pinned, say unknown and propose a test.\ngeometry Challenge a ray-to-fin mapping at a specific Project member and cite an exact mesh or source record; say whether the geometry is measured, reconstructed or illustrative.\naerodynamics Separate a level-flight lift constraint from glide and sink predictions; name the regime and the evidence that would falsify the proxy.\ngenotype bridge Require an exact developmental or genetic Evidence pin before treating a morphology correlation as a causal genotype-to-fin link.\nmanufacturing State print material, orientation, minimum feature size and a physical test that could reject the design claim.\n\nThese are dimensions to inspect. They do not assert that the current Project has any particular flaw.\n\nDraft a challenge\n\nA draft stays in this browser. Nothing is submitted, no one is notified and the Project is not changed. Submitting needs an operator credential: POST /v1/design/reviews with Authorization: Bearer … and an Idempotency-Key. This page never holds a credential. The anchor must be the exact Project version, which the draft marks as unpinned until a Project record supplies it.\n\nDimension\nbiology\ngeometry\naerodynamics\ngenotype_bridge\nmanufacturing\nmaterials\nphysiology\nbehavior\necology\nvalidation\nother\nProject member (optional, 0 to 59)\nEvidence basis\nobserved\nsource\nsimulation\nformal\nassumption\nunknown\nChallenge (what is wrong or unsupported) \nScope (what this challenge covers and does not) \nAlternative explanation \nFalsifiable next test \nEvidence pins (optional; one exact namespace/Kind/id@version per line, at most 12) \nSave local draft\n\nContribute (optional)\n\nReading needs nothing. To propose an annotation you need a contributor credential. Paste it below: it stays in this page's memory only. It is never stored in the browser (no local storage, session storage, cookie or address), is sent only to this node's proposal routes, and is forgotten when you disconnect, reload or close the page. Being signed in to the site does not authorize a write.\n\nContributor credential\nConnect\nDisconnect\n\nNot connected: you can read and keep local drafts; submitting needs a credential.\n\nAnnotations and local drafts\n\nLoading exact Project context…\n\nSAVED ANNOTATIONS ON THE CURRENT EXACT VERSION\nLoad more saved annotations\nDISCUSSION ON EARLIER PROJECT VERSIONS\nDRAFTS IN THIS BROWSER\n\nNo local drafts.\n\nDRAFT AN ANNOTATION\nType\ncomment\nquestion\nchallenge\nproposed edit\nExact record versionRegion anchor JSON (optional)Reply to an exact saved Annotation (optional)\nNew annotation\nComment, question, or challenge\nSave local draftClear form\n\nProject record draft\n\nValidated but not submitted. This is the project as a Project record would carry it (file projects/flying-fish.draft.json, sha256 e4180e22588b…). Independent scientific acceptance is not established; the page does not submit records.\n\n13 pinned members; none declares a calibrated causal bridge (all say none declared). Every member ref is a snapshot-catalog ref (namespace 'snapshot'), not a live-store version: re-pin before submitting. Membership is a declared pin and states where a record applies; it infers no causal link between members. No calibration bridges any pair of scales; every coupling above the organ scale is refused or assumption-level. The numeric requirements are Fish 1990 observed ranges proposed as a design envelope, not a feasibility certificate.\n\n6 requirements all stage proposed, declared\n5 open questions\nDesign assurance: where this design is supported and where it is not\n\nNo whole-organism success figure exists. Project status: unsupported essential bridges. Biological success probability: not computed; calibrated: false. This is not an AlphaFold pLDDT or PAE equivalent: each part carries a vector of separate properties, and colours show one property at a time. Named parts are UI anchors, not measured segmentation or spatial error.\n\nColour parts by\nFormal properties\nNumerical fidelity\nEmpirical validation\nParameter coverage\nCross-scale transfer\nEnsemble robustness\nEmpirical validation\n:\nunknown\n(Accuracy/calibration unknown)\nColors are categorical evidence states, not calibrated probabilities or spatial-error scores Each status is also written out.\nschematic of named parts, not a measured shape\nScales\nmolecular\nunknown\nmacromolecular\nunknown\nsubcellular\nunknown\ncellular\nunknown\ntissue\nunknown\norgan\nunknown\nneural\nunknown\norganism\nunknown\ndevelopmental\nunknown\ncollective\nunknown\necological\nunknown\nevolutionary\nunknown\nSelect a part or scale\n\nEach status carries its scope and the exact source artifact digest and selector it rests on.\n\nInterfaces between models\n\nRows are the source model, columns the target. A cell is a scoped transfer check, not a spatial error. Dimensional mismatches are refused; “unknown” is a valid cell.\n\nThis table is wider than the screen: scroll sideways for the other columns.\n\nFROM \\ TO\tFLYING_FISH_CONSTRAINTS\tGLIDE_POINTMASS\tFINBEAM_EULER_BERNOULLI\tFIN_LOAD_BRIDGE\tHH1952_GAP_CHAIN\tMOTOR_CLUTCH_ECM\tRDFIELD_NONLINEAR_SWEEP\tCOLLIER1996_TWO_CELL\nflying_fish_constraints\t·\tassumption scenario\tunknown\tassumption scenario\tunknown\tunknown\tunknown\tunknown\nglide_pointmass\tunknown\t·\tunknown\tunknown\tunknown\tunknown\tunknown\tunknown\nfinbeam_euler_bernoulli\tunknown\trefused\t·\tunknown\tunknown\tunknown\tunknown\tunknown\nfin_load_bridge\tunknown\tunknown\tassumption scenario\t·\tunknown\tunknown\tunknown\tunknown\nhh1952_gap_chain\tunknown\tunknown\trefused\tunknown\t·\tunknown\tunknown\tunknown\nmotor_clutch_ecm\tunknown\tunknown\tunknown\tunknown\tunknown\t·\tunknown\tunknown\nrdfield_nonlinear_sweep\tunknown\trefused\tunknown\tunknown\tunknown\tunknown\t·\tunknown\ncollier1996_two_cell\tunknown\tunknown\trefused\tunknown\tunknown\tunknown\tunknown\t·\nNext questions\nUNSUPPORTED ESSENTIAL BRIDGES\nTarget-species cell/tissue measurements and a causal developmental-to-fin map unsupported\nBlocks: developmental biological design\nsources\nCalibrated geometry/deformation-to-lift/drag and held-out trajectories unsupported\nBlocks: loaded-fin flight prediction\nsources\nTarget-fin effective stiffness and boundary-condition data unknown\nBlocks: material-validity decision\nsources\nCOUNTEREXAMPLES\nformal_constraint_conflict unsat\nScope: within the declared constraints only; not organism feasibility; a source envelope is not a universal feasibility region; the lift constraint is a level-flight proxy (L = W), not a glide analysis (L = W cos(gamma))\nsources\nno_robust_candidate_winner\nsources\nNEXT ACTIONS, ORDERED BY DECLARED BLOCKER AND DEPENDENCY POLICY\nTarget-species cell/tissue measurements and a causal developmental-to-fin map unsupported essential bridge\nCan remove an explicit essential blocker; ranking among these needs measured cost/outcome models\nsources\nCalibrated geometry/deformation-to-lift/drag and held-out trajectories unsupported essential bridge\nCan remove an explicit essential blocker; ranking among these needs measured cost/outcome models\nsources\nTarget-fin effective stiffness and boundary-condition data unsupported essential bridge\nCan remove an explicit essential blocker; ranking among these needs measured cost/outcome models\nsources\nInspect and refine the recorded unconverged common-launch scenario before comparing it known numerical failure\nsources\n\nExpected information gain: not computed. No utility or information number is invented.\n\nEnsemble fractions (simulated scenarios only)\n\nThese count how many declared simulated scenarios met a predicate written before the runs. They are not a probability of biological success, and repeated draws sharing inputs are not independent confirmations.\n\nCANDIDATE\tSCENARIOS MEETING THE PREDICATE\tPREDICATE\tCAVEATS\nbaseline\nReference declared geometry; not an observed specimen\nray 0.15 m, EI ×1; parts pectoral-left, pectoral-right\t20 of 64 (31.3% of the simulated scenarios; biological success probability: not computed)\tFor both uniform load q and same-total tip force q*L: abs(tip)/L <= 0.1 and max(abs(slope)) <= 0.2 rad\npredicate declared before the runs\tFraction over the declared simulated scenarios only; paired load shapes/meshes are one trial, not biological success probability\nCommitted protocol bytes match; protocol commit is ancestor of declared pre-run code revision. Actual wall-time execution ordering is author-reported, not independently witnessed.\n256 shared-input groups.\nsources\n\nshorter-ray\nShortening may lose lifting area; flight consequence unmodeled\nray 0.12 m, EI ×1; parts pectoral-left, pectoral-right\t33 of 64 (51.6% of the simulated scenarios; biological success probability: not computed)\tFor both uniform load q and same-total tip force q*L: abs(tip)/L <= 0.1 and max(abs(slope)) <= 0.2 rad\npredicate declared before the runs\tFraction over the declared simulated scenarios only; paired load shapes/meshes are one trial, not biological success probability\nCommitted protocol bytes match; protocol commit is ancestor of declared pre-run code revision. Actual wall-time execution ordering is author-reported, not independently witnessed.\n256 shared-input groups.\nsources\n\nstiffer-ray\nStiffness change has unknown mass, material and developmental cost\nray 0.15 m, EI ×2; parts pectoral-left, pectoral-right\t34 of 64 (53.1% of the simulated scenarios; biological success probability: not computed)\tFor both uniform load q and same-total tip force q*L: abs(tip)/L <= 0.1 and max(abs(slope)) <= 0.2 rad\npredicate declared before the runs\tFraction over the declared simulated scenarios only; paired load shapes/meshes are one trial, not biological success probability\nCommitted protocol bytes match; protocol commit is ancestor of declared pre-run code revision. Actual wall-time execution ordering is author-reported, not independently witnessed.\n256 shared-input groups.\nsources\nEquation registry\n\n12 equations that exist as executable model code or checked formulas, with where each applies. An equation here is not a demonstrated mechanism; its scope line says what it is.\n\nEQ-WING-LOADING\n𝑊\n𝐿\n=\n𝑚\n𝑔\n𝑆\nW\nL\n\t​\n\n=\nS\nmg\n\t​\n\n\nflying_fish_constraints organism body\n\nVariables. m (input, kg); g (parameter, m/s^2); S (input, m^2); W_L (output, N/m^2)\n\nAssumptions. S>0; source envelope differs from a viability region\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-SIMILARITY\n𝑚\n′\n=\n𝑘\n3\n𝑚\n,\n𝑆\n′\n=\n𝑘\n2\n𝑆\n⇒\n𝑊\n𝐿\n′\n=\n𝑘\n𝑊\n𝐿\n,\n𝑉\n𝑠\n′\n=\n𝑘\n𝑉\n𝑠\nm\n′\n=k\n3\nm,S\n′\n=k\n2\nS⇒W\nL\n′\n\t​\n\n=kW\nL\n\t​\n\n,V\ns\n′\n\t​\n\n=\nk\n\t​\n\nV\ns\n\t​\n\n\nflying_fish_constraints organism body\n\nVariables. m (input, kg); S (input, m^2); k (assumed-scale-factor, 1); V_s (output, m/s); W_L (output, N/m^2)\n\nAssumptions. geometric similarity; unchanged body density, rho, C and gravity; positivity hypotheses\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-LEVEL-LIFT\n1\n2\n𝜌\n𝑉\n2\n𝑆\n𝐶\n𝐿\n≥\n𝑚\n𝑔\n2\n1\n\t​\n\nρV\n2\nSC\nL\n\t​\n\n≥mg\n\nflying_fish_constraints organism body\n\nVariables. rho (assumed-parameter, kg/m^3); V (input, m/s); S (input, m^2); C_L (assumed-parameter, 1); m (input, kg); g (parameter, m/s^2)\n\nAssumptions. level-flight lift proxy, not gliding feasibility; rho and CL are design assumptions\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-GLIDE-DYNAMICS\n𝑥\n˙\n=\n𝑉\ncos\n⁡\n𝛾\n,\nℎ\n˙\n=\n𝑉\nsin\n⁡\n𝛾\n,\n𝑚\n𝑉\n˙\n=\n−\n𝐷\n−\n𝑚\n𝑔\nsin\n⁡\n𝛾\n,\n𝑚\n𝑉\n𝛾\n˙\n=\n𝐿\n−\n𝑚\n𝑔\ncos\n⁡\n𝛾\nx\n˙\n=Vcosγ,\nh\n˙\n=Vsinγ,m\nV\n˙\n=−D−mgsinγ,mV\nγ\n˙\n\t​\n\n=L−mgcosγ\n\nglide_pointmass organism body\n\nVariables. x (state, m); h (state, m); V (state, m/s); gamma (state, rad); m (input, kg); g (parameter, m/s^2); L (input, N); D (input, N)\n\nAssumptions. point mass, vertical plane; constant commanded lift coefficient; no fin-deformation feedback or active control\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-AERO-POLAR\n𝐿\n=\n1\n2\n𝜌\n𝑉\n2\n𝑆\n𝐶\n𝐿\n,\n𝐷\n=\n1\n2\n𝜌\n𝑉\n2\n𝑆\n𝐶\n𝐷\n,\n𝐶\n𝐷\n=\n𝐶\n𝐷\n0\n+\n𝐶\n𝐿\n2\n𝜋\n𝑒\n𝐴\n𝑅\n,\n𝐴\n𝑅\n=\n𝑏\n2\n/\n𝑆\nL=\n2\n1\n\t​\n\nρV\n2\nSC\nL\n\t​\n\n,D=\n2\n1\n\t​\n\nρV\n2\nSC\nD\n\t​\n\n,C\nD\n\t​\n\n=C\nD0\n\t​\n\n+\nπeAR\nC\nL\n2\n\t​\n\n\t​\n\n,AR=b\n2\n/S\n\nglide_pointmass organism body\n\nVariables. rho (assumed-parameter, kg/m^3); V (input, m/s); S (input, m^2); b (input, m); C_L (assumed-parameter, 1); C_D (model-output, 1); C_D0 (assumed-parameter, 1); e (assumed-parameter, 1); AR (derived, 1); L (output, N); D (output, N)\n\nAssumptions. assumed parabolic polar; no sourced target-species aerodynamic calibration\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-FIN-BEAM\n𝑑\n2\n𝑑\n𝑥\n2\n(\n𝐸\n𝐼\n𝑑\n2\n𝑤\n𝑑\n𝑥\n2\n)\n=\n𝑞\n,\n𝑤\n(\n0\n)\n=\n𝑤\n′\n(\n0\n)\n=\n0\n;\n𝑤\n𝑢\n𝑛\n𝑖\n𝑓\n𝑜\n𝑟\n𝑚\n(\n𝐿\n)\n=\n𝑞\n𝐿\n4\n8\n𝐸\n𝐼\ndx\n2\nd\n2\n\t​\n\n(EI\ndx\n2\nd\n2\nw\n\t​\n\n)=q,w(0)=w\n′\n(0)=0;w\nuniform\n\t​\n\n(L)=\n8EI\nqL\n4\n\t​\n\n\nfinbeam_euler_bernoulli organ pectoral-leftpectoral-right\n\nVariables. x (coordinate, m); L (assumed-geometry, m); w (state-output, m); EI (assumed-material, N m^2); q (assumed-load, N/m)\n\nAssumptions. clamped-free Euler-Bernoulli beam; linear elastic small deflection; uniform loading closed form requires constant EI\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-HH-VOLTAGE\n𝐶\n𝑚\n𝑉\n˙\n𝑖\n=\n𝐼\n𝑖\n−\n𝑔\n𝑁\n𝑎\n𝑚\n𝑖\n3\nℎ\n𝑖\n(\n𝑉\n𝑖\n−\n𝐸\n𝑁\n𝑎\n)\n−\n𝑔\n𝐾\n𝑛\n𝑖\n4\n(\n𝑉\n𝑖\n−\n𝐸\n𝐾\n)\n−\n𝑔\n𝐿\n(\n𝑉\n𝑖\n−\n𝐸\n𝐿\n)\n+\n∑\n𝑗\n𝑔\n𝑖\n𝑗\n(\n𝑉\n𝑗\n−\n𝑉\n𝑖\n)\nC\nm\n\t​\n\nV\n˙\ni\n\t​\n\n=I\ni\n\t​\n\n−g\nNa\n\t​\n\nm\ni\n3\n\t​\n\nh\ni\n\t​\n\n(V\ni\n\t​\n\n−E\nNa\n\t​\n\n)−g\nK\n\t​\n\nn\ni\n4\n\t​\n\n(V\ni\n\t​\n\n−E\nK\n\t​\n\n)−g\nL\n\t​\n\n(V\ni\n\t​\n\n−E\nL\n\t​\n\n)+\nj\n∑\n\t​\n\ng\nij\n\t​\n\n(V\nj\n\t​\n\n−V\ni\n\t​\n\n)\n\nhh1952_gap_chain cellular\n\nVariables. V_i (state, mV); C_m (parameter, uF/cm^2); I_i (input, uA/cm^2); g_Na (parameter, mS/cm^2); g_K (parameter, mS/cm^2); g_L (parameter, mS/cm^2); g_ij (assumed-network, mS/cm^2); E_Na,E_K,E_L (fixed-reservoir-parameters, mV); m_i,h_i,n_i (gating-states, 1)\n\nAssumptions. squid source membrane; assumed equal-area sealed gap chain; fixed ion reservoirs, no pumps/depletion\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-HH-GATES\n𝑞\n˙\n=\n𝛼\n𝑞\n(\n𝑉\n)\n(\n1\n−\n𝑞\n)\n−\n𝛽\n𝑞\n(\n𝑉\n)\n𝑞\n,\n𝑞\n∈\n{\n𝑚\n,\nℎ\n,\n𝑛\n}\n;\n𝜙\n𝑇\n=\n3\n(\n𝑇\n−\n6.3\n)\n/\n10\n,\n𝑄\n10\n=\n3\nq\n˙\n\t​\n\n=α\nq\n\t​\n\n(V)(1−q)−β\nq\n\t​\n\n(V)q,q∈{m,h,n};ϕ\nT\n\t​\n\n=3\n(T−6.3)/10\n,Q\n10\n\t​\n\n=3\n\nhh1952_gap_chain cellular\n\nVariables. q (gating-state, 1); V (input, mV); alpha_q,beta_q (voltage-dependent-rates, 1/ms); T (scenario-parameter, degC)\n\nAssumptions. published voltage-dependent empirical rate functions; source temperature scaling\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-MOTOR-CLUTCH\n𝐹\n=\n∑\n𝑏\n𝑜\n𝑢\n𝑛\n𝑑\n𝑘\n𝑐\n(\n𝑎\n−\n𝑟\n𝑖\n−\n𝑥\n𝑠\n)\n=\n𝑘\n𝑙\n𝑥\n𝑠\n+\n𝑘\n𝑎\n(\n𝑥\n𝑠\n−\n𝑧\n)\n,\n𝑧\n˙\n=\n𝑘\n𝑎\n(\n𝑥\n𝑠\n−\n𝑧\n)\n/\n𝜂\n,\n𝑎\n˙\n=\n𝑣\n𝑢\n(\n1\n−\n𝐹\n/\n(\n𝑁\n𝑚\n𝐹\n𝑚\n)\n)\nF=\nbound\n∑\n\t​\n\nk\nc\n\t​\n\n(a−r\ni\n\t​\n\n−x\ns\n\t​\n\n)=k\nl\n\t​\n\nx\ns\n\t​\n\n+k\na\n\t​\n\n(x\ns\n\t​\n\n−z),\nz\n˙\n=k\na\n\t​\n\n(x\ns\n\t​\n\n−z)/η,\na\n˙\n=v\nu\n\t​\n\n(1−F/(N\nm\n\t​\n\nF\nm\n\t​\n\n))\n\nmotor_clutch_ecm cellular\n\nVariables. F,F_m (force-state/parameter, pN); a,r_i,x_s,z (states/reference, nm); k_c,k_l,k_a (parameters, pN/nm); eta (parameter, pN s/nm); v_u (parameter, nm/s); N_m (parameter, 1)\n\nAssumptions. quasi-static linear force balance; shared actin displacement; standard-linear-solid contact, no whole-cell shape\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-CLUTCH-RUPTURE\n𝑝\n𝑜\n𝑓\n𝑓\n=\n1\n−\nexp\n⁡\n[\n−\n𝑘\n𝑜\n𝑓\n𝑓\nexp\n⁡\n(\nmax\n⁡\n(\n𝑓\n𝑖\n,\n0\n)\n/\n𝐹\n𝑏\n)\nΔ\n𝑡\n]\n,\n𝑝\n𝑜\n𝑛\n=\n1\n−\nexp\n⁡\n(\n−\n𝑘\n𝑜\n𝑛\nΔ\n𝑡\n)\np\noff\n\t​\n\n=1−exp[−k\noff\n\t​\n\nexp(max(f\ni\n\t​\n\n,0)/F\nb\n\t​\n\n)Δt],p\non\n\t​\n\n=1−exp(−k\non\n\t​\n\nΔt)\n\nmotor_clutch_ecm cellular\n\nVariables. p_on,p_off (frozen-rate-transition-probabilities, 1); k_on,k_off (parameters, 1/s); f_i,F_b (force-state/parameter, pN); Delta t (numerical-step, s)\n\nAssumptions. slip bonds with Bell rupture; frozen-rate stochastic splitting; compression uses unloaded rate\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-RD-SCHNAKENBERG\n∂\n𝜏\n𝑢\n=\n∇\n2\n𝑢\n+\n𝑎\n−\n𝑢\n+\n𝑢\n2\n𝑣\n,\n∂\n𝜏\n𝑣\n=\n𝐷\n𝑣\n∇\n2\n𝑣\n+\n𝑏\n−\n𝑢\n2\n𝑣\n∂\nτ\n\t​\n\nu=∇\n2\nu+a−u+u\n2\nv,∂\nτ\n\t​\n\nv=D\nv\n\t​\n\n∇\n2\nv+b−u\n2\nv\n\nrdfield_nonlinear_sweep tissue\n\nVariables. u,v (states, model units); tau (coordinate, dimensionless model time); a,b,D_v (parameters, model units)\n\nAssumptions. Schnakenberg branch only; 1-D no-flux boundaries; no SI tissue length/time or fin mapping\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nEQ-PRESSURE-LINE-LOAD\n𝑝\n=\n1\n2\n𝜌\n𝑉\n2\n𝐶\n𝐿\n,\n𝑞\n=\n𝑝\n𝑤\n𝑡\n,\n𝐿\n𝑟\n𝑎\n𝑦\n=\n𝑓\n𝑟\n𝑎\n𝑦\n𝑏\n/\n2\np=\n2\n1\n\t​\n\nρV\n2\nC\nL\n\t​\n\n,q=pw\nt\n\t​\n\n,L\nray\n\t​\n\n=f\nray\n\t​\n\nb/2\n\nfin_load_bridge organ pectoral-leftpectoral-right\n\nVariables. p (mean-pressure-proxy, Pa); rho (assumed-parameter, kg/m^3); V (input, m/s); C_L (assumed-parameter, 1); w_t (assumed-width, m); q (output, N/m); f_ray (assumed-length-fraction, 1); b (input, m); L_ray (output, m)\n\nAssumptions. fixed mean lift-pressure proxy; declared tributary width and ray fraction; no deformation-dependent aerodynamic feedback\n\nDomain. Published/scoped computational model; no target-fish calibration or biological correspondence established\n\nScope. An executable model equation/checked mathematical formula, not a demonstrated developmental mechanism\n\nsources and checks\nUNRESOLVED BIOLOGICAL CONNECTIONS\ngene-to-fin-program missing mechanism No calibrated gene-to-channel-to-pattern-to-fin equation stack is established (scales: molecular, developmental, organ)\nsources\ntissue-to-EI missing mechanism No calibrated cell/contact/pattern-to-ray material/geometry map exists (scales: cellular, tissue, organ)\nsources\ndeformed-fin-to-polar missing mechanism A bending-only static two-way FEM/VLM scenario is implemented. A measured deformed-fin polar, finite torsion, and calibrated continuous fluid-structure dynamics remain missing. (scales: organ, organism)\nsources\nneural-caudal-control missing mechanism Bounded airborne fin feedback and neighbor-response scenarios are implemented. Calibrated neural control, underwater propulsion and the water-to-air transition remain missing. (scales: neural, organism)\nsources\nwhole-life-history missing mechanism No growth, ecological fitness or evolutionary reachability equations established (scales: developmental, ecological, evolutionary)\nsources\n\nAggregation: No product/sum of confidence; shared source/model inputs form dependence groups; repeated frames/seeds are not biological confirmations\n\nNotices (4)\nEvidence index (38 files)\n\nMap file sha256 e66ed5e834df…. Typed coupling “pass” means dimensional and interface consistency only. Repeated frames, seeds and shared priors are not independent biological confirmations.\n\nsnapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)\n\nInput files and sha256\n\nDesign geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.",
+  "links": [
+    {
+      "text": "Skip to content",
+      "url": "https://studio.morphoswarm.ai/#main"
+    },
+    {
+      "text": "MorphoSwarm\nStudio\nCLAIMS AND EVIDENCE: DELPHI",
+      "url": "https://studio.morphoswarm.ai/#/home"
+    },
+    {
+      "text": "Studio",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Frontier",
+      "url": "https://studio.morphoswarm.ai/#/frontier"
+    },
+    {
+      "text": "Knowledge",
+      "url": "https://studio.morphoswarm.ai/#/knowledge"
+    },
+    {
+      "text": "Evidence",
+      "url": "https://studio.morphoswarm.ai/#/evidence"
+    },
+    {
+      "text": "System",
+      "url": "https://studio.morphoswarm.ai/#/work"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/blog"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/team"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/docs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/about/inspirations"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/generative"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/demo"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/faq"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/work?tab=connect"
+    },
+    {
+      "text": "STUDIO",
+      "url": "https://studio.morphoswarm.ai/#/studio"
+    },
+    {
+      "text": "Studio",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish"
+    },
+    {
+      "text": "Engineering workspace",
+      "url": "https://studio.morphoswarm.ai/#/engineering"
+    },
+    {
+      "text": "Simulations",
+      "url": "https://studio.morphoswarm.ai/#/simulations"
+    },
+    {
+      "text": "Belief",
+      "url": "https://studio.morphoswarm.ai/#/belief"
+    },
+    {
+      "text": "Proposal checker",
+      "url": "https://studio.morphoswarm.ai/#/formalize"
+    },
+    {
+      "text": "Fish design history",
+      "url": "https://studio.morphoswarm.ai/#/history"
+    },
+    {
+      "text": "Regulatory applicability",
+      "url": "https://studio.morphoswarm.ai/#/regulatory"
+    },
+    {
+      "text": "Genetic blueprints",
+      "url": "https://studio.morphoswarm.ai/#/blueprints"
+    },
+    {
+      "text": "Experimentation",
+      "url": "https://studio.morphoswarm.ai/#/experimentation?scale=neural"
+    },
+    {
+      "text": "Ecology scenarios",
+      "url": "https://studio.morphoswarm.ai/#/ecology"
+    },
+    {
+      "text": "Assemblies",
+      "url": "https://studio.morphoswarm.ai/#/assemblies"
+    },
+    {
+      "text": "Claim reuse and dispute",
+      "url": "https://studio.morphoswarm.ai/#/reuse"
+    },
+    {
+      "text": "Open questions at this scale",
+      "url": "https://studio.morphoswarm.ai/#/frontier?scale=neural"
+    },
+    {
+      "text": "1\nMolecular\npartial",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=molecular"
+    },
+    {
+      "text": "2\nMacromolecular\ngap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=macromolecular"
+    },
+    {
+      "text": "3\nSubcellular\ngap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=subcellular"
+    },
+    {
+      "text": "4\nCellular\npartial",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=cellular"
+    },
+    {
+      "text": "5\nTissue\ngap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=tissue"
+    },
+    {
+      "text": "6\nOrgan\nrecorded model",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organ"
+    },
+    {
+      "text": "7\nNeural / control\ngap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=neural"
+    },
+    {
+      "text": "8\nOrganism\nrecorded model",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=organism"
+    },
+    {
+      "text": "9\nDevelopmental\npartial",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=developmental"
+    },
+    {
+      "text": "10\nCollective\ngap",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=collective"
+    },
+    {
+      "text": "11\nEcological / evolutionary\npartial",
+      "url": "https://studio.morphoswarm.ai/#/studio/flying-fish?scale=ecological"
+    },
+    {
+      "text": "Filter the Frontier to this scale",
+      "url": "https://studio.morphoswarm.ai/#/frontier?scale=neural"
+    },
+    {
+      "text": "proposal checker",
+      "url": "https://studio.morphoswarm.ai/#/formalize"
+    },
+    {
+      "text": "Lean proof gallery",
+      "url": "https://studio.morphoswarm.ai/#/proofs"
+    },
+    {
+      "text": "Regulatory applicability",
+      "url": "https://studio.morphoswarm.ai/#/regulatory"
+    },
+    {
+      "text": "genetic blueprints",
+      "url": "https://studio.morphoswarm.ai/#/blueprints"
+    },
+    {
+      "text": "Open the solver and the print forms",
+      "url": "https://studio.morphoswarm.ai/#/engineering"
+    },
+    {
+      "text": "Open the design-control map",
+      "url": "https://studio.morphoswarm.ai/#/design-control"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/frontier/F002"
+    },
+    {
+      "text": "",
+      "url": "https://studio.morphoswarm.ai/#/frontier/F003"
+    },
+    {
+      "text": "snapshot.json",
+      "url": "https://studio.morphoswarm.ai/data/snapshot.json"
+    },
+    {
+      "text": "catalog.json",
+      "url": "https://studio.morphoswarm.ai/data/catalog.json"
+    },
+    {
+      "text": "licence",
+      "url": "https://studio.morphoswarm.ai/vendor/katex/LICENSE"
+    }
+  ],
+  "media": [
+    {
+      "tag": "VIDEO",
+      "src": "https://studio.morphoswarm.ai/artifacts/simulations/behavior-cpg/behavior.mp4",
+      "alt": "",
+      "poster": "https://studio.morphoswarm.ai/artifacts/simulations/behavior-cpg/poster.png"
+    }
+  ]
+}

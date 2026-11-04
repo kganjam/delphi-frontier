@@ -1,0 +1,82 @@
+Skip to content
+MorphoSwarm
+Studio
+CLAIMS AND EVIDENCE: DELPHI
+Studio
+Frontier
+Knowledge
+Evidence
+System
+About
+Search the catalog
+Search
+Live runtime
+Claim reuse and an independent dispute
+
+One existing published Claim was read by two separate computations before they ran. An independent reviewer then recorded both results as disputed. This is a worked example of versioned reuse and of a disagreement that stays visible, not a measure of benefit.
+
+Read this first. Two illustrative mathematical stiffness candidates under one already published exact Claim context; not measured fish biology, collective benefit or biological validation. Two Actions using one Claim is a count of uses, not a saving of time or cost (not measured), not a collective benefit (not measured) and not biological evidence (empirical validation: unknown; success probability: not computed).
+
+1. The shared Claim
+
+eng-finmech-claim-ei-crit @4998ef85bd98…
+
+2 distinct current Actions recorded a typed uses link to this exact version, with the neighbourhood read in full. The audit checked that each computation read the Claim and bound its input before the solver ran: yes, in that order. Chronology uses the producer's own UTC times, not an outside time anchor.
+
+agent-fin-reuse-below-threshold-v1 @0ed92cdd83a6… uses eng-finmech-claim-ei-crit @4998ef85bd98…
+agent-fin-reuse-above-threshold-v1 @6753217293d3… uses eng-finmech-claim-ei-crit @4998ef85bd98…
+2. Two computations from that Claim
+The two computations
+CASE	STIFFNESS USED (N M², EXACT)	TIP OVER SPAN	MAX SLOPE (RAD)	INSIDE THE DECLARED MODEL DOMAIN	RECORDS
+below-threshold	11907/20480000
+from the Claim's threshold 1323/2048000	0.111111 (limit 0.1)	0.148148	outside: a retained counterexample numerical checks passed	agent-fin-reuse-below-threshold-v1 @0ed92cdd83a6… state submitted
+agent-fin-reuse-evidence-below-threshold-v1 @f1d756de9af5… proposed
+result 94407c399f8f…
+above-threshold	14553/20480000
+from the Claim's threshold 1323/2048000	0.090909 (limit 0.1)	0.121212	inside numerical checks passed	agent-fin-reuse-above-threshold-v1 @6753217293d3… state submitted
+agent-fin-reuse-evidence-above-threshold-v1 @745133a46891… proposed
+result ae353610c4aa…
+
+The lower candidate exceeds the declared tip-over-span limit, so it is outside the surrogate's valid domain and is kept as a counterexample, not a prediction of fin deformation. All pressure, geometry, material and validity inputs are declared illustration assumptions.
+
+3. The independent review: disputed
+
+Reviewer fin-reuse-reviewer, policy frontier-independent-review-0.1. Decision recorded for both Evidence records: disputed. The computation checks passed; empirical relevance and independent replication did not. The decision lives in each Assessment's payload; the records are the source of truth.
+
+Review dimensions for each case
+DIMENSION	BELOW CANDIDATE	ABOVE CANDIDATE
+applicability	passed
+Applies to the declared surrogate only (declared rho, V, CL, width, ray length, thresholds; assumed EI). Not to any fish.	passed
+Applies to the declared surrogate only (declared rho, V, CL, width, ray length, thresholds; assumed EI). Not to any fish.
+computational replay formal check	passed
+My own exact-fraction closed form gives tip/L 1/9 (exact), outside the 1/10 limit; slope 4/27 within 1/5; my own Hermite FEM and a replay of the author's code (profile.csv byte-identical) agree to 5.1e-10; zero-load, L^3-mutant and five altered-Claim controls behave as required.	passed
+My own exact-fraction closed form gives tip/L 1/11 (exact), within the 1/10 limit; slope 4/33 within 1/5; my own Hermite FEM and a replay of the author's code (profile.csv byte-identical) agree to 5.1e-10; zero-load, L^3-mutant and five altered-Claim controls behave as required.
+empirical relevance	insufficient
+EI, load and ray length are declared illustration values; no measured fin ray, pressure or outcome is involved, so relevance to any observation is unestablished.	insufficient
+EI, load and ray length are declared illustration values; no measured fin ray, pressure or outcome is involved, so relevance to any observation is unestablished.
+independent replication	insufficient
+My recomputation is computational and shares the declared source, model and inputs; no independent non-computational replication exists.	insufficient
+My recomputation is computational and shares the declared source, model and inputs; no independent non-computational replication exists.
+source fidelity	passed
+Source request and result sha256 match the Claim's declared pins; the before-run Claim read equals the live record; every listed artifact matches its committed file. The source itself is producer-made and still unreviewed.	passed
+Source request and result sha256 match the Claim's declared pins; the before-run Claim read equals the live record; every listed artifact matches its committed file. The source itself is producer-made and still unreviewed.
+statistical adequacy	not applicable
+Deterministic computation under declared inputs: no sample, estimate or uncertainty interval exists to assess.	not applicable
+Deterministic computation under declared inputs: no sample, estimate or uncertainty interval exists to assess.
+target fidelity	passed
+The Evidence addresses the Claim's stated declared-example threshold (relation qualifies) and nothing broader.	passed
+The Evidence addresses the Claim's stated declared-example threshold (relation qualifies) and nothing broader.
+4. What the author said back
+
+The author's response agreed with each finding and changed no record: the disagreement stands. Original proposals that were never leased or run were replaced before any computation, and are not counted as uses (Ready but never leased/run, superseded before compute for cache identity strengthening; excluded from executed reuse count).
+
+Author response (full text)
+Producer README (full text)
+
+Audit artifacts/claim-reuse/audit.json feb661036783… · review readback docs/reviews/fin-reuse-review-run/readback
+
+snapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)
+
+Input files and sha256
+
+Design geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.

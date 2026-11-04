@@ -1,0 +1,22 @@
+PUBLIC ARCHIVE BOUNDARY
+
+Included supporting content
+- Canonical LinkedIn post, email and optional first-comment drafts, unchanged.
+- Public source notes, source attribution and scientific limits.
+- All 49 source-inventory entries with public media/manifest URLs, recorded tests and separately labeled proposed questions.
+- Public source evidence used by the two cuts, selected narration/dialogue and build inputs, supplied by the media archive.
+
+Intentionally omitted
+- OneDrive sharing dialogs, browser accessibility dumps and sharing-session receipts. These contain account context, session/correlation identifiers and machine paths. Only the intentionally public video link and final content hash are retained in public notes.
+- Raw shared-chat HTML, message JSON, transcripts and local tmux/assistant session logs. They are not needed to rebuild the films.
+- The recovered Slide 5 pitch transcript. It contains superseded quantitative and scale-count claims not carried into the final films; the final narration is the canonical dialogue.
+- Credentials, authentication material, service configuration files, private browser state and personal filesystem paths.
+- Superseded movie exports and redundant work caches. The two chosen cuts, their essential original recordings and all five short closing auditions are retained for editing.
+- Vendored dependency trees, node_modules, Python bytecode, temporary frame/shot caches and downloaded copies of the delivered OneDrive movie.
+- Unused simulation videos and the seven earlier edited tours as duplicate binary copies. All inventory entries retain their public links, source identity, scope and recorded checks. Assets needed by the two archived cuts are retained separately.
+
+Portability
+The inventory uses public URLs rather than machine-specific local-media paths. The selected film source manifests use package-relative paths. Public links can change after the recorded check; retained source hashes identify the bytes used during production.
+
+Scope of review
+This boundary addresses the reviewed Delphi-LinkedIn package. It is not a claim that every file in other repositories or user directories was inspected.

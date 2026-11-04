@@ -1,0 +1,539 @@
+Skip to content
+MorphoSwarm
+Studio
+CLAIMS AND EVIDENCE: DELPHI
+Studio
+Frontier
+Knowledge
+Evidence
+System
+About
+Search the catalog
+Search
+Live runtime
+Engineering
+
+From a requirement to a constrained design: requirements and constraints, candidate checks, and what simulation would be needed. Mission: engineer toward a flying fish.
+
+Geometry and simulations, as recorded
+Precursor-inspired short-fin form (rejected glider candidate)
+Enlarged-pectoral two-wing glider (Exocoetus-type proportions)
+Enlarged pectoral + pelvic four-wing glider (Cypselurus-type proportions)
+Comparison N1: Cypselurus baseline, 0.05 kg
+Comparison N2: wing area x1.3, same aspect ratio
+Comparison N3: wing area x1.3, aspect ratio x1.2
+▶ Two-cell Delta-Notch replay (BioModels BIOMD0000001047)
+▶ Elastic fin-ray surrogate (Euler-Bernoulli cantilever)
+▶ Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions
+▶ Adhesion clutch mechanics (render of a simulation)
+▶ Glide trajectories at a fixed launch (point mass)
+▶ Reaction-diffusion field time series
+▶ 2D low-Reynolds flow past the N1 silhouette (lattice-Boltzmann), verdict FAIL
+▶ BETSE potassium-permeability sensitivity with gap-junction controls
+▶ Collagen-mimetic trimer: three 100 ps molecular dynamics runs on an H100 (OpenMM, CUDA)
+▶ Collagen-mimetic trimer: three 900 ps continuations from the 100 ps states (OpenMM, CUDA)
+▶ Collagen-mimetic trimer: 0.2 ps CPU setup run (OpenMM), the earlier short run
+▶ Candidate N1 as a 3D model: path-traced turntable
+▶ 3D flow past the fish3d candidate, Re = 1000, 128 cells along the body (WaterLily, H100)
+▶ 3D flow past the fish3d candidate, Re = 1000, 192 cells along the body (WaterLily, H100)
+▶ Morpheus full-horizon logger chart (t to 2.0): a chart of logged counts, not a spatial tissue movie
+▶ Rhythm-generator controller driving a designed joint servo (eight segments)
+▶ Erk trigger waves and wave-gated growth on one regenerating zebrafish scale
+▶ Static aeroelastic coupling of the fins: 36 arms, bending-only torsion-rigid scaffold
+▶ Aeroelastic fidelity ladder: 45 native arms, no effect magnitude resolved
+▶ Neural cellular automaton fin pattern, original run: 0 of 48 predicates
+▶ Neural cellular automaton fin pattern, corrected seed placement: 32 of 48 predicates, left-half recovery 0 of 12
+▶ NCA curriculum repair/persistence tradeoff: 89/192 design predicates
+▶ Soft-voxel toy body under a travelling actuation wave (Voxelyze)
+▶ Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off
+▶ Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off — protrusion-disabled control
+
+Files from earlier runs, each with its hash in the sections below and in Simulations. Illustrations and simulated output, not observations.
+
+1 Goal
+2 Constraints
+3 Candidate
+4 Results
+5 Open questions
+Goal
+
+Design requirement: a vertebrate glider reachable from a beloniform ancestor that satisfies the constraints below at a stated mass. The goal does not assert that such a design is feasible.
+
+See it on the whiteboard
+
+Scales
+
+All eleven MorphoSwarm scales are shown. A scale without an executable coupling to its neighbours is an open question, not a gap to ignore.
+
+Molecular
+Cell
+Tissue
+Organ
+Organism
+Development
+Evolution / ecology
+1
+Molecular
+2
+Macromolecular
+3
+Subcellular
+4
+Cellular
+5
+Tissue
+6
+Organ
+7
+Neural / control
+8
+Organism
+9
+Developmental
+10
+Collective
+11
+Ecological / evolutionary
+Organism scale
+WHAT IS INDEXED
+Fish, F. E. (1990) full-text
+Park, H. & Choi, H. (2010) full-text, as returned by a fetch tool
+Davenport, J. (1992) abstract, as returned by a fetch tool
+OPEN QUESTION
+
+Wing loading, aspect ratio, glide distance and ground effect are measured or computed in the literature. Maximum L/D = 11.0 is a 1929 calculation relayed by Fish, not a measurement. Davenport 2003 (the maximum-size stability argument) has not been read.
+
+COUPLINGS
+empirical fit only Organ → Organism: Fish (1990) allometric fits relate mass to wing loading per genus. Fitted coefficients, not mechanism; valid only inside the measured mass range.
+no executable coupling Neural / control → Organism: No executable model of control.
+no executable coupling Ecological / evolutionary → Organism: Unestablished. A novel-appendage flag is metadata, not a reachability check; no model links developmental or evolutionary process to organism-scale design.
+no executable coupling Organism → Developmental: No executable model from adult design back to a developmental programme.
+
+The browser calculation below is the only runnable organism-scale model; it is arithmetic on published fits, not a flight simulation.
+
+Design workspace: flying-fish candidate
+
+Preliminary. This arithmetic reimplements an earlier checker table. Where the corrected solver differs (opt-in assumptions, qualitative flags that cannot pass, genus context), the solver is authoritative. With a live runtime, use the solver request below; this page does not override it.
+
+Calculation, not a solver. The numbers below are browser arithmetic on published fits (Fish 1990) and thresholds from the checker handoff. They are not an SMT solver, not a simulation, and not validated for any organism. Blank means unknown, and unknown stays unknown.
+
+Side
+Top
+Front
+3/4 view
+
+Drag to rotate, or focus the drawing and use the arrow keys. Stylised body proportions are fixed; only the entered dimensions and fin share change the shape. A design visualisation, not an observed fish and not CFD.
+
+0.001
+0.01
+0.1
+1
+10
+10
+100
+1000
+body mass M (kg, log)
+wing loading WL (N/m², log)
+208.9 largest measured WL
+candidate WL 113
+Cypselurus
+b = 0.4
+Danichthys
+b = 0.533
+Exocoetus
+b = 0.36
+Fodiator
+b = 0.434
+Hirundichthys
+b = 0.526
+Parexocoetus
+b = 0.408
+Nothing declared
+Cypselurus-type, 0.1 kg
+Scaled-up Cypselurus, 5 kg
+Oxyporhamphus-like (CG aft)
+
+CORE DIMENSIONS
+Body mass kg
+Measured range 0.003–0.53 kg
+Standard length m
+Extant exocoetids reach 0.50 m
+Wing span (tip to tip) m
+Pectoral span; the area uses span² / AR
+Aspect ratio
+Measured 3.0–16.9 (Table III up to 19.9)
+Advanced scientific settings fin length, launch speed, air density, lift coefficient, solver requirements, premises and opt-in assumptions
+Clear all (unknown)
+Download candidate JSON
+
+The download is a local file on your machine. Nothing is submitted anywhere.
+
+Derived (arithmetic)
+WING AREA S = SPAN² / AR
+0.008644 m²
+WING LOADING WL = M G / S
+113.5 N/m²
+REQUIRED LAUNCH SPEED 16 √(WL / 205.5)
+11.9 m/s
+MASS INSIDE MEASURED RANGE?
+Yes
+Requirements and constraints, checked against this candidate
+NO FLAG RAISED
+
+3 of 8 checks could be evaluated. Cannot evaluate: C2, C3, C4, C5, C6a.
+
+Scope: browser arithmetic against published thresholds. “No flag raised” means no evaluable threshold failed. It does not mean feasible, evolvable or flightworthy, and says nothing about reachability. “Flag raised” names thresholds or declared premises, not an impossibility.
+
+ID	CONSTRAINT	STATUS	DETAIL	SOURCE AND CONFIDENCE
+C1	Wing-loading envelope
+WL <= 208.9 N/m^2	pass	WL = 113.5 N/m^2 is within the measured maximum of 208.9.
+The largest wing loading measured on any specimen across six genera (Danichthys; the Cypselurus maximum is 205.5). Genus context matters: a candidate is not a Danichthys unless stated. Exceeding it is outside what has been observed, not proof of impossibility.	Fish 1990
+High empirically; moderate as a limit
+C2	Launch speed implied by loading (Cypselurus taxi anchor)
+IF the taxi-speed assumption is opted in: declared speed >= 16 sqrt(WL/205.5) m/s	cannot evaluate	Not evaluated: the 16 m/s anchor is a Cypselurus taxiing launch speed (observed 16-20 m/s), not a flight-speed bound for every design. Opt in below to apply it as an assumption. Implied value if applied: 11.9 m/s.
+The 16-20 m/s figures are observed Cypselurus taxi/launch speeds. Applying them as a flight-speed requirement for any design is an opt-in assumption, off by default.	Fish 1990
+Moderate at best; a Cypselurus taxiing launch speed, not a universal flight bound
+C3	Pectoral fin length
+fin length <= 0.79 x standard length	cannot evaluate	Needs pectoral fin length and standard length.
+Davenport (1992, abstract) reports swimming is impaired beyond about 78-79% of standard length. Treat it as a reported envelope, not a demonstrated ceiling.	Davenport 1992
+Moderate
+C4	Longitudinal stability (qualitative flag only)
+source-assigned qualitative CG statement; never a green pass	cannot evaluate	Declared not aft. The source statement is qualitative and no numeric CG offset or threshold exists, so this cannot be a pass.
+Davenport reports CG-behind-pectorals as why Oxyporhamphus cannot take off. Without a numeric CG offset and a threshold the page cannot return a pass; it can only show the flag. Davenport 2003 is unread. No measured centre-of-gravity number exists for any exocoetid; Oxyporhamphus is the one living illustration.	Davenport 1992
+Qualitative; no numeric centre-of-gravity data exist
+C5	Aspect-ratio envelope (opt-in assumption)
+IF the fin-level AR assumption is opted in: 3.0 <= AR <= 16.9 (19.9 in Fish Table III)	cannot evaluate	Not evaluated: Fish's 3.0-16.9 is the aspect ratio of individual pectoral fins; this AR is whole-wing span^2/area. Opt in below to treat them as the same (an assumption). AR = 10.
+Fish's 3.0-16.9 is the aspect ratio of individual pectoral fins. This page's AR is span squared over whole-wing area. Treating them as the same is an assumption, off by default.	Fish 1990
+Moderate for individual pectoral fins; unestablished for a whole wing
+C6a	Novel-appendage flag (metadata only)
+a declared novel appendage or powered flapping is flagged; absence of a flag establishes nothing	cannot evaluate	No flag raised. That does NOT establish evolutionary reachability: the developmental and evolutionary bridge is unestablished.
+A dorsal wing, jointed or flapping wing, novel skeletal element or sustained powered flapping falls outside the route sourced from the exocoetid literature (enlarged fin rays plus an axial/tail launch motor; flyingfishes nested in halfbeaks). That means unsupported by the sourced envelope: state your mechanism. It does not mean impossible. No check on this page establishes reachability; the developmental and evolutionary bridge is unestablished.	Lovejoy 2004
+Metadata only. NOT a reachability check
+C6b	Extant-species size envelope
+standard length <= 0.50 m	pass	SL = 0.212 m is within the extant envelope (<= 0.50 m).
+Observed over 69 extant Exocoetidae with a parsed maximum (10.3-50.0 cm TL). Not a physical bound.	FishBase lengths
+High for extant species; low as a physical limit
+C6c	Ontogenetic gliding threshold
+standard length >= 0.05 m	pass	SL = 0.212 m >= 0.05 m.
+Juveniles under 0.05 m do not fly (Hubbs 1933, relayed by Fish).	Fish 1990
+Moderate
+
+A satisfied check means “not refuted by this threshold”. A threshold measured on one population does not transfer outside it, and the extrapolation flag says when it is being used that way. “Cannot evaluate” is never counted as a pass.
+
+What the measured fits say beyond the measured range
+
+Browser arithmetic on the Cypselurus fit; extrapolates beyond the 0.53 kg maximum measured. The fit crosses 500 N/m^2, about 2.4x anything measured, near 4 kg.
+
+MASS (KG)	CYPSELURUS WL (N/M²)	HIRUNDICHTHYS WL (N/M²)	REQUIRED SPEED, ANCHORED AT 16 M/S (CYPSELURUS)	STATUS
+0.53	221	279	16.6 m/s	edge of measured range
+1	285	390	18.8 m/s	extrapolated
+2	376	562	21.6 m/s	extrapolated
+5	543	909	26 m/s	extrapolated
+10	716	1.31e+3	29.9 m/s	extrapolated
+Open questions that limit this design
+
+For each constraint, the unresolved questions that stop it from being strengthened or trusted further. They update with the candidate's results; each opens on the whiteboard.
+
+C1 Wing-loading envelope pass EQ1: Turn Davenport (2003) into a real size bound · EQ2: Find raw exocoetid fin-area and mass data · EQ4: Couple fin morphometry to a mechanism, not only a fit
+C2 Launch speed implied by loading (Cypselurus taxi anchor) cannot evaluate EQ5: Is a numeric L/D measurable from the existing wind-tunnel work?
+C3 Pectoral fin length cannot evaluate no unresolved question recorded
+C4 Longitudinal stability (qualitative flag only) cannot evaluate EQ1: Turn Davenport (2003) into a real size bound
+C5 Aspect-ratio envelope (opt-in assumption) cannot evaluate EQ2: Find raw exocoetid fin-area and mass data · EQ3: Resolve the aspect-ratio upper bound
+C6a Novel-appendage flag (metadata only) cannot evaluate EQ6: Does the lat4a x kcnh2a fin mechanism transfer from zebrafish to a halfbeak or flying fish?
+C6b Extant-species size envelope pass no unresolved question recorded
+C6c Ontogenetic gliding threshold pass no unresolved question recorded
+Printable form studies
+
+Form study pending a validated candidate. Engineered illustrative form. Not an ancestor, not a viable organism, not a demonstrated evolutionary path, not flight-tested. Fins are thickened for printing.
+
+one scale per set, so sizes compare within a set; sets have different masses. morphology-v1: display scale 0.35 (3 forms); nca-comparison-v1: display scale 0.45 (3 forms). Printer and resin: unknown / unknown; nothing has been printed. Built with solver 948c2e1d7 (work/guilds-engineering); libraries manifold3d 3.5.4, matplotlib 3.11.2, numpy 2.4.4, trimesh 5.2.0, z3-solver 5.3.3.0. The 3D shapes below are files from that run, not this page's parametric drawing.
+
+Precursor-inspired short-fin form (rejected glider candidate)
+
+Form B's body at 0.1 kg with the paired-fin lengths measured on non-gliding halfbeaks; isolates fin length, and the solver rejects it
+
+rendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 350 mm prop; fins are thickened print plates, not biological thickness. GIF
+
+Display scale 0.35, set morphology-v1.
+
+solver: unsat glide: not applicable Lean: not run
+
+the declared constraints conflict at this point (named); this form is shown as a rejected candidate Conflict: wl_hi, q_m_ge, q_S_le.
+
+Body held equal to Form B (Exocoetus fits) on purpose: no halfbeak length-mass fit was read. The elongate jaw is a qualitative halfbeak feature.
+
+BOUNDS (MM)
+110.9 × 25.33 × 20.93
+VOLUME (MM³)
+4714.2
+CLOSED 2-MANIFOLD
+yes
+CONSISTENTLY ORIENTED
+yes
+CONVERGED (COARSE/DEFAULT/FINE)
+yes
+STL ROUND TRIP
+yes 8136 triangles
+
+Not to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.
+
+Not checked (6)
+Inspect the mesh here
+
+Download STL 8b4ac3883808… · 406884 bytes · stand STL
+
+Mesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.
+
+Enlarged-pectoral two-wing glider (Exocoetus-type proportions)
+
+monoplane design: pectorals carry 91.8% of wing area (Fish 1990 Table IV)
+
+rendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 350 mm prop; fins are thickened print plates, not biological thickness. GIF
+
+Display scale 0.35, set morphology-v1.
+
+solver: feasible glide: not run Lean: not run
+
+an exact point satisfies the declared constraints in guilds' model; not organism feasibility
+
+BOUNDS (MM)
+94.93 × 111.3 × 20.93
+VOLUME (MM³)
+6046.3
+CLOSED 2-MANIFOLD
+yes
+CONSISTENTLY ORIENTED
+yes
+CONVERGED (COARSE/DEFAULT/FINE)
+yes
+STL ROUND TRIP
+yes 7948 triangles
+
+Not to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.
+
+Not checked (6)
+Inspect the mesh here
+
+Download STL e12dbd8c8db4… · 397484 bytes · stand STL
+
+Mesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.
+
+Enlarged pectoral + pelvic four-wing glider (Cypselurus-type proportions)
+
+biplane design: pectorals 76.0%, pelvics + body the rest (Fish 1990 Table IV)
+
+rendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 350 mm prop; fins are thickened print plates, not biological thickness. GIF
+
+Display scale 0.35, set morphology-v1.
+
+solver: feasible glide: not run Lean: not run
+
+an exact point satisfies the declared constraints in guilds' model; not organism feasibility
+
+Pelvic length / SL is from Cheilopogon furcatus (four-wing; Cypselurus is not in Daane S1A): a cross-genus substitution.
+
+BOUNDS (MM)
+91.28 × 94.39 × 19.97
+VOLUME (MM³)
+6107.8
+CLOSED 2-MANIFOLD
+yes
+CONSISTENTLY ORIENTED
+yes
+CONVERGED (COARSE/DEFAULT/FINE)
+yes
+STL ROUND TRIP
+yes 8154 triangles
+
+Not to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.
+
+Not checked (6)
+Inspect the mesh here
+
+Download STL 1407a294489f… · 407784 bytes · stand STL
+
+Mesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.
+
+Comparison N1: Cypselurus baseline, 0.05 kg
+
+Fish 1990 Cypselurus wing-area and span fits at 0.05 kg (NCA baseline)
+
+rendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 450 mm prop; fins are thickened print plates, not biological thickness. GIF
+
+Display scale 0.45, set nca-comparison-v1.
+
+solver: feasible glide: not run Lean: not run
+
+an exact point satisfies the declared constraints in guilds' model; not organism feasibility
+
+Pelvic length / SL is from Cheilopogon furcatus (four-wing; Cypselurus is not in Daane S1A): a cross-genus substitution. Body, fins and shape parameters as Form C; only S and b differ within the set.
+
+BOUNDS (MM)
+92.53 × 93.61 × 20.57
+VOLUME (MM³)
+6473.5
+CLOSED 2-MANIFOLD
+yes
+CONSISTENTLY ORIENTED
+yes
+CONVERGED (COARSE/DEFAULT/FINE)
+yes
+STL ROUND TRIP
+yes 8210 triangles
+
+Not to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.
+
+Not checked (6)
+Inspect the mesh here
+
+Download STL 7582e66eff22… · 410584 bytes · stand STL
+
+Mesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.
+
+Comparison N2: wing area x1.3, same aspect ratio
+
+N1 with wing area x1.3 at the same whole-wing b^2/S (NCA variant fS 1.3, fAR 1.0)
+
+rendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 450 mm prop; fins are thickened print plates, not biological thickness. GIF
+
+Display scale 0.45, set nca-comparison-v1.
+
+solver: feasible glide: not run Lean: not run
+
+an exact point satisfies the declared constraints in guilds' model; not organism feasibility
+
+Pelvic length / SL is from Cheilopogon furcatus (four-wing; Cypselurus is not in Daane S1A): a cross-genus substitution. Body, fins and shape parameters as Form C; only S and b differ within the set.
+
+BOUNDS (MM)
+92.53 × 106.8 × 20.57
+VOLUME (MM³)
+7005.4
+CLOSED 2-MANIFOLD
+yes
+CONSISTENTLY ORIENTED
+yes
+CONVERGED (COARSE/DEFAULT/FINE)
+yes
+STL ROUND TRIP
+yes 8260 triangles
+
+Not to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.
+
+Not checked (6)
+Inspect the mesh here
+
+Download STL 1b739f8e5149… · 413084 bytes · stand STL
+
+Mesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.
+
+Comparison N3: wing area x1.3, aspect ratio x1.2
+
+N1 with wing area x1.3 and whole-wing b^2/S x1.2 (NCA variant fS 1.3, fAR 1.2)
+
+rendering of an engineered print mesh (not an observation, not a simulation). 1 m biological = 450 mm prop; fins are thickened print plates, not biological thickness. GIF
+
+Display scale 0.45, set nca-comparison-v1.
+
+solver: feasible glide: not run Lean: not run
+
+an exact point satisfies the declared constraints in guilds' model; not organism feasibility
+
+Pelvic length / SL is from Cheilopogon furcatus (four-wing; Cypselurus is not in Daane S1A): a cross-genus substitution. Body, fins and shape parameters as Form C; only S and b differ within the set.
+
+BOUNDS (MM)
+92.53 × 117 × 20.78
+VOLUME (MM³)
+7015.1
+CLOSED 2-MANIFOLD
+yes
+CONSISTENTLY ORIENTED
+yes
+CONVERGED (COARSE/DEFAULT/FINE)
+yes
+STL ROUND TRIP
+yes 8258 triangles
+
+Not to be said of this form: feasible organism; viable; evolutionarily reachable; ancestor; flight-tested; aerodynamically faithful.
+
+Not checked (6)
+Inspect the mesh here
+
+Download STL d50513632a35… · 412984 bytes · stand STL
+
+Mesh checks are closure and orientation on this file; printability, slicing, supports and a physical print are not tested.
+
+Recorded results: Lean receipt and simulation
+Lean check (offline receipt)
+
+all checks as recorded not run by this page
+
+Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release). Mathlib 56a005855ea1, toolchain leanprover/lean4:v4.35.0. Receipt engineering/formal/RECEIPT.json sha256 b384c5ace856….
+
+Positive file: exit 0 in 85.6 s; axioms used Classical.choice, Quot.sound, propext (standard only).
+Negative controls (altered law or corrupted certificate): exit 1; each block rejected: wl_k2: rejected, mass_exponent: rejected, stall_k2: rejected, corrupted_certificate: rejected.
+
+What this does and does not show. It checks that a specific conflict certificate for three encoded constraints (level-lift proxy, minimum wing loading, maximum speed) is valid, and that mutated laws fail. It is a statement about the encoding of those constraints, not about any fish. The solver's other verdicts are z3 verdicts with no Lean check, and the solve endpoint reports Lean as not run.
+
+Corrected common-launch comparison preferred over the Pareto set simulated
+
+900 rows (1 unconverged), model glide-pointmass/1, protocol engineering/simulation/PROTOCOL_CONTROLLED.md. Designs are compared with a genus baseline under the same launch speeds and drag scenarios, not by their own best case.
+
+Designs compared: 144. Robust wins over the baseline across scenarios: 0. Designs whose comparison flips between scenarios: 62.
+Baseline infeasible in 10 genus/mass/launch/drag scenarios (shown as such, not dropped).
+2 baseline masses were excluded because their wing loading falls outside the genus's measured range.
+BASELINE GENUS	M (KG)	S (M²)	AR	WL (N/M²)	VS TABLE II FIT
+Cypselurus	0.0500	0.00570	7.86	86.04	0.053% apart
+Cypselurus	0.100	0.00889	8.47	110.3	2.8% apart
+Cypselurus	0.200	0.0139	9.13	141.3	5.6% apart
+Cypselurus	0.400	0.0217	9.84	181.1	8.3% apart
+Exocoetus	0.0500	0.00500	12.3	98.13	3.9% apart
+Exocoetus	0.100	0.00835	12.5	117.4	10% apart
+SOLVER WITNESS CHECK
+
+Status feasible; independent verification true. Query: flying_fish_model(rho=1.225, CL=6/5, assume_pectoral_ar_applies_to_wing=True) + q_speed_max(12). Witness: m = 153/512 (≈ 0.298828); S = 1/4 (≈ 0.250000); b = 1; V = 4; wing loading 11.72 N/m². A point in the encoded model, not a design.
+
+Not established: biological feasibility of any fin or body; fin-tissue coupling or any genetic mechanism; calibrated lift/drag for any fish; Reynolds-number or scale validity of the drag polar; unsteady, flapping, taxiing or take-off phases; wind, waves, ground effect.
+
+summary.json (63140 bytes, d62b455e16ff…) comparison.csv (264595 bytes, 6c434c4a7b09…) witness_check.json (3449 bytes, abcb2351747c…)
+
+Glide simulation (glide-pointmass/1) simulated
+
+720 designs, 48 on the Pareto set, 0 unconverged; largest step-halving range difference 0.00000162. Monte Carlo n = 200, seed 20261031. Nominal assumptions: rho = 1.225, CL_max = 1.2, CD0 = 0.06, e = 0.8, h0 = 1. These coefficients are model assumptions, not measurements.
+
+NUMERICAL CONTROL	ERROR OR DRIFT	TOLERANCE
+ballistic	0.00000157	0.001
+energy no drag	4.55e-14	0.0001
+equilibrium	1.28e-14	0.0001
+dt halving single	1.67e-8	0.0001
+
+All controls pass: true.
+
+The authors' own caveat. In this point-mass model with constant coefficients the dynamics depend on mass only through wing loading m g/S, so at fixed (WL, AR) mass does not change range; mass enters the Pareto set only through the A* objective, which favours small mass trivially. Release speed 1.5 V_stall makes release kinetic energy (equivalent height >> 1 m for most designs) dominate the range, so ranges rise with wing loading mainly because of the release-speed convention. Both are model/assumption artefacts, not biological findings. The high-wing-loading Pareto designs zoom-climb from the 1 m release (peak height shown above) because release kinetic energy exceeds the potential-energy scale; that is a release-convention artefact, not a statement about fish. A release-height-only (fixed speed) policy would need a sourced speed.
+
+Figure as recorded (engineering/simulation/results/figure.png, sha256 a4c358e98368…). Simulated point-mass glides, not a fish and not CFD.
+48 selected Pareto designs from the first sweep: exploratory, uncalibrated. Open the table
+
+Files: summary.json (16020 bytes, b63e9955db70…) controls.json (499 bytes, b5453be2da7f…) pareto.json (29698 bytes, 3101c1f6a2d2…) model_structure_findings.json (1260 bytes, b629027d4b69…) designs.csv (220669 bytes, 80ca9b5b10ea…) figure.png (118054 bytes, a4c358e98368…)
+
+There is no mesh or print-geometry artifact in this tree; the drawing above is a parametric visualisation, not a validated model.
+
+Solver candidates and simulation
+Solver candidates
+
+None attached to this snapshot. A solver returns satisfiable, unsatisfiable, unknown or timeout; the page will show whichever it returns, never a default.
+
+Request a solver run
+
+Sends this candidate's entered numbers as decimal strings; blank air density and lift coefficient stay unknown. No online Lean status is produced; any Lean receipt is separate and offline.
+
+Simulation
+
+No recorded glide simulation is attached to this snapshot. Only a recorded run, with its receipt, will appear here; the arithmetic above is not a simulation.
+
+Request a simulation run
+
+snapshot of inputs 52c50b565b99 · 907 input files hashed · snapshot.json · catalog.json · KaTeX 0.16.47 (MIT, licence)
+
+Input files and sha256
+
+Design geometry, simulations and observations are distinct evidence types. Each result states its model, source and validation limits. Upstream review labels are assertions, never local acceptance. Live: records, search, questions, System and the solver read the running node when it answers. From the snapshot: the curated mission board, recorded results and media, labelled with the snapshot above.

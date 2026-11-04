@@ -1,0 +1,571 @@
+DELPHI BIO / MORPHOSWARM STUDIO — PUBLIC SOURCE INVENTORY
+Frozen source review: November 03, 2026, 1:54 PM PST
+Snapshot: snapshot of inputs 52c50b565b99
+Source: https://studio.morphoswarm.ai/#/studio/flying-fish
+
+Inventory of the live Flying Fish Studio scale registry and its linked Ecology movies, captured November 3, 2026. 31 registry records contain 27 videos, 3 static figures and 1 record without either. The 27 videos comprise 26 whose downloaded SHA-256 matches the published digest and 1 unpinned source. The 2 linked Ecology movies bring the main gallery to 33 records and 29 videos. The appendix retains 3 extra condition/chart movies, all 7 edited demo cuts, and 6 original print-geometry turntables listed in the snapshot. Records include simulations, analyses, geometry, controls, revisions and related-project reuse: this is not a count of independent validated flying-fish simulations.
+
+Portable public edition of the November 3 source review. The 49 record IDs, source links, recorded-test prose, limits, and separately proposed questions are preserved. Machine-specific file paths and duplicate raw source payloads are omitted. Source links target public artifacts; no additional simulation or biological experiment was run for this archive. Eight unavailable site manifest paths are replaced by the corresponding public source-repository URLs; original URLs are retained in original_source_manifest_url and link-remapping.json.
+
+RECORDED describes saved output. PROPOSED questions and next experiments are editorial possibilities, not achieved fish functions or measured outcomes.
+
+PROPOSED DESIGN QUESTIONS ACROSS SCALES
+molecular: Which molecular structures and interactions could support the intended material or signaling function?
+macromolecular: How would protein assemblies transfer forces while keeping a fin light and tough?
+subcellular: Can respiration and ATP supply meet the intended demand within oxygen and nutrient limits?
+cellular: Which signals set cell fates, and when should responses stay local or spread?
+tissue: How can growth, repair and material organization produce flexible, damage-tolerant tissue?
+organ: Can fins carry load and change shape while other organs deliver enough oxygen?
+neural: Which sensing, steering and reflex loops can recover from disturbances?
+organism: How should launch, lift, drag, energy use and return to water work together?
+developmental: Where, when and how much should each structure grow, and when should growth stop?
+collective: Can local cues coordinate a group without collisions or unstable cascades?
+ecological: What would change for predators, prey and food webs, and which fitness tradeoffs could emerge?
+
+SOURCE RECORDS
+
+1. Two-cell Delta-Notch replay (BioModels BIOMD0000001047) [biomodels-delta-notch]
+CATEGORY: Registry record; SCALES: cellular
+RECORDED: Replays the published Collier two-cell Delta–Notch SBML model in three scenarios, plotting concentrations and phase portraits.
+SCOPE: Two abstract cells in dimensionless units; no cell shape, tissue or fin is represented.
+PROPOSED QUESTION: Could neighboring fin cells adopt complementary roles through lateral inhibition?
+PROPOSED NEXT EXPERIMENT: Measure signaling and cell-fate patterns in the target fin, then test whether this model explains perturbation responses.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/biomodels-delta-notch/delta_notch_replay.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/connectors/biomodels/video/delta_notch_replay_manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 2fb5ab69267be62d7a0c50c116227857a1706b8847cf208d582f0897eb62059d
+
+2. Elastic fin-ray surrogate (Euler-Bernoulli cantilever) [fin-mechanics]
+CATEGORY: Registry record; SCALES: organ
+RECORDED: Compares an Euler–Bernoulli cantilever finite-element surrogate with its closed-form bending solution as loads vary.
+SCOPE: Geometry and material properties are assumed. The source checker flags 179 of 360 frames invalid; it is not a validated fin model.
+PROPOSED QUESTION: How stiff must a fin ray be to carry load while remaining flexible?
+PROPOSED NEXT EXPERIMENT: Measure ray geometry, bending stiffness and loading; restrict the model to its valid deformation regime.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/fin-mechanics/fin_mechanics.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/engineering/fin_mechanics/artifacts/manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: dbdedba50e1f34222deafacde235b846d7d2607359f563e813f3bacf53887efd
+
+3. Bioelectric cell-voltage model: baseline, sodium-reduced and disconnected gap junctions [bioelectric-cells]
+CATEGORY: Registry record; SCALES: cellular
+RECORDED: Compares baseline, reduced sodium conductance and disconnected gap junctions in a membrane-voltage/cable network model.
+SCOPE: A generic electrical model. Numerical checks cover selected default and smooth passive cases, not a fish nervous system or every displayed condition.
+PROPOSED QUESTION: When should an electrical signal stay local, and when should it spread across a cell network?
+PROPOSED NEXT EXPERIMENT: Measure target-cell membrane and junction conductances, then compare responses to channel and coupling perturbations.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/bioelectric-cells/bioelectric.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/bioelectric/manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 25647a2a6b87a23a695bcb130c47073acce5928f1ebffc9bc17466b3074fb594
+
+4. Adhesion clutch mechanics (render of a simulation) [mechanobio-clutch]
+CATEGORY: Registry record; SCALES: cellular
+RECORDED: Renders a molecular-clutch trajectory and response sweep linking adhesion binding, force loading, rupture and actin flow.
+SCOPE: Generic cell–matrix adhesion mechanics; transfer to a fish fin has not been established.
+PROPOSED QUESTION: Can fin cells transmit force to their matrix without slipping or detaching?
+PROPOSED NEXT EXPERIMENT: Measure adhesion, traction and matrix response in the intended tissue; calibrate the clutch parameters against those data.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/mechanobio-clutch/mechanobio.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/mechanobio/render-manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 993fca9057746fae6f9bd56518619a45f5582397f82c6c3abfb3cdc7d5a1602e
+
+5. Glide trajectories at a fixed launch (point mass) [glide-fixed-launch]
+CATEGORY: Registry record; SCALES: organism
+RECORDED: Compares point-mass glide trajectories from the same assumed 12 m/s speed and 1 m height over aerodynamic-coefficient ranges.
+SCOPE: Constant coefficients and assumed launch conditions. The corrected common-launch comparison finds no robust winner.
+PROPOSED QUESTION: Which geometry travels farther when every candidate starts from the same launch state?
+PROPOSED NEXT EXPERIMENT: Measure aerodynamic coefficients and compare candidates under matched launch conditions with uncertainty.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/glide-fixed-launch/glide_fixed_launch.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/engineering/simulation/video/manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 95b0e0f75cf937190f4f6905adb8a8d160fb020b14b3ea68e1b805388934c30c
+
+6. Reaction-diffusion field time series [rd-fields]
+CATEGORY: Registry record; SCALES: tissue
+RECORDED: Evolves generic Brusselator and Schnakenberg reaction–diffusion fields and compares resulting modes with linear predictions.
+SCOPE: One finite-amplitude pattern emerges in a linearly stable case; the other dominant mode differs from the linear fastest mode. Neither is calibrated fin patterning.
+PROPOSED QUESTION: Could spatial chemical signals set the spacing of fin structures?
+PROPOSED NEXT EXPERIMENT: Measure signaling wavelengths and kinetics, then test predicted spacing changes after controlled perturbations.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/rd-fields/rd_fields.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/engineering/simulation/video/manifest_rd.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 629115f5ad8556cbe2cebb9297b84ec24f0a7566edafdf7ebf5bb1a54094e510
+
+7. Single-ray basal sliding and curvature: published-equation reproduction [fin-ray-bilaminar]
+CATEGORY: Registry record; SCALES: organ, tissue
+RECORDED: Reproduces published two-hemitrich ray equations: basal sliding changes curvature under fixed loading; 24 numerical comparisons agree with the same equations.
+SCOPE: Bluegill-source, nondimensional single-ray mechanics. A published figure discrepancy remains unresolved; membrane, muscle, torsion and fluid coupling are absent.
+PROPOSED QUESTION: Could controlled sliding at a ray's base steer fin curvature?
+PROPOSED NEXT EXPERIMENT: Measure flying-fish ray geometry and shear/bending properties, then compare curvature under known basal actuation and load.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/fin-ray-bilaminar/ray-response.png
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/fin-ray/index.json
+RECORDED FILE CHECK: No registry video
+SHA-256: 409771061aed410ad0fa32b5d43b7ba101a5a5eb79b5268c153e59199c66c12f
+
+8. 2D low-Reynolds flow past the N1 silhouette (lattice-Boltzmann), verdict FAIL [windtunnel-2d]
+CATEGORY: Registry record; SCALES: organism, organ
+RECORDED: Runs low-Reynolds-number lattice-Boltzmann flow around a two-dimensional candidate silhouette.
+SCOPE: Source verdict FAIL: stability/sign checks fail and refinement is incomplete. Infinite extrusion and low Reynolds number do not establish flight performance.
+PROPOSED QUESTION: How might the fin outline alter flow separation and drag?
+PROPOSED NEXT EXPERIMENT: First pass reference and resolution tests, then use resolved three-dimensional geometry at relevant flow conditions.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/windtunnel-2d/windtunnel.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/windtunnel/render-manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: ea0f4621b759ab45ba385bd286ae31338f8bf380f4dc6281b0d0f2c3b782ce96
+
+9. BETSE bioelectric tissue patch: potassium permeability and gap-junction block [betse-tissue]
+CATEGORY: Registry record; SCALES: tissue, cellular
+RECORDED: Applies a potassium-permeability intervention to two cells in a 66-cell BETSE patch, comparing spread with and without gap-junction coupling.
+SCOPE: Generic, uncalibrated patch; permeability is not a named channel. The registry supplies no expected video hash, so this video remains unpinned.
+PROPOSED QUESTION: Can a local electrical intervention influence a larger developing tissue?
+PROPOSED NEXT EXPERIMENT: Measure target-tissue parameters and repeat local permeability perturbations with junction controls.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/betse-tissue/bioelectric_tissue.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/bioelectric-tissue/summary.json
+RECORDED FILE CHECK: Source has no pinned video digest
+SHA-256: a5e084e0f8a5c2dc00406f7d2fbfce767e15a2275d908ef07577db780786bc08
+
+10. BETSE potassium-permeability sensitivity with gap-junction controls [betse-k-sensitivity-v1]
+CATEGORY: Registry record; SCALES: cellular, tissue
+RECORDED: Sweeps potassium permeability and gap-junction conditions in one shared 64-cell world, with seven conditions and a half-step numerical check.
+SCOPE: One initialized world per condition, not biological replicates. No demonstrated link to Kcnj13 identity or fin morphology.
+PROPOSED QUESTION: How robust is local versus collective voltage control when permeability changes?
+PROPOSED NEXT EXPERIMENT: Calibrate conductances and repeat across independent tissue layouts and measured parameter uncertainty.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/betse-k-sensitivity-v1/reconstructed/sensitivity.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/bioelectric-tissue/sensitivity-v1/index.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 6ac2eb69873a3a098934d1a555f056efc1ae4609d14a0fcd0a6a2b068d8924b4
+
+11. Morpheus multicellular growth: cell cycle, division, cytokine feedback (baseline arm) [morpheus-multicell]
+CATEGORY: Registry record; SCALES: tissue, cellular
+RECORDED: Shows the baseline of a generic cell-cycle, Potts-division and cytokine-feedback growth model; no-feedback and repeat-seed arms are available separately.
+SCOPE: The early runs hit a 600-second compute cap around model time 0.46 of 2.0. This is not fish tissue or a complete growth trajectory.
+PROPOSED QUESTION: Could feedback regulate cell number and tissue expansion during fin growth?
+PROPOSED NEXT EXPERIMENT: Measure proliferation and spatial growth under feedback perturbation, then calibrate and refine the model.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/morpheus-multicell/baseline.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/multicell/summary.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: ceaaeabc4adf678830231946353897921e0a4432fa5ccb67b45be5fd442e0efd
+
+12. Collagen-mimetic trimer: three 100 ps molecular dynamics runs on an H100 (OpenMM, CUDA) [molecular-md-cuda]
+CATEGORY: Registry record; SCALES: molecular
+RECORDED: Runs three 100 ps classical molecular-dynamics trajectories of a synthetic collagen-mimetic trimer; the movie shows saved coordinates from one seed.
+SCOPE: Short protein-fragment dynamics, not a stiffness measurement, equilibrium proof or demonstrated fin material. Shared starting structure, solvent and force field.
+PROPOSED QUESTION: Could structural-protein properties help make a lightweight fin tough enough to bear load?
+PROPOSED NEXT EXPERIMENT: Test longer independent trajectories and calibrated mechanical perturbations, then connect them to measured tissue mechanics.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-cuda/trajectory.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/molecular/cuda-render/render.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: f03ea1a2915d26e2904edef7d2fe72a3ac5ba894c1b04042372efc7718a7dd3d
+
+13. Collagen-mimetic trimer: three 900 ps continuations from the 100 ps states (OpenMM, CUDA) [molecular-md-continuation]
+CATEGORY: Registry record; SCALES: molecular
+RECORDED: Continues the three collagen-mimetic trajectories by 900 ps, reaching 1,000 ps total; the movie follows one continuation.
+SCOPE: Conditional continuations, not independent new starts. Only one of three passes a short-window drift diagnostic; no equilibrium or modulus is established.
+PROPOSED QUESTION: Do candidate structural-protein behaviors persist over a longer observation window?
+PROPOSED NEXT EXPERIMENT: Use independent starting conditions and validated force fields, with mechanical tests and explicit convergence criteria.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/molecular-md-continuation/trajectory.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/molecular/continuation-analysis/summary.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: f02c5fa485d376eb4a7db6674c41fabef9b1d635ddc8ec3d6a77eef18e87a264
+
+14. Generic zebrafish metabolic model: a steady-state flux balance with an assumed medium [metabolism-gem]
+CATEGORY: Registry record; SCALES: subcellular, cellular
+RECORDED: Solves steady-state flux balance in a generic zebrafish metabolic network under an assumed nutrient medium, including an oxygen-uptake sweep.
+SCOPE: The model can generate oxygen through a route involving near-uncapped vitamin uptake. Biomass flux is not measured respiration, ATP demand or flight capacity.
+PROPOSED QUESTION: Can the intended behavior be supported within oxygen and nutrient constraints?
+PROPOSED NEXT EXPERIMENT: Measure tissue-specific uptake and energetic demand, constrain the medium and resolve the oxygen-generating route before interpreting energy budgets.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/metabolism-gem/o2_atp_biomass.png
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/metabolism/manifest.json
+RECORDED FILE CHECK: No registry video
+SHA-256: 74f995a74d83f28e07d8e0c72989c0c9c67607bfae6add46e78fe7decb2b5c0a
+
+15. Collagen-mimetic trimer: 0.2 ps CPU setup run (OpenMM), the earlier short run [molecular-md]
+CATEGORY: Registry record; SCALES: molecular
+RECORDED: Renders an earlier 0.2 ps CPU setup trajectory of the collagen-mimetic trimer after 0.1 ps thermalization.
+SCOPE: A setup check: temperature remains below the 300 K target. No equilibration, stiffness or protein-to-fin conversion is established.
+PROPOSED QUESTION: Is the molecular setup suitable for asking a structural-material question?
+PROPOSED NEXT EXPERIMENT: Establish thermalization and stable numerical settings before longer, calibrated mechanical studies.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/molecular-md/trajectory.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/molecular/cpu-render/render.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: cf86030ffa4e70f76093a05fe644592fa4529ab1c7c1742163d2884b2ee4cf2f
+
+16. Predicted structure of zebrafish Kcnj13 (OpenFold2): a computed model, not an observation [openfold2-kcnj13]
+CATEGORY: Registry record; SCALES: molecular
+RECORDED: Predicts an unrelaxed 362-residue zebrafish Kcnj13 monomer with OpenFold2 using a single-sequence/dummy-MSA setup.
+SCOPE: Mean pLDDT 52.9 and pTM 0.27; no membrane, tetramer, conductance, gating or phenotype test. No video or poster is published for this registry row.
+PROPOSED QUESTION: Could a candidate ion-channel structure help frame experiments on electrical growth control?
+PROPOSED NEXT EXPERIMENT: Improve sequence/assembly context, then measure channel function and tissue effects rather than infer them from this structure.
+MEDIA: No video or figure is linked for this record.
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/bio-services/kcnj13_openfold2/metrics.json
+RECORDED FILE CHECK: No registry video
+SHA-256: Not recorded for this artifact.
+
+17. Candidate N1 as a 3D model: path-traced turntable [fish3d-render]
+CATEGORY: Registry record; SCALES: organism
+RECORDED: Shows a path-traced turntable of candidate N1 geometry assembled from fitted dimensions and explicit artistic/geometric assumptions.
+SCOPE: A geometry illustration, not simulated flight, a constructed organism or a performance result.
+PROPOSED QUESTION: Do the proposed body and fin proportions form a coherent candidate to test?
+PROPOSED NEXT EXPERIMENT: Check dimensions against specimens and manufacturing constraints, then use the same geometry in validated mechanics and flow tests.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/fish3d-render/turntable.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/fish3d/fish3d-N1-cypselurus-baseline/render/render.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 9e8ba77ec3cecad34b6defc4d4914badca7e178be777e7db1c402053c4325704
+
+18. 3D flow past the fish3d candidate, Re = 1000, 128 cells along the body (WaterLily, H100) [cfd3d-gpu-L128-Re1000]
+CATEGORY: Registry record; SCALES: organism
+RECORDED: Computes three-dimensional flow around the fixed candidate at Re = 1,000, with 128 cells along body length; the movie shows velocity midplanes.
+SCOPE: The sphere reference check fails, and fins are subgrid. This is exploratory flow footage, not trustworthy force or flight-performance prediction.
+PROPOSED QUESTION: Where might wakes form around this body and fin geometry?
+PROPOSED NEXT EXPERIMENT: Pass reference cases and resolve the fins before interpreting force differences at relevant Reynolds numbers.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L128-Re1000/flow.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/cfd3d/gpu-v1/gpu_fish_L128_Re1000/render/render.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 90a2424ad4fe542dd4589e03a67c962107001c2393c90f987b641710f4f00b82
+
+19. 3D flow past the fish3d candidate, Re = 1000, 192 cells along the body (WaterLily, H100) [cfd3d-gpu-L192-Re1000]
+CATEGORY: Registry record; SCALES: organism
+RECORDED: Repeats the fixed-body Re = 1,000 flow computation at 192 cells along body length.
+SCOPE: The same failed reference applies, and fins remain subgrid. A finer grid alone does not validate the model.
+PROPOSED QUESTION: Do apparent flow structures persist as spatial resolution improves?
+PROPOSED NEXT EXPERIMENT: Continue a documented refinement ladder with resolved fin thickness and passing reference cases.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/cfd3d-gpu-L192-Re1000/flow.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/cfd3d/gpu-v1/gpu_fish_L192_Re1000/render/render.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 3a1d2e65b146acc48ed0471e1033bd60f743935a16663fba1e2879ca4b6b426c
+
+20. Morpheus full-horizon logger chart (t to 2.0): a chart of logged counts, not a spatial tissue movie [morpheus-full-horizon-chart]
+CATEGORY: Registry record; SCALES: tissue, cellular
+RECORDED: Charts logged growth through model time 2.0: baseline 256 cells, no-feedback 128 and repeat-seed 263.
+SCOPE: A chart of a generic model's logged counts, not a spatial tissue movie; no fish calibration or physical time mapping.
+PROPOSED QUESTION: Does a feedback effect on growth persist beyond the earliest divisions?
+PROPOSED NEXT EXPERIMENT: Compare measured growth trajectories with repeated, calibrated model runs and numerical-refinement checks.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/morpheus-full-horizon-chart/full_horizon_chart.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/multicell/full/full_horizon_chart.receipt.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: e182866f34943970c79f71b3b30e89106bd741819fc34e5082bc9706f2ff8361
+
+21. Rhythm-generator controller driving a designed joint servo (eight segments) [behavior-cpg]
+CATEGORY: Registry record; SCALES: neural, organ, organism
+RECORDED: Drives an eight-segment designed joint servo with phase/amplitude oscillators; tests tracking, kick recovery and feedback/coupling ablations.
+SCOPE: Coarse independent mechanical joints, not somites or a validated fish nervous system; hydrodynamics is absent.
+PROPOSED QUESTION: Can coordinated body actuation recover from disturbances?
+PROPOSED NEXT EXPERIMENT: Measure body kinematics and torque, then connect the controller to a calibrated coupled body–fluid model.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/behavior-cpg/behavior.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/behavior/manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 247b1289fe695146e7d5a17acc4aa3a95785efc2a9bfd6fa6cbeb8fbf2b98063
+
+22. Erk trigger waves and wave-gated growth on one regenerating zebrafish scale [scale-erk-wave]
+CATEGORY: Registry record; SCALES: tissue, developmental
+RECORDED: Models ERK trigger waves and assumed wave-gated growth on a regenerating zebrafish scale over 120 hours.
+SCOPE: Some source-band comparisons pass and others fail. This is scale regeneration, not microscopy, initial fin development or established flying-fish transfer.
+PROPOSED QUESTION: Could signaling waves coordinate controlled repair or regrowth after surface damage?
+PROPOSED NEXT EXPERIMENT: Measure signaling waves and growth in the target tissue, and test whether the proposed coupling predicts perturbation outcomes.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/scale-erk-wave/erk_growth.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/scales/erk-wave/receipt.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: b10d8fb873dd80040c464651868c3631124e87115bbea17d1b4b2994661708e8
+
+23. Static aeroelastic coupling of the fins: 36 arms, bending-only torsion-rigid scaffold [aeroelastic-coupling]
+CATEGORY: Registry record; SCALES: organ, organism
+RECORDED: Compares rigid, frozen-load and recomputed-load cases across 36 steady bending/aerodynamic arms.
+SCOPE: Assumed constant stiffness, torsion-rigid scaffold and steady flow. The tiny nominal range effect is not resolved by the mesh check or a demonstrated benefit.
+PROPOSED QUESTION: Does bending change aerodynamic performance enough to matter?
+PROPOSED NEXT EXPERIMENT: Measure fin stiffness, validate flow and trim, and resolve the effect above numerical uncertainty.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-coupling/render-production/coupled-states.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/aeroelastic/index.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 39cccc437663bccb120bdc72222dae71f5d31bc78c649ee4044242f336294d66
+
+24. Aeroelastic fidelity ladder: 45 native arms, no effect magnitude resolved [aeroelastic-fidelity-v1]
+CATEGORY: Registry record; SCALES: organ, organism
+RECORDED: Runs 45 arms across five lattices and three contexts to test resolution of aeroelastic effects.
+SCOPE: No effect magnitude is resolved; all three engineering decisions remain undetermined despite consistent signs in some comparisons.
+PROPOSED QUESTION: Does an apparent flexibility advantage survive a stricter fidelity check?
+PROPOSED NEXT EXPERIMENT: Refine span/chord resolution and validate the physics until uncertainty is small enough to distinguish candidates.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/aeroelastic-fidelity-v1/coupled-states.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/aeroelastic/fidelity-v1/return-handoff.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 747f6e5a13b4c1a13cb0e34d45bd00965314ddbfcc75f463deecf5d88039bf58
+
+25. Neural cellular automaton fin pattern, original run: 0 of 48 predicates [nca-pattern]
+CATEGORY: Registry record; SCALES: tissue, developmental
+RECORDED: Trains local neural cellular-automaton rules toward a fin-shaped design raster and tests growth/repair predicates: 0 of 48 pass.
+SCOPE: Computational grid channels, not biochemical states or DNA. The original run does not meet its design predicates.
+PROPOSED QUESTION: Can local rules build and repair a desired pattern?
+PROPOSED NEXT EXPERIMENT: Predefine independent initialization, damage, recovery and persistence tests; biological implementation is a separate missing connection.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/nca-pattern/returned-analysis/damage-trajectories.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/nca-pattern/index.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: b438da91b5e726086fb1df0584b646e76369874928b1d8cf0f1260f5a9e99986
+
+26. Neural cellular automaton fin pattern, corrected seed placement: 32 of 48 predicates, left-half recovery 0 of 12 [nca-seed-placement]
+CATEGORY: Registry record; SCALES: tissue, developmental
+RECORDED: Changes one initial seed position in the NCA setup: 32 of 48 predicates pass, but left-half recovery remains 0 of 12.
+SCOPE: The same tests were reused, not a fresh held-out evaluation. No biological implementation is shown.
+PROPOSED QUESTION: How sensitive is a developmental rule to its initial spatial conditions?
+PROPOSED NEXT EXPERIMENT: Evaluate untouched initializations, patterns and damage cases with preregistered success and persistence criteria.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/nca-seed-placement/returned-analysis/damage-trajectories.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/nca-seed-placement/index.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: ffb1b56c7e22637425528068b7abc38d6c660f914ee9ac3ba3f6a57ee9edba09
+
+27. NCA curriculum repair/persistence tradeoff: 89/192 design predicates [nca-curriculum]
+CATEGORY: Registry record; SCALES: tissue, developmental
+RECORDED: Compares a staged damage curriculum with baseline NCA training: 89 of 192 predicates pass overall; baseline 45/96, curriculum 44/96.
+SCOPE: Some repair improves while persistence worsens; no aggregate benefit. The movie emphasizes a repair case, not the long-term endpoint.
+PROPOSED QUESTION: Can a pattern repair damage without sacrificing durable form?
+PROPOSED NEXT EXPERIMENT: Evaluate repair and long-term persistence together on independent held-out damage cases.
+MEDIA: https://studio.morphoswarm.ai/artifacts/simulations/nca-curriculum/returned-analysis/curriculum-trajectories.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/nca-curriculum/index.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: dc3a3829d2f1819d2bb8ba027be0fdeabd4d796f60293b02a397ce39cec06f39
+
+28. Observed-data update: added specimens worsen held-out transfer [observed-allometry-update]
+CATEGORY: Registry record; SCALES: organ, organism
+RECORDED: Re-fits fin/body scaling with additional preserved-specimen rows; added data worsens held-out species transfer and triggers recomputation instead of stale reuse.
+SCOPE: An analysis of existing observed data, not newly collected measurements or proof that a designed fish works. The registry publishes a static figure only.
+PROPOSED QUESTION: Will a fin-size relationship transfer to a new species or body size?
+PROPOSED NEXT EXPERIMENT: Collect independent morphology measurements and evaluate cross-species predictions with explicit uncertainty.
+MEDIA: https://studio.morphoswarm.ai/artifacts/observed-allometry/observed-update.png
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/observed-allometry/publication.json
+RECORDED FILE CHECK: No registry video
+SHA-256: 3d0e000a3a51b1084c776c6260efadc38a1c3da6b47dc6a16363bd2988e1291c
+
+29. Soft-voxel toy body under a travelling actuation wave (Voxelyze) [voxelyze-travelling-wave]
+CATEGORY: Registry record; SCALES: organism
+RECORDED: Animates saved states of a soft-voxel ground-contact toy under a travelling actuation wave from a related tissue-microcarrier reuse study.
+SCOPE: Not fish, tissue or fluid locomotion. A zero-gravity control misses its bound and spatial refinement is not converged; other controls used a different actuation pattern.
+PROPOSED QUESTION: Could a travelling actuation wave coordinate a deformable body?
+PROPOSED NEXT EXPERIMENT: Use measured tissue mechanics and appropriate fluid/contact physics, then repeat controls on the exact actuation pattern being evaluated.
+MEDIA: https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/tissue-microcarrier/travelling-voxels.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: 7bccbddc3de4412a2274509dd483975c63f9798f19b23dbd063d5a43469aff43
+
+30. Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off [epithelial-closes-vs-arrests]
+CATEGORY: Registry record; SCALES: cellular, tissue
+RECORDED: Shows actual Cellular Potts lattice states and logged tracks as a gap closes in a related epithelial-repair model.
+SCOPE: Generic uncalibrated two-dimensional tissue model; several checks fail or remain incomplete. No fish-specific repair or clinical outcome is established.
+PROPOSED QUESTION: Could cell migration close a damaged fin surface?
+PROPOSED NEXT EXPERIMENT: Measure target-tissue motility and adhesion, then compare model and observed closure under matched perturbations.
+MEDIA: https://studio.morphoswarm.ai/artifacts/epithelial/media/A1-baseline.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: c82a7c0a4b9cbc9a1c3ef90e61d469b128383129936e1f9f83d31ab869a73ac1
+
+31. Epithelial gap in a Cellular Potts model: the same wound closes, or is left open when motility is off — protrusion-disabled control [epithelial-closes-vs-arrests-control]
+CATEGORY: Registry record; SCALES: cellular, tissue
+RECORDED: Shows the paired protrusion/motility-disabled control of the epithelial gap model, where the wound is left open.
+SCOPE: A model ablation, not biological evidence. No purse-string mechanism is represented; the same calibration/check limitations apply.
+PROPOSED QUESTION: Does surface closure require cell motility rather than another repair mechanism?
+PROPOSED NEXT EXPERIMENT: Compare matched motility and contractility perturbations in the target tissue, with model mechanisms kept distinguishable.
+MEDIA: https://studio.morphoswarm.ai/artifacts/epithelial/media/A2-motility-off.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/reuse-study-visuals/manifest.json
+RECORDED FILE CHECK: SHA-256 matches published digest
+SHA-256: d66a9b2e975a0c011913437a099355785115f9c82e565f42030ef53b3455f22b
+
+32. Passive glide versus bounded fin feedback [ecology-glide]
+CATEGORY: Linked ecology video; SCALES: organism
+RECORDED: Replays saved MuJoCo states comparing passive glide with bounded fin feedback after an assumed airborne release.
+SCOPE: Assumed 20 m/s release and bounded aerodynamic-angle domain; no water launch or empirical validation. Passive stops at water earlier, so endpoints are not equal landing times.
+PROPOSED QUESTION: Can fin feedback maintain a controlled glide after release?
+PROPOSED NEXT EXPERIMENT: Measure forces and control response, then compare matched releases and equal evaluation horizons within the validated aerodynamic domain.
+MEDIA: https://studio.morphoswarm.ai/artifacts/ecology/render-refined/glide.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/ecology/render-refined/glide.provenance.json
+RECORDED FILE CHECK: Downloaded bytes hashed; local source provenance retained
+SHA-256: c2c4498db17810163701f3c32844e06041148a0eafb80d005865a98a6dcac1db
+
+33. Eight-fish local-cue escape scenario and no-neighbor ablation [ecology-school]
+CATEGORY: Linked ecology video; SCALES: collective, ecological
+RECORDED: Replays an eight-fish local-neighbor-cue scenario against a no-neighbor ablation using saved simulator states and explicit cue/response rules.
+SCOPE: Assumed delays, thresholds and fin torques; stops at an aerodynamic-domain limit. No wake/contact model, calibrated ecology or survival/fitness result.
+PROPOSED QUESTION: Could local cues coordinate a group's escape response?
+PROPOSED NEXT EXPERIMENT: Measure cue detection, response delays and flight behavior, then test the model against independent collective-response data.
+MEDIA: https://studio.morphoswarm.ai/artifacts/ecology/render-refined/school.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/ecology/render-refined/school.provenance.json
+RECORDED FILE CHECK: Downloaded bytes hashed; local source provenance retained
+SHA-256: d6575b36fe18c1121fc0c6d0f807d1979f2e041fd4c7c65fc1a898fb77dabb75
+
+34. Metabolism o2 sweep [metabolism-o2-sweep]
+CATEGORY: underlying additional arm; SCALES: subcellular, cellular
+RECORDED: Oxygen sweep of the same generic zebrafish flux-balance model.
+SCOPE: Chart animation; not measured respiration or independent evidence of flight capacity.
+PROPOSED QUESTION: Can oxygen supply constrain the intended energetic demand?
+PROPOSED NEXT EXPERIMENT: Constrain measured medium/uptake and resolve the model oxygen-generating route.
+MEDIA: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/metabolism/basic-nutrients-v3/o2_sweep.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/metabolism/manifest.json
+RECORDED FILE CHECK: Downloaded bytes hashed
+SHA-256: 52cf744604eca6abba35dd98128ffd3c6ab8afd7e5447a1ac64f09c904e405ec
+
+35. Morpheus nofeedback [morpheus-nofeedback]
+CATEGORY: underlying additional arm; SCALES: tissue, cellular
+RECORDED: No-cytokine-feedback arm of the early generic multicell model.
+SCOPE: Related arm of the same capped early run; not an independent fish-growth result.
+PROPOSED QUESTION: Does growth change when feedback is removed?
+PROPOSED NEXT EXPERIMENT: Measure the matching perturbation and compare calibrated full trajectories.
+MEDIA: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/multicell/nofeedback.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/multicell/summary.json
+RECORDED FILE CHECK: Downloaded bytes hashed
+SHA-256: 7e82325584b69f6be3db6a0655af9786c9028a04afcc7cb5341486f9c3533648
+
+36. Morpheus seed repeat [morpheus-seed-repeat]
+CATEGORY: underlying additional arm; SCALES: tissue, cellular
+RECORDED: Repeat-seed arm of the early generic multicell model.
+SCOPE: Related arm of the same capped early run; not an independent fish-growth result.
+PROPOSED QUESTION: How much does the growth result depend on initialization?
+PROPOSED NEXT EXPERIMENT: Repeat independent initializations and compare with observed variability.
+MEDIA: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/multicell/seed2.mp4
+SOURCE MANIFEST: https://raw.githubusercontent.com/kganjam/delphi-frontier/main/artifacts/multicell/summary.json
+RECORDED FILE CHECK: Downloaded bytes hashed
+SHA-256: bfcdf4b59d08b91ceeb4cf5543a6805e6574596dcfe8c67edd8a4bf6e3f8e922
+
+37. Two-minute tour [frontier-120s]
+CATEGORY: edited demo tour; SCALES: across scales
+RECORDED: An edited presentation/tour of existing project material; not a separate scientific run.
+SCOPE: Do not count a presentation cut as new simulation evidence. Exact source title and ID retained.
+PROPOSED QUESTION: Not applicable: edited tour, not a simulation or test.
+PROPOSED NEXT EXPERIMENT: Use the underlying simulation records to frame a test.
+MEDIA: https://studio.morphoswarm.ai/artifacts/demo-video/frontier-120s.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/data/snapshot.json
+RECORDED FILE CHECK: Public URL HEAD checked; existing local file recorded
+SHA-256: Not recorded for this artifact.
+
+38. One-minute tour [frontier-60s]
+CATEGORY: edited demo tour; SCALES: across scales
+RECORDED: An edited presentation/tour of existing project material; not a separate scientific run.
+SCOPE: Do not count a presentation cut as new simulation evidence. Exact source title and ID retained.
+PROPOSED QUESTION: Not applicable: edited tour, not a simulation or test.
+PROPOSED NEXT EXPERIMENT: Use the underlying simulation records to frame a test.
+MEDIA: https://studio.morphoswarm.ai/artifacts/demo-video/frontier-60s.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/data/snapshot.json
+RECORDED FILE CHECK: Public URL HEAD checked; existing local file recorded
+SHA-256: Not recorded for this artifact.
+
+39. Ninety-second tour [frontier-90s]
+CATEGORY: edited demo tour; SCALES: across scales
+RECORDED: An edited presentation/tour of existing project material; not a separate scientific run.
+SCOPE: Do not count a presentation cut as new simulation evidence. Exact source title and ID retained.
+PROPOSED QUESTION: Not applicable: edited tour, not a simulation or test.
+PROPOSED NEXT EXPERIMENT: Use the underlying simulation records to frame a test.
+MEDIA: https://studio.morphoswarm.ai/artifacts/demo-video-90/frontier-90s.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/data/snapshot.json
+RECORDED FILE CHECK: Public URL HEAD checked; existing local file recorded
+SHA-256: Not recorded for this artifact.
+
+40. Lean for biology · one-minute science cut [frontier-science-60s]
+CATEGORY: edited demo tour; SCALES: across scales
+RECORDED: An edited presentation/tour of existing project material; not a separate scientific run.
+SCOPE: Do not count a presentation cut as new simulation evidence. Exact source title and ID retained.
+PROPOSED QUESTION: Not applicable: edited tour, not a simulation or test.
+PROPOSED NEXT EXPERIMENT: Use the underlying simulation records to frame a test.
+MEDIA: https://studio.morphoswarm.ai/artifacts/demo-video-science/frontier-science-60s.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/data/snapshot.json
+RECORDED FILE CHECK: Public URL HEAD checked; existing local file recorded
+SHA-256: Not recorded for this artifact.
+
+41. Lean for biology · two-minute science cut [frontier-science-120s]
+CATEGORY: edited demo tour; SCALES: across scales
+RECORDED: An edited presentation/tour of existing project material; not a separate scientific run.
+SCOPE: Do not count a presentation cut as new simulation evidence. Exact source title and ID retained.
+PROPOSED QUESTION: Not applicable: edited tour, not a simulation or test.
+PROPOSED NEXT EXPERIMENT: Use the underlying simulation records to frame a test.
+MEDIA: https://studio.morphoswarm.ai/artifacts/demo-video-science/frontier-science-120s.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/data/snapshot.json
+RECORDED FILE CHECK: Public URL HEAD checked; existing local file recorded
+SHA-256: Not recorded for this artifact.
+
+42. Delphi · one-minute vision cut [frontier-delphi-60s]
+CATEGORY: edited demo tour; SCALES: across scales
+RECORDED: An edited presentation/tour of existing project material; not a separate scientific run.
+SCOPE: Do not count a presentation cut as new simulation evidence. Exact source title and ID retained.
+PROPOSED QUESTION: Not applicable: edited tour, not a simulation or test.
+PROPOSED NEXT EXPERIMENT: Use the underlying simulation records to frame a test.
+MEDIA: https://studio.morphoswarm.ai/artifacts/demo-video-delphi/frontier-delphi-60s.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/data/snapshot.json
+RECORDED FILE CHECK: Public URL HEAD checked; existing local file recorded
+SHA-256: Not recorded for this artifact.
+
+43. Delphi · two-minute vision cut [frontier-delphi-120s]
+CATEGORY: edited demo tour; SCALES: across scales
+RECORDED: An edited presentation/tour of existing project material; not a separate scientific run.
+SCOPE: Do not count a presentation cut as new simulation evidence. Exact source title and ID retained.
+PROPOSED QUESTION: Not applicable: edited tour, not a simulation or test.
+PROPOSED NEXT EXPERIMENT: Use the underlying simulation records to frame a test.
+MEDIA: https://studio.morphoswarm.ai/artifacts/demo-video-delphi/frontier-delphi-120s.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/data/snapshot.json
+RECORDED FILE CHECK: Public URL HEAD checked; existing local file recorded
+SHA-256: Not recorded for this artifact.
+
+44. Precursor-inspired short-fin form (rejected glider candidate) [A-precursor-short-fin]
+CATEGORY: Geometry turntable; SCALES: organ, organism
+RECORDED: A rendered orbit of the original exported print mesh. The short-fin form conflicts with the encoded constraints; the paired two-wing comparison holds the body equal.
+SCOPE: Geometry illustration, not a simulation, observed organism, demonstrated evolutionary path or flight test. Fins are thickened print plates. Compare dimensions only within the same source display-scale set.
+PROPOSED QUESTION: Which constraint rules out a short-fin candidate before a physical test?
+PROPOSED NEXT EXPERIMENT: Test the same measured geometry under matched loads/launch conditions using calibrated mechanics and aerodynamics; check fabrication constraints separately.
+MEDIA: https://studio.morphoswarm.ai/artifacts/print/media/A-precursor-short-fin/turntable.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/print/manifest.json
+RECORDED FILE CHECK: Video SHA-256 matches render manifest; render manifest SHA-256 matches snapshot
+SHA-256: e0f85f2df22b790c63e99c663d7b32a0b8f3218cf8496dd2e05b815b6a6fbbae
+
+45. Enlarged-pectoral two-wing glider (Exocoetus-type proportions) [B-two-wing-glider]
+CATEGORY: Geometry turntable; SCALES: organ, organism
+RECORDED: A rendered orbit of the original exported print mesh. This geometry satisfies one exact point in the declared constraint model; its recorded glide test is not run.
+SCOPE: Geometry illustration, not a simulation, observed organism, demonstrated evolutionary path or flight test. Fins are thickened print plates. Compare dimensions only within the same source display-scale set.
+PROPOSED QUESTION: Could larger pectoral fins satisfy a declared lift/geometry requirement?
+PROPOSED NEXT EXPERIMENT: Test the same measured geometry under matched loads/launch conditions using calibrated mechanics and aerodynamics; check fabrication constraints separately.
+MEDIA: https://studio.morphoswarm.ai/artifacts/print/media/B-two-wing-glider/turntable.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/print/manifest.json
+RECORDED FILE CHECK: Video SHA-256 matches render manifest; render manifest SHA-256 matches snapshot
+SHA-256: 444d0ae366850fdad1841ffb94645de4736a5e3930f0050f2c09460e03f6b241
+
+46. Enlarged pectoral + pelvic four-wing glider (Cypselurus-type proportions) [C-four-wing-glider]
+CATEGORY: Geometry turntable; SCALES: organ, organism
+RECORDED: A rendered orbit of the original exported print mesh. This geometry satisfies one exact point in the declared constraint model; its recorded glide test is not run.
+SCOPE: Geometry illustration, not a simulation, observed organism, demonstrated evolutionary path or flight test. Fins are thickened print plates. Compare dimensions only within the same source display-scale set.
+PROPOSED QUESTION: What changes when pelvic fins contribute to the candidate geometry?
+PROPOSED NEXT EXPERIMENT: Test the same measured geometry under matched loads/launch conditions using calibrated mechanics and aerodynamics; check fabrication constraints separately.
+MEDIA: https://studio.morphoswarm.ai/artifacts/print/media/C-four-wing-glider/turntable.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/print/manifest.json
+RECORDED FILE CHECK: Video SHA-256 matches render manifest; render manifest SHA-256 matches snapshot
+SHA-256: 5b4804b57ff4217181ec761f99b8722d323d01c54a10b2825d6251c971c73807
+
+47. Comparison N1: Cypselurus baseline, 0.05 kg [N1-cypselurus-baseline]
+CATEGORY: Geometry turntable; SCALES: organ, organism
+RECORDED: A rendered orbit of the original exported print mesh. This geometry satisfies one exact point in the declared constraint model; its recorded glide test is not run.
+SCOPE: Geometry illustration, not a simulation, observed organism, demonstrated evolutionary path or flight test. Fins are thickened print plates. Compare dimensions only within the same source display-scale set.
+PROPOSED QUESTION: What baseline geometry should every proposed revision be compared against?
+PROPOSED NEXT EXPERIMENT: Test the same measured geometry under matched loads/launch conditions using calibrated mechanics and aerodynamics; check fabrication constraints separately.
+MEDIA: https://studio.morphoswarm.ai/artifacts/print/media/N1-cypselurus-baseline/turntable.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/print/manifest.json
+RECORDED FILE CHECK: Video SHA-256 matches render manifest; render manifest SHA-256 matches snapshot
+SHA-256: 8b977daaeb616015fb53d262e00236c2c504d1d2bab5c39f2ddbefbe329c109d
+
+48. Comparison N2: wing area x1.3, same aspect ratio [N2-area-x1.3]
+CATEGORY: Geometry turntable; SCALES: organ, organism
+RECORDED: A rendered orbit of the original exported print mesh. This geometry satisfies one exact point in the declared constraint model; its recorded glide test is not run.
+SCOPE: Geometry illustration, not a simulation, observed organism, demonstrated evolutionary path or flight test. Fins are thickened print plates. Compare dimensions only within the same source display-scale set.
+PROPOSED QUESTION: What tradeoffs follow from increasing fin area while holding aspect ratio fixed?
+PROPOSED NEXT EXPERIMENT: Test the same measured geometry under matched loads/launch conditions using calibrated mechanics and aerodynamics; check fabrication constraints separately.
+MEDIA: https://studio.morphoswarm.ai/artifacts/print/media/N2-area-x1.3/turntable.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/print/manifest.json
+RECORDED FILE CHECK: Video SHA-256 matches render manifest; render manifest SHA-256 matches snapshot
+SHA-256: 04ba9977b56a2544a490143551689c54b559313e74acc2a57e855fc3936260c6
+
+49. Comparison N3: wing area x1.3, aspect ratio x1.2 [N3-area-x1.3-ar-x1.2]
+CATEGORY: Geometry turntable; SCALES: organ, organism
+RECORDED: A rendered orbit of the original exported print mesh. This geometry satisfies one exact point in the declared constraint model; its recorded glide test is not run.
+SCOPE: Geometry illustration, not a simulation, observed organism, demonstrated evolutionary path or flight test. Fins are thickened print plates. Compare dimensions only within the same source display-scale set.
+PROPOSED QUESTION: What changes when fin area and aspect ratio are increased together?
+PROPOSED NEXT EXPERIMENT: Test the same measured geometry under matched loads/launch conditions using calibrated mechanics and aerodynamics; check fabrication constraints separately.
+MEDIA: https://studio.morphoswarm.ai/artifacts/print/media/N3-area-x1.3-ar-x1.2/turntable.mp4
+SOURCE MANIFEST: https://studio.morphoswarm.ai/artifacts/print/manifest.json
+RECORDED FILE CHECK: Video SHA-256 matches render manifest; render manifest SHA-256 matches snapshot
+SHA-256: b6a111713be22c066ed4fcf92c9716665a2430405f84142087d15a4a630e8881
+
+METHOD
+Read the live snapshot, Studio/Simulation/Ecology source modules and all 31 underlying registry manifests. Fetched all 27 registry videos and both Ecology movies; checked HTTP responses, inspected media metadata, and computed hashes. No scientific model was rerun. Current Studio code adds every registry record matching the selected scale, including the soft-voxel reuse study and two epithelial-repair records. Some authored project summary text predates these newer records; this inventory follows the actual manifests and media. The two Ecology rows are reached through the linked Ecology page, not the 31-entry registry. The 6 print-form turntables were added during subsequent source-footage curation; their video digests match their render manifests, and those manifest digests match the frozen snapshot. Supplemental media scope is the source-manifest-linked extra movies, snapshot demo-cut list and print_forms turntables; it is not an exhaustive crawl of every binary in the repository.
+
+PUBLIC LINK CHECKS
+See public-link-checks.json for the dated archive-time HTTP checks. These establish link availability only, not biological validity or future availability.
+The machine-specific working paths and duplicate raw source payloads were omitted. The recorded scientific descriptions and proposed questions were preserved.

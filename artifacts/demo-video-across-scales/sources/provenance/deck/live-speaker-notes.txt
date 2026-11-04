@@ -1,0 +1,101 @@
+SLIDE 1: Delphi: Lean for Biology
+
+Opening frame. The sphere on the right is the knowledge graph the portal shows: every one of the 1,777 extracted claims is a node, the 92 theorems are lit, and it rotates slowly (drag to turn it). The four figures underneath are computed from docs/claims.json and test-data/organisms/merged/ at build time.
+One line to say out loud: biology is the most powerful engineering material we have, and the only one whose blueprints nobody could check. Delphi makes them checkable.
+
+SLIDE 2: Newton made gravity calculable.
+
+Suggested delivery: Newton’s law made gravitational attraction calculable. Once a model and its assumptions are stated, we can derive predictions rather than relying only on descriptions. Lean adds a different capability: it checks formal deductions inside a mathematical model.
+For point masses, or the appropriate spherically symmetric idealization, F = Gm₁m₂/r². At fixed masses, replacing r by 2r gives F/4. This is an analogy, not a reported Delphi theorem. Combining gravitational and motion models supports trajectory prediction; observations establish how well those models apply.
+For the biological example, let similar geometry and constant density give m ∝ L³ and S ∝ L². Then wing loading mg/S ∝ L. With steady lift and fixed air density and lift coefficient, V = √(2mg/(ρSCL)), so V ∝ √L. These relations alone do not establish an absolute maximum size. A speed, power, material or other constraint must also be specified.
+Lean checks a theorem relative to its actual formal statement, imports and axioms. A successful proof does not establish that an empirical assumption is true or that the formalization captures the intended biology. No new Lean program was compiled for this slide.
+Primary references: NASA: Newton’s law of gravitation; Lean reference: validating proofs. Biological design context: supplied product platform, fishGrounds and wingTrack.
+Suggested delivery: Biology is not governed by one convenient equation. Mechanisms interact across scales; feedback, history, variation and environmental context affect outcomes. A mathematical model selects variables and relationships that are useful for a particular question.
+The network is conceptual. It does not imply Delphi has implemented or validated every coupling. The three lenses illustrate geometry and mechanics, dynamic processes, and variation or probability. M ∝ L³, dc/dt and P(x) are representative notation, not three newly proved biological claims.
+Delphi’s contribution is to connect the original claim to its scope, a mathematical representation, linked formal work where available, and empirical evidence. Several models may explain the same observation. Discriminating predictions and experiments help decide which representation is useful.
+
+SLIDE 3: From patterns to precise relationships.
+
+Suggested delivery: The output is a library of conditional relationships. These examples make the content of that library visible: growth rules, force balance, geometric partitions, packing, pattern formation and evolutionary thresholds.
+The counts are built from the repository: 1,777 extracted claims and 194 claims carrying a formal mathematical statement come from docs/claims.json; 92 of them are theorems, meaning a mathematical statement whose proof is established (73 compiled in Lean 4 with no sorry and standard axioms only, 19 with a proof recorded in the literature). Separately, the versioned Lean law registry (lean/registry/) holds 61 laws, 36 of them accepted after human review; the rest are proposed, candidate, contested or retired. A theorem is a proof status, not a project: a proof shows a statement follows from its assumptions, not that organisms satisfy them. The attached deck lists spiral, cell-division and cell-packing families among its formalized work; the platform’s offline Lean filter explicitly includes Turing and Hamilton.
+Growth preserves form — thompson1917-ch11-03. Fixed relative growth. r = r₀ exp(bθ). A logarithmic spiral follows.
+Cells balance forces — thompson1917-ch07-04. Equal interface tensions. 120° + 120° + 120°. Three interfaces meet at balance.
+Division has a geometry — thompson1917-ch08-02. Fixed shape + target volume. min A(new wall). Choose the least-area partition.
+Packing organizes tissue — thompson1917-ch07-09. Equal cells + idealized packing. Hexagonal geometry. Local contacts constrain form.
+Diffusion can create pattern — turing-ddi. Suitable kinetics + diffusion. λ(k) > 0 for some k. A spatial perturbation can grow.
+Selection has a threshold — hamilton-rule. Under the relatedness model. rb > c. Benefit to relatives exceeds cost.
+Scope: Logarithmic growth refers to an idealized constant relative growth rule, not every shell or horn. The 120° junction assumes three equal tensions at equilibrium. The partition is an idealized minimization at a prescribed volume; the drawing is a two-dimensional equal-area example. Hexagons depict idealized equal-cell packing, not all tissues. A Turing instability requires suitable reaction kinetics, diffusion and a permitted spatial mode: different diffusivities alone are insufficient. Hamilton’s rule depends on how relatedness, costs and benefits are defined; the bars illustrate r = 0.5, b = 3 and c = 1 and are not measurements.
+The diagrams illustrate these relations. They are not proof certificates or new experimental results.
+Source: supplied product platform, DelphiVisuals.LAW_ART and leanLibrary. Open the Delphi law catalog.
+
+SLIDE 4: How it was built: the stack, a measured swarm and its collaborators
+
+Suggested delivery: three things built this project: the compute and models we ran, the swarm of agents that ran them, and the outside agents and people who argued with us.
+The stack column is the frontier node’s own usage record (swarm/frontier/built.json, observed 2026-11-01 07:39 UTC), quoted, not re-verified here. It covers the jobs and model runs that left a receipt, not every worker or account. Total tokens and spend are unknown and are not shown. A Nebius job that ended COMPLETED means the container exited, not that a scientific check passed. GPU utilisation is a range over sampled windows, because the record infers no project-wide average. No BioNeMo or BioNeMo NIM execution is established by the scoped receipts in this ledger. The one hosted OpenFold2 receipt explicitly reports upstream-source-not-nim.
+The middle column is the measured four-arm comparison in test-data/agent-comparison/, pre-registered before the first run (PREREG.md). Each arm had the same model, prompt, tools and budget and had to write one pre-registered test plan per claim naming one real public dataset; plans were scored mechanically by fetching every URL and DOI. What it does not show: The single agent costs a fifth (experiment 1) to a tenth (experiment 2) of a swarm arm; its shortfall is mostly blank plans (context exhaustion), not worse dataset picks (DEVIATIONS.md, experiment 2: 8 of 8 shortfalls blank). Verified means the URL resolves to a page that names the dataset, not that the dataset can decide the claim. n=20 per experiment, one model (Sonnet 5.5) in every arm, same provider as the builder; no blind assessor from another provider scored the plans. Experiment 1 decentralized arm wrote 1 fabricated identifier on a first attempt (corrected after a board gap note), so under the strict all-attempts count it fails the hard constraint and is excluded from the best-collective-arm margin in experiment 1. A sister project with deterministic specialists (delphi-evolve) reported no collective advantage; the gain here is in the regime where context and attention are the bottleneck.
+Below it, one concrete run through the stack: Thompson’s three cell-packing claims from chapter 7 (walls meet at 120°, regular hexagons only where cells are equal, hexagonal on average). A worker fetched 8 Wikimedia Commons micrographs, sent each to Cellpose (cpsam_v2, Cellpose 4.2.1) on the Nebius Scientific AI Platform (933 cells, about 4.5 s per image; every operation id, model checksum and input hash is in claim-sources/cell-geometry/results/*/cellpose.json), and measured junction angles and neighbour counts locally against a hexagonal lattice, a brick wall and a random Voronoi partition. 5 tissues from 5 species had enough interior cells. Say plainly what it is: exploratory, not pre-registered, one image per tissue. The ‘six on average’ reading is Euler’s formula, which the Voronoi control also satisfies, and an outside Moltbook agent’s segmenter-bias check showed Cellpose pulls brick walls toward 120°, so the 120° margin is inflated. Verdicts are in test-data/claim-tests/thompson-growth-form/thompson1917-ch07-04, -08 and -10.
+Collaborations: the right column is parsed from COLLABORATIONS.md. Outside agents on Moltbook asked for a segmenter-bias null, separate expected and disconfirming observations, formalization tags and seeded assessment batches; each change is recorded in the file named in that table, and the agent is a dct:contributor in the provenance of the resulting nanopub. MCP usage comes from mcp/usage/*.json; the server keeps no per-user logs, so client names cannot be tied to people.
+
+SLIDE 5: A flying fish becomes a set of constraints.
+
+Suggested delivery: A flying fish is a useful test of the method because multiple constraints meet in one recognizable shape. The platform explicitly grounds its fish design in three Thompson claims. We show all three, then identify two supporting scaling laws in its catalog and the separate engineering lift equation.
+thompson1917-ch02-10 — Flight-speed scaling, v ∝ √L for similar forms under fixed aerodynamic conditions.
+thompson1917-ch02-06 — Powered-flight demand scales as L^3.5 compared with a muscle-supply scaling of L³. The platform reuses the speed relationship; its glider does not test the historical powered-flight claim about birds.
+thompson1917-ch16-03 — Hollow structures distribute material efficiently for bending resistance. The printed body is modeled as a thin hollow shell; its wall thickness is a design choice, not a measured fin-ray or bone thickness.
+thompson1917-ch02-01 — Weight grows as the cube of length under geometric similarity and constant density.
+thompson1917-ch02-03 — Cross-sectional load capacity scales as L² while weight scales as L³, under constant material strength and similar geometry.
+Engineering balance: ½ρV²SCL = mg is the platform’s steady-lift relation, not an additional claim of a compiled Lean theorem.
+At S = 52.9 cm² = 0.00529 m², CL = 0.5, ρ = 1.225 kg/m³, g = 9.81 m/s² and a maximum target speed V = 8 m/s, m = ρV²SCL/(2g) = 0.0105692 kg, or 10.57 g. The 10 g reference gives approximately 7.78 m/s. These are calculations from reference inputs, not measured flight performance.
+The 107.5 mm pectoral input and pelvic position 0.48 × standard length come from the supplied platform; the cited specimen row was not independently re-extracted. Fish (1990) and Park & Choi (2010) supply empirical context. Darcy Thompson’s scaling does not imply that no larger fish can ever glide: limits depend on geometry, airspeed, aerodynamic coefficients, material and power assumptions. Launch, water taxiing, ground effect, dynamic stability and control need additional models and physical tests.
+All three direct design claims are included. Relatedness, Turing patterning and the other catalog examples on slide 4 are not presented as established constraints on this fish design.
+Sources: supplied platform FISH_LAWS, LAW_ART, fishGrounds and liftEnvelope; Fish (1990); Park & Choi (2010). Open Delphi Design studio.
+Suggested delivery: Every scale has a schematic, but not every scale has a measured or executable bridge to the next. That distinction is part of the design record.
+1. Genome — Comparative fish data
+Daane and colleagues compared 35 beloniform species and sampled more than 300,000 targeted loci.
+Scope: Flying fishes and relatives.
+Limit: A comparative study does not specify a genome that would produce this design.
+Drawing: Locus schematic. No DNA sequence or inferred genome is depicted.
+2. Proteins — Fish genetics + zebrafish
+Lat4a is an amino acid transporter. Kcnh2a is a potassium channel linked to fin proportions.
+Scope: Comparative fish genetics; zebrafish functional work.
+Limit: Protein geometry and candidate-specific kinetics are not available.
+Drawing: Membrane-function schematic, not an atomic protein structure.
+3. Cells — Zebrafish proxy evidence
+KCNH2 expression in zebrafish fin mesenchyme produced local ray overgrowth associated with marked fibroblast clones.
+Scope: Zebrafish functional proxy.
+Limit: This is proxy evidence, not a measured cellular response in the selected fish.
+Drawing: Fin-associated fibroblast schematic. No microscopy image or cell-size estimate.
+4. Tissues — Published fin morphology
+The study reports regularly spaced fin-ray segmentation in flying fish, alongside zebrafish fin-growth phenotypes.
+Scope: Flying-fish morphology; zebrafish comparison.
+Limit: The printed shell’s wall thickness is not a measurement of living fin tissue.
+Drawing: Segmented ray and surrounding tissue schematic. Not to scale.
+5. Fins & organs — Reference design inputs
+Paired pectoral and pelvic fins provide the design’s aerodynamic surfaces.
+Scope: Inputs described by the supplied platform.
+Limit: The attached platform attributes the length to Data S1A. That specimen row has not been independently verified here.
+Drawing: Dorsal fin-layout schematic. Length labels are inputs; the drawing is not to scale.
+6. Whole fish — Reference calculation
+The supplied steady-lift equation connects mass, fin area and the design’s trim-speed target.
+Scope: Local force-balance calculation.
+Limit: Steady lift omits launch, taxiing, ground effect and stability. No flight test is implied.
+Drawing: Force-balance and gliding schematic. The trajectory is illustrative.
+7. Populations — Nothing indexed
+No indexed source records schooling or a group launch at this scale.
+Scope: Collective scale.
+Limit: No executable coupling. A scenario output would not establish abundance, fitness, or population viability.
+Drawing: Illustrative fish group. The drawn fish count is not a population measurement.
+8. Ecosystems — Darwin 1859 and later sources
+The predator-escape idea is Darwin’s and has not been quantified, so it is not used as a design constraint.
+Scope: Ecological / evolutionary scale.
+Limit: No check on this page establishes that a beloniform ancestor can reach this design. The bridge to the organism scale is open.
+Drawing: Air–water and predator-context schematic. No measured habitat map.
+The visual schematics are adapted directly from DelphiFishScales.schematic in the attached product platform. They do not depict an inferred genome, atomic protein structures, microscopy, measured cell dimensions, a measured population or a habitat map. The organism trajectory and the number of drawn fish are illustrative.
+The current attached platform explicitly marks population evidence as missing and the ecological predator-escape hypothesis as unquantified. This supersedes the older slide’s GBIF occurrence and water-temperature descriptions. Reference tissue content is published segmented fin-ray morphology; it does not establish material properties of living fins.
+Platform-linked sources: Daane et al. (2021); Fish (1990); Park & Choi (2010). The platform’s ecosystem register names Darwin (1859), Lovejoy (2004), Xu (2013) and Davenport (1992); this deck does not add new quantitative ecological constraints.
+
+SLIDE 6: Where the same method goes next
+
+Prioritisation reflects how directly each application builds on existing Delphi examples, not demonstrated performance.
+The enzyme track extends a retrospective planner. In its 100-episode benchmark the model-assisted planner did not beat the strong baseline; a prospective comparison is the next test.
+Source texts are the works in claim-sources/; the number of claims per work is computed at build time. Sponsor services are described in sponsors/, one file per sponsor, each stating what was used, where the record is and what was not done. Outside agents whose objections changed a design are listed in COLLABORATIONS.md and credited as contributors in the provenance of the resulting nanopubs.
