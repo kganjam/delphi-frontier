@@ -161,6 +161,9 @@ literature**. First measured pass, over 3 claims:
 
 By kind: existence 10, range 5, conservation 2, spatial 2, timescale 1, energetic 1.
 
+**The pass continued, and §9 replaces these numbers.** Four `unsatisfiable` verdicts did arrive —
+and reading them is what produced the more useful result.
+
 ### The one that came closest, and why it was right not to claim it
 
 Claim 283 — *required wing area at a 2 m/s launch is ~20 cm² against a ~1.4 cm² silhouette* —
@@ -196,3 +199,66 @@ constraint is *entailed* rather than merely related, which is the failure mode �
 generation makes cheaper to commit at scale, not rarer. And the one near-miss above turned on a
 judgment call that a different agent could plausibly have made the other way — so the verdict
 distribution is, for now, partly a measurement of the prompt.
+
+---
+
+## 9. The first refutations from below, and the two that were not
+
+The pass widened to **26 claims and 173 constraints**: 71 `satisfied`, 50 `open`, 49 `unsatisfied`,
+1 `assumed`, and **4 `unsatisfiable`** — the outcome §4 calls the prize and §7 said had never
+happened.
+
+**Two of the four were wrong, and the reason they were wrong is worth more than the two that were
+right.**
+
+### The defect: nothing checked that both sides were the same animal
+
+Rows 93 and 125 both come from **S32, which models a zebrafish taxi**. Each was marked
+`unsatisfiable` on an **exocoetid** measurement — Franzisket's 400 m in 30 s (≈13.3 m/s) and Fish
+1990's 3–530 g body masses, against a ~0.4 g zebrafish.
+
+The sharpest one refutes itself on inspection. **S32's own published result is that the same
+equations reproduce the exocoetid taxi to 15 m/s**, and fail for the zebrafish only through
+Reynolds-dependent lobe drag. So the flying-fish speed quoted to contradict the model is a number
+the model *predicts*. That refutation was a confirmation, filed backwards.
+
+**The error has a direction, which is why it is structural rather than careless.** This project's
+claims are about zebrafish; almost all the literature is about flying fish. So the nearest
+measurement to any claim is usually about the wrong animal, and an agent reaching for the closest
+number reaches wrong *by default*. Both agents half-saw it — row 93 records *"if claim 269 models a
+small or tank-confined fish, this becomes open"* — and wrote `unsatisfiable` anyway.
+
+Both rows are now `open`, with the reason recorded in the row rather than deleted. The generator
+prompt now requires the animal to be **named on both sides** before `unsatisfiable` may be written,
+and says that a cross-species comparison can still be informative but is not a refutation.
+
+This is §7's warning — *nothing checks that a constraint is entailed rather than merely related* —
+arriving as a measurement instead of a caution, and one level deeper: the *constraint* was
+entailed. The **evidence** was merely related.
+
+### The two that hold
+
+**Row 43 (`spatial`, claim 185, dna → protein).** A 12-transmembrane transporter must match its
+orthologues' length within ~1.3×. UniProt `Q7ZUS0` is **153 aa with 2 annotated TM helices**, a
+ratio of **0.27** against human SLC43A2 (569 aa, 12 TM) and zebrafish slc43a2b (592 aa, 12 TM).
+Read full-text from the primary records and their feature tables.
+
+Note what it refutes: **the 153 aa records as the functional protein, not the claim** — which
+predicted exactly this truncation. The measurement is what turns *"153 aa"* from an observation into
+the diagnosis *"fragment"*, and the agent said so in the row.
+
+**Row 53 (`timescale`, claim 234, organism → behaviour).** Single-release take-off requires one
+stroke; exocoetids taxi ~9 m at 50–70 beats/s, about **22–45 strokes**. It refutes applying
+single-stroke LaMSA supply to exocoetids, **not** the β > α inequality itself, and it keeps a
+conflicting 13.5 Hz figure visible rather than reconciling it.
+
+### What this pass established
+
+The mechanism produces real refutations from below, at roughly **2 sound verdicts per 173
+constraints** — and the honest reading of that rate is that it is an estimate from one pass whose
+error rate was **50% before review**.
+
+**So the verdict is not the product; the reviewed verdict is.** Generation made it cheap to produce
+four candidate refutations and free to produce two false ones, and nothing in the pipeline
+distinguished them. A reader who had taken the table at face value would have recorded two
+refutations of the project's own best result, using the number that result was validated against.

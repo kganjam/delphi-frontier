@@ -386,6 +386,20 @@ def gen_entail(accts, i=0, limit=10):
                you must quote that number with its source. But do not flinch from it either, and in
                particular do not soften it to `unsatisfied` because the claim is one of ours.
 
+               BEFORE writing `unsatisfiable`, NAME THE ANIMAL ON BOTH SIDES. A measurement refutes
+               a claim only if it is about the same subject. This project's claims are mostly about
+               ZEBRAFISH while almost all the available literature is about FLYING FISH, so the
+               nearest measurement to any claim is usually about the wrong animal, and the mistake
+               therefore has a direction rather than being random. It has already happened twice in
+               four verdicts: two S32 zebrafish claims were "refuted" with exocoetid numbers, and
+               in one case the number quoted is one the model EXPLICITLY REPRODUCES -- S32's result
+               is that its equations give the exocoetid taxi to 15 m/s and fail for the zebrafish
+               only through Reynolds-dependent lobe drag. So that refutation was a confirmation,
+               filed backwards.
+               If the species differ, the verdict is `open` and you say which animal each number
+               came from. A cross-species comparison can still be informative; it is just not a
+               refutation, and calling it one destroys the only verdict here that carries weight.
+
             {HONESTY}
 
             Write docs/research/fish/claim-{cid}-entail.md on a new branch and commit, ending with:
