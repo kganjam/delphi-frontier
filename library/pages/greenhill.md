@@ -1,0 +1,126 @@
+---
+title: Greenhill buckling-limited column height
+label: law-greenhill
+---
+
+:::{important}
+**Constraining** — this law yields a number a design is checked against.
+:::
+
+## The law
+
+:::{math}
+:label: eq-greenhill
+l_{cr} = C_G \left(\frac{E}{\rho g}\right)^{1/3} d^{2/3}, \qquad C_G = \left(\frac{7.8373}{16}\right)^{1/3} = 0.7883
+:::
+
+### Symbols
+
+| Symbol | Dimension | Units | Meaning |
+|---|---|---|---|
+| `l_cr` | L | m | critical height at which a uniform vertical column, clamped at the base and free at the top, buckles under its OWN weight |
+| `d` | L | m | diameter of a solid circular cross-section |
+| `E` | M/(L*T^2) | Pa | Young's modulus of the column material |
+| `rho` | M/L^3 | kg/m^3 | bulk density of the column material, including water for green wood |
+| `g` | L/T^2 | m/s^2 | gravitational acceleration |
+| `C_G` | 1 | dimensionless | Greenhill prefactor for a SOLID circular section |
+
+### Measured constants
+
+| Constant | Value | Note |
+|---|---|---|
+| `greenhill_eigenvalue` | 7.8373 | CALCULATED, not measured, so it carries no interval -- and it has now been computed independently three times with the same answer, which is why it is trusted despite no source having been read for it. A cloud session obtained it as (3/2*j)^2 with j = 1.86635 the first zero of the Bessel function J_(-1/3); this entry re-ran that root-find (scipy brentq on J_(-1/3), j = 1.866351, giving 7.8373); and the catalogue reached 0.788 from the same classical result held in memory. Greenhill 1881 itself has no Crossref record and was read by nobody, so the number rests on calculation rather than on a quotation. That is a weaker provenance than a measurement but a stronger one than a remembered constant, and the entry says which it is. |
+| `C_G` | 0.7883 | From the eigenvalue and I/A = d^2/16 for a solid circle. A HOLLOW section -- bone, bamboo, a feather rachis -- has a larger I/A at the same outer diameter and therefore a larger prefactor, so this value must not be carried across to one. |
+| `plant_safety_factor` | 4 | Niklas 1994, 111 species spanning basal diameters from 0.03 cm to 3.0 m: Elastica and Greenhill estimates were statistically indistinguishable, and H_crit/H is about 4. Plants stand at roughly a quarter of their buckling height. No interval was retrieved. McMahon 1973's similar claim for American trees was seen only in search summaries and is not relied on here. |
+| `tallest_measured_tree_m` | 112.7 | Koch et al. 2004. The relevant comparison for the break below. |
+| `hydraulic_height_ceiling_m` | 126 (interval 122 to 130) | Koch et al. 2004's predicted maximum tree height from WATER-TRANSPORT limits, barring mechanical damage. This is the number that actually binds at the top end, not the buckling height. |
+
+## Why it holds
+
+Euler buckling under a distributed axial load, the load being the column's own weight. Bending stiffness E*I resists weight per unit length rho*g*A, and the eigenvalue of the resulting differential equation -- which is a Bessel equation, hence the J_(-1/3) zero -- fixes the critical height. For a solid circle I/A = d^2/16, so l_cr^3 is proportional to (E/(rho*g))*d^2 and l_cr goes as d^(2/3). The design content is in the exponent rather than the prefactor: under GEOMETRIC scaling (d proportional to l) a column grows relatively closer to its buckling limit, because l_cr/l falls as l^(-1/3). Getting taller is disproportionately expensive in girth, and that is true whatever the material.
+
+## Where it holds
+
+- **load case**: self-weight loading of a slender, prismatic, straight, solid column clamped at the base and free at the top
+- **medium**: air, so that weight is not offset by buoyancy
+- **material**: isotropic, linearly elastic
+- **taxa**: self-supporting woody stems; measured across 111 species by Niklas 1994
+- **notes**: Exact for a uniform column with no crown or branch load. Real trunks taper and carry a crown, which shifts the prefactor; the d^(2/3) dependence survives only while shape changes in proportion. Green-wood E and rho both vary with density across species (Niklas & Spatz 2010).
+
+
+:::{danger} Where it breaks
+The headline failure is that the tallest trees are NOT limited by buckling. The tallest measured tree is 112.7 m and the predicted ceiling from water transport is 122-130 m, while the Greenhill limit for a trunk of that size is well above both -- the worked example gives 286 m for D = 4.84 m on illustrative properties. So at the top of the range, where the question is most interesting, this law returns a number that is not the binding one, and a design that checks only buckling will pass something physiology forbids. Wind loading usually dominates self-weight in real trees; tapered trunks, crown mass, and lianas and other non-self-supporting plants all violate the geometry. In WATER the law is inapplicable rather than merely inaccurate: effective weight is (rho - rho_water)*g, which is near zero for fish tissue, so self-weight buckling sets no useful bound on a fish or a fin, and using the dry density there is simply wrong. At millimetre scale in air the law is vacuous in the other direction -- a 0.1 mm rod has a computed l_cr of about 0.14 m, two orders of magnitude longer than the structure -- so aerodynamic, inertial or contact loads govern and buckling never binds. Finally the constant-safety-factor premise is contradicted within stems: Niklas 1995 reports the buckling safety factor of herbaceous stems falling roughly as d^(-1/3), and a 1998 study of three columnar cacti found it falling with size in each species.
+:::
+
+## Worked examples
+
+**idealised solid trunk at four diameters, illustrative green-wood properties**
+
+```
+assumed (NOT measured for any species): E = 10 GPa, rho = 600 kg/m^3, g = 9.81 m/s^2
+l_cr = 0.788 * (1e10/(600*9.81))^(1/3) * d^(2/3)
+  d = 0.1 m ->  20 m
+  d = 0.5 m ->  59 m
+  d = 1.0 m ->  94 m
+  d = 3.0 m -> 196 m
+
+```
+
+- value: `94`
+
+- A 30-fold increase in diameter buys under a 10-fold increase in critical height -- the d^(2/3) law made concrete. At the Niklas ratio of about one quarter, the 1 m trunk would be expected to stand about 24 m; that combines a calculation with a second-hand ratio and is an inference, not a measurement.
+
+- evidence: **derived**
+
+**coast redwood scale, against the hydraulic ceiling**
+
+```
+assumed: E = 10 GPa, rho = 500 kg/m^3, D = 4.84 m
+E/(rho*g) = 1e10/(500*9.81) = 2.039e6 m ; cube root = 126.8
+D^(2/3) = 4.84^0.667 = 2.861
+l_cr = 0.788 * 126.8 * 2.861 = 286 m        (for D = 1 m: 100 m)
+with green-wood E = 8 GPa, rho = 900 kg/m^3: l_cr = 218 m
+
+```
+
+- value: `286`
+
+- Against a 112.7 m real tree the buckling safety factor is about 2-2.5, but the hydraulic ceiling of 122-130 m bites first. This worked example exists to show the law being OUTRANKED rather than being wrong, which is the harder case to notice.
+
+- evidence: **derived**
+
+**millimetre-scale skeletal rod in air -- a candidate fin ray**
+
+```
+assumed: E = 10 GPa, rho = 2000 kg/m^3, d = 0.1 mm
+l_cr = 0.788 * (1e10/(2000*9.81))^(1/3) * (1e-4)^(2/3) = 0.14 m
+
+```
+
+- value: `0.14`
+
+- Two orders of magnitude longer than the ray, so self-weight buckling is not the binding constraint at that size and the law should not be cited for it. Measured E and density for zebrafish fin rays are unknown and were not searched.
+
+- evidence: **derived**
+
+:::{seealso} Contested
+- Koch et al. 2004 place the operative limit on tree height in water transport rather than mechanics. This is not a correction to the buckling formula but a statement that a different constraint binds first, which is the more useful thing to know.
+- Niklas 1995 and a 1998 columnar-cactus study find the buckling safety factor falling with size, contradicting the constant-safety-factor premise that elastic similarity rests on. Recorded here rather than reconciled; see the elastic-similarity entry.
+:::
+
+## Sources
+
+| Citation | Read-level |
+|---|---|
+| Greenhill AG (1881) Proc Camb Philos Soc 4:65-73, Determination of the greatest height consistent with stability that a vertical pole or mast can be made | `remembered` |
+| Niklas KJ (1994) Am J Bot 81:1275-1279, Interspecific allometries of critical buckling height and actual plant height, doi 10.1002/j.1537-2197.1994.tb11449.x | `abstract` |
+| Niklas KJ, Spatz H-C (2010) Am J Bot 97:1587-1594, Worldwide correlations of mechanical properties and green wood density, doi 10.3732/ajb.1000150 | `abstract` |
+| Koch GW, Sillett SC, Jennings GM, Davis SD (2004) Nature 428:851-854, The limits to tree height, doi 10.1038/nature02417 | `abstract` |
+| Niklas KJ (1995) Plant height and the properties of some herbaceous stems, Ann Bot, doi 10.1006/anbo.1995.1004 | `search-summary` |
+| Stem biomechanics of three columnar cacti from the Sonoran Desert (1998) Am J Bot; authors not verified | `search-summary` |
+| McMahon TA, Kronauer RE (1976) J Theor Biol 59:443-466, Tree structures: deducing the principle of mechanical design, doi 10.1016/0022-5193(76)90182-X | `metadata` |
+
+
+---
+
+*Generated from [`library/laws/greenhill.yaml`](https://github.com/kganjam/delphi-frontier/blob/main/library/laws/greenhill.yaml). Do not edit this page; edit the YAML.*
