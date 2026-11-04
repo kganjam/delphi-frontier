@@ -139,6 +139,30 @@ no lift, glide or flight was tested. The physics needs area.
 
 An implementer working from standard sources **fails twice before designing a guide RNA**.
 
+### And when they get there, the guide RNA is not the tool they expect
+
+**Codon 200 is `ACA`.** Under the standard genetic code the minimum substitution distance from
+Thr to Lys is **1**, but only from `ACA`→`AAA` or `ACG`→`AAG`; from `ACU` or `ACC` it is **2**. So
+T200K is a **single base change** here: **C→A at codon position 2**.
+
+**That single base cannot be written by a base editor.** C→A is a transversion. Cytosine base
+editors make C→T and adenine base editors make A→G — a CBE at this site yields `ACA`→`ATA`, which
+is **isoleucine, not lysine**. The edit needs **prime editing or HDR**, despite being one
+nucleotide.
+
+This is the kind of thing that is invisible at the allele-name level and decides the bench
+protocol. `lat4a^nr21` reads like a point mutation, and it is one; it is just not a point mutation
+the cheapest tool can make.
+
+The substitution-distance law is kernel-backed (`Delphi.Genotype.claimed_substitutions_rules_out`,
+pinned at commit `ba62f16`), and it was re-derived here against the three instances its own
+statement commits to — Phe→Leu 1, Trp→Stop 1, Met→Trp 2 — all of which reproduce, so the code table
+used matches the one the kernel checked. The reading frame carries its own control: the CDS is
+1734 nt, 578 codons, starts `ATG`, ends `TGA`, and codon 200 translates to Thr.
+
+**What the law does not say**, in its own third named hypothesis: reachability in the code is only
+reachability. It does not say the substitution occurred, was favoured, or has the claimed effect.
+
 ### The protein scale, measured rather than asserted
 
 Three independent routes now agree that **position 200 of the full-length product is threonine** —
