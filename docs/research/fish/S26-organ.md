@@ -87,7 +87,7 @@ R = 100 (the model ceiling) needs d/t ~ 5.7. R = 165 needs **d/t ~ 7.4**: the he
 Under isometric scaling, EI ∝ s^4, where s = L_zebrafish-ray / L_bluegill-ray and L_bluegill-ray = 40.3 mm.
 - EI_zf = 5.65e-4 x s^4.
 - Meeting 6.3e-4 needs s^4 >= 1.115, so s >= **1.03**. The zebrafish ray would have to be **at least as long as a bluegill's (~41 mm)**, on a fish only 40 mm long overall.
-- Illustrative only, because zebrafish pectoral ray length is **unknown** to me (I did not find it): s = 0.25 gives EI_zf = 2.2e-6 N m^2, which is 290x short. s = 0.5 gives 3.5e-5 N m^2, 18x short.
+- Illustrative only, because zebrafish pectoral ray length is **unknown** to me (I did not find it): s = 0.25 gives EI_zf = 2.2e-6 N m^2, which is 285x short. s = 0.5 gives 3.5e-5 N m^2, 18x short.
 
 Assumption A2: material, segmentation and active gain are size-independent. I have not verified this.
 
