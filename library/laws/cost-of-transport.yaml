@@ -1,0 +1,242 @@
+id: cost-of-transport
+name: Cost of transport versus body mass across swimming, flying and running
+usability: descriptive           # The running line (Taylor et al. 1982) predicts a number for a
+                                 # 15 g-254 kg bird or mammal to within ~25% for 90% of the fitted
+                                 # species, which is close to constraining INSIDE that band. Across
+                                 # modes, though, the exponent changes with mode, the prefactor
+                                 # changes with thermoregulation and with surface vs submerged
+                                 # swimming, and species at the same mass deviate several-fold.
+                                 # Across modes the law describes a pattern; it does not give a
+                                 # number to accept or reject a design against.
+equation: "COT = E_net / (M_b * d) = a * (M_b / M_0)^b"
+latex: "\\mathrm{COT} = \\frac{E_\\mathrm{net}}{M_b\\, d} = a \\left(\\frac{M_b}{M_0}\\right)^{b}"
+symbols:
+  COT:   {dimension: L/T^2, units: J/(kg*m), description: "mass-specific cost of transport: metabolic energy to move 1 kg of body 1 m (J kg^-1 m^-1 reduces to m/s^2)"}
+  E_net: {dimension: M*L^2/T^2, units: J, description: "metabolic energy spent over distance d. NET (resting or standard metabolism subtracted) for the running line; several swimming and flight values below are GROSS or TOTAL -- check before comparing"}
+  M_b:   {dimension: M, units: kg, description: body mass}
+  d:     {dimension: L, units: m, description: distance travelled}
+  a:     {dimension: L/T^2, units: J/(kg*m), description: "mode- and clade-specific prefactor: the COT of a 1 kg animal on the fitted line"}
+  M_0:   {dimension: M, units: kg, description: "reference mass (1 kg), present only so that the power law has consistent dimensions"}
+  b:     {dimension: "1", units: dimensionless, description: "mode- and clade-specific mass exponent of mass-specific COT (negative: larger animals pay less per kg per m)"}
+constants:
+  M_0:
+    value: 1.0
+    units: kg
+    note: A normalisation convention, not a measured quantity.
+  running_prefactor_net:
+    value: 10.7
+    interval: unknown
+    units: J/(kg*m)
+    note: >
+      MEASURED (regression), Taylor, Heglund & Maloiy 1982: VO2/M_b = 0.533 M_b^-0.316 v_g +
+      0.300 M_b^-0.303 (ml O2 s^-1 kg^-1), converted with 1 ml O2 = 20.1 J to
+      10.7 M_b^-0.316 v_g + 6.03 M_b^-0.303 (W/kg). The net COT is the speed coefficient. I got
+      these numbers from a search summary of the paper because the full text is paywalled and the
+      abstract page renders its equations as images. 0.533 * 20.1 = 10.71 checks out (my
+      arithmetic). No confidence interval on the coefficient was obtained, so none is given. The
+      abstract (which I read) says the fit uses 62 bird and mammal species and that "Ninety per
+      cent of the values calculated" fall within 25% of observed values in the middle of the
+      measured speed range.
+  running_exponent_net:
+    value: -0.316
+    interval: unknown
+    note: >
+      MEASURED (regression), Taylor et al. 1982. The value is confirmed in the full text of Kram
+      2012 ("scaled with mass to the -0.316 power") and, rounded to -0.32, in the full text of
+      Alexander 2005, which also says that "the same relationship also fits data from reptiles,
+      amphibians and arthropods" (Full 1989). Mass range 15 g (mice) to 254 kg (zebu cattle) per
+      Kram 2012. No interval obtained.
+  fish_swimming_exponent_mass_specific:
+    value: -0.20
+    interval: [-0.31, -0.08]
+    note: >
+      DERIVED BY ME from a measured value. Hein & Keirsted 2012 fit WHOLE-ANIMAL minimum COT
+      (J m^-1, gross, standard metabolism included) as proportional to M^alpha, with
+      alpha = 0.80, 95% CI (0.69, 0.92), across 22 fish species, more than 800 observations,
+      8.3e-3 to 1.2 kg, at 5-30 C. Dividing by M gives the mass-specific exponent alpha - 1
+      (my arithmetic). Their own model predicted alpha = 0.72 (mass-specific -0.28), which lies
+      inside the CI. This interval overlaps the running exponent, so I cannot say the fish
+      exponent differs from -0.316. The prefactor c_0 is printed in an equation image that I could
+      not read, so it is `unknown`.
+  marine_mammal_swimming_exponent_total:
+    value: -0.29
+    interval: unknown
+    note: Exponent of the Williams 1999 fit below; same source and caveats.
+  marine_mammal_swimming_prefactor_total:
+    value: 7.79
+    units: J/(kg*m)
+    interval: unknown
+    note: >
+      MEASURED (regression), Williams 1999. Read from a search summary of the abstract:
+      COT_TOT = 7.79 M^-0.29, r^2 = 0.83, n = 6 species, about 21 to 15,000 kg. This is TOTAL
+      cost (resting metabolism included), so it cannot be compared directly with Taylor's NET
+      line. The summary reports Williams as saying it is "indistinguishable from" the total
+      transport costs of running mammals.
+  flight_exponent_mass_specific:
+    value: -0.31
+    interval: unknown
+    note: >
+      MY INFERENCE, calculated rather than measured, and the weakest number in this entry. Alexander 2005 (full
+      text) reports Rayner 1995a's finding that metabolic power in bird flight scales as M^0.83,
+      and gives maximum-range speed scaling as M^0.14 (Rayner) or M^0.18 (Alexander's model).
+      COT = P / (M v), so the mass-specific exponent is 0.83 - 1 - 0.14 = -0.31, or -0.35 with the
+      0.18 speed exponent. This combines a measured power exponent with a MODELLED speed exponent.
+      I found no published flight COT regression with an interval that I could read. A search
+      summary says Tucker 1970 gives a flight COT-versus-weight equation with an exponent "of
+      about -0.33", but the summary marks the equation as garbled and I did not read the source,
+      so I do not use it as a value.
+  mechanical_cost_of_transport_exponent:
+    value: 0
+    note: >
+      MEASURED for running (Heglund et al. 1982; Full & Tu 1991), as reported in the full text of
+      Alexander 2005: mechanical COT is "independent of body mass". This contrast with the
+      metabolic exponent of -0.32 is the central puzzle of this law (see mechanism).
+mechanism: >
+  The pattern, as the authors report it: mass-specific metabolic COT falls with body mass in
+  every mode. At equal mass the order is roughly submerged swimming < flying < running (Schmidt-Nielsen
+  1972; Tucker 1975, both read at search-summary level only). Each mode has its own physical
+  cost. Running pays to support weight and to swing limbs. Flying pays to support weight
+  aerodynamically and to overcome drag. A neutrally buoyant swimmer pays almost only for drag,
+  which is why it is cheapest. That last step is a standard argument, which I am stating rather
+  than verifying. WHY the exponent is about -0.3 is unresolved. In running, mechanical work per kg
+  per m is mass-independent, while metabolic cost scales as M^-0.32. So either larger muscles do
+  the same work more efficiently (Alexander 2005, who writes "We must conclude that the muscles of
+  larger runners do indeed perform work with higher efficiency"), or the cost is set by how fast
+  force must be generated (Kram & Taylor 1990, as described in the full text of Kram 2012 and of
+  Alexander 2005). Alexander reports that the force hypothesis "works reasonably well for bird
+  flight, but less well for bees". Bejan & Marden 2006 (full text) argue that one minimum-
+  exergy-destruction principle gives speed proportional to M^(1/6) and force proportional to body
+  weight in all three modes. They make no cost-of-transport prediction with a prefactor, and their
+  own Table 1 does not support all the predicted slopes statistically.
+domain_of_validity:
+  running_line: >
+    Net metabolic COT of birds and mammals from 15 g to 254 kg at constant speed on a treadmill
+    (Taylor et al. 1982). Kram 2012 reports later extension down to ants and up to elephants.
+    Alexander 2005 reports that the line also fits reptiles, amphibians and arthropods.
+  fish_swimming: >
+    Minimum gross COT, 22 species, 8.3e-3 to 1.2 kg, 5-30 C (Hein & Keirsted 2012). Temperature is
+    a second required predictor.
+  marine_mammal_swimming: Total COT, 6 species, about 21-15,000 kg (Williams 1999, abstract via search summary).
+  flight: >
+    No interval-bearing regression was read for this entry. The exponent given is inferred
+    (see constants).
+  regime: >
+    Steady, aerobic, constant-speed locomotion. Bejan & Marden 2006 state that undulating
+    swimming and flapping flight occur only above a body Reynolds number of about 30, so
+    ciliary and other low-Re swimmers are outside this law.
+  notes: >
+    Not checked: bats separately from birds, insect flight COT regressions, jet-propelled
+    swimmers (squid, jellyfish), or cycling and other machine-assisted locomotion.
+where_it_breaks: >
+  (1) "SWIMMING IS CHEAPEST" HOLDS ONLY FOR SUBMERGED, NEUTRALLY BUOYANT SWIMMERS, NOT FOR
+  SURFACE SWIMMERS. Prange & Schmidt-Nielsen 1970 (abstract via search summary) measured a minimum
+  surface-swimming COT in ducks of 5.77 kcal kg^-1 km^-1. That is 24.1 J kg^-1 m^-1 (my
+  conversion), about twice the NET running line at 1 kg (10.7). The duck value is gross and the duck's mass
+  was not in the summary, so the ratio is indicative only. The authors tie the speed limit to
+  displacement-hull wave drag. A search summary of a sea-otter study gives a surface-swimming
+  total COT of 12.56 J kg^-1 m^-1, "more than 12 times" that predicted for a salmonid fish of
+  similar size. Wave drag at the surface, not mass, sets the cost here.
+  (2) THE SWIMMING BAND SPLITS BY THERMOREGULATION. Marine mammals' TOTAL swimming COT
+  (7.79 M^-0.29) is reported as indistinguishable from running mammals' total COT. Williams
+  attributes their excess over fish to endothermy, and the summary reports the swimming cost
+  "by itself" as similar to salmon. So the cross-mode ordering depends on whether the cost
+  is net or total. A gross-vs-net mix-up alone can make swimming look no cheaper than running.
+  (3) IN FISH, MASS IS NOT A SUFFICIENT PREDICTOR. COT_min depends on temperature as well as mass
+  (equivalent Q10 about 1.3; Hein & Keirsted 2012). Alexander 2005 reports that, unlike runners
+  and fliers, "there is no evidence of larger fish being more efficient". The mass-specific fish
+  exponent (-0.20, CI -0.31 to -0.08; my derivation) is poorly constrained and may be shallower
+  than running.
+  (4) AT A FIXED MASS, SPECIES DEVIATE SEVERAL-FOLD FROM THE LINE (the "secondary allometric signal",
+  Kram 2012). Penguins walk at an "inordinately large" cost; turtles walk "with exceptional
+  economy". The Taylor fit is good to ~25% for 90% of its 62 species and only in mid-range speeds.
+  It is not a prediction interval for an arbitrary new taxon.
+  (5) GAIT. Rubenson et al. 2007 (as reported by Kram 2012) found that walking and running costs
+  scale differently. The single -0.316 line mixes gaits.
+  (6) THE ANT END IS DISPUTED (see contested_by). Lighton et al. 1993 report an unladen COT of
+  158 J kg^-1 m^-1 for Pogonomyrmex rugosus (abstract). On the running line, 158 corresponds to
+  a mass of 0.20 g (my calculation), so the ant falls BELOW the line if its mass is under 0.2 g. I did not obtain the worker mass.
+  A search summary of a harvester-ant study says minimum COT was "lower than predicted from
+  vertebrate data". Kram 2012 says the line predicts extensions to ants "with uncanny accuracy".
+  (7) FLIGHT IN SMALL ANIMALS AND INSECTS. A search summary of a bat-flight study reports that
+  published flight-cost estimates below 35 g "differ by more than a factor of five" at a given
+  mass. A search summary of a review chapter says that COT falling with mass "is not the case
+  for insects". I did not read either source, so both are leads rather than findings.
+  (8) MECHANICAL COT DOES NOT FOLLOW THE METABOLIC LAW. Extrapolating mechanical cost against
+  metabolic cost predicts efficiencies "greater than 100%" in large runners, which is impossible
+  (Alexander 2005). Elastic energy storage breaks the link, so a mechanical-work model of a
+  design cannot be converted into a metabolic COT through this law.
+worked_examples:
+  - organism: generic 1 kg bird or mammal, running
+    computation: "COT = 10.7 * (1/1)^-0.316 = 10.7 J kg^-1 m^-1"
+    value: 10.7
+    units: J/(kg*m)
+    note: Calculated from the regression; this is the prefactor by construction.
+    evidence: derived
+  - organism: mouse (0.02 kg) vs human (70 kg), running line
+    computation: "(0.02/70)^-0.316 = 13.2"
+    value: 13.2
+    note: >
+      Calculated, using masses I chose. Kram 2012 states "approximately 12 times" without giving
+      the masses he used. The difference comes from the choice of masses, not from a different
+      exponent.
+    evidence: derived
+  - organism: Anas (duck), surface swimming
+    computation: "5.77 kcal kg^-1 km^-1 * 4184 J/kcal / 1000 m/km = 24.1 J kg^-1 m^-1"
+    value: 24.1
+    units: J/(kg*m)
+    note: >
+      Unit conversion of a measured value (Prange & Schmidt-Nielsen 1970, read via search
+      summary). Gross cost. It is the counter-example to "swimming is cheapest".
+    evidence: literature
+  - organism: Danio rerio (design check for this repository)
+    computation: >
+      ASSUMED M_b = 4e-4 kg (an illustrative value, not a measurement). (a) Applying the running
+      line out of its domain: 10.7 * (4e-4)^-0.316 = 127 J kg^-1 m^-1. (b) Fish exponent, relative to a
+      1.2 kg fish at the same temperature: (4e-4/1.2)^-0.20 = 5.0, interval 1.9 to 12.0 from
+      the exponent CI.
+    value: unknown
+    note: >
+      Calculated, not observed. No absolute fish COT can be given because the Hein & Keirsted
+      prefactor was not readable. 4e-4 kg is about 20 times below the smallest fish in their fit,
+      so (b) is an extrapolation whose spread (1.9x to 12x) is the honest result. Number (a) is
+      included only to show that using the RUNNING line for a fish is a category error (failure (2)
+      and (3) above). It is not an estimate.
+    evidence: derived
+contested_by:
+  - "Cause of the -0.3 exponent: Alexander 2005 concludes larger muscles work at higher efficiency; Kram & Taylor 1990 attribute cost to the rate of force generation (as reported by Kram 2012 and Alexander 2005); Alexander notes that force-hypothesis predictions miss for euglossine bees (predicted M^0.73 vs observed M^0.58 metabolic power). Not reconciled."
+  - "Bejan & Marden 2006 claim one constructal principle unifies running, swimming and flying; their own Table 1 gives a wingbeat-frequency exponent of -0.26 +/- 0.015 against a predicted -0.167, and they write that they 'do not find statistical support across the board for the exact scaling slopes predicted'."
+  - "Ant end of the running line: Kram 2012 says extensions to ants are predicted 'with uncanny accuracy'; a harvester-ant study (search summary) reports minimum COT 'lower than predicted from vertebrate data'."
+  - "Fish: Hein & Keirsted 2012 fit an exponent consistent with larger fish costing less per kg; Alexander 2005 reports Yates's salmon analysis found larger fish NOT more efficient, while also suggesting Yates's data were distorted by low-speed and anaerobic swimming."
+  - "Flight power exponent: Alexander's fixed-wing calculation gives mechanical power ~ M^1.02, Rayner's vortex-wake calculation M^1.10, while measured metabolic power is ~ M^0.83 (Rayner 1995a), all as reported by Alexander 2005."
+negative_searches:
+  - "Flight COT regression with an interval: one standard and one extended web search (2026-11-04); none found that I could read. Tucker 1973 (JEB 58:689) was fetched but only the abstract was accessible; direct PDF download returned an HTML page."
+  - "Fish COT prefactor: Hein & Keirsted 2012 full text read on PMC, but its equation 2.2 is an image; Videler 1993 and Videler & Nolet 1990 were searched once and not found."
+  - "Not accessible from this session (host blocked by network policy): gwern.net copy of Schmidt-Nielsen 1972, pubmed.ncbi.nlm.nih.gov, en.wikipedia.org, cob.silverchair.com."
+  - "Did not search: bat-specific COT, jet propulsion, cycling or machine comparisons beyond a search summary."
+sources:
+  - citation: "Taylor CR, Heglund NC, Maloiy GMO (1982) Energetics and mechanics of terrestrial locomotion. I. J Exp Biol 97:1-21"
+    read_level: abstract
+    note: Equation coefficients from a search summary; the abstract page renders them as images.
+  - citation: "Kram R (2012) Taylor's treadmill menagerie (JEB Classics). J Exp Biol 215:2349-2350"
+    read_level: full-text
+  - citation: "Alexander RMcN (2005) Models and the scaling of energy costs for locomotion. J Exp Biol 208:1645-1652"
+    read_level: full-text
+  - citation: "Bejan A, Marden JH (2006) Unifying constructal theory for scale effects in running, swimming and flying. J Exp Biol 209:238-248"
+    read_level: full-text
+  - citation: "Hein AM, Keirsted KJ (2012) The rising cost of warming waters: effects of temperature on the cost of swimming in fishes. Biol Lett 8(2):266-269"
+    read_level: full-text
+  - citation: "Williams TM (1999) The evolution of cost efficient swimming in marine mammals: limits to energetic optimization. Phil Trans R Soc B 354:193-201"
+    read_level: search-summary
+  - citation: "Prange HD, Schmidt-Nielsen K (1970) The metabolic cost of swimming in ducks. J Exp Biol 53:763-777"
+    read_level: search-summary
+  - citation: "Lighton JRB, Weier JA, Feener DH (1993) The energetics of locomotion and load carriage in the desert harvester ant Pogonomyrmex rugosus. J Exp Biol 181:49-62"
+    read_level: abstract
+  - citation: "Schmidt-Nielsen K (1972) Locomotion: energy cost of swimming, flying, and running. Science 177:222-228"
+    read_level: search-summary
+  - citation: "Tucker VA (1975) The energetic cost of moving about. American Scientist 63:413-419"
+    read_level: search-summary
+  - citation: "Tucker VA (1973) Bird metabolism during flight: evaluation of a theory. J Exp Biol 58:689-709"
+    read_level: abstract
+  - citation: "Rubenson J et al. (2007) gait-specific allometric analysis of locomotor cost"
+    read_level: listing
+    note: Known only from Kram 2012's text and reference list; full citation details not obtained.
