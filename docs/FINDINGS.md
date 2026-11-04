@@ -617,7 +617,7 @@ one is a detail that changes nothing.**
 
 | 31 | and2's cysteine depletion is not significant | **replication right, on method** — p flips 0.022 → 0.055, and z = −2.02 only appears at a window failing the project's own control |
 | 201, 260 | lower bounds and a pitch mode differ | **minor** — the replications state the conclusions stand; 201's moment and bone section *reproduce exactly* |
-| 11 | the a3m holds 76 records, not 72 | **undecidable here** — the file was never committed ([claim 210](#)); the substantive part, that top hits are real K2P structures, is confirmed |
+| 11 | the a3m holds 76 records, not 72 | **ORIGINAL RIGHT — settled 2026-11-04.** The file *is* committed at `results/fish-proteins/structures/` and holds **exactly 72** records. I had called this undecidable on the strength of claim 210, which itself asserted the file was never committed; **claim 210 is refuted and superseded** |
 | 296, 181 | loop delay and actinotrichial modulus | **unresolved** — in both, the replication could not verify the inputs its own alternative needs |
 | 29 | and1 does depart from the shuffle null | **source-only** — two replications agree and cite the claim's own table against it; not re-run here |
 
@@ -698,8 +698,12 @@ work that would obviously succeed; each is a specific question with a stated rea
 - **Formal verification reaches the organism scale and not the DNA scale.** The Delphi registry's
   five genotype laws (G1–G5) return `cannot-evaluate`; supplying `genotype_edits` cleared the
   `missing` list without producing a verdict.
-- **The `kcnk5b` a3m was never committed**, so the MSA-depth result behind *"the alignment ran out,
-  not disorder"* cannot be independently checked from this repository.
+- ~~The `kcnk5b` a3m was never committed~~ — **false, corrected 2026-11-04.** It is at
+  `results/fish-proteins/structures/kcnk5b_pdb70.a3m`, holds **72 records**, and its depth profile
+  recomputes exactly: 57 at residue 100, 27 at 200, 2 at 300, **0 from 326 onward**. The result is
+  independently reproducible from this repository. **A second finding fell out:** `and1` and `and2`
+  each have an alignment of **one record — the query alone**, so the actinodins have **no PDB70
+  structural homologues at all**, independently consistent with their pTM of 0.185–0.202.
 
 ## What this does not establish
 
