@@ -106,4 +106,55 @@ quoted values) and 201 (two quantities). Counting each value separately gives **
 
 ## Comparison with the recorded value
 
-Done only after the value above was fixed and committed. See the section added below.
+I did this only after the value above was fixed and committed (`0660b9e8`). I then read the first 30 lines of
+`docs/research/fish/challenge-207.md` on `origin/claude/challenge-207-audit-yrcec6` (read-level: listing),
+because they quote the claim. That file is a challenge **of** claim 207, not the original working. I read no
+further.
+
+**The recorded claim, as quoted there:**
+
+> "CHALLENGER AUDIT: 156 resolved challenges returned 109 weakened, 26 survived, 21 refuted -- a 17% survival rate.
+> I suspected the challengers were manufacturing faults, sampled six weakened verdicts, and found the opposite:
+> all six were substantive, several correcting real errors against primary sources."
+
+Recorded level: derived. Value: 17 percent survival.
+
+The claim has two parts, and my results bear on them differently.
+
+### Part 1: "all six were substantive"
+
+- The author's claim: 6 of 6 sampled weakened verdicts were substantive.
+- My measurement is a seeded random sample of 10 challenge documents, of any outcome (8 weakened, 2 survived). The
+  evidence those documents cite reproduced in 10/10, and 27/27 checked assertions reproduced.
+- The two are different tests. I checked the evidence; they judged the verdicts as substantive.
+- **AGREE in direction.** I found no manufactured evidence in my sample.
+
+### Part 2: "17 % survival" (26/156)
+
+**Observed, from the `swarm-challenge` blocks in git (my collection, scope: every `challenge-N.md` blob reachable
+from the remote branches on 2026-11-04):**
+
+| Population | weakened | survived | refuted | survival |
+|---|---|---|---|---|
+| Latest verdict per claim ID (172 IDs) | 114 | 49 | 9 | **28.5 %** |
+| First verdict per claim ID (172) | 117 | 46 | 9 | 26.7 % |
+| The first 156 claim IDs resolved, by first commit time | 101 | 46 | 9 | **29.5 %** |
+| All 215 blobs (versions counted separately) | 151 | 54 | 10 | 25.1 % |
+| **Recorded claim (database, not accessed)** | 109 | 26 | 21 | **16.7 %** |
+
+- **DISAGREE.** No population I can build from git gives 17 %. The time-matched first 156 give 29.5 %.
+- The refuted count also goes the opposite way: the claim has 21, while git has at most 10 even across all 215
+  versions. So git does not hold a subset that could reconcile the two figures.
+- **My inference, unverified:** the database `challenge` table and the git documents are not the same population.
+  Possible causes include:
+  - challenge rows whose documents were never pushed;
+  - several challenge rows per claim;
+  - outcomes recorded in the database that differ from the committed block.
+- I could not read the database, so I **cannot tell which side is wrong**. I report both figures and do not average
+  them.
+- Arithmetic check: 26/156 = 16.67 %, so the author's 17 % follows from the author's own counts.
+
+```swarm-replication
+{"claim_id": 207, "my_value": "survival 28.5% (49/172 latest verdicts; 29.5% = 46/156 for the first 156 resolved) from git challenge blocks; sampled evidence audit 10/10 documents (27/27 assertions) reproduce, 95% LB 69%", "agrees": false,
+  "note": "The audit half (challengers not manufacturing faults) agrees, but no git population reproduces 17% survival or 21 refuted (git: at most 10 refuted), and the database the claim counted was not accessible to settle which record is wrong."}
+```
