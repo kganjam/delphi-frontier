@@ -1,7 +1,7 @@
 id: ashby
 name: Ashby material-selection indices
 usability: constraining
-equation: "P_beam = E^1/2 / rho"
+equation: "P_beam = E^(1/2) / rho"
 latex: "P_{\\text{tie}} = \\frac{E}{\\rho}, \\quad P_{\\text{beam}} = \\frac{E^{1/2}}{\\rho}, \\quad P_{\\text{panel}} = \\frac{E^{1/3}}{\\rho}, \\quad P_{\\text{strong beam}} = \\frac{\\sigma_f^{2/3}}{\\rho}"
 symbols:
   P_beam: {dimension: M^-1/2*L^5/2/T, units: "Pa^(1/2) m^3 kg^-1", description: "the performance index for a light, stiff beam; its ODD dimension is expected and is explained in the mechanism"}
