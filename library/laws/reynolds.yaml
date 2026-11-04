@@ -1,0 +1,46 @@
+id: reynolds
+name: Reynolds number and flow-regime boundaries
+usability: constraining
+equation: "Re = rho * U * L / mu = U * L / nu"
+latex: "\\mathrm{Re} = \\frac{\\rho U L}{\\mu} = \\frac{U L}{\\nu}"
+symbols:
+  rho: {dimension: M/L^3, units: kg/m^3, description: fluid density}
+  U:   {dimension: L/T,   units: m/s,    description: characteristic velocity}
+  L:   {dimension: L,     units: m,      description: "characteristic length (chord, for a wing)"}
+  mu:  {dimension: M/(L*T), units: Pa*s, description: dynamic viscosity}
+  nu:  {dimension: L^2/T, units: m^2/s,  description: kinematic viscosity}
+  Re:  {dimension: "1",   units: dimensionless, description: ratio of inertial to viscous forces}
+constants:
+  nu_air_15C:   {value: 1.5e-5,  interval: [1.42e-5, 1.57e-5], units: m^2/s, note: varies with temperature}
+  nu_water_20C: {value: 1.004e-6, interval: [0.8e-6, 1.3e-6],  units: m^2/s, note: varies with temperature}
+mechanism: >
+  The ratio of inertial to viscous forces in the Navier-Stokes equations. It is the similarity
+  parameter for incompressible flow: two geometrically similar flows at equal Re are dynamically
+  similar, which is what licenses reasoning from one scale to another at all.
+domain_of_validity:
+  notes: >
+    Universally defined for incompressible flow. The CONSEQUENCES attached to a given Re -- the
+    attainable lift coefficient, the stall behaviour -- are geometry-specific and must not be
+    carried across geometries.
+where_it_breaks: >
+  Re itself does not break; the inferences people hang on it do. The common error is transferring a
+  lift coefficient measured on one body at a given Re to a different body at the same Re. Re also
+  ceases to be the sole similarity parameter once compressibility (Mach), free-surface effects
+  (Froude), or unsteadiness (Strouhal) matter -- and for a flapping or launching animal, at least
+  two of those apply simultaneously.
+worked_examples:
+  - organism: Danio rerio candidate wing in air
+    computation: "U = 2 m/s, L = 0.01 m, nu = 1.5e-5 m^2/s  ->  Re = 2*0.01/1.5e-5 = 1333"
+    value: 1333
+    note: >
+      Low-Reynolds regime, two orders of magnitude below exocoetid gliding flight. Conventional
+      airfoil performance does not apply and thin cambered plates outperform thick sections here.
+    evidence: derived
+  - organism: Exocoetidae in gliding flight
+    value_range: [1.0e5, 1.0e6]
+    evidence: literature
+sources:
+  - citation: "Reynolds O (1883) Phil. Trans. R. Soc. 174:935-982"
+    read_level: search-summary
+  - citation: "Vogel S, Life in Moving Fluids, 2nd ed."
+    read_level: search-summary
