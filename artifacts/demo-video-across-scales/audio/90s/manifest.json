@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "variant": "90s",
+  "text": "Type: “Design a fish that can fly.”\n\nThat’s the promise of a biological compiler: describe the capability you want, then engineer across scales.\n\nDelphi Bio and MorphoSwarm Studio bring a decentralized swarm of agents to the challenge. They apply mathematical biology, propose simulations, design experiments—and challenge each other’s designs.\n\nCould faster cellular respiration supply launch power—and can oxygen delivery keep up? Which proteins could make fins tougher without adding weight? How do cell signals shape their growth? Can tissues stay flexible, and the nervous system steer?\n\nThen think bigger. How would a school coordinate takeoff? What changes for predators, prey, and the ecosystem?\n\nEvery answer changes the design. Bigger fins may help lift—but what happens to drag, strength, and energy?\n\nWe extract mathematical laws from literature and data, make assumptions explicit, and formally check the deductions. Compatible models become composable building blocks, with biophysical control knobs to explore.\n\nExplore protein motion. Compare cell signals. Bend a virtual fin and follow its wake. Each simulation should answer a design question.\n\nAgents can turn missing connections into experiments, testing each scale and the interfaces between them.\n\nThe knowledge goes back into Delphi, carrying evidence, uncertainty, disagreement, and limits. New findings update claims and flag dependent designs. This is the infrastructure we’re building for verified biology.\n\nThe pieces are coming together. The destination: compile the design into candidate DNA, with a plan to build and test it.\n\nFrom a sentence to an organism. What would you build?\n",
+  "text_sha256": "cc90f26aab80fcd152f8b9a8c2f931ef55fc37ad51fde2a10903767702075137",
+  "word_count_whitespace": 244,
+  "wav_file": "narration.wav",
+  "wav_sha256": "5a74ae797a7454009ab67cf81f14d59b1671b52e7dcbdc09d2e64412e9dc893d",
+  "wav_duration_s": 88.625719,
+  "pcm_sha256": "7fd069db8460334d84283a2ddb5ff0fa8c5bf27c720a6d0281d2f7192d6c1fb0",
+  "timings_file": "timings.json",
+  "timings_sha256": "f7e527834b5ef11712565790137e0a780c4024bda70dd0230504cd783d1cd1a0",
+  "base_manifest": "base-manifest.json",
+  "base_manifest_sha256": "7631b7d097d8b4b6f075924610fb478cee051fb48378ad27e3ec6bb94bdc1d16",
+  "closing_take": "sources/closing.json",
+  "closing_take_sha256": "7288166c8e9c11d02dcb9ad3909a1427573799cf619d8441a33e00f59b99d063",
+  "model": "speech-2.8-hd",
+  "voice_id": "English_expressive_narrator",
+  "closing_provider_speed": 1.15,
+  "selected_closing": "03-yoo-caps",
+  "closing_tts_text": "From a sentence to an organism. What would YOO build?",
+  "splice_time_s": 85.7,
+  "splice_frame": 2742400,
+  "closing_post_tempo_factor": 1.0,
+  "preserve_base_duration": true,
+  "canonical_display_text_changed": false,
+  "pcm_prefix_byte_identical": true,
+  "closing_pcm_byte_identical": true,
+  "archive_metadata_changes": [
+    {
+      "change": "Parent-timing versus raw-subtitle hash references separated and recomputed.",
+      "old_mislabeled_source_sha256": "31f8392582cae12b37c7e9314bf2333ca8675365a379ccc9d4058cc1729e36db",
+      "actual_original_parent_timings_sha256": "28a24701e82da438f67aae457acf0e89a83b0cc59521e5751eee56af889cb2d9"
+    },
+    {
+      "change": "Absolute local paths and provider trace identifiers omitted; references are relative to each JSON file. Word/sentence/paragraph timing arrays and recorded audio bytes retained."
+    }
+  ],
+  "unchanged_pcm_prefix_sha256": "21d169a4552816169bbbb4eb38e00fe8c2ec110b329034e9ad679b35c5dd09e3"
+}
