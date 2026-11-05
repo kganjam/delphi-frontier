@@ -134,6 +134,8 @@ def ask_text(text: str, label: str, question: str, qnum: int, tenant: str) -> tu
     for item in (data or {}).get("values", []) or []:
         q = ev.norm(str(item.get("quote", "")))
         item["paper"], item["asked"] = label, qnum
+        item["qfile"] = QFILE_STEM[0]
+        item["project"] = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
         if q and len(q) > 15 and q in hay:
             item["verified_quote"] = True
             kept.append(item)
@@ -271,6 +273,8 @@ def ask(path: pathlib.Path, question: str, qnum: int, tenant: str) -> tuple[list
         for item in (data or {}).get("values", []) or []:
             q = ev.norm(str(item.get("quote", "")))
             item["paper"], item["asked"] = path.stem, qnum
+            item["qfile"] = QFILE_STEM[0]
+            item["project"] = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
             if q and len(q) > 15 and q in hay:
                 item["verified_quote"] = True
                 kept.append(item)
