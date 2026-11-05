@@ -29,7 +29,26 @@ import sys
 
 from dbq import q
 
-CITE = re.compile(r"\bclaims?\s+((?:\d{3,4})(?:\s*(?:,|and|&)\s*\d{3,4})*)", re.I)
+# THE FIRST VERSION HAD A 60% FALSE-POSITIVE RATE on the full history, which by this
+# repository's own standard is a gate that gets switched off. Three of five flags were not
+# citations at all:
+#
+#   "claim 38125 of 40000"            -> \d{3,4} truncated a 5-digit number to "3812"
+#   "Claim 1323/2048000"              -> grabbed the numerator of a fraction
+#   "claim 323, subproblem 95, run 27" -> a ROW-COUNT TABLE, not a citation to claim #323
+#
+# So: the number must not be part of a longer number, must not be followed by "/" or a digit,
+# and must not sit in a comma-separated list of entity counts. Each exclusion is pinned by a
+# control below using the real text that caused it.
+_ENTITY = r"(?:subproblem|run|parameter|artifact|constraint\w*|challenge|candidate|part|grade)"
+# `.` must only disqualify a DECIMAL, not a sentence-ending period. The first fix excluded any
+# following "." and so lost db41d926's genuine "Claim 533." -- trading false positives for a
+# false negative, which is the worse trade for a checker whose whole purpose is catching the
+# citation nobody re-reads. `\.(?=\d)` matches a decimal point only.
+_TAIL = r"(?![\d/]|\.(?=\d))"
+CITE = re.compile(
+    r"\bclaims?\s+(\d{3,4})" + _TAIL + r"(?!\s*,\s*" + _ENTITY + r")"
+    r"((?:\s*(?:,|and|&)\s*\d{3,4}" + _TAIL + r")*)", re.I)
 
 
 def main() -> int:
@@ -57,7 +76,7 @@ def main() -> int:
         sha, _, body = c.strip().partition("\x01")
         is_correction = bool(CORRECTION.search(body))
         for m in CITE.finditer(body):
-            for tok in re.findall(r"\d{3,4}", m.group(1)):
+            for tok in re.findall(r"\d{3,4}", (m.group(1) or "") + " " + (m.group(2) or "")):
                 cid = int(tok)
                 checked += 1
                 if cid not in live:
@@ -93,6 +112,29 @@ def main() -> int:
     hits2 = [t for m in CITE.finditer(probe2) for t in re.findall(r"\d{3,4}", m.group(1))]
     print(f"    a message with a bare number and a PMID: parsed {hits2} "
           f"{'OK, not treated as citations' if not hits2 else 'FALSE POSITIVE'}")
+    # MUST-NOT-FLAG: the three real false positives from the first full-history run.
+    for txt, why in (("claim 38125 of 40000, so 1875 nodes", "5-digit number truncated"),
+                     ("reproduces the Claim 1323/2048000", "numerator of a fraction"),
+                     ("claim 323, subproblem 95, constraint_entailed 381, run 27",
+                      "a row-count table")):
+        got = [t for m in CITE.finditer(txt) for t in
+               re.findall(r"\d{3,4}", (m.group(1) or "") + " " + (m.group(2) or ""))]
+        print(f"    {why:28}: parsed {got} {'OK' if not got else 'STILL A FALSE POSITIVE'}")
+    # MUST-FLAG: a citation ending a sentence. The first fix lost this one.
+    for txt, want in (("The reusable fix is one source location. Claim 533.", ["533"]),
+                      ("a value of claim 533.5 is a decimal, not a citation", [])):
+        got = [t for m in CITE.finditer(txt) for t in
+               re.findall(r"\d{3,4}", (m.group(1) or "") + " " + (m.group(2) or ""))]
+        ok = got == want
+        print(f"    {'sentence-final / decimal':28}: parsed {got}, wanted {want} "
+              f"{'OK' if ok else 'WRONG'}")
+    # must-flag: a genuine multi-id citation must still parse BOTH ids
+    multi = "this supersedes claims 1072 and 1073 together"
+    got = [t for m in CITE.finditer(multi) for t in
+           re.findall(r"\d{3,4}", (m.group(1) or "") + " " + (m.group(2) or ""))]
+    print(f"    {'a real two-id citation':28}: parsed {got} "
+          f"{'OK' if len(got) == 2 else 'LOST ONE'}")
+
     # must-flag: the real historical case
     probe3 = "Record the access attempt on the paper that could answer S904 (claim 1075)"
     hits3 = [int(t) for m in CITE.finditer(probe3) for t in re.findall(r"\d{3,4}", m.group(1))]
