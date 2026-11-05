@@ -208,6 +208,40 @@ def flush(dest: pathlib.Path, kept: list, bad: list) -> None:
     tmp.replace(dest)
 
 
+TABLE_ASK = ("Any measured numeric value that appears in a TABLE in the text below, with the "
+             "row label and column heading it sits under. Report each separately. Units wanted: "
+             "whatever the table states. Include the species and conditions if the table or its "
+             "caption gives them.")
+
+
+def has_markup_tables(pmcid: str) -> bool:
+    """Whether this paper's tables are deposited as MARKUP, read from the XML, not guessed.
+
+    MEASURED 2026-11-05: 4 of the 6 papers with tables deposit them as <tr> rows, which arrive
+    inside <body> and are therefore already in the fetched text; the other 2 deposit images, so
+    the text names the table and reports no value (claim 1407).
+
+    TWO TEXT HEURISTICS WERE TRIED FIRST AND BOTH FAILED THEIR CONTROL. Looking for numbers near
+    the FIRST "Table N" missed PMC3013094, whose first table is a primer list with no numerals.
+    Looking near EVERY "Table N" then produced three false positives, because prose that CITES a
+    table sits next to numbers just as a table does ("as shown in Table 3, ... 0.45"). Flattened
+    text cannot distinguish a table from a sentence about one; the structure can, and the XML is
+    one request away. This is the project's own rule -- prefer the artifact that computed it over
+    a restatement -- applied to its own retrieval layer.
+    """
+    import urllib.request
+    try:
+        req = urllib.request.Request(
+            f"https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML",
+            headers={"User-Agent": "morphoswarm-research/1.0"})
+        with urllib.request.urlopen(req, timeout=60) as fh:
+            xml = fh.read().decode("utf-8", "replace")
+    except Exception:                                             # noqa: BLE001
+        return False
+    import re as _re
+    return any("<tr" in b for b in _re.findall(r"<table-wrap.*?</table-wrap>", xml, _re.S))
+
+
 def read_questions(path: pathlib.Path) -> list[str]:
     """One question per numbered block; the indented 'Report the species' line belongs to it."""
     out, cur = [], []
@@ -479,6 +513,15 @@ def main() -> int:
                 fetched += 1
             k, b = ask(p, question, i, TENANTS[asked % len(TENANTS)])
             asked += 1
+            # One extra call where the paper's tables are markup, because a table row reports
+            # under its own heading and a quantity-named question cannot match it (claim 1407).
+            if has_markup_tables(p.stem):
+                tk, tb = ask(p, TABLE_ASK, i, TENANTS[asked % len(TENANTS)])
+                asked += 1
+                for it in tk:
+                    it["from_table"] = True
+                k += tk
+                b += tb
             kept_all += k
             bad_all += b
             if k:
