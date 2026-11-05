@@ -74,6 +74,26 @@ _THE ADVERSARIAL ARM FOUND THREE REAL DEFECTS IN TONIGHT'S LAST TWO CLAIMS, AND 
 claim 550 `derived` / `full-text`  
 _CORRECTING CLAIM 549: THE MASS CANNOT COME OFF THE SKELETON, AND THE ONLY ROUTE THAT REACHES 46 PERCENT IS GAS DISPLACEMENT -- WHICH NAMES A TISSUE AN…_
 
+**What wind does the ACHIEVABLE animal actually need?**  
+**12.5 m/s minimum sustaining wind at the genetically achievable fin (2.65x wild type)**  
+claim 988 `derived`  
+_[ROUTE D, THE ACTUAL OPERATING POINT] At the best fin the published genetics delivers, the minimum wind at which this project's closed-loop model find…_
+
+**The taxi route has its organ now -- does it close?**  
+**16.2 cm SL upper end of the corrected body-size target, from Eloy eq16 branches rather than a fitted exponent**  
+claim 1014 `derived` / `full-text`  
+_[SUPERSEDES CLAIM 992] The body-size target is 10.6-16.2 cm SL on a correct drag model, not 9.8-14.1 cm on a fitted exponent -- and the fitted exponen…_
+
+**Is there a danionin already at the required size?**  
+**15 cm TL maximum length of Devario aequipinnatus, against Danio rerio 3.8 cm SL**  
+claim 1000 `literature` / `listing`  
+_[S905 ANSWERED] The body size the physics requires already exists in the clade. Devario aequipinnatus, a danionin, reaches 15.0 cm TL against Danio re…_
+
+**Can a zebrafish instead be ENGINEERED to that size?**  
+**1.098 fold change in adult body length, GH-transgenic vs WT Danio rerio at ~90 dpf**  
+claim 1012 `literature` / `full-text`  
+_[S906, GH ARM MEASURED -- AND IT IS THE SAME SPECIES] Growth-hormone transgenesis in DANIO RERIO raises adult body length by 1.10x, not the 2.45x clai…_
+
 
 ## ORGAN / fin morphology
 
@@ -86,6 +106,26 @@ _AREA AND ASPECT RATIO TRADE OFF, THE PROJECT OPTIMISED AREA ALONE, AND ON THE C
 **1.33 measured exponent n for the kcnh2a longfin pectoral fin; a LOWER bound given the posture confound**  
 claim 542 `literature` / `full-text`  
 _CORRECTING CLAIM 541: THE LINEAR REQUIREMENT IT WAS MEASURED AGAINST ASSUMES AN EXPONENT THAT DOES NOT HOLD FOR THIS ALLELE, AND THE THRESHOLD IS NOT…_
+
+**Does the allele PAIR give the flying-fish body plan?**  
+_no single value_  
+claim 990 `literature` / `full-text`  
+_[CORRECTS CLAIM 989] The allele pair does NOT remove the launch surface. It makes the caudal fin HYPOCERCAL -- generally wild-type in overall size, wi…_
+
+**How does the achievable fin compare with real gliders, in their own unit?**  
+**0.46 pectoral fin length/SL, mutant vs 0.250 flying halfbeaks and 0.683 flying fishes**  
+claim 986 `literature` / `full-text`  
+_[ROUTE D BENCHMARK] Measured in the SAME unit as the mutant, a kcnh2a^lof/+ zebrafish has a pectoral fin length/SL of 0.46, which is 1.84x that of the…_
+
+**Can fin AREA be enlarged without the ray-stiffness penalty?**  
+_no single value_  
+claim 1013 `literature` / `listing`  
+_[EXTENDS CLAIM 1011 TO CAPTION LEVEL] The preprint's figure captions confirm that the COUPLING this project treats as a blocker is real in the existin…_
+
+**At what LIFE STAGE is the fin ratio measured, and which way does that err?**  
+_no single value_  
+claim 1025 `literature` / `full-text`  
+_[CLOSES CLAIM 1024'S TRANSFER GAP QUALITATIVELY] The allometry claim 1024 could only establish for schleier is stated for LOF -- long fin, the kcnh2a…_
 
 
 ## ORGAN / swim bladder
@@ -157,9 +197,9 @@ _CORRECTION TO CLAIM 595: 1.75 x 1.17 MULTIPLIED TWO FACTORS THAT BELONG TO DIFF
 ## TISSUE / muscle
 
 **Can the fin muscle beat fast enough?**  
-**52 W/kg total flapping power with no elastic recovery, against 35-71 available; claim 587 asserted it exceeded the floor**  
-claim 588 `derived` / `full-text`  
-_CLAIM 587 CLOSED THE FLAPPING ROUTE ON AN ASSERTION, AND COMPUTING IT REOPENS THE ROUTE. Claim 587 found that superfast myosin buys the 53 Hz the flap…_
+**3.7 factor by which measured superfast muscle power falls short of the flapping requirement**  
+claim 998 `derived`  
+_[CORRECTS CLAIM 588] Claim 588's REQUIREMENT arithmetic stands and its VERDICT does not. It concluded the flapping route "CLOSES at the optimistic end…_
 
 **Can any fish muscle generate power AT that frequency?**  
 **4.4 factor by which the 53 Hz beat exceeds the measured ~12 Hz power-generating ceiling of fish white (fast-twitch) locomotory muscle**  
@@ -211,11 +251,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 375 live claims of 444 for project `zebrafish-flight`; **69 superseded**, which is the project correcting itself and is not a defect.
+- 657 live claims of 787 for project `zebrafish-flight`; **130 superseded**, which is the project correcting itself and is not a defect.
 
-- (the same database also holds `insect-flight` 100, `xenobot` 97, `coral` 48, `limbless-mouse` 39 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
+- (the same database also holds `xenobot` 164, `insect-flight` 114, `limbless-mouse` 113, `coral` 58 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 183, `measured` 109, `literature` 56, `simulated` 16, `unknown` 9, `refused` 1, `assumed` 1
+- live claims by evidence class: `derived` 229, `measured` 192, `literature` 158, `simulated` 45, `unknown` 25, `assumed` 5, `refused` 3
 
 
 **Two criteria, and they are not the same question:**
@@ -232,7 +272,7 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 | fin area | ~2.65x | three alleles on one bioelectric pathway |
 | fin shape | nothing beyond the floor | aspect ratio saturates; induced drag -> 0 and the requirement stops falling |
 | exit speed | 1.57-1.60 m/s | muscle work, and speeds add in quadrature so a run-up needs a 23 BL/s sprint |
-| body size | unresolved | smaller helps only if adult zebrafish are on the velocity plateau, which is unmeasured |
+| body size | favourable, bounded by a 5x gap in the exponent | lift/weight ~ L^(2b-1) and b is bracketed, not unknown: b=0 from mummichog FAST-START (claim 573) gives 6.0 mm at Re 642, b=0.269 from zebrafish FEEDING strikes measured off a figure (claim 1292) gives 1.1 mm at Re 50. The within-species fast-start exponent is the open quantity |
 | body mass | no implementation | needs ~46% gas volume and a distributed autonomic setpoint defeated |
 
-The chain is complete in structure. Every link has a number and an evidence class, and the places it fails are named rather than bridged. **The single cheapest open measurement is a zebrafish fast-start velocity against body length over 20–40 mm** — absent from PubMed, and it governs whether the body-size lever exists at all.
+The chain is complete in structure. Every link has a number and an evidence class, and the places it fails are named rather than bridged. **The single cheapest open measurement is a zebrafish fast-start velocity against body length over 20–40 mm.** It is not absent from the literature: biomechanics papers measure it and report it in FIGURES, and PMC3675323 states the exact normalisation in its methods while publishing no value in text (claim 1291). Searched through NCBI efetch, Europe PMC full text, Europe PMC figure packages and preprints, the nearest obtainable values are a cross-species plateau (claim 1290) and a within-species FEEDING-strike exponent (claim 1292). It governs whether the body-size lever is worth 6.0 mm or 1.1 mm.

@@ -183,16 +183,29 @@ def main() -> int:
         "and the requirement stops falling |",
         "| exit speed | 1.57-1.60 m/s | muscle work, and speeds add in quadrature so a run-up "
         "needs a 23 BL/s sprint |",
-        "| body size | unresolved | smaller helps only if adult zebrafish are on the velocity "
-        "plateau, which is unmeasured |",
+        "| body size | favourable, bounded by a 5x gap in the exponent | lift/weight ~ L^(2b-1) "
+        "and b is bracketed, not unknown: b=0 from mummichog FAST-START (claim 573) gives 6.0 mm "
+        "at Re 642, b=0.269 from zebrafish FEEDING strikes measured off a figure (claim 1292) "
+        "gives 1.1 mm at Re 50. The within-species fast-start exponent is the open quantity |",
         "| body mass | no implementation | needs ~46% gas volume and a distributed autonomic "
         "setpoint defeated |",
     ]))
+    # "absent from PubMed" was withdrawn on 2026-11-05. The search behind it ran without
+    # `sort=relevance`, so it returned the most RECENT PMC matches rather than the most relevant
+    # (claim 1287), and the corpus route was efetch alone, which reaches different papers from
+    # Europe PMC (claim 1388). Re-searched through both routes and through preprints, the
+    # measurement is still not obtained -- but for a different and narrower reason, and saying
+    # "absent from PubMed" overstated how complete the search had been.
     out.append("\nThe chain is complete in structure. Every link has a number and an evidence "
                "class, and the places it fails are named rather than bridged. **The single "
                "cheapest open measurement is a zebrafish fast-start velocity against body "
-               "length over 20–40 mm** — absent from PubMed, and it governs whether the "
-               "body-size lever exists at all.\n")
+               "length over 20–40 mm.** It is not absent from the literature: biomechanics "
+               "papers measure it and report it in FIGURES, and PMC3675323 states the exact "
+               "normalisation in its methods while publishing no value in text (claim 1291). "
+               "Searched through NCBI efetch, Europe PMC full text, Europe PMC figure packages "
+               "and preprints, the nearest obtainable values are a cross-species plateau "
+               "(claim 1290) and a within-species FEEDING-strike exponent (claim 1292). It "
+               "governs whether the body-size lever is worth 6.0 mm or 1.1 mm.\n")
 
     text = "\n".join(out)
     if "--write" in sys.argv:
