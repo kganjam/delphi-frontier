@@ -7,7 +7,11 @@ project is a row in `project`, a ladder in `scale` and its own subproblems; the 
 The honesty floor is enforced at dispatch, not hoped for afterwards: every prompt carries it, and a result is
 recorded with the evidence level it earned rather than the one it claims.
 """
-import json, os, subprocess, sys, textwrap, datetime
+import json
+import os
+import subprocess
+import sys
+import textwrap
 
 RESEARCH_DIR = "docs/research/" + (
     "fish" if os.environ.get("SWARM_PROJECT", "zebrafish-flight") == "zebrafish-flight"
@@ -49,7 +53,7 @@ def q(sql):
     r = subprocess.run(PG + ["-c", sql], capture_output=True, text=True, env=ENV, timeout=120)
     if r.returncode:
         raise RuntimeError(r.stderr.strip())
-    return [l.split(SEP) for l in r.stdout.strip().split("\n") if l]
+    return [ln.split(SEP) for ln in r.stdout.strip().split("\n") if ln]
 
 
 def sql_lit(s):
@@ -294,10 +298,18 @@ def challenge(project, claim_id, account, workdir="/data/worktrees/delphi-fronti
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
     proj = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
-    if cmd == "status":   status(proj)
-    elif cmd == "poll":   poll(proj)
-    elif cmd == "ready":  [print(r[0], r[1], r[2][:70]) for r in ready_subproblems(proj)]
-    elif cmd == "loop":   loop(proj, int(sys.argv[2]) if len(sys.argv) > 2 else 8)
-    elif cmd == "dispatch": dispatch(proj, sys.argv[2], sys.argv[3])
-    elif cmd == "challenge": challenge(proj, int(sys.argv[2]), sys.argv[3])
-    else: raise SystemExit(f"unknown command {cmd}")
+    if cmd == "status":
+        status(proj)
+    elif cmd == "poll":
+        poll(proj)
+    elif cmd == "ready":
+        for r in ready_subproblems(proj):
+            print(r[0], r[1], r[2][:70])
+    elif cmd == "loop":
+        loop(proj, int(sys.argv[2]) if len(sys.argv) > 2 else 8)
+    elif cmd == "dispatch":
+        dispatch(proj, sys.argv[2], sys.argv[3])
+    elif cmd == "challenge":
+        challenge(proj, int(sys.argv[2]), sys.argv[3])
+    else:
+        raise SystemExit(f"unknown command {cmd}")
