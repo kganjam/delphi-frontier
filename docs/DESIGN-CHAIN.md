@@ -159,16 +159,10 @@ _THE BEST DESIGN THIS PROJECT CAN SPECIFY: A 2.6 cm YOUNG ADULT WITH THE BEST ME
 
 | lever | bound | why |
 |---|---|---|
-
-| fin area | ~2.65× | three alleles on one bioelectric pathway |
-
-| fin shape | nothing beyond the floor | aspect ratio saturates; induced drag → 0 and the requirement stops falling |
-
-| exit speed | 1.57–1.60 m/s | muscle work, and speeds add in quadrature so a run-up needs a 23 BL/s sprint |
-
+| fin area | ~2.65x | three alleles on one bioelectric pathway |
+| fin shape | nothing beyond the floor | aspect ratio saturates; induced drag -> 0 and the requirement stops falling |
+| exit speed | 1.57-1.60 m/s | muscle work, and speeds add in quadrature so a run-up needs a 23 BL/s sprint |
 | body size | unresolved | smaller helps only if adult zebrafish are on the velocity plateau, which is unmeasured |
-
 | body mass | no implementation | needs ~46% gas volume and a distributed autonomic setpoint defeated |
-
 
 The chain is complete in structure. Every link has a number and an evidence class, and the places it fails are named rather than bridged. **The single cheapest open measurement is a zebrafish fast-start velocity against body length over 20–40 mm** — absent from PubMed, and it governs whether the body-size lever exists at all.

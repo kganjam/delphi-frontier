@@ -149,16 +149,21 @@ def main() -> int:
     out.append("- **lift ≥ weight**, which is what flying means, needs ~17× the present "
                "silhouette. The best design is **4.3× short** (claim 571).\n")
     out.append("\n**Every lever has been pushed to a bound:**\n")
-    out.append("| lever | bound | why |\n|---|---|---|\n")
-    out.append("| fin area | ~2.65× | three alleles on one bioelectric pathway |\n")
-    out.append("| fin shape | nothing beyond the floor | aspect ratio saturates; induced "
-               "drag → 0 and the requirement stops falling |\n")
-    out.append("| exit speed | 1.57–1.60 m/s | muscle work, and speeds add in quadrature so a "
-               "run-up needs a 23 BL/s sprint |\n")
-    out.append("| body size | unresolved | smaller helps only if adult zebrafish are on the "
-               "velocity plateau, which is unmeasured |\n")
-    out.append("| body mass | no implementation | needs ~46% gas volume and a distributed "
-               "autonomic setpoint defeated |\n")
+    # ONE append: the list is joined with newlines AND each append ends with one, so a row
+    # per append puts a blank line between every row and markdown stops seeing a table.
+    out.append("\n".join([
+        "| lever | bound | why |",
+        "|---|---|---|",
+        "| fin area | ~2.65x | three alleles on one bioelectric pathway |",
+        "| fin shape | nothing beyond the floor | aspect ratio saturates; induced drag -> 0 "
+        "and the requirement stops falling |",
+        "| exit speed | 1.57-1.60 m/s | muscle work, and speeds add in quadrature so a run-up "
+        "needs a 23 BL/s sprint |",
+        "| body size | unresolved | smaller helps only if adult zebrafish are on the velocity "
+        "plateau, which is unmeasured |",
+        "| body mass | no implementation | needs ~46% gas volume and a distributed autonomic "
+        "setpoint defeated |",
+    ]))
     out.append("\nThe chain is complete in structure. Every link has a number and an evidence "
                "class, and the places it fails are named rather than bridged. **The single "
                "cheapest open measurement is a zebrafish fast-start velocity against body "
