@@ -44,11 +44,18 @@ MODEL = "claude-opus-4-5-20251101"
 OUT = pathlib.Path(__file__).resolve().parent.parent / "results" / "extract"
 PAUSE_S = 0.4
 
-QUERY_PROMPT = """Write a PubMed Central search query for each question below.
+QUERY_PROMPT = """Write a literature search query for each question below.
 
-The query will be sent to NCBI esearch against PMC. Use the vocabulary a paper would use, not the
-question's wording. Prefer a few strong terms joined with AND over a long disjunction, and do not
-restrict to one species unless the question does.
+KEEP IT SHORT: three to five plain keywords, no boolean operators, no quotes, no field tags. The
+query goes to both NCBI esearch and Europe PMC, and Europe PMC ANDs every term it is given, so a
+long or boolean query silently returns nothing. Measured 2026-11-05: longer model-written queries
+returned 0 records for 11 of 20 questions, and the resulting "the literature has no numbers"
+reading was an artifact of the query, not a fact about the literature. Short keyword queries over
+the same questions returned 166 abstracts of which 37% carried a number with a unit.
+
+Use the vocabulary a paper would use, not the question's wording. Do not restrict to one species
+unless the question does -- a value from any fish, or from another animal whose physiology
+carries over, is wanted.
 
 QUESTIONS:
 {items}
@@ -56,6 +63,75 @@ QUESTIONS:
 Reply with JSON only:
 {{"queries": [{{"n": <question number>, "query": "..."}}]}}
 """
+
+
+EPMC = ("https://www.ebi.ac.uk/europepmc/webservices/rest/search"
+        "?query={q}&resultType=core&format=json&pageSize={n}")
+
+
+def epmc_search(term: str, n: int = 25, tries: int = 4) -> list[dict]:
+    """Europe PMC search, returning records WITH their abstract.
+
+    WHY ABSTRACTS, AND WHY THIS IS NOT A WEAKER VERSION OF FULL TEXT. Measured 2026-11-05: PMC's
+    open-access subset, searched on this project's own questions, returns theory and robotics
+    papers and two medical-dictionary entries. PMC5454310 is squarely on topic -- ray-finned fish
+    fin mechanics -- and says "stiffness" five times without stating a single value, because it
+    is a modelling paper. The experimental measurements this project needs sit in J Exp Biol,
+    Integrative and Comparative Biology and J Morphology, which are largely NOT in the OA subset,
+    so no full-text route reaches them from here.
+
+    Their abstracts are open, and a biomechanics abstract usually carries the headline number
+    with its units. That is a genuinely weaker read than full text -- no methods, no table, no
+    conditions -- which is exactly why `read_level` is a closed vocabulary in this project and
+    why every value from here is labelled `abstract` and must never be written up in the voice of
+    having read the paper (docs/research/README.md).
+    """
+    import json as _json
+    import urllib.parse
+    import urllib.request
+    url = EPMC.format(q=urllib.parse.quote(term), n=int(n))
+    last = None
+    for attempt in range(tries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "morphoswarm-research/1.0"})
+            with urllib.request.urlopen(req, timeout=45) as fh:
+                data = _json.loads(fh.read().decode("utf-8", "replace"))
+            out = []
+            for r in data.get("resultList", {}).get("result", []):
+                if r.get("abstractText"):
+                    out.append({"id": r.get("id"), "src": r.get("source"),
+                                "title": r.get("title", ""), "doi": r.get("doi", ""),
+                                "journal": (r.get("journalInfo") or {}).get("journal", {}).get("title", ""),
+                                "year": r.get("pubYear", ""), "abstract": r["abstractText"]})
+            return out
+        except Exception as e:                                    # noqa: BLE001
+            last = e
+            time.sleep(1.5 * (attempt + 1))
+    print(f"    epmc_search failed: {type(last).__name__}")
+    return []
+
+
+def ask_text(text: str, label: str, question: str, qnum: int, tenant: str) -> tuple[list, list]:
+    """Ask one block of text one question. Shared by the full-text and abstract routes."""
+    hay = ev.norm(text)
+    kept, bad = [], []
+    prompt = ev.PROMPT.format(questions=f"1. {question}", excerpt=text)
+    try:
+        r = call(tenant, prompt, max_tokens=2000, model=ev.MODEL)
+    except Exception:                                             # noqa: BLE001
+        return kept, bad
+    body = r.get("text") if isinstance(r, dict) else str(r)
+    data = ev.extract_json(body or "")
+    for item in (data or {}).get("values", []) or []:
+        q = ev.norm(str(item.get("quote", "")))
+        item["paper"], item["asked"] = label, qnum
+        if q and len(q) > 15 and q in hay:
+            item["verified_quote"] = True
+            kept.append(item)
+        else:
+            item["verified_quote"] = False
+            bad.append(item)
+    return kept, bad
 
 
 def read_questions(path: pathlib.Path) -> list[str]:
@@ -132,6 +208,66 @@ def ask(path: pathlib.Path, question: str, qnum: int, tenant: str) -> tuple[list
     return kept, bad
 
 
+def run_abstracts(questions, queries, per, write) -> int:
+    """The abstract route: Europe PMC covers journals PMC's OA subset does not.
+
+    Every value from here is labelled `read_level: abstract`. That is weaker evidence than full
+    text and the label is the whole point -- a number read in an abstract carries no methods and
+    no conditions, and writing it up as though the paper had been read is the failure
+    docs/research/README.md exists to prevent.
+    """
+    kept_all, bad_all, asked = [], [], 0
+    for i, question in enumerate(questions, 1):
+        qstr = queries.get(i)
+        if not qstr:
+            continue
+        recs = epmc_search(qstr, n=per)
+        print(f"  Q{i:<2} {question[:50]:<50} {len(recs):>3} abstract(s)")
+        for rec in recs:
+            label = f"{rec['src']}{rec['id']}"
+            blob = f"{rec['title']}\n\n{rec['abstract']}"
+            k, b = ask_text(blob, label, question, i, TENANTS[asked % len(TENANTS)])
+            asked += 1
+            for it in k:
+                it["read_level"] = "abstract"
+                it["journal"] = rec["journal"]
+                it["year"] = rec["year"]
+                it["doi"] = rec["doi"]
+                print(f"      {label:<13} {str(it.get('value'))[:24]:<24} "
+                      f"{str(it.get('units'))[:14]:<14} {str(it.get('provenance'))[:13]:<13} "
+                      f"{rec['journal'][:24]}")
+            kept_all += k
+            bad_all += b
+        time.sleep(PAUSE_S)
+
+    print("\n" + "-" * 78)
+    print(f"  {asked} abstract-question pair(s) asked")
+    print(f"  {len(kept_all)} value(s) with a quote VERIFIED against the abstract")
+    print(f"  {len(bad_all)} DISCARDED because the quote was not in it")
+    if kept_all or bad_all:
+        print(f"  paraphrase/fabrication rate: "
+              f"{100.0 * len(bad_all) / (len(kept_all) + len(bad_all)):.1f}%")
+    prov: dict[str, int] = {}
+    for it in kept_all:
+        prov[str(it.get("provenance", "unstated"))] = prov.get(str(it.get("provenance", "unstated")), 0) + 1
+    print(f"  provenance: {prov}")
+    print("-" * 78)
+    if write:
+        OUT.mkdir(parents=True, exist_ok=True)
+        dest = OUT / "abstracts.json"
+        prev = {"verified": [], "discarded": []}
+        if dest.exists():
+            try:
+                prev = json.loads(dest.read_text())
+            except Exception:                                     # noqa: BLE001
+                pass
+        prev["verified"] += kept_all
+        prev["discarded"] += bad_all
+        dest.write_text(json.dumps(prev, indent=1))
+        print(f"\n  wrote {dest} ({len(prev['verified'])} verified in all)")
+    return 0
+
+
 def main() -> int:
     qpath = pathlib.Path(sys.argv[sys.argv.index("--questions") + 1]) if "--questions" in sys.argv \
         else OUT / "questions_gen.txt"
@@ -160,6 +296,10 @@ def main() -> int:
     if not queries:
         print("  no queries came back; aborting rather than searching on the question text")
         return 2
+
+    abstracts_mode = "--abstracts" in sys.argv
+    if abstracts_mode:
+        return run_abstracts(questions, queries, per, write)
 
     store = ff.OUT
     store.mkdir(parents=True, exist_ok=True)
