@@ -75,7 +75,12 @@ CHAIN = [
     ("ORGANISM / powered flight",
      "Does unsteady flapping lift close the gap?", 586),
     ("TISSUE / muscle",
-     "Can the fin muscle beat fast enough?", 587),
+     "Can the fin muscle beat fast enough?", 588),  # was 587: it closed the route on an
+                                                    # assertion; 588 computes the budget
+    ("GENE / myosin",
+     "Is there a gene for superfast fin muscle?", 589),
+    ("GENE / collagen",
+     "Is fin SHAPE genetically addressable?", 590),
     ("SYNTHESIS",
      "What is the best design this project can specify?", 580),  # was 574: the 1.54x gain double-counted progressive overgrowth; 580 is 1.41x
     ("SYNTHESIS",

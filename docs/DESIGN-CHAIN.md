@@ -147,9 +147,25 @@ _UNSTEADY FLAPPING AERODYNAMICS BRINGS THE FREQUENCY FROM 108 Hz TO 53 Hz AT NO 
 ## TISSUE / muscle
 
 **Can the fin muscle beat fast enough?**  
-**0.35 fraction of normal muscle power available from superfast fibres: one sixth the force at 2.1x the frequency**  
-claim 587 `literature` / `abstract`  
-_THE MUSCLE MODIFICATION THAT WOULD SUPPLY THE FLAPPING FREQUENCY REMOVES THE POWER, AND THE TRADE-OFF IS A GENERAL MECHANISM RATHER THAN A PROPERTY OF…_
+**52 W/kg total flapping power with no elastic recovery, against 35-71 available; claim 587 asserted it exceeded the floor**  
+claim 588 `derived` / `full-text`  
+_CLAIM 587 CLOSED THE FLAPPING ROUTE ON AN ASSERTION, AND COMPUTING IT REOPENS THE ROUTE. Claim 587 found that superfast myosin buys the 53 Hz the flap…_
+
+
+## GENE / myosin
+
+**Is there a gene for superfast fin muscle?**  
+**0 zebrafish myosin heavy chain entries of 200 annotated superfast, sonic or swimbladder**  
+claim 589 `literature` / `listing`  
+_ZEBRAFISH CARRIES NO ANNOTATED SUPERFAST MYOSIN, SO THE LIVE ROUTE NEEDS A HETEROLOGOUS TRANSGENE RATHER THAN A ZEBRAFISH ALLELE. Claim 588 establishe…_
+
+
+## GENE / collagen
+
+**Is fin SHAPE genetically addressable?**  
+**0 measurements of fin elastic strain-energy storage found; col9a1c named as a fin-SPREAD gene instead**  
+claim 590 `literature` / `abstract`  
+_col9a1c IS A NAMED GENE FOR FIN SHAPE RATHER THAN FIN SIZE, WHICH THE PROJECT HAD NO LEVER FOR -- AND THE ELASTIC-STORAGE QUESTION REMAINS UNANSWERED.…_
 
 
 ## SYNTHESIS
@@ -167,11 +183,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 359 live claims of 424 for project `zebrafish-flight`; **65 superseded**, which is the project correcting itself and is not a defect.
+- 361 live claims of 427 for project `zebrafish-flight`; **66 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 181, `measured` 103, `literature` 49, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 182, `measured` 103, `literature` 50, `simulated` 16, `unknown` 9, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**
