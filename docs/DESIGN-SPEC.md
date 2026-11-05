@@ -167,6 +167,11 @@ _THE 134% IS A FUNCTION OF MUSCLE FRACTION, NOT A PROPERTY OF THE ANIMAL, AND TH
 claim 960 `literature` / `abstract`  
 _ROUTE C IS CLOSED: THE TRANSFER EFFICIENCY THE LATCH-SPRING LAUNCH NEEDS IS MEASURED, AND EVEN AN ALL-MUSCLE FISH FALLS SHORT. Claim 959 left the route turning on one unmeasured quantity -- what fraction of muscle work a launch can deliver as body kinetic energy -- and called it the only remaining barrier and a better question than the one it replaced, because it was a single measurable efficiency…_
 
+**Can a spring be charged across several contractions?**  
+**0 biological examples found of a spring charged across MULTIPLE muscle contractions, across three searches; engineered precedent exists (Cho 2020 RIPA), so the barrier is an anatomical novelty rather than physics**  
+claim 969 `literature` / `abstract`  
+_MULTI-CONTRACTION SPRING CHARGING HAS ENGINEERED PRECEDENT BUT NO BIOLOGICAL ONE FOUND, WHICH LEAVES ROUTE C REQUIRING A NOVEL ANATOMICAL STRUCTURE RATHER THAN A GENE EDIT. Claim 968 established that route C's closure depends entirely on whether a spring can be charged across 2 to 5 successive muscle contractions, because the efficiency argument caps what fraction of STORED energy reaches the body…_
+
 
 ## 6. ROUTE D -- HARVESTING THE WIND
 

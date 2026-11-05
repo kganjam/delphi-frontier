@@ -62,6 +62,7 @@ SPEC = [
         ("Can a tendon spring hold that much energy?", 958),
         ("How much muscle does the launch actually need?", 959),
         ("What efficiency does it need, and is that attainable?", 960),
+        ("Can a spring be charged across several contractions?", 969),
     ]),
     ("6. ROUTE D -- HARVESTING THE WIND", [
         ("Can it soar on the wind instead of its own muscle?", 964),
