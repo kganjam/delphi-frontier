@@ -340,7 +340,14 @@ def import_studies_v3(project: str, d: str, write: bool) -> int:
             j = json.load(open(f, encoding="utf-8"))
         except Exception:
             continue
-        if isinstance(j, dict) and j.get("schema") == "design-space-study/0.1":
+        if not isinstance(j, dict):
+            continue
+        if j.get("schema") == "design-space-study/0.1":
+            files.append((f, j))
+        # Schema-less model studies: a dict `model` plus `parameters`, same acceptance test as
+        # the routes case -- match on content, require every status to map.
+        elif (isinstance(j.get("model"), dict) and j["model"].get("parameters")
+              and not j.get("schema")):
             files.append((f, j))
     if not files:
         print(f"  no `design-space-study/0.1` files in {d}")
@@ -348,9 +355,18 @@ def import_studies_v3(project: str, d: str, write: bool) -> int:
     print(f"  {len(files)} study(ies) under design-space-study/0.1")
     made = {}
     for f, s in files:
+        if not s.get("id"):
+            s = dict(s, id=os.path.splitext(os.path.basename(f))[0])
         m = s.get("model") or {}
         eng = (m.get("engine") or {}) if isinstance(m.get("engine"), dict) else {}
-        declares = eng.get("name") or m.get("what_it_is")
+        # If the file states is_observation explicitly, that beats every other signal and the
+        # existing refusal rule applies unchanged.
+        if isinstance(m.get("is_observation"), bool) and m["is_observation"]:
+            print(f"  REFUSED {os.path.basename(f)}: model.is_observation is TRUE, so this is "
+                  f"an OBSERVATION and this importer only writes simulated rows.")
+            continue
+        declares = (eng.get("name") or m.get("what_it_is") or m.get("kind")
+                    or s.get("what_this_is"))
         if not declares:
             print(f"  REFUSED {os.path.basename(f)}: neither model.engine.name nor "
                   f"model.what_it_is is present, so nothing DECLARES this a simulation. "
@@ -376,7 +392,7 @@ def import_studies_v3(project: str, d: str, write: bool) -> int:
                     returning id""")[0][0]
         lims = (s.get("limitations") or []) + (s.get("what_this_cannot_establish") or [])
         head = (str(s.get("headline", "")).strip()
-                + f"\n\nDECLARED BY: {'model.engine ' + str(eng.get('name')) if eng.get('name') else 'model.what_it_is'}"
+                + f"\n\nDECLARED BY: {('model.engine ' + str(eng.get('name'))) if eng.get('name') else str(declares)[:220]}"
                 + (f" at commit {eng.get('commit')}" if eng.get("commit") else "")
                 + (f"\nall_controls_met={s.get('all_controls_met')}"
                    if s.get("all_controls_met") is not None else "")
@@ -420,6 +436,74 @@ def import_studies_v3(project: str, d: str, write: bool) -> int:
     return 0
 
 
+# ------------------------------------------- the FIFTH shape: a sequence-comparison analysis
+# results/limbless-mouse/zrs-analysis.json is neither a simulation nor a routes file. It has no
+# `model` at all. It RETRIEVES 12 real sequences from NCBI by accession and computes a
+# comparative table over them, so its rows are DERIVED from public data rather than simulated,
+# and its one literature column (the Kvon 2016 knock-in phenotype) is literature. Importing it
+# as 'simulated' because the other limbless-mouse files are would be exactly the flattening this
+# importer exists to refuse.
+def import_sequence_analysis(project: str, d: str, write: bool) -> int:
+    f = os.path.join(d, "zrs-analysis.json")
+    if not os.path.exists(f):
+        print(f"  no zrs-analysis.json in {d}")
+        return 1
+    j = json.load(open(f, encoding="utf-8"))
+    rows = j.get("summary_table") or []
+    rets = {r.get("species"): r for r in (j.get("retrievals") or []) if isinstance(r, dict)}
+    if not rows:
+        print(f"  {f} has no summary_table")
+        return 1
+    print(f"  {len(rows)} species row(s), {len(rets)} NCBI retrieval(s) in {f}")
+    if not write:
+        print("  report only; pass --write to import")
+        return 0
+    rid = q(f"""insert into run (project_id, tool, command, not_executable_because, notes)
+                values ({lit(project)}, 'zrs-analysis', {lit(str(j.get('method'))[:400])},
+                        {lit('a comparative sequence analysis over retrieved public records; '
+                             'no single code path is declared in this file')},
+                        {lit('imported from ' + f + ' (sequence-comparison shape)')})
+                returning id""")[0][0]
+    made = {}
+    for r in rows:
+        sp = r.get("species")
+        acc = (rets.get(sp) or {}).get("accession")
+        src = f"{f} / NCBI {acc}" if acc else f
+        # DERIVED: computed from the retrieved sequence.
+        pid = r.get("pct_identity_to_mouse")
+        if isinstance(pid, (int, float)):
+            st = (f"ZRS ENHANCER, {sp} ({r.get('common_name')}, {r.get('group')}): "
+                  f"{pid}% identity to mouse over {r.get('compared_columns')} aligned columns; "
+                  f"core length {r.get('core_length_bp')} bp; {r.get('n_ets_motifs')} ETS "
+                  f"motifs; E1 ETS site present={r.get('has_e1_ets_site')}. DERIVED by alignment "
+                  f"from the retrieved record"
+                  + (f" NCBI {acc}." if acc else ", accession not recorded for this row.")
+                  + " Computed from public sequence, not measured here.")
+            q(f"""insert into claim (project_id, statement, evidence, value_num, units,
+                                     source, run_id)
+                  values ({lit(project)}, {lit(st)}, 'derived', {repr(float(pid))},
+                          {lit('percent identity of the ZRS core to mouse')}, {lit(src)}, {rid})""")
+            made["derived"] = made.get("derived", 0) + 1
+        # LITERATURE: the published knock-in phenotype, a result of someone else's experiment.
+        ph = r.get("knockin_phenotype_in_kvon2016")
+        if ph:
+            st = (f"ZRS KNOCK-IN PHENOTYPE, {sp} ({r.get('common_name')}): \"{ph}\". "
+                  f"Published result of Kvon et al. 2016 (PMID 27768887), which replaced the "
+                  f"mouse ZRS with this species' ortholog. LITERATURE, not measured here, and "
+                  f"recorded separately from the sequence metrics in the same row, which are "
+                  f"derived by alignment.")
+            q(f"""insert into claim (project_id, statement, evidence, source, run_id, read_level)
+                  values ({lit(project)}, {lit(st)}, 'literature', {lit(src)}, {rid},
+                          'full-text')""")
+            made["literature"] = made.get("literature", 0) + 1
+    print(f"  imported {sum(made.values())} claim(s): {made}")
+    assert "simulated" not in made and "measured" not in made, \
+        "a sequence-comparison row was typed simulated or measured"
+    print("  [ok] control: nothing typed 'simulated' or 'measured' -- these rows are DERIVED "
+          "from retrieved public sequence, or LITERATURE from Kvon 2016")
+    return 0
+
+
 def main() -> int:
     if len(sys.argv) < 3:
         print(__doc__)
@@ -430,6 +514,8 @@ def main() -> int:
         return import_routes(project, d, write)
     if "--studies" in sys.argv:
         return import_studies_v3(project, d, write)
+    if "--sequence" in sys.argv:
+        return import_sequence_analysis(project, d, write)
     if not os.path.isdir(d):
         print(f"  REFUSING: {d} is not a directory. Reporting 0 studies for a path that does not "
               f"exist is a missing tree, not a measurement.", file=sys.stderr)
