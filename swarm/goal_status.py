@@ -52,10 +52,21 @@ def rows():
                          and superseded_by is null and evidence='refused'
                          and statement like '%%NOT A LEVER%%'""" % PROJ)
     resolved = specced + noconstruct
-    yield ("genetic levers resolved (variant specified, or established as unbuildable)",
-           f"{specced:.0f} of {levers:.0f} have a part_revision; "
-           f"{noconstruct:.0f} established as having no published construct; "
-           f"{levers-resolved:.0f} still unexamined",
+    # TWO ROWS, NOT ONE. The previous version merged these and set the threshold on `resolved`,
+    # which counted a lever with NO buildable construct as done. That is a threshold moved in my
+    # own favour: the goal asks for genetic changes that could make a fish fly, and a lever
+    # nothing can build does not contribute one. Reported as two independent rows so neither
+    # number hides behind the other -- the hard bar stays hard, and the research question that
+    # WAS answered still gets its credit.
+    yield ("genetic levers with a buildable variant  [the hard bar]",
+           f"{specced:.0f} of {levers:.0f} levers have a part_revision; "
+           f"{levers-specced:.0f} cannot be built from anything published",
+           specced >= levers,
+           "every lever names a variant that could actually be made")
+    yield ("genetic levers RESEARCHED to a conclusion",
+           f"{resolved:.0f} of {levers:.0f} answered "
+           f"({specced:.0f} specified, {noconstruct:.0f} shown to have no published construct); "
+           f"{levers-resolved:.0f} unexamined",
            resolved >= levers,
            "each lever either names a variant or is shown to have none in the literature")
 
@@ -143,14 +154,15 @@ def rows():
 
 def main() -> int:
     print(f"  GOAL STATUS for {PROJ} -- every number fetched, none written by hand\n")
-    done = 0
+    done = total = 0
     for item, measurement, ok, means in rows():
+        total += 1
         done += bool(ok)
         print(f"  [{'OK ' if ok else '   '}] {item}")
         print(f"         {measurement}")
         if not ok:
             print(f"         would be done when: {means}")
-    print(f"\n  {done} of 9 goal items meet their stated threshold.")
+    print(f"\n  {done} of {total} goal items meet their stated threshold.")
     print("  A threshold is an editorial choice and is printed beside each row so it can be")
     print("  disagreed with. Nothing here grades the science; it reports what the record holds.")
     return 0
