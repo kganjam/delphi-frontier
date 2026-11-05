@@ -147,7 +147,8 @@ def rows():
                         and bool_or(scale_id in ('organism','behaviour','ecology'))) t""" % PROJ, "0")
     yield ("end-to-end multi-scale SIMULATION",
            f"widest scale span by one module: {span} scales; "
-           f"{molec} module(s) link a molecular scale (dna/protein) to organism-or-wider",
+           f"{molec} module(s) link a molecular scale (dna/protein) to organism-or-wider "
+           f"[COARSE: a molecular->organism JUMP counts, skipped scales and all]",
            int(molec) > 0,
            "one module whose inputs are molecular and whose outputs are whole-animal")
 
