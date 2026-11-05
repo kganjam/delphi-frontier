@@ -73,6 +73,24 @@ def call(tenant: str, prompt: str, max_tokens: int = 1200, model: str | None = N
     return json.loads(r.stdout[i:])
 
 
+def call_live_with_fallback(tenants, prompt: str, max_tokens: int = 1200) -> dict:
+    """Rotate tenants on an out-of-credit refusal AND fall back on a content refusal.
+
+    The two remedies answer different failures and neither substitutes for the other:
+    call_with_fallback retries a CONTENT refusal on another model, and call_first_live moves past
+    a tenant that is out of money. api_evaluate_constraints used the first alone, pinned to
+    TENANTS[0]; when that tenant hit its reserve floor the stage failed on every constraint,
+    while the other three tenants held 280 USD between them.
+    """
+    errs = []
+    for t in tenants:
+        try:
+            return call_with_fallback(t, prompt, max_tokens=max_tokens)
+        except Exception as e:                                    # noqa: BLE001
+            errs.append(f"{t}: {str(e)[:90]}")
+    raise RuntimeError("every tenant failed -- " + " | ".join(errs))
+
+
 def call_first_live(tenants, prompt: str, max_tokens: int = 1200, model: str | None = None):
     """Call the first tenant that is not out of credit.
 

@@ -177,7 +177,7 @@ def main() -> int:
     spent = 0.0
     for eid, stmt, qty, lo, hi, units, ss, ts in cons:
         claims = claims_block(f"{stmt} {qty} bound: [{lo}, {hi}] {units}")
-        r = ac.call_with_fallback(pin or ac.TENANTS[0], PROMPT.format(
+        r = ac.call_live_with_fallback([pin] if pin else ac.TENANTS, PROMPT.format(
             eid=f"e{eid}", statement=stmt[:400], quantity=qty, lo=lo, hi=hi, units=units,
             ss=ss, ts=ts, claims=claims[:9000]), max_tokens=700)
         spent += float(r.get("cost_usd") or 0)
@@ -200,7 +200,7 @@ def main() -> int:
         # a corpus fills with closures nobody checked. Confirmation costs one extra call and is
         # only spent on the verdicts that would WRITE.
         if write and v == "satisfied":
-            r2 = ac.call_with_fallback(pin or ac.TENANTS[0], PROMPT.format(
+            r2 = ac.call_live_with_fallback([pin] if pin else ac.TENANTS, PROMPT.format(
                 eid=f"e{eid}", statement=stmt[:400], quantity=qty, lo=lo, hi=hi, units=units,
                 ss=ss, ts=ts, claims=claims[:9000]), max_tokens=700)
             spent += float(r2.get("cost_usd") or 0)
