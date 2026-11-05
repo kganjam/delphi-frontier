@@ -100,7 +100,7 @@ ROUTE_VERDICTS = [
      "PROVISIONAL. The efficiency argument caps what fraction of STORED energy reaches the "
      "body, not how much is stored -- so it closes only if multi-contraction spring charging "
      "is impossible, which is unknown. The adversarial arm caught this."),
-    ("D. Harvesting the wind", 1055, True,
+    ("D. Harvesting the wind", 1056, True,
      "CLOSED ON HABITAT, NOT ON PHYSICS -- and that distinction is the point. The flight "
      "result stands: in wind above 12.5 m/s at 1 m the design sustains flight for the full 4 s "
      "simulation with net energy gain, while a wingless body of the same drag sustains in 0 of "
