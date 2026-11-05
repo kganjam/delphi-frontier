@@ -74,10 +74,32 @@ MEAN_KC10_56: <value>
 PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
 
 
+def media_type_of(img_b64: str) -> str:
+    """Name the image type from its MAGIC BYTES, not from an assumption.
+
+    This was hard-coded to `image/png`, and every figure read of a PMC JPEG failed with
+    HTTP 400 "specified using the image/png media type, but the image is a JPEG". Six reads
+    of Jiang 2024 Fig 2 failed that way, and the run then reported NO USABLE READ -- which is
+    the correct words for a different problem. A declared type that contradicts the bytes is a
+    transport error, not a measurement that failed its control, and the two must not print the
+    same sentence.
+    """
+    head = base64.b64decode(img_b64[:16] + "==")
+    if head.startswith(b"\x89PNG"):
+        return "image/png"
+    if head.startswith(b"\xff\xd8\xff"):
+        return "image/jpeg"
+    if head[:4] == b"RIFF":
+        return "image/webp"
+    if head.startswith(b"GIF8"):
+        return "image/gif"
+    return "image/png"
+
+
 def ask_once(tenant: str, img_b64: str, model: str, ask: str = "") -> tuple[dict, float]:
     content = [
         {"type": "image",
-         "source": {"type": "base64", "media_type": "image/png", "data": img_b64}},
+         "source": {"type": "base64", "media_type": media_type_of(img_b64), "data": img_b64}},
         {"type": "text", "text": ask or ASK},
     ]
     out = api_credits.call(tenant, content, model=model, max_tokens=900,
@@ -140,7 +162,9 @@ def generic(a) -> int:
             reads.append(f)
 
     if not reads:
-        print("\nNO USABLE READ -- every read failed a control, so there is no measurement "
+        print("\nNO USABLE READ -- no read survived its controls (a read that never "
+              "completed is a TRANSPORT failure, not a control failure; the per-read lines "
+              "above say which), so there is no measurement "
               "here. Reporting nothing is the correct outcome.")
         return 1
 
@@ -215,7 +239,9 @@ def main() -> int:
             reads.append(f)
 
     if not reads:
-        print("\nNO USABLE READ. Every read failed a printed-value control, so nothing here is "
+        print("\nNO USABLE READ. No read survived -- check the per-read lines above: a "
+              "read that FAILED before replying is a transport error, not a model that "
+              "misread a printed value. Nothing here is "
               "a measurement. Reporting no number is the correct outcome.")
         return 1
 
