@@ -64,7 +64,7 @@ CHAIN = [
     ("ORGAN / fin morphology",
      "Does the allele PAIR give the flying-fish body plan?", 990),  # was 989: it read Fig 4C's DORSAL lobe as the whole caudal fin
     ("ORGAN / fin morphology",
-     "How does the achievable fin compare with real gliders, in their own unit?", 986),
+     "How does the achievable fin compare with real gliders, in their own unit?", 986),  # 1001 superseded by 1003: it read a FIT, not the specimens
     ("ORGAN / swim bladder",
      "Can the body be made light enough?", 553),
     ("TISSUE / fin skeleton",
