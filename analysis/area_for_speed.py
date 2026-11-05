@@ -95,27 +95,32 @@ def main() -> int:
         print("  DECIDED HERE. Claim 988 states the 2.65x is ALREADY INSIDE closed_loop.py's S,")
         print("  and compounding it is the shape of the myosin double-count the panel refuted.")
 
-        # THE SHORTFALL UNDER BOTH BASELINE READINGS, because the module must not pick one.
-        # An earlier version printed a single "2.05x remaining" figure by dividing the required
-        # speed by sqrt(2.666). The panel caught that it thereby ASSUMED the requirement was
-        # computed on wild-type area -- the exact decision the docstring above refuses to make.
-        # Claim 1151 records it. Both readings are now printed and neither is preferred.
+        # THE BASELINE IS NOW RESOLVED, and the answer was neither reading. An earlier
+        # version printed two branches -- (A) the requirement is on wild-type area, (B) it
+        # already contains the 2.666x ratio -- and said the project had not settled which.
+        # Reading the code settled it: closed_loop.py line 26 is
+        # S = 1.4e-4 * (2.6/4.0)**2 * 2.65, so 1.4e-4 m^2 is the WILD-TYPE fin at 4.0 cm, and
+        # claim 1's "1 body-length span, AR 5" wing on a 0.4 g (4.0 cm) fish is
+        # S = b^2/AR = 0.04^2/5 = 3.2e-4 m^2 -- which is 2.29x that wild-type area, not 1.0x
+        # and not 2.666x. Reproduction control: that geometry gives 5.78 m/s against claim 1's
+        # stated 5.84, so the geometry is read correctly. Claim 1154.
         taxi = next((a[2] for a in atts if a[0] == 269), None)
+        S_WT_4CM, S_CLAIM1 = 1.4e-4, 0.04 ** 2 / 5.0
+        already = S_CLAIM1 / S_WT_4CM
         if taxi:
             v0 = reqs[0][2]
-            print("\n  THE SHORTFALL, UNDER BOTH READINGS OF WHERE THE PUBLISHED RATIO SITS:")
-            print(f"    (A) if the {v0:.2f} m/s requirement was computed on WILD-TYPE area, the")
-            print(f"        published {gv:.3f}x lowers it to {v0/gv**0.5:.2f} m/s; against the "
-                  f"{taxi:.2f} m/s taxi")
-            print(f"        that leaves {(v0/gv**0.5/taxi)**2:.2f}x of area, "
-                  f"{gv*(v0/gv**0.5/taxi)**2:.2f}x wild type in total.")
-            print(f"    (B) if the {v0:.2f} m/s requirement ALREADY CONTAINS that ratio -- which "
-                  f"claim 988 says")
-            print("        is true of closed_loop.py's baseline S -- then no division applies and")
-            print(f"        the remaining area factor is {(v0/taxi)**2:.2f}x ON TOP of the "
-                  f"genetics already in it.")
-            print("    These differ by the ratio itself. The project has not settled which holds,")
-            print("    and settling it is worth more than either number.")
+            further = gv / already
+            v_at_best = v0 / further ** 0.5
+            print("\n  THE BASELINE, RESOLVED (claim 1154):")
+            print(f"    claim 1's requirement already assumes {already:.2f}x wild-type fin area")
+            print(f"      (1-BL span, AR 5 -> S = {S_CLAIM1:.3e} m^2, against closed_loop.py's")
+            print(f"       wild-type {S_WT_4CM:.3e} m^2 at the same 4.0 cm body length)")
+            print(f"    so the published {gv:.3f}x buys only a further {further:.3f}x area = "
+                  f"{further**0.5:.3f}x speed")
+            print(f"    {v0:.2f} m/s -> {v_at_best:.2f} m/s, against the {taxi:.2f} m/s taxi")
+            print(f"    REMAINING: {(v_at_best/taxi)**2:.2f}x more area on top of the genetics,")
+            print(f"    about {gv*(v_at_best/taxi)**2:.1f}x WILD-TYPE FIN AREA IN TOTAL.")
+            print("    That is worse than either earlier reading, and it is the honest number.")
 
     print("""
   READING THIS HONESTLY. The right-hand column is a LOWER BOUND, because larger fins carry mass

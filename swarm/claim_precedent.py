@@ -123,11 +123,24 @@ def main() -> int:
     build_df(rows)
     real = search(query, rows)
     null = search(query, rows, shuffled=True)
-    ratio = len(null) / len(real) if real else 0.0
+    # WHEN THE REAL QUERY FINDS NOTHING AND THE NONSENSE QUERY FINDS SOMETHING, that is the
+    # loudest signal this module can produce, and the first version printed it as "0%" -- which
+    # reads as a perfect control. Measured on a real query: 0 real hits, 4 null hits, reported
+    # 0%. A zero and a broken search look identical unless the code is written to tell them
+    # apart, which is this project's oldest recurring lesson arriving inside the guard built to
+    # enforce it.
+    ratio = (len(null) / len(real)) if real else (float("inf") if null else 0.0)
     print(f"  {len(rows)} records in {PROJECT} (claims + entailments); {len(real)} share "
           f"{MIN_RARE}+ rare terms with the query")
-    print(f"  CONTROL, same-size query of equally rare but unrelated terms: {len(null)} hits "
-          f"= {ratio:.0%} of the real rate (ceiling {NULL_CEILING:.0%})")
+    if not real and null:
+        print(f"  CONTROL FAILED LOUDLY: the real query found 0 records and a query of equally "
+              f"rare but UNRELATED terms found {len(null)}.")
+        print("  The matcher is keying on vocabulary rarity, not on meaning, for this query. "
+              "Treat the")
+        print("  'no precedent' below as UNKNOWN rather than as a negative, and search by hand.")
+    else:
+        print(f"  CONTROL, same-size query of equally rare but unrelated terms: {len(null)} hits "
+              f"= {ratio:.0%} of the real rate (ceiling {NULL_CEILING:.0%})")
     # A RATIO ON A HANDFUL OF HITS IS NOT A MEASUREMENT. Measured on its own must-find control:
     # 3 real hits against 1 null reads as 33%, just under the ceiling -- but one hit either way
     # moves it to 0% or 67%. Saying so is cheaper than pretending the number means something.
