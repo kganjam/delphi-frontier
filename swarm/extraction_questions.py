@@ -183,8 +183,25 @@ GENERALISE = """These are quantities a research project currently cannot answer.
 for that project's own argument, so many are phrased as ITS arithmetic rather than as something a
 published paper would ever state.
 
-Rewrite each one as a question the METHODS or RESULTS section of a real paper could answer, and
-drop the ones that no paper could.
+Rewrite each one as a QUANTITY that the METHODS or RESULTS section of a real paper could state,
+and drop the ones no paper could.
+
+PHRASE EACH AS A NOUN PHRASE NAMING A MEASURABLE QUANTITY, never as a yes/no or a relationship
+question. The downstream step extracts NUMBERS WITH UNITS from paper text; a question it cannot
+answer with a number returns nothing however relevant the paper is. Measured 2026-11-05: gap
+sentences rewritten as "Does membrane-potential change in fin cells correlate with fin-ray growth
+rate?" and "What is the spatial relationship between Lat4a- and Kcnh2a-expressing cells?"
+returned ZERO values from roughly 80 on-topic papers, because neither has a single number as its
+answer.
+
+    NOT  "Does membrane-potential change correlate with fin-ray growth rate?"
+    YES  "Fin-ray outgrowth rate in regenerating fins under depolarising or hyperpolarising
+          treatment, in um/day"
+    NOT  "What is the spatial relationship between Lat4a- and Kcnh2a-expressing cells?"
+    YES  "Distance between the two expression domains in a regenerating fin ray, in um"
+
+A relationship an underlying paper reports is still reachable: name the MEASURED QUANTITY on each
+side, and let the extractor return both.
 
     KEEP and generalise:  "phosphagen free-energy store per kg fast muscle, compared with the
                           cost of one start (about 57 J/kg, derived assuming 0.1 s and
@@ -260,6 +277,17 @@ def main() -> int:
             must_keep = "muscle" in joined and ("mass" in joined or "power" in joined)
             must_drop = source == "gaps" or any("available minus required" in items[n - 1][0].lower()
                             for n in dropped_n if isinstance(n, int) and 1 <= n <= len(items))
+            # A yes/no or relationship phrasing returns nothing from a numeric extractor
+            # however relevant the paper is, and it is invisible in the output -- it looks
+            # exactly like a question the literature has not answered.
+            YESNO = ("does ", "do ", "is ", "are ", "can ", "has ", "have ", "whether ",
+                     "what is the relationship", "what is the spatial relationship")
+            yesno = [q["question"] for q in kept_q
+                     if str(q["question"]).strip().lower().startswith(YESNO)]
+            if yesno:
+                print(f"  {len(yesno)} question(s) phrased as yes/no or a relationship; a "
+                      f"numeric extractor cannot answer these. First: {yesno[0][:70]}")
+                kept_q = [q for q in kept_q if q["question"] not in yesno]
             if not (kept_q and must_keep):
                 print("  generalisation CONTROL FAILED -- keeping the verbatim quantities")
             else:
