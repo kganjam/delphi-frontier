@@ -952,3 +952,21 @@ work that would obviously succeed; each is a specific question with a stated rea
 - The headline 4.37 m/s **looks the most precise number here and is the most structurally
   dependent**: its ±0.11 propagates neither the wing area's total absence of an interval nor the two
   untested structural assumptions beneath it (steady lift, rigid wing).
+- **The two-model review panel is a one-model panel on most claims, and always the same model
+  is missing.** The panel exists to end "topic selects reviewer selects verdict": a refusal with
+  `category: bio` used to divert protein claims to the fallback model, so topic chose reviewer.
+  Measured over 370 claims carrying panel rows, 61 have a verdict from only one model, and the
+  lone voice is `claude-sonnet-5-5` in **104 of 104** rows — opus is never the lone voice,
+  because it is opus's refusals that create the gap. A fresh cross-project run refused far
+  harder: **49 of 82 opus calls (60%)** against sonnet's **0**.
+  It changes verdicts, not just bookkeeping. Sonnet alone weakened 98 of 104 (94%) and passed 4
+  (**3.8%**); a true panel weakened 479 of 640 (75%) and passed 157 (**24.5%**). A claim that
+  trips the refusal classifier is about **six times less likely to survive review** — the
+  original confound, intact, running at the refusal rate.
+  **The two models are totally ordered on strictness.** Across **17 of 17** disagreements opus
+  returned the gentler verdict (16 `survived` vs `weakened`, 1 `weakened` vs `refuted`); the
+  reverse ordering occurs **zero** times, which was checked rather than assumed. So a missing
+  opus verdict is not a random reviewer dropping out — it removes the only voice that ever
+  passes anything.
+  Refusals are now recorded as `api-panel-refused:<model>@<tenant>` with outcome `not-run`, so
+  the shortfall is countable. That makes it visible; it does not make those claims reviewed.
