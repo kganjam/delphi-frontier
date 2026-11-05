@@ -56,6 +56,7 @@ SPEC = [
         ("Would a larger bladder float the fish?", 553),
         ("Is there a gene for superfast fin muscle?", 589),
         ("Can that gene actually be obtained?", 889),
+        ("How much power does superfast muscle make?", 979),
     ]),
     ("5. ROUTE C -- A LATCH-SPRING LAUNCH", [
         ("Can a spring reach the speed muscle cannot?", 957),
@@ -90,8 +91,10 @@ ROUTE_VERDICTS = [
     ("A. Gliding", 599, True,
      "It needs a lift coefficient near 7; the best steady value measured anywhere is 1.75."),
     ("B. Powered flapping", 601, True,
-     "It needs ~83 Hz; fish white locomotory muscle makes no power above ~12 Hz, and the "
-     "superfast myosin that could reach it has never been sequenced in any animal."),
+     "Closed THREE independent ways: fish white locomotory muscle makes no power above ~12 Hz "
+     "against the ~83 Hz needed; the superfast myosin has never been sequenced in any animal; "
+     "and superfast muscle delivers at most 14.19 W/kg against the 53 W/kg required, short by "
+     "3.7 to 9 fold across every species ever measured."),
     ("C. Latch-spring launch", 960, False,
      "PROVISIONAL. The efficiency argument caps what fraction of STORED energy reaches the "
      "body, not how much is stored -- so it closes only if multi-contraction spring charging "
