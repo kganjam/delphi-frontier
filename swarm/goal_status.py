@@ -85,9 +85,17 @@ def rows():
            "every project's frontier is scale-placed like the fish's")
 
     sp = num("select count(*) from spec_parameter")
+    spc = num("select count(*) from spec_parameter where coalesce(conditions,'') <> ''")
+    # The WORDING is derived too, not just the number. This row previously read "spec_parameter
+    # still N rows (vacuous constraint)" and kept saying it after the table filled -- the
+    # sentence contradicted the count printed inside it. Third stale hand-written fragment in
+    # this module, which is the one that exists to stop exactly that.
+    verdict = (f"{sp:.0f} rows, {spc:.0f} carrying mandatory conditions -- the constraint binds"
+               if sp else "0 rows, so its mandatory conditions/units are VACUOUSLY satisfied")
     yield ("ASK D5 transferability",
-           f"transfer record implemented; spec_parameter still {sp:.0f} rows (vacuous constraint)",
-           sp > 0, "spec_parameter non-empty so its mandatory conditions bite")
+           f"transfer record implemented; spec_parameter {verdict}",
+           sp > 0 and spc == sp,
+           "every spec_parameter row carries the conditions its value depends on")
 
     yield ("nanopub / ASK publication",
            "dry run only; output lacks trusty URIs and is explicitly NOT publishable",
