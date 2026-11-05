@@ -138,6 +138,30 @@ _THE SECOND GENETIC CHANGE HAS NO SINGLE-GENE TARGET: ZEBRAFISH BUOYANCY REGULAT
 claim 580 `derived` / `full-text`  
 _THE FIN ADVANTAGE IS PROGRESSIVE WITH BODY SIZE, SO CLAIM 574 DOUBLE-COUNTED: ITS 1.5-FOLD FREE GAIN IS 1.41-FOLD. claude-opus-5-5 objected to claim 5…_
 
+
+## ORGANISM / powered flight
+
+**Could it FLAP instead of gliding?**  
+**108 Hz flapping frequency required for weight support, against ~50 Hz for a hummingbird**  
+claim 585 `derived` / `full-text`  
+_POWERED FLAPPING FLIGHT, NEVER EVALUATED HERE, FAILS ON MUSCLE CONTRACTION FREQUENCY RATHER THAN POWER -- AND FIXING THAT RE-CREATES THE AREA PROBLEM…_
+
+**Does unsteady flapping lift close the gap?**  
+**53 Hz flapping frequency at clap-and-fling CL 4.5 with no extra fin area, against ~50 Hz for a hummingbird**  
+claim 586 `derived` / `full-text`  
+_UNSTEADY FLAPPING AERODYNAMICS BRINGS THE FREQUENCY FROM 108 Hz TO 53 Hz AT NO EXTRA FIN AREA, WHICH IS THE CLOSEST ANY ROUTE IN THIS PROJECT HAS COME…_
+
+
+## TISSUE / muscle
+
+**Can the fin muscle beat fast enough?**  
+**0.35 fraction of normal muscle power available from superfast fibres: one sixth the force at 2.1x the frequency**  
+claim 587 `literature` / `abstract`  
+_THE MUSCLE MODIFICATION THAT WOULD SUPPLY THE FLAPPING FREQUENCY REMOVES THE POWER, AND THE TRADE-OFF IS A GENERAL MECHANISM RATHER THAN A PROPERTY OF…_
+
+
+## SYNTHESIS
+
 **What does that design actually achieve?**  
 **2.72 cm lift-attributable distance for the best design at a 5 BL/s run-up, meeting the 2 cm threshold**  
 claim 584 `derived` / `full-text`  
@@ -146,11 +170,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 356 live claims of 421 for project `zebrafish-flight`; **65 superseded**, which is the project correcting itself and is not a defect.
+- 359 live claims of 424 for project `zebrafish-flight`; **65 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 179, `measured` 103, `literature` 48, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 181, `measured` 103, `literature` 49, `simulated` 16, `unknown` 9, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**
