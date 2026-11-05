@@ -64,7 +64,7 @@ SPEC = [
         ("What efficiency does it need, and is that attainable?", 960),
     ]),
     ("6. ROUTE D -- HARVESTING THE WIND", [
-        ("Can it soar on the wind instead of its own muscle?", 961),
+        ("Can it soar on the wind instead of its own muscle?", 964),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [
         ("What does the design actually ACHIEVE?", 962),
@@ -86,9 +86,11 @@ ROUTE_VERDICTS = [
      "Even a fish made entirely of muscle needs 54% of muscle work to arrive as body kinetic "
      "energy; the best measured for any fish fast-start is 39%, and a spring-loaded mechanical "
      "fish achieved 10%."),
-    ("D. Harvesting the wind", 961, True,
-     "Dynamic soaring supplies energy, not lift, and every phase presupposes an animal already "
-     "flying; at 16% of its weight in lift this design cannot climb at all."),
+    ("D. Harvesting the wind", 964, False,
+     "REOPENED by this project's own adversarial arm. Its closure rested on the animal being "
+     "unable to climb, computed at a still-air lift fraction -- but lift needs AIRSPEED, and in "
+     "the 2.42 m/s headwind that gives lift = weight at exit, that premise is false. It is not "
+     "closed, and it is not shown to work either."),
 ]
 
 
