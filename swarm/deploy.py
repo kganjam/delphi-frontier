@@ -65,17 +65,50 @@ def shared() -> list[str]:
     return sorted(n for n in names if (LIVE / n).exists())
 
 
+def live_matches_a_past_commit(name: str) -> str | None:
+    """Return the short SHA whose committed version of this file equals the LIVE copy, or None.
+
+    THIS IS THE TEST THAT GETS THE DIRECTION RIGHT. The previous rule -- "repo is committed and
+    clean, therefore LIVE carries the unreviewed edits" -- confuses *no uncommitted edits* with
+    *no new work*, and those are different. A repo that is clean because its new work is already
+    COMMITTED is exactly the case where the repo is ahead and live is a stale deployment.
+
+    Measured 2026-11-04: generate.py, swarm.py and progress.py were all reported LIVE-AHEAD with
+    "COMMIT them, do not overwrite". The live-only lines were the OLD hard-coded
+    docs/research/fish/ paths that a committed repo change had replaced, and progress.py's
+    live-only lines were the dead cloud-pool credit code that a committed fix had removed. The
+    repo carried 11, 8 and 119 new lines against live's 4, 2 and 14. Following the tool's advice
+    would have committed stale content over three reviewed fixes.
+
+    If the live bytes equal SOME past committed version of the file, live is a deployment of an
+    older commit and the repo is ahead. If they match no commit, live was edited in place.
+    """
+    live_bytes = (LIVE / name).read_bytes()
+    rel = f"swarm/{name}"
+    log = subprocess.run(["git", "log", "--format=%h", "-n", "40", "--", rel],
+                         cwd=REPO_SWARM.parent, capture_output=True, text=True)
+    for sha in log.stdout.split():
+        blob = subprocess.run(["git", "show", f"{sha}:{rel}"],
+                              cwd=REPO_SWARM.parent, capture_output=True)
+        if blob.returncode == 0 and blob.stdout == live_bytes:
+            return sha
+    return None
+
+
 def classify(name: str) -> tuple[str, str]:
     repo, live = REPO_SWARM / name, LIVE / name
     if filecmp.cmp(repo, live, shallow=False):
         return "same", ""
-    # Direction. If the repo copy is committed and clean, the live copy is the one carrying
-    # unreviewed edits -- that is LIVE-AHEAD and copying over it would destroy them.
     if repo_dirty(repo):
         return "both-moved", "repo copy has uncommitted changes AND differs from live"
+    sha = live_matches_a_past_commit(name)
+    if sha:
+        return "repo-ahead", (f"live {live.stat().st_size}B vs repo {repo.stat().st_size}B; "
+                              f"the live copy is exactly commit {sha}, so it is a stale "
+                              f"DEPLOYMENT and the repo carries reviewed new work -- DEPLOY it")
     return "live-ahead", (f"live {live.stat().st_size}B vs repo {repo.stat().st_size}B; "
-                          "the repo copy is committed and clean, so the live edits are "
-                          "unreviewed and unversioned -- COMMIT them, do not overwrite")
+                          "the live copy matches no commit of this file, so it was edited in "
+                          "place -- COMMIT those edits, do not overwrite")
 
 
 def do_check() -> int:
