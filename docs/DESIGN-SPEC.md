@@ -195,6 +195,11 @@ _ROUTE D IS OPEN AND THE DESIGN SUSTAINS FLIGHT IN WIND ABOVE 12.5 m/s: CLAIM 96
 claim 972 `derived` / `full-text`  
 _THE STRUCTURAL CAVEAT ON CLAIM 971 IS WEAKER THAN IT LOOKED: THE SOARING LOADS ARE 6.4 TIMES BELOW WHAT THE FIN ALREADY CARRIES IN WATER. Claim 971 reported sustained flight above 12.5 m/s and listed, among its unestablished caveats, that there is "no structural limit, and a 0.11 g animal at 17 m/s is carrying loads nothing here has checked". This checks them.  WHAT THE SUSTAINING TRAJECTORIES ACT…_
 
+**Does sustained flight require flying past stall?**  
+**22.8 degrees angle of attack at which 25 of 50 controllers sustain flight (CL 1.07), against measured CL_max angles of 30-41 deg; CL 0.60 at 12.8 deg sustains 0 of 50**  
+claim 973 `derived` / `full-text`  
+_THE STALL CAVEAT ON CLAIM 971 IS SUBSTANTIALLY REMOVED: SUSTAINED FLIGHT IS ACHIEVED AT 22.8 DEGREES ANGLE OF ATTACK, BELOW EVERY MEASURED CL_MAX ANGLE. Claim 971 listed as its second caveat that "there is no stall model, so a lift coefficient of 1.07 to 1.75 is assumed available at every attitude the controller commands". That is the right worry -- a controller free to demand any CL can fly throu…_
+
 **Can it extract energy from WIND SHEAR?**  
 **25.7 fold inertial-frame energy gain from wind shear at u*=0.60, lift-dependent (a wingless body with the same drag LOSES energy); but the cycle does not close and the animal lands every time**  
 claim 966 `simulated` / `full-text`  

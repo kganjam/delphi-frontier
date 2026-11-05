@@ -69,6 +69,7 @@ SPEC = [
         ("What does wind actually buy, integrated properly?", 965),
         ("Does the soaring cycle close?", 971),
         ("Can the fin take the soaring loads?", 972),
+        ("Does sustained flight require flying past stall?", 973),
         ("Can it extract energy from WIND SHEAR?", 966),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [
