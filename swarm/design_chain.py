@@ -52,11 +52,17 @@ CHAIN = [
      "Does a SMALLER fish need less fin?", 577),  # was 576: the cross-species refutation was invalid; 577 is the corrected form
     ("ORGANISM / body plan",
      "Does reducing body MASS close the gap?", 550),
+    ("ORGANISM / body plan",
+     "What wind does the ACHIEVABLE animal actually need?", 988),
     # ORGAN and TISSUE
     ("ORGAN / fin morphology",
      "How much fin AREA is achievable, and at what aspect ratio?", 567),
     ("ORGAN / fin morphology",
      "What does the best published allele give?", 542),
+    ("ORGAN / fin morphology",
+     "Does the allele PAIR give the flying-fish proportion, and what does it cost?", 989),
+    ("ORGAN / fin morphology",
+     "How does the achievable fin compare with real gliders, in their own unit?", 986),
     ("ORGAN / swim bladder",
      "Can the body be made light enough?", 553),
     ("TISSUE / fin skeleton",
@@ -119,7 +125,13 @@ def main() -> int:
     rows = {int(r[0]): r for r in q(
         f"""select id, coalesce(value_num::text,''), coalesce(units,''), evidence,
                    coalesce(read_level,''), coalesce(superseded_by::text,''),
-                   left(statement, 150)
+                   -- NEWLINES MUST GO BEFORE THE TRUNCATION, not after. Rows come back
+                   -- newline-delimited and are split on chr(10), so a statement whose first
+                   -- 150 characters contain a line break is parsed as TWO rows and the second
+                   -- one's id field is a fragment of prose. The failure is an int() ValueError
+                   -- far from its cause, and it lay dormant only because every earlier claim
+                   -- happened to open with a single long line.
+                   replace(left(replace(statement, chr(10), ' '), 150), chr(13), ' ')
             from claim where id in ({ids})""")}
 
     out = []
