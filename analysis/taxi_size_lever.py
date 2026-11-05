@@ -149,8 +149,23 @@ def main() -> int:
         print(f"    {lab:10} Re {row['re']:.0e}  law {eloy(row['re']):.5f} ({br})  "
               f"observed {row['cd_lo']}-{row['cd_hi']}  form factor "
               f"{row['cd_lo']/eloy(row['re']):.2f}-{row['cd_hi']/eloy(row['re']):.2f}")
-    print("  the two form-factor ranges OVERLAP, so the data show no exponent anomaly --")
-    print("  both points are the standard law times a form factor of roughly 1.4 to 3.")
+    # THEY DO NOT OVERLAP, and an earlier version of this file said they did. A peer asserted
+    # "overlapping multipliers" and I repeated it without checking; the adversarial panel caught
+    # it. zebrafish 2.26-3.01 against exocoetid 1.38-2.08 leaves a gap of 0.18.
+    zlo, zhi = ZEB["cd_lo"]/eloy(ZEB["re"]), ZEB["cd_hi"]/eloy(ZEB["re"])
+    elo, ehi = EXO["cd_lo"]/eloy(EXO["re"]), EXO["cd_hi"]/eloy(EXO["re"])
+    if max(zlo, elo) <= min(zhi, ehi):
+        print("  the two form-factor ranges OVERLAP -- no exponent anomaly in the data.")
+    else:
+        print(f"  the form-factor ranges DO NOT overlap: zebrafish {zlo:.2f}-{zhi:.2f} against")
+        print(f"  exocoetid {elo:.2f}-{ehi:.2f}, a gap of {max(zlo,elo)-min(zhi,ehi):.2f}. The")
+        print("  exocoetid's is LOWER, and claim 1016 explains why without invoking physics:")
+        print("  that anchor was extrapolated with Re^-0.5, the LAMINAR exponent, into a regime")
+        print("  the same law puts on the TURBULENT branch. Re-doing it two-branch (laminar to")
+        print("  the crossover, then turbulent) gives 0.0120 against the 0.0101 actually used --")
+        print("  the top of the stated 0.008-0.012 band, form factor 2.08. Still no overlap, so")
+        print("  the gap narrows but does not close, and nothing here separates a real")
+        print("  streamlining difference from the remaining extrapolation error.")
 
     # Hold the form factor constant and move along whichever branch governs.
     re_ratios = []
