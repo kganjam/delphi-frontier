@@ -95,32 +95,30 @@ def main() -> int:
         print("  DECIDED HERE. Claim 988 states the 2.65x is ALREADY INSIDE closed_loop.py's S,")
         print("  and compounding it is the shape of the myosin double-count the panel refuted.")
 
-        # THE BASELINE IS NOW RESOLVED, and the answer was neither reading. An earlier
-        # version printed two branches -- (A) the requirement is on wild-type area, (B) it
-        # already contains the 2.666x ratio -- and said the project had not settled which.
-        # Reading the code settled it: closed_loop.py line 26 is
-        # S = 1.4e-4 * (2.6/4.0)**2 * 2.65, so 1.4e-4 m^2 is the WILD-TYPE fin at 4.0 cm, and
-        # claim 1's "1 body-length span, AR 5" wing on a 0.4 g (4.0 cm) fish is
-        # S = b^2/AR = 0.04^2/5 = 3.2e-4 m^2 -- which is 2.29x that wild-type area, not 1.0x
-        # and not 2.666x. Reproduction control: that geometry gives 5.78 m/s against claim 1's
-        # stated 5.84, so the geometry is read correctly. Claim 1154.
-        taxi = next((a[2] for a in atts if a[0] == 269), None)
-        S_WT_4CM, S_CLAIM1 = 1.4e-4, 0.04 ** 2 / 5.0
-        already = S_CLAIM1 / S_WT_4CM
-        if taxi:
-            v0 = reqs[0][2]
-            further = gv / already
-            v_at_best = v0 / further ** 0.5
-            print("\n  THE BASELINE, RESOLVED (claim 1154):")
-            print(f"    claim 1's requirement already assumes {already:.2f}x wild-type fin area")
-            print(f"      (1-BL span, AR 5 -> S = {S_CLAIM1:.3e} m^2, against closed_loop.py's")
-            print(f"       wild-type {S_WT_4CM:.3e} m^2 at the same 4.0 cm body length)")
-            print(f"    so the published {gv:.3f}x buys only a further {further:.3f}x area = "
-                  f"{further**0.5:.3f}x speed")
-            print(f"    {v0:.2f} m/s -> {v_at_best:.2f} m/s, against the {taxi:.2f} m/s taxi")
-            print(f"    REMAINING: {(v_at_best/taxi)**2:.2f}x more area on top of the genetics,")
-            print(f"    about {gv*(v_at_best/taxi)**2:.1f}x WILD-TYPE FIN AREA IN TOTAL.")
-            print("    That is worse than either earlier reading, and it is the honest number.")
+        # THE BASELINE IS NOT RESOLVED, and an earlier version of this block said it was.
+        # It identified closed_loop.py's `S = 1.4e-4 * (2.6/4.0)**2 * 2.65` as making 1.4e-4 m^2
+        # the WILD-TYPE fin area at 4.0 cm, concluded claim 1's requirement already assumed
+        # 2.29x wild type, and printed "about 12.5x WILD-TYPE FIN AREA IN TOTAL".
+        #
+        # THE CONSTANT CANNOT MEAN THAT (claim 1155). 1.4e-4 m^2 is 1.40 cm^2 -- a surface
+        # 11.8 mm on a side, or a 26.5 mm span at AR 5, which is 0.66 body lengths on a 40 mm
+        # fish. This project's own claims 984 and 986 put wild-type pectoral fin length/SL near
+        # 0.22, i.e. about 9 mm, for a paired area of order 4e-5 m^2. The constant is several
+        # times that. It is most plausibly a TOTAL LIFTING SURFACE for the glide model, and no
+        # comment in that file says.
+        #
+        # So this module prints the conversion table and NOTHING ELSE about baselines. The
+        # arithmetic of 12.5x was self-consistent by two independent routes, which is exactly
+        # why it was convincing and exactly why the wrong INPUT was the dangerous part.
+        print("\n  THE BASELINE REMAINS OPEN, deliberately (claim 1155).")
+        print("    Every ratio above is between two SPEEDS and needs no baseline. Converting")
+        print("    any of them into 'x wild-type fin area' needs a measured wild-type area,")
+        print("    which this project does not hold: the one constant available"
+              " (closed_loop.py's")
+        print("    1.4e-4 m^2) is several times the paired pectoral area implied by claims 984")
+        print("    and 986, so it is not that quantity. Establishing what it IS, or measuring a")
+        print("    wild-type fin area directly, is worth more than any number this module could")
+        print("    print in its place.")
 
     print("""
   READING THIS HONESTLY. The right-hand column is a LOWER BOUND, because larger fins carry mass
