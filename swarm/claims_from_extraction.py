@@ -117,15 +117,50 @@ def statement(it: dict) -> str:
             + f"\nasked: question {it.get('asked')} of the open-constraint question set")
 
 
+def load_scale_map() -> dict:
+    """questions-file name -> {question number -> the scale its ORIGINATING CONSTRAINT declared}.
+
+    KEYED BY FILE, because a question number alone is not an identifier. Two question files
+    generated from the same constraints renumber them differently, so joining a value stamped
+    `asked: 7` to whichever map happened to sort first would attach a confident scale drawn from
+    a different question. Values carry `qfile`; a value without one gets no scale.
+
+    This is inherited provenance, not a judgement. The scale comes from whichever
+    constraint_entailed row phrased the quantity, and those rows disagree with each other:
+    fin-ray flexural stiffness is `tissue` on one constraint and `protein` on another, and
+    membrane potential is `cell` on one and `protein` on another. Both pairs are the same
+    physical quantity. So a scale here says "the constraint that wanted this called it X", which
+    is worth recording and is NOT the same as this pipeline having decided the scale.
+
+    A question whose quantity maps to more than one scale is left NULL rather than resolved,
+    because picking one would turn an inherited disagreement into an assertion.
+    """
+    out: dict[str, dict[str, str]] = {}
+    for mp in sorted(EXTRACT.glob("*.map.json")):
+        stem = mp.name[:-len(".map.json")]
+        try:
+            rows = json.loads(mp.read_text())
+        except Exception:                                         # noqa: BLE001
+            continue
+        for k, v in rows.items():
+            sc = v.get("scales") or []
+            if len(sc) == 1:
+                out.setdefault(stem, {})[str(k)] = sc[0]
+    return out
+
+
 def main() -> int:
     write = "--write" in sys.argv
     files = [EXTRACT / "abstracts.json", EXTRACT / "targeted.json",
              EXTRACT.parent / "extracted-values.json"]
     items = load(files)
+    smap = load_scale_map()
     print("=" * 78)
     print("EXTRACTED VALUES -> CLAIMS")
     print("=" * 78)
     print(f"  {len(items)} verified value(s) in {len([f for f in files if f.exists()])} file(s)")
+    print("  scale maps: " + ", ".join(f"{k} ({len(v)} q)" for k, v in smap.items()) if smap
+          else "  no scale map found; every row will be NULL")
 
     # Dedupe against what is already recorded. The source string carries the paper id and the
     # quote, so re-running the harvester cannot double-record the same sentence.
@@ -176,15 +211,20 @@ def main() -> int:
 
     n = 0
     for it, src in rows:
-        cid = dbq.write_claim(PROJECT, None, statement(it),
+        scale = smap.get(str(it.get("qfile", "")), {}).get(str(it.get("asked")))
+        cid = dbq.write_claim(PROJECT, scale, statement(it),
                               EVIDENCE.get(str(it.get("provenance", "")), "unknown"),
                               numeric(it.get("value")), str(it.get("units") or "")[:400],
                               src, str(it.get("read_level") or "full-text"))
         n += 1 if cid else 0
-    print(f"\n  recorded {n} claim(s)")
-    print("  scale_id is left NULL: the generalised question no longer names the constraint's "
-          "scale, and assigning one by guessing the unit would be the invention this pipeline "
-          "exists to avoid. Reported rather than filled.")
+    withscale = sum(1 for it, _ in rows
+                    if smap.get(str(it.get("qfile", "")), {}).get(str(it.get("asked"))))
+    print(f"\n  recorded {n} claim(s); {withscale} carry a scale INHERITED from the "
+          f"originating constraint, {n - withscale} are NULL")
+    print("  An inherited scale is not this pipeline's judgement. The constraint rows disagree "
+          "with each other -- fin-ray stiffness is `tissue` on one and `protein` on another -- "
+          "so a question whose quantity maps to more than one scale is left NULL rather than "
+          "resolved, because picking one would turn an inherited disagreement into an assertion.")
     return 0
 
 

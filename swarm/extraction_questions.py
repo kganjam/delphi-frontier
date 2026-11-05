@@ -194,7 +194,7 @@ def main() -> int:
         cap = int(sys.argv[sys.argv.index("--cap") + 1])
     text, n, dropped, collapsed = build(keep, cap)
 
-    gen_note = ""
+    gen_note, gen_map = "", {}
     if "--generalise" in sys.argv:
         from api_challenge import TENANTS, call      # api_allen excluded in exactly one place
         items = [(q, u, c) for q, u, c in open_quantities()
@@ -214,12 +214,27 @@ def main() -> int:
             if not (kept_q and must_keep):
                 print("  generalisation CONTROL FAILED -- keeping the verbatim quantities")
             else:
-                lines = []
+                lines, qmap = [], {}
                 for i, q in enumerate(kept_q[:cap], 1):
                     u = f" Units wanted: {q['units']}." if q.get("units") else ""
                     lines.append(f"{i}. {q['question']}.{u}\n   Report the species and the body "
                                  f"length or life stage if the paper states them.")
+                    # Carry the originating constraint's SCALE through the generalisation.
+                    # Without this the question is a good literature question that has forgotten
+                    # which scale of the model it was asked for, and every value extracted with
+                    # it lands with scale_id NULL -- which is exactly why the project's
+                    # measured-with-a-scale row cannot move even when real values arrive.
+                    src_n = q.get("n")
+                    if isinstance(src_n, int) and 1 <= src_n <= len(items):
+                        quantity = items[src_n - 1][0]
+                        scales = [r[0] for r in dbq.q(
+                            "select distinct target_scale from constraint_entailed where "
+                            f"project_id = {dbq.lit(PROJECT)} and status = 'open' and "
+                            f"quantity = {dbq.lit(quantity)} and target_scale is not null")]
+                        qmap[str(i)] = {"question": q["question"], "units": q.get("units", ""),
+                                        "from_quantity": quantity, "scales": sorted(scales)}
                 text, n = "\n".join(lines), len(lines)
+                gen_map = qmap
                 gen_note = (f"  generalised by model: {len(kept_q)} kept, "
                             f"{len(dropped_n)} dropped as project-internal arithmetic "
                             f"[{'ok' if must_drop else 'WEAK'}] control: dropped a known "
@@ -240,6 +255,14 @@ def main() -> int:
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(text + "\n")
         print(f"wrote {path}")
+        if gen_map:
+            import json as _json
+            mpath = path + ".map.json"
+            with open(mpath, "w", encoding="utf-8") as fh:
+                _json.dump(gen_map, fh, indent=1)
+            one = sum(1 for v in gen_map.values() if len(v["scales"]) == 1)
+            print(f"wrote {mpath}: {len(gen_map)} question(s), {one} with exactly ONE scale "
+                  f"(the rest stay NULL rather than being guessed)")
     if gen_note:
         print(gen_note)
     print(f"  {n} question(s) from OPEN constraints; {dropped} dropped as dimensionless "

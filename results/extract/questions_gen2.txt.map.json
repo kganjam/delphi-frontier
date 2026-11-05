@@ -1,0 +1,162 @@
+{
+ "1": {
+  "question": "Flexural stiffness (EI) of pectoral fin rays in teleost fish",
+  "units": "N m^2",
+  "from_quantity": "passive EI of a 40.3 mm bluegill pectoral ray",
+  "scales": [
+   "tissue"
+  ]
+ },
+ "2": {
+  "question": "Water-exit speed during leaping in fish",
+  "units": "m/s",
+  "from_quantity": "water-exit speed of a leaping adult",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "3": {
+  "question": "Pectoral muscle mass as a fraction of body mass in teleost fish",
+  "units": "% body mass",
+  "from_quantity": "adult zebrafish pectoral muscle mass / body mass",
+  "scales": [
+   "organ"
+  ]
+ },
+ "4": {
+  "question": "Launch speed at water exit in leaping or flying fish",
+  "units": "m/s",
+  "from_quantity": "air-phase launch speed",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "5": {
+  "question": "Pectoral fin amplitude normalized to body length in fish",
+  "units": "body lengths",
+  "from_quantity": "A_pp / body length",
+  "scales": [
+   "organ"
+  ]
+ },
+ "6": {
+  "question": "Bilateral pectoral muscle mass as a fraction of body mass in teleost fish",
+  "units": "% body mass",
+  "from_quantity": "bilateral pectoral muscle mass / body mass",
+  "scales": [
+   "organ"
+  ]
+ },
+ "7": {
+  "question": "Adult body length in Danio rerio or comparable small teleosts",
+  "units": "mm",
+  "from_quantity": "body length of the Miln et al. 2021 adults",
+  "scales": [
+   "organism"
+  ]
+ },
+ "8": {
+  "question": "Body mass in adult teleost fish",
+  "units": "g",
+  "from_quantity": "body mass",
+  "scales": [
+   "organism"
+  ]
+ },
+ "9": {
+  "question": "Flexural stiffness (EI) of caudal fin rays in fish",
+  "units": "N m^2",
+  "from_quantity": "caudal fin flexural stiffness EI",
+  "scales": [
+   "protein"
+  ]
+ },
+ "10": {
+  "question": "Coding sequence length of fin development genes in teleosts",
+  "units": "nt",
+  "from_quantity": "CDS length",
+  "scales": [
+   "dna"
+  ]
+ },
+ "11": {
+  "question": "Coding sequence length (excluding stop codon) of target genes in fish",
+  "units": "nt",
+  "from_quantity": "coding nucleotides excluding stop",
+  "scales": [
+   "dna"
+  ]
+ },
+ "12": {
+  "question": "Difference between potassium equilibrium potential and resting membrane potential in ion channel-expressing fin cells",
+  "units": "mV",
+  "from_quantity": "E_K minus V_rest in kcnk5b-expressing fin cells",
+  "scales": [
+   "cell"
+  ]
+ },
+ "13": {
+  "question": "Pectoral muscle mass as a fraction of body mass in fish with enlarged pectoral muscles (e.g., flying fish)",
+  "units": "% body mass",
+  "from_quantity": "enlarged pectoral muscle mass / body mass",
+  "scales": [
+   "organ"
+  ]
+ },
+ "14": {
+  "question": "Duration of peak velocity phase during fast-start escape responses in small teleost fish",
+  "units": "ms",
+  "from_quantity": "FWHM of the centre-of-mass speed peak during an adult zebrafish fast-start",
+  "scales": [
+   "organism"
+  ]
+ },
+ "15": {
+  "question": "High-energy phosphate consumption per fast-start in fish muscle",
+  "units": "\u00b5mol/g muscle",
+  "from_quantity": "high-energy phosphate consumed per fast-start",
+  "scales": [
+   "cell"
+  ]
+ },
+ "16": {
+  "question": "Mass-specific power required for hovering flight in flying fish or comparable aerial locomotion",
+  "units": "W/kg body",
+  "from_quantity": "hover power per unit body mass",
+  "scales": [
+   "organ"
+  ]
+ },
+ "17": {
+  "question": "Hydrophobic thickness of transmembrane helical segments in ion channels",
+  "units": "nm",
+  "from_quantity": "hydrophobic thickness spanned by the helical segment containing residue 200",
+  "scales": [
+   "cell"
+  ]
+ },
+ "18": {
+  "question": "Twitch time-to-peak tension in fast/white muscle of fish",
+  "units": "ms",
+  "from_quantity": "intact fast-muscle twitch time-to-peak at test temperature",
+  "scales": [
+   "organism"
+  ]
+ },
+ "19": {
+  "question": "Resting membrane potential and voltage excursions in fin-ray mesenchymal cells",
+  "units": "mV",
+  "from_quantity": "in vivo resting membrane potential and excursions of adult fin-ray mesenchyme",
+  "scales": [
+   "protein"
+  ]
+ },
+ "20": {
+  "question": "Ratio of active to passive stiffness in fish fin rays",
+  "units": "dimensionless",
+  "from_quantity": "in-vivo stiffening factor over passive",
+  "scales": [
+   "tissue"
+  ]
+ }
+}

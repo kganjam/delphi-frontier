@@ -41,6 +41,10 @@ import fetch_fulltext as ff                                       # noqa: E402
 from api_challenge import TENANTS, call    # noqa: E402  api_allen excluded in one place
 
 MODEL = "claude-opus-4-5-20251101"
+# The question NUMBER is only meaningful beside the file that numbered it. Two question files
+# renumber the same quantities differently, so a value stamped only with `asked: 7` cannot be
+# joined to a scale map later without silently reading the wrong row.
+QFILE_STEM = [""]
 OUT = pathlib.Path(__file__).resolve().parent.parent / "results" / "extract"
 PAUSE_S = 0.4
 
@@ -388,6 +392,7 @@ def main() -> int:
     write = "--write" in sys.argv
     limit = int(sys.argv[sys.argv.index("--limit") + 1]) if "--limit" in sys.argv else 0
 
+    QFILE_STEM[0] = qpath.name
     questions = read_questions(qpath)
     if limit:
         questions = questions[:limit]
