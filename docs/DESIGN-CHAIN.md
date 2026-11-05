@@ -143,17 +143,6 @@ _POWERED FLAPPING FLIGHT, NEVER EVALUATED HERE, FAILS ON MUSCLE CONTRACTION FREQ
 claim 586 `derived` / `full-text`  
 _UNSTEADY FLAPPING AERODYNAMICS BRINGS THE FREQUENCY FROM 108 Hz TO 53 Hz AT NO EXTRA FIN AREA, WHICH IS THE CLOSEST ANY ROUTE IN THIS PROJECT HAS COME…_
 
-
-## TISSUE / muscle
-
-**Can the fin muscle beat fast enough?**  
-**52 W/kg total flapping power with no elastic recovery, against 35-71 available; claim 587 asserted it exceeded the floor**  
-claim 588 `derived` / `full-text`  
-_CLAIM 587 CLOSED THE FLAPPING ROUTE ON AN ASSERTION, AND COMPUTING IT REOPENS THE ROUTE. Claim 587 found that superfast myosin buys the 53 Hz the flap…_
-
-
-## ORGANISM / powered flight
-
 **What lift coefficient is actually attainable?**  
 **78 Hz beat frequency required at the best MEASURED lift coefficient (1.75 delayed stall + 17% clap bonus = 2.05), replacing the 53 Hz derived at the refuted CL 4.5**  
 claim 595 `literature` / `full-text`  
@@ -161,6 +150,11 @@ _THE FLAPPING ROUTE'S CL 4.5 IS REFUTED BY MEASUREMENT, AND THE BEAT FREQUENCY I
 
 
 ## TISSUE / muscle
+
+**Can the fin muscle beat fast enough?**  
+**52 W/kg total flapping power with no elastic recovery, against 35-71 available; claim 587 asserted it exceeded the floor**  
+claim 588 `derived` / `full-text`  
+_CLAIM 587 CLOSED THE FLAPPING ROUTE ON AN ASSERTION, AND COMPUTING IT REOPENS THE ROUTE. Claim 587 found that superfast myosin buys the 53 Hz the flap…_
 
 **Can any fish muscle generate power AT that frequency?**  
 **4.4 factor by which the 53 Hz beat exceeds the measured ~12 Hz power-generating ceiling of fish white (fast-twitch) locomotory muscle**  
