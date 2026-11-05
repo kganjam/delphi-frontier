@@ -111,11 +111,23 @@ def submit(tool, args, note=""):
         out = call(tool, args)
     except RuntimeError as e:
         try:
-            op = json.loads(str(e)).get("operation_id")
+            err = json.loads(str(e))
         except json.JSONDecodeError:
-            op = None
+            err = {}
+        op = err.get("operation_id")
         if op:
             record(op, tool, f"{note} -- ADMISSION_PENDING at submit; replay the SAME key")
+        elif err.get("request_id"):
+            # A 503 SERVERLESS_REQUEST_FAILED carries `request_id` and `admission`, NOT an
+            # operation_id. When admission says "accepted" the work may exist server side with
+            # no handle recorded here, which is the unreclaimable slot this module exists to
+            # prevent -- measured 2026-11-05, six such attempts on one job recorded nothing.
+            # The request_id is not an operation id and cannot be polled, but it is the only
+            # identifier the server gave, so it is kept rather than discarded.
+            record("UNKNOWN", tool,
+                   f"{note} -- {err.get('code')} admission={err.get('admission')!r}, "
+                   f"request_id={err.get('request_id')}; NOT pollable, replay the SAME "
+                   f"idempotency key")
         raise
     op = out.get("operation_id") or out.get("id") or out.get("operation", {}).get("id")
     if op:
