@@ -75,6 +75,19 @@ def context() -> str:
             + "\n".join(f"- {r[0]}: {r[1]}" for r in qs))
 
 
+def next_subproblem_number() -> int:
+    """One past the highest S<digits> already in this project, floored at 900.
+
+    The id family is S<number>; ids with a suffix (S9-D, S25-D-D) are deepenings of those and
+    are left alone. `regexp_replace` strips the S and anything after the digits so a suffixed
+    id cannot be read as a number.
+    """
+    rows = ac.q(f"""select coalesce(max((regexp_replace(id, '^S([0-9]+).*$', chr(92) || '1'))::int), 0)
+                    from subproblem
+                    where project_id={ac.lit(ac.PROJECT)} and id ~ '^S[0-9]+'""")
+    return max(900, int(rows[0][0]) + 1)
+
+
 def parse(text: str) -> dict | None:
     out = {}
     for f in FIELDS:
@@ -122,18 +135,28 @@ def main() -> int:
     print("  NOT written: a generated question is a suggestion. Review each, then --write."
           if not write else "")
     if write:
+        # ALLOCATE FROM WHAT EXISTS, NOT FROM A LITERAL. This read `f"S{900 + j}"` with j the
+        # loop index, so every run started at S900 regardless of the table. S900-S908 were
+        # already taken, so the FIRST insert raised `duplicate key value violates unique
+        # constraint "subproblem_pkey"` and the exception discarded all ten questions the run
+        # had just paid for -- a failure that costs money and leaves nothing to show for it.
+        base = next_subproblem_number()
         for j, p in enumerate(good):
-            sid = f"S{900 + j}"
+            sid = f"S{base + j}"
             # `acceptance` is NOT NULL in the schema, which is the right constraint: a
             # subproblem that does not say what would settle it is a topic, not a question. It is
             # built from the REACHABLE field, because that is the one naming the instrument.
             acc = (f"Run: {p['REACHABLE']}  ->  ANSWERED when that produces a number that either "
                    f"meets or fails this pre-registered falsifier: {p['FALSIFIER']}")
+            # ON CONFLICT DO NOTHING so a collision costs one row, not the whole batch.
+            # The surviving rows are still worth having and the run is not cheap.
             ac.q(f"""insert into subproblem (project_id, id, question, why_it_matters, acceptance,
                                              falsifier, status)
                      values ({ac.lit(ac.PROJECT)}, {ac.lit(sid)}, {ac.lit(p['QUESTION'])},
                              {ac.lit(p['WHY'])}, {ac.lit(acc)},
-                             {ac.lit(p['FALSIFIER'])}, 'open')""")
+                             {ac.lit(p['FALSIFIER'])}, 'open')
+                     on conflict (id) do nothing
+                     returning id""")
             print(f"  wrote {sid}")
     return 0
 
