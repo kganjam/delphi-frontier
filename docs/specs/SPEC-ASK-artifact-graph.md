@@ -153,12 +153,40 @@ legitimate partial activation *provided the gaps stay visible* — which is what
    named rather than skipped. What is still **not** captured is a full dependency closure — the stored
    record is accelerator, framework build, language version and driver, which is enough to tell two
    machines apart and **not** enough to rebuild either.
-2. **Dependency propagation** (D4). The source video states the capability directly — *"New findings
-   update claims and **flag dependent designs**."* Superseding a claim must mark every claim, part
-   revision and subproblem that consumed it as `needs-review`. This is the single highest-value
-   missing piece, because without it a refuted input silently keeps supporting its conclusions.
-3. **A transfer record** (D5): a serialisation in which a value cannot be separated from its units,
-   conditions and scope. See §5.
+2. ~~**Dependency propagation** (D4)~~ — **discharged; re-measured 2026-11-05.** The reasoning is
+   kept rather than deleted because it is the reusable part: the source video states the capability
+   directly — *"New findings update claims and **flag dependent designs**."* Superseding a claim must
+   mark every claim, part revision and subproblem that consumed it as `needs-review`, because without
+   it a refuted input silently keeps supporting its conclusions.
+   **This item contradicted §3 for a day and the contradiction was invisible.** §3's D4 row already
+   recorded the trigger firing and the entailment block closing the cross-scale hole, while this item
+   still called it "the single highest-value missing piece" — a reader consulting §4 would have
+   rebuilt something that works. Measured on the live database 2026-11-05: `trg_claim_superseded`
+   present, `claim_depends` **184 edges**, `review_flag` **63 rows** of which **33 carry an
+   `entailment_id`**, and the D4 failure query — entailments resting on a superseded claim with no
+   flag — returns **0**.
+   Two caveats kept visible: the 184 edges are **fewer than the 236** §3 reports after its backfill,
+   which is unexplained here and may simply be supersession since, and 0 violations is a statement
+   about the current graph, not a proof the propagation is complete.
+3. ~~**A transfer record** (D5)~~ — **implemented 2026-11-05 as `swarm/transfer_record.py`**: a
+   serialisation in which a value cannot be separated from its units, conditions and scope. See §5.
+   The value is not addressable on its own — there is no key whose value is the bare number, so a
+   consumer that wants it must take the `quantity` object carrying its units, evidence class, read
+   level, scope and provenance. `validate()` REFUSES a record missing any of them, and refuses a
+   number hoisted to the top level, which is how a consumer would otherwise strip the units.
+   **296 of 296 live zebrafish quantities validate**, and that clean pass is exactly how a dead
+   validator looks, so `analysis/control_transfer_record.py` mutates ONE FIELD of a REAL record per
+   arm: units stripped, scope removed, provenance removed, literature record with no read_level,
+   value hoisted, wrong schema — all refused; unmutated record and a MEASURED record with no
+   read_level — both accepted. 8 arms, all behaving.
+   **The first rule was wrong and the distribution caught it**: requiring `read_level` of every
+   record refused **31 legitimate ones** (26 `derived`, 5 `simulated`) which have no source to have
+   read. `read_level` is now required only for `literature` and `refused`. `evidence` and
+   `read_level` are separate vocabularies — how the value was obtained, versus how deeply its source
+   was read — and conflating them has cost this project an insert before.
+   **D5 stays `partial`.** This stops a consumer MISREADING a number; it does not carry a dependency
+   closure sufficient to recompute one, and `spec_parameter` is still **0 rows**, so that table's
+   mandatory-conditions constraint remains vacuously satisfied.
 4. **Resolvable ids** (D1).
 
 ---
