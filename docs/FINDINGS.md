@@ -998,19 +998,25 @@ work that would obviously succeed; each is a specific question with a stated rea
   and re-deriving it reproduces the optimistic answer, because squaring is the intuitive step.**
   What survives untouched is any comparison that never converts: claim 986 benchmarks fin
   length/SL against gliders' fin length/SL in the same unit, and needs no exponent at all.
-- **The second fin allele changes PROPORTION, not pectoral size — and that is the paper's own
-  point, which reading one panel hides.** Adding `lat4a^nr21/+` to `kcnh2a^lof/+` leaves the
-  pectoral at 0.460 and shrinks the dorsal caudal fin 35% (0.310 → 0.200), moving
-  pectoral:caudal from **0.79** in wild type to **2.30** — a 2.93× shift toward the flying-fish
-  body plan. Measured by two models, 10/10 reads usable, ratio agreeing to two decimals.
-  Claim 984's "stacking adds nothing" is true of pectoral *size* and false of the animal's
-  *shape*; Figure 4 is titled "sufficient to phenocopy the evolved" state, and the proportion is
-  what the intersection buys.
-  **It buys it by removing the surface a launch pushes against.** A flying fish taxis on an
-  enlarged lower caudal lobe before the pectorals carry it, and this combination deletes 35% of
-  the caudal. Claim 519 already settles S900 negatively — the launch does not close on the
-  measured-burst route at any combination of this project's numbers — so this deepens an
-  existing blocker rather than opening a new one. **Under these alleles the two halves of the
-  flying-fish plan are in tension: the proportion that makes a glider is bought by removing the
-  surface that gets it airborne.** A route through this pair needs a launch that does not depend
-  on caudal area.
+- **The second fin allele delivers the flying-fish body plan, including the take-off tail —
+  and reading one figure panel made me conclude the opposite.** Adding `lat4a^nr21/+` to
+  `kcnh2a^lof/+` leaves the pectoral at 0.460 and makes the caudal fin **hypocercal**: generally
+  wild-type in overall size, with a shortened dorsal lobe (0.310 → 0.200, measured) and an
+  **elongated ventral lobe**. Daane 2021 states both halves in prose — that flying fishes have
+  "a hypocercal caudal fin with a stiffened and elongated ventral lobe" which "facilitates the
+  initial emergence and take-off from the water", and that the double mutant's caudal fin "while
+  generally wild type in size, is hypocercal, with an elongated ventral lobe… remarkably similar
+  to that of flying fishes".
+  **I measured Figure 4C correctly and inferred the opposite conclusion.** The panel is labelled
+  "dorsal caudal fin"; I read the 35% fall as the whole structure shrinking and wrote up a
+  trade-off in which the glider proportion is bought by deleting the launch surface. It is one
+  lobe of an asymmetric fin whose other lobe moves the other way. A correct number under a
+  correctly read label still produced a wrong conclusion, because the inference needed the part
+  of the paper I had not read. **Reading a figure is not reading a paper** — and the figure arm
+  that produced this session's best results is exactly the arm that makes that easy to forget.
+  Claim 989 is superseded by 990. The pectoral:caudal ratio in 989 is arithmetically right but
+  compares a fin against ONE LOBE of another fin, so it is not a body-plan statistic.
+  **What it still does not establish:** Daane 2021 measures fin length normalised to standard
+  length only — no area, aspect ratio, lift, gliding or flight (claim 202). "Facilitates
+  take-off" is the source's statement about flying fishes, not a measurement of a zebrafish
+  leaving the water.

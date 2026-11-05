@@ -60,7 +60,7 @@ CHAIN = [
     ("ORGAN / fin morphology",
      "What does the best published allele give?", 542),
     ("ORGAN / fin morphology",
-     "Does the allele PAIR give the flying-fish proportion, and what does it cost?", 989),
+     "Does the allele PAIR give the flying-fish body plan?", 990),  # was 989: it read Fig 4C's DORSAL lobe as the whole caudal fin
     ("ORGAN / fin morphology",
      "How does the achievable fin compare with real gliders, in their own unit?", 986),
     ("ORGAN / swim bladder",
