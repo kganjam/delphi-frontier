@@ -51,7 +51,11 @@ QUESTIONS = """\
 6. Swimming or escape velocity, with body length and whether the fish started from rest.
 """
 
-PROMPT = """You are extracting MEASURED values from a scientific paper for a research database.
+PROMPT = """You are extracting NUMERIC values from a scientific paper for a research database.
+
+The database records HOW a paper came by each number, so do not restrict yourself to the paper's
+own measurements. A modelling study's assumed constants and simulation outputs are wanted too,
+and so is a value the paper quotes from an earlier study. Each one is simply labelled.
 
 Below is an excerpt of the paper's full text. Find values answering any of these questions:
 
@@ -60,16 +64,35 @@ Below is an excerpt of the paper's full text. Find values answering any of these
 RULES, and the third is enforced mechanically after you reply:
 - Report ONLY values that appear in the excerpt below. Do not use anything you know about this
   paper or this field from elsewhere.
-- Reporting NOTHING is a correct and expected answer. Most excerpts contain no relevant value.
-  An empty list is a good result. Inventing a value is far worse than returning none.
+- Every item MUST carry `provenance`, which is the whole point of this extraction. Use exactly
+  one of:
+    "measured-here"   the authors measured it in THIS study, from real specimens or apparatus
+    "modelled-here"   an output of this paper's own simulation, model or calculation
+    "assumed-here"    a constant this paper's model takes as input without deriving it
+    "quoted"          a value this paper attributes to an earlier study. Put that study in
+                      `attributed_to` (for example "Sawicki et al. 2015").
+    "unclear"         the excerpt does not let you tell. Preferred over guessing.
+  A simulation output labelled "measured-here" is the single worst error you can make here,
+  because it is the error this database exists to prevent.
+- Be THOROUGH. A results section, a figure caption, a table or a methods paragraph often holds
+  several relevant values; report each one separately. Scan the whole excerpt, not just its
+  opening. Partial answers are wanted: a value whose species or conditions you cannot determine
+  is still worth reporting with those fields left as "unstated".
+- Report a value even when it is incidental to the paper's own argument. This database wants the
+  NUMBER, not the paper's conclusion, so a control measurement or a value quoted from an earlier
+  study counts, provided the sentence you quote is in the excerpt below.
+- If, having scanned it all, the excerpt genuinely holds no measured value relevant to ANY of the
+  questions, an empty list is the correct answer. Never invent one: a fabricated value is worse
+  than a missed one, and the quote check below will catch it anyway.
 - Every item MUST carry `quote`: a span copied EXACTLY, character for character, from the
   excerpt below. Your reply is checked by searching the excerpt for that string. A quote that is
   not found causes the item to be DISCARDED, so a paraphrase loses you the finding.
 - If the excerpt contains no relevant measured value, reply exactly: {{"values": []}}
 
 Reply with JSON only, no other text:
-{{"values": [{{"question": <1-6>, "value": "...", "units": "...", "species": "...",
-              "conditions": "...", "quote": "..."}}]}}
+{{"values": [{{"question": <number>, "value": "...", "units": "...", "species": "...",
+              "conditions": "...", "provenance": "...", "attributed_to": "...",
+              "quote": "..."}}]}}
 
 PAPER EXCERPT:
 ---
@@ -181,6 +204,12 @@ def load_questions() -> tuple[str, str]:
 
 def main() -> int:
     write = "--write" in sys.argv
+    out = OUT
+    if "--out" in sys.argv:
+        # A fixed output path means two slices of the corpus overwrite each other, so a
+        # parallel run keeps only whichever finished last. Per-slice files also give the
+        # run resume for free: a slice whose file exists has already been done.
+        out = Path(sys.argv[sys.argv.index("--out") + 1])
     questions, qlabel = load_questions()
     papers = sorted(FULLTEXT.glob("*.txt"))
     if "--papers" in sys.argv:
@@ -195,7 +224,7 @@ def main() -> int:
     print("=" * 78)
     print(f"  {len(papers)} paper(s), tenants {TENANTS} (api_allen EXCLUDED)")
     print(f"  questions: {qlabel}")
-    print(f"  every quote is verified against the source; unverified items are DISCARDED")
+    print("  every quote is verified against the source; unverified items are DISCARDED")
     ok, why = controls_pass()
     print(f"  [{'ok' if ok else 'FAIL'}] controls: {why}")
     if not ok:
@@ -254,8 +283,8 @@ def main() -> int:
               f"{str(it.get('units'))[:22]} | {str(it.get('species'))[:24]}")
 
     if write:
-        OUT.write_text(json.dumps({"verified": kept, "discarded": discarded}, indent=1))
-        print(f"\n  wrote {OUT}")
+        out.write_text(json.dumps({"verified": kept, "discarded": discarded}, indent=1))
+        print(f"\n  wrote {out}")
     else:
         print("\n  (dry run; pass --write to save)")
     print("\n  A verified quote means the SENTENCE is real. Whether the value means what the")
