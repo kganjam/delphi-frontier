@@ -178,7 +178,11 @@ def main() -> int:
     out.append("\n".join([
         "| lever | bound | why |",
         "|---|---|---|",
-        "| fin area | ~2.65x | three alleles on one bioelectric pathway |",
+        "| fin area | ~2.65x, ADULTS ONLY | three alleles on one bioelectric pathway. The three "
+        "papers this rests on -- PMC3894163, PMC6039437, PMC7235970 -- mention `larva` and `dpf` "
+        "ZERO times between them against 15, 4 and 21 mentions of `adult` (claim 1401), so the "
+        "multiplier is not established below 10 mm and CANNOT BE MULTIPLIED BY THE BODY-SIZE "
+        "ROW without extrapolating across the stage at which fin musculature matures |",
         "| fin shape | nothing beyond the floor | aspect ratio saturates; induced drag -> 0 "
         "and the requirement stops falling |",
         "| exit speed | 1.57-1.60 m/s | muscle work, and speeds add in quadrature so a run-up "
@@ -206,6 +210,14 @@ def main() -> int:
                "and preprints, the nearest obtainable values are a cross-species plateau "
                "(claim 1290) and a within-species FEEDING-strike exponent (claim 1292). It "
                "governs whether the body-size lever is worth 6.0 mm or 1.1 mm.\n")
+    out.append("\n**A cheaper question has displaced it.** The fin-area and body-size rows "
+               "cannot both be applied as written: 2.65x is an ADULT measurement and the size "
+               "target is 6.0 mm, which is late-larval and below the 10 mm at which fin "
+               "musculature reaches adult-like morphology (claims 1400, 1401). The question "
+               "that now gates the design is **does the 2.65x fin-area effect hold at 6 mm "
+               "total length?** That is a photograph and an area, on mutant lines that already "
+               "exist, at a standard stage -- not a search for a value published only in "
+               "figures.\n")
 
     text = "\n".join(out)
     if "--write" in sys.argv:
