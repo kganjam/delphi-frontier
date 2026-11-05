@@ -73,7 +73,7 @@ def call(tenant: str, prompt: str, max_tokens: int = 1200, model: str | None = N
     return json.loads(r.stdout[i:])
 
 
-def call_with_fallback(tenant: str, prompt: str) -> dict:
+def call_with_fallback(tenant: str, prompt: str, max_tokens: int = 1200) -> dict:
     """Try the default model; on a refusal, retry on FALLBACK.
 
     This is the API's OWN documented remedy -- a refusal reply says so in its explanation field:
@@ -88,11 +88,11 @@ def call_with_fallback(tenant: str, prompt: str) -> dict:
     opus's $0.016.
     """
     try:
-        return call(tenant, prompt)
+        return call(tenant, prompt, max_tokens=max_tokens)
     except Exception as e:
         if "refused" not in str(e).lower():
             raise
-        out = call(tenant, prompt, model=FALLBACK)
+        out = call(tenant, prompt, max_tokens=max_tokens, model=FALLBACK)
         out["_fallback_from_refusal"] = True
         return out
 
