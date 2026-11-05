@@ -104,7 +104,16 @@ def fetch(url: str, timeout: int = 70, tries: int = 3) -> str:
 
 
 def figures_of(pmcid: str) -> tuple[list[str], list[str]]:
-    """Return (figure image urls, caption snippets) for a PMC article."""
+    """Return (figure image urls, caption snippets) for a PMC article.
+
+    THE TWO LISTS ARE NOT PAIRED AND MUST NOT BE ZIPPED. `urls` is sorted by the CDN hash
+    path; `caps` is in document order. Nothing relates element i of one to element i of the
+    other, and on PMC9172250 the orders genuinely differ -- zipping them hands you Figure 2's
+    image under Figure 4's caption, which is how a figure read of the "double-mutant phenocopy"
+    came back showing an evolutionary-rate plot. Use `figures_paired()` when the pairing
+    matters, which is whenever a specific figure is wanted. These two are kept for the callers
+    that only count or list.
+    """
     html = fetch(f"https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/")
     if len(html) < STUB_BYTES:
         # Say THROTTLED, not "no figures". The distinction is the whole point.
@@ -125,12 +134,42 @@ def figures_of(pmcid: str) -> tuple[list[str], list[str]]:
     text = re.sub(r'\s+', ' ', text)
     caps = []
     for m in re.finditer(r'(Fig(?:ure)?\s*\d+[A-Za-z]?)[.\s]{1,3}([A-Z][^.]{25,180}\.)', text):
-        s = f"{m.group(1)}. {m.group(2)}"
-        if s not in caps:
-            caps.append(s)
+        s2 = f"{m.group(1)}. {m.group(2)}"
+        if s2 not in caps:
+            caps.append(s2)
     return urls, caps[:12]
 
 
+FIG_BLOCK = re.compile(r'<figure[^>]*\bclass="[^"]*\bfig\b[^"]*"[^>]*>(.*?)</figure>', re.S)
+FIG_HEAD = re.compile(r'<h4[^>]*class="[^"]*obj_head[^"]*"[^>]*>(.*?)</h4>', re.S)
+FIG_IMG = re.compile(r'<img[^>]+src="(https://cdn\.ncbi\.nlm\.nih\.gov/pmc/blobs/[^"]+?'
+                     r'\.(?:jpg|png))"', re.S)
+
+
+def figures_paired(pmcid: str) -> list[dict]:
+    """Pair each figure's image with ITS OWN caption, from inside the same <figure> element.
+
+    This exists because the parallel lists above cannot be zipped, and the failure is silent:
+    you get a real image and a real caption, both from the right paper, describing different
+    figures. Nothing downstream can tell. A figure read then measures the wrong plot and
+    reports a number with controls that all pass, because the controls check the reading, not
+    the identity of what was read.
+    """
+    html = fetch(f"https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/")
+    if len(html) < STUB_BYTES:
+        raise RuntimeError(f"throttled: {pmcid} returned {len(html)} bytes "
+                           f"(a real article page is >{STUB_BYTES//1000} KB)")
+    out = []
+    for block in FIG_BLOCK.findall(html):
+        im = FIG_IMG.search(block)
+        if not im:
+            continue
+        hd = FIG_HEAD.search(block)
+        head = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', hd.group(1))).strip() if hd else ""
+        lab = re.match(r'(Fig(?:ure)?\s*\d+)', head)
+        out.append({"label": lab.group(1) if lab else "", "url": im.group(1),
+                    "caption": head})
+    return out
 def main() -> int:
     want = sys.argv[1:] or [v[0] for v in CORPUS.values() if v[0] and v[0].startswith("PMC")]
     label = {v[0]: v[1] for v in CORPUS.values() if v[0]}
