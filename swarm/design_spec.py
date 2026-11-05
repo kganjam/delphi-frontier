@@ -85,15 +85,14 @@ ROUTE_VERDICTS = [
     ("B. Powered flapping", 601, True,
      "It needs ~83 Hz; fish white locomotory muscle makes no power above ~12 Hz, and the "
      "superfast myosin that could reach it has never been sequenced in any animal."),
-    ("C. Latch-spring launch", 960, True,
-     "Even a fish made entirely of muscle needs 54% of muscle work to arrive as body kinetic "
-     "energy; the best measured for any fish fast-start is 39%, and a spring-loaded mechanical "
-     "fish achieved 10%."),
-    ("D. Harvesting the wind", 967, True,
-     "Reopened by this project's own adversarial arm, then closed on a better argument. The "
-     "design DOES climb in wind and DOES extract energy from shear -- both measured against a "
-     "wingless control -- but the soaring cycle never closes: every trajectory ends in the "
-     "water, at every shear strength up to 18.7 m/s."),
+    ("C. Latch-spring launch", 960, False,
+     "PROVISIONAL. The efficiency argument caps what fraction of STORED energy reaches the "
+     "body, not how much is stored -- so it closes only if multi-contraction spring charging "
+     "is impossible, which is unknown. The adversarial arm caught this."),
+    ("D. Harvesting the wind", 967, False,
+     "PROVISIONAL. No cycle was FOUND under one hand-built heading controller, which is not "
+     "the same as none existing; and the shear controls compared wind against no-wind rather "
+     "than sheared against uniform. The adversarial arm caught both."),
 ]
 
 
