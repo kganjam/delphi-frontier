@@ -123,6 +123,19 @@ def main() -> int:
     print("  is weak BECAUSE it is fast (claims 979, 998, 1090) -- so a power figure without its")
     print("  frequency is not comparable to a cyclic-power requirement. Read the conditions on")
     print("  both sides, not just the number and the unit.")
+    print()
+    print("  FIVE candidates were worked by hand and ALL FIVE failed (claim 1094), in five")
+    print("  distinct ways no numeric filter catches:")
+    print("    circular -- the bound was derived from the candidate            (e88, now guarded)")
+    print("    conditions the bound does not carry -- regime mismatch          (e180)")
+    print("    WRONG SIDE: the candidate is the REQUIREMENT, not the capability (e123)")
+    print("    the candidate's OWN TEXT forbids the use                        (e54)")
+    print("    same units, unrelated physics                                   (e281)")
+    print("  e54 is the one to remember: claim 238 exists specifically to say its 2.5 g is a")
+    print("  DIFFERENT quantity and must not be conflated -- and this tool proposed exactly that")
+    print("  conflation. A corpus that records its own refusals will have them offered back by")
+    print("  any naive matcher, and a numeric matcher cannot read 'do not use X for Y'.")
+    print("  The tool is still worth running: 151 open -> 12 worth reading, in minutes.")
     return 0
 
 
