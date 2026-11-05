@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 import re
+import time
 import subprocess
 import sys
 import urllib.parse
@@ -44,17 +45,35 @@ CORPUS = {
 FIGCAP = re.compile(r'(?:Fig(?:ure)?\.?\s*\d+[A-Za-z]?\.?\s+)([^<]{20,200})')
 
 
-def fetch(url: str, timeout: int = 70) -> str:
-    r = subprocess.run(["curl", "-sL", "--max-time", str(timeout), "-A", "Mozilla/5.0", url],
-                       capture_output=True, text=True, timeout=timeout + 20)
-    return r.stdout
+# PMC THROTTLES, AND A THROTTLED PAGE IS NOT AN EMPTY PAGE. After a handful of rapid requests
+# it serves a ~21 KB stub instead of the ~325 KB article, with no figure images in it. The first
+# version of this sweep read that as "no figure images found -- record as not retrievable here"
+# for SEVEN papers, two of whose figures had been downloaded by hand minutes earlier. That is the
+# empty-set failure with a plausible cover story: the mechanism ran, returned nothing, and the
+# nothing was reported as a property of the papers.
+STUB_BYTES = 60_000          # a real PMC article page is several hundred KB
+PAUSE_S = 6                  # between requests, to stay under the throttle
+
+
+def fetch(url: str, timeout: int = 70, tries: int = 3) -> str:
+    out = ""
+    for i in range(tries):
+        r = subprocess.run(["curl", "-sL", "--max-time", str(timeout), "-A", "Mozilla/5.0", url],
+                           capture_output=True, text=True, timeout=timeout + 20)
+        out = r.stdout
+        if len(out) >= STUB_BYTES:
+            return out
+        time.sleep(PAUSE_S * (i + 1))      # back off and retry; a stub is transient
+    return out
 
 
 def figures_of(pmcid: str) -> tuple[list[str], list[str]]:
     """Return (figure image urls, caption snippets) for a PMC article."""
     html = fetch(f"https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/")
-    if len(html) < 5000:
-        return [], []
+    if len(html) < STUB_BYTES:
+        # Say THROTTLED, not "no figures". The distinction is the whole point.
+        raise RuntimeError(f"throttled: {pmcid} returned {len(html)} bytes "
+                           f"(a real article page is >{STUB_BYTES//1000} KB)")
     # PMC serves figure images from cdn.ncbi.nlm.nih.gov/pmc/blobs/<hash>/<pmcid>/<hash>/<name>.
     # The first version of this looked for the OLD "/bin/" path and found ZERO images on every
     # paper -- reporting "not retrievable here" for articles whose figures were sitting in the
@@ -82,11 +101,34 @@ def main() -> int:
     out = {}
     print(f"{len(CORPUS)} cited paper(s); "
           f"{sum(1 for v in CORPUS.values() if v[0] is None)} with no PMC record\n")
+    # POSITIVE CONTROL FIRST. PMC9172250's figures were downloaded by hand, so if the sweep
+    # reports zero for IT the sweep is broken and every other zero is meaningless. Refuse rather
+    # than produce a report nobody can trust.
+    try:
+        ctrl_urls, _ = figures_of("PMC9172250")
+    except RuntimeError as e:
+        print(f"  CONTROL FAILED -- {e}")
+        print("  Refusing to sweep: a throttled fetch and an article without figures look the "
+              "same from here.")
+        return 2
+    if not ctrl_urls:
+        print("  CONTROL FAILED: PMC9172250 is known to carry 4 figures and this sweep found 0.")
+        print("  Refusing to report any other zero.")
+        return 2
+    print(f"  control ok: PMC9172250 -> {len(ctrl_urls)} figure image(s)\n")
+
     for pmcid in want:
         if not re.fullmatch(r"PMC\d+", pmcid):
             print(f"  SKIP {pmcid}: not a well-formed PMCID (placeholder in the table)")
             continue
-        urls, caps = figures_of(pmcid)
+        time.sleep(PAUSE_S)
+        try:
+            urls, caps = figures_of(pmcid)
+        except RuntimeError as e:
+            print(f"  {pmcid:<13} THROTTLED -- {e}")
+            out[pmcid] = {"urls": [], "captions": [], "throttled": True,
+                          "label": label.get(pmcid, "")}
+            continue
         print(f"  {pmcid:<13} {len(urls):>2} figure image(s)   {label.get(pmcid,'')}")
         for c in caps[:4]:
             print(f"       - {c[:112]}")
