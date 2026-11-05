@@ -1,0 +1,41 @@
+@prefix this: <https://w3id.org/delphi-frontier/np/ms/parameter/U_b> .
+@prefix sub: <https://w3id.org/delphi-frontier/np/ms/parameter/U_b#> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+sub:Head {
+  this: a np:Nanopublication ;
+    np:hasAssertion sub:assertion ;
+    np:hasProvenance sub:provenance ;
+    np:hasPublicationInfo sub:pubinfo .
+}
+
+sub:assertion {
+  sub:quantity a qudt:Quantity ;
+    dct:identifier "ms:parameter/U_b" ;
+    dct:title "Measured adult fast-start peak speed" ;
+    qudt:symbol "U_b" ;
+    qudt:value "0.45 to 1.38 (measured-ci)" ;
+    qudt:unit "m/s" ;
+    dct:conditionsOfUse "Adult, 120-1000 fps video" .
+}
+
+sub:provenance {
+  sub:assertion prov:wasDerivedFrom "Danos & Lauder 2012; Miln et al. 2021" ;
+    dct:accrualMethod "measured" ;
+    dct:accessRights "full-text" ;
+    dct:description "Two INDEPENDENT routes agreeing: derived from a measured Reynolds number (Danos & Lauder 2012) and measured directly from high-speed video (Miln et al. 2021, n=50). The derived value sits inside the measured range." ;
+    prov:generatedAtTime "2026-11-04 09:22:28.99318+00" ;
+    prov:wasGeneratedBy "swarm/export_transfer.py ask-transfer/v1" .
+}
+
+sub:pubinfo {
+  this: dct:created "2026-11-05T01:18:51+00:00"^^xsd:dateTime ;
+    dct:creator "delphi-frontier swarm (DRY RUN, throwaway key)" ;
+    dct:isReplacedBy "not-superseded" ;
+    dct:references "no open challenges" ;
+    dct:rights "DRY RUN -- not a Trusty URI, not publishable, never transmitted" .
+}
