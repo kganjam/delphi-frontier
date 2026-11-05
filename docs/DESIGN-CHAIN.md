@@ -97,11 +97,11 @@ _THE FIRST CONCRETE GENETIC DESIGN WITH EVERY COMPONENT ALREADY VALIDATED IN VIV
 
 ## Where it stands
 
-- 333 live claims of 394 for project `zebrafish-flight`; **61 superseded**, which is the project correcting itself and is not a defect.
+- 339 live claims of 400 for project `zebrafish-flight`; **61 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 161, `measured` 103, `literature` 43, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 164, `measured` 103, `literature` 46, `simulated` 16, `unknown` 9, `assumed` 1
 
 
 **The two routes, and neither is a flying fish:**
