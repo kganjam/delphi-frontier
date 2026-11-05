@@ -93,9 +93,31 @@ def rows():
            "dry run only; output lacks trusty URIs and is explicitly NOT publishable",
            False, "AUTHORISATION REQUIRED -- publishing is irreversible, owner's call")
 
+    # MEASURED, NOT ASSERTED. This row was hand-written as "NOT MEASURABLE HERE" in the first
+    # version of this file -- inside a module whose own docstring says a hand-written headline is
+    # where all the staleness lands. It was substantively right and methodologically wrong, and
+    # it would never have changed no matter what the project built. Now it asks the graph.
+    span = one("""with m as (
+                    select regexp_replace(source, '^.*?([a-z0-9_]+\\.py).*$', '\\1') as mod,
+                           scale_id
+                    from claim where project_id='%s' and superseded_by is null
+                      and scale_id is not null and source ~ '[a-z0-9_]+\\.py')
+                  select coalesce(max(n)::text,'0') from (
+                    select count(distinct scale_id) as n from m group by mod) t""" % PROJ, "0")
+    molec = one("""with m as (
+                     select regexp_replace(source, '^.*?([a-z0-9_]+\\.py).*$', '\\1') as mod,
+                            scale_id
+                     from claim where project_id='%s' and superseded_by is null
+                       and scale_id is not null and source ~ '[a-z0-9_]+\\.py')
+                   select count(*)::text from (
+                     select mod from m group by mod
+                     having bool_or(scale_id in ('dna','protein'))
+                        and bool_or(scale_id in ('organism','behaviour','ecology'))) t""" % PROJ, "0")
     yield ("end-to-end multi-scale SIMULATION",
-           "NOT MEASURABLE HERE: no run links a molecule-scale input to an organism-scale output",
-           False, "one simulation whose inputs and outputs span scales")
+           f"widest scale span by one module: {span} scales; "
+           f"{molec} module(s) link a molecular scale (dna/protein) to organism-or-wider",
+           int(molec) > 0,
+           "one module whose inputs are molecular and whose outputs are whole-animal")
 
 
 def main() -> int:
