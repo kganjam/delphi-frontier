@@ -70,11 +70,25 @@ def rows():
            resolved >= levers,
            "each lever either names a variant or is shown to have none in the literature")
 
-    sat = num("""select count(*) from constraint_entailed where project_id='%s'
-                 and status='satisfied'""" % PROJ)
-    tot = num("select count(*) from constraint_entailed where project_id='%s'" % PROJ)
+    # COUNTED OVER DISTINCT CONSTRAINTS, NOT ROWS, and the difference ran in the flattering
+    # direction. 24 duplicate groups hold 78 rows, 54 of them redundant -- the same constraint
+    # entered up to three times with identical quantity, bounds, units and source claim (the
+    # bluegill fin-ray EI bound is there three times). Satisfied rows were duplicated more than
+    # unsatisfied ones, so the row-count ratio read 130/381 = 34.1% where distinct constraints
+    # give 105/327 = 32.1%. Found 2026-11-05 by entailment_match.py, which could not match
+    # against the set without tripping over the copies.
+    key = ("""coalesce(quantity,'')||'|'||coalesce(lo::text,'')||'|'||coalesce(hi::text,'')"""
+           """||'|'||coalesce(units,'')||'|'||coalesce(source_claim::text,'')""")
+    sat = num(f"""select count(*) from (select {key} as k,
+                    max(case status when 'satisfied' then 1 else 0 end) as s
+                    from constraint_entailed where project_id='{PROJ}' group by 1) t
+                  where s = 1""")
+    tot = num(f"""select count(distinct {key}) from constraint_entailed
+                  where project_id='{PROJ}'""")
+    rows = num("select count(*) from constraint_entailed where project_id='%s'" % PROJ)
     yield ("cross-scale chain",
-           f"{sat:.0f} of {tot:.0f} entailments satisfied; chain spans 8/8 scales (claim 1084)",
+           f"{sat:.0f} of {tot:.0f} DISTINCT entailments satisfied "
+           f"({rows:.0f} rows before de-duplication); chain spans 8/8 scales (claim 1084)",
            sat / tot > 0.5 if tot else False,
            "most cross-scale constraints satisfied, not just connected")
 
