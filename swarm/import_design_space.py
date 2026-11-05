@@ -255,10 +255,18 @@ def import_routes(project: str, d: str, write: bool) -> int:
         print(f"  no routes.json in {d}")
         return 1
     j = json.load(open(f, encoding="utf-8"))
-    if j.get("schema") != "design-space-routes-0.1":
-        print(f"  {f} is schema {j.get('schema')!r}, not design-space-routes-0.1; not imported")
-        return 1
     routes = j.get("routes") or []
+    declared = j.get("schema") == "design-space-routes-0.1"
+    looks_right = (routes and isinstance(routes[0], dict)
+                   and {"evidence_strength", "intervention", "predicted_phenotype"}
+                   <= set(routes[0]))
+    if not declared and not looks_right:
+        print(f"  {f} is schema {j.get('schema')!r} and its routes do not carry the expected "
+              f"field set; not imported")
+        return 1
+    if not declared:
+        print(f"  NOTE: {f} declares no schema and no evidence_labels. Accepted on its route "
+              f"FIELD SET, with every evidence_strength required to map (below).")
     scales = {s.get("key"): s for s in (j.get("scales") or [])}
     unknown = sorted({r.get("evidence_strength") for r in routes
                       if route_evidence(r.get("evidence_strength")) is None})
@@ -312,6 +320,106 @@ def import_routes(project: str, d: str, write: bool) -> int:
     return 0
 
 
+# ------------------------------------------------- the FOURTH shape: design-space-study/0.1
+# results/xenobot carries three studies under `design-space-study/0.1`. Like the insect shape it
+# has no `is_observation`, and unlike it there is no `model.kind` either, so import_v2 refuses
+# them -- correctly. What DOES declare them is more specific and better provenance than either:
+# `model.engine` names a simulation engine with a commit (Voxelyze,
+# 4287e365e11416dd108f2f361e9ec4c5a011a16c), or `model.what_it_is` describes the models in a
+# declared field. One of those two must be present or the study is refused.
+#
+# This shape also carries the single most valuable field in any of these corpora:
+# `predeclared_expectation`, a hypothesis REGISTERED BEFORE THE RUN with an `outcome`. In
+# cargo-work that outcome is REFUTED and the headline says so -- "contradicting our predeclared
+# expectation". That gets its own claim, because a registered prediction that failed is worth
+# more than the result it was attached to and must not be buried inside a headline.
+def import_studies_v3(project: str, d: str, write: bool) -> int:
+    files = []
+    for f in sorted(glob.glob(os.path.join(d, "*.json"))):
+        try:
+            j = json.load(open(f, encoding="utf-8"))
+        except Exception:
+            continue
+        if isinstance(j, dict) and j.get("schema") == "design-space-study/0.1":
+            files.append((f, j))
+    if not files:
+        print(f"  no `design-space-study/0.1` files in {d}")
+        return 1
+    print(f"  {len(files)} study(ies) under design-space-study/0.1")
+    made = {}
+    for f, s in files:
+        m = s.get("model") or {}
+        eng = (m.get("engine") or {}) if isinstance(m.get("engine"), dict) else {}
+        declares = eng.get("name") or m.get("what_it_is")
+        if not declares:
+            print(f"  REFUSED {os.path.basename(f)}: neither model.engine.name nor "
+                  f"model.what_it_is is present, so nothing DECLARES this a simulation. "
+                  f"Not inferring it from the prose.")
+            continue
+        params = [x for x in (m.get("parameters") or []) if isinstance(x, dict)]
+        bad = sorted({x.get("status") for x in params if x.get("status") not in V2_STATUS})
+        if bad:
+            print(f"  REFUSED {os.path.basename(f)}: parameter status {bad} unmapped.")
+            continue
+        pre = s.get("predeclared_expectation") or {}
+        print(f"  {s.get('id','?'):18} engine={eng.get('name') or 'n/a':10} params={len(params):2} "
+              f"predeclared={pre.get('outcome') or '-':9} controls_met={s.get('all_controls_met')}")
+        if not write:
+            continue
+        rid = q(f"""insert into run (project_id, tool, command, code_sha, not_executable_because,
+                                     notes)
+                    values ({lit(project)}, {lit(s.get('id'))}, {lit(eng.get('driver'))},
+                            {lit(eng.get('commit'))},
+                            {lit(None if eng.get('commit') else
+                                 'this study declares no engine commit')},
+                            {lit('imported from ' + f + ' (design-space-study/0.1)')})
+                    returning id""")[0][0]
+        lims = (s.get("limitations") or []) + (s.get("what_this_cannot_establish") or [])
+        head = (str(s.get("headline", "")).strip()
+                + f"\n\nDECLARED BY: {'model.engine ' + str(eng.get('name')) if eng.get('name') else 'model.what_it_is'}"
+                + (f" at commit {eng.get('commit')}" if eng.get("commit") else "")
+                + (f"\nall_controls_met={s.get('all_controls_met')}"
+                   if s.get("all_controls_met") is not None else "")
+                + ("\n\nSTATED LIMITATIONS (verbatim): " + " | ".join(map(str, lims)) if lims else "")
+                + f"\n\nIMPORTED from {f}. No `is_observation` field exists in this shape; it is "
+                  f"recorded as SIMULATED because a simulation engine or model is DECLARED, and "
+                  f"nothing on this path may be typed 'measured'.")
+        q(f"""insert into claim (project_id, statement, evidence, source, run_id)
+              values ({lit(project)}, {lit(head)}, 'simulated', {lit(f)}, {rid})""")
+        made["simulated"] = made.get("simulated", 0) + 1
+        if pre.get("statement"):
+            st = (f"PREDECLARED EXPECTATION for study {s.get('id')!r}, registered BEFORE the run "
+                  f"and reported with its outcome: \"{pre.get('statement')}\"\n\n"
+                  f"OUTCOME: {pre.get('outcome')}\n"
+                  f"EVIDENCE AS STATED: {pre.get('evidence')}\n\n"
+                  f"A registered prediction reported as {pre.get('outcome')} is recorded "
+                  f"separately from the study headline so it cannot be buried in it.")
+            q(f"""insert into claim (project_id, statement, evidence, source, run_id)
+                  values ({lit(project)}, {lit(st)}, 'simulated', {lit(f)}, {rid})""")
+            made["simulated"] += 1
+        for prm in params:
+            ev = V2_STATUS[prm.get("status")]
+            val = prm.get("value")
+            vnum = val if isinstance(val, (int, float)) and not isinstance(val, bool) else None
+            st = (f"MODEL PARAMETER of study {s.get('id')!r}: {prm.get('name')} = "
+                  f"{prm.get('value')} {prm.get('units') or ''}. Declared status "
+                  f"{prm.get('status')!r} -> evidence={ev!r}. "
+                  f"SOURCE AS STATED: {prm.get('source') or 'none given'}")
+            q(f"""insert into claim (project_id, statement, evidence, value_num, units,
+                                     source, run_id)
+                  values ({lit(project)}, {lit(st)}, {lit(ev)},
+                          {'null' if vnum is None else repr(float(vnum))},
+                          {lit(prm.get('units'))}, {lit(f)}, {rid})""")
+            made[ev] = made.get(ev, 0) + 1
+    if write:
+        print(f"  imported {sum(made.values())} claim(s): {made}")
+        assert "measured" not in made, "a study on this path was typed 'measured'"
+        print("  [ok] control: 0 claims typed 'measured' on this path")
+    else:
+        print("  report only; pass --write to import")
+    return 0
+
+
 def main() -> int:
     if len(sys.argv) < 3:
         print(__doc__)
@@ -320,6 +428,8 @@ def main() -> int:
     write = "--write" in sys.argv
     if "--routes" in sys.argv:
         return import_routes(project, d, write)
+    if "--studies" in sys.argv:
+        return import_studies_v3(project, d, write)
     if not os.path.isdir(d):
         print(f"  REFUSING: {d} is not a directory. Reporting 0 studies for a path that does not "
               f"exist is a missing tree, not a measurement.", file=sys.stderr)
