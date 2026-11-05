@@ -93,6 +93,11 @@ def main() -> int:
     ap.add_argument("--wt-fasta", required=True)
     ap.add_argument("--var-fasta", required=True)
     ap.add_argument("--site", type=int, required=True, help="1-indexed")
+    ap.add_argument("--null", action="store_true",
+                    help="the two runs are REPLICATES of the same sequence, not a variant pair. "
+                         "This is the control the variant comparison needs: it measures how much "
+                         "two independent structure predictions of the SAME genotype disagree, "
+                         "which is the background a real substitution has to beat.")
     a = ap.parse_args()
 
     wt_seq, var_seq = read_seq(a.wt_fasta), read_seq(a.var_fasta)
@@ -101,7 +106,11 @@ def main() -> int:
               f"this script assumes a substitution, not an indel.")
         return 2
     diffs = [(i + 1, x, y) for i, (x, y) in enumerate(zip(wt_seq, var_seq)) if x != y]
-    if diffs != [(a.site, wt_seq[a.site - 1], var_seq[a.site - 1])]:
+    if a.null and diffs:
+        print(f"REFUSED: --null says these are replicates of one sequence, but they differ "
+              f"at {diffs}.")
+        return 2
+    if not a.null and diffs != [(a.site, wt_seq[a.site - 1], var_seq[a.site - 1])]:
         print(f"REFUSED: the two sequences differ at {diffs}, not only at the named site {a.site}.")
         return 2
 
@@ -109,7 +118,8 @@ def main() -> int:
     wt_aa, var_aa = wt_seq[i0], var_seq[i0]
     WT = json.load(open(a.wt_probs))["probs"]
     VR = json.load(open(a.var_probs))["probs"]
-    print(f"site {a.site}: {wt_aa} -> {var_aa}   "
+    kind = "REPLICATE PAIR (null control)" if a.null else f"{wt_aa} -> {var_aa}"
+    print(f"site {a.site}: {kind}   "
           f"({len(WT)} and {len(VR)} replicate decoding orders)\n")
 
     pw, pv = site_profile(WT, i0), site_profile(VR, i0)
@@ -138,6 +148,12 @@ def main() -> int:
     print(f"    90th pct / max           {others[int(.9*len(others))]:.4f} / {others[-1]:.4f}")
     print(f"    the site sits at the {pct:.1f}th percentile of background shift "
           f"({bigger} positions moved at least as much)")
+    if a.null:
+        print("\n  READING (null control): the same genotype folded twice, so every number above\n"
+              "  is structure-prediction background with NO substitution in it. Compare this\n"
+              "  distribution against the variant pair's -- if they match, the variant\n"
+              "  comparison was measuring the predictor and not the mutation.")
+        return 0
     if pct < 95.0:
         print("\n  READING: the mutated site's shift is NOT distinguishable from the background\n"
               "  two independent structure predictions produce anyway. This comparison does not\n"
