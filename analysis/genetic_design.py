@@ -8,11 +8,14 @@ molecular lesion nobody holds. A lever with a revision is not a lever you can or
 
 SO THIS REPORTS BUILDABILITY, NOT COVERAGE, and it reads the distinction off the data rather
 than asserting it. `content_sha256` is non-null only when the project holds an actual sequence
-change it could hash. FOUR DIFFERENT THINGS MAKE IT NULL and they are not interchangeable:
+change it could hash. FIVE DIFFERENT THINGS MAKE IT NULL and they are not interchangeable:
 
     FRAMESHIFT     the lesion is known but its PRODUCT is not derivable from protein-level
                    information: a frameshift runs to the next stop in the shifted frame, which
                    needs the nucleotide sequence (col9a1c@zf3676/zf3677)
+    JUNCTION       the breakpoints are known but one side of the junction is absent from the
+                   reference assembly, so there is no sequence to synthesise against
+                   (kcnh2a@longfin-dt2, from Daane et al.)
     REGULATORY     the change is not in any coding sequence, so there is nothing to hash
                    (kcnh2a@longfin-lof^dt2 is a chromosome-2 inversion between 5' prrx1a and
                    5' kcnh2a that upregulates the gene "without affecting the coding region")
@@ -65,6 +68,15 @@ NULL_REASON = {
                                               "position of the shift is not enough. This null "
                                               "records a limit of the protein-level convention, "
                                               "not a gap in the literature"),
+    "longfin-dt2-inversion-chr2-23.174-24.075Mb-Zv11": (
+        "JUNCTION NOT IN REFERENCE",
+        "a FIFTH class, added 2026-11-05: the breakpoints ARE held (~23.174 Mb and ~24.075 Mb "
+        "in Zv11, a ~901 kb inversion), so this is no longer 'coordinates unknown'. But Daane "
+        "et al. state they 'did not generate contigs representing the wild-type (Zv11) "
+        "chromosome organization at these breakpoints' and that one breakpoint lies 'within a "
+        "DNA transposon that is not present between these genes in the zebrafish reference "
+        "genome'. One side of the junction is absent from the reference, so the coordinates "
+        "locate the inversion without specifying a synthesisable junction"),
     "MYH13-Q9UKX3-motor-domain-only": ("NOT SEQUENCED",
                                        "a reviewed accession and a partial expression precedent, "
                                        "but no construct sequence obtained"),
