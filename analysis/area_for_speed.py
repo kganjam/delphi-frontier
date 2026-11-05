@@ -95,20 +95,27 @@ def main() -> int:
         print("  DECIDED HERE. Claim 988 states the 2.65x is ALREADY INSIDE closed_loop.py's S,")
         print("  and compounding it is the shape of the myosin double-count the panel refuted.")
 
-        # THE SHORTFALL AT THE BEST PUBLISHED FIN, which is the number the design needs.
-        v_at_best = reqs[0][2] / gv ** 0.5
+        # THE SHORTFALL UNDER BOTH BASELINE READINGS, because the module must not pick one.
+        # An earlier version printed a single "2.05x remaining" figure by dividing the required
+        # speed by sqrt(2.666). The panel caught that it thereby ASSUMED the requirement was
+        # computed on wild-type area -- the exact decision the docstring above refuses to make.
+        # Claim 1151 records it. Both readings are now printed and neither is preferred.
         taxi = next((a[2] for a in atts if a[0] == 269), None)
         if taxi:
-            short_v = v_at_best / taxi
-            print("\n  THE SHORTFALL, stated in the currency the levers move:")
-            print(f"     at the best published fin ({gv:.3f}x) the stall speed is "
-                  f"{v_at_best:.2f} m/s")
-            print(f"     the taxi attains                              {taxi:.2f} m/s "
-                  f"[claim 269]")
-            print(f"     remaining speed gap  {short_v:.2f}x  ->  remaining AREA factor "
-                  f"{short_v**2:.2f}x")
-            print(f"     so the design needs about {gv*short_v**2:.2f}x wild-type fin area in "
-                  f"all, against {gv:.2f}x achieved.")
+            v0 = reqs[0][2]
+            print("\n  THE SHORTFALL, UNDER BOTH READINGS OF WHERE THE PUBLISHED RATIO SITS:")
+            print(f"    (A) if the {v0:.2f} m/s requirement was computed on WILD-TYPE area, the")
+            print(f"        published {gv:.3f}x lowers it to {v0/gv**0.5:.2f} m/s; against the "
+                  f"{taxi:.2f} m/s taxi")
+            print(f"        that leaves {(v0/gv**0.5/taxi)**2:.2f}x of area, "
+                  f"{gv*(v0/gv**0.5/taxi)**2:.2f}x wild type in total.")
+            print(f"    (B) if the {v0:.2f} m/s requirement ALREADY CONTAINS that ratio -- which "
+                  f"claim 988 says")
+            print("        is true of closed_loop.py's baseline S -- then no division applies and")
+            print(f"        the remaining area factor is {(v0/taxi)**2:.2f}x ON TOP of the "
+                  f"genetics already in it.")
+            print("    These differ by the ratio itself. The project has not settled which holds,")
+            print("    and settling it is worth more than either number.")
 
     print("""
   READING THIS HONESTLY. The right-hand column is a LOWER BOUND, because larger fins carry mass
