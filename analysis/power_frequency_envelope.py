@@ -228,8 +228,9 @@ velocity ratio double-counts. This multiplies nothing and compares measured poin
         f"superfast-transgene requirement now rests, replacing 'only superfast muscle is fast enough'",
         SOURCE, "abstract"))
 
-    ids.append(write_claim(PROJECT, "tissue", f"""[THE MEASURED POWER-FREQUENCY ENVELOPE CONTAINS NO POINT MEETING BOTH COORDINATES, AND THE
-SHORTFALL IS IN FREQUENCY BY {gap:.0f} Hz RATHER THAN IN POWER]
+    ids.append(write_claim(PROJECT, "tissue", f"""[THE MEASURED POWER-FREQUENCY ENVELOPE CONTAINS NO POINT MEETING BOTH COORDINATES. AT THE
+REQUIRED {REQ_FREQ:.0f} Hz, NO MEASURED POWER EXISTS AT ALL -- THE SHORTFALL THERE IS UNKNOWN,
+NOT ZERO]
 Every muscle for which this project holds a measured work-loop power, placed at its measured
 operating frequency, against the requirement of {REQ_POWER:.0f} W/kg muscle at {REQ_FREQ:.0f} Hz:
 
@@ -243,6 +244,13 @@ operating frequency, against the requirement of {REQ_POWER:.0f} W/kg muscle at {
 NONE meets both. The closest in frequency among power-sufficient muscles is Hyla at
 {best_f[0]:.0f} Hz, {gap:.0f} Hz short; the closest in power among frequency-sufficient muscles
 is the toadfish swimbladder at {best_p[1]:.2f} W/kg, short by {REQ_POWER/best_p[1]:.1f}x.
+
+IT IS WRONG TO SAY THE SHORTFALL IS "IN FREQUENCY RATHER THAN IN POWER", and an earlier draft of
+this claim said exactly that. Hyla's {best_f[1]:.0f} W/kg is an OPTIMUM at {best_f[0]:.0f} Hz and
+work-loop power falls either side of an optimum, so at {REQ_FREQ:.0f} Hz its power is both lower
+and unmeasured. The power shortfall AT THE REQUIRED FREQUENCY is therefore unknown, not zero.
+What the envelope shows is narrower and still useful: the power requirement is met somewhere by a
+non-superfast muscle, which is not what this project previously believed.
 
 THIS CONSTRUCTION ANSWERS THE TWO OBJECTIONS THAT KILLED CLAIM 1111. It applies no isoform ratio,
 so there is nothing to double-count; and the envelope contains locomotory POWER muscle
@@ -258,6 +266,19 @@ level; the curve's shape above the optimum would settle it and is the cheapest n
         SOURCE, "abstract"))
 
     f_req = 16.0 / best_f[1]
+    BIRD_HI = 25.0  # upper end of the 15-25% bird flight-muscle range quoted below
+    pct = f_req * 100
+    if pct <= BIRD_HI:
+        bird_verdict = (f"At {pct:.0f}% this sits INSIDE that range, so the organ scale is not "
+                        f"where this route fails.")
+    else:
+        bird_verdict = (f"At {pct:.0f}% this sits ABOVE that range, by "
+                        f"{pct - BIRD_HI:.0f} percentage points -- so the organ scale is NOT "
+                        f"clear either, and an earlier draft of this module asserted it was. "
+                        f"The comparison is now computed rather than written, because the "
+                        f"asserted version said 'high but not outside what flying vertebrates "
+                        f"carry' about a number that exceeds the range quoted in the same "
+                        f"sentence.")
     ids.append(write_claim(PROJECT, "organ", f"""[THE ORGAN-SCALE CONSEQUENCE: AT THE BEST NON-SUPERFAST POWER, FLIGHT MUSCLE WOULD HAVE TO BE
 ABOUT {f_req*100:.0f} PERCENT OF BODY MASS]
 Claim 247 records the flapping requirement on a body-mass basis as about 16 W/kg body. At the
@@ -265,9 +286,13 @@ Claim 247 records the flapping requirement on a body-mass basis as about 16 W/kg
 muscle fraction required is 16 / {best_f[1]:.0f} = {f_req:.3f}, i.e. about {f_req*100:.0f}% of
 body mass.
 
-For scale, bird flight muscle is commonly 15-25% of body mass. So this is high but not outside
-what flying vertebrates carry -- which means the ORGAN scale is not where this route fails. It
-fails, if it fails, at the {gap:.0f} Hz frequency gap one scale below.
+For scale, bird flight muscle is commonly 15-25% of body mass. {bird_verdict}
+
+AND THE FIGURE IS A FLOOR, NOT AN ESTIMATE. 54 W/kg is PEAK mass-specific work-loop power of
+isolated muscle at its optimum. Sustained in-vivo output is lower after the activation and
+relaxation duty cycle, transmission losses, and the non-contractile mass inside the muscle
+(mitochondria, connective tissue). Every one of those corrections raises the required fraction,
+so {f_req*100:.0f}% is the most favourable number this chain can produce, not its best guess.
 
 CARRIED FORWARD HONESTLY: the 16 W/kg body figure is itself `derived` in claim 247 and partly
 rests on a search-summary read, and this project holds NO measured zebrafish muscle-mass
@@ -284,9 +309,11 @@ Running the chain protein -> tissue -> organ -> organism without the step the pa
   protein   the superfast transgene is not shown to be mandatory; the case for it narrows to
             {best_f[0]:.0f}-{REQ_FREQ:.0f} Hz, and claim 889's unspecifiable part leaves the
             critical path if a non-superfast myosin suffices
-  tissue    no measured muscle meets both {REQ_POWER:.0f} W/kg and {REQ_FREQ:.0f} Hz; the
-            shortfall is {gap:.0f} Hz of frequency, not a factor on power
-  organ     about {f_req*100:.0f}% of body mass as flight muscle, within what birds carry
+  tissue    no measured muscle meets both {REQ_POWER:.0f} W/kg and {REQ_FREQ:.0f} Hz, and at
+            {REQ_FREQ:.0f} Hz no power has been measured for the one muscle that clears the
+            power bar, so the shortfall there is UNKNOWN rather than zero
+  organ     at least {f_req*100:.0f}% of body mass as flight muscle, ABOVE the 15-25% birds
+            carry, and that is a floor because 54 W/kg is isolated peak power
   organism  the route is not closed by muscle power
 
 WHAT THIS SUPERSEDES IN SUBSTANCE, without superseding the claims: claim 979 reported the muscle
