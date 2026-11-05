@@ -57,7 +57,10 @@ SPEC = [
         ("Is there a gene for superfast fin muscle?", 589),
         ("Can that gene actually be obtained?", 889),
     ]),
-    ("5. WHAT THE DESIGN WOULD BE", [
+    ("5. ROUTE C -- A LATCH-SPRING LAUNCH", [
+        ("Can a spring reach the speed muscle cannot?", 956),
+    ]),
+    ("6. WHAT THE DESIGN WOULD BE", [
         ("The best design this project can specify", 580),
         ("What that design actually achieves", 584),
     ]),
@@ -117,6 +120,12 @@ def main() -> int:
              "locomotory muscle produces NO power above about 12 Hz, and the superfast muscle "
              "that could reach it has never been sequenced in any animal, so the transgene the "
              "route depends on cannot be specified.\n")
+    L.append("- **A latch-spring launch is NOT closed.** It is the only route here not excluded "
+             "by physics. Reaching the required exit speed needs 134% of one muscle "
+             "contraction's work, which a single stroke cannot supply -- but a spring loaded "
+             "over 2 contractions (3 at 50% efficiency, 5 at 30%) can. It is blocked by ANATOMY: "
+             "no spring or latch of that capacity is catalogued in a fish here. That is an open "
+             "question, not a refutation.\n")
     L.append("The sections below give the design anyway, scale by scale, because the parts that "
              "ARE achievable are specified in real genes with real magnitudes, and because a "
              "negative result is only useful if someone can see exactly where it fails.\n")
