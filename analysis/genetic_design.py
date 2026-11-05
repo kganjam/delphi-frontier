@@ -159,12 +159,25 @@ def main() -> int:
     print("  WHAT YOU COULD ORDER TOMORROW")
     for name, _k, _s, _f, rev, _st, sha, _n in buildable:
         print(f"     {name} @ {rev}  (sha256 {sha[:12]})")
+    # GENERATE THE SUMMARY, DO NOT HAND-WRITE IT. The previous version of this paragraph read
+    # "{len(buildable)} of {len(rows)} revisions carry a sequence change. Both are variants of
+    # the SAME gene, kcnk5b -- so the design has ONE orderable locus, not six." The count was
+    # interpolated and correct; the sentence around it was written when `buildable` held TWO
+    # rows, both kcnk5b. It now holds six across five genes, and the prose still said "Both" and
+    # "ONE orderable locus" directly beneath a printed list of six constructs. A generated body
+    # is re-derived every run and cannot drift; a hand-written headline is written once against
+    # the state of the world at that moment and nothing re-checks it, so that is where all the
+    # staleness lands.
+    genes = sorted({name for name, _k, _s, _f, _rev, _st, _sha, _n in buildable})
+    dup = [g for g in genes if sum(1 for b in buildable if b[0] == g) > 1]
+    n_hold = len(rows) - len(buildable)
+    gene_phrase = (f"{len(genes)} distinct gene(s)"
+                   + (f", with {', '.join(dup)} specified more than once" if dup else ""))
     print(f"""
-  AND WHAT THAT MEANS. {len(buildable)} of {len(rows)} revisions carry a sequence change. Both
-  are variants of the SAME gene, kcnk5b -- so the design has ONE orderable locus, not six. The
-  other five revisions name real published alleles and constructs, and a wet lab could obtain
-  several of them by writing to the authors, but this project does not hold what it would take
-  to synthesise them.
+  AND WHAT THAT MEANS. {len(buildable)} of {len(rows)} revisions carry a sequence change this
+  project holds, spanning {gene_phrase}. The other {n_hold} revisions name real published alleles
+  and constructs, and a wet lab could obtain several of them by writing to the authors, but this
+  project does not hold what it would take to synthesise them.
 
   THE HONEST SUMMARY OF THE SET. One lever (kcnk5b) is specified twice over, once at abstract
   level (W169L) and once at full text with a measured effect size and a specificity control
@@ -175,8 +188,10 @@ def main() -> int:
   claims on BOTH counts -- it may not be necessary, and neither it nor its non-superfast
   alternative can currently be specified.
 
-  SO: the genetic change set is REAL but THIN. It is not six edits. It is one locus you could
-  order, four you would have to request or sequence, and one that may not belong in the design.""")
+  SO: the genetic change set is REAL but THIN. It is {len(buildable)} construct(s) across
+  {len(genes)} locus/loci that this project holds a sequence for, and {n_hold} more it would have
+  to request or sequence. Whether every one of them BELONGS in the design is a separate question
+  and the CONTESTED lines above are where it is argued.""")
     return 0
 
 
