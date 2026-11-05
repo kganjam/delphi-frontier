@@ -60,9 +60,19 @@ QUESTION: <one sentence, with the number in it>
 WHY: <one sentence>
 FALSIFIER: <one sentence>
 REACHABLE: <the tool that would settle it, or "NOT REACHABLE: needs <what>">
+SCALE: <the biological scale the question sits at: one of dna, protein, cell, tissue, organ, organism, behaviour, ecology>
 """
 
 FIELDS = ("QUESTION", "WHY", "FALSIFIER", "REACHABLE")
+#: SCALE is requested but NOT required, and that asymmetry is deliberate. Every subproblem this
+#: generator wrote before 2026-11-05 landed with scale_id NULL, because the insert never set one
+#: and the prompt never asked. The "architecture replicates to other projects" goal row counts
+#: scale-placed subproblems, so each frontier run drove that row DOWN and a separate
+#: classify_scale.py pass had to walk it back up -- twice in one session. Asking the generator,
+#: which already holds the question in context, removes the backlog at its source. It stays
+#: optional so a model that omits or invents a scale costs a null (which classify_scale.py then
+#: handles) rather than a dropped proposal.
+SCALE_VOCAB = ("dna", "protein", "cell", "tissue", "organ", "organism", "behaviour", "ecology")
 
 
 def context() -> str:
@@ -126,6 +136,12 @@ def parse(text: str) -> dict | None:
         if not m:
             return None
         out[f] = m[-1].strip()[:600]
+    # SCALE is parsed but its absence is NOT fatal, unlike every field in FIELDS. Adding it to
+    # FIELDS would make a model that omits it lose the whole proposal, which trades a null
+    # scale_id for a dropped question -- the wrong way round. Parsed here instead.
+    m = re.findall(r"SCALE:\s*(.+)", text)
+    if m:
+        out["SCALE"] = m[-1].strip()[:40]
     if not re.search(r"\d", out["QUESTION"]):
         out["_no_number"] = True
     return out
@@ -243,11 +259,16 @@ def main() -> int:
                    f"meets or fails this pre-registered falsifier: {p['FALSIFIER']}")
             # ON CONFLICT DO NOTHING so a collision costs one row, not the whole batch.
             # The surviving rows are still worth having and the run is not cheap.
+            # Validated against the closed vocabulary; anything else becomes NULL rather than
+            # entering a bad value, because a wrong scale is worse than an absent one -- the
+            # absent one is visibly unplaced and gets classified, the wrong one looks done.
+            sc = str(p.get("SCALE", "")).strip().lower().split()[0] if p.get("SCALE") else ""
+            sc = sc if sc in SCALE_VOCAB else None
             got = ac.q(f"""insert into subproblem (project_id, id, question, why_it_matters, acceptance,
-                                             falsifier, status)
+                                             falsifier, status, scale_id)
                      values ({ac.lit(ac.PROJECT)}, {ac.lit(sid)}, {ac.lit(p['QUESTION'])},
                              {ac.lit(p['WHY'])}, {ac.lit(acc)},
-                             {ac.lit(p['FALSIFIER'])}, 'open')
+                             {ac.lit(p['FALSIFIER'])}, 'open', {ac.lit(sc)})
                      on conflict (id) do nothing
                      returning id""")
             print(f"  wrote {sid}" if got else
