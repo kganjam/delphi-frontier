@@ -21,6 +21,7 @@ each entry was worth asking.
 from __future__ import annotations
 
 import os
+import difflib
 import re
 import sys
 
@@ -130,6 +131,54 @@ def parse(text: str) -> dict | None:
     return out
 
 
+#: Pairwise question similarity above which two proposals are treated as the same question.
+#: MEASURED, not guessed (2026-11-05). On a thin project every tenant proposes the obvious
+#: question: all 10 insect-flight pairs and 3 of 10 coral pairs scored above 0.6, while the
+#: zebrafish frontier -- 112 subproblems built from a 474-claim history -- maxes out at 0.29
+#: pairwise. So 0.6 separates "the generator repeated itself" from "these are different
+#: questions", with a must-flag case and a must-not-flag case on real data.
+DUP_RATIO = 0.6
+
+
+def _ratio(a: str, b: str) -> float:
+    return difflib.SequenceMatcher(None, a.lower(), b.lower()).ratio()
+
+
+def existing_questions() -> list[str]:
+    """Questions already on this project's frontier, so a run cannot re-propose one."""
+    rows = ac.q(f"select {ac.flat('question', 400)} from subproblem "
+                f"where project_id = {ac.lit(ac.PROJECT)}")
+    return [r[0] for r in rows if r and r[0]]
+
+
+def dedupe(props: list[dict], prior: list[str]) -> tuple[list[dict], list[tuple]]:
+    """Drop proposals that repeat each other or a question already on the frontier.
+
+    WHY THIS IS NOT OPTIONAL. The frontier generator is the piece that is supposed to make the
+    pipeline replicate to a new project. It does replicate mechanically -- coral and
+    insect-flight both returned five well-formed proposals with reachable falsifiers. But a new
+    project has a thin context (coral: 588 characters of settled findings, against the fish's
+    474 claims), and with little to go on every tenant converges on the same obvious question.
+    Writing those unfiltered would add five versions of one question to a project whose stated
+    problem is already that it is scattered -- the pipeline would be actively making the thing
+    it exists to fix worse.
+    """
+    kept: list[dict] = []
+    dropped: list[tuple] = []
+    for p in props:
+        q = p["QUESTION"]
+        hit = next(((r, "already on the frontier", e)
+                    for e in prior if (r := _ratio(q, e)) >= DUP_RATIO), None)
+        if hit is None:
+            hit = next(((r, "repeats proposal " + k["QUESTION"][:60], k["QUESTION"])
+                        for k in kept if (r := _ratio(q, k["QUESTION"])) >= DUP_RATIO), None)
+        if hit:
+            dropped.append((q, hit[0], hit[1]))
+        else:
+            kept.append(p)
+    return kept, dropped
+
+
 def main() -> int:
     n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 3
     write = "--write" in sys.argv
@@ -166,6 +215,12 @@ def main() -> int:
     print(f"  spent ${spent:.4f}")
     print("  NOT written: a generated question is a suggestion. Review each, then --write."
           if not write else "")
+    prior = existing_questions()
+    good, dropped = dedupe(good, prior)
+    for q, r, why in dropped:
+        print(f"  DROPPED (similarity {r:.2f}, {why[:50]}): {q[:90]}")
+    print(f"  {len(good)} distinct after deduplication against each other and "
+          f"{len(prior)} existing subproblems")
     if write:
         # ALLOCATE FROM WHAT EXISTS, NOT FROM A LITERAL. This read `f"S{900 + j}"` with j the
         # loop index, so every run started at S900 regardless of the table. S900-S908 were
