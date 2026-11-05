@@ -67,6 +67,7 @@ SPEC = [
         ("Can it soar on the wind instead of its own muscle?", 961),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [
+        ("What does the design actually ACHIEVE?", 962),
         ("The best design this project can specify", 580),
         ("What that design actually achieves", 584),
     ]),

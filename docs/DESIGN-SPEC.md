@@ -178,6 +178,11 @@ _ROUTE D IS CLOSED, AND IT FAILS ON THE SAME LIFT SHORTFALL AS ROUTE A RATHER TH
 
 ## 7. WHAT THE DESIGN WOULD BE
 
+**What does the design actually ACHIEVE?**  
+**4.9 cm of extra airborne range the engineered fin buys over a ballistic leap, a 19% increase; 31.0 cm total, 11.9 body lengths, against roughly 1,333 body lengths for a real flying fish**  
+claim 962 `derived` / `full-text`  
+_WHAT THE DESIGN ACHIEVES, STATED AS A POSITIVE RESULT: THE ENGINEERED FIN EXTENDS THE AIRBORNE LEAP BY 4.9 cm, A 19 PERCENT INCREASE, FROM NAMED ALLELES ALONE -- AND THAT IS 112-FOLD SHORT OF A REAL FLYING FISH IN BODY LENGTHS. Four routes have been closed on four different measured quantities, and the project's answer to whether a zebrafish can be made to fly is no. On its own that is not a usefu…_
+
 **The best design this project can specify**  
 **1.41 fold net gain from choosing a 2.6 cm body, after correcting the double-counted fin advantage from 1.54**  
 claim 580 `derived` / `full-text`  
