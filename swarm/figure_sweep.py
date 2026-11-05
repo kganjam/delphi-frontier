@@ -40,6 +40,23 @@ CORPUS = {
     "10.1242/jeb.203.2.333":       (None,          "J Exp Biol 2000 - NOT open access"),
     "10.1016/j.ydbio.2017.07.024": (None,          "Koenig 2017 - NOT open access (actinotrichia)"),
     "10.1101/2024.03.27.587111":   (None,          "bioRxiv preprint - no PMC record"),
+
+    # BIOMECHANICS. Added 2026-11-04 after finding the corpus above was almost entirely
+    # developmental genetics -- fin-SIZE genes -- while the project's blocking magnitudes had
+    # become mechanical: stiffness, power, frequency, elastic storage. The project was asking
+    # mechanical questions of a genetics corpus, which is why so many came back "nobody has
+    # measured this". Two of these answered critical-path questions within an hour of being
+    # found (claims 592, 593), and neither was in the corpus.
+    "10.1002/jmor.20161":          (None,          "Flammang 2013 J Morphol - fin ray EI 565e-6 Nm2, claim 592"),
+    "10.1098/rspb.2001.1731":      ("PMC1088836",  "Young & Rome 2001 - muscle power vs frequency, claim 593"),
+    "10.1098/rsif.2006.0181":      ("PMC2359861",  "Alben 2007 - fin ray force-displacement, >10x active stiffness"),
+    "10.1002/jmor.20830":          (None,          "Aiello 2018 J Morphol - fin ray EI across labrids"),
+    "10.1242/jeb.046052":          (None,          "Park & Choi 2010 - flying fish gliding, measured L/D and ground effect"),
+    "10.1242/jeb.201.10.1505":     (None,          "Wakeling 1998 - fast-start muscle power 142.7 W/kg"),
+    "10.1242/jeb.205.2.189":       (None,          "Syme & Shadwick 2002 - tuna red muscle power vs cycle frequency"),
+    "10.1146/annurev.physiol.68.040104.105418": (None, "Rome 2006 review - superfast muscle design"),
+    "10.1242/jeb.200.11.1549":     (None,          "Walker & Westneat 1997 - labriform flapping kinematics"),
+    "10.1242/jeb.205.2.177":       (None,          "Walker & Westneat 2002 - flapping vs rowing performance"),
 }
 
 FIGCAP = re.compile(r'(?:Fig(?:ure)?\.?\s*\d+[A-Za-z]?\.?\s+)([^<]{20,200})')
