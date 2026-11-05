@@ -333,6 +333,38 @@ def import_routes(project: str, d: str, write: bool) -> int:
 # cargo-work that outcome is REFUTED and the headline says so -- "contradicting our predeclared
 # expectation". That gets its own claim, because a registered prediction that failed is worth
 # more than the result it was attached to and must not be buried inside a headline.
+# A 'sourced' PARAMETER IS NOT NECESSARILY FROM THE LITERATURE. Measured 2026-11-04, and found
+# by this project's own adversarial arm rather than by review: 12 xenobot parameters imported as
+# evidence='literature' name `voxcraft-sim demos/basic/base.vxa` as their source -- a simulator
+# DEMO CONFIG FILE. The challenge put it exactly right: "a default value in a simulator demo file
+# is an arbitrary configuration choice, not a literature-reported or empirically grounded
+# material property". The studies' own `status: sourced` means "taken from somewhere", and the
+# importer read it as "taken from a paper".
+#
+# So the status alone does not determine the evidence type; the SOURCE TEXT has to be looked at.
+# A source naming a config file, a demo or a repository default is 'assumed'. This is checked
+# rather than assumed in the other direction too: 39 of the 52 xenobot literature claims DO cite
+# a PMID, DOI or author, and those are untouched.
+CONFIG_MARKERS = (".vxa", ".yaml", ".yml", ".json", ".cfg", ".ini", "demos/", "demo file",
+                  "default value", "config")
+CITATION_MARKERS = ("pmid", "doi", "et al", "handbook")
+
+
+def refine_evidence(ev: str, source_text: str) -> tuple[str, str]:
+    """Downgrade a 'literature' typing whose source is a configuration file, not a paper."""
+    if ev != "literature" or not source_text:
+        return ev, ""
+    low = source_text.lower()
+    if any(m in low for m in CITATION_MARKERS):
+        return ev, ""
+    if any(m in low for m in CONFIG_MARKERS):
+        return "assumed", (" NOTE: declared status was 'sourced', but the stated source is a "
+                           "configuration or demo file rather than a publication, so this is "
+                           "recorded as ASSUMED. A simulator default is an arbitrary "
+                           "configuration choice, not an empirically grounded property.")
+    return ev, ""
+
+
 def import_studies_v3(project: str, d: str, write: bool) -> int:
     files = []
     for f in sorted(glob.glob(os.path.join(d, "*.json"))):
@@ -415,11 +447,12 @@ def import_studies_v3(project: str, d: str, write: bool) -> int:
             made["simulated"] += 1
         for prm in params:
             ev = V2_STATUS[prm.get("status")]
+            ev, _note = refine_evidence(ev, str(prm.get("source") or ""))
             val = prm.get("value")
             vnum = val if isinstance(val, (int, float)) and not isinstance(val, bool) else None
             st = (f"MODEL PARAMETER of study {s.get('id')!r}: {prm.get('name')} = "
                   f"{prm.get('value')} {prm.get('units') or ''}. Declared status "
-                  f"{prm.get('status')!r} -> evidence={ev!r}. "
+                  f"{prm.get('status')!r} -> evidence={ev!r}.{_note} "
                   f"SOURCE AS STATED: {prm.get('source') or 'none given'}")
             q(f"""insert into claim (project_id, statement, evidence, value_num, units,
                                      source, run_id)
