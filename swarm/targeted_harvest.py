@@ -208,6 +208,72 @@ def ask(path: pathlib.Path, question: str, qnum: int, tenant: str) -> tuple[list
     return kept, bad
 
 
+def run_abstracts_all(questions, queries, per, write) -> int:
+    """Fetch by question, then ask each abstract EVERY question in one call.
+
+    WHY. The per-pair version asks one abstract one question, so a search that returns 25
+    abstracts spends 25 calls to test 25 hypotheses -- and an abstract fetched for the fin-ray
+    question is thrown away even when it states a body mass that another open constraint needs.
+    Measured on the first run: 2 verified values from about 175 abstract-question pairs.
+
+    The questions all fit in one prompt beside an abstract, which is a few hundred words, so the
+    call costs essentially the same and tests twenty hypotheses instead of one. The search is
+    still per-question -- that is what puts a relevant paper in front of the model at all -- only
+    the asking is pooled.
+    """
+    qblock = "\n".join(f"{i}. {q}" for i, q in enumerate(questions, 1))
+    kept_all, bad_all, asked, seen = [], [], 0, set()
+    for i, question in enumerate(questions, 1):
+        qstr = queries.get(i)
+        if not qstr:
+            continue
+        recs = epmc_search(qstr, n=per)
+        fresh = [r for r in recs if (r["src"], r["id"]) not in seen]
+        for r in fresh:
+            seen.add((r["src"], r["id"]))
+        print(f"  Q{i:<2} {question[:46]:<46} {len(recs):>3} found, {len(fresh):>3} new")
+        for rec in fresh:
+            label = f"{rec['src']}{rec['id']}"
+            blob = f"{rec['title']}\n\n{rec['abstract']}"
+            k, b = ask_text(blob, label, qblock, i, TENANTS[asked % len(TENANTS)])
+            asked += 1
+            for it in k:
+                it["read_level"] = "abstract"
+                it["journal"], it["year"], it["doi"] = rec["journal"], rec["year"], rec["doi"]
+                print(f"      {label:<13} Q{str(it.get('question'))[:2]:<3} "
+                      f"{str(it.get('value'))[:22]:<22} {str(it.get('units'))[:13]:<13} "
+                      f"{str(it.get('provenance'))[:13]:<13} {rec['journal'][:22]}")
+            kept_all += k
+            bad_all += b
+        time.sleep(PAUSE_S)
+
+    print("\n" + "-" * 78)
+    print(f"  {asked} abstract(s) asked, each against all {len(questions)} questions")
+    print(f"  {len(kept_all)} value(s) with a quote VERIFIED; {len(bad_all)} DISCARDED")
+    if kept_all or bad_all:
+        print(f"  paraphrase/fabrication rate: "
+              f"{100.0 * len(bad_all) / (len(kept_all) + len(bad_all)):.1f}%")
+    prov: dict[str, int] = {}
+    for it in kept_all:
+        prov[str(it.get("provenance", "unstated"))] = prov.get(str(it.get("provenance", "unstated")), 0) + 1
+    print(f"  provenance: {prov}")
+    print("-" * 78)
+    if write:
+        OUT.mkdir(parents=True, exist_ok=True)
+        dest = OUT / "abstracts.json"
+        prev = {"verified": [], "discarded": []}
+        if dest.exists():
+            try:
+                prev = json.loads(dest.read_text())
+            except Exception:                                     # noqa: BLE001
+                pass
+        prev["verified"] += kept_all
+        prev["discarded"] += bad_all
+        dest.write_text(json.dumps(prev, indent=1))
+        print(f"\n  wrote {dest} ({len(prev['verified'])} verified in all)")
+    return 0
+
+
 def run_abstracts(questions, queries, per, write) -> int:
     """The abstract route: Europe PMC covers journals PMC's OA subset does not.
 
@@ -299,7 +365,9 @@ def main() -> int:
 
     abstracts_mode = "--abstracts" in sys.argv
     if abstracts_mode:
-        return run_abstracts(questions, queries, per, write)
+        if "--one-question-each" in sys.argv:
+            return run_abstracts(questions, queries, per, write)
+        return run_abstracts_all(questions, queries, per, write)
 
     store = ff.OUT
     store.mkdir(parents=True, exist_ok=True)
