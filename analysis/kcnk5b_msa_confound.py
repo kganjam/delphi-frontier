@@ -110,5 +110,56 @@ def main() -> int:
     return 0
 
 
+
+
+def autocorrelation_control() -> int:
+    """The splits are NOT independent, so a naive rho over 31 of them is not evidence.
+
+    An adversarial challenge on claim 1039 made three points and all three are right:
+      1. the 31 split points overlap almost completely -- a split at 100 and one at 110 share
+         98% of their data -- so the effective sample size is far below 31 and a correlation
+         computed over them cannot be read as if the points were independent;
+      2. the causal story ("the profile is largely a measure of homology availability") needs a
+         control that breaks the alignment between the two curves while keeping their shape;
+      3. "the two predictions disagree outright" overstates what rho = -0.29 supports; "show no
+         agreement" is what the data say.
+
+    THE RIGHT NULL IS A CIRCULAR SHIFT, NOT A SHUFFLE. Shuffling the depth profile destroys its
+    spatial autocorrelation, which is the very thing that makes the naive correlation look
+    impressive -- a shuffled null is too easy to beat and would confirm the result spuriously.
+    A circular shift preserves the autocorrelation exactly and destroys only the registration
+    between depth and contact, which is the thing under test.
+    """
+    cov = depth_profile(D / "kcnk5b_pdb70.a3m")
+    prof = {}
+    for name in FILES:
+        ats = ca_atoms(D / name)
+        check_protein_like(ats, name)
+        prof[name] = [contact_fraction(ats, s) for s in SPLITS]
+    depth = [sum(cov[s:]) / len(cov[s:]) for s in SPLITS]
+
+    print("\n  AUTOCORRELATION CONTROL -- circular shift of the depth profile")
+    print(f"  the {len(SPLITS)} splits share most of their residues, so they are not "
+          f"{len(SPLITS)} independent observations")
+    n = len(cov)
+    for name in FILES:
+        real = spearman(prof[name], depth)
+        null = []
+        for shift in range(20, n - 20, 7):            # every circular shift, coarsely sampled
+            rolled = cov[shift:] + cov[:shift]
+            d2 = [sum(rolled[s:]) / len(rolled[s:]) for s in SPLITS]
+            null.append(spearman(prof[name], d2))
+        bigger = sum(1 for x in null if abs(x) >= abs(real))
+        print(f"    {name:24} real rho {real:+.3f}   "
+              f"|null| >= |real| in {bigger:>3} of {len(null)} shifts  "
+              f"(p ~ {bigger/len(null):.3f})")
+    print("    A circular shift keeps the depth curve's shape and destroys only its")
+    print("    registration with the contact curve, so beating it is evidence the ALIGNMENT")
+    print("    matters rather than the shape. A plain shuffle would destroy the shape too and")
+    print("    would be far too easy to beat.")
+    return 0
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
+    raise SystemExit(autocorrelation_control())
