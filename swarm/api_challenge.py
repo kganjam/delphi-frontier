@@ -213,6 +213,8 @@ def main() -> int:
     print(f"  {len(rows)} claim(s); tenants {TENANTS} (api_allen EXCLUDED)"
           + (f"; PANEL mode, every claim to {PANEL}" if panel else "") + "\n")
     spent = 0.0
+    refused_n = 0
+    panel_sizes: dict[int, int] = {}
     tally: dict[str, int] = {}
     for i, (cid, ev, stmt) in enumerate(rows):
         t = TENANTS[i % len(TENANTS)]
@@ -223,7 +225,32 @@ def main() -> int:
             verdicts = []
             for mdl, rr in panel_call(t, prompt):
                 if rr.get("_refused"):
-                    print(f"  claim {cid:>4} {mdl:18} REFUSED")
+                    # A REFUSAL IS DATA AND MUST LEAVE A ROW. Printing it and moving on is how
+                    # the panel came to misreport itself: measured 2026-11-04 over 370 claims
+                    # carrying api-panel rows, 61 had a verdict from only ONE model, and the
+                    # lone voice was claude-sonnet-5-5 in 104 of 104 rows -- opus never once.
+                    # Because both cases are labelled `api-panel:`, nothing downstream could
+                    # tell a two-model panel from a one-model one. The consequence is not
+                    # cosmetic: sonnet alone weakened 98 of 104 (94%) and passed 4 (3.8%),
+                    # while a true panel weakened 479 of 640 (75%) and passed 157 (24.5%). So a
+                    # claim that trips the refusal classifier is about SIX TIMES less likely to
+                    # survive -- which is precisely the "topic selects reviewer selects verdict"
+                    # confound this panel was built to remove, still running at the refusal rate.
+                    # A separate challenger prefix keeps `like 'api-panel:%'` queries unchanged
+                    # while making the gap countable.
+                    refused_n += 1
+                    print(f"  claim {cid:>4} {mdl:18} REFUSED   -> recorded as not-run")
+                    if write:
+                        q(f"""insert into challenge (claim_id, challenger, attack, outcome, evidence)
+                              values ({int(cid)},
+                                      {lit('api-panel-refused:' + mdl + '@' + t)},
+                                      {lit('(no attack: the model refused the prompt)')},
+                                      {lit('not-run')},
+                                      {lit('REFUSAL, not a judgement. The model declined this '
+                                           'prompt, so this claim was reviewed by the rest of '
+                                           'the panel only. Counting it as unreviewed would be '
+                                           'wrong; counting the panel as complete would be '
+                                           'worse.')})""")
                     continue
                 a2, o2, w2 = parse(rr.get("text", ""))
                 spent += float(rr.get("cost_usd") or 0)
@@ -234,8 +261,12 @@ def main() -> int:
                     q(f"""insert into challenge (claim_id, challenger, attack, outcome, evidence)
                           values ({int(cid)}, {lit('api-panel:' + mdl + '@' + t)}, {lit(a2)},
                                   {lit(o2)}, {lit(w2)})""")
+            panel_sizes[len(verdicts)] = panel_sizes.get(len(verdicts), 0) + 1
             if len(verdicts) == 2 and verdicts[0][1] != verdicts[1][1]:
                 print(f"       -> PANEL SPLIT: {verdicts[0][1]} vs {verdicts[1][1]}")
+            if len(verdicts) < 2:
+                print(f"       -> DEGRADED PANEL: {len(verdicts)} of {len(PANEL)} models "
+                      f"answered; this verdict is one model's opinion, not a panel's")
             continue
         try:
             r = call_with_fallback(t, prompt)
@@ -263,6 +294,14 @@ def main() -> int:
             q(f"""insert into challenge (claim_id, challenger, attack, outcome, evidence)
                   values ({int(cid)}, {lit(who)}, {lit(att)}, {lit(out)}, {lit(why)})""")
     print(f"\n  outcomes: {tally}")
+    if panel_sizes or refused_n:
+        full = panel_sizes.get(len(PANEL), 0)
+        part = sum(v for k, v in panel_sizes.items() if k < len(PANEL))
+        print(f"  panel completeness: {full} claim(s) judged by all {len(PANEL)} models, "
+              f"{part} by fewer ({refused_n} refusal(s) recorded as not-run)")
+        if part:
+            print("  A DEGRADED PANEL IS NOT A PANEL. Those verdicts are one model's opinion "
+                  "and are labelled api-panel-refused: so they stay countable.")
     print(f"  spent ${spent:.4f} of Console API credit"
           + ("" if write else "  (report only; pass --write to record)"))
     if tally and len(tally) == 1 and "survived" not in tally:
