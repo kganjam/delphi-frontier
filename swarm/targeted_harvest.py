@@ -126,7 +126,7 @@ def ask_text(text: str, label: str, question: str, qnum: int, tenant: str) -> tu
     kept, bad = [], []
     prompt = ev.PROMPT.format(questions=f"1. {question}", excerpt=text)
     try:
-        r = call(tenant, prompt, max_tokens=2000, model=ev.MODEL)
+        r = call(tenant, prompt, max_tokens=8000, model=ev.MODEL)
     except Exception:                                             # noqa: BLE001
         return kept, bad
     body = r.get("text") if isinstance(r, dict) else str(r)
@@ -300,10 +300,20 @@ def ask(path: pathlib.Path, question: str, qnum: int, tenant: str) -> tuple[list
     for chunk in [text[i:i + ev.CHUNK] for i in range(0, len(text), ev.CHUNK)]:
         prompt = ev.PROMPT.format(questions=f"1. {question}", excerpt=chunk)
         try:
-            r = call(tenant, prompt, max_tokens=2000, model=ev.MODEL)
+            # 8000, not 2000. MEASURED 2026-11-05: on a chunk containing a table, a 2000-token
+            # reply stops with stop_reason `max_tokens` part-way through the JSON, the parse
+            # fails, and the call returns ZERO values and ZERO discards -- indistinguishable
+            # from "this excerpt has nothing in it". The identical chunk at 8000 returns 28
+            # values and stops with `end_turn`. Every table sweep before this reported 0.
+            r = call(tenant, prompt, max_tokens=8000, model=ev.MODEL)
         except Exception:                                         # noqa: BLE001
             continue
         body = r.get("text") if isinstance(r, dict) else str(r)
+        if isinstance(r, dict) and r.get("stop_reason") == "max_tokens":
+            # Say so rather than returning a quiet zero. A truncated reply is a LOST
+            # measurement, not an absent one, and the two look the same downstream.
+            print(f"      TRUNCATED reply on {path.stem} (stop_reason=max_tokens); "
+                  f"values in this chunk are lost, not absent")
         data = ev.extract_json(body or "")
         for item in (data or {}).get("values", []) or []:
             q = ev.norm(str(item.get("quote", "")))
