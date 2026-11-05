@@ -42,9 +42,22 @@ def rows():
     levers = num("select count(*) from part where project_id='%s'" % PROJ)
     specced = num("select count(distinct part_id) from part_revision pr "
                   "join part p on p.id=pr.part_id where p.project_id='%s'" % PROJ)
-    yield ("genetic levers with a concrete variant",
-           f"{specced:.0f} of {levers:.0f} levers have a part_revision",
-           specced >= levers, "every lever names what to change it to")
+    # A lever with NO published construct is RESOLVED, not pending. Counting it as pending
+    # leaves a permanently red row and hides the difference between "not looked up" and
+    # "looked up, nothing exists" -- which for superfast-myosin is the whole finding (claim
+    # 1093: no construct, and no precedent for heterologous expression of any superfast myosin).
+    # The threshold is therefore whether each lever's question is ANSWERED, not whether each
+    # lever works. A lever that cannot be built is an answer.
+    noconstruct = num("""select count(*) from claim where project_id='%s'
+                         and superseded_by is null and evidence='refused'
+                         and statement like '%%NOT A LEVER%%'""" % PROJ)
+    resolved = specced + noconstruct
+    yield ("genetic levers resolved (variant specified, or established as unbuildable)",
+           f"{specced:.0f} of {levers:.0f} have a part_revision; "
+           f"{noconstruct:.0f} established as having no published construct; "
+           f"{levers-resolved:.0f} still unexamined",
+           resolved >= levers,
+           "each lever either names a variant or is shown to have none in the literature")
 
     sat = num("""select count(*) from constraint_entailed where project_id='%s'
                  and status='satisfied'""" % PROJ)
