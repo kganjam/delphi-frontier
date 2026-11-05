@@ -50,7 +50,14 @@ def main():
     print("=" * 78)
     print(f"\n  grid search gave: 12.5, 10.4, 12.5, 8.3, 10.4 m/s (non-monotonic)")
     print(f"  wing loading falls monotonically, so that ordering was noise\n")
-    print(f"  {'fin x':>7} {'loading':>12} {'min wind found':>16} {'hits at that wind':>18}")
+    # THE MULTIPLIER COMPOUNDS ON TOP OF THE GENETICS, which is easy to misread and was
+    # misread once (superseded claim 985). closed_loop.S already contains the 2.65x ACHIEVED
+    # fin-area ratio (claims 529, 542), so row "1.0x" is the best animal the published alleles
+    # produce, NOT wild type. Row 4.0x is a 10.6x wild-type fin, which nothing delivers --
+    # claim 984 measured that stacking a second overgrowth allele adds nothing. Read the
+    # second column, not the first, before quoting a wind speed as reachable.
+    print(f"  {'fin x':>7} {'vs WILD TYPE':>13} {'loading':>12} "
+          f"{'min wind found':>16} {'hits at that wind':>18}")
     print("  " + "-" * 60)
     rows = []
     for mult in (1.0, 1.5, 2.0, 3.0, 4.0):
@@ -66,10 +73,12 @@ def main():
         if found:
             w = cl.wind(1.0, found[0])
             rows.append((mult, wl, w))
-            print(f"  {mult:>6.1f}x {wl:>10.2f} N/m2 {w:>14.1f} m/s {found[1]:>13} of 400")
+            print(f"  {mult:>6.1f}x {mult*2.65:>12.1f}x {wl:>10.2f} N/m2 "
+                  f"{w:>14.1f} m/s {found[1]:>13} of 400")
         else:
             rows.append((mult, wl, None))
-            print(f"  {mult:>6.1f}x {wl:>10.2f} N/m2 {'none to 15.6':>16} {'0':>18}")
+            print(f"  {mult:>6.1f}x {mult*2.65:>12.1f}x {wl:>10.2f} N/m2 "
+                  f"{'none to 15.6':>16} {'0':>18}")
     cl.S = base_S
 
     print("\n" + "-" * 78)
