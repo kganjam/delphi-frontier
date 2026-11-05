@@ -58,10 +58,24 @@ def rows():
     # nothing can build does not contribute one. Reported as two independent rows so neither
     # number hides behind the other -- the hard bar stays hard, and the research question that
     # WAS answered still gets its credit.
+    # THE ROW MEASURED THE WRONG THING AND PASSED ITSELF (corrected 2026-11-05, claim 1134).
+    # It counted levers having a part_revision and called that "a buildable variant", while its
+    # own stated meaning below is "every lever names a variant that could actually be MADE".
+    # Those differ: a revision may name a published allele whose molecular lesion nobody holds.
+    # Measured, 2 of 7 revisions carry a content_sha256 -- an actual sequence change this project
+    # holds -- and BOTH are variants of kcnk5b, so the six-lever design has ONE orderable locus.
+    # The previous comment on this row says "the hard bar stays hard"; it was not hard, because
+    # the quantity it tested was existence of a row. Counting the thing the row claims to count
+    # flips it from OK to open and takes the project from 8 of 10 to 7 of 10, which is the
+    # correct direction for a correction that nobody else would have made.
+    buildable = num("""select count(distinct pr.part_id) from part_revision pr
+                       join part p on p.id = pr.part_id
+                       where p.project_id='%s' and pr.content_sha256 is not null""" % PROJ)
     yield ("genetic levers with a buildable variant  [the hard bar]",
-           f"{specced:.0f} of {levers:.0f} levers have a part_revision; "
-           f"{levers-specced:.0f} cannot be built from anything published",
-           specced >= levers,
+           f"{buildable:.0f} of {levers:.0f} levers carry a SEQUENCE CHANGE this project holds "
+           f"(non-null content_sha256); {specced:.0f} have a part_revision of any kind, but a "
+           f"revision naming a published allele whose lesion is not held cannot be made",
+           buildable >= levers,
            "every lever names a variant that could actually be made")
     yield ("genetic levers RESEARCHED to a conclusion",
            f"{resolved:.0f} of {levers:.0f} answered "
