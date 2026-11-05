@@ -82,9 +82,9 @@ claim 601 `literature` / `full-text`
 _CORRECTION TO CLAIM 595: 1.75 x 1.17 MULTIPLIED TWO FACTORS THAT BELONG TO DIFFERENT STROKE PATTERNS. THE MEASURED BEST IS CL 1.83, AND THE REQUIREMENT IS 83 Hz, NOT 78. Claim 595 formed its best-case coefficient by multiplying Usherwood & Ellington's peak CL_max 1.75 by Lehmann's peak clap-and-fling augmentation of 17%. A peer session read Lehmann & Pick 2007 (J Exp Biol 210:1362-77, PMID 1740111…_
 
 **What does the power budget come to?**  
-**52 W/kg total flapping power with no elastic recovery, against 35-71 available; claim 587 asserted it exceeded the floor**  
-claim 588 `derived` / `full-text`  
-_CLAIM 587 CLOSED THE FLAPPING ROUTE ON AN ASSERTION, AND COMPUTING IT REOPENS THE ROUTE. Claim 587 found that superfast myosin buys the 53 Hz the flapping route needs at the cost of five sixths of the force, leaving 35 to 71 W/kg of muscle power against a 33 W/kg induced requirement, and then stated that "adding profile and inertial power pushes the requirement above the 35 W/kg floor". THAT WAS A…_
+**3.7 factor by which measured superfast muscle power falls short of the flapping requirement**  
+claim 998 `derived`  
+_[CORRECTS CLAIM 588] Claim 588's REQUIREMENT arithmetic stands and its VERDICT does not. It concluded the flapping route "CLOSES at the optimistic end ... MARGINAL, not refuted" by setting a computed requirement of 35-52 W/kg against 35-71 W/kg "available" from superfast muscle. That availability figure is DERIVED, not measured, and the measurement contradicts it by 4-8x. With measured power the r…_
 
 **Does elastic storage recover the inertial cost?**  
 **50.2 ratio of fin first-bending-mode frequency to the 53 Hz beat frequency; >5 means quasi-static, so no elastic recovery of the inertial term**  
