@@ -36,6 +36,14 @@ import sys
 #: Never spend these, whatever the arithmetic says. Owner instruction, not a tunable.
 EXCLUDED = ("api_allen", "ent_allen", "allen_api", "max_allen")
 MAX_ARMS = 6
+#: Top up whenever fewer than this many arms are alive, WHATEVER the measured rate says.
+#: The arms==0 special case was not enough: with ONE arm left, the observed rate still reflects
+#: the three or four that were running during the sample window, so the supervisor reports "on
+#: track" while the fleet is collapsing. Measured 2026-11-05 -- arms fell 4 -> 1 while
+#: api_outlook2 went $151 -> $144, and the next cycle would have taken no action. Zero was an
+#: arbitrary floor; the real rule is that a DECLINING arm count predicts the future and a
+#: trailing average does not.
+MIN_ARMS = 3
 ARM = ["python3", "-u", "swarm/api_challenge.py", "60", "--repanel", "--write"]
 STATE = pathlib.Path(os.environ.get("MS_CREDIT_STATE",
                                     "/tmp/claude-1000/ms-credit-supervisor.json"))
@@ -129,9 +137,11 @@ def main() -> int:
     # supervisor that waits for the average to fall always acts one interval too late, and on a
     # 15-minute cycle near an expiry that is real money. With nothing running, past burn
     # predicts nothing.
-    if arms == 0 and amount > 0:
-        want = min(MAX_ARMS, 3)
-        print(f"  NOTHING RUNNING -- launching {want} arm(s) on {binding} regardless of the "
+    if arms < MIN_ARMS and amount > 0:
+        want = min(MAX_ARMS - arms, MIN_ARMS - arms)
+        why = ("NOTHING RUNNING" if arms == 0 else
+               f"ONLY {arms} ARM(S) LEFT, below the floor of {MIN_ARMS}")
+        print(f"  {why} -- launching {want} arm(s) on {binding} regardless of the "
               f"observed rate, which was earned by arms that have since exited")
         for _ in range(want):
             subprocess.Popen(ARM + ["--tenant", binding],
