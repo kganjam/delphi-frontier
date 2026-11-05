@@ -73,6 +73,30 @@ def call(tenant: str, prompt: str, max_tokens: int = 1200, model: str | None = N
     return json.loads(r.stdout[i:])
 
 
+def call_first_live(tenants, prompt: str, max_tokens: int = 1200, model: str | None = None):
+    """Call the first tenant that is not out of credit.
+
+    `call_with_fallback` falls back to a different MODEL on a refusal; it cannot help when the
+    TENANT itself is spent. Measured 2026-11-05: api_outlook2 reached its reserve floor
+    ("promo credit at reserve (4.85 USD left)") after being drawn down from 200 USD, and every
+    module that takes TENANTS[0] -- which is that tenant -- failed hard instead of moving on.
+    Two cycle stages reported RAN-FAILED for a reason that had nothing to do with their work.
+
+    Raises only if EVERY tenant fails, and reports what each one said, because "all four are out"
+    and "the prompt is malformed" produce the same exception from a single-tenant call.
+    """
+    errs = []
+    for t in tenants:
+        try:
+            kw = {"max_tokens": max_tokens}
+            if model:
+                kw["model"] = model
+            return call(t, prompt, **kw)
+        except Exception as e:                                    # noqa: BLE001
+            errs.append(f"{t}: {str(e)[:90]}")
+    raise RuntimeError("every tenant failed -- " + " | ".join(errs))
+
+
 def call_with_fallback(tenant: str, prompt: str, max_tokens: int = 1200) -> dict:
     """Try the default model; on a refusal, retry on FALLBACK.
 

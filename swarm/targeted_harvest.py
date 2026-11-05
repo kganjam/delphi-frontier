@@ -225,7 +225,8 @@ def read_questions(path: pathlib.Path) -> list[str]:
 
 def write_queries(questions: list[str]) -> dict[int, str]:
     items = "\n".join(f"{i}. {q}" for i, q in enumerate(questions, 1))
-    r = call(TENANTS[0], QUERY_PROMPT.format(items=items), max_tokens=3000, model=MODEL)
+    from api_challenge import call_first_live
+    r = call_first_live(TENANTS, QUERY_PROMPT.format(items=items), max_tokens=3000, model=MODEL)
     body = r.get("text") if isinstance(r, dict) else str(r)
     data = ev.extract_json(body or "")
     if not data or "queries" not in data:

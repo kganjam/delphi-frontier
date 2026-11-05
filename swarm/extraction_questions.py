@@ -238,7 +238,9 @@ def generalise(items: list[tuple[str, str, int]], tenant_list, call_fn, model: s
     it could not remove a derived quantity that happens to carry W/kg.
     """
     numbered = "\n".join(f"{i}. {q} [units: {u or 'unstated'}]" for i, (q, u, _) in enumerate(items, 1))
-    r = call_fn(tenant_list[0], GENERALISE.format(items=numbered), max_tokens=4000, model=model)
+    from api_challenge import call_first_live
+    r = call_first_live(tenant_list, GENERALISE.format(items=numbered), max_tokens=4000,
+                        model=model)
     body = r.get("text") if isinstance(r, dict) else str(r)
     import json as _json
     import re as _re
