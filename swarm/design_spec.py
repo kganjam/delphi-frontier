@@ -58,7 +58,7 @@ SPEC = [
         ("Can that gene actually be obtained?", 889),
     ]),
     ("5. ROUTE C -- A LATCH-SPRING LAUNCH", [
-        ("Can a spring reach the speed muscle cannot?", 956),
+        ("Can a spring reach the speed muscle cannot?", 957),
     ]),
     ("6. WHAT THE DESIGN WOULD BE", [
         ("The best design this project can specify", 580),
@@ -120,12 +120,14 @@ def main() -> int:
              "locomotory muscle produces NO power above about 12 Hz, and the superfast muscle "
              "that could reach it has never been sequenced in any animal, so the transgene the "
              "route depends on cannot be specified.\n")
-    L.append("- **A latch-spring launch is NOT closed.** It is the only route here not excluded "
-             "by physics. Reaching the required exit speed needs 134% of one muscle "
-             "contraction's work, which a single stroke cannot supply -- but a spring loaded "
-             "over 2 contractions (3 at 50% efficiency, 5 at 30%) can. It is blocked by ANATOMY: "
-             "no spring or latch of that capacity is catalogued in a fish here. That is an open "
-             "question, not a refutation.\n")
+    L.append("- **A latch-spring launch is OPEN.** It is the only route not excluded, and the "
+             "anatomical objection has been removed: seahorses and pipefish are a characterised "
+             "LaMSA system whose springs are the epaxial and sternohyoideus TENDONS, which "
+             "zebrafish also have, and pipefish pre-load for over 300 ms before a sub-10 ms "
+             "release. Reaching the required exit speed still needs 134% of one contraction's "
+             "work, so it turns on ONE unmeasured quantity: whether a teleost tendon spring can "
+             "be charged across 2 to 5 successive contractions while a latch holds. No source "
+             "reports that either way.\n")
     L.append("The sections below give the design anyway, scale by scale, because the parts that "
              "ARE achievable are specified in real genes with real magnitudes, and because a "
              "negative result is only useful if someone can see exactly where it fails.\n")
