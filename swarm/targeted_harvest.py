@@ -134,6 +134,51 @@ def ask_text(text: str, label: str, question: str, qnum: int, tenant: str) -> tu
     return kept, bad
 
 
+def ask_confirmed(text: str, label: str, question: str, qnum: int,
+                  t1: str, t2: str) -> tuple[list, list]:
+    """Ask twice on two tenants and reconcile, because the provenance label is prompt-sensitive.
+
+    MEASURED 2026-11-05: the same abstract (MED23720195) came back `modelled-here` under a
+    one-question prompt and `measured-here` under the pooled prompt. Five repeats of each
+    configuration were internally stable (5/5), so the label is not call-to-call noise -- it
+    moves with what else the model was asked. The earlier label was also the wrong one.
+
+    A field the record depends on cannot rest on one call. `api_evaluate_constraints.py` already
+    refuses a `satisfied` verdict a second run does not reproduce; this is the same gate for the
+    same reason. A value whose provenance does not repeat is recorded as `unclear` rather than as
+    whichever label the first call happened to produce, and one that appears in only one of the
+    two runs is kept with its provenance demoted and the disagreement written into the item.
+
+    The value itself is NOT silently reconciled: two runs reporting different numbers for the
+    same quantity is a disagreement about fact, and both are dropped with a note, because
+    choosing between them here would be choosing which paper says what.
+    """
+    k1, b1 = ask_text(text, label, question, qnum, t1)
+    k2, _b2 = ask_text(text, label, question, qnum, t2)
+    second = {}
+    for it in k2:
+        second.setdefault((str(it.get("value")).strip(), str(it.get("units")).strip()), []).append(it)
+    out = []
+    for it in k1:
+        key = (str(it.get("value")).strip(), str(it.get("units")).strip())
+        twin = second.get(key)
+        if not twin:
+            it["provenance_confirmed"] = False
+            it["provenance_note"] = "not reproduced by a second run; provenance demoted"
+            it["provenance_first"] = it.get("provenance")
+            it["provenance"] = "unclear"
+        elif str(twin[0].get("provenance")) != str(it.get("provenance")):
+            it["provenance_confirmed"] = False
+            it["provenance_note"] = (f"two runs disagreed: {it.get('provenance')} vs "
+                                     f"{twin[0].get('provenance')}; recorded as unclear")
+            it["provenance_first"] = it.get("provenance")
+            it["provenance"] = "unclear"
+        else:
+            it["provenance_confirmed"] = True
+        out.append(it)
+    return out, b1
+
+
 def read_questions(path: pathlib.Path) -> list[str]:
     """One question per numbered block; the indented 'Report the species' line belongs to it."""
     out, cur = [], []
@@ -235,7 +280,9 @@ def run_abstracts_all(questions, queries, per, write) -> int:
         for rec in fresh:
             label = f"{rec['src']}{rec['id']}"
             blob = f"{rec['title']}\n\n{rec['abstract']}"
-            k, b = ask_text(blob, label, qblock, i, TENANTS[asked % len(TENANTS)])
+            t1 = TENANTS[asked % len(TENANTS)]
+            t2 = TENANTS[(asked + 1) % len(TENANTS)]
+            k, b = ask_confirmed(blob, label, qblock, i, t1, t2)
             asked += 1
             for it in k:
                 it["read_level"] = "abstract"
