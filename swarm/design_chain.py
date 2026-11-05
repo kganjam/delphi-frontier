@@ -87,6 +87,8 @@ CHAIN = [
      "Does elastic storage recover the inertial cost?", 592),
     ("GENE / myosin",
      "Is there a gene for superfast fin muscle?", 589),
+    ("GENE / myosin",
+     "Can that gene actually be obtained?", 889),
     ("GENE / collagen",
      "Is fin SHAPE genetically addressable?", 590),
     ("SYNTHESIS",

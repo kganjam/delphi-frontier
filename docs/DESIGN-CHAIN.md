@@ -182,6 +182,11 @@ _Elastic strain-energy storage does NOT recover the inertial term of the flappin
 claim 589 `literature` / `listing`  
 _ZEBRAFISH CARRIES NO ANNOTATED SUPERFAST MYOSIN, SO THE LIVE ROUTE NEEDS A HETEROLOGOUS TRANSGENE RATHER THAN A ZEBRAFISH ALLELE. Claim 588 establishe…_
 
+**Can that gene actually be obtained?**  
+**0 superfast/sonic muscle myosin heavy chain sequences identified as such in NCBI protein, across toadfish, midshipman, weakfish and rattlesnake; the 3 sonic-fish myosins that exist are partial CARDIAC MyHC6 of 237-255 aa**  
+claim 889 `measured` / `full-text`  
+_THE SUPERFAST MYOSIN TRANSGENE THE FLAPPING ROUTE REQUIRES CANNOT BE SPECIFIED: IT HAS NEVER BEEN SEQUENCED. Claim 589 found zebrafish carries no anno…_
+
 
 ## GENE / collagen
 
@@ -206,11 +211,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 368 live claims of 437 for project `zebrafish-flight`; **69 superseded**, which is the project correcting itself and is not a defect.
+- 375 live claims of 444 for project `zebrafish-flight`; **69 superseded**, which is the project correcting itself and is not a defect.
 
-- (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
+- (the same database also holds `insect-flight` 100, `xenobot` 97, `coral` 48, `limbless-mouse` 39 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 183, `measured` 103, `literature` 55, `simulated` 16, `unknown` 9, `refused` 1, `assumed` 1
+- live claims by evidence class: `derived` 183, `measured` 109, `literature` 56, `simulated` 16, `unknown` 9, `refused` 1, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**
