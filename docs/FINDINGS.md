@@ -998,3 +998,19 @@ work that would obviously succeed; each is a specific question with a stated rea
   and re-deriving it reproduces the optimistic answer, because squaring is the intuitive step.**
   What survives untouched is any comparison that never converts: claim 986 benchmarks fin
   length/SL against gliders' fin length/SL in the same unit, and needs no exponent at all.
+- **The second fin allele changes PROPORTION, not pectoral size — and that is the paper's own
+  point, which reading one panel hides.** Adding `lat4a^nr21/+` to `kcnh2a^lof/+` leaves the
+  pectoral at 0.460 and shrinks the dorsal caudal fin 35% (0.310 → 0.200), moving
+  pectoral:caudal from **0.79** in wild type to **2.30** — a 2.93× shift toward the flying-fish
+  body plan. Measured by two models, 10/10 reads usable, ratio agreeing to two decimals.
+  Claim 984's "stacking adds nothing" is true of pectoral *size* and false of the animal's
+  *shape*; Figure 4 is titled "sufficient to phenocopy the evolved" state, and the proportion is
+  what the intersection buys.
+  **It buys it by removing the surface a launch pushes against.** A flying fish taxis on an
+  enlarged lower caudal lobe before the pectorals carry it, and this combination deletes 35% of
+  the caudal. Claim 519 already settles S900 negatively — the launch does not close on the
+  measured-burst route at any combination of this project's numbers — so this deepens an
+  existing blocker rather than opening a new one. **Under these alleles the two halves of the
+  flying-fish plan are in tension: the proportion that makes a glider is bought by removing the
+  surface that gets it airborne.** A route through this pair needs a launch that does not depend
+  on caudal area.
