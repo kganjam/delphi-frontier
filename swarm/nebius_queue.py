@@ -130,14 +130,14 @@ def run_job(job: dict) -> bool:
             if st == "admission_pending" and raw.get("retry_same_idempotency_key"):
                 try:
                     submit_job(job)          # same label -> same idempotency key -> same operation
-                    print(f"  replayed the idempotency key to resolve admission_pending", flush=True)
+                    print("  replayed the idempotency key to resolve admission_pending", flush=True)
                 except Exception as e:
                     print(f"  replay failed: {type(e).__name__}: {str(e)[:90]}", flush=True)
         except Exception as e:
             st = f"poll-error {type(e).__name__}"
         if st in ("succeeded", "success", "completed"):
             try:
-                for n, p, b in fr.fetch_run(op, job["outdir"]):
+                for n, p, b in fr.fetch_run(op, job["outdir"], stem=job.get("stem") or job["label"]):
                     print(f"  FETCHED {n} -> {p} ({b:,} bytes, sha256 verified)", flush=True)
                 return True
             except Exception as e:

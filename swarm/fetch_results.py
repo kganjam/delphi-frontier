@@ -74,8 +74,30 @@ def status_of(res: dict) -> str:
     return ""
 
 
-def fetch_run(op_id: str, outdir: str) -> list[tuple[str, str, int]]:
-    """Fetch every output file of a finished run. Returns (name, path, bytes) per file."""
+def _write(path: str, raw: bytes) -> None:
+    """Write, refusing to destroy a different file that is already there.
+
+    Two jobs sharing an `outdir` used to overwrite each other in silence: the direct-artifact
+    branch names every file `result.<ext>`, and the manifest branch reuses the manifest's own
+    entry names, which repeat across two runs of the same tool. The loss is invisible -- the
+    second job reports success and the first job's result is simply gone, which reads afterwards
+    as a job that was never submitted. Measured 2026-11-05 on two ProteinMPNN runs into
+    results/nebius/slc12a7a; the first was renamed by hand with two minutes to spare.
+    Re-fetching the SAME bytes is fine and stays idempotent.
+    """
+    if os.path.exists(path) and open(path, "rb").read() != raw:
+        raise RuntimeError(
+            f"{path} already exists with different contents -- refusing to overwrite. "
+            f"Pass a distinct `stem` (or outdir) per job; two jobs are writing the same name.")
+    with open(path, "wb") as f:
+        f.write(raw)
+
+
+def fetch_run(op_id: str, outdir: str, stem: str | None = None) -> list[tuple[str, str, int]]:
+    """Fetch every output file of a finished run. Returns (name, path, bytes) per file.
+
+    `stem` prefixes every filename, so several jobs can share one `outdir` without colliding.
+    """
     res = nbx.call("get_operation_result", {"operation_id": op_id})
     status = status_of(res)
     if status not in ("succeeded", "success", "completed"):
@@ -87,10 +109,10 @@ def fetch_run(op_id: str, outdir: str) -> list[tuple[str, str, int]]:
     direct = (res.get("result") or {}).get("artifact") or {}
     if direct.get("artifact_id") and not (res.get("output_manifest") or {}).get("artifact_id"):
         raw = fetch_artifact(direct["artifact_id"], direct.get("sha256"))
-        path = os.path.join(outdir, f"result{EXT.get(direct.get('media_type'), '.bin')}")
-        with open(path, "wb") as f:
-            f.write(raw)
-        return [("result", path, len(raw))]
+        base = stem or "result"
+        path = os.path.join(outdir, f"{base}{EXT.get(direct.get('media_type'), '.bin')}")
+        _write(path, raw)
+        return [(base, path, len(raw))]
 
     om = res.get("output_manifest") or {}
     if not om.get("artifact_id"):
@@ -107,9 +129,8 @@ def fetch_run(op_id: str, outdir: str) -> list[tuple[str, str, int]]:
         raw = fetch_artifact(aid, art.get("sha256"))
         name = entry.get("name", aid)
         ext = EXT.get(art.get("media_type"), ".bin")
-        path = os.path.join(outdir, f"{name}{ext}")
-        with open(path, "wb") as f:
-            f.write(raw)
+        path = os.path.join(outdir, f"{stem}_{name}{ext}" if stem else f"{name}{ext}")
+        _write(path, raw)
         written.append((name, path, len(raw)))
     # A run that reports success and yields no files is the empty-set failure, not a success.
     if not written:
