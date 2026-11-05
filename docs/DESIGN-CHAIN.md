@@ -131,14 +131,6 @@ claim 554 `literature` / `abstract`
 _THE SECOND GENETIC CHANGE HAS NO SINGLE-GENE TARGET: ZEBRAFISH BUOYANCY REGULATION IS DISTRIBUTED ACROSS MULTIPLE AUTONOMIC NEURON POPULATIONS, AND BL…_
 
 
-## SYNTHESIS
-
-**What is the best design this project can specify?**  
-**1.41 fold net gain from choosing a 2.6 cm body, after correcting the double-counted fin advantage from 1.54**  
-claim 580 `derived` / `full-text`  
-_THE FIN ADVANTAGE IS PROGRESSIVE WITH BODY SIZE, SO CLAIM 574 DOUBLE-COUNTED: ITS 1.5-FOLD FREE GAIN IS 1.41-FOLD. claude-opus-5-5 objected to claim 5…_
-
-
 ## ORGANISM / powered flight
 
 **Could it FLAP instead of gliding?**  
@@ -161,6 +153,11 @@ _THE MUSCLE MODIFICATION THAT WOULD SUPPLY THE FLAPPING FREQUENCY REMOVES THE PO
 
 
 ## SYNTHESIS
+
+**What is the best design this project can specify?**  
+**1.41 fold net gain from choosing a 2.6 cm body, after correcting the double-counted fin advantage from 1.54**  
+claim 580 `derived` / `full-text`  
+_THE FIN ADVANTAGE IS PROGRESSIVE WITH BODY SIZE, SO CLAIM 574 DOUBLE-COUNTED: ITS 1.5-FOLD FREE GAIN IS 1.41-FOLD. claude-opus-5-5 objected to claim 5…_
 
 **What does that design actually achieve?**  
 **2.72 cm lift-attributable distance for the best design at a 5 BL/s run-up, meeting the 2 cm threshold**  

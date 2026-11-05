@@ -69,8 +69,6 @@ CHAIN = [
     ("GENE / autonomic",
      "What gene defeats buoyancy regulation?", 554),
     # the bottom line
-    ("SYNTHESIS",
-     "What is the best design this project can specify?", 580),  # was 574: the 1.54x gain double-counted progressive overgrowth; 580 is 1.41x
     # POWERED FLIGHT -- the route the gliding analysis assumed away entirely
     ("ORGANISM / powered flight",
      "Could it FLAP instead of gliding?", 585),
@@ -78,6 +76,8 @@ CHAIN = [
      "Does unsteady flapping lift close the gap?", 586),
     ("TISSUE / muscle",
      "Can the fin muscle beat fast enough?", 587),
+    ("SYNTHESIS",
+     "What is the best design this project can specify?", 580),  # was 574: the 1.54x gain double-counted progressive overgrowth; 580 is 1.41x
     ("SYNTHESIS",
      "What does that design actually achieve?", 584),
 ]
