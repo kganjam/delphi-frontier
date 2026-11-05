@@ -123,7 +123,94 @@ def controls():
     return ok
 
 
+
+
+
+# ---------------------------------------------------------------------------------------------
+# ADDED after claim 957: the anatomical objection was removed (seahorses and pipefish are a
+# characterised LaMSA system whose springs are epaxial and sternohyoideus TENDONS), leaving the
+# route turning on TWO unknowns: can a tendon spring HOLD 134% of a contraction's work, and can
+# it be CHARGED across successive contractions? This settles the first one and leaves the second.
+#
+# The approach avoids needing a precise strain-energy density, because the question is really a
+# MASS question: how much tendon would it take? If the answer is a few percent of body mass
+# across two orders of magnitude of assumption, the storage capacity is not the blocker.
+
+RHO_TENDON = 1100.0        # kg/m^3, ASSUMED standard value for collagenous tissue
+E_TENDON = 1.0e9           # Pa, ASSUMED tendon Young's modulus, order 1 GPa
+
+
+def strain_energy_density(eps, E=E_TENDON, rho=RHO_TENDON):
+    """Energy per unit MASS a linear-elastic spring holds at strain eps: (1/2)E*eps^2 / rho."""
+    return 0.5 * E * eps * eps / rho
+
+
+def tendon_mass_needed():
+    print("\n" + "=" * 78)
+    print("CAN A TENDON SPRING HOLD IT? A MASS QUESTION, NOT A MATERIAL-PROPERTY QUESTION")
+    print("=" * 78)
+    total_work = M_BODY * MUSCLE_FRACTION * ENERGY_DENSITY
+    need = frac_of_muscle_work(V_NEEDED) * total_work
+    print(f"\n  energy to store: {need*1e3:.4f} mJ "
+          f"({100*frac_of_muscle_work(V_NEEDED):.0f}% of one contraction)")
+    print(f"  body mass: {M_BODY*1e3:.3f} g\n")
+    print(f"  {'strain':>8} {'J/kg':>9} {'tendon mass':>13} {'% of body':>11}")
+    print("  " + "-" * 46)
+    rows = []
+    for eps, note in [(0.02, "very conservative"), (0.04, "safe working strain"),
+                      (0.06, ""), (0.08, "near tendon failure strain")]:
+        u = strain_energy_density(eps)
+        m = need / u
+        rows.append(100 * m / M_BODY)
+        print(f"  {eps:>8.2f} {u:>9.0f} {m*1e6:>10.2f} mg {100*m/M_BODY:>10.2f}%   {note}")
+    # A deliberately crushed material property, two orders of magnitude below the above.
+    u_low = 30.0
+    m_low = need / u_low
+    print(f"\n  even at an absurdly low {u_low:.0f} J/kg -- below MUSCLE's own 15 J/kg per")
+    print(f"  contraction by only a factor of 2 -- the requirement is {m_low*1e6:.1f} mg, "
+          f"{100*m_low/M_BODY:.1f}% of body mass.")
+    print("\n" + "-" * 78)
+    print("VERDICT")
+    print("-" * 78)
+    print(f"  Across strains from 2% to 8%, the tendon needed is "
+          f"{min(rows):.2f}% to {max(rows):.2f}% of body mass.")
+    print("  Zebrafish already carry far more tendon and collagenous tissue than that.")
+    print("  SO STORAGE CAPACITY IS NOT THE BLOCKER, and it is not close to being one.")
+    print("  The route now turns on ONE question, not two: whether a latch can hold a")
+    print("  partially-charged spring BETWEEN contractions so it can be loaded across")
+    print("  2 to 5 of them. No source found reports multi-contraction charging either way;")
+    print("  every LaMSA system located here loads within a single pre-load window, which")
+    print("  in pipefish is over 300 ms.")
+    print("=" * 78)
+    return rows
+
+
+def controls_mass():
+    print("\nCONTROLS (storage)")
+    ok = True
+    # 1. The scaling must be quadratic in strain, as (1/2)E eps^2 requires.
+    r = strain_energy_density(0.08) / strain_energy_density(0.04)
+    arm1 = abs(r - 4.0) < 1e-9
+    print(f"  [{'ok' if arm1 else 'FAIL'}] doubling strain quadruples energy density "
+          f"(got {r:.3f}x)")
+    ok &= arm1
+    # 2. POSITIVE CONTROL ON THE VERDICT: a material bad enough MUST come out infeasible, or
+    #    'feasible' is a constant and the sensitivity table proves nothing.
+    total_work = M_BODY * MUSCLE_FRACTION * ENERGY_DENSITY
+    need = frac_of_muscle_work(V_NEEDED) * total_work
+    frac_at_1 = 100 * (need / 1.0) / M_BODY          # a 1 J/kg spring
+    arm2 = frac_at_1 > 100.0
+    print(f"  [{'ok' if arm2 else 'FAIL'}] a 1 J/kg spring needs {frac_at_1:.0f}% of body mass, "
+          f"i.e. INFEASIBLE -- the test can return both answers")
+    ok &= arm2
+    print(f"  -> controls {'PASS' if ok else 'FAIL'}")
+    return ok
+
+
 if __name__ == "__main__":
     main()
-    if not controls():
+    ok = controls()
+    tendon_mass_needed()
+    ok &= controls_mass()
+    if not ok:
         raise SystemExit("controls failed")

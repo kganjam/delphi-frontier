@@ -150,6 +150,11 @@ _THE SUPERFAST MYOSIN TRANSGENE THE FLAPPING ROUTE REQUIRES CANNOT BE SPECIFIED:
 claim 957 `literature` / `abstract`  
 _CORRECTION TO CLAIM 956, IN THE PROJECT'S FAVOUR: FISH ARE A TEXTBOOK LaMSA SYSTEM, SO THE LATCH-SPRING ROUTE IS NOT BLOCKED BY ANATOMY. THE ENERGY REQUIREMENT IS UNCHANGED. Claim 956 said "no fish is known TO THIS ANALYSIS to use latch-mediated spring actuation", explicitly flagged that as an absence in my own knowledge rather than a scoped literature negative, and named searching it as the step…_
 
+**Can a tendon spring hold that much energy?**  
+**4.44 percent of body mass of tendon needed to store the launch energy at a conservative 2% strain; 0.28% at 8% strain, and 26.9% even at an absurd 30 J/kg**  
+claim 958 `derived` / `full-text`  
+_STORAGE CAPACITY IS NOT THE BLOCKER FOR THE LATCH-SPRING ROUTE: THE TENDON NEEDED IS 0.28% TO 4.44% OF BODY MASS, SO THE ROUTE NOW TURNS ON ONE QUESTION RATHER THAN TWO. Claim 957 removed the anatomical objection by showing fish are a characterised LaMSA system, and left the route turning on two unknowns: whether a tendon spring can HOLD 134% of a contraction's work, and whether it can be CHARGED…_
+
 
 ## 6. WHAT THE DESIGN WOULD BE
 
