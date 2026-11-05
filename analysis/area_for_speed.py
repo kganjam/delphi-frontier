@@ -100,7 +100,7 @@ def main() -> int:
         taxi = next((a[2] for a in atts if a[0] == 269), None)
         if taxi:
             short_v = v_at_best / taxi
-            print(f"\n  THE SHORTFALL, stated in the currency the levers move:")
+            print("\n  THE SHORTFALL, stated in the currency the levers move:")
             print(f"     at the best published fin ({gv:.3f}x) the stall speed is "
                   f"{v_at_best:.2f} m/s")
             print(f"     the taxi attains                              {taxi:.2f} m/s "
