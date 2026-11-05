@@ -151,6 +151,17 @@ _UNSTEADY FLAPPING AERODYNAMICS BRINGS THE FREQUENCY FROM 108 Hz TO 53 Hz AT NO 
 claim 588 `derived` / `full-text`  
 _CLAIM 587 CLOSED THE FLAPPING ROUTE ON AN ASSERTION, AND COMPUTING IT REOPENS THE ROUTE. Claim 587 found that superfast myosin buys the 53 Hz the flap…_
 
+
+## ORGANISM / powered flight
+
+**What lift coefficient is actually attainable?**  
+**78 Hz beat frequency required at the best MEASURED lift coefficient (1.75 delayed stall + 17% clap bonus = 2.05), replacing the 53 Hz derived at the refuted CL 4.5**  
+claim 595 `literature` / `full-text`  
+_THE FLAPPING ROUTE'S CL 4.5 IS REFUTED BY MEASUREMENT, AND THE BEAT FREQUENCY IT IMPLIED RISES FROM 53 Hz TO 78 Hz. The 53 Hz that claims 587, 588, 59…_
+
+
+## TISSUE / muscle
+
 **Can any fish muscle generate power AT that frequency?**  
 **4.4 factor by which the 53 Hz beat exceeds the measured ~12 Hz power-generating ceiling of fish white (fast-twitch) locomotory muscle**  
 claim 593 `literature` / `abstract`  
@@ -196,11 +207,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 363 live claims of 429 for project `zebrafish-flight`; **66 superseded**, which is the project correcting itself and is not a defect.
+- 367 live claims of 433 for project `zebrafish-flight`; **66 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 183, `measured` 103, `literature` 51, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 184, `measured` 103, `literature` 54, `simulated` 16, `unknown` 9, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**
