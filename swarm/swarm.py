@@ -42,7 +42,11 @@ HONESTY = textwrap.dedent("""
 
 
 def q(sql):
-    r = subprocess.run(PG + ["-c", sql], capture_output=True, text=True, env=ENV)
+    # timeout is NOT optional: without it a lock wait or a contended DB hangs the caller
+    # forever with no error. generate.py imports this q(), so that hang is silent and
+    # unbounded. Measured 2026-11-05: corpus_gap.py's equivalent select exceeded 120 s
+    # under load on a 916-row table that answers in 0.04 s idle.
+    r = subprocess.run(PG + ["-c", sql], capture_output=True, text=True, env=ENV, timeout=120)
     if r.returncode:
         raise RuntimeError(r.stderr.strip())
     return [l.split(SEP) for l in r.stdout.strip().split("\n") if l]
