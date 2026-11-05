@@ -348,13 +348,43 @@ def import_routes(project: str, d: str, write: bool) -> int:
 CONFIG_MARKERS = (".vxa", ".yaml", ".yml", ".json", ".cfg", ".ini", "demos/", "demo file",
                   "default value", "config")
 CITATION_MARKERS = ("pmid", "doi", "et al", "handbook")
+# A DEFINED CONSTANT IS NOT LITERATURE. "Defined value of standard gravity" names no
+# publication and no measurement: 9.80665 m/s^2 is a convention fixed by the 3rd CGPM, and
+# citing it as literature claims an empirical grounding that does not exist. It is not
+# `measured` either -- nobody measured it here -- so it is recorded as `assumed`, the type
+# this vocabulary uses for a stated modelling choice. Distinguish it from a HANDBOOK value,
+# which is literature: "handbook value for dry air at 20 C" summarises real measurements, and
+# claim 605 is exactly that case sitting next to claim 627 which is not.
+DEFINED_MARKERS = ("defined value", "by definition", "standard gravity", "exact by definition")
 
 
 def refine_evidence(ev: str, source_text: str) -> tuple[str, str]:
-    """Downgrade a 'literature' typing whose source is a configuration file, not a paper."""
+    """Downgrade a 'literature' typing that names no publication.
+
+    TWO CASES, AND THE ORDER MATTERS: a defined constant is tested before the citation marker,
+    because "standard gravity" carries no citation and would otherwise fall through to the
+    permissive return. A HANDBOOK value does carry one and stays literature -- claim 605
+    ("handbook value for dry air at 20 C") and claim 627 ("defined value of standard gravity")
+    sit next to each other in the same study and must type differently.
+
+    PASS THE STUDY'S DECLARED SOURCE TEXT, NOT A FILE PATH. Measured 2026-11-04: a backfill
+    called this with the claim's `source` COLUMN, which holds
+    `results/limbless-mouse/digit-turing.json`. That matched `.json` in CONFIG_MARKERS and
+    demoted 16 rows, 13 of which cite real publications -- onimaru2016's Methods, Gumuskaya
+    et al. 2023 PMID 38032125 -- in the declared-source text this function never received. All
+    16 were reverted. The file a parameter was imported FROM says nothing about where its value
+    CAME FROM, and only the second is what this function judges.
+    """
     if ev != "literature" or not source_text:
         return ev, ""
     low = source_text.lower()
+
+    if ev == "literature" and any(m in low for m in DEFINED_MARKERS) \
+            and not any(m in low for m in CITATION_MARKERS):
+        return "assumed", (
+            " NOTE: declared status was 'sourced', but the stated source names a DEFINED "
+            "CONSTANT rather than a publication or a measurement. A value fixed by convention "
+            "has no empirical grounding to cite, so it is recorded as ASSUMED.")
     if any(m in low for m in CITATION_MARKERS):
         return ev, ""
     if any(m in low for m in CONFIG_MARKERS):
