@@ -215,6 +215,11 @@ _THE SUSTAINED FLIGHT IS NOT ROBUST: THE MOST STABLE CONTROLLER SURVIVES ONLY 5 
 claim 976 `simulated` / `full-text`  
 _THE KNIFE EDGE WAS THE POLICY, NOT THE PHYSICS: A CLOSED-LOOP CONTROLLER SURVIVES 12 OF 12 PERTURBATIONS WHERE THE OPEN-LOOP FAMILY'S BEST WAS 5 -- BUT IT NEEDS A GALE. Claim 975 found the sustained flight of claims 971 and 974 to be a knife edge, and named the specific thing that might change it: "every trajectory here flies an OPEN-LOOP fixed schedule... A closed-loop controller might find a bas…_
 
+**Can the genetics lower the wind requirement?**  
+**10.6 fold wild-type fin area needed to bring robust flight down to 12.5 m/s of wind (4x the best published allele's 2.65-fold); the best single lever gives 2.65 and the levers share one pathway**  
+claim 977 `simulated` / `full-text`  
+_WHAT THE GENETICS WOULD HAVE TO DELIVER TO FLY IN ORDINARY WIND, AND WHY THEY CANNOT: FOUR TIMES MORE FIN THAN THE BEST PUBLISHED ALLELE GIVES, WHICH IS ABOUT 10.6 TIMES WILD TYPE. Claim 976 established that robust sustained flight needs roughly 18.7 m/s of wind at one metre -- a gale -- and that nothing flies robustly below it. That requirement is set by WING LOADING, which is exactly what the fi…_
+
 **Can it extract energy from WIND SHEAR?**  
 **25.7 fold inertial-frame energy gain from wind shear at u*=0.60, lift-dependent (a wingless body with the same drag LOSES energy); but the cycle does not close and the animal lands every time**  
 claim 966 `simulated` / `full-text`  

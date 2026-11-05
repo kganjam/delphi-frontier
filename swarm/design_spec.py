@@ -73,6 +73,7 @@ SPEC = [
         ("Does the chain close from water exit to flight?", 974),
         ("Is that flight ROBUST, or a knife edge?", 975),
         ("Does closed-loop control fix the fragility?", 976),
+        ("Can the genetics lower the wind requirement?", 977),
         ("Can it extract energy from WIND SHEAR?", 966),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [
