@@ -76,15 +76,21 @@ def context() -> str:
 
 
 def next_subproblem_number() -> int:
-    """One past the highest S<digits> already in this project, floored at 900.
+    """One past the highest S<digits> in the WHOLE TABLE, floored at 900.
+
+    NOT per project. `subproblem_pkey` is `PRIMARY KEY (id)` -- the id is globally unique, not
+    unique per project. Scoping this query by project_id is how coral's first frontier run
+    allocated S900-S905, collided with the zebrafish rows of those names, and wrote NOTHING
+    while printing "wrote S903" for each: `on conflict (id) do nothing` had converted the
+    crash into a silent no-op, which is strictly worse than the crash it replaced. The insert
+    below now reads its `returning` value and says which ids actually landed.
 
     The id family is S<number>; ids with a suffix (S9-D, S25-D-D) are deepenings of those and
     are left alone. `regexp_replace` strips the S and anything after the digits so a suffixed
     id cannot be read as a number.
     """
-    rows = ac.q(f"""select coalesce(max((regexp_replace(id, '^S([0-9]+).*$', chr(92) || '1'))::int), 0)
-                    from subproblem
-                    where project_id={ac.lit(ac.PROJECT)} and id ~ '^S[0-9]+'""")
+    rows = ac.q("""select coalesce(max((regexp_replace(id, '^S([0-9]+).*$', chr(92) || '1'))::int), 0)
+                   from subproblem where id ~ '^S[0-9]+'""")
     return max(900, int(rows[0][0]) + 1)
 
 
@@ -150,14 +156,15 @@ def main() -> int:
                    f"meets or fails this pre-registered falsifier: {p['FALSIFIER']}")
             # ON CONFLICT DO NOTHING so a collision costs one row, not the whole batch.
             # The surviving rows are still worth having and the run is not cheap.
-            ac.q(f"""insert into subproblem (project_id, id, question, why_it_matters, acceptance,
+            got = ac.q(f"""insert into subproblem (project_id, id, question, why_it_matters, acceptance,
                                              falsifier, status)
                      values ({ac.lit(ac.PROJECT)}, {ac.lit(sid)}, {ac.lit(p['QUESTION'])},
                              {ac.lit(p['WHY'])}, {ac.lit(acc)},
                              {ac.lit(p['FALSIFIER'])}, 'open')
                      on conflict (id) do nothing
                      returning id""")
-            print(f"  wrote {sid}")
+            print(f"  wrote {sid}" if got else
+                  f"  NOT WRITTEN {sid}: id already taken (ids are globally unique)")
     return 0
 
 
