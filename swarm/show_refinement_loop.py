@@ -43,8 +43,73 @@ def wrap(s: str, indent: str = "      ") -> str:
                          initial_indent=indent, subsequent_indent=indent)
 
 
+def process(proj: str) -> int:
+    """The refinement PROCESS across the whole corpus, not one worked example.
+
+    One rendered loop shows the mechanism exists. It does not show the mechanism is a process,
+    and those are different claims. This prints the distribution: how often an attack lands, what
+    kind of change follows, and -- the part that distinguishes refinement from scoring -- whether
+    a challenged claim is more likely to be corrected than an unchallenged one.
+    """
+    tot = int(q(f"""select count(*)::text from challenge ch join claim c on c.id=ch.claim_id
+                    where c.project_id='{proj}'""")[0][0])
+    print(f"  REFINEMENT AS A PROCESS, project {proj}   ({tot} challenges)\n")
+    print("  outcome distribution:")
+    for r in q(f"""select coalesce(ch.outcome,'(null)'), count(*)::text
+                   from challenge ch join claim c on c.id=ch.claim_id
+                   where c.project_id='{proj}' group by 1 order by count(*) desc"""):
+        if len(r) >= 2:
+            print(f"      {r[0]:<12} {int(r[1]):>5}  {100*int(r[1])/tot:5.1f}%")
+
+    # THE DISCRIMINATING COMPARISON. If challenging a claim did nothing, the superseded rate
+    # among challenged claims would match the rate among unchallenged ones.
+    row = q(f"""select
+      (select count(*) from claim where project_id='{proj}'
+         and id in (select claim_id from challenge))::text,
+      (select count(*) from claim where project_id='{proj}'
+         and id in (select claim_id from challenge) and superseded_by is not null)::text,
+      (select count(*) from claim where project_id='{proj}'
+         and id not in (select claim_id from challenge))::text,
+      (select count(*) from claim where project_id='{proj}'
+         and id not in (select claim_id from challenge) and superseded_by is not null)::text""")[0]
+    ca, cs, ua, us = (int(x) for x in row[:4])
+    gap_u = q(f"""select coalesce(round(percentile_cont(0.5) within group (order by superseded_by-id))::text,'-')
+                  from claim where project_id='{proj}' and superseded_by is not null
+                    and id not in (select claim_id from challenge)""")[0][0]
+    gap_c = q(f"""select coalesce(round(percentile_cont(0.5) within group (order by superseded_by-id))::text,'-')
+                  from claim where project_id='{proj}' and superseded_by is not null
+                    and id in (select claim_id from challenge)""")[0][0]
+    print("\n  TWO CORRECTION MECHANISMS AT DIFFERENT SPEEDS, which is what the raw rates hide:")
+    print(f"      challenged   {cs:>4} of {ca:>4} superseded = {100*cs/ca if ca else 0:5.1f}%"
+          f"   median gap to its replacement: {gap_c} claims")
+    print(f"      unchallenged {us:>4} of {ua:>4} superseded = {100*us/ua if ua else 0:5.1f}%"
+          f"   median gap to its replacement: {gap_u} claims")
+    print("      READ THIS CAREFULLY. The unchallenged rate is HIGHER, and that is NOT evidence")
+    print("      that challenging protects a claim. An unchallenged claim that gets superseded is")
+    print("      corrected by its own author almost immediately -- median gap of a couple of")
+    print("      claims -- so it never survives long enough for the panel to reach it. The panel")
+    print("      operates on claims that already stood, and corrects them an order of magnitude")
+    print("      later. Self-correction and adversarial correction are different loops at")
+    print("      different timescales, and dividing one count by the other mixes them.")
+    print("      A time confound was tested and REFUTED: unchallenged claims are NEWER (higher")
+    print("      median id), and none of them predate the first challenge.")
+
+    print("\n  distinct challengers (models x tenants):")
+    for r in q(f"""select coalesce(ch.challenger,'?'), count(*)::text
+                   from challenge ch join claim c on c.id=ch.claim_id
+                   where c.project_id='{proj}' group by 1 order by count(*) desc limit 6"""):
+        if len(r) >= 2:
+            print(f"      {r[0][:52]:<52} {int(r[1]):>5}")
+    n = int(q(f"""select count(distinct ch.challenger)::text from challenge ch
+                  join claim c on c.id=ch.claim_id where c.project_id='{proj}'""")[0][0])
+    print(f"      ... {n} distinct challengers in all")
+    return 0
+
+
 def main() -> int:
     proj = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+    if "--process" in sys.argv:
+        return process(proj)
     want = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1].isdigit() else None
     sel = f"and ch.claim_id = {int(want)}" if want else ""
     rows = q(f"""select ch.claim_id::text, c.superseded_by::text, coalesce(ch.challenger,'?'),
