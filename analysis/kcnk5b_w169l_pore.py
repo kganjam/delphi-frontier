@@ -39,17 +39,33 @@ def variant_sequence(seq: str) -> str:
 
 
 def submit(label: str, seq: str, a3m: str):
+    """openfold3, NOT boltz2, and the reason is a schema wall rather than a preference.
+
+    boltz2_predict_native refuses a homodimer three ways: passing the same alignment inline to
+    chains A and B returns `ValueError: All proteins with the same sequence must share the same
+    MSA!`, and so does uploading the alignment once and referencing that one artifact from both
+    chains. Boltz's own convention for a homodimer is a single entry with `id: [A, B]`, but this
+    endpoint's Polymer.id is a STRING (pattern ^[A-Za-z0-9]+$), so that form cannot be
+    expressed. Three submissions, two input shapes, one unchanged error message -- and progress
+    is a change of error, not a reworded same error.
+
+    infer_openfold3_native takes `molecules` with unique chain ids and a per-chain MSA, with no
+    sharing constraint, and this project already has a successful `infer_openfold3_native and3
+    homodimer A+B` run (exit 0). So the working path was already in the run table.
+    """
     import nebius
-    poly = [{"id": c, "molecule_type": "protein", "sequence": seq,
-             "msa": {"msa_search": {"a3m": {"alignment": a3m}}}} for c in ("A", "B")]
+    mols = [{"type": "protein", "id": c, "sequence": seq,
+             "msa": {"main": {"a3m": {"alignment": a3m, "format": "a3m"}}}} for c in ("A", "B")]
     op, _ = nebius.submit(
-        "boltz2_predict_native",
-        {"polymers": poly, "diffusion_samples": 1, "recycling_steps": 3,
-         "idempotency_key": f"ms-kcnk5b-{label}-boltz2-dimer-v1"},
+        "infer_openfold3_native",
+        {"request_id": f"ms-kcnk5b-{label}-of3-dimer-v2",
+         "inputs": [{"input_id": f"kcnk5b-{label}", "output_format": "cif",
+                     "molecules": mols}],
+         "idempotency_key": f"ms-kcnk5b-{label}-of3-dimer-v2"},
         f"kcnk5b-w169l-pore:{label} -- does the alf substitution move the ion pathway?")
     print(f"  {label}: submitted {op}", flush=True)
     nebius.wait(op)
-    out = D / f"kcnk5b-{label}-boltz2"
+    out = D / f"kcnk5b-{label}-of3"
     out.mkdir(parents=True, exist_ok=True)
     os.system(f"python3 {HERE}/../swarm/fetch_results.py {op} {out}")
     return op, out
