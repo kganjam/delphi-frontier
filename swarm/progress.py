@@ -17,8 +17,9 @@ import sys
 import time
 from datetime import datetime, timezone
 
-DEADLINE = 1793864700          # 2026-11-04 23:45 PST, when cloud-session credit expires
-START_CREDIT = 998.48
+DEADLINE = 1793864700          # kept: the CLOUD pool's expiry, now past. See cloud_pool_done().
+START_CREDIT = 998.48          # kept: that pool's size, for the historical line only.
+EXCLUDED_TENANTS = ("api_allen",)   # owner's standing instruction; never spend, never count
 PGBASE = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm", "-tAq"]
 REPO = "/data/worktrees/delphi-frontier/swarm-arch"
 STATE = "/data/swarm/progress-state.json"
@@ -47,6 +48,30 @@ def sh(cmd, cwd=None, timeout=90):
         return r.stdout.strip()
     except Exception:
         return ""
+
+
+def console_credit():
+    """Per-tenant Console API credit, the pool that is actually live and expiring.
+
+    Returns (rows, total_spendable, soonest). Reads `orchestra api-credits list` rather than
+    hard-coding a number, because a hard-coded total is how this monitor came to be watching a
+    pool that no longer exists. api_allen is excluded by the owner's standing instruction.
+    """
+    import re as _re
+    out = sh("orchestra api-credits list", timeout=200) or ""
+    rows = []
+    for ln in out.splitlines():
+        m = _re.match(r"\s*(api_\S+)\s+\S+\s+(yes|no)\s+(yes|no)\s+([\d.]+)\s+(\d+)\s+(\S+)", ln)
+        if not m:
+            continue
+        tenant, on, _key, left, _of, exp = m.groups()
+        if tenant in EXCLUDED_TENANTS:
+            continue
+        rows.append({"tenant": tenant, "on": on == "yes", "left": float(left), "expires": exp})
+    spendable = [r for r in rows if r["on"]]
+    total = sum(r["left"] for r in spendable)
+    soonest = min(spendable, key=lambda r: r["expires"]) if spendable else None
+    return rows, total, soonest
 
 
 def credit():
@@ -100,7 +125,23 @@ def main() -> int:
     projected = (left - burn * hours_left) if burn is not None else left
 
     print(f"=== progress {datetime.now(timezone.utc).astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')} ===")
-    print(f"  credit      ${left:.2f} left of ${START_CREDIT:.2f}  (spent ${spent:.2f})  {hours_left:.1f}h to expiry")
+    print(f"  cloud       ${left:.2f} left of ${START_CREDIT:.2f} -- this pool is FINISHED and "
+          f"its deadline is past; kept as history, not as an alarm")
+    try:
+        crows, ctotal, csoon = console_credit()
+    except Exception as e:                                   # noqa: BLE001
+        crows, ctotal, csoon = [], 0.0, None
+        print(f"  console     COULD NOT READ ({type(e).__name__}) -- not reported as zero")
+    if crows:
+        print(f"  console     ${ctotal:.2f} spendable across {len([r for r in crows if r['on']])} "
+              f"tenant(s), api_allen excluded by standing instruction")
+        for r in sorted(crows, key=lambda x: x["expires"]):
+            flag = "" if r["on"] else "  (OFF, not spendable)"
+            print(f"                ${r['left']:>7.2f}  {r['tenant']:<14} expires {r['expires'][:10]}{flag}")
+        if csoon:
+            print(f"  nearest     ${csoon['left']:.2f} on {csoon['tenant']} expires "
+                  f"{csoon['expires'][:10]} -- that is the amount actually at risk first, "
+                  f"NOT the total")
     btxt = f"${burn:.0f}/h observed" if burn is not None else f"not yet measurable ({dt_h*60:.0f} min of baseline, need 15)"
     print(f"  burn        {btxt}   ${need:.0f}/h NEEDED to finish   -> projected leftover ${max(0,projected):.0f}")
     print(f"  sessions    {running} running        monitor.log {mon_age:.0f} min old")
@@ -108,12 +149,29 @@ def main() -> int:
     print(f"  content     {laws} law entries, {branches} claude branches, {commits_1h} commits in the last hour")
 
     alarms = []
-    if mon_age > 20:
-        alarms.append(f"monitor.log is {mon_age:.0f} min stale -- the generator may be dead")
-    if running < 10:
-        alarms.append(f"only {running} sessions running; credit cannot be spent at this rate")
-    if hours_left > 0.5 and burn is not None and burn < need * 0.6:
-        alarms.append(f"burn ${burn:.0f}/h is below the ${need:.0f}/h needed; ~${max(0,projected):.0f} will expire unused")
+    cloud_done = left <= 0.01 or hours_left <= 0
+    if not cloud_done:
+        if mon_age > 20:
+            alarms.append(f"monitor.log is {mon_age:.0f} min stale -- the generator may be dead")
+        if running < 10:
+            alarms.append(f"only {running} sessions running; credit cannot be spent at this rate")
+        if hours_left > 0.5 and burn is not None and burn < need * 0.6:
+            alarms.append(f"burn ${burn:.0f}/h is below the ${need:.0f}/h needed; "
+                          f"~${max(0,projected):.0f} will expire unused")
+    # Live pool: alarm on the amount at risk SOONEST, not the total. Quoting the total as
+    # "expiring" overstates it -- the four tenants expire on three different dates.
+    if csoon:
+        import datetime as _dt
+        try:
+            exp = _dt.datetime.fromisoformat(csoon["expires"].replace("Z", "+00:00"))
+            days = (exp - _dt.datetime.now(_dt.timezone.utc)).total_seconds() / 86400
+        except Exception:                                    # noqa: BLE001
+            days = None
+        if days is not None and days < 3 and csoon["left"] > 50:
+            alarms.append(f"${csoon['left']:.2f} on {csoon['tenant']} expires in {days:.1f} days "
+                          f"and is largely unspent (total spendable ${ctotal:.2f} across "
+                          f"{len([r for r in crows if r['on']])} tenants expiring on "
+                          f"{len({r['expires'][:10] for r in crows if r['on']})} different dates)")
     if prev and claims <= prev.get("claims", 0) and commits_1h == 0:
         alarms.append("no new claims and no commits in the last hour -- nothing is being learned")
 
@@ -121,7 +179,12 @@ def main() -> int:
         print("\n  ALARMS:")
         for a in alarms:
             print(f"    ! {a}")
-        print("\n  REMEDY: python3 /data/swarm/generate.py 40   (refills the queue; safe to run repeatedly)")
+        if cloud_done:
+            print("\n  NOTE: the cloud pool is finished, so its generator/session alarms are "
+                  "suppressed rather than fired for ever.")
+        else:
+            print("\n  REMEDY: python3 /data/swarm/generate.py 40   (refills the cloud queue; "
+                  "safe to run repeatedly)")
     else:
         print("\n  no alarms")
 
@@ -130,7 +193,11 @@ def main() -> int:
     if abs(base_left - left) > 0.01 and dt_h >= 0.25:      # baseline consumed; start a fresh one
         st["base_t"], st["base_left"] = now, left
     json.dump(st, open(STATE, "w"))
-    return 2 if mon_age > 20 or running < 4 else (1 if alarms else 0)
+    # Exit code must track the LIVE pool. Keying it to the finished cloud pool returned 2
+    # (stalled) permanently, which is the same false-positive failure as the alarms above.
+    if not cloud_done and (mon_age > 20 or running < 4):
+        return 2
+    return 1 if alarms else 0
 
 
 if __name__ == "__main__":
