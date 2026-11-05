@@ -27,6 +27,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import pathlib
 import sys
 from pathlib import Path
 
@@ -159,8 +160,28 @@ def controls_pass() -> tuple[bool, str]:
                   f"0 in husbandry prose")
 
 
+def load_questions() -> tuple[str, str]:
+    """Return (questions_text, label). QUESTIONS WERE HARD-CODED AND THAT IS A REPLICATION BUG.
+
+    The six questions in this module are about fin mechanics, muscle power and lift -- the
+    zebrafish-flight project's questions. Any other project, and any NEW question in this one,
+    had to edit the module to ask it. That is the same shape as the fish research path baked
+    into every agent prompt: a project-specific constant inside a general tool, invisible to a
+    search for the project's name.
+
+    `--questions FILE` supplies them instead. The controls in controls_pass() stay pinned to the
+    built-in set on purpose: they prove the EXTRACTOR works, and a run whose controls moved with
+    its questions could not tell a broken extractor from a question nothing matches.
+    """
+    if "--questions" in sys.argv:
+        path = pathlib.Path(sys.argv[sys.argv.index("--questions") + 1])
+        return path.read_text(encoding="utf-8"), path.name
+    return QUESTIONS, "built-in (fin/flight)"
+
+
 def main() -> int:
     write = "--write" in sys.argv
+    questions, qlabel = load_questions()
     papers = sorted(FULLTEXT.glob("*.txt"))
     if "--papers" in sys.argv:
         want = set(sys.argv[sys.argv.index("--papers") + 1].split(","))
@@ -173,6 +194,7 @@ def main() -> int:
     print("FULL-TEXT VALUE EXTRACTION")
     print("=" * 78)
     print(f"  {len(papers)} paper(s), tenants {TENANTS} (api_allen EXCLUDED)")
+    print(f"  questions: {qlabel}")
     print(f"  every quote is verified against the source; unverified items are DISCARDED")
     ok, why = controls_pass()
     print(f"  [{'ok' if ok else 'FAIL'}] controls: {why}")
@@ -192,7 +214,7 @@ def main() -> int:
         for ci, chunk in enumerate(chunks):
             tenant = TENANTS[calls % len(TENANTS)]
             try:
-                r = call(tenant, PROMPT.format(questions=QUESTIONS, excerpt=chunk),
+                r = call(tenant, PROMPT.format(questions=questions, excerpt=chunk),
                          max_tokens=2000, model=MODEL)
             except Exception as e:                          # noqa: BLE001
                 errors += 1
