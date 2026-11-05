@@ -135,9 +135,23 @@ def rows():
     live = num("select count(*) from claim where project_id='%s' and superseded_by is null" % PROJ)
     meas = num("select count(*) from claim where project_id='%s' and superseded_by is null "
                "and evidence='measured'" % PROJ)
+    # MOST `measured` CLAIMS HERE ARE NOT ABOUT THE ANIMAL (measured 2026-11-05, claim 1177).
+    # Of 167 live measured claims, 118 carry NO biological scale: they are measurements of this
+    # project's own tooling -- generator defects, citation audits, panel behaviour, pLDDT runs,
+    # entailment bookkeeping. A random sample of ten pre-session ones was 10/10 process claims.
+    # Those are legitimate claims and correctly labelled `measured`; what was wrong is counting
+    # them in a row whose stated meaning is the empirical grounding of the SCIENCE. The row now
+    # reports the biology-grounded count and the raw count side by side, and gates on the first.
+    # The project itself had already noticed the drift in one case -- claim 513, "THE RESIDUE-200
+    # SERIES HAS BECOME A STUDY OF ESMFOLD2 RATHER THAN OF THE FISH".
+    meas_bio = num("select count(*) from claim where project_id='%s' and superseded_by is null "
+                   "and evidence='measured' and scale_id is not null" % PROJ)
     yield ("grounded, non-fabricated claims",
-           f"{meas:.0f} of {live:.0f} live claims are `measured` (not simulated/assumed)",
-           meas / live > 0.2 if live else False, "a substantial measured fraction")
+           f"{meas_bio:.0f} of {live:.0f} live claims are `measured` AND carry a biological "
+           f"scale; {meas:.0f} are `measured` in all, so {meas-meas_bio:.0f} measure this "
+           f"PROJECT (tooling, panels, generators) rather than the animal",
+           meas_bio / live > 0.2 if live else False,
+           "a substantial fraction measured ABOUT THE ORGANISM, not about the pipeline")
 
     openn = num("select count(*) from subproblem where project_id='%s' and status='open'" % PROJ)
     ans = num("select count(*) from subproblem where project_id='%s' and status='answered'" % PROJ)
