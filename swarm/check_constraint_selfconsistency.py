@@ -124,10 +124,22 @@ def main() -> int:
       e194, e353   consistent against the 4.37 m/s take-off speed   (1.1% out)
       e224, e307   consistent against claim 1's 5.84 m/s stall      (0.03% out)
       e195         against a leap requirement, 7.170 m/s            (its own statement says so)
-      e258, e316   imply 4.732 m/s, which matches NOTHING this project holds   <- the defect
+      e258, e316   imply 4.732 m/s -- and that 8% gap IS A STANDARD ERROR, not a defect
 
-  Five of seven are internally consistent against a reference that can be named. Two are not,
-  and they are the two the panel caught by hand.""")
+  ALL SEVEN RESOLVE, once e258/e316 are traced (claim 1166). Their source, claim 24, forms its
+  5.2x ratio from claim 21's CENTRAL value 0.842 m/s, while the rows take their BOUND from the
+  upper end of that claim's +/-1 s.e.m. interval, 0.91. 0.910/0.842 = 1.081: the 8% this module
+  reports is the measurement's own standard error. Both numbers are traceable and both choices
+  are defensible; the rows simply do not say WHICH STATISTIC the bound represents.
+
+  SO THE RIGHT READING OF A FLAGGED ROW IS "go and find out", not "this is broken". This module
+  found a real 8% discrepancy and localised it to 2 rows of 285; resolving it took three
+  queries. An earlier version of this comment called those rows inconsistent with everything the
+  project holds, which was an assertion about the corpus made without searching the corpus.
+
+  THE SCHEMA SUGGESTION THAT FALLS OUT: a bound that recorded which statistic it is -- central,
+  upper s.e.m., measured maximum -- would make these rows checkable rather than merely
+  defensible, and this corpus holds at least two that need it.""")
     return 0
 
 
