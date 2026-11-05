@@ -65,6 +65,7 @@ SPEC = [
     ]),
     ("6. ROUTE D -- HARVESTING THE WIND", [
         ("Can it soar on the wind instead of its own muscle?", 964),
+        ("What does wind actually buy, integrated properly?", 965),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [
         ("What does the design actually ACHIEVE?", 962),

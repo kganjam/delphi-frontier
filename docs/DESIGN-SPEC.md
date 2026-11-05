@@ -175,6 +175,11 @@ _ROUTE C IS CLOSED: THE TRANSFER EFFICIENCY THE LATCH-SPRING LAUNCH NEEDS IS MEA
 claim 964 `derived` / `full-text`  
 _CORRECTION FOUND BY THIS PROJECT'S OWN ADVERSARIAL ARM: THE PROJECT HAS BEEN USING GROUND SPEED WHERE LIFT NEEDS AIRSPEED, AND IN A 2.42 m/s HEADWIND THE DESIGN REACHES LIFT = WEIGHT AT EXIT. CLAIM 961'S CLOSURE OF ROUTE D IS WITHDRAWN. The challenge arm, run over zebrafish-flight an hour after claim 961 was written, returned against it: "The 15.8%-of-weight lift figure uses the animal's 1.60 m/s…_
 
+**What does wind actually buy, integrated properly?**  
+**48 fold increase in peak height in an 8 m/s headwind over still air (187 cm vs 3.9 cm), with 6.4x the time aloft -- but blown 8.8 m BACKWARDS, so ground-frame range stops measuring flight above break-even**  
+claim 965 `simulated` / `full-text`  
+_IN WIND THE DESIGN CLIMBS 48 TIMES HIGHER AND STAYS AIRBORNE 6.4 TIMES LONGER -- AND IS BLOWN BACKWARDS, WHICH MEANS THE GROUND-FRAME RANGE STOPS MEASURING FLIGHT ABOVE THE BREAK-EVEN HEADWIND. Claim 964 withdrew claim 961's closure of route D by showing lift needs AIRSPEED, not ground speed. This computes what follows, because "not closed" is not "works".  THE MODEL FIXES THE THREE ERRORS THE ADV…_
+
 
 ## 7. WHAT THE DESIGN WOULD BE
 
