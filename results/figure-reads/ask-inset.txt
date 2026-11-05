@@ -1,0 +1,14 @@
+This is a small LOG-LOG inset plot from a zebrafish paper. The x axis is "log STL (um)" and the
+y axis is "log CFL (um)" -- log10 of standard length and caudal fin length, both in micrometres.
+Two series: triangles (wild-type) and circles (schleier mutant).
+
+Report ONLY what you can see. If something is not in the image, write "absent".
+
+Reply in EXACTLY this form, one item per line, nothing else:
+XMIN: <smallest number printed on the x axis>
+XMAX: <largest number printed on the x axis>
+YMIN: <smallest number printed on the y axis>
+YMAX: <largest number printed on the y axis>
+SQUARES: <the y value of a series drawn as SQUARES, or "absent">
+TRI_AT_X45: <log CFL of the TRIANGLE series at log STL = 4.5>
+CIRC_AT_X45: <log CFL of the CIRCLE series at log STL = 4.5>
