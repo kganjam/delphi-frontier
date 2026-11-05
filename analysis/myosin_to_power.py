@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PROTEIN to ORGANISM: myosin kinetics to muscle power to the flapping requirement.
+"""PROTEIN -> TISSUE -> ORGAN -> ORGANISM: myosin kinetics to the muscle fraction a fish would need.
 
 This is the chain claim 1103 said the project did not have. develop_to_flight.py starts at an
 organ-scale allometry and routes AROUND the unmeasured potential-to-rate junction, so it spans
@@ -44,6 +44,7 @@ ISOFORMS = [("EO / MYH13 (superfast)", 352.0, 3.2),
 REQUIRED_W_PER_KG = 53.0     # claim 998 / 588, the flapping route's requirement
 MEASURED_SUPERFAST_W_PER_KG = (6.0, 15.0)   # claims 979, 998
 MEASURED_FAST_W_PER_KG = 142.7              # claim 309, Scorpaena fast myotomal, FAST-START
+BREAKEVEN_MUSCLE_FRACTION = 0.539           # claim 959, scale=organism; break-even at 53 W/kg
 
 
 def main() -> int:
@@ -89,6 +90,32 @@ def main() -> int:
     print("  upper end of a 6-15 W/kg measured range. The honest reading is UNDETERMINED.")
     print("  Choosing IIb as the baseline would make this look like a solved problem; choosing")
     print("  IId would make it look closed. Neither choice is defensible from the kinetics.")
+
+    # ---- the two scales the first version JUMPED OVER ----
+    # TISSUE -> ORGAN: whole-animal power is (W/kg of muscle) x (muscle mass). Claim 959 fixes
+    # the break-even at 53.9% muscle fraction when muscle delivers the 53 W/kg requirement, so
+    # a muscle delivering W W/kg needs a fraction f = 0.539 * (53 / W) to deliver the same
+    # whole-animal power. That is an ORGAN-scale quantity -- how much of the animal is muscle --
+    # derived from a TISSUE-scale one, and it is what the protein-scale kinetics finally buy.
+    print(f"\n  TISSUE -> ORGAN: muscle FRACTION needed, from claim 959's {BREAKEVEN_MUSCLE_FRACTION:.1%}")
+    print(f"  break-even at {REQUIRED_W_PER_KG:.0f} W/kg. f = {BREAKEVEN_MUSCLE_FRACTION:.3f} x ({REQUIRED_W_PER_KG:.0f} / W):")
+    fracs = []
+    for label, c_lo, c_hi in ceilings:
+        f_hi = BREAKEVEN_MUSCLE_FRACTION * REQUIRED_W_PER_KG / c_hi
+        f_lo = BREAKEVEN_MUSCLE_FRACTION * REQUIRED_W_PER_KG / c_lo
+        fracs.append((label, f_hi, f_lo))
+        print(f"    vs {label:4} -> {f_hi:5.1%} to {f_lo:5.1%} of body mass as flight muscle")
+    print("\n  ORGAN -> ORGANISM: is that anatomically available? Claim 959 records that active")
+    print(f"  teleosts REPORTEDLY exceed {BREAKEVEN_MUSCLE_FRACTION:.1%}, which is the only")
+    print("  benchmark this project holds, and records it as reported rather than measured here.")
+    best_f = min(f for _, f, _ in fracs)
+    worst_f = max(f for _, _, f in fracs)
+    print(f"    the chain's range is {best_f:.1%} to {worst_f:.1%}. The favourable end is well")
+    print(f"    inside what teleosts reportedly reach; the unfavourable end is "
+          f"{worst_f/BREAKEVEN_MUSCLE_FRACTION:.1f}x that benchmark and")
+    print("    is not anatomically plausible for an animal that must also swim and feed.")
+    print("    So the SAME undeterminacy propagates: the protein-scale ambiguity becomes an")
+    print("    organ-scale one, and nothing downstream resolves it.")
 
     print("\n  THE ASSUMPTION IS THE WEAK POINT AND IT IS LOAD-BEARING. Power is force times")
     print("  velocity and this chain carries no force data. Comai et al. 2026 (claim 1099,")
