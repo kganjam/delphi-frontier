@@ -55,7 +55,11 @@ CHAIN = [
     ("ORGANISM / body plan",
      "What wind does the ACHIEVABLE animal actually need?", 988),
     ("ORGANISM / body plan",
-     "The taxi route has its organ now -- does it close?", 992),  # was 991: its Re range mixed corners
+     "The taxi route has its organ now -- does it close?", 992),
+    ("ORGANISM / body plan",
+     "Is there a danionin already at the required size?", 1000),
+    ("ORGANISM / body plan",
+     "Can a zebrafish instead be ENGINEERED to that size?", 1012),  # was 991: its Re range mixed corners
     # ORGAN and TISSUE
     ("ORGAN / fin morphology",
      "How much fin AREA is achievable, and at what aspect ratio?", 567),
@@ -64,7 +68,9 @@ CHAIN = [
     ("ORGAN / fin morphology",
      "Does the allele PAIR give the flying-fish body plan?", 990),  # was 989: it read Fig 4C's DORSAL lobe as the whole caudal fin
     ("ORGAN / fin morphology",
-     "How does the achievable fin compare with real gliders, in their own unit?", 986),  # 1001 superseded by 1003: it read a FIT, not the specimens
+     "How does the achievable fin compare with real gliders, in their own unit?", 986),
+    ("ORGAN / fin morphology",
+     "Can fin AREA be enlarged without the ray-stiffness penalty?", 1013),  # 1001 superseded by 1003: it read a FIT, not the specimens
     ("ORGAN / swim bladder",
      "Can the body be made light enough?", 553),
     ("TISSUE / fin skeleton",
