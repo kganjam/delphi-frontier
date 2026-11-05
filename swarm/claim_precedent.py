@@ -45,15 +45,45 @@ NULL_CEILING = 0.34
 DF: dict[str, int] = {}
 
 
+def stem(w: str) -> str:
+    """Crudest possible suffix stripping, and it was not optional.
+
+    Without it the must-find control FAILED on its first run: the query said "frequency" and
+    "conflicts" where entailment e38 says "frequencies" and "conflict", so two of the shared
+    terms never matched and the hit fell below the three-rare-term floor. A precedent checker
+    that misses a record because of an English plural is not a precedent checker. No stemmer
+    library is used, because the only job here is collapsing inflections that would otherwise
+    split one concept into two tokens.
+    """
+    for suf in ("ies", "ing", "ed", "es", "s"):
+        if w.endswith(suf) and len(w) - len(suf) >= 4:
+            return w[: -len(suf)] + ("y" if suf == "ies" else "")
+    return w
+
+
 def toks(s: str) -> set[str]:
-    return {w for w in re.findall(r"[a-z0-9]+", (s or "").lower())
+    return {stem(w) for w in re.findall(r"[a-z0-9]+", (s or "").lower())
             if w not in STOP and len(w) > 3}
 
 
 def corpus():
-    return q(f"""select id, coalesce(superseded_by::text,''),
-             replace(left(coalesce(statement,''),700), chr(10), ' ')
-             from claim where project_id = {lit(PROJECT)}""")
+    """Claims AND entailments. The first version searched claims only, and missed.
+
+    Measured 2026-11-05, the same day this module was written to stop exactly this: claim 1145
+    reported a conflict in flying-fish tail-beat frequency as a finding, and entailment e38
+    already held all three figures -- Davenport 1994, Deng 2019 and the APS 2024 13.5 Hz -- in
+    its satisfied_by field. A propositions-level checker that reads only one of the two tables
+    where this project records propositions is a checker with a blind spot the size of the other
+    table. 381 entailment rows carry prose nobody was searching.
+    """
+    claims = q(f"""select 'claim ' || id, coalesce(superseded_by::text,''),
+               replace(left(coalesce(statement,''),700), chr(10), ' ')
+               from claim where project_id = {lit(PROJECT)}""")
+    ents = q(f"""select 'entailment e' || id, '',
+             replace(left(coalesce(statement,'') || ' ' || coalesce(satisfied_by,''), 700),
+                     chr(10), ' ')
+             from constraint_entailed where project_id = {lit(PROJECT)}""")
+    return claims + ents
 
 
 def build_df(rows) -> None:
@@ -94,10 +124,16 @@ def main() -> int:
     real = search(query, rows)
     null = search(query, rows, shuffled=True)
     ratio = len(null) / len(real) if real else 0.0
-    print(f"  {len(rows)} claims in {PROJECT}; {len(real)} share {MIN_RARE}+ rare terms "
-          f"with the query")
+    print(f"  {len(rows)} records in {PROJECT} (claims + entailments); {len(real)} share "
+          f"{MIN_RARE}+ rare terms with the query")
     print(f"  CONTROL, same-size query of equally rare but unrelated terms: {len(null)} hits "
           f"= {ratio:.0%} of the real rate (ceiling {NULL_CEILING:.0%})")
+    # A RATIO ON A HANDFUL OF HITS IS NOT A MEASUREMENT. Measured on its own must-find control:
+    # 3 real hits against 1 null reads as 33%, just under the ceiling -- but one hit either way
+    # moves it to 0% or 67%. Saying so is cheaper than pretending the number means something.
+    if real and len(real) < 8:
+        print(f"  (that ratio rests on {len(real)} real hits; one hit either way moves it by "
+              f"{1/len(real):.0%}, so read it as a smell test and not a measurement)")
     if real and ratio > NULL_CEILING:
         print("  TREAT THE HITS BELOW AS NOISE -- a meaningless query of equally rare terms "
               "matches nearly as often, so the vocabulary is doing the work, not the meaning.")
@@ -111,7 +147,7 @@ def main() -> int:
     print(f"  {len(sup_hits)} of the top hits are SUPERSEDED claims -- read those first.\n")
     for score, cid, sup, rare, stmt in real[:8]:
         tag = f"SUPERSEDED by {sup}" if sup else "live"
-        print(f"  claim {cid}  [{tag}]  score {score:.2f}  via {','.join(rare[:5])}")
+        print(f"  {cid}  [{tag}]  score {score:.2f}  via {','.join(rare[:5])}")
         print(f"     {stmt[:170]}")
         if sup:
             why = q(f"select replace(left(coalesce(statement,''),200), chr(10), ' ') "
