@@ -202,12 +202,124 @@ def import_v2(project: str, d: str, write: bool) -> int:
     return 0
 
 
+# ---------------------------------------------------------------- the THIRD shape: routes
+# Both results/coral/routes.json and results/insect-flight/routes.json use
+# `design-space-routes-0.1`: 45 and 46 ROUTES respectively, each a PROPOSED intervention with a
+# declared `evidence_strength` drawn from that file's own `evidence_labels`, plus an `evidence`
+# list of {cite, pmid, read_level}.
+#
+# NOTHING ON THIS PATH IS A RESULT, AND NOTHING MAY BE TYPED 'measured'. Both files say so in
+# their own limitations: coral's reads "NONE OF THESE ROUTES HAS BEEN ATTEMPTED HERE. This is a
+# reading of a literature, with two simulations beside it. No coral was touched." A route is a
+# proposal about what an intervention WOULD do.
+#
+# The mapping below was written only after enumerating every value that actually occurs in both
+# files, not from the label list alone: coral has direct_coral_phenotype 31, proposed 5,
+# model_only 3, direct_coral_phenotype_relayed 3, direct_other_species 2,
+# cis_regulatory_inference 1; insect has direct_insect_phenotype 27, direct_other_species 15,
+# model_only 2, cis_regulatory_inference 1, proposed 1. The two files differ in exactly one
+# label (`direct_coral_phenotype` vs `direct_insect_phenotype`), which is why the key is matched
+# by shape rather than listed per project.
+ROUTE_EVIDENCE = {
+    "proposed": "assumed",                  # nothing perturbed; a proposal, not a finding
+    "model_only": "simulated",
+    "direct_other_species": "literature",
+    "cis_regulatory_inference": "literature",
+}
+# Our own closed read-level vocabulary. `web-page` occurs twice in coral and is NOT in it;
+# it is recorded as NULL rather than guessed into the nearest neighbour.
+READ_LEVELS = ("full-text", "abstract", "listing", "search-summary", "could-not-access")
+
+
+def route_evidence(strength: str) -> str | None:
+    if strength in ROUTE_EVIDENCE:
+        return ROUTE_EVIDENCE[strength]
+    # Any `direct_*` label: a published direct result READ from a paper. Literature, never
+    # measured -- we measured nothing. The prefix carries the meaning and the suffix only names
+    # the system, verified against all three files' own `evidence_labels`:
+    #   coral    direct_coral_phenotype / _relayed  "direct coral phenotype[, source unverified]"
+    #   insect   direct_insect_phenotype            "direct insect phenotype"
+    #   xenobot  direct_construct_result            "direct xenobot / anthrobot result"
+    #   all      direct_other_species               "direct result, another system"
+    # An earlier version matched only "_phenotype" and so REFUSED xenobot's 26
+    # direct_construct_result routes -- correctly, since a xenobot has no phenotype. Checked a
+    # sample before widening: it cites PMIDs 31932426 and 34074533 at full-text and abstract.
+    if strength and strength.startswith("direct_"):
+        return "literature"
+    return None
+
+
+def import_routes(project: str, d: str, write: bool) -> int:
+    f = os.path.join(d, "routes.json")
+    if not os.path.exists(f):
+        print(f"  no routes.json in {d}")
+        return 1
+    j = json.load(open(f, encoding="utf-8"))
+    if j.get("schema") != "design-space-routes-0.1":
+        print(f"  {f} is schema {j.get('schema')!r}, not design-space-routes-0.1; not imported")
+        return 1
+    routes = j.get("routes") or []
+    scales = {s.get("key"): s for s in (j.get("scales") or [])}
+    unknown = sorted({r.get("evidence_strength") for r in routes
+                      if route_evidence(r.get("evidence_strength")) is None})
+    if unknown:
+        print(f"  REFUSING {f}: evidence_strength {unknown} has no mapping. Not defaulting.")
+        return 2
+    print(f"  {len(routes)} route(s), {len(scales)} scales in {f}")
+    if not write:
+        print("  report only; pass --write to import")
+        return 0
+    rid = q(f"""insert into run (project_id, tool, command, not_executable_because, notes)
+                values ({lit(project)}, 'routes-import', {lit(f)},
+                        {lit('a routes file is a reading of a literature, not an executed run')},
+                        {lit('imported from ' + f + ' (design-space-routes-0.1)')})
+                returning id""")[0][0]
+    made = {}
+    for r in routes:
+        ev = route_evidence(r.get("evidence_strength"))
+        evs = r.get("evidence") or []
+        lv = [e.get("read_level") for e in evs if isinstance(e, dict)]
+        best = next((x for x in READ_LEVELS if x in lv), None)
+        outside = sorted({x for x in lv if x and x not in READ_LEVELS})
+        pmids = sorted({str(e.get("pmid")) for e in evs
+                        if isinstance(e, dict) and e.get("pmid")})
+        sc = scales.get(r.get("scale")) or {}
+        st = (f"ROUTE (a PROPOSED intervention, not a result): {r.get('title')}\n\n"
+              f"INTERVENTION: {r.get('intervention')}\n"
+              f"PREDICTED PHENOTYPE: {r.get('predicted_phenotype')}\n"
+              f"MECHANISM: {r.get('mechanism')}\n"
+              f"SCALE: {r.get('scale')} ({sc.get('label', '?')})\n"
+              f"reversibility={r.get('reversibility')} lethality_risk={r.get('lethality_risk')} "
+              f"difficulty={r.get('difficulty')}\n"
+              f"EVIDENCE TRANSFER: {r.get('evidence_transfer_label') or '-'}"
+              + (f" -- {r.get('evidence_transfer_note')}" if r.get('evidence_transfer_note') else "")
+              + f"\n\nIMPORTED from {f}. Declared evidence_strength "
+                f"{r.get('evidence_strength')!r} -> evidence={ev!r}. This is a PROPOSAL about "
+                f"what an intervention would do; the source file states that none of its routes "
+                f"was attempted. {len(evs)} evidence item(s), read levels "
+                f"{ {x: lv.count(x) for x in set(lv) if x} or 'none stated'}"
+              + (f"; {outside} are OUTSIDE this project's closed read-level vocabulary and the "
+                 f"row's read_level is left NULL rather than guessed" if outside else "")
+              + (f". PMIDs: {', '.join(pmids)}" if pmids else ". No PMIDs given."))
+        q(f"""insert into claim (project_id, statement, evidence, source, run_id, read_level)
+              values ({lit(project)}, {lit(st)}, {lit(ev)}, {lit(f)}, {rid},
+                      {lit(best) if best else 'null'})""")
+        made[ev] = made.get(ev, 0) + 1
+    print(f"  imported {sum(made.values())} route claim(s): {made}")
+    assert "measured" not in made, "a route was typed 'measured'; routes are proposals"
+    print(f"  [ok] control: 0 route claims typed 'measured' -- routes are proposals, "
+          f"and both source files state none was attempted")
+    return 0
+
+
 def main() -> int:
     if len(sys.argv) < 3:
         print(__doc__)
         return 2
     project, d = sys.argv[1], sys.argv[2]
     write = "--write" in sys.argv
+    if "--routes" in sys.argv:
+        return import_routes(project, d, write)
     if not os.path.isdir(d):
         print(f"  REFUSING: {d} is not a directory. Reporting 0 studies for a path that does not "
               f"exist is a missing tree, not a measurement.", file=sys.stderr)
