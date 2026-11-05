@@ -55,7 +55,7 @@ CHAIN = [
     ("ORGANISM / body plan",
      "What wind does the ACHIEVABLE animal actually need?", 988),
     ("ORGANISM / body plan",
-     "The taxi route has its organ now -- does it close?", 992),
+     "The taxi route has its organ now -- does it close?", 1014),  # was 992: it fitted one exponent across Eloy's laminar/turbulent kink AND corner-selected it
     ("ORGANISM / body plan",
      "Is there a danionin already at the required size?", 1000),
     ("ORGANISM / body plan",
@@ -93,7 +93,7 @@ CHAIN = [
     ("ORGANISM / powered flight",
      "What lift coefficient is actually attainable?", 601),
     ("TISSUE / muscle",
-     "Can the fin muscle beat fast enough?", 588),  # was 587: it closed the route on an
+     "Can the fin muscle beat fast enough?", 998),  # was 588: its 35-71 W/kg availability was DERIVED; measurement says 14.19  # was 587: it closed the route on an
                                                     # assertion; 588 computes the budget
     ("TISSUE / muscle",
      "Can any fish muscle generate power AT that frequency?", 593),
