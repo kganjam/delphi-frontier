@@ -73,7 +73,18 @@ def main() -> int:
 
     # CONTROL: at CL 0 the induced term must vanish and CD must fall to CD0.
     assert abs(cd_induced(2.0, 0.8, cl=0.0)) < 1e-12, "CONTROL FAILED: induced drag nonzero at zero lift"
-    assert sigma(2.0) == 0.0, "CONTROL FAILED: ground effect applied far from the surface"
+    # THIS CONTROL WAS VACUOUS AND THE ADVERSARIAL PANEL CAUGHT IT. It asserted
+    # sigma(2.0) == 0.0, which the h_over_b > 0.9 guard GUARANTEES -- so it tested the guard
+    # and never the formula, and could not have failed. The raw form actually gives -0.1035 at
+    # h/b 2.0, i.e. it would RAISE induced drag by 10% if applied there, which is exactly why
+    # the clamp exists. The clamp is right; the control proved nothing. Now both are checked:
+    # that the clamp fires, and that it fires on a value the formula would otherwise return.
+    assert sigma(2.0) == 0.0, "CONTROL FAILED: the far-field clamp did not fire"
+    raw = (1.0 - 1.32*2.0)/(1.05 + 7.4*2.0)
+    assert raw < -0.05, (
+        f"CONTROL FAILED: the raw form gives {raw:.4f} at h/b 2.0; if it were already ~0 the "
+        "clamp would be untested and this assertion vacuous")
+    assert sigma(0.12) > 0.4, "CONTROL FAILED: no ground effect where there should be a large one"
     print(f"\n  CONTROLS: induced drag is exactly 0 at CL 0, and ground effect is 0 at h/b 2.0.")
 
     print(f"\n  WHAT THIS MEANS. Every lift-attributable distance recorded in this project used a")
