@@ -226,9 +226,9 @@ claim 978 `simulated` / `full-text`
 _CORRECTION TO CLAIM 976: ROBUST FLIGHT NEEDS 12.5 m/s, NOT 18.7 -- THE GALE REQUIREMENT WAS A SEARCH ARTIFACT, NOT PHYSICS. Claim 976 reported that closed-loop control makes the flight robust (12 of 12 perturbations) but cannot fly below 18.7 m/s at one metre, and concluded route D offers "fragile flight in a strong breeze, robust flight only in a GALE, and nothing below". The 18.7 figure came fro…_
 
 **Can the genetics lower the wind requirement?**  
-**10.6 fold wild-type fin area needed to bring robust flight down to 12.5 m/s of wind (4x the best published allele's 2.65-fold); the best single lever gives 2.65 and the levers share one pathway**  
-claim 977 `simulated` / `full-text`  
-_WHAT THE GENETICS WOULD HAVE TO DELIVER TO FLY IN ORDINARY WIND, AND WHY THEY CANNOT: FOUR TIMES MORE FIN THAN THE BEST PUBLISHED ALLELE GIVES, WHICH IS ABOUT 10.6 TIMES WILD TYPE. Claim 976 established that robust sustained flight needs roughly 18.7 m/s of wind at one metre -- a gale -- and that nothing flies robustly below it. That requirement is set by WING LOADING, which is exactly what the fi…_
+**0 fin-area sweep points that can be quoted: the 200-controller sweep is non-monotonic (12.5, 10.4, 12.5, 8.3, 10.4 m/s) while wing loading falls throughout, so every magnitude is search noise; the DIRECTION (more fin helps) survives**  
+claim 981 `simulated` / `full-text`  
+_CLAIM 977'S FIN-AREA NUMBERS ARE WITHDRAWN WITHOUT REPLACEMENT: THE SWEEP IS STILL NON-MONOTONIC AT 200 CONTROLLERS, SO THE LEVER'S DIRECTION IS KNOWN AND ITS MAGNITUDE IS NOT RESOLVABLE WITH THIS SEARCH. Claim 978 showed claim 977's fin-area sweep had been run on a 27-point controller grid that produced a non-monotonic result, and undertook to redo it at 200 points. That is done, and it fails the…_
 
 **Can it extract energy from WIND SHEAR?**  
 **25.7 fold inertial-frame energy gain from wind shear at u*=0.60, lift-dependent (a wingless body with the same drag LOSES energy); but the cycle does not close and the animal lands every time**  
