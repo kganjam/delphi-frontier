@@ -368,3 +368,65 @@ if __name__ == "__main__":
     ok &= controls_efficiency()
     if not ok:
         raise SystemExit("controls failed")
+
+
+# ---------------------------------------------------------------------------
+# The gap the adversarial arm found: N contractions, not one.
+# ---------------------------------------------------------------------------
+
+def multi_contraction():
+    """How many charging contractions would route C need, at each measured efficiency?
+
+    CLAIM 960 CLOSED ROUTE C AT N = 1 AND DID NOT SAY SO. Its arithmetic,
+    muscle_fraction = v^2 / (2 * E_d * eta), is the energy of ONE contraction of a muscle mass.
+    A latch-and-spring does not have to be charged in one contraction: if the spring holds the
+    energy, N contractions of the same muscle deposit N times the work before release. Then
+
+        m_muscle / m  =  v^2 / (2 * eta * N * E_d)
+
+    and the muscle fraction falls as 1/N. That is the objection the adversarial arm raised --
+    "the efficiency argument caps what fraction of STORED energy reaches the body, not how much
+    is stored" -- and it is correct. The efficiency eta is unchanged by N; what N changes is how
+    much there is to be inefficient with.
+
+    So the route does not close on efficiency alone. It closes only if the REQUIRED N is
+    biologically out of reach. This computes the required N rather than asserting either way.
+    """
+    print("\n" + "=" * 78)
+    print("ROUTE C AT N CHARGING CONTRACTIONS -- claim 960 assumed N = 1")
+    print("=" * 78)
+    print("\n  m_muscle/m = v^2 / (2 * eta * N * E_d)     [claim 960 is this at N = 1]\n")
+    for budget, blabel in ((0.30, "30% muscle, a generous but real fraction"),
+                           (0.60, "60% muscle, implausible but a bound")):
+        print(f"  contractions needed to fit the launch into {blabel}:")
+        print(f"    {'efficiency':>11}{'N needed':>11}   source")
+        for eta, label, _src in EFFICIENCIES:
+            n = V_NEEDED ** 2 / (2 * eta * ENERGY_DENSITY * budget)
+            print(f"    {eta:>11.2f}{n:>11.1f}   {label}")
+        print()
+
+    print("  CONTROLS")
+    # 1. N = 1 must reproduce claim 960's published numbers exactly, or this is a different model.
+    print(f"    {'efficiency':>11}{'N=1 fraction':>14}   claim 960 reported")
+    for eta, label, _ in EFFICIENCIES:
+        f = V_NEEDED ** 2 / (2 * ENERGY_DENSITY * eta)
+        print(f"    {eta:>11.2f}{100*f:>13.0f}%   {label}")
+    print("      claim 960 reported 138% at 0.39, 146% at 0.37 and 539% at 0.10 -- match above.")
+    # 2. the requirement must fall as 1/N, not some other way
+    a = V_NEEDED ** 2 / (2 * 0.39 * ENERGY_DENSITY * 1.0)
+    b = V_NEEDED ** 2 / (2 * 0.39 * ENERGY_DENSITY * 1.0) / 2.0
+    n2 = V_NEEDED ** 2 / (2 * 0.39 * ENERGY_DENSITY * 2.0)
+    print(f"    doubling N halves the requirement: {a:.3f} -> {n2:.3f}, expected {b:.3f} "
+          f"{'OK' if abs(n2-b) < 1e-9 else 'WRONG'}")
+    # 3. the test must be able to return 'feasible', or it only ever says impossible
+    n_feas = V_NEEDED ** 2 / (2 * 0.39 * ENERGY_DENSITY * 0.30)
+    print(f"    at eta=0.39 and a 30% budget the answer is N={n_feas:.1f}, a FINITE number, so "
+          f"the test can return feasible")
+
+    print("\n  WHAT THIS DOES AND DOES NOT SETTLE. It does not reopen route C on its own: it")
+    print("  converts the question from 'is the efficiency enough' (answered, no, at N=1) into")
+    print("  'can a fish charge a spring over N contractions' (not answered here). The N above")
+    print("  is what that mechanism would have to deliver. Whether any fish, or any LaMSA")
+    print("  system, charges over multiple contractions is a literature question and is")
+    print("  deliberately NOT guessed at in this file.")
+    return True

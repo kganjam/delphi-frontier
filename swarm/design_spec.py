@@ -96,10 +96,18 @@ ROUTE_VERDICTS = [
      "against the ~83 Hz needed; the superfast myosin has never been sequenced in any animal; "
      "and superfast muscle delivers at most 14.19 W/kg against the 53 W/kg required, short by "
      "3.7 to 9 fold across every species ever measured."),
-    ("C. Latch-spring launch", 960, False,
-     "PROVISIONAL. The efficiency argument caps what fraction of STORED energy reaches the "
-     "body, not how much is stored -- so it closes only if multi-contraction spring charging "
-     "is impossible, which is unknown. The adversarial arm caught this."),
+    ("C. Latch-spring launch", 1060, True,
+     "CLOSED, and on a better argument than the one first offered. Claim 960 closed it on "
+     "transfer efficiency; the adversarial arm objected -- correctly -- that efficiency caps "
+     "what fraction of STORED energy reaches the body, not how much is stored, so N charging "
+     "contractions would cut the requirement by 1/N. At the best measured efficiency the "
+     "launch needs 4.6 contractions into a 30% muscle budget, and 18 at the spring-driven "
+     "efficiency. But a muscle's work in ONE contraction is bounded by its stroke, and that "
+     "bound IS the 15 J/kg already used, so a second contraction requires the muscle to "
+     "re-lengthen while the spring stays charged -- which a latch cannot do and a RATCHET "
+     "would. The Journal of Experimental Biology LaMSA review, read at 200,000 of its 264,473 "
+     "characters, describes no system charging over multiple contractions and no ratchet; what "
+     "it describes is longer SINGLE contractions, which the 15 J/kg bound already contains."),
     ("D. Harvesting the wind", 1056, True,
      "CLOSED ON HABITAT, NOT ON PHYSICS -- and that distinction is the point. The flight "
      "result stands: in wind above 12.5 m/s at 1 m the design sustains flight for the full 4 s "
