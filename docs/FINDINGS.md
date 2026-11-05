@@ -219,10 +219,28 @@ number remain.
 
 **They differ in exactly one quantity.**
 
-**And the model validates against the animal that succeeds.** The same equations reproduce the
-exocoetid taxi to 15 m/s, and Deng 2019's 36 W, **only with Reynolds-dependent lobe drag. With a
-constant C_D a flying fish could not taxi at all.** So the Reynolds effect is not a fitted excuse
-for our failure — it is what makes the model describe the real glider.
+**And the model is CONSISTENT WITH the animal that succeeds — which is weaker than validation,
+and the source document said so.** The same equations reproduce the exocoetid taxi to 15 m/s and
+Deng 2019's 36 W **only with Reynolds-dependent lobe drag; with a constant C_D a flying fish
+could not taxi at all.**
+
+**Two qualifiers from the originating document (commit `c1b761eb`, S32) were dropped when this
+passage was written, and both matter:**
+
+1. *"φ and A_pp are assumed, so this is a **consistency check, not a calibration**."* The 36 W
+   agreement is between Floryan's pitching power law with two assumed parameters and **Deng
+   2019's CFD**, read at **abstract** level (bioRxiv 765560; full text returned HTTP 429 or
+   exceeded the size limit on six attempts). It is a **simulated** number, not an observation.
+2. The exocoetid lobe C_D is **not measured**. S32's assumptions table calls it an *"ASSUMED
+   extrapolation"* — the measured-span value *"scaled as Re^−½ outside the measured span"* — and
+   says it matters *"decisively for the exocoetid"*. Floryan's 0.08 at Re 4,780 scaled that way
+   to Re 3×10⁵ gives 0.0101, which is the tabulated value (claim 1016).
+
+**So the Reynolds effect is not independently evidenced here.** The two rows of the table above
+are one measurement and an extrapolation of it under an assumed exponent of ½, which is why any
+exponent fitted across them returns ≈½ (claim 1016), and why claims 992 and 1014 were recovering
+their own input. Claim 1015 adds that appendage **configuration** alone moved one angelfish's
+drag coefficient by 4.30× at fixed Reynolds number — 43–86% of the gap between these rows.
 
 That is the strongest form this result can take: **one parameter explains both the success and the
 failure.**
