@@ -114,6 +114,68 @@ def search(query: str, rows, shuffled=False):
     return out
 
 
+EXPAND_PROMPT = """A research project records claims in prose. Someone is about to record the
+proposition below and wants to know whether the project already recorded it -- possibly in quite
+different words, possibly years of vocabulary drift apart.
+
+Write 6 ALTERNATIVE PHRASINGS of the same proposition, each using DIFFERENT content words.
+
+AIM AT THE REGISTER OF A WORKING LAB NOTEBOOK, not a journal abstract. The corpus being searched
+was written by people recording what they found, in plain words, often as a flat negative: "X
+does not discriminate Y", "the ratio is no better than background", "this tells us nothing about
+Z". Measured 2026-11-05: an earlier version of this prompt asked for "the jargon a specialist
+would use" and produced "inverse-folding model log-odds" and "softmax over a
+structure-conditioned generator" -- further from the target than the original query, because the
+precedent was written as "does not discriminate ... above the background for any native versus
+foreign residue comparison".
+
+So: two phrasings in plainer words than the query, two stating the proposition as a NEGATIVE or a
+refutation, and two using different nouns for the same objects. Change the TERMS, not the
+connectives.
+
+PROPOSITION:
+{query}
+
+Reply with one phrasing per line, six lines, nothing else.
+"""
+
+
+def expand(query: str) -> list[str]:
+    """Paraphrase the query, because the matcher needs the PRECEDENT's words, not the asker's.
+
+    MEASURED 2026-11-05, on this module's own founding failure. Claim 1031 states the rule "the
+    background has to be measured per position rather than assumed from one success". Asked in
+    the words I would naturally write -- "a mutant probability is evidence only where the model
+    recovers the native residue" -- this module returned ONE hit, my own claim. Asked in claim
+    1031's words -- "does not discriminate ... above the background for any native versus foreign
+    residue comparison" -- it returns claim 1031 at score 0.65.
+
+    So the matcher works and the QUERY was the problem, and the problem is structural: it wants
+    the vocabulary of the precedent, which is exactly what someone about to re-derive a claim
+    does not have. Rare-term IDF cannot bridge a paraphrase; another pass over the same model
+    that wrote the query can.
+    """
+    try:
+        # call_live_with_fallback, NOT call_first_live. A query about mutant residues trips the
+        # API's bio classifier -- measured here: all four tenants returned
+        # RefusalStopDetails(category='bio') -- and the documented remedy for a CONTENT refusal
+        # is a different model, which call_first_live does not do. This is the same mistake I
+        # diagnosed in api_evaluate_constraints two hours ago, made again in a new module: a
+        # tenant that is out of money and a model that refuses need different answers, and
+        # reaching for whichever helper is closest gives one of them.
+        from api_challenge import TENANTS, call_live_with_fallback
+    except Exception:                                             # noqa: BLE001
+        return []
+    try:
+        r = call_live_with_fallback(TENANTS, EXPAND_PROMPT.format(query=query), max_tokens=500)
+    except Exception as e:                                        # noqa: BLE001
+        print(f"  (expansion unavailable: {str(e)[:150]}); searching the query alone")
+        return []
+    text = (r.get("text") if isinstance(r, dict) else str(r)) or ""
+    out = [ln.strip(" -*\t") for ln in text.splitlines() if len(ln.strip()) > 20]
+    return out[:6]
+
+
 def main() -> int:
     if len(sys.argv) < 2:
         print("  usage: claim_precedent.py '<the proposition you are about to record>'")
@@ -121,7 +183,21 @@ def main() -> int:
     query = " ".join(a for a in sys.argv[1:] if not a.startswith("--"))
     rows = corpus()
     build_df(rows)
-    real = search(query, rows)
+    queries = [query]
+    if "--expand" in sys.argv:
+        extra = expand(query)
+        if extra:
+            print(f"  expanded into {len(extra)} alternative phrasing(s):")
+            for e in extra:
+                print(f"    - {e[:96]}")
+            queries += extra
+    seen_ids, real = set(), []
+    for qq in queries:
+        for hit in search(qq, rows):
+            key = hit[0] if isinstance(hit, (list, tuple)) else str(hit)
+            if key not in seen_ids:
+                seen_ids.add(key)
+                real.append(hit)
     null = search(query, rows, shuffled=True)
     # WHEN THE REAL QUERY FINDS NOTHING AND THE NONSENSE QUERY FINDS SOMETHING, that is the
     # loudest signal this module can produce, and the first version printed it as "0%" -- which

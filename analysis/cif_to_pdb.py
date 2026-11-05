@@ -39,7 +39,13 @@ def to_pdb(path: str) -> str:
     cols, rows = read_cif(path)
     i = {name: cols.index(name) for name in
          ("group_PDB", "type_symbol", "label_atom_id", "label_comp_id", "label_asym_id",
-          "label_seq_id", "Cartn_x", "Cartn_y", "Cartn_z", "B_iso_or_equiv", "occupancy")}
+          "label_seq_id", "Cartn_x", "Cartn_y", "Cartn_z", "B_iso_or_equiv")}
+    # `occupancy` is OPTIONAL. ESMFold2's writer emits it; OpenFold3's does not, and a required
+    # lookup turned a perfectly readable dimer into ValueError: 'occupancy' is not in list.
+    # Where it is absent every atom is fully occupied by construction -- these are predictions,
+    # not crystallographic refinements with partial occupancy -- so 1.00 is the right default
+    # rather than a guess.
+    i_occ = i.get("occupancy")
     out = []
     for n, r in enumerate(rows, 1):
         name, elem = r[i["label_atom_id"]], r[i["type_symbol"]]
@@ -50,7 +56,8 @@ def to_pdb(path: str) -> str:
             f"{n:5d} {an}{'':1s}{r[i['label_comp_id']]:>3s} {r[i['label_asym_id']][:1]:1s}"
             f"{int(r[i['label_seq_id']]):4d}{'':1s}   "
             f"{float(r[i['Cartn_x']]):8.3f}{float(r[i['Cartn_y']]):8.3f}{float(r[i['Cartn_z']]):8.3f}"
-            f"{float(r[i['occupancy']]):6.2f}{float(r[i['B_iso_or_equiv']]):6.2f}"
+            f"{(float(r[i_occ]) if i_occ is not None else 1.0):6.2f}"
+            f"{float(r[i['B_iso_or_equiv']]):6.2f}"
             f"{'':10s}{elem:>2s}")
     out.append("TER")
     out.append("END")
