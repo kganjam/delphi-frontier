@@ -96,7 +96,7 @@ SPEC = [
     # real hole rather than a bookkeeping one: the project asked at length whether the animal
     # COULD launch and never whether it WOULD. Claim 1072 answers it, and unfavourably.
     ("9. BEHAVIOUR -- WOULD THE ANIMAL DO IT?", [
-        ("Does a zebrafish leave the water at all, and does a bigger fin help?", 1072),
+        ("Does a zebrafish leave the water at all, and does a bigger fin help?", 1073),
         ("How fast can an adult actually start?", 75),
         ("Does taxiing on the surface add anything?", 37),
     ]),

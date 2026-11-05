@@ -271,9 +271,9 @@ _[THE PROTEIN ARM'S RESOLUTION IS MEASURED, AND IT SITS BETWEEN ONE SUBSTITUTION
 ## 9. BEHAVIOUR -- WOULD THE ANIMAL DO IT?
 
 **Does a zebrafish leave the water at all, and does a bigger fin help?**  
-**0 difference in individual tail-flip jump distance between longfin and wildtype zebrafish despite differing caudal fin area; wildtype performed more jumps and covered more total distance**  
-claim 1072 `literature` / `abstract`  
-_[THE BEHAVIOUR GAP, FILLED, AND IT IS UNFAVOURABLE: THE ONE PUBLISHED EXPERIMENT COMPARING LONGFIN WITH WILDTYPE ON LEAVING THE WATER FINDS THE BIG FIN NO BETTER AND WORSE OVERALL] Claim 1071 recorded that the design spec reaches 7 of 8 scales and that `behaviour` is absent -- and that the project's four behaviour-labelled claims are really fast-start KINEMATICS (21, 37, 75) plus an access note (2…_
+**0 difference in individual tail-flip jump distance between longfin and wildtype despite differing caudal fin area; endurance and time-to-exhaustion also equal, with total distance differing by behavioural strategy**  
+claim 1073 `literature` / `abstract`  
+_[I OVERSTATED THE LONGFIN JUMPING RESULT; THE FULL ABSTRACT IS KINDER TO THE DESIGN AND MORE INTERESTING -- SUPERSEDES 1072] Claim 1072 reported that the enlarged fin "bought NOTHING on single-jump distance and cost the animal on sustained performance", from a truncated abstract via one index with an unconfirmed PMID. The paper is now confirmed and its full abstract read, and two things change.  T…_
 
 **How fast can an adult actually start?**  
 **1.38 m/s**  
