@@ -23,7 +23,10 @@ failure wearing a verdict. Three defences:
   * the `challenger` field names the model AND the tenant, so a later reader can ask whether one
     model produced all the refutations.
 
-    python3 api_challenge.py <n> [--tenant T] [--write]
+    python3 api_challenge.py <n> [--tenant T] [--panel|--repanel|--no-opus] [--write]
+
+`--tenant T` pins every call to one tenant, for draining the credit that expires first.
+Without it the run rotates over all four in scope.
 """
 from __future__ import annotations
 
@@ -142,6 +145,20 @@ def main() -> int:
     n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5
     write = "--write" in sys.argv
     panel = "--panel" in sys.argv
+    # --tenant PINS the spend to one tenant. The docstring has advertised this flag since the
+    # file was written and main() never read it, so a run meant to drain the tenant expiring
+    # soonest silently rotated across all four and looked exactly like a run that had not. The
+    # name is checked against TENANTS so a typo -- or `api_allen`, which the owner's standing
+    # instruction excludes -- refuses rather than falling back to the rotation.
+    tenants = list(TENANTS)
+    if "--tenant" in sys.argv:
+        want = sys.argv[sys.argv.index("--tenant") + 1]
+        if want not in TENANTS:
+            print(f"  --tenant {want!r} is not one of {TENANTS}"
+                  + ("  (api_allen is EXCLUDED by standing instruction)"
+                     if want == "api_allen" else ""))
+            return 2
+        tenants = [want]
     if "--repanel" in sys.argv:
         # Claims that have been challenged by exactly ONE model. Those verdicts are confounded:
         # claim 497 measured that opus passes 41% of what it judges and sonnet 0 of 18, and that
@@ -186,14 +203,14 @@ def main() -> int:
     if not rows:
         print("  no unchallenged live claims; nothing to do.")
         return 0
-    print(f"  {len(rows)} claim(s); tenants {TENANTS} (api_allen EXCLUDED)"
+    print(f"  {len(rows)} claim(s); tenants {tenants} (api_allen EXCLUDED)"
           + (f"; PANEL mode, every claim to {PANEL}" if panel else "") + "\n")
     spent = 0.0
     refused_n = 0
     panel_sizes: dict[int, int] = {}
     tally: dict[str, int] = {}
     for i, (cid, ev, stmt) in enumerate(rows):
-        t = TENANTS[i % len(TENANTS)]
+        t = tenants[i % len(tenants)]
         prompt = PROMPT.format(cid=cid, ev=ev, stmt=stmt[:6000])
         if panel:
             # Both models, recorded as separate challenge rows. A claim both weaken is a different
