@@ -67,11 +67,52 @@ def arms():
 
 def main() -> int:
     bad = 0
-    for name, ok, detail in arms():
+    for name, ok, detail in arms() + pdb_arms():
         print(f"  [{'ok' if ok else 'FAIL'}] {name}\n           {detail}")
         bad += not ok
     print(f"  -> controls {'PASS' if not bad else f'FAIL ({bad})'}")
     return 1 if bad else 0
+
+
+
+
+def pdb_arms():
+    """Round-trip control: the PDB must carry the same CA coordinates as the mmCIF."""
+    import tempfile
+    from cif import all_atoms, to_pdb
+    out = []
+    src = D / "kcnk5b-homodimer-msa" / "model.cif"
+    if not src.exists():
+        return [("pdb round trip: source absent", False, str(src))]
+    with tempfile.TemporaryDirectory() as td:
+        dst = pathlib.Path(td) / "m.pdb"
+        n = to_pdb(src, dst)
+        text = dst.read_text()
+        # re-read the PDB BY COLUMN, which is how a real parser reads it
+        got = []
+        for ln in text.splitlines():
+            if ln.startswith("ATOM") and ln[12:16].strip() == "CA":
+                got.append((ln[21], int(ln[22:26]),
+                            float(ln[30:38]), float(ln[38:46]), float(ln[46:54])))
+        want = [(a["chain"], a["resi"], a["x"], a["y"], a["z"])
+                for a in all_atoms(src) if a["name"] == "CA"]
+        out.append((f"pdb has the same CA count as the cif ({len(want)})",
+                    len(got) == len(want), f"pdb {len(got)} vs cif {len(want)}"))
+        worst = max((max(abs(g[i] - w[i]) for i in (2, 3, 4))
+                     for g, w in zip(got, want)), default=9.9)
+        out.append(("CA coordinates survive the round trip to 0.001 A",
+                    worst <= 0.0011, f"worst {worst:.4f} A"))
+        out.append((f"both chains present and single-character ({len(set(g[0] for g in got))})",
+                    len({g[0] for g in got}) == 2, str(sorted({g[0] for g in got}))))
+        # MUST FLAG: a CA written one column left reads as calcium to a column parser
+        out.append(("the atom name is column-correct: 'CA' at 13-16 reads as ' CA '",
+                    any(ln[12:16] == " CA " for ln in text.splitlines()
+                        if ln.startswith("ATOM")),
+                    "found ' CA '" if any(ln[12:16] == " CA " for ln in text.splitlines()
+                                          if ln.startswith("ATOM")) else "MISPLACED"))
+        out.append(("atom count is nonzero and matches the writer's return",
+                    n == len(all_atoms(src)), f"{n}"))
+    return out
 
 
 if __name__ == "__main__":

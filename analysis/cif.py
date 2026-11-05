@@ -83,3 +83,58 @@ def check_protein_like(atoms: list[dict], path: str = "") -> None:
     if all(a[k] >= 0 for a in atoms for k in "xyz"):
         raise CifError(f"{path}: every x/y/z is non-negative, which a centred structure is not -- "
                        f"suspect a B-factor/pLDDT column")
+
+
+def all_atoms(path: str | pathlib.Path) -> list[dict]:
+    """Every ATOM record, read through the declared header (not just CA)."""
+    text = pathlib.Path(path).read_text()
+    c = atom_columns(text)
+    chain = c.get("auth_asym_id", c.get("label_asym_id"))
+    resi = c.get("auth_seq_id", c.get("label_seq_id"))
+    elem = c.get("type_symbol")
+    out = []
+    for line in text.splitlines():
+        if not line.startswith("ATOM"):
+            continue
+        f = line.split()
+        if len(f) <= max(c.values()):
+            continue
+        out.append({"name": f[c["label_atom_id"]], "resn": f[c["label_comp_id"]],
+                    "chain": f[chain], "resi": int(f[resi]),
+                    "x": float(f[c["Cartn_x"]]), "y": float(f[c["Cartn_y"]]),
+                    "z": float(f[c["Cartn_z"]]),
+                    "b": float(f[c["B_iso_or_equiv"]]) if "B_iso_or_equiv" in c else 0.0,
+                    "elem": f[elem] if elem is not None else ""})
+    if not out:
+        raise CifError(f"{path}: no ATOM records")
+    return out
+
+
+def to_pdb(src: str | pathlib.Path, dst: str | pathlib.Path) -> int:
+    """Write an mmCIF's atoms as a PDB file. Returns the atom count.
+
+    PDB is COLUMN-FIXED, not whitespace-separated, and the two traps are the atom-name field
+    and the chain id. A one-character element is right-justified into columns 13-14 so the
+    name begins at column 14; writing it at 13 makes `CA` (alpha carbon) read as `CA` the
+    calcium ion to anything that parses by column. And the chain id is a SINGLE character, so
+    an mmCIF label longer than one character has to be mapped rather than truncated silently.
+    """
+    atoms = all_atoms(src)
+    check_protein_like([a for a in atoms if a["name"] == "CA"], str(src))
+    chains = sorted({a["chain"] for a in atoms})
+    if len(chains) > 62:
+        raise CifError(f"{src}: {len(chains)} chains, more than PDB single-character ids allow")
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    cmap = {c: (c if len(c) == 1 else alphabet[i]) for i, c in enumerate(chains)}
+    lines = []
+    for i, a in enumerate(atoms, start=1):
+        nm = a["name"]
+        el = (a["elem"] or nm[0]).strip()
+        name = f" {nm:<3}" if len(el) == 1 and len(nm) < 4 else f"{nm:<4}"
+        lines.append(
+            f"ATOM  {i:>5} {name}{'':1}{a['resn']:>3} {cmap[a['chain']]:1}{a['resi']:>4}    "
+            f"{a['x']:>8.3f}{a['y']:>8.3f}{a['z']:>8.3f}{1.00:>6.2f}{a['b']:>6.2f}"
+            f"{'':10}{el:>2}")
+    lines.append("END")
+    pathlib.Path(dst).write_text("\n".join(lines) + "\n")
+    return len(atoms)
