@@ -21,9 +21,9 @@ claim 523 `derived` / `full-text`
 _CLAIM 520 IS CORRECTED: ITS VERDICT WAS AN ARTIFACT OF A FIXED 45 DEGREE LAUNCH ANGLE, AND THE ADVERSARIAL ARM CAUGHT IT. Claim 520 reported a best li…_
 
 **Can a better-SHAPED fin compensate for less area?**  
-**1.66 irreducible fold area shortfall after every aerodynamic refinement, achievable 2.65x against a 4.4x floor**  
-claim 568 `derived` / `full-text`  
-_THE 4.4-FOLD AREA REQUIREMENT IS A FLOOR SET BY LIFT PHYSICS, NOT BY DRAG: ASPECT RATIO SATURATES AND CANNOT RESCUE THE DESIGN. Claim 567 found that a…_
+**1.78 lift coefficient at which the achievable fin would clear the floor, against a measured 1.07 maximum at this Reynolds number**  
+claim 579 `derived` / `full-text`  
+_CLAIM 568'S "IRREDUCIBLE" OVERREACHED AND BOTH PANEL MODELS CAUGHT IT: THE FLOOR MOVES WITH CL AND CD0. ITS CONCLUSION SURVIVES, BUT ON A DIFFERENT AR…_
 
 **Is the drag coefficient the project uses physically attainable?**  
 **1.96 fold area shortfall at the BEST physically available drag, against the 1.85x the project has quoted**  
@@ -60,9 +60,9 @@ _CORRECTING CLAIM 545 WITH A PUBLISHED MUSCLE ENERGY DENSITY: THE SPEEDS NEED 14
 ## ORGANISM / body plan
 
 **Does a SMALLER fish need less fin?**  
-**21.3 mm body length of the claim 575 crossing, inside the regime where fast-start velocity still rises with size**  
-claim 576 `literature` / `abstract`  
-_FAST-START VELOCITY RISES WITH SIZE IN THE RANGE THE DESIGN WANTS TO EXPLOIT, SO THE SMALL-FISH ROUTE IS REFUTED AND CLAIM 573 IS QUALIFIED. Claim 573…_
+**3 real defects the panel found in the two most recent claims, one of which breaks a refutation**  
+claim 577 `derived` / `full-text`  
+_THE ADVERSARIAL ARM FOUND THREE REAL DEFECTS IN TONIGHT'S LAST TWO CLAIMS, AND THE FIRST BREAKS CLAIM 576'S REFUTATION. Tonight produced 52 claims and…_
 
 **Does reducing body MASS close the gap?**  
 **46 percent of body volume that must become gas to reach the density claim 549 requires**  
@@ -134,18 +134,18 @@ _THE SECOND GENETIC CHANGE HAS NO SINGLE-GENE TARGET: ZEBRAFISH BUOYANCY REGULAT
 ## SYNTHESIS
 
 **What is the best design this project can specify?**  
-**4.3 fold shortfall of the best specifiable design against flight; 1.08x against the weak threshold**  
-claim 574 `derived` / `full-text`  
-_THE BEST DESIGN THIS PROJECT CAN SPECIFY: A 2.6 cm YOUNG ADULT WITH THE BEST MEASURED FIN GENETICS, WHICH NEARLY MEETS THE WEAK THRESHOLD AND IS 4.3-F…_
+**1.41 fold net gain from choosing a 2.6 cm body, after correcting the double-counted fin advantage from 1.54**  
+claim 580 `derived` / `full-text`  
+_THE FIN ADVANTAGE IS PROGRESSIVE WITH BODY SIZE, SO CLAIM 574 DOUBLE-COUNTED: ITS 1.5-FOLD FREE GAIN IS 1.41-FOLD. claude-opus-5-5 objected to claim 5…_
 
 
 ## Where it stands
 
-- 352 live claims of 413 for project `zebrafish-flight`; **61 superseded**, which is the project correcting itself and is not a defect.
+- 355 live claims of 419 for project `zebrafish-flight`; **64 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 174, `measured` 103, `literature` 49, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 178, `measured` 103, `literature` 48, `simulated` 16, `unknown` 9, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**

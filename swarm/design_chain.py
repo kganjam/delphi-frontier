@@ -35,7 +35,7 @@ CHAIN = [
     ("ORGANISM / aerodynamics",
      "Does a wing beat a ballistic leap, and how much does launch ANGLE matter?", 523),
     ("ORGANISM / aerodynamics",
-     "Can a better-SHAPED fin compensate for less area?", 568),
+     "Can a better-SHAPED fin compensate for less area?", 579),  # was 568: 'irreducible' overreached; 579 gives the CL-bounded form
     ("ORGANISM / aerodynamics",
      "Is the drag coefficient the project uses physically attainable?", 565),
     ("ORGANISM / kinematics",
@@ -47,7 +47,7 @@ CHAIN = [
     ("ORGANISM / energetics",
      "Can muscle supply that speed at all?", 547),
     ("ORGANISM / body plan",
-     "Does a SMALLER fish need less fin?", 576),
+     "Does a SMALLER fish need less fin?", 577),  # was 576: the cross-species refutation was invalid; 577 is the corrected form
     ("ORGANISM / body plan",
      "Does reducing body MASS close the gap?", 550),
     # ORGAN and TISSUE
@@ -70,7 +70,7 @@ CHAIN = [
      "What gene defeats buoyancy regulation?", 554),
     # the bottom line
     ("SYNTHESIS",
-     "What is the best design this project can specify?", 574),
+     "What is the best design this project can specify?", 580),  # was 574: the 1.54x gain double-counted progressive overgrowth; 580 is 1.41x
 ]
 
 
