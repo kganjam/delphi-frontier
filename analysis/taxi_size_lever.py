@@ -110,33 +110,75 @@ def main() -> int:
           f"   (claim 991 said 1.8x-7.3x by mixing corners)")
 
     import math
-    re_ratio = EXO["re"] / ZEB["re"]
-    n_lo = math.log(ZEB["cd_lo"] / EXO["cd_lo"]) / math.log(re_ratio)
-    n_hi = math.log(ZEB["cd_hi"] / EXO["cd_hi"]) / math.log(re_ratio)
-    n = (n_lo + n_hi) / 2
-    print(f"\n  C_D ~ Re^-n with n = {n_lo:.3f} to {n_hi:.3f} (two tabulated points, mean {n:.3f})")
-    re_ratios = [(r ** (1.0 / n)) for r in reductions]
-    print(f"  -> Reynolds number must rise {min(re_ratios):.1f}x to {max(re_ratios):.1f}x")
 
-    # Re ~ V_to * L, and V_to ~ sqrt(W/S) ~ sqrt(L) under geometric scaling, so Re ~ L^1.5.
-    # f*A_pp/V_to is SIZE-INDEPENDENT under constant Strouhal (f*A = St*U), and the table
-    # supports that empirically: both rows carry fa = 0.09-0.10 across a 30x Reynolds range.
+    # ELOY 2012 eq (16), NOT A FITTED EXPONENT. The previous version fitted
+    # C_D ~ Re^-n to the table's two points and inverted it. A peer review (session
+    # morphoswarm-ed, S908) showed that is wrong twice over, and both verify here:
+    #
+    #   (a) CORNER SELECTION. n = ln(C_zeb/C_exo)/ln(30) has FOUR corner pairings from two
+    #       bracketed anchors -- 0.5924, 0.5578, 0.4732, 0.6770 -- and the reported
+    #       0.558-0.592 was exactly the two CORRELATED ones. The anchors are different
+    #       animals in different papers; nothing couples their uncertainties. Honest
+    #       interval 0.473-0.677, six times wider.
+    #   (b) THE KINK. Eloy's law is a MAX of two power laws whose crossover is at
+    #       Re = 1.671e5, BETWEEN the two anchors: the zebrafish point is on the laminar
+    #       branch and the exocoetid point on the turbulent one. One exponent across them
+    #       is a chord over a kink -- the law's own two-point exponent there is 0.448
+    #       against local slopes of 0.5 and 0.2 -- so n was never a material property.
+    #
+    # So the slope comes from the law and the FORM FACTOR is what the data estimate.
+    ELOY_LAM, ELOY_TUR = 2 * 1.328, 0.072
+    XOVER = (ELOY_LAM / ELOY_TUR) ** (1 / 0.3)
+
+    def eloy(re):
+        return max(ELOY_LAM * re ** -0.5, ELOY_TUR * re ** -0.2)
+
+    print(f"\n  DRAG LAW: Eloy 2012 eq (16), Cd = max({ELOY_LAM}*Re^-0.5, {ELOY_TUR}*Re^-0.2)")
+    print(f"  laminar/turbulent crossover at Re = {XOVER:.3e}, which lies BETWEEN the anchors")
+    for lab, row in (("zebrafish", ZEB), ("exocoetid", EXO)):
+        br = "laminar" if ELOY_LAM * row["re"] ** -0.5 > ELOY_TUR * row["re"] ** -0.2 else "TURBULENT"
+        print(f"    {lab:10} Re {row['re']:.0e}  law {eloy(row['re']):.5f} ({br})  "
+              f"observed {row['cd_lo']}-{row['cd_hi']}  form factor "
+              f"{row['cd_lo']/eloy(row['re']):.2f}-{row['cd_hi']/eloy(row['re']):.2f}")
+    print("  the two form-factor ranges OVERLAP, so the data show no exponent anomaly --")
+    print("  both points are the standard law times a form factor of roughly 1.4 to 3.")
+
+    # Hold the form factor constant and move along whichever branch governs.
+    re_ratios = []
+    for red in reductions:
+        re_need = red ** 2.0              # laminar branch: Cd ~ Re^-0.5
+        newre = ZEB["re"] * re_need
+        if newre > XOVER:
+            print(f"    WARNING: reduction {red:.2f}x crosses into the turbulent branch; "
+                  f"the laminar-only step below understates the requirement")
+        re_ratios.append(re_need)
+        print(f"    reduce C_D {red:.2f}x -> Re x{re_need:.2f} (to {newre:.2e}, "
+              f"{'laminar' if newre < XOVER else 'TURBULENT'})")
+
+    # Re ~ V_to * L and V_to ~ sqrt(W/S) ~ sqrt(L), so Re ~ L^1.5. f*A_pp/V_to is
+    # size-independent under constant Strouhal, which the table confirms: both rows carry
+    # fa = 0.09-0.10 across a 30x Reynolds range.
     L_ratios = [r ** (2.0 / 3.0) for r in re_ratios]
-    print(f"\n  Re ~ L^1.5 (V_to ~ sqrt(L)), and f*A_pp/V_to is size-independent under constant")
-    print(f"  Strouhal -- which the table CONFIRMS: both rows share fa = {FA_LO}-{FA_HI} across a")
-    print(f"  {re_ratio:.0f}x Reynolds range. So:")
-    print(f"    body length must rise {min(L_ratios):.2f}x to {max(L_ratios):.2f}x")
-    print(f"    a 4 cm zebrafish becomes {4*min(L_ratios):.1f} to {4*max(L_ratios):.1f} cm")
+    print(f"\n  Re ~ L^1.5, so body length must rise "
+          f"{min(L_ratios):.2f}x to {max(L_ratios):.2f}x")
+    print(f"    a 3.8 cm Danio rerio (FishBase max SL) becomes "
+          f"{3.8*min(L_ratios):.1f} to {3.8*max(L_ratios):.1f} cm SL")
+    print(f"    Devario aequipinnatus is 12.0-12.8 cm SL (claim 1000) -> "
+          f"{'INSIDE' if 3.8*min(L_ratios) <= 12.8 and 12.0 <= 3.8*max(L_ratios) else 'OUTSIDE'} "
+          f"the target")
 
     lo_x, hi_x = min(re_ratios), max(re_ratios)
     print("\n" + "-" * 78)
     print(f"  READ THIS AS A RANGE, NOT A DESIGN POINT: Reynolds number must rise by")
     print(f"  {lo_x:.1f}x to {hi_x:.1f}x, i.e. {math.log10(lo_x):.1f} to {math.log10(hi_x):.1f} "
-          f"orders of magnitude. The exponent comes from")
-    print("  two tabulated points; a third would move it, and the required Re ratio is that")
-    print("  exponent inverted, which amplifies its error. What the number supports is the")
-    print("  DIRECTION and the SCALE -- the gap is a body-size problem, not a few percent of")
-    print("  fin area.")
+          f"orders of magnitude. The SLOPE is no longer fitted --")
+    print("  it is Eloy eq (16)'s laminar branch -- so the old warning about an inverted")
+    print("  two-point exponent no longer applies. What IS uncertain now is the FORM FACTOR,")
+    print("  which the two anchors put at 1.4-3.0, and whether it stays constant with size.")
+    print("  AND A LARGER CONFOUND SITS UNDER ALL OF IT (claim 1015): Blake 1979 measured one")
+    print("  angelfish at ONE Reynolds number, pectoral fins extended versus amputated, and got")
+    print("  4.30x in drag coefficient. The two anchors here differ by 5.0-10.0x in total, so")
+    print("  CONFIGURATION alone could account for 43% to 86% of what this attributes to Re.")
     print("\n  AND NO FIN ALLELE SUPPLIES IT. Re = U*L/nu. The measured genetic levers change")
     print("  fin area (2.67x, claim 987) and fin proportion (claim 990). Neither changes body")
     print("  length or kinematic viscosity. The lever that would is BODY SIZE, and the alleles")
