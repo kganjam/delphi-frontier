@@ -172,7 +172,7 @@ def main() -> int:
         # re-running sonnet on opus-PASSED claims weakens 7 of 8 -- so a single-model verdict
         # records which model happened to see it as much as what it says. Re-running these through
         # the panel replaces one model's opinion with two, at about $0.02 a claim.
-        rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
+        rows = q(f"""select c.id, c.evidence, replace(replace(c.statement, '{SEP}', ' '), chr(10), ' ')
                      from claim c
                      where c.project_id={lit(PROJECT)} and c.superseded_by is null
                      and length(c.statement) between 80 and 6000
@@ -192,7 +192,7 @@ def main() -> int:
         # read it, and the panel's row count hides that. 244 live claims were in this state when
         # the mode was added. Fallback verdicts keep their distinct challenger label, so they
         # stay countable separately rather than merging into the panel.
-        rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
+        rows = q(f"""select c.id, c.evidence, replace(replace(c.statement, '{SEP}', ' '), chr(10), ' ')
                      from claim c
                      where c.project_id={lit(PROJECT)} and c.superseded_by is null
                      and length(c.statement) between 80 and 6000
@@ -202,7 +202,7 @@ def main() -> int:
                                      and ch.outcome in ('survived','weakened','refuted'))
                      order by c.id desc limit {n}""")
     else:
-        rows = q(f"""select c.id, c.evidence, replace(c.statement, '{SEP}', ' ')
+        rows = q(f"""select c.id, c.evidence, replace(replace(c.statement, '{SEP}', ' '), chr(10), ' ')
                      from claim c where c.project_id={lit(PROJECT)} and c.superseded_by is null
                      and length(c.statement) between 80 and 6000
                      and not exists (select 1 from challenge ch where ch.claim_id = c.id)
