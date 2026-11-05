@@ -275,7 +275,16 @@ def main() -> int:
             # keeps everything and a step that drops everything both "work" on one example.
             joined = " ".join(str(q.get("question", "")).lower() for q in kept_q)
             dropped_n = {q.get("n") for q in qs if not q.get("keep")}
-            must_keep = "muscle" in joined and ("mass" in joined or "power" in joined)
+            # Project-agnostic, for the same reason as the final control below: the previous
+            # test was `"muscle" in joined and ("mass" in joined or "power" in joined)`, which
+            # is zebrafish-flight vocabulary. Coral has no muscle, so the generalisation control
+            # failed for it and the module silently fell back to the verbatim quantities -- a
+            # degraded result that announces itself only as one line of output. Same bug as the
+            # final control, in a second place, and fixing one did not fix the other.
+            src_w: set = set()
+            for quantity, _u, _c in items:
+                src_w |= words(quantity)
+            must_keep = bool(src_w & words(joined))
             must_drop = source == "gaps" or any("available minus required" in items[n - 1][0].lower()
                             for n in dropped_n if isinstance(n, int) and 1 <= n <= len(items))
             # A yes/no or relationship phrasing returns nothing from a numeric extractor
