@@ -138,6 +138,11 @@ _THE SECOND GENETIC CHANGE HAS NO SINGLE-GENE TARGET: ZEBRAFISH BUOYANCY REGULAT
 claim 580 `derived` / `full-text`  
 _THE FIN ADVANTAGE IS PROGRESSIVE WITH BODY SIZE, SO CLAIM 574 DOUBLE-COUNTED: ITS 1.5-FOLD FREE GAIN IS 1.41-FOLD. claude-opus-5-5 objected to claim 5…_
 
+**What does that design actually achieve?**  
+**2.72 cm lift-attributable distance for the best design at a 5 BL/s run-up, meeting the 2 cm threshold**  
+claim 584 `derived` / `full-text`  
+_WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDINARY CRUISING, THE FLIGHT CRITERION IS NOT AND IS NOT CLOSE. Claim 583 e…_
+
 
 ## Where it stands
 

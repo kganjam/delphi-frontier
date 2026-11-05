@@ -71,6 +71,8 @@ CHAIN = [
     # the bottom line
     ("SYNTHESIS",
      "What is the best design this project can specify?", 580),  # was 574: the 1.54x gain double-counted progressive overgrowth; 580 is 1.41x
+    ("SYNTHESIS",
+     "What does that design actually achieve?", 584),
 ]
 
 
