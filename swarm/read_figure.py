@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 import base64
 import json
+import os
 import re
 import statistics
 import sys
@@ -70,6 +71,9 @@ MEAN_KC10_56: <value>
 """
 
 
+PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+
+
 def ask_once(tenant: str, img_b64: str, model: str, ask: str = "") -> tuple[dict, float]:
     content = [
         {"type": "image",
@@ -77,7 +81,7 @@ def ask_once(tenant: str, img_b64: str, model: str, ask: str = "") -> tuple[dict
         {"type": "text", "text": ask or ASK},
     ]
     out = api_credits.call(tenant, content, model=model, max_tokens=900,
-                           purpose="figure-read", project="zebrafish-flight")
+                           purpose="figure-read", project=PROJECT)
     text = out.get("text") or ""
     fields = {}
     for line in text.splitlines():
