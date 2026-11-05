@@ -72,6 +72,7 @@ SPEC = [
         ("Does sustained flight require flying past stall?", 973),
         ("Does the chain close from water exit to flight?", 974),
         ("Is that flight ROBUST, or a knife edge?", 975),
+        ("Does closed-loop control fix the fragility?", 976),
         ("Can it extract energy from WIND SHEAR?", 966),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [
@@ -99,10 +100,10 @@ ROUTE_VERDICTS = [
      "design sustains flight for the full 4 s simulation above 1 metre with net energy gain "
      "(50-75 of 100 controllers); below that, 0 of 100. A wingless body with the same drag "
      "sustains in 0 of 2500 cases at every altitude floor, so this is lift, not advection. "
-     "Structural loads and stall were since tested and cleared. But the flight is a KNIFE "
-     "EDGE: the most robust of 24 sustaining controllers survives only 5 of 12 one-at-a-time "
-     "perturbations, with non-monotonic failures. Real inside the model; not a regime an "
-     "animal could hold."),
+     "Structural loads and stall were tested and cleared. Open-loop flight is a KNIFE EDGE "
+     "(best 5 of 12 perturbations). CLOSED-LOOP control fixes that -- 12 of 12 -- but cannot "
+     "fly below 18.7 m/s at all. So: fragile flight in a strong breeze, robust flight only in "
+     "a GALE, and nothing below."),
 ]
 
 
