@@ -70,7 +70,9 @@ CHAIN = [
     ("ORGAN / fin morphology",
      "How does the achievable fin compare with real gliders, in their own unit?", 986),
     ("ORGAN / fin morphology",
-     "Can fin AREA be enlarged without the ray-stiffness penalty?", 1013),  # 1001 superseded by 1003: it read a FIT, not the specimens
+     "Can fin AREA be enlarged without the ray-stiffness penalty?", 1013),
+    ("ORGAN / fin morphology",
+     "At what LIFE STAGE is the fin ratio measured, and which way does that err?", 1025),  # 1001 superseded by 1003: it read a FIT, not the specimens
     ("ORGAN / swim bladder",
      "Can the body be made light enough?", 553),
     ("TISSUE / fin skeleton",
