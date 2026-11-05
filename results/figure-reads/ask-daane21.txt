@@ -1,0 +1,21 @@
+This is panel B of a figure from a published zebrafish paper (Daane et al. 2021, Current Biology).
+
+The y axis is "fin length/SL" and the panel is titled "pectoral fin". There are FOUR groups of
+scattered points, each with a box-and-whisker overlay. Below the x axis are two genotype rows
+labelled "lof/+" and "nr21/+", each marked - or + for each group. The four groups are, left to
+right:  (lof -, nr21 -) = wild type;  (lof -, nr21 +);  (lof +, nr21 -);  (lof +, nr21 +).
+
+Give the MEDIAN of each group -- the central horizontal line of each box.
+
+Report ONLY what you can see. If something is not in the image, write "absent".
+
+Reply in EXACTLY this form, one item per line, nothing else:
+AXIS_MIN: <smallest number printed on the y axis>
+AXIS_MAX: <largest number printed on the y axis>
+NGROUPS: <how many groups are plotted>
+N_GROUP3: <the sample size n printed under the third group>
+GROUP5_MEDIAN: <median of a FIFTH group, or "absent">
+MED_WT: <median, group 1, lof- nr21->
+MED_NR21: <median, group 2, lof- nr21+>
+MED_LOF: <median, group 3, lof+ nr21->
+MED_DOUBLE: <median, group 4, lof+ nr21+>

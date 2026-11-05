@@ -55,11 +55,17 @@ def figures_of(pmcid: str) -> tuple[list[str], list[str]]:
     html = fetch(f"https://pmc.ncbi.nlm.nih.gov/articles/{pmcid}/")
     if len(html) < 5000:
         return [], []
-    # PMC serves figure images under /bin/ ; capture both jpg and png
-    urls = sorted(set(re.findall(r'https://[^"\']*?/bin/[^"\']+?\.(?:jpg|png)', html)))
+    # PMC serves figure images from cdn.ncbi.nlm.nih.gov/pmc/blobs/<hash>/<pmcid>/<hash>/<name>.
+    # The first version of this looked for the OLD "/bin/" path and found ZERO images on every
+    # paper -- reporting "not retrievable here" for articles whose figures were sitting in the
+    # HTML. A scraper matching a pattern the site no longer uses returns the same empty list as
+    # a paywalled article, which is the empty-set failure wearing a plausible explanation.
+    urls = sorted(set(re.findall(
+        r'https://cdn\.ncbi\.nlm\.nih\.gov/pmc/blobs/[^"\']+?\.(?:jpg|png)', html)))
+    # icons and logos live under the same CDN; keep only per-article blobs
+    urls = [u for u in urls if "/blobs/" in u and "favicon" not in u and "logo" not in u]
     if not urls:
-        rel = sorted(set(re.findall(r'["\'](/[^"\']*?/bin/[^"\']+?\.(?:jpg|png))["\']', html)))
-        urls = ["https://pmc.ncbi.nlm.nih.gov" + u for u in rel]
+        urls = sorted(set(re.findall(r'https://[^"\']*?/bin/[^"\']+?\.(?:jpg|png)', html)))
     text = re.sub(r'<[^>]+>', ' ', html)
     text = re.sub(r'\s+', ' ', text)
     caps = []
