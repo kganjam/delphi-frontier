@@ -56,6 +56,31 @@ QUANTITIES = {
 EXCLUDED_HOMONYMS = {"fold change": "RNA-seq differential expression, not fin size"}
 
 
+REFHEAD = re.compile(r"\b(References|Bibliography|Literature cited)\b", re.I)
+
+
+def split_references(text: str) -> tuple[str, bool]:
+    """Return (body, boundary_found). A REFERENCE LIST IS NOT EVIDENCE OF CONTENT.
+
+    Measured 2026-11-04: the top-ranked 'myostatin' paper in this corpus is about social
+    dominance hierarchies, and both its hits are in the bibliography -- a cited TITLE, counted
+    as if the paper discussed the subject. Over the 19 papers where a boundary can be located,
+    reference sections are 18% of the file and carry 0% of the flexural-stiffness and fin-size
+    hits, 8% of lift/drag, 10% of Reynolds and 25% of swim-speed-in-BL/s.
+
+    THE BOUNDARY IS ONLY LOCATABLE IN ABOUT ONE FILE IN SIX (19 of 111), because PMC strips the
+    heading from most. So this does not eliminate the contamination, it bounds it: where the
+    split works the inflation is 0-25% and does not change which quantities are present. A first
+    pass that compared every file to itself reported 0-4% and looked reassuring, because 92 of
+    111 files contributed an identical pair by construction -- a control that cannot fail.
+    """
+    cut = None
+    for m in REFHEAD.finditer(text):
+        if m.start() > len(text) * 0.45:
+            cut = m.start()
+    return (text[:cut], True) if cut else (text, False)
+
+
 def controls_pass() -> tuple[bool, str]:
     """A string each pattern MUST match, and prose it MUST NOT."""
     must = {
@@ -94,8 +119,11 @@ def main() -> int:
     print(f"  {len(files)} paper(s)\n")
 
     totals = {k: 0 for k in QUANTITIES}
+    split_ok = 0
     for f in files:
-        t = f.read_text(encoding="utf-8")
+        raw = f.read_text(encoding="utf-8")
+        t, found = split_references(raw)
+        split_ok += found
         hits = {k: len(re.findall(p, t, re.I)) for k, p in QUANTITIES.items()}
         for k, v in hits.items():
             totals[k] += v
@@ -103,6 +131,9 @@ def main() -> int:
         print(f"  {f.stem:14} {len(t):>8,} chars  {nz or '-- none --'}")
 
     print("\n" + "-" * 78)
+    print(f"  reference lists excluded where locatable: {split_ok} of {len(files)} papers. In the")
+    print("  rest the heading is absent and citations are still counted, so these totals are an")
+    print("  UPPER bound (measured inflation where the split works: 0-25% by quantity).")
     absent = [k for k, v in totals.items() if v == 0]
     for k, v in totals.items():
         mark = "  <- ABSENT from the whole corpus" if v == 0 else ""
