@@ -18,6 +18,11 @@ WHAT IT WILL NOT DO, and these are hard rules rather than defaults:
 HOW THE RATE IS MEASURED. Balances are sampled into a state file. A rate needs two samples, so
 the FIRST run never launches anything -- it records a sample and says so. That is deliberate:
 launching on one sample means launching on no measurement at all.
+
+ONE WRITER. Every run REWRITES the state file, so running this by hand while the heartbeat loop
+is running resets the clock the loop depends on and can keep it permanently under the 120 s
+floor. Use MS_CREDIT_STATE to point an ad-hoc run at a different file, or just let the loop own
+this one.
 """
 from __future__ import annotations
 
@@ -94,20 +99,25 @@ def main() -> int:
     rate_needed, amount, hours = need[binding]
     print(f"  binding tenant {binding}: ${amount:.2f}, {hours:.1f} h -> needs ${rate_needed:.2f}/h")
 
-    observed = None
+    observed, why = None, "no prior sample"
     if prior.get("at") and binding in prior.get("bal", {}):
         dtsec = (now - dt.datetime.fromisoformat(prior["at"])).total_seconds()
         if dtsec > 120:
             spent = prior["bal"][binding] - amount
             observed = spent / (dtsec / 3600)
             print(f"  observed ${observed:.2f}/h over the last {dtsec/60:.0f} min")
+        else:
+            # NOT the same as having no sample, and saying so matters: a supervisor that has
+            # been running for hours but prints "first sample" reads as broken state. This
+            # branch means the previous sample is simply too close in time to divide by.
+            why = f"prior sample only {dtsec:.0f}s old; too recent to derive a rate"
 
     STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps({"at": now.isoformat(),
                                  "bal": {t: v[0] for t, v in bal.items()}}))
 
     if observed is None:
-        print("  FIRST SAMPLE: a rate needs two. Recorded; launching nothing this run.")
+        print(f"  NO RATE YET ({why}). Recorded; launching nothing this run.")
         return 0
 
     arms = running_arms()
