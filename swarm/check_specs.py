@@ -62,7 +62,14 @@ def env():
     return e
 
 
-SCOPABLE = {"claim", "run", "subproblem", "artifact", "idea", "rubric", "setting",
+# `setting` is DELIBERATELY ABSENT. It carries a project_id column, so the scoper treated it as
+# scopable -- but every row is scope='system' with project_id NULL, because these are fleet-wide
+# policy rows (honesty.*, billing.*), not per-project configuration. Scoping the locked-setting
+# rule to a project therefore checked 8 rows database-wide and 0 for this project, and
+# check_specs reported "SCOPING EMPTIED THIS RULE -- unevaluable per project, NOT satisfied".
+# A policy-integrity rule is global by nature: an agent writing a locked row is a violation
+# whoever it belongs to. Removing `setting` here makes the rule run and be reported [GLOBAL].
+SCOPABLE = {"claim", "run", "subproblem", "artifact", "idea", "rubric",
             "agent_session", "project_capability"}
 
 
