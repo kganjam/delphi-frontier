@@ -71,7 +71,13 @@ def rows():
     buildable = num("""select count(distinct pr.part_id) from part_revision pr
                        join part p on p.id = pr.part_id
                        where p.project_id='%s' and pr.content_sha256 is not null""" % PROJ)
-    yield ("genetic levers with a buildable variant  [the hard bar]",
+    # THE MEASUREMENT IS A PROXY AND IS NOW LABELLED AS ONE (panel, claims 1134/1135). Both
+    # models objected that a non-null content_sha256 means "a sequence this project holds", not
+    # "orderable": the follistatin ORF has no promoter so the transgene cannot be built, the
+    # chimera is an unvalidated design, and kcnk5b@alf-W169L is counted from an abstract alone.
+    # The criterion below is UNCHANGED -- relaxing it to match the proxy is forbidden. What
+    # changes is that the row no longer calls the proxy by the criterion's name.
+    yield ("genetic levers with a SEQUENCE THIS PROJECT HOLDS  [proxy for the hard bar]",
            f"{buildable:.0f} of {levers:.0f} levers carry a SEQUENCE CHANGE this project holds "
            f"(non-null content_sha256); {specced:.0f} have a part_revision of any kind, but a "
            f"revision naming a published allele whose lesion is not held cannot be made. "
@@ -79,7 +85,12 @@ def rows():
            f"chromosome-2 inversion with no coding change, so its null hash is a design fact "
            f"rather than a gap, and the strain exists. Counting it as buildable would need the "
            f"metric to read an editorial table (analysis/genetic_design.py NULL_REASON), which "
-           f"is the kind of dependency that let the previous version of this row pass itself",
+           f"is the kind of dependency that let the previous version of this row pass itself. "
+           f"AND A HELD SEQUENCE IS NOT AN ORDERABLE CONSTRUCT: the follistatin ORF has no "
+           f"promoter, the MYH13 chimera is a design nobody has made, and kcnh2a's inversion "
+           f"needs breakpoint coordinates this project does not hold, so even its strain is "
+           f"obtainable rather than constructible. The threshold below is the real bar and this "
+           f"number is only the closest thing the database can count",
            buildable >= levers,
            "every lever names a variant that could actually be made")
     yield ("genetic levers RESEARCHED to a conclusion",
