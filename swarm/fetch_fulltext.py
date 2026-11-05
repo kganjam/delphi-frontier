@@ -43,18 +43,57 @@ PAUSE_S = 1.0          # NCBI asks for <= 3 requests/second unauthenticated; sta
 CONTROL_PMCID = "PMC7235970"
 
 
-def fetch(pmcid: str) -> tuple[int, int, str]:
-    """Return (bytes, body_chars, text). body_chars == 0 means metadata only, not OA."""
-    req = urllib.request.Request(EFETCH.format(pmcid=pmcid),
-                                 headers={"User-Agent": "morphoswarm-research/1.0"})
-    with urllib.request.urlopen(req, timeout=90) as r:
-        raw = r.read().decode("utf-8", errors="replace")
+EPMC_XML = "https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML"
+
+
+def _body_of(raw: str) -> str:
     m = re.search(r"<body>(.*)</body>", raw, re.S)
     body = m.group(1) if m else ""
     fg = re.search(r"<floats-group>(.*)</floats-group>", raw, re.S)
     if fg:
         body += "\n\nFIGURES AND TABLES\n" + fg.group(1)
-    return len(raw), len(body), raw
+    return body
+
+
+def fetch(pmcid: str) -> tuple[int, int, str]:
+    """Return (bytes, body_chars, text). body_chars == 0 means metadata only, not OA.
+
+    TWO SOURCES, BECAUSE THEIR COVERAGE IS COMPLEMENTARY AND NEITHER CONTAINS THE OTHER.
+    Measured 2026-11-05 over seven papers this project wanted:
+
+        PMC11911140   efetch: no body        Europe PMC: 145,360 bytes
+        PMC2669901    efetch: body           Europe PMC: HTTPError
+        PMC6839432    efetch: body           Europe PMC: 266,092 bytes
+        four others   neither
+
+    efetch reached 2 of 7 and Europe PMC reached 2 of 7, but not the same 2 -- the union is 3.
+    This module's docstring argues at length that NCBI efetch is "the route that works", which
+    was true against the routes it compared (the PMC website, r.jina.ai, headless Playwright,
+    publisher sites, and Europe PMC's fullTextXML returning HTTP 500 for two sessions). That
+    500 is evidently no longer the general case, so the conclusion "Europe PMC does not work"
+    outlived the measurement behind it.
+
+    efetch stays first because it was the measured-reliable one; Europe PMC is tried only when
+    efetch returns no body, so a working path is never replaced by an unproven one.
+    """
+    req = urllib.request.Request(EFETCH.format(pmcid=pmcid),
+                                 headers={"User-Agent": "morphoswarm-research/1.0"})
+    with urllib.request.urlopen(req, timeout=90) as r:
+        raw = r.read().decode("utf-8", errors="replace")
+    body = _body_of(raw)
+    if body:
+        return len(raw), len(body), raw
+    try:
+        req2 = urllib.request.Request(EPMC_XML.format(pmcid=pmcid),
+                                      headers={"User-Agent": "morphoswarm-research/1.0"})
+        with urllib.request.urlopen(req2, timeout=90) as r2:
+            raw2 = r2.read().decode("utf-8", errors="replace")
+        body2 = _body_of(raw2)
+        if body2:
+            return len(raw2), len(body2), raw2
+    except Exception:                                             # noqa: BLE001
+        pass
+    return len(raw), 0, raw
 
 
 def strip_tags(xml_body: str) -> str:
@@ -112,7 +151,7 @@ def main() -> int:
     print("\n" + "-" * 78)
     print(f"  {len(got)} full texts retrieved and saved under results/fulltext/")
     print(f"  {len(meta_only)} in PMC but NOT open access (metadata only -- a real limit,")
-    print(f"     not a retrieval failure, and the control above is what distinguishes them)")
+    print("     not a retrieval failure, and the control above is what distinguishes them)")
     print(f"  {len(no_pmc)} with no PMC record at all")
     if failed:
         print(f"  {len(failed)} fetch errors: {', '.join(p for p, _, _ in failed)}")
