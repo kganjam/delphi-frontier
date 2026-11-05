@@ -32,6 +32,15 @@ import sys
 
 # analysis/taxi_ceiling.py ROWS, same source: docs/FINDINGS.md U_max table.
 FA_LO, FA_HI = 0.09, 0.10          # f * A_pp / V_to, shared by both rows
+# THE EXOCOETID ANCHOR IS AN EXTRAPOLATION, NOT A MEASUREMENT (claim 1016). The S32 commit
+# that introduced this model (c1b761eb) states in its own assumptions table that lobe C_D
+# outside the measured span of Re 4,780-9,560 was "scaled as Re^-1/2 outside the measured span
+# ('scaled', laminar friction)", marked "ASSUMED extrapolation" and "decisively" so for the
+# exocoetid. Floryan's measured 0.08 at Re 4,780 scaled that way to Re 3e5 gives 0.0101, which
+# is the value below. So the two rows are ONE measurement and an extrapolation of it, and any
+# exponent fitted across them returns the 0.5 that the extrapolation assumed. This file no
+# longer fits an exponent (see the Eloy block), which is why that circularity no longer
+# propagates -- but the anchor is still not independent evidence of a Reynolds effect.
 EXO = {"re": 3.0e5, "cd_lo": 0.008, "cd_hi": 0.012, "u_lo": 1.3, "u_hi": 1.5}
 ZEB = {"re": 1.0e4, "cd_lo": 0.06, "cd_hi": 0.08, "u_lo": 0.58, "u_hi": 0.68}
 C6_LO, C6_HI = 1.352, 3.333        # fitted to the exocoetid row by taxi_ceiling.py
