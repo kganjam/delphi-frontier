@@ -273,7 +273,13 @@ def import_routes(project: str, d: str, write: bool) -> int:
     if unknown:
         print(f"  REFUSING {f}: evidence_strength {unknown} has no mapping. Not defaulting.")
         return 2
+    # Quote the file's OWN first limitation instead of paraphrasing it. A file that states no
+    # limitation gets an explicit marker rather than a sentence invented on its behalf.
+    lims = j.get("limitations") or []
+    src_limit = (str(lims[0])[:400] if lims
+                 else "(this source file states no limitations)")
     print(f"  {len(routes)} route(s), {len(scales)} scales in {f}")
+    print(f"  source limitation quoted into every row: {src_limit[:90]}...")
     if not write:
         print("  report only; pass --write to import")
         return 0
@@ -292,7 +298,26 @@ def import_routes(project: str, d: str, write: bool) -> int:
         pmids = sorted({str(e.get("pmid")) for e in evs
                         if isinstance(e, dict) and e.get("pmid")})
         sc = scales.get(r.get("scale")) or {}
-        st = (f"ROUTE (a PROPOSED intervention, not a result): {r.get('title')}\n\n"
+        # WHAT THE SOURCE ACTUALLY SAYS, quoted rather than paraphrased. The previous version
+        # wrote "the source file states that none of its routes was attempted" onto EVERY
+        # route. No source file says that. limitations[0] of both files says "We ran no
+        # experiments. Every route on this page is a reading of someone else's published work,
+        # OR an explicitly labelled proposal." -- that the FILE'S AUTHORS ran nothing, which is
+        # a different statement from nobody having performed the intervention.
+        #
+        # The paraphrase inverted claims in both directions. limbless-mouse 848 was filed as an
+        # unattempted proposal when Kvon et al. 2016 (Cell 167:633-642) had done exactly it and
+        # the route's own body said so; xenobot 754 was typed `direct_construct_result` for a
+        # protocol its cited abstracts do not contain. 177 live claims carried the sentence and
+        # only 9 of them had declared `proposed` -- see claim 1053.
+        proposed_kinds = ("proposed", "model_only", "cis_regulatory_inference")
+        strength = str(r.get("evidence_strength") or "")
+        is_proposal = (not strength) or strength in proposed_kinds
+        head = ("ROUTE (a PROPOSED intervention, not a result)" if is_proposal
+                else "ROUTE (its evidence is a published result; whether THIS intervention has "
+                     "been performed in the target organism is stated by the evidence items, "
+                     "not by this header)")
+        st = (f"{head}: {r.get('title')}\n\n"
               f"INTERVENTION: {r.get('intervention')}\n"
               f"PREDICTED PHENOTYPE: {r.get('predicted_phenotype')}\n"
               f"MECHANISM: {r.get('mechanism')}\n"
@@ -302,9 +327,13 @@ def import_routes(project: str, d: str, write: bool) -> int:
               f"EVIDENCE TRANSFER: {r.get('evidence_transfer_label') or '-'}"
               + (f" -- {r.get('evidence_transfer_note')}" if r.get('evidence_transfer_note') else "")
               + f"\n\nIMPORTED from {f}. Declared evidence_strength "
-                f"{r.get('evidence_strength')!r} -> evidence={ev!r}. This is a PROPOSAL about "
-                f"what an intervention would do; the source file states that none of its routes "
-                f"was attempted. {len(evs)} evidence item(s), read levels "
+                f"{r.get('evidence_strength')!r} -> evidence={ev!r}. "
+                + ("This route is declared a proposal. " if is_proposal else
+                   "This route's declared strength names a DIRECT published result, so it is "
+                   "NOT merely a proposal; read the evidence items for what was actually done "
+                   "and in which organism. ")
+                + f"The source file's own limitation reads: {src_limit!r}. "
+                  f"{len(evs)} evidence item(s), read levels "
                 f"{ {x: lv.count(x) for x in set(lv) if x} or 'none stated'}"
               + (f"; {outside} are OUTSIDE this project's closed read-level vocabulary and the "
                  f"row's read_level is left NULL rather than guessed" if outside else "")
@@ -314,9 +343,16 @@ def import_routes(project: str, d: str, write: bool) -> int:
                       {lit(best) if best else 'null'})""")
         made[ev] = made.get(ev, 0) + 1
     print(f"  imported {sum(made.values())} route claim(s): {made}")
-    assert "measured" not in made, "a route was typed 'measured'; routes are proposals"
-    print(f"  [ok] control: 0 route claims typed 'measured' -- routes are proposals, "
-          f"and both source files state none was attempted")
+    assert "measured" not in made, "a route was typed 'measured'; this project measured nothing"
+    print("  [ok] control: 0 route claims typed 'measured' -- the FILE'S AUTHORS ran no "
+          "experiments, which is what its limitations say")
+    # MUST-FLAG CONTROL: the retired paraphrase must not come back. It is quoted here with its
+    # words separated so this line cannot match itself.
+    banned = "none of its routes" + " was attempted"
+    assert banned not in st, (
+        "the blanket not-attempted paraphrase is back; no source file says it, and it "
+        "mistyped 177 claims (claim 1053)")
+    print("  [ok] control: the retired blanket not-attempted paraphrase is absent")
     return 0
 
 
