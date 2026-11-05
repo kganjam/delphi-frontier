@@ -115,6 +115,16 @@ def parse(text: str) -> tuple[str, str, str]:
            (why.group(1).strip()[:900] if why else "")
 
 
+#: THE PANEL IS CLAUDE-ONLY BY CONSTRUCTION, and agreement between its members is therefore NOT
+#: independent confirmation (claim 1117). call() routes through `orchestra api-credits call`,
+#: the Anthropic Console API, which reaches Claude models and nothing else; varying --tenant
+#: varies the billing account, so the challenger STRING changes while the model does not.
+#: Two Claude models share training, alignment and failure modes: an objection both miss is one
+#: this panel structurally cannot make, and repeated sampling never reveals it.
+#: REPORT IT AS "two Claude models agreed", never as "N agents independently converged".
+#: A free cross-family panelist exists -- nvidia/nemotron-3.5-super-vl:free, and AGENTS.md 7a
+#: permits any model here because the data is public -- but reaching it needs a call path that
+#: orchestra does not currently expose. That is the open work.
 PANEL = ("claude-opus-5-5", FALLBACK)
 
 
