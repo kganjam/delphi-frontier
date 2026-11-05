@@ -71,6 +71,7 @@ SPEC = [
         ("Can the fin take the soaring loads?", 972),
         ("Does sustained flight require flying past stall?", 973),
         ("Does the chain close from water exit to flight?", 974),
+        ("Is that flight ROBUST, or a knife edge?", 975),
         ("Can it extract energy from WIND SHEAR?", 966),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [
@@ -94,11 +95,14 @@ ROUTE_VERDICTS = [
      "body, not how much is stored -- so it closes only if multi-contraction spring charging "
      "is impossible, which is unknown. The adversarial arm caught this."),
     ("D. Harvesting the wind", 971, False,
-     "OPEN, AND THE ONLY ROUTE WITH A POSITIVE RESULT. In wind above ~12.5 m/s at 1 m the "
+     "OPEN but NOT ROBUST. In wind above ~12.5 m/s at 1 m the "
      "design sustains flight for the full 4 s simulation above 1 metre with net energy gain "
      "(50-75 of 100 controllers); below that, 0 of 100. A wingless body with the same drag "
      "sustains in 0 of 2500 cases at every altitude floor, so this is lift, not advection. "
-     "Not shown: indefinite flight, stall, structural loads, or roll-rate limits."),
+     "Structural loads and stall were since tested and cleared. But the flight is a KNIFE "
+     "EDGE: the most robust of 24 sustaining controllers survives only 5 of 12 one-at-a-time "
+     "perturbations, with non-monotonic failures. Real inside the model; not a regime an "
+     "animal could hold."),
 ]
 
 
