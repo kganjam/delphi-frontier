@@ -142,8 +142,39 @@ def main() -> int:
             print(f"  nearest     ${csoon['left']:.2f} on {csoon['tenant']} expires "
                   f"{csoon['expires'][:10]} -- that is the amount actually at risk first, "
                   f"NOT the total")
-    btxt = f"${burn:.0f}/h observed" if burn is not None else f"not yet measurable ({dt_h*60:.0f} min of baseline, need 15)"
-    print(f"  burn        {btxt}   ${need:.0f}/h NEEDED to finish   -> projected leftover ${max(0,projected):.0f}")
+    # Burn projection, on the LIVE pool. Until 2026-11-04 this read `left`, the FINISHED cloud
+    # pool: left was $0, so need was 0/hours = $0/h and projected was $0, and the line printed
+    # "$0/h NEEDED to finish -> projected leftover $0" DIRECTLY BENEATH a console block
+    # reporting $783 at risk. Both phrases read as "on track, nothing will be wasted" and both
+    # described a pool that cannot be spent, three lines above an alarm saying the opposite.
+    # The number a deadline monitor exists to produce was computed from the wrong pool.
+    cburn = cneed = cproj = None
+    cdt_h = 0.0
+    if csoon:
+        try:
+            _exp = datetime.fromisoformat(csoon["expires"].replace("Z", "+00:00"))
+            crisk_h = (_exp - datetime.now(timezone.utc)).total_seconds() / 3600
+        except Exception:                                    # noqa: BLE001
+            crisk_h = None
+        cbase_t = prev.get("cbase_t", now)
+        cbase_total = prev.get("cbase_total", ctotal)
+        cdt_h = (now - cbase_t) / 3600
+        if cdt_h >= 0.25:                                    # same baseline rule as the cloud pool
+            cburn = (cbase_total - ctotal) / cdt_h
+        if crisk_h and crisk_h > 0.1:
+            cneed = csoon["left"] / crisk_h
+            if cburn is not None:
+                cproj = csoon["left"] - cburn * crisk_h
+    if cneed is not None:
+        btxt = (f"${cburn:.2f}/h observed" if cburn is not None
+                else f"not yet measurable ({cdt_h*60:.0f} min of baseline, need 15)")
+        ptxt = (f"${max(0, cproj):.0f} of it EXPIRES UNUSED at this rate" if cproj is not None
+                else "no projection until a burn is measurable")
+        print(f"  burn        {btxt}   ${cneed:.2f}/h needed to spend {csoon['tenant']}'s "
+              f"${csoon['left']:.0f} by {csoon['expires'][:10]}")
+        print(f"                -> {ptxt}")
+    else:
+        print("  burn        no live pool deadline readable -- NOT reported as on-track")
     print(f"  sessions    {running} running        monitor.log {mon_age:.0f} min old")
     print(f"  knowledge   {claims} claims ({sup} superseded), {chal} challenges resolved, {answered} subproblems answered")
     print(f"  content     {laws} law entries, {branches} claude branches, {commits_1h} commits in the last hour")
@@ -172,6 +203,10 @@ def main() -> int:
                           f"and is largely unspent (total spendable ${ctotal:.2f} across "
                           f"{len([r for r in crows if r['on']])} tenants expiring on "
                           f"{len({r['expires'][:10] for r in crows if r['on']})} different dates)")
+    if cneed is not None and cburn is not None and cburn < cneed * 0.6:
+        alarms.append(f"live burn ${cburn:.2f}/h is below the ${cneed:.2f}/h needed to spend "
+                      f"{csoon['tenant']} before {csoon['expires'][:10]}"
+                      + (f"; ~${max(0, cproj):.0f} expires unused" if cproj is not None else ""))
     if prev and claims <= prev.get("claims", 0) and commits_1h == 0:
         alarms.append("no new claims and no commits in the last hour -- nothing is being learned")
 
@@ -189,9 +224,12 @@ def main() -> int:
         print("\n  no alarms")
 
     st = {"t": now, "left": left, "claims": claims, "running": running, "laws": laws,
-          "base_t": base_t, "base_left": base_left}
+          "base_t": base_t, "base_left": base_left,
+          "cbase_t": prev.get("cbase_t", now), "cbase_total": prev.get("cbase_total", ctotal)}
     if abs(base_left - left) > 0.01 and dt_h >= 0.25:      # baseline consumed; start a fresh one
         st["base_t"], st["base_left"] = now, left
+    if cdt_h >= 0.25 and abs(st["cbase_total"] - ctotal) > 0.01:
+        st["cbase_t"], st["cbase_total"] = now, ctotal
     json.dump(st, open(STATE, "w"))
     # Exit code must track the LIVE pool. Keying it to the finished cloud pool returned 2
     # (stalled) permanently, which is the same false-positive failure as the alarms above.
