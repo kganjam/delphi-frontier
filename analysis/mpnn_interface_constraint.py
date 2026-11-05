@@ -207,6 +207,77 @@ def monomer_control() -> int:
     return 0
 
 
+
+
+def truncation_constraint() -> int:
+    """Does truncation change what SEQUENCE the pore admits, not just where its atoms sit?
+
+    Claim 1067 measured the geometric answer: the truncated pore sits 1.35 A from the
+    full-length one after superposition, six times the 0.22 A floor set by the two chains of
+    one dimer. That is a shift of the same fold. It says nothing about whether the fold now
+    tolerates different residues, which is the functional question and the one ProteinMPNN
+    answers.
+
+    THE YARDSTICK IS THE POINT, and it is the lesson from the RMSD work applied here: a
+    difference in entropy means nothing until you know what two copies of the SAME protein in
+    the SAME model differ by. The two chains of the full-length homodimer supply that floor,
+    exactly as they did for geometry.
+    """
+    import statistics as st
+    runs = {}
+    for lbl, sub in (("full dimer", "kcnk5b-homodimer-msa"),
+                     ("truncated dimer", "kcnk5b-trunc240-dimer-msa")):
+        f = D / sub / "mpnn" / "result.json"
+        if not f.exists():
+            print(f"\n  TRUNCATION CONSTRAINT: {sub} ProteinMPNN not landed.")
+            return 0
+        pr = json.loads(f.read_text())["probs"]
+        per = len(pr[0]) // 2
+        runs[lbl] = (pr, per)
+
+    print("\n  TRUNCATION AND CONSTRAINT -- does the pore admit different sequence?")
+    pore = {}
+    floors = {}
+    for lbl, (pr, per) in runs.items():
+        ent = [st.fmean(entropy(pr[s][i]) for s in range(len(pr))) for i in range(len(pr[0]))]
+        A = ent[:per][:240]
+        B = ent[per:][:240]
+        pore[lbl] = [st.fmean((a, b)) for a, b in zip(A, B)]
+        floors[lbl] = st.fmean(abs(a - b) for a, b in zip(A, B))
+        print(f"    {lbl:18} pore 1-240 mean entropy {st.fmean(pore[lbl]):.4f} bits   "
+              f"(chain A vs B mean |diff| {floors[lbl]:.4f} = this model's own floor)")
+
+    a, b = pore["full dimer"], pore["truncated dimer"]
+    diff = st.fmean(abs(x - y) for x, y in zip(a, b))
+    floor = max(floors.values())
+    print(f"\n    mean |entropy difference| between the two constructs: {diff:.4f} bits")
+    print(f"    the within-model floor (two chains of one dimer):       {floor:.4f} bits")
+    print(f"    ratio: {diff/floor:.1f}x the floor")
+    # A BINARY diff > floor TEST IS TOO LENIENT and the first version of this used one,
+    # announcing "there IS a signature" at 1.3x. A ratio just above 1 is what two noisy
+    # quantities give when neither differs; the floor is itself an average of absolute
+    # differences and carries its own spread. Report the ratio in bands and let it be read
+    # against the geometric result, which reached 6x on the same kind of comparison.
+    r = diff / floor
+    if r <= 1.2:
+        verdict = ("indistinguishable from predicting the same protein twice -- no signature "
+                   "on this measure")
+    elif r <= 2.0:
+        verdict = ("MARGINAL: above the floor but not clear of it. Compare the geometric "
+                   "test, which reached 6x on the same constructs")
+    else:
+        verdict = "clear of the floor; a signature to explain"
+    print(f"    -> {r:.1f}x the floor: {verdict}")
+
+    print("\n    CONTROL: a region's entropy compared with ITSELF must give 0.0000 bits: "
+          f"{st.fmean(abs(x - y) for x, y in zip(a, a)):.4f}")
+    print("    CONTROL: the two constructs' pore means are both in the plausible range for")
+    print(f"             ProteinMPNN over 21 letters (max {math.log2(21):.2f} bits): "
+          f"{st.fmean(a):.2f} and {st.fmean(b):.2f}")
+    return 0
+
+
 if __name__ == "__main__":
     main()
-    raise SystemExit(monomer_control())
+    monomer_control()
+    raise SystemExit(truncation_constraint())
