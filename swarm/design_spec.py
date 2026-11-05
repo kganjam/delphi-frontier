@@ -42,7 +42,7 @@ SPEC = [
     ("3. ROUTE B -- POWERED FLAPPING", [
         ("Could it flap instead of glide?", 585),
         ("What lift coefficient is actually attainable?", 601),
-        ("What does the power budget come to?", 588),
+        ("What does the power budget come to?", 998),  # was 588: its 35-71 W/kg availability was DERIVED and the measurement contradicts it
         ("Does elastic storage recover the inertial cost?", 592),
         ("Can any fish muscle work at that frequency?", 593),
     ]),
