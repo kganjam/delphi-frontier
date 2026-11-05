@@ -33,6 +33,7 @@ IT EARNS ITS KEEP ON THE MUST-FLAG TEST. Against the pre-correction document it 
 from __future__ import annotations
 
 import re
+import os
 import sys
 
 sys.path.insert(0, "/data/swarm")
@@ -40,6 +41,15 @@ from harvest import BASE, git   # noqa: E402
 
 RANGE = re.compile(r"(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)\s*(J/kg|m/s|Hz|GPa|%)")
 SUMMARY = "/data/worktrees/delphi-frontier/swarm-arch/docs/FINDINGS.md"
+
+
+# THE READER MUST FOLLOW THE WRITER. generate.py and swarm.py write a project's research under
+# docs/research/<project>, and this checker scanned a literal "research/fish" -- so for any other
+# project it would read nothing and report a clean pass over an empty set, which is this repo's
+# vacuous-success shape. Derived identically to generate.py rather than restated as a constant.
+RESEARCH_DIR = "docs/research/" + ("fish" if os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+                                   == "zebrafish-flight"
+                                   else os.environ.get("SWARM_PROJECT", "").split("-")[0])
 
 
 def ranges(text):
@@ -57,7 +67,7 @@ def main():
     for b in [x.strip() for x in git("branch", "-r", "--sort=-committerdate").split("\n")
               if "origin/claude/" in x][:200]:
         for f in [y for y in git("diff", "--name-only", f"{BASE}...{b}").split("\n")
-                  if y.endswith(".md") and "research/fish" in y]:
+                  if y.endswith(".md") and RESEARCH_DIR in y]:
             try:
                 srcs[f] = git("show", f"{b}:{f}")
             except Exception:
