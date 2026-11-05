@@ -43,7 +43,7 @@ CHAIN = [
     ("ORGANISM / kinematics",
      "Is peak speed available AT the surface?", 548),
     ("ORGANISM / kinematics",
-     "Can a run-up supply the missing speed?", 570),
+     "Can a run-up supply the missing speed?", 583),  # was 570: it assumed work-limiting; 583 shows impulse reopens the lever
     ("ORGANISM / energetics",
      "Can muscle supply that speed at all?", 547),
     ("ORGANISM / body plan",

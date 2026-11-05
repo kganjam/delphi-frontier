@@ -44,9 +44,9 @@ claim 548 `derived` / `full-text`
 _THE BINDING QUESTION IS ANSWERED AND IT IS ABOUT LAUNCH DEPTH, NOT THE FIN: PEAK SPEED IS AVAILABLE ONLY 0.6 cm BELOW THE SURFACE. Claim 546 found tha…_
 
 **Can a run-up supply the missing speed?**  
-**0.77 m/s run-up speed required before the fast-start to reach 1.75 m/s, which is 23 BL/s**  
-claim 570 `derived` / `full-text`  
-_A RUN-UP CANNOT CLOSE THE 1.14-FOLD SPEED GAP, BECAUSE SPEEDS ADD IN QUADRATURE: THE FISH WOULD HAVE TO BE SPRINTING AT 23 BODY LENGTHS PER SECOND BEF…_
+**0.18 m/s run-up needed under the impulse model, against 0.77 under the work model claim 570 assumed**  
+claim 583 `derived` / `full-text`  
+_CLAIM 570 ASSERTED WORK-LIMITING WITHOUT JUSTIFYING IT, AND UNDER THE IMPULSE ALTERNATIVE THE SPEED GAP CLOSES AT ORDINARY CRUISING SPEED. THIS IS THE…_
 
 
 ## ORGANISM / energetics
@@ -141,11 +141,11 @@ _THE FIN ADVANTAGE IS PROGRESSIVE WITH BODY SIZE, SO CLAIM 574 DOUBLE-COUNTED: I
 
 ## Where it stands
 
-- 355 live claims of 419 for project `zebrafish-flight`; **64 superseded**, which is the project correcting itself and is not a defect.
+- 356 live claims of 421 for project `zebrafish-flight`; **65 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 178, `measured` 103, `literature` 48, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 179, `measured` 103, `literature` 48, `simulated` 16, `unknown` 9, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**
