@@ -29,22 +29,48 @@ PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "desig
 
 # (scale, question, claim id) -- the editorial spine. Order is the argument, not the id order.
 CHAIN = [
-    # 523 covers both the wing-vs-ballistic verdict AND the launch-angle correction, because
-    # the angle sweep is what overturned the original verdict. Listing it twice printed the same
-    # text under two questions -- noise, not evidence. One entry, both questions named.
+    # ORGANISM: the aerodynamic requirement and what sets it
+    ("ORGANISM / criterion",
+     "Which threshold is the project measuring against?", 571),
     ("ORGANISM / aerodynamics",
      "Does a wing beat a ballistic leap, and how much does launch ANGLE matter?", 523),
-    ("ORGANISM / kinematics",   "What exit speed does the fish actually have?", 546),
-    ("ORGANISM / kinematics",   "Is peak speed available AT the surface?", 548),
-    ("ORGANISM / energetics",   "Can muscle supply that speed at all?", 547),
-    ("ORGAN / fin morphology",  "How much fin AREA is achievable?", 542),
-    ("ORGAN / fin morphology",  "What does the best published allele give?", 528),
-    ("TISSUE / fin skeleton",   "Is the enlarged fin stiff enough?", 537),
-    ("ORGANISM / body plan",    "Does reducing body MASS close the gap?", 550),
-    ("ORGAN / swim bladder",    "Can the body be made light enough?", 553),
-    ("GENE / hox",              "What genes enlarge the swim bladder?", 551),
-    ("GENE / autonomic",        "What gene defeats buoyancy regulation?", 554),
-    ("GENE / kcnk5b",           "What genes enlarge the fin?", 531),
+    ("ORGANISM / aerodynamics",
+     "Can a better-SHAPED fin compensate for less area?", 568),
+    ("ORGANISM / aerodynamics",
+     "Is the drag coefficient the project uses physically attainable?", 565),
+    ("ORGANISM / kinematics",
+     "What exit speed does the fish actually have?", 546),
+    ("ORGANISM / kinematics",
+     "Is peak speed available AT the surface?", 548),
+    ("ORGANISM / kinematics",
+     "Can a run-up supply the missing speed?", 570),
+    ("ORGANISM / energetics",
+     "Can muscle supply that speed at all?", 547),
+    ("ORGANISM / body plan",
+     "Does a SMALLER fish need less fin?", 576),
+    ("ORGANISM / body plan",
+     "Does reducing body MASS close the gap?", 550),
+    # ORGAN and TISSUE
+    ("ORGAN / fin morphology",
+     "How much fin AREA is achievable, and at what aspect ratio?", 567),
+    ("ORGAN / fin morphology",
+     "What does the best published allele give?", 542),
+    ("ORGAN / swim bladder",
+     "Can the body be made light enough?", 553),
+    ("TISSUE / fin skeleton",
+     "Is the enlarged fin stiff enough?", 537),
+    # GENE
+    ("GENE / kcnk5b",
+     "What genes enlarge the fin?", 531),
+    ("GENE / pathway",
+     "Are the fin levers independent, or one pathway?", 562),
+    ("GENE / hox",
+     "What genes enlarge the swim bladder?", 551),
+    ("GENE / autonomic",
+     "What gene defeats buoyancy regulation?", 554),
+    # the bottom line
+    ("SYNTHESIS",
+     "What is the best design this project can specify?", 574),
 ]
 
 
@@ -116,14 +142,28 @@ def main() -> int:
                      "the whole table and reported another project's work as this one's)\n")
     out.append("- live claims by evidence class: "
                + ", ".join(f"`{e}` {n}" for e, n in by_ev) + "\n")
-    out.append("\n**The two routes, and neither is a flying fish:**\n")
-    out.append("1. **Fin enlargement** — real alleles, measured magnitudes, **1.85× short** on "
-               "area at present body mass.\n")
-    out.append("2. **Mass reduction** — the arithmetic closes at 0.54 of present mass, but it "
-               "requires ~46% of body volume as gas, which needs a distributed autonomic "
-               "setpoint defeated. **No genetic implementation.**\n")
+    out.append("\n**Two criteria, and they are not the same question:**\n")
+    out.append("- the **2 cm lift-attributable** threshold asks whether a wing beats no wing. "
+               "The best specifiable design is **1.08× short** of it, and crosses only by "
+               "extrapolating a speed below its measured range (claims 574, 575).\n")
+    out.append("- **lift ≥ weight**, which is what flying means, needs ~17× the present "
+               "silhouette. The best design is **4.3× short** (claim 571).\n")
+    out.append("\n**Every lever has been pushed to a bound:**\n")
+    out.append("| lever | bound | why |\n|---|---|---|\n")
+    out.append("| fin area | ~2.65× | three alleles on one bioelectric pathway |\n")
+    out.append("| fin shape | nothing beyond the floor | aspect ratio saturates; induced "
+               "drag → 0 and the requirement stops falling |\n")
+    out.append("| exit speed | 1.57–1.60 m/s | muscle work, and speeds add in quadrature so a "
+               "run-up needs a 23 BL/s sprint |\n")
+    out.append("| body size | unresolved | smaller helps only if adult zebrafish are on the "
+               "velocity plateau, which is unmeasured |\n")
+    out.append("| body mass | no implementation | needs ~46% gas volume and a distributed "
+               "autonomic setpoint defeated |\n")
     out.append("\nThe chain is complete in structure. Every link has a number and an evidence "
-               "class, and the places it fails are named rather than bridged.\n")
+               "class, and the places it fails are named rather than bridged. **The single "
+               "cheapest open measurement is a zebrafish fast-start velocity against body "
+               "length over 20–40 mm** — absent from PubMed, and it governs whether the "
+               "body-size lever exists at all.\n")
 
     text = "\n".join(out)
     if "--write" in sys.argv:
