@@ -51,7 +51,8 @@ def entropy(p: list[float]) -> float:
 
 def main() -> int:
     print(f"  known-bad item   : selectivity-filter glycines at {GLY} (1-indexed)")
-    print(f"  discriminating   : filter MIDDLE residues at {MIDDLE}, which K2P varies (GYG/GFG)")
+    print(f"  NOT a control    : filter MIDDLE residues at {MIDDLE} are printed for information")
+    print(f"                     only -- the arm was withdrawn as invalid; see the docstring")
     print(f"  pass condition   : every glycine inside the most-constrained {QUARTILE:.0%}\n")
     caught = total = 0
     for run in RUNS:
