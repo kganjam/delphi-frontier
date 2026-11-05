@@ -96,9 +96,19 @@ def one_cycle(project: str, n_challenge: int, write: bool) -> dict:
         None if write else "needs --write: this stage spends Console API credit"))
     # 3. Synthesis.
     stages.append(run_stage("synthesis", [py, str(HERE / "design_chain.py")]))
-    # 4. Conformance.
-    stages.append(run_stage("specs", [py, str(HERE / "check_specs.py")]))
-    stages.append(run_stage("vacuity", [py, str(HERE / "check_vacuity.py")]))
+    # 4. Conformance. EVERY check_*.py RUNS HERE, and that is the point of the loop below
+    # rather than a hand-written list.
+    #
+    # Before this, cycle.py invoked `check_specs` and `check_vacuity` and nothing else, while
+    # swarm/ held SEVEN check_*.py files. Five of them -- claim_citations, frontier_stale,
+    # route_typing, grader_use, interval_collapse -- were run by nothing at all. A checker
+    # that nobody invokes reports nothing and reads exactly like a checker that found nothing,
+    # which is the same failure as a gate that is switched off.
+    #
+    # Discovering them from the directory means a new check_*.py is wired in by existing,
+    # instead of by somebody remembering to add a line here.
+    for chk in sorted(HERE.glob("check_*.py")):
+        stages.append(run_stage(chk.stem.replace("check_", ""), [py, str(chk)]))
     # 5. Publish, ALWAYS dry-run. It asserts no network module is loaded and writes to disk.
     stages.append(run_stage("publish", [py, str(HERE / "publish_dryrun.py")]))
     # 6. Did anything actually move?

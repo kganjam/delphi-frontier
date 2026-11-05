@@ -54,6 +54,8 @@ import re
 import subprocess
 import sys
 
+from dbq import flat
+
 SEP = "\x01"
 PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm",
       "-tAq", "-F", SEP]
@@ -130,7 +132,12 @@ def matches(key: str, text: str) -> bool:
 
 def scan(live_only: bool = True) -> list[tuple[str, str, str, str]]:
     cond = "and c.superseded_by is null" if live_only else ""
-    rows = q(f"""select c.id, replace(coalesce(c.statement,''), '{SEP}', ' ')
+    # flat() scrubs the FIELD SEPARATOR *and* newlines. This read `replace(col, SEP, ' ')`,
+    # which leaves the newline in, so a statement containing one came back as a short row and
+    # `for cid, stmt in rows` raised "not enough values to unpack (expected 2, got 1)".
+    # Identical to the bug that crashed api_frontier.py tonight, and invisible here because
+    # nothing invoked this checker.
+    rows = q(f"""select c.id, {flat("coalesce(c.statement,'')")}
                  from claim c where c.project_id='{PROJECT}' {cond} order by c.id""")
     hits = []
     for cid, stmt in rows:
