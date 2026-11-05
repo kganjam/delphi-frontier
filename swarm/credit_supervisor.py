@@ -44,7 +44,13 @@ MAX_ARMS = 6
 #: arbitrary floor; the real rule is that a DECLINING arm count predicts the future and a
 #: trailing average does not.
 MIN_ARMS = 3
+#: ALTERNATES between re-panelling old claims and attacking NEW ones. It used to be --repanel
+#: only, which meant the swarm spent an entire session re-attacking claims it had already
+#: attacked and never reached a single new claim -- 29 of them, including every claim that
+#: corrected one of my own results (claim 1110). A supervisor that only ever re-reviews is not
+#: an adversary, it is an echo.
 ARM = ["python3", "-u", "swarm/api_challenge.py", "60", "--repanel", "--write"]
+ARM_NEW = ["python3", "-u", "swarm/api_challenge.py", "20", "--panel", "--write"]
 STATE = pathlib.Path(os.environ.get("MS_CREDIT_STATE",
                                     "/tmp/claude-1000/ms-credit-supervisor.json"))
 
@@ -164,8 +170,9 @@ def main() -> int:
                f"ONLY {arms} ARM(S) LEFT, below the floor of {MIN_ARMS}")
         print(f"  {why} -- launching {want} arm(s) on {binding} regardless of the "
               f"observed rate, which was earned by arms that have since exited")
-        for _ in range(want):
-            subprocess.Popen(ARM + ["--tenant", binding],
+        for j in range(want):
+            cmd = ARM_NEW if j % 2 == 0 else ARM     # alternate: new claims first
+            subprocess.Popen(cmd + ["--tenant", binding],
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                              start_new_session=True)
         return 0
