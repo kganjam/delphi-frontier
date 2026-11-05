@@ -155,6 +155,11 @@ _CORRECTION TO CLAIM 956, IN THE PROJECT'S FAVOUR: FISH ARE A TEXTBOOK LaMSA SYS
 claim 958 `derived` / `full-text`  
 _STORAGE CAPACITY IS NOT THE BLOCKER FOR THE LATCH-SPRING ROUTE: THE TENDON NEEDED IS 0.28% TO 4.44% OF BODY MASS, SO THE ROUTE NOW TURNS ON ONE QUESTION RATHER THAN TWO. Claim 957 removed the anatomical objection by showing fish are a characterised LaMSA system, and left the route turning on two unknowns: whether a tendon spring can HOLD 134% of a contraction's work, and whether it can be CHARGED…_
 
+**How much muscle does the launch actually need?**  
+**53.9 percent muscle fraction at which the 4.02 m/s launch needs exactly ONE contraction; active teleosts are reported above 60%, but the route then requires ~90% transfer of muscle work into body KE, which is unmeasured**  
+claim 959 `derived` / `abstract`  
+_THE 134% IS A FUNCTION OF MUSCLE FRACTION, NOT A PROPERTY OF THE ANIMAL, AND THE BREAK-EVEN IS 53.9% -- WHICH ACTIVE TELEOSTS REPORTEDLY EXCEED. SO THE MULTI-CONTRACTION QUESTION MAY BE MOOT, BUT A SECOND CONDITION REPLACES IT AND IS NOT SATISFIED BY ANYTHING MEASURED HERE. Claims 956 and 958 computed that the 4.02 m/s launch needs 134% of one contraction's muscle work, and concluded the route req…_
+
 
 ## 6. WHAT THE DESIGN WOULD BE
 

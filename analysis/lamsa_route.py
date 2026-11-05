@@ -207,10 +207,84 @@ def controls_mass():
     return ok
 
 
+
+
+
+# ---------------------------------------------------------------------------------------------
+# ADDED after claim 958. The 134% figure is NOT a fixed property of the animal: it is a function
+# of MUSCLE FRACTION, which this project had fixed at 0.40 following claim 547. Body mass
+# cancels out of the requirement entirely:
+#     required fraction = KE / (m * f * E_d) = (1/2) m v^2 / (m f E_d) = v^2 / (2 f E_d)
+# so the whole question reduces to one number, the muscle fraction, and the break-even value of
+# it can be solved for directly rather than searched.
+def muscle_fraction_sweep():
+    print("\n" + "=" * 78)
+    print("THE 134% IS A FUNCTION OF MUSCLE FRACTION, AND BODY MASS CANCELS OUT")
+    print("=" * 78)
+    print("\n  required fraction of muscle work = v^2 / (2 * f * E_d)   [mass cancels]\n")
+    f_break = V_NEEDED ** 2 / (2 * ENERGY_DENSITY)
+    print(f"  {'muscle fraction':>16} {'% of muscle work needed':>26}   status")
+    print("  " + "-" * 60)
+    for f, note in [(0.40, "the value claim 547 assumed"),
+                    (0.50, ""),
+                    (f_break, "BREAK-EVEN"),
+                    (0.60, "'>60% in active species' (Anderson 2017)"),
+                    (0.70, "")]:
+        req = V_NEEDED ** 2 / (2 * f * ENERGY_DENSITY)
+        status = "needs >1 contraction" if req > 1.0 else "ONE contraction suffices"
+        print(f"  {f:>16.3f} {100*req:>25.1f}%   {status}  {note}")
+    print(f"\n  BREAK-EVEN MUSCLE FRACTION = {f_break:.3f}, i.e. {100*f_break:.1f}%")
+    print("\n" + "-" * 78)
+    print("WHAT THIS MEANS")
+    print("-" * 78)
+    print(f"  At the 40% this project assumed, the launch needs 135% of muscle work and")
+    print(f"  therefore multi-contraction spring charging, which nothing is known to do.")
+    print(f"  At {100*f_break:.0f}% it needs exactly one contraction. Anderson et al. 2017 state that")
+    print(f"  myotomal muscle 'comprises >60% of the adult body mass in active species',")
+    print(f"  which is ABOVE the break-even. So the multi-contraction question may be moot:")
+    print(f"  the launch energy fits in a SINGLE contraction for a fish as muscular as an")
+    print(f"  active teleost already is.")
+    print("\n  AND THE FRACTION IS GENETICALLY ADDRESSABLE. The same paper describes")
+    print("  'transgenic rainbow trout, overexpress follistatin, which antagonizes myostatin")
+    print("  and increases myotonal muscle', with the gain 'due primarily to myocyte")
+    print("  hyperplasia'. That is a published, real genetic manipulation that raises exactly")
+    print("  this parameter in a fish.")
+    print("=" * 78)
+    return f_break
+
+
+def controls_fraction():
+    print("\nCONTROLS (muscle fraction)")
+    ok = True
+    # 1. Mass must genuinely cancel: two very different body masses, same requirement.
+    def req(f, m):
+        return (0.5 * m * V_NEEDED ** 2) / (m * f * ENERGY_DENSITY)
+    a, b = req(0.4, 1e-4), req(0.4, 1e-1)
+    arm1 = abs(a - b) < 1e-12
+    print(f"  [{'ok' if arm1 else 'FAIL'}] a 0.1 g and a 100 g fish give the same requirement "
+          f"({100*a:.1f}% vs {100*b:.1f}%) -- mass cancels as the algebra says")
+    ok &= arm1
+    # 2. The 0.40 case must REPRODUCE claim 956's 134%, or this extends a different model.
+    r40 = V_NEEDED ** 2 / (2 * 0.40 * ENERGY_DENSITY)
+    arm2 = abs(r40 - 1.344) < 0.02
+    print(f"  [{'ok' if arm2 else 'FAIL'}] at f=0.40 it returns {100*r40:.1f}%, reproducing the "
+          f"134% of claims 956/958")
+    ok &= arm2
+    # 3. The verdict must flip: some fraction must give 'needs >1 contraction'.
+    arm3 = (V_NEEDED ** 2 / (2 * 0.20 * ENERGY_DENSITY)) > 1.0
+    print(f"  [{'ok' if arm3 else 'FAIL'}] a 20% muscle fraction still needs >1 contraction -- "
+          f"the test returns both answers")
+    ok &= arm3
+    print(f"  -> controls {'PASS' if ok else 'FAIL'}")
+    return ok
+
+
 if __name__ == "__main__":
     main()
     ok = controls()
     tendon_mass_needed()
     ok &= controls_mass()
+    muscle_fraction_sweep()
+    ok &= controls_fraction()
     if not ok:
         raise SystemExit("controls failed")

@@ -60,6 +60,7 @@ SPEC = [
     ("5. ROUTE C -- A LATCH-SPRING LAUNCH", [
         ("Can a spring reach the speed muscle cannot?", 957),
         ("Can a tendon spring hold that much energy?", 958),
+        ("How much muscle does the launch actually need?", 959),
     ]),
     ("6. WHAT THE DESIGN WOULD BE", [
         ("The best design this project can specify", 580),
