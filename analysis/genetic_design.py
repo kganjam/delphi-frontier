@@ -8,8 +8,11 @@ molecular lesion nobody holds. A lever with a revision is not a lever you can or
 
 SO THIS REPORTS BUILDABILITY, NOT COVERAGE, and it reads the distinction off the data rather
 than asserting it. `content_sha256` is non-null only when the project holds an actual sequence
-change it could hash. THREE DIFFERENT THINGS MAKE IT NULL and they are not interchangeable:
+change it could hash. FOUR DIFFERENT THINGS MAKE IT NULL and they are not interchangeable:
 
+    FRAMESHIFT     the lesion is known but its PRODUCT is not derivable from protein-level
+                   information: a frameshift runs to the next stop in the shifted frame, which
+                   needs the nucleotide sequence (col9a1c@zf3676/zf3677)
     REGULATORY     the change is not in any coding sequence, so there is nothing to hash
                    (kcnh2a@longfin-lof^dt2 is a chromosome-2 inversion between 5' prrx1a and
                    5' kcnh2a that upregulates the gene "without affecting the coding region")
@@ -52,6 +55,16 @@ NULL_REASON = {
     "mylz2-fst1-li2011-UNNAMED": ("NOT SEQUENCED",
                                   "the transgenic line exists in the literature; its designation "
                                   "and effect size do not appear in what was read"),
+    "col9a1c-zf3676-zf3677-frameshift-null": ("FRAMESHIFT NULL",
+                                              "a FOURTH class, added 2026-11-05: the lesion IS "
+                                              "held (del10 at nt 505-514, frameshift at aa 169; "
+                                              "ins1 at nt 664, frameshift at aa 222) but a "
+                                              "frameshift's product is whatever the shifted "
+                                              "reading frame yields until the next stop, which "
+                                              "needs the NUCLEOTIDE sequence -- the amino-acid "
+                                              "position of the shift is not enough. This null "
+                                              "records a limit of the protein-level convention, "
+                                              "not a gap in the literature"),
     "MYH13-Q9UKX3-motor-domain-only": ("NOT SEQUENCED",
                                        "a reviewed accession and a partial expression precedent, "
                                        "but no construct sequence obtained"),
