@@ -32,9 +32,10 @@ TOOLS = ("ESMFold2 / OpenFold3 / Boltz2 structure prediction on Nebius (single s
          "retrieval; local Python numerical modelling; a Postgres claim graph. NO wet-lab access, "
          "NO animal work, NO new experimental measurement of any kind.")
 
-PROMPT = """You are proposing the next open question for a design project that is trying to work out
-what it would take to turn a zebrafish (4 cm, ~0.4 g) into an animal that can glide. Not to copy
-flying fish -- to derive the changes from first principles and published measurement.
+PROMPT = """You are proposing the next open question for this design project:
+
+PROJECT: {title}
+GOAL: {goal}
 
 WHAT IS ALREADY SETTLED OR IN HAND:
 {context}
@@ -47,7 +48,7 @@ one is useless to us:
 1. QUESTION containing a NUMBER or a threshold, so it is a calculation and not a conversation.
    "Can a fin ray carry load?" is unanswerable. "Can it carry the design lift without exceeding
    10% tip deflection?" is a calculation.
-2. WHY it matters to the flight question specifically.
+2. WHY it matters to THIS PROJECT'S goal specifically, as stated above.
 3. FALSIFIER: a concrete result that would settle it NEGATIVELY, stated before anyone looks.
 4. REACHABLE: name which of the tools above would produce that falsifier, and say plainly if none
    would. A question whose falsifier needs a wet lab is honest to propose and must be labelled so,
@@ -73,6 +74,29 @@ def context() -> str:
     return ("RECENT QUANTITATIVE FINDINGS:\n" + "\n".join("- " + r[0] for r in rows)
             + "\n\nEXISTING SUBPROBLEMS (do not duplicate):\n"
             + "\n".join(f"- {r[0]}: {r[1]}" for r in qs))
+
+
+def project_brief() -> tuple[str, str]:
+    """This project's title and goal, from the `project` table. REFUSES if absent.
+
+    THE PROMPT USED TO HARDCODE THE FISH: "turn a zebrafish (4 cm, ~0.4 g) into an animal that
+    can glide", and "WHY it matters to the flight question". Running it under SWARM_PROJECT=coral
+    therefore wrote ZEBRAFISH questions into the coral project -- 24 such rows across coral,
+    insect-flight, xenobot and limbless-mouse before this was caught, every one of them
+    mentioning zebrafish and none mentioning its own organism. The `project` table has carried a
+    title and goal for all five projects the whole time.
+
+    Refusing on an absent brief rather than falling back to a default is deliberate: a default
+    is what produced 24 wrong rows that LOOKED like progress on the structure checker.
+    """
+    rows = ac.q(f"""select {ac.flat('title')}, {ac.flat('goal')} from project
+                    where id={ac.lit(ac.PROJECT)}""")
+    if not rows or not rows[0][0].strip():
+        raise SystemExit(
+            f"REFUSING: no project row with a title for {ac.PROJECT!r}. The prompt is written "
+            f"from the project's own goal, and defaulting to another project's text is what "
+            f"put 24 zebrafish questions into four other projects.")
+    return rows[0][0], (rows[0][1] if len(rows[0]) > 1 else "")
 
 
 def next_subproblem_number() -> int:
@@ -109,6 +133,8 @@ def parse(text: str) -> dict | None:
 def main() -> int:
     n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 3
     write = "--write" in sys.argv
+    title, goal = project_brief()
+    print(f"  project {ac.PROJECT}: {title[:70]}")
     ctx = context()
     print(f"  context: {len(ctx)} chars of settled findings and existing subproblems\n")
     good = []
@@ -116,7 +142,7 @@ def main() -> int:
     for i in range(n):
         t = ac.TENANTS[i % len(ac.TENANTS)]
         try:
-            r = ac.call_with_fallback(t, PROMPT.format(context=ctx[:14000], tools=TOOLS))
+            r = ac.call_with_fallback(t, PROMPT.format(context=ctx[:14000], tools=TOOLS, title=title, goal=goal))
         except Exception as e:
             print(f"  [{i+1}] {t:13} FAILED {type(e).__name__}: {str(e)[:70]}")
             continue
