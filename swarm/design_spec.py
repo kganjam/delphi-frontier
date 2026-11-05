@@ -100,15 +100,19 @@ ROUTE_VERDICTS = [
      "PROVISIONAL. The efficiency argument caps what fraction of STORED energy reaches the "
      "body, not how much is stored -- so it closes only if multi-contraction spring charging "
      "is impossible, which is unknown. The adversarial arm caught this."),
-    ("D. Harvesting the wind", 971, False,
-     "OPEN but NOT ROBUST. In wind above ~12.5 m/s at 1 m the "
-     "design sustains flight for the full 4 s simulation above 1 metre with net energy gain "
-     "(50-75 of 100 controllers); below that, 0 of 100. A wingless body with the same drag "
-     "sustains in 0 of 2500 cases at every altitude floor, so this is lift, not advection. "
-     "Structural loads and stall tested and cleared. Open-loop flight is a KNIFE EDGE (best 5 "
-     "of 12 perturbations); CLOSED-LOOP control fixes that -- 10 to 12 of 12 -- from 12.5 m/s "
-     "of wind at 1 m. Below 10.4 m/s nothing sustains across 600 trajectories. So the design "
-     "flies robustly in a strong wind and not at all in an ordinary one."),
+    ("D. Harvesting the wind", 1055, True,
+     "CLOSED ON HABITAT, NOT ON PHYSICS -- and that distinction is the point. The flight "
+     "result stands: in wind above 12.5 m/s at 1 m the design sustains flight for the full 4 s "
+     "simulation with net energy gain, while a wingless body of the same drag sustains in 0 of "
+     "2500 cases, so it is lift and not advection. What closes it is where the animal lives. "
+     "Correcting the reference height (Beaufort 7, not 6) and then the surface roughness "
+     "(Beaufort 8, 20.6 m/s at 10 m over a vegetated floodplain) puts the requirement at 4.9 "
+     "to 11.9 times the Gangetic plain's measured annual mean of 1.73-4.17 m/s. A Beaufort 8 "
+     "gale there is a cyclone or a nor'wester. Claim 971 justified the wind as the conditions "
+     "flying fish launch in -- true, and true because exocoetids live in the open ocean where "
+     "that is routine and the fetch is unlimited; a zebrafish lives in a pond of 30-300 m "
+     "fetch. The flying fish's solution is inseparable from its habitat, and no genetic change "
+     "reaches the weather."),
 ]
 
 
