@@ -117,6 +117,15 @@ def main() -> int:
     print("    So the SAME undeterminacy propagates: the protein-scale ambiguity becomes an")
     print("    organ-scale one, and nothing downstream resolves it.")
 
+    print("\n  CELL SCALE IS SKIPPED AND CANNOT BE ADDED (claim 1109). This project holds ZERO")
+    print("  live claims carrying a sarcomere, cross-bridge, fibre-type or myofibril quantity --")
+    print("  its three cell-scale claims are all about the bioelectric pathway. Adding the step")
+    print("  would mean inventing cross-bridge density for zebrafish flight muscle, and the")
+    print("  textbook values for other animals would not look invented. Four scales of five.")
+    print("  WHAT THE SKIP ASSUMES: that cross-bridge density and sarcomere geometry are")
+    print("  unchanged between the myosin whose kinetics were measured (human MYH13, in C2C12")
+    print("  cells) and the muscle whose power was measured (bird syrinx, toadfish swimbladder).")
+
     print("\n  THE ASSUMPTION IS THE WEAK POINT AND IT IS LOAD-BEARING. Power is force times")
     print("  velocity and this chain carries no force data. Comai et al. 2026 (claim 1099,")
     print("  abstract) report that myosin-binding protein composition rather than the motor sets")
