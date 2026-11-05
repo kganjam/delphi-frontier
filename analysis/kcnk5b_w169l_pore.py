@@ -38,7 +38,7 @@ def variant_sequence(seq: str) -> str:
     return seq[:POS - 1] + MUT + seq[POS:]
 
 
-def submit(label: str, seq: str, a3m: str):
+def submit(label: str, seq: str, a3m: str, chains=("A", "B")):
     """openfold3, NOT boltz2, and the reason is a schema wall rather than a preference.
 
     boltz2_predict_native refuses a homodimer three ways: passing the same alignment inline to
@@ -55,7 +55,7 @@ def submit(label: str, seq: str, a3m: str):
     """
     import nebius
     mols = [{"type": "protein", "id": c, "sequence": seq,
-             "msa": {"main": {"a3m": {"alignment": a3m, "format": "a3m"}}}} for c in ("A", "B")]
+             "msa": {"main": {"a3m": {"alignment": a3m, "format": "a3m"}}}} for c in chains]
     op, _ = nebius.submit(
         "infer_openfold3_native",
         {"request_id": f"ms-kcnk5b-{label}-of3-dimer-v2",
@@ -91,9 +91,31 @@ def wt_twice() -> int:
     return 0
 
 
+def monomer_twice() -> int:
+    """Is kcnk5b unpredictable only as a DIMER, or at all?
+
+    Claim 1092 measured 30.161 A between two openfold3 runs of the identical wild-type DIMER.
+    That could be an interface problem -- iPTM was 0.33-0.40, and iPTM scores the interface. The
+    existing monomer prediction is WORSE on its own terms (pLDDT 48.7 against the dimer's 60.7),
+    so this asks whether a second monomer run lands anywhere near the first.
+
+    IT MATTERS BEYOND THIS PROTEIN. Claims 1080 and 1081 compared ProteinMPNN across a dimer and
+    a monomer structure. If the monomer is as irreproducible as the dimer, both of those rest on
+    two draws from a wide distribution and neither can be read as structural.
+    """
+    a3m = A3M.read_text()
+    wt = [ln for ln in a3m.splitlines() if not ln.startswith(">")][0]
+    print("  predicting the MONOMER a second time; one chain, identical alignment")
+    op, out = submit("monomer-replicate", wt, a3m, chains=("A",))
+    print(f"  {op} -> {out}")
+    return 0
+
+
 def main() -> int:
     if "--wt-twice" in sys.argv:
         return wt_twice()
+    if "--monomer-twice" in sys.argv:
+        return monomer_twice()
     a3m = A3M.read_text()
     wt = [ln for ln in a3m.splitlines() if not ln.startswith(">")][0]
     print(f"  alignment {len(a3m.splitlines())//2} sequences; query length {len(wt)}")
