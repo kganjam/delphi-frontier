@@ -59,6 +59,30 @@ NAMED = re.compile(r"\bop-[0-9a-f]{8,}"
                    r"|\b[\w./{},-]*(?:structures|proteinmpnn)[\w./{},-]*", re.I)
 
 
+# A bare sequence-model PROBABILITY, e.g. "P(K) = 6.2e-19". Measured 2026-11-05 (claim 1396):
+# across four ESMFold2 replicate backbones of one sequence, ProteinMPNN's P(native) at one
+# position spans 4.52 orders of magnitude and P(mutant) spans 1.84, while pLDDT at that same
+# position in those same structures has sd 0.116. The ARGMAX is stable (valine in all four,
+# 0.976-1.000) and the magnitudes are not, so a probability quoted from one structure carries an
+# unstated uncertainty of two to four orders.
+PROB = re.compile(r"P\(\s*(?:native|[A-Z])\s*\)\s*(?:at|=|of|is)?[^.\n]{0,24}"
+                  r"\d(?:\.\d+)?\s*(?:[eE][-+]?\d+|x\s*10)", re.I)
+# a replicate spread is quoted when the text mentions replicates/seeds AND a spread word
+SPREAD = re.compile(r"(replicate|seed[s]?\b|across .{0,20}backbone)[^.\n]{0,80}"
+                    r"(spread|range|sd\b|orders of magnitude|standard deviation)"
+                    r"|(spread|range|sd\b|orders of magnitude)[^.\n]{0,80}(replicate|seed|backbone)", re.I)
+
+
+def probabilities_without_spread(rows):
+    out = []
+    for r in rows:
+        if len(r) < 4 or not PROB.search(r[2]):
+            continue
+        if not SPREAD.search(r[2]):
+            out.append(r)
+    return out
+
+
 def main() -> int:
     rows = dbq.q(
         "select id::text, coalesce(evidence,''), "
@@ -89,6 +113,20 @@ def main() -> int:
     if len(bare) > 20:
         print(f"    ... and {len(bare) - 20} more")
     print("\n  Reports only. A claim here is not wrong; its number is just not retrievable.")
+
+    bare_p = probabilities_without_spread(rows)
+    print()
+    print("=" * 78)
+    print("SEQUENCE-MODEL PROBABILITIES QUOTED WITHOUT A REPLICATE SPREAD")
+    print("=" * 78)
+    print(f"  {len(bare_p)} live claim(s) quote a P(...) value with no replicate range beside it.")
+    print("  Measured error bar on such a number: 4.52 orders on P(native), 1.84 on P(mutant),")
+    print("  across four replicate backbones of ONE sequence (claim 1396). The argmax is stable;")
+    print("  the magnitude is not. Prefer a rank or an argmax, or quote the spread.")
+    for r in bare_p[:15]:
+        print(f"    {r[0]:>5} [{r[1]:<10}] {r[2][:92]}")
+    if len(bare_p) > 15:
+        print(f"    ... and {len(bare_p) - 15} more")
     return 0
 
 
