@@ -67,7 +67,7 @@ SPEC = [
     ("6. ROUTE D -- HARVESTING THE WIND", [
         ("Can it soar on the wind instead of its own muscle?", 964),
         ("What does wind actually buy, integrated properly?", 965),
-        ("Does the soaring cycle close?", 967),
+        ("Does the soaring cycle close?", 971),
         ("Can it extract energy from WIND SHEAR?", 966),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [
@@ -90,10 +90,12 @@ ROUTE_VERDICTS = [
      "PROVISIONAL. The efficiency argument caps what fraction of STORED energy reaches the "
      "body, not how much is stored -- so it closes only if multi-contraction spring charging "
      "is impossible, which is unknown. The adversarial arm caught this."),
-    ("D. Harvesting the wind", 967, False,
-     "PROVISIONAL. No cycle was FOUND under one hand-built heading controller, which is not "
-     "the same as none existing; and the shear controls compared wind against no-wind rather "
-     "than sheared against uniform. The adversarial arm caught both."),
+    ("D. Harvesting the wind", 971, False,
+     "OPEN, AND THE ONLY ROUTE WITH A POSITIVE RESULT. In wind above ~12.5 m/s at 1 m the "
+     "design sustains flight for the full 4 s simulation above 1 metre with net energy gain "
+     "(50-75 of 100 controllers); below that, 0 of 100. A wingless body with the same drag "
+     "sustains in 0 of 2500 cases at every altitude floor, so this is lift, not advection. "
+     "Not shown: indefinite flight, stall, structural loads, or roll-rate limits."),
 ]
 
 
