@@ -85,6 +85,9 @@ def run_stage(name: str, cmd: list[str], why_skip: str | None = None) -> dict:
     return rec
 
 
+EXTRACT = HERE.parent / "results" / "extract"
+
+
 def one_cycle(project: str, n_challenge: int, write: bool) -> dict:
     py = sys.executable
     stages = []
@@ -94,6 +97,38 @@ def one_cycle(project: str, n_challenge: int, write: bool) -> dict:
     stages.append(run_stage(
         "challenge", [py, str(HERE / "api_challenge.py"), str(n_challenge), "--write"],
         None if write else "needs --write: this stage spends Console API credit"))
+    # 2b. THE RETRIEVAL LOOP, which is what turns an adversarial critic into a swarm that can
+    # answer its own objections rather than only raising them.
+    #
+    #   evaluate  -> every constraint it cannot settle records WHY, in one sentence
+    #   questions -> those sentences become literature questions, as QUANTITIES not yes/nos
+    #   harvest   -> one search per question; each paper is asked only the question that found it
+    #   record    -> verified values become claims, labelled by how the PAPER came by the number
+    #
+    # Until 2026-11-05 every one of these was run by hand and the insufficient verdicts -- the
+    # most actionable thing the evaluator produces -- were printed to stdout and discarded, so
+    # each run paid to recompute a sentence nothing had kept. Run as a loop, an evaluator's
+    # complaint becomes the next search, and the next cycle's evaluator sees what came back.
+    #
+    # BOUNDED HARD, because a harvest is hours long and this runs unattended: a handful of
+    # questions per cycle, a dozen candidates each. The loop's value is that it runs EVERY cycle,
+    # not that any one cycle is exhaustive.
+    spend = None if write else "needs --write: these stages spend Console API credit"
+    stages.append(run_stage(
+        "evaluate", [py, str(HERE / "api_evaluate_constraints.py"), "12", "--write"], spend))
+    stages.append(run_stage(
+        "questions", [py, str(HERE / "extraction_questions.py"), "--from-gaps", "--generalise",
+                      "--cap", "6", "--out", str(EXTRACT / "questions_cycle.txt")], spend))
+    stages.append(run_stage(
+        "harvest", [py, str(HERE / "targeted_harvest.py"), "--questions",
+                    str(EXTRACT / "questions_cycle.txt"), "--limit", "4", "--write"],
+        spend or (None if (EXTRACT / "questions_cycle.txt").exists()
+                  else "no question file: the questions stage did not produce one")))
+    # Recording is free and must run even when the paid stages were skipped, because a previous
+    # cycle's harvest may be sitting unrecorded -- which is exactly how this pipeline sat for a
+    # day with 225 papers and a 37-byte output file.
+    stages.append(run_stage("record", [py, str(HERE / "claims_from_extraction.py"), "--write"]))
+
     # 3. Synthesis.
     stages.append(run_stage("synthesis", [py, str(HERE / "design_chain.py")]))
     # 4. Conformance. EVERY check_*.py RUNS HERE, and that is the point of the loop below
