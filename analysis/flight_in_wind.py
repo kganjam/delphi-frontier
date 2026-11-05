@@ -25,8 +25,9 @@ would be a LOWER bound on what wind buys, not an upper one.
 import math
 
 G, RHO = 9.81, 1.225
-M = 4.0e-4 * (2.6 / 4.0) ** 3
-S = 1.4e-4 * (2.6 / 4.0) ** 2 * 2.65      # m^2, the 2.65-fold fin
+from geometry import MASS_KG as _M, S_LIFTING_M2 as _S  # noqa: E402  one definition; see analysis/geometry.py
+M = _M                  # was: 4.0e-4 * (2.6/4.0)**3, re-typed alongside it
+S = _S                  # was: 1.4e-4 * (2.6/4.0)**2 * 2.65, re-typed in 9 files
 CL = 1.07                                  # claim 86
 LD = 4.0                                   # lift-to-drag, generous for this Re (claim 565 area)
 V_EXIT = 1.60

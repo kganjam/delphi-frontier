@@ -22,8 +22,9 @@ Usage:  python3 flapping_power_budget.py
 import math
 
 RHO, G = 1.225, 9.81
-M = 4.0e-4 * (2.6/4.0)**3        # 0.110 g, the best specifiable design
-S = 1.4e-4 * (2.6/4.0)**2 * 2.65  # 1.57 cm2 of fin
+from geometry import MASS_KG as _M, S_LIFTING_M2 as _S  # noqa: E402  one definition; see analysis/geometry.py
+M = _M                  # was: 4.0e-4 * (2.6/4.0)**3, re-typed alongside it
+S = _S                  # was: 1.4e-4 * (2.6/4.0)**2 * 2.65, re-typed in 9 files
 R, PHI = 0.013, 2.3               # wing length, stroke amplitude
 F = 53.0                          # Hz, from claim 586 at clap-and-fling CL
 CD_PROFILE = 0.2                  # a flapping wing at Re ~1e3-1e4; generous low end

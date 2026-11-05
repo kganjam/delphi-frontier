@@ -21,8 +21,9 @@ import math
 
 RHO, G, CL = 1.225, 9.81, 1.07
 # the best specifiable design (claims 580, 584): 2.6 cm young adult, 2.65x fin genetics
-M = 4.0e-4 * (2.6/4.0)**3          # kg
-S = 1.4e-4 * (2.6/4.0)**2 * 2.65   # m2 of lifting surface
+from geometry import MASS_KG as _M, S_LIFTING_M2 as _S  # noqa: E402  one definition; see analysis/geometry.py
+M = _M                  # was: 4.0e-4 * (2.6/4.0)**3, re-typed alongside it
+S = _S                  # was: 1.4e-4 * (2.6/4.0)**2 * 2.65, re-typed in 9 files
 R = 0.013                           # m, wing (fin) length -- half a body length, generous
 PHI = (2.0, 2.6)                    # rad, stroke amplitude: 115 to 150 degrees
 

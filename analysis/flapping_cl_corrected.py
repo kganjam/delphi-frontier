@@ -54,8 +54,9 @@ Lowering CL from 4.5 to the measured ceiling RAISES the required frequency.
 import math
 
 RHO, G = 1.225, 9.81
-M = 4.0e-4 * (2.6 / 4.0) ** 3      # kg, the best specifiable design (claims 580, 584)
-S = 1.4e-4 * (2.6 / 4.0) ** 2 * 2.65
+from geometry import MASS_KG as _M, S_LIFTING_M2 as _S  # noqa: E402  one definition; see analysis/geometry.py
+M = _M                  # was: 4.0e-4 * (2.6/4.0)**3, re-typed alongside it
+S = _S                  # was: 1.4e-4 * (2.6/4.0)**2 * 2.65, re-typed in 9 files
 R = 0.013                           # m, wing (fin) length
 PHI_MID = 2.3                       # rad, mid of the 115-150 deg stroke amplitude range
 

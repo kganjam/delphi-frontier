@@ -20,8 +20,9 @@ ballistic lob also does.
 import math
 
 G, RHO = 9.81, 1.225
-M = 4.0e-4 * (2.6 / 4.0) ** 3
-S = 1.4e-4 * (2.6 / 4.0) ** 2 * 2.65
+from geometry import MASS_KG as _M, S_LIFTING_M2 as _S  # noqa: E402  one definition; see analysis/geometry.py
+M = _M                  # was: 4.0e-4 * (2.6/4.0)**3, re-typed alongside it
+S = _S                  # was: 1.4e-4 * (2.6/4.0)**2 * 2.65, re-typed in 9 files
 CL, LD = 1.07, 4.0
 V_EXIT = 1.60
 DT = 1.0e-4

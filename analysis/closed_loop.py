@@ -22,8 +22,9 @@ That is a real question with two possible answers, which is why it is worth runn
 import math
 
 G, RHO = 9.81, 1.225
-M = 4.0e-4 * (2.6 / 4.0) ** 3
-S = 1.4e-4 * (2.6 / 4.0) ** 2 * 2.65
+from geometry import MASS_KG as _M, S_LIFTING_M2 as _S  # noqa: E402  one definition; see analysis/geometry.py
+M = _M                  # was: 4.0e-4 * (2.6/4.0)**3, re-typed alongside it
+S = _S                  # was: 1.4e-4 * (2.6/4.0)**2 * 2.65, re-typed in 9 files
 CD0 = 0.27
 Z0, KARMAN = 2.0e-4, 0.41
 DT = 5.0e-5
