@@ -30,6 +30,11 @@ _CLAIM 568'S "IRREDUCIBLE" OVERREACHED AND BOTH PANEL MODELS CAUGHT IT: THE FLOO
 claim 565 `derived` / `full-text`  
 _THE DRAG COEFFICIENT USED IN EVERY TRAJECTORY RESULT IS BELOW THE PHYSICAL FLOOR, SO THE 1.85-FOLD GAP IS A LOWER BOUND AND THE REAL SHORTFALL IS 2.0…_
 
+**Is the gliding negative robust to the LIFT coefficient?**  
+**6.5 fold area shortfall for sustained gliding, restored to claim 571's value at CL 1.07 after the low-AR LEV premise behind claim 594's 4.6x was refuted**  
+claim 599 `literature` / `full-text`  
+_CORRECTION TO CLAIM 594: PARK & CHOI'S FLYING FISH IS A HIGH-ASPECT-RATIO WING, SO IT DOES NOT LICENSE THE LOW-AR LEV REGIME I INFERRED, AND CLAIM 571…_
+
 
 ## ORGANISM / kinematics
 
@@ -201,11 +206,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 367 live claims of 433 for project `zebrafish-flight`; **66 superseded**, which is the project correcting itself and is not a defect.
+- 367 live claims of 435 for project `zebrafish-flight`; **68 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 184, `measured` 103, `literature` 54, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 183, `measured` 103, `literature` 55, `simulated` 16, `unknown` 9, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**

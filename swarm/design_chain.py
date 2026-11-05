@@ -38,6 +38,8 @@ CHAIN = [
      "Can a better-SHAPED fin compensate for less area?", 579),  # was 568: 'irreducible' overreached; 579 gives the CL-bounded form
     ("ORGANISM / aerodynamics",
      "Is the drag coefficient the project uses physically attainable?", 565),
+    ("ORGANISM / aerodynamics",
+     "Is the gliding negative robust to the LIFT coefficient?", 599),
     ("ORGANISM / kinematics",
      "What exit speed does the fish actually have?", 546),
     ("ORGANISM / kinematics",
