@@ -152,6 +152,14 @@ claim 588 `derived` / `full-text`
 _CLAIM 587 CLOSED THE FLAPPING ROUTE ON AN ASSERTION, AND COMPUTING IT REOPENS THE ROUTE. Claim 587 found that superfast myosin buys the 53 Hz the flap…_
 
 
+## TISSUE / fin mechanics
+
+**Does elastic storage recover the inertial cost?**  
+**50.2 ratio of fin first-bending-mode frequency to the 53 Hz beat frequency; >5 means quasi-static, so no elastic recovery of the inertial term**  
+claim 592 `derived` / `abstract`  
+_Elastic strain-energy storage does NOT recover the inertial term of the flapping budget, so the 52 W/kg branch of claim 588 is the one that holds, not…_
+
+
 ## GENE / myosin
 
 **Is there a gene for superfast fin muscle?**  
@@ -183,11 +191,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 361 live claims of 427 for project `zebrafish-flight`; **66 superseded**, which is the project correcting itself and is not a defect.
+- 362 live claims of 428 for project `zebrafish-flight`; **66 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 182, `measured` 103, `literature` 50, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 183, `measured` 103, `literature` 50, `simulated` 16, `unknown` 9, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**

@@ -77,6 +77,8 @@ CHAIN = [
     ("TISSUE / muscle",
      "Can the fin muscle beat fast enough?", 588),  # was 587: it closed the route on an
                                                     # assertion; 588 computes the budget
+    ("TISSUE / fin mechanics",
+     "Does elastic storage recover the inertial cost?", 592),
     ("GENE / myosin",
      "Is there a gene for superfast fin muscle?", 589),
     ("GENE / collagen",
