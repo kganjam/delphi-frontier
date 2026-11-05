@@ -68,6 +68,7 @@ SPEC = [
         ("Can it soar on the wind instead of its own muscle?", 964),
         ("What does wind actually buy, integrated properly?", 965),
         ("Does the soaring cycle close?", 971),
+        ("Can the fin take the soaring loads?", 972),
         ("Can it extract energy from WIND SHEAR?", 966),
     ]),
     ("7. WHAT THE DESIGN WOULD BE", [

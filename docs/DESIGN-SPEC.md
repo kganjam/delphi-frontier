@@ -190,6 +190,11 @@ _IN WIND THE DESIGN CLIMBS 48 TIMES HIGHER AND STAYS AIRBORNE 6.4 TIMES LONGER -
 claim 971 `simulated` / `full-text`  
 _ROUTE D IS OPEN AND THE DESIGN SUSTAINS FLIGHT IN WIND ABOVE 12.5 m/s: CLAIM 967'S CLOSURE WAS AN ARTIFACT OF A HEIGHT-RETURN TEST THAT PENALISED THE TRAJECTORIES THAT WORKED. Claim 967 reported that no controller closed the soaring cycle and closed route D. Claim 968 recorded the adversarial arm's objection that one hand-built policy failing proves nothing. A sweep of 2,500 controllers -- bank an…_
 
+**Can the fin take the soaring loads?**  
+**6.4 factor by which the worst soaring fin loading (192 Pa at 17.7 m/s in air) is BELOW what the same fin already carries in a C-start in water (1,232 Pa); crossover at 44.9 m/s**  
+claim 972 `derived` / `full-text`  
+_THE STRUCTURAL CAVEAT ON CLAIM 971 IS WEAKER THAN IT LOOKED: THE SOARING LOADS ARE 6.4 TIMES BELOW WHAT THE FIN ALREADY CARRIES IN WATER. Claim 971 reported sustained flight above 12.5 m/s and listed, among its unestablished caveats, that there is "no structural limit, and a 0.11 g animal at 17 m/s is carrying loads nothing here has checked". This checks them.  WHAT THE SUSTAINING TRAJECTORIES ACT…_
+
 **Can it extract energy from WIND SHEAR?**  
 **25.7 fold inertial-frame energy gain from wind shear at u*=0.60, lift-dependent (a wingless body with the same drag LOSES energy); but the cycle does not close and the animal lands every time**  
 claim 966 `simulated` / `full-text`  
