@@ -121,6 +121,11 @@ def parse(text: str) -> tuple[str, str, str]:
 #: varies the billing account, so the challenger STRING changes while the model does not.
 #: Two Claude models share training, alignment and failure modes: an objection both miss is one
 #: this panel structurally cannot make, and repeated sampling never reveals it.
+#: MEASURED 2026-11-05 (claim 1118), because the line above was asserted before it was checked:
+#: opus and sonnet agree on 83.8% of claims they both review (31/37), against a 93.9%
+#: within-model self-consistency baseline (62/66). They are PARTIALLY decorrelated, not one
+#: viewpoint. And the six divergences are systematic -- opus more lenient, sonnet harsher, every
+#: time -- so a single-model panel is biased in a knowable direction.
 #: REPORT IT AS "two Claude models agreed", never as "N agents independently converged".
 #: A free cross-family panelist exists -- nvidia/nemotron-3.5-super-vl:free, and AGENTS.md 7a
 #: permits any model here because the data is public -- but reaching it needs a call path that
