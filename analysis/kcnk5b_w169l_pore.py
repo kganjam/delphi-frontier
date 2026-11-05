@@ -71,7 +71,29 @@ def submit(label: str, seq: str, a3m: str):
     return op, out
 
 
+def wt_twice() -> int:
+    """THE CONTROL CLAIM 1083 LACKS: predict wild type TWICE and measure the difference.
+
+    Claim 1083 concluded "openfold3 does not converge on this target" from a WT-vs-W169L
+    comparison of 49.178 A. That comparison cannot separate two explanations:
+      (a) the predictor is non-deterministic on this target, so ANY two runs differ hugely; or
+      (b) the predictor is stable and the single substitution genuinely moved the fold.
+    (b) would be an extraordinary result for one conservative-ish substitution in a 448-residue
+    protein, which is why (a) is the working hypothesis -- but it is a hypothesis until wild type
+    is run against itself. If WT-vs-WT also lands near 49 A, (a) is confirmed and claim 1083
+    stands. If WT-vs-WT is small, claim 1083 is WRONG and the mutation did something.
+    """
+    a3m = A3M.read_text()
+    wt = [ln for ln in a3m.splitlines() if not ln.startswith(">")][0]
+    print("  predicting WILD TYPE a second time; identical inputs, new idempotency key")
+    op, out = submit("wt-replicate", wt, a3m)
+    print(f"  {op} -> {out}")
+    return 0
+
+
 def main() -> int:
+    if "--wt-twice" in sys.argv:
+        return wt_twice()
     a3m = A3M.read_text()
     wt = [ln for ln in a3m.splitlines() if not ln.startswith(">")][0]
     print(f"  alignment {len(a3m.splitlines())//2} sequences; query length {len(wt)}")
