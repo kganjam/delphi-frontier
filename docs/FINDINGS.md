@@ -983,3 +983,18 @@ work that would obviously succeed; each is a specific question with a stated rea
   (12%) with none. Project totals mix claim content with reviewer composition, so they cannot
   separate the two. The within-corpus comparison is the evidence that can — same claim pool,
   one model versus two, 3.8% against 24.5%.
+- **The fin-area exponent is measured, not 2, and assuming 2 overstates the lifting area by
+  1.64x.** Area scales as fin linear dimension raised to n. For the *alf* fin n = **1.82**
+  (claim 529); for the *kcnh2a* longfin fin specifically n = **1.33** (claim 542, a lower bound
+  given a posture confound). So the 2.02–2.09x fin length/SL that `kcnh2a^lof/+` delivers is
+  **2.67x in AREA**, not the 4.37x that squaring gives — short of S901's 4.4x requirement by
+  **1.65x**, not "just short".
+  **This error has now been made twice in this project, from the same figure.** Claim 541
+  compared 2.08x fin length against "the 2.10x required" and called it a match within 1%; claim
+  542 superseded it because 2.10 is √4.4 and so assumes n = 2. Claim 985 then reproduced the
+  same step and was superseded by claim 987 for the same reason. Both times the derivation was
+  done fresh instead of searching the graph for an already-measured exponent. **A quantity this
+  project has measured is reachable by one query and is cheaper to look up than to re-derive —
+  and re-deriving it reproduces the optimistic answer, because squaring is the intuitive step.**
+  What survives untouched is any comparison that never converts: claim 986 benchmarks fin
+  length/SL against gliders' fin length/SL in the same unit, and needs no exponent at all.
