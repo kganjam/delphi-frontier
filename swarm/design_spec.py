@@ -63,7 +63,10 @@ SPEC = [
         ("How much muscle does the launch actually need?", 959),
         ("What efficiency does it need, and is that attainable?", 960),
     ]),
-    ("6. WHAT THE DESIGN WOULD BE", [
+    ("6. ROUTE D -- HARVESTING THE WIND", [
+        ("Can it soar on the wind instead of its own muscle?", 961),
+    ]),
+    ("7. WHAT THE DESIGN WOULD BE", [
         ("The best design this project can specify", 580),
         ("What that design actually achieves", 584),
     ]),
@@ -134,6 +137,12 @@ def main() -> int:
              "fast-start is 39%, and a spring-loaded mechanical fish -- the directly analogous "
              "device, built and measured -- achieved 10%. A latch changes WHEN energy arrives, "
              "not how much survives the water.\n")
+    L.append("- **Harvesting the wind is closed too, and for a structural reason.** Dynamic "
+             "soaring supplies ENERGY, not LIFT, and every phase of a cycle presupposes an "
+             "animal already flying. At 16% of its weight in lift this design cannot climb; its "
+             "entire vertical range is the 7.8 cm its launch buys, against the metres of shear "
+             "layer a soaring bird works in. A fish that cannot hold itself up cannot perform "
+             "the manoeuvre that would give it the energy to hold itself up.\n")
     L.append("The sections below give the design anyway, scale by scale, because the parts that "
              "ARE achievable are specified in real genes with real magnitudes, and because a "
              "negative result is only useful if someone can see exactly where it fails.\n")
