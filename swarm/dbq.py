@@ -76,3 +76,23 @@ def flat(expr: str, limit: int | None = None) -> str:
     for ch in FRAMING:
         out = f"replace({out}, {ch}, ' ')"
     return f"left({out}, {int(limit)})" if limit is not None else out
+
+
+def write_claim(project: str, scale: str | None, statement: str, evidence: str,
+                value_num: float | None, units: str | None, source: str,
+                read_level: str | None = None) -> int:
+    """Insert one claim and return its id.
+
+    ADDED because there was no shared writer and every module that needed one carried its own
+    INSERT. `scripts` already holds twelve copies of the read path for the same reason; this is
+    the write path, consolidated before it reached two.
+    """
+    cols = ["project_id", "scale_id", "statement", "evidence", "value_num", "units", "source"]
+    vals = [lit(project), lit(scale), lit(statement), lit(evidence),
+            "null" if value_num is None else repr(float(value_num)), lit(units), lit(source)]
+    if read_level is not None:
+        cols.append("read_level")
+        vals.append(lit(read_level))
+    sql = (f"insert into claim ({', '.join(cols)}) values ({', '.join(vals)}) returning id")
+    rows = q(sql)
+    return int(rows[0][0])
