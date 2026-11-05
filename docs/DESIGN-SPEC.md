@@ -180,6 +180,11 @@ _CORRECTION FOUND BY THIS PROJECT'S OWN ADVERSARIAL ARM: THE PROJECT HAS BEEN US
 claim 965 `simulated` / `full-text`  
 _IN WIND THE DESIGN CLIMBS 48 TIMES HIGHER AND STAYS AIRBORNE 6.4 TIMES LONGER -- AND IS BLOWN BACKWARDS, WHICH MEANS THE GROUND-FRAME RANGE STOPS MEASURING FLIGHT ABOVE THE BREAK-EVEN HEADWIND. Claim 964 withdrew claim 961's closure of route D by showing lift needs AIRSPEED, not ground speed. This computes what follows, because "not closed" is not "works".  THE MODEL FIXES THE THREE ERRORS THE ADV…_
 
+**Can it extract energy from WIND SHEAR?**  
+**25.7 fold inertial-frame energy gain from wind shear at u*=0.60, lift-dependent (a wingless body with the same drag LOSES energy); but the cycle does not close and the animal lands every time**  
+claim 966 `simulated` / `full-text`  
+_THE DESIGN EXTRACTS ENERGY FROM A SHEARED WIND -- UP TO 26 TIMES ITS LAUNCH ENERGY -- AND STILL DOES NOT SUSTAIN FLIGHT. THE MECHANISM WORKS; THE CYCLE DOES NOT CLOSE. Claim 965 showed that in a UNIFORM wind the design climbs but comes down every time, because a uniform wind only translates the reference frame, and stated that whether a SHEARED wind changes that was unanswered. It is now modelled:…_
+
 
 ## 7. WHAT THE DESIGN WOULD BE
 
