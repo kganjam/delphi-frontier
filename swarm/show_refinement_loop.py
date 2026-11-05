@@ -43,6 +43,52 @@ def wrap(s: str, indent: str = "      ") -> str:
                          initial_indent=indent, subsequent_indent=indent)
 
 
+def chains(proj: str) -> int:
+    """Successive refinement of ONE design question across a supersession chain.
+
+    A single loop shows a claim was corrected. Aggregate rates show corrections happen. Neither
+    shows a DESIGN BEING REFINED -- a question pursued across several rounds, each round
+    correcting the last on evidence. That is what this prints, by walking claim.superseded_by.
+
+    These chains are the strongest evidence in this project that the loop does science rather
+    than scoring, because the corrections are not cosmetic: a pre-registered prediction is
+    refuted, a replacement model is proposed, and the replacement then fails its own
+    out-of-sample test -- which is the sequence a working method produces and a flattering one
+    does not.
+    """
+    heads = q(f"""with recursive edges as (
+                    select id, superseded_by from claim
+                    where project_id = '{proj}' and superseded_by is not null),
+                  chain as (
+                    select id as head, id as cur, 1 as depth from edges
+                    union all
+                    select c.head, e.superseded_by, c.depth + 1
+                    from chain c join edges e on e.id = c.cur where c.depth < 8)
+                  select head::text, max(depth)::text from chain group by head
+                  having max(depth) >= 3 order by max(depth) desc limit 3""")
+    for row in heads:
+        if len(row) < 2:
+            continue
+        head, depth = row[0], row[1]
+        print(f"\n  === REFINEMENT CHAIN from claim {head}, {depth} rounds ===")
+        cur, seen, n = head, set(), 0
+        while cur and cur not in seen:
+            seen.add(cur)
+            r = q(f"""select coalesce(superseded_by::text,''), coalesce(value_num::text,'-'),
+                             coalesce(units,'-'), {flat('statement', 900)}
+                      from claim where id = {int(cur)}""")
+            if not r or len(r[0]) < 4:
+                break
+            nxt, val, units, stmt = r[0][:4]
+            n += 1
+            print(f"\n  ROUND {n}  claim {cur}   value {val} {units[:40]}")
+            print(wrap(stmt[:420]))
+            cur = nxt.strip() or None
+    print("\n  Each round SUPERSEDES the one above it. The chain is read from claim.superseded_by,")
+    print("  not curated: these are simply the longest chains in the project.")
+    return 0
+
+
 def process(proj: str) -> int:
     """The refinement PROCESS across the whole corpus, not one worked example.
 
@@ -110,6 +156,8 @@ def main() -> int:
     proj = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
     if "--process" in sys.argv:
         return process(proj)
+    if "--chains" in sys.argv:
+        return chains(proj)
     want = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1].isdigit() else None
     sel = f"and ch.claim_id = {int(want)}" if want else ""
     rows = q(f"""select ch.claim_id::text, c.superseded_by::text, coalesce(ch.challenger,'?'),
