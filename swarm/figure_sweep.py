@@ -55,6 +55,25 @@ STUB_BYTES = 60_000          # a real PMC article page is several hundred KB
 PAUSE_S = 6                  # between requests, to stay under the throttle
 
 
+CAPTCHA_MARKERS = ("RecaptchaChallengePageUi", "preparing to download", "unusual traffic",
+                   "Performing security verification", "are you a robot")
+
+
+def looks_blocked(html: str) -> str:
+    """Name WHY a fetch failed. 'Throttled', 'captcha' and 'embargoed' are different facts and
+    only one of them is worth retrying soon. The first version of this sweep collapsed all of
+    them into 'not retrievable here', which is how an EMBARGOED paper (PMC11911126, released
+    2026-11-18) came to be recorded as a fetch problem."""
+    low = html.lower()
+    if any(m.lower() in low for m in CAPTCHA_MARKERS):
+        return "captcha/rate-limited"
+    if "will be available in pmc on" in low:
+        return "EMBARGOED"
+    if len(html) < STUB_BYTES:
+        return "stub/throttled"
+    return ""
+
+
 def fetch(url: str, timeout: int = 70, tries: int = 3) -> str:
     out = ""
     for i in range(tries):
