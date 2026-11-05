@@ -67,7 +67,12 @@ def flat(expr: str, limit: int | None = None) -> str:
     leave a trailing fragment, but scrubbing first guarantees the result is single-line
     whatever the limit does.
     """
-    out = expr
+    # CAST FIRST. `replace()` is text-only, so flat('criteria') on a jsonb column fails with
+    # `function replace(jsonb, text, unknown) does not exist` -- a cryptic error for what is
+    # just a column of the wrong type. q() returns psql's text serialisation of every column
+    # anyway, so casting here is what the caller wanted in every case, and on a text column
+    # `col::text` is a no-op.
+    out = f"({expr})::text"
     for ch in FRAMING:
         out = f"replace({out}, {ch}, ' ')"
     return f"left({out}, {int(limit)})" if limit is not None else out

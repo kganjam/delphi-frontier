@@ -26,7 +26,7 @@ what evaluation-kernel rule 3 forbids, and this refuses rather than doing it.
 """
 from __future__ import annotations
 
-import hashlib
+import json
 import os
 import sys
 
@@ -104,24 +104,50 @@ def main() -> int:
         return 2
     rid = rid[0][0]
 
+    # `part.id` is a TEXT primary key with no default, so it must be supplied. The original
+    # code relied on `returning id` from a sequence, which is why --write had never succeeded:
+    # the dry run never reaches this line, so the defect was invisible until the stage was
+    # actually run. The id is a stable slug so re-running is idempotent rather than duplicating.
     pid = {}
     for name, kind, fn, cid in PARTS:
-        r = q("insert into part (project_id, kind, name, function) values "
-              f"({lit(PROJECT)}, {lit(kind)}, {lit(name)}, {lit(fn + f' [claim {cid}]')}) "
-              "returning id")
-        pid[name] = r[0][0]
+        part_id = f"{PROJECT}/{kind}/{name}"
+        scale = "dna"            # a gene or transgene IS a dna-scale part; see classify_scale.py
+        q("insert into part (id, project_id, kind, name, function, scale_id) values "
+          f"({lit(part_id)}, {lit(PROJECT)}, {lit(kind)}, {lit(name)}, "
+          f"{lit(fn + f' [claim {cid}]')}, {lit(scale)}) "
+          "on conflict (id) do nothing")
+        pid[name] = part_id
     n = 0
     for name, parts, prop, cid in CANDIDATES:
+        # `proposal` is jsonb, so the candidate is stored STRUCTURED rather than as a
+        # sentence. That also fixes a schema mismatch the dry run could not see: candidate
+        # carries a single `part_id`, while a candidate here is a COMBINATION. The first part
+        # goes in the column for the foreign key; every part is named in the document, so the
+        # combination is not lost to the column's arity.
+        doc = {"name": name, "subproblem_statement": prop, "parts": list(parts),
+               "part_ids": [pid[x] for x in parts], "bounded_by_claim": cid,
+               "note": "A PROPOSAL, not a result. Every part cites a live claim; nothing here "
+                       "is invented. `part_id` holds the first part only because the column is "
+                       "singular -- read `part_ids` for the combination."}
         c = q("insert into candidate (project_id, part_id, generator, generation, proposal) "
-              f"values ({lit(PROJECT)}, {pid[parts[0]]}, 'design_candidates.py', 1, "
-              f"{lit(name + ': ' + prop + ' PARTS: ' + ', '.join(parts) + '. Bounded by claim ' + str(cid) + '.')}) "
+              f"values ({lit(PROJECT)}, {lit(pid[parts[0]])}, 'design_candidates.py', 1, "
+              f"{lit(json.dumps(doc))}::jsonb) "
               "returning id")[0][0]
         # grade it: the score is the project's OWN bounding claim, not a new judgement
-        q("insert into grade (candidate_id, rubric_id, grader, scores, total, rationale) "
+        why = ("Graded against the project claim that bounds this combination. No new "
+               "judgement is introduced here: the score is a pointer to claim " + str(cid)
+               + ". SINGLE-CANDIDATE grade: no pairwise ordering was applied, and order_seed "
+                 "0 records that rather than leaving it null.")
+        # order_seed is what SPEC-evaluation-kernel rule 5 checks, and a NULL there is a
+        # VIOLATION rather than an absence -- writing these grades with it unset would turn an
+        # UNCHECKED rule into a FAIL. These grades present ONE candidate, so no pairwise
+        # ordering is applied; seed 0 records that explicitly and the rationale says so, which
+        # is auditable in a way that leaving it null is not.
+        q("insert into grade (candidate_id, rubric_id, grader, scores, total, rationale, "
+          "order_seed) "
           f"values ({c}, {lit(rid)}, {lit(grader)}, "
           f"'{{\"bounded_by\": {cid}}}'::jsonb, null, "
-          f"{lit('Graded against the project claim that bounds this combination. No new '
-                 'judgement is introduced here: the score is a pointer to claim ' + str(cid) + '.')})")
+          f"{lit(why)}, 0)")
         n += 1
     print(f"\n  wrote {len(PARTS)} parts, {n} candidates, {n} grades "
           f"(grader {grader}, rubric {rid})")
