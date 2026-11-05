@@ -87,6 +87,27 @@ def load(paths: list[pathlib.Path]) -> list[dict]:
     return out
 
 
+def for_this_project(items: list[dict]) -> tuple[list[dict], int]:
+    """Keep only values harvested FOR this project.
+
+    Every harvest file sits in one directory and the bridge reads all of them, so a value's own
+    record of which project it was gathered for is the only thing separating them. Without it,
+    running this with SWARM_PROJECT=coral attributes zebrafish fin-ray stiffness to coral -- 43
+    such rows were one keystroke from being written that way.
+
+    A value with no `project` stamp predates the stamp, and every run before it was
+    zebrafish-flight, so that is what it is treated as. The count of skipped rows is printed
+    rather than hidden, because a project with no harvest of its own should show zero here and
+    not silently inherit another project's corpus."""
+    keep, skipped = [], 0
+    for v in items:
+        if str(v.get("project") or "zebrafish-flight") == PROJECT:
+            keep.append(v)
+        else:
+            skipped += 1
+    return keep, skipped
+
+
 def source_string(it: dict) -> str:
     bits = [str(it.get("paper", "")).strip()]
     for key in ("journal", "year", "doi"):
@@ -157,11 +178,14 @@ def main() -> int:
     files = [f for f in files if not f.name.endswith(".map.json")]
     files.append(EXTRACT.parent / "extracted-values.json")
     items = load(files)
+    items, other_project = for_this_project(items)
     smap = load_scale_map()
     print("=" * 78)
     print("EXTRACTED VALUES -> CLAIMS")
     print("=" * 78)
-    print(f"  {len(items)} verified value(s) in {len([f for f in files if f.exists()])} file(s)")
+    print(f"  {len(items)} verified value(s) for project {PROJECT!r} in "
+          f"{len([f for f in files if f.exists()])} file(s); {other_project} skipped as "
+          f"belonging to another project")
     print("  scale maps: " + ", ".join(f"{k} ({len(v)} q)" for k, v in smap.items()) if smap
           else "  no scale map found; every row will be NULL")
 
