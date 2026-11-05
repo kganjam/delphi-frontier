@@ -55,7 +55,7 @@ CHAIN = [
     ("ORGANISM / body plan",
      "What wind does the ACHIEVABLE animal actually need?", 988),
     ("ORGANISM / body plan",
-     "The taxi route has its organ now -- does it close?", 991),
+     "The taxi route has its organ now -- does it close?", 992),  # was 991: its Re range mixed corners
     # ORGAN and TISSUE
     ("ORGAN / fin morphology",
      "How much fin AREA is achievable, and at what aspect ratio?", 567),

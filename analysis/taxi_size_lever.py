@@ -93,40 +93,45 @@ def main() -> int:
     print(f"    zebrafish  Re {ZEB['re']:.0e}  C_D {ZEB['cd_lo']}-{ZEB['cd_hi']}"
           f"   U_max/V_to {ZEB['u_lo']}-{ZEB['u_hi']}")
 
-    print("\n  LOBE C_D NEEDED FOR THE TAXI TO REACH TAKE-OFF SPEED (U_max/V_to = 1.0):")
-    for c6, lab in ((C6_LO, "c6 low"), (C6_HI, "c6 high")):
-        for fa, flab in ((FA_LO, "fa low"), (FA_HI, "fa high")):
-            print(f"    {lab:8} {flab:8} C_D <= {cd_needed(1.0, fa, c6):.4f}")
-    need_lo = min(cd_needed(1.0, FA_HI, C6_LO), cd_needed(1.0, FA_LO, C6_LO))
-    need_hi = max(cd_needed(1.0, FA_HI, C6_HI), cd_needed(1.0, FA_LO, C6_HI))
-    print(f"    -> required C_D {need_lo:.4f}-{need_hi:.4f}, against the zebrafish's "
-          f"{ZEB['cd_lo']}-{ZEB['cd_hi']}")
-    print(f"    -> a drag reduction of {ZEB['cd_lo']/need_hi:.1f}x to "
-          f"{ZEB['cd_hi']/need_lo:.1f}x")
+    # WITHIN-CORNER, because the alternative is wrong and I published the wrong one first.
+    # For a FIXED (c6, fa), ratio = fa*sqrt(c6/C_D), so reaching 1.0 from r0 needs C_D to fall
+    # by exactly 1/r0^2 -- c6 and fa cancel and never need to be paired across corners.
+    # Claim 991 instead compared the zebrafish's lowest actual C_D against the highest required
+    # one and vice versa, giving 1.8x-7.3x. Those two corners carry different c6 and fa, so the
+    # pair is not a reachable comparison. It is the same corner-mixing error the control in
+    # controls_pass() caught in this file's first draft, repeated in the claim written from it.
+    print("\n  LOBE C_D REDUCTION NEEDED FOR U_max/V_to = 1.0 (within corner, exact):")
+    reductions = []
+    for r0 in (ZEB["u_lo"], ZEB["u_hi"]):
+        red = 1.0 / r0 ** 2
+        reductions.append(red)
+        print(f"    from U_max/V_to = {r0}:  C_D must fall {red:.2f}x")
+    print(f"    -> {min(reductions):.2f}x to {max(reductions):.2f}x"
+          f"   (claim 991 said 1.8x-7.3x by mixing corners)")
 
-    # Two points, so one exponent. Printed with its sensitivity rather than as a law.
     import math
     re_ratio = EXO["re"] / ZEB["re"]
-    print(f"\n  THE EXPONENT IS FITTED TO TWO POINTS AND NOTHING ELSE:")
-    re_ratios = []
-    for zcd, ecd, lab in ((ZEB["cd_lo"], EXO["cd_lo"], "low ends"),
-                          (ZEB["cd_hi"], EXO["cd_hi"], "high ends")):
-        n = math.log(zcd / ecd) / math.log(re_ratio)
-        need = (zcd / need_hi) ** (1.0 / n)
-        need2 = (zcd / need_lo) ** (1.0 / n)
-        re_ratios.append((min(need, need2), max(need, need2)))
-        print(f"    {lab:9} C_D ~ Re^-{n:.2f}  ->  Re must rise "
-              f"{min(need,need2):.0f}x to {max(need,need2):.0f}x")
+    n_lo = math.log(ZEB["cd_lo"] / EXO["cd_lo"]) / math.log(re_ratio)
+    n_hi = math.log(ZEB["cd_hi"] / EXO["cd_hi"]) / math.log(re_ratio)
+    n = (n_lo + n_hi) / 2
+    print(f"\n  C_D ~ Re^-n with n = {n_lo:.3f} to {n_hi:.3f} (two tabulated points, mean {n:.3f})")
+    re_ratios = [(r ** (1.0 / n)) for r in reductions]
+    print(f"  -> Reynolds number must rise {min(re_ratios):.1f}x to {max(re_ratios):.1f}x")
 
-    # GENERATE THE HEADLINE FROM THE NUMBERS. The first version of this line said "one to two
-    # orders of magnitude" while the computation gave 3x-35x, which is 0.5 to 1.5 orders. A
-    # hand-written summary above a generated table is the only part that can go stale, so it is
-    # computed here instead.
-    lo_x = min(min(r) for r in re_ratios)
-    hi_x = max(max(r) for r in re_ratios)
+    # Re ~ V_to * L, and V_to ~ sqrt(W/S) ~ sqrt(L) under geometric scaling, so Re ~ L^1.5.
+    # f*A_pp/V_to is SIZE-INDEPENDENT under constant Strouhal (f*A = St*U), and the table
+    # supports that empirically: both rows carry fa = 0.09-0.10 across a 30x Reynolds range.
+    L_ratios = [r ** (2.0 / 3.0) for r in re_ratios]
+    print(f"\n  Re ~ L^1.5 (V_to ~ sqrt(L)), and f*A_pp/V_to is size-independent under constant")
+    print(f"  Strouhal -- which the table CONFIRMS: both rows share fa = {FA_LO}-{FA_HI} across a")
+    print(f"  {re_ratio:.0f}x Reynolds range. So:")
+    print(f"    body length must rise {min(L_ratios):.2f}x to {max(L_ratios):.2f}x")
+    print(f"    a 4 cm zebrafish becomes {4*min(L_ratios):.1f} to {4*max(L_ratios):.1f} cm")
+
+    lo_x, hi_x = min(re_ratios), max(re_ratios)
     print("\n" + "-" * 78)
     print(f"  READ THIS AS A RANGE, NOT A DESIGN POINT: Reynolds number must rise by")
-    print(f"  {lo_x:.0f}x to {hi_x:.0f}x, i.e. {math.log10(lo_x):.1f} to {math.log10(hi_x):.1f} "
+    print(f"  {lo_x:.1f}x to {hi_x:.1f}x, i.e. {math.log10(lo_x):.1f} to {math.log10(hi_x):.1f} "
           f"orders of magnitude. The exponent comes from")
     print("  two tabulated points; a third would move it, and the required Re ratio is that")
     print("  exponent inverted, which amplifies its error. What the number supports is the")
