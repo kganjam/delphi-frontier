@@ -113,6 +113,16 @@ def main() -> int:
     print("  A UNIT MATCH IS NOT A QUANTITY MATCH. m/s is m/s whether it is a launch speed or a")
     print("  wind speed, so every pair above needs a person to accept or reject it. Nothing is")
     print("  written. Auto-satisfying on this would manufacture a satisfied chain.")
+    print()
+    print("  AND A BOUND DOES NOT CARRY ITS CONDITIONS, which is the subtler failure. Worked")
+    print("  example, entailment 180: it requires pectoral muscle to deliver net CYCLIC power")
+    print("  >= 50 W/kg, and claim 309 measures 142.7 W/kg -- non-circular, right units, three")
+    print("  times the bound. It is still NOT a satisfaction: the measurement is Scorpaena")
+    print("  notata MYOTOMAL fibres at 20 C under FAST-START strain, not pectoral muscle cycling")
+    print("  at flapping frequency. Power and frequency trade off in muscle -- superfast muscle")
+    print("  is weak BECAUSE it is fast (claims 979, 998, 1090) -- so a power figure without its")
+    print("  frequency is not comparable to a cyclic-power requirement. Read the conditions on")
+    print("  both sides, not just the number and the unit.")
     return 0
 
 
