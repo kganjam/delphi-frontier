@@ -23,6 +23,13 @@ sys.path.insert(0, "/data/swarm")
 from swarm import q, sql_lit, HONESTY, accounts_with_credit, dispatch  # noqa: E402
 
 PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+# Deliverable path, derived from the project rather than hard-coded. Until 2026-11-05 every
+# agent prompt said "{RESEARCH_DIR}/", so a coral agent would have filed coral findings
+# under the fish's directory and only check_interval_collapse.py would have read them. That
+# literal is invisible to a grep for "zebrafish-flight", which is how it survived the audit
+# that declared this pipeline project-agnostic.
+RESEARCH_DIR = "docs/research/" + ("fish" if PROJECT == "zebrafish-flight"
+                                   else PROJECT.split("-")[0])
 WORKDIR = "/data/worktrees/delphi-frontier/foundation"
 
 LAWS = [
@@ -104,7 +111,7 @@ def gen_challenges(accts, i=0):
             manufactured fault is worse than none, because it will be believed. Your value is the
             honest verdict, not the body count.
 
-            Write docs/research/fish/challenge-{cid}.md on a new branch and commit, ending with:
+            Write {RESEARCH_DIR}/challenge-{cid}.md on a new branch and commit, ending with:
             ```swarm-challenge
             {{"claim_id": {cid}, "outcome": "survived|refuted|weakened", "reason": "<one sentence>",
               "corrected_value": "<value with units, or null>",
@@ -149,7 +156,7 @@ def gen_replications(accts, i=0):
 
             Two independent derivations agreeing is evidence. One agent agreeing with itself is not.
 
-            Write docs/research/fish/replicate-{cid}.md on a new branch and commit, ending with:
+            Write {RESEARCH_DIR}/replicate-{cid}.md on a new branch and commit, ending with:
             ```swarm-replication
             {{"claim_id": {cid}, "my_value": "<value with units>", "agrees": true|false|null,
               "note": "<one sentence>"}}
@@ -284,7 +291,7 @@ def gen_deepen(accts, i=0, limit=10):
 
             {HONESTY}
 
-            Write docs/research/fish/{sid}-deepen.md on a new branch and commit, ending with:
+            Write {RESEARCH_DIR}/{sid}-deepen.md on a new branch and commit, ending with:
             ```swarm-result
             {{"subproblem": "{sid}-D", "evidence": "<level>", "answer": "<one sentence>",
               "key_number": "<the improved input, with units>", "verdict": "stands|strengthens|falls",
@@ -407,7 +414,7 @@ def gen_entail(accts, i=0, limit=10):
 
             {HONESTY}
 
-            Write docs/research/fish/claim-{cid}-entail.md on a new branch and commit, ending with:
+            Write {RESEARCH_DIR}/claim-{cid}-entail.md on a new branch and commit, ending with:
             ```swarm-entail
             {{"source_claim": {cid}, "source_scale": "{scale}",
               "constraints": [

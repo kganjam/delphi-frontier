@@ -9,6 +9,12 @@ recorded with the evidence level it earned rather than the one it claims.
 """
 import json, os, subprocess, sys, textwrap, datetime
 
+RESEARCH_DIR = "docs/research/" + (
+    "fish" if os.environ.get("SWARM_PROJECT", "zebrafish-flight") == "zebrafish-flight"
+    else os.environ.get("SWARM_PROJECT", "zebrafish-flight").split("-")[0])
+# See generate.py for why this is derived rather than literal.
+
+
 # -F with a control character: the default field separator is `|`, and a claim statement containing
 # one silently splits a row into extra fields. That crashed gen_challenges with "too many values to
 # unpack", which stopped the generator refilling and let concurrency fall from 40 to 8 unnoticed --
@@ -92,7 +98,7 @@ def build_prompt(project, sid, scale, question, acceptance, falsifier, why):
 
         {HONESTY}
 
-        DELIVERABLE. Write `docs/research/fish/{sid}-{scale}.md` on a new branch and COMMIT it. Structure:
+        DELIVERABLE. Write `{RESEARCH_DIR}/{sid}-{scale}.md` on a new branch and COMMIT it. Structure:
           1. The question, restated precisely with the numbers that make it hard.
           2. What is measured -- every value with source, year and read-level. Preserve disagreement.
           3. What you computed -- show the arithmetic, state the assumptions, mark it as computation.
@@ -251,7 +257,7 @@ THE RULE THAT MATTERS MOST: if after genuinely trying you cannot break the claim
 manufactures a fault is worse than no challenge, because it will be believed. Report `survived` with your
 reasoning. Your value is in the honest verdict, not in the body count.
 
-DELIVERABLE. Write `docs/research/fish/challenge-{cid}.md` on a new branch and commit it, ending with:
+DELIVERABLE. Write `{RESEARCH_DIR}/challenge-{cid}.md` on a new branch and commit it, ending with:
 
 ```swarm-challenge
 {{"claim_id": {cid}, "outcome": "<survived|refuted|weakened>", "reason": "<one sentence>",
