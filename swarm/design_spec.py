@@ -73,6 +73,24 @@ SPEC = [
 ]
 
 
+# (route, claim id, closed?, one-sentence reason). EDITORIAL and declared; the NUMBERS are
+# fetched from the claims so this block cannot drift from them.
+ROUTE_VERDICTS = [
+    ("A. Gliding", 599, True,
+     "It needs a lift coefficient near 7; the best steady value measured anywhere is 1.75."),
+    ("B. Powered flapping", 601, True,
+     "It needs ~83 Hz; fish white locomotory muscle makes no power above ~12 Hz, and the "
+     "superfast myosin that could reach it has never been sequenced in any animal."),
+    ("C. Latch-spring launch", 960, True,
+     "Even a fish made entirely of muscle needs 54% of muscle work to arrive as body kinetic "
+     "energy; the best measured for any fish fast-start is 39%, and a spring-loaded mechanical "
+     "fish achieved 10%."),
+    ("D. Harvesting the wind", 961, True,
+     "Dynamic soaring supplies energy, not lift, and every phase presupposes an animal already "
+     "flying; at 16% of its weight in lift this design cannot climb at all."),
+]
+
+
 def fetch(cid: int) -> dict | None:
     r = q("select id, coalesce(value_num::text,''), coalesce(units,''), coalesce(evidence,''), "
           "coalesce(read_level,''), coalesce(superseded_by::text,''), "
@@ -88,6 +106,12 @@ def fetch(cid: int) -> dict | None:
 def main() -> int:
     write = "--write" in sys.argv
     rows, missing, stale = [], [], []
+    for _r, _cid, _c, _w in ROUTE_VERDICTS:
+        c = fetch(_cid)
+        if not c:
+            missing.append(_cid)
+        elif c["superseded_by"]:
+            stale.append((_cid, c["superseded_by"]))
     for section, items in SPEC:
         for qtext, cid in items:
             c = fetch(cid)
@@ -118,34 +142,26 @@ def main() -> int:
              "`literature` means read from a paper, at the stated read level.\n")
     L.append("---\n")
     L.append("## THE VERDICT, FIRST\n")
-    L.append("**This design does not fly, by two independent routes, and neither is close.**\n")
-    L.append("- **Gliding** is short of the area needed to hold lift equal to weight by a factor "
-             "that no published lift coefficient closes: it would need CL near 7 where the best "
-             "steady value measured anywhere is about 1.75.\n")
-    L.append("- **Powered flapping** needs a beat frequency of roughly 83 Hz. Fish white "
-             "locomotory muscle produces NO power above about 12 Hz, and the superfast muscle "
-             "that could reach it has never been sequenced in any animal, so the transgene the "
-             "route depends on cannot be specified.\n")
-    L.append("- **A latch-spring launch is also closed, and this one was a genuine "
-             "candidate.** Two objections to it fell in turn -- the anatomical one (seahorses "
-             "and pipefish are a characterised LaMSA system whose springs are tendons zebrafish "
-             "also have) and the storage one (the tendon needed is 0.28-4.44% of body mass) -- "
-             "and the 134% energy figure turned out to be a function of muscle fraction, with "
-             "break-even at 53.9% against active teleosts reported above 60%. It closes on "
-             "TRANSFER EFFICIENCY. Even a fish made entirely of muscle needs 54% of muscle work "
-             "to arrive as body kinetic energy. The best efficiency measured for any fish "
-             "fast-start is 39%, and a spring-loaded mechanical fish -- the directly analogous "
-             "device, built and measured -- achieved 10%. A latch changes WHEN energy arrives, "
-             "not how much survives the water.\n")
-    L.append("- **Harvesting the wind is closed too, and for a structural reason.** Dynamic "
-             "soaring supplies ENERGY, not LIFT, and every phase of a cycle presupposes an "
-             "animal already flying. At 16% of its weight in lift this design cannot climb; its "
-             "entire vertical range is the 7.8 cm its launch buys, against the metres of shear "
-             "layer a soaring bird works in. A fish that cannot hold itself up cannot perform "
-             "the manoeuvre that would give it the energy to hold itself up.\n")
-    L.append("The sections below give the design anyway, scale by scale, because the parts that "
-             "ARE achievable are specified in real genes with real magnitudes, and because a "
-             "negative result is only useful if someone can see exactly where it fails.\n")
+    # GENERATED, NOT HAND-WRITTEN. Four times in one session a hand-written summary sentence
+    # contradicted the generated table directly beneath it, and the table was right every time.
+    # The failure was always in the only part of this document a human composed. So the verdict
+    # now states each route's status from ITS OWN claim: the editorial choice of which claim
+    # closes which route is declared in ROUTE_VERDICTS, and the NUMBER and the UNITS come from
+    # the graph. A superseded or missing claim here aborts the whole file, as for any other slot.
+    L.append(f"**{len(ROUTE_VERDICTS)} routes examined. "
+             f"{sum(1 for r in ROUTE_VERDICTS if r[2])} closed, "
+             f"{sum(1 for r in ROUTE_VERDICTS if not r[2])} open.**\n")
+    for route, cid, closed, why in ROUTE_VERDICTS:
+        c = fetch(cid)
+        state = "CLOSED" if closed else "OPEN"
+        L.append(f"- **{route} -- {state}.** {why} "
+                 f"The number: **{c['value']} {c['units']}** (claim {c['id']}, "
+                 f"`{c['evidence']}`).\n")
+    L.append("Each closure is a DIFFERENT measured quantity, which is a stronger result than "
+             "one route failing several ways. The sections below give the design anyway, scale "
+             "by scale, because the parts that ARE achievable are specified in real genes with "
+             "real magnitudes, and because a negative result is only useful if someone can see "
+             "exactly where it fails.\n")
     L.append("---\n")
 
     cur = None
