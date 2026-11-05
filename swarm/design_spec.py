@@ -92,6 +92,14 @@ SPEC = [
         ("Does it change what sequence the pore admits?", 1069),
         ("What can this arm resolve at all?", 1028),
     ]),
+    # BEHAVIOUR was the last scale this spec did not reach, and claim 1071 recorded that as a
+    # real hole rather than a bookkeeping one: the project asked at length whether the animal
+    # COULD launch and never whether it WOULD. Claim 1072 answers it, and unfavourably.
+    ("9. BEHAVIOUR -- WOULD THE ANIMAL DO IT?", [
+        ("Does a zebrafish leave the water at all, and does a bigger fin help?", 1072),
+        ("How fast can an adult actually start?", 75),
+        ("Does taxiing on the surface add anything?", 37),
+    ]),
     ("7. WHAT THE DESIGN WOULD BE", [
         ("What does the design actually ACHIEVE?", 962),
         ("The best design this project can specify", 580),

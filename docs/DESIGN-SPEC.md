@@ -268,6 +268,24 @@ claim 1028 `simulated` / `full-text`
 _[THE PROTEIN ARM'S RESOLUTION IS MEASURED, AND IT SITS BETWEEN ONE SUBSTITUTION AND A SCRAMBLED SEQUENCE] Two scans in this project, each carrying its own controls, bracket what structure prediction can and cannot tell this design. The method discriminates a destroyed sequence at 19x signal-to-noise and a point mutation at 0.39x. Everything the design actually asks about is a point mutation.  THE…_
 
 
+## 9. BEHAVIOUR -- WOULD THE ANIMAL DO IT?
+
+**Does a zebrafish leave the water at all, and does a bigger fin help?**  
+**0 difference in individual tail-flip jump distance between longfin and wildtype zebrafish despite differing caudal fin area; wildtype performed more jumps and covered more total distance**  
+claim 1072 `literature` / `abstract`  
+_[THE BEHAVIOUR GAP, FILLED, AND IT IS UNFAVOURABLE: THE ONE PUBLISHED EXPERIMENT COMPARING LONGFIN WITH WILDTYPE ON LEAVING THE WATER FINDS THE BIG FIN NO BETTER AND WORSE OVERALL] Claim 1071 recorded that the design spec reaches 7 of 8 scales and that `behaviour` is absent -- and that the project's four behaviour-labelled claims are really fast-start KINEMATICS (21, 37, 75) plus an access note (2…_
+
+**How fast can an adult actually start?**  
+**1.38 m/s**  
+claim 75 `measured` / `full-text`  
+_S21-D VERDICT STRENGTHENS: directly measured adult zebrafish fast-start maxima span 0.45-1.38 m/s (Miln et al. 2021, n=50, 120 fps, full text, values digitised from Fig 1a), BRACKETING the Reynolds-derived 0.842 m/s. The fastest individual is still ~4.2x below the 5.84 m/s threshold_
+
+**Does taxiing on the surface add anything?**  
+**0.56 m/s**  
+claim 37 `derived`  
+_At sustainable tail-beat frequencies the calculated taxi ceiling is ~0.56 m/s, which is Ucrit itself -- so taxiing adds essentially nothing to the launch_
+
+
 ## 7. WHAT THE DESIGN WOULD BE
 
 **What does the design actually ACHIEVE?**  
