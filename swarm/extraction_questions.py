@@ -79,6 +79,44 @@ def same_need(a: frozenset, b: frozenset) -> bool:
     return jaccard(a, b) >= MERGE_AT
 
 
+def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
+    """The evidence each open constraint is WAITING ON, in the evaluator's own words.
+
+    WHY THIS BEATS THE QUANTITY LIST. A quantity says what number is wanted; a gap says why the
+    numbers already held do not answer it, which is what a search actually has to fix. Measured
+    2026-11-05, constraint e28: the quantity is "A_pp / body length", and the project had just
+    harvested four values for exactly that quantity (claims 1190-1193, 0.19-0.25 BL). The
+    evaluator still returned INSUFFICIENT, because those values are juvenile grass carp in flume
+    tests and the constraint is about adult zebrafish escape kinematics. A search built on the
+    quantity would have re-found the same inapplicable papers; a search built on the gap looks
+    for the adult escape-kinematics paper.
+
+    These sentences exist only because insufficient verdicts are now persisted. Until today they
+    were printed and discarded, and the run that produced 30 of them in one batch -- 0 satisfied,
+    0 unsatisfied, $0.79 -- is the point at which evaluating existing claims stops paying and
+    retrieval has to take over.
+
+    The constraints' own `note` field was the obvious alternative and was measured first: of 139
+    open constraints carrying a note, only 6 name missing evidence under a
+    needs/requires/no-claim pattern, and 3 of the 4 inspected are false matches. The evaluator
+    writes a usable sentence for every insufficient verdict instead.
+    """
+    rows = dbq.q(
+        "select replace(replace(missing_evidence, chr(1), ' '), chr(10), ' ') || chr(1) || "
+        "coalesce(quantity,'') || chr(1) || coalesce(units,'') || chr(1) || id::text "
+        f"from constraint_entailed where project_id = {dbq.lit(PROJECT)} and status = 'open' "
+        f"and missing_evidence is not null order by missing_evidence_at desc limit {int(limit)}")
+    # dbq.q() ALREADY splits each line on chr(1) -- that is its field separator -- so the row
+    # arrives as a list of columns, not as one string to split again. Splitting it a second time
+    # silently produced zero usable rows from 29 real ones.
+    out = []
+    for r in rows:
+        parts = list(r) if isinstance(r, (list, tuple)) else [str(r)]
+        if len(parts) >= 3 and parts[0].strip():
+            out.append((parts[0].strip(), parts[2].strip(), 1))
+    return out
+
+
 def open_quantities(limit: int = 400) -> list[tuple[str, str, int]]:
     rows = dbq.q(
         "select quantity, coalesce(units,''), count(*)::text from constraint_entailed "
@@ -91,9 +129,14 @@ def is_physical(units: str) -> bool:
     return units.strip().lower() not in DIMENSIONLESS
 
 
-def build(keep_dimensionless: bool = False, cap: int = 18) -> tuple[str, int, int]:
-    qs = open_quantities()
-    kept = [q for q in qs if keep_dimensionless or is_physical(q[1])]
+def build(keep_dimensionless: bool = False, cap: int = 18,
+          source: str = "quantities") -> tuple[str, int, int, int]:
+    qs = evidence_gaps() if source == "gaps" else open_quantities()
+    # The units filter exists to drop ratios of THIS project's own numbers. A gap sentence is a
+    # research question whatever its units are -- "no zebrafish study links a membrane-potential
+    # change to fin-ray growth" has no units at all and is still the most searchable item here --
+    # so it does not apply to that source.
+    kept = [q for q in qs if source == "gaps" or keep_dimensionless or is_physical(q[1])]
     dropped = len(qs) - len(kept)
 
     # DEDUPE. Four of the first eighteen were the same quantity under four spellings
@@ -189,16 +232,17 @@ def generalise(items: list[tuple[str, str, int]], tenant_list, call_fn, model: s
 
 def main() -> int:
     keep = "--keep-dimensionless" in sys.argv
+    source = "gaps" if "--from-gaps" in sys.argv else "quantities"
     cap = 18
     if "--cap" in sys.argv:
         cap = int(sys.argv[sys.argv.index("--cap") + 1])
-    text, n, dropped, collapsed = build(keep, cap)
+    text, n, dropped, collapsed = build(keep, cap, source)
 
     gen_note, gen_map = "", {}
     if "--generalise" in sys.argv:
         from api_challenge import TENANTS, call      # api_allen excluded in exactly one place
-        items = [(q, u, c) for q, u, c in open_quantities()
-                 if keep or is_physical(u)][:40]
+        items = ([(q, u, c) for q, u, c in evidence_gaps()][:40] if source == "gaps"
+                 else [(q, u, c) for q, u, c in open_quantities() if keep or is_physical(u)][:40])
         qs, err = generalise(items, TENANTS, call, MODEL)
         if qs is None:
             print(f"  generalisation FAILED ({err}); keeping the verbatim quantities")
@@ -209,7 +253,7 @@ def main() -> int:
             joined = " ".join(str(q.get("question", "")).lower() for q in kept_q)
             dropped_n = {q.get("n") for q in qs if not q.get("keep")}
             must_keep = "muscle" in joined and ("mass" in joined or "power" in joined)
-            must_drop = any("available minus required" in items[n - 1][0].lower()
+            must_drop = source == "gaps" or any("available minus required" in items[n - 1][0].lower()
                             for n in dropped_n if isinstance(n, int) and 1 <= n <= len(items))
             if not (kept_q and must_keep):
                 print("  generalisation CONTROL FAILED -- keeping the verbatim quantities")
@@ -225,7 +269,9 @@ def main() -> int:
                     # it lands with scale_id NULL -- which is exactly why the project's
                     # measured-with-a-scale row cannot move even when real values arrive.
                     src_n = q.get("n")
-                    if isinstance(src_n, int) and 1 <= src_n <= len(items):
+                    if source == "gaps":
+                        pass          # a gap's scale is the constraint's; wired separately
+                    elif isinstance(src_n, int) and 1 <= src_n <= len(items):
                         quantity = items[src_n - 1][0]
                         scales = [r[0] for r in dbq.q(
                             "select distinct target_scale from constraint_entailed where "
@@ -245,7 +291,7 @@ def main() -> int:
     low = text.lower()
     must_find = "water-exit speed" in low or "tail-beat frequency" in low or "muscle" in low
     must_drop = "frame interval" not in low          # a ratio of OUR OWN timings
-    ok = n > 0 and must_find and (must_drop or keep)
+    ok = n > 0 and (must_find or source == "gaps") and (must_drop or keep or source == "gaps")
     if "--out" in sys.argv:
         path = sys.argv[sys.argv.index("--out") + 1]
         if not ok:
