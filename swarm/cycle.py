@@ -156,6 +156,34 @@ def one_cycle(project: str, n_challenge: int, write: bool) -> dict:
             "stages": stages, "counts": counts}
 
 
+LOCK = HERE.parent / "results" / "cycles" / ".cycle.lock"
+
+
+def take_lock():
+    """One cycle at a time, enforced by the OS rather than by who remembers to check.
+
+    The nested-run sentinel below stops a cycle INVOKING ITSELF. It does not stop two SIBLING
+    cycles -- one launched by hand and one by the credit supervisor -- from running at once, and
+    those collide concretely: the questions stage writes a fixed `questions_cycle.txt` that the
+    harvest stage then reads, so the second cycle's questions silently become the first cycle's
+    harvest. That is the same fixed-path collision that made two concurrent harvests overwrite
+    each other's results earlier today, and it was invisible for the same reason: the file is
+    always a valid, complete question list. Just not the one that stage produced.
+
+    flock is advisory but it is held by the kernel for the life of the process, so a cycle that
+    is killed releases it without leaving a stale lock behind -- which a lockfile-plus-pid scheme
+    does not manage.
+    """
+    import fcntl
+    LOCK.parent.mkdir(parents=True, exist_ok=True)
+    fh = open(LOCK, "w")
+    try:
+        fcntl.flock(fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        return None
+    return fh                      # kept open: closing it would release the lock
+
+
 def main() -> int:
     # THE NESTING GUARD: check first, set second. Setting without checking is not a guard.
     if os.environ.get(SENTINEL):
@@ -165,6 +193,12 @@ def main() -> int:
     os.environ[SENTINEL] = "1"
 
     args = sys.argv[1:]
+    _lock = take_lock()
+    if _lock is None:
+        print("  another cycle is already running (flock held); this one exits without running.")
+        print("  That is not a failure: a cycle is a loop iteration, and two at once would have")
+        print("  the second's questions file read by the first's harvest.")
+        return 0
     def opt(flag, default):
         return args[args.index(flag) + 1] if flag in args else default
     project = opt("--project", os.environ.get("SWARM_PROJECT", "zebrafish-flight"))
