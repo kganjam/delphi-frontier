@@ -21,8 +21,23 @@ in the nanopub's own identifier -- and this does not implement that algorithm. I
 canonicalisation from scratch, unverified against the reference implementation, would produce
 files that LOOK like nanopubs and would be rejected or, worse, accepted with a wrong hash. The
 digest here is over the serialised bytes and is labelled as such. Converting these to publishable
-nanopubs requires nanopub-java or @nanopub/sign, neither of which is installed here, plus a
-non-throwaway key and a registered namespace -- which remain open decisions.
+nanopubs requires nanopub-java or @nanopub/sign, plus a non-throwaway key and a registered
+namespace.
+
+CORRECTED 2026-11-05: this used to say @nanopub/sign is "not installed here". IT IS --
+version 0.2.0 at /tmp/claude-1000/npmwork/node_modules/@nanopub/sign, with Node 22 -- and a
+trusty URI WAS produced from this module's own output in a throwaway test (RDF matching
+/RA[A-Za-z0-9_-]{40,}/), which was then deleted. The stale clause mattered because it made a
+DECISION look like a tooling gap. sign() and publish() are separate methods, so a conformant
+artifact needs no network call and no irreversible act.
+
+THE ACTUAL BLOCKER IS THE SIGNING IDENTITY. NpProfile refuses a profile without a well-formed
+ORCID; AGENTS.md section 5 records that the bot-IRI-versus-ORCID choice cannot be changed after
+the first publish; and no ORCID appears anywhere in this repository. That is the owner's
+decision, not a package to install. Two packaging traps if someone does wire it up: node.js
+uses CommonJS `exports` under a package.json declaring "type": "module" (copy it to node.cjs),
+and it reads ./node_bg.wasm from the CURRENT DIRECTORY (cd into the package, keep your script
+outside it). See claim 1091.
 
 Usage:  python3 publish_dryrun.py [--out DIR] [--verify-only DIR]
 """
