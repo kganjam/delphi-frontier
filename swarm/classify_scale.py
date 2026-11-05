@@ -129,6 +129,7 @@ TABLES = {
         "min_len": "and length(statement) > 120",
         "noun": "claim",
         "prompt": lambda: PROMPT,
+        "control_filter": "",
     },
     "subproblem": {
         "table": "subproblem",
@@ -138,6 +139,17 @@ TABLES = {
         "min_len": "and length(coalesce(question,'')) > 40",
         "noun": "subproblem",
         "prompt": lambda: SUBPROBLEM_PROMPT,
+        # THE CONTROL POPULATION MUST MATCH THE APPLICATION POPULATION. Measured 2026-11-05:
+        # 63 of the 99 placed zebrafish subproblems are templated rows reading "Deepen S10:
+        # attack its most sensitive input". Their text names NO biological subject -- the scale
+        # is inherited from the parent subproblem, not derivable from the words -- so a text
+        # classifier answering NONE is CORRECT and the stored label is correct-by-provenance.
+        # Sampling 30 from a pool that is 64% unclassifiable left 6 then 7 scoreable, and the
+        # control refused twice for a reason that had nothing to do with the classifier.
+        # All 43 rows actually awaiting a scale are substantive (0 templated), so the control
+        # now draws from substantive rows only. A templated row should INHERIT its parent's
+        # scale; classifying it from text is the wrong instrument, not a hard case.
+        "control_filter": "and question not ilike 'Deepen %'",
     },
 }
 
@@ -151,12 +163,13 @@ def control(n: int = 30, seed: int = 11) -> tuple[bool, str, float]:
     S = spec()
     rows = q(f"""select scale_id, {S['text']()} from {S['table']}
                  where project_id='zebrafish-flight' {S['live']}
-                 and scale_id is not null {S['min_len']}
+                 and scale_id is not null {S['min_len']} {S.get('control_filter','')}
                  order by id""")
     random.Random(seed).shuffle(rows)
     rows = rows[:n]
     dist = collections.Counter(r[0] for r in q(f"""select scale_id from {S['table']}
-            where project_id='zebrafish-flight' {S['live']} and scale_id is not null"""))
+            where project_id='zebrafish-flight' {S['live']} and scale_id is not null
+            {S.get('control_filter','')}"""))
     base = max(dist.values()) / sum(dist.values())
     print(f"  CONTROL: {len(rows)} {S['noun']}s that a person already placed, classified blind.")
     print(f"  Majority-class baseline is '{dist.most_common(1)[0][0]}' at {100*base:.1f}% -- "
