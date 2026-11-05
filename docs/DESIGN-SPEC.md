@@ -114,6 +114,11 @@ _THE FIN-SIZE LEVERS CONVERGE ON ONE BIOELECTRIC PATHWAY, SO THEY WILL NOT MULTI
 claim 563 `literature` / `full-text`  
 _WHETHER kcnh2a IS AN INDEPENDENT SECOND LEVER IS UNTESTED IN THE LITERATURE, NOT MERELY UNREAD BY ME, AND THE ONE DOUBLE-MUTANT DATUM AVAILABLE SHOWS NON-ADDITIVITY. Claim 562 established that three of the four fin-size levers converge on the kcnk5b bioelectric pathway, leaving kcnh2a longfin as the only candidate for an independent second lever -- and noted that nothing read there established it…_
 
+**Is longfin even a coding allele?**  
+**0 coding changes in the longfin allele -- it is a chromosome-2 INVERSION upregulating kcnh2a 'without affecting the coding region of either gene', so the Kcnh2a protein in a longfin fish is wild type and there is no mutant protein to model**  
+claim 980 `literature` / `abstract`  
+_THREE GENE-IDENTITY CORRECTIONS THAT CHANGE WHAT THE PROJECT CAN SAY ABOUT ITS OWN LEVERS, THE SHARPEST BEING THAT longfin IS NOT A CODING ALLELE AND HAS NO MUTANT PROTEIN TO MODEL. Reported by a delegated session (nbx-alleles) with accessions and controls; relayed here at the read-level stated and NOT independently re-verified by this session.  1. longfin IS A REGULATORY ALLELE, NOT A LOSS-OF-FUN…_
+
 **Is the single-pathway ceiling demonstrated?**  
 **0 measured allele-COMBINATION experiments found in the fin-size literature; Lanni's epistasis test is a reversion of overgrowth by loss of kcnk5b, not a combination, and its authors favour an ADDITIVE model**  
 claim 598 `literature` / `full-text`  

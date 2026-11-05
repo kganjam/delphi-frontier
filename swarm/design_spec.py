@@ -50,6 +50,7 @@ SPEC = [
         ("What genes enlarge the fin, and by how much?", 561),
         ("Do the fin levers stack, or share one pathway?", 562),
         ("Is kcnh2a an independent second lever?", 563),
+        ("Is longfin even a coding allele?", 980),
         ("Is the single-pathway ceiling demonstrated?", 598),
         ("Is fin SHAPE genetically addressable?", 590),
         ("What genes enlarge the swim bladder?", 551),
