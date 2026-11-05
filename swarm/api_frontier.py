@@ -182,6 +182,12 @@ def dedupe(props: list[dict], prior: list[str]) -> tuple[list[dict], list[tuple]
 def main() -> int:
     n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 3
     write = "--write" in sys.argv
+    # PIN TO ONE TENANT when asked. The round-robin below exists for billing spread, not for
+    # diversity: a tenant is a billing account, not a model, and this file's own note at the
+    # TENANTS comment records that every tenant converges on the same obvious question on a thin
+    # project. So pinning costs no variety, and it is what lets the supervisor aim spend at the
+    # account that expires first.
+    pin = sys.argv[sys.argv.index("--tenant") + 1] if "--tenant" in sys.argv else None
     title, goal = project_brief()
     print(f"  project {ac.PROJECT}: {title[:70]}")
     ctx = context()
@@ -189,7 +195,7 @@ def main() -> int:
     good = []
     spent = 0.0
     for i in range(n):
-        t = ac.TENANTS[i % len(ac.TENANTS)]
+        t = pin or ac.TENANTS[i % len(ac.TENANTS)]
         try:
             r = ac.call_with_fallback(t, PROMPT.format(context=ctx[:14000], tools=TOOLS, title=title, goal=goal))
         except Exception as e:

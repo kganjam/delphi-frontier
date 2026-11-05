@@ -50,7 +50,16 @@ MIN_ARMS = 3
 #: corrected one of my own results (claim 1110). A supervisor that only ever re-reviews is not
 #: an adversary, it is an echo.
 ARM = ["python3", "-u", "swarm/api_challenge.py", "60", "--repanel", "--write"]
-ARM_NEW = ["python3", "-u", "swarm/api_challenge.py", "20", "--panel", "--write"]
+#: THE PREVIOUS ARM_NEW WAS A NO-OP AND THE FLEET LOOKED HEALTHY ANYWAY (measured 2026-11-05).
+#: It was `api_challenge.py 20 --panel`, which selects claims that have NEVER been challenged.
+#: That query now returns 0 of 503 live claims, so every ARM_NEW exited within seconds and only
+#: --repanel arms survived long enough to be counted. The fix at line 47 -- alternate instead of
+#: re-panelling forever -- was correct at the FLAG level and silently dead at the SUPPLY level,
+#: which is the harder half to notice: `ps` showed arms running and credit was being spent.
+#: The binding constraint moved. Review throughput is ~7.4x claim production and coverage is
+#: complete (claim 1119), so the scarce thing is no longer review, it is NEW CLAIMS. The new-work
+#: arm therefore generates frontier questions rather than re-attacking a corpus with no gaps.
+ARM_NEW = ["python3", "-u", "swarm/api_frontier.py", "3", "--write"]
 STATE = pathlib.Path(os.environ.get("MS_CREDIT_STATE",
                                     "/tmp/claude-1000/ms-credit-supervisor.json"))
 
@@ -100,6 +109,12 @@ def running_arms() -> int:
 
 
 def main() -> int:
+    # `--status` MUST NOT WRITE THE STATE FILE OR LAUNCH ANYTHING. Until 2026-11-05 no argument
+    # was parsed at all, so `--status` was a full tick wearing a read-only name: it launched arms
+    # and, worse, consumed the rate sample, so the loop's next real tick printed "prior sample
+    # only 18s old" and did nothing. Checking the supervisor switched the supervisor off, and
+    # both effects were invisible because each looked like normal output.
+    dry = "--status" in sys.argv
     now = dt.datetime.now(dt.timezone.utc)
     bal = balances()
     for name in list(bal):
@@ -147,9 +162,10 @@ def main() -> int:
             # branch means the previous sample is simply too close in time to divide by.
             why = f"prior sample only {dtsec:.0f}s old; too recent to derive a rate"
 
-    STATE.parent.mkdir(parents=True, exist_ok=True)
-    STATE.write_text(json.dumps({"at": now.isoformat(),
-                                 "bal": {t: v[0] for t, v in bal.items()}}))
+    if not dry:
+        STATE.parent.mkdir(parents=True, exist_ok=True)
+        STATE.write_text(json.dumps({"at": now.isoformat(),
+                                     "bal": {t: v[0] for t, v in bal.items()}}))
 
     if observed is None:
         print(f"  NO RATE YET ({why}). Recorded; launching nothing this run.")
@@ -172,6 +188,9 @@ def main() -> int:
               f"observed rate, which was earned by arms that have since exited")
         for j in range(want):
             cmd = ARM_NEW if j % 2 == 0 else ARM     # alternate: new claims first
+            if dry:
+                print(f"    [--status] would launch: {' '.join(cmd)} --tenant {binding}")
+                continue
             subprocess.Popen(cmd + ["--tenant", binding],
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                              start_new_session=True)
@@ -184,8 +203,15 @@ def main() -> int:
         return 0
     want = min(MAX_ARMS - arms, 3)
     print(f"  BEHIND by ${rate_needed-observed:.2f}/h -> launching {want} arm(s) on {binding}")
-    for _ in range(want):
-        subprocess.Popen(ARM + ["--tenant", binding],
+    # ALTERNATE HERE TOO. The floor branch above alternated and this one did not, so once the
+    # fleet was at or above the floor -- which is most of the time -- every further launch was a
+    # --repanel arm. Measured 2026-11-05: both surviving arms were --repanel for this reason.
+    for j in range(want):
+        cmd = ARM_NEW if j % 2 == 0 else ARM
+        if dry:
+            print(f"    [--status] would launch: {' '.join(cmd)} --tenant {binding}")
+            continue
+        subprocess.Popen(cmd + ["--tenant", binding],
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                          start_new_session=True)
     return 0
