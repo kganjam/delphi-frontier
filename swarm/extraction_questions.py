@@ -44,6 +44,7 @@ PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
 MODEL = "claude-opus-4-5-20251101"
 
 # Units that mean "a paper could state this". A bare ratio is almost always ours; see docstring.
+GAP_SCALE: dict[str, str] = {}      # gap sentence -> the scale of the constraint that raised it
 STOP = {"the", "and", "for", "per", "with", "during", "from", "its", "both", "that"}
 MERGE_AT = 0.25          # with the subset guard in same_need(); see its docstring
 DIMENSIONLESS = {"", "dimensionless", "ratio", "dimensionless ratio", "fraction", "-", "none"}
@@ -102,8 +103,8 @@ def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
     writes a usable sentence for every insufficient verdict instead.
     """
     rows = dbq.q(
-        "select replace(replace(missing_evidence, chr(1), ' '), chr(10), ' ') || chr(1) || "
-        "coalesce(quantity,'') || chr(1) || coalesce(units,'') || chr(1) || id::text "
+        "select replace(replace(missing_evidence, chr(1), ' '), chr(10), ' '), "
+        "coalesce(quantity,''), coalesce(units,''), id::text, coalesce(target_scale,'') "
         f"from constraint_entailed where project_id = {dbq.lit(PROJECT)} and status = 'open' "
         f"and missing_evidence is not null order by missing_evidence_at desc limit {int(limit)}")
     # dbq.q() ALREADY splits each line on chr(1) -- that is its field separator -- so the row
@@ -114,6 +115,10 @@ def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
         parts = list(r) if isinstance(r, (list, tuple)) else [str(r)]
         if len(parts) >= 3 and parts[0].strip():
             out.append((parts[0].strip(), parts[2].strip(), 1))
+            # A gap inherits the scale of the constraint that raised it. Unlike the quantity
+            # route, that is a ONE-TO-ONE link -- this sentence came from exactly this row -- so
+            # there is no disagreement between constraints to resolve, and no guessing.
+            GAP_SCALE[parts[0].strip()] = parts[4].strip() if len(parts) > 4 else ""
     return out
 
 
@@ -270,7 +275,12 @@ def main() -> int:
                     # measured-with-a-scale row cannot move even when real values arrive.
                     src_n = q.get("n")
                     if source == "gaps":
-                        pass          # a gap's scale is the constraint's; wired separately
+                        if isinstance(src_n, int) and 1 <= src_n <= len(items):
+                            sc = GAP_SCALE.get(items[src_n - 1][0], "")
+                            qmap[str(i)] = {"question": q["question"],
+                                            "units": q.get("units", ""),
+                                            "from_quantity": items[src_n - 1][0][:200],
+                                            "scales": [sc] if sc else []}
                     elif isinstance(src_n, int) and 1 <= src_n <= len(items):
                         quantity = items[src_n - 1][0]
                         scales = [r[0] for r in dbq.q(

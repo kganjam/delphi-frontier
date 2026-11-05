@@ -1,0 +1,130 @@
+{
+ "1": {
+  "question": "Does membrane-potential change in fin cells correlate with fin-ray growth rate, and what is the effect size, in any fish or regenerating vertebrate?",
+  "units": "effect size (e.g., fold-change in growth rate per mV)",
+  "from_quantity": "Claims 308 and 397 report that no zebrafish study links a measured membrane-potential change in fin cells to a change in fin-ray growth rate with an effect size, so the route is unmeasured rather than",
+  "scales": [
+   "tissue"
+  ]
+ },
+ "2": {
+  "question": "What is the membrane conductance of fin mesenchyme cells, in any fish or comparable regenerating tissue?",
+  "units": "S/cm^2",
+  "from_quantity": "Claim 295 derives the *required* fin-mesenchyme membrane conductance, roughly 1e-9 to 4.8e-5 S/cm^2, to hold at least 10 mV. The only values it compares against are surrogates from other cell types an",
+  "scales": [
+   "cell"
+  ]
+ },
+ "3": {
+  "question": "What is the spatial relationship (distance or co-localization) between Lat4a-expressing cells and Kcnh2a-expressing intra-ray fibroblasts in regenerating fins, in any fish?",
+  "units": "\u00b5m or qualitative co-localization",
+  "from_quantity": "No claim measures where Lat4a acts relative to the Kcnh2a-acting intra-ray fibroblast lineage, or the distance between those cells. The listed claims establish only the allele stack (280, 233, 38), a ",
+  "scales": [
+   "protein"
+  ]
+ },
+ "4": {
+  "question": "At what time during fin regeneration is lat4a (or ortholog) protein activity detectable, in any fish?",
+  "units": "dpa (days post-amputation)",
+  "from_quantity": "No claim measures when the suppressor (lat4a T200K) acts during regeneration. The constraint asks whether its protein activity falls within the enlarger's 6\u201330 dpa outgrowth-prolonging window, and cla",
+  "scales": [
+   "protein"
+  ]
+ },
+ "5": {
+  "question": "How long can fast axial muscle sustain an isometric preload before force decline, in any fish or comparable vertebrate?",
+  "units": "s",
+  "from_quantity": "The only preload duration in the evidence is claim 957's 300 ms of epaxial pre-loading, which falls inside the 0.26\u20136.1 s bound. But it was measured in pipefish, not the project's zebrafish, so no cla",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "6": {
+  "question": "What is the mass-specific mechanical power output per kg body mass during burst swimming or surface locomotion, in any fish?",
+  "units": "W/kg body mass",
+  "from_quantity": "The constraint needs mass-specific mechanical power per kg of body mass during the taxi, at 87-334 W/kg body. The closest claim (309, 142.7 W/kg) is per kg of muscle, measured in a different species (",
+  "scales": [
+   "organ"
+  ]
+ },
+ "7": {
+  "question": "What is the net propulsive force produced during burst acceleration or surface taxi, measured or derived from kinematics, in any fish?",
+  "units": "N",
+  "from_quantity": "No listed claim reports a net propulsive force in newtons from the measured taxi acceleration that could be checked against the [0.026, 8.8] N bound. The nearest claims are about something else: claim",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "8": {
+  "question": "What is the maximum sustained tail-beat frequency during burst or surface locomotion, in any fish?",
+  "units": "Hz",
+  "from_quantity": "The only capability figure for taxiing tail-beat frequency is the 52 Hz EMG maximum from small adults (claims 145, 193), which is a burst ceiling, not a demonstrated sustained beat at \u226552 Hz. The othe",
+  "scales": [
+   "organ"
+  ]
+ },
+ "9": {
+  "question": "What is the time to full pectoral fin abduction from rest, in any fish?",
+  "units": "s",
+  "from_quantity": "None of the listed claims measures or derives the time to full pectoral abduction against the 0.05 s bound. Claim 226's 5-14 ms is a launch-release duration, and the lift-ratio claims (428, 964) conce",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "10": {
+  "question": "What is the body mass of adult fish capable of aerial locomotion or gliding, in any species?",
+  "units": "g",
+  "from_quantity": "The lift arithmetic gives about 0.0038 N, which supports roughly 0.39 g, but no claim states the organism's actual body mass to compare against the [0.2, 0.8] g band. The nearest mass figure is claim ",
+  "scales": [
+   "organism"
+  ]
+ },
+ "11": {
+  "question": "Is the Kcnk5b (or ortholog) C-terminal region retained or processed/cleaved in vivo in the relevant cell type, in any fish or vertebrate?",
+  "units": "qualitative (intact vs. cleaved) or kDa",
+  "from_quantity": "The constraint requires evidence that the Kcnk5b protein in the cells where the channel acts retains its zero-depth C-terminal region (residues past ~326) without processing. No claim measures this. C",
+  "scales": [
+   "cell"
+  ]
+ },
+ "12": {
+  "question": "What is the effective wing loading (weight per lifting area divided by lift coefficient) during aerial gliding, in any flying fish or gliding vertebrate?",
+  "units": "Pa",
+  "from_quantity": "No claim reports the effective wing loading (W/S)/C_L in Pa for comparison with the 13\u201327 Pa bound, nor the air-phase range gain at 1.38 or 0.45 m/s. Claim 972 gives a fin loading of 192 Pa, but that ",
+  "scales": [
+   "organ"
+  ]
+ },
+ "13": {
+  "question": "What is the water-exit (launch) speed during jumping or aerial locomotion, in any fish?",
+  "units": "m/s",
+  "from_quantity": "No claim measures the air-phase launch speed itself. Claim 75's 1.38 m/s is an in-water fast-start maximum, which falls inside [1.31, 1.45] but is not the speed at water exit, and claims 1188 (guppy, ",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "14": {
+  "question": "What is the temperature sensitivity (Q10) of fast-start peak speed over an ecologically relevant temperature range, in any fish?",
+  "units": "dimensionless",
+  "from_quantity": "The constraint requires an effective Q10 of fast-start peak speed over 23-39 C no greater than 2.46. None of the listed claims measures or derives how fast-start speed depends on temperature; they rep",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "15": {
+  "question": "What is the duration of stage 1 (C-bend) of the fast-start escape response, in any fish?",
+  "units": "ms",
+  "from_quantity": "Claim 21 gives a 1 ms frame interval (1000 fps, Danos & Lauder), and claim 546 places peak speed 8 ms into the C-bend, but that comes from a different study (Demesmay 2025). No claim states the stage-",
+  "scales": [
+   "organism"
+  ]
+ },
+ "16": {
+  "question": "What is the mechanical energy delivered per kg body mass in a single fast-start stroke, in any fish?",
+  "units": "J/kg body mass",
+  "from_quantity": "No claim reports the mechanical energy per kg body that an observed fish stroke actually delivers, which is what the 29.6 J/kg body demand would need to be compared against. Claims 227, 230, 422 and 4",
+  "scales": [
+   "behaviour"
+  ]
+ }
+}
