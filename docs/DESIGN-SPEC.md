@@ -200,6 +200,11 @@ _THE STRUCTURAL CAVEAT ON CLAIM 971 IS WEAKER THAN IT LOOKED: THE SOARING LOADS 
 claim 973 `derived` / `full-text`  
 _THE STALL CAVEAT ON CLAIM 971 IS SUBSTANTIALLY REMOVED: SUSTAINED FLIGHT IS ACHIEVED AT 22.8 DEGREES ANGLE OF ATTACK, BELOW EVERY MEASURED CL_MAX ANGLE. Claim 971 listed as its second caveat that "there is no stall model, so a lift coefficient of 1.07 to 1.75 is assumed available at every attitude the controller commands". That is the right worry -- a controller free to demand any CL can fly throu…_
 
+**Does the chain close from water exit to flight?**  
+**16 of 144 controllers still airborne at 6 s in a continuous integration from WATER EXIT at 1.60 m/s with nothing seeded, at u*=0.60 (12.5 m/s at 1 m); 0 of 144 below that wind, matching the seeded sweep's threshold**  
+claim 974 `simulated` / `full-text`  
+_THE CHAIN CLOSES END TO END: FROM WATER EXIT AT 1.60 m/s, WITH NOTHING SEEDED, THE DESIGN CLIMBS INTO THE WIND GRADIENT AND IS STILL AIRBORNE AT 6 SECONDS -- AT THE SAME 12.5 m/s THRESHOLD THE SEEDED RESULT FOUND. This removes the last structural caveat on claim 971, which read: "the entry condition still assumes the animal gets to 30 cm, which claim 965 supports in wind but which is not integrate…_
+
 **Can it extract energy from WIND SHEAR?**  
 **25.7 fold inertial-frame energy gain from wind shear at u*=0.60, lift-dependent (a wingless body with the same drag LOSES energy); but the cycle does not close and the animal lands every time**  
 claim 966 `simulated` / `full-text`  
