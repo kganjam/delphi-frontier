@@ -57,6 +57,15 @@ def main() -> int:
         print(row + tag)
     print("\n  (cells are lift-attributable cm; >= 2.00 clears the threshold)\n")
 
+    # BISECTION IS ONLY VALID ON THE SPEED AXIS, AND THAT HAD TO BE CHECKED RATHER THAN ASSUMED.
+    # Lift-attributable distance is MONOTONIC in speed at fixed area (1.12, 2.05, 3.17, 5.04,
+    # 8.14 across the grid row), so bisecting speed is sound. It is NOT monotonic in AREA: at
+    # 1.57 m/s it peaks near 28x and falls after, because beyond some area the drag penalty
+    # exceeds the lift gain and the winged trajectory lands SHORT of the ballistic one. A
+    # bisection over area therefore converges on whatever its bracket happens to enclose. One
+    # did, in an earlier version of this analysis, and returned "400x" -- which was the search
+    # CEILING, not a crossing. The true first crossing at 0.842 m/s is near 44x, found by
+    # scanning upward. Area questions are scanned here; only speed is bisected.
     # What speed does the ACHIEVABLE fin need? Bisect rather than read off the grid.
     lo, hi = MEASURED_V, 6.0
     if best_attrib(PRESENT_AREA_CM2 * ACHIEVED_AREA_RATIO, hi) < THRESHOLD_CM:
