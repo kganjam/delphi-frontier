@@ -65,11 +65,12 @@ def main() -> int:
     rows IS the control, and no constant is hardcoded.
     """
     rows = q(f"""select id, coalesce(lo::text,''), coalesce(hi::text,''), coalesce(units,''),
-             replace(coalesce(statement,''), chr(10), ' ')
+             replace(coalesce(statement,''), chr(10), ' '), coalesce(bound_statistic,'')
              from constraint_entailed
              where project_id = {lit(PROJECT)} and (lo is not null or hi is not null)""")
     cands = []
-    for eid, lo, hi, units, stmt in rows:
+    stat_of = {r[0]: r[5] for r in rows}
+    for eid, lo, hi, units, stmt, _bs in rows:
         if "m/s" not in units:
             continue
         rs = ratios_in(stmt)
@@ -107,10 +108,16 @@ def main() -> int:
         if eid not in best or err < best[eid][0]:
             best[eid] = (err, which, b, r, imp, stmt)
     for eid, (err, which, b, r, imp, stmt) in sorted(best.items(), key=lambda kv: kv[1][0]):
-        mark = "  " if err <= TOLERANCE else "<<"
+        st = stat_of.get(eid, "")
+        # A RECORDED STATISTIC EXPLAINS ITS OWN DEVIATION. An `upper-sem` bound is SUPPOSED to
+        # sit above a ratio formed from the centre; flagging it would be flagging the standard
+        # error. This is the whole reason the column exists (claim 1167).
+        mark = ("  " if err <= TOLERANCE else
+                "ok" if st and st != "central" else "<<")
+        tag = f"  [{st}]" if st else "  [statistic unrecorded]"
         print(f"  {mark} e{eid:<5} {which}={b:g} m/s x {r:g}x = {imp:.3f} m/s   "
-              f"{err:5.1%} from {TAKEOFF}")
-        print(f"        {stmt[:130]}")
+              f"{err:5.1%} from {TAKEOFF}{tag}")
+        print(f"        {stmt[:120]}")
     print(f"""
   READING IT. A row near {TAKEOFF} is internally consistent: its bound and the ratio its prose
   names agree about the quantity they are formed against. A row far from it is EITHER
