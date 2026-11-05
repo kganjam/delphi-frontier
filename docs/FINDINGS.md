@@ -970,3 +970,16 @@ work that would obviously succeed; each is a specific question with a stated rea
   passes anything.
   Refusals are now recorded as `api-panel-refused:<model>@<tenant>` with outcome `not-run`, so
   the shortfall is countable. That makes it visible; it does not make those claims reviewed.
+- **The refusal rate that degrades the panel is set by the project's TOPIC, which is the
+  confound's mechanism measured directly.** Across one cross-project run (352 calls, $4.51),
+  the share of claims a model declined to review ranged from **0% to 79%** and tracked subject
+  matter, not claim quality: limbless-mouse (mouse developmental genetics, Fgf4/Fgf8 knockouts)
+  **37 of 47 degraded (79%)**, zebrafish-flight **60%**, insect-flight **3 of 16 (19%)**,
+  xenobot **0 of 29**, coral **0 of 3**. A bioelectrics or knockout claim is reviewed by one
+  model; a soft-robotics or reef claim is reviewed by two. That is "topic selects reviewer"
+  shown on its own terms.
+  **The project-level survival rates do NOT line up with it, and the honest reading says so**:
+  limbless-mouse survived 12 of 57 (21%) with a 79% refusal rate while xenobot survived 7 of 58
+  (12%) with none. Project totals mix claim content with reviewer composition, so they cannot
+  separate the two. The within-corpus comparison is the evidence that can — same claim pool,
+  one model versus two, 3.8% against 24.5%.
