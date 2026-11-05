@@ -93,6 +93,72 @@ def extract_json(text: str):
         return None
 
 
+# POSITIVE CONTROL. The first run of this module returned ZERO values from 368,000 characters
+# across six papers -- 0 verified AND 0 discarded, every reply an empty list -- and the output
+# read as a finding about the papers. It was a finding about fetch_fulltext.py, which was taking
+# only <body> and dropping <floats-group>, where JATS keeps every figure, table and caption and
+# therefore most measured values.
+#
+# The quote check this module already had could not see that: it guards against INVENTED values
+# and is silent about a model that returns nothing. A guard against fabrication is not a guard
+# against vacuity, and an extractor that always replies {"values": []} passed every check here.
+# So the control below is a MUST-FIND case: a passage known to contain a measured value must
+# yield at least one verified extraction, or the run aborts and reports nothing.
+# TWO CONTROLS, BECAUSE "the extractor is broken" AND "these papers contain nothing" PRODUCE
+# THE IDENTICAL OUTPUT and must be told apart.
+#
+# History: the first run returned 0 values from 368,000 characters across six papers and read as
+# a finding about the papers. Part of it WAS a bug -- fetch_fulltext.py took only <body> and
+# dropped <floats-group>, where JATS keeps every figure and caption, so ~30k characters of
+# exactly the content that carries numbers was discarded. That is fixed.
+#
+# The second attempt used a real sentence as the must-find needle (Lanni's fin allometry slope,
+# "0.9209"). It failed -- and was RIGHT to: a regression slope in a figure caption is not a "fin
+# size measurement with age and body length", so an extractor returning nothing there is
+# behaving correctly. A control whose expected answer is arguable is not a control.
+#
+# So the must-find control is SYNTHETIC: a sentence written here, carrying an unambiguous value
+# of a kind the questions ask for. It tests the EXTRACTOR, never the corpus, and nothing it
+# contains can enter the claim graph. Alongside it a must-NOT-find control checks the extractor
+# is not simply reporting whatever it is shown.
+CONTROL_POSITIVE = (
+    "Methods. Flexural stiffness of the pectoral fin ray was measured in bending and found to "
+    "be 412 x 10-6 N m2 in adult zebrafish of 31 mm standard length at 26 degrees C."
+)
+CONTROL_NEGATIVE = (
+    "Methods. Fish were maintained on a 14:10 light cycle and fed twice daily with brine "
+    "shrimp. Tanks were cleaned weekly and water chemistry was monitored throughout."
+)
+
+
+def _run_control(passage: str):
+    r = call(TENANTS[0], PROMPT.format(questions=QUESTIONS, excerpt=passage),
+             max_tokens=2000, model=MODEL)
+    data = extract_json((r.get("text") if isinstance(r, dict) else str(r)) or "")
+    if not data or "values" not in data:
+        return None
+    hay = norm(passage)
+    return [v for v in data["values"]
+            if norm(str(v.get("quote", ""))) and norm(str(v.get("quote", ""))) in hay]
+
+
+def controls_pass() -> tuple[bool, str]:
+    pos = _run_control(CONTROL_POSITIVE)
+    if pos is None:
+        return False, "positive control reply was not usable JSON"
+    if not pos:
+        return False, ("positive control found NOTHING in a passage stating a fin-ray flexural "
+                       "stiffness -- the extractor is broken, so any zero below is meaningless")
+    neg = _run_control(CONTROL_NEGATIVE)
+    if neg is None:
+        return False, "negative control reply was not usable JSON"
+    if neg:
+        return False, (f"negative control extracted {len(neg)} value(s) from husbandry prose -- "
+                       f"the extractor reports whatever it is shown, so its hits mean nothing")
+    return True, (f"positive control found {len(pos)} verified value(s); negative control found "
+                  f"0 in husbandry prose")
+
+
 def main() -> int:
     write = "--write" in sys.argv
     papers = sorted(FULLTEXT.glob("*.txt"))
@@ -107,7 +173,15 @@ def main() -> int:
     print("FULL-TEXT VALUE EXTRACTION")
     print("=" * 78)
     print(f"  {len(papers)} paper(s), tenants {TENANTS} (api_allen EXCLUDED)")
-    print(f"  every quote is verified against the source; unverified items are DISCARDED\n")
+    print(f"  every quote is verified against the source; unverified items are DISCARDED")
+    ok, why = controls_pass()
+    print(f"  [{'ok' if ok else 'FAIL'}] controls: {why}")
+    if not ok:
+        print("\n  ABORTING. Without both controls a zero result is indistinguishable from a")
+        print("  broken extractor, and a non-zero one from an extractor that reports anything.")
+        print("  No results are reported.")
+        return 2
+    print()
 
     kept, discarded, calls, errors = [], [], 0, 0
     for p in papers:

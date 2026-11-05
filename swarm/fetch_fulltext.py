@@ -50,7 +50,11 @@ def fetch(pmcid: str) -> tuple[int, int, str]:
     with urllib.request.urlopen(req, timeout=90) as r:
         raw = r.read().decode("utf-8", errors="replace")
     m = re.search(r"<body>(.*)</body>", raw, re.S)
-    return len(raw), len(m.group(1)) if m else 0, raw
+    body = m.group(1) if m else ""
+    fg = re.search(r"<floats-group>(.*)</floats-group>", raw, re.S)
+    if fg:
+        body += "\n\nFIGURES AND TABLES\n" + fg.group(1)
+    return len(raw), len(body), raw
 
 
 def strip_tags(xml_body: str) -> str:
@@ -94,10 +98,15 @@ def main() -> int:
                   f"  {desc[:36]}")
         else:
             body = re.search(r"<body>(.*)</body>", raw, re.S).group(1)
+            fg = re.search(r"<floats-group>(.*)</floats-group>", raw, re.S)
+            if fg:
+                body += "\n\nFIGURES AND TABLES\n" + fg.group(1)
             p = OUT / f"{pmcid}.txt"
-            p.write_text(strip_tags(body), encoding="utf-8")
-            got.append((pmcid, bodyn, desc))
-            print(f"  {pmcid:<14} FULL TEXT  {bodyn:>7,} chars -> {p.name}  {desc[:34]}")
+            saved = strip_tags(body)
+            p.write_text(saved, encoding="utf-8")
+            got.append((pmcid, len(saved), desc))
+            print(f"  {pmcid:<14} FULL TEXT  {len(saved):>7,} chars saved "
+                  f"(from {bodyn:,} of XML) -> {p.name}  {desc[:28]}")
         time.sleep(PAUSE_S)
 
     print("\n" + "-" * 78)
