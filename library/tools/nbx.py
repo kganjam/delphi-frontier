@@ -9,7 +9,33 @@ can read the server's own error text rather than a paraphrase of it.
 import hashlib, json, os, ssl, sys, time, urllib.request
 
 MCP = "https://89.169.99.188/mcp"
-KEY = os.environ.get("NEBIUS_API_KEY", "")
+KEYFILE = os.path.expanduser("~/.config/morphoswarm/nebius.env")
+
+
+def _key() -> str:
+    """The environment first, then the key file `swarm/nebius.py` has always used.
+
+    THESE TWO MODULES AUTHENTICATED DIFFERENTLY AND IT FAILED SILENTLY (measured 2026-11-05).
+    `nebius.py` reads the key from KEYFILE; this module read it only from the environment. A
+    background run that polled with one and fetched with the other therefore saw a job reach
+    SUCCEEDED and then got `HTTP Error 401: Unauthorized` fetching it ONE SECOND LATER, which
+    reads as an expired token or a server fault rather than as an empty `Authorization: Bearer `
+    header. Three queued submits died the same way. Falling back to the file makes the two
+    agree; an empty key now raises here instead of producing a 401 four round trips later.
+    """
+    k = os.environ.get("NEBIUS_API_KEY", "").strip()
+    if k:
+        return k
+    try:
+        for line in open(KEYFILE):
+            if line.startswith("NEBIUS_API_KEY="):
+                return line.split("=", 1)[1].strip().strip('"').strip("'")
+    except OSError:
+        pass
+    raise RuntimeError(f"no NEBIUS_API_KEY in the environment and none in {KEYFILE}")
+
+
+KEY = ""        # resolved lazily by _key(); kept so existing `nbx.KEY` readers still import
 CTX = ssl.create_default_context()
 CTX.check_hostname = False
 CTX.verify_mode = ssl.CERT_NONE          # the cert does not validate for a bare IP; documented in memory
@@ -24,7 +50,7 @@ def _post(url, data, headers, method="POST"):
 def call(tool, args):
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "tools/call",
                        "params": {"name": tool, "arguments": args}}).encode()
-    st, raw = _post(MCP, body, {"Authorization": f"Bearer {KEY}", "Content-Type": "application/json",
+    st, raw = _post(MCP, body, {"Authorization": f"Bearer {_key()}", "Content-Type": "application/json",
                                 "Accept": "application/json, text/event-stream"})
     d = json.loads(raw)
     if "error" in d:                      # transport-level error
@@ -45,7 +71,7 @@ def upload(path_or_bytes, media_type, model_id):
     if "upload_url" not in res:
         return {"_failed_at": "begin", "response": res}
     st, _ = _post(res["upload_url"], raw,
-                  {"Authorization": f"Bearer {KEY}", "Content-Type": media_type}, method="PUT")
+                  {"Authorization": f"Bearer {_key()}", "Content-Type": media_type}, method="PUT")
     if st != 200:
         return {"_failed_at": "transfer", "http": st}
     fin = call("finalize_scientific_artifact_upload", {"upload_id": res["upload_id"]})
