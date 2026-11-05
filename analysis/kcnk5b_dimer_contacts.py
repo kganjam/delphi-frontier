@@ -100,5 +100,38 @@ def main() -> int:
     return 0
 
 
+
+
+def interface_set(sub: str, cut_pl: float = 70, cut: float = CUT) -> set[int]:
+    """Confidently-placed chain-A residues within `cut` A of the partner chain."""
+    _, ats = load(sub)
+    chains = sorted({a["ch"] for a in ats})
+    A = [a for a in ats if a["ch"] == chains[0] and a["pl"] >= cut_pl]
+    B = [a for a in ats if a["ch"] == chains[1] and a["pl"] >= cut_pl]
+    return {a["resi"] for a in A for b in B
+            if (a["x"]-b["x"])**2 + (a["y"]-b["y"])**2 + (a["z"]-b["z"])**2 <= cut*cut}
+
+
+def compare_truncation() -> None:
+    """Full-length against truncated, on the residues both constructs have.
+
+    THE GLOBAL SCORES ARE A TRAP. Truncation raises cplDDT from 59.14 to 70.78 and iPTM past
+    the 0.5 threshold -- by DELETING 208 disordered residues from the average, not by changing
+    anything. The pore's own mean pLDDT is 73.1 against 73.2. Every global score here, iPTM
+    included, is an average whose denominator the truncation changes.
+    """
+    full = {r for r in interface_set("kcnk5b-homodimer-msa") if r <= BOUNDARY}
+    trunc = interface_set("kcnk5b-trunc240-dimer-msa")
+    both = full & trunc
+    print(f"\n  TRUNCATION: confident interface residues within 1-{BOUNDARY}, both constructs")
+    print(f"    full-length {len(full)}   truncated {len(trunc)}   shared {len(both)}")
+    print(f"    only full-length: {sorted(full - trunc)}")
+    print(f"    only truncated:   {sorted(trunc - full)}")
+    print(f"    Jaccard {len(both)/len(full | trunc):.2f} -- reported as a NUMBER, not as "
+          "'preserved': the model runs a fixed seed with one sample, so no replicate of an "
+          "identical input exists to calibrate what overlap means.")
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
+    compare_truncation()
