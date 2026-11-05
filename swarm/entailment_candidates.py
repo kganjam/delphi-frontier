@@ -44,10 +44,13 @@ def norm(u: str) -> str:
 
 def main() -> int:
     proj = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+    # Hoisted out of the f-string: a backslash escape inside one is a SyntaxError on
+    # Python 3.11, which ruff targets. It only ran here because this interpreter is 3.13.
+    src_stmt = flat("coalesce(c.statement, '')", 1600)
     ents = q(f"""select e.id::text, e.source_scale, e.target_scale, coalesce(e.quantity,''),
                         coalesce(e.lo::text,''), coalesce(e.hi::text,''), coalesce(e.units,''),
                         {flat('e.statement', 110)}, coalesce(e.source_claim::text,''),
-                        {flat('coalesce(c.statement, \'\')', 1600)}
+                        {src_stmt}
                  from constraint_entailed e
                  left join claim c on c.id = e.source_claim
                  where e.project_id = '{proj}' and e.status = 'open'
