@@ -64,7 +64,8 @@ WHITE_MUSCLE_HZ = 12.0              # claim 593, Young & Rome 2001, measured
 CASES = [
     ("clap-and-fling, as assumed", 4.50, "ASSUMED -- refuted by the 5-17% measurements"),
     ("delayed stall, measured ceiling", 1.75, "Usherwood & Ellington 2002, full-text, Re 8071"),
-    ("delayed stall + 17% clap bonus", 1.75 * 1.17, "+ Lehmann 2005 upper bound, abstract"),
+    ("best MEASURED two-wing value", 1.83,
+     "Lehmann & Pick 2007 Table 1 pattern I, full-text, cycle-averaged, Re 134"),
     ("cambered thin wing (claim 86)", 1.07, "the value the gliding analysis uses"),
 ]
 
@@ -92,7 +93,7 @@ def main():
         print(f"    {name:<34} {note}")
 
     f_assumed = out["clap-and-fling, as assumed"]
-    f_best = out["delayed stall + 17% clap bonus"]
+    f_best = out["best MEASURED two-wing value"]
     print("\n" + "-" * 78)
     print("VERDICT")
     print("-" * 78)

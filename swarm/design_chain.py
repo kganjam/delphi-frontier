@@ -77,7 +77,7 @@ CHAIN = [
     ("ORGANISM / powered flight",
      "Does unsteady flapping lift close the gap?", 586),
     ("ORGANISM / powered flight",
-     "What lift coefficient is actually attainable?", 595),
+     "What lift coefficient is actually attainable?", 601),
     ("TISSUE / muscle",
      "Can the fin muscle beat fast enough?", 588),  # was 587: it closed the route on an
                                                     # assertion; 588 computes the budget

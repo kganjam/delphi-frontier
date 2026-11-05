@@ -149,9 +149,9 @@ claim 586 `derived` / `full-text`
 _UNSTEADY FLAPPING AERODYNAMICS BRINGS THE FREQUENCY FROM 108 Hz TO 53 Hz AT NO EXTRA FIN AREA, WHICH IS THE CLOSEST ANY ROUTE IN THIS PROJECT HAS COME…_
 
 **What lift coefficient is actually attainable?**  
-**78 Hz beat frequency required at the best MEASURED lift coefficient (1.75 delayed stall + 17% clap bonus = 2.05), replacing the 53 Hz derived at the refuted CL 4.5**  
-claim 595 `literature` / `full-text`  
-_THE FLAPPING ROUTE'S CL 4.5 IS REFUTED BY MEASUREMENT, AND THE BEAT FREQUENCY IT IMPLIED RISES FROM 53 Hz TO 78 Hz. The 53 Hz that claims 587, 588, 59…_
+**83 Hz beat frequency required at the best MEASURED two-wing lift coefficient (1.83, Lehmann & Pick 2007 pattern I, cycle-averaged); shortfall vs the 12 Hz white-muscle ceiling is 6.9x**  
+claim 601 `literature` / `full-text`  
+_CORRECTION TO CLAIM 595: 1.75 x 1.17 MULTIPLIED TWO FACTORS THAT BELONG TO DIFFERENT STROKE PATTERNS. THE MEASURED BEST IS CL 1.83, AND THE REQUIREMEN…_
 
 
 ## TISSUE / muscle
@@ -206,11 +206,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 367 live claims of 435 for project `zebrafish-flight`; **68 superseded**, which is the project correcting itself and is not a defect.
+- 368 live claims of 437 for project `zebrafish-flight`; **69 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 3 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 183, `measured` 103, `literature` 55, `simulated` 16, `unknown` 9, `assumed` 1
+- live claims by evidence class: `derived` 183, `measured` 103, `literature` 55, `simulated` 16, `unknown` 9, `refused` 1, `assumed` 1
 
 
 **Two criteria, and they are not the same question:**
