@@ -236,6 +236,38 @@ claim 966 `simulated` / `full-text`
 _THE DESIGN EXTRACTS ENERGY FROM A SHEARED WIND -- UP TO 26 TIMES ITS LAUNCH ENERGY -- AND STILL DOES NOT SUSTAIN FLIGHT. THE MECHANISM WORKS; THE CYCLE DOES NOT CLOSE. Claim 965 showed that in a UNIFORM wind the design climbs but comes down every time, because a uniform wind only translates the reference frame, and stated that whether a SHEARED wind changes that was unanswered. It is now modelled:…_
 
 
+## 8. THE PROTEIN SCALE -- FROM THE ALLELE TO THE CHANNEL
+
+**What does the fin-overgrowth allele do to the protein?**  
+claim 1035 `literature` / `full-text`  
+_[THE C-TERMINUS OF Kcnk5b IS AUTO-INHIBITORY, AND REMOVING IT ENLARGES FINS] Truncating the channel increases its function rather than abolishing it, which is a design lever of a different kind from every point mutation this project has considered -- and it explains the anomaly claim 1034 could not account for.  THE SOURCE, verbatim (Daane et al. 2018, PMC6039437): "we have found that premature tr…_
+
+**Is the channel a dimer, and does the zebrafish sequence say so itself?**  
+**2 selectivity-filter motifs in the zebrafish kcnk5b sequence (GYG 100-102, GFG 205-207), which forces the dimer from this proteins own architecture rather than from a human citation**  
+claim 1066 `derived` / `full-text`  
+_[THE DIMER ARGUMENT RESTED ON A HUMAN CITATION WHEN THE ZEBRAFISH SEQUENCE PROVES IT DIRECTLY] Claims 1038, 1042 and 1043 all turn on Kcnk5b being a dimer, and all of them cite UniProt O95279 -- which is HUMAN KCNK5, not zebrafish kcnk5b. An adversarial challenge noted the species mismatch in passing while judging claim 1042 survived. Checking it found two things: the citation is weaker than it lo…_
+
+**Can a structure prediction see the C-terminus doing it?**  
+**0 confidently-placed C-terminal residues (pLDDT>=70) contacting the partner subunit, of 8 that qualify -- against 85 contacting pairs in the pore half**  
+claim 1043 `simulated` / `full-text`  
+_[THE DIMER PREDICTION NOW WORKS, REPRODUCES K2P ARCHITECTURE, AND STILL CANNOT ANSWER THE QUESTION -- AND THAT WAS PREDICTED IN ADVANCE] Supplying the project's 72-sequence pdb70 alignment turns the uninterpretable dimer of claim 1042 into a model that is confident in the pore half and demonstrably correct there. The C-terminus remains unresolved, so the question claim 1039 posed is answered "not…_
+
+**Does truncation move the pore?**  
+**1.35 Angstrom CA RMSD between the truncated and full-length pore after superposition, against a 0.22 A floor set by the two chains of the same dimer -- a shift of the same fold, not a rearrangement**  
+claim 1067 `simulated` / `full-text`  
+_[pLDDT WAS THE WRONG INSTRUMENT: THE TRUNCATED PORE DOES SHIFT, BY 6x THE MODEL'S OWN REPRODUCIBILITY -- SUPERSEDES 1045] Claim 1045 concluded that truncating Kcnk5b does not reorganise the pore, on the evidence that mean pLDDT over residues 1-240 is 73.1 in the full-length dimer and 73.2 in the truncated one. Two adversarial challenges made the same point and it is correct: "identical pore pLDDT…_
+
+**Does it change what sequence the pore admits?**  
+**1.3 ratio of the truncation-induced change in pore sequence tolerance to the within-model floor, against 6.1x for the same constructs geometry -- the fold shifts, its sequence tolerance does not**  
+claim 1069 `simulated` / `full-text`  
+_[TRUNCATION MOVES THE PORE PHYSICALLY BUT BARELY CHANGES WHAT SEQUENCE IT ADMITS: 6x THE NOISE FLOOR ON GEOMETRY, 1.3x ON CONSTRAINT] Claim 1067 measured that the truncated Kcnk5b pore sits 1.35 A from the full-length one, six times the 0.22 A floor set by the two chains of a single dimer. That is geometry. Whether the shifted fold tolerates DIFFERENT RESIDUES is the functional question, and Prote…_
+
+**What can this arm resolve at all?**  
+**19 signal-to-noise for a scrambled sequence, against 0.39 for a point mutation**  
+claim 1028 `simulated` / `full-text`  
+_[THE PROTEIN ARM'S RESOLUTION IS MEASURED, AND IT SITS BETWEEN ONE SUBSTITUTION AND A SCRAMBLED SEQUENCE] Two scans in this project, each carrying its own controls, bracket what structure prediction can and cannot tell this design. The method discriminates a destroyed sequence at 19x signal-to-noise and a point mutation at 0.39x. Everything the design actually asks about is a point mutation.  THE…_
+
+
 ## 7. WHAT THE DESIGN WOULD BE
 
 **What does the design actually ACHIEVE?**  

@@ -149,10 +149,22 @@ def main() -> int:
         print(f"\n  NOT classifying {project}: the control did not beat its baseline ({detail}).")
         return 1
 
-    rows = q(f"""select id, {flat('statement', 3000)} from claim
-                 where project_id={lit(project)} and superseded_by is null
-                 and scale_id is null and length(statement) > 120
-                 order by id limit {n}""")
+    # --ids lets a caller target specific claims rather than taking the lowest ids. The
+    # design spec cites 53 claims spread across the whole id range, 50 of them unplaced, so
+    # "the first N unplaced" would mostly miss them and the spec's scale coverage would not
+    # move.
+    want = [a.split("=", 1)[1] for a in sys.argv if a.startswith("--ids=")]
+    if want:
+        ids = ",".join(str(int(x)) for x in want[0].split(",") if x.strip())
+        rows = q(f"""select id, {flat('statement', 3000)} from claim
+                     where project_id={lit(project)} and superseded_by is null
+                     and scale_id is null and id in ({ids})
+                     order by id""")
+    else:
+        rows = q(f"""select id, {flat('statement', 3000)} from claim
+                     where project_id={lit(project)} and superseded_by is null
+                     and scale_id is null and length(statement) > 120
+                     order by id limit {n}""")
     print(f"\n  {project}: {len(rows)} unplaced claim(s) to classify"
           + ("" if write else "  (dry run; pass --write)"))
     tally: collections.Counter[str] = collections.Counter()

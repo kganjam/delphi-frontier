@@ -78,6 +78,20 @@ SPEC = [
         ("Can the genetics lower the wind requirement?", 981),
         ("Can it extract energy from WIND SHEAR?", 966),
     ]),
+    # THE PROTEIN SCALE WAS MISSING FROM THIS SPEC ENTIRELY. Checking which scales the
+    # generated file reaches -- by reading the scale_id of every claim it cites -- returned 3
+    # of 8, and `protein` was absent despite the project holding structure predictions, a
+    # ProteinMPNN series and a dimer. The spec is the artifact that is supposed to run "from
+    # all scales back down to dna", and it was skipping the scale that connects the allele to
+    # the organ.
+    ("8. THE PROTEIN SCALE -- FROM THE ALLELE TO THE CHANNEL", [
+        ("What does the fin-overgrowth allele do to the protein?", 1035),
+        ("Is the channel a dimer, and does the zebrafish sequence say so itself?", 1066),
+        ("Can a structure prediction see the C-terminus doing it?", 1043),
+        ("Does truncation move the pore?", 1067),
+        ("Does it change what sequence the pore admits?", 1069),
+        ("What can this arm resolve at all?", 1028),
+    ]),
     ("7. WHAT THE DESIGN WOULD BE", [
         ("What does the design actually ACHIEVE?", 962),
         ("The best design this project can specify", 580),
