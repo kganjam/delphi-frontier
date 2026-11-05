@@ -258,6 +258,7 @@ def main() -> int:
     cap = 18
     if "--cap" in sys.argv:
         cap = int(sys.argv[sys.argv.index("--cap") + 1])
+    qs_for_control = evidence_gaps() if source == "gaps" else open_quantities()
     text, n, dropped, collapsed = build(keep, cap, source)
 
     gen_note, gen_map = "", {}
@@ -326,9 +327,26 @@ def main() -> int:
 
     # TWO-SIDED CONTROL. A generator that emits nothing and a generator pointed at an empty
     # database print the same thing, and a filter that drops everything looks like a strict one.
+    # THE CONTROL MUST NOT NAME THIS PROJECT'S SUBJECT MATTER. The previous version asserted
+    # that the output mentioned "water-exit speed", "tail-beat frequency" or "muscle", and that
+    # it did NOT mention "frame interval". Both are zebrafish-flight vocabulary, so the module
+    # reported FAIL for every other project in the database -- and because --out returns 2 on a
+    # failed control, it could not be run for coral, insect-flight, limbless-mouse or xenobot at
+    # all. Measured 2026-11-05: coral and insect-flight each produce six sensible questions
+    # ("generation time, years"; "sensory feedback latency, ms") and each reported FAIL.
+    #
+    # What the control is actually for is that the output DERIVES FROM THE INPUT rather than
+    # from the model's priors, and that is testable without knowing the subject: the generated
+    # questions must share content words with the quantities they were generated from.
     low = text.lower()
-    must_find = "water-exit speed" in low or "tail-beat frequency" in low or "muscle" in low
-    must_drop = "frame interval" not in low          # a ratio of OUR OWN timings
+    src_words: set[str] = set()
+    for quantity, _u, _c in qs_for_control:
+        src_words |= words(quantity)
+    out_words = words(low)
+    shared = src_words & out_words
+    must_find = bool(shared)
+    # And the units filter must actually have run when there was anything for it to drop.
+    must_drop = dropped > 0 or not any(not is_physical(u) for _q, u, _c in qs_for_control)
     ok = n > 0 and (must_find or source == "gaps") and (must_drop or keep or source == "gaps")
     if "--out" in sys.argv:
         path = sys.argv[sys.argv.index("--out") + 1]
@@ -351,8 +369,9 @@ def main() -> int:
         print(gen_note)
     print(f"  {n} question(s) from OPEN constraints; {dropped} dropped as dimensionless "
           f"(ours, not a paper's), {collapsed} collapsed as restatements of another")
-    print(f"  [{'ok' if ok else 'FAIL'}] control: finds a known live need, drops a known "
-          f"internal ratio")
+    print(f"  [{'ok' if ok else 'FAIL'}] control: output shares {len(shared)} content word(s) "
+          f"with the quantities it was generated from, so it derives from this project's own "
+          f"constraints and not from the model's priors; units filter ran ({dropped} dropped)")
     print()
     print(text)
     return 0 if ok else 1
