@@ -118,6 +118,83 @@ def read_level(note: str) -> str:
     return "read level not stated in the note"
 
 
+# Where a predicted structure for a lever's gene lives, if this project holds one.
+STRUCTURES = {
+    "kcnk5b":   "results/fish-proteins/structures/kcnk5b-homodimer-full/model.cif",
+    "lat4a":    "results/fish-proteins/structures/slc43a2a_wt/",
+    "slc12a7a": "results/nebius/slc12a7a/WT_ESMFold2.cif",
+}
+
+
+def _plddt_at(path: str, pos: int):
+    """pLDDT of the CA at one residue, or None. Takes a file or a directory holding one .cif."""
+    import pathlib as _p
+    f = _p.Path(path)
+    if f.is_dir():
+        f = next(iter(f.glob("*.cif")), None)
+    if f is None or not f.exists():
+        return None
+    hdr = []
+    for line in open(f):
+        if line.startswith("_atom_site."):
+            hdr.append(line.strip().split(".")[1])
+        elif hdr and line.startswith("ATOM"):
+            break
+    ix = {n: i for i, n in enumerate(hdr)}
+    if "B_iso_or_equiv" not in ix:
+        return None
+    for line in open(f):
+        if not line.startswith("ATOM"):
+            continue
+        r = line.split()
+        if r[ix["label_atom_id"]] != "CA":
+            continue
+        if int(r[ix["label_seq_id"]]) == pos:
+            return float(r[ix["B_iso_or_equiv"]])
+    return None
+
+
+def structural_evaluability(buildable) -> None:
+    """Say, per lever, whether a structure can speak to its variant -- GENERATED, not asserted.
+
+    WHY. Measured 2026-11-05: the pLDDT at a variant's own residue decides whether any
+    structural or sequence-model result about it means anything. lat4a T200K sits at 97.7, where
+    four replicate folds agree to sd 0.116 and the ProteinMPNN rank is identical in all four.
+    kcnk5b W169L sits at 42.4 and S345E at 34.0, where two chains of the SAME molecule -- 0.09
+    pLDDT apart -- disagree on the mutant's rank. At 345, zero of 71 aligned homologues have a
+    residue at all, so the low confidence is an honest report of an unconstrained backbone
+    rather than a model failure (claims 1396-1399).
+
+    Without this line a reader of the list below sees six orderable constructs and no indication
+    that computational evidence exists for one of them and cannot exist for two.
+    """
+    import re as _re
+    print("  CAN A STRUCTURE SPEAK TO THIS VARIANT?")
+    for name, _k, _s, _f, rev, _st, _sha, _n in buildable:
+        # A substitution token, NOT a fragment of an accession. The loose form [A-Z]\d+[A-Z]
+        # read "Q9Y" out of the UniProt accession Q9YHV4 in `fst1-Q9YHV4-ORF` and reported
+        # follistatin as a residue-9 substitution. Both flanks must be amino-acid letters and
+        # the token must not continue into more alphanumerics.
+        m = _re.search(r"(?<![A-Za-z0-9])[ACDEFGHIKLMNPQRSTVWY](\d+)"
+                       r"[ACDEFGHIKLMNPQRSTVWY](?![A-Za-z0-9])", rev)
+        if not m:
+            print(f"     {name} @ {rev}: no single-residue substitution in the label")
+            continue
+        pos = int(m.group(1))
+        path = STRUCTURES.get(name)
+        if path is None:
+            print(f"     {name} @ {rev}: residue {pos}, NO STRUCTURE held")
+            continue
+        v = _plddt_at(path, pos)
+        if v is None:
+            print(f"     {name} @ {rev}: residue {pos}, structure held but residue not in it")
+            continue
+        verdict = ("YES -- confident backbone" if v >= 70 else
+                   "NO -- backbone not determined at this residue")
+        print(f"     {name} @ {rev}: residue {pos} pLDDT {v:.1f}  {verdict}")
+    print()
+
+
 def main() -> int:
     rows = q("""select p.name, coalesce(p.kind,''), coalesce(p.scale_id,''),
              replace(coalesce(p.function,''), chr(10), ' '),
@@ -155,6 +232,8 @@ def main() -> int:
         if name in CONTESTED:
             print(f"      CONTESTED: {CONTESTED[name][:230]}")
         print()
+
+    structural_evaluability(buildable)
 
     print("  WHAT YOU COULD ORDER TOMORROW")
     for name, _k, _s, _f, rev, _st, sha, _n in buildable:
