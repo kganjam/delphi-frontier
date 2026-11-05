@@ -151,8 +151,11 @@ def load_scale_map() -> dict:
 
 def main() -> int:
     write = "--write" in sys.argv
-    files = [EXTRACT / "abstracts.json", EXTRACT / "targeted.json",
-             EXTRACT.parent / "extracted-values.json"]
+    # Every harvest file, because each run now writes its own (a fixed name let two concurrent
+    # harvests overwrite each other). Sorted so the set read is reproducible.
+    files = sorted(EXTRACT.glob("*.json"))
+    files = [f for f in files if not f.name.endswith(".map.json")]
+    files.append(EXTRACT.parent / "extracted-values.json")
     items = load(files)
     smap = load_scale_map()
     print("=" * 78)

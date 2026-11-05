@@ -45,6 +45,11 @@ MODEL = "claude-opus-4-5-20251101"
 # renumber the same quantities differently, so a value stamped only with `asked: 7` cannot be
 # joined to a scale map later without silently reading the wrong row.
 QFILE_STEM = [""]
+# Each run writes its OWN file. A fixed output path means two concurrent harvests -- which is the
+# normal case here, since a run takes hours and the questions change -- silently overwrite each
+# other, and the one that finishes last wins. Caught by the incremental flush above: with both
+# runs writing after every question, the file visibly alternated between two sets of values.
+OUTFILE = ["targeted.json"]
 OUT = pathlib.Path(__file__).resolve().parent.parent / "results" / "extract"
 PAUSE_S = 0.4
 
@@ -183,6 +188,24 @@ def ask_confirmed(text: str, label: str, question: str, qnum: int,
     return out, b1
 
 
+def flush(dest: pathlib.Path, kept: list, bad: list) -> None:
+    """Write what has been verified SO FAR, after every question.
+
+    A multi-hour run that writes only at the end holds every value it has found in process
+    memory, so a kill, a timeout or a machine restart loses all of it. That happened in this
+    session's own workflow -- a run was stopped at question 5 of 20 holding verified values that
+    existed nowhere else -- and it is the same shape as the dead ends this module was written to
+    fix: work done correctly, output that never reaches a reader.
+
+    Written whole each time rather than appended, so the file is always a valid document and a
+    crash mid-write cannot leave a half-object behind.
+    """
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    tmp = dest.with_suffix(".tmp")
+    tmp.write_text(json.dumps({"verified": kept, "discarded": bad}, indent=1))
+    tmp.replace(dest)
+
+
 def read_questions(path: pathlib.Path) -> list[str]:
     """One question per numbered block; the indented 'Report the species' line belongs to it."""
     out, cur = [], []
@@ -296,6 +319,8 @@ def run_abstracts_all(questions, queries, per, write) -> int:
                       f"{str(it.get('provenance'))[:13]:<13} {rec['journal'][:22]}")
             kept_all += k
             bad_all += b
+        if write:
+            flush(OUT / ("abstracts_" + OUTFILE[0]), kept_all, bad_all)
         time.sleep(PAUSE_S)
 
     print("\n" + "-" * 78)
@@ -311,7 +336,7 @@ def run_abstracts_all(questions, queries, per, write) -> int:
     print("-" * 78)
     if write:
         OUT.mkdir(parents=True, exist_ok=True)
-        dest = OUT / "abstracts.json"
+        dest = OUT / ("abstracts_" + OUTFILE[0])
         prev = {"verified": [], "discarded": []}
         if dest.exists():
             try:
@@ -371,7 +396,7 @@ def run_abstracts(questions, queries, per, write) -> int:
     print("-" * 78)
     if write:
         OUT.mkdir(parents=True, exist_ok=True)
-        dest = OUT / "abstracts.json"
+        dest = OUT / ("abstracts_" + OUTFILE[0])
         prev = {"verified": [], "discarded": []}
         if dest.exists():
             try:
@@ -393,6 +418,10 @@ def main() -> int:
     limit = int(sys.argv[sys.argv.index("--limit") + 1]) if "--limit" in sys.argv else 0
 
     QFILE_STEM[0] = qpath.name
+    if "--out" in sys.argv:
+        OUTFILE[0] = sys.argv[sys.argv.index("--out") + 1]
+    else:
+        OUTFILE[0] = f"harvest_{qpath.stem}.json"
     questions = read_questions(qpath)
     if limit:
         questions = questions[:limit]
@@ -451,6 +480,8 @@ def main() -> int:
                 for it in k:
                     print(f"      {pmcid:<13} {str(it.get('value'))[:26]:<26} "
                           f"{str(it.get('units'))[:16]:<16} {str(it.get('provenance'))[:14]}")
+        if write:
+            flush(OUT / OUTFILE[0], kept_all, bad_all)
 
     print("\n" + "-" * 78)
     print(f"  {asked} paper-question pair(s) asked, {fetched} paper(s) newly fetched")
@@ -467,7 +498,7 @@ def main() -> int:
     print("-" * 78)
 
     if write:
-        dest = OUT / "targeted.json"
+        dest = OUT / OUTFILE[0]
         OUT.mkdir(parents=True, exist_ok=True)
         prev = {"verified": [], "discarded": []}
         if dest.exists():
