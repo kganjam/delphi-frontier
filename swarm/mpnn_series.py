@@ -98,8 +98,32 @@ def main() -> int:
                         f"mpnn-series:{label} -- {why}; interface constraint in the dimer context")
                     break
                 except RuntimeError as e:
-                    print(f"  submit attempt {attempt+1} failed: {str(e)[:120]}", flush=True)
-                    time.sleep(45)
+                    # READ THE ERROR BODY. A 503 from this endpoint is several different
+                    # failures wearing one status code, and `admission` says which:
+                    #   not-submitted  -> validation; nothing was created; retrying is pointless
+                    #   accepted + phase=observation + operation_id -> THE JOB IS FINE and the
+                    #       OBSERVATION path failed. Resubmitting is wrong; take the op id.
+                    #   not-confirmed  -> the serverless layer is degraded generally
+                    # Measured 2026-11-05: six submits read as failures had all been ACCEPTED,
+                    # and a plain retry minutes later succeeded, so this loop reported "giving
+                    # up" on work that existed.
+                    try:
+                        err = json.loads(str(e))
+                    except json.JSONDecodeError:
+                        err = {}
+                    if err.get("operation_id"):
+                        op = err["operation_id"]
+                        print(f"  attempt {attempt+1}: {err.get('code')} but the operation "
+                              f"EXISTS ({op}, admission={err.get('admission')!r}, "
+                              f"phase={err.get('phase')!r}) -- taking it, not resubmitting",
+                              flush=True)
+                        nebius.record(op, "infer_proteinmpnn_native",
+                                      f"mpnn-series:{label} -- recovered from a "
+                                      f"{err.get('code')} carrying its operation_id")
+                        break
+                    print(f"  submit attempt {attempt+1} failed "
+                          f"(admission={err.get('admission')!r}): {str(e)[:110]}", flush=True)
+                    time.sleep(90)
             if op is None:
                 print(f"  GIVING UP on {label} after 6 attempts; continuing with the rest",
                       flush=True)
