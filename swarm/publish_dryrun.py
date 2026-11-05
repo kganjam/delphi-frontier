@@ -232,7 +232,7 @@ def main() -> int:
         made.append((p, data, sig))
         print(f"  wrote {p.name}  ({len(data)} B, signature {sig[:16]}...)")
 
-    print(f"\n  VERIFY, reading back from disk:")
+    print("\n  VERIFY, reading back from disk:")
     allok = True
     for p, _, sig in made:
         ok = verify(pub, p.read_bytes(), sig)
