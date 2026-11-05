@@ -74,7 +74,12 @@ def rows():
     yield ("genetic levers with a buildable variant  [the hard bar]",
            f"{buildable:.0f} of {levers:.0f} levers carry a SEQUENCE CHANGE this project holds "
            f"(non-null content_sha256); {specced:.0f} have a part_revision of any kind, but a "
-           f"revision naming a published allele whose lesion is not held cannot be made",
+           f"revision naming a published allele whose lesion is not held cannot be made. "
+           f"THIS UNDERCOUNTS BY ONE ON PURPOSE AND THE REASON IS DECLARED: kcnh2a@longfin is a "
+           f"chromosome-2 inversion with no coding change, so its null hash is a design fact "
+           f"rather than a gap, and the strain exists. Counting it as buildable would need the "
+           f"metric to read an editorial table (analysis/genetic_design.py NULL_REASON), which "
+           f"is the kind of dependency that let the previous version of this row pass itself",
            buildable >= levers,
            "every lever names a variant that could actually be made")
     yield ("genetic levers RESEARCHED to a conclusion",
