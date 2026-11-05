@@ -214,8 +214,16 @@ side, and let the extractor return both.
     DROP:                 "time to reach U_min from 0.45 m/s compared with the fall-back time"
                           -- a comparison internal to this project's model.
 
-Widen the species: this project works on zebrafish, but a value from any fish, or from another
-animal where the physiology carries over, is wanted. Say so in the question.
+Widen the organism, but INFER WHAT IT IS FROM THE QUANTITIES THEMSELVES -- the list below is the
+only thing that tells you what this project studies. A value from a related organism, or from
+another system where the physiology carries over, is wanted; say so in the question.
+
+NEVER NAME AN ORGANISM THE QUANTITIES DO NOT IMPLY. Measured 2026-11-05: this instruction
+previously read "this project works on zebrafish", and for the insect-flight project it turned
+the quantity `lift-to-weight ratio of the four-wing configuration` into "Lift force produced by
+flying fish or gliding fish during aerial locomotion". A four-wing configuration is an insect.
+The question was well-formed, searchable, and about the wrong animal, and it would have harvested
+fish papers into an insect project.
 
 QUANTITIES:
 {items}
