@@ -211,6 +211,15 @@ def main() -> int:
                 tally["satisfied"] -= 1
                 tally["unstable"] = tally.get("unstable", 0) + 1
                 continue
+        if write and v == "insufficient":
+            # PERSIST THE GAP. An insufficient verdict is the most actionable thing this module
+            # produces: it names, in one sentence, the evidence a constraint is waiting on. Until
+            # now it was printed and discarded, so every run paid a call to recompute a sentence
+            # nothing had kept -- the same dead end as an extraction pipeline writing to a file
+            # no reader opens. Stored here, it becomes the input to the next literature search,
+            # which is what closes the loop from evaluation back to retrieval.
+            ac.q(f"""update constraint_entailed set missing_evidence = {ac.lit(why[:900])},
+                 missing_evidence_at = now() where id = {eid} and status = 'open'""")
         if write and v in ("satisfied", "unsatisfied"):
             ev = ac.q(f"select coalesce(evidence,'literature') from claim where id = {cid}")
             note = (f"{why[:600]} [evaluated by api_evaluate_constraints.py against claim {cid}]")
