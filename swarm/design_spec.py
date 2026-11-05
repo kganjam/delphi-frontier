@@ -61,6 +61,7 @@ SPEC = [
         ("Can a spring reach the speed muscle cannot?", 957),
         ("Can a tendon spring hold that much energy?", 958),
         ("How much muscle does the launch actually need?", 959),
+        ("What efficiency does it need, and is that attainable?", 960),
     ]),
     ("6. WHAT THE DESIGN WOULD BE", [
         ("The best design this project can specify", 580),
@@ -122,20 +123,17 @@ def main() -> int:
              "locomotory muscle produces NO power above about 12 Hz, and the superfast muscle "
              "that could reach it has never been sequenced in any animal, so the transgene the "
              "route depends on cannot be specified.\n")
-    L.append("- **A latch-spring launch is OPEN, and it is the only route not excluded.** Two "
-             "objections to it have fallen in turn. The ANATOMICAL one: seahorses and pipefish "
-             "are a characterised LaMSA system whose springs are the epaxial and sternohyoideus "
-             "TENDONS, which zebrafish also have, with pipefish pre-loading over 300 ms before "
-             "a sub-10 ms release. The STORAGE one: the tendon needed is 0.28-4.44% of body "
-             "mass. And the 134% figure turned out to be a function of MUSCLE FRACTION rather "
-             "than a property of the animal -- break-even is 53.9%, and active teleosts are "
-             "reported above 60%, which is also genetically addressable by myostatin "
-             "antagonism.\n")
-    L.append("  What the route now turns on is ONE measurable efficiency: the launch would need "
-             "about 90% of total muscle work to arrive as body kinetic energy, and no source "
-             "measures what a C-start can actually deliver. That is a better question than the "
-             "one it replaced -- an efficiency rather than an unprecedented mechanism -- but it "
-             "is unanswered, and the route does not close until it is.\n")
+    L.append("- **A latch-spring launch is also closed, and this one was a genuine "
+             "candidate.** Two objections to it fell in turn -- the anatomical one (seahorses "
+             "and pipefish are a characterised LaMSA system whose springs are tendons zebrafish "
+             "also have) and the storage one (the tendon needed is 0.28-4.44% of body mass) -- "
+             "and the 134% energy figure turned out to be a function of muscle fraction, with "
+             "break-even at 53.9% against active teleosts reported above 60%. It closes on "
+             "TRANSFER EFFICIENCY. Even a fish made entirely of muscle needs 54% of muscle work "
+             "to arrive as body kinetic energy. The best efficiency measured for any fish "
+             "fast-start is 39%, and a spring-loaded mechanical fish -- the directly analogous "
+             "device, built and measured -- achieved 10%. A latch changes WHEN energy arrives, "
+             "not how much survives the water.\n")
     L.append("The sections below give the design anyway, scale by scale, because the parts that "
              "ARE achievable are specified in real genes with real magnitudes, and because a "
              "negative result is only useful if someone can see exactly where it fails.\n")

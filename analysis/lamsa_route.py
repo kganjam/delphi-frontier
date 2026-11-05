@@ -279,6 +279,84 @@ def controls_fraction():
     return ok
 
 
+# ---------------------------------------------------------------------------------------------
+# ADDED after claim 959, which left the route turning on ONE unmeasured quantity: what fraction
+# of muscle work a launch can deliver as body kinetic energy. IT IS MEASURED, and it closes the
+# route.
+#
+#   Frith & Blake 1995, J Exp Biol, northern pike fast-starts (abstract):
+#     "Hydrodynamic efficiencies for fast-starts range from 0.16 to 0.39"
+#   Frith 2011, same system (abstract):
+#     "Hydrodynamic efficiency averages 0.37 (range: 0.34 to 0.39) for C-starts"
+#   Conte et al. 2010, Bioinspir Biomim -- and this is the DIRECTLY analogous case, a
+#   SPRING-LOADED mechanical fish released from curvature, with efficiency defined exactly as
+#   this route needs it, "the ratio of the final kinetic energy of the fish and the initially
+#   stored potential energy in the body beam":
+#     "The hydrodynamic efficiency of the fish was found to be around 10%"
+EFFICIENCIES = [
+    (0.39, "pike C-start, best measured", "Frith & Blake 1995 / Frith 2011"),
+    (0.37, "pike C-start, mean", "Frith 2011"),
+    (0.16, "fast-start, low end of range", "Frith & Blake 1995"),
+    (0.10, "SPRING-LOADED mechanical fish, KE_final / PE_stored", "Conte et al. 2010"),
+]
+
+
+def efficiency_closes_it():
+    print("\n" + "=" * 78)
+    print("THE TRANSFER EFFICIENCY IS MEASURED, AND IT CLOSES THE ROUTE")
+    print("=" * 78)
+    print("\n  required muscle fraction = v^2 / (2 * E_d * efficiency)\n")
+    print(f"  {'efficiency':>11} {'muscle fraction needed':>24}   source")
+    print("  " + "-" * 72)
+    for eta, label, src in EFFICIENCIES:
+        f = V_NEEDED ** 2 / (2 * ENERGY_DENSITY * eta)
+        verdict = "IMPOSSIBLE (>100%)" if f > 1.0 else f"{100*f:.0f}% muscle"
+        print(f"  {eta:>11.2f} {verdict:>24}   {label}")
+    print("\n  " + "-" * 72)
+    eta_break = V_NEEDED ** 2 / (2 * ENERGY_DENSITY * 1.0)
+    print(f"  Even at a muscle fraction of 1.00 -- a fish made entirely of muscle -- the")
+    print(f"  launch needs an efficiency of {eta_break:.3f}, i.e. {100*eta_break:.0f}%.")
+    print(f"  The best efficiency ever measured for a fish fast-start is 0.39, and for the")
+    print(f"  directly analogous SPRING-DRIVEN case it is 0.10.")
+    print("\n" + "-" * 78)
+    print("VERDICT: ROUTE C IS CLOSED")
+    print("-" * 78)
+    best = max(e for e, _, _ in EFFICIENCIES)
+    print(f"  Required efficiency {100*eta_break:.0f}% against a measured best of {100*best:.0f}%:")
+    print(f"  short by {eta_break/best:.1f}x, with an all-muscle fish already assumed.")
+    print(f"  Against the spring-driven measurement of 10%, short by {eta_break/0.10:.1f}x.")
+    print("  A latch and a spring change WHEN the energy arrives, not how much of it")
+    print("  survives the water. The same hydrodynamics that limit a C-start limit a")
+    print("  catapult, and the one spring-driven fish anybody has built did WORSE than")
+    print("  the animal, not better.")
+    print("=" * 78)
+    return eta_break
+
+
+def controls_efficiency():
+    print("\nCONTROLS (efficiency)")
+    ok = True
+    # 1. POSITIVE: an efficiency high enough MUST give a feasible muscle fraction, or the
+    #    test can only ever say impossible.
+    f_hi = V_NEEDED ** 2 / (2 * ENERGY_DENSITY * 0.95)
+    arm1 = f_hi < 1.0
+    print(f"  [{'ok' if arm1 else 'FAIL'}] at 95% efficiency the requirement is "
+          f"{100*f_hi:.0f}% muscle, i.e. FEASIBLE -- the test returns both answers")
+    ok &= arm1
+    # 2. NEGATIVE: every MEASURED efficiency must give an impossible fraction.
+    arm2 = all(V_NEEDED ** 2 / (2 * ENERGY_DENSITY * e) > 1.0 for e, _, _ in EFFICIENCIES)
+    print(f"  [{'ok' if arm2 else 'FAIL'}] every measured efficiency gives >100% muscle")
+    ok &= arm2
+    # 3. The requirement must be computed from the efficiency, not fixed.
+    r = (V_NEEDED ** 2 / (2 * ENERGY_DENSITY * 0.2)) / (V_NEEDED ** 2 / (2 * ENERGY_DENSITY * 0.4))
+    arm3 = abs(r - 2.0) < 1e-9
+    print(f"  [{'ok' if arm3 else 'FAIL'}] halving efficiency doubles the requirement "
+          f"(got {r:.3f}x)")
+    ok &= arm3
+    print(f"  -> controls {'PASS' if ok else 'FAIL'}")
+    return ok
+
+
 if __name__ == "__main__":
     main()
     ok = controls()
@@ -286,5 +364,7 @@ if __name__ == "__main__":
     ok &= controls_mass()
     muscle_fraction_sweep()
     ok &= controls_fraction()
+    efficiency_closes_it()
+    ok &= controls_efficiency()
     if not ok:
         raise SystemExit("controls failed")
