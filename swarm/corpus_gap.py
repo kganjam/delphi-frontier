@@ -63,7 +63,7 @@ DOMAINS = {
 }
 
 
-from design_chain import env  # noqa: E402  (after the sys.path insert below)
+from design_chain import env, flat  # noqa: E402  (after the sys.path insert below)
 
 
 PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm",
@@ -187,11 +187,14 @@ def analyse(descriptions, claims, label, verbose=True):
     return gaps
 
 
+CLAIM_TEXT = "coalesce(statement,'') || ' ' || coalesce(units,'')"
+
+
 def main() -> int:
     from figure_sweep import CORPUS
 
     claims = q(
-        "select replace(coalesce(statement,'') || ' ' || coalesce(units,''), chr(10), ' ') "
+        f"select {flat(CLAIM_TEXT)} "
         f"from claim where project_id = '{PROJECT}' and superseded_by is null")
 
     print("=" * 78)

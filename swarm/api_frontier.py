@@ -20,7 +20,6 @@ each entry was worth asking.
 """
 from __future__ import annotations
 
-import json
 import os
 import re
 import sys
@@ -65,11 +64,11 @@ FIELDS = ("QUESTION", "WHY", "FALSIFIER", "REACHABLE")
 
 
 def context() -> str:
-    rows = ac.q(f"""select left(replace(statement,'{ac.SEP}',' '), 240) from claim
+    rows = ac.q(f"""select {ac.flat('statement', 240)} from claim
                     where project_id={ac.lit(ac.PROJECT)} and superseded_by is null
                     and evidence in ('measured','derived') and value_num is not null
                     order by id desc limit 18""")
-    qs = ac.q(f"""select id, left(replace(question,'{ac.SEP}',' '),120) from subproblem
+    qs = ac.q(f"""select id, {ac.flat('question', 120)} from subproblem
                   where project_id={ac.lit(ac.PROJECT)} order by id desc limit 40""")
     return ("RECENT QUANTITATIVE FINDINGS:\n" + "\n".join("- " + r[0] for r in rows)
             + "\n\nEXISTING SUBPROBLEMS (do not duplicate):\n"

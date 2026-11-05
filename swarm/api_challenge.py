@@ -28,15 +28,11 @@ failure wearing a verdict. Three defences:
 from __future__ import annotations
 
 import json
-import os
 import re
 import subprocess
 import sys
 
-SEP = "\x01"
-PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm",
-      "-tAq", "-F", SEP]
-PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+from dbq import PG, PROJECT, SEP, env, flat, lit, q  # noqa: F401  (re-exported: api_frontier uses ac.q / ac.lit)
 OUTCOMES = ("survived", "weakened", "refuted")
 TENANTS = ["api_outlook2", "api_outlook1", "api_outlook", "api_gmail"]   # api_allen EXCLUDED
 
@@ -57,26 +53,6 @@ OUTCOME: <survived|weakened|refuted>
 ATTACK: <one sentence naming the specific weakness, or "none found">
 WHY: <two sentences at most>
 """
-
-
-def env() -> dict:
-    e = dict(os.environ)
-    if "PGPASSWORD" not in e:
-        for line in open("/home/ubuntu/git/morphoswarm/.env"):
-            if line.startswith("MORPHOSWARM_PG_PASSWORD="):
-                e["PGPASSWORD"] = line.split("=", 1)[1].strip().strip('"').strip("'")
-    return e
-
-
-def q(sql: str) -> list[list[str]]:
-    r = subprocess.run(PG + ["-c", sql], capture_output=True, text=True, env=env(), timeout=120)
-    if r.returncode:
-        raise RuntimeError(r.stderr.strip()[:300])
-    return [ln.split(SEP) for ln in r.stdout.strip().split("\n") if ln]
-
-
-def lit(s) -> str:
-    return "null" if s is None else "'" + str(s).replace("'", "''") + "'"
 
 
 FALLBACK = "claude-sonnet-5-5"
@@ -172,7 +148,7 @@ def main() -> int:
         # re-running sonnet on opus-PASSED claims weakens 7 of 8 -- so a single-model verdict
         # records which model happened to see it as much as what it says. Re-running these through
         # the panel replaces one model's opinion with two, at about $0.02 a claim.
-        rows = q(f"""select c.id, c.evidence, replace(replace(c.statement, '{SEP}', ' '), chr(10), ' ')
+        rows = q(f"""select c.id, c.evidence, {flat('c.statement')}
                      from claim c
                      where c.project_id={lit(PROJECT)} and c.superseded_by is null
                      and length(c.statement) between 80 and 6000
@@ -192,7 +168,7 @@ def main() -> int:
         # read it, and the panel's row count hides that. 244 live claims were in this state when
         # the mode was added. Fallback verdicts keep their distinct challenger label, so they
         # stay countable separately rather than merging into the panel.
-        rows = q(f"""select c.id, c.evidence, replace(replace(c.statement, '{SEP}', ' '), chr(10), ' ')
+        rows = q(f"""select c.id, c.evidence, {flat('c.statement')}
                      from claim c
                      where c.project_id={lit(PROJECT)} and c.superseded_by is null
                      and length(c.statement) between 80 and 6000
@@ -202,7 +178,7 @@ def main() -> int:
                                      and ch.outcome in ('survived','weakened','refuted'))
                      order by c.id desc limit {n}""")
     else:
-        rows = q(f"""select c.id, c.evidence, replace(replace(c.statement, '{SEP}', ' '), chr(10), ' ')
+        rows = q(f"""select c.id, c.evidence, {flat('c.statement')}
                      from claim c where c.project_id={lit(PROJECT)} and c.superseded_by is null
                      and length(c.statement) between 80 and 6000
                      and not exists (select 1 from challenge ch where ch.claim_id = c.id)

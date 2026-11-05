@@ -18,14 +18,9 @@ Usage:  python3 design_chain.py            # markdown to stdout
 """
 from __future__ import annotations
 
-import os
-import subprocess
 import sys
 
-PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
-SEP = "\x01"
-PG = ["psql", "-h", "127.0.0.1", "-p", "5436", "-U", "morphoswarm", "-d", "designswarm",
-      "-tAq", "-F", SEP]
+from dbq import PG, PROJECT, SEP, env, flat, lit, q  # noqa: F401,E402  (re-exported)
 
 # (scale, question, claim id) -- the editorial spine. Order is the argument, not the id order.
 CHAIN = [
@@ -114,34 +109,17 @@ CHAIN = [
 ]
 
 
-def env() -> dict:
-    e = dict(os.environ)
-    if "PGPASSWORD" not in e:
-        for line in open("/home/ubuntu/git/morphoswarm/.env"):
-            if line.startswith("MORPHOSWARM_PG_PASSWORD="):
-                e["PGPASSWORD"] = line.split("=", 1)[1].strip().strip('"').strip("'")
-    return e
-
-
-def q(sql: str) -> list[list[str]]:
-    r = subprocess.run(PG + ["-c", sql], capture_output=True, text=True, env=env(), timeout=120)
-    if r.returncode:
-        raise RuntimeError(r.stderr.strip()[:300])
-    return [ln.split(SEP) for ln in r.stdout.strip().split("\n") if ln]
-
-
 def main() -> int:
     ids = ",".join(str(c[2]) for c in CHAIN)
     rows = {int(r[0]): r for r in q(
         f"""select id, coalesce(value_num::text,''), coalesce(units,''), evidence,
                    coalesce(read_level,''), coalesce(superseded_by::text,''),
-                   -- NEWLINES MUST GO BEFORE THE TRUNCATION, not after. Rows come back
-                   -- newline-delimited and are split on chr(10), so a statement whose first
-                   -- 150 characters contain a line break is parsed as TWO rows and the second
-                   -- one's id field is a fragment of prose. The failure is an int() ValueError
-                   -- far from its cause, and it lay dormant only because every earlier claim
-                   -- happened to open with a single long line.
-                   replace(left(replace(statement, chr(10), ' '), 150), chr(13), ' ')
+                   -- flat() scrubs BEFORE truncating, which is the order that matters:
+                   -- a statement whose first 150 characters contain a line break would
+                   -- otherwise parse as TWO rows, the second one's id field a fragment of
+                   -- prose, failing as an int() ValueError far from its cause. It lay dormant
+                   -- only because every earlier claim happened to open with one long line.
+                   {flat('statement', 150)}
             from claim where id in ({ids})""")}
 
     out = []

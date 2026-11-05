@@ -21,7 +21,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from design_chain import PROJECT, q  # noqa: E402
+from design_chain import flat, q  # noqa: E402
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "DESIGN-SPEC.md")
 
@@ -115,7 +115,7 @@ ROUTE_VERDICTS = [
 def fetch(cid: int) -> dict | None:
     r = q("select id, coalesce(value_num::text,''), coalesce(units,''), coalesce(evidence,''), "
           "coalesce(read_level,''), coalesce(superseded_by::text,''), "
-          "replace(statement, chr(10), ' ') "
+          f"{flat('statement')} "
           f"from claim where id = {cid}")
     if not r:
         return None
