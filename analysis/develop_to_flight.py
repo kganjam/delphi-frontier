@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""A developmental SIMULATION from allele to flight speed, integrated over growth.
+"""A developmental SIMULATION from ORGAN to ORGANISM, integrated over growth.
+
+TITLE CORRECTED 2026-11-05 (claim 1103). This said "from allele to flight speed". It is not.
+Every input is organ or organism scale -- the allometric exponents and intercepts are fin-length
+measurements, the rest are body size, mass and lift coefficient. NO MOLECULAR QUANTITY IS
+COMPUTED OR CONSUMED. The allele is a LABEL on an organ-scale exponent: "alf has k = 1.88" is a
+measurement of fin against standard length in animals carrying that allele, and the chain never
+passes through the channel, the conductance, the potential or the growth rate. goal_status.py
+reported this correctly and I checked its test before believing it.
 
 Claim 1101 bracketed the dna-to-organism chain algebraically and was fairly described as a lumped
 calculation rather than a simulation. This integrates instead, and the allele enters through a
