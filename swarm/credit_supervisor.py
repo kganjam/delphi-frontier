@@ -64,12 +64,33 @@ def balances() -> dict[str, tuple[float, str]]:
 
 
 def running_arms() -> int:
-    # Match on the script path, never on a pattern this command's own line contains.
-    r = subprocess.run(["pgrep", "-fc", "api_challenge.py"], capture_output=True, text=True)
-    try:
-        return max(0, int(r.stdout.strip()) - 1)   # minus the pgrep itself
-    except ValueError:
-        return 0
+    """Count arms by their ACTUAL process, not by a substring any command line may contain.
+
+    `pgrep -fc api_challenge.py` minus one was wrong, and it was wrong in the direction that
+    silences the supervisor. Measured 2026-11-05: a watcher I started to observe this very
+    function had `pgrep -fc api_challenge.py` in its own command line, so pgrep matched it and
+    the supervisor counted a monitoring process as a running arm. AGENTS.md section 6b documents
+    exactly this -- "a pgrep -f 'foo' inside a command whose own text contains foo matches
+    itself" -- and subtracting a fixed 1 only ever accounts for the pgrep, never for the other
+    processes that mention the pattern.
+
+    Reading /proc and requiring the EXECUTABLE to be python and the script to appear as its own
+    argument cannot match a shell whose text merely quotes the name.
+    """
+    n = 0
+    for pid in pathlib.Path("/proc").iterdir():
+        if not pid.name.isdigit():
+            continue
+        try:
+            argv = (pid / "cmdline").read_bytes().split(b"\0")
+        except OSError:
+            continue
+        argv = [a.decode("utf-8", "replace") for a in argv if a]
+        if not argv or "python" not in os.path.basename(argv[0]):
+            continue
+        if any(a.endswith("api_challenge.py") for a in argv[1:]):
+            n += 1
+    return n
 
 
 def main() -> int:
