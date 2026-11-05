@@ -122,6 +122,22 @@ def main() -> int:
 
     arms = running_arms()
     print(f"  {arms} arm(s) running, cap {MAX_ARMS}")
+    # THE OBSERVED RATE IS A LAGGING INDICATOR AND THE ARM COUNT IS THE LEADING ONE.
+    # Measured 2026-11-05, cycle 2: it printed "observed $8.42/h ... 0 arm(s) running ... on
+    # track; no action". Both statements were true and the conclusion was wrong -- that $8.42/h
+    # was earned by arms that had since exited, so the forward rate was about to be zero. A
+    # supervisor that waits for the average to fall always acts one interval too late, and on a
+    # 15-minute cycle near an expiry that is real money. With nothing running, past burn
+    # predicts nothing.
+    if arms == 0 and amount > 0:
+        want = min(MAX_ARMS, 3)
+        print(f"  NOTHING RUNNING -- launching {want} arm(s) on {binding} regardless of the "
+              f"observed rate, which was earned by arms that have since exited")
+        for _ in range(want):
+            subprocess.Popen(ARM + ["--tenant", binding],
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                             start_new_session=True)
+        return 0
     if observed >= rate_needed:
         print("  on track; no action")
         return 0
