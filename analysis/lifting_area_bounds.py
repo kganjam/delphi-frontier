@@ -50,6 +50,13 @@ FIN_SL = (("wild type (claim 986 / 984: 0.46 / 2.05)", 0.46 / 2.05),
 K_RANGE = ((0.20, "narrow, strongly tapered"),
            (0.35, "moderately tapered fan"),
            (0.50, "half-ellipse, about as broad as a pectoral gets"))
+#: ETA: how much lift a unit of BODY silhouette makes against a unit of FIN. The first version of
+#: this module implicitly set it to 1.0 -- treating a thick, rounded, low-aspect-ratio fish body
+#: as exactly as lift-effective as a thin fin -- and then declared its conclusion "invariant".
+#: The panel objected (claim 1161) and it reverses the result: across eta the ratio spans 1.60x
+#: to 4.22x and the 2.65x those nine modules use sits INSIDE that band. Sweeping one unknown
+#: proves nothing when a second unswept one dominates.
+ETA_RANGE = (1.0, 0.5, 0.25, 0.10, 0.0)
 
 #: what the nine modules used, for comparison only
 S_AS_USED = 1.4e-4 * (2.6 / 4.0) ** 2 * 2.65
@@ -81,36 +88,36 @@ def main() -> int:
         print(f"  {label:44s} {'':7s}  " +
               "  ".join(f"{v_stall(a):5.2f}m/s" for a in areas))
 
-    wt = rows[FIN_SL[0][0]]
-    mut = rows[FIN_SL[1][0]]
-    # THE RATIO MUST BE TAKEN AT THE SAME k. An earlier version printed
-    # min(mut)/max(wt) to max(mut)/min(wt), which compares the wild type at one shape factor
-    # against the mutant at another -- physically meaningless, since the same fin shape has the
-    # same k, and it inflated the range from 1.60-2.17x to 1.25-2.78x. Caught by reading the
-    # output, which is also how the project's other interval errors were found.
-    ratios = [m / w for m, w in zip(mut, wt)]
+    Lw = FIN_SL[0][1] * SL_M
+    Lm = FIN_SL[1][1] * SL_M
+    print("\n  THE MUTANT / WILD-TYPE ADVANTAGE IN TOTAL LIFTING AREA, swept over BOTH unknowns:")
+    print(f"    {'eta':>5}   " + "  ".join(f"k={k:.2f}" for k, _ in K_RANGE))
+    lo, hi = float("inf"), 0.0
+    for eta in ETA_RANGE:
+        cells = []
+        for k, _ in K_RANGE:
+            w = eta * SILHOUETTE_M2 + 2 * k * Lw * Lw
+            m = eta * SILHOUETTE_M2 + 2 * k * Lm * Lm
+            r = m / w
+            lo, hi = min(lo, r), max(hi, r)
+            cells.append(f"{r:6.2f}x")
+        print(f"    {eta:5.2f}   " + "  ".join(cells))
     print(f"""
-  WHAT THE SWEEP SETTLES. Across the entire k range the wild-type total lifting area is
-  {min(wt)*1e4:.2f}-{max(wt)*1e4:.2f} cm^2 and the longfin mutant's is {min(mut)*1e4:.2f}-{max(mut)*1e4:.2f} cm^2.
-  Taken AT THE SAME k, the mutant's advantage in TOTAL lifting area is {min(ratios):.2f}x to
-  {max(ratios):.2f}x -- not the 2.65x the nine modules apply, because THE SILHOUETTE DOMINATES.
-  A fin whose length doubles quadruples its own area, and its own area is small against the body.
+  ACROSS BOTH UNKNOWNS THE ADVANTAGE IS {lo:.2f}x TO {hi:.2f}x, AND THE 2.65x THOSE NINE MODULES
+  USE SITS INSIDE THAT BAND. So this project cannot say the factor is wrong. It can say it is
+  UNCONSTRAINED: the value implied depends on how lift-effective a fish body is per unit
+  silhouette, which nothing here measures, and 2.65x corresponds to roughly eta = 0.3-0.5.
 
-  THAT IS THE ERROR THE 2.65 FACTOR ENCODES. 2.666 is a ratio of FIN AREA to FIN AREA
-  (claim 1082). Applied to a total that is mostly body, it multiplies the body as well, and the
-  body does not grow when the fin does. The honest enlargement of TOTAL lifting area from the
-  published genetics is {min(ratios):.2f}-{max(ratios):.2f}x, which is SMALLER -- so the design is
-  harder than the nine modules represent, not easier.
+  AT eta = 0 the body contributes nothing and the ratio is the pure fin-area ratio,
+  (0.46/0.224)^2 = {(FIN_SL[1][1]/FIN_SL[0][1])**2:.2f}x. At eta = 1 the body is as good a lifting
+  surface as the fin, which for a thick, rounded, low-aspect-ratio body is the implausible end.
 
-  AND THE NINE MODULES' OWN NUMBER IS NOT A 2.65-FOLD FIN. They use S = {S_AS_USED*1e4:.2f} cm^2,
-  which is BELOW every longfin-mutant figure here ({min(mut)*1e4:.2f}-{max(mut)*1e4:.2f}) and
-  within the WILD-TYPE range ({min(wt)*1e4:.2f}-{max(wt)*1e4:.2f}). Multiplying a silhouette by a
-  fin ratio and then rescaling to a smaller body produced a total that is about wild-type sized.
-  Whether that is a happy accident or a second error cancelling the first is not established here.
-
-  WHAT THE SWEEP DOES NOT SETTLE: the absolute areas, since k is unmeasured. The SIGN of every
-  statement above is invariant across k = 0.20 to 0.50, which is what a sweep is for. Measuring
-  k would sharpen the numbers and would not change the direction.""")
+  WHAT STANDS AND WHAT DOES NOT. The LABELLING problem stands: nine modules multiply a body
+  silhouette by a fin-to-fin allometry and three of them call the product "of fin" (claim 1157).
+  The NUMERICAL claim that 2.65x overstates the genetics does NOT stand, and an earlier version
+  of this module made it by implicitly setting eta = 1 and then calling the result invariant
+  across k. Sweeping one unknown while a second unswept one spans the whole answer is not a
+  sensitivity analysis; it is an assumption wearing one.""")
     return 0
 
 
