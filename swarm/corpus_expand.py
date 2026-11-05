@@ -32,8 +32,25 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from fetch_fulltext import OUT, PAUSE_S, fetch, strip_tags   # noqa: E402  reuse, do not restate
 
+# `sort=relevance` IS NOT OPTIONAL AND ITS ABSENCE IS WHY THIS CORPUS WAS USELESS.
+# Measured 2026-11-05 on the query "zebrafish fin regeneration membrane potential", same term,
+# same retmax, one parameter apart:
+#
+#   default        Bombay duck population genomics / tissue morphogenesis / ESHG conference
+#                  abstracts / body-wide circuit imaging          -- none relevant
+#   relevance      "Voltage-gated calcium channels generate blastema Ca2+ fluxes restraining
+#                  zebrafish fin regeneration" / "Limited Dedifferentiation Provides Replacement
+#                  Tissue during Zebrafish Fin regeneration"      -- all relevant
+#
+# E-utilities does not default to relevance for db=pmc; it returns the most recent matches. A
+# broad biological query matches an enormous number of papers, so "most recent" is effectively a
+# random sample of last month's PMC deposits. That is the whole explanation for a 225-paper,
+# 20.7 MB corpus containing alligator phylogeny, pufferfish aquaculture and two medical
+# dictionary entries, and for extraction returning zero verified values from it: the papers were
+# never about the questions. The docstring above says this module "does not judge relevance",
+# which was read as a limitation of the design when it was a missing query parameter.
 ESEARCH = ("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
-           "?db=pmc&retmode=json&retmax={n}&term={term}")
+           "?db=pmc&retmode=json&sort=relevance&retmax={n}&term={term}")
 
 # A phrase from a paper we already hold, used as the POSITIVE control: esearch must return that
 # paper for it. If this comes back empty the search route is down, and every "0 hits" below
