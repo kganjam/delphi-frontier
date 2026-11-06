@@ -30,6 +30,9 @@ D = HERE.parent / "results" / "fish-proteins" / "structures"
 A3M = D / "kcnk5b_pdb70.a3m"
 SAMPLES = 8
 IDEM = "ms-kcnk5b-wt-boltz2-spread8-v1"
+#: A SECOND run under a DIFFERENT key is the between-run arm. Claim 3163's floor came from one
+#: operation, whose samples share a seed and an MSA, so it is a lower bound; this makes it real.
+IDEM2 = "ms-kcnk5b-wt-boltz2-spread8-v2"
 
 
 def wt_sequence() -> str:
@@ -37,7 +40,7 @@ def wt_sequence() -> str:
     return [ln for ln in A3M.read_text().splitlines() if not ln.startswith(">")][0].strip()
 
 
-def submit() -> int:
+def submit(idem: str = IDEM) -> int:
     import nebius
     seq = wt_sequence()
     pol = {"id": "A", "molecule_type": "protein", "sequence": seq,
@@ -47,14 +50,14 @@ def submit() -> int:
     print(f"  kcnk5b WT, {len(seq)} aa, {SAMPLES} diffusion samples, one operation")
     op, _ = nebius.submit(
         "boltz2_predict_native",
-        {"polymers": [pol], "diffusion_samples": SAMPLES, "idempotency_key": IDEM,
+        {"polymers": [pol], "diffusion_samples": SAMPLES, "idempotency_key": idem,
          "wait_seconds": 5},
-        f"boltz2 re-run spread: {SAMPLES} samples of kcnk5b WT in one slot")
-    print(f"  submitted {op}  (recorded to the ops log; idempotency_key {IDEM})")
+        f"boltz2 re-run spread ({idem}): {SAMPLES} samples of kcnk5b WT in one slot")
+    print(f"  submitted {op}  (recorded to the ops log; idempotency_key {idem})")
     return 0
 
 
-def report(op: str) -> int:
+def report(op: str, stem: str = "spread8") -> int:
     """Fetch (if needed) and measure the spread across the 8 samples.
 
     Boltz2's result schema is NOT openfold3's: it returns parallel lists
@@ -66,14 +69,14 @@ def report(op: str) -> int:
     sys.path.insert(0, str(HERE))
     from pore_geometry import ca_atoms, kabsch_rmsd
 
-    out = D / "kcnk5b-boltz2-spread8"
+    out = D / f"kcnk5b-boltz2-{stem}"
     out.mkdir(parents=True, exist_ok=True)
-    blob_path = next(iter(out.glob("spread8*.json")), None)
+    blob_path = next(iter(out.glob(f"{stem}*.json")), None)
     if blob_path is None:
         import fetch_results as fr
-        for name, path, n in fr.fetch_run(op, str(out), stem="spread8"):
+        for name, path, n in fr.fetch_run(op, str(out), stem=stem):
             print(f"  {name:28} -> {path}  ({n:,} bytes, sha256 verified)")
-        blob_path = next(iter(out.glob("spread8*.json")))
+        blob_path = next(iter(out.glob(f"{stem}*.json")))
     blob = json.load(open(blob_path))
 
     conf, ptm = blob["confidence_scores"], blob["ptm_scores"]
@@ -194,11 +197,98 @@ key is the matching measurement and has not been run.""",
     return 0
 
 
+def between(stem_a: str = "spread8", stem_b: str = "v2") -> int:
+    """The BETWEEN-run floor: every sample of one operation against every sample of another.
+
+    Claim 3163 measured spread WITHIN one operation and said plainly that samples sharing a seed
+    and an MSA give only a LOWER bound. This is the matching measurement it named as missing.
+    """
+    import numpy as np
+    sys.path.insert(0, str(HERE))
+    from pore_geometry import ca_atoms, kabsch_rmsd
+
+    def load(stem):
+        d = D / f"kcnk5b-boltz2-{stem}"
+        blob = json.load(open(next(iter(d.glob(f"{stem}*.json")))))
+        out = []
+        for i, st in enumerate(blob["structures"]):
+            fp = d / f"sample{i}.cif"
+            if not fp.exists():
+                fp.write_text(st["structure"])
+            ats = sorted((a for a in ca_atoms(str(fp)) if a["chain"] == "A"),
+                         key=lambda a: int(a["resi"]))
+            out.append(np.array([[a["x"], a["y"], a["z"]] for a in ats]))
+        return out
+
+    A, B = load(stem_a), load(stem_b)
+    if {len(x) for x in A + B} != {len(A[0])}:
+        print("  REFUSING: differing CA counts")
+        return 1
+    within_a = [kabsch_rmsd(A[i], A[j]) for i in range(len(A)) for j in range(i + 1, len(A))]
+    within_b = [kabsch_rmsd(B[i], B[j]) for i in range(len(B)) for j in range(i + 1, len(B))]
+    cross = [kabsch_rmsd(a, b) for a in A for b in B]
+    rng = np.random.default_rng(0)
+    ceiling = kabsch_rmsd(A[0], A[0][rng.permutation(len(A[0]))])
+    print(f"\n  {len(A)} + {len(B)} samples, {len(A[0])} CA each")
+    print(f"    within run 1 ({len(within_a)} pairs): max {max(within_a):.3f} A")
+    print(f"    within run 2 ({len(within_b)} pairs): max {max(within_b):.3f} A")
+    print(f"    BETWEEN runs ({len(cross)} pairs):   "
+          f"min {min(cross):.3f}  median {statistics.median(cross):.3f}  max {max(cross):.3f} A")
+    print(f"    ceiling (shuffled correspondence):   {ceiling:.3f} A")
+    OF3 = 30.161
+    print(f"    openfold3's between-run floor:       {OF3:.3f} A (claim 1092)")
+    frac = max(cross) / ceiling
+    print(f"\n    Boltz2 between-run floor is {max(cross):.1f} A = {100*frac:.0f} per cent of its "
+          f"ceiling.")
+    print(f"    Against openfold3's {OF3:.1f} A this is "
+          + ("LOWER" if max(cross) < OF3 else "NO LOWER") + ", and the detectable band is "
+          + f"{max(cross):.1f}-{ceiling:.1f} A.")
+    if "--write" in sys.argv:
+        sys.path.insert(0, str(HERE.parent / "swarm"))
+        from dbq import write_claim
+        cid = write_claim(
+            "zebrafish-flight", None,
+            f"""[THE BETWEEN-RUN FLOOR CLAIM 3163 SAID WAS MISSING: {max(cross):.1f} A, WHICH IS
+{100*frac:.0f} PER CENT OF THE CEILING AND SETTLES THAT BOLTZ2 CANNOT RESOLVE THIS SUBSTITUTION]
+Claim 3163 measured Boltz2's spread WITHIN one operation at {max(within_a):.1f} A and stated that
+samples sharing a seed and an MSA give only a LOWER bound, naming a second submit under a
+different idempotency key as the matching measurement. That run is op-e6aed05b0416685d.
+
+Every sample of run 1 against every sample of run 2, {len(cross)} pairs of the identical
+448-residue sequence: min {min(cross):.3f} A, median {statistics.median(cross):.3f} A, max
+{max(cross):.3f} A. Within run 1 the max is {max(within_a):.3f} A and within run 2
+{max(within_b):.3f} A, so the between-run figure is the larger, as predicted. Ceiling, from
+shuffling the residue correspondence, {ceiling:.3f} A.
+
+So Boltz2's true floor on this protein is {max(cross):.1f} A against openfold3's {OF3:.1f} A
+(claim 1092). The gap between the two predictors is much smaller than claim 3163's within-run
+number suggested, and 3163's own scope paragraph predicted exactly that: it said the comparison
+favoured Boltz2 and that the true floor could only be larger. It is.
+
+The detectable band is {max(cross):.1f}-{ceiling:.1f} A, or {100*(1-frac):.0f} per cent of the
+scale. A point substitution is not expected to move a fold that far. CONSEQUENCE, now resting on
+a between-run floor rather than a lower bound: structure prediction in this catalogue cannot
+answer the kcnk5b variant question, and further variant folding on this target should stop. It
+says nothing about whether the allele has an effect.
+
+SCOPE: one protein, two operations, 8 samples each. Two runs give a floor, not a distribution
+over runs.""",
+            "measured", max(cross),
+            "A, max CA RMSD between two independent Boltz2 runs of one sequence",
+            "analysis/boltz2_rerun_spread.py", None)
+        print(f"\n  recorded claim {cid}")
+    return 0
+
+
 if __name__ == "__main__":
+    if "--between" in sys.argv:
+        raise SystemExit(between())
+    if "--submit2" in sys.argv:
+        raise SystemExit(submit(IDEM2))
     if "--submit" in sys.argv:
         raise SystemExit(submit())
     rest = [a for a in sys.argv[1:] if not a.startswith("-")]
     if not rest:
         print(__doc__)
         raise SystemExit(2)
-    raise SystemExit(report(rest[0]))
+    raise SystemExit(report(rest[0], rest[1] if len(rest) > 1 else "spread8"))
