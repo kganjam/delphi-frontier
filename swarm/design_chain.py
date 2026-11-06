@@ -193,14 +193,20 @@ def main() -> int:
         "gives 1.1 mm at Re 50. The within-species fast-start exponent is the open quantity |",
         "| body mass | no implementation | needs ~46% gas volume and a distributed autonomic "
         "setpoint defeated |",
-        "| surface taxi | closed on tail-beat FREQUENCY, not thrust | the exemplar taxis to "
-        "1.6x its exit speed, so the phase is worth 2.69x in lift and was applied by claim 1404. "
-        "A zebrafish cannot drive it: claim 196 needs ~49-73 Hz at 1.95 m/s against measured "
-        "adult maxima of 21 Hz sustained and 52 Hz transient, and claim 37 puts the taxi ceiling "
-        "at sustainable frequencies at ~0.56 m/s, which is Ucrit itself. Worse at a smaller body "
-        "-- amplitude scales with length so f ~ 1/L, and at claim 1404's own 16.3 mm target the "
-        "requirement is 90-526 Hz, 4.3-25x the sustained ceiling (claim 1866, which supersedes "
-        "1404). Shrinking the body to supply LIFT raises the taxi frequency by the same factor |",
+        "| surface taxi | NARROWED, and now rests on muscle POWER rather than frequency | the "
+        "exemplar taxis to 1.6x its exit speed, worth 2.69x in lift, applied by claim 1404. A "
+        "WILD-TYPE zebrafish cannot drive it: claim 196 needs ~49-73 Hz at 1.95 m/s against "
+        "measured adult maxima of 21 Hz sustained and 52 Hz transient, and claim 37 puts the "
+        "taxi ceiling at sustainable frequencies at ~0.56 m/s, which is Ucrit itself. At the "
+        "16.3 mm target the requirement is 90-526 Hz, because amplitude scales with length so "
+        "f ~ 1/L and shrinking the body to supply LIFT raises the taxi frequency by the same "
+        "factor (claim 1866). BUT THE DESIGN IS NOT A WILD-TYPE FISH: against the toadfish "
+        "swimbladder's measured 200 Hz (claim 979), the superfast transgene already in this "
+        "project's part list, 4 of the 9 amplitude x Strouhal corners are reachable -- every "
+        "corner at 0.35 body lengths. Every non-superfast muscle measured here covers 0 of 9. So "
+        "the open question is whether that muscle's 14.19 W/kg suffices, and the taxi's power "
+        "requirement has never been computed (claim 1869, superseding 1866; subproblems S1304, "
+        "S1305, S1308) |",
     ]))
     # "absent from PubMed" was withdrawn on 2026-11-05. The search behind it ran without
     # `sort=relevance`, so it returned the most RECENT PMC matches rather than the most relevant
