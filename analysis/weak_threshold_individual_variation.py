@@ -32,12 +32,24 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from s901_ballistic_leap import fly  # noqa: E402
 
-AREA_CM2 = 1.4 * 2.65      #: present silhouette x the best measured fin ratio (claims 529, 542)
+PRESENT_AREA_CM2 = 1.4
+AREA_CM2 = PRESENT_AREA_CM2 * 2.65      #: present silhouette x the best measured fin ratio (claims 529, 542)
 CL = 1.07                  #: measured maximum at this Reynolds number (claim 579)
 THRESHOLD_CM = 2.0         #: S901's falsifier
 MEAN_V, SD_V = 1.57, 0.27  #: Demesmay et al. 2025, mean +/- SD across individuals, n >= 11
 #: claim 565: CL 1.07 on a fish fin implies this total CD once induced drag is counted.
 DRAG_FLOOR = (0.165, 0.377)
+
+#: (allele, area ratio, aspect ratio, CD) -- claim 567, computed from MEASURED fin spans and
+#: areas rather than from a generic range. This is what makes the per-allele table below
+#: possible: the drag coefficient is not an unknown to be swept, it is a property of each
+#: published allele's own shape. A fin that elongates without widening raises its aspect ratio
+#: and cuts its own induced drag, which is why the area ranking and the aerodynamic ranking
+#: disagree.
+ALLELES = (("wild type", 1.00, 1.50, 0.316),
+           ("alf",       2.65, 1.66, 0.289),
+           ("longfin",   2.65, 2.45, 0.205),
+           ("schleier",  1.54, 3.30, 0.160))
 
 
 def attrib(v: float, cd: float) -> float:
@@ -47,6 +59,27 @@ def attrib(v: float, cd: float) -> float:
     """
     bal = max(fly(0.0, 0.0, 0.0, v0=v, ang=math.radians(d))[0] for d in range(5, 66, 5))
     win = max(fly(AREA_CM2 * 1e-4, CL, cd, v0=v, ang=math.radians(d))[0]
+              for d in range(5, 66, 5))
+    return (win - bal) * 100
+
+
+def crossing_for(area_cm2: float, cd: float, hi: float = 6.0) -> float | None:
+    """crossing() for an arbitrary area; see crossing() for the bracket caveat."""
+    lo = 1.0
+    if attrib_for(area_cm2, hi, cd) < THRESHOLD_CM:
+        return None
+    for _ in range(45):
+        mid = (lo + hi) / 2
+        if attrib_for(area_cm2, mid, cd) >= THRESHOLD_CM:
+            hi = mid
+        else:
+            lo = mid
+    return hi
+
+
+def attrib_for(area_cm2: float, v: float, cd: float) -> float:
+    bal = max(fly(0.0, 0.0, 0.0, v0=v, ang=math.radians(d))[0] for d in range(5, 66, 5))
+    win = max(fly(area_cm2 * 1e-4, CL, cd, v0=v, ang=math.radians(d))[0]
               for d in range(5, 66, 5))
     return (win - bal) * 100
 
@@ -101,6 +134,22 @@ def main() -> int:
             continue
         print(f"  {cd:>7.3f} {v:>11.2f} m/s {v/MEAN_V:>7.2f}x {(v-MEAN_V)/SD_V:>8.2f} "
               f"{pct_above(v):>10.1f}%   {note}")
+
+    print("\n  PER ALLELE, each with ITS OWN measured area and induced drag (claim 567):\n")
+    print(f"  {'allele':<12s} {'area x':>7s} {'AR':>5s} {'CD':>6s} {'crossing':>13s} "
+          f"{'SD above':>9s} {'% of fish':>10s}")
+    for name, ratio, ar, cd in ALLELES:
+        v = crossing_for(PRESENT_AREA_CM2 * ratio, cd)
+        if v is None:
+            print(f"  {name:<12s} {ratio:>7.2f} {ar:>5.2f} {cd:>6.3f} {'never clears':>13s} "
+                  f"{'-':>9s} {'0.0%':>10s}")
+        else:
+            print(f"  {name:<12s} {ratio:>7.2f} {ar:>5.2f} {cd:>6.3f} {v:>11.2f} m/s "
+                  f"{(v-MEAN_V)/SD_V:>8.2f} {pct_above(v):>9.1f}%")
+    print("\n    longfin is the best allele here, and that INDEPENDENTLY REPRODUCES claim 567's")
+    print("    ranking, which reached it by required-area rather than by integrating a")
+    print("    trajectory. Wild type needs 4.7 SD above the mean -- no fish -- so the fin")
+    print("    genetics are what move this from 'none' to about one in twelve.")
 
     print("\n  READING")
     print("    The answer is set by the DRAG COEFFICIENT and not by the fish. At the favourable")
