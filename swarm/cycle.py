@@ -30,8 +30,10 @@ BOUNDEDNESS, because an unbounded loop on a shared host is how this fleet has hu
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -60,6 +62,37 @@ def scope(cmd: list[str]) -> list[str]:
             "-p", "TasksMax=256", "-p", f"RuntimeMaxSec={STAGE_TIMEOUT}"] + cmd
 
 
+#: Volatile text that differs between two runs of an UNCHANGED check: wall-clock times, ISO
+#: timestamps, durations, memory addresses, temp paths. Stripped before signing so the signature
+#: changes when the FINDINGS change and not when the clock does.
+_VOLATILE = [
+    (re.compile(r"\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(\.\d+)?([+-]\d{2}:?\d{2}|Z)?"), "<ts>"),
+    (re.compile(r"\b\d+(\.\d+)?\s*(s|ms|sec|seconds|minutes)\b"), "<dur>"),
+    (re.compile(r"0x[0-9a-f]{6,}"), "<addr>"),
+    (re.compile(r"/tmp/[^\s'\"]+"), "<tmp>"),
+    (re.compile(r"\$\d+\.\d+"), "<cost>"),
+]
+
+
+def signature(tail: str) -> str:
+    """A digest of what a stage FOUND, stable across re-runs that find the same thing.
+
+    A STAGE THAT IS ALWAYS RED HIDES A STAGE THAT JUST TURNED RED. Two of this loop's stages
+    are deliberately red -- `specs` carries one documented FAIL, and `grader_use` exits 1 to
+    register every claim resting on a provisional grader -- so `RAN-FAILED` has been the normal
+    state for both and a NEW failure in either would have looked identical to the old one. That
+    is this file's own opening rule ("a stage that was not run MUST NOT LOOK LIKE a stage that
+    passed") with the sign flipped.
+
+    Nothing is suppressed: a red stage stays RAN-FAILED. What the signature adds is whether the
+    red is the SAME red, so the cycle can say CHANGED rather than only FAILED.
+    """
+    t = tail or ""
+    for rx, repl in _VOLATILE:
+        t = rx.sub(repl, t)
+    return hashlib.sha256(t.encode()).hexdigest()[:12]
+
+
 def run_stage(name: str, cmd: list[str], why_skip: str | None = None) -> dict:
     """Run one stage and classify it. Never returns a bare pass/fail."""
     rec = {"stage": name, "cmd": " ".join(cmd), "started": datetime.now(timezone.utc).isoformat()}
@@ -80,6 +113,7 @@ def run_stage(name: str, cmd: list[str], why_skip: str | None = None) -> dict:
     except Exception as e:                                    # noqa: BLE001
         rec.update(status="ERRORED", exit=None, reason=f"{type(e).__name__}: {e}", tail="")
     rec["seconds"] = round(time.time() - t0, 1)
+    rec["signature"] = signature(rec.get("tail", ""))
     mark = {"RAN-OK": "ok", "RAN-FAILED": "FAILED", "ERRORED": "ERROR"}[rec["status"]]
     print(f"  {name:<12} {rec['status']:<10} exit={rec['exit']} {rec['seconds']}s  {mark}")
     return rec
@@ -184,7 +218,109 @@ def take_lock():
     return fh                      # kept open: closing it would release the lock
 
 
+def previous_record(project: str) -> dict | None:
+    """The most recent cycle record for this project, or None on the first ever run."""
+    fs = sorted(OUT.glob(f"{project}-*.json"), key=lambda f: f.stat().st_mtime)
+    for f in reversed(fs):
+        try:
+            return json.loads(f.read_text())
+        except Exception:                                      # noqa: BLE001
+            continue
+    return None
+
+
+def report_delta(prior: dict | None, now: dict) -> None:
+    """Say which stages CHANGED since the last cycle, not merely which are red.
+
+    Two stages here are permanently red by design, so "2 RAN-FAILED" has been the steady state
+    and carried no information. This prints the transitions instead. A stage that is red in both
+    cycles with the SAME signature is `unchanged`; one whose findings moved is `CHANGED`, which
+    is the line a reader should act on.
+    """
+    if not prior:
+        print("\n  DELTA: no previous cycle for this project; nothing to compare.")
+        return
+    old = {s["stage"]: s for s in prior.get("stages", [])}
+    new = {s["stage"]: s for s in now.get("stages", [])}
+    lines = []
+    for name, s in new.items():
+        o = old.get(name)
+        if o is None:
+            lines.append((f"NEW STAGE   {name}", s["status"]))
+            continue
+        if o["status"] != s["status"]:
+            lines.append((f"{o['status']} -> {s['status']}  {name}", "transition"))
+        elif o.get("signature") != s.get("signature"):
+            lines.append((f"CHANGED     {name} ({s['status']}, findings moved)", "signature"))
+    for name in old:
+        if name not in new:
+            lines.append((f"GONE        {name}", "missing"))
+    print(f"\n  DELTA against the previous cycle ({prior.get('at', '?')}):")
+    if not lines:
+        print("    nothing changed -- same stages, same statuses, same findings.")
+        red = [n for n, s in new.items() if s["status"] != "RAN-OK"]
+        if red:
+            print(f"    still red, unchanged: {', '.join(sorted(red))}")
+        return
+    for text, _kind in lines:
+        print(f"    {text}")
+    print("    A red stage that is unchanged is NOT listed here; it is in the stage table.")
+
+
+def selftest() -> int:
+    """Controls for signature() and report_delta(), shipped with them.
+
+    A GUARD NEEDS A CASE IT MUST FLAG AND A CASE IT MUST NOT. The must-not case is the one that
+    matters here: if the signature moved every run, every stage would read CHANGED forever and
+    the delta would be exactly as uninformative as the bare FAILED count it replaces.
+    """
+    same_findings_later_clock = (
+        "checked 12 claims\n  claim 402 FLAGGED\ndone in 3.2s at 2026-11-05T21:53:05+00:00",
+        "checked 12 claims\n  claim 402 FLAGGED\ndone in 9.9s at 2026-11-05T22:41:11+00:00")
+    more_findings = (
+        same_findings_later_clock[0],
+        "checked 13 claims\n  claim 402 FLAGGED\n  claim 999 FLAGGED\ndone in 3.2s "
+        "at 2026-11-05T21:53:05+00:00")
+    def rec(st):
+        return {"at": "2026-11-05T21:00:00+00:00", "stages": st}
+    def S(n, st, sig):
+        return {"stage": n, "status": st, "signature": sig}
+    base = [S("specs", "RAN-FAILED", "aaa"), S("grader_use", "RAN-FAILED", "bbb"),
+            S("gap", "RAN-OK", "ccc")]
+    checks = [
+        ("signature ignores clock and duration",
+         signature(same_findings_later_clock[0]) == signature(same_findings_later_clock[1])),
+        ("signature moves when a finding is added",
+         signature(more_findings[0]) != signature(more_findings[1])),
+    ]
+    import io
+    import contextlib
+    def delta_text(new_stages):
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            report_delta(rec(base), rec(new_stages))
+        return buf.getvalue()
+    checks.append(("identical cycles report no change",
+                   "nothing changed" in delta_text(base)))
+    moved = [S("specs", "RAN-FAILED", "aaa"), S("grader_use", "RAN-FAILED", "ZZZ"),
+             S("gap", "RAN-OK", "ccc")]
+    checks.append(("a persistent red whose findings move is CHANGED",
+                   "CHANGED" in delta_text(moved)))
+    newfail = [S("specs", "RAN-FAILED", "aaa"), S("grader_use", "RAN-FAILED", "bbb"),
+               S("gap", "RAN-FAILED", "ddd")]
+    t = delta_text(newfail)
+    checks.append(("a NEW failure behind two persistent reds is surfaced",
+                   "RAN-OK -> RAN-FAILED" in t and "gap" in t))
+    bad = [n for n, ok in checks if not ok]
+    for n, ok in checks:
+        print(f"  {'ok  ' if ok else 'FAIL'}  {n}")
+    print(f"\n  {len(checks) - len(bad)} of {len(checks)} controls pass")
+    return 1 if bad else 0
+
+
 def main() -> int:
+    if "--selftest" in sys.argv:
+        return selftest()
     # THE NESTING GUARD: check first, set second. Setting without checking is not a guard.
     if os.environ.get(SENTINEL):
         print(f"REFUSING: {SENTINEL} is set, so a cycle is already running in this process tree. "
@@ -208,6 +344,9 @@ def main() -> int:
     write = "--write" in args
 
     OUT.mkdir(parents=True, exist_ok=True)
+    # Snapshot the newest PRIOR record before writing any of our own, so the delta below
+    # compares against the last cycle and not against this one.
+    prior = previous_record(project)
     print("=" * 78)
     print(f"SWARM CYCLE -- project {project!r}, {cycles} cycle(s), "
           f"{'WRITING' if write else 'dry (no spend)'}")
@@ -220,6 +359,9 @@ def main() -> int:
         recs.append(rec)
         p = OUT / f"{project}-{rec['at'].replace(':', '').replace('-', '')[:15]}.json"
         p.write_text(json.dumps(rec, indent=1))
+
+    if recs:
+        report_delta(prior, recs[-1])
 
     print("\n" + "-" * 78)
     total = {}
