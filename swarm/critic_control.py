@@ -32,12 +32,11 @@ import argparse
 import json
 import random
 import re
-import subprocess
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from api_challenge import PROMPT, TENANTS, call, env, q  # noqa: E402
+from api_challenge import PROMPT, TENANTS, call, q  # noqa: E402
 
 MODELS = {"opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5"}
 
@@ -71,7 +70,14 @@ ARITH_MARKERS = re.compile(
 
 
 def fetch(cid: int) -> tuple[str, str]:
-    rows = q(f"select statement, evidence from claim where id = {cid};")
+    # flat() OR THIS CANNOT READ 74.6 PER CENT OF THE CORPUS. dbq.q() splits its output on
+    # line boundaries, so a bare `select statement` on a multi-line claim returns one list per
+    # LINE and rows[0][1] raises IndexError -- not a truncation anyone would notice, a crash.
+    # Measured 2026-11-06: 1170 of 1568 live claims contain a newline, so this function could
+    # only ever run on the single-line quarter, and the mutation control it implements was
+    # necessarily measured on that subset.
+    rows = q("select replace(replace(statement, chr(10), ' '), chr(1), ' '), evidence "
+             f"from claim where id = {cid};")
     if not rows:
         raise SystemExit(f"claim {cid} not found")
     return rows[0][0], rows[0][1]

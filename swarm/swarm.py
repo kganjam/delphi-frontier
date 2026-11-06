@@ -275,8 +275,12 @@ DELIVERABLE. Write `{RESEARCH_DIR}/challenge-{cid}.md` on a new branch and commi
 
 
 def challenge(project, claim_id, account, workdir="/data/worktrees/delphi-frontier/foundation"):
-    row = q(f"""select statement, evidence, coalesce(value_num::text,'n/a'), coalesce(units,''),
-                       coalesce(source,'') from claim where id={claim_id}""")
+    # flat() on every free-text column: dbq.q() splits on line boundaries, so a multi-line
+    # statement or source silently becomes several rows and row[0] holds only the first line.
+    row = q(f"""select replace(replace(statement, chr(10), ' '), chr(1), ' '),
+                       evidence, coalesce(value_num::text,'n/a'), coalesce(units,''),
+                       replace(replace(coalesce(source,''), chr(10), ' '), chr(1), ' ')
+                from claim where id={claim_id}""")
     if not row:
         raise SystemExit(f"no claim {claim_id}")
     st, ev, val, un, src = row[0]
