@@ -193,6 +193,14 @@ def main() -> int:
         "gives 1.1 mm at Re 50. The within-species fast-start exponent is the open quantity |",
         "| body mass | no implementation | needs ~46% gas volume and a distributed autonomic "
         "setpoint defeated |",
+        "| surface taxi | closed on tail-beat FREQUENCY, not thrust | the exemplar taxis to "
+        "1.6x its exit speed, so the phase is worth 2.69x in lift and was applied by claim 1404. "
+        "A zebrafish cannot drive it: claim 196 needs ~49-73 Hz at 1.95 m/s against measured "
+        "adult maxima of 21 Hz sustained and 52 Hz transient, and claim 37 puts the taxi ceiling "
+        "at sustainable frequencies at ~0.56 m/s, which is Ucrit itself. Worse at a smaller body "
+        "-- amplitude scales with length so f ~ 1/L, and at claim 1404's own 16.3 mm target the "
+        "requirement is 90-526 Hz, 4.3-25x the sustained ceiling (claim 1866, which supersedes "
+        "1404). Shrinking the body to supply LIFT raises the taxi frequency by the same factor |",
     ]))
     # "absent from PubMed" was withdrawn on 2026-11-05. The search behind it ran without
     # `sort=relevance`, so it returned the most RECENT PMC matches rather than the most relevant

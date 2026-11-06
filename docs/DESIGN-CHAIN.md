@@ -251,11 +251,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 659 live claims of 789 for project `zebrafish-flight`; **130 superseded**, which is the project correcting itself and is not a defect.
+- 1122 live claims of 1254 for project `zebrafish-flight`; **132 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `xenobot` 164, `insect-flight` 114, `limbless-mouse` 113, `coral` 58 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `derived` 229, `measured` 193, `literature` 159, `simulated` 45, `unknown` 25, `assumed` 5, `refused` 3
+- live claims by evidence class: `literature` 440, `derived` 231, `measured` 199, `simulated` 172, `unknown` 50, `assumed` 27, `refused` 3
 
 
 **Two criteria, and they are not the same question:**
@@ -274,6 +274,7 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 | exit speed | 1.57-1.60 m/s | muscle work, and speeds add in quadrature so a run-up needs a 23 BL/s sprint |
 | body size | favourable, bounded by a 5x gap in the exponent | lift/weight ~ L^(2b-1) and b is bracketed, not unknown: b=0 from mummichog FAST-START (claim 573) gives 6.0 mm at Re 642, b=0.269 from zebrafish FEEDING strikes measured off a figure (claim 1292) gives 1.1 mm at Re 50. The within-species fast-start exponent is the open quantity |
 | body mass | no implementation | needs ~46% gas volume and a distributed autonomic setpoint defeated |
+| surface taxi | closed on tail-beat FREQUENCY, not thrust | the exemplar taxis to 1.6x its exit speed, so the phase is worth 2.69x in lift and was applied by claim 1404. A zebrafish cannot drive it: claim 196 needs ~49-73 Hz at 1.95 m/s against measured adult maxima of 21 Hz sustained and 52 Hz transient, and claim 37 puts the taxi ceiling at sustainable frequencies at ~0.56 m/s, which is Ucrit itself. Worse at a smaller body -- amplitude scales with length so f ~ 1/L, and at claim 1404's own 16.3 mm target the requirement is 90-526 Hz, 4.3-25x the sustained ceiling (claim 1866, which supersedes 1404). Shrinking the body to supply LIFT raises the taxi frequency by the same factor |
 
 The chain is complete in structure. Every link has a number and an evidence class, and the places it fails are named rather than bridged. **The single cheapest open measurement is a zebrafish fast-start velocity against body length over 20–40 mm.** It is not absent from the literature: biomechanics papers measure it and report it in FIGURES, and PMC3675323 states the exact normalisation in its methods while publishing no value in text (claim 1291). Searched through NCBI efetch, Europe PMC full text, Europe PMC figure packages and preprints, the nearest obtainable values are a cross-species plateau (claim 1290) and a within-species FEEDING-strike exponent (claim 1292). It governs whether the body-size lever is worth 6.0 mm or 1.1 mm.
 
