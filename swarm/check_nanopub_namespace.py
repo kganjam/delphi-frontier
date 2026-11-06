@@ -93,9 +93,18 @@ def main() -> int:
     print(f"\n  CONTROLS  {CONTROL_OK} -> {ok_st} (want 200); "
           f"a nonsense namespace -> {bad_st} (want 404)")
     if not controls_ok:
-        print("  CONTROLS FAILED -- the network or w3id is not behaving, so nothing below is "
-              "evidence about registration. Reporting UNVERIFIED rather than unregistered.")
-        return 2
+        print("  *** UNVERIFIED: the network or w3id is not behaving, so nothing below would be "
+              "evidence\n  *** about registration. NOT reporting the namespaces as "
+              "unregistered -- a failed probe and\n  *** an unregistered namespace are "
+              "different things and look identical from here.")
+        # EXIT 0 IN NON-STRICT MODE, DELIBERATELY, and this is the one checker in swarm/ that
+        # does it. cycle.py globs check_*.py and marks ANY non-zero exit RAN-FAILED. This check
+        # depends on an EXTERNAL service, so a transient outage would turn every cycle red for
+        # a reason that has nothing to do with the project -- and a checker that cries wolf is
+        # one that gets switched off, which is this repo's own recorded failure mode. The loud
+        # banner above is what carries the information in a cycle log. Anyone gating on this
+        # passes --strict, which exits 2 here instead.
+        return 2 if strict else 0
 
     print()
     results = {}
