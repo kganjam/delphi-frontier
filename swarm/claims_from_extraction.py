@@ -304,6 +304,22 @@ def main() -> int:
     files.append(EXTRACT.parent / "extracted-values.json")
     items = load(files)
     items, other_project = for_this_project(items)
+    # A CLAIM WRITTEN FROM A VALUE ASSERTS "this was harvested to answer question N of <qfile>",
+    # which is exactly the sentence a value judged NOT to answer that question makes false.
+    # swarm/targeted_harvest.py --judge-relevance asks an independent tenant whether each
+    # verified value measures the quantity asked for, and writes `answers_question` onto the
+    # item. Measured on one complete harvest: 300 values with verified quotes, 128 matching the
+    # units asked, and 0 answering the question (claim 3186) -- the 128 were dimensionless
+    # numbers answering a question that wanted a dimensionless number, none of them the right
+    # quantity. Recording those would have added 300 rows the graph cannot use and whose stated
+    # provenance is wrong.
+    #
+    # ONLY AN EXPLICIT False IS SKIPPED. A missing field means the judgement was never run, or
+    # the call failed, and that is not evidence of irrelevance -- every harvest predating this
+    # flag is unjudged and must keep its old behaviour. The values stay in the harvest file
+    # either way, so the yield remains auditable; what is withheld is the claim.
+    judged_out = [it for it in items if it.get("answers_question") is False]
+    items = [it for it in items if it.get("answers_question") is not False]
     smap = load_scale_map()
     qtext = load_question_text()
     globals()["_QUNITS"] = load_question_units()
@@ -313,6 +329,11 @@ def main() -> int:
     print(f"  {len(items)} verified value(s) for project {PROJECT!r} in "
           f"{len([f for f in files if f.exists()])} file(s); {other_project} skipped as "
           f"belonging to another project")
+    if judged_out:
+        print(f"  {len(judged_out)} value(s) WITHHELD: an independent tenant judged they do not "
+              f"answer the\n    question they were harvested for. They remain in the harvest "
+              f"files; only the claim\n    is withheld, because its statement would assert a "
+              f"provenance that is false.")
     print("  scale maps: " + ", ".join(f"{k} ({len(v)} q)" for k, v in smap.items()) if smap
           else "  no scale map found; every row will be NULL")
 
