@@ -119,7 +119,35 @@ def source_string(it: dict) -> str:
     return "; ".join(b for b in bits if b)
 
 
-def statement(it: dict) -> str:
+def load_question_text() -> dict[str, dict[str, str]]:
+    """questions-file name -> {question number -> the question's own text}.
+
+    WHY THE TEXT AND NOT JUST THE NUMBER. The statement used to end `asked: question 7 of the
+    open-constraint question set`, which is unresolvable twice over. There are eight question
+    files and they renumber independently, so a bare 7 does not identify a question at all --
+    the same ambiguity load_scale_map() documents for the scale join, left in the prose. And
+    even resolved, the number alone does not let a reader judge RELEVANCE, which is the thing
+    most worth judging here: the harvester asks a paper for one quantity and the paper's tables
+    contain many, so a value can be quote-verified, correctly attributed, and still not be an
+    answer to what was asked. The husbandry temperatures pulled from PMC10503471 while asking
+    for tail-beat amplitude are the worked example. Carrying the question lets that be seen
+    instead of inferred.
+    """
+    out: dict[str, dict[str, str]] = {}
+    for mp in sorted(EXTRACT.glob("*.map.json")):
+        stem = mp.name[:-len(".map.json")]
+        try:
+            rows = json.loads(mp.read_text())
+        except Exception:                                         # noqa: BLE001
+            continue
+        for k, v in rows.items():
+            t = (v or {}).get("question")
+            if t:
+                out.setdefault(stem, {})[str(k)] = str(t)
+    return out
+
+
+def statement(it: dict, qtext: dict[str, dict[str, str]] | None = None) -> str:
     prov = str(it.get("provenance", "unclear"))
     how = {"measured-here": "MEASURED BY THAT PAPER",
            "modelled-here": "AN OUTPUT OF THAT PAPER'S MODEL, NOT AN OBSERVATION",
@@ -135,7 +163,62 @@ def statement(it: dict) -> str:
             + ("an abstract states a number without its methods, table or conditions; this is a "
                "lead with a number attached and is not a reading of the paper"
                if lvl == "abstract" else "full text read")
-            + f"\nasked: question {it.get('asked')} of the open-constraint question set")
+            + f"\nasked: question {it.get('asked')} of {it.get('qfile') or 'an unrecorded question file'}"
+            + (f"\nthe question was: {_qtext(qtext, it)}" if _qtext(qtext, it) else
+               "\nthe question text was not recoverable, so RELEVANCE CANNOT BE JUDGED from this "
+               "record alone -- the value is verified against its paper, not against the question")
+            + _unit_note(qtext, it))
+
+
+def _unit_note(qtext: dict | None, it: dict) -> str:
+    """Do the value's units match the units the question asked for?
+
+    MEASURED 2026-11-05 over 1833 verified values: 20.9 percent match, 71.5 percent do NOT, and
+    7.6 percent have no units on one side. The mismatches are not formatting variants -- the
+    commonest pairs are Hz wanted against cm found, N against W, g against p-Value, Pa against
+    mm, and `W/kg body mass` against `Percentage of total blood flow`. The harvester asks a
+    paper one question and extracts the numbers the paper contains, so a value can be
+    quote-verified, correctly attributed and still be an answer to nothing that was asked.
+
+    This ANNOTATES rather than filters. A unit string is a crude test: it cannot see that mm
+    converts to body lengths given a length, and it would throw away a real answer written in
+    an unexpected unit. Dropping rows on it would also hide the measurement above, which is
+    worth keeping visible. So every claim carries the comparison and a reader or a downstream
+    query can act on it.
+    """
+    want = ((_QUNITS.get(str(it.get("qfile")), {}) or {}).get(str(it.get("asked"))) or "").strip()
+    got = str(it.get("units") or "").strip()
+    if not want or not got:
+        return ""
+    w, g = want.lower().replace(" ", ""), got.lower().replace(" ", "")
+    if w == g or w in g or g in w:
+        return f"\nunits asked for: {want} -- the value's units MATCH"
+    return (f"\nunits asked for: {want} -- the value's units are {got}, which DO NOT MATCH. "
+            f"This value is verified against its paper but may not answer the question above.")
+
+
+_QUNITS: dict[str, dict[str, str]] = {}
+
+
+def load_question_units() -> dict[str, dict[str, str]]:
+    out: dict[str, dict[str, str]] = {}
+    for mp in sorted(EXTRACT.glob("*.map.json")):
+        stem = mp.name[:-len(".map.json")]
+        try:
+            rows = json.loads(mp.read_text())
+        except Exception:                                         # noqa: BLE001
+            continue
+        for k, v in rows.items():
+            u = (v or {}).get("units")
+            if u:
+                out.setdefault(stem, {})[str(k)] = str(u)
+    return out
+
+
+def _qtext(qtext: dict | None, it: dict) -> str:
+    if not qtext:
+        return ""
+    return (qtext.get(str(it.get("qfile")), {}) or {}).get(str(it.get("asked")), "")
 
 
 def load_scale_map() -> dict:
@@ -180,6 +263,8 @@ def main() -> int:
     items = load(files)
     items, other_project = for_this_project(items)
     smap = load_scale_map()
+    qtext = load_question_text()
+    globals()["_QUNITS"] = load_question_units()
     print("=" * 78)
     print("EXTRACTED VALUES -> CLAIMS")
     print("=" * 78)
@@ -239,7 +324,7 @@ def main() -> int:
     n = 0
     for it, src in rows:
         scale = smap.get(str(it.get("qfile", "")), {}).get(str(it.get("asked")))
-        cid = dbq.write_claim(PROJECT, scale, statement(it),
+        cid = dbq.write_claim(PROJECT, scale, statement(it, qtext),
                               EVIDENCE.get(str(it.get("provenance", "")), "unknown"),
                               numeric(it.get("value")), str(it.get("units") or "")[:400],
                               src, str(it.get("read_level") or "full-text"))
