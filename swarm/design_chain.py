@@ -170,6 +170,25 @@ def main() -> int:
     out.append("- the **2 cm lift-attributable** threshold asks whether a wing beats no wing. "
                "The best specifiable design is **1.08× short** of it, and crosses only by "
                "extrapolating a speed below its measured range (claims 574, 575).\n")
+    out.append("  **That reading was pushed through five revisions on 2026-11-05 and ends at "
+               "NOT SHOWN.** A route needing no size extrapolation exists -- hold the body at "
+               "the measured size and let an upper-tail individual supply the speed, since "
+               "Demesmay's 157 ± 27 cm/s is a standard deviation BETWEEN individuals (read "
+               "from the paper's methods). On that route the best allele is **longfin at 1.95 "
+               "m/s, about one fish in twelve** (claim 2773), which independently reproduces "
+               "claim 567's allele ranking. But it rests on an Oswald efficiency of **0.85 that "
+               "claim 567 never states** (claim 2775), and there is a **cliff at about 0.55** "
+               "below which longfin clears at NO speed. The literature puts the design below "
+               "it: measured span efficiencies for insects at this Reynolds number are "
+               "**0.22-0.60**, and 0.85 matches the UNCORRECTED convention that Yasuda et al. "
+               "2026 corrects by a measured mean factor of 0.424 *at Re 3300* -- giving 0.36 "
+               "(claims 2776, 2777). The obvious rescue, that a steadily gliding fin beats "
+               "those flapping measurements, was tested and **refuted**: in the one species "
+               "measured both ways the flapping swift had the HIGHER span efficiency (claim "
+               "2778). So the weak threshold is not nearly met; it is unshown, and the one "
+               "quantity that would settle it is a span efficiency for a gliding "
+               "low-aspect-ratio surface at Re ~3000, which nobody appears to have "
+               "measured.\n")
     out.append("- **lift ≥ weight**, which is what flying means, needs ~17× the present "
                "silhouette. The best design is **4.3× short** (claim 571).\n")
     out.append("\n**Every lever has been pushed to a bound:**\n")
