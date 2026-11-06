@@ -82,6 +82,132 @@ def same_need(a: frozenset, b: frozenset) -> bool:
     return jaccard(a, b) >= MERGE_AT
 
 
+#: Meta-commentary the evaluator writes ABOUT THE RECORD, which a literature search cannot act
+#: on. "No claim reports X" tells a searcher nothing that "X" does not; "claim 276 is calculated,
+#: not measured" names a defect in our own graph. Stripped from the head of a gap sentence.
+_GAP_META = re.compile(
+    r"^(?:no\s+claim\s+(?:reports?|measures?|gives?|states?|records?|holds?)|"
+    r"nothing\s+(?:in\s+the\s+record\s+)?(?:reports?|gives?)|"
+    r"claim\s+\d+\s+(?:is|gives?|states?|reports?|gave)|"
+    r"the\s+(?:only\s+)?quantity\s+(?:needed\s+)?is|"
+    r"the\s+only\s+[\w\- ]{0,40}\s+(?:value\s+)?held\s+is)\b[\s,:-]*", re.I)
+#: Fragments left behind AFTER the head is stripped that are still about our record rather than
+#: about the quantity. "a calculated, not measured, per-fin span" survives `claim 276 is` and is
+#: still unsearchable, so it is removed separately.
+_GAP_RESIDUE = re.compile(
+    r"^(?:an?\s+)?(?:calculated|derived|inferred|assumed|stated)\s*,?\s*"
+    r"(?:not\s+(?:measured|observed)\s*,?\s*)?", re.I)
+#: Trailing clauses that explain the CONSEQUENCE for our bookkeeping rather than the quantity.
+_GAP_TAIL = re.compile(
+    r"[,;]?\s*(?:so\s+nothing\s+can\s+be\s+compared|so\s+the\s+constraint|"
+    r"so\s+nothing\s+|which\s+is\s+why|and\s+nothing\s+)\b.*$", re.I)
+
+
+#: A sentence that talks about THIS PROJECT'S record rather than about the quantity. Matching
+#: on `claim <n>` alone is too narrow -- the commonest form is "the dimensionless values listed
+#: are other quantities" -- and matching any mention of a number is far too broad.
+_ABOUT_RECORD = re.compile(
+    r"\bclaims?\s+\d+|\bthe\s+(?:dimensionless\s+)?values?\s+(?:listed|held)|"
+    r"\bno\s+claim\b|\bthis\s+(?:design|project)'?s?\s+(?:capability|fish|record)|"
+    r"\bthe\s+constraint\s+(?:needs|requires)|\bnothing\s+(?:in\s+the\s+record|here)\b|"
+    r"\bthe\s+other\s+values?\b|\bnone\s+measures?\b|\bare\s+(?:quoted|modelled|assumed)\b",
+    re.I)
+
+
+def named_gap_question(quantity: str, units: str, gap: str) -> str:
+    """Ask for a NAMED QUANTITY in its own units, keeping the regime the gap carries.
+
+    WHY NOT EITHER ALONE, measured 2026-11-05 and this is the whole point. Asking the QUANTITY
+    alone is what evidence_gaps() was written to escape: constraint e28 wanted A_pp/body length,
+    four values for exactly that quantity had just been harvested, and the verdict stayed
+    INSUFFICIENT because they were juvenile grass carp in flume tests against adult zebrafish
+    escape kinematics. Asking the GAP alone is what this project has been doing, and it returns
+    material unrelated to the question: topical overlap with a shuffled null gives a lift of 1.0
+    at a two-content-word bar (claim 3167), while the small targeted question files -- which ask
+    "Flexural stiffness (EI) of pectoral fin rays in teleost fish", a named quantity in its own
+    units -- match the units asked for 89-100 per cent of the time against 3.6-11.7 (claim 3160).
+
+    So the head is the quantity and the tail is the regime: a searcher gets something to look
+    for AND the conditions it must hold under. What is dropped is only the commentary about our
+    own record -- "no claim reports", "claim 276 is calculated, not measured" -- which no paper
+    can supply and which is most of what a gap sentence is made of.
+    """
+    qty = (quantity or "").strip().rstrip(".")
+    body = _GAP_TAIL.sub("", _GAP_META.sub("", (gap or "").strip())).strip(" ,;.")
+    body = _GAP_RESIDUE.sub("", body).strip(" ,;.")
+    # DROP SENTENCES ABOUT OUR OWN RECORD. The leading-pattern strip above only reaches the
+    # first clause; a gap sentence often continues "Claim 1222 (27% in hummingbirds) is a
+    # reference value for a different species, not the design's capability", which names a
+    # defect in our graph and is useless to a literature search. What survives is the clause
+    # describing the quantity and its regime.
+    keep = [c for c in re.split(r"(?<=[.;])\s+", body)
+            if c.strip() and not _ABOUT_RECORD.search(c)]
+    body = " ".join(keep).strip(" ,;.")
+    if not qty:
+        # 4 of 41 open gaps carry no quantity. Falling back to the cleaned gap is still better
+        # than the raw sentence, and returning nothing would silently drop the constraint.
+        return body or (gap or "").strip()
+    # NO UNITS IN THE HEAD. The generator already appends "Units wanted: <units>." to every
+    # question, so adding them here printed them twice -- "S_wet/S_fin ..., in dimensionless
+    # ratio -- ... Units wanted: dimensionless ratio." Found by generating the file and reading
+    # it, not by the controls, which only ever saw this function's own output.
+    head = qty
+    # DROP A TAIL THAT MERELY RESTATES THE HEAD. Measured on the first version: the lower-lobe
+    # gap produced "... in mm^2 -- the immersed lower-lobe area of a 0.25 g fish in mm^2", where
+    # every content word of the tail was already in the quantity. The tail earns its place only
+    # by adding words the head does not have.
+    # A NUMBER IS THE REGIME DETAIL, and words() drops it. It filters to content words of 4+
+    # characters, so "0.36 SL" contributes nothing and a tail carrying the one fact that makes
+    # the question specific was being discarded -- caught by the control, not by reading.
+    qt, bt = words(qty), words(body)
+    nums_head = set(re.findall(r"\d+(?:\.\d+)?", qty))
+    nums_body = set(re.findall(r"\d+(?:\.\d+)?", body))
+    extra = body if (bt and len(bt - qt) >= 2) or (nums_body - nums_head) else ""
+    return f"{head} -- {extra}" if extra else head
+
+
+def gap_question_controls() -> int:
+    """Cases the transform must handle, and one it must not mangle."""
+    cases = [
+        ("immersed lower-lobe area (0.25 g fish; bound is 38.5 mm2 for 0.40 g)", "mm^2",
+         "No claim reports the immersed lower-lobe area of a 0.25 g fish in mm\u00b2, so nothing "
+         "can be compared against the 23.97 mm\u00b2 ceiling.",
+         ["immersed lower-lobe area"],
+         ["No claim", "so nothing can be compared", ", in mm^2"]),
+        ("net cyclic mass-specific power of muscle", "W/kg muscle",
+         "The only pectoral-muscle power value held is 16.5 W/kg for bluegill fin muscle.",
+         ["net cyclic mass-specific power", "bluegill"], ["The only", ", in W/kg"]),
+        ("pectoral fin length / standard length (per fin)", "dimensionless",
+         "Claim 276 is a calculated, not measured, per-fin span of ~0.36 SL.",
+         ["pectoral fin length", "0.36 SL"],
+         ["Claim 276 is", "calculated", "not measured", "in dimensionless"]),
+        ("", "-", "No claim reports the baseline pectoral mass.",
+         ["baseline pectoral mass"], ["No claim reports"]),
+        ("required fast-muscle mass-specific power to reach 1.38 m/s", "W/kg muscle",
+         "The other values (120-500 W/kg) are quoted, modelled or assumed figures from other "
+         "species, so none measures the capability of this organism's fast muscle.",
+         ["required fast-muscle mass-specific power"], ["The other values", "none measures"]),
+        # must-flag: a tail that only talks about our record is dropped entirely
+        ("enlarged pectoral muscle mass / body mass", "% body mass",
+         "The constraint needs the enlarged pectoral muscle mass as a fraction of this design's "
+         "body mass (9-23%), and no claim measures that. Claim 1222 (27% in hummingbirds) is a "
+         "reference value for a different species, not the design's capability.",
+         ["enlarged pectoral muscle mass"], ["Claim 1222", "hummingbirds", "no claim"]),
+    ]
+    bad = []
+    for qty, units, gap, must, mustnt in cases:
+        out = named_gap_question(qty, units, gap)
+        miss = [m for m in must if m.lower() not in out.lower()]
+        leak = [m for m in mustnt if m.lower() in out.lower()]
+        ok = not miss and not leak
+        print(f"  {'ok  ' if ok else 'FAIL'}  {out[:92]}")
+        if not ok:
+            bad.append((out, miss, leak))
+            print(f"          missing={miss} leaked={leak}")
+    print(f"\n  {len(cases) - len(bad)} of {len(cases)} controls pass")
+    return 1 if bad else 0
+
+
 def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
     """The evidence each open constraint is WAITING ON, in the evaluator's own words.
 
@@ -116,11 +242,22 @@ def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
     for r in rows:
         parts = list(r) if isinstance(r, (list, tuple)) else [str(r)]
         if len(parts) >= 3 and parts[0].strip():
-            out.append((parts[0].strip(), parts[2].strip(), 1))
+            # ASK FOR THE QUANTITY, KEEP THE REGIME. Until 2026-11-05 this emitted parts[0], the
+            # evaluator's sentence, verbatim -- and discarded parts[1], the constraint's own
+            # `quantity`, which is the named quantity a paper would recognise. Measured: the
+            # harvest those questions produced is unrelated to them, a lift of 1.0 over a
+            # shuffled pairing at a two-content-word bar (claim 3167), while question files that
+            # ask a named quantity in its own units match the asked units 89-100 per cent of the
+            # time against 3.6-11.7 (claim 3160). named_gap_question() puts the quantity at the
+            # head and keeps the gap's regime clause behind it, dropping only the commentary
+            # about our own record, which no paper can supply.
+            text = named_gap_question(parts[1], parts[2], parts[0])
+            out.append((text, parts[2].strip(), 1))
             # A gap inherits the scale of the constraint that raised it. Unlike the quantity
             # route, that is a ONE-TO-ONE link -- this sentence came from exactly this row -- so
-            # there is no disagreement between constraints to resolve, and no guessing.
-            GAP_SCALE[parts[0].strip()] = parts[4].strip() if len(parts) > 4 else ""
+            # there is no disagreement between constraints to resolve, and no guessing. Keyed on
+            # the text actually emitted, or the map lookup misses every row.
+            GAP_SCALE[text] = parts[4].strip() if len(parts) > 4 else ""
     return out
 
 
