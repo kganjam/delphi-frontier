@@ -31,6 +31,7 @@ from __future__ import annotations
 import json
 import os
 import pathlib
+import re
 import sys
 import time
 
@@ -242,6 +243,55 @@ def has_markup_tables(pmcid: str) -> bool:
     return any("<tr" in b for b in _re.findall(r"<table-wrap.*?</table-wrap>", xml, _re.S))
 
 
+#: "Units wanted: W/kg muscle." is written into every generated question, so the units a
+#: question asked for are recoverable at harvest time without re-reading the map file.
+_UNITS_WANTED = re.compile(r"units\s+wanted\s*:\s*([^.]+?)\s*\.", re.I)
+
+
+def asked_units(question: str) -> str:
+    m = _UNITS_WANTED.search(question or "")
+    return m.group(1).strip() if m else ""
+
+
+def on_target(kept: list, questions: list[str]) -> tuple[int, int]:
+    """How many VERIFIED values came back in the units their question asked for.
+
+    THE QUOTE GATE CHECKS PROVENANCE, NOT RELEVANCE, and nothing reported the difference. A
+    value passes when its quote is a substring of the paper -- `q in hay` -- which is exactly
+    the right test for "did this model invent the sentence" and no test at all for "does this
+    number answer the question". Measured consequences, all from already-committed harvests:
+    questions_gaps4 verified 1862 values of which 4.7 per cent came back in the units asked
+    (claim 3160), their topical overlap with their own question has a lift of 1.0 over a
+    shuffled pairing (claim 3167), and the recorded `units` include `gut contents`, `r2` and
+    `bph`. The extractor reads table cells; the gate confirms the cells exist.
+
+    This does NOT gate anything. A paper legitimately reports in its own units, and refusing a
+    value for that would throw away most of the real evidence -- which is why the ratio-question
+    finding (claim 2769) prescribes converting rather than rejecting. What was missing is that
+    the rate was invisible at harvest time and had to be excavated by a separate analysis weeks
+    later. Now the harvest reports it beside the fabrication rate it already reports.
+    """
+    try:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "analysis"))
+        from units_match_rate import accepted, canon
+    except Exception:                                             # noqa: BLE001
+        return 0, 0
+    hits = seen = 0
+    for it in kept:
+        try:
+            qn = int(it.get("asked") or 0)
+        except (TypeError, ValueError):
+            continue
+        if not 1 <= qn <= len(questions):
+            continue
+        want = asked_units(questions[qn - 1])
+        if not want:
+            continue
+        seen += 1
+        hits += canon(str(it.get("units") or "")) in accepted(want)
+    return hits, seen
+
+
 def read_questions(path: pathlib.Path) -> list[str]:
     """One question per numbered block; the indented 'Report the species' line belongs to it."""
     out, cur = [], []
@@ -435,6 +485,9 @@ def run_abstracts(questions, queries, per, write) -> int:
     print(f"  {asked} abstract-question pair(s) asked")
     print(f"  {len(kept_all)} value(s) with a quote VERIFIED against the abstract")
     print(f"  {len(bad_all)} DISCARDED because the quote was not in it")
+    hits, seen = on_target(kept_all, questions)
+    if seen:
+        print(f"  came back in the UNITS ASKED: {hits} of {seen} ({100.0*hits/seen:.1f}%)")
     if kept_all or bad_all:
         print(f"  paraphrase/fabrication rate: "
               f"{100.0 * len(bad_all) / (len(kept_all) + len(bad_all)):.1f}%")
@@ -548,6 +601,12 @@ def main() -> int:
     if kept_all or bad_all:
         rate = 100.0 * len(bad_all) / (len(kept_all) + len(bad_all))
         print(f"  paraphrase/fabrication rate: {rate:.1f}%")
+    hits, seen = on_target(kept_all, questions)
+    if seen:
+        print(f"  came back in the UNITS ASKED: {hits} of {seen} ({100.0*hits/seen:.1f}%)")
+        print("  The quote gate checks that a value is really in the paper, not that it answers")
+        print("  the question. This rate is reported, NOT enforced: a paper reports in its own")
+        print("  units and rejecting that would discard most real evidence (claim 2769).")
     by_prov: dict[str, int] = {}
     for it in kept_all:
         by_prov[str(it.get("provenance", "unstated"))] = \
