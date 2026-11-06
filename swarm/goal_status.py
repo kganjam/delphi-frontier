@@ -198,27 +198,49 @@ def rows():
     # version of this file -- inside a module whose own docstring says a hand-written headline is
     # where all the staleness lands. It was substantively right and methodologically wrong, and
     # it would never have changed no matter what the project built. Now it asks the graph.
-    span = one("""with m as (
-                    select regexp_replace(source, '^.*?([a-z0-9_]+\\.py).*$', '\\1') as mod,
+    # A METRIC MUST NOT COUNT ITS OWN MODULE. Measured 2026-11-05: this row reported "2
+    # module(s) link a molecular scale to organism-or-wider", and one of the two was
+    # goal_status.py -- this file, whose two claims happen to sit at `dna` and `organism`.
+    # The scoreboard was scoring itself, which is the shape section 1 rule 3 forbids: a number
+    # computed from something other than the thing being scored. Excluding it leaves ONE
+    # qualifying module, so the row still passes, but it now passes for a real reason.
+    #
+    # The old COARSE caveat is also gone, replaced by the thing it was apologising for: the
+    # skipped rungs are now computed and printed per module, so a jump is visible rather than
+    # disclaimed. power_frequency_envelope.py spans protein < tissue < organ < organism and
+    # skips `cell`; that is reported, not hidden, and it is NOT failed -- demanding every rung
+    # would reject a chain that is scientifically contiguous as built.
+    SELF = "goal_status.py"
+    ladder = [x for x in one(
+        "select coalesce(string_agg(id, ',' order by ord), '') from scale").split(",") if x]
+    raw = one(r"""with m as (
+                    select regexp_replace(source, '^.*?([a-z0-9_]+\.py).*$', '\1') as mod,
                            scale_id
                     from claim where project_id='%s' and superseded_by is null
-                      and scale_id is not null and source ~ '[a-z0-9_]+\\.py')
-                  select coalesce(max(n)::text,'0') from (
-                    select count(distinct scale_id) as n from m group by mod) t""" % PROJ, "0")
-    molec = one("""with m as (
-                     select regexp_replace(source, '^.*?([a-z0-9_]+\\.py).*$', '\\1') as mod,
-                            scale_id
-                     from claim where project_id='%s' and superseded_by is null
-                       and scale_id is not null and source ~ '[a-z0-9_]+\\.py')
-                   select count(*)::text from (
-                     select mod from m group by mod
-                     having bool_or(scale_id in ('dna','protein'))
-                        and bool_or(scale_id in ('organism','behaviour','ecology'))) t""" % PROJ, "0")
+                      and scale_id is not null and source ~ '[a-z0-9_]+\.py')
+                  select coalesce(string_agg(mod || ':' || sc, ';' order by mod), '')
+                  from (select mod, string_agg(distinct scale_id, ',') as sc
+                        from m where mod <> '%s' group by mod) t""" % (PROJ, SELF), "")
+    mods = {}
+    for part in (x for x in raw.split(";") if ":" in x):
+        mod, sc = part.split(":", 1)
+        mods[mod] = [x for x in sc.split(",") if x in ladder]
+    span = max((len(v) for v in mods.values()), default=0)
+    MOLEC, WIDE = {"dna", "protein"}, {"organism", "behaviour", "ecology"}
+    linked = sorted(m for m, v in mods.items()
+                    if MOLEC & set(v) and WIDE & set(v))
+    detail = []
+    for m in linked:
+        idx = sorted(ladder.index(x) for x in mods[m])
+        skipped = [ladder[k] for k in range(idx[0], idx[-1] + 1) if k not in idx]
+        detail.append(f"{m} ({' < '.join(sorted(mods[m], key=ladder.index))}"
+                      + (f"; SKIPS {','.join(skipped)}" if skipped else "; contiguous") + ")")
     yield ("end-to-end multi-scale SIMULATION",
            f"widest scale span by one module: {span} scales; "
-           f"{molec} module(s) link a molecular scale (dna/protein) to organism-or-wider "
-           f"[COARSE: a molecular->organism JUMP counts, skipped scales and all]",
-           int(molec) > 0,
+           f"{len(linked)} module(s) link a molecular scale (dna/protein) to organism-or-wider"
+           + (": " + "; ".join(detail) if detail else "")
+           + f"  [{SELF} excluded: a metric must not count its own module]",
+           len(linked) > 0,
            "one module whose inputs are molecular and whose outputs are whole-animal")
 
 
