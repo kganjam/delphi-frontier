@@ -151,6 +151,26 @@ def main() -> int:
     print("    trajectory. Wild type needs 4.7 SD above the mean -- no fish -- so the fin")
     print("    genetics are what move this from 'none' to about one in twelve.")
 
+    # --- how much of this rests on the one ASSUMED input? -------------------------------
+    print("\n  SENSITIVITY TO OSWALD EFFICIENCY, the only assumed input in the drag model.")
+    print("  CD = CD0 + CL^2/(pi*AR*e). Reverse-solving claim 567's longfin CD of 0.205 at")
+    print("  AR 2.45 and CD0 0.03 gives e = 0.85 -- a value 567 does not state.\n")
+    print(f"  {'e':>5s} {'CD':>7s} {'crossing':>13s} {'% of fish':>10s}   note")
+    AR_LF, AREA_LF, CD0 = 2.45, PRESENT_AREA_CM2 * 2.65, 0.03
+    for e, note in ((0.90, "claim 565 favourable end"), (0.85, "what claim 567 used"),
+                    (0.70, "claim 565 unfavourable end"), (0.60, "typical low-Re low-AR"),
+                    (0.50, "poor")):
+        cd = CD0 + CL * CL / (math.pi * AR_LF * e)
+        v = crossing_for(AREA_LF, cd)
+        if v is None:
+            print(f"  {e:>5.2f} {cd:>7.3f} {'never clears':>13s} {'0.0%':>10s}   {note}")
+        else:
+            print(f"  {e:>5.2f} {cd:>7.3f} {v:>11.2f} m/s {pct_above(v):>9.1f}%   {note}")
+    print("\n    THERE IS A CLIFF BETWEEN e=0.60 AND e=0.50: above it the longfin allele clears")
+    print("    the threshold at some reachable speed, below it NO speed clears it at all. The")
+    print("    result therefore rests on an unstated assumption being right to within about")
+    print("    0.3 in e, and 0.85 is an aircraft-wing value applied to a low-Reynolds fish fin.")
+
     print("\n  READING")
     print("    The answer is set by the DRAG COEFFICIENT and not by the fish. At the favourable")
     print("    end of the physically attainable range the weak threshold is met by about one")
