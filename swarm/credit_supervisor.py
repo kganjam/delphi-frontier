@@ -64,18 +64,44 @@ STATE = pathlib.Path(os.environ.get("MS_CREDIT_STATE",
                                     "/tmp/claude-1000/ms-credit-supervisor.json"))
 
 
-def balances() -> dict[str, tuple[float, str]]:
-    r = subprocess.run(["orchestra", "api-credits", "list"],
-                       capture_output=True, text=True, timeout=240)
+#: TENANT EMAIL ON KEY LEFT OF EXPIRES SPENDABLE. `ON` is field 2 and `SPENDABLE` is field 7
+#: onwards, because its value is either "yes" or a sentence such as
+#: "no: promo credit at reserve (4.85 USD left)".
+def parse_credits(text: str) -> dict[str, tuple[float, str]]:
+    """Tenants that can ACTUALLY be spent, from `orchestra api-credits list`.
+
+    UNTIL 2026-11-06 THIS READ THE WRONG COLUMN AND THE LOOP SPENT NOTHING. It tested field 2,
+    which is `ON` -- whether the tenant is enabled -- and never looked at `SPENDABLE`. So
+    api_outlook2 was admitted with $4.85 left and 20 h to expiry, and because the binding tenant
+    is the one needing the highest $/h, it won: $4.85/20 h = $0.24/h against api_gmail's
+    $35.53/283 h = $0.13/h. Every arm was launched against a tenant whose own listing says
+    "no: promo credit at reserve", so the arms spent nothing, api_gmail went undrained, and the
+    supervisor's next tick saw $0.00/h and launched more arms at the same dead tenant.
+
+    Measured: three arms running and the gmail balance flat at $35.53 across 110 seconds.
+
+    The reserve is the PROVIDER's floor, not a policy of ours -- that residue cannot be spent by
+    anyone -- so a tenant sitting on it is not a shortfall to close. It is excluded here rather
+    than deprioritised, because any amount of urgency times zero spendability is still zero.
+    """
     out = {}
-    for ln in r.stdout.splitlines():
-        p = ln.split()
-        if len(p) > 6 and p[0].startswith("api_") and p[2] == "yes":
+    for ln in text.splitlines():
+        f = ln.split()
+        if len(f) > 7 and f[0].startswith("api_") and f[2] == "yes":
+            if not " ".join(f[7:]).strip().lower().startswith("yes"):
+                print(f"  {f[0]}: not spendable ({' '.join(f[7:])[:46]}) -- not considered")
+                continue
             try:
-                out[p[0]] = (float(p[4]), p[6])
+                out[f[0]] = (float(f[4]), f[6])
             except (ValueError, IndexError):
                 pass
     return out
+
+
+def balances() -> dict[str, tuple[float, str]]:
+    r = subprocess.run(["orchestra", "api-credits", "list"],
+                       capture_output=True, text=True, timeout=240)
+    return parse_credits(r.stdout)
 
 
 def running_arms() -> int:
