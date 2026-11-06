@@ -218,6 +218,26 @@ def gap_question_controls() -> int:
     return 1 if bad else 0
 
 
+#: Quantities about THIS PROJECT'S SOFTWARE rather than about the animal. A literature search
+#: cannot answer them and they consume harvest budget: e46 idempotency-record retention time,
+#: e47 pending interval + runtime, e77 fraction of keyed ADMISSION_PENDING operations later
+#: admitted. 3 of 115 open constraints, and it was not the count that mattered -- e47 produced
+#: the ONLY apparent success in nine harvested questions, 32 values judged to answer it, all of
+#: them one table row of another program's execution times ("Ex. time (s) 42.2 21.2 35.9 ...").
+#: That spurious hit became the evidence for "the retrieval arm works" (claim 3312).
+#:
+#: WORD BOUNDARIES ARE LOAD-BEARING HERE. A first attempt without them matched `API` inside
+#: "leaping" and flagged "water-exit speed of a leaping adult" as infrastructure.
+_INFRA = re.compile(
+    r"\b(idempotenc\w*|admission[_ ]?pending|retention time|replay|runtime|pending interval|"
+    r"endpoint|checkpoint|sandbox|queue depth|cache hit|http\b|api key)\b", re.I)
+
+
+def is_infrastructure(quantity: str) -> bool:
+    """Is this quantity about our own software rather than about the organism?"""
+    return bool(_INFRA.search(quantity or ""))
+
+
 def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
     """The evidence each open constraint is WAITING ON, in the evaluator's own words.
 
@@ -288,6 +308,10 @@ def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
             # which claim 2769 had already measured as near-futile to harvest. 101 of the 120
             # open constraints carry a simple unit and have NOT been shown to fail. This flag
             # exists to run that fair test, and claim 3236 names it as the missing arm.
+            # A constraint about our own software cannot be answered by a paper, whatever
+            # its units. Dropped from every gap question set, not only --simple-units.
+            if is_infrastructure(parts[1]):
+                continue
             if "--simple-units" in sys.argv:
                 u = parts[2].strip().lower()
                 if ratio_unit(parts[2]) or u in ("", "-", "dimensionless",
