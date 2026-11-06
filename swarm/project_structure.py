@@ -33,12 +33,26 @@ filled:
 
 So "0 scales, 0 subproblems, 0 superseded" is fixed: all four projects are now placed on
 scales, carry a frontier, and have had at least one claim corrected by the adversarial arm
-writing back. ONE STRUCTURAL ZERO REMAINS and it is the same one in all four: `measured` is 0,
-meaning nothing in those projects was measured BY those projects -- every value is literature,
-derived or simulated. That is an honest zero and must not be filled by relabelling: in the
-fish project 136 of its 198 `measured` claims measure the PIPELINE (tooling, panels,
-generators) rather than the animal, so the cell is reachable without a wet lab, but only by
-actually running something and recording what it returned.
+writing back.
+
+UPDATED LATER THE SAME DAY -- THE LAST STRUCTURAL ZERO IS ALSO GONE, and the way it went is
+the part worth keeping. `measured` was 0 in all four, meaning nothing in those projects was
+measured BY those projects. The note here said that must not be filled by relabelling, and it
+was not: each project earned its first measured claim by having something actually run on its
+own data and the result recorded.
+
+    insect-flight  claim 2080  measuring its harvest's unit-match rate FOUND a six-fold
+                               defect in the measuring instrument itself (3.8% -> 23.0%)
+    coral          claim 2765  the same measurement, which exposed three MORE instrument
+                               defects (proportion, degC/°C spelling, the `unstated` sentinel)
+    xenobot        claim 2766  98.6% of 148 -- the result that refutes "off-target harvesting
+                               is a property of the method"
+    limbless-mouse claim 2767  its constraint layer going from 0% evaluated to 100%
+
+So this script's own "WHERE EACH PROJECT IS STRUCTURALLY EMPTY" section now prints `none` for
+all four. The reason the rule against relabelling held is that each measurement had to produce
+a finding to be worth recording, and three of the four did -- two of them finding defects in
+the instrument doing the measuring.
 
 THIS IS A MEASUREMENT, NOT A GATE. The thresholds below are the fish's own shape, and a
 different design question may legitimately need fewer scales. The point is to make the gap
