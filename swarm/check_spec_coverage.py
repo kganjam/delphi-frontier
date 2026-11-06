@@ -24,9 +24,27 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SPEC_DIRS = [ROOT / "specs", ROOT / "docs" / "specs"]
 CODE_DIRS = [ROOT / "swarm", ROOT / "analysis"]
-#: A numbered item under an Acceptance/Checkable/Gate heading, or a bolded requirement.
+#: Every numbered or bulleted line in the spec. COUNTED OVER THE WHOLE FILE, NOT UNDER AN
+#: "Acceptance" HEADING, because anchoring on the heading undercounted badly and silently: the
+#: first version required a heading STARTING with Acceptance/Checkable/Gate/Requirements, so
+#: SPEC-012's "First implementation and acceptance checklist" did not match and its 12 items
+#: were reported as 0, as were SPEC-015's 8 and SPEC-017's 27 under "Validation contract
+#: attached to a candidate". Three goal-central specs read as having nothing to check.
+#:
+#: A whole-file count is CRUDER and unbiased: it includes prose bullets that are not acceptance
+#: items, so it OVERSTATES what is checkable, where the previous rule understated it. An
+#: overstatement in a coverage report is the safer error -- it cannot make an unchecked spec
+#: look checked.
 ITEM = re.compile(r"^\s*(?:\d+\.|[-*])\s+\S", re.M)
-HEAD = re.compile(r"^##+\s*(Acceptance|Checkable|Gate|Requirements)", re.M | re.I)
+
+
+#: THIS FILE IS EXCLUDED FROM ITS OWN SCAN. Measured 2026-11-06, immediately: fixing the item
+#: undercount meant naming SPEC-012, SPEC-015 and SPEC-017 in the comment explaining the fix,
+#: and the count of specs "named by some checker" rose from 6 to 9 for that reason alone. A
+#: checker that mentions a spec marks it covered by itself, which is AGENTS.md section 6b's
+#: "a checker that greps for a forbidden string finds it in its own source". The exclusion is
+#: by resolved path, so renaming the file cannot reintroduce it.
+SELF = pathlib.Path(__file__).resolve()
 
 
 def code_text() -> str:
@@ -34,6 +52,8 @@ def code_text() -> str:
     for d in CODE_DIRS:
         if d.is_dir():
             for f in sorted(d.rglob("*.py")):
+                if f.resolve() == SELF:
+                    continue
                 try:
                     parts.append(f.read_text(encoding="utf-8", errors="replace"))
                 except OSError:
@@ -65,8 +85,13 @@ def control() -> int:
                                                       code) is False),
         ("the bare SPEC-NNN form counts",
          named_by_code("SPEC-ASK-artifact-graph-extra", code) is True),
-        ("acceptance items are counted", len(ITEM.findall("1. a\n2. b\n- c\n")) == 3),
+        ("listed items are counted", len(ITEM.findall("1. a\n2. b\n- c\n")) == 3),
+        ("items count without an Acceptance heading",
+         len(ITEM.findall("## First implementation and acceptance checklist\n- a\n- b\n")) == 2),
         ("prose is not an item", len(ITEM.findall("just a sentence\n")) == 0),
+        # must-flag: the scan must not read this file, or every spec it discusses counts
+        ("this file is excluded from its own scan",
+         "SPEC-012-genetic-implementation-blueprints" not in code_text()),
     ]
     for n, ok in checks:
         print(f"  {'ok  ' if ok else 'FAIL'}  {n}")
@@ -87,17 +112,20 @@ def main() -> int:
     orphan_items = 0
     print(f"\n  {len(files)} spec file(s); checking whether any Python under "
           f"{', '.join(d.name for d in CODE_DIRS)} names each\n")
-    print(f"  {'spec':<46}{'named in code':>14}{'acceptance items':>18}")
+    print(f"  {'spec':<46}{'named in code':>14}{'listed items':>18}")
     for f in files:
         txt = f.read_text(encoding="utf-8", errors="replace")
-        items = len(ITEM.findall(txt)) if HEAD.search(txt) else 0
+        items = len(ITEM.findall(txt))
         hit = named_by_code(f.stem, code)
         named += hit
         unnamed += not hit
         orphan_items += 0 if hit else items
         print(f"  {f.stem[:44]:<46}{('yes' if hit else 'NO'):>14}{items:>18}")
     print(f"\n  named by some checker: {named}    named by nothing: {unnamed}")
-    print(f"  acceptance items in specs nothing names: {orphan_items}")
+    print(f"  listed items in specs nothing names: {orphan_items}")
+    print("  `listed items` counts every numbered or bulleted line, so it includes prose")
+    print("  bullets and OVERSTATES what is checkable. That is the safer error here: it")
+    print("  cannot make an unchecked spec look checked.")
     print("  A spec nothing names is certainly unchecked. A spec something names is NOT")
     print("  thereby implemented -- a mention is a mention. This column is a necessary")
     print("  condition and never a sufficient one.")
