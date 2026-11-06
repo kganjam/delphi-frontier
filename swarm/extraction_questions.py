@@ -251,13 +251,28 @@ def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
             # time against 3.6-11.7 (claim 3160). named_gap_question() puts the quantity at the
             # head and keeps the gap's regime clause behind it, dropping only the commentary
             # about our own record, which no paper can supply.
-            # --raw-gaps emits the pre-2026-11-05 shape, the evaluator's sentence verbatim.
-            # It exists ONLY as the control arm for named_gap_question: a change to how
-            # questions are asked cannot be judged by running the new shape alone, because a
-            # harvest that returns nothing may be the shape's fault or the sample's. Same
-            # constraints, two shapes, one comparison.
-            text = (parts[0].strip() if "--raw-gaps" in sys.argv
-                    else named_gap_question(parts[1], parts[2], parts[0]))
+            # REVERTED TO THE EVALUATOR'S SENTENCE, 2026-11-05, BY ITS OWN A/B.
+            # named_gap_question() reshapes a gap into "<named quantity>. Units wanted: <u>.",
+            # on the reasoning that question files asking a named quantity match the asked units
+            # 89-100 per cent of the time against 3.6-11.7 (claim 3160) while the harvest these
+            # sentences produce is unrelated to them (claim 3167). That reasoning predicted an
+            # improvement and the measurement refused it. Same constraint pool, same --limit 4,
+            # same harvester:
+            #
+            #     old shape (questions_rawctl1)  25 pairs  300 verified  36 discarded  19.4% fab
+            #     new shape (questions_named1)   19 pairs    0 verified   0 discarded
+            #
+            # Zero verified AND zero discarded means the extractor proposed nothing at all, so
+            # the terse named form gives it less to work with than the evaluator's prose, whose
+            # surrounding context is apparently what lets it find a number in a paper. The
+            # units-match argument may still be right about the VALUES that come back; it was
+            # wrong that reshaping the question would produce more of them.
+            #
+            # The shape is kept behind --named-gaps so the experiment can be rerun at a sample
+            # size that could detect a smaller effect. It is NOT the default and should not be
+            # until a run beats 300.
+            text = (named_gap_question(parts[1], parts[2], parts[0])
+                    if "--named-gaps" in sys.argv else parts[0].strip())
             out.append((text, parts[2].strip(), 1))
             # A gap inherits the scale of the constraint that raised it. Unlike the quantity
             # route, that is a ONE-TO-ONE link -- this sentence came from exactly this row -- so
