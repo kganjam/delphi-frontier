@@ -107,6 +107,84 @@ def is_terminal(resp):
     return op_status(resp).replace("-", "_") in TERMINAL
 
 
+def op_id(resp):
+    """The operation id from a submit response, wherever this server chose to put it.
+
+    THREE SPELLINGS, ALL MEASURED IN ONE SESSION (2026-11-05), and a caller that knows only one
+    reads a successful submit as a failure:
+
+        msa_search_native      result.operation.id            -> op-cae0d4dc9544f2c0
+        boltz2_predict_native  result.operation.id            -> op-a31030f2eb4a938d
+        submit_esmfold2        result.operation.operation_id  -> op-cdf4e821a1c34145
+                               (and the same id again at result.operation_id and result.id)
+
+    Each of those submits SUCCEEDED. Each was reported by the caller as "NO OP" because its
+    extractor looked in one place. That is the expensive shape: the job is queued and burning the
+    single in-flight slot while the caller believes nothing was submitted and retries with a new
+    idempotency key, stranding the first.
+    """
+    if not isinstance(resp, dict):
+        return None
+    r = resp.get("result", resp)
+    inner = r.get("operation") if isinstance(r.get("operation"), dict) else {}
+    for src in (inner, r, resp):
+        for k in ("operation_id", "id"):
+            v = src.get(k) if isinstance(src, dict) else None
+            if isinstance(v, str) and v.startswith("op-"):
+                return v
+    return None
+
+
+def has_payload(obj, key):
+    """True only when `obj[key]` is a LIST OF DICTS, i.e. a real result payload.
+
+    WHY NOT `key in json.dumps(obj)`. That substring test is what a caller reaches for, and it
+    matched the PROGRESS object for a finished boltz2 run, because progress reports a step whose
+    `step_id` is literally "structures". The caller then wrote the progress blob out as a
+    structure and raised KeyError on it. A pattern that matches its own description is this
+    repository's §6b, arriving through a JSON blob instead of a grep.
+    """
+    v = obj.get(key) if isinstance(obj, dict) else None
+    return isinstance(v, list) and bool(v) and isinstance(v[0], dict)
+
+
+def fetch_result(operation, verify=True):
+    """Download a finished operation's result artifact and return (parsed_json, raw_bytes).
+
+    THE RESULT IS NOT INLINE. `get_operation_result` returns an `operation-artifact-result/v1`
+    envelope holding only an artifact ref; the bytes come from a SECOND call,
+    `download_scientific_artifact`, whose presigned URL is at `handle.url` -- not `download_url`,
+    which is the name every caller guesses first and which is absent.
+
+    That URL is S3-presigned, **expires in 60 seconds**, and its signature covers `host` only, so
+    it takes NO headers -- adding an Authorization or Content-Type header invalidates it. Both
+    calls therefore have to happen in one process, close together; a human round trip between
+    them always fails.
+
+    `verify` checks the downloaded bytes against the sha256 the server declared. Leave it on: it
+    is the only evidence that what arrived is what the run produced, and it costs one hash.
+    """
+    rr = call("get_operation_result", {"operation_id": operation})
+    rr = rr.get("result", rr)
+    ref = rr.get("artifact")
+    if not ref:
+        raise RuntimeError(f"no artifact in operation result: {json.dumps(rr)[:300]}")
+    d = call("download_scientific_artifact", {"artifact_id": ref["artifact_id"]})
+    d = d.get("result", d)
+    url = (d.get("handle") or {}).get("url")
+    if not url:
+        raise RuntimeError(f"no handle.url in download response: {json.dumps(d)[:300]}")
+    raw = urllib.request.urlopen(urllib.request.Request(url), context=CTX, timeout=300).read()
+    if verify:
+        got = hashlib.sha256(raw).hexdigest()
+        if got != ref["sha256"]:
+            raise RuntimeError(f"sha256 mismatch: declared {ref['sha256']}, got {got}")
+    try:
+        return json.loads(raw), raw
+    except json.JSONDecodeError:
+        return None, raw
+
+
 def poll(op_id, every=20, limit=90):
     """Poll until the status is one we know to be terminal. Returns the last response seen."""
     last = None
