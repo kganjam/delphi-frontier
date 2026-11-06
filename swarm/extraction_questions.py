@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import hashlib
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -47,6 +48,7 @@ MODEL = "claude-opus-4-5-20251101"
 GAP_SCALE: dict[str, str] = {}      # gap sentence -> the scale of the constraint that raised it
 STOP = {"the", "and", "for", "per", "with", "during", "from", "its", "both", "that"}
 MERGE_AT = 0.25          # with the subset guard in same_need(); see its docstring
+_RATIO_FOLD = 9    #: measured 8.94, claim 2769
 DIMENSIONLESS = {"", "dimensionless", "ratio", "dimensionless ratio", "fraction", "-", "none"}
 
 
@@ -134,6 +136,43 @@ def is_physical(units: str) -> bool:
     return units.strip().lower() not in DIMENSIONLESS
 
 
+#: dimensionless phrases that merely NAME a ratio; these are pure numbers, not quotients of units
+_DIMLESS_PHRASE = re.compile(r'^(fraction|proportion|ratio|percent|percentage|%)\b', re.I)
+
+
+def ratio_unit(units: str) -> tuple[str, str] | None:
+    """If the unit DIVIDES one dimension by another, return (numerator, denominator).
+
+    MEASURED, and it is the sharpest predictor of a wasted question this project has: over all
+    52 question-sets and 4710 compared values, questions asking a RATIO unit had their answer
+    come back in the units they asked for 2.9 per cent of the time, against 26.2 per cent for
+    every other question -- a 8.9-fold difference (claim 2769). Papers report masses and powers;
+    they rarely report mass-specific power. Asking for the quotient is close to futile.
+
+    So a ratio question is split into its two factors, each asked in its own simple unit, and
+    the quotient is computed afterwards rather than searched for. `W/kg body mass` becomes a
+    question for W and a question for kg.
+
+    Recognises a slash, the word `per`, and negative-exponent notation, because `mol m^-2 s^-1`
+    is a ratio with no slash in it -- a case the first version of this classifier missed and
+    which diluted the measured effect from 8.9-fold to 3.2.
+    """
+    t = (units or "").strip()
+    if not t or _DIMLESS_PHRASE.match(t):
+        return None
+    if t.lower() in {"body lengths", "body weights", "tail beats", "dimensionless"}:
+        return None
+    m = re.match(r'^\s*([^/]+?)\s*/\s*(.+?)\s*$', t)
+    if m:
+        return (m.group(1).strip(), m.group(2).strip())
+    m = re.match(r'^\s*(.+?)\s+per\s+(.+?)\s*$', t, re.I)
+    if m:
+        return (m.group(1).strip(), m.group(2).strip())
+    if re.search(r'\^\s*-|[\u207b]', t):
+        return (t, "")            # negative-exponent form: flag it, do not try to split blindly
+    return None
+
+
 def build(keep_dimensionless: bool = False, cap: int = 18,
           source: str = "quantities") -> tuple[str, int, int, int]:
     qs = evidence_gaps() if source == "gaps" else open_quantities()
@@ -174,8 +213,19 @@ def build(keep_dimensionless: bool = False, cap: int = 18,
     for i, (quantity, units, n) in enumerate(kept[:cap], 1):
         u = f" Units wanted: {units}." if units.strip() else ""
         many = f" ({n} open constraints need this.)" if n > 1 else ""
-        lines.append(f"{i}. {quantity}.{u}{many}\n   Report the species and the body length or "
-                     f"life stage if the paper states them.")
+        split = ratio_unit(units)
+        hint = ""
+        if split and split[1]:
+            hint = (f"\n   This is a RATIO. A paper is {_RATIO_FOLD}x more likely to state its "
+                    f"parts than the quotient, so ALSO accept a value for the numerator "
+                    f"({split[0]}) or the denominator ({split[1]}) on its own, and say which "
+                    f"one it is.")
+        elif split:
+            hint = ("\n   This is a RATIO written with negative exponents. A paper is more "
+                    "likely to state its parts than the quotient, so ALSO accept a value for "
+                    "either factor on its own, and say which one it is.")
+        lines.append(f"{i}. {quantity}.{u}{many}{hint}\n   Report the species and the body "
+                     f"length or life stage if the paper states them.")
     return "\n".join(lines), len(kept[:cap]), dropped, collapsed
 
 
