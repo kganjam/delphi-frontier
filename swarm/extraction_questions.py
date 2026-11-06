@@ -251,7 +251,13 @@ def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
             # time against 3.6-11.7 (claim 3160). named_gap_question() puts the quantity at the
             # head and keeps the gap's regime clause behind it, dropping only the commentary
             # about our own record, which no paper can supply.
-            text = named_gap_question(parts[1], parts[2], parts[0])
+            # --raw-gaps emits the pre-2026-11-05 shape, the evaluator's sentence verbatim.
+            # It exists ONLY as the control arm for named_gap_question: a change to how
+            # questions are asked cannot be judged by running the new shape alone, because a
+            # harvest that returns nothing may be the shape's fault or the sample's. Same
+            # constraints, two shapes, one comparison.
+            text = (parts[0].strip() if "--raw-gaps" in sys.argv
+                    else named_gap_question(parts[1], parts[2], parts[0]))
             out.append((text, parts[2].strip(), 1))
             # A gap inherits the scale of the constraint that raised it. Unlike the quantity
             # route, that is a ONE-TO-ONE link -- this sentence came from exactly this row -- so
