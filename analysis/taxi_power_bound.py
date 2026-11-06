@@ -118,6 +118,29 @@ def main() -> int:
     else:
         print(f"    The bound is met at the most generous corner ({worst:.2f}x), so drag decides "
               f"and\n    this does not close the lever. A drag model is needed after all.")
+    # --- is there ANY amplitude at which one muscle meets both coordinates? ----------------
+    print("\n  IS THERE AN AMPLITUDE THAT RESCUES IT? The power bound above is "
+          "amplitude-INDEPENDENT --\n  it is a kinetic-energy requirement -- while the required "
+          "FREQUENCY falls as amplitude rises\n  (f = St U / A). So the question is whether any "
+          "sweep brings the frequency down to a muscle\n  that also has the power.\n")
+    p_min = p_body / max(MUSCLE_FRAC[0])
+    muscles = [("Hyla external oblique (claim 1090)", 44.0, 54.0),
+               ("starling syringeal (claim 997)", 50.0, 8.9),
+               ("toadfish swimbladder (claim 979)", 200.0, 14.19)]
+    print(f"    required muscle power, most generous corner: {p_min:.1f} W/kg\n")
+    print(f"    {'muscle':>36s} {'f_max':>7s} {'W/kg':>7s} {'power?':>8s} {'A at St 0.2':>13s}")
+    for name, fmax, pw in muscles:
+        a_bl = 0.2 * u2 / fmax / L_BODY[0]
+        print(f"    {name:>36s} {fmax:>6.0f}H {pw:>7.1f} "
+              f"{('YES' if pw >= p_min else 'no'):>8s} {a_bl:>10.2f} BL")
+    print(f"\n    The only muscle with enough POWER is Hyla at 54 W/kg, and reaching its 44 Hz "
+          f"needs a\n    peak-to-peak tail excursion of {0.2*u2/44.0/L_BODY[0]:.2f} body lengths "
+          f"at the lowest Strouhal in the\n    band and {0.3*u2/44.0/L_BODY[0]:.2f} at the "
+          f"midpoint -- against the 0.12-0.35 BL this project holds\n    (claim 1464) and the "
+          f"~0.2 BL ordinary for fish. A sweep approaching the animal's own\n    length is not a "
+          f"design parameter. NO MEASURED MUSCLE HERE MEETS BOTH COORDINATES AT ANY\n    "
+          f"PHYSICALLY ORDINARY AMPLITUDE.")
+
     print("\n  WHAT THIS DOES NOT SHOW: the bound assumes the taxi must complete within 20 body "
           "lengths,\n  which the subproblems specify rather than measure. A longer taxi lowers "
           "the power and\n  raises the distance over which drag acts; this script does not model "
