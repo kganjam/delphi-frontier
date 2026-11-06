@@ -140,6 +140,19 @@ def is_physical(units: str) -> bool:
 _DIMLESS_PHRASE = re.compile(r'^(fraction|proportion|ratio|percent|percentage|%)\b', re.I)
 
 
+#: Ratios that papers DO report directly, so decomposing them would cost rather than gain.
+#: MEASURED per question: `m/s` matches at 12.9 per cent over 186 values, while the other eight
+#: ratio-unit questions in this database -- S/cm^2, W/kg body mass, mol m^-2 s^-1 (twice),
+#: degC/generation (twice), degC/year, degC-weeks/year -- sit at 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+#: 0.0 and 6.8 per cent, seven of them at LITERALLY ZERO across 786 values. The distinction is
+#: not dimensional: it is whether the quotient is a quantity a paper names in its own right.
+#: Speed is; mass-specific power is not.
+STANDARD_RATIOS = {
+    "m/s", "cm/s", "mm/s", "km/h", "m/s^2", "m/s2", "rad/s", "deg/s", "rev/s",
+    "kg/m^3", "g/cm^3", "g/ml", "mg/ml", "mol/l", "ml/min", "l/min", "m^2/s", "mm^2/s",
+}
+
+
 def ratio_unit(units: str) -> tuple[str, str] | None:
     """If the unit DIVIDES one dimension by another, return (numerator, denominator).
 
@@ -162,6 +175,8 @@ def ratio_unit(units: str) -> tuple[str, str] | None:
         return None
     if t.lower() in {"body lengths", "body weights", "tail beats", "dimensionless"}:
         return None
+    if t.lower().replace(" ", "") in STANDARD_RATIOS:
+        return None                    # a quantity papers name in its own right -- see above
     m = re.match(r'^\s*([^/]+?)\s*/\s*(.+?)\s*$', t)
     if m:
         return (m.group(1).strip(), m.group(2).strip())
