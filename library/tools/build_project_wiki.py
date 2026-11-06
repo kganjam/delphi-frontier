@@ -43,7 +43,7 @@ def q(sql):
     r = subprocess.run(PG + ["-c", sql], capture_output=True, text=True, env=env(), timeout=120)
     if r.returncode:
         raise RuntimeError(r.stderr.strip()[:400])
-    return [l.split(SEP) for l in r.stdout.strip().split("\n") if l]
+    return [ln.split(SEP) for ln in r.stdout.strip().split("\n") if ln]
 
 
 def esc(s):
@@ -120,7 +120,7 @@ def parameters():
                       derivation, how, coalesce(conditions,''), coalesce(source,''), coalesce(read_level,'')
                from parameter where project_id='{PROJECT}' and superseded_by is null order by id""")
     deps = q("select parameter_id, depends_on, relation, coalesce(sensitivity,'') from parameter_depends")
-    sas = q("""select ps.parameter_id, sa.id, sa.statement, sa.evidence, coalesce(sa.alternatives,''),
+    sas = q("""select ps.parameter_id, sa.id, replace(replace(sa.statement, chr(10), ' '), chr(1), ' '), sa.evidence, coalesce(sa.alternatives,''),
                       sa.consequence_if_wrong
                  from parameter_structural ps join structural_assumption sa on sa.id=ps.assumption_id""")
     DER = {"measured": "🟢 measured", "derived": "🟡 derived", "fitted": "🟡 fitted",
@@ -211,9 +211,11 @@ def board():
 
 
 def claims():
-    rows = q(f"""select c.id, coalesce(c.subproblem_id,''), coalesce(c.scale_id,''), c.statement,
+    rows = q(f"""select c.id, coalesce(c.subproblem_id,''), coalesce(c.scale_id,''),
+                        replace(replace(c.statement, chr(10), ' '), chr(1), ' '),
                         c.evidence, coalesce(c.value_num::text,''), coalesce(c.units,''),
-                        coalesce(c.source,''), coalesce(c.read_level,''),
+                        replace(replace(coalesce(c.source,''), chr(10), ' '), chr(1), ' '),
+                        coalesce(c.read_level,''),
                         coalesce(c.superseded_by::text,'')
                  from claim c where c.project_id='{PROJECT}' order by c.id""")
     live = [r for r in rows if not r[9]]
