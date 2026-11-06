@@ -281,6 +281,18 @@ def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
             # The shape is kept behind --named-gaps so the experiment can be rerun at a sample
             # size that could detect a smaller effect. It is NOT the default and should not be
             # until a run beats 300.
+            # --simple-units keeps only questions asking for a SIMPLE PHYSICAL unit, dropping
+            # ratio and dimensionless ones. Every intervention measured against the retrieval
+            # failure so far -- question shape, extraction prompt, decomposition, sampling
+            # depth -- was tested on pools dominated by ratio and dimensionless questions,
+            # which claim 2769 had already measured as near-futile to harvest. 101 of the 120
+            # open constraints carry a simple unit and have NOT been shown to fail. This flag
+            # exists to run that fair test, and claim 3236 names it as the missing arm.
+            if "--simple-units" in sys.argv:
+                u = parts[2].strip().lower()
+                if ratio_unit(parts[2]) or u in ("", "-", "dimensionless",
+                                                 "dimensionless ratio", "unitless"):
+                    continue
             text = (named_gap_question(parts[1], parts[2], parts[0])
                     if "--named-gaps" in sys.argv else parts[0].strip())
             out.append((text, parts[2].strip(), 1))
