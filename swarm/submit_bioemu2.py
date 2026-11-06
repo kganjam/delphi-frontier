@@ -71,11 +71,60 @@ def record(op_id: str, note: str) -> None:
                             "t": time.time()}) + "\n")
 
 
+def in_flight() -> str | None:
+    """The id of this helper's most recent operation if it has NOT reached a terminal state.
+
+    WHY A GUARD AND NOT A COMMENT. This endpoint allows one operation in flight across all 69
+    tools. A second VALID submit does not always come back as a clean 429 with a retry_after:
+    measured 2026-11-05, two of them returned `admission: "unknown"` with "key concurrency limit
+    reached", which leaves an operation that is neither admitted nor refused. Those cannot be
+    cancelled -- cancel_operation answers "recover the original admission with the same
+    idempotency key first" -- and replaying the key returns the same ADMISSION_PENDING rather
+    than resolving it. `GET /v1/operations` does not list them. Three were created in one loop
+    that afternoon and blocked the endpoint for everything.
+
+    The rule that allowed it was right until it wasn't: a loop of probes is slot-safe exactly
+    while the probes are INVALID, because validation precedes admission. The first VALID probe
+    takes the slot and every one after it wedges. So the loop has to stop the moment a probe
+    succeeds, and a guard enforces that better than remembering it does.
+
+    Reads the helper's own append-only log rather than the API, because the API cannot see the
+    state this is guarding against.
+    """
+    try:
+        with open(OPS_LOG) as f:
+            mine = [json.loads(ln) for ln in f if '"submit_bioemu2"' in ln]
+    except OSError:
+        return None
+    if not mine:
+        return None
+    op = mine[-1].get("op")
+    if not op or op == "UNKNOWN":
+        return None
+    try:
+        r = nbx.call("get_operation", {"operation_id": op})
+    except Exception:                                             # noqa: BLE001
+        return op          # cannot confirm it finished, so assume it has not
+    st = str(r.get("status") or (r.get("operation") or {}).get("status") or "").upper()
+    return None if st in ("SUCCEEDED", "SUCCESS", "COMPLETED", "FAILED", "CANCELLED") else op
+
+
 def workload_tar(sequence: str) -> bytes:
-    """The inner artifact. A tar, not JSON -- a JSON inner artifact is rejected (see module docstring)."""
+    """The inner artifact. A tar, not JSON -- a JSON inner artifact is rejected.
+
+    It must carry `system.yaml`, or a complete `initial.cif` with molecular metadata. That is
+    the model's own words: a tar holding only a FASTA and an input.json was admitted, ran, and
+    failed at stage prepare-input with "BioEmu2 workload needs system.yaml, or a complete
+    initial.cif with molecular metadata" (op-82087738dd3ebf67). WHICH system.yaml SHAPE IS
+    CORRECT IS NOT YET KNOWN -- the three candidates below were submitted and all three are
+    wedged in admission-unknown, so none of them returned a verdict. `sequence: <seq>` is the
+    one tried here because BioEmu's own Python API is sample(sequence=..., num_samples=...).
+    Treat it as unverified until a run reaches a terminal state.
+    """
     buf = io.BytesIO()
     with tarfile.open(fileobj=buf, mode="w") as t:
-        for name, data in (("sequence.fasta", f">input\n{sequence}\n".encode()),
+        for name, data in (("system.yaml", f"sequence: {sequence}\n".encode()),
+                           ("sequence.fasta", f">input\n{sequence}\n".encode()),
                            ("input.json", json.dumps({"sequence": sequence}).encode())):
             ti = tarfile.TarInfo(name)
             ti.size = len(data)
@@ -91,6 +140,14 @@ def submit(label: str, sequence: str, operation: str = "sample-equilibrium",
                          f"{sorted(set(sequence) - set('ACDEFGHIKLMNPQRSTVWY'))}")
     if operation not in OPERATIONS:
         raise SystemExit(f"operation must be one of {OPERATIONS}")
+
+    busy = in_flight()
+    if busy and "--force" not in sys.argv:
+        raise SystemExit(
+            f"REFUSING: {busy} is still in flight and this endpoint allows ONE operation across "
+            f"all 69 tools. A second valid submit can return admission-unknown, which cannot be "
+            f"cancelled or completed. Poll it to a terminal state first, or pass --force if you "
+            f"know it is finished.")
 
     tar = workload_tar(sequence)
     inner = nbx.upload(tar, "application/x-tar", MODEL)
