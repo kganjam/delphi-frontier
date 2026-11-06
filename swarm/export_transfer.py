@@ -130,10 +130,11 @@ def rows() -> list[dict]:
     return out
 
 
-def census() -> int:
+def census(write: bool = False) -> int:
     print(f"  D5 census for project {PROJECT!r}: live quantities that could be exported\n")
     print(f"  {'table':22} {'quantities':>10} {'with units':>11} {'with conditions':>16} {'exportable':>11}")
     tot_ok = 0
+    seen: list[tuple[str, int, int, int, bool]] = []
     for table, valexpr, cond in (
             ("parameter", "point is not null or lo is not null", "conditions"),
             # spec_parameter has NO project_id column, so it is counted project-wide. It holds 0
@@ -158,9 +159,41 @@ def census() -> int:
         note = "" if cond else "   <- NO conditions column at all"
         print(f"  {table:22} {n:10} {u:11} {c:16} {c:11}{note}")
         tot_ok += c
+        seen.append((table, n, u, c, cond is not None))
     print(f"\n  TOTAL exportable without severing conditions: {tot_ok}")
     print("  A quantity in a table with no `conditions` column cannot be exported under D5 at all:")
     print("  its conditions exist only in prose, and prose does not travel with the number.")
+    if write:
+        from dbq import write_claim
+        total_q = sum(r[1] for r in seen)
+        nocol = [r for r in seen if not r[4]]
+        tbl = "; ".join(f"{t} {n} quantities, {c} exportable" for t, n, _u, c, _h in seen)
+        cid = write_claim(
+            PROJECT, None,
+            f"""[ASK D5 HAS A CONFORMING EXPORT FORMAT AND ALMOST NOTHING TO PUT THROUGH IT:
+{tot_ok} OF {total_q} LIVE QUANTITIES CAN BE EXPORTED WITHOUT SEVERING THEIR CONDITIONS]
+SPEC-ASK's D5 row said the gap was "no export format that carries them". That is no longer true:
+`ask-transfer/v1` offers no bare scalar at top level and its validate() REFUSES a record missing
+`units` or `conditions`, with three controls passing -- a complete record accepted, the same
+record with conditions stripped refused, an empty value refused.
+
+The real gap is narrower and worse, and it is measured rather than asserted. Per table: {tbl}.
+{tot_ok} of {total_q} quantities, or {100.0*tot_ok/total_q:.1f} per cent, can be exported at all.
+The shortfall is structural, not an omission: {" and ".join(r[0] for r in nocol)} have NO
+`conditions` column, so for {sum(r[1] for r in nocol)} quantities the conditions exist only in
+prose, and prose does not travel with the number.
+
+A format nothing can be exported through is not transferability. The next step is a conditions
+field on those tables, or an extraction of conditions from claim statements into one -- and the
+second is a reading task, not a migration, because a claim's conditions are currently a free-text
+clause inside its statement.
+
+SCOPE: one project. spec_parameter has no project_id and is counted database-wide; the census
+counts live rows only, and a quantity is anything with a numeric value or a bound.""",
+            "measured", 100.0 * tot_ok / total_q if total_q else 0.0,
+            "percent of live quantities exportable under ASK D5",
+            "swarm/export_transfer.py --census", None)
+        print(f"\n  recorded claim {cid}")
     return 0
 
 
@@ -178,12 +211,12 @@ def control() -> int:
     stripped = json.loads(json.dumps(good))
     stripped["quantity"]["conditions"] = ""
     r2 = validate(stripped)
-    print(f"  must-flag  the same record with conditions stripped: "
+    print("  must-flag  the same record with conditions stripped: "
           + (f"REFUSED ({r2[0][:60]}...)  ok" if r2 else "ACCEPTED  *** the validator is broken ***"))
     ok &= bool(r2)
     r3 = validate({"schema": SCHEMA, "quantity": {"units": "m", "conditions": "x", "source": "y",
                                                   "value": {"point": None, "lo": None, "hi": None}}})
-    print(f"  must-flag  a record with an empty value: "
+    print("  must-flag  a record with an empty value: "
           + ("REFUSED  ok" if r3 else "ACCEPTED  *** broken ***"))
     ok &= bool(r3)
     return 0 if ok else 1
@@ -193,7 +226,7 @@ def main() -> int:
     if "--control" in sys.argv:
         return control()
     if "--census" in sys.argv:
-        return census()
+        return census("--write" in sys.argv)
     if "--emit" in sys.argv:
         n = bad = 0
         for r in rows():
