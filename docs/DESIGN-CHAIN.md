@@ -147,6 +147,11 @@ _[THE DESIGN REQUIREMENT, RESTATED IN THE UNITS THE LEVERS CONTROL: ABOUT 1.4x M
 claim 3331 `literature` / `full-text`  
 _[QUALIFIES CLAIM 3330: ITS 1.420 IS THE REGENERATION ASSAY, AND THE DESIGN NEEDS THE UNAMPUTATED ONE, WHICH THE PROJECT ALREADY HELD AT 1.16x] Claim 3…_
 
+**Is the design measuring the fin its requirement is about?**  
+_no single value_  
+claim 3339 `derived` / `full-text`  
+_[THE DESIGN'S REQUIREMENT IS PECTORAL FIN AREA AND EVERY NUMBER IN ITS LEVER STACK IS CAUDAL RAY LENGTH -- AN UNSTATED FIN SUBSTITUTION THAT DAANE 202…_
+
 
 ## ORGAN / swim bladder
 
@@ -178,6 +183,39 @@ _THE FIRST CONCRETE GENETIC DESIGN WITH EVERY COMPONENT ALREADY VALIDATED IN VIV
 **3 of four fin-size levers that converge on the kcnk5b bioelectric pathway rather than acting independently**  
 claim 562 `literature` / `full-text`  
 _THE FIN-SIZE LEVERS CONVERGE ON ONE BIOELECTRIC PATHWAY, SO THEY WILL NOT MULTIPLY -- AND THAT PARTLY REVIVES THE CEILING I DISMISSED ONE CLAIM AGO. C…_
+
+**How does the allele PAIR produce fin-TYPE specificity, and does it multiply?**  
+_no single value_  
+claim 3338 `literature` / `full-text`  
+_[THE FLYING-FISH BAUPLAN HAS A PUBLISHED TWO-ALLELE RECIPE IN ZEBRAFISH, AND IT IS NOT A FIN-ENLARGEMENT STACK -- IT IS AN ENLARGER PLUS A SUPPRESSOR]…_
+
+
+## GENE / lat4a
+
+**Which way does lat4a T200K move fin size?**  
+_no single value_  
+claim 3336 `literature` / `full-text`  
+_[DIRECTION CORRECTION TO CLAIM 1142: lat4a T200K SHORTENS FINS. IT IS NOT AN ENLARGER, AND THE PROJECT HAS CARRIED IT AS A "FIN-SIZE LEVER" WITH NO SI…_
+
+**Which lat4a allele do the gliding lineages actually carry?**  
+_no single value_  
+claim 3337 `literature` / `full-text`  
+_[THE PROJECT HOLDS THE WRONG lat4a ALLELE: F326L, NOT T200K, IS THE ONE THE GLIDING LINEAGES ACTUALLY CARRY, AND IT IS UNTESTED] Daane 2021 has two ar…_
+
+**Can a lat4a construct be numbered and specified at all?**  
+**577 aa residues, ENSDARP00000138218**  
+claim 3340 `measured` / `full-text`  
+_[CLAIM 90'S BLOCKER IS RESOLVED: lat4a T200K IS NUMBERABLE AFTER ALL, AGAINST ENSEMBL ENSDARP00000138218 -- AND THE PROJECT HAD THE RIGHT IDENTIFIER I…_
+
+**Where do the two lat4a alleles sit in the transporter?**  
+**78.5 percent identity, zebrafish Lat4a vs human SLC43A2 over 563 aligned columns**  
+claim 3341 `derived` / `full-text`  
+_[THE TWO lat4a ALLELES SIT IN STRUCTURALLY DIFFERENT PLACES, AND THAT EXPLAINS WHY ONE IS A BLUNT LAB ALLELE AND THE OTHER A SURVIVABLE NATURAL ONE] C…_
+
+**Can a predicted structure sharpen that?**  
+**41.3 mean pLDDT, 0-100, boltz2 + PDB70 depth-1 alignment**  
+claim 3342 `measured` / `full-text`  
+_[THE Lat4a STRUCTURE PREDICTION IS UNUSABLE, AND THE REASON IS AN EMPTY ALIGNMENT RATHER THAN A DIFFICULT PROTEIN -- REPORTED AS A NEGATIVE SO NOBODY…_
 
 
 ## GENE / hox
@@ -271,11 +309,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 1678 live claims of 1826 for project `zebrafish-flight`; **148 superseded**, which is the project correcting itself and is not a defect.
+- 1689 live claims of 1837 for project `zebrafish-flight`; **148 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 740, `insect-flight` 323, `xenobot` 165, `limbless-mouse` 114 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `literature` 830, `derived` 240, `measured` 228, `simulated` 217, `unknown` 113, `assumed` 47, `refused` 3
+- live claims by evidence class: `literature` 836, `derived` 243, `measured` 230, `simulated` 217, `unknown` 113, `assumed` 47, `refused` 3
 
 
 **Two criteria, and they are not the same question:**

@@ -76,6 +76,8 @@ CHAIN = [
      "In what unit can the requirement be stated so the levers can address it?", 3326),
     ("ORGAN / fin morphology",
      "What does the best-evidenced variant deliver, in the assay the design needs?", 3331),
+    ("ORGAN / fin morphology",
+     "Is the design measuring the fin its requirement is about?", 3339),  # requirement pectoral, levers caudal
     ("ORGAN / swim bladder",
      "Can the body be made light enough?", 553),
     ("TISSUE / fin skeleton",
@@ -85,6 +87,18 @@ CHAIN = [
      "What genes enlarge the fin?", 531),
     ("GENE / pathway",
      "Are the fin levers independent, or one pathway?", 562),
+    ("GENE / pathway",
+     "How does the allele PAIR produce fin-TYPE specificity, and does it multiply?", 3338),  # non-additive; downstream of bioelectric
+    ("GENE / lat4a",
+     "Which way does lat4a T200K move fin size?", 3336),   # it SHORTENS; 1142 never stated the sign
+    ("GENE / lat4a",
+     "Which lat4a allele do the gliding lineages actually carry?", 3337),  # F326L, untested
+    ("GENE / lat4a",
+     "Can a lat4a construct be numbered and specified at all?", 3340),  # yes, against ENSDARP00000138218
+    ("GENE / lat4a",
+     "Where do the two lat4a alleles sit in the transporter?", 3341),
+    ("GENE / lat4a",
+     "Can a predicted structure sharpen that?", 3342),
     ("GENE / hox",
      "What genes enlarge the swim bladder?", 551),
     ("GENE / autonomic",
