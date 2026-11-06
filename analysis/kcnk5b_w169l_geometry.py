@@ -150,7 +150,13 @@ def main() -> int:
             dp = abs(wt_s["complex_plddt_score"] - rep_s["complex_plddt_score"])
             de = abs(wt_s["complex_plddt_score"] - mut_s["complex_plddt_score"])
             cid = write_claim(
-                "zebrafish-flight", "protein",
+                # NO SCALE, DELIBERATELY. goal_status uses `scale_id is not null` as its proxy
+                # for "measured about the ANIMAL", and its convention is that instrument
+                # measurements carry none. This claim measures openfold3's determinism, not the
+                # fish -- claim 513 already named this drift ("the residue-200 series has become
+                # a study of ESMFold2 rather than of the fish"). Scoring it as biology would
+                # inflate the one row that exists to detect exactly that.
+                "zebrafish-flight", None,
                 f"""[EXTENDS CLAIM 1868 TO THE CONFIDENCE SCORES IT QUOTED WITHOUT A FLOOR:
 {unresolved} OF 5 ARE UNRESOLVED, AND openfold3 IS NON-DETERMINISTIC AT FIXED SEED]
 Claim 1868 established that an RMSD between two predicted structures may not be read as evidence
