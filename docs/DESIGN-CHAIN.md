@@ -189,6 +189,11 @@ _no single value_
 claim 3338 `literature` / `full-text`  
 _[THE FLYING-FISH BAUPLAN HAS A PUBLISHED TWO-ALLELE RECIPE IN ZEBRAFISH, AND IT IS NOT A FIN-ENLARGEMENT STACK -- IT IS AN ENLARGER PLUS A SUPPRESSOR]…_
 
+**Is the design's headline number resting on that composition assumption?**  
+_no single value_  
+claim 3344 `derived` / `full-text`  
+_[THE ONLY PUBLISHED COMBINATION OF TWO FIN-SIZE ALLELES IN ZEBRAFISH IS NON-ADDITIVE, WHICH IS THE FIRST EMPIRICAL EVIDENCE BEARING ON 562'S OPEN QUES…_
+
 
 ## GENE / lat4a
 
@@ -212,10 +217,15 @@ _[CLAIM 90'S BLOCKER IS RESOLVED: lat4a T200K IS NUMBERABLE AFTER ALL, AGAINST E
 claim 3341 `derived` / `full-text`  
 _[THE TWO lat4a ALLELES SIT IN STRUCTURALLY DIFFERENT PLACES, AND THAT EXPLAINS WHY ONE IS A BLUNT LAB ALLELE AND THE OTHER A SURVIVABLE NATURAL ONE] C…_
 
-**Can a predicted structure sharpen that?**  
+**Can an MSA-dependent model sharpen that?**  
 **41.3 mean pLDDT, 0-100, boltz2 + PDB70 depth-1 alignment**  
 claim 3342 `measured` / `full-text`  
 _[THE Lat4a STRUCTURE PREDICTION IS UNUSABLE, AND THE REASON IS AN EMPTY ALIGNMENT RATHER THAN A DIFFICULT PROTEIN -- REPORTED AS A NEGATIVE SO NOBODY…_
+
+**Can an MSA-FREE model sharpen it?**  
+**85.9 mean pLDDT, 0-100, ESMFold2 single-sequence**  
+claim 3345 `measured` / `full-text`  
+_[AN MSA-FREE STRUCTURE CONFIRMS CLAIM 3341 FROM AN INDEPENDENT DIRECTION: T200 IS BURIED, F326 IS NOT, AND THE TWO SIT AT OPPOSITE ENDS OF THE BURIAL…_
 
 
 ## GENE / hox
@@ -309,11 +319,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 1689 live claims of 1837 for project `zebrafish-flight`; **148 superseded**, which is the project correcting itself and is not a defect.
+- 1691 live claims of 1839 for project `zebrafish-flight`; **148 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 740, `insect-flight` 323, `xenobot` 165, `limbless-mouse` 114 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `literature` 836, `derived` 243, `measured` 230, `simulated` 217, `unknown` 113, `assumed` 47, `refused` 3
+- live claims by evidence class: `literature` 836, `derived` 244, `measured` 231, `simulated` 217, `unknown` 113, `assumed` 47, `refused` 3
 
 
 **Two criteria, and they are not the same question:**

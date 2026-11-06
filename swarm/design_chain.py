@@ -89,6 +89,8 @@ CHAIN = [
      "Are the fin levers independent, or one pathway?", 562),
     ("GENE / pathway",
      "How does the allele PAIR produce fin-TYPE specificity, and does it multiply?", 3338),  # non-additive; downstream of bioelectric
+    ("GENE / pathway",
+     "Is the design's headline number resting on that composition assumption?", 3344),  # looked for, NOT found
     ("GENE / lat4a",
      "Which way does lat4a T200K move fin size?", 3336),   # it SHORTENS; 1142 never stated the sign
     ("GENE / lat4a",
@@ -98,7 +100,9 @@ CHAIN = [
     ("GENE / lat4a",
      "Where do the two lat4a alleles sit in the transporter?", 3341),
     ("GENE / lat4a",
-     "Can a predicted structure sharpen that?", 3342),
+     "Can an MSA-dependent model sharpen that?", 3342),   # no: PDB70 depth 1, pLDDT 41.3
+    ("GENE / lat4a",
+     "Can an MSA-FREE model sharpen it?", 3345),           # yes: pLDDT 85.9, and it confirms 3341
     ("GENE / hox",
      "What genes enlarge the swim bladder?", 551),
     ("GENE / autonomic",
