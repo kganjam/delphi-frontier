@@ -108,6 +108,86 @@ def main() -> int:
           "either\n    structure, so neither is a determined answer that a difference could be "
           "read against.")
 
+    # THE SAME FLOOR, ON THE SCORES THEMSELVES. Claim 1868 established that an RMSD between two
+    # predicted structures needs both bounds, and quoted these confidence scores as supporting
+    # evidence WITHOUT a floor under them. That leaves the pair readable the wrong way: pLDDT
+    # 60.7 -> 57.3 looks like the substitution destabilising the fold. The wild type was run
+    # twice, so the floor is already on disk and nothing new has to be computed on a GPU.
+    rep = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                       "results/fish-proteins/structures", "kcnk5b-wt-replicate-of3",
+                       "result.json")
+    if os.path.exists(rep):
+        def sc_of(name):
+            d = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                                            "results/fish-proteins/structures", name,
+                                            "result.json")))
+            return d["outputs"][0]["structures_with_scores"][0]
+        wt_s, mut_s = sc_of(WT), sc_of(MUT)
+        rep_s = json.load(open(rep))["outputs"][0]["structures_with_scores"][0]
+        print("\n  AND THE FLOOR UNDER THOSE SCORES -- wild type run TWICE, same seed 42:")
+        print(f"    {'metric':<22}{'noise (WT vs WT)':>18}{'effect (WT vs W169L)':>22}   verdict")
+        unresolved = 0
+        for k in ("complex_plddt_score", "iptm_score", "ptm_score", "confidence_score",
+                  "complex_pde_score"):
+            noise = abs(wt_s[k] - rep_s[k])
+            effect = abs(wt_s[k] - mut_s[k])
+            ok = effect > noise
+            unresolved += not ok
+            print(f"    {k:<22}{noise:>18.4f}{effect:>22.4f}   "
+                  + ("resolved" if ok else "NOT RESOLVED (noise >= effect)"))
+        print(f"\n    {unresolved} of 5 confidence metrics are NOT resolved. The two wild-type "
+              f"runs\n    differ by {abs(wt_s['complex_plddt_score'] - rep_s['complex_plddt_score']):.1f} "
+              f"pLDDT against {abs(wt_s['complex_plddt_score'] - mut_s['complex_plddt_score']):.1f} "
+              f"between wild type and W169L, so the\n    score drop is smaller than what an "
+              f"UNCHANGED sequence produces. Both runs carry\n    the same seed, so openfold3 is "
+              f"non-deterministic at fixed seed on this target --\n    the same property claim 1394 "
+              f"measured for ESMFold2, on a different predictor.")
+
+        if "--write" in sys.argv:
+            sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                            "..", "swarm"))
+            from dbq import write_claim
+            dp = abs(wt_s["complex_plddt_score"] - rep_s["complex_plddt_score"])
+            de = abs(wt_s["complex_plddt_score"] - mut_s["complex_plddt_score"])
+            cid = write_claim(
+                "zebrafish-flight", "protein",
+                f"""[EXTENDS CLAIM 1868 TO THE CONFIDENCE SCORES IT QUOTED WITHOUT A FLOOR:
+{unresolved} OF 5 ARE UNRESOLVED, AND openfold3 IS NON-DETERMINISTIC AT FIXED SEED]
+Claim 1868 established that an RMSD between two predicted structures may not be read as evidence
+about a substitution without quoting a floor and a ceiling. In support it quoted this pair's own
+confidence scores -- complex pLDDT 60.7 and 57.3, ipTM 0.399 and 0.371 -- and observed that both
+are low. It did not put a floor under THOSE numbers, which leaves them readable the wrong way: a
+60.7 to 57.3 drop looks like the substitution destabilising the fold.
+
+The wild type was run twice, so the floor was already on disk and no GPU was spent to get it.
+Two runs of the IDENTICAL wild-type sequence differ by {dp:.4f} complex pLDDT; wild type against
+W169L differs by {de:.4f}. The effect is SMALLER than the noise. The same holds on all five
+metrics the model reports: ipTM {abs(wt_s['iptm_score']-rep_s['iptm_score']):.4f} noise against
+{abs(wt_s['iptm_score']-mut_s['iptm_score']):.4f} effect, pTM
+{abs(wt_s['ptm_score']-rep_s['ptm_score']):.4f} against
+{abs(wt_s['ptm_score']-mut_s['ptm_score']):.4f}, confidence
+{abs(wt_s['confidence_score']-rep_s['confidence_score']):.4f} against
+{abs(wt_s['confidence_score']-mut_s['confidence_score']):.4f}, PDE
+{abs(wt_s['complex_pde_score']-rep_s['complex_pde_score']):.4f} against
+{abs(wt_s['complex_pde_score']-mut_s['complex_pde_score']):.4f}. {unresolved} of 5 unresolved.
+
+BOTH RUNS CARRY SEED 42. They differ only in idempotency key, so openfold3 is non-deterministic
+at a FIXED seed on this target -- the property claim 1394 measured for ESMFold2, reproduced here
+on a different predictor and a different target. A seed is not a reproducibility guarantee for
+either.
+
+CONSEQUENCE, extending 1868's: a confidence score reported for a variant may not be compared with
+one reported for its wild type unless a same-sequence re-run bounds the comparison. That bound is
+cheap -- it is one extra submit -- and in this case it already existed unused.
+
+SCOPE: one target, one predictor, one replicate pair. A single replicate gives a floor, not a
+distribution, so "noise exceeds effect" here is a statement about these four runs and not an
+error bar. The monomer-replicate arm reports ipTM 0.0000, which is the expected value for a
+single chain and is a sanity control on the reader, not evidence about the dimer.""",
+                "measured", dp, "complex pLDDT between two runs of the identical sequence",
+                "analysis/kcnk5b_w169l_geometry.py", None)
+            print(f"\n    recorded claim {cid}")
+
     print("\n  READING")
     print(f"    The {worst:.1f} A difference is {100*worst/scram:.0f} per cent of the {scram:.1f} A "
           f"a SHUFFLED\n    correspondence gives -- that is, the two predictions are most of the "

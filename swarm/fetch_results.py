@@ -141,11 +141,16 @@ def fetch_run(op_id: str, outdir: str, stem: str | None = None) -> list[tuple[st
 
 def main() -> int:
     if len(sys.argv) < 3:
-        print("usage: fetch_results.py <operation_id> <outdir>", file=sys.stderr)
+        print("usage: fetch_results.py <operation_id> <outdir> [stem]", file=sys.stderr)
         return 2
+    # `stem` was reachable from the library and NOT from the CLI, which is how two runs of the
+    # same tool came to target one filename. The guard in _write() caught it rather than losing
+    # a result -- measured 2026-11-05 on the kcnk5b W169L pore pair, where the second fetch
+    # refused instead of overwriting the first -- but the guard is the backstop, not the fix.
     op, outdir = sys.argv[1], sys.argv[2]
+    stem = sys.argv[3] if len(sys.argv) > 3 else None
     try:
-        for name, path, n in fetch_run(op, outdir):
+        for name, path, n in fetch_run(op, outdir, stem=stem):
             print(f"  {name:28} -> {path}  ({n:,} bytes, sha256 verified)")
     except Exception as e:
         print(f"  {op}: {type(e).__name__}: {e}", file=sys.stderr)
