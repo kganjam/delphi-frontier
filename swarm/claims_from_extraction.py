@@ -324,9 +324,19 @@ def main() -> int:
     n = 0
     for it, src in rows:
         scale = smap.get(str(it.get("qfile", "")), {}).get(str(it.get("asked")))
+        # A NUMBER WITH NO UNIT IS NOT A QUANTITY, which is SPEC ASK-artifact-graph rule 5 in
+        # its own words, and writing one here turned that rule red on 2026-11-05: 10 of the 411
+        # claims this module wrote committed a value_num with an empty units string. All ten
+        # were genuinely dimensionless -- seven conductivity anisotropy ratios and three Q10
+        # coefficients -- but the extractor never said so, and asserting `dimensionless` on the
+        # module's behalf would be this pipeline inventing a unit from a conditions string it
+        # does not parse. So the number stays in the statement, where it is readable with its
+        # conditions and its provenance, and value_num is left NULL: the row records what the
+        # paper said without claiming to be a quantity the graph can compute on.
+        units = str(it.get("units") or "").strip()[:400]
         cid = dbq.write_claim(PROJECT, scale, statement(it, qtext),
                               EVIDENCE.get(str(it.get("provenance", "")), "unknown"),
-                              numeric(it.get("value")), str(it.get("units") or "")[:400],
+                              numeric(it.get("value")) if units else None, units,
                               src, str(it.get("read_level") or "full-text"))
         n += 1 if cid else 0
     withscale = sum(1 for it, _ in rows
