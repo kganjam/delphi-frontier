@@ -241,5 +241,109 @@ compound units. So `ratio` here means DECOMPOSABLE ratio and is not 2769's bucke
     return 0
 
 
+def relevance(write: bool = False) -> int:
+    """Is a low units-match rate really off-target, or an artifact of how gap questions ask?
+
+    THE OBJECTION THIS TESTS, and it is a good one. extraction_questions.evidence_gaps() asks in
+    the evaluator's own words -- "claim 276 is calculated, not measured" -- because a gap says
+    WHY the numbers already held do not answer the constraint, which is what a search has to fix.
+    Its docstring gives a measured case: constraint e28 wanted A_pp/body length, four values for
+    exactly that quantity had just been harvested, and the verdict was still INSUFFICIENT because
+    they were juvenile grass carp in flume tests against adult zebrafish escape kinematics. A
+    units-match metric cannot see regime, so it penalises exactly what makes a gap question
+    better, and the 3.6-11.7 per cent for the bulk harvests might be the metric's fault.
+
+    IT IS NOT. Topical overlap between a harvested claim and its question is measured against a
+    SHUFFLED null -- each claim re-paired with a random question from the same file -- and at a
+    two-content-word bar the real pairing and the shuffled one score IDENTICALLY. A lift of 1.0
+    means the words shared with the true question are the words any question would share.
+
+    So the objection fails and claim 3160 stands, by units and by topic both. This is recorded
+    because an attempted refutation that fails is evidence, and because the next person will
+    raise the same objection.
+    """
+    import random
+    import re
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "swarm"))
+    from dbq import q as dbq_q
+    PROJECT, QFILE = "zebrafish-flight", "questions_gaps4.txt"
+    MAP = EXTRACT / f"{QFILE}.map.json"
+    ASKED = re.compile(rf"asked: question (\d+) of {re.escape(QFILE)}")
+    STOP = set("the a an of in for and or to at with by is are was were no not this that which "
+               "what claim claims reports report value values during from its it as on than more "
+               "less other same each any all been have has had can could would should".split())
+    def toks(t):
+        return {w for w in re.findall(r"[a-z]{4,}", t.lower()) if w not in STOP}
+    m = json.loads(MAP.read_text())
+    qtok = {k: toks(v["question"]) for k, v in m.items()}
+    pairs = []
+    for _cid, st in dbq_q(f"""select id::text, replace(statement, chr(10),' ') from claim
+                              where project_id='{PROJECT}' and statement like '%{QFILE}%'"""):
+        g = ASKED.search(st)
+        if g and g.group(1) in qtok:
+            pairs.append((g.group(1), toks(st)))
+    if not pairs:
+        print("  no gaps4 claims with a resolvable question -- NOT reporting a rate.")
+        return 1
+    keys = sorted(qtok)
+    rng = random.Random(7)
+    def rate(assign, thresh):
+        return 100.0 * sum(1 for (_k, t), kk in zip(pairs, assign)
+                           if len(qtok[kk] & t) >= thresh) / len(pairs)
+    real = [k for k, _ in pairs]
+    print(f"\n  {len(pairs)} {QFILE} claims against {len(keys)} questions")
+    print(f"  {'bar':<24}{'real':>8}{'shuffled':>10}{'lift':>8}")
+    table = []
+    for thresh in (1, 2, 3, 4):
+        sh = [rng.choice(keys) for _ in pairs]
+        r, sv = rate(real, thresh), rate(sh, thresh)
+        lift = (r / sv) if sv else float("inf")
+        table.append((thresh, r, sv, lift))
+        print(f"  >={thresh} shared content word(s){'':<2}{r:>6.1f}%{sv:>9.1f}%{lift:>7.1f}x")
+    two = next(t for t in table if t[0] == 2)
+    print(f"\n  At the two-word bar the real pairing scores {two[1]:.1f}% and a RANDOM pairing"
+          f"\n  {two[2]:.1f}%. A lift of {two[3]:.1f}x means the words a claim shares with its own"
+          f"\n  question are the words it would share with any question in the file.")
+    if not write:
+        print("\n  (dry run; pass --write to record a claim)")
+        return 0
+    rowtxt = "; ".join(f">={t} words real {r:.1f}% shuffled {sv:.1f}% lift {lf:.1f}x"
+                       for t, r, sv, lf in table)
+    cid = write_claim(
+        PROJECT, None,
+        f"""[AN ATTEMPT TO REFUTE CLAIM 3160 FAILED ITS OWN NULL CONTROL: THE BULK HARVEST IS
+OFF-TARGET BY TOPIC AS WELL AS BY UNITS, AT A LIFT OF {two[3]:.1f}x OVER RANDOM PAIRING]
+Claim 3160 measured that the bulk harvests return the units their question asked for 3.6-11.7
+per cent of the time against 89-100 for the small targeted ones. There is a good objection to
+that. extraction_questions.evidence_gaps() deliberately asks in the evaluator's own words,
+because a gap says WHY the numbers already held do not answer the constraint -- its docstring
+gives constraint e28, where four values for exactly the right quantity were still INSUFFICIENT
+because they were juvenile grass carp in flume tests against adult zebrafish escape kinematics.
+A units-match metric cannot see regime, so it penalises precisely what makes a gap question
+better, and the low rate could have been the metric's fault.
+
+It is not. Topical overlap between each harvested claim and its own question, against a shuffled
+null where the claim is re-paired with a random question from the same file: {rowtxt}. At the
+two-content-word bar the real and shuffled rates are the same to one decimal place. The words a
+claim shares with its own question are the words it would share with any question in the file.
+
+So claim 3160 stands, by units and by topic both, and the harvest is returning material that is
+unrelated rather than merely differently-expressed.
+
+WHY THIS IS RECORDED RATHER THAN DROPPED: an attempted refutation that fails is evidence, and
+the objection is a natural one that the next reader will raise.
+
+SCOPE: one harvest file, a bag-of-words overlap, and a 4-character minimum token. A lexical
+measure cannot see a paraphrase, so it understates relevance in general -- which is why the
+SHUFFLED control, not the absolute rate, carries the argument: both arms are understated
+equally.""",
+        "measured", two[3], "lift over shuffled pairing at a two-content-word bar",
+        "analysis/units_match_rate.py --relevance", None)
+    print(f"\n  recorded claim {cid}")
+    return 0
+
+
 if __name__ == "__main__":
+    if "--relevance" in sys.argv:
+        raise SystemExit(relevance("--write" in sys.argv))
     raise SystemExit(main())
