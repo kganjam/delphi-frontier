@@ -1,0 +1,146 @@
+{
+ "1": {
+  "question": "Projected degree-heating-weeks at coral reef sites in 2050, in degC-weeks",
+  "units": "degC-weeks",
+  "from_quantity": "The constraint needs a projected 2050 degree-heating-weeks value at the planted site compared against the outplanted stock's measured tolerance threshold (DHW minus threshold \u2264 0 degC-weeks), and no c",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "2": {
+  "question": "Bleaching threshold (thermal tolerance) of coral stocks, in degC-weeks",
+  "units": "degC-weeks",
+  "from_quantity": "The constraint needs a projected 2050 degree-heating-weeks value at the planted site compared against the outplanted stock's measured tolerance threshold (DHW minus threshold \u2264 0 degC-weeks), and no c",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "3": {
+  "question": "Bicarbonate flux to the coral calcifying space, in mol m^-2 s^-1",
+  "units": "mol m^-2 s^-1",
+  "from_quantity": "No claim measures bicarbonate flux to the calcifying space (mol m^-2 s^-1), and none compares that flux under a thermal edit with the carbonate deposition rate. Claims 665 and 667 are only proposed in",
+  "scales": [
+   "organ"
+  ]
+ },
+ "4": {
+  "question": "Carbonate deposition rate in coral skeleton, in mol m^-2 s^-1",
+  "units": "mol m^-2 s^-1",
+  "from_quantity": "No claim measures bicarbonate flux to the calcifying space (mol m^-2 s^-1), and none compares that flux under a thermal edit with the carbonate deposition rate. Claims 665 and 667 are only proposed in",
+  "scales": [
+   "organ"
+  ]
+ },
+ "5": {
+  "question": "Attachment fraction among metamorphosed coral larvae, as a fraction",
+  "units": "fraction",
+  "from_quantity": "The quantity is the attachment fraction among metamorphosed larvae. Only claim 694 mentions it (0\u20132% attachment after tetrabromopyrrole-induced metamorphosis), but that is a proposed route, not a meas",
+  "scales": [
+   "tissue"
+  ]
+ },
+ "6": {
+  "question": "Persistence duration of acquired thermal tolerance in corals after sub-bleaching heat exposure, in months",
+  "units": "months",
+  "from_quantity": "The constraint concerns how long tolerance acquired from a sub-bleaching thermal pulse persists, which must be until the next seasonal heat peak. The only persistence value, claim 1265 (\u226510 years), is",
+  "scales": [
+   "organism"
+  ]
+ },
+ "7": {
+  "question": "Heritable gain in coral heat tolerance per generation, in degC or degC-weeks per generation",
+  "units": "degC/generation or degC-weeks/generation",
+  "from_quantity": "Generation time is reported (about 2 years for Stylophora pistillata and Pocillopora verrucosa in claims 1259/1260, and 3 years assumed in 1258), but it is only the time base. No claim measures the he",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "8": {
+  "question": "Rate of increase in heat stress at coral reef sites, in degC or degC-weeks per year",
+  "units": "degC/year or degC-weeks/year",
+  "from_quantity": "Generation time is reported (about 2 years for Stylophora pistillata and Pocillopora verrucosa in claims 1259/1260, and 3 years assumed in 1258), but it is only the time base. No claim measures the he",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "9": {
+  "question": "Thermal tolerance gain from hosting Durusdinium trenchii (D. trenchii) symbionts in corals, in degC",
+  "units": "degC",
+  "from_quantity": "Claim 669 gives a literature thermal gain of about +1 to 2 degC for D. trenchii, but it is a proposed route, not a measurement. No claim gives the projected site warming over the colony's reproductive",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "10": {
+  "question": "Projected warming at coral reef sites over decadal timescales, in degC",
+  "units": "degC",
+  "from_quantity": "Claim 669 gives a literature thermal gain of about +1 to 2 degC for D. trenchii, but it is a proposed route, not a measurement. No claim gives the projected site warming over the colony's reproductive",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "11": {
+  "question": "Ratio of symbiont-to-host carbon translocation to host respiration in corals at elevated temperature, dimensionless",
+  "units": "ratio",
+  "from_quantity": "Claim 478 only simulates host carbon balance. It reports that three of four interventions starve the host, but the excerpt cuts off before the fourth, and no claim gives a measured per-cell ratio of s",
+  "scales": [
+   "cell"
+  ]
+ },
+ "12": {
+  "question": "Fraction of bleaching-threshold variance explained by thermal optimum (T_opt) in field coral populations, as a fraction",
+  "units": "fraction",
+  "from_quantity": "The quantity required is the fraction of bleaching-threshold variance that the dominant knob (T_opt) explains in field data. Claim 1059 gives a simulated Sobol index of 0.843, which is exactly the mod",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "13": {
+  "question": "Colony shape factor (e.g., surface-area-to-volume ratio, height-to-width ratio) in reef-building corals, dimensionless",
+  "units": "dimensionless",
+  "from_quantity": "Every listed claim is a proposed route, not a measured colony shape factor. Claims 684 and 685 point toward opposite ends of the shape range, and none shows a single shape factor that meets both the s",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "14": {
+  "question": "Groove or crevice width on coral reef substrates used by coral recruits, in mm",
+  "units": "mm",
+  "from_quantity": "Claim 695 proposes 4 mm grooves, but it is a literature-derived intervention route, not a measured result, and it is truncated. Nothing here measures groove width against recruit size or grazer access",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "15": {
+  "question": "Size of coral recruits at settlement, in mm",
+  "units": "mm",
+  "from_quantity": "Claim 695 proposes 4 mm grooves, but it is a literature-derived intervention route, not a measured result, and it is truncated. Nothing here measures groove width against recruit size or grazer access",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "16": {
+  "question": "Thermal tolerance gain per coral generation, in degC or degC-weeks per generation",
+  "units": "degC/generation",
+  "from_quantity": "Generation-time values exist (2 to 10 years, claims 1259, 1260, 1258 and 1265), but no claim measures the tolerance gain per generation (688 is only a proposed target of about 1 DHW per generation) or",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "17": {
+  "question": "Regional ocean warming rate at coral reef sites, in degC per year",
+  "units": "degC/year",
+  "from_quantity": "Generation-time values exist (2 to 10 years, claims 1259, 1260, 1258 and 1265), but no claim measures the tolerance gain per generation (688 is only a proposed target of about 1 DHW per generation) or",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "18": {
+  "question": "Heritability of thermal optimum (T_opt) in corals, as a fraction or h^2 value",
+  "units": "fraction",
+  "from_quantity": "Claim 1059 identifies T_opt as the dominant knob, but no claim measures whether T_opt is heritable or transmissible across generations. Claim 688 only proposes breeding for about one DHW per generatio",
+  "scales": [
+   "ecology"
+  ]
+ }
+}

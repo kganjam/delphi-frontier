@@ -186,18 +186,28 @@ def statement(it: dict, qtext: dict[str, dict[str, str]] | None = None) -> str:
 DIMENSIONLESS = {
     "dimensionless", "unitless", "fraction", "ratio", "%", "percent", "percentage", "none", "-",
     "body lengths", "body weights", "body length", "body weight", "bl", "x", "fold", "times",
-    "fraction of body mass", "fraction of body weight",
+    "fraction of body mass", "fraction of body weight", "proportion", "proportions",
 }
+
+#: Spellings of one unit that must normalise together. Extended whenever a project turns one up;
+#: `degC` against `°C` cost 30 false mismatches in coral alone.
+SPELLINGS = {"degc": "°c", "degreesc": "°c", "celsius": "°c", "deg c": "°c",
+             "degreescelsius": "°c", "oc": "°c"}
+
+#: Words the extractor uses to say a value HAS no units. Treating them as a unit manufactures a
+#: mismatch against every question: 46 in coral alone.
+NO_UNITS = {"unstated", "not stated", "n/a", "na", "unknown", "not reported", "none given"}
 
 
 def _canon_unit(u: str) -> str:
     """Canonical form for the comparison: dimensionless synonyms collapse to one token."""
     flat = (u or "").strip().lower()
-    if not flat:
-        return ""
+    if not flat or flat in NO_UNITS:
+        return ""                      # "" means absent, and an absent side is never a mismatch
     if flat in DIMENSIONLESS or flat.replace(" ", "") in {d.replace(" ", "") for d in DIMENSIONLESS}:
         return "@dimensionless"
-    return flat.replace(" ", "")
+    tight = flat.replace(" ", "")
+    return SPELLINGS.get(tight, SPELLINGS.get(flat, tight))
 
 
 def _unit_note(qtext: dict | None, it: dict) -> str:
