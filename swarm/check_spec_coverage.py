@@ -23,7 +23,14 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SPEC_DIRS = [ROOT / "specs", ROOT / "docs" / "specs"]
-CODE_DIRS = [ROOT / "swarm", ROOT / "analysis"]
+#: THE WHOLE REPOSITORY, not two directories. The first version scanned swarm/ and analysis/
+#: only, and reported "16 of 21 specs named by nothing". There are 1,580 Python files outside
+#: those two, several of which name a spec directly -- engineering/biodesign_compiler,
+#: connectors/biomodels, connectors/bioservices -- and artifacts/genetic-blueprints/ carries its
+#: own check.py for SPEC-012. So the figure measured the two directories I happened to look in,
+#: which is the "state the domain your search covered" failure in AGENTS.md section 7.
+CODE_ROOT = ROOT
+SKIP_DIRS = {".git", "node_modules", ".venv", "__pycache__", "site-packages"}
 #: Every numbered or bulleted line in the spec. COUNTED OVER THE WHOLE FILE, NOT UNDER AN
 #: "Acceptance" HEADING, because anchoring on the heading undercounted badly and silently: the
 #: first version required a heading STARTING with Acceptance/Checkable/Gate/Requirements, so
@@ -49,15 +56,15 @@ SELF = pathlib.Path(__file__).resolve()
 
 def code_text() -> str:
     parts = []
-    for d in CODE_DIRS:
-        if d.is_dir():
-            for f in sorted(d.rglob("*.py")):
-                if f.resolve() == SELF:
-                    continue
-                try:
-                    parts.append(f.read_text(encoding="utf-8", errors="replace"))
-                except OSError:
-                    pass
+    for f in sorted(CODE_ROOT.rglob("*.py")):
+        if any(part in SKIP_DIRS for part in f.parts):
+            continue
+        if f.resolve() == SELF:
+            continue
+        try:
+            parts.append(f.read_text(encoding="utf-8", errors="replace"))
+        except OSError:
+            pass
     return "\n".join(parts)
 
 
@@ -110,8 +117,8 @@ def main() -> int:
         return 1
     named = unnamed = 0
     orphan_items = 0
-    print(f"\n  {len(files)} spec file(s); checking whether any Python under "
-          f"{', '.join(d.name for d in CODE_DIRS)} names each\n")
+    print(f"\n  {len(files)} spec file(s); checking whether "
+          f"any Python in the repository names each\n")
     print(f"  {'spec':<46}{'named in code':>14}{'listed items':>18}")
     for f in files:
         txt = f.read_text(encoding="utf-8", errors="replace")
