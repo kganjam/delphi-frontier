@@ -365,7 +365,21 @@ def main() -> int:
 
     n = 0
     for it, src in rows:
-        scale = smap.get(str(it.get("qfile", "")), {}).get(str(it.get("asked")))
+        # THE INHERITED SCALE IS NO LONGER WRITTEN TO claim.scale_id. Two mechanisms wrote
+        # that one column with different meanings: classify_scale.py places a claim "at the
+        # biological scale it is ABOUT", a judgement about the claim's own content, while this
+        # pipeline knew only which QUESTION fetched the row. Those agree only when the harvest
+        # is on topic, and measured 2026-11-05 over 375 gaps4 claims it often was not -- a
+        # keratocyte motility index inherited `behaviour`, a broiler embryo mass `organ`, a
+        # 590 nm length `cell`. Worse, the cheap mechanism silently won: classify_scale only
+        # ever visits `scale_id is null`, so an inherited value PERMANENTLY PRE-EMPTED the
+        # content judgement for that claim and nothing would have revisited it.
+        #
+        # Nothing is lost by not writing it. The statement already carries
+        # `asked: question N of <qfile>`, and the map file is committed beside the harvest, so
+        # the originating constraint's scale stays recoverable from the join those two make.
+        # It is still recorded -- just not in the column another system owns.
+        scale = None
         # A NUMBER WITH NO UNIT IS NOT A QUANTITY, which is SPEC ASK-artifact-graph rule 5 in
         # its own words, and writing one here turned that rule red on 2026-11-05: 10 of the 411
         # claims this module wrote committed a value_num with an empty units string. All ten
@@ -381,14 +395,15 @@ def main() -> int:
                               numeric(it.get("value")) if units else None, units,
                               src, str(it.get("read_level") or "full-text"))
         n += 1 if cid else 0
-    withscale = sum(1 for it, _ in rows
+    inherited = sum(1 for it, _ in rows
                     if smap.get(str(it.get("qfile", "")), {}).get(str(it.get("asked"))))
-    print(f"\n  recorded {n} claim(s); {withscale} carry a scale INHERITED from the "
-          f"originating constraint, {n - withscale} are NULL")
-    print("  An inherited scale is not this pipeline's judgement. The constraint rows disagree "
-          "with each other -- fin-ray stiffness is `tissue` on one and `protein` on another -- "
-          "so a question whose quantity maps to more than one scale is left NULL rather than "
-          "resolved, because picking one would turn an inherited disagreement into an assertion.")
+    print(f"\n  recorded {n} claim(s), all with scale_id NULL. {inherited} of them have an "
+          f"inherited scale available from their originating constraint; it is deliberately "
+          f"NOT written.")
+    print("  An inherited scale is not this pipeline's judgement -- it says only which question "
+          "fetched the row, and the harvest is often off topic. Writing it also pre-empted "
+          "classify_scale.py, which visits `scale_id is null` only. The scale stays recoverable "
+          "from `asked: question N of <qfile>` in the statement plus the committed map file.")
     return 0
 
 

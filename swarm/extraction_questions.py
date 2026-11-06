@@ -189,7 +189,22 @@ def ratio_unit(units: str) -> tuple[str, str] | None:
 
 
 def build(keep_dimensionless: bool = False, cap: int = 18,
-          source: str = "quantities") -> tuple[str, int, int, int]:
+          source: str = "quantities") -> tuple[str, int, int, int, dict]:
+    """Also returns the question->scale map, which the non-generalised path used to omit.
+
+    WHY IT WAS MISSING AND WHAT IT COST. The map is what lets a harvested value inherit the
+    scale of the constraint that asked for it, and claims_from_extraction leaves a value with no
+    map entry at NULL scale rather than guessing. It was built only in the --generalise branch,
+    because there a model REWRITES each question and the link back to its source quantity has to
+    be reconstructed from the model's own numbering. Without --generalise there is nothing to
+    reconstruct: question i IS quantity i, so the mapping is identity and strictly more reliable
+    than the generalised one.
+
+    Measured 2026-11-05: the gaps4 harvest ran on a non-generalised question file, so 375 of the
+    379 claims it produced carry no scale. Regenerating that file is safe -- the non-generalised
+    path is deterministic, and a regeneration reproduced all 18 questions identical in text and
+    order -- so the map below is valid for a harvest already run.
+    """
     qs = evidence_gaps() if source == "gaps" else open_quantities()
     # The units filter exists to drop ratios of THIS project's own numbers. A gap sentence is a
     # research question whatever its units are -- "no zebrafish study links a membrane-potential
@@ -224,8 +239,25 @@ def build(keep_dimensionless: bool = False, cap: int = 18,
     # alphabetically truncated an 18-question list at the letter "b" and never showed the
     # extractor anything past it.
     kept.sort(key=lambda t: (-t[2], hashlib.sha256(t[0].encode()).hexdigest()))
-    lines = []
+    lines, qmap = [], {}
     for i, (quantity, units, n) in enumerate(kept[:cap], 1):
+        # TWO SOURCES, TWO JOINS, and using the wrong one gives an empty map that looks like
+        # "no scale is known" rather than "I asked the wrong question". For the GAPS source the
+        # link is already one-to-one and already built: evidence_gaps() fills GAP_SCALE as it
+        # reads each row, because that sentence came from exactly that constraint. For the
+        # QUANTITY source several constraints can share a quantity and disagree about its
+        # scale, so the distinct lookup is right there and a question with more than one scale
+        # is left NULL rather than resolved.
+        if source == "gaps":
+            sc = GAP_SCALE.get(quantity, "")
+            scales = [sc] if sc else []
+        else:
+            scales = [r[0] for r in dbq.q(
+                "select distinct target_scale from constraint_entailed where "
+                f"project_id = {dbq.lit(PROJECT)} and status = 'open' and "
+                f"quantity = {dbq.lit(quantity)} and target_scale is not null")]
+        qmap[str(i)] = {"question": quantity[:200], "units": units,
+                        "from_quantity": quantity[:200], "scales": sorted(scales)}
         u = f" Units wanted: {units}." if units.strip() else ""
         many = f" ({n} open constraints need this.)" if n > 1 else ""
         # THE DECOMPOSITION INSTRUCTION WAS REMOVED AFTER BEING MEASURED. It asked the
@@ -247,7 +279,7 @@ def build(keep_dimensionless: bool = False, cap: int = 18,
                 "convert.]" if split else "")
         lines.append(f"{i}. {quantity}.{u}{many}{hint}\n   Report the species and the body "
                      f"length or life stage if the paper states them.")
-    return "\n".join(lines), len(kept[:cap]), dropped, collapsed
+    return "\n".join(lines), len(kept[:cap]), dropped, collapsed, qmap
 
 
 GENERALISE = """These are quantities a research project currently cannot answer. Each was written
@@ -340,9 +372,9 @@ def main() -> int:
     if "--cap" in sys.argv:
         cap = int(sys.argv[sys.argv.index("--cap") + 1])
     qs_for_control = evidence_gaps() if source == "gaps" else open_quantities()
-    text, n, dropped, collapsed = build(keep, cap, source)
+    text, n, dropped, collapsed, base_map = build(keep, cap, source)
 
-    gen_note, gen_map = "", {}
+    gen_note, gen_map = "", dict(base_map)   # identity map; --generalise replaces it
     if "--generalise" in sys.argv:
         from api_challenge import TENANTS, call      # api_allen excluded in exactly one place
         items = ([(q, u, c) for q, u, c in evidence_gaps()][:40] if source == "gaps"
