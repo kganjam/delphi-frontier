@@ -31,6 +31,7 @@ better than the nothing that was there before.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import pathlib
@@ -339,16 +340,29 @@ def main() -> int:
 
     # Dedupe against what is already recorded. The source string carries the paper id and the
     # quote, so re-running the harvester cannot double-record the same sentence.
+    # COMPARED AS MD5, BECAUSE THE SOURCE STRINGS CONTAIN NEWLINES AND THE DEDUP SET WAS
+    # SILENTLY SHREDDED BY THEM. dbq.q() splits its output on line boundaries, so a source
+    # holding a newline arrives as several fragments and the full string is never in the set.
+    # Measured 2026-11-06: the query counts 1042 rows in SQL and dbq.q parsed 1286 of them,
+    # and the exact source of a claim recorded seven times was NOT among them. 132 sources
+    # contain a newline.
+    #
+    # The consequence was that re-running the harvester re-recorded everything. 148 claims were
+    # written in one session from 52 distinct values -- 96 duplicate rows, 65 per cent -- which
+    # also inflates the denominator of the `grounded, non-fabricated claims` goal row (claim
+    # 3164). An md5 is one hex token and cannot be split, so the comparison survives whatever
+    # the value contains.
     existing = {r[0] for r in dbq.q(
-        f"select source from claim where project_id = {dbq.lit(PROJECT)} "
+        f"select md5(source) from claim where project_id = {dbq.lit(PROJECT)} "
         "and source like '%quote verified against the source%'")}
     rows, skipped, nonum = [], 0, 0
     for it in items:
         src = source_string(it)
-        if src in existing:
+        key = hashlib.md5(src.encode("utf-8")).hexdigest()      # noqa: S324 - dedup, not crypto
+        if key in existing:
             skipped += 1
             continue
-        existing.add(src)
+        existing.add(key)
         if numeric(it.get("value")) is None:
             nonum += 1
         rows.append((it, src))
