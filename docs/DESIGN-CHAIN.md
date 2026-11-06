@@ -35,6 +35,11 @@ _THE DRAG COEFFICIENT USED IN EVERY TRAJECTORY RESULT IS BELOW THE PHYSICAL FLOO
 claim 599 `literature` / `full-text`  
 _CORRECTION TO CLAIM 594: PARK & CHOI'S FLYING FISH IS A HIGH-ASPECT-RATIO WING, SO IT DOES NOT LICENSE THE LOW-AR LEV REGIME I INFERRED, AND CLAIM 571…_
 
+**Can growing the fish close the area shortfall?**  
+**21.5 fold increase in standard length needed to close 6.5x by growth, under alf/+**  
+claim 3322 `derived`  
+_[CORRECTS CLAIM 3320: THE SIGN OF THE SIZE EFFECT DEPENDS ON WHICH ALLELE. IT IS NEGATIVE FOR LONGFIN TL AND POSITIVE FOR alf/+, AND THE PRACTICAL CON…_
+
 
 ## ORGANISM / kinematics
 
@@ -126,6 +131,21 @@ _[EXTENDS CLAIM 1011 TO CAPTION LEVEL] The preprint's figure captions confirm th
 _no single value_  
 claim 1025 `literature` / `full-text`  
 _[CLOSES CLAIM 1024'S TRANSFER GAP QUALITATIVELY] The allometry claim 1024 could only establish for schleier is stated for LOF -- long fin, the kcnh2a…_
+
+**What does the fin-size literature actually MEASURE?**  
+**3 papers measuring ray length rather than fin area**  
+claim 3325 `literature` / `full-text`  
+_[THE BIOELECTRIC FIN-SIZE LITERATURE MEASURES RAY LENGTH AND NEVER AREA, IN ALL THREE PAPERS THE DESIGN DEPENDS ON -- SO THE PROJECT'S MISSING AREA NU…_
+
+**In what unit can the requirement be stated so the levers can address it?**  
+**1.41 fold additional caudal ray length needed beyond adult longfin, fan model**  
+claim 3326 `derived`  
+_[THE DESIGN REQUIREMENT, RESTATED IN THE UNITS THE LEVERS CONTROL: ABOUT 1.4x MORE CAUDAL RAY LENGTH THAN ADULT LONGFIN ALREADY SHOWS, OR 1.19x ON EAC…_
+
+**What does the best-evidenced variant deliver, in the assay the design needs?**  
+**1.16 fold fin-to-body ratio, S345E over non-transgenic, UNAMPUTATED fins**  
+claim 3331 `literature` / `full-text`  
+_[QUALIFIES CLAIM 3330: ITS 1.420 IS THE REGENERATION ASSAY, AND THE DESIGN NEEDS THE UNAMPUTATED ONE, WHICH THE PROJECT ALREADY HELD AT 1.16x] Claim 3…_
 
 
 ## ORGAN / swim bladder
@@ -251,11 +271,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 1135 live claims of 1274 for project `zebrafish-flight`; **139 superseded**, which is the project correcting itself and is not a defect.
+- 1678 live claims of 1826 for project `zebrafish-flight`; **148 superseded**, which is the project correcting itself and is not a defect.
 
 - (the same database also holds `coral` 740, `insect-flight` 323, `xenobot` 165, `limbless-mouse` 114 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `literature` 442, `derived` 238, `measured` 204, `simulated` 171, `unknown` 50, `assumed` 27, `refused` 3
+- live claims by evidence class: `literature` 830, `derived` 240, `measured` 228, `simulated` 217, `unknown` 113, `assumed` 47, `refused` 3
 
 
 **Two criteria, and they are not the same question:**

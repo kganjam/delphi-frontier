@@ -35,6 +35,8 @@ CHAIN = [
      "Is the drag coefficient the project uses physically attainable?", 565),
     ("ORGANISM / aerodynamics",
      "Is the gliding negative robust to the LIFT coefficient?", 599),
+    ("ORGANISM / aerodynamics",
+     "Can growing the fish close the area shortfall?", 3322),   # fin area SL^2.94-3.61 vs mass SL^3
     ("ORGANISM / kinematics",
      "What exit speed does the fish actually have?", 546),
     ("ORGANISM / kinematics",
@@ -68,6 +70,12 @@ CHAIN = [
      "Can fin AREA be enlarged without the ray-stiffness penalty?", 1013),
     ("ORGAN / fin morphology",
      "At what LIFE STAGE is the fin ratio measured, and which way does that err?", 1025),  # 1001 superseded by 1003: it read a FIT, not the specimens
+    ("ORGAN / fin morphology",
+     "What does the fin-size literature actually MEASURE?", 3325),   # ray length, never area
+    ("ORGAN / fin morphology",
+     "In what unit can the requirement be stated so the levers can address it?", 3326),
+    ("ORGAN / fin morphology",
+     "What does the best-evidenced variant deliver, in the assay the design needs?", 3331),
     ("ORGAN / swim bladder",
      "Can the body be made light enough?", 553),
     ("TISSUE / fin skeleton",
