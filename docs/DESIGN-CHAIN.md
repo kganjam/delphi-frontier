@@ -251,11 +251,11 @@ _WHAT THE REOPENED SPEED LEVER ACTUALLY BUYS: THE WEAK THRESHOLD IS MET AT ORDIN
 
 ## Where it stands
 
-- 1124 live claims of 1258 for project `zebrafish-flight`; **134 superseded**, which is the project correcting itself and is not a defect.
+- 1126 live claims of 1262 for project `zebrafish-flight`; **136 superseded**, which is the project correcting itself and is not a defect.
 
-- (the same database also holds `xenobot` 164, `insect-flight` 114, `limbless-mouse` 113, `coral` 58 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
+- (the same database also holds `insect-flight` 323, `xenobot` 164, `limbless-mouse` 113, `coral` 58 — NOT counted above, because an earlier version of this summary counted the whole table and reported another project's work as this one's)
 
-- live claims by evidence class: `literature` 440, `derived` 233, `measured` 200, `simulated` 171, `unknown` 50, `assumed` 27, `refused` 3
+- live claims by evidence class: `literature` 440, `derived` 234, `measured` 201, `simulated` 171, `unknown` 50, `assumed` 27, `refused` 3
 
 
 **Two criteria, and they are not the same question:**

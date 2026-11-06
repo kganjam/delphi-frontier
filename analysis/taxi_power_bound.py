@@ -81,13 +81,23 @@ def main() -> int:
 
     u1, u2 = U_EXIT[0], U_TAXI[0]
     dist = TAXI_BL[0] * L_BODY[0]
-    u_mean = 0.5 * (u1 + u2)
+    # THE LOWEST BOUND USES THE LONGEST POSSIBLE TRAVERSE TIME, not the arithmetic mean.
+    # This project's adversarial arm challenged the first version: "the 157.5 ms window assumes
+    # the mean speed is the arithmetic average of exit and takeoff speeds, which holds only
+    # under constant acceleration, so 13.14 W/kg is not the drag-free lower bound the claim says
+    # it is." Correct. Speed is bounded by u1 and u2 throughout, so d/u2 <= t <= d/u1, and the
+    # LOWER bound on power needs t_max = d/u1. That is 207.6 ms against the 157.5 ms the
+    # arithmetic mean gives, and it lowers the bound from 13.14 to 9.97 W/kg body -- a 1.32x
+    # overstatement, corrected. The closure survives: see the reading below.
+    u_mean = u1
     dt = dist / u_mean
     inc = specific_ke(u2) - specific_ke(u1)
     p_body = inc / dt
 
     print("\n  the taxi, from claims 443/1404 and the subproblems' own 20-body-length window:")
-    print(f"    speed {u1} -> {u2} m/s over {dist*100:.1f} cm at mean {u_mean:.2f} m/s")
+    print(f"    speed {u1} -> {u2} m/s over {dist*100:.1f} cm")
+    print(f"    time bounded by d/u2 = {1000*dist/u2:.1f} ms and d/u1 = {1000*dist/u1:.1f} ms; "
+          f"the LOWER bound on power takes the longest")
     print(f"    time available                 {dt*1000:7.1f} ms")
     print(f"    specific KE increment          {inc:7.2f} J/kg body")
     print(f"    body power required            {p_body:7.2f} W/kg body   (drag EXCLUDED)")
