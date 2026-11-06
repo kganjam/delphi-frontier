@@ -228,17 +228,23 @@ def build(keep_dimensionless: bool = False, cap: int = 18,
     for i, (quantity, units, n) in enumerate(kept[:cap], 1):
         u = f" Units wanted: {units}." if units.strip() else ""
         many = f" ({n} open constraints need this.)" if n > 1 else ""
+        # THE DECOMPOSITION INSTRUCTION WAS REMOVED AFTER BEING MEASURED. It asked the
+        # extractor to also accept the numerator or denominator on its own, on the reasoning
+        # that a paper states parts more often than quotients. Tested over four ratio questions
+        # in one harvest: Q5 (W/kg muscle) returned 5 values in the requested factors out of
+        # 222; Q6 (S/cm^2) 0 of 306; Q14 (J/kg muscle) 0 of 52; Q16 (m/s) 0 of 52. Asking for
+        # the parts did not make the literature yield the parts, so the instruction was clutter
+        # in every question that carried it.
+        #
+        # ratio_unit() SURVIVES AS A PREDICTOR, which is the half that measured true: a
+        # ratio-unit question returns a usable value far less often than a non-ratio one
+        # (claim 2769), so the flag is worth printing for whoever reads the question list and
+        # decides what to spend a harvest on. It no longer tells the extractor what to do.
         split = ratio_unit(units)
-        hint = ""
-        if split and split[1]:
-            hint = (f"\n   This is a RATIO. A paper is {_RATIO_FOLD}x more likely to state its "
-                    f"parts than the quotient, so ALSO accept a value for the numerator "
-                    f"({split[0]}) or the denominator ({split[1]}) on its own, and say which "
-                    f"one it is.")
-        elif split:
-            hint = ("\n   This is a RATIO written with negative exponents. A paper is more "
-                    "likely to state its parts than the quotient, so ALSO accept a value for "
-                    "either factor on its own, and say which one it is.")
+        hint = ("\n   [LOW-YIELD: this asks for a RATIO. Ratio-unit questions have returned a "
+                "value in the units asked for far less often than other questions in this "
+                "project -- see claim 2769. Expect the paper's own units and be prepared to "
+                "convert.]" if split else "")
         lines.append(f"{i}. {quantity}.{u}{many}{hint}\n   Report the species and the body "
                      f"length or life stage if the paper states them.")
     return "\n".join(lines), len(kept[:cap]), dropped, collapsed
