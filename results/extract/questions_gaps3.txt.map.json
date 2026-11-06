@@ -1,0 +1,130 @@
+{
+ "1": {
+  "question": "Number of tail beats during taxi phase from ~10 m/s to take-off speed in flying fish (Exocoetidae)",
+  "units": "tail beats",
+  "from_quantity": "No claim reports the number of tail beats in an exocoetid taxi from ~10 m/s to take-off for comparison with the 64-stroke bound. Claim 237 says exocoetid take-off is multi-stroke and claim 1183 gives ",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "2": {
+  "question": "Peak-to-peak tail-beat amplitude as a fraction of body length in larval or juvenile fish (10-30 mm body length)",
+  "units": "body lengths",
+  "from_quantity": "The only measured A_pp/body-length values (0.19\u20130.25 BL, claims 1190\u20131193) come from juvenile grass carp in flume tests. That is a different species and regime from the 18\u201330 mm body this constraint c",
+  "scales": [
+   "organ"
+  ]
+ },
+ "3": {
+  "question": "Resting membrane potential of fin-ray mesenchymal cells in adult teleost fish",
+  "units": "mV",
+  "from_quantity": "The constraint needs the in vivo resting membrane potential and its excursions in adult zebrafish fin-ray mesenchyme, including the long-fin K+-allele shift. No claim measures that. The -90 to -100 mV",
+  "scales": [
+   "protein"
+  ]
+ },
+ "4": {
+  "question": "Membrane conductance of fin mesenchymal cells or dermal fibroblasts in fish or other vertebrates",
+  "units": "S/cm^2",
+  "from_quantity": "Claim 295 derives only the *required* fin-mesenchyme membrane conductance (about 1e-9 to 4.8e-5 S/cm\u00b2, central ~2e-7) for holding a gradient of at least 10 mV. Its only measured values are surrogates ",
+  "scales": [
+   "cell"
+  ]
+ },
+ "5": {
+  "question": "Distance between Lat4a-expressing and Kcnh2a-expressing cell populations in regenerating fin rays",
+  "units": "um",
+  "from_quantity": "No claim measures where Lat4a acts relative to the Kcnh2a-acting intra-ray fibroblast lineage, or the distance between those cells. The listed claims establish only the allele stack (280, 233, 38), a ",
+  "scales": [
+   "protein"
+  ]
+ },
+ "6": {
+  "question": "Time post-amputation when lat4a gene expression peaks during fin regeneration in zebrafish or other teleosts",
+  "units": "dpa",
+  "from_quantity": "No claim measures when the suppressor (lat4a T200K) acts during regeneration. The constraint asks whether its protein activity falls within the enlarger's 6\u201330 dpa outgrowth-prolonging window, and cla",
+  "scales": [
+   "protein"
+  ]
+ },
+ "7": {
+  "question": "Duration of muscle pre-loading before rapid movement release in fish locomotor or feeding strikes",
+  "units": "s",
+  "from_quantity": "The only preload duration in the evidence is claim 957's 300 ms of epaxial pre-loading, which falls inside the 0.26\u20136.1 s bound. But it was measured in pipefish, not the project's zebrafish, so no cla",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "8": {
+  "question": "Mass-specific mechanical power output during burst swimming, normalized to body mass, in teleost fish",
+  "units": "W/kg body mass",
+  "from_quantity": "The constraint needs mass-specific mechanical power per kg of body mass during the taxi, at 87-334 W/kg body. The closest claim (309, 142.7 W/kg) is per kg of muscle, measured in a different species (",
+  "scales": [
+   "organ"
+  ]
+ },
+ "9": {
+  "question": "Net propulsive force during taxiing acceleration in flying fish or burst-swimming teleosts",
+  "units": "N",
+  "from_quantity": "No listed claim reports a net propulsive force in newtons from the measured taxi acceleration that could be checked against the [0.026, 8.8] N bound. The nearest claims are about something else: claim",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "10": {
+  "question": "Maximum sustained tail-beat frequency during burst or escape swimming in small teleost fish",
+  "units": "Hz",
+  "from_quantity": "The only capability figure for taxiing tail-beat frequency is the 52 Hz EMG maximum from small adults (claims 145, 193), which is a burst ceiling, not a demonstrated sustained beat at \u226552 Hz. The othe",
+  "scales": [
+   "organ"
+  ]
+ },
+ "11": {
+  "question": "Time to full pectoral fin abduction during fast-start or launch in teleost fish",
+  "units": "s",
+  "from_quantity": "None of the listed claims measures or derives the time to full pectoral abduction against the 0.05 s bound. Claim 226's 5-14 ms is a launch-release duration, and the lift-ratio claims (428, 964) conce",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "12": {
+  "question": "Body mass of juvenile or adult zebrafish or similar small teleosts",
+  "units": "g",
+  "from_quantity": "The lift arithmetic gives about 0.0038 N, which supports roughly 0.39 g, but no claim states the organism's actual body mass to compare against the [0.2, 0.8] g band. The nearest mass figure is claim ",
+  "scales": [
+   "organism"
+  ]
+ },
+ "13": {
+  "question": "Wing loading (weight per wing area) of pectoral fins in gliding or flying fish",
+  "units": "Pa",
+  "from_quantity": "No claim reports the effective wing loading (W/S)/C_L in Pa for comparison with the 13\u201327 Pa bound, nor the air-phase range gain at 1.38 or 0.45 m/s. Claim 972 gives a fin loading of 192 Pa, but that ",
+  "scales": [
+   "organ"
+  ]
+ },
+ "14": {
+  "question": "Speed at water exit during aerial launch in flying fish or jumping teleosts",
+  "units": "m/s",
+  "from_quantity": "No claim measures the air-phase launch speed itself. Claim 75's 1.38 m/s is an in-water fast-start maximum, which falls inside [1.31, 1.45] but is not the speed at water exit, and claims 1188 (guppy, ",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "15": {
+  "question": "Q10 temperature coefficient for fast-start swimming speed in teleost fish",
+  "units": "dimensionless",
+  "from_quantity": "The constraint requires an effective Q10 of fast-start peak speed over 23-39 C no greater than 2.46. None of the listed claims measures or derives how fast-start speed depends on temperature; they rep",
+  "scales": [
+   "ecology"
+  ]
+ },
+ "16": {
+  "question": "Duration of stage 1 (C-bend) in fast-start escape response in small teleost fish",
+  "units": "ms",
+  "from_quantity": "Claim 21 gives a 1 ms frame interval (1000 fps, Danos & Lauder), and claim 546 places peak speed 8 ms into the C-bend, but that comes from a different study (Demesmay 2025). No claim states the stage-",
+  "scales": [
+   "organism"
+  ]
+ }
+}

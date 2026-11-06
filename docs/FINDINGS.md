@@ -1,0 +1,1040 @@
+# Can a zebrafish be engineered to fly?
+
+**No. And the interesting part is how precisely no, and why two unrelated attempts fail for
+different reasons.**
+
+This is the top-level account. Every number below is recorded in the project graph with its
+evidence level and source; the [subproblem board](../library/pages/project/board.md) shows what is
+open and what each question is blocked on.
+
+---
+
+## The answer in one table
+
+| | Required | Available | Short by |
+|---|---|---|---|
+| Water-exit speed | 4.37 m/s | 0.45–1.38 m/s *measured* | **3.2×** *(vs the fastest of 50 fish; 9.7× vs the slowest)* |
+| ↳ *same row, newer source* | 4.37 m/s | **1.57 ± 0.27 m/s** *(Demesmay 2025, 240 fps)* | **2.78×** *(7.75× in kinetic energy)* |
+| **Pectoral fin area** | 26.7 cm² *(CL 0.6, 2 m/s)* | 1.4 cm² *whole-body silhouette* | **19.1× area = 4.37× LINEAR** |
+| **Fin-ray rigidity** | tip deflection ≤ 10% span | EI 1.5–4×10⁻⁹ N m² *in vivo* | **9–196×** *(and coupled — see below)* |
+| Launch kinetic energy | 3.82 mJ | — | **10×** |
+| Tail-beat for a taxi | 132–199 Hz *(contested: see below)* | 52 Hz *measured* | **2.5–3.8×** *(or 1.4–1.6×)* |
+| Pectoral muscle fraction | 7.5–20% | 1.4% *measured* | **5–15×** |
+| Muscle energy per stroke (spring route) | 98.5 J/kg | 32–81 J/kg *measured spring-loading work* (mean 53) | **1.2–3.1×** |
+
+:::{important} Two rows added and one re-sourced, 2026-11-04
+**The water-exit row now carries both measurements, and neither is deleted.** The original 0.45–1.38
+m/s is a *range across 50 fish*; Demesmay et al. 2025 ([DOI](https://doi.org/10.1371/journal.pbio.3003484))
+report 157 ± 27 cm/s as a *mean of maximal escape speeds* in controls, at 240 fps. These are
+different quantities and the disagreement is kept visible rather than reconciled. On the newer
+figure the deficit is **2.78× in speed and 7.75× in kinetic energy** — against **5.19× and 26.9×**
+on the superseded number, so the gap is materially smaller than this document carried for months.
+
+**The two new rows are the largest constraints in the project and were absent from this table.**
+Fin area had only ever been quoted as a 19.1× *area* ratio; area scales as length², so the figure a
+fin-length phenotype must be read against is **4.37× linear**. Rigidity had never appeared here at
+all, and at 9–196× it is the larger of the two.
+
+**And they are not independent.** Relative tip deflection scales as `L²/I(L)`, so enlarging the fin
+to fix the lift changes the stiffness problem by `4.37^(2−n)`, where `I ~ L^n` is **unmeasured**.
+That spans **0.052× to 19.1×** — a factor of 370, larger than either shortfall alone. Subproblem
+**S904** is open to measure `n`; until it is, the sign of the interaction is unknown, and the one
+phenotype the literature describes (König 2017: "an extended size of actinotrichia") is an
+*elongation*, which points to the unfavourable end.
+:::
+
+:::{caution} The tail-beat row rests on a contested regime assignment
+The 132–199 Hz figure comes from applying the Strouhal numbers of **small, low-Reynolds swimmers**
+— goldfish **0.54 at Re 7.1×10³**, tadpole 0.79 — on the argument that a 4 cm zebrafish is that
+case. A recovered replication recomputes Eloy's `St_opt = 0.75·Li^(1/3)` **at the taxi operating
+point** and gets St ≈ 0.30–0.34, hence **72–83 Hz** and a **1.4–1.6×** shortfall.
+
+**Both arithmetics are correct.** Checked here: St 0.54 → 131.6 Hz and St 0.30–0.34 → 73–83 Hz,
+reproducing each side exactly. The dispute is entirely *which Strouhal applies*.
+
+**And the operating point is not where the borrowed value was measured.** A 4 cm body at 1.95 m/s
+in water is **Re ≈ 7.8×10⁴**; even the caudal lobe alone is ≈2×10⁴. The goldfish value was taken
+at **7.1×10³**.
+
+**Settled against claim 52 by this project's own law library.** `library/laws/strouhal.yaml`
+declares `domain_of_validity: reynolds_min: 1.0e4`. The taxi point sits **inside** that domain.
+The goldfish (0.54, Re 7.1×10³) and lungfish (1.02, Re 7.0×10³) figures claim 52 borrowed are
+listed under `where_it_breaks` and are **below the law's own stated minimum** — so the claim
+applied out-of-domain exceptions to an in-domain case.
+
+The same file also gives Eloy's relation as `Li = (S/h²)·C_d/**2**`. The replication wrote it
+without the `/2`, which would scale its St by 0.794 — to **0.24–0.27**, further into the band and
+further from 0.54. **Both corrections push the same way.**
+
+**Still not a full re-derivation** — S and h for a zebrafish were not retrieved, so the 72–83 Hz
+figure itself is unverified. What is settled is that the 132–199 Hz figure rests on values the
+project's own law file places outside the applicable regime.
+:::
+
+:::{warning} Corrected 2026-11-04 — the last row's arithmetic did not work
+It read *"98.5 J/kg | **8.6 J/kg** delivered | 1.9×"*, and 98.5 / 8.6 is **11.45**, not 1.9.
+
+**Both numbers were right; they came from different comparisons.** Claim 227 states a **11.5×**
+gap against the 8.6 J/kg the muscle *"effectively delivers today"* **and** *"54–82 % of need"*
+against the 53–81 J/kg spring-loading work. The table took its Available cell from the first and
+its ratio from the second. A row about the **spring route** needs the spring comparator, so the
+1.9× compares the requirement against the *best measured spring-loading work* — frog, 53–81 J/kg —
+which claim 227 states as supplying *"only 54–82 % of need"*. That reproduces: 98.5/53 = 1.86 and
+53/98.5 = 53.8 %.
+
+8.6 J/kg is a different quantity that belongs elsewhere in the argument, not opposite a ratio
+computed from a different comparator. Anyone checking the table's arithmetic — which is the first
+thing a sceptical reader does — would have found it off by a factor of 6 and been right to
+distrust the rest.
+:::
+
+The best design buildable from **demonstrated** alleles is the zebrafish that already exists — the
+Daane *lat4a^nr21/+; kcnh2a^lof/+* double heterozygote. Granting it an unmeasured one-body-length
+wing, it produces **10% of body weight in lift at launch** and lengthens a 19.4 cm ballistic leap by
+**3–6 mm**.
+
+**The honest deliverable is a possibly detectable ~5–7% reduction in ascent deceleration — ~6%
+net.** Not flight, not a glide, not a meaningfully longer leap. Calling it flight would destroy the
+credibility of everything else here.
+
+:::{warning} Corrected 2026-11-04 — this read "5–10 %", and the 10 % was geometrically wrong
+A recovered replication caught it. **Lift acts perpendicular to the flight path**, so on a 45°
+leap its vertical component is `L·cos 45° = 0.707 L`. A lift/weight ratio of 10 % at exit therefore
+buys **7.1 %** of vertical reduction, not 10 % — and ~**6 %** once wing drag is included. The
+10 % upper end treated full lift at a 45° climb as though it acted vertically.
+
+Two further conditions the figure carries and the sentence did not: it is for the **designed
+196 mm² wing**, not any measured Daane fin (40–80 mm² fins give ~1–3 %), and it is **~0 for a
+vertical leap**, where cos θ → 0.
+
+The lift ratios themselves (10 % at exit, 5 % at apex) **replicate exactly**. Only the projection
+onto the vertical was wrong.
+:::
+
+---
+
+## Why the negative is worth more than a maybe
+
+Two **independent representations** were tried, and they fail on **different terms**:
+
+1. **Build a better wing** — more span, more area, stiffer rays. Fails on **lift and launch speed**,
+   by ≥10× on energy.
+2. **Store the launch energy** — latch-mediated spring actuation, the mechanism fleas, froghoppers
+   and mantis shrimp use to beat muscle power limits by orders of magnitude. Fails on **muscle
+   energy per stroke**, by 1.9×.
+
+The second route *removes the power wall entirely*: spring volume needs only **1–4% of body volume**,
+and the required 7400–18400 W/kg sits **within measured insect LaMSA** (36,000–74,000 W/kg). It
+still fails, because break-even needs essentially **all skeletal muscle loading one spring in a
+single stroke**.
+
+**When two unrelated framings hit a wall, the wall belongs to the problem.** Changing
+representation moved the shortfall from **≥10× to 1.9×**, so the reframe was right even though it
+still failed.
+
+:::{danger} That conclusion was then refuted, and the refutation is the better result
+**Superseded by S30.** The claim above continued *"the barrier is a property of single-impulse
+launch from water at this size"*. **The sign is wrong**, and so is the framing.
+
+Required specific energy scales as **m^0.36–0.53** (measured in exocoetids, Fish 1990), while
+single-stroke LaMSA supply per kg is **size-independent** (Sutton 2019). Since the exponent on
+demand exceeds the exponent on supply, the budget closes as mass **decreases**. The crossover is an
+**upper** bound at **m\* = 39 mg**, which makes a 0.4 g zebrafish **~10× too LARGE** for
+single-impulse launch, not too small.
+
+:::{note} The Sutton citation checked, 2026-11-04 — sound, with one scope caveat and one missed bound
+Resolved via PubMed to Sutton, Mendoza, Azizi, Longo, Olberding, Ilton & Patek,
+*Integr Comp Biol* 59(6):1609–1618, [doi:10.1093/icb/icz145](https://doi.org/10.1093/icb/icz145).
+The size-independence premise is supported: the abstract states that length–tension properties
+limit spring-actuated systems to **one third** of the work a muscle could produce, and muscle work
+per kg is itself size-independent, so LaMSA supply per kg is too.
+
+**The m\* = 39 mg crossover above is this project's own**, derived from the exponent comparison —
+it is *not* the "size related crossover point" the Sutton abstract names, which is between spring-
+and muscle-actuated *jumping*. The two are distinct and are not conflated here.
+
+**Scope, stated because the citation does not carry it:** Sutton's subject is jumping animals and
+the question of why large ones do not use springs. Applying its size-independence result to
+**water exit in a fish** is a cross-domain transfer. The underlying muscle and spring physics is
+the same, so the transfer is reasonable — but it is an inference this project makes, not a result
+the paper states.
+
+**A tighter bound looked available, and it was a double-count.** Sutton's one-third ceiling is
+quantitative where the argument above uses only size-independence, which suggested the muscle
+requirement is really ~**296 J/kg** — turning a 1.2–1.9× shortfall into 3.6–5.6×.
+
+**It does not hold, and the source settles it.** The figures come from **Mendoza & Azizi 2021,
+*"Tuned muscle and spring properties increase elastic energy storage"*, J Exp Biol 224(24),
+[doi:10.1242/jeb.243180](https://doi.org/10.1242/jeb.243180)** — muscle stretching its own series
+tendon in situ in Cuban tree frogs. These are **measurements of muscle work into a spring**, so
+whatever length–tension limit Sutton quantifies is already reflected in them. Multiplying by three
+on top counts the same limitation twice.
+
+**But tracing it corrected the row in the other direction.** Mendoza & Azizi measured
+**32–81 J/kg, mean 53** — and this table had been quoting **53–81**, i.e. mean-to-max, silently
+dropping the low end. The source subproblem S29 states the shortfall as **1.2–3.1×**; the table
+said 1.2–1.9×.
+
+**So the spring route is worse than this document has been reporting, not better.** Corrected above.
+:::
+
+And the hard reality check forced a reinterpretation rather than a tuning. The scaling predicts no
+exocoetid of 3–530 g can reach glide speed in one stroke — and that is what is observed. A **300 g
+*Cypselurus* needs 16.4 m/s, exits the water at only ~10 m/s (37% of the kinetic energy), and
+taxis** to 15–20 m/s with the lower caudal lobe still immersed.
+
+**So real fish gliders use a multi-stroke launch, and both results above modelled a single
+impulse.** The smallest real glider is ~1–2 g needing 4.23 m/s — essentially the same speed the
+zebrafish design requires. The difference is not the speed; it is the mode of reaching it.
+:::
+
+### The third route, modelled properly, closes it — and validates against a real animal
+
+**S32** wrote the equations of motion for the phase real gliders actually use: body airborne, lower
+caudal lobe still immersed, thrust applied over many strokes.
+
+**Thrust passes.** Leaving the water cuts body drag by **816×** — exactly the water/air density
+ratio — from 4.6 mN to 8 µN. Lobe thrust exceeds drag 3–40× and **speed genuinely rises**, doubling
+in ~10 strokes. S24 had closed this prematurely on tail-beat frequency.
+
+**But the taxi stalls at 2.2–2.9 m/s, 50–65% of the 4.41 m/s glide speed** — and the source puts
+the full uncertainty span at **1.9–2.9 m/s**, which this document had not carried. It does not fail to
+accelerate; it accelerates to a ceiling below what is needed. From the low-end exit it fails earlier
+still, on **weight support** rather than thrust.
+
+The ceiling has a clean form, and the interesting part is what cancels:
+
+```
+U_max = f · A_pp · √(c6 / C_D(Re))
+```
+
+Measured foil thrust scales with *tail* speed squared, independent of forward speed; drag scales as
+U². **Immersed area and body mass drop out entirely.** Only tail speed and lobe drag at Reynolds
+number remain.
+
+| | f·A_pp / V_to | lobe C_D | U_max / V_to |
+|---|---|---|---|
+| zebrafish, Re ~1e4 | 0.09–0.10 | 0.06–0.08 | **0.58–0.68** |
+| exocoetid, Re ~3e5 | 0.09–0.10 | ~0.01 | **1.3–1.5** |
+
+**They differ in exactly one quantity.**
+
+**And the model is CONSISTENT WITH the animal that succeeds — which is weaker than validation,
+and the source document said so.** The same equations reproduce the exocoetid taxi to 15 m/s and
+Deng 2019's 36 W **only with Reynolds-dependent lobe drag; with a constant C_D a flying fish
+could not taxi at all.**
+
+**Two qualifiers from the originating document (commit `c1b761eb`, S32) were dropped when this
+passage was written, and both matter:**
+
+1. *"φ and A_pp are assumed, so this is a **consistency check, not a calibration**."* The 36 W
+   agreement is between Floryan's pitching power law with two assumed parameters and **Deng
+   2019's CFD**, read at **abstract** level (bioRxiv 765560; full text returned HTTP 429 or
+   exceeded the size limit on six attempts). It is a **simulated** number, not an observation.
+2. The exocoetid lobe C_D is **not measured**. S32's assumptions table calls it an *"ASSUMED
+   extrapolation"* — the measured-span value *"scaled as Re^−½ outside the measured span"* — and
+   says it matters *"decisively for the exocoetid"*. Floryan's 0.08 at Re 4,780 scaled that way
+   to Re 3×10⁵ gives 0.0101, which is the tabulated value (claim 1016).
+
+**So the Reynolds effect is not independently evidenced here.** The two rows of the table above
+are one measurement and an extrapolation of it under an assumed exponent of ½, which is why any
+exponent fitted across them returns ≈½ (claim 1016), and why claims 992 and 1014 were recovering
+their own input. Claim 1015 adds that appendage **configuration** alone moved one angelfish's
+drag coefficient by 4.30× at fixed Reynolds number — 43–86% of the gap between these rows.
+
+That is the strongest form this result can take: **one parameter explains both the success and the
+failure.**
+
+**Reopening condition, falsifiable:** an airborne zebrafish lobe beating at **1.4–2.2× its best
+measured burst tail speed**, or surface-piercing lobe thrust at Re 1e4 measuring well above the 2-D
+foil law.
+
+---
+
+## What is real, and what is not
+
+**Real genetic precedent.** Daane et al. 2021 ([doi:10.1016/j.cub.2021.08.054](https://doi.org/10.1016/j.cub.2021.08.054))
+phenocopied flying-fish **fin proportions** in zebrafish by crossing two dominant alleles. Our DOI
+check resolves it to *"Modulation of bioelectric cues in the evolution of flying fishes."*
+
+**And the gap that matters:** they measured fin **length** only. **Fin area was never reported**, and
+no lift, glide or flight was tested. The physics needs area.
+
+**Two build blockers, found by trying to build it:**
+
+- The symbol `lat4a` **resolves to nothing** in UniProt or NCBI Gene. It is `slc43a2a`
+  (GeneID 393221, chromosome 15) — identified from Daane's own chromosome mapping, with four
+  positive controls proving the search worked.
+- Every UniProt entry for `slc43a2a` is **153 aa** — too short to contain a residue 200, so **the
+  T200K substitution is unrepresentable** in the standard references. Only Ensembl GRCz11 carries
+  the full-length product: `ENSDARP00000138218` (577 aa) and `ENSDARP00000120945` (571 aa).
+
+  **Both carry threonine at position 200**, which is what the allele name predicts — so the
+  substitution is now confirmed against a reference rather than taken from the nomenclature, the
+  1-based index convention is established rather than assumed, and the 153 aa UniProt entries are
+  demonstrably **fragments** rather than a conflicting annotation. That last point matters for an
+  implementer: the two sources do not disagree about the protein, one of them is simply partial.
+
+An implementer working from standard sources **fails twice before designing a guide RNA**.
+
+### And when they get there, the guide RNA is not the tool they expect
+
+**Codon 200 is `ACA`.** Under the standard genetic code the minimum substitution distance from
+Thr to Lys is **1**, but only from `ACA`→`AAA` or `ACG`→`AAG`; from `ACU` or `ACC` it is **2**. So
+T200K is a **single base change** here: **C→A at codon position 2**.
+
+**That single base cannot be written by a base editor.** C→A is a transversion. Cytosine base
+editors make C→T and adenine base editors make A→G — a CBE at this site yields `ACA`→`ATA`, which
+is **isoleucine, not lysine**. The edit needs **prime editing or HDR**, despite being one
+nucleotide.
+
+This is the kind of thing that is invisible at the allele-name level and decides the bench
+protocol. `lat4a^nr21` reads like a point mutation, and it is one; it is just not a point mutation
+the cheapest tool can make.
+
+The substitution-distance law is kernel-backed (`Delphi.Genotype.claimed_substitutions_rules_out`,
+pinned at commit `ba62f16`), and it was re-derived here against the three instances its own
+statement commits to — Phe→Leu 1, Trp→Stop 1, Met→Trp 2 — all of which reproduce, so the code table
+used matches the one the kernel checked. The reading frame carries its own control: the CDS is
+1734 nt, 578 codons, starts `ATG`, ends `TGA`, and codon 200 translates to Thr.
+
+**What the law does not say**, in its own third named hypothesis: reachability in the code is only
+reachability. It does not say the substitution occurred, was favoured, or has the claimed effect.
+
+### The protein scale, measured rather than asserted
+
+Three independent routes now agree that **position 200 of the full-length product is threonine** —
+the Ensembl sequence, the query row of the alignment search, and the folded structure. That is the
+cheapest possible check on an off-by-one in the edit, and it is the only one available: a guide RNA
+aimed at the wrong codon fails silently.
+
+| | |
+|---|---|
+| PDB70 alignment depth at residue 200 | **0** (474 of 577 positions uncovered; max depth 2) |
+| ESMFold2 pLDDT at residue 200 | **97.7** |
+| mean pLDDT / pTM (577 aa, MSA-free) | 85.9 / 0.823 |
+| window 190–210 vs whole protein | 95.1 vs 85.9 |
+
+**The two rows that look contradictory are the result.** The alignment database has nothing to say
+about residue 200, and an MSA-free model folds that exact region at the *highest confidence in the
+molecule*. So low alignment depth here does **not** indicate a flexible or disordered region — had
+the fold come back weak, the honest reading would have been *the alignment ran out*, and there is
+no weak confidence to misread in the first place.
+
+**What this does not license.** pLDDT is the model's confidence in itself, not an accuracy, and
+there is no experimental structure for this protein to check it against. It says the model is
+internally certain about a fold nobody has measured.
+
+### T200K, folded separately: the measurements stand, the conclusion does not
+
+> **WITHDRAWN 2026-11-04.** The heading below used to read *"the fold survives, the effect is
+> confined to the site"*, and the section concluded that T200K is **tolerated by the fold**. That
+> conclusion is withdrawn. Every number in it reproduces; what failed is the inference, and it
+> failed against a control run afterwards.
+>
+> **L219P** — a proline into the middle of a 93 %-hydrophobic transmembrane helix at window pLDDT
+> 98.6, one residue like T200K and 19 residues away — was folded under identical settings as a
+> **must-flag** case. ProteinMPNN, a different model on a different principle, rates it about
+> **10⁶ times less likely** than T200K (probability 7.7 × 10⁻¹⁸ against 5.5 × 10⁻¹², and its rank
+> there is *stable* across samples where T200K's is not). It is the more disruptive substitution by
+> every independent measure available.
+>
+> | at its own site | Δ pLDDT | in sd | rank among 577 |
+> |---|---|---|---|
+> | T200K | −10.0 | 15.9 | **1** |
+> | **L219P** (must flag) | **−0.1** | 0.4 | **414** |
+>
+> Globally L219P moved mean pLDDT **+0.24 — upward** — and pTM from 0.8232 to 0.8329, also upward.
+>
+> **UPDATED later the same day — the box below was itself superseded twice, and the final reading is
+> different again.** Two things in it are now wrong. First, the "0.4 sd" used the *per-residue delta
+> distribution* as its noise estimate, not replicates; four wild-type replicates put residue 219's own
+> noise at **0.0050**, which makes L219P's −0.09 an **18.5 sd** effect that *was* detected (claim 477).
+> Second, "anti-correlated with severity" was the best model of two points and did not survive five
+> more. A seven-point ladder at residue 200 — A, T, V, I, K, F, W — shows the uncharged response is a
+> smooth **dose** in volume (+0.40, +0.05, +0.24, −0.34, −3.59, −7.23 across 88.6→227.8 Å³), and that
+> **I at 166.7 Å³ gives −0.34 while K at 168.6 Å³ gives −9.99**. 1.9 Å³ apart, 9.65 pLDDT different.
+> The driver is **charge**, worth **−9.38** at one position against **−7.63** for the entire volume
+> range (claim 501). And none of it generalises: the same ladder at residue 219 gives −0.03 to −0.26
+> (claim 494). **The conclusion that T200K is not shown "tolerated" is unchanged throughout**; what
+> changed four times is why. Kept rather than rewritten, because the sequence of readings is the
+> honest record of how the number was understood.
+>
+> **FINAL READING, after thirteen substitutions at this one site (claim 517).** The charge reading
+> above is also superseded. Glutamine — the **uncharged** isostere of glutamate — drops **−7.72**,
+> *more* than charged glutamate's −6.29, so removing the charge while holding shape and length fixed
+> does not remove the effect. The variable that separates all thirteen residues is **side-chain
+> heavy-atom count**:
+>
+> | | residues | Δ pLDDT |
+> |---|---|---|
+> | **≤ 4 atoms — flat** | A(1) T(3) V(3) D(4) N(4) I(4) | +0.40 … −0.59 |
+> | **≥ 5 atoms — drops** | E(5) Q(5) K(5) H(6) R(7) F(7) W(10) | −3.59 … −15.38 |
+>
+> Max flat = 4, min dropping = 5, **no exceptions**. Charge, sign, β-branching and volume all cut
+> *across* the two groups — valine at 140.0 Å³ gives +0.24 while glutamate at 138.4 gives −6.29.
+>
+> **Four successive models were refuted here, each by the next residue placed**: a steric gate near
+> 168 Å³ (by isoleucine), positive-charge-specificity (by glutamate), charge dominance (by
+> glutamine), and the reach hypothesis (by the same structure). **The conclusion that T200K is not
+> shown "tolerated" survived all four.** What this section demonstrates is not a result about
+> lysine — it is that a pLDDT delta at one position tracks a property of the *substituted residue*
+> that has nothing to do with how damaging the substitution is.
+>
+> **So the statistic is anti-correlated with severity, not merely insensitive.** It gave its largest
+> response in the protein to the milder substitution and nothing to the severe one. The sentence
+> below that reads *"the informative part is that it stayed local, not that it happened"* is
+> precisely the inference the control refuses: staying local is what the metric does regardless.
+>
+> Kept rather than deleted because the reasoning is the reusable part, and because the section was
+> already carefully caveated and still reached a wrong conclusion — caveats did not save it, a
+> control did. **Whether T200K is tolerated is now an open question**, and answering it needs a
+> method whose sensitivity to a single substitution has been demonstrated rather than assumed.
+> Recorded as grader_calibration id 3 (`untrusted`) and claims 460 / 462.
+>
+> **FIFTH MODEL REFUTED, AND THIS ONE TAKES THE SITE WITH IT (claims 521 / 522).** The
+> heavy-atom reading above was registered as a prediction before being tested — claim 518 named
+> methionine and leucine, each four heavy atoms, each required to be **flat** under 1.5 pLDDT.
+> **Methionine dropped 3.33**, 2.2× the threshold the prediction itself named and 29× the
+> replicate sd of 0.1160. So "no exceptions" was true of the thirteen residues in the table and
+> false of the fourteenth. Claim 518 had already given the reason: all thirteen were chosen to
+> test charge, sign and reach, **none to test atom count**, so the clean break at four-versus-five
+> was a property of the sample. The discarded volume model is not vindicated by getting methionine
+> right — it is refuted twice by the table above, where I(166.7 Å³) is flat and E(138.4 Å³) drops.
+> A depth-from-CB rule (flat iff the side chain reaches at most two bonds past CB) separates all
+> fourteen, but it was found *after* seeing the residue that broke the atom model, so it is a
+> hypothesis and not a result — and **no remaining natural amino acid at this site can separate
+> the two readings**, so the queued leucine fold cannot decide it either.
+>
+> **The sentence that has to go furthest is the one claiming the delta tracks a property of the
+> substituted residue.** It does not. The same three substitutions were folded at residue 200 and
+> at residue 219: **lysine drops 9.99 at site 200 and 0.03 at site 219**, nineteen residues apart
+> in the same protein. Mean paired effect 5.87 against 0.13, a factor of **47** — and the *ordering
+> flips*, K > W > A at 200 against W > A > K at 219, so no per-site normalisation rescues it. A
+> pLDDT delta reports how tolerant a **position** is in the model's own representation. **This
+> project must not build a design pipeline that ranks variants by pLDDT delta**, which is what the
+> characterisation was for; the answer came back negative and that closes the line rather than
+> extending it. Every model in this section, this one included, was fitted at site 200 alone,
+> where the representation happens to be sensitive; at 219 nothing moves and there is nothing to
+> fit. **Significance against magnitude, at our own expense:** the replicate sd at 219 is 0.0050,
+> so tryptophan's 0.26 drop there is a **52-sd** effect and is still nothing at all.
+>
+> **T200L closed it (claim 525).** The second registered residue dropped **5.44**, 3.6× the
+> threshold, so *both* residues claim 518 named before folding came back wrong, and the
+> depth-from-CB rule — flagged above as post-hoc and untested — is now tested and dead, because
+> leucine sits two bonds past CB with isoleucine and aspartate. **Isoleucine against leucine is
+> the sharpest pair in the series:** same formula, same heavy-atom count, same depth, same volume
+> to 0.1 Å³, differing only in where the methyl branch sits — and **0.34 against 5.44**. No count,
+> volume or reach variable can separate a pair identical in all of them. Six models refuted at
+> this one site. The line is closed, and claim 522 says why: the drop is not a property of the
+> residue.
+
+
+
+| | WT | T200K | Δ |
+|---|---|---|---|
+| mean pLDDT | 85.95 | 85.83 | **−0.11** |
+| pTM | 0.823 | 0.824 | +0.001 |
+| pLDDT at residue 200 | 97.7 | 87.7 | **−10.0** |
+| window 190–210 mean | — | — | −0.79 |
+
+**The −10.0 at residue 200 is the largest absolute shift anywhere in the protein — 0 of 577
+residues move more — and it is 16.0 population standard deviations of the per-residue Δ.** Yet the
+global numbers do not move at all.
+
+~~So the substitution is **tolerated by the fold rather than fold-breaking**~~ — **withdrawn, see
+the box above.** The reasoning it supported is kept because it remains the hypothesis worth
+testing: a dominant allele acting by change- or gain-of-function rather than by loss of a folded
+product would fit what `lat4a^nr21` is reported to be, a dominant fin-size *suppressor* rather than
+a null. That remains **a hypothesis with no structural evidence for or against it**, which is a
+weaker position than this document held before the control was run.
+
+**Three things this does not show, and the first is the one most easily over-read.** A pLDDT drop
+at a substituted position is *partly expected for any substitution*, because the local sequence
+context changed; the informative part is that it stayed local, not that it happened. pLDDT is not a
+stability measure and no ΔΔG was computed — `stab-ddg` turned out to be a binding-interface tool
+and ESM-2 was paused platform-side. And nothing here touches transport function or the fin
+phenotype.
+
+The comparison carried its own control: the WT model contains **THR** at 200 and the mutant
+contains **LYS**, asserted in the analysis, so the two runs demonstrably folded different sequences
+rather than the same one twice.
+
+### A second model class, and the control that deflated it
+
+ProteinMPNN — structure-conditioned sequence design — was run on the same WT backbone and asked
+what belongs at position 200. Raw result: **lysine rank 14 of 21, probability ≈ 0, against
+threonine at rank 2** — a probability ratio of order 10¹⁵. Read alone, that looks like a strong
+verdict against the substitution.
+
+**It is not, and the control is the finding.** Lysine's *median* rank across all 577 positions of
+this protein is **12**, and **64.8 %** of positions rank lysine at least as well as position 200
+does. Lysine is simply a rarely-chosen residue throughout a hydrophobic membrane transporter. And
+the model's whole-protein sequence recovery is **32.4 %** — the native residue is top-1 at only
+32.8 % of positions — so a single-position disagreement carries almost no evidential weight by
+construction.
+
+**What survives:** the top six choices at 200 are **V, T, L, I, M, A** — all small and hydrophobic
+— so the site sits in a buried-like environment where a charged residue is locally unusual. That is
+weak, independent corroboration of the ESMFold2 result: **two different model classes agree the
+site is locally perturbed, and neither says the protein breaks.**
+
+This is what the raw number would have bought without its control: a dramatic-looking 10¹⁵ ratio
+reported as evidence, when the same ratio holds at two thirds of the protein.
+
+The parse carried its own control, and needed one: this writer orders `B_iso_or_equiv` at field 12
+and `occupancy` at 13, and every occupancy is exactly `1.0` — so a positional parse written for a
+standard mmCIF reports a mean pLDDT of **1.0** and looks fine. Reading the `_atom_site.` header
+gives 85.9, matching the run's own `plddt_mean` of 0.8595.
+
+### The edit stack: two demonstrated alleles out of eight required slots
+
+**S15** asked for a minimal stack where *every edit is individually demonstrated in zebrafish*.
+
+**Two alleles** produce the fin allometry: `kcnh2a^lof(dt2)` (longfin, cis-ectopic *kcnh2a*,
+coordinated fin overgrowth) crossed with `lat4a^nr21/dmh26` (dominant T200K — and notably a fin-size
+**suppressor**). Their viable transheterozygote is the published flying-fish-like phenocopy.
+
+That the mechanism is **enlarger + suppressor rather than uniform enlargement** is why the published
+result concerns fin *proportions*. The design lever is differential allometry across fins, not
+growth of one fin.
+
+:::{danger} The edited gene is not fin-specific, and nothing in this project had asked
+`SLC43A2`/LAT4 — the human ortholog of the gene carrying T200K — has three **experimental**
+UniProt function statements (Q8N370, entry v169):
+
+- a uniporter for **L-phenylalanine, L-methionine and L-branched-chain amino acids**, which *"may
+  control the transepithelial (re)absorption of neutral amino acid in **kidney and small
+  intestine**"* (PMIDs 15659399, 30379325, 26305885);
+- transport by facilitated diffusion, Na⁺/Cl⁻/pH-independent (PMID 15659399);
+- **efflux of 3,3′-diiodo-L-thyronine (3,3′-T2) and 3-iodo-L-tyrosine** (PMID 26305885).
+
+If the zebrafish paralog keeps either role, **T200K is a systemic intervention** — amino-acid
+handling and thyroid-hormone-metabolite transport — not a fin-local one. The thyroid link is also
+*mechanistically suggestive* rather than merely a side effect, since thyroid hormone drives
+zebrafish fin development.
+
+**Scope, and it is the whole caveat.** This is the **human** ortholog. Zebrafish `slc43a2a` has
+**no curated function at all** — UniProt returns only the two unreviewed 153 aa fragments, neither
+with a FUNCTION comment. Nothing here establishes that the zebrafish gene does any of this. It
+establishes that **the question was never asked**, which is precisely what the registry's
+pleiotropy-closure law (G2) exists to force.
+:::
+
+**Six required capabilities contain no demonstrated zebrafish edit at all:** membrane stiffness,
+launch power, aerial stability, vestibular and visual function in air, aerial gas exchange, mass
+reduction.
+
+**A third fin allele exists and does NOT fit the stack, which is worth more than if it did.**
+`cacna1g` homozygous mutants regenerate extraordinarily long fins (Le Bleu et al. 2025,
+[doi:10.1242/dev.204739](https://doi.org/10.1242/dev.204739)) — a demonstrated zebrafish
+loss-of-function long-fin model. But the authors state it **decouples developmental from
+regenerative** outgrowth: the fin lengthens *while regenerating after amputation*. It is not a lever
+for a larger fin in an intact animal, so it cannot be added to the stack as a third enlarger, and
+counting it would have inflated two demonstrated slots to three on a misreading of what the allele
+does.
+
+**Two of eight slots is not a buildable stack**, and the subproblem refuted itself on the project's
+own criterion rather than assembling something speculative. So the honest answer to *"can we get to
+real genetic manipulations?"* is: **two of them, and six have never been done in this animal.**
+
+An independent check: the required wing area at a 2 m/s launch is ~20 cm² against a ~1.4 cm²
+whole-body dorsal silhouette — a **14× shortfall**, falling to 0.6× only at a 10 m/s launch. That
+reproduces the launch-speed barrier from a completely different direction.
+
+:::{caution} That 14× assumes C_L = 0.8, and this project's own claim 5 argues for ≤ 0.6
+Area scales as `1/C_L`, so the assumption moves the shortfall directly:
+
+| C_L | area at 2 m/s | shortfall vs 1.4 cm² | **linear ×** |
+|---|---|---|---|
+| 0.5 *(flat plate, per a replication)* | 32.0 cm² | 22.9× | 4.79× |
+| 0.6 *(claim 5 — **SUPERSEDED by claim 86**)* | 26.7 cm² | 19.1× | 4.37× |
+| **0.8** *(assumed, and used throughout)* | 20.0 cm² | **14.3×** | 3.78× |
+| **1.0** *(cambered/corrugated — **the superseding value, claim 86**)* | 16.0 cm² | **11.4×** | **3.38×** |
+
+:::{important} The linear column is the one a genetic phenotype can be compared against
+**Corrected within the same day.** The 4.37× figure was first reported against **claim 5's CL ≤ 0.6**,
+and claim 5 is **superseded by claim 86**, which measures CL_max ≈ **1.0 (0.9–1.1)** near Re 3×10³ for
+cambered/corrugated thin wings and finds ≤0.6 holds "only for a flat plate on weak evidence". At the
+superseding value the demand is **3.38× linear**, not 4.37×. Both rows are kept and the superseded one
+is labelled, because **the fin's own CL is unknown** and a membrane is arguably neither a flat plate
+nor a corrugated wing — so the honest statement is the **range**, not either endpoint.
+
+**Added 2026-11-04 (claim 491).** Every figure above is an *area* ratio, and this document carried
+only area ratios for months. Area scales as length², so the demand a fin-length mutant has to meet
+is the **square root** — 19.1× area is **4.37× linear**, not 19×.
+
+That changes what the target looks like. Across the inputs actually in dispute — C_L from 0.5 to
+1.07, and a stall speed allowed to rise from 2 to 3 m/s — the linear demand runs **2.18× to 4.79×**.
+A fin-length phenotype is measured in linear units, so this is the range any candidate mutant must
+be read against, and "19-fold" was never the number to compare it with.
+
+**What is still missing is the other side of the ratio.** The *reachable* enlargement is recorded
+nowhere in this project: S5 is open with no answer, and the live claim graph contains no
+enlargement factor at all. A PubMed search (`kcnk5b zebrafish fin`, 6 of 6 records retrieved,
+abstract level) found that none of the six papers states a magnitude in its abstract, and full-text
+retrieval of Daane 2018 and Jiang 2024 showed why: the measurements are in **figures**, which the
+PMC text extraction drops. So the required side is computed and controlled, and the reachable side
+cannot be obtained with the retrieval available here (claims 492, 493).
+:::
+
+**The assumed 0.8 is above the ceiling one of this project's own claims argues for**, so the
+headline 14× sits on the *optimistic* side of the internal evidence. At claim 5's ceiling it is
+19×. A recovered replication disputes claim 5 in the other direction — ~1.0 for a
+cambered/corrugated thin wing (snake section 1.1, dragonfly 0.93–1.07 at Re ~3×10³), 0.4–0.55 for
+a flat plate — and a fin membrane is arguably neither.
+
+**The conclusion is unaffected** — every value in that range leaves an order-of-magnitude
+shortfall. What the spread shows is that the *precision* of "14×" is not earned: the honest range
+is **11–23×**, and the figure quoted is the most favourable third of it.
+:::
+
+### A third check, formal, from a registry this project did not author
+
+The **Delphi Lean law registry** (lawset 1.6.0, 53 laws with Lean theorems) was given the design —
+*Danio rerio*, 0.4 g, 1.4 cm² lifting area, C_L,max 0.8, 4.41 m/s. It returned **exactly one
+binding violation**: `C9 / thompson1917-ch02-06`, status `accepted`, band `proved`.
+
+| | |
+|---|---|
+| v_min at 1.4 cm² | **7.56 m/s** vs the design's 4.41 — **1.71× too slow** |
+| lifting area needed at 4.41 m/s | **4.12 cm²** vs 1.4 available — **2.94× short** |
+| verdict | *lift cannot reach the weight even at C_L,max* |
+
+**The agreement is the point.** Our own figure is ~20 cm² at a 2 m/s launch; lift area scales as
+1/v², so propagated to 4.41 m/s that is **4.11 cm²**, against the registry's **4.12 cm²** — **0.06 %
+apart**, from a separately derived formula in a registry we did not write.
+
+**And it refused to over-reach, mechanically.** Seven rows came back `out-of-scope` rather than
+violated, each because the constraint is calibrated against a single *Exocoetidae* reference
+specimen and the design is *Danio rerio*. Each of those rows still records, in a separate
+`evaluator_verdict` field, what the formula *would* have said — `violated` for five of them. So the
+registry holds both facts without conflating them: **the arithmetic fails, and the law does not
+apply here.**
+
+That is precisely the distinction [two of our own entailment agents lost](architecture/cross-scale-constraints.md)
+when they refuted zebrafish claims with exocoetid measurements. The registry gets it right by
+construction, because scope is a *declared field on the law* rather than a judgement made per
+verdict — which is the design lesson worth carrying back.
+
+**Stated by the tool itself, not softened here:** this is a floating-point evaluation of
+Lean-backed formulas, **not a kernel check**; kernel certificates exist only for recorded examples.
+21 of 29 evaluated rows returned `cannot-evaluate` for missing inputs, so this is one constraint
+genuinely tested, not a clean sweep.
+
+---
+
+## Three decisive experiments, all cheap, all bench-scale
+
+1. **Measure pectoral fin AREA in the existing Daane double heterozygote.** The authors measured
+   length and never area — **the animal exists and the measurement does not.** It decides whether
+   even the ~5–7% phenotype is detectable.
+
+   **Sizing, with one correction.** At CV_area = 0.10, 90 % power and α = 0.0167, **n ≈ 28 per
+   genotype** — a figure an independent replication reproduces. But the claim that measuring
+   *area* rather than *length* cuts the required n **four-fold is wrong**: it is **~1×**.
+
+   Under isotropic scaling `area = length²`, so a 5 % length effect becomes a 10.25 % area effect
+   — **and the CV doubles with it** (delta method: `d(L²)/L² = 2·dL/L`). Sample size scales as
+   `(CV / effect)²`, so both transformations nearly cancel: 4.00 → 3.81, a reduction of **1.05×**.
+   The four-fold figure comes from doubling the effect and **not** the noise.
+
+   This does not weaken the recommendation — area is still the quantity the physics needs, and
+   length cannot substitute for it. It removes a statistical argument that was never real.
+2. **In-situ single-stroke spring-loading work of zebrafish fast myotomal muscle.** At or above
+   **~99 J/kg** the energy term closes and the launch route reopens.
+3. **Zebrafish C-start PIV efficiency**, which sets the 0.37 hydromechanical efficiency the whole
+   launch budget rests on.
+
+   **Quantified 2026-11-04.** The requirement is `10.17 / (0.30 · 0.93 · η_h)`, which reproduces
+   98.5 J/kg at η_h = 0.37. But **0.37 is a point taken from a cited range of 0.34–0.39**, and the
+   budget is linear in η_h, so the cited source alone puts the requirement at **93.5–107.2 J/kg**.
+   The document has been quoting the midpoint as if it were the number.
+
+   | η_h | required | shortfall vs 32–81 J/kg |
+   |---|---|---|
+   | 0.39 *(pike upper)* | 93.5 | 1.2–2.9× |
+   | **0.37** *(the value used)* | **98.5** | **1.2–3.1×** |
+   | 0.34 *(pike lower)* | 107.2 | 1.3–3.4× |
+   | 0.25 *(hypothetical)* | 145.8 | 1.8–4.6× |
+
+   **The other two inputs, traced the same day.** `98.5 = 10.17 / (0.30 · 0.93 · 0.37)`, and the
+   0.30 is the one that matters:
+
+   | input | what it is |
+   |---|---|
+   | 10.17 J/kg | derived energy need |
+   | **0.30** | **an assumption** — S29 states *"the one-side 30 % is my assumption"*, taken as half of a 60 % whose own table is marked *"SECONDARY review figure; primary not read"* |
+   | 0.93 | tendon return |
+   | 0.37 | a point from a cited 0.34–0.39 pike range |
+
+   | f_muscle | required | shortfall vs 32–81 J/kg |
+   |---|---|---|
+   | 0.60 *all skeletal muscle* | 49.3 | 0.6–1.5× |
+   | **0.30** *the assumed one side* | **98.5** | **1.2–3.1×** |
+   | 0.20 *upper jumper value* | 147.8 | 1.8–4.6× |
+
+   **The source document is honest about this and the summary was not.** S29 flags the assumption
+   in its own text and lists the dissected axial muscle fraction as a decisive experiment. This
+   document carried neither caveat, and presented 98.5 as a number. **At 0.60 the row would read
+   0.6×, i.e. the energy term closing** — so the headline rests on an assumption that, moved to
+   the other end of its own stated range, reverses the finding.
+
+   **And the value is pike** — a much larger fish at far higher Reynolds number — applied to a
+   zebrafish. Whether a 0.4 g fish at Re ~10⁴ achieves the same hydromechanical efficiency is
+   **not known and not asserted here in either direction**; it is listed as a decisive experiment
+   precisely because nobody has measured it. What the table above establishes is only the
+   **sensitivity**: a fifth off the efficiency adds half again to the requirement.
+
+None is a programme. Each is a measurement.
+
+---
+
+## How much of this is measured
+
+Of **295** live claims: **163 derived**, **56 measured**, 37 literature, **27 unknown**,
+11 simulated, 1 assumed. Most of this project is *derived from* measurements rather than measured —
+legitimate for a design study, and the number to probe first.
+
+**`unknown` went from 90 to 27, and most of the recovery was a bug rather than a judgement.**
+**55** of the 90 carried an explicit, valid evidence level *in their own text* — written there by
+an earlier importer that put the agent's answer in prose instead of in the column. The current
+harvester does it correctly, so this was one-off historical damage, not a live defect. Restoring
+them is mechanical and was verified: all 55 stored levels match the text they were read from.
+A further **8** were assigned by reading the full claim one at a time, each recording in its source
+field why — and the rule used was *the level describes what the conclusion rests on, not the
+strongest input in it*, which is why a figure-read input feeding a calculation lands as `derived`.
+
+**The remaining 27 are mostly correct.** Reading 20 of the original 90 by hand: **9 are correctly
+`unknown`** — a stated non-result (*"adult zebrafish fast-start
+peak velocity is unknown"*), the scope of a negative (*"the lat4a absence is against UniProtKB and
+NCBI Gene only"*), a source that could not be read (*"the table is image-only"*), a preserved
+disagreement (*"relayed as 3.8e-6 by Puri 2018 and 565e-6 in the Flammang abstract"*), and
+reproducibility or scope caveats. **An evidence level would be wrong for every one of those** —
+there is no measurement to level.
+
+The other **11 of 20 are factual claims whose level was genuinely lost**, including a direct
+measurement (*"per-fish maximum fast-start speeds span ~0.45–1.38 m/s"*) sitting at `unknown`.
+
+**The sample was 20 taken in id order, not at random, so early claims are over-represented** —
+the split was indicative, not measured, and the eventual recovery rate (63 of 90) came out higher
+than that sample implied.
+Each of the 11 needs reading to assign a level; nothing can do it mechanically, because a classifier
+that distinguishes *"X is unknown"* from *"X is 1.38 m/s"* by pattern is the same forbidden-string
+check this project has documented failing three times.
+
+**An earlier version of this passage called all 90 a quality gap.** That was asserted from a count
+without reading the rows — the error this document exists to catch.
+
+**Only 10 of 295 claims carry a `run_id`** — a command that reproduces them. The rest trace to an
+agent's prose and no further. See [the empty set](architecture/the-empty-set.md) §4.
+
+**753 challenges have been resolved**, and the base rate is uncomfortable and informative:
+**70.4 % weakened, 22.7 % survived, 6.9 % refuted**. Sampling six weakened verdicts found all six
+substantive. The recurring shape is *"the arithmetic reproduces, but the inference overreaches"* —
+so the low survival rate is a finding **about us**, not about the challengers.
+
+:::{note} An independent replication disputed these numbers, and the database settles it in their favour
+A re-derivation of the original audit got **29.5 % survival** against the recorded 17 %, and
+flagged in its own note that *"the database the claim counted was not accessible to settle which
+record is wrong"*. Counted directly: the first 156 resolved challenges give 107 weakened,
+**26 survived** — exactly as recorded — and 23 refuted, i.e. **16.7 %**. The original stands.
+
+**The cause is a population mismatch worth knowing about.** Git holds **305** `swarm-challenge`
+blocks; the database holds **843** challenge rows, 753 resolved. A row is created when the
+generator *dispatches* a challenge; a block exists only where an agent *wrote the result up*. So
+git blocks are a **biased subset**, not a proxy for the population, and any statistic taken from
+them diverges systematically.
+
+The replication was wrong and behaved correctly: it recomputed independently, reached a different
+number, named exactly what would settle it, and declined to assert which record was in error.
+:::
+
+**The weakened rate is now a measurement rather than an impression.** At 231 challenges it was
+70 %; at **753** — a 3.3× larger sample — it is **70.4 %**. A base rate that stable across that
+much more evidence is not a small-sample artifact.
+
+The other two moved, and in the direction that matters: **refuted roughly halved (13 % → 6.9 %)
+while survived rose (17 % → 22.7 %)**. The most likely reading is that the early claims were the
+easy targets and the graph has since been corrected toward statements that hold — but this is an
+inference about a changing population, not a controlled comparison, and the challengers' prompts
+were edited during that period.
+
+The grader producing those verdicts has been **calibrated**: 7/7 on a blind benchmark, 4/4 on
+seeded defects spanning arithmetic, regime, scale and evidence-level inflation. **Two of the four
+seeded defects are real errors this project made.**
+
+---
+
+## An independent replication arm was running, and its output was being thrown away
+
+`generate.py` describes replication as *"the cheapest hallucination detector there is"*: an agent
+re-derives a claim's number **without being shown the original**. **134 such results were produced.
+None was ever recorded.** The harvester's block regex matched four kinds and its dispatch had
+three branches, so every `swarm-replication` block was parsed, counted in the "blocks found"
+total, and dropped. Recovered 2026-11-04: **103 stored, 86 agreeing, 17 disagreeing.**
+
+**Four of the 17 have been adjudicated. Two corrected this document; one is now openly contested;
+one is a detail that changes nothing.**
+
+| claim | the disagreement | outcome |
+|---|---|---|
+| 194 | the 10 % upper end treats full lift at a 45° climb as vertical | **replication right** — headline deliverable corrected to ~5–7 % |
+| 310 | measuring area does not cut n four-fold | **replication right** — real reduction is 1.05×; isotropy doubles the CV too |
+| 52 | the tail-beat row borrows a Strouhal measured 11× away in Re | **unresolved** — both arithmetics reproduce; the row now carries both |
+| 298 | the AR convention factor mixes two of Fish 1990's tables | **unsettled, and immaterial** — both candidate bars leave the conclusion intact |
+| 203 | fish red muscle reaches ~28 W/kg, not 5–10 | **original right, on method** — 28 is an *optimized isolated-tissue* value; Rome & Swank's own conclusion warns against using those to predict whole-animal performance |
+| 5 | C_L,max is ~1.0, not ≤ 0.6 | **exposed an internal inconsistency** — the project assumes 0.8, above claim 5's own ceiling; honest shortfall range is 11–23×, not 14× |
+| 232 / 304 | the girdle section modulus is ~1.0e-3, not 3.6–6.8e-3 mm³ | **unresolved and conclusion-relevant** — both numbers reproduce on *different sections*; if the dorsal cleithral limb is load-bearing the girdle **fails** at measured size (0.61×) and passes only after scaling to 40 mm |
+| 31 | and2's cysteine depletion is z = −1.6, not −2.02 | **replication right, on method** — p flips 0.022 → 0.055 across the boundary, and z = −2.02 only appears at a window that fails the project's own control. The zero close-pairs and absent CxxC *do* reproduce |
+| 207 | the challenger survival rate | **original right** — the replication counted git blocks, a biased subset of the database |
+
+| 31 | and2's cysteine depletion is not significant | **replication right, on method** — p flips 0.022 → 0.055, and z = −2.02 only appears at a window failing the project's own control |
+| 201, 260 | lower bounds and a pitch mode differ | **minor** — the replications state the conclusions stand; 201's moment and bone section *reproduce exactly* |
+| 11 | the a3m holds 76 records, not 72 | **ORIGINAL RIGHT — settled 2026-11-04.** The file *is* committed at `results/fish-proteins/structures/` and holds **exactly 72** records. I had called this undecidable on the strength of claim 210, which itself asserted the file was never committed; **claim 210 is refuted and superseded** |
+| 296, 181 | loop delay and actinotrichial modulus | **unresolved** — in both, the replication could not verify the inputs its own alternative needs |
+| 29 | and1 does depart from the shuffle null | **source-only** — two replications agree and cite the claim's own table against it; not re-run here |
+
+**All 17 have now been read.** They are stored as `artifact_signal` rows with `voter_kind: agent`.
+
+**Final tally: the arm was right 4 times, wrong twice, raised 4 unresolved or immaterial
+questions, and exposed one internal inconsistency.** Two of its correct findings were in this
+document's headline material — the lead deliverable and the top recommended experiment.
+
+**The uncomfortable summary:** the bug that discarded all of this was a dispatch with three
+branches for four kinds. It ran for the project's entire life, and the harvester printed a
+"blocks found" total that included the blocks it was dropping.
+
+## What is and is not machine-checked in this document
+
+A precise answer, because "every number is checked" is the kind of claim this document spends its
+length refusing to accept from others. Of **49** bold numeric assertions:
+
+| | count | how it is backed |
+|---|---|---|
+| **design arithmetic + audit ratios** | **23** | `analysis/headline_table.py` recomputes each from its own inputs and **exits non-zero on drift** |
+| run outputs | 9 | a `run` row with a `code_sha` — ESMFold2 pLDDT, ProteinMPNN ranks, the shuffle p |
+| graph statistics | 7 | live counts; **deliberately not pinned**, since a script asserting them would go stale the moment the graph moves |
+| external lookups | 1 | a PubMed count, reproducible only by re-querying |
+| everything else | 9 | counts about this document, and ratios whose inputs are run outputs |
+
+**So the honest statement is: the design arithmetic and the recomputable audit ratios are
+machine-checked; nine numbers are not.**
+
+The audit ratios were the gap this section named an hour ago, and five of them are now checked —
+the quotient that exposed the broken table row (`98.5/8.6 = 11.45`), the 45° lift projection
+(`10·cos 45° = 7.07`), the one-third ceiling that was rejected as a double-count (`98.5×3 = 295.5`),
+the 1/v² propagation (`20·(2/4.41)² = 4.11`), and the area-vs-length sample-size ratio (**1.05**,
+where ignoring the CV doubling gives the 4.2 that was wrong).
+
+The nine that remain are **counts about this document itself** and **ratios whose inputs are run
+outputs** — a ProteinMPNN rank percentile, a sequence-recovery fraction. Those are backed by a
+`run_id` rather than by recomputation, which is a different guarantee, not an absent one.
+
+## Open items, stated so the next reader does not have to find them
+
+Everything below is unresolved **and known to be unresolved**. Nothing here is a to-do list of
+work that would obviously succeed; each is a specific question with a stated reason it is open.
+
+### Could change a conclusion
+
+| item | why it matters | what would settle it |
+|---|---|---|
+| **Which girdle limb carries the fin-root moment** about the AP axis | if the dorsal cleithral limb is binding, the girdle **fails** at measured size (0.61×) rather than passing at 2.1–3.9× | **a structural analysis nobody has done** — whether the limbs load in *series* (weakest section governs → fail) or *parallel* (stiffer ventral limb governs → pass). Tested for reachability three ways: both analyses already decoded the mesh and agree on the numbers; a morphology paper would not give a load path; and PubMed returns **0** for *"zebrafish cleithrum biomechanics"* against **64** for *"cleithrum"* alone, so that zero is a real absence |
+| **How the ray's second moment `I` scales with length `n` in `I ~ L^n`** | it decides the **sign** of the coupling between the two largest shortfalls. The fin needs 2.2–4.8× linear enlargement for lift and is already **9–196× too compliant**; relative tip deflection goes as `L^(2−n)`, so **n > 2 means enlargement helps, n < 2 means it compounds** — at n = 0 the rigidity shortfall grows 19-fold to **172–3743×**. The span is a factor of **370**, larger than either shortfall alone, and the project has been reporting the two as independent | **micro-CT or sections of longfin vs wild-type rays** at matched proximodistal positions, fitting `I` against `L`. Subproblem **S904**. Not answerable from abstracts: the kcnk5b literature describes the phenotype as ray *lengthening* (König 2017, "an extended size of actinotrichia") and none of the six papers found states a thickness measurement |
+| **The Strouhal regime for the taxi** | the headline table row is either **2.5–3.8×** or **1.4–1.6×** | re-derive Eloy's Lighthill number at the taxi operating point; both arithmetics already reproduce |
+| ~~Whether `and1` departs from the shuffle null~~ | **CLOSED 2026-11-04** | re-run here: **p = 0.0050**, reproducing both replications. Claim 29 is refuted. Both controls pass — a planted repeat is caught at p = 0.0050, a shuffled copy of `and1` returns p = 0.607. The effect is **significant but small**: 0.1157 against a shuffle maximum of 0.1154 |
+
+### Known weaknesses in numbers that are quoted
+
+- **C_L = 0.8 is assumed, and the ceiling it was once measured against is superseded.** This line
+  used to read that 0.8 *exceeds* claim 5's ≤ 0.6 — **claim 5 is superseded by claim 86**, which
+  measures CL_max ≈ **1.0 (0.9–1.1)** near Re 3×10³ for cambered/corrugated thin wings and finds
+  ≤ 0.6 holds "only for a flat plate on weak evidence". So 0.8 now sits *below* the superseding
+  value, not above a ceiling. **The fin's own C_L is unknown** and a membrane is arguably neither a
+  flat plate nor a corrugated wing, so the honest area-shortfall range is **11–23×** and the linear
+  demand **2.18–4.79×** — a range, not either endpoint. *(Corrected 2026-11-04, claim 510, after the
+  4.37× figure had been headlined from the superseded end.)*
+- **η_h = 0.37 is a point from a cited 0.34–0.39 range**, and is a *pike* value applied to a
+  zebrafish at Re ~10⁴. The requirement spans **93.5–107.2 J/kg** from the cited range alone.
+- **f_muscle = 0.30 is an assumption** — half of a 60 % whose own table is marked *"SECONDARY
+  review figure; primary not read"*. At 0.60 the energy term **closes**.
+- **The 0.93 spring-return efficiency is the most favourable reading of its own sources.** Traced
+  2026-11-04: S29 cites *"hysteresis ~7–10 % for tendon: **Ker 1981, ABSTRACT**; **Gosline 2002
+  resilience 90–92 %, SECONDARY**"*. That gives 0.90–0.93 from Ker and 0.90–0.92 from Gosline, so
+  **0.93 is the top of one range and above the other entirely**, and neither source was read in
+  full. The effect is small — 98.5 → 101.8 J/kg at 0.90, a 3.3 % spread — but it is the **fourth
+  input in a row** taken from the favourable end of its own evidence.
+
+### Structural gaps in the record itself
+
+- **Only 11 of 295 claims carry a `run_id`** — a command that reproduces them. The rest trace to
+  an agent's prose and cannot be given one retroactively without inventing provenance.
+- **11 of 21 mechanisms in the schema hold no rows at all** ([the empty set](architecture/the-empty-set.md)),
+  so any rule quantified over them is vacuously true. `grade` and `rubric` are empty, which is why
+  [SPEC-evaluation-kernel](specs/SPEC-evaluation-kernel.md) reads green: **grading never happened.**
+- **20 literature claims have no `read_level`** and 10 subproblems no `answer_kind`. Both are left
+  red deliberately — the agent never supplied the value, and inventing one is the fabrication those
+  fields exist to prevent.
+- **Formal verification reaches the organism scale and not the DNA scale.** The Delphi registry's
+  five genotype laws (G1–G5) return `cannot-evaluate`; supplying `genotype_edits` cleared the
+  `missing` list without producing a verdict.
+- ~~The `kcnk5b` a3m was never committed~~ — **false, corrected 2026-11-04.** It is at
+  `results/fish-proteins/structures/kcnk5b_pdb70.a3m`, holds **72 records**, and its depth profile
+  recomputes exactly: 57 at residue 100, 27 at 200, 2 at 300, **0 from 326 onward**. The result is
+  independently reproducible from this repository. **A second finding fell out:** `and1` and `and2`
+  each have an alignment of **one record — the query alone**, so the actinodins have **no PDB70
+  structural homologues at all**, independently consistent with their pTM of 0.185–0.202.
+
+## What this does not establish
+
+- Fin **area** has never been measured in any enlarged-fin zebrafish, so the central geometric input
+  is an extrapolation.
+- **Membrane stiffness has no computational route, not merely no demonstrated allele.** The
+  actinotrichia proteins are actinodins — `and1` (E7F5V5, 570 aa), `and2` (A9JRX1, 508 aa), `and3`
+  (Q7SZZ6, 295 aa). Measured here from primary sequence, they carry **no collagen triple-helix
+  signature**: glycine fractions of 5.4 / 4.5 / 2.7 % and longest in-frame Gly-X-Y runs of **2, 2
+  and 1** triplets, against a `col1a1a` positive control at **26.4 % glycine and a 339-triplet
+  run**. That is a ~170× separation, so the assay discriminates and the negative is informative.
+  It confirms the project's existing "not collagen-like despite being termed elastoidin" claim by
+  an independent route.
+
+  **But no model in reach predicts a modulus from a sequence.** ProteinMPNN designs sequences
+  compatible with a *backbone*, not stiffer ones; ESMFold2 returns a structure and its own
+  confidence. So a "stiffer actinodin variant" is not something this project can currently produce
+  or evaluate, and any such design would be a claim with nothing behind it.
+
+  **Folding it made that sharper: the question is at the wrong level of description.** MSA-free
+  ESMFold2 on `and1` returns **pTM 0.202**, mean pLDDT **69.7**, only **2.8 %** of residues above
+  90, and a longest ordered stretch of **49 residues**. The control is `slc43a2a` WT — same model,
+  same settings, same day, 577 aa against 570 — at **pTM 0.823**, mean **85.9**, **58.1 %** above
+  90, **477** residues above 70.
+
+  | | slc43a2a (control) | and1 | and2 | **and3** |
+  |---|---|---|---|---|
+  | length | 577 | 570 | 508 | **295** |
+  | pTM | 0.823 | **0.202** | **0.196** | **0.185** |
+  | mean pLDDT | 85.9 | 69.7 | 64.6 | **71.6** |
+  | residues > 90 | 58.1 % | **2.8 %** | **2.8 %** | **7.5 %** |
+  | residues > 70 | 477 of 577 | **304 of 570** |
+  | **longest contiguous run > 70** | **102** | **49** |
+
+  ESMFold2 is MSA-free, so **all three got identical (absent) alignment treatment** — the
+  difference is in the sequences, not an alignment-depth artifact. Both actinodins are predicted
+  largely extended, with no compact tertiary structure: what an extracellular fibrillar protein
+  should look like.
+
+  **All three paralogs land within pTM 0.185–0.202**, across a **twofold range in length**
+  (295–570 aa), against the control's 0.823. Three independent sequences converging on the same
+  answer is a far stronger statement than one, and it was not guaranteed.
+
+  **`and3` is the shortest and scores the lowest**, which cuts *against* the usual length
+  dependence — shorter chains generally reach a confident global topology more easily. A short
+  protein scoring lowest is therefore stronger evidence, not weaker.
+
+  *(Corrected 2026-11-04: an earlier version of this table labelled **477** as the "longest run",
+  when 477 is the **count** of residues above 70 out of 577. The control's longest contiguous run
+  is **102**. Found by recomputing the column rather than re-reading it.)*
+
+  So a fibrous protein's stiffness comes from **supramolecular assembly** — fibril packing and
+  cross-linking — and a single-chain monomer prediction cannot address that *even in principle*.
+  Adding a monomer stiffness predictor would not help. The honest status of this capability is
+  **no demonstrated allele, no in-silico route, and the available route is at the wrong level**.
+
+  :::{danger} That hypothesis was then tested with a dimer, and it did not hold
+  OpenFold3 predicts *assemblies*, so an `and3` homodimer (2 × 295 = 590 residues) tests the claim
+  rather than arguing it. **ipTM 0.106** — the *interface* confidence — means **no confident
+  interface was predicted at all**, and pTM *fell* slightly against the monomer (0.169 vs 0.185).
+  **Dimerisation produced no order.**
+
+  So "assembly creates the structure a monomer cannot show" is **not** what two chains produce.
+  What survives is narrower: *if* actinodin order is supramolecular, it needs **more than a pair** —
+  fibril-scale assembly, cross-linking, or a non-actinodin partner.
+
+  **The caveat cuts both ways, and is why this is not a refutation of the biology.** Structure
+  predictors are trained overwhelmingly on PDB entries, where fibrillar and disordered assemblies
+  are barely represented. A low ipTM is **strong evidence about what the model can say and weak
+  evidence about what the protein does.** The honest summary: the hypothesis is **untested**, not
+  tested and passed.
+  :::
+- The S26 active-stiffening margin rests on a boundary condition that **could not be verified**: the
+  publisher blocks full text and the OA service 404s. The order of magnitude is confirmed by the
+  paper's own abstract; the exact factor is not.
+- No organism was built, no measurement was taken by us, and no simulation was validated against an
+  experiment. Every number is literature, derivation, or model output, labelled as such.
+- **Three routes have now failed on three different terms** — wings on lift, a single spring
+  impulse on muscle energy density, and the multi-stroke taxi on Reynolds-limited lobe drag. The
+  third is the best founded because it reproduces a real glider. None of this proves no route
+  exists; it means the three that have been modelled do not work, each for a reason that can be
+  checked independently.
+- The headline 4.37 m/s **looks the most precise number here and is the most structurally
+  dependent**: its ±0.11 propagates neither the wing area's total absence of an interval nor the two
+  untested structural assumptions beneath it (steady lift, rigid wing).
+- **The two-model review panel is a one-model panel on most claims, and always the same model
+  is missing.** The panel exists to end "topic selects reviewer selects verdict": a refusal with
+  `category: bio` used to divert protein claims to the fallback model, so topic chose reviewer.
+  Measured over 370 claims carrying panel rows, 61 have a verdict from only one model, and the
+  lone voice is `claude-sonnet-5-5` in **104 of 104** rows — opus is never the lone voice,
+  because it is opus's refusals that create the gap. A fresh cross-project run refused far
+  harder: **49 of 82 opus calls (60%)** against sonnet's **0**.
+  It changes verdicts, not just bookkeeping. Sonnet alone weakened 98 of 104 (94%) and passed 4
+  (**3.8%**); a true panel weakened 479 of 640 (75%) and passed 157 (**24.5%**). A claim that
+  trips the refusal classifier is about **six times less likely to survive review** — the
+  original confound, intact, running at the refusal rate.
+  **The two models are totally ordered on strictness.** Across **17 of 17** disagreements opus
+  returned the gentler verdict (16 `survived` vs `weakened`, 1 `weakened` vs `refuted`); the
+  reverse ordering occurs **zero** times, which was checked rather than assumed. So a missing
+  opus verdict is not a random reviewer dropping out — it removes the only voice that ever
+  passes anything.
+  Refusals are now recorded as `api-panel-refused:<model>@<tenant>` with outcome `not-run`, so
+  the shortfall is countable. That makes it visible; it does not make those claims reviewed.
+- **The refusal rate that degrades the panel is set by the project's TOPIC, which is the
+  confound's mechanism measured directly.** Across one cross-project run (352 calls, $4.51),
+  the share of claims a model declined to review ranged from **0% to 79%** and tracked subject
+  matter, not claim quality: limbless-mouse (mouse developmental genetics, Fgf4/Fgf8 knockouts)
+  **37 of 47 degraded (79%)**, zebrafish-flight **60%**, insect-flight **3 of 16 (19%)**,
+  xenobot **0 of 29**, coral **0 of 3**. A bioelectrics or knockout claim is reviewed by one
+  model; a soft-robotics or reef claim is reviewed by two. That is "topic selects reviewer"
+  shown on its own terms.
+  **The project-level survival rates do NOT line up with it, and the honest reading says so**:
+  limbless-mouse survived 12 of 57 (21%) with a 79% refusal rate while xenobot survived 7 of 58
+  (12%) with none. Project totals mix claim content with reviewer composition, so they cannot
+  separate the two. The within-corpus comparison is the evidence that can — same claim pool,
+  one model versus two, 3.8% against 24.5%.
+- **The fin-area exponent is measured, not 2, and assuming 2 overstates the lifting area by
+  1.64x.** Area scales as fin linear dimension raised to n. For the *alf* fin n = **1.82**
+  (claim 529); for the *kcnh2a* longfin fin specifically n = **1.33** (claim 542, a lower bound
+  given a posture confound). So the 2.02–2.09x fin length/SL that `kcnh2a^lof/+` delivers is
+  **2.67x in AREA**, not the 4.37x that squaring gives — short of S901's 4.4x requirement by
+  **1.65x**, not "just short".
+  **This error has now been made twice in this project, from the same figure.** Claim 541
+  compared 2.08x fin length against "the 2.10x required" and called it a match within 1%; claim
+  542 superseded it because 2.10 is √4.4 and so assumes n = 2. Claim 985 then reproduced the
+  same step and was superseded by claim 987 for the same reason. Both times the derivation was
+  done fresh instead of searching the graph for an already-measured exponent. **A quantity this
+  project has measured is reachable by one query and is cheaper to look up than to re-derive —
+  and re-deriving it reproduces the optimistic answer, because squaring is the intuitive step.**
+  What survives untouched is any comparison that never converts: claim 986 benchmarks fin
+  length/SL against gliders' fin length/SL in the same unit, and needs no exponent at all.
+- **The second fin allele delivers the flying-fish body plan, including the take-off tail —
+  and reading one figure panel made me conclude the opposite.** Adding `lat4a^nr21/+` to
+  `kcnh2a^lof/+` leaves the pectoral at 0.460 and makes the caudal fin **hypocercal**: generally
+  wild-type in overall size, with a shortened dorsal lobe (0.310 → 0.200, measured) and an
+  **elongated ventral lobe**. Daane 2021 states both halves in prose — that flying fishes have
+  "a hypocercal caudal fin with a stiffened and elongated ventral lobe" which "facilitates the
+  initial emergence and take-off from the water", and that the double mutant's caudal fin "while
+  generally wild type in size, is hypocercal, with an elongated ventral lobe… remarkably similar
+  to that of flying fishes".
+  **I measured Figure 4C correctly and inferred the opposite conclusion.** The panel is labelled
+  "dorsal caudal fin"; I read the 35% fall as the whole structure shrinking and wrote up a
+  trade-off in which the glider proportion is bought by deleting the launch surface. It is one
+  lobe of an asymmetric fin whose other lobe moves the other way. A correct number under a
+  correctly read label still produced a wrong conclusion, because the inference needed the part
+  of the paper I had not read. **Reading a figure is not reading a paper** — and the figure arm
+  that produced this session's best results is exactly the arm that makes that easy to forget.
+  Claim 989 is superseded by 990. The pectoral:caudal ratio in 989 is arithmetically right but
+  compares a fin against ONE LOBE of another fin, so it is not a body-plan statistic.
+  **What it still does not establish:** Daane 2021 measures fin length normalised to standard
+  length only — no area, aspect ratio, lift, gliding or flight (claim 202). "Facilitates
+  take-off" is the source's statement about flying fishes, not a measurement of a zebrafish
+  leaving the water.

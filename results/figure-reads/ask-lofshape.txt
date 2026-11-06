@@ -1,0 +1,23 @@
+This image shows TWO zebrafish photographed from above, side by side, each with its left pectoral
+fin spread out to the side as a FAN of thin rays. LEFT is wild type. RIGHT is a long-fin mutant.
+
+Measure the spread pectoral fin of EACH fish, in PIXELS of this image:
+
+  LENGTH = straight-line distance from the fin's base on the body wall to the tip of its LONGEST ray
+  SPAN   = straight-line distance from the tip of the most ANTERIOR ray to the tip of the most
+           POSTERIOR ray -- the width across the open fan, tip to tip
+
+Also judge the fin POSTURE, because a fin held folded against the body has a smaller apparent span
+than the same fin spread, and that would corrupt the comparison.
+
+Report ONLY what you can see. If something is not in the image, write "absent".
+
+Reply in EXACTLY this form, one item per line, nothing else:
+NFISH: <how many fish are shown>
+THIRD_FISH_LENGTH: <left pectoral fin length in px of a THIRD fish, or "absent">
+WT_LENGTH_PX: <number>
+WT_SPAN_PX: <number>
+MUT_LENGTH_PX: <number>
+MUT_SPAN_PX: <number>
+POSTURE: <one word -- are the two fins spread COMPARABLY, or is one more FOLDED than the other?
+          answer COMPARABLE or WT_FOLDED or MUT_FOLDED>

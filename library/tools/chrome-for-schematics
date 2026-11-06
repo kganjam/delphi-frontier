@@ -1,0 +1,14 @@
+#!/bin/bash
+# Chromium wrapper for the vendored schematic-figure skill.
+#
+# The skill launches Chrome without --no-sandbox, which is correct for a normal desktop. On this host
+# (Ubuntu with AppArmor's unprivileged-user-namespace restriction) Chrome aborts with "No usable
+# sandbox!" and the skill reports only "chrome did not start", 20 s later, which reads like a missing
+# binary rather than a sandbox policy.
+#
+# A wrapper rather than a patch: the skill stays byte-identical to upstream (MIT, lgwrightlab), so it
+# can be updated with a plain copy and this host's quirk does not become a fork to maintain.
+CH="${SCHEMATIC_CHROME:-$HOME/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome}"
+[ -x "$CH" ] || CH="$(ls -d "$HOME"/.cache/ms-playwright/chromium-*/chrome-linux*/chrome 2>/dev/null | tail -1)"
+[ -x "$CH" ] || { echo "chrome-for-schematics: no chromium found" >&2; exit 127; }
+exec "$CH" --no-sandbox "$@"

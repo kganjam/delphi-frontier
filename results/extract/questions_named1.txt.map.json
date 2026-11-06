@@ -1,0 +1,66 @@
+{
+ "1": {
+  "question": "ratio of available to used muscle-mass-specific power in a maximal fast-start",
+  "units": "dimensionless",
+  "from_quantity": "ratio of available to used muscle-mass-specific power in a maximal fast-start",
+  "scales": [
+   "organ"
+  ]
+ },
+ "2": {
+  "question": "mass-specific mechanical power -- The constraint asks for propulsive power delivered per kg of body mass (87\u2013334 W/kg body) during the taxi. The held values do not measure that: the 120\u2013500 W/kg figur",
+  "units": "W/kg body mass",
+  "from_quantity": "mass-specific mechanical power -- The constraint asks for propulsive power delivered per kg of body mass (87\u2013334 W/kg body) during the taxi. The held values do not measure that: the 120\u2013500 W/kg figur",
+  "scales": [
+   "organ"
+  ]
+ },
+ "3": {
+  "question": "t_stroke / t_contraction -- the ratio of escape stroke duration to fast axial muscle contraction time (t_stroke / t_contraction)",
+  "units": "dimensionless",
+  "from_quantity": "t_stroke / t_contraction -- the ratio of escape stroke duration to fast axial muscle contraction time (t_stroke / t_contraction)",
+  "scales": [
+   "organ"
+  ]
+ },
+ "4": {
+  "question": "added pectoral muscle mass (k-1) x baseline mass",
+  "units": "g",
+  "from_quantity": "added pectoral muscle mass (k-1) x baseline mass",
+  "scales": [
+   "organ"
+  ]
+ },
+ "5": {
+  "question": "pectoral fin length / standard length (per fin) -- per-fin span of ~0.36 SL for genetically enlarged zebrafish fins, sitting exactly at the 0.36 lower bound with a 0.30\u20130.45 range that straddles it, s",
+  "units": "dimensionless",
+  "from_quantity": "pectoral fin length / standard length (per fin) -- per-fin span of ~0.36 SL for genetically enlarged zebrafish fins, sitting exactly at the 0.36 lower bound with a 0.30\u20130.45 range that straddles it, s",
+  "scales": [
+   "organ"
+  ]
+ },
+ "6": {
+  "question": "net cyclic mass-specific power of muscle -- That is a different species, and it does not establish the maximum cyclic capability of this design's pectoral fibres. The values above 50 W/kg (142.7, 216,",
+  "units": "W/kg muscle",
+  "from_quantity": "net cyclic mass-specific power of muscle -- That is a different species, and it does not establish the maximum cyclic capability of this design's pectoral fibres. The values above 50 W/kg (142.7, 216,",
+  "scales": [
+   "cell"
+  ]
+ },
+ "7": {
+  "question": "air-phase launch speed -- The only in-air speeds held (1188, guppy 1.24 m/s; 1187, archerfish 1.4 m/s) come from different species",
+  "units": "m/s",
+  "from_quantity": "air-phase launch speed -- The only in-air speeds held (1188, guppy 1.24 m/s; 1187, archerfish 1.4 m/s) come from different species",
+  "scales": [
+   "behaviour"
+  ]
+ },
+ "8": {
+  "question": "time to reach U_min from 0.45 m/s compared with the fall-back time (generous / central / stingy: 3.3 ms and 0.01 mm sink / 91 ms and 20 mm / never)",
+  "units": "ms",
+  "from_quantity": "time to reach U_min from 0.45 m/s compared with the fall-back time (generous / central / stingy: 3.3 ms and 0.01 mm sink / 91 ms and 20 mm / never)",
+  "scales": [
+   "behaviour"
+  ]
+ }
+}

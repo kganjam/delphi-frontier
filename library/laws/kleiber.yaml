@@ -1,0 +1,210 @@
+id: kleiber
+name: Kleiber's law and the 2/3 versus 3/4 dispute
+usability: descriptive
+equation: B = B_0 * M^(3/4)
+latex: B = B_0 M^{\alpha}, \qquad \alpha \in \{2/3, 3/4, \ldots\} \text{ --- the exponent is the dispute}
+symbols:
+  B:
+    dimension: M*L^2/T^3
+    units: W
+    description: basal or standard metabolic rate
+  M:
+    dimension: M
+    units: kg
+    description: body mass
+  B_0:
+    dimension: M^1/4*L^2/T^3
+    units: W kg^-3/4
+    description: the normalisation; it depends on temperature, taxon and metabolic state, and its FRACTIONAL
+      mass dimension changes whenever the exponent does
+constants:
+  exponent_kleiber_refit:
+    value: 0.738
+    interval:
+    - 0.722
+    - 0.754
+    note: 'Dodds, Rothman & Weitz 2001 re-fitting Kleiber''s own 13 points over 0.15-679 kg: 0.738 +/-
+      0.016. White & Seymour note that Kleiber''s set is "13 data points derived from eight species".
+      Kleiber''s own published values were about 0.74 (1932) and 3/4 (1947), both remembered rather
+      than retrieved.
+
+      '
+  exponent_kleiber_small:
+    value: 0.667
+    interval:
+    - 0.624
+    - 0.71
+    note: 'Same data, animals below 10 kg: 0.667 +/- 0.043 (Dodds et al.). The split by mass is itself
+      evidence against a single exponent.'
+  exponent_kleiber_large:
+    value: 0.754
+    interval:
+    - 0.706
+    - 0.802
+    note: 'Same data, above 10 kg: 0.754 +/- 0.048 (Dodds et al.).'
+  exponent_heusner_mammals_under_10kg:
+    value: 0.668
+    interval:
+    - 0.643
+    - 0.693
+    note: Heusner's mammal data, n = 357, as re-fitted by Dodds et al. 2001 Table I. The interval excludes
+      3/4.
+  exponent_birds:
+    value: 0.666
+    interval:
+    - 0.653
+    - 0.679
+    note: Bennett & Harvey bird data, n = 398, 0.666 +/- 0.013 (Dodds et al.).
+  exponent_white_seymour_uncorrected:
+    value: 0.69
+    note: 'White & Seymour 2003, 619 species across 19 orders, uncorrected. Its 95 per cent confidence
+      interval EXCLUDES BOTH 2/3 AND 3/4 -- the single most awkward number in the dispute, and the one
+      most often misquoted. The widely circulated "0.67, n = 619" is not what the paper says.
+
+      '
+  exponent_white_seymour_corrected:
+    value: 0.68
+    note: 'Same study after correction to 36.2 degrees C with Q10 = 3.0, on 469 species: 0.68 interspecific
+      and 0.65 interordinal. Both differ significantly from 3/4 and not from 2/3. So the 2/3-compatible
+      result appears only AFTER a temperature correction and on a smaller sample.
+
+      '
+  exponent_prokaryotes:
+    value: 1.85
+    interval:
+    - 1.7
+    - 2.0
+    note: 'DeLong et al. 2010, RMA fits, active/inactive: 1.7 / 2.0 across 44 / 121 species. Super-linear,
+      so mass-specific metabolism RISES with size.'
+  exponent_protists:
+    value: 1.05
+    interval:
+    - 1.0
+    - 1.1
+    note: DeLong et al. 2010, 51 / 52 species.
+  exponent_metazoans:
+    value: 0.775
+    interval:
+    - 0.76
+    - 0.79
+    note: 'DeLong et al. 2010, 71 / 15 species. The values ~1.96 / 1.06 / 0.79 in circulation for the
+      three groups are NOT in the retrieved text; the pairs above are.
+
+      '
+mechanism: 'There are two, and they are rival rather than complementary. West, Brown & Enquist 1997
+  derive exactly 3/4 from resources moving through space-filling fractal networks of branching tubes,
+  with energy dissipation minimised and terminal tubes invariant with body size; the same model predicts
+  aorta radius proportional to M^(3/8) and heart rate to M^(-1/4). Banavar, Maritan & Rinaldo 1999 obtain
+  the bound from network geometry alone, and Etienne, Apol & Olff 2006 obtain it without requiring network
+  self-similarity. Against that, Rubner''s surface argument gives 2/3 from geometry for a resting homeotherm.
+  Neither mechanism is established, because the observation each explains is itself in dispute -- which
+  is the entry''s point.
+
+  '
+domain_of_validity:
+  measurement: basal or resting metabolic rate
+  taxa: interspecific comparisons within endotherms (mammals and birds)
+  notes: 'Each exponent holds ONLY for the dataset, taxon, temperature correction and regression method
+    it was fitted with. Ontogenetic, static and evolutionary allometries are different exponents and
+    must not be pooled.
+
+    '
+where_it_breaks: 'It breaks as a universal law in four measured ways, none of them an open question.
+  Prokaryotes and protists scale SUPER-LINEARLY, at roughly 1 to 2, so the mass-specific rate rises
+  with size -- the opposite of the whole story. Intraspecific and ontogenetic scaling does not follow
+  the interspecific exponent: Glazier 2005 states flatly that the 3/4-power scaling law "is not universal,
+  either within or among animal species", and his metabolic-level boundaries hypothesis correctly predicts
+  the slope varying mostly between 2/3 and 1 in a U-shaped relation to activity. Active or maximal metabolism
+  has higher exponents than basal. And over the full mammal range the log-log relation is not a straight
+  line at all: Kolokotrones et al. 2010 report convex CURVATURE persisting after body-temperature correction,
+  and report that the vascular-network model fails that test -- so no single exponent, 2/3 or 3/4, is
+  the right shape. Beyond those, the deeper limitation is what kind of statement this is: an interspecific
+  regression says what evolution produced inside a scatter band for the taxa sampled. It cannot tell
+  a designer that a design will FAIL, only that it is unlike the measured animals, and the dataset must
+  be quoted with it.
+
+  '
+worked_examples:
+- organism: mouse against elephant -- why the dispute matters to a design check
+  computation: '25 g mouse vs 4000 kg elephant: mass ratio 160,000
+
+    alpha = 3/4 : 160000^0.75  = 8000x  the mouse''s BMR
+
+    alpha = 2/3 : 160000^0.667 = 2947x
+
+    ratio of the two predictions = 8000/2947 = 2.7
+
+    '
+  value: 2.7
+  note: 'The two exponents disagree by a factor of 2.7 at the extremes, which is larger than most design
+    margins. That is the practical content of the dispute: it is not a scholastic disagreement about
+    a third decimal place.
+
+    '
+  evidence: derived
+- organism: the often-quoted normalisation B = 70*M^0.75 kcal/d
+  computation: 'mouse    : 70 * 0.025^0.75 = 70 * 0.0629 =     4.4 kcal/d
+
+    elephant : 70 * 4000^0.75  = 70 * 503    = 35,200 kcal/d
+
+    '
+  note: 'THE CONSTANT 70 IS REMEMBERED AND NO SOURCE FOR IT WAS RETRIEVED. The arithmetic is shown so
+    the number can be checked once someone finds the source; it should not be leaned on until then.
+
+    '
+  evidence: derived
+contested_by:
+- '3/4 side: West, Brown & Enquist 1997 derive it; Savage et al. 2004 report BMR exponents whose confidence
+  intervals include 3/4 and exclude 2/3 -- but that came from a search snippet of the abstract and the
+  paper''s own value and CI were NOT retrieved, so the 3/4 side currently carries no retrieved number
+  of the same quality as the 2/3 side''s.'
+- '2/3 side: Dodds, Rothman & Weitz 2001 find little evidence for rejecting 2/3 in favour of 3/4; White
+  & Seymour 2003 conclude mammalian BMR is proportional to M^(2/3).'
+- 'Neither side: Glazier 2005 and 2010 (not universal; varies 2/3 to 1 with metabolic level), Kolokotrones
+  et al. 2010 (curvature, not a pure power law), DeLong et al. 2010 (super-linear unicells).'
+- 'Mathematics: Kozlowski & Konarzewski 2004 argue the WBE model is internally inconsistent, in that
+  size-invariant terminal units and the claimed blood-volume scaling cannot both hold as stated. That
+  paper is at metadata level here, so the argument is relayed from memory. Brown, West & Enquist 2005
+  reply that the model is both mathematically correct and biologically relevant; only the title was
+  retrieved.'
+sources:
+- citation: Kleiber M (1932) Hilgardia 6:315-353, Body size and metabolism, doi 10.3733/hilg.v06n11p315
+  read_level: metadata
+- citation: Kleiber M (1947) Physiol Rev 27:511-541, Body size and metabolic rate, doi 10.1152/physrev.1947.27.4.511
+  read_level: metadata
+- citation: West GB, Brown JH, Enquist BJ (1997) Science 276:122-126, A general model for the origin
+    of allometric scaling laws in biology, doi 10.1126/science.276.5309.122
+  read_level: abstract
+- citation: Dodds PS, Rothman DH, Weitz JS (2001) J Theor Biol 209:9-27, Re-examination of the 3/4-law
+    of metabolism, doi 10.1006/jtbi.2000.2238
+  read_level: full-text-preprint
+  note: arXiv physics/0007096v1, plus the journal abstract.
+- citation: White CR, Seymour RS (2003) PNAS 100:4046-4049, Mammalian basal metabolic rate is proportional
+    to body mass^2/3, doi 10.1073/pnas.0436428100, PMC153045
+  read_level: full-text
+  note: Quotes were extracted by a summariser and NOT string-matched against the PMC XML. Re-check before
+    reuse.
+- citation: Savage VM et al. (2004) Funct Ecol 18:257-282, The predominance of quarter-power scaling
+    in biology, doi 10.1111/j.0269-8463.2004.00856.x
+  read_level: metadata
+- citation: Glazier DS (2005) Biol Rev 80:611-662, doi 10.1017/S1464793105006834
+  read_level: abstract
+- citation: Glazier DS (2010) Biol Rev 85:111-138, doi 10.1111/j.1469-185X.2009.00095.x
+  read_level: abstract
+- citation: Kolokotrones T, Savage V, Deeds EJ, Fontana W (2010) Nature 464:753-756, Curvature in metabolic
+    scaling, doi 10.1038/nature08920
+  read_level: abstract
+- citation: DeLong JP, Okie JG, Moses ME, Sibly RM, Brown JH (2010) PNAS 107:12941-12945, doi 10.1073/pnas.1007783107,
+    PMC2919978
+  read_level: full-text
+  note: Summariser-extracted; re-check.
+- citation: Banavar JR, Maritan A, Rinaldo A (1999) Nature 399:130-132, doi 10.1038/20144
+  read_level: abstract
+- citation: Etienne RS, Apol MEF, Olff H (2006) Funct Ecol 20:394-399, doi 10.1111/j.1365-2435.2006.01136.x
+  read_level: abstract
+- citation: Kozlowski J, Konarzewski M (2004) Funct Ecol 18:283-289, Is West, Brown and Enquist's model
+    of allometric scaling mathematically correct and biologically relevant?, doi 10.1111/j.0269-8463.2004.00830.x
+  read_level: metadata
+  note: Title supplied by resolving the DOI. Surname is Kozlowski with a stroked l in the registry.
+- citation: Brown JH, West GB, Enquist BJ (2005) Funct Ecol 19:735-738, doi 10.1111/j.1365-2435.2005.01022.x
+  read_level: metadata

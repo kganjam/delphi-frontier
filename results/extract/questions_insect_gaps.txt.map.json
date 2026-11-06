@@ -1,0 +1,58 @@
+{
+ "1": {
+  "question": "Lift loss fraction experienced by trailing wings in tandem-wing or four-winged insect configurations due to aerodynamic interference",
+  "units": "fraction",
+  "from_quantity": "The only value for trailing-pair lift loss is claim 625 (0.15), which is an assumed model parameter, not a measurement or validated estimate. Claim 604's simulated 0.46 body weights for four wings, ag",
+  "scales": [
+   "organism"
+  ]
+ },
+ "2": {
+  "question": "Wing mass as a fraction of body mass in Diptera or other flying insects",
+  "units": "fraction of body mass",
+  "from_quantity": "The only relevant value is claim 614, an assumed mass of 0.005 body mass for one wild-type wing, and no claim gives flight-muscle power capacity or the inertial power of a four-winged fly. The constra",
+  "scales": [
+   "organism"
+  ]
+ },
+ "3": {
+  "question": "Longitudinal vein spacing as a fraction of wing blade width in insect wings",
+  "units": "fraction of blade width",
+  "from_quantity": "No claim measures the vein pattern wavelength as a fraction of blade width, let alone for a T3-derived blade. Claims 1300, 1301 and 1303 are pouch-width fractions in the T2 wing disc (1301 is a P-Mad ",
+  "scales": [
+   "organ"
+  ]
+ },
+ "4": {
+  "question": "Dpp or P-Mad signaling decay length as a fraction of imaginal disc pouch width in Drosophila or related insects",
+  "units": "fraction of pouch width",
+  "from_quantity": "Claims 1300 (0.11) and 1301 (0.21) give Dpp/P-Mad decay lengths as a fraction of pouch width. Both fall inside [0.1, 1], but they are wild-type wing disc measurements, not the haltere pouch after Dpp ",
+  "scales": [
+   "organ"
+  ]
+ },
+ "5": {
+  "question": "Ultrabithorax protein expression level in the T3 (haltere) imaginal disc relative to wild-type endogenous levels in Drosophila",
+  "units": "fraction of endogenous expression",
+  "from_quantity": "Claim 630 gives only the wing-trait threshold (0.39 of endogenous T3 Ubx), which is the requirement, and claim 705 is a proposed titration route, not a result. No claim reports an achieved Ubx dose in",
+  "scales": [
+   "organ"
+  ]
+ },
+ "6": {
+  "question": "Mechanosensory feedback latency from haltere campaniform sensilla to flight motor neurons in Diptera",
+  "units": "ms",
+  "from_quantity": "The constraint needs the haltere sensory feedback latency of the target fly to be at most 30 ms. The measured latencies (1305\u20131308, 1310\u20131311) come from Manduca wing sensilla and locust leg sensilla, ",
+  "scales": [
+   "organism"
+  ]
+ },
+ "7": {
+  "question": "Lift-to-weight ratio during hovering or forward flight in four-winged insects",
+  "units": "body weights",
+  "from_quantity": "Claim 604 gives a lift-to-weight ratio of 0.46 body weights, but only for the same total area split over four wings, the case the constraint already rules out. No claim reports the lift-to-weight rati",
+  "scales": [
+   "organism"
+  ]
+ }
+}

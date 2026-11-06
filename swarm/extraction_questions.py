@@ -1,0 +1,721 @@
+#!/usr/bin/env python3
+"""Generate the full-text extraction question list from the project's OPEN needs.
+
+WHY THIS EXISTS, and it is a measured failure rather than a tidiness argument.
+`extract_values.py` shipped with six hard-coded questions about fin stiffness, muscle W/kg and
+lift coefficients. Run on 2026-11-05 over nine papers that this project ALREADY CITES for a
+numeric value, it returned ZERO verified values -- and on the whole 225-paper corpus, zero as
+well. The extractor was not broken and the papers were not empty. The questions were stale.
+
+The decisive case is Sutton et al. 2019 (PMC6907395). Four live claims draw on it, for a muscle
+energy density of 15 J/kg and a 2.5 g crossover. Question 2 of the hard-coded list asks for
+muscle power in W/kg. A paper reporting J/kg answers no question on that list, so an honest
+extractor correctly reported nothing, and the project read its own silence as "the corpus has
+no values in it".
+
+So the questions are now derived from what the project currently CANNOT answer: the quantities
+named by `constraint_entailed` rows still `open`. Those move as the work moves -- the hard-coded
+list was written for fin mechanics and the frontier has since gone to water exit, taxi speed,
+phosphagen stores and pectoral muscle fraction -- and nothing but this file has to be edited
+when they do.
+
+WHAT IT DELIBERATELY DROPS, and why that is a judgement rather than a cleanup.
+A constraint whose units are `dimensionless` is nearly always a ratio of two numbers THIS
+PROJECT derived -- `frame interval / stage-1 duration`, `curvature-derived strain / directly
+measured strain`. No paper contains those; they are our own arithmetic, and asking a literature
+extractor for them spends a call to be told no. Quantities carrying a physical unit are the ones
+a published methods or results section can actually hold. The filter is therefore on UNITS, not
+on wording, and `--keep-dimensionless` turns it off so the choice can be disagreed with.
+
+It does not judge whether a question is ANSWERABLE, only whether it is the kind of thing a paper
+states. An open constraint nobody has published on will simply return nothing, which is the
+correct answer and costs one call to establish.
+"""
+from __future__ import annotations
+
+import hashlib
+import os
+import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import dbq  # noqa: E402
+
+PROJECT = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+MODEL = "claude-opus-4-5-20251101"
+
+# Units that mean "a paper could state this". A bare ratio is almost always ours; see docstring.
+GAP_SCALE: dict[str, str] = {}      # gap sentence -> the scale of the constraint that raised it
+STOP = {"the", "and", "for", "per", "with", "during", "from", "its", "both", "that"}
+MERGE_AT = 0.25          # with the subset guard in same_need(); see its docstring
+_RATIO_FOLD = 9    #: measured 8.94, claim 2769
+#: Spellings of "this number has no units". INCOMPLETE UNTIL 2026-11-05, and the omission ran
+#: in the direction that makes the pipeline look worse than it is: `unitless` appears 530 times
+#: across the committed harvests, `proportion` 112 and `n/a` 4, and none of them folded, so a
+#: question asking `dimensionless` answered with `unitless` was counted as a MISS. That is 646
+#: values wrongly scored off-target by analysis/units_match_rate.py, which imports this set.
+#: Found by reading the per-pair breakdown of one harvest -- the commonest "miss" was
+#: `dimensionless -> unitless`, 128 of 300, which is not a miss at all.
+#: `percent` is deliberately NOT here: a percentage is a pure number but it carries a factor of
+#: 100, so a value reported as 23 % is not interchangeable with one reported as 0.23.
+DIMENSIONLESS = {"", "dimensionless", "ratio", "dimensionless ratio", "fraction", "-", "none",
+                 "unitless", "proportion", "n/a", "na", "no units", "no unit", "unitless ratio"}
+
+
+def words(quantity: str) -> frozenset:
+    """Content words. `M_pectoral/M_body` has to yield {pectoral, body}, so underscores and
+    slashes are separators: without that it shares no token with `bilateral pectoral muscle
+    mass / body mass`, and the two never collapse."""
+    flat = "".join(c if c.isalnum() or c.isspace() else " " for c in quantity.lower())
+    out = frozenset(w for w in flat.split() if len(w) > 2 and w not in STOP and not w.isdigit())
+    return out or frozenset([quantity.lower()])
+
+
+def jaccard(a: frozenset, b: frozenset) -> float:
+    return len(a & b) / len(a | b) if (a | b) else 0.0
+
+
+def same_need(a: frozenset, b: frozenset) -> bool:
+    """Whether two quantity spellings name one need.
+
+    A plain word-overlap score CANNOT do this, and the control is what showed it: `body mass`
+    against `bilateral pectoral muscle mass / body mass` scores 0.400, HIGHER than two of the
+    four spellings that genuinely are one quantity (0.286 and 0.250). A short quantity is a
+    subset of every ratio built from it, so no threshold separates the two cases.
+
+    The subset itself is the discriminator. `body mass` is a DIFFERENT, simpler quantity than a
+    ratio that contains it, and a paper answering one does not answer the other. So a strict
+    subset is refused outright, and the threshold then only has to separate genuine restatements
+    from unrelated quantities, which it does (0.000 for both unrelated pairs tested)."""
+    if a <= b or b <= a:
+        return False
+    return jaccard(a, b) >= MERGE_AT
+
+
+#: Meta-commentary the evaluator writes ABOUT THE RECORD, which a literature search cannot act
+#: on. "No claim reports X" tells a searcher nothing that "X" does not; "claim 276 is calculated,
+#: not measured" names a defect in our own graph. Stripped from the head of a gap sentence.
+_GAP_META = re.compile(
+    r"^(?:no\s+claim\s+(?:reports?|measures?|gives?|states?|records?|holds?)|"
+    r"nothing\s+(?:in\s+the\s+record\s+)?(?:reports?|gives?)|"
+    r"claim\s+\d+\s+(?:is|gives?|states?|reports?|gave)|"
+    r"the\s+(?:only\s+)?quantity\s+(?:needed\s+)?is|"
+    r"the\s+only\s+[\w\- ]{0,40}\s+(?:value\s+)?held\s+is)\b[\s,:-]*", re.I)
+#: Fragments left behind AFTER the head is stripped that are still about our record rather than
+#: about the quantity. "a calculated, not measured, per-fin span" survives `claim 276 is` and is
+#: still unsearchable, so it is removed separately.
+_GAP_RESIDUE = re.compile(
+    r"^(?:an?\s+)?(?:calculated|derived|inferred|assumed|stated)\s*,?\s*"
+    r"(?:not\s+(?:measured|observed)\s*,?\s*)?", re.I)
+#: Trailing clauses that explain the CONSEQUENCE for our bookkeeping rather than the quantity.
+_GAP_TAIL = re.compile(
+    r"[,;]?\s*(?:so\s+nothing\s+can\s+be\s+compared|so\s+the\s+constraint|"
+    r"so\s+nothing\s+|which\s+is\s+why|and\s+nothing\s+)\b.*$", re.I)
+
+
+#: A sentence that talks about THIS PROJECT'S record rather than about the quantity. Matching
+#: on `claim <n>` alone is too narrow -- the commonest form is "the dimensionless values listed
+#: are other quantities" -- and matching any mention of a number is far too broad.
+_ABOUT_RECORD = re.compile(
+    r"\bclaims?\s+\d+|\bthe\s+(?:dimensionless\s+)?values?\s+(?:listed|held)|"
+    r"\bno\s+claim\b|\bthis\s+(?:design|project)'?s?\s+(?:capability|fish|record)|"
+    r"\bthe\s+constraint\s+(?:needs|requires)|\bnothing\s+(?:in\s+the\s+record|here)\b|"
+    r"\bthe\s+other\s+values?\b|\bnone\s+measures?\b|\bare\s+(?:quoted|modelled|assumed)\b",
+    re.I)
+
+
+def named_gap_question(quantity: str, units: str, gap: str) -> str:
+    """Ask for a NAMED QUANTITY in its own units, keeping the regime the gap carries.
+
+    WHY NOT EITHER ALONE, measured 2026-11-05 and this is the whole point. Asking the QUANTITY
+    alone is what evidence_gaps() was written to escape: constraint e28 wanted A_pp/body length,
+    four values for exactly that quantity had just been harvested, and the verdict stayed
+    INSUFFICIENT because they were juvenile grass carp in flume tests against adult zebrafish
+    escape kinematics. Asking the GAP alone is what this project has been doing, and it returns
+    material unrelated to the question: topical overlap with a shuffled null gives a lift of 1.0
+    at a two-content-word bar (claim 3167), while the small targeted question files -- which ask
+    "Flexural stiffness (EI) of pectoral fin rays in teleost fish", a named quantity in its own
+    units -- match the units asked for 89-100 per cent of the time against 3.6-11.7 (claim 3160).
+
+    So the head is the quantity and the tail is the regime: a searcher gets something to look
+    for AND the conditions it must hold under. What is dropped is only the commentary about our
+    own record -- "no claim reports", "claim 276 is calculated, not measured" -- which no paper
+    can supply and which is most of what a gap sentence is made of.
+    """
+    qty = (quantity or "").strip().rstrip(".")
+    body = _GAP_TAIL.sub("", _GAP_META.sub("", (gap or "").strip())).strip(" ,;.")
+    body = _GAP_RESIDUE.sub("", body).strip(" ,;.")
+    # DROP SENTENCES ABOUT OUR OWN RECORD. The leading-pattern strip above only reaches the
+    # first clause; a gap sentence often continues "Claim 1222 (27% in hummingbirds) is a
+    # reference value for a different species, not the design's capability", which names a
+    # defect in our graph and is useless to a literature search. What survives is the clause
+    # describing the quantity and its regime.
+    keep = [c for c in re.split(r"(?<=[.;])\s+", body)
+            if c.strip() and not _ABOUT_RECORD.search(c)]
+    body = " ".join(keep).strip(" ,;.")
+    if not qty:
+        # 4 of 41 open gaps carry no quantity. Falling back to the cleaned gap is still better
+        # than the raw sentence, and returning nothing would silently drop the constraint.
+        return body or (gap or "").strip()
+    # NO UNITS IN THE HEAD. The generator already appends "Units wanted: <units>." to every
+    # question, so adding them here printed them twice -- "S_wet/S_fin ..., in dimensionless
+    # ratio -- ... Units wanted: dimensionless ratio." Found by generating the file and reading
+    # it, not by the controls, which only ever saw this function's own output.
+    head = qty
+    # DROP A TAIL THAT MERELY RESTATES THE HEAD. Measured on the first version: the lower-lobe
+    # gap produced "... in mm^2 -- the immersed lower-lobe area of a 0.25 g fish in mm^2", where
+    # every content word of the tail was already in the quantity. The tail earns its place only
+    # by adding words the head does not have.
+    # A NUMBER IS THE REGIME DETAIL, and words() drops it. It filters to content words of 4+
+    # characters, so "0.36 SL" contributes nothing and a tail carrying the one fact that makes
+    # the question specific was being discarded -- caught by the control, not by reading.
+    qt, bt = words(qty), words(body)
+    nums_head = set(re.findall(r"\d+(?:\.\d+)?", qty))
+    nums_body = set(re.findall(r"\d+(?:\.\d+)?", body))
+    extra = body if (bt and len(bt - qt) >= 2) or (nums_body - nums_head) else ""
+    return f"{head} -- {extra}" if extra else head
+
+
+def gap_question_controls() -> int:
+    """Cases the transform must handle, and one it must not mangle."""
+    cases = [
+        ("immersed lower-lobe area (0.25 g fish; bound is 38.5 mm2 for 0.40 g)", "mm^2",
+         "No claim reports the immersed lower-lobe area of a 0.25 g fish in mm\u00b2, so nothing "
+         "can be compared against the 23.97 mm\u00b2 ceiling.",
+         ["immersed lower-lobe area"],
+         ["No claim", "so nothing can be compared", ", in mm^2"]),
+        ("net cyclic mass-specific power of muscle", "W/kg muscle",
+         "The only pectoral-muscle power value held is 16.5 W/kg for bluegill fin muscle.",
+         ["net cyclic mass-specific power", "bluegill"], ["The only", ", in W/kg"]),
+        ("pectoral fin length / standard length (per fin)", "dimensionless",
+         "Claim 276 is a calculated, not measured, per-fin span of ~0.36 SL.",
+         ["pectoral fin length", "0.36 SL"],
+         ["Claim 276 is", "calculated", "not measured", "in dimensionless"]),
+        ("", "-", "No claim reports the baseline pectoral mass.",
+         ["baseline pectoral mass"], ["No claim reports"]),
+        ("required fast-muscle mass-specific power to reach 1.38 m/s", "W/kg muscle",
+         "The other values (120-500 W/kg) are quoted, modelled or assumed figures from other "
+         "species, so none measures the capability of this organism's fast muscle.",
+         ["required fast-muscle mass-specific power"], ["The other values", "none measures"]),
+        # must-flag: a tail that only talks about our record is dropped entirely
+        ("enlarged pectoral muscle mass / body mass", "% body mass",
+         "The constraint needs the enlarged pectoral muscle mass as a fraction of this design's "
+         "body mass (9-23%), and no claim measures that. Claim 1222 (27% in hummingbirds) is a "
+         "reference value for a different species, not the design's capability.",
+         ["enlarged pectoral muscle mass"], ["Claim 1222", "hummingbirds", "no claim"]),
+    ]
+    bad = []
+    for qty, units, gap, must, mustnt in cases:
+        out = named_gap_question(qty, units, gap)
+        miss = [m for m in must if m.lower() not in out.lower()]
+        leak = [m for m in mustnt if m.lower() in out.lower()]
+        ok = not miss and not leak
+        print(f"  {'ok  ' if ok else 'FAIL'}  {out[:92]}")
+        if not ok:
+            bad.append((out, miss, leak))
+            print(f"          missing={miss} leaked={leak}")
+    print(f"\n  {len(cases) - len(bad)} of {len(cases)} controls pass")
+    return 1 if bad else 0
+
+
+#: Quantities about THIS PROJECT'S SOFTWARE rather than about the animal. A literature search
+#: cannot answer them and they consume harvest budget: e46 idempotency-record retention time,
+#: e47 pending interval + runtime, e77 fraction of keyed ADMISSION_PENDING operations later
+#: admitted. 3 of 115 open constraints, and it was not the count that mattered -- e47 produced
+#: the ONLY apparent success in nine harvested questions, 32 values judged to answer it, all of
+#: them one table row of another program's execution times ("Ex. time (s) 42.2 21.2 35.9 ...").
+#: That spurious hit became the evidence for "the retrieval arm works" (claim 3312).
+#:
+#: WORD BOUNDARIES ARE LOAD-BEARING HERE. A first attempt without them matched `API` inside
+#: "leaping" and flagged "water-exit speed of a leaping adult" as infrastructure.
+_INFRA = re.compile(
+    r"\b(idempotenc\w*|admission[_ ]?pending|retention time|replay|runtime|pending interval|"
+    r"endpoint|checkpoint|sandbox|queue depth|cache hit|http\b|api key)\b", re.I)
+
+
+def is_infrastructure(quantity: str) -> bool:
+    """Is this quantity about our own software rather than about the organism?"""
+    return bool(_INFRA.search(quantity or ""))
+
+
+def evidence_gaps(limit: int = 60) -> list[tuple[str, str, int]]:
+    """The evidence each open constraint is WAITING ON, in the evaluator's own words.
+
+    WHY THIS BEATS THE QUANTITY LIST. A quantity says what number is wanted; a gap says why the
+    numbers already held do not answer it, which is what a search actually has to fix. Measured
+    2026-11-05, constraint e28: the quantity is "A_pp / body length", and the project had just
+    harvested four values for exactly that quantity (claims 1190-1193, 0.19-0.25 BL). The
+    evaluator still returned INSUFFICIENT, because those values are juvenile grass carp in flume
+    tests and the constraint is about adult zebrafish escape kinematics. A search built on the
+    quantity would have re-found the same inapplicable papers; a search built on the gap looks
+    for the adult escape-kinematics paper.
+
+    These sentences exist only because insufficient verdicts are now persisted. Until today they
+    were printed and discarded, and the run that produced 30 of them in one batch -- 0 satisfied,
+    0 unsatisfied, $0.79 -- is the point at which evaluating existing claims stops paying and
+    retrieval has to take over.
+
+    The constraints' own `note` field was the obvious alternative and was measured first: of 139
+    open constraints carrying a note, only 6 name missing evidence under a
+    needs/requires/no-claim pattern, and 3 of the 4 inspected are false matches. The evaluator
+    writes a usable sentence for every insufficient verdict instead.
+    """
+    rows = dbq.q(
+        "select replace(replace(missing_evidence, chr(1), ' '), chr(10), ' '), "
+        "coalesce(quantity,''), coalesce(units,''), id::text, coalesce(target_scale,'') "
+        f"from constraint_entailed where project_id = {dbq.lit(PROJECT)} and status = 'open' "
+        f"and missing_evidence is not null order by missing_evidence_at desc limit {int(limit)}")
+    # dbq.q() ALREADY splits each line on chr(1) -- that is its field separator -- so the row
+    # arrives as a list of columns, not as one string to split again. Splitting it a second time
+    # silently produced zero usable rows from 29 real ones.
+    out = []
+    for r in rows:
+        parts = list(r) if isinstance(r, (list, tuple)) else [str(r)]
+        if len(parts) >= 3 and parts[0].strip():
+            # ASK FOR THE QUANTITY, KEEP THE REGIME. Until 2026-11-05 this emitted parts[0], the
+            # evaluator's sentence, verbatim -- and discarded parts[1], the constraint's own
+            # `quantity`, which is the named quantity a paper would recognise. Measured: the
+            # harvest those questions produced is unrelated to them, a lift of 1.0 over a
+            # shuffled pairing at a two-content-word bar (claim 3167), while question files that
+            # ask a named quantity in its own units match the asked units 89-100 per cent of the
+            # time against 3.6-11.7 (claim 3160). named_gap_question() puts the quantity at the
+            # head and keeps the gap's regime clause behind it, dropping only the commentary
+            # about our own record, which no paper can supply.
+            # REVERTED TO THE EVALUATOR'S SENTENCE, 2026-11-05, BY ITS OWN A/B.
+            # named_gap_question() reshapes a gap into "<named quantity>. Units wanted: <u>.",
+            # on the reasoning that question files asking a named quantity match the asked units
+            # 89-100 per cent of the time against 3.6-11.7 (claim 3160) while the harvest these
+            # sentences produce is unrelated to them (claim 3167). That reasoning predicted an
+            # improvement and the measurement refused it. Same constraint pool, same --limit 4,
+            # same harvester:
+            #
+            #     old shape (questions_rawctl1)  25 pairs  300 verified  36 discarded  19.4% fab
+            #     new shape (questions_named1)   19 pairs    0 verified   0 discarded
+            #
+            # Zero verified AND zero discarded means the extractor proposed nothing at all, so
+            # the terse named form gives it less to work with than the evaluator's prose, whose
+            # surrounding context is apparently what lets it find a number in a paper. The
+            # units-match argument may still be right about the VALUES that come back; it was
+            # wrong that reshaping the question would produce more of them.
+            #
+            # The shape is kept behind --named-gaps so the experiment can be rerun at a sample
+            # size that could detect a smaller effect. It is NOT the default and should not be
+            # until a run beats 300.
+            # --simple-units keeps only questions asking for a SIMPLE PHYSICAL unit, dropping
+            # ratio and dimensionless ones. Every intervention measured against the retrieval
+            # failure so far -- question shape, extraction prompt, decomposition, sampling
+            # depth -- was tested on pools dominated by ratio and dimensionless questions,
+            # which claim 2769 had already measured as near-futile to harvest. 101 of the 120
+            # open constraints carry a simple unit and have NOT been shown to fail. This flag
+            # exists to run that fair test, and claim 3236 names it as the missing arm.
+            # A constraint about our own software cannot be answered by a paper, whatever
+            # its units. Dropped from every gap question set, not only --simple-units.
+            if is_infrastructure(parts[1]):
+                continue
+            if "--simple-units" in sys.argv:
+                u = parts[2].strip().lower()
+                if ratio_unit(parts[2]) or u in ("", "-", "dimensionless",
+                                                 "dimensionless ratio", "unitless"):
+                    continue
+            text = (named_gap_question(parts[1], parts[2], parts[0])
+                    if "--named-gaps" in sys.argv else parts[0].strip())
+            out.append((text, parts[2].strip(), 1))
+            # A gap inherits the scale of the constraint that raised it. Unlike the quantity
+            # route, that is a ONE-TO-ONE link -- this sentence came from exactly this row -- so
+            # there is no disagreement between constraints to resolve, and no guessing. Keyed on
+            # the text actually emitted, or the map lookup misses every row.
+            GAP_SCALE[text] = parts[4].strip() if len(parts) > 4 else ""
+    return out
+
+
+def open_quantities(limit: int = 400) -> list[tuple[str, str, int]]:
+    rows = dbq.q(
+        "select quantity, coalesce(units,''), count(*)::text from constraint_entailed "
+        f"where project_id = {dbq.lit(PROJECT)} and status = 'open' and quantity is not null "
+        f"group by 1,2 order by 3 desc, 1 limit {int(limit)}")
+    return [(r[0], r[1], int(r[2])) for r in rows if r and r[0]]
+
+
+def is_physical(units: str) -> bool:
+    return units.strip().lower() not in DIMENSIONLESS
+
+
+#: dimensionless phrases that merely NAME a ratio; these are pure numbers, not quotients of units
+_DIMLESS_PHRASE = re.compile(r'^(fraction|proportion|ratio|percent|percentage|%)\b', re.I)
+
+
+#: Ratios that papers DO report directly, so decomposing them would cost rather than gain.
+#: MEASURED per question: `m/s` matches at 12.9 per cent over 186 values, while the other eight
+#: ratio-unit questions in this database -- S/cm^2, W/kg body mass, mol m^-2 s^-1 (twice),
+#: degC/generation (twice), degC/year, degC-weeks/year -- sit at 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+#: 0.0 and 6.8 per cent, seven of them at LITERALLY ZERO across 786 values. The distinction is
+#: not dimensional: it is whether the quotient is a quantity a paper names in its own right.
+#: Speed is; mass-specific power is not.
+STANDARD_RATIOS = {
+    "m/s", "cm/s", "mm/s", "km/h", "m/s^2", "m/s2", "rad/s", "deg/s", "rev/s",
+    "kg/m^3", "g/cm^3", "g/ml", "mg/ml", "mol/l", "ml/min", "l/min", "m^2/s", "mm^2/s",
+}
+
+
+def ratio_unit(units: str) -> tuple[str, str] | None:
+    """If the unit DIVIDES one dimension by another, return (numerator, denominator).
+
+    MEASURED: over all 52 question-sets and 4710 compared values, questions asking a RATIO unit
+    had their answer come back in the units they asked for 2.9 per cent of the time, against
+    26.2 per cent for every other question -- a 8.9-fold difference (claim 2769). Papers report
+    masses and powers; they rarely report mass-specific power. Asking for the quotient is close
+    to futile, and that still holds.
+
+    IT IS NO LONGER THE SHARPEST PREDICTOR OF A WASTED QUESTION, which this docstring claimed
+    until 2026-11-05. analysis/units_match_rate.py recomputes the figure -- it had never had a
+    script, so it could not be rechecked -- and finds the ratio effect reproducing as a RATIO
+    (8.4-fold) but not as a LEVEL (10.9 per cent against 26.2, on a population 47 per cent
+    larger). Broken down by harvest file, the four BULK harvests match at 3.6-11.7 per cent and
+    the small targeted ones at 88.9-100: roughly twenty-fold, larger than the effect this
+    function exists to exploit, and invisible in any aggregate. Whether the harvest mode CAUSES
+    it is not established -- the small harvests' questions may have been written against values
+    already in hand -- so this is a pointer to that script, not a new rule here (claim 3160).
+
+    Note also that `ratio` now means DECOMPOSABLE ratio: STANDARD_RATIOS below exempts m/s and
+    relatives, which 2769 counted as ratios and commit 35bc9701 found to be the best performer
+    in the set. So 2769's bucket and this function's are not the same set.
+
+    So a ratio question is split into its two factors, each asked in its own simple unit, and
+    the quotient is computed afterwards rather than searched for. `W/kg body mass` becomes a
+    question for W and a question for kg.
+
+    Recognises a slash, the word `per`, and negative-exponent notation, because `mol m^-2 s^-1`
+    is a ratio with no slash in it -- a case the first version of this classifier missed and
+    which diluted the measured effect from 8.9-fold to 3.2.
+    """
+    t = (units or "").strip()
+    if not t or _DIMLESS_PHRASE.match(t):
+        return None
+    if t.lower() in {"body lengths", "body weights", "tail beats", "dimensionless"}:
+        return None
+    if t.lower().replace(" ", "") in STANDARD_RATIOS:
+        return None                    # a quantity papers name in its own right -- see above
+    m = re.match(r'^\s*([^/]+?)\s*/\s*(.+?)\s*$', t)
+    if m:
+        return (m.group(1).strip(), m.group(2).strip())
+    m = re.match(r'^\s*(.+?)\s+per\s+(.+?)\s*$', t, re.I)
+    if m:
+        return (m.group(1).strip(), m.group(2).strip())
+    if re.search(r'\^\s*-|[\u207b]', t):
+        return (t, "")            # negative-exponent form: flag it, do not try to split blindly
+    return None
+
+
+def build(keep_dimensionless: bool = False, cap: int = 18,
+          source: str = "quantities") -> tuple[str, int, int, int, dict]:
+    """Also returns the question->scale map, which the non-generalised path used to omit.
+
+    WHY IT WAS MISSING AND WHAT IT COST. The map is what lets a harvested value inherit the
+    scale of the constraint that asked for it, and claims_from_extraction leaves a value with no
+    map entry at NULL scale rather than guessing. It was built only in the --generalise branch,
+    because there a model REWRITES each question and the link back to its source quantity has to
+    be reconstructed from the model's own numbering. Without --generalise there is nothing to
+    reconstruct: question i IS quantity i, so the mapping is identity and strictly more reliable
+    than the generalised one.
+
+    Measured 2026-11-05: the gaps4 harvest ran on a non-generalised question file, so 375 of the
+    379 claims it produced carry no scale. Regenerating that file is safe -- the non-generalised
+    path is deterministic, and a regeneration reproduced all 18 questions identical in text and
+    order -- so the map below is valid for a harvest already run.
+    """
+    qs = evidence_gaps() if source == "gaps" else open_quantities()
+    # The units filter exists to drop ratios of THIS project's own numbers. A gap sentence is a
+    # research question whatever its units are -- "no zebrafish study links a membrane-potential
+    # change to fin-ray growth" has no units at all and is still the most searchable item here --
+    # so it does not apply to that source.
+    kept = [q for q in qs if source == "gaps" or keep_dimensionless or is_physical(q[1])]
+    dropped = len(qs) - len(kept)
+
+    # DEDUPE. Four of the first eighteen were the same quantity under four spellings
+    # (`M_pectoral/M_body in aerial teleosts`, `adult zebrafish pectoral muscle mass / body
+    # mass`, `bilateral pectoral muscle mass / body mass`, `M_pectoral(both fins)/M_body`), which
+    # spends four questions on one need. Collapse on the content words, keep the wording that the
+    # most constraints used, and carry the combined demand so ranking still sees it.
+    merged: dict[frozenset, list] = {}
+    for quantity, units, n in kept:
+        key = words(quantity)
+        hit = None
+        for k in merged:
+            if same_need(k, key):
+                hit = k
+                break
+        if hit is not None:
+            merged[hit][2] += n
+            if n > merged[hit][3]:
+                merged[hit][0], merged[hit][1], merged[hit][3] = quantity, units, n
+        else:
+            merged[key] = [quantity, units, n, n]
+    collapsed = len(kept) - len(merged)
+    kept = [(v[0], v[1], v[2]) for v in merged.values()]
+
+    # Most-wanted first. The tie-break is a stable HASH, not the quantity text: sorting ties
+    # alphabetically truncated an 18-question list at the letter "b" and never showed the
+    # extractor anything past it.
+    kept.sort(key=lambda t: (-t[2], hashlib.sha256(t[0].encode()).hexdigest()))
+    lines, qmap = [], {}
+    for i, (quantity, units, n) in enumerate(kept[:cap], 1):
+        # TWO SOURCES, TWO JOINS, and using the wrong one gives an empty map that looks like
+        # "no scale is known" rather than "I asked the wrong question". For the GAPS source the
+        # link is already one-to-one and already built: evidence_gaps() fills GAP_SCALE as it
+        # reads each row, because that sentence came from exactly that constraint. For the
+        # QUANTITY source several constraints can share a quantity and disagree about its
+        # scale, so the distinct lookup is right there and a question with more than one scale
+        # is left NULL rather than resolved.
+        if source == "gaps":
+            sc = GAP_SCALE.get(quantity, "")
+            scales = [sc] if sc else []
+        else:
+            scales = [r[0] for r in dbq.q(
+                "select distinct target_scale from constraint_entailed where "
+                f"project_id = {dbq.lit(PROJECT)} and status = 'open' and "
+                f"quantity = {dbq.lit(quantity)} and target_scale is not null")]
+        qmap[str(i)] = {"question": quantity[:200], "units": units,
+                        "from_quantity": quantity[:200], "scales": sorted(scales)}
+        u = f" Units wanted: {units}." if units.strip() else ""
+        many = f" ({n} open constraints need this.)" if n > 1 else ""
+        # THE DECOMPOSITION INSTRUCTION WAS REMOVED AFTER BEING MEASURED. It asked the
+        # extractor to also accept the numerator or denominator on its own, on the reasoning
+        # that a paper states parts more often than quotients. Tested over four ratio questions
+        # in one harvest: Q5 (W/kg muscle) returned 5 values in the requested factors out of
+        # 222; Q6 (S/cm^2) 0 of 306; Q14 (J/kg muscle) 0 of 52; Q16 (m/s) 0 of 52. Asking for
+        # the parts did not make the literature yield the parts, so the instruction was clutter
+        # in every question that carried it.
+        #
+        # ratio_unit() SURVIVES AS A PREDICTOR, which is the half that measured true: a
+        # ratio-unit question returns a usable value far less often than a non-ratio one
+        # (claim 2769), so the flag is worth printing for whoever reads the question list and
+        # decides what to spend a harvest on. It no longer tells the extractor what to do.
+        split = ratio_unit(units)
+        hint = ("\n   [LOW-YIELD: this asks for a RATIO. Ratio-unit questions have returned a "
+                "value in the units asked for far less often than other questions in this "
+                "project -- see claim 2769. Expect the paper's own units and be prepared to "
+                "convert.]" if split else "")
+        lines.append(f"{i}. {quantity}.{u}{many}{hint}\n   Report the species and the body "
+                     f"length or life stage if the paper states them.")
+    return "\n".join(lines), len(kept[:cap]), dropped, collapsed, qmap
+
+
+GENERALISE = """These are quantities a research project currently cannot answer. Each was written
+for that project's own argument, so many are phrased as ITS arithmetic rather than as something a
+published paper would ever state.
+
+Rewrite each one as a QUANTITY that the METHODS or RESULTS section of a real paper could state,
+and drop the ones no paper could.
+
+PHRASE EACH AS A NOUN PHRASE NAMING A MEASURABLE QUANTITY, never as a yes/no or a relationship
+question. The downstream step extracts NUMBERS WITH UNITS from paper text; a question it cannot
+answer with a number returns nothing however relevant the paper is. Measured 2026-11-05: gap
+sentences rewritten as "Does membrane-potential change in fin cells correlate with fin-ray growth
+rate?" and "What is the spatial relationship between Lat4a- and Kcnh2a-expressing cells?"
+returned ZERO values from roughly 80 on-topic papers, because neither has a single number as its
+answer.
+
+    NOT  "Does membrane-potential change correlate with fin-ray growth rate?"
+    YES  "Fin-ray outgrowth rate in regenerating fins under depolarising or hyperpolarising
+          treatment, in um/day"
+    NOT  "What is the spatial relationship between Lat4a- and Kcnh2a-expressing cells?"
+    YES  "Distance between the two expression domains in a regenerating fin ray, in um"
+
+A relationship an underlying paper reports is still reachable: name the MEASURED QUANTITY on each
+side, and let the extractor return both.
+
+    KEEP and generalise:  "phosphagen free-energy store per kg fast muscle, compared with the
+                          cost of one start (about 57 J/kg, derived assuming 0.1 s and
+                          efficiency 0.25)"  ->  "phosphagen (PCr/ATP) free-energy store per kg
+                          of fast/white muscle, in J/kg"
+    KEEP and generalise:  "M_pectoral/M_body in aerial teleosts"  ->  "pectoral muscle mass as a
+                          fraction of body mass, in any teleost fish"
+    DROP:                 "available minus required mass-specific power"  -- a difference between
+                          two numbers THIS project computed; no paper reports it.
+    DROP:                 "time to reach U_min from 0.45 m/s compared with the fall-back time"
+                          -- a comparison internal to this project's model.
+
+Widen the organism, but INFER WHAT IT IS FROM THE QUANTITIES THEMSELVES -- the list below is the
+only thing that tells you what this project studies. A value from a related organism, or from
+another system where the physiology carries over, is wanted; say so in the question.
+
+NEVER NAME AN ORGANISM THE QUANTITIES DO NOT IMPLY. Measured 2026-11-05: this instruction
+previously read "this project works on zebrafish", and for the insect-flight project it turned
+the quantity `lift-to-weight ratio of the four-wing configuration` into "Lift force produced by
+flying fish or gliding fish during aerial locomotion". A four-wing configuration is an insect.
+The question was well-formed, searchable, and about the wrong animal, and it would have harvested
+fish papers into an insect project.
+
+QUANTITIES:
+{items}
+
+Reply with JSON only:
+{{"questions": [{{"n": <the number above>, "question": "...", "units": "...", "keep": true}},
+                {{"n": <number>, "keep": false, "why": "..."}}]}}
+"""
+
+
+def generalise(items: list[tuple[str, str, int]], tenant_list, call_fn, model: str):
+    """Turn project-internal quantities into questions a paper could answer.
+
+    WHY. With the quantities used verbatim, extraction returned zero verified values from nine
+    papers in three separate runs. The decisive example: Sutton et al. 2019 states a muscle
+    energy density of 15.0 J/kg in plain words, and NO question on the verbatim list asks for
+    muscle energy density -- the nearest was "phosphagen free-energy store per kg fast muscle,
+    compared with the cost of one start (about 57 J/kg, derived assuming ...)", which names this
+    project's own comparison and not the paper's quantity. The filter on units removed ratios;
+    it could not remove a derived quantity that happens to carry W/kg.
+    """
+    numbered = "\n".join(f"{i}. {q} [units: {u or 'unstated'}]" for i, (q, u, _) in enumerate(items, 1))
+    from api_challenge import call_first_live
+    r = call_first_live(tenant_list, GENERALISE.format(items=numbered), max_tokens=4000,
+                        model=model)
+    body = r.get("text") if isinstance(r, dict) else str(r)
+    import json as _json
+    import re as _re
+    m = _re.search(r"\{.*\}", body or "", _re.S)
+    if not m:
+        return None, "no JSON in reply"
+    try:
+        data = _json.loads(m.group(0))
+    except Exception as e:                                    # noqa: BLE001
+        return None, f"unparseable JSON: {e}"
+    return data.get("questions"), ""
+
+
+def main() -> int:
+    keep = "--keep-dimensionless" in sys.argv
+    source = "gaps" if "--from-gaps" in sys.argv else "quantities"
+    cap = 18
+    if "--cap" in sys.argv:
+        cap = int(sys.argv[sys.argv.index("--cap") + 1])
+    qs_for_control = evidence_gaps() if source == "gaps" else open_quantities()
+    text, n, dropped, collapsed, base_map = build(keep, cap, source)
+
+    gen_note, gen_map = "", dict(base_map)   # identity map; --generalise replaces it
+    if "--generalise" in sys.argv:
+        from api_challenge import TENANTS, call      # api_allen excluded in exactly one place
+        items = ([(q, u, c) for q, u, c in evidence_gaps()][:40] if source == "gaps"
+                 else [(q, u, c) for q, u, c in open_quantities() if keep or is_physical(u)][:40])
+        qs, err = generalise(items, TENANTS, call, MODEL)
+        if qs is None:
+            print(f"  generalisation FAILED ({err}); keeping the verbatim quantities")
+        else:
+            kept_q = [q for q in qs if q.get("keep") and q.get("question")]
+            # TWO-SIDED CONTROL on the generalisation, not just on the filter. A step that
+            # keeps everything and a step that drops everything both "work" on one example.
+            joined = " ".join(str(q.get("question", "")).lower() for q in kept_q)
+            dropped_n = {q.get("n") for q in qs if not q.get("keep")}
+            # Project-agnostic, for the same reason as the final control below: the previous
+            # test was `"muscle" in joined and ("mass" in joined or "power" in joined)`, which
+            # is zebrafish-flight vocabulary. Coral has no muscle, so the generalisation control
+            # failed for it and the module silently fell back to the verbatim quantities -- a
+            # degraded result that announces itself only as one line of output. Same bug as the
+            # final control, in a second place, and fixing one did not fix the other.
+            src_w: set = set()
+            for quantity, _u, _c in items:
+                src_w |= words(quantity)
+            must_keep = bool(src_w & words(joined))
+            must_drop = source == "gaps" or any("available minus required" in items[n - 1][0].lower()
+                            for n in dropped_n if isinstance(n, int) and 1 <= n <= len(items))
+            # A yes/no or relationship phrasing returns nothing from a numeric extractor
+            # however relevant the paper is, and it is invisible in the output -- it looks
+            # exactly like a question the literature has not answered.
+            YESNO = ("does ", "do ", "is ", "are ", "can ", "has ", "have ", "whether ",
+                     "what is the relationship", "what is the spatial relationship")
+            yesno = [q["question"] for q in kept_q
+                     if str(q["question"]).strip().lower().startswith(YESNO)]
+            if yesno:
+                print(f"  {len(yesno)} question(s) phrased as yes/no or a relationship; a "
+                      f"numeric extractor cannot answer these. First: {yesno[0][:70]}")
+                kept_q = [q for q in kept_q if q["question"] not in yesno]
+            if not (kept_q and must_keep):
+                print("  generalisation CONTROL FAILED -- keeping the verbatim quantities")
+            else:
+                lines, qmap = [], {}
+                for i, q in enumerate(kept_q[:cap], 1):
+                    u = f" Units wanted: {q['units']}." if q.get("units") else ""
+                    lines.append(f"{i}. {q['question']}.{u}\n   Report the species and the body "
+                                 f"length or life stage if the paper states them.")
+                    # Carry the originating constraint's SCALE through the generalisation.
+                    # Without this the question is a good literature question that has forgotten
+                    # which scale of the model it was asked for, and every value extracted with
+                    # it lands with scale_id NULL -- which is exactly why the project's
+                    # measured-with-a-scale row cannot move even when real values arrive.
+                    src_n = q.get("n")
+                    if source == "gaps":
+                        if isinstance(src_n, int) and 1 <= src_n <= len(items):
+                            sc = GAP_SCALE.get(items[src_n - 1][0], "")
+                            qmap[str(i)] = {"question": q["question"],
+                                            "units": q.get("units", ""),
+                                            "from_quantity": items[src_n - 1][0][:200],
+                                            "scales": [sc] if sc else []}
+                    elif isinstance(src_n, int) and 1 <= src_n <= len(items):
+                        quantity = items[src_n - 1][0]
+                        scales = [r[0] for r in dbq.q(
+                            "select distinct target_scale from constraint_entailed where "
+                            f"project_id = {dbq.lit(PROJECT)} and status = 'open' and "
+                            f"quantity = {dbq.lit(quantity)} and target_scale is not null")]
+                        qmap[str(i)] = {"question": q["question"], "units": q.get("units", ""),
+                                        "from_quantity": quantity, "scales": sorted(scales)}
+                text, n = "\n".join(lines), len(lines)
+                gen_map = qmap
+                gen_note = (f"  generalised by model: {len(kept_q)} kept, "
+                            f"{len(dropped_n)} dropped as project-internal arithmetic "
+                            f"[{'ok' if must_drop else 'WEAK'}] control: dropped a known "
+                            f"internal difference = {must_drop}")
+
+    # TWO-SIDED CONTROL. A generator that emits nothing and a generator pointed at an empty
+    # database print the same thing, and a filter that drops everything looks like a strict one.
+    # THE CONTROL MUST NOT NAME THIS PROJECT'S SUBJECT MATTER. The previous version asserted
+    # that the output mentioned "water-exit speed", "tail-beat frequency" or "muscle", and that
+    # it did NOT mention "frame interval". Both are zebrafish-flight vocabulary, so the module
+    # reported FAIL for every other project in the database -- and because --out returns 2 on a
+    # failed control, it could not be run for coral, insect-flight, limbless-mouse or xenobot at
+    # all. Measured 2026-11-05: coral and insect-flight each produce six sensible questions
+    # ("generation time, years"; "sensory feedback latency, ms") and each reported FAIL.
+    #
+    # What the control is actually for is that the output DERIVES FROM THE INPUT rather than
+    # from the model's priors, and that is testable without knowing the subject: the generated
+    # questions must share content words with the quantities they were generated from.
+    low = text.lower()
+    src_words: set[str] = set()
+    for quantity, _u, _c in qs_for_control:
+        src_words |= words(quantity)
+    out_words = words(low)
+    shared = src_words & out_words
+    must_find = bool(shared)
+    # And the units filter must actually have run when there was anything for it to drop.
+    must_drop = dropped > 0 or not any(not is_physical(u) for _q, u, _c in qs_for_control)
+    ok = n > 0 and (must_find or source == "gaps") and (must_drop or keep or source == "gaps")
+    if "--out" in sys.argv:
+        path = sys.argv[sys.argv.index("--out") + 1]
+        if not ok:
+            print("CONTROL FAILED -- refusing to write a question list that cannot be trusted")
+            print(f"  questions={n} must_find={must_find} must_drop={must_drop}")
+            return 2
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(text + "\n")
+        print(f"wrote {path}")
+        if gen_map:
+            import json as _json
+            mpath = path + ".map.json"
+            with open(mpath, "w", encoding="utf-8") as fh:
+                _json.dump(gen_map, fh, indent=1)
+            one = sum(1 for v in gen_map.values() if len(v["scales"]) == 1)
+            print(f"wrote {mpath}: {len(gen_map)} question(s), {one} with exactly ONE scale "
+                  f"(the rest stay NULL rather than being guessed)")
+    if gen_note:
+        print(gen_note)
+    print(f"  {n} question(s) from OPEN constraints; {dropped} dropped as dimensionless "
+          f"(ours, not a paper's), {collapsed} collapsed as restatements of another")
+    print(f"  [{'ok' if ok else 'FAIL'}] control: output shares {len(shared)} content word(s) "
+          f"with the quantities it was generated from, so it derives from this project's own "
+          f"constraints and not from the model's priors; units filter ran ({dropped} dropped)")
+    print()
+    print(text)
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

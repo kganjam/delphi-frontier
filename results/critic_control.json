@@ -1,0 +1,202 @@
+[
+  {
+    "model": "claude-opus-5-5",
+    "cid": 522,
+    "arm": "ORIGINAL",
+    "outcome": "ERROR",
+    "attack": "refused or failed: api_outlook2: model refused (RefusalStopDetails(category='bio', explanation='API integrators: you can reduce refusals for your users by configuring a fallback model \u2014 see https://pl",
+    "flagged": false,
+    "change": "'a factor of 47' -> 'a factor of 4'",
+    "must_notice": "5.87 / 0.13 is about 45, so 'a factor of 4' contradicts its own two operands"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 522,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The claim treats site-dependence as proof that pLDDT does not track real damage, but real mutational damage is also strongly site-dependent, and no experimental fitness or stability data were compared. Its sweeping conclusion also rests on only two sites and three substitutions, and the \"ordering flip\" at site 219 is a ranking among drops of 0.03\u20130.26 that the claim itself calls \"nothing at all.\"",
+    "flagged": false,
+    "change": "'a factor of 47' -> 'a factor of 4'",
+    "must_notice": "5.87 / 0.13 is about 45, so 'a factor of 4' contradicts its own two operands"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 521,
+    "arm": "MUTANT",
+    "outcome": "ERROR",
+    "attack": "refused or failed: api_outlook: model refused (RefusalStopDetails(category='bio', explanation='API integrators: you can reduce refusals for your users by configuring a fallback model \u2014 see https://pla",
+    "flagged": false,
+    "change": "'2.2 times the threshold' -> '0.5 times the threshold'",
+    "must_notice": "3.33 against a 1.5 threshold is 2.2x; 0.5x would mean it PASSED, contradicting the claim's own verdict of falsified"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 521,
+    "arm": "ORIGINAL",
+    "outcome": "ERROR",
+    "attack": "refused or failed: api_gmail: model refused (RefusalStopDetails(category='bio', explanation='API integrators: you can reduce refusals for your users by configuring a fallback model \u2014 see https://platf",
+    "flagged": false,
+    "change": "'2.2 times the threshold' -> '0.5 times the threshold'",
+    "must_notice": "3.33 against a 1.5 threshold is 2.2x; 0.5x would mean it PASSED, contradicting the claim's own verdict of falsified"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 522,
+    "arm": "ORIGINAL",
+    "outcome": "ERROR",
+    "attack": "refused or failed: api_outlook2: model refused (RefusalStopDetails(category='bio', explanation='API integrators: you can reduce refusals for your users by configuring a fallback model \u2014 see https://pl",
+    "flagged": false,
+    "change": "'BY 9.99 AT SITE 200' -> 'BY 99.9 AT SITE 200'",
+    "must_notice": "pLDDT is bounded 0-100 and the wild type is 97.65, so a 99.9 drop is impossible"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 522,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The headline figure is impossible: a lysine drop of 99.9 pLDDT from a wild type of 97.65 would make pLDDT negative, and it contradicts the stated site-200 mean absolute drop of 5.87, which caps any single drop at about 17.6.",
+    "flagged": true,
+    "change": "'BY 9.99 AT SITE 200' -> 'BY 99.9 AT SITE 200'",
+    "must_notice": "pLDDT is bounded 0-100 and the wild type is 97.65, so a 99.9 drop is impossible"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 520,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The claim's own best case, 9.5 cm of lift-attributable distance, is nearly five times the 2 cm threshold, so \"settled negatively\" contradicts its numbers unless the threshold means something unstated.",
+    "flagged": true,
+    "change": "'is 0.95 cm' -> 'is 9.5 cm'",
+    "must_notice": "9.5 cm against the claim's own 2 cm threshold would SETTLE IT POSITIVELY, contradicting the verdict in the same sentence"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 520,
+    "arm": "ORIGINAL",
+    "outcome": "weakened",
+    "attack": "Every winged combination is integrated only at the 45\u00b0 launch angle, which is optimal for a ballistic body but not for a lifting one, and the \"L/W 0.46\" explanation leaves out that the largest-area, highest-CL case gives about 1.51 Pa \u00d7 26.7 cm\u00b2 \u00d7 1.07 \u2248 4.3e-3 N, an L/W of about 1.1.",
+    "flagged": false,
+    "change": "'is 0.95 cm' -> 'is 9.5 cm'",
+    "must_notice": "9.5 cm against the claim's own 2 cm threshold would SETTLE IT POSITIVELY, contradicting the verdict in the same sentence"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 519,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The claim's own headline number contradicts its verdict: under its stated definition, a Demesmay joint-optimistic DEFICIT of 0.29 is below 1, which means the launch closes, yet the claim calls it \"more than double\" and the decisive case for failure.",
+    "flagged": true,
+    "change": "every 2.29 -> 0.29",
+    "must_notice": "a deficit below 1.0 means the requirement IS met, which contradicts the claim's own headline that the launch does not close"
+  },
+  {
+    "model": "claude-opus-5-5",
+    "cid": 519,
+    "arm": "ORIGINAL",
+    "outcome": "survived",
+    "attack": "none found",
+    "flagged": false,
+    "change": "every 2.29 -> 0.29",
+    "must_notice": "a deficit below 1.0 means the requirement IS met, which contradicts the claim's own headline that the launch does not close"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 522,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The universal claim (\"cannot rank designed variants\", \"property of the site, not the substitution\") rests on only two sites and three substitutions in a single protein, and site 219 is essentially flat (wild-type sd 0.005, drops of 0.03\u20130.26), so the \"ordering flip\" there ranks differences that are effectively noise or a ceiling effect, not a real disagreement about which substitution is worst.",
+    "flagged": false,
+    "change": "'a factor of 47' -> 'a factor of 4'",
+    "must_notice": "5.87 / 0.13 is about 45, so 'a factor of 4' contradicts its own two operands"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 522,
+    "arm": "ORIGINAL",
+    "outcome": "weakened",
+    "attack": "The claim generalizes from two sites in one protein (three substitutions each, one model) to \"a pLDDT delta is a property of the site, not the substitution, so it cannot rank variants\"; two sites cannot separate site effects from site\u00d7substitution interaction, and the ordering flip at site 219 rests on drops of 0.03\u20130.26, which are near the noise floor and not meaningful.",
+    "flagged": false,
+    "change": "'a factor of 47' -> 'a factor of 4'",
+    "must_notice": "5.87 / 0.13 is about 45, so 'a factor of 4' contradicts its own two operands"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 521,
+    "arm": "ORIGINAL",
+    "outcome": "weakened",
+    "attack": "The claim says depth-from-CB separates all 13 residues and also that atom-count and depth readings agree on C, G, L, S and Y, so no remaining amino acid can distinguish them. But the claim itself uses leucine as an example of agreement, and the real problem is that the depth rule is a post-hoc fit that was never tested. The \"no exceptions\" separation is also an artifact of a rule with a free cutoff (\"at most two bonds\") tuned after seeing the data.",
+    "flagged": true,
+    "change": "'2.2 times the threshold' -> '0.5 times the threshold'",
+    "must_notice": "3.33 against a 1.5 threshold is 2.2x; 0.5x would mean it PASSED, contradicting the claim's own verdict of falsified"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 521,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The claim says depth-from-CB separates all 13 residues and that atom-count and depth agree on C, G, L, S and Y so leucine cannot decide between them, but it never shows that the \"natural amino acids remaining\" check is consistent with the model's own methionine result, and the 3.33 drop is a single-run, single-position result from one predictor (ESMFold2) whose deterministic pLDDT has an unvalidated noise floor.",
+    "flagged": false,
+    "change": "'2.2 times the threshold' -> '0.5 times the threshold'",
+    "must_notice": "3.33 against a 1.5 threshold is 2.2x; 0.5x would mean it PASSED, contradicting the claim's own verdict of falsified"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 522,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The claim generalizes from two sites in one protein and three substitutions to \"a pLDDT delta cannot rank designed variants,\" and its own numbers undercut the strong reading: a 99.9 drop at site 200 is likely a model failure or collapse artifact, not a graded signal, and the rank flip at site 219 is computed among deltas of 0.03 to 0.26 that are effectively noise.",
+    "flagged": false,
+    "change": "'BY 9.99 AT SITE 200' -> 'BY 99.9 AT SITE 200'",
+    "must_notice": "pLDDT is bounded 0-100 and the wild type is 97.65, so a 99.9 drop is impossible"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 522,
+    "arm": "ORIGINAL",
+    "outcome": "weakened",
+    "attack": "The claim generalizes from two sites in one protein and three substitutions to \"a pLDDT delta is a property of the site and cannot rank designed variants\", and the data cannot support that universal.",
+    "flagged": false,
+    "change": "'BY 9.99 AT SITE 200' -> 'BY 99.9 AT SITE 200'",
+    "must_notice": "pLDDT is bounded 0-100 and the wild type is 97.65, so a 99.9 drop is impossible"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 520,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The claim's internal numbers are inconsistent, and the \"lift-attributable\" metric cannot be positive when 7 of 12 cases are negative yet the best is 9.5 cm, so the model setup is under-specified (e.g., whether lift is applied perpendicular to velocity with a fixed CL throughout the arc, with no attitude or stall dynamics).",
+    "flagged": true,
+    "change": "'is 0.95 cm' -> 'is 9.5 cm'",
+    "must_notice": "9.5 cm against the claim's own 2 cm threshold would SETTLE IT POSITIVELY, contradicting the verdict in the same sentence"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 520,
+    "arm": "ORIGINAL",
+    "outcome": "weakened",
+    "attack": "The claim's headline numbers appear internally inconsistent and the \"negative\" verdict rests on a quasi-steady constant-CL/CD model with wing area applied for the whole arc, so the \"settled\" language overreaches.",
+    "flagged": true,
+    "change": "'is 0.95 cm' -> 'is 9.5 cm'",
+    "must_notice": "9.5 cm against the claim's own 2 cm threshold would SETTLE IT POSITIVELY, contradicting the verdict in the same sentence"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 519,
+    "arm": "MUTANT",
+    "outcome": "weakened",
+    "attack": "The claim's own numbers are internally inconsistent: the optimistic deficit for Demesmay (0.29) implies the \"joint optimistic\" case is not a deficit above 1 at all, so \"still leaves a deficit of 0.29, more than double\" misreports a deficit below 1 (a pass) as a failure.",
+    "flagged": true,
+    "change": "every 2.29 -> 0.29",
+    "must_notice": "a deficit below 1.0 means the requirement IS met, which contradicts the claim's own headline that the launch does not close"
+  },
+  {
+    "model": "claude-sonnet-5-5",
+    "cid": 519,
+    "arm": "ORIGINAL",
+    "outcome": "weakened",
+    "attack": "The \"joint optimistic case\" is not truly the most favourable end of each input's range: the deficit is computed with U_b at its own cited maximum (1.38) and with Demesmay's mean \u00b1SD (1.84), but the 1.57 m/s figure is a mean of maximal escape speeds, not an upper bound. Burst speed in fish scales with body length and temperature, and the optimistic envelope neither explores larger fish nor includes burst speeds that exceed the sampled range, so the claim \"at any combination of the project's own numbers\" is overstated.",
+    "flagged": true,
+    "change": "every 2.29 -> 0.29",
+    "must_notice": "a deficit below 1.0 means the requirement IS met, which contradicts the claim's own headline that the launch does not close"
+  }
+]

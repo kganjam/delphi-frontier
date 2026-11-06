@@ -1,0 +1,46 @@
+version: 1
+project:
+  id: delphi-law-library
+  title: The law library
+  description: Biological design laws, with the conditions where each holds and where it breaks.
+  keywords:
+  - biological design
+  - scaling laws
+  - biomimetics
+  - engineering biology
+  github: https://github.com/kganjam/delphi-frontier
+  toc:
+  - file: pages/index.md
+  - title: Laws
+    children:
+    - file: pages/allometry-huxley.md
+    - file: pages/ashby.md
+    - file: pages/bone-strain.md
+    - file: pages/cell-size-adder.md
+    - file: pages/cost-of-transport.md
+    - file: pages/darcy-thompson.md
+    - file: pages/elastic-similarity.md
+    - file: pages/froude-efficiency.md
+    - file: pages/froude-gait.md
+    - file: pages/golden-angle.md
+    - file: pages/gompertz.md
+    - file: pages/greenhill.md
+    - file: pages/kleiber.md
+    - file: pages/leonardo.md
+    - file: pages/lighthill.md
+    - file: pages/murray.md
+    - file: pages/pennycuick.md
+    - file: pages/poiseuille.md
+    - file: pages/reynolds.md
+    - file: pages/rubner.md
+    - file: pages/second-moment.md
+    - file: pages/soaring-size-limit.md
+    - file: pages/strouhal.md
+    - file: pages/turing.md
+    - file: pages/von-bertalanffy.md
+    - file: pages/weis-fogh.md
+    - file: pages/wing-loading.md
+site:
+  template: book-theme
+  options:
+    logo_text: Law library

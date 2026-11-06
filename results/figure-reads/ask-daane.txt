@@ -1,0 +1,20 @@
+This is panel A of a figure from a published zebrafish paper (Daane et al. 2018, Sci Rep).
+
+The plot's y axis is "Growth/STL (mm)" and the x axis is "Days Post Amputation". Several coloured
+curves are drawn. Separately, there are HORIZONTAL GREY DASHED REFERENCE LINES running across the
+plot, each labelled on the RIGHT-HAND side with a genotype name: sof, wt, and alf.
+
+I want the y-axis VALUE of each of those three horizontal grey dashed reference lines, read against
+the y axis.
+
+Report ONLY what you can see. If something is not in the image write "absent" -- do not estimate it
+from context, and do not infer a line that is not drawn.
+
+Reply in EXACTLY this form, one item per line, nothing else:
+AXIS_MAX: <the largest number printed on the y axis>
+XAXIS_MAX: <the largest number printed on the x axis>
+NLINES: <how many horizontal grey dashed reference lines are drawn>
+LINE_SOF: <y value of the dashed line labelled sof>
+LINE_WT: <y value of the dashed line labelled wt>
+LINE_ALF: <y value of the dashed line labelled alf>
+LINE_LOF: <y value of a dashed line labelled lof, or "absent">

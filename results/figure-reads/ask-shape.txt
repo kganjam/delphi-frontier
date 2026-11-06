@@ -1,0 +1,23 @@
+This image shows TWO zebrafish photographed from above (dorsal view), side by side. LEFT is wild
+type. RIGHT is the "alf" long-fin mutant. Each fish has a pair of pectoral fins spread out to the
+sides, each fin being a FAN of thin rays radiating from a small base on the body wall.
+
+Measure the LEFT-HAND pectoral fin of EACH fish (the fin on the left side of the picture for that
+fish). Work in PIXELS of this image. Two quantities per fin:
+
+  LENGTH = straight-line distance from the fin's base on the body wall to the tip of its LONGEST ray
+  SPAN   = straight-line distance from the tip of the most ANTERIOR (forward) ray to the tip of the
+           most POSTERIOR (rearward) ray -- the width across the open fan, tip to tip
+
+Report ONLY what you can see. If something is not in the image, write "absent".
+
+Reply in EXACTLY this form, one item per line, nothing else:
+NFISH: <how many whole fish are shown>
+SCALEBAR_TEXT: <the text printed next to the scale bar, verbatim>
+SOF_PRESENT: <the length in pixels of the left pectoral fin of a fish labelled "sof", or "absent">
+WT_LENGTH_PX: <number>
+WT_SPAN_PX: <number>
+ALF_LENGTH_PX: <number>
+ALF_SPAN_PX: <number>
+WIDER: <one word -- is the alf fin proportionally WIDER, SAME, or NARROWER than wild type, meaning
+        its span-to-length ratio compared with wild type's>

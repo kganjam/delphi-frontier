@@ -1,0 +1,42 @@
+{
+ "1": {
+  "question": "Actuation period or cycle time of soft robotic actuators or microdevices, in seconds",
+  "units": "s",
+  "from_quantity": "actuation period",
+  "scales": [
+   "organism"
+  ]
+ },
+ "2": {
+  "question": "Width of concave surface features in microfabricated or soft robotic structures, in micrometers",
+  "units": "um",
+  "from_quantity": "concave feature width",
+  "scales": [
+   "organism"
+  ]
+ },
+ "3": {
+  "question": "Minimum achievable concave feature width in microfabrication or soft lithography, in micrometers",
+  "units": "um",
+  "from_quantity": "minimum concave feature width",
+  "scales": [
+   "tissue"
+  ]
+ },
+ "4": {
+  "question": "Operational lifetime of soft robotic devices or biomedical implants, in days",
+  "units": "days",
+  "from_quantity": "operational lifetime",
+  "scales": [
+   "organism"
+  ]
+ },
+ "5": {
+  "question": "Elastic modulus (Young's modulus) of soft tissues or tissue-mimetic materials, in Pascals",
+  "units": "Pa",
+  "from_quantity": "tissue elastic modulus",
+  "scales": [
+   "organism"
+  ]
+ }
+}

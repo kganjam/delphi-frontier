@@ -1,0 +1,18 @@
+This is panel J of a figure from a published zebrafish paper (Lanni et al. 2019).
+
+The MAIN plot has x axis "Standard length (mm)" and y axis "Caudal fin length (mm)". Two series
+are plotted: WILD-TYPE as triangles, and "schleier" as circles (see the legend in the panel).
+
+Read the two series at specific body sizes.
+
+Report ONLY what you can see. If something is not in the image, write "absent".
+
+Reply in EXACTLY this form, one item per line, nothing else:
+XAXIS_MAX: <largest number printed on the x axis>
+YAXIS_MAX: <largest number printed on the y axis>
+NSERIES: <how many data series are in the legend>
+THIRD_SERIES: <the name of a THIRD series in the legend, or "absent">
+WT_AT_STL20: <caudal fin length in mm for WILD-TYPE at standard length 20 mm>
+SCH_AT_STL20: <caudal fin length in mm for schleier at standard length 20 mm>
+WT_AT_STL30: <caudal fin length in mm for WILD-TYPE at standard length 30 mm>
+SCH_AT_STL30: <caudal fin length in mm for schleier at standard length 30 mm>

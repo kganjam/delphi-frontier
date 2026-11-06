@@ -1,0 +1,5335 @@
+{
+ "schema": "morphoswarm/ask-transfer-record/v1",
+ "project": "zebrafish-flight",
+ "records": [
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1",
+   "quantity": {
+    "value": 5.84,
+    "units": "m/s",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "zebrafish-glide-physics.md, computed",
+     "recorded_at": "2026-11-04 06:09:58.523244+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "10",
+   "quantity": {
+    "value": 0.258,
+    "units": "pTM",
+    "evidence": "simulated",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius workbench infer_openfold2_native",
+     "recorded_at": "2026-11-04 06:54:06.625059+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1000",
+   "quantity": {
+    "value": 15.0,
+    "units": "cm TL maximum length of Devario aequipinnatus, against Danio rerio 3.8 cm SL",
+    "evidence": "literature",
+    "read_level": "listing",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "FishBase species summary pages, fetched 2026-11-05, with Danio rerio and Danionella cerebrum as positive controls",
+     "recorded_at": "2026-11-05 08:09:23.237415+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1003",
+   "quantity": {
+    "value": 2.67,
+    "units": "FLOOR on the fin-area ratio; ceiling 4.37x at n=2, both short of the 4.4x requirement",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "claim 542 units field (lower bound); adversarial panel attacks on claims 987 and 1001",
+     "recorded_at": "2026-11-05 08:20:16.121424+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1004",
+   "quantity": {
+    "value": 1.158,
+    "units": "allometric exponent of pectoral fin length against standard length in flying fishes, from plotted specimens",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "PMC9172250 Fig 1B individual data points read by swarm/read_figure.py (6 reads, 3 controls); supersedes the fitted-line reading in claims 1001/1003",
+     "recorded_at": "2026-11-05 08:24:30.702373+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1006",
+   "quantity": {
+    "value": 0.0,
+    "units": "usable third (Re, C_D) points found in the 193-paper corpus",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "exhaustive sentence scan of 193 reference-stripped full texts for co-occurring Reynolds and drag-coefficient terms with numerals",
+     "recorded_at": "2026-11-05 08:27:51.822431+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1007",
+   "quantity": {
+    "value": 1.2,
+    "units": "best measured fold change in fish adult body length, against 2.45x required",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "claims 995 and 996; seven PMC candidates fetched for the GH arm, four not in the OA subset",
+     "recorded_at": "2026-11-05 08:30:19.528833+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1009",
+   "quantity": {
+    "value": 1550.0,
+    "units": "g total weight of the aerial-aquatic robot that still requires propeller-assisted take-off",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "PMC13599785, read in full text; found by a corpus scan for fin/ray stiffness terms",
+     "recorded_at": "2026-11-05 08:35:52.497746+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1012",
+   "quantity": {
+    "value": 1.098,
+    "units": "fold change in adult body length, GH-transgenic vs WT Danio rerio at ~90 dpf",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "PMC11018968 Fig 2A read by swarm/read_figure.py (opus 6 reads, 5 usable, 3 controls); paper located by peer session morphoswarm-34",
+     "recorded_at": "2026-11-05 08:49:00.950966+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1014",
+   "quantity": {
+    "value": 16.2,
+    "units": "cm SL upper end of the corrected body-size target, from Eloy eq16 branches rather than a fitted exponent",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "peer report from session morphoswarm-ed on S908, both objections verified arithmetically here; Eloy 2012 J Fluids Struct 30:205-218 eq (16); Blake 1979 J exp Biol 82:255-271 for the posture effect",
+     "recorded_at": "2026-11-05 08:57:43.698666+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1015",
+   "quantity": {
+    "value": 4.3,
+    "units": "fold change in drag coefficient from appendage configuration alone at fixed Reynolds number",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Blake 1979 J exp Biol 82:255-271, four quotes verified verbatim against a full-text extraction; paper located by peer session morphoswarm-ed",
+     "recorded_at": "2026-11-05 08:59:57.064907+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1016",
+   "quantity": {
+    "value": 0.5,
+    "units": "exponent assumed into the exocoetid anchor by Re^-1/2 extrapolation, then recovered by fitting",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "commit c1b761eb S32 assumptions table, read from git history; arithmetic reproduced here",
+     "recorded_at": "2026-11-05 09:03:19.408185+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1017",
+   "quantity": {
+    "value": 7.0,
+    "units": "strong-verb candidates flagged in FINDINGS, of which 6 were contrastive or negated",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "sweep of 62 strong-verb occurrences in docs/FINDINGS.md plus a random sample of 8 of 38 \"measured\" uses, all read by hand",
+     "recorded_at": "2026-11-05 09:05:59.010025+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1018",
+   "quantity": {
+    "value": 15.0,
+    "units": "cm approximate body length of a convergent Triassic glider, inside the 10.6-16.2 cm target",
+    "evidence": "literature",
+    "read_level": "search-summary",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "project source card B2 (listing + search-summary) for the size; paper identity and title confirmed via Semantic Scholar; PMC3574442 is not in the OA subset",
+     "recorded_at": "2026-11-05 09:09:02.752533+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1019",
+   "quantity": {
+    "value": 1.16,
+    "units": "minimum residual factor left for Reynolds number after a 4.30x configuration effect",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "adversarial panel attacks on claims 1014 and 1015, both verified arithmetically here",
+     "recorded_at": "2026-11-05 09:13:45.083692+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1020",
+   "quantity": {
+    "value": 0.46,
+    "units": "fraction of maximum adult SL at which the GH transgenic length measurement was taken",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "adversarial panel attacks on claims 1012, 1013, 1016, 1018; each adjudicated against the arithmetic or the source here",
+     "recorded_at": "2026-11-05 09:15:15.674136+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1021",
+   "quantity": {
+    "value": 0.46,
+    "units": "fraction of maximum SL at which the GH fold change was measured, despite the fish being sexually mature",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "PMC11018968 methods text, verbatim; FishBase max SL for Danio rerio (claim 1000)",
+     "recorded_at": "2026-11-05 09:16:26.317168+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1022",
+   "quantity": {
+    "value": 0.14,
+    "units": "fraction of maximum length at which the triploid fold change was measured",
+    "evidence": "literature",
+    "read_level": "listing",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "FishBase species pages for Takifugu rubripes and Danio rerio (control), fetched 2026-11-05; claim 995 figure read",
+     "recorded_at": "2026-11-05 09:17:40.20004+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1024",
+   "quantity": {
+    "value": 1.35,
+    "units": "allometric exponent of fin length against standard length, schleier heterozygote zebrafish",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Lanni et al. 2019 PMC7235970, verbatim from full text held in the corpus",
+     "recorded_at": "2026-11-05 09:20:31.071657+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1027",
+   "quantity": {
+    "value": 2.56,
+    "units": "ratio of seed noise floor to total variant signal in the slc43a2a pLDDT scan",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/structures/slc43a2a_*/confidence.json, 22 runs; T200K identified as lat4a^nr21 from Daane 2021 PMC9172250",
+     "recorded_at": "2026-11-05 09:26:15.626329+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1028",
+   "quantity": {
+    "value": 19.0,
+    "units": "signal-to-noise for a scrambled sequence, against 0.39 for a point mutation",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/structures/*/confidence.json; actinodin1 vs its shuffled and seed7 controls, slc43a2a vs its 4 wild-type seeds",
+     "recorded_at": "2026-11-05 09:27:26.50003+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1030",
+   "quantity": {
+    "value": 0.256,
+    "units": "fraction of positions where L is ProteinMPNN argmax, the background that explains the apparent signal",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/proteinmpnn_slc43a2a_wt/result.json; three background controls over all 577 positions",
+     "recorded_at": "2026-11-05 09:31:27.878856+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1031",
+   "quantity": {
+    "value": 2.3,
+    "units": "factor by which the T200K likelihood ratio exceeds background, against the 1e9 it appears to be",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/proteinmpnn_slc43a2a_wt/result.json; background computed over 35 native-T and 555 non-K positions",
+     "recorded_at": "2026-11-05 09:32:34.378054+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1032",
+   "quantity": {
+    "value": 145.0,
+    "units": "rank of the lat4a^nr21 site among 577 positions by structural constraint, lower is more constrained",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/proteinmpnn_slc43a2a_wt/result.json, Shannon entropy over 8 designs; glycine/proline control at the constrained extreme",
+     "recorded_at": "2026-11-05 09:34:25.358398+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1034",
+   "quantity": {
+    "value": 86.0,
+    "units": "constraint rank of the alf F241Y gain-of-function site, inside the top quartile and contradicting the heuristic",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/proteinmpnn_kcnk5b/result.json; alleles from PMC6039437 (F241Y), PMC8110307 (S345A), BIORXIV_587111 (W169L); numbering validated 4/4",
+     "recorded_at": "2026-11-05 09:37:10.668293+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1036",
+   "quantity": {
+    "value": -0.106,
+    "units": "bits difference in mean entropy across the truncation boundary, smaller than an arbitrary split at residue 180",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/proteinmpnn_kcnk5b/result.json; four arbitrary control splits",
+     "recorded_at": "2026-11-05 09:39:31.042735+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1041",
+   "quantity": {
+    "value": 7.0,
+    "units": "literature claims backfilled with a read_level under a stated weakest-load-bearing-source convention",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "swarm/backfill_read_level.py; swarm/check_specs.py ASK-artifact-graph rule 2; claim text quote-checked against the database",
+     "recorded_at": "2026-11-05 10:06:49.084051+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1042",
+   "quantity": {
+    "value": 0.116,
+    "units": "iPTM of the kcnk5b homodimer prediction -- no confident interface, so no contact measurement was taken from it",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/structures/kcnk5b-homodimer-full/result.json (op-4041ee304fe6c4af, sha256 verified on fetch); confidence read before coordinates",
+     "recorded_at": "2026-11-05 10:11:03.617739+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1043",
+   "quantity": {
+    "value": 0.0,
+    "units": "confidently-placed C-terminal residues (pLDDT>=70) contacting the partner subunit, of 8 that qualify -- against 85 contacting pairs in the pore half",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "results/fish-proteins/structures/kcnk5b-homodimer-msa/ (op-1e07e0ef806cd311), kcnk5b-homodimer-full/, kcnk5b-monomer-of3/; coordinates and pLDDT read through analysis/cif.py",
+     "recorded_at": "2026-11-05 10:16:24.405028+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1044",
+   "quantity": {
+    "value": 7.0,
+    "units": "Beaufort force at the 10 m reference corresponding to claim 971s 12.5 m/s threshold at 1 m -- the claim says 6; the 75-of-100 case is force 9, not 7",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "ecology"
+    },
+    "provenance": {
+     "source": "analysis/wind_reference_height.py, recomputed from claim 971s own kappa and z0 with its five 1 m speeds as a positive control; NWS Beaufort bands (weather.gov/mfl/beaufort) and the WMO v = 0.836 B^1.5 relation at 10 m",
+     "recorded_at": "2026-11-05 10:21:25.872004+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1046",
+   "quantity": {
+    "value": 0.08,
+    "units": "significant wave height in metres at the Beaufort 7 wind route D requires, over a 100 m floodplain pond -- against a 1 m flight altitude; the 1 m wave crossing needs 15.3 km of fetch",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "ecology"
+    },
+    "provenance": {
+     "source": "analysis/wave_fetch.py: SPM/JONSWAP fetch-limited growth law with the Pierson-Moskowitz cap, validated against two independent reference points before use",
+     "recorded_at": "2026-11-05 10:28:51.735174+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1047",
+   "quantity": {
+    "value": 0.0,
+    "units": "order-induced winner flips out of 12 supersession pairs judged in both orders, with the supersession tell redacted; accuracy 24/24",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "swarm/order_bias.py, rubric pairwise-support-v1-94f73147c078df21 (frozen, identified by prompt hash); redaction controlled for both removal and non-removal",
+     "recorded_at": "2026-11-05 10:47:45.083215+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1049",
+   "quantity": {
+    "value": 0.23,
+    "units": "permutation p for the dimer interface tightening MORE than a random set of the same size on dimerisation -- it does not; the naive permutation said 0.005",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/mpnn_interface_constraint.py over kcnk5b-homodimer-msa and kcnk5b-monomer-msa ProteinMPNN runs (ops 3fb4265eb59f0e1f, 6257ebf5a5eb1086), same model, same alignment",
+     "recorded_at": "2026-11-05 11:01:53.796431+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1054",
+   "quantity": {
+    "value": 20.6,
+    "units": "m/s 10 m wind required to put claim 971s 12.46 m/s at 1 m over vegetated floodplain roughness z0 = 0.03 m -- Beaufort 8, against the 15.8 m/s and Beaufort 7 that open-water roughness gives",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "ecology"
+    },
+    "provenance": {
+     "source": "analysis/wind_reference_height.py roughness_table(); Davenport/WMO roughness classes; controlled against claim 1044s open-water ratio and on monotonicity in z0",
+     "recorded_at": "2026-11-05 11:19:33.42749+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1056",
+   "quantity": {
+    "value": 0.0,
+    "units": "days in 14,612 site-days of NASA POWER 10 m wind over the zebrafish native range whose daily MAXIMUM reaches route Ds 20.6 m/s; highest daily max in ten years is 16.84 m/s",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "ecology"
+    },
+    "provenance": {
+     "source": "analysis/wind_power_dataset.py; NASA POWER daily WS10M/WS10M_MAX 2015-2024 at 4 Ganges-Brahmaputra sites, retrieved 2026-11-05",
+     "recorded_at": "2026-11-05 11:25:23.717985+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1057",
+   "quantity": {
+    "value": 24.0,
+    "units": "subproblems I added to four projects that were zebrafish questions, reported as architecture progress and now deleted",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "swarm/api_frontier.py hardcoded PROMPT; counts by ilike over the subproblem table before deletion",
+     "recorded_at": "2026-11-05 11:28:12.805241+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1060",
+   "quantity": {
+    "value": 4.6,
+    "units": "charging contractions route C needs at the BEST measured transfer efficiency and a 30% muscle budget; 18 at the spring-driven efficiency, and no LaMSA system is described as charging over more than one",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/lamsa_route.py multi_contraction(); JEB LaMSA review 226(Suppl 1):jeb245262 read 2026-11-05, 200k of 264k characters; muscle energy density 15 J/kg Sutton et al. 2019 PMC6907395",
+     "recorded_at": "2026-11-05 11:41:05.540534+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1061",
+   "quantity": {
+    "value": 2.0,
+    "units": "of the four route closures that are NOT against a hard physical ceiling -- and both of those two are nearer to reversible than either hard-ceiling route",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "swarm/what_would_open_it.py over claims 599, 601, 1056, 1060",
+     "recorded_at": "2026-11-05 11:43:12.635976+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1065",
+   "quantity": {
+    "value": 0.441,
+    "units": "p of the esmfold2-vs-MSA-depth correlation against a circular-shift null that preserves the depth curves shape; the boltz2 one gives 0.831, so neither rho is distinguishable from noise",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/kcnk5b_msa_confound.py autocorrelation_control(); 59 circular shifts of the pdb70 coverage profile",
+     "recorded_at": "2026-11-05 12:00:46.70257+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1066",
+   "quantity": {
+    "value": 2.0,
+    "units": "selectivity-filter motifs in the zebrafish kcnk5b sequence (GYG 100-102, GFG 205-207), which forces the dimer from this proteins own architecture rather than from a human citation",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "zebrafish kcnk5b 448-aa sequence held by this project; UniProtKB organism 7955 retrieved 2026-11-05 (no reviewed entry; Q6PFU3 and A0A8M1PBI1 are TrEMBL with no FUNCTION comment)",
+     "recorded_at": "2026-11-05 12:02:06.424302+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1067",
+   "quantity": {
+    "value": 1.35,
+    "units": "Angstrom CA RMSD between the truncated and full-length pore after superposition, against a 0.22 A floor set by the two chains of the same dimer -- a shift of the same fold, not a rearrangement",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/pore_geometry.py; Kabsch superposition of 240 shared CA atoms from kcnk5b-homodimer-msa and kcnk5b-trunc240-dimer-msa",
+     "recorded_at": "2026-11-05 12:05:37.965754+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1068",
+   "quantity": {
+    "value": 18.0,
+    "units": "percent of claims written in one 12-hour session that were later superseded; the adversarial arm triggered 42% of those corrections and unprompted checking the other 58%",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "claim and challenge tables, zebrafish-flight, claims created in the last 12 hours; a supersession counts as arm-triggered when a weakened/refuted verdict predates the replacement claim",
+     "recorded_at": "2026-11-05 12:10:00.027698+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1069",
+   "quantity": {
+    "value": 1.3,
+    "units": "ratio of the truncation-induced change in pore sequence tolerance to the within-model floor, against 6.1x for the same constructs geometry -- the fold shifts, its sequence tolerance does not",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/mpnn_interface_constraint.py truncation_constraint(); ProteinMPNN on kcnk5b-homodimer-msa and kcnk5b-trunc240-dimer-msa (op-9157d8ce9e9f44d7)",
+     "recorded_at": "2026-11-05 12:14:40.595428+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1070",
+   "quantity": {
+    "value": 70.0,
+    "units": "percent of panel verdicts that weakened or refuted a zebrafish-flight claim, against 1 percent for limbless-mouse under the same prompt and models -- a seventyfold spread",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "challenge table, all five projects, one 45-minute panel window; permutation p computed exactly over all 120 orderings of 5 projects",
+     "recorded_at": "2026-11-05 12:16:28.76419+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1071",
+   "quantity": {
+    "value": 7.0,
+    "units": "of 8 scales reached by the claims the generated design spec cites, up from 3; behaviour remains unrepresented and that is a real gap in the argument, not a bookkeeping one",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "docs/DESIGN-SPEC.md regenerated to 48 slots; scale_id of every cited claim read from the claim table",
+     "recorded_at": "2026-11-05 12:22:18.658661+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1073",
+   "quantity": {
+    "value": 0.0,
+    "units": "difference in individual tail-flip jump distance between longfin and wildtype despite differing caudal fin area; endurance and time-to-exhaustion also equal, with total distance differing by behavioural strategy",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "behaviour"
+    },
+    "provenance": {
+     "source": "Reed MR & Minicozzi MR 2024, Zoology 162:126145, PMID 38232499, doi 10.1016/j.zool.2024.126145; full abstract via Europe PMC 2026-11-05; not open access, full text unread",
+     "recorded_at": "2026-11-05 12:26:07.549146+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1074",
+   "quantity": {
+    "value": 2.28,
+    "units": "fold ray thickening claim 537 specifies while lengthening 1.71-fold; the longfin mutant shows no jump-distance benefit, which is what a ray that lengthened without thickening would produce",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "claims 537 (S904 literature negative and inverted spec), 514 (rigidity shortfall recomputed), 1073 (Reed & Minicozzi 2024, PMID 38232499, abstract)",
+     "recorded_at": "2026-11-05 12:30:16.204884+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1076",
+   "quantity": {
+    "value": 4.0,
+    "units": "open routes tried for Reed & Minicozzi 2024 full text, none reaching the ray or fin dimensions; the measurement likely exists and is paywalled rather than absent",
+    "evidence": "refused",
+    "read_level": "could-not-access",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Europe PMC EXT_ID:38232499; OpenAlex doi:10.1016/j.zool.2024.126145 (oa_status closed, 2 closed locations); Cornerstone repository poster Reed 2022 (no PDF, no numbers); retrieved 2026-11-05",
+     "recorded_at": "2026-11-05 12:32:13.582155+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1077",
+   "quantity": {
+    "value": 13.0,
+    "units": "live claims using a grader not cleared for aggregation, found by a checker that nothing invoked; proteinmpnn-rank has no calibration row at all",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "swarm/check_grader_use.py after fixing its newline bug and wiring it into cycle.py; grader_calibration table read 2026-11-05",
+     "recorded_at": "2026-11-05 12:39:10.701165+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1078",
+   "quantity": {
+    "value": 0.639,
+    "units": "worst split-half Spearman rho for positional-entropy rank across 70 disjoint half-splits of 8 ProteinMPNN samples; shuffled control gives -0.040",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/mpnn_rank_stability.py over the three kcnk5b ProteinMPNN runs",
+     "recorded_at": "2026-11-05 12:41:34.582607+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1079",
+   "quantity": {
+    "value": 1.0,
+    "units": "of 3 ProteinMPNN runs in which the positional-entropy metric ranked the selectivity-filter glycines as constrained; registered as grader_calibration verdict untrusted",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/mpnn_rank_calibration.py; grader_calibration row 10; runs kcnk5b-homodimer-msa, kcnk5b-monomer-msa, kcnk5b-trunc240-dimer-msa",
+     "recorded_at": "2026-11-05 12:44:10.101701+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1080",
+   "quantity": {
+    "value": 0.0,
+    "units": "rank movement of the three top-ranked filter glycines in the dimer between decoding seeds 42 and 7, against a median movement of 36 ranks across all 448 positions",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/mpnn_seed_stability.py; Nebius infer_proteinmpnn_native op-bc0a85e8992cb042 (monomer, seed 7) and op-dc93b5f64b9e9975 (dimer, seed 7), both SUCCEEDED, artifacts sha256-verified on fetch",
+     "recorded_at": "2026-11-05 13:02:44.938552+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1081",
+   "quantity": {
+    "value": 447.0,
+    "units": "rank of W169 (the alf gain-of-function position, known to tolerate substitution) out of 448 positions in the kcnk5b homodimer at seed 42; 445 of 448 at seed 7",
+    "evidence": "measured",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/mpnn_specificity_arm.py; Nebius infer_proteinmpnn_native op-bc0a85e8992cb042 and op-dc93b5f64b9e9975; Aramaki 2026 bioRxiv (abstract), Perathoner 2014 PLoS Genetics (abstract)",
+     "recorded_at": "2026-11-05 13:10:35.217632+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "1082",
+   "quantity": {
+    "value": 2.666,
+    "units": "fin-area ratio obtained as (2.09 linear fin length/SL ratio) ^ (1.33 allometric exponent, itself a measured lower bound); a FLOOR, not a measured area",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "claims 984, 1003, 980; Daane et al. 2021 Curr Biol PMC9172250 whole-article XML via NCBI efetch; subproblem S907",
+     "recorded_at": "2026-11-05 13:22:54.068278+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "14",
+   "quantity": {
+    "value": 5.4,
+    "units": "percent glycine",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "computed here from UniProt E7F5V5 and A0ACM8QEN9",
+     "recorded_at": "2026-11-04 06:54:06.625059+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "15",
+   "quantity": {
+    "value": 2.0,
+    "units": "motifs",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "regex scan verified here on UniProt Q6PFU3; negative controls and1/and2 return 0",
+     "recorded_at": "2026-11-04 07:19:41.841218+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "16",
+   "quantity": {
+    "value": 80.2,
+    "units": "pLDDT",
+    "evidence": "simulated",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius OpenFold2 vs Boltz2+PDB70 MSA",
+     "recorded_at": "2026-11-04 07:19:41.841218+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "18",
+   "quantity": {
+    "value": 0.0,
+    "units": "percent residues pLDDT>70",
+    "evidence": "simulated",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius boltz2_predict_native",
+     "recorded_at": "2026-11-04 07:19:41.841218+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "185",
+   "quantity": {
+    "value": 153.0,
+    "units": "aa",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "verified here against UniProt REST; agent finding from fish-alleles/README.md",
+     "recorded_at": "2026-11-04 08:59:02.217763+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "190",
+   "quantity": {
+    "value": 10.0,
+    "units": "percent of weight",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S28-organism.md",
+     "recorded_at": "2026-11-04 09:00:05.655993+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "191",
+   "quantity": {
+    "value": 3.0,
+    "units": "percent range gain",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S28-organism.md; ballistic range v^2/g = 19.4 cm reproduced here",
+     "recorded_at": "2026-11-04 09:00:05.655993+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "193",
+   "quantity": {
+    "value": 16.0,
+    "units": "percent of lift",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S28-organism.md",
+     "recorded_at": "2026-11-04 09:00:05.655993+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "2",
+   "quantity": {
+    "value": 0.548,
+    "units": "m/s",
+    "evidence": "literature",
+    "read_level": "search-summary",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "zebrafish-glide-physics.md",
+     "recorded_at": "2026-11-04 06:09:58.523244+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "20",
+   "quantity": {
+    "value": 0.32,
+    "units": "sequence recovery",
+    "evidence": "simulated",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius infer_proteinmpnn_native, second run as its own control",
+     "recorded_at": "2026-11-04 07:19:41.841218+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "21",
+   "quantity": {
+    "value": 0.842,
+    "units": "m/s",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "behaviour"
+    },
+    "provenance": {
+     "source": "Danos & Lauder 2012, Re measurement read at full text; speed computed here as U = Re*nu/L",
+     "recorded_at": "2026-11-04 07:21:35.082616+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "211",
+   "quantity": {
+    "value": 0.0,
+    "units": "MSA depth past residue 326",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "recomputed here from results/fish-proteins/structures/kcnk5b_pdb70.a3m",
+     "recorded_at": "2026-11-04 09:02:53.767335+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "216",
+   "quantity": {
+    "value": 4.4,
+    "units": "setpoints",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/challenge-s14-falls-kcnk5b-axmlig challenge-91.md",
+     "recorded_at": "2026-11-04 09:10:00.099496+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "217",
+   "quantity": {
+    "value": 12.0,
+    "units": "mV (midpoint of 8-17 range, derived)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branches claude/challenge-kcnk5b-claim-6ey3si, claude/challenge-kcnk5b-claim-trw1cg challenge-167.md",
+     "recorded_at": "2026-11-04 09:10:00.099496+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "218",
+   "quantity": {
+    "value": 222.0,
+    "units": "slc43a2b residue homologous to slc43a2a-200 (challenger-derived)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/slc43a2-t200k-challenge-wkixy4 challenge-90.md",
+     "recorded_at": "2026-11-04 09:10:00.099496+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "219",
+   "quantity": {
+    "value": 1.98,
+    "units": "N/m",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/challenge-214-fish-stiffness-cml8qn challenge-214.md",
+     "recorded_at": "2026-11-04 09:10:00.099496+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "220",
+   "quantity": {
+    "value": 3.4,
+    "units": "x break-even pectoral overgrowth (midpoint of 3.1-3.7)",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s22-d-d-input-vncsjh S22-D-D-deepen.md",
+     "recorded_at": "2026-11-04 09:10:00.099496+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "221",
+   "quantity": {
+    "value": 0.26,
+    "units": "mm required solid-equivalent diameter",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s7-d-sensitive-input-n67r40 S7-D-deepen.md",
+     "recorded_at": "2026-11-04 09:10:00.099496+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "222",
+   "quantity": {
+    "value": 7.0,
+    "units": "of 7 items",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "grader_calibration; session_01QbcBRXmj1D5f1cmzW25ocp",
+     "recorded_at": "2026-11-04 09:10:03.396858+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "224",
+   "quantity": {
+    "value": 11.8,
+    "units": "mJ stored",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md; verified here",
+     "recorded_at": "2026-11-04 09:11:25.177614+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "225",
+   "quantity": {
+    "value": 4.0,
+    "units": "percent body volume",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md",
+     "recorded_at": "2026-11-04 09:11:25.177614+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "226",
+   "quantity": {
+    "value": 18400.0,
+    "units": "W/kg muscle",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md",
+     "recorded_at": "2026-11-04 09:11:25.177614+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "227",
+   "quantity": {
+    "value": 98.5,
+    "units": "J/kg muscle required",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md",
+     "recorded_at": "2026-11-04 09:11:25.177614+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "228",
+   "quantity": {
+    "value": 1.86,
+    "units": "shortfall ratio",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md",
+     "recorded_at": "2026-11-04 09:11:25.177614+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "23",
+   "quantity": {
+    "value": 1.07,
+    "units": "CL_max",
+    "evidence": "literature",
+    "read_level": "search-summary",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "adversarial challenge to claim 5, agreeing independently with S2-low-reynolds-aero.md",
+     "recorded_at": "2026-11-04 07:21:35.082616+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "230",
+   "quantity": {
+    "value": 99.0,
+    "units": "J/kg threshold",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md",
+     "recorded_at": "2026-11-04 09:11:25.177614+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "234",
+   "quantity": {
+    "value": 0.45,
+    "units": "mass exponent beta",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S30-organism.md",
+     "recorded_at": "2026-11-04 09:25:25.06247+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "235",
+   "quantity": {
+    "value": 10.3,
+    "units": "times too large",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S30-organism.md; ratio verified here",
+     "recorded_at": "2026-11-04 09:25:25.06247+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "236",
+   "quantity": {
+    "value": 37.0,
+    "units": "percent of KE at exit",
+    "evidence": "literature",
+    "read_level": "search-summary",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S30-organism.md; bioRxiv 765560",
+     "recorded_at": "2026-11-04 09:25:25.06247+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "238",
+   "quantity": {
+    "value": 2.5,
+    "units": "g",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Sutton et al. 2019 ICB 59:1609, PMC6907395",
+     "recorded_at": "2026-11-04 09:25:25.06247+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "239",
+   "quantity": {
+    "value": 4.23,
+    "units": "m/s",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Fish 1990 via S30-organism.md",
+     "recorded_at": "2026-11-04 09:25:25.06247+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "242",
+   "quantity": {
+    "value": 0.0,
+    "units": "supporting passages of 35",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "cell"
+    },
+    "provenance": {
+     "source": "GXL /api/v1/claims/support with positive and negative controls",
+     "recorded_at": "2026-11-04 09:28:27.605201+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "244",
+   "quantity": {
+    "value": 1.0,
+    "units": "reference failures before guide design",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/challenge-186-lat4a-claim-3g5eqa challenge-186.md",
+     "recorded_at": "2026-11-04 09:29:32.703802+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "245",
+   "quantity": {
+    "value": 5.3,
+    "units": "x body weight (lower bound)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/rederive-s7-pectoral-girdle-r2hm12 replicate-201.md",
+     "recorded_at": "2026-11-04 09:29:32.703802+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "246",
+   "quantity": {
+    "value": 5.5,
+    "units": "% net vertical reduction",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/replicate-194-rederivation-12i93y replicate-194.md",
+     "recorded_at": "2026-11-04 09:29:32.703802+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "247",
+   "quantity": {
+    "value": 28.0,
+    "units": "W/kg (fish red-muscle maximum, search-summary)",
+    "evidence": "derived",
+    "read_level": "search-summary",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s10-flapping-power-rederivation-ygs05k replicate-203.md",
+     "recorded_at": "2026-11-04 09:29:32.703802+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "248",
+   "quantity": {
+    "value": 2.4,
+    "units": "x margin S/C",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s23-d-actinotrichia-modulus-87c1ku replicate-181.md",
+     "recorded_at": "2026-11-04 09:29:32.703802+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "249",
+   "quantity": {
+    "value": 1.35e-05,
+    "units": "N m^2 (harvester, L/2 load)",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-flammang-fin-ray-stiffness-vvpk2v S25-deepen.md",
+     "recorded_at": "2026-11-04 09:29:32.703802+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "25",
+   "quantity": {
+    "value": 83.6,
+    "units": "mean pLDDT",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius esmfold2 op-2112f97ee3d11f6e; recomputed here from the CIF B-factor column and corroborated by confidence.json",
+     "recorded_at": "2026-11-04 07:29:58.424898+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "251",
+   "quantity": {
+    "value": 6.0,
+    "units": "spurious refutes",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "GXL claims/support, both phrasings run",
+     "recorded_at": "2026-11-04 09:30:37.581696+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "254",
+   "quantity": {
+    "value": 0.0,
+    "units": "supports on method-claims",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "GXL claims/support over 39 claims",
+     "recorded_at": "2026-11-04 09:32:14.499307+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "256",
+   "quantity": {
+    "value": 0.0,
+    "units": "of 4 admitted",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "concurrency test, 4 parallel infer_openfold2_native submits",
+     "recorded_at": "2026-11-04 09:37:45.0967+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "258",
+   "quantity": {
+    "value": 4.0,
+    "units": "nesting levels",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "workbench $defs: Polymer, MSA, MSASearch, A3M",
+     "recorded_at": "2026-11-04 09:37:45.0967+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "26",
+   "quantity": {
+    "value": 76.4,
+    "units": "mean pLDDT",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "recomputed here from the ESMFold2 CIF; MSA depth profile from the running agent",
+     "recorded_at": "2026-11-04 07:29:58.424898+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "268",
+   "quantity": {
+    "value": 816.0,
+    "units": "fold drag reduction",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S32-organism.md; density ratio verified here",
+     "recorded_at": "2026-11-04 09:39:51.243026+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "269",
+   "quantity": {
+    "value": 2.5,
+    "units": "m/s stall speed",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S32-organism.md",
+     "recorded_at": "2026-11-04 09:39:51.243026+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "270",
+   "quantity": {
+    "value": 10.0,
+    "units": "CL required",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S32-organism.md",
+     "recorded_at": "2026-11-04 09:39:51.243026+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "272",
+   "quantity": {
+    "value": 0.63,
+    "units": "U_max over V_to",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S32-organism.md; ratio reproduced here",
+     "recorded_at": "2026-11-04 09:39:51.243026+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "274",
+   "quantity": {
+    "value": 2.2,
+    "units": "times burst tail speed",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S32-organism.md",
+     "recorded_at": "2026-11-04 09:39:51.243026+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "280",
+   "quantity": {
+    "value": 2.0,
+    "units": "alleles",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "S15-dna.md",
+     "recorded_at": "2026-11-04 09:45:27.847732+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "282",
+   "quantity": {
+    "value": 6.0,
+    "units": "slots with no demonstrated edit",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "S15-dna.md",
+     "recorded_at": "2026-11-04 09:45:27.847732+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "283",
+   "quantity": {
+    "value": 14.0,
+    "units": "fold area shortfall",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "S15-dna.md",
+     "recorded_at": "2026-11-04 09:45:27.847732+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "285",
+   "quantity": {
+    "value": 28.5,
+    "units": "percent survival (git, replicator)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/replicate-207-challenger-audit-1mwyh0 replicate-207.md; harvester DB query",
+     "recorded_at": "2026-11-04 09:49:45.154165+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "287",
+   "quantity": {
+    "value": 1.0,
+    "units": "independent prediction per operation",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/challenge-257-boltz2-batching-goiema challenge-257.md",
+     "recorded_at": "2026-11-04 09:49:45.154165+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "288",
+   "quantity": {
+    "value": 5.0,
+    "units": "Hz pitch mode",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/zebrafish-glider-attitude-fpeh9d replicate-260.md",
+     "recorded_at": "2026-11-04 09:49:45.154165+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "289",
+   "quantity": {
+    "value": 0.037,
+    "units": "implied C_D at 10 m/s (challenger B)",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branches claude/challenge-273-exocoetid-taxi-hid0nd, claude/challenge-273-exocoetid-taxi-x5n6z2 challenge-273.md",
+     "recorded_at": "2026-11-04 09:49:45.154165+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "290",
+   "quantity": {
+    "value": 0.19,
+    "units": "required/available bandwidth ratio",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s18-zebrafish-air-3u64z4 S18-deepen.md",
+     "recorded_at": "2026-11-04 09:49:45.154165+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "291",
+   "quantity": {
+    "value": 0.94,
+    "units": "mg crossover mass",
+    "evidence": "derived",
+    "read_level": "search-summary",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s30-launch-budget-jb7qj4 S30-deepen.md",
+     "recorded_at": "2026-11-04 09:49:45.154165+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "30",
+   "quantity": {
+    "value": 0.011,
+    "units": "p-value",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "2000-shuffle test by the running agent",
+     "recorded_at": "2026-11-04 07:29:58.424898+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "304",
+   "quantity": {
+    "value": 0.00105,
+    "units": "mm^3 Z_min at 24 mm SL",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s7-d-girdle-section-4o9w38 replicate-232.md",
+     "recorded_at": "2026-11-04 10:09:22.451984+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "305",
+   "quantity": {
+    "value": 1.64,
+    "units": "m/s threshold (GENEROUS)",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s32-sensitive-input-sy9vpn S32-D-deepen.md",
+     "recorded_at": "2026-11-04 10:09:22.451984+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "306",
+   "quantity": {
+    "value": 0.0,
+    "units": "aligned PDB70 hits at residue 200",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius Scientific AI msa_search_native, model msa-search-pdb70, database pdb70_220313, operation op-95b6ef92728e409b, run 2026-11-04. Depth computed from the returned a3m by skipping lowercase insertion columns and counting non-gap characters per query column. Positive controls: the a3m query row is",
+     "recorded_at": "2026-11-04 10:10:12.476507+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "309",
+   "quantity": {
+    "value": 142.7,
+    "units": "W/kg muscle",
+    "evidence": "measured",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "tissue"
+    },
+    "provenance": {
+     "source": "PubMed PMID 9556535, doi 10.1242/jeb.201.10.1505. Abstract read in full 2026-11-04. Independently checked by the host session after an agent cited the value at read-level search-summary; the value, species and temperature matched exactly.",
+     "recorded_at": "2026-11-04 10:13:26.011041+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "315",
+   "quantity": {
+    "value": 1.0,
+    "units": "residue 200 = Thr (challenger-derived, unconfirmed)",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/challenge-slc43a2a-esm2-scoring-chdthn challenge-307.md",
+     "recorded_at": "2026-11-04 10:29:43.017869+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "316",
+   "quantity": {
+    "value": 30.0,
+    "units": "ms",
+    "evidence": "derived",
+    "read_level": "search-summary",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s18-d-sensorimotor-delay-l5ylxu replicate-296.md",
+     "recorded_at": "2026-11-04 10:29:43.017869+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "317",
+   "quantity": {
+    "value": 2.68,
+    "units": "best one-side corner margin",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s30-d-sensitive-challenge-t2fajt challenge-300.md",
+     "recorded_at": "2026-11-04 10:29:43.017869+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "318",
+   "quantity": {
+    "value": 1.8,
+    "units": "AR single fin (midpoint of 1.5-2.1)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s5-d-rederivation-u1at2h replicate-298.md",
+     "recorded_at": "2026-11-04 10:29:43.017869+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "319",
+   "quantity": {
+    "value": 1.0,
+    "units": "fold reduction in n (area vs length, isotropy)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/zebrafish-fin-area-b6m9sr replicate-310.md",
+     "recorded_at": "2026-11-04 10:29:43.017869+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "320",
+   "quantity": {
+    "value": 0.206,
+    "units": "mm decay length",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s41-deepen-kcnh2a-decay-zmra54 S41-deepen.md",
+     "recorded_at": "2026-11-04 10:29:43.017869+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "37",
+   "quantity": {
+    "value": 0.56,
+    "units": "m/s",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "behaviour"
+    },
+    "provenance": {
+     "source": "S24-behaviour.md",
+     "recorded_at": "2026-11-04 08:01:59.062515+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "399",
+   "quantity": {
+    "value": 2.0,
+    "units": "longest in-frame GXY triplet run in and1",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "UniProt REST, FASTA records for E7F5V5, A9JRX1, Q7SZZ6 and Q6U1J5 fetched and parsed 2026-11-04 by the host session. Glycine fraction counted directly; longest in-frame Gly-X-Y run computed over all three reading frames. Negative-search scope: UniProt free-text 'actinodin' with organism_id 7955 retu",
+     "recorded_at": "2026-11-04 10:40:14.54033+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "400",
+   "quantity": {
+    "value": 97.7,
+    "units": "pLDDT at residue 200",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius ESMFold2, operation op-c12798c16531560c, status succeeded, model_revision 8fc3ff471022fdce52c77030685eb775de0c00a3, run 2026-11-04. Per-residue pLDDT read from the returned mmCIF by locating B_iso_or_equiv via the _atom_site. header block rather than by position. CONTROL FOR THAT PARSE: this ",
+     "recorded_at": "2026-11-04 10:42:47.031173+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "403",
+   "quantity": {
+    "value": 1.83e-05,
+    "units": "N m^2 whole-ray effective EI",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s45-sensitive-input-i5ttv8 S45-D-deepen.md",
+     "recorded_at": "2026-11-04 10:49:24.768526+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "406",
+   "quantity": {
+    "value": 7.56,
+    "units": "m/s minimum flight speed at 1.4 cm2",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "mcp delphisci lean_check against lawset 1.6.0, local-fallback source, fetched 2026-11-03T15:00:44Z, evaluator lean/eliminate/browser-check.mjs. Run 2026-11-04 by the host session. The 0.06 percent agreement was computed here from the registry's returned liftingAreaNeeded_m2 of 4.116e-4 and this proj",
+     "recorded_at": "2026-11-04 10:50:42.400872+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "409",
+   "quantity": {
+    "value": 1.0,
+    "units": "minimum nucleotide substitutions Thr->Lys at codon 200",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "Delphi law genotype-genetic-code v1.0.0 (theorem Delphi.Genotype.claimed_substitutions_rules_out, module lean/Delphi/Genotype.lean line 130, commit ba62f1688beb79c27f21cd3a3c060f66c674c2df, pin status ok), read via mcp delphisci lean_law_get 2026-11-04. minSubst recomputed here over the 64-codon tab",
+     "recorded_at": "2026-11-04 10:54:09.456104+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "410",
+   "quantity": {
+    "value": 0.202,
+    "units": "pTM for actinodin-1",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius ESMFold2, operation op-92f580cf32aca438 (and1) and op-c12798c16531560c (slc43a2a WT), both status succeeded, model_revision 8fc3ff471022fdce52c77030685eb775de0c00a3, run 2026-11-04. Per-residue pLDDT read from each mmCIF via the _atom_site. header; means match each run's own confidence JSON. ",
+     "recorded_at": "2026-11-04 10:56:16.146737+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "414",
+   "quantity": {
+    "value": 3.8,
+    "units": "ratio of predicted to stated interval width (the test power)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/taxi_ceiling.py, run 10, source pinned by sha256. Supersedes claim 413, which stated the power factor as 2.4 -- a figure estimated by eye rather than read from the script's own output, which computes 3.8. The error is the one this project exists to catch, committed in the sentence about rep",
+     "recorded_at": "2026-11-04 11:18:13.017384+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "415",
+   "quantity": {
+    "value": 11.45,
+    "units": "ratio the table stated as 1.9x before correction",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/headline_table.py, run 11, source pinned by sha256. Cells taken verbatim from docs/FINDINGS.md; the 54-82 percent cross-check is against claim 227.",
+     "recorded_at": "2026-11-04 11:26:56.049344+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "416",
+   "quantity": {
+    "value": 8.0,
+    "units": "body figures recomputed, all reproducing",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/headline_table.py, run 11, source pinned by sha256. Figures taken verbatim from docs/FINDINGS.md and recomputed from the inputs it states.",
+     "recorded_at": "2026-11-04 11:28:09.743692+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "421",
+   "quantity": {
+    "value": 3.08,
+    "units": "corrected upper shortfall for the spring route (was 1.9)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md on branch claude/s29-launch-energy-2iuixr, read in full by the host session 2026-11-04. The citation was then resolved independently: doi.org returns HTTP 200 with the title and authors above, and a fabricated jeb identifier returns 404, so the resolver discriminates.",
+     "recorded_at": "2026-11-04 11:33:00.943145+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "422",
+   "quantity": {
+    "value": 107.2,
+    "units": "J/kg required at the LOW end of the cited efficiency range",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/headline_table.py (run 11) now recomputes 98.5 from its four inputs and both ends of the cited eta_h range. Budget and range read from S29-organism.md on branch claude/s29-launch-energy-2iuixr.",
+     "recorded_at": "2026-11-04 11:34:17.965335+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "423",
+   "quantity": {
+    "value": 49.3,
+    "units": "J/kg required if all skeletal muscle loads the spring (the energy term then closes)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md on branch claude/s29-launch-energy-2iuixr, read in full 2026-11-04 by the host session. Sensitivity recomputed from the budget it states.",
+     "recorded_at": "2026-11-04 11:35:26.200535+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "426",
+   "quantity": {
+    "value": 17.0,
+    "units": "independent re-derivations that disagreed and were discarded",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Host session 2026-11-04. Blocks counted directly from all claude/* branches with the harvester own regex; recovery by scripts/backfill_replications.py.",
+     "recorded_at": "2026-11-04 11:43:12.990417+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "427",
+   "quantity": {
+    "value": 16.7,
+    "units": "percent survival in the first 156 resolved challenges (database)",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Host session 2026-11-04. Database counted directly over the first 156 resolved challenges ordered by created_at; git block count from the same scan that recovered the replications.",
+     "recorded_at": "2026-11-04 11:44:32.444906+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "428",
+   "quantity": {
+    "value": 7.1,
+    "units": "percent vertical reduction at 45 degrees from a 10 percent lift ratio",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Replication recovered from the discarded arm, verified here by trigonometry 2026-11-04.",
+     "recorded_at": "2026-11-04 11:46:07.129621+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "430",
+   "quantity": {
+    "value": 1.05,
+    "units": "fold reduction in required n from measuring area instead of length",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Replication recovered from the discarded arm; the (CV/effect)^2 arithmetic re-run here 2026-11-04 by the host session.",
+     "recorded_at": "2026-11-04 11:47:24.518597+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "431",
+   "quantity": {
+    "value": 11.0,
+    "units": "ratio of taxi-point Reynolds number to that of the borrowed goldfish Strouhal",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Replication recovered from the discarded arm; Reynolds numbers and both frequency derivations recomputed here 2026-11-04.",
+     "recorded_at": "2026-11-04 11:48:54.822238+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "434",
+   "quantity": {
+    "value": 19.1,
+    "units": "area shortfall at claim 5 own CL ceiling of 0.6",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Recovered replication on claim 5, read 2026-11-04; the 1/CL sensitivity recomputed here from the same lift equation as analysis/lift_budget.py.",
+     "recorded_at": "2026-11-04 11:52:55.584745+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "435",
+   "quantity": {
+    "value": 0.61,
+    "units": "ratio of dorsal-limb section modulus to requirement at measured size",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Two replications recovered from the discarded arm, read 2026-11-04; the margin arithmetic recomputed here against the stated 1.73e-3 mm3 requirement. Meshes not decoded by this session.",
+     "recorded_at": "2026-11-04 11:53:55.632632+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "436",
+   "quantity": {
+    "value": 0.0548,
+    "units": "one-sided p at the control-validated window (claim reported z giving 0.0217)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Recovered replication on claim 31, read 2026-11-04; one-sided p-values recomputed here from the stated z-scores.",
+     "recorded_at": "2026-11-04 11:57:35.110312+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "438",
+   "quantity": {
+    "value": 4.0,
+    "units": "inputs to the headline requirement, all at the favourable end of their evidence",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "S29-organism.md read in full 2026-11-04 for the spring-return provenance; sensitivity recomputed from the budget it states.",
+     "recorded_at": "2026-11-04 12:00:43.16872+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "439",
+   "quantity": {
+    "value": 0.005,
+    "units": "empirical p for and1 vs 200 composition-preserving shuffles",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "analysis/tandem_shuffle_test.py, run 12, source pinned by sha256. Sequence from UniProt E7F5V5, fetched 2026-11-04.",
+     "recorded_at": "2026-11-04 12:02:45.924609+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "440",
+   "quantity": {
+    "value": 10000.0,
+    "units": "reynolds_min declared in the project own Strouhal law file",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "library/laws/strouhal.yaml read in full 2026-11-04; Reynolds numbers recomputed here.",
+     "recorded_at": "2026-11-04 12:04:26.381679+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "443",
+   "quantity": {
+    "value": 1.57,
+    "units": "m/s mean maximal escape speed, controls",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Demesmay 2025 PLoS Biol PMC12604801 (Europe PMC full text, harvester-read); branches via constraint_entailed",
+     "recorded_at": "2026-11-04 12:09:49.028531+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "444",
+   "quantity": {
+    "value": 0.0,
+    "units": "superseded claims with a dependent and no flag",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Host session 2026-11-04, counted directly against designswarm after the claim_depends backfill.",
+     "recorded_at": "2026-11-04 12:19:42.930954+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "445",
+   "quantity": {
+    "value": 15.0,
+    "units": "spec acceptance rules passing of 24",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Host session 2026-11-04, re-examining each red rule against designswarm after three of this checker own rules were found over-strict.",
+     "recorded_at": "2026-11-04 12:21:47.285666+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "446",
+   "quantity": {
+    "value": 58.7,
+    "units": "percent of attributable spend leaving no artefact in the graph",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Host session 2026-11-04, joined directly against designswarm; harvest coverage verified from work_log.",
+     "recorded_at": "2026-11-04 12:24:22.032443+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "447",
+   "quantity": {
+    "value": 7.0,
+    "units": "artifacts recorded, none missing a content hash",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Host session 2026-11-04. Hashes computed locally over the downloaded files and compared against the digests in each Nebius operation result.",
+     "recorded_at": "2026-11-04 12:30:45.788918+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "448",
+   "quantity": {
+    "value": 0.185,
+    "units": "lowest pTM among the three actinodins (and3, the shortest)",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius ESMFold2 operations op-92f580cf32aca438 (and1), op-97bafd7c19ff779d (and2), op-04cbc044f424a918 (and3) and op-c12798c16531560c (control); per-residue pLDDT recomputed from each mmCIF via the _atom_site. header, 2026-11-04.",
+     "recorded_at": "2026-11-04 12:33:53.979594+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "449",
+   "quantity": {
+    "value": 72.0,
+    "units": "records in the committed kcnk5b a3m (claim 11 said 72)",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Host session 2026-11-04. Files read from the swarm-architecture branch at results/fish-proteins/structures/; records counted and per-column depth recomputed by skipping lowercase a3m insertion columns.",
+     "recorded_at": "2026-11-04 12:38:28.084483+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "451",
+   "quantity": {
+    "value": 0.106,
+    "units": "ipTM for the and3 homodimer interface",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius OpenFold3 Preview2, operation op-64de8745d0c25cbc, 2026-11-04. Monomer comparison from op-04cbc044f424a918.",
+     "recorded_at": "2026-11-04 12:40:26.939243+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "452",
+   "quantity": {
+    "value": 3.0,
+    "units": "held-out validation runs, all failed",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Manifests under results/compute/ on the swarm-architecture branch, parsed and inserted 2026-11-04.",
+     "recorded_at": "2026-11-04 12:42:39.694665+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "476",
+   "quantity": {
+    "value": 2.78,
+    "units": "speed ratio",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "constraint_entailed 195/225/259/283/306/307/355 rechecked against claim 443",
+     "recorded_at": "2026-11-04 14:02:34.19962+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "488",
+   "quantity": {
+    "value": 0.9,
+    "units": "USD spent of 800 available",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "orchestra api-credits balances; designswarm claim and subproblem counts",
+     "recorded_at": "2026-11-04 14:35:20.853116+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "491",
+   "quantity": {
+    "value": 4.37,
+    "units": "fold linear fin enlargement required at CL 0.6, 2 m/s",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/fin_area_closure.py; claims 283 and 434",
+     "recorded_at": "2026-11-04 14:43:46.354059+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "494",
+   "quantity": {
+    "value": 333.0,
+    "units": "fold ratio between site-200 and site-219 response to the same K substitution",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "results/fish-proteins/structures/slc43a2a_{wt,wt_seed1..3,l219a,l219w,l219k,l219p,t200a,t200v,t200w,t200k}/",
+     "recorded_at": "2026-11-04 14:47:24.89998+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "495",
+   "quantity": {
+    "value": 861.0,
+    "units": "seconds spent polling an opaque admission_pending before a replay resolved it",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "nebius get_operation on op-7e7f91b4588f478e; replay of key ms-slc43a2a-t200f-gate-test",
+     "recorded_at": "2026-11-04 14:48:21.384384+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "496",
+   "quantity": {
+    "value": 7.0,
+    "units": "of 8 opus-survived claims that sonnet weakened",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "designswarm challenge rows, challenger field; 8-claim cross-model re-run",
+     "recorded_at": "2026-11-04 14:50:35.865861+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "503",
+   "quantity": {
+    "value": 196.0,
+    "units": "upper bound of the fold shortfall in fin-ray rigidity",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "designswarm claims 199, 403, 88; subproblem S903",
+     "recorded_at": "2026-11-04 15:06:45.37408+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "505",
+   "quantity": {
+    "value": 370.0,
+    "units": "fold span in the post-enlargement stiffness shortfall across the plausible range of n",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/enlargement_coupling.py; claims 199, 491, 492, 493",
+     "recorded_at": "2026-11-04 15:09:25.488853+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "510",
+   "quantity": {
+    "value": 3.38,
+    "units": "fold linear fin demand at the SUPERSEDING CL of 1.0",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "designswarm claims 5, 86, 434, 491; citation sweep over 302 live claims",
+     "recorded_at": "2026-11-04 15:18:44.775408+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "513",
+   "quantity": {
+    "value": 17.0,
+    "units": "slc43a2a variant structures folded today, against 12 live flight-question claims",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "counts over designswarm claims id>=460 and results/fish-proteins/structures",
+     "recorded_at": "2026-11-04 15:22:22.51546+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "514",
+   "quantity": {
+    "value": 9.2,
+    "units": "fold rigidity shortfall at 3 mm, independently recomputed against the claim's stated 9x",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/rigidity_shortfall.py against claim 199",
+     "recorded_at": "2026-11-04 15:24:12.529063+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "515",
+   "quantity": {
+    "value": -5.43,
+    "units": "histidine departure from the uncharged volume trend at residue 200",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "results/fish-proteins/structures/slc43a2a_t200{a,d,e,h,v,i,k,r,f,w} vs wt replicates",
+     "recorded_at": "2026-11-04 15:25:34.031814+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "516",
+   "quantity": {
+    "value": 0.37,
+    "units": "pLDDT cost of charge at side-chain reach 2, shape held fixed (D minus N)",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "results/fish-proteins/structures/slc43a2a_t200{d,n}/ vs wt replicates",
+     "recorded_at": "2026-11-04 15:31:20.219275+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "519",
+   "quantity": {
+    "value": 2.29,
+    "units": "joint-optimistic launch deficit, the most favourable case available",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/s900_launch_deficit.py; parameter table and claim 443",
+     "recorded_at": "2026-11-04 15:41:50.99109+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "521",
+   "quantity": {
+    "value": 3.33,
+    "units": "pLDDT drop for T200M against a 1.5 threshold registered before the run",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/atom_count_outofsample.py",
+     "recorded_at": "2026-11-04 15:49:26.088881+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "522",
+   "quantity": {
+    "value": 47.0,
+    "units": "ratio of mean paired substitution effect at site 200 to site 219",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/plddt_site_dominance.py",
+     "recorded_at": "2026-11-04 15:49:26.088881+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "523",
+   "quantity": {
+    "value": 4.4,
+    "units": "x enlargement of lifting surface to clear the 2 cm threshold; 17.4x for lift = weight",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/s901_ballistic_leap.py",
+     "recorded_at": "2026-11-04 15:59:54.325325+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "524",
+   "quantity": {
+    "value": 3.0,
+    "units": "mutants caught of 4 judged by opus, against 1 of 5 by sonnet; 0 vs 3 false alarms on controls",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/critic_control.py",
+     "recorded_at": "2026-11-04 15:59:54.325325+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "525",
+   "quantity": {
+    "value": 5.44,
+    "units": "pLDDT drop for T200L against the 1.5 threshold registered before the run",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/atom_count_outofsample.py",
+     "recorded_at": "2026-11-04 16:02:15.139745+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "527",
+   "quantity": {
+    "value": 1.78,
+    "units": "fold increase in pectoral fin bud area ratio, best published K+ channel line, against 4.4x required",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "https://doi.org/10.1371/journal.pbio.3002565 Fig 2C (figure read, publisher PNG)",
+     "recorded_at": "2026-11-04 16:08:05.541652+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "528",
+   "quantity": {
+    "value": 1.74,
+    "units": "fold linear fin proportion, alf (kcnk5b gain of function) over wild type, adult",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "https://doi.org/10.1038/s41598-018-28450-6 Fig 1A (figure read, publisher JPEG)",
+     "recorded_at": "2026-11-04 16:13:01.435822+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "529",
+   "quantity": {
+    "value": 1.82,
+    "units": "measured exponent n in area = linear^n for the alf pectoral fin; area ratio 2.65x",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/fin_shape_exponent.py over https://doi.org/10.1038/s41598-018-28450-6 Fig 1B",
+     "recorded_at": "2026-11-04 16:20:14.231906+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "530",
+   "quantity": {
+    "value": 20.5,
+    "units": "percent ProteinMPNN sequence recovery on the kcnk5b ESMFold2 backbone, against 40-50 published",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/proteinmpnn_fitness.py",
+     "recorded_at": "2026-11-04 16:30:05.630277+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "531",
+   "quantity": {
+    "value": 1.16,
+    "units": "fold fin-to-body ratio of kcnk5b S345E over non-transgenic; alf gives 1.74x in a different metric",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "https://doi.org/10.7554/eLife.60691 Fig 6I + full text",
+     "recorded_at": "2026-11-04 16:34:08.789535+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "532",
+   "quantity": {
+    "value": 7.0,
+    "units": "claims violating SPEC-ASK rule 2 of 316; 17 of 25 spec rules pass, 6 unchecked",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/check_specs.py + swarm/harvest.py",
+     "recorded_at": "2026-11-04 16:36:53.011124+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "535",
+   "quantity": {
+    "value": 3.0,
+    "units": "of 11 shared swarm files had drifted between the repo and the live path, in both directions",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/evidence.py + swarm/harvest.py + swarm/swarm.py",
+     "recorded_at": "2026-11-04 16:39:11.673737+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "536",
+   "quantity": {
+    "value": 12.0,
+    "units": "shared files now checked for drift across the repo and the live path, 0 drifting",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/deploy.py",
+     "recorded_at": "2026-11-04 16:41:38.117543+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "537",
+   "quantity": {
+    "value": 2.28,
+    "units": "required ray width increase while ray length increases 1.71x; d proportional to L^1.53",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/ray_stiffness_spec.py",
+     "recorded_at": "2026-11-04 16:45:40.091561+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "538",
+   "quantity": {
+    "value": 3.0,
+    "units": "publish-stage gaps remaining, corrected from the four claim 508 recorded",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/import_transfer.py --round-trip",
+     "recorded_at": "2026-11-04 16:47:09.516568+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "539",
+   "quantity": {
+    "value": 1.0,
+    "units": "of the 2 grounds in the panel refutation of claim 280 is correct; the claim is not refuted",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "PMID 34061172 + UniProt Q7ZUS0 + challenge on claim 280",
+     "recorded_at": "2026-11-05 01:15:47.313394+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "540",
+   "quantity": {
+    "value": 5.0,
+    "units": "signed nanopub-shaped documents produced and verified, zero transmitted",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/publish_dryrun.py",
+     "recorded_at": "2026-11-05 01:19:33.244206+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "542",
+   "quantity": {
+    "value": 1.33,
+    "units": "measured exponent n for the kcnh2a longfin pectoral fin; a LOWER bound given the posture confound",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis of Daane 2021 Fig 4A calibrated against Fig 4B",
+     "recorded_at": "2026-11-05 01:26:38.672121+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "543",
+   "quantity": {
+    "value": 1.79,
+    "units": "m/s exit speed at which the achievable 2.65x fin clears the 2 cm threshold, vs 1.57 measured",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/feasible_region.py",
+     "recorded_at": "2026-11-05 01:28:41.149726+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "544",
+   "quantity": {
+    "value": 47.6,
+    "units": "body lengths per second implied by the escape speed in use, against ~20-25 BL/s typical",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Demesmay 2025 PMC12604801 + analysis/feasible_region.py",
+     "recorded_at": "2026-11-05 01:31:37.375492+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "546",
+   "quantity": {
+    "value": 6.0,
+    "units": "fold swing in the required fin area between the peak and 40ms-average readings of one measurement",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Demesmay 2025 PMC12604801 methods + analysis/feasible_region.py",
+     "recorded_at": "2026-11-05 01:36:27.30912+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "547",
+   "quantity": {
+    "value": 20.5,
+    "units": "percent of muscle work that must arrive as translational KE for the 1.57 m/s peak, at muscle fraction 0.4",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/burst_energy_bound.py; Sutton 2019 PMC6907395",
+     "recorded_at": "2026-11-05 01:40:21.256717+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "548",
+   "quantity": {
+    "value": 0.63,
+    "units": "cm travelled when the fish is fastest, so the depth at which peak exit speed is available",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/exit_at_peak.py + analysis/feasible_region.py",
+     "recorded_at": "2026-11-05 01:42:15.329551+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "550",
+   "quantity": {
+    "value": 46.0,
+    "units": "percent of body volume that must become gas to reach the density claim 549 requires",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "proximate-composition arithmetic over claim 549",
+     "recorded_at": "2026-11-05 01:46:07.658526+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "551",
+   "quantity": {
+    "value": 2.0,
+    "units": "named zebrafish genes with published swim bladder enlargement phenotypes, magnitude unknown",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "PMID 39556020 abstract (PMC11911126 throttled)",
+     "recorded_at": "2026-11-05 01:47:56.398058+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "552",
+   "quantity": {
+    "value": 14.0,
+    "units": "days until the swim bladder magnitudes become available in PMC, from 2026-11-04",
+    "evidence": "literature",
+    "read_level": "could-not-access",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "r.jina.ai fetch of PMC11911126; Wiley interstitial",
+     "recorded_at": "2026-11-05 01:51:11.544527+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "553",
+   "quantity": {
+    "value": 7.1,
+    "units": "percent gas by volume needed for NEUTRAL buoyancy at tissue density 1076, against 46 percent required",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "buoyancy derivation over claims 550 and 551",
+     "recorded_at": "2026-11-05 01:52:27.711972+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "554",
+   "quantity": {
+    "value": 0.0,
+    "units": "single-gene targets found for defeating zebrafish buoyancy regulation",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "PMID 16498679 abstract; PubMed counts with scope stated",
+     "recorded_at": "2026-11-05 01:53:59.201617+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "555",
+   "quantity": {
+    "value": 336.0,
+    "units": "live claims assembled into the five-scale design chain, generated from the graph",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/design_chain.py -> docs/DESIGN-CHAIN.md",
+     "recorded_at": "2026-11-05 01:55:59.41238+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "556",
+   "quantity": {
+    "value": 18.0,
+    "units": "of 25 spec rules now passing, from 17; unchecked down from 6 to 5",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/check_specs.py; setting table",
+     "recorded_at": "2026-11-05 01:57:49.135703+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "560",
+   "quantity": {
+    "value": 3.0,
+    "units": "arms of the read_level path exercised end to end, all correct, rollback clean",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "tests/test_readlevel_e2e.py",
+     "recorded_at": "2026-11-05 01:59:23.689132+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "561",
+   "quantity": {
+    "value": 2.4,
+    "units": "fold linear caudal fin enlargement in schleier, mean of two model reads of the log-log inset",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "https://doi.org/10.1016/j.ydbio.2019.08.016 Fig 1J inset (figure read)",
+     "recorded_at": "2026-11-05 02:02:45.897019+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "562",
+   "quantity": {
+    "value": 3.0,
+    "units": "of four fin-size levers that converge on the kcnk5b bioelectric pathway rather than acting independently",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "cell"
+    },
+    "provenance": {
+     "source": "https://doi.org/10.1016/j.ydbio.2019.08.016 full text",
+     "recorded_at": "2026-11-05 02:04:13.636239+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "563",
+   "quantity": {
+    "value": 0.0,
+    "units": "published epistasis experiments found placing kcnh2a inside or outside the kcnk5b pathway",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "PubMed counts with scope stated; Lanni 2019 full text; claim 541",
+     "recorded_at": "2026-11-05 02:05:36.791628+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "564",
+   "quantity": {
+    "value": 0.79,
+    "units": "measured area exponent n for the schleier caudal fin; alf is 1.82 and longfin 1.33",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "Lanni 2019 Fig 1A/1C lateral photographs, body-normalised",
+     "recorded_at": "2026-11-05 02:07:42.285757+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "565",
+   "quantity": {
+    "value": 1.96,
+    "units": "fold area shortfall at the BEST physically available drag, against the 1.85x the project has quoted",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/induced_drag_check.py",
+     "recorded_at": "2026-11-05 02:09:47.559463+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "566",
+   "quantity": {
+    "value": 4.0,
+    "units": "percent maximum change in any recorded trajectory figure at the corrected best-case drag",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/induced_drag_check.py + s901 recomputation",
+     "recorded_at": "2026-11-05 02:11:32.752512+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "567",
+   "quantity": {
+    "value": 2.6,
+    "units": "fold area shortfall for longfin at its own aspect ratio, the best of the three alleles",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/induced_drag_check.py + claims 529, 542, 564 shape measurements",
+     "recorded_at": "2026-11-05 02:13:04.769188+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "569",
+   "quantity": {
+    "value": 1.14,
+    "units": "fold exit-speed increase that closes the threshold at the achievable fin and present mass",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/s901_ballistic_leap.py swept over area, mass and speed",
+     "recorded_at": "2026-11-05 02:15:53.038315+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "571",
+   "quantity": {
+    "value": 6.5,
+    "units": "fold area shortfall against the ACTUAL flight criterion, against 1.66x for the 2 cm threshold",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "lift=weight computation over claims 523, 568, 569, 570",
+     "recorded_at": "2026-11-05 02:18:13.87815+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "572",
+   "quantity": {
+    "value": 1.21,
+    "units": "fold uncertainty in the headline area requirement from the unreconciled body-size inconsistency",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "mass-length isometry over claims 443, 523, 571",
+     "recorded_at": "2026-11-05 02:19:57.981627+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "573",
+   "quantity": {
+    "value": 4.3,
+    "units": "fold shortfall at a 2.6 cm body, against 6.5 at 4 cm, from size-independent linear fast-start velocity",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "PMID 37942892 abstract (Clark et al. 2024, J Fish Biol)",
+     "recorded_at": "2026-11-05 02:21:37.053334+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "575",
+   "quantity": {
+    "value": 2.13,
+    "units": "cm body length at which the weak threshold crosses, which is below every supporting size range",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/s901_ballistic_leap.py integrated over body size; claims 443, 548, 573",
+     "recorded_at": "2026-11-05 02:24:22.901658+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "577",
+   "quantity": {
+    "value": 3.0,
+    "units": "real defects the panel found in the two most recent claims, one of which breaks a refutation",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "adversarial panel over claims 575 and 576",
+     "recorded_at": "2026-11-05 02:31:07.943244+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "578",
+   "quantity": {
+    "value": 1.0,
+    "units": "of 2 panel objections upheld: the vacuous ground-effect control; the log-base refutation fails on units",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "verification of panel objections to claims 561 and 565",
+     "recorded_at": "2026-11-05 02:32:50.116002+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "579",
+   "quantity": {
+    "value": 1.78,
+    "units": "lift coefficient at which the achievable fin would clear the floor, against a measured 1.07 maximum at this Reynolds number",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "sensitivity of the area floor to CL and CD0, after panel objections to claim 568",
+     "recorded_at": "2026-11-05 02:34:17.626707+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "580",
+   "quantity": {
+    "value": 1.41,
+    "units": "fold net gain from choosing a 2.6 cm body, after correcting the double-counted fin advantage from 1.54",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Lanni 2019 Fig 1J re-read after panel objections to claim 574",
+     "recorded_at": "2026-11-05 02:35:39.341531+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "581",
+   "quantity": {
+    "value": 0.0,
+    "units": "arithmetic errors found in claim 537 on full recomputation; the objection conflates per-ray I with per-width D_w",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "recomputation of claim 537 after a panel objection",
+     "recorded_at": "2026-11-05 02:36:55.49931+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "582",
+   "quantity": {
+    "value": 0.0,
+    "units": "bits of information in the sonnet arm verdict on this sample, against 0.811 for opus",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "review of 43 claims written tonight; entropy computed from the verdict rates",
+     "recorded_at": "2026-11-05 02:37:53.269169+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "583",
+   "quantity": {
+    "value": 0.18,
+    "units": "m/s run-up needed under the impulse model, against 0.77 under the work model claim 570 assumed",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "impulse-versus-work analysis after a panel objection to claim 570",
+     "recorded_at": "2026-11-05 02:40:33.106177+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "584",
+   "quantity": {
+    "value": 2.72,
+    "units": "cm lift-attributable distance for the best design at a 5 BL/s run-up, meeting the 2 cm threshold",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "impulse-model exit speeds through the trajectory integrator",
+     "recorded_at": "2026-11-05 02:41:35.483586+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "585",
+   "quantity": {
+    "value": 108.0,
+    "units": "Hz flapping frequency required for weight support, against ~50 Hz for a hummingbird",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/flapping_flight.py",
+     "recorded_at": "2026-11-05 02:44:26.090605+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "586",
+   "quantity": {
+    "value": 53.0,
+    "units": "Hz flapping frequency at clap-and-fling CL 4.5 with no extra fin area, against ~50 Hz for a hummingbird",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/flapping_flight.py extended over unsteady lift coefficients",
+     "recorded_at": "2026-11-05 02:46:03.268553+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "589",
+   "quantity": {
+    "value": 0.0,
+    "units": "zebrafish myosin heavy chain entries of 200 annotated superfast, sonic or swimbladder",
+    "evidence": "literature",
+    "read_level": "listing",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "UniProt 200 zebrafish MyHC entries; PubMed counts with controls",
+     "recorded_at": "2026-11-05 02:51:51.781271+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "590",
+   "quantity": {
+    "value": 0.0,
+    "units": "measurements of fin elastic strain-energy storage found; col9a1c named as a fin-SPREAD gene instead",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "PMID 34537221 abstract; PubMed counts with scope stated",
+     "recorded_at": "2026-11-05 02:53:15.800946+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "592",
+   "quantity": {
+    "value": 50.2,
+    "units": "ratio of fin first-bending-mode frequency to the 53 Hz beat frequency; >5 means quasi-static, so no elastic recovery of the inertial term",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "PMID 23720195; PMID 17251142",
+     "recorded_at": "2026-11-05 03:00:10.104133+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "593",
+   "quantity": {
+    "value": 4.4,
+    "units": "factor by which the 53 Hz beat exceeds the measured ~12 Hz power-generating ceiling of fish white (fast-twitch) locomotory muscle",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "tissue"
+    },
+    "provenance": {
+     "source": "PMID 11571041; PMID 16460271",
+     "recorded_at": "2026-11-05 03:03:57.420902+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "596",
+   "quantity": {
+    "value": 0.0,
+    "units": "no velocity value obtained; the finding is a DIRECTION (smaller zebrafish score higher on a composite fast-start performance axis), not a measured slope",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "PMID 29398712",
+     "recorded_at": "2026-11-05 03:25:56.570481+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "598",
+   "quantity": {
+    "value": 0.0,
+    "units": "measured allele-COMBINATION experiments found in the fin-size literature; Lanni's epistasis test is a reversion of overgrowth by loss of kcnk5b, not a combination, and its authors favour an ADDITIVE model",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "PMID 31472116",
+     "recorded_at": "2026-11-05 03:27:07.190972+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "599",
+   "quantity": {
+    "value": 6.5,
+    "units": "fold area shortfall for sustained gliding, restored to claim 571's value at CL 1.07 after the low-AR LEV premise behind claim 594's 4.6x was refuted",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "PMID 20833919",
+     "recorded_at": "2026-11-05 03:30:35.339325+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "600",
+   "quantity": {
+    "value": 8.0,
+    "units": "distinct retrieval routes tried and failed for the numeric CL_max of Park & Choi 2010; recorded as a standing gap so it is not re-attempted",
+    "evidence": "refused",
+    "read_level": "could-not-access",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "PMID 20833919",
+     "recorded_at": "2026-11-05 03:32:14.604597+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "601",
+   "quantity": {
+    "value": 83.0,
+    "units": "Hz beat frequency required at the best MEASURED two-wing lift coefficient (1.83, Lehmann & Pick 2007 pattern I, cycle-averaged); shortfall vs the 12 Hz white-muscle ceiling is 6.9x",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "PMID 17401119; PMID 16081606; PMID 12000800",
+     "recorded_at": "2026-11-05 03:34:55.079419+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "602",
+   "quantity": {
+    "value": 5.3,
+    "units": "percent net whole-cycle lift gain from clap-and-fling (Lehmann 2005), against fling-phase coefficients of 7-8 that are referenced to wing-opening tip velocity and are NOT cycle-averaged weight-support coefficients",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "doi 10.1017/S0022112086003087; PMID 16081606; PMID 17401119",
+     "recorded_at": "2026-11-05 03:42:08.163136+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "603",
+   "quantity": {
+    "value": 0.0,
+    "units": "values extracted from 397,525 characters of open-access full text across 6 papers and 12 API calls, with a synthetic positive control returning 1 and a negative control returning 0",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "results/extracted-values.json",
+     "recorded_at": "2026-11-05 03:44:03.23313+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "658",
+   "quantity": {
+    "value": 54.0,
+    "units": "claims imported into the previously-unregistered insect-flight project; 1 true hard-code of the project name found and fixed across swarm/; 2 of 4 file-based projects still unregistered",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/import_design_space.py",
+     "recorded_at": "2026-11-05 03:48:45.967763+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "69",
+   "quantity": {
+    "value": 157.0,
+    "units": "residues pLDDT>=70 of 570",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/pdb70-and1-challenge-ne0qg7 challenge-12.md; AF-E7F5V5-F1 v6 (unverified by harvester)",
+     "recorded_at": "2026-11-04 08:16:58.076114+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "70",
+   "quantity": {
+    "value": 0.035,
+    "units": "FoldIndex",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/review-and2-disorder-claim-tq2sbd challenge-28.md",
+     "recorded_at": "2026-11-04 08:16:58.076114+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "71",
+   "quantity": {
+    "value": 0.098,
+    "units": "max self-identity",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/tandem-repeat-challenge-k6d4ao challenge-29.md",
+     "recorded_at": "2026-11-04 08:16:58.076114+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "74",
+   "quantity": {
+    "value": 1.51e-06,
+    "units": "N m^2",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Aiello 2018 via S6-deepen.md",
+     "recorded_at": "2026-11-04 08:23:11.730278+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "75",
+   "quantity": {
+    "value": 1.38,
+    "units": "m/s",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "behaviour"
+    },
+    "provenance": {
+     "source": "Miln et al. 2021 via S21-deepen.md",
+     "recorded_at": "2026-11-04 08:23:11.730278+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "77",
+   "quantity": {
+    "value": 0.014,
+    "units": "muscle mass fraction",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "tissue"
+    },
+    "provenance": {
+     "source": "Mansuit & Herrel 2021 via S10-deepen.md",
+     "recorded_at": "2026-11-04 08:23:11.730278+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "78",
+   "quantity": {
+    "value": 10.0,
+    "units": "fold enlargement",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "tissue"
+    },
+    "provenance": {
+     "source": "S10-deepen.md",
+     "recorded_at": "2026-11-04 08:23:11.730278+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "79",
+   "quantity": {
+    "value": 0.0,
+    "units": "hits",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "fish-alleles/README.md; query form <symbol>[Gene Name] AND \"Danio rerio\"[Organism]",
+     "recorded_at": "2026-11-04 08:26:32.516593+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "799",
+   "quantity": {
+    "value": 140.0,
+    "units": "route claims imported across coral, insect-flight and xenobot under design-space-routes-0.1; 4 of 5 file-based projects now registered",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/import_design_space.py",
+     "recorded_at": "2026-11-05 03:52:10.998489+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "80",
+   "quantity": {
+    "value": 393221.0,
+    "units": "NCBI GeneID",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "fish-alleles/README.md; GeneID 393221 chromosome 15 verified here against NCBI esummary",
+     "recorded_at": "2026-11-04 08:26:32.516593+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "83",
+   "quantity": {
+    "value": 76.0,
+    "units": "sequences",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/pdb70-kcnk5b-search-s7699q replicate-11.md; file results/mol-sims/claude-20261101/structures/msa/kcnk5b_core.a3m on claude/mol-sims-20261101",
+     "recorded_at": "2026-11-04 08:29:47.256056+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "84",
+   "quantity": {
+    "value": 77.5,
+    "units": "Hz",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/strouhal-band-rederivation-ljqyv7 replicate-52.md",
+     "recorded_at": "2026-11-04 08:29:47.256056+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "85",
+   "quantity": {
+    "value": 71.0,
+    "units": "Hz",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/s24-deepen-launch-gap-2motub S24-deepen.md",
+     "recorded_at": "2026-11-04 08:29:47.256056+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "86",
+   "quantity": {
+    "value": 1.0,
+    "units": "CL_max",
+    "evidence": "derived",
+    "read_level": "search-summary",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/zebrafish-glide-replication-ptg7f5 replicate-5.md",
+     "recorded_at": "2026-11-04 08:29:47.256056+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "87",
+   "quantity": {
+    "value": -1.6,
+    "units": "z",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/cysteine-close-pairs-7qjmxn replicate-31.md",
+     "recorded_at": "2026-11-04 08:29:47.256056+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "88",
+   "quantity": {
+    "value": 2.5e-09,
+    "units": "N m^2 (caudal fin EI midpoint)",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s9-fin-ray-ixdx5u S9-deepen.md",
+     "recorded_at": "2026-11-04 08:29:47.256056+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "887",
+   "quantity": {
+    "value": 5.0,
+    "units": "projects now registered and populated in the claim graph, from 2 this morning; 284 claims imported across four new mappings with 0 typed measured",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/import_design_space.py",
+     "recorded_at": "2026-11-05 03:54:42.766454+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "888",
+   "quantity": {
+    "value": 18.0,
+    "units": "of 25 spec rules passing; 2 FAIL (both honest reds not to be cleared by editing data) and 5 UNCHECKED",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/check_specs.py",
+     "recorded_at": "2026-11-05 03:57:31.453624+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "889",
+   "quantity": {
+    "value": 0.0,
+    "units": "superfast/sonic muscle myosin heavy chain sequences identified as such in NCBI protein, across toadfish, midshipman, weakfish and rattlesnake; the 3 sonic-fish myosins that exist are partial CARDIAC MyHC6 of 237-255 aa",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "NCBI protein; UniProt; PMID 16460271",
+     "recorded_at": "2026-11-05 04:04:34.068888+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "890",
+   "quantity": {
+    "value": 787.58,
+    "units": "USD of Console API credit actually spendable, across 4 enabled tenants expiring on 3 different dates; $196.77 is the amount expiring soonest (2026-11-07), and api_allen $200 is disabled and excluded",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "orchestra api-credits list",
+     "recorded_at": "2026-11-05 04:07:07.3572+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "9",
+   "quantity": {
+    "value": 0.479,
+    "units": "pTM",
+    "evidence": "simulated",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "protein"
+    },
+    "provenance": {
+     "source": "Nebius workbench boltz2_predict_native + msa_search_native",
+     "recorded_at": "2026-11-04 06:54:06.625059+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "92",
+   "quantity": {
+    "value": 2.1,
+    "units": "x required active factor",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s26-active-stiffening-48xj8q S26-deepen.md",
+     "recorded_at": "2026-11-04 08:49:25.754909+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "93",
+   "quantity": {
+    "value": 4.3e-05,
+    "units": "N m^2 (passive bluegill EI upper bound)",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s6-d-sensitive-input-fc1hm8 S6-D-deepen.md",
+     "recorded_at": "2026-11-04 08:49:25.754909+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "94",
+   "quantity": {
+    "value": 1.95,
+    "units": "L/D midpoint of 1.2-2.7",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "branch claude/deepen-s2-d-imobtp S2-D-deepen.md",
+     "recorded_at": "2026-11-04 08:49:25.754909+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "95",
+   "quantity": {
+    "value": 2.1,
+    "units": "ratio",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "S26-deepen.md; recomputed here: (120/40.3)^4 = 78.6",
+     "recorded_at": "2026-11-04 08:50:15.371997+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "952",
+   "quantity": {
+    "value": 5.0,
+    "units": "distinct source shapes now mapped into the claim graph (routes, unversioned headline/model/controls, design-space-study, schema-less model study, sequence comparison); site manifests deliberately excluded",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/import_design_space.py",
+     "recorded_at": "2026-11-05 04:09:26.83604+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "953",
+   "quantity": {
+    "value": 355.0,
+    "units": "claims across the four imported projects that had never been adversarially challenged, now reachable by the loop; the bug blocking that was found by the loop's first run on a second project",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "swarm/cycle.py",
+     "recorded_at": "2026-11-05 04:14:18.781353+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "954",
+   "quantity": {
+    "value": 3.0,
+    "units": "of 4 known-bad mutants caught by claude-opus-5-5 under the adversarial-challenge rubric, with 4 refusal arms excluded rather than counted as misses; the session log had reported 3/5",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "results/critic_control.json",
+     "recorded_at": "2026-11-05 04:17:18.452507+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "955",
+   "quantity": {
+    "value": 24.0,
+    "units": "design-specification slots generated from the claim graph, 0 citing a superseded or missing claim, with both refusal arms of the generator tested",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "docs/DESIGN-SPEC.md",
+     "recorded_at": "2026-11-05 04:20:46.640022+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "957",
+   "quantity": {
+    "value": 300.0,
+    "units": "ms of epaxial pre-loading before release measured in pipefish, against a sub-10 ms release -- the slow-load fast-release asymmetry the route needs, demonstrated in a teleost",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Avidan 2020 Proc R Soc B; Van Wassenbergh 2008 J R Soc Interface",
+     "recorded_at": "2026-11-05 04:28:12.296413+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "958",
+   "quantity": {
+    "value": 4.44,
+    "units": "percent of body mass of tendon needed to store the launch energy at a conservative 2% strain; 0.28% at 8% strain, and 26.9% even at an absurd 30 J/kg",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "tissue"
+    },
+    "provenance": {
+     "source": "analysis/lamsa_route.py",
+     "recorded_at": "2026-11-05 04:30:23.17309+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "959",
+   "quantity": {
+    "value": 53.9,
+    "units": "percent muscle fraction at which the 4.02 m/s launch needs exactly ONE contraction; active teleosts are reported above 60%, but the route then requires ~90% transfer of muscle work into body KE, which is unmeasured",
+    "evidence": "derived",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/lamsa_route.py; Anderson 2017 FASEB J",
+     "recorded_at": "2026-11-05 04:32:58.167256+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "96",
+   "quantity": {
+    "value": 5.7,
+    "units": "margin",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "S26-deepen.md",
+     "recorded_at": "2026-11-04 08:50:15.371997+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "960",
+   "quantity": {
+    "value": 0.539,
+    "units": "muscle-work-to-body-KE efficiency the launch requires even at a muscle fraction of 1.00, against a measured best of 0.39 for any fish fast-start and 0.10 for a spring-driven mechanical fish",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Frith & Blake 1995; Frith 2011; Conte 2010",
+     "recorded_at": "2026-11-05 04:35:34.463388+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "962",
+   "quantity": {
+    "value": 4.9,
+    "units": "cm of extra airborne range the engineered fin buys over a ballistic leap, a 19% increase; 31.0 cm total, 11.9 body lengths, against roughly 1,333 body lengths for a real flying fish",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/what_it_achieves.py",
+     "recorded_at": "2026-11-05 04:42:09.562204+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "963",
+   "quantity": {
+    "value": 3.4,
+    "units": "fold spread in adversarial survival rate across four corpora under the same prompt, model and rubric (22.0% to 73.9%), which an arm that reflexively weakens cannot produce",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "challenge table",
+     "recorded_at": "2026-11-05 04:43:50.943254+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "964",
+   "quantity": {
+    "value": 2.42,
+    "units": "m/s headwind at which the achievable design reaches lift = weight AT EXIT, because lift needs airspeed and not ground speed; about 4.7 knots. Does NOT give sustained flight",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/airspeed_vs_groundspeed.py",
+     "recorded_at": "2026-11-05 04:49:29.415336+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "965",
+   "quantity": {
+    "value": 48.0,
+    "units": "fold increase in peak height in an 8 m/s headwind over still air (187 cm vs 3.9 cm), with 6.4x the time aloft -- but blown 8.8 m BACKWARDS, so ground-frame range stops measuring flight above break-even",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/flight_in_wind.py",
+     "recorded_at": "2026-11-05 04:51:57.806235+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "966",
+   "quantity": {
+    "value": 25.7,
+    "units": "fold inertial-frame energy gain from wind shear at u*=0.60, lift-dependent (a wingless body with the same drag LOSES energy); but the cycle does not close and the animal lands every time",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/sheared_wind.py",
+     "recorded_at": "2026-11-05 04:55:12.149173+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "968",
+   "quantity": {
+    "value": 2.0,
+    "units": "of four route closures that are FIRM; routes C and D are provisional -- C depends on multi-contraction spring charging being impossible (unknown), D on one control law failing rather than none existing",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "challenge table",
+     "recorded_at": "2026-11-05 05:02:58.498681+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "969",
+   "quantity": {
+    "value": 0.0,
+    "units": "biological examples found of a spring charged across MULTIPLE muscle contractions, across three searches; engineered precedent exists (Cho 2020 RIPA), so the barrier is an anatomical novelty rather than physics",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Cho et al. 2020 Bioinspir Biomim",
+     "recorded_at": "2026-11-05 05:04:30.605296+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "970",
+   "quantity": {
+    "value": 0.0,
+    "units": "design candidates ever generated by this project, which is why 3 of the 4 UNCHECKED evaluation-kernel rules are unevaluable; the grade table FKs to candidate, not claim, and refused an attempt to record claim-challenges as candidate-grades",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "check_specs.py; grade_candidate_id_fkey",
+     "recorded_at": "2026-11-05 05:13:09.769197+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "971",
+   "quantity": {
+    "value": 12.5,
+    "units": "m/s wind at 1 m above which the design SUSTAINS flight for the full 4 s simulation above 1 metre with net energy gain (50-75 of 100 controllers); 0 of 100 below it, and 0 wingless at every altitude floor",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/soaring_search.py",
+     "recorded_at": "2026-11-05 05:17:50.069238+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "972",
+   "quantity": {
+    "value": 6.4,
+    "units": "factor by which the worst soaring fin loading (192 Pa at 17.7 m/s in air) is BELOW what the same fin already carries in a C-start in water (1,232 Pa); crossover at 44.9 m/s",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "analysis/soaring_search.py",
+     "recorded_at": "2026-11-05 05:20:10.382245+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "973",
+   "quantity": {
+    "value": 22.8,
+    "units": "degrees angle of attack at which 25 of 50 controllers sustain flight (CL 1.07), against measured CL_max angles of 30-41 deg; CL 0.60 at 12.8 deg sustains 0 of 50",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/soaring_search.py; PMID 20833919; PMID 12000800",
+     "recorded_at": "2026-11-05 05:21:39.656145+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "974",
+   "quantity": {
+    "value": 16.0,
+    "units": "of 144 controllers still airborne at 6 s in a continuous integration from WATER EXIT at 1.60 m/s with nothing seeded, at u*=0.60 (12.5 m/s at 1 m); 0 of 144 below that wind, matching the seeded sweep's threshold",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/end_to_end.py",
+     "recorded_at": "2026-11-05 05:24:18.550273+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "975",
+   "quantity": {
+    "value": 5.0,
+    "units": "of 12 one-at-a-time perturbations survived by the MOST robust of 24 sustaining controllers; failures are non-monotonic, so the sustained flight is a knife edge rather than a flight regime",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/end_to_end.py",
+     "recorded_at": "2026-11-05 05:27:12.507342+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "978",
+   "quantity": {
+    "value": 12.5,
+    "units": "m/s wind at 1 m for ROBUST sustained flight on a 200-controller grid (10 of 12 perturbations), correcting claim 976's 18.7 which came from a 27-point grid; floor between 10.4 and 12.5 m/s on a 600-trajectory negative",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/closed_loop.py",
+     "recorded_at": "2026-11-05 05:37:06.650669+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "979",
+   "quantity": {
+    "value": 14.19,
+    "units": "W/kg, the highest power output measured for any superfast muscle (toadfish swimbladder, Askew 2023 supplementary table), against the 53 W/kg the flapping route needs -- 3.7x short; every other superfast muscle is lower",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "tissue"
+    },
+    "provenance": {
+     "source": "PMID 36627504; PMID 18612467; PMID 38563308; PMID 10539971",
+     "recorded_at": "2026-11-05 05:40:15.030093+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "980",
+   "quantity": {
+    "value": 0.0,
+    "units": "coding changes in the longfin allele -- it is a chromosome-2 INVERSION upregulating kcnh2a 'without affecting the coding region of either gene', so the Kcnh2a protein in a longfin fish is wild type and there is no mutant protein to model",
+    "evidence": "literature",
+    "read_level": "abstract",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "dna"
+    },
+    "provenance": {
+     "source": "nbx-alleles report; Daane et al.",
+     "recorded_at": "2026-11-05 05:41:22.547521+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "981",
+   "quantity": {
+    "value": 0.0,
+    "units": "fin-area sweep points that can be quoted: the 200-controller sweep is non-monotonic (12.5, 10.4, 12.5, 8.3, 10.4 m/s) while wing loading falls throughout, so every magnitude is search noise; the DIRECTION (more fin helps) survives",
+    "evidence": "simulated",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "analysis/closed_loop.py",
+     "recorded_at": "2026-11-05 05:42:34.607025+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "982",
+   "quantity": {
+    "value": 0.0,
+    "units": "spec-rule FAILs separating a NONEXISTENT project from three real ones under check_specs.py: all score 7 pass / 0 FAIL / 18 UNCHECKED, so '0 FAIL' measures reach, not conformance",
+    "evidence": "measured",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": null
+    },
+    "provenance": {
+     "source": "project-structure report; swarm/check_specs.py",
+     "recorded_at": "2026-11-05 05:44:28.176954+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "983",
+   "quantity": {
+    "value": 1.82,
+    "units": "fold change in bud area ratio",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Jiang et al. 2024 PLoS Biol, PMC11018282 Fig 2, read by swarm/read_figure.py (6 reads, 3 controls each)",
+     "recorded_at": "2026-11-05 06:26:37.260715+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "984",
+   "quantity": {
+    "value": 2.05,
+    "units": "fold change in pectoral fin length/SL",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organ"
+    },
+    "provenance": {
+     "source": "Daane et al. 2021 Curr Biol, PMC9172250 Fig 4B, read by swarm/read_figure.py (opus 6 reads + sonnet 4 reads, 4 controls each)",
+     "recorded_at": "2026-11-05 06:40:07.28077+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "986",
+   "quantity": {
+    "value": 0.46,
+    "units": "pectoral fin length/SL, mutant vs 0.250 flying halfbeaks and 0.683 flying fishes",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "Daane et al. 2021 Curr Biol, PMC9172250 Fig 1B read by swarm/read_figure.py (6 reads, 3 controls) + claim 984",
+     "recorded_at": "2026-11-05 07:00:20.676284+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "988",
+   "quantity": {
+    "value": 12.5,
+    "units": "m/s minimum sustaining wind at the genetically achievable fin (2.65x wild type)",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "analysis/fin_lever_search.py row 1.0x + analysis/closed_loop.py S definition + claims 529, 542, 984, 987",
+     "recorded_at": "2026-11-05 07:03:05.511668+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "994",
+   "quantity": {
+    "value": 0.0,
+    "units": "values extractable from text for body-size fold change across 50 papers",
+    "evidence": "derived",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "swarm/extract_values.py --questions q_bodysize.txt over 50 of 190 papers; cause read by hand from PMC13299875",
+     "recorded_at": "2026-11-05 07:45:11.2084+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "995",
+   "quantity": {
+    "value": 1.168,
+    "units": "fold change in body length, triploid vs diploid Takifugu at 150 dpt",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "PMC13299875 Fig 1c, read by swarm/read_figure.py (opus 6 + sonnet 4 reads, 3 controls each)",
+     "recorded_at": "2026-11-05 07:50:29.360213+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "996",
+   "quantity": {
+    "value": 0.0,
+    "units": "fish myostatin studies in this corpus reporting a body-length measurement",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "organism"
+    },
+    "provenance": {
+     "source": "reference-stripped scan of 190 full texts; the four substantive myostatin papers read by hand",
+     "recorded_at": "2026-11-05 07:51:52.490083+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "997",
+   "quantity": {
+    "value": 8.9,
+    "units": "W/kg peak power, starling syringeal dTB, re-read here from Elemans 2008 Fig 3C",
+    "evidence": "literature",
+    "read_level": "full-text",
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "tissue"
+    },
+    "provenance": {
+     "source": "PMC2440420 Fig 3C read here; quotes verified in PMC2440420 and PMC11058336; peer report by session superfast-power",
+     "recorded_at": "2026-11-05 08:01:35.430395+00"
+    }
+   }
+  },
+  {
+   "schema": "morphoswarm/ask-transfer-record/v1",
+   "claim_id": "998",
+   "quantity": {
+    "value": 3.7,
+    "units": "factor by which measured superfast muscle power falls short of the flapping requirement",
+    "evidence": "derived",
+    "read_level": null,
+    "scope": {
+     "project": "zebrafish-flight",
+     "scale": "tissue"
+    },
+    "provenance": {
+     "source": "claims 979, 997 (measured) against claim 588 (derived availability); analysis/flapping_power_budget.py for the requirement and its sinusoid assumption",
+     "recorded_at": "2026-11-05 08:04:19.5266+00"
+    }
+   }
+  }
+ ],
+ "digest": "41698a61176a092cb35f1a22157bfefe0e427788f87e335279fe915408b8b415"
+}

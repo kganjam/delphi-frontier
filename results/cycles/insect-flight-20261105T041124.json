@@ -1,0 +1,80 @@
+{
+ "project": "insect-flight",
+ "at": "2026-11-05T04:11:24.391114+00:00",
+ "stages": [
+  {
+   "stage": "gap",
+   "cmd": "/home/ubuntu/miniconda3/bin/python3 /data/worktrees/delphi-frontier/swarm-arch/swarm/corpus_gap.py",
+   "started": "2026-11-05T04:11:12.884241+00:00",
+   "status": "RAN-OK",
+   "exit": 0,
+   "reason": "",
+   "tail": "muscle physiology)\n  [ok] muscle physiology is NOT flagged on the current corpus -- the expansion actually fixed it\n  [ok] an unrelated sentence classifies into NO domain -- the classifier is not matching everything\n  [ok] a known-mechanics sentence classifies as mechanics -- the classifier is not matching nothing\n  [ok] genetics is NOT flagged on the pre-expansion corpus -- it was genetics-rich, so flagging it would mean the sweep flags everything\n  [ok] the pre-expansion corpus does not flag ALL 5 domains (1 flagged)\n  [ok] all 22 corpus papers carry an explicit domain tag\n  -> controls PASS",
+   "seconds": 0.1
+  },
+  {
+   "stage": "challenge",
+   "cmd": "/home/ubuntu/miniconda3/bin/python3 /data/worktrees/delphi-frontier/swarm-arch/swarm/api_challenge.py 25 --write",
+   "started": "2026-11-05T04:11:12.988979+00:00",
+   "status": "RAN-FAILED",
+   "exit": 1,
+   "reason": "",
+   "tail": "200 claim(s); tenants ['api_outlook2', 'api_outlook1', 'api_outlook', 'api_gmail'] (api_allen EXCLUDED)\n\n  claim  749 api_outlook2     survived  $0.01026  none found\nTraceback (most recent call last):\n  File \"/data/worktrees/delphi-frontier/swarm-arch/swarm/api_challenge.py\", line 275, in <module>\n    sys.exit(main())\n             ~~~~^^\n  File \"/data/worktrees/delphi-frontier/swarm-arch/swarm/api_challenge.py\", line 217, in main\n    for i, (cid, ev, stmt) in enumerate(rows):\n           ^^^^^^^^^^^^^^^\nValueError: not enough values to unpack (expected 3, got 1)",
+   "seconds": 7.2
+  },
+  {
+   "stage": "synthesis",
+   "cmd": "/home/ubuntu/miniconda3/bin/python3 /data/worktrees/delphi-frontier/swarm-arch/swarm/design_chain.py",
+   "started": "2026-11-05T04:11:20.152636+00:00",
+   "status": "RAN-OK",
+   "exit": 0,
+   "reason": "",
+   "tail": " in quadrature so a run-up needs a 23 BL/s sprint |\n| body size | unresolved | smaller helps only if adult zebrafish are on the velocity plateau, which is unmeasured |\n| body mass | no implementation | needs ~46% gas volume and a distributed autonomic setpoint defeated |\n\nThe chain is complete in structure. Every link has a number and an evidence class, and the places it fails are named rather than bridged. **The single cheapest open measurement is a zebrafish fast-start velocity against body length over 20\u201340 mm** \u2014 absent from PubMed, and it governs whether the body-size lever exists at all.",
+   "seconds": 0.3
+  },
+  {
+   "stage": "specs",
+   "cmd": "/home/ubuntu/miniconda3/bin/python3 /data/worktrees/delphi-frontier/swarm-arch/swarm/check_specs.py",
+   "started": "2026-11-05T04:11:20.446460+00:00",
+   "status": "RAN-FAILED",
+   "exit": 1,
+   "reason": "",
+   "tail": "e of this file's own rules were found\n  over-strict on 2026-11-04, and in every case the first reading blamed the system:\n    - in-flight challenges counted as unrecorded outcomes\n    - `not-run` counted the same as NULL, so honest abandonment looked like lost data\n    - superseded claims with NO dependents required to have flagged something\n    - a shortfall required to span a whole measured range when one end is the right one\n    - pre-cap rows counted against a cap that now holds (still red, deliberately)\n  Before fixing data to clear a red, check whether the rule is asking the right thing.",
+   "seconds": 1.9
+  },
+  {
+   "stage": "vacuity",
+   "cmd": "/home/ubuntu/miniconda3/bin/python3 /data/worktrees/delphi-frontier/swarm-arch/swarm/check_vacuity.py",
+   "started": "2026-11-05T04:11:22.312026+00:00",
+   "status": "RAN-OK",
+   "exit": 0,
+   "reason": "",
+   "tail": "   comparison               would silently satisfy: SPEC-evaluation-kernel rule 5\n    idea_score               would silently satisfy: SPEC-idea-intake rule 3\n    part                     would silently satisfy: the parts-library design\n    need                     would silently satisfy: the needs/pressure loop\n    experiment               would silently satisfy: anything proposing bench work\n    retraction               would silently satisfy: ASK D4\n\n  An empty table is often CORRECT. What is never correct is a check reporting green\n  over one. This sweep is to be read, not to gate a build.",
+   "seconds": 0.9
+  },
+  {
+   "stage": "publish",
+   "cmd": "/home/ubuntu/miniconda3/bin/python3 /data/worktrees/delphi-frontier/swarm-arch/swarm/publish_dryrun.py",
+   "started": "2026-11-05T04:11:23.165157+00:00",
+   "status": "RAN-FAILED",
+   "exit": 1,
+   "reason": "",
+   "tail": "export_transfer.py returned no records -- nothing to publish. Reporting that rather than writing an empty directory that would read as success.",
+   "seconds": 0.1
+  },
+  {
+   "stage": "progress",
+   "cmd": "/home/ubuntu/miniconda3/bin/python3 /data/worktrees/delphi-frontier/swarm-arch/swarm/progress.py",
+   "started": "2026-11-05T04:11:23.294836+00:00",
+   "status": "RAN-FAILED",
+   "exit": 1,
+   "reason": "",
+   "tail": " risk first, NOT the total\n  burn        $0/h observed   $0/h NEEDED to finish   -> projected leftover $0\n  sessions    0 running        monitor.log 179 min old\n  knowledge   791 claims (69 superseded), 1804 challenges resolved, 84 subproblems answered\n  content     27 law entries, 732 claude branches, 15 commits in the last hour\n\n  ALARMS:\n    ! $196.76 on api_outlook2 expires in 1.8 days and is largely unspent (total spendable $787.57 across 4 tenants expiring on 3 different dates)\n\n  NOTE: the cloud pool is finished, so its generator/session alarms are suppressed rather than fired for ever.",
+   "seconds": 1.1
+  }
+ ],
+ "counts": {
+  "RAN-OK": 3,
+  "RAN-FAILED": 4
+ }
+}

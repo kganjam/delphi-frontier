@@ -1,0 +1,86 @@
+id: poiseuille
+name: Hagen-Poiseuille flow in a tube
+usability: constraining
+equation: "dP = 8 * mu * L * Q / (pi * r^4)"
+latex: "\\Delta P = \\frac{8 \\mu L Q}{\\pi r^4}, \\qquad R_h = \\frac{8 \\mu L}{\\pi r^4}"
+symbols:
+  dP:  {dimension: M/(L*T^2), units: Pa,     description: "pressure drop along the tube"}
+  mu:  {dimension: M/(L*T),   units: Pa*s,   description: "dynamic viscosity of the fluid"}
+  L:   {dimension: L,         units: m,      description: "tube length"}
+  Q:   {dimension: L^3/T,     units: m^3/s,  description: "volume flow rate"}
+  r:   {dimension: L,         units: m,      description: "tube radius"}
+constants:
+  radius_exponent:
+    value: 4.0
+    note: >
+      Exact under the stated assumptions, not a fitted value. It is the load-bearing feature of the
+      law: halving the radius raises resistance sixteenfold, which is why r is the variable every
+      transport network is built around and why Murray's law has the exponent it has.
+  laminar_reynolds_ceiling:
+    value: 2000
+    note: "The conventional transition Reynolds number for pipe flow. Above it the parabolic profile is not the solution."
+  fahraeus_lindqvist_onset:
+    value: 3.0e-4
+    units: m
+    note: >
+      Blood's apparent viscosity becomes appreciably diameter-dependent below roughly 0.3 mm
+      diameter (Farina et al. 2021, a secondary source read at abstract level). Pries et al. 1992
+      measured tubes from 3.3 to 1978 micrometres; Pries & Secomb 2005 report a distinctive minimum
+      at 6-7 micrometres in glass tubes.
+mechanism: >
+  It is not a model but the exact solution of the Navier-Stokes equations for steady, fully
+  developed, laminar flow of a Newtonian fluid in a rigid circular tube with a no-slip wall. The
+  velocity profile is parabolic, and integrating it across the section gives the fourth power of
+  the radius. Because it is exact rather than fitted, its failures are always failures of its
+  ASSUMPTIONS, and each one can be named in advance -- which is unusual among the entries here.
+domain_of_validity:
+  flow_regime: "steady, fully developed, laminar"
+  reynolds_max: 2000
+  fluid: "Newtonian"
+  walls: "rigid, no-slip"
+  geometry: "circular section, entrance length small compared with L"
+where_it_breaks: >
+  Blood in small tubes is the first failure and it is quantitative, not marginal: apparent viscosity
+  depends on diameter (the Fahraeus-Lindqvist effect), with a distinctive minimum at 6-7 micrometres
+  in glass tubes, and resistance in vivo EXCEEDS the in vitro value because of an endothelial
+  surface layer roughly 0.8-1 micrometre thick in 10-40 micrometre vessels. So the law fails in both
+  directions depending on scale, and a design that assumes a single viscosity for a microvascular
+  network is wrong twice over. The second failure is large arteries: flow there is pulsatile, and
+  Reneman & Hoeks state directly that Poiseuille's law does not hold for the arterial system in vivo
+  because of pulsatility. The Womersley number is the discriminator -- for a human aorta it is about
+  19, meaning the profile is blunt and inertia-dominated rather than parabolic. Compliant walls,
+  bends and entrance regions each break it as well.
+worked_examples:
+  - organism: "human aorta -- the case where the law fails, shown by its own diagnostics"
+    computation: |
+      inputs (remembered, not retrieved): r = 1.25 cm, rho = 1060 kg/m^3, mu = 3.5 mPa s, HR = 1.2 Hz
+      mean flow,  U = 0.2 m/s : Re = rho*U*2r/mu = 1060*0.2*0.025/0.0035 = 1514
+      peak systole, U = 1.0 m/s: Re = 7570                      -- above the laminar threshold
+      Womersley alpha = r*sqrt(omega*rho/mu), omega = 2*pi*1.2 = 7.54 1/s
+        sqrt(7.54*1060/0.0035) = sqrt(2.28e6) = 1511 ; alpha = 0.0125*1511 = 18.9
+      alpha >> 1  ->  blunt, inertia-dominated profile. Poiseuille's assumptions fail here.
+    value: 18.9
+    note: >
+      The worked example is deliberately a FAILURE case. Poiseuille gives a number for any tube you
+      hand it, including this one; what tells you not to use it is a separate calculation. That is
+      the general shape of the problem this library exists to address.
+    evidence: derived
+  - organism: "a vessel of half the radius"
+    computation: "R_h ratio = (1/0.5)^4 = 16"
+    value: 16
+    note: "Resistance rises sixteenfold. Exact within the domain."
+    evidence: derived
+contested_by:
+  - "Nothing contests the result within its assumptions; it is a derivation, not a regression. What is contested in the literature is how far into the microcirculation a corrected effective viscosity can carry it, rather than whether the uncorrected law applies there."
+sources:
+  - citation: "Pries AR, Neuhaus D, Gaehtgens P (1992) Am J Physiol 263:H1770-H1778, Blood viscosity in tube flow: dependence on diameter and hematocrit, doi 10.1152/ajpheart.1992.263.6.H1770"
+    read_level: abstract
+  - citation: "Pries AR, Secomb TW (2005) Am J Physiol Heart Circ Physiol 289:H2657-H2664, doi 10.1152/ajpheart.00297.2005"
+    read_level: abstract
+  - citation: "Reneman RS, Hoeks AP (2008) Med Biol Eng Comput 46:499-507, doi 10.1007/s11517-008-0330-2, PMC2441533"
+    read_level: full-text
+  - citation: "Fahraeus R, Lindqvist T (1931) Am J Physiol 96:562-568"
+    read_level: remembered
+    note: "The citation was seen in two abstracts; the paper itself was not read."
+  - citation: "The parabolic-profile derivation is standard textbook material and was not retrieved from a named source in this compilation."
+    read_level: remembered
