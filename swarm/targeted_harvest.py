@@ -292,6 +292,133 @@ def on_target(kept: list, questions: list[str]) -> tuple[int, int]:
     return hits, seen
 
 
+RELEVANCE_PROMPT = """A search was run to answer ONE question. An extractor pulled numbers out of
+a paper. Some answer the question; others are numbers that happened to be nearby -- a p value, a
+test statistic, a row label, a concentration from an unrelated assay.
+
+THE QUESTION:
+{question}
+
+THE EXTRACTED VALUES:
+{values}
+
+For EACH numbered value, decide whether it is a measurement OF THE QUANTITY THE QUESTION ASKS
+FOR. Judge the quantity, not the regime: a value for the right quantity in the wrong species or
+the wrong life stage still ANSWERS it, and is handled elsewhere. A value for a different
+quantity does not, however relevant the paper is.
+
+Reply with JSON only, no prose:
+{{"answers": [<numbers that answer the question>], "no": [<numbers that do not>]}}
+"""
+
+
+def judge_relevance(kept: list, questions: list[str], tenants: list[str]) -> tuple[int, int]:
+    """Ask an INDEPENDENT tenant whether each verified value answers its question.
+
+    THE GAP THIS FILLS IS STRUCTURAL, not a tuning problem. The quote gate is `q in hay`: a
+    substring test of the model's quote against the paper text. It is the right test for "did
+    this model invent the sentence" and NO test for "does this number answer the question", and
+    for a long time nothing measured the difference. Measured consequences, from committed
+    harvests: a question asking pectoral-muscle power in W/kg had `222 N` and `0.86 r2` proposed
+    from one table row, and a question asking a dimensionless ratio returned 88 values in ng/nl,
+    42 `test statistic` and 42 `p value` -- all with quotes genuinely present in their papers.
+
+    WHY NOT THE UNITS CHECK, which is free. It cannot see this. `p value` against a question
+    asking `dimensionless ratio` is a UNITS MATCH under any sane folding, because both are pure
+    numbers -- and claim 3185 measured that this is not hypothetical: the whole of one harvest's
+    42.7 per cent units-match rate was `dimensionless -> unitless`, while its misses were the
+    p values. A dimensionless question makes the units check nearly vacuous, and those are the
+    questions this project asks most.
+
+    WHY A DIFFERENT TENANT. The extractor proposed these values; asking it to mark its own work
+    is the shape `ask_confirmed` already refuses for provenance labels.
+
+    IT RECORDS, IT DOES NOT GATE. `answers_question` goes on the item and the rate is printed.
+    Nothing is dropped on this judgement alone, because a model's opinion about relevance is not
+    better evidence than a quote verified against the source, and silently discarding values
+    would make the harvest's own yield unauditable.
+    """
+    import json as _json
+
+    import api_challenge as ac
+    groups: dict[tuple, list] = {}
+    for it in kept:
+        try:
+            qn = int(it.get("asked") or 0)
+        except (TypeError, ValueError):
+            continue
+        if 1 <= qn <= len(questions):
+            groups.setdefault((qn, str(it.get("paper"))), []).append(it)
+    yes = seen = 0
+    for (qn, _paper), items in groups.items():
+        lines = "\n".join(
+            f"{i}. value {it.get('value')} {it.get('units')} "
+            f"({str(it.get('species') or '')[:40]}; {str(it.get('conditions') or '')[:60]}) "
+            f"quote: {str(it.get('quote') or '')[:160]}"
+            for i, it in enumerate(items, 1))
+        try:
+            r = ac.call_live_with_fallback(
+                tenants, RELEVANCE_PROMPT.format(question=questions[qn - 1][:900], values=lines),
+                max_tokens=900)
+            body = r.get("text") if isinstance(r, dict) else str(r)
+            start, end = body.find("{"), body.rfind("}")
+            ok = set(_json.loads(body[start:end + 1]).get("answers") or [])
+        except Exception:                                         # noqa: BLE001
+            continue          # a failed judgement leaves the field unset, never False
+        for i, it in enumerate(items, 1):
+            it["answers_question"] = i in ok
+            seen += 1
+            yes += i in ok
+    return yes, seen
+
+
+def relevance_control() -> int:
+    """Run judge_relevance on REAL records whose answer is already known.
+
+    THE CASES COME FROM COMMITTED HARVESTS, not from fixtures written to pass. A hand-made
+    example tests the prompt against my idea of a hard case; a real one tests it against what
+    the extractor actually produces. The must-flag cases are the `p value` and `test statistic`
+    rows that a dimensionless-ratio question returned -- the exact values the units check cannot
+    reject, because a p value is dimensionless. The must-miss cases come from the targeted
+    question files, whose values match the units asked.
+    """
+    import json as _json
+
+    import api_challenge as ac
+    ex = pathlib.Path(__file__).resolve().parents[1] / "results" / "extract"
+    bad_src = _json.loads((ex / "harvest_questions_rawctl1.json").read_text())["verified"]
+    good_src = _json.loads((ex / "harvest_questions_gaps3.json").read_text())["verified"]
+    bad = [v for v in bad_src
+           if str(v.get("units", "")).lower() in ("p value", "test statistic")][:3]
+    good = good_src[:3]
+    if not bad or not good:
+        print("  CONTROL CANNOT RUN: no real must-flag/must-miss records found.")
+        return 1
+    qs_bad = _json.loads((ex / "questions_rawctl1.txt.map.json").read_text())
+    qs_good = _json.loads((ex / "questions_gaps3.txt.map.json").read_text())
+
+    def run(items, qmap, label, expect):
+        qn = str(items[0].get("asked"))
+        entry = qmap.get(qn) or {}
+        question = f"{entry.get('question', '')}. Units wanted: {entry.get('units', '')}."
+        for i, it in enumerate(items, 1):
+            it["asked"] = 1
+        hits, seen = judge_relevance(items, [question], ac.TENANTS)
+        got = [bool(it.get("answers_question")) for it in items]
+        ok = all(g is expect for g in got)
+        print(f"  {'ok  ' if ok else 'FAIL'}  {label}: judged {got}, expected all {expect}"
+              f"  ({hits} of {seen} called answering)")
+        print(f"          question: {question[:96]}")
+        for it in items:
+            print(f"          value {it.get('value')} {it.get('units')}")
+        return ok
+
+    a = run(bad, qs_bad, "must-flag  (p value / test statistic)", False)
+    b = run(good, qs_good, "must-miss  (targeted file, units match)", True)
+    print(f"\n  {int(a) + int(b)} of 2 control arms pass")
+    return 0 if (a and b) else 1
+
+
 def read_questions(path: pathlib.Path) -> list[str]:
     """One question per numbered block; the indented 'Report the species' line belongs to it."""
     out, cur = [], []
@@ -607,6 +734,19 @@ def main() -> int:
         print("  The quote gate checks that a value is really in the paper, not that it answers")
         print("  the question. This rate is reported, NOT enforced: a paper reports in its own")
         print("  units and rejecting that would discard most real evidence (claim 2769).")
+    # --judge-relevance costs one call per (paper, question) group, so it is opt-in. It is the
+    # only one of the three numbers that measures whether the harvest produced EVIDENCE: on
+    # harvest_questions_rawctl1 the three read 300 quote-verified, 128 units-matched, 0 answering
+    # the question (claim 3186), and the 128 were all dimensionless non-answers.
+    if "--judge-relevance" in sys.argv and kept_all:
+        import api_challenge as _ac
+        ry, rs = judge_relevance(kept_all, questions, _ac.TENANTS)
+        if rs:
+            print(f"  ANSWER the question (independent tenant): {ry} of {rs} "
+                  f"({100.0*ry/rs:.1f}%)")
+            print("  Recorded on each item as `answers_question`; nothing is dropped on it.")
+        if write:
+            flush(OUT / OUTFILE[0], kept_all, bad_all)
     by_prov: dict[str, int] = {}
     for it in kept_all:
         by_prov[str(it.get("provenance", "unstated"))] = \
