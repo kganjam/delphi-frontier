@@ -73,6 +73,9 @@ def call(tenant: str, prompt: str, max_tokens: int = 1200, model: str | None = N
     return json.loads(r.stdout[i:])
 
 
+_SPENT: set[str] = set()   #: tenants seen out of credit in THIS process; see call_live_with_fallback
+
+
 def call_live_with_fallback(tenants, prompt: str, max_tokens: int = 1200) -> dict:
     """Rotate tenants on an out-of-credit refusal AND fall back on a content refusal.
 
@@ -83,10 +86,18 @@ def call_live_with_fallback(tenants, prompt: str, max_tokens: int = 1200) -> dic
     while the other three tenants held 280 USD between them.
     """
     errs = []
-    for t in tenants:
+    live = [t for t in tenants if t not in _SPENT] or list(tenants)
+    for t in live:
         try:
             return call_with_fallback(t, prompt, max_tokens=max_tokens)
         except Exception as e:                                    # noqa: BLE001
+            if is_credit_refusal(e):
+                # Remember it. TENANTS[0] is api_outlook2, which has been at its reserve floor
+                # since 2026-11-05, so without this every single item pays one doomed
+                # subprocess before rotating -- a per-item cost on a loop that runs thousands
+                # of times. Process-local on purpose: it is a cache of an observation, not a
+                # policy, so a tenant that is topped up is live again in the next process.
+                _SPENT.add(t)
             errs.append(f"{t}: {str(e)[:90]}")
     raise RuntimeError("every tenant failed -- " + " | ".join(errs))
 
@@ -115,6 +126,30 @@ def call_first_live(tenants, prompt: str, max_tokens: int = 1200, model: str | N
     raise RuntimeError("every tenant failed -- " + " | ".join(errs))
 
 
+#: Substrings that mark an OUT-OF-CREDIT refusal rather than a content refusal.
+CREDIT_MARKERS = ("credit at reserve", "out of credit", "insufficient credit",
+                  "no credit", "credit exhausted", "disabled")
+
+
+def is_credit_refusal(err: object) -> bool:
+    """Is this failure about MONEY rather than about the prompt?
+
+    THE TWO ARE NOT DISTINGUISHABLE BY THE WORD "refused" AND THAT COST A WORKING TOOL.
+    `orchestra api-credits call` reports a spent tenant as
+    `refused or failed: api_outlook2: promo credit at reserve (4.85 USD left)`. That string
+    contains "refused", so call_with_fallback's `if "refused" not in str(e)` test classified it
+    as a CONTENT refusal and retried the identical prompt on the fallback MODEL -- against the
+    same tenant, which has no money, so it failed again for the same reason. The caller then saw
+    a content-refusal error for a billing condition. Measured 2026-11-05: classify_scale could
+    not run at all, on either project, for this reason alone.
+
+    This is the forbidden-string shape SPEC 6b already records twice: a substring test cannot
+    tell claiming from quoting, and it cannot tell "the model declined" from "the account is
+    empty" either. Pin the positive condition instead of matching one word of it.
+    """
+    return any(m in str(err).lower() for m in CREDIT_MARKERS)
+
+
 def call_with_fallback(tenant: str, prompt: str, max_tokens: int = 1200) -> dict:
     """Try the default model; on a refusal, retry on FALLBACK.
 
@@ -132,7 +167,10 @@ def call_with_fallback(tenant: str, prompt: str, max_tokens: int = 1200) -> dict
     try:
         return call(tenant, prompt, max_tokens=max_tokens)
     except Exception as e:
-        if "refused" not in str(e).lower():
+        # A spent tenant cannot be helped by another MODEL -- same account, same balance. Raise
+        # at once so a rotating caller moves to the next tenant instead of paying for a second
+        # doomed call, and so the error the caller sees names the real condition.
+        if is_credit_refusal(e) or "refused" not in str(e).lower():
             raise
         out = call(tenant, prompt, max_tokens=max_tokens, model=FALLBACK)
         out["_fallback_from_refusal"] = True

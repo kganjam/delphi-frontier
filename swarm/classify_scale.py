@@ -108,7 +108,12 @@ def classify(tenant: str, stmt: str) -> tuple[str | None, float]:
     None for both and the control printed them identically as "REFUSED", which made a
     deliberate, and as it turned out correct, judgement look like a transport failure.
     """
-    out = ac.call_with_fallback(tenant, spec()['prompt']().format(scales=", ".join(SCALES), stmt=stmt[:4000]))
+    # Rotate past a spent tenant. The named one is tried first so an explicit --tenant is
+    # honoured, then the rest: a single-tenant call made this whole script unrunnable on
+    # 2026-11-05 when TENANTS[0] hit its reserve floor while three tenants held credit.
+    order = [tenant] + [t for t in ac.TENANTS if t != tenant]
+    out = ac.call_live_with_fallback(
+        order, spec()['prompt']().format(scales=", ".join(SCALES), stmt=stmt[:4000]))
     cost = float(out.get("cost_usd") or 0.0)
     if out.get("_refused"):
         return None, cost
@@ -158,20 +163,53 @@ def spec():
     return TABLES["subproblem" if "--subproblems" in sys.argv else "claim"]
 
 
-def control(n: int = 30, seed: int = 11) -> tuple[bool, str, float]:
-    """Blind-classify claims that ALREADY carry a hand-assigned scale, and compare."""
+REFERENCE = "zebrafish-flight"   #: the only project with a large hand-placed set; the fallback only
+CONTROL_MIN = 20          #: labelled rows a project needs before it can control on itself
+
+
+def control(n: int = 30, seed: int = 11, project: str | None = None) -> tuple[bool, str, float]:
+    """Blind-classify rows that ALREADY carry a hand-assigned scale, and compare.
+
+    THE CONTROL RUNS ON THE PROJECT BEING CLASSIFIED WHEN THAT PROJECT CAN SUPPORT ONE.
+    It used to query `project_id='zebrafish-flight'` unconditionally while main() classified
+    whatever SWARM_PROJECT named, so `SWARM_PROJECT=coral classify_scale.py --write` validated
+    the classifier on FISH vocabulary and then applied it to CORAL. That was defensible when it
+    was written -- the fish project was the only one with hand-assigned scales, and a control on
+    a different distribution beats no control -- but it is a weaker guarantee than it reads as,
+    because beating a baseline on one project's language is not evidence about another's.
+
+    It is no longer necessary. Measured 2026-11-05: coral has 52 of 57 live claims placed on a
+    scale, insect-flight 58 of 113, limbless-mouse 63 of 112, xenobot 109 of 162. So each can
+    now be its own control.
+
+    The fallback remains for a project that cannot: under CONTROL_MIN labelled rows the
+    reference project is used and the substitution is PRINTED, because a control borrowed from
+    another distribution that does not announce itself is the thing this docstring exists to
+    stop.
+    """
     S = spec()
+    project = project or REFERENCE
     rows = q(f"""select scale_id, {S['text']()} from {S['table']}
-                 where project_id='zebrafish-flight' {S['live']}
+                 where project_id={lit(project)} {S['live']}
                  and scale_id is not null {S['min_len']} {S.get('control_filter','')}
                  order by id""")
+    if len(rows) < CONTROL_MIN:
+        print(f"  CONTROL: {project!r} has only {len(rows)} labelled {S['noun']}s "
+              f"(needs {CONTROL_MIN}), so the control borrows {REFERENCE!r}. "
+              f"Beating a baseline there is NOT evidence about {project!r}'s vocabulary.")
+        project = REFERENCE
+        rows = q(f"""select scale_id, {S['text']()} from {S['table']}
+                     where project_id={lit(project)} {S['live']}
+                     and scale_id is not null {S['min_len']} {S.get('control_filter','')}
+                     order by id""")
     random.Random(seed).shuffle(rows)
     rows = rows[:n]
     dist = collections.Counter(r[0] for r in q(f"""select scale_id from {S['table']}
-            where project_id='zebrafish-flight' {S['live']} and scale_id is not null
+            where project_id={lit(project)} {S['live']} and scale_id is not null
             {S.get('control_filter','')}"""))
     base = max(dist.values()) / sum(dist.values())
-    print(f"  CONTROL: {len(rows)} {S['noun']}s that a person already placed, classified blind.")
+    print(f"  CONTROL: {len(rows)} {S['noun']}s from {project!r} that a person already "
+          f"placed, classified blind.")
     print(f"  Majority-class baseline is '{dist.most_common(1)[0][0]}' at {100*base:.1f}% -- "
           f"the bar to beat, so a one-word classifier cannot pass.")
     agree = none_said = refused = 0
@@ -219,7 +257,7 @@ def main() -> int:
     n = int(nums[0]) if nums else 25
     project = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
 
-    ok, detail, spent = control()
+    ok, detail, spent = control(project=project)
     if "--control" in sys.argv:
         return 0 if ok else 1
     if not ok:

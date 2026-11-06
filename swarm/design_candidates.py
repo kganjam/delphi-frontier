@@ -62,21 +62,50 @@ CANDIDATES = [
 
 
 def check(ids):
-    rows = q("select id, coalesce(superseded_by::text,'') from claim where id in (%s)"
+    """Every part's backing claim must EXIST, be live, and BELONG TO THE PROJECT BEING RUN.
+
+    The project check is the one that was missing, and its absence made this script look
+    generic when it is not. PARTS and CANDIDATES below are a hard-coded zebrafish list; PROJECT
+    comes from the environment and was used only for the heading and for the `part_id` prefix.
+    So `SWARM_PROJECT=coral python3 design_candidates.py` printed "DESIGN CANDIDATES for
+    'coral'" above kcnk5b, slc12a7a, superfast-myosin and a candidate called "flapping-full",
+    each citing a claim id that belongs to zebrafish-flight -- measured 2026-11-05, with coral's
+    own claims running 478-1265. With --write it would have inserted parts keyed
+    `coral/gene/kcnk5b` into the coral project, backed by another project's evidence. That is
+    SPEC rule 2's "never generate data that stands in for measurement", reached by a path nobody
+    was watching: the existing guard checked that each claim is live, which is a real check, and
+    being a real check is what made it look sufficient.
+
+    Refusing is the honest behaviour, not a limitation to work around. A project earns a design
+    candidate by having claims that back one. Generating coral parts needs a coral PARTS list
+    derived from coral's own claims, which is work, and the refusal says so instead of hiding it.
+    """
+    rows = q("select id, coalesce(superseded_by::text,''), project_id from claim where id in (%s)"
              % ",".join(str(i) for i in ids))
-    found = {int(r[0]): r[1] for r in rows}
+    found = {int(r[0]): (r[1], r[2]) for r in rows}
     missing = [i for i in ids if i not in found]
-    stale = [(i, found[i]) for i in ids if found.get(i)]
-    return missing, stale
+    stale = [(i, found[i][0]) for i in ids if found.get(i) and found[i][0]]
+    foreign = sorted({(i, found[i][1]) for i in ids if i in found and found[i][1] != PROJECT})
+    return missing, stale, foreign
 
 
 def main() -> int:
     write = "--write" in sys.argv
     ids = sorted({c for *_, c in PARTS} | {c for *_, c in CANDIDATES})
-    missing, stale = check(ids)
+    missing, stale, foreign = check(ids)
     if missing or stale:
         print(f"REFUSING: missing claims {missing}; superseded {stale}. "
               f"A part or candidate resting on a withdrawn claim is worse than none.")
+        return 2
+    if foreign:
+        owners = sorted({p for _, p in foreign})
+        print(f"REFUSING: this script's PARTS/CANDIDATES are backed by claims belonging to "
+              f"{owners}, but SWARM_PROJECT is {PROJECT!r}.")
+        print(f"  {len(foreign)} of {len(ids)} backing claims are another project's: "
+              + ", ".join(f"{i} ({p})" for i, p in foreign[:8]))
+        print("  The parts list here is a hard-coded zebrafish one. Running it under another "
+              "project would write that project's design out of this project's evidence.")
+        print(f"  To design for {PROJECT!r}, give it a PARTS list drawn from its own claims.")
         return 2
     print("=" * 78)
     print(f"DESIGN CANDIDATES for {PROJECT!r}")

@@ -19,6 +19,27 @@ so nothing tells an agent what to do next. A project with 0 superseded claims ha
 claim corrected, which means the adversarial arm ran and nothing was written back -- 53 to 194
 challenges exist against each of those projects and not one changed a claim.
 
+THAT TABLE IS THE STATE THIS SCRIPT WAS WRITTEN AGAINST AND IT IS NO LONGER TRUE. Kept rather
+than replaced, because the gap it describes is why the script exists and the comparison is the
+point. Re-measured 2026-11-05, every one of those zeros except the last column has been
+filled:
+
+    project          scales  subproblems  superseded  measured  typed-beyond-literature
+    coral                 8           10           1         0                        7
+    insect-flight         7           10           1         0                        7
+    limbless-mouse        5           12           1         0                       16
+    xenobot               5           11           2         0                       20
+    zebrafish-flight      8          454         131       198                      601
+
+So "0 scales, 0 subproblems, 0 superseded" is fixed: all four projects are now placed on
+scales, carry a frontier, and have had at least one claim corrected by the adversarial arm
+writing back. ONE STRUCTURAL ZERO REMAINS and it is the same one in all four: `measured` is 0,
+meaning nothing in those projects was measured BY those projects -- every value is literature,
+derived or simulated. That is an honest zero and must not be filled by relabelling: in the
+fish project 136 of its 198 `measured` claims measure the PIPELINE (tooling, panels,
+generators) rather than the animal, so the cell is reachable without a wet lab, but only by
+actually running something and recording what it returned.
+
 THIS IS A MEASUREMENT, NOT A GATE. The thresholds below are the fish's own shape, and a
 different design question may legitimately need fewer scales. The point is to make the gap
 visible and per-dimension, so closing it is a work list rather than an opinion.
