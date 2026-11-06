@@ -140,8 +140,12 @@ def census(write: bool = False) -> int:
             # spec_parameter has NO project_id column, so it is counted project-wide. It holds 0
             # rows, which is why the spec's D5 row citing its "mandatory" constraints is vacuous.
             ("spec_parameter", "value_nominal is not null or value_min is not null", "conditions"),
-            ("claim", "value_num is not null", None),
-            ("constraint_entailed", "quantity is not null or lo is not null", None)):
+            # `conditions` added to both by db/designswarm/0015_claim_conditions.sql and
+            # backfilled for 2,025 claims from the `conditions:` field their statement already
+            # carried. Before that migration these two tables had no column to hold it, which is
+            # why this census read 7 of 1,620 (claim 3166).
+            ("claim", "value_num is not null", "conditions"),
+            ("constraint_entailed", "quantity is not null or lo is not null", "conditions")):
         has_proj = int(q("select count(*) from information_schema.columns where "
                          f"table_name={lit(table)} and column_name='project_id'")[0][0])
         where = f"where project_id={lit(PROJECT)}" if has_proj else "where true"
