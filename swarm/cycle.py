@@ -151,8 +151,16 @@ def one_cycle(project: str, n_challenge: int, write: bool) -> dict:
     stages.append(run_stage(
         "evaluate", [py, str(HERE / "api_evaluate_constraints.py"), "12", "--write"], spend))
     stages.append(run_stage(
-        "questions", [py, str(HERE / "extraction_questions.py"), "--from-gaps", "--generalise",
-                      "--cap", "6", "--out", str(EXTRACT / "questions_cycle.txt")], spend))
+        # --simple-units added 2026-11-06. Measured on the same harvester, prompt and judge:
+        # questions asking a simple physical unit answer at 32.7 per cent (16 of 49), while
+        # dimensionless and ratio questions answer at 0 -- 0 of 88 at 6 papers per query and
+        # 0 of 265 at 30 (claim 3256). That is claim 2769's ratio finding on a harder metric.
+        # Of 120 open constraints carrying a quantity, 101 have a simple unit and 19 do not, so
+        # this points the loop at the reachable ones. The 19 need deriving from parts or
+        # recording as unobtainable; harvesting for them is measured to pay nothing.
+        "questions", [py, str(HERE / "extraction_questions.py"), "--from-gaps", "--simple-units",
+                      "--generalise", "--cap", "6",
+                      "--out", str(EXTRACT / "questions_cycle.txt")], spend))
     stages.append(run_stage(
         # --judge-relevance added 2026-11-06. The quote gate establishes that a value is
         # really in the paper and nothing establishes that it answers the question: one
