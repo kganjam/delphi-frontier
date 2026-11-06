@@ -134,12 +134,27 @@ def claims_block(constraint_text: str = "", limit=40) -> str:
 
 
 def open_constraints(limit):
+    """Open constraints, NEVER-EVALUATED FIRST, then the stalest.
+
+    IT WAS `order by id` AND THAT MADE THE STAGE A TREADMILL. An INSUFFICIENT verdict leaves a
+    constraint `open`, so ordering by id returned the same lowest-id rows every cycle. Measured
+    2026-11-06: 131 open constraints, 90 of which had NEVER been evaluated, while the 12 the
+    evaluator always selected had all been evaluated before. Every cycle re-asked twelve
+    questions already answered INSUFFICIENT and never reached the ninety. The unbroken run of
+    "0 satisfied, 0 unsatisfied, N insufficient" across many cycles is partly that: the same
+    hard rows, re-read at about $0.026 each.
+
+    `missing_evidence_at asc nulls first` puts never-evaluated rows at the front and then the
+    least recently evaluated, so the stage advances and still returns to old rows once new
+    evidence has had a chance to land. Ordering by id within each group keeps it deterministic.
+    """
     return ac.q(f"""select id, replace(coalesce(statement,''), chr(10), ' '),
                 coalesce(quantity,'-'), coalesce(lo::text,'-'), coalesce(hi::text,'-'),
                 coalesce(units,''), coalesce(source_scale,'?'), coalesce(target_scale,'?')
                 from constraint_entailed
                 where project_id = {ac.lit(PROJECT)} and status = 'open'
-                order by id limit {limit}""")
+                order by missing_evidence_at asc nulls first, id
+                limit {limit}""")
 
 
 def parse(text: str) -> tuple[str, str, str]:
