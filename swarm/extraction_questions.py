@@ -49,7 +49,17 @@ GAP_SCALE: dict[str, str] = {}      # gap sentence -> the scale of the constrain
 STOP = {"the", "and", "for", "per", "with", "during", "from", "its", "both", "that"}
 MERGE_AT = 0.25          # with the subset guard in same_need(); see its docstring
 _RATIO_FOLD = 9    #: measured 8.94, claim 2769
-DIMENSIONLESS = {"", "dimensionless", "ratio", "dimensionless ratio", "fraction", "-", "none"}
+#: Spellings of "this number has no units". INCOMPLETE UNTIL 2026-11-05, and the omission ran
+#: in the direction that makes the pipeline look worse than it is: `unitless` appears 530 times
+#: across the committed harvests, `proportion` 112 and `n/a` 4, and none of them folded, so a
+#: question asking `dimensionless` answered with `unitless` was counted as a MISS. That is 646
+#: values wrongly scored off-target by analysis/units_match_rate.py, which imports this set.
+#: Found by reading the per-pair breakdown of one harvest -- the commonest "miss" was
+#: `dimensionless -> unitless`, 128 of 300, which is not a miss at all.
+#: `percent` is deliberately NOT here: a percentage is a pure number but it carries a factor of
+#: 100, so a value reported as 23 % is not interchangeable with one reported as 0.23.
+DIMENSIONLESS = {"", "dimensionless", "ratio", "dimensionless ratio", "fraction", "-", "none",
+                 "unitless", "proportion", "n/a", "na", "no units", "no unit", "unitless ratio"}
 
 
 def words(quantity: str) -> frozenset:
