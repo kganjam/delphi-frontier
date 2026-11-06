@@ -154,8 +154,16 @@ def one_cycle(project: str, n_challenge: int, write: bool) -> dict:
         "questions", [py, str(HERE / "extraction_questions.py"), "--from-gaps", "--generalise",
                       "--cap", "6", "--out", str(EXTRACT / "questions_cycle.txt")], spend))
     stages.append(run_stage(
+        # --judge-relevance added 2026-11-06. The quote gate establishes that a value is
+        # really in the paper and nothing establishes that it answers the question: one
+        # complete harvest gave 300 quote-verified values of which 0 answered (claim 3186),
+        # and the recorder would have written all 300 as claims asserting they were harvested
+        # to answer a question they do not answer. claims_from_extraction now withholds a value
+        # judged False, but only an EXPLICIT False -- so without this flag the loop keeps
+        # recording unjudged values and the withholding never fires.
         "harvest", [py, str(HERE / "targeted_harvest.py"), "--questions",
-                    str(EXTRACT / "questions_cycle.txt"), "--limit", "4", "--write"],
+                    str(EXTRACT / "questions_cycle.txt"), "--limit", "4", "--write",
+                    "--judge-relevance"],
         spend or (None if (EXTRACT / "questions_cycle.txt").exists()
                   else "no question file: the questions stage did not produce one")))
     # Recording is free and must run even when the paid stages were skipped, because a previous
