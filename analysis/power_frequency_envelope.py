@@ -68,6 +68,16 @@ POINTS = (
 #: would hide the highest measured power in the project (142.7 W/kg).
 BURST = 309
 
+#: Bluegill pectoral fin muscle, held out for the SAME reason and reported separately: the
+#: source gives a power with no operating frequency, so it has no x-coordinate. It is recorded
+#: here because it is the only measurement in this project on the tissue the design's flight
+#: routes ACTUALLY USE -- every point plotted above is a surrogate: frog trunk, bird syrinx,
+#: fish sound-producing, fish axial. Found 2026-11-05 by the literature arm (claim 2774) and
+#: `quoted` rather than primary: it is a secondary citation inside PMC3799785, whose own
+#: reference was not retrieved. Bluegill swim by pectoral-fin labriform propulsion, a different
+#: functional regime from a zebrafish's pectorals, so it is a surrogate too -- a much nearer one.
+PECTORAL = 2774
+
 REQ_POWER_CLAIM, REQ_POWER = 588, 52.0      # W/kg muscle
 REQ_FREQ_CLAIM, REQ_FREQ = 586, 53.0        # Hz
 
@@ -156,6 +166,12 @@ def main() -> int:
     print(f"  {'burst':>6}  {b['value']:7.2f}  {'YES':>6} {'n/a':>6}  "
           f"Scorpaena notata fast myotomal  [claim {BURST}, locomotory fast-start, held out: "
           f"a burst has no cyclic frequency]")
+    pec = claim(PECTORAL)
+    ok = "YES" if pec["value"] >= REQ_POWER else "no"
+    print(f"  {'no f':>6}  {pec['value']:7.2f}  {ok:>6} {'n/a':>6}  "
+          f"bluegill PECTORAL FIN muscle  [claim {PECTORAL}, quoted, held out: no frequency "
+          f"given. The ONLY point here on the tissue the design actually uses -- every other "
+          f"row is a surrogate. {REQ_POWER/pec['value']:.2f}x short on power alone]")
     print(f"\n  Locomotory frequency ceiling (claim 593, NOT a power point): fish white myotomal "
           f"muscle\n  generates no power above ~12 Hz, which the {REQ_FREQ:.0f} Hz beat exceeds "
           f"by {ceil593['value']:.1f}x. Adding muscle\n  mass does not reach a FREQUENCY ceiling, "
@@ -240,6 +256,9 @@ operating frequency, against the requirement of {REQ_POWER:.0f} W/kg muscle at {
  200 Hz   {claim(979)['value']:.2f} W/kg  toadfish swimbladder (superfast)
  burst   {claim(309)['value']:.2f} W/kg  Scorpaena notata fast myotomal (held out: a fast-start has
                            no cyclic frequency, but it is the project's highest measured power)
+  no f    {claim(PECTORAL)['value']:.2f} W/kg  bluegill PECTORAL FIN muscle (held out: no frequency given.
+                           The ONLY value here on the tissue the design actually uses; every
+                           plotted point above is a surrogate. {REQ_POWER/claim(PECTORAL)['value']:.2f}x short on power alone.)
 
 NONE meets both. The closest in frequency among power-sufficient muscles is Hyla at
 {best_f[0]:.0f} Hz, {gap:.0f} Hz short; the closest in power among frequency-sufficient muscles
