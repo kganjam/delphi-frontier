@@ -204,9 +204,14 @@ def main() -> int:
         "swimbladder's measured 200 Hz (claim 979), the superfast transgene already in this "
         "project's part list, 4 of the 9 amplitude x Strouhal corners are reachable -- every "
         "corner at 0.35 body lengths. Every non-superfast muscle measured here covers 0 of 9. So "
-        "the open question is whether that muscle's 14.19 W/kg suffices, and the taxi's power "
-        "requirement has never been computed (claim 1869, superseding 1866; subproblems S1304, "
-        "S1305, S1308) |",
+        "it is not frequency that closes the lever (claim 1869, superseding 1866). POWER DOES, and "
+        "without a drag model: the kinetic-energy increment over the specified 20 body lengths "
+        "demands at least 23.9 W/kg of muscle at perfect transfer and the favourable 0.55 muscle "
+        "fraction WITH DRAG EXCLUDED, against the 14.19 W/kg that same superfast muscle delivers "
+        "-- 1.7x short at the most generous corner and 5.9x at claim 960's measured transfer "
+        "efficiency. Drag only adds, so no drag model can reopen it. Frequency and power are met "
+        "by DIFFERENT muscles and by neither together, which is claim 1127's configuration for "
+        "the third time (claim 1870) |",
     ]))
     # "absent from PubMed" was withdrawn on 2026-11-05. The search behind it ran without
     # `sort=relevance`, so it returned the most RECENT PMC matches rather than the most relevant
