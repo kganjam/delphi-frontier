@@ -170,6 +170,36 @@ def statement(it: dict, qtext: dict[str, dict[str, str]] | None = None) -> str:
             + _unit_note(qtext, it))
 
 
+#: Strings that all denote a DIMENSIONLESS quantity. A fraction, a percentage and a
+#: body-length-normalised ratio differ by a SCALE FACTOR, not by dimension, so for the question
+#: this annotation asks -- does the value answer the question? -- they are the same quantity.
+#:
+#: MEASURED 2026-11-05, and the instrument was wrong on the project it had not been checked on.
+#: The first version compared unit strings literally. On zebrafish-flight that gives 20.9 per
+#: cent matching, and adding this equivalence set moves it to 20.8 -- no material change,
+#: because that project's questions mostly want physical units. On insect-flight the literal
+#: comparison gives 3.8 per cent and the equivalence set gives 23.0, because its questions ask
+#: for fractions of body mass and body-length-normalised ratios, and the harvester answers in
+#: `%`, `dimensionless` and `unitless`. A six-fold error, invisible on the project the check was
+#: built against. Same shape as the borrowed control in classify_scale.py: an instrument
+#: validated on one project and applied to another without being re-validated there.
+DIMENSIONLESS = {
+    "dimensionless", "unitless", "fraction", "ratio", "%", "percent", "percentage", "none", "-",
+    "body lengths", "body weights", "body length", "body weight", "bl", "x", "fold", "times",
+    "fraction of body mass", "fraction of body weight",
+}
+
+
+def _canon_unit(u: str) -> str:
+    """Canonical form for the comparison: dimensionless synonyms collapse to one token."""
+    flat = (u or "").strip().lower()
+    if not flat:
+        return ""
+    if flat in DIMENSIONLESS or flat.replace(" ", "") in {d.replace(" ", "") for d in DIMENSIONLESS}:
+        return "@dimensionless"
+    return flat.replace(" ", "")
+
+
 def _unit_note(qtext: dict | None, it: dict) -> str:
     """Do the value's units match the units the question asked for?
 
@@ -190,8 +220,10 @@ def _unit_note(qtext: dict | None, it: dict) -> str:
     got = str(it.get("units") or "").strip()
     if not want or not got:
         return ""
-    w, g = want.lower().replace(" ", ""), got.lower().replace(" ", "")
-    if w == g or w in g or g in w:
+    w, g = _canon_unit(want), _canon_unit(got)
+    # substring matching is for real units only -- "@dimensionless" must match exactly, or it
+    # would absorb anything containing it.
+    if w == g or (w != "@dimensionless" and g != "@dimensionless" and (w in g or g in w)):
         return f"\nunits asked for: {want} -- the value's units MATCH"
     return (f"\nunits asked for: {want} -- the value's units are {got}, which DO NOT MATCH. "
             f"This value is verified against its paper but may not answer the question above.")
