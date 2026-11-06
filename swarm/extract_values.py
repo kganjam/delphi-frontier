@@ -81,6 +81,20 @@ RULES, and the third is enforced mechanically after you reply:
 - Report a value even when it is incidental to the paper's own argument. This database wants the
   NUMBER, not the paper's conclusion, so a control measurement or a value quoted from an earlier
   study counts, provided the sentence you quote is in the excerpt below.
+- BUT IT MUST BE A MEASUREMENT OF THE QUANTITY THE QUESTION ASKS FOR. "Incidental to the paper's
+  argument" is welcome; "a different quantity" is not. If the question asks for muscle power in
+  W/kg, a number in the same table that is not a muscle power does not answer it, however close
+  it sits to one that does.
+- DO NOT REPORT STATISTICS ABOUT THE ANALYSIS. A p value, a test statistic, an R^2, a degrees of
+  freedom, a confidence-interval bound reported on its own, a sample size n -- these describe how
+  strongly a result was established, not a property of the organism or the system, and they are
+  never an answer unless the question asks for that statistic by name. This is the commonest
+  error on this task: a question asking for a dimensionless ratio once returned 42 p values and
+  42 test statistics, every quote genuinely present in its paper, because a p value is a
+  dimensionless number sitting in a results table.
+- A ROW LABEL, A SPECIMEN CODE OR A COLUMN HEADING IS NOT A VALUE. When you take a number out of
+  a table, name the quantity its column reports. If you cannot say what quantity a number
+  measures, it is not an answer; leave it out.
 - If, having scanned it all, the excerpt genuinely holds no measured value relevant to ANY of the
   questions, an empty list is the correct answer. Never invent one: a fabricated value is worse
   than a missed one, and the quote check below will catch it anyway.
