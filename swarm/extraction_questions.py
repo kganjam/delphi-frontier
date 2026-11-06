@@ -156,11 +156,25 @@ STANDARD_RATIOS = {
 def ratio_unit(units: str) -> tuple[str, str] | None:
     """If the unit DIVIDES one dimension by another, return (numerator, denominator).
 
-    MEASURED, and it is the sharpest predictor of a wasted question this project has: over all
-    52 question-sets and 4710 compared values, questions asking a RATIO unit had their answer
-    come back in the units they asked for 2.9 per cent of the time, against 26.2 per cent for
-    every other question -- a 8.9-fold difference (claim 2769). Papers report masses and powers;
-    they rarely report mass-specific power. Asking for the quotient is close to futile.
+    MEASURED: over all 52 question-sets and 4710 compared values, questions asking a RATIO unit
+    had their answer come back in the units they asked for 2.9 per cent of the time, against
+    26.2 per cent for every other question -- a 8.9-fold difference (claim 2769). Papers report
+    masses and powers; they rarely report mass-specific power. Asking for the quotient is close
+    to futile, and that still holds.
+
+    IT IS NO LONGER THE SHARPEST PREDICTOR OF A WASTED QUESTION, which this docstring claimed
+    until 2026-11-05. analysis/units_match_rate.py recomputes the figure -- it had never had a
+    script, so it could not be rechecked -- and finds the ratio effect reproducing as a RATIO
+    (8.4-fold) but not as a LEVEL (10.9 per cent against 26.2, on a population 47 per cent
+    larger). Broken down by harvest file, the four BULK harvests match at 3.6-11.7 per cent and
+    the small targeted ones at 88.9-100: roughly twenty-fold, larger than the effect this
+    function exists to exploit, and invisible in any aggregate. Whether the harvest mode CAUSES
+    it is not established -- the small harvests' questions may have been written against values
+    already in hand -- so this is a pointer to that script, not a new rule here (claim 3160).
+
+    Note also that `ratio` now means DECOMPOSABLE ratio: STANDARD_RATIOS below exempts m/s and
+    relatives, which 2769 counted as ratios and commit 35bc9701 found to be the best performer
+    in the set. So 2769's bucket and this function's are not the same set.
 
     So a ratio question is split into its two factors, each asked in its own simple unit, and
     the quotient is computed afterwards rather than searched for. `W/kg body mass` becomes a
