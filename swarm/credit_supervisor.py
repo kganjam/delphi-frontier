@@ -49,7 +49,43 @@ MIN_ARMS = 3
 #: attacked and never reached a single new claim -- 29 of them, including every claim that
 #: corrected one of my own results (claim 1110). A supervisor that only ever re-reviews is not
 #: an adversary, it is an echo.
-ARM = ["python3", "-u", "swarm/api_challenge.py", "60", "--repanel", "--write"]
+ARM_PANEL = ["python3", "-u", "swarm/api_challenge.py", "60", "--panel", "--write"]
+ARM_REPANEL = ["python3", "-u", "swarm/api_challenge.py", "60", "--repanel", "--write"]
+
+
+def review_arm() -> list[str]:
+    """--panel while claims have never been challenged, --repanel once they all have.
+
+    CHOSEN FROM SUPPLY RATHER THAN HARDCODED, BECAUSE THE HARDCODED CHOICE WENT STALE AND KEPT
+    SPENDING. The constant below was fixed to --repanel on 2026-11-05 with the reason recorded
+    in the comment: the --panel query "now returns 0 of 503 live claims", so a panel arm exited
+    within seconds and only re-panel arms survived. That was true at 503 claims. Measured
+    2026-11-06 at 1,625 live claims, the same query returns 730 -- 44.9 per cent of the corpus
+    has never been challenged once, while individual claims carry up to 168 challenges each.
+
+    So the supervisor was re-reviewing a reviewed subset on a supply measurement that had
+    expired, and nothing re-checked it because the reason was a comment rather than a query.
+    This asks the database each tick. When the never-challenged pool empties the arm returns to
+    --repanel by itself, which is what the 2026-11-05 reasoning wanted and what a constant
+    cannot do.
+    """
+    try:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+        from dbq import lit, q
+        proj = os.environ.get("SWARM_PROJECT", "zebrafish-flight")
+        n = int(q(f"""select count(*) from claim c
+                      where c.project_id = {lit(proj)} and c.superseded_by is null
+                      and length(c.statement) between 80 and 6000
+                      and not exists (select 1 from challenge ch
+                                      where ch.claim_id = c.id)""")[0][0])
+    except Exception as e:                                        # noqa: BLE001
+        # On any doubt use the arm that always has supply, and SAY SO -- a silent fallback
+        # here would reproduce the failure this function exists to fix.
+        print(f"  could not count never-challenged claims ({type(e).__name__}); using --repanel")
+        return ARM_REPANEL
+    print(f"  never-challenged claims: {n} -> "
+          + ("--panel" if n > 0 else "--repanel"))
+    return ARM_PANEL if n > 0 else ARM_REPANEL
 #: THE PREVIOUS ARM_NEW WAS A NO-OP AND THE FLEET LOOKED HEALTHY ANYWAY (measured 2026-11-05).
 #: It was `api_challenge.py 20 --panel`, which selects claims that have NEVER been challenged.
 #: That query now returns 0 of 503 live claims, so every ARM_NEW exited within seconds and only
@@ -213,7 +249,7 @@ def main() -> int:
         print(f"  {why} -- launching {want} arm(s) on {binding} regardless of the "
               f"observed rate, which was earned by arms that have since exited")
         for j in range(want):
-            cmd = ARM_NEW if j % 2 == 0 else ARM     # alternate: new claims first
+            cmd = ARM_NEW if j % 2 == 0 else review_arm()   # alternate: new claims first
             if dry:
                 print(f"    [--status] would launch: {' '.join(cmd)} --tenant {binding}")
                 continue
@@ -233,7 +269,7 @@ def main() -> int:
     # fleet was at or above the floor -- which is most of the time -- every further launch was a
     # --repanel arm. Measured 2026-11-05: both surviving arms were --repanel for this reason.
     for j in range(want):
-        cmd = ARM_NEW if j % 2 == 0 else ARM
+        cmd = ARM_NEW if j % 2 == 0 else review_arm()
         if dry:
             print(f"    [--status] would launch: {' '.join(cmd)} --tenant {binding}")
             continue
